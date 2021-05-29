@@ -8,9 +8,12 @@ import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_mayacalendar.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+
+import 'main_menu/settings_mayacalendar.dart';
 
 buildMainMenu(BuildContext context) {
   var header = SizedBox(
@@ -90,15 +93,15 @@ buildMainMenu(BuildContext context) {
   );
 
   return Drawer(
-    child: Column(
-      children: <Widget>[
-        header,
-        Expanded(
+      child: Column(
+    children: <Widget>[
+      header,
+      Expanded(
           child: ListView(
-            padding: EdgeInsets.zero, // Remove any padding from the ListView.
-            children: menuEntries)),
-        footer,
-      ],
+              padding: EdgeInsets.zero, // Remove any padding from the ListView.
+              children: menuEntries)),
+      footer,
+    ],
   ));
 }
 
@@ -113,6 +116,11 @@ _buildSettingsItem(BuildContext context) {
       'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())),
       'toolName': i18n(context, 'mainmenu_settings_coordinates_title'),
       'icon': Icons.language
+    },
+    {
+      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(MayaCalendarSettings())),
+      'toolName': i18n(context, 'mainmenu_settings_mayacalendar_title'),
+      'icon': Icons.ballot_rounded
     },
   ];
 

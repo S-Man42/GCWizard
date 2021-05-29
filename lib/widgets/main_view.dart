@@ -25,6 +25,8 @@ import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
@@ -34,6 +36,7 @@ import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
@@ -76,11 +79,11 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart'
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -90,6 +93,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/houdini.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
@@ -99,6 +103,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
@@ -127,6 +132,8 @@ import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
@@ -142,27 +149,31 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -344,6 +355,7 @@ class _MainViewState extends State<MainView> {
         className(Brainfk()),
         className(BurrowsWheeler()),
         className(Caesar()),
+        className(Calendar()),
         className(Catan()),
         className(CCITT1Selection()),
         className(CCITT2Selection()),
@@ -358,7 +370,10 @@ class _MainViewState extends State<MainView> {
         className(ColorPicker()),
         className(Combination()),
         className(CombinationPermutation()),
+        className(ComplexNumbers()),
         className(CoordinateAveraging()),
+        className(CountriesCallingCodes()),
+        className(Cow()),
         className(CrossBearing()),
         className(CrossSum()),
         className(CrossSumRange()),
@@ -367,6 +382,7 @@ class _MainViewState extends State<MainView> {
         className(Deadfish()),
         className(Decabit()),
         className(DistanceBearing()),
+        className(Divisor()),
         className(DTMF()),
         className(DNAAminoAcids()),
         className(DNAAminoAcidsTable()),
@@ -393,6 +409,7 @@ class _MainViewState extends State<MainView> {
         className(Hexadecimal()),
         className(HexString2File()),
         className(Homophone()),
+        className(Houdini()),
         className(Humidex()),
         className(IceCodesSelection()),
         className(IntersectBearings()),
@@ -405,14 +422,16 @@ class _MainViewState extends State<MainView> {
         className(IteratedCrossSumRangeFrequency()),
         className(Kamasutra()),
         className(Kenny()),
-        className(Keyboard()),
+        className(KeyboardSelection()),
         className(Malbolge()),
         className(MapView()),
+        className(MayaCalendarSelection()),
         className(MayaNumbersSelection()),
         className(MexicanArmyCipherWheel()),
         className(MoonPosition()),
         className(MoonRiseSet()),
         className(Morse()),
+        className(Navajo()),
         className(NumberSequenceSelection()),
         className(MultiDecoder()),
         className(NumeralBases()),
@@ -429,7 +448,9 @@ class _MainViewState extends State<MainView> {
         className(Polybios()),
         className(PrimesSelection()),
         className(Projectiles()),
+        className(QuadraticEquation()),
         className(RailFence()),
+        className(RALColorCodes()),
         className(RC4()),
         className(Resection()),
         className(ResistorSelection()),
@@ -443,6 +464,7 @@ class _MainViewState extends State<MainView> {
         className(RotationGeneral()),
         className(RSASelection()),
         className(Scrabble()),
+        className(ShadoksSelection()),
         className(Seasons()),
         className(SevenSegments()),
         className(SixteenSegments()),

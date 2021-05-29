@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+crowdin.properties
 
 # IntelliJ related
 *.iml
@@ -96,7 +97,6 @@ howtocode/
 /assets/i18n/fi.json
 /assets/i18n/it.json
 /assets/i18n/ja.json
-/assets/i18n/ko.json
 /assets/i18n/nl.json
 /assets/i18n/no.json
 /assets/i18n/pl.json

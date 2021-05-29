@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 // https://www.languagesandnumbers.com/how-to-count-in-volapuk/en/vol/
@@ -15,6 +16,8 @@ import 'package:gc_wizard/utils/common_utils.dart';
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
+//
+// https://de.wikipedia.org/wiki/Zahlen_in_unterschiedlichen_Sprachen
 
 class NumeralWordsDecodeOutput {
   final String number;
@@ -48,6 +51,28 @@ enum NumeralWordsLanguage {
   SOL,
   SWE,
   VOL,
+  MAP,
+  BAS,
+  DOT,
+  UNG,
+  PER,
+  AMH,
+  VIE,
+  TUR,
+  MEG,
+  BRE,
+  SCO,
+  IND,
+  TAM,
+  FIN,
+  QUE,
+  CEQ,
+  KLI,
+  LOJ,
+  JAP,
+  CHI,
+  MIN,
+  SHA,
   ALL,
   NUM
 }
@@ -56,6 +81,7 @@ final Map<String, String> DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
+  'zwo': '2',
   'drei': '3',
   'vier': '4',
   'fuenf': '5',
@@ -124,6 +150,7 @@ final Map<String, String> ENGWordToNum = {
   'hundred': '100',
   'thousand': '1000',
   'degree': '°',
+  'degrees': '°',
   'point': '.',
   'komma': ',',
   'north': 'numeralwords_n',
@@ -503,8 +530,8 @@ final Map<String, String> POLWordToNum = {
 };
 
 final Map<String, String> RUSWordToNum = {
-  'nol’': '0',
-  'nul’': '0',
+  'nol': '0',
+  'nul': '0',
   'adna': '1',
   'adno': '1',
   'adin': '1',
@@ -750,6 +777,291 @@ final Map<String, String> LATWordToNum = {
   'meridies': 'numeralwords_s',
 };
 
+final Map<String, String> MAPWordToNum = {
+  'kinhe': '1',
+  'epu': '2',
+  'kyla': '3',
+  'meli': '4',
+  'kecu': '5',
+  'kaju': '6',
+  'reqle': '7',
+  'pura': '8',
+  'ailha': '9',
+  'mari ': '10',
+};
+final Map<String, String> BASWordToNum = {
+  'huts / zero': '0',
+  'bat': '1',
+  'bi': '2',
+  'hiru': '3',
+  'lau': '4',
+  'bost': '5',
+  'sei': '6',
+  'zazpi': '7',
+  'zortzi': '8',
+  'bederatzi': '9',
+  'hamar': '10',
+};
+final Map<String, String> DOTWordToNum = {
+  'at': '1',
+  'akat': '2',
+  'sen': '3',
+  'tor': '4',
+  'mek': '5',
+  'zhinda': '6',
+  'fekh': '7',
+  'ori': '8',
+  'qazat': '9',
+  'thi': '10',
+};
+final Map<String, String> UNGWordToNum = {
+  'nulla': '0',
+  'egy': '1',
+  'kettő': '2',
+  'három': '3',
+  'négy': '4',
+  'öt': '5',
+  'hat': '6',
+  'hét': '7',
+  'nyolc': '8',
+  'kilenc': '9',
+  'tíz ': '10',
+};
+final Map<String, String> PERWordToNum = {
+  'sefr': '0',
+  'yek': '1',
+  'do': '2',
+  'se': '3',
+  'chahar': '4',
+  'panj': '5',
+  'sesh': '6',
+  'haft': '7',
+  'hasht': '8',
+  'noh': '9',
+  'dah': '10',
+};
+final Map<String, String> AMHWordToNum = {
+  'bado': '0',
+  'ahnd': '1',
+  'hulet': '2',
+  'sost': '3',
+  'arat': '4',
+  'amest\'': '5',
+  'sidest': '6',
+  'sābat': '7',
+  'siment': '8',
+  'zetegn': '9',
+  '\'asser ': '10',
+};
+final Map<String, String> TURWordToNum = {
+  'sıfır': '0',
+  'bir': '1',
+  'iki': '2',
+  'üç': '3',
+  'dört': '4',
+  'beş': '5',
+  'altı': '6',
+  'yedi': '7',
+  'sekiz': '8',
+  'dokuz': '9',
+  'on ': '10',
+};
+final Map<String, String> BREWordToNum = {
+  'mann': '0',
+  'unan': '1',
+  'daou': '2',
+  'tri': '3',
+  'pevar': '4',
+  'pemp': '5',
+  'c\'hwec\'h': '6',
+  'seizh': '7',
+  'eizh': '8',
+  'nav': '9',
+  'dek': '10',
+};
+final Map<String, String> INDWordToNum = {
+  'nol': '0',
+  'satu': '1',
+  'dua': '2',
+  'tiga': '3',
+  'empat': '4',
+  'lima': '5',
+  'enam': '6',
+  'tujuh': '7',
+  'delapan': '8',
+  'sembilan': '9',
+  'sepuluh': '10',
+};
+final Map<String, String> FINWordToNum = {
+  'nolla': '0',
+  'yksi': '1',
+  'kaksi': '2',
+  'kolme': '3',
+  'neljä': '4',
+  'viisi': '5',
+  'kuusi': '6',
+  'seitsemän': '7',
+  'kahdeksan': '8',
+  'yhdeksän': '9',
+  'kymmenen': '10',
+};
+final Map<String, String> CEQWordToNum = {
+  'han': '1',
+  'du': '2',
+  'tri': '3',
+  'for': '4',
+  'fai': '5',
+  'ce': '6',
+  'cil': '7',
+  'pal': '8',
+  'gau': '9',
+  'hanzoi': '10',
+};
+final Map<String, String> SCOWordToNum = {
+  'nocht': '0',
+  'ane': '1',
+  'ae': '1',
+  'twa': '2',
+  'three': '3',
+  'fower': '4',
+  'five': '5',
+  'sax': '6',
+  'seiven': '7',
+  'aicht': '8',
+  'nine': '9',
+  'ten ': '10',
+};
+final Map<String, String> QUEWordToNum = {
+  'huk': '0',
+  'iskay': '1',
+  'kimsa': '2',
+  'tawa': '3',
+  'pichqa': '4',
+  'soqta': '5',
+  'qanchis': '6',
+  'pusaq': '7',
+  'isqon': '8',
+  'chunka ': '9',
+};
+final Map<String, String> LOJWordToNum = {
+  'no': '0',
+  'pa': '1',
+  're': '2',
+  'ci': '3',
+  'vo': '4',
+  'mu': '5',
+  'xa': '6',
+  'ze': '7',
+  'bi': '8',
+  'so': '9',
+  'pano': '10',
+};
+final Map<String, String> CHIWordToNum = {
+  'líng': '0',
+  'yī': '1',
+  'èr': '2',
+  'liǎng': '2',
+  'sān': '3',
+  'sì': '4',
+  'wǔ': '5',
+  'liù': '6',
+  'qī': '7',
+  'bā': '8',
+  'jiǔ': '9',
+  'shí ': '10',
+};
+final Map<String, String> KLIWordToNum = {
+  'wa\'': '1',
+  'cha\'': '2',
+  'wej': '3',
+  'loS': '4',
+  'vagh': '5',
+  'jav': '6',
+  'Soch': '7',
+  'chorgh': '8',
+  'Hut': '9',
+  'wa\'maH': '10',
+};
+final Map<String, String> VIEWordToNum = {
+  'cê-rô': '0',
+  'một': '1',
+  'hai': '2',
+  'ba': '3',
+  'bốn': '4',
+  'năm': '5',
+  'sáu': '6',
+  'bảy': '7',
+  'tám': '8',
+  'chín': '9',
+  'mười ': '10',
+};
+final Map<String, String> MEGWordToNum = {
+  'zero': '0',
+  'ună': '1',
+  'dău': '2',
+  'trei': '3',
+  'pătru': '4',
+  'ţinţi': '5',
+  'şăsi': '6',
+  'şapti': '7',
+  'optu': '8',
+  'nău': '9',
+  'dzieţi ': '10',
+};
+final Map<String, String> TAMWordToNum = {
+  'cuḻiyam': '0',
+  'oṉdṟu': '1',
+  'irandu': '2',
+  'mūṉdṟu': '3',
+  'nāṉgu': '4',
+  'aindhu': '5',
+  'āṟu': '6',
+  'ēḻu': '7',
+  'eṯṯu': '8',
+  'oṉbadhu': '9',
+  'paththu': '10',
+};
+final Map<String, String> JAPWordToNum = {
+  'rei': '0',
+  'ichi': '1',
+  'ni': '2',
+  'san': '3',
+  'shi': '4',
+  'yon': '4',
+  'go': '5',
+  'roku': '6',
+  'shichi': '7',
+  'nana': '7',
+  'hachi': '8',
+  'kyū': '9',
+  'jū': '10',
+};
+final Map<String, String> MINWordToNum = {
+  'hana': '1',
+  'dul': '2',
+  'sae': '3',
+  'duldul': '4',
+  'duldulhana': '5',
+  'saesae': '6',
+  'saesaehana': '7',
+  'saesaedul': '8',
+  'saesaesae': '9',
+  'saesaesaehana': '10',
+};
+final Map<String, String> SHAWordToNum = {
+  'ga': '0',
+  'bu': '1',
+  'zo': '2',
+  'meu': '3',
+  'buga': '4',
+  'bubu': '5',
+  'buzo': '6',
+  'bumeu': '7',
+  'zoga': '8',
+  'zobu': '9',
+  'zozo': '10',
+};
+
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DEU: 'common_language_german',
   NumeralWordsLanguage.ENG: 'common_language_english',
@@ -759,15 +1071,37 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.ESP: 'common_language_spanish',
   NumeralWordsLanguage.NLD: 'common_language_dutch',
   NumeralWordsLanguage.NOR: 'common_language_norwegian',
-  NumeralWordsLanguage.POL: 'common_language_polish',
   NumeralWordsLanguage.POR: 'common_language_portuguese',
   NumeralWordsLanguage.SWE: 'common_language_swedish',
+  NumeralWordsLanguage.POL: 'common_language_polish',
   NumeralWordsLanguage.RUS: 'common_language_russian',
   NumeralWordsLanguage.KYR: 'numeralwords_language_kyr',
+  NumeralWordsLanguage.JAP: 'numeralwords_language_jap',
+  NumeralWordsLanguage.CHI: 'numeralwords_language_chi',
+  NumeralWordsLanguage.UNG: 'numeralwords_language_ung',
+  NumeralWordsLanguage.PER: 'numeralwords_language_per',
+  NumeralWordsLanguage.AMH: 'numeralwords_language_amh',
+  NumeralWordsLanguage.VIE: 'numeralwords_language_vie',
+  NumeralWordsLanguage.TUR: 'numeralwords_language_tur',
+  NumeralWordsLanguage.MEG: 'numeralwords_language_meg',
+  NumeralWordsLanguage.BRE: 'numeralwords_language_bre',
+  NumeralWordsLanguage.SCO: 'numeralwords_language_sco',
+  NumeralWordsLanguage.IND: 'numeralwords_language_ind',
+  NumeralWordsLanguage.TAM: 'numeralwords_language_tam',
+  NumeralWordsLanguage.FIN: 'numeralwords_language_fin',
+  NumeralWordsLanguage.QUE: 'numeralwords_language_que',
   NumeralWordsLanguage.VOL: 'common_language_volapuek',
   NumeralWordsLanguage.EPO: 'common_language_esperanto',
   NumeralWordsLanguage.SOL: 'common_language_solresol',
-  NumeralWordsLanguage.LAT: 'common_language_latin'
+  NumeralWordsLanguage.LOJ: 'numeralwords_language_loj',
+  NumeralWordsLanguage.CEQ: 'numeralwords_language_ceq',
+  NumeralWordsLanguage.LAT: 'common_language_latin',
+  NumeralWordsLanguage.MAP: 'numeralwords_language_map',
+  NumeralWordsLanguage.BAS: 'numeralwords_language_bas',
+  NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
+  NumeralWordsLanguage.DOT: 'numeralwords_language_dot',
+  NumeralWordsLanguage.MIN: 'numeralwords_language_min',
+  NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -775,21 +1109,43 @@ Map<NumeralWordsLanguage, String> _languageList;
 Map NumWords = {
   NumeralWordsLanguage.DEU: DEUWordToNum,
   NumeralWordsLanguage.ENG: ENGWordToNum,
+  NumeralWordsLanguage.SCO: SCOWordToNum,
   NumeralWordsLanguage.FRA: FRAWordToNum,
+  NumeralWordsLanguage.BRE: BREWordToNum,
+  NumeralWordsLanguage.BAS: BASWordToNum,
   NumeralWordsLanguage.ITA: ITAWordToNum,
-  NumeralWordsLanguage.DNK: DNKWordToNum,
   NumeralWordsLanguage.ESP: ESPWordToNum,
   NumeralWordsLanguage.NLD: NLDWordToNum,
+  NumeralWordsLanguage.DNK: DNKWordToNum,
   NumeralWordsLanguage.NOR: NORWordToNum,
-  NumeralWordsLanguage.POL: POLWordToNum,
   NumeralWordsLanguage.POR: PORWordToNum,
   NumeralWordsLanguage.SWE: SWEWordToNum,
+  NumeralWordsLanguage.POL: POLWordToNum,
   NumeralWordsLanguage.RUS: RUSWordToNum,
   NumeralWordsLanguage.KYR: KYRWordToNum,
+  NumeralWordsLanguage.JAP: JAPWordToNum,
+  NumeralWordsLanguage.CHI: CHIWordToNum,
   NumeralWordsLanguage.VOL: VOLWordToNum,
   NumeralWordsLanguage.EPO: EPOWordToNum,
   NumeralWordsLanguage.SOL: SOLWordToNum,
-  NumeralWordsLanguage.LAT: LATWordToNum
+  NumeralWordsLanguage.LOJ: LOJWordToNum,
+  NumeralWordsLanguage.CEQ: CEQWordToNum,
+  NumeralWordsLanguage.LAT: LATWordToNum,
+  NumeralWordsLanguage.DOT: DOTWordToNum,
+  NumeralWordsLanguage.KLI: KLIWordToNum,
+  NumeralWordsLanguage.MAP: MAPWordToNum,
+  NumeralWordsLanguage.UNG: UNGWordToNum,
+  NumeralWordsLanguage.PER: PERWordToNum,
+  NumeralWordsLanguage.AMH: AMHWordToNum,
+  NumeralWordsLanguage.VIE: VIEWordToNum,
+  NumeralWordsLanguage.TUR: TURWordToNum,
+  NumeralWordsLanguage.MEG: MEGWordToNum,
+  NumeralWordsLanguage.IND: INDWordToNum,
+  NumeralWordsLanguage.TAM: TAMWordToNum,
+  NumeralWordsLanguage.FIN: FINWordToNum,
+  NumeralWordsLanguage.QUE: QUEWordToNum,
+  NumeralWordsLanguage.MIN: MINWordToNum,
+  NumeralWordsLanguage.SHA: SHAWordToNum,
 };
 
 bool _isNumeral(String input) {
@@ -1225,7 +1581,11 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // start decoding
     decodeText.forEach((element) {
       _alreadyFound = false;
-      if (_isNumeral(element)) {
+      if (_isShadoks(element))
+        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList[NumeralWordsLanguage.SHA]));
+      else if (_isMinion(element))
+        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList[NumeralWordsLanguage.MIN]));
+      else if (_isNumeral(element)) {
         // checks - if is a number/digit
         output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
       } else {
@@ -1299,4 +1659,25 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     }); // forEach element
     return output;
   }
+}
+
+bool _isShadoks(String element) {
+  return (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') == '');
+}
+
+bool _isMinion(String element) {
+  return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '') == '');
+}
+
+String _decodeShadoks(String element) {
+  return convertBase(
+      element.replaceAll('ga', '0').replaceAll('bu', '1').replaceAll('zo', '2').replaceAll('meu', '3'), 4, 10);
+}
+
+String _decodeMinion(String element) {
+  int number = 0;
+  element.replaceAll('hana', '1').replaceAll('dul', '2').replaceAll('sae', '3').split('').forEach((element) {
+    number = number + int.parse(element);
+  });
+  return number.toString();
 }

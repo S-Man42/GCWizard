@@ -45,7 +45,7 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     var swissGripPlus = SwissGridPlus.parse(text);
     if (swissGripPlus != null &&
         (swissGripPlus.easting.toInt().toString().length == 7 ||
-         swissGripPlus.northing.toInt().toString().length == 7)) {
+            swissGripPlus.northing.toInt().toString().length == 7)) {
       if (coord != null) coords.add(swissGripPlus);
       if (coord != null) coords.add(coord);
     } else {
@@ -89,13 +89,13 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
-  LatLng coord = DMS.parse(text, wholeString: wholeString).toLatLng();
+  LatLng coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': keyCoordsDMS, 'coordinate': coord};
 
-  coord = DMM.parse(text, wholeString: wholeString).toLatLng();
+  coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': keyCoordsDMM, 'coordinate': coord};
 
-  coord = DEC.parse(text, wholeString: wholeString).toLatLng();
+  coord = DEC.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': keyCoordsDEC, 'coordinate': coord};
 
   return null;

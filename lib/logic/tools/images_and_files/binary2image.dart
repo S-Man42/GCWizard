@@ -5,26 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
   var filter = _buildFilter(input);
-  if (filter.length < 2)
-    return null;
+  if (filter.length < 2) return null;
 
   if (!squareFormat) filter += "\n";
   input = _filterInput(input, filter);
 
   if (invers)
-    input = substitution(input,  {filter[0]: '1', filter[1]: '0'});
+    input = substitution(input, {filter[0]: '1', filter[1]: '0'});
   else
-    input = substitution(input,  {filter[0]: '0', filter[1]: '1'});
+    input = substitution(input, {filter[0]: '0', filter[1]: '1'});
 
   if (squareFormat) {
-    var size = sqrt(input.length) .ceil();
+    var size = sqrt(input.length).ceil();
     input = insertSpaceEveryNthCharacter(input, size);
     input = input.replaceAll(RegExp('[ ]'), '\n');
   }
-
 
   return await _binary2Image(input);
 }
@@ -40,29 +37,25 @@ String _buildFilter(String input) {
     return alphabet;
   }
 
-  if (alphabet.length == 3 && alphabet.contains(' '))
-    return alphabet.replaceAll(' ', '');
+  if (alphabet.length == 3 && alphabet.contains(' ')) return alphabet.replaceAll(' ', '');
 
   var filter = '';
   var map = Map<String, int>();
 
-  alphabet
-    .split('')
-    .forEach((char) {
-      map.addAll({char: char.allMatches(input).length});
-    });
+  alphabet.split('').forEach((char) {
+    map.addAll({char: char.allMatches(input).length});
+  });
 
   var countList = map.values.toList();
   countList.sort();
 
-  for (int i = 0; i< countList.length; i++) {
+  for (int i = 0; i < countList.length; i++) {
     map.forEach((key, value) {
-      if (value == countList[i])
-        filter += key;
+      if (value == countList[i]) filter += key;
     });
     map.removeWhere((key, value) => value == countList[i]);
   }
-  filter =  filter.split('').reversed.join();
+  filter = filter.split('').reversed.join();
 
   filter = filter.substring(0, 3);
   if (filter.contains(' '))
@@ -73,10 +66,8 @@ String _buildFilter(String input) {
 
 String _filterInput(String input, String filter) {
   var special = ".\$*+-?";
-  special
-    .split('')
-    .forEach((char) {
-    filter = filter.replaceAll(char, '\\' + char );
+  special.split('').forEach((char) {
+    filter = filter.replaceAll(char, '\\' + char);
   });
 
   return input.replaceAll(RegExp('[^$filter]'), '');
@@ -108,16 +99,17 @@ Future<Uint8List> _binary2Image(String input) async {
 
   paint.color = Colors.black;
 
-  for (int row=0; row<lines.length; row++) {
-    for (int column=0; column<lines[row].length; column++) {
+  for (int row = 0; row < lines.length; row++) {
+    for (int column = 0; column < lines[row].length; column++) {
       if (lines[row][column] != '0')
-        canvas.drawRect(Rect.fromLTWH(column*pointSize + bounds, row*pointSize + bounds, pointSize, pointSize), paint);
+        canvas.drawRect(
+            Rect.fromLTWH(column * pointSize + bounds, row * pointSize + bounds, pointSize, pointSize), paint);
     }
-  };
+  }
+  ;
 
   final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
   final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
   return data.buffer.asUint8List();
 }
-

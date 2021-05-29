@@ -7,8 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive_io.dart';
 import 'package:image/image.dart' as img;
 
-
-Future <Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
     return null;
@@ -21,13 +20,12 @@ Future <Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = img.findDecoderForData(bytes);
 
-    if (decoder == null)
-      return null;
+    if (decoder == null) return null;
 
     var out = Map<String, dynamic>();
     var animation = decoder.decodeAnimation(bytes);
@@ -35,31 +33,79 @@ Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncP
 
     var imageList = <Uint8List>[];
     var durations = <int>[];
+    var linkList = <int>[];
     var extension = getFileType(bytes);
 
-    animation?.frames.forEach((image) {
-      switch (extension) {
-        case '.png':
-          imageList.add(img.encodePng(image));
-          break;
-        default:
-          imageList.add(img.encodeGif(image));
-          break;
+    if (animation != null) {
+      animation?.frames.forEach((image) {
+        durations.add(image.duration);
+      });
+
+      // overrides also durations
+      animation.frames = _linkSameImages(animation.frames);
+
+      for (int i = 0; i < animation.frames.length; i++) {
+        var index = _checkSameHash(animation.frames, i);
+        if (index < 0) {
+          switch (extension) {
+            case '.png':
+              imageList.add(img.encodePng(animation.frames[i]));
+              break;
+            default:
+              imageList.add(img.encodeGif(animation.frames[i]));
+              break;
+          }
+          linkList.add(i);
+        } else {
+          imageList.add(imageList[index]);
+          linkList.add(index);
+        }
+
+        progress++;
+        if (sendAsyncPort != null && (progress % progressStep == 0)) {
+          sendAsyncPort.send({'progress': progress / animation.length});
+        }
       }
-      durations.add(image.duration);
-      progress++;
-      if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort.send({'progress': progress / animation.length});
-      }
-    });
-    out.addAll({"animation": animation});
+    }
+
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
+    out.addAll({"linkList": linkList});
 
     return out;
   } on Exception {
     return null;
   }
+}
+
+List<img.Image> _linkSameImages(List<img.Image> images) {
+  for (int i = 1; i < images.length; i++) {
+    for (int x = 0; x < i; x++) {
+      if (_checkSameHash(images, x) >= 0) continue;
+
+      if (compareImages(images[i].getBytes(), images[x].getBytes())) {
+        images[i] = images[x];
+        break;
+      }
+    }
+  }
+
+  return images;
+}
+
+bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
+  if (image1.length != image2.length) return false;
+
+  for (int i = 0; i < image1.length; i++) if ((image1[i] - image2[i]).abs() > toler) return false;
+
+  return true;
+}
+
+int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
+  var compareHash = list[maxSearchIndex].hashCode;
+  for (int i = 0; i < maxSearchIndex; i++) if (list[i].hashCode == compareHash) return i;
+
+  return -1;
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
@@ -69,8 +115,7 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
     var zipPath = '$tmpDir/gcwizardtmp.zip';
     var pointIndex = fileName.lastIndexOf('.');
     var extension = getFileType(imageList[0]);
-    if (pointIndex > 0)
-      fileName = fileName.substring(0, pointIndex);
+    if (pointIndex > 0) fileName = fileName.substring(0, pointIndex);
 
     var encoder = ZipFileEncoder();
     encoder.create(zipPath);
@@ -79,8 +124,7 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
       counter++;
       var fileNameZip = '$fileName' + '_$counter$extension';
       var tmpPath = '$tmpDir/$fileNameZip';
-      if (File(tmpPath).existsSync())
-        File(tmpPath).delete();
+      if (File(tmpPath).existsSync()) File(tmpPath).delete();
 
       File imageFileTmp = new File(tmpPath);
       imageFileTmp = await imageFileTmp.create();
@@ -88,7 +132,8 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
 
       encoder.addFile(imageFileTmp, fileNameZip);
       imageFileTmp.delete();
-    };
+    }
+    ;
 
     encoder.close();
 
@@ -100,6 +145,3 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
     return null;
   }
 }
-
-
-

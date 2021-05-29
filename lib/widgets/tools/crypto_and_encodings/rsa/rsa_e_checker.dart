@@ -73,12 +73,9 @@ class RSAECheckerState extends State<RSAEChecker> {
 
       var validE = validateE(e, p, q);
       _output = GCWDefaultOutput(
-          child: validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid')
-      );
+          child: validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid'));
     } catch (exception) {
-      _output = GCWDefaultOutput(
-          child: i18n(context, exception.message)
-      );
+      _output = GCWDefaultOutput(child: i18n(context, exception.message));
     }
   }
 }
