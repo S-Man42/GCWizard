@@ -104,6 +104,8 @@ const SEARCHSTRING_DE_COORDINATES_SEGMENTLINE = 'unterteilen einteilen teilungen
 const SEARCHSTRING_DE_COORDINATES_VARIABLECOORDINATEFORMULAS = 'variable wegpunkte';
 const SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION =
     'winkel wegpunktprojektionen wegpunktpeilungen richtungen rueckwaertspeilung';
+const SEARCHSTRING_DE_COUNTRIES = 'land laender nationen staaten internationales';
+const SEARCHSTRING_DE_COUNTRIES_CALLINGCODES = 'vorwahlen telefonnummern vorwahlnummern telephonnummern';
 const SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
 const SEARCHSTRING_DE_CROSSSUMS = 'iteriert  quersummen produkte alternierend alterniert iterierend';
 const SEARCHSTRING_DE_CROSSUM = '';

@@ -24,6 +24,7 @@ import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/countries_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
@@ -230,6 +231,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -609,6 +611,17 @@ class Registry {
         SEARCHSTRING_EN_COORDINATES,
         SEARCHSTRING_FR_COORDINATES
       ]),
+      GCWTool(
+          tool: CountriesSelection(),
+          i18nPrefix: 'countries_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['ko'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COORDINATES,
+            SEARCHSTRING_DE_COORDINATES,
+            SEARCHSTRING_EN_COORDINATES,
+            SEARCHSTRING_FR_COORDINATES
+          ]),
       GCWTool(
           tool: CrossSumSelection(),
           i18nPrefix: 'crosssum_selection',
@@ -2149,7 +2162,17 @@ class Registry {
             SEARCHSTRING_FR_COORDINATES_ELLIPSOIDTRANSFORM
           ]),
 
+      //Countries Selection ******************************************************************************************
+
+      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcodes', missingHelpLocales: ['ko'], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES_CALLINGCODES,
+        SEARCHSTRING_DE_COUNTRIES_CALLINGCODES,
+        SEARCHSTRING_EN_COUNTRIES_CALLINGCODES,
+        SEARCHSTRING_FR_COUNTRIES_CALLINGCODES
+      ]),
+
       //CrossSumSelection *******************************************************************************************
+
       GCWTool(tool: CrossSum(), i18nPrefix: 'crosssum_crosssum', missingHelpLocales: ['ko'], searchStrings: [
         SEARCHSTRING_COMMON_CROSSSUMS,
         SEARCHSTRING_DE_CROSSSUMS,

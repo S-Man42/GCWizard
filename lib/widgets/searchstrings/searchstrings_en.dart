@@ -100,6 +100,8 @@ const SEARCHSTRING_EN_COORDINATES_SEGMENTLINE = 'segments segmentlines  regularl
 const SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS = 'waypoints flex';
 const SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION =
     'angles waypointprojections bearings cardinaldirections reverse projections ';
+const SEARCHSTRING_EN_COUNTRIES = 'countries country nations states internationals';
+const SEARCHSTRING_EN_COUNTRIES_CALLINGCODES = 'callingcodes prefixes areacodes preselection pre-selection';
 const SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY = 'frequency  occurrences';
 const SEARCHSTRING_EN_CROSSSUMS = 'crosssums digits alternated crosstotals iterated products digitalroot digitroot';
 const SEARCHSTRING_EN_CROSSUM = '';
