@@ -369,7 +369,7 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _setCurrentValueAndEmitOnChange([BaseCoordinates newValue]) {
-    widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': newValue ?? _currentValue});
+    widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': (newValue ?? _currentValue)?.toLatLng()});
   }
 
   _setCoords(List<BaseCoordinates> pastedCoords) {
