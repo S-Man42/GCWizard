@@ -106,7 +106,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                   _outData = null;
                   _outText = null;
                   _analysePlatformFileAsync();
-                };
+                }
               });
             });
           }
@@ -167,14 +167,14 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       return null;
 
     var durations = <List<dynamic>>[];
-    if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
+    if (_outData["durations"] != null && _outData["durations"].length > 1) {
       var counter = 0;
-      durations.addAll([[i18n(context, 'animated_image_morse_code_table_index'), i18n(context, 'animated_image_morse_code_table_duration')]]);
+      durations.addAll([[i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]]);
       _outData["durations"].forEach((value) {
         counter++;
         durations.addAll([[counter, value]]);
       });
-    };
+    }
 
     return Column(
         children: <Widget>[
@@ -219,15 +219,15 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(
         children: <Widget>[
           GCWDefaultOutput( child: GCWOutputText(text: _outText == null ? "" : _outText["text"])),
-          GCWOutput(title: "Morse-Code", child: GCWOutputText(text: _outText == null ? "" : _outText["morse"])),
+          GCWOutput(title: i18n(context, 'animated_image_morse_code_morse_code'), child: GCWOutputText(text: _outText == null ? "" : _outText["morse"])),
         ]);
   }
 
   Widget _encodeWidgets() {
     return Column(children: [
       Row(children: [
-        Expanded(child: GCWTextDivider(text: "High Signal")),
-        Expanded(child: GCWTextDivider(text: "Low Signal")),
+        Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_high_signal'))),
+        Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_low_signal'))),
       ]),
       Row(children: [
         Expanded(child:
@@ -239,7 +239,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                   setState(() {
                     if (file != null) {
                       _highImage = file.bytes;
-                    };
+                    }
                   });
                 });
               },
@@ -255,7 +255,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                   setState(() {
                     if (file != null) {
                     _lowImage = file?.bytes;
-                  };
+                  }
                 });
               });
             },
@@ -268,7 +268,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(child: _lowImage !=null ? Image.memory(_lowImage) : Container()),
       ]),
       Row(children: <Widget>[
-        Expanded(child: GCWText(text: 'Dot Duration' + ':'), flex: 1), //i18n(context, 'homophone_rotation')
+        Expanded(child: GCWText(text: i18n(context, 'animated_image_morse_code_dot_duration') + ':'), flex: 1),
         Expanded(
           child: GCWIntegerSpinner(
             controller: _currentDitDurationController,
@@ -371,9 +371,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
         var image = images[imagesFiltered[i].first];
         list.add(GCWImageViewData(image, description: description, marked: _marked[imagesFiltered[i].first]));
-      };
+      }
       _outText = decodeMorseCode(durations, _marked);
-    };
+    }
     return list;
   }
 
@@ -390,9 +390,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           description += ': ' + durations[i].toString() + ' ms';
         }
         list.add(GCWImageViewData(images[i], description: description, marked: _marked[i]));
-      };
+      }
       _outText = decodeMorseCode(durations, _marked);
-    };
+    }
     return list;
   }
 
