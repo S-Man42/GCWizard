@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+
+import 'file_utils.dart';
 
 var unsupportedAndroidTypes = ['gpx'];
 
@@ -13,6 +16,28 @@ var unsupportedAndroidTypes = ['gpx'];
 ///
 /// * [allowedExtensions] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
 Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) async {
+  try {
+    if (!kIsWeb)
+      return _openMobileFileExplorer(allowedExtensions);
+    else
+      /// web version
+      return _openWebFileExplorer(allowedExtensions);
+  } catch (ex) {
+    print(ex);
+  }
+  return null;
+}
+
+Future<local.PlatformFile> _openMobileFileExplorer(List<String> allowedExtensions) async {
+  final fileInfo = await FilePickerWritable().openFile((fileInfo, file) async {
+    if (file != null && _filterFile(fileInfo?.fileName, allowedExtensions) != null)
+      return (file == null) ? null : new local.PlatformFile(path: fileInfo.uri, name: fileInfo?.fileName, bytes: file.readAsBytesSync());
+  });
+  return fileInfo;
+}
+
+
+Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) async {
 
   try {
     List<String> allowedExtensionsTmp = allowedExtensions;
@@ -39,6 +64,10 @@ Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) as
     print("Unsupported operation " + e.toString());
   }
   return null;
+}
+
+String _filterFile(String fileName, List<String> allowedExtensions) {
+  return allowedExtensions.contains(fileName?.split('.').last) ? fileName : null;
 }
 
 List<PlatformFile> _filterFiles(List<PlatformFile> files, List<String> allowedExtensions) {
