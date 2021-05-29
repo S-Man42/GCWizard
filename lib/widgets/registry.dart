@@ -292,6 +292,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
@@ -1137,6 +1138,14 @@ class Registry {
         SEARCHSTRING_DE_RAILFENCE,
         SEARCHSTRING_EN_RAILFENCE,
         SEARCHSTRING_FR_RAILFENCE
+      ]),
+      GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', category: ToolCategory.SCIENCE_AND_TECHNOLOGY, missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_RALCOLORCODES,
+        SEARCHSTRING_DE_RALCOLORCODES,
+        SEARCHSTRING_EN_RALCOLORCODES,
+        SEARCHSTRING_FR_RALCOLORCODES
       ]),
       GCWTool(
           tool: RC4(),

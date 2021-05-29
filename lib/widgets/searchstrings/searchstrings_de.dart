@@ -278,6 +278,7 @@ const SEARCHSTRING_DE_PRIMES_PRIMEINDEX = 'positionen';
 const SEARCHSTRING_DE_PROJECTILES = 'geschosse projektile ballistik';
 const SEARCHSTRING_DE_QUADRATICEQUATION = 'quadratische gleichung';
 const SEARCHSTRING_DE_RAILFENCE = 'palisadenzaun gartenzaun lattenzaun jaegerzaun';
+const SEARCHSTRING_DE_RALCOLORCODES = 'ralfarbcodes ralfarben ralpaletten';
 const SEARCHSTRING_DE_RC4 = 'stromverschluesselung';
 const SEARCHSTRING_DE_RESISTOR = 'widerstand widerstaende';
 const SEARCHSTRING_DE_RESISTOREIA96 = '';

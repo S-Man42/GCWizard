@@ -2562,6 +2562,8 @@
   "railfence_key": "Key",
   "railfence_optionalpassword": "Optional Password",
   "railfence_offset": "Offset",
+  "ralcolorcodes_title": "RAL Color Codes",
+  "ralcolorcodes_description": "RAL Classic colors (4 digits)",
   "rc4_title": "RC4",
   "rc4_description": "Stream cipher (HTTPS, SSH 1, WEP, WPA)",
   "rc4_example": "abcdef → CD 14",
