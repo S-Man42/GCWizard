@@ -85,6 +85,7 @@ import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
+import 'package:gc_wizard/widgets/tools/coords/dmm_add_integers.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/widgets/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
@@ -1507,6 +1508,14 @@ class Registry {
         SEARCHSTRING_FR_ASTRONOMY_SEASONS
       ]),
 
+      //Babylon Numbers Selection **************************************************************************************
+      GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchStrings: [
+        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
+      ]),
+
       //BaseSelection **************************************************************************************************
       GCWTool(tool: Base16(), i18nPrefix: 'base_base16', missingHelpLocales: ['ko'], searchStrings: [
         SEARCHSTRING_COMMON_BASE,
@@ -1873,17 +1882,22 @@ class Registry {
             SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS,
             SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS
           ]),
-
-      //Babylon Numbers Selection **************************************************************************************************
-      GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchStrings: [
-        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
-      ]),
-
-      //BaseSelection **************************************************************************************************
-
+      GCWTool(
+          tool: DMMAddIntegers(),
+          i18nPrefix: 'coords_dmmaddintegers',
+          iconPath: 'assets/icons/coords/icon_free_map.png',
+          category: ToolCategory.COORDINATES,
+          missingHelpLocales: ['ko'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COORDINATES,
+            SEARCHSTRING_DE_COORDINATES,
+            SEARCHSTRING_EN_COORDINATES,
+            SEARCHSTRING_FR_COORDINATES,
+            SEARCHSTRING_COMMON_COORDINATES_MAPVIEW,
+            SEARCHSTRING_DE_COORDINATES_MAPVIEW,
+            SEARCHSTRING_EN_COORDINATES_MAPVIEW,
+            SEARCHSTRING_FR_COORDINATES_MAPVIEW
+          ]),
       GCWTool(
           tool: CoordinateAveraging(),
           i18nPrefix: 'coords_averaging',
