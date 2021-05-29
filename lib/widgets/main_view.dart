@@ -93,6 +93,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/houdini.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
@@ -409,6 +410,7 @@ class _MainViewState extends State<MainView> {
         className(Hexadecimal()),
         className(HexString2File()),
         className(Homophone()),
+        className(Houdini()),
         className(Humidex()),
         className(IceCodesSelection()),
         className(IntersectBearings()),
