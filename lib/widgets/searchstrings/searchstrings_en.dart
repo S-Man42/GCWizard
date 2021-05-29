@@ -273,6 +273,7 @@ const SEARCHSTRING_EN_PRIMES_PRIMEINDEX = 'positions';
 const SEARCHSTRING_EN_PROJECTILES = 'bullets projectiles ballistics ';
 const SEARCHSTRING_EN_QUADRATICEQUATION = 'quadratic equation';
 const SEARCHSTRING_EN_RAILFENCE = 'railfence redefence';
+const SEARCHSTRING_EN_RALCOLORCODES = 'ralcolorcodes ralcolors ralcolours ralcolourcodes';
 const SEARCHSTRING_EN_RC4 = 'stream cipher arcfour';
 const SEARCHSTRING_EN_RESISTOR = 'resistance resistors';
 const SEARCHSTRING_EN_RESISTOREIA96 = '';
