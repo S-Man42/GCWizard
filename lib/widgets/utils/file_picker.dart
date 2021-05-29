@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
-import 'file_utils.dart';
+// import 'file_utils.dart';
 
 var unsupportedAndroidTypes = ['gpx'];
 

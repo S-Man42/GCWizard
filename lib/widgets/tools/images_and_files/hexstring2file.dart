@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -46,7 +45,7 @@ class HexString2FileState extends State<HexString2File> {
                 onPressed: () {
                   setState(
                     () {
-                      openFileExplorer(context).then((file) {
+                      openFileExplorer().then((file) {
                         if (file != null) {
                           _outData = file.bytes;
                           setState(() {});
