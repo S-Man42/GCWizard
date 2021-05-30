@@ -2,7 +2,7 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart' as animated_gif;
+import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart' as animated_image;
 import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
 
@@ -23,7 +23,7 @@ Future<Map<String, dynamic>> analyseImageMorsCodeAsync(dynamic jobData) async {
 Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort sendAsyncPort}) async {
   try {
 
-    var out = animated_gif.analyseImage(bytes,
+    var out = animated_image.analyseImage(bytes,
             sendAsyncPort: sendAsyncPort,
             filterImages: (outMap, frames) {
               List<Uint8List> imageList = outMap["images"];
@@ -129,7 +129,7 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
     var compareImage = imageList[filteredList[i].first];
     var image = imageList[imageIndex];
 
-    if (animated_gif.compareImages(compareImage, image, toler: toler)) {
+    if (animated_image.compareImages(compareImage, image, toler: toler)) {
       filteredList[i].add(imageIndex);
       return filteredList;
     }
@@ -235,7 +235,7 @@ Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
-  animated_gif.createZipFile(fileName, imageList);
+  animated_image.createZipFile(fileName, imageList);
 }
 
 List<List<int>> _searchHighSignalImage(List<Image.Image> frames, List<List<int>> filteredList) {

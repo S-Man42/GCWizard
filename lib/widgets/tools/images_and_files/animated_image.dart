@@ -33,6 +33,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
+  static var allowedExtensions = ['gif', 'png', 'webp'];
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class AnimatedImageState extends State<AnimatedImage> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context, allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
+              openFileExplorer(context, allowedExtensions: allowedExtensions).then((file) {
                 if (file != null) {
                   _platformFile = file;
                   _analysePlatformFileAsync();

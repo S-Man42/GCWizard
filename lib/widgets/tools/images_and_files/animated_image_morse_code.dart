@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
@@ -42,13 +43,12 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
   bool _filtered = true;
-  var _allowedExtensions = ['.gif', '.png', '.webp'];
 
   Uint8List _highImage;
   Uint8List _lowImage;
   String _currentInput = '';
-  int _currentDitDuration = 400;
-  TextEditingController _currentDitDurationController;
+  int _currentDotDuration = 400;
+  TextEditingController _currentDotDurationController;
   TextEditingController _currentInputController;
   Uint8List _encodeOutputImage;
 
@@ -57,13 +57,13 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     super.initState();
 
     _currentInputController = TextEditingController(text: _currentInput);
-    _currentDitDurationController = TextEditingController(text: _currentDitDuration.toString());
+    _currentDotDurationController = TextEditingController(text: _currentDotDuration.toString());
   }
 
   @override
   void dispose() {
     _currentInputController.dispose();
-    _currentDitDurationController.dispose();
+    _currentDotDurationController.dispose();
 
     super.dispose();
   }
@@ -100,7 +100,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context, allowedExtensions: _allowedExtensions).then((file) {
+              openFileExplorer(context, allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                 if (file != null) {
                   _platformFile = file;
                   _outData = null;
@@ -166,16 +166,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     if (_outData == null)
       return null;
 
-    var durations = <List<dynamic>>[];
-    if (_outData["durations"] != null && _outData["durations"].length > 1) {
-      var counter = 0;
-      durations.addAll([[i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]]);
-      _outData["durations"].forEach((value) {
-        counter++;
-        durations.addAll([[counter, value]]);
-      });
-    }
-
     return Column(
         children: <Widget>[
           _play
@@ -183,38 +173,36 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           Image.memory(_platformFile.bytes)
               :
           _filtered
-              ?
-          GCWGallery(
-            imageData: _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
-            onDoubleTap: (index) {
-              setState(() {
-                List<List<int>> imagesFiltered = _outData["imagesFiltered"];
+            ?
+            GCWGallery(
+              imageData: _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
+              onDoubleTap: (index) {
+                setState(() {
+                  List<List<int>> imagesFiltered = _outData["imagesFiltered"];
 
-                _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
-                _markedListSetColumn (imagesFiltered[index], _marked[imagesFiltered[index].first]);
-                _outText = decodeMorseCode(_outData["durations"], _marked);
-              });
-            },
-          )
-              :
-          GCWGallery(
-            imageData: _convertImageData(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
-            onDoubleTap: (index) {
-              setState(() {
-                if (_marked != null && index < _marked.length)
-                  _marked[index] = !_marked[index];
-                _outText = decodeMorseCode(_outData["durations"], _marked);
-              });
-            },
-          ),
+                  _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
+                  _markedListSetColumn (imagesFiltered[index], _marked[imagesFiltered[index].first]);
+                  _outText = decodeMorseCode(_outData["durations"], _marked);
+                });
+              },
+            )
+            :
+            GCWGallery(
+              imageData: _convertImageData(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
+              onDoubleTap: (index) {
+                setState(() {
+                  if (_marked != null && index < _marked.length)
+                    _marked[index] = !_marked[index];
+                  _outText = decodeMorseCode(_outData["durations"], _marked);
+                });
+              },
+            ),
 
-          _buildDurationOutput(durations)
+          _buildDecodeOutput(),
         ]);
   }
 
-  Widget _buildDurationOutput(List<List<dynamic>> durations) {
-    if (durations == null)
-      return Container();
+  Widget _buildDecodeOutput() {
 
     return Column(
         children: <Widget>[
@@ -235,7 +223,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWButton(
               text: i18n(context, 'common_exportfile_openfile'),
               onPressed: () {
-                openFileExplorer(context, allowedExtensions: _allowedExtensions).then((file) {
+                openFileExplorer(context, allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                   setState(() {
                     if (file != null) {
                       _highImage = file.bytes;
@@ -251,7 +239,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWButton(
               text: i18n(context, 'common_exportfile_openfile'),
               onPressed: () {
-                openFileExplorer(context, allowedExtensions: _allowedExtensions).then((file) {
+                openFileExplorer(context, allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                   setState(() {
                     if (file != null) {
                     _lowImage = file?.bytes;
@@ -271,12 +259,12 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(child: GCWText(text: i18n(context, 'animated_image_morse_code_dot_duration') + ':'), flex: 1),
         Expanded(
           child: GCWIntegerSpinner(
-            controller: _currentDitDurationController,
+            controller: _currentDotDurationController,
             min: 0,
             max: 999999,
             onChanged: (value) {
               setState(() {
-                _currentDitDuration = value;
+                _currentDotDuration = value;
               });
             },
           ),
@@ -422,7 +410,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, String, int>(_highImage, _lowImage, _currentInput, _currentDitDuration));
+    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, String, int>(_highImage, _lowImage, _currentInput, _currentDotDuration));
   }
 
   _saveOutputDecode(Map<String, dynamic> output) {
