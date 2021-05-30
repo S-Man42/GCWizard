@@ -100,7 +100,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context, allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
+              openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                 if (file != null) {
                   _platformFile = file;
                   _outData = null;
@@ -223,7 +223,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWButton(
               text: i18n(context, 'common_exportfile_openfile'),
               onPressed: () {
-                openFileExplorer(context, allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
+                openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                   setState(() {
                     if (file != null) {
                       _highImage = file.bytes;
@@ -239,7 +239,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWButton(
               text: i18n(context, 'common_exportfile_openfile'),
               onPressed: () {
-                openFileExplorer(context, allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
+                openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                   setState(() {
                     if (file != null) {
                     _lowImage = file?.bytes;
