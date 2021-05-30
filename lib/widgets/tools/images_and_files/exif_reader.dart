@@ -194,7 +194,7 @@ class _ExifReaderState extends State<ExifReader> {
       var rows = [
         ["name", platformFile.name ?? ''],
         ["path", platformFile.path ?? ''],
-        ["size", platformFile?.bytes.length ?? 0],
+        ["size", platformFile.bytes?.length ?? 0],
         ["lastModified", formatDate(_file?.lastModifiedSync())],
         ["lastAccessed", formatDate(_file?.lastAccessedSync())],
         ["extension", platformFile.extension ?? ''],
@@ -240,12 +240,13 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<ImageWrapper> completeImageMetadata(PlatformFile file) async {
-    Image.Image image = Image.decodeImage(file.bytes);
-    String filetype = getFileType(file.bytes, defaultType: null);
+    Uint8List data = file.bytes;
+    Image.Image image = Image.decodeImage(data);
+    String filetype = getFileType(data, defaultType: null);
 
     List<ArchiveFile> archiveFiles;
     try {
-      Archive archive = ZipDecoder().decodeBytes(file.bytes);
+      Archive archive = ZipDecoder().decodeBytes(data);
       archiveFiles = archive.files.where((element) => element.isFile).toList();
     } catch (e) {
       print(e);

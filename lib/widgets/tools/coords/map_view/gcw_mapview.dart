@@ -316,7 +316,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: []))).whenComplete(() {
+                            missingHelpLocales: ['ko']))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
                       _persistanceAdapter.updateMapPolyline(child);
@@ -331,7 +331,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: []))).whenComplete(() {
+                            missingHelpLocales: ['ko']))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -764,7 +764,7 @@ class GCWMapViewState extends State<GCWMapView> {
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                                       i18nPrefix: 'coords_openmap_pointeditor',
-                                      missingHelpLocales: []))).whenComplete(() {
+                                      missingHelpLocales: ['ko']))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);

@@ -13,6 +13,10 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
 class ColorPicker extends StatefulWidget {
+  final RGB color;
+
+  const ColorPicker({Key key, this.color}) : super(key: key);
+
   @override
   ColorPickerState createState() => ColorPickerState();
 }
@@ -29,6 +33,7 @@ class ColorPickerState extends State<ColorPicker> {
   void initState() {
     super.initState();
 
+    _currentColor = widget.color ?? defaultColor;
     _setColorPickerColor(_currentColor);
   }
 

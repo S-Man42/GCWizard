@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 final supportedLocales = [
-  Locale('de'), //, 'DE'),
-  Locale('en'), //, 'US'),
-  Locale('fr'), //, 'FR'),
+  Locale('de'),
+  Locale('en'),
+  Locale('fr'),
+  Locale('ko'),
 ];
 const String defaultLanguage = 'en';
 

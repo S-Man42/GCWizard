@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 Map<String, String> SolveEquation(String currentA, String currentB, String currentC) {
   if (currentA == null || currentA == '' || currentB == null || currentB == '' || currentC == null || currentC == '')
@@ -13,16 +14,24 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
   double b = 0.0;
   double c = 0.0;
 
-  if (double.tryParse(currentA) != null)
-    a = double.parse(currentA);
+  final parser = Parser();
+  final _context = ContextModel();
+
+  var evalResult = _parseExpression(currentA, parser, _context);
+  if (evalResult is double)
+    a = evalResult;
   else
     return {'': ''};
-  if (double.tryParse(currentB) != null)
-    b = double.parse(currentB);
+
+  evalResult = _parseExpression(currentB, parser, _context);
+  if (evalResult is double)
+    b = evalResult;
   else
     return {'': ''};
-  if (double.tryParse(currentC) != null)
-    c = double.parse(currentC);
+
+  evalResult = _parseExpression(currentC, parser, _context);
+  if (evalResult is double)
+    c = evalResult;
   else
     return {'': ''};
 
@@ -48,4 +57,12 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
     result['x2'] = NumberFormat('0.0' + '#' * 7).format((-b - sqrt(b * b - 4 * a * c)) / 2 / a);
   }
   return result;
+}
+
+dynamic _parseExpression(String value, Parser parser, ContextModel context) {
+  try {
+    Expression expression = parser.parse(value);
+    return expression.evaluate(EvaluationType.REAL, context);
+  } catch (e) {}
+  return null;
 }
