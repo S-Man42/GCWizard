@@ -1,40 +1,26 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:filesystem_picker/filesystem_picker.dart';
-import 'package:file_picker/file_picker.dart' as web_picker;
+import 'package:file_picker/file_picker.dart';
+//import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
-/// Open FileSystemPicker dialog
+// import 'file_utils.dart';
+
+var unsupportedAndroidTypes = ['gpx'];
+
+/// Open File Picker dialog
 ///
 /// Returns null if nothing was selected.
 ///
-/// * [rootDirectory] specifies the root of the filesystem view.
-/// * [rootName] specifies the name of the filesystem view root in breadcrumbs, by default "Storage".
-/// * [title] specifies the text of the dialog title.
-/// * [allowedExtensions] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['.jpg', '.jpeg']`
-Future<PlatformFile> openFileExplorer(
-  BuildContext context, {
-  Directory rootDirectory,
-  String rootName,
-  List<String> allowedExtensions,
-  String title,
-}) async {
-  var status = await Permission.storage.request();
-  if (status != PermissionStatus.granted) {
-    return null;
-  }
-
+/// * [allowedExtensions] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
+Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) async {
   try {
-    if (kIsWeb)
-      return _openMobileFileExplorer(context, rootDirectory, rootName, allowedExtensions, title);
+    if (!kIsWeb)
+      //return _openMobileFileExplorer(allowedExtensions);
+      return _openWebFileExplorer(allowedExtensions);
     else
-
       /// web version
       return _openWebFileExplorer(allowedExtensions);
   } catch (ex) {
@@ -43,98 +29,70 @@ Future<PlatformFile> openFileExplorer(
   return null;
 }
 
-Future<PlatformFile> _openMobileFileExplorer(BuildContext context, Directory rootDirectory, String rootName,
-    List<String> allowedExtensions, String title) async {
-  if (rootDirectory == null) {
-    var mainPath = await mainDirectory();
-    if (mainPath != null)
-      rootDirectory = Directory(mainPath);
-    else
-      return null;
-  }
+// Future<local.PlatformFile> _openMobileFileExplorer(List<String> allowedExtensions) async {
+//   final fileInfo = await FilePickerWritable().openFile((fileInfo, file) async {
+//     if (file != null && _filterFile(fileInfo?.fileName, allowedExtensions) != null)
+//       return (file == null) ? null : new local.PlatformFile(path: fileInfo.uri, name: fileInfo?.fileName, bytes: file.readAsBytesSync());
+//   });
+//   return fileInfo;
+// }
 
-  if (title == null) title = i18n(context, 'common_exportfile_openfile');
 
-  String path = await FilesystemPicker.open(
-    title: title,
-    context: context,
-    rootDirectory: rootDirectory,
-    rootName: rootName,
-    fsType: FilesystemType.file,
-    //folderIconColor: Colors.teal,
-    allowedExtensions: allowedExtensions,
-    fileTileSelectMode: FileTileSelectMode.wholeTile,
-    requestPermission: !kIsWeb ? () async => await Permission.storage.request().isGranted : null,
-  );
-  if (path != null)
-    return new PlatformFile(
-        path: path, name: (path.split(Platform.pathSeparator).last), bytes: await readByteDataFromFile(path));
-  else
-    return null;
-}
+Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) async {
 
-Future<PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) async {
   try {
+    List<String> allowedExtensionsTmp = allowedExtensions;
+
     if (allowedExtensions != null)
-      for (var i = 0; i < allowedExtensions.length; i++)
+      for (var i=0; i<allowedExtensions.length; i++)
         allowedExtensions[i] = allowedExtensions[i].replaceFirst('.', '');
 
-    var files = (await web_picker.FilePicker.platform.pickFiles(
-      type: web_picker.FileType.custom,
+    if (_hasUnsupportedTypes(allowedExtensions))
+      allowedExtensions = null;
+
+    var files = (await FilePicker.platform.pickFiles(
+      type: allowedExtensions == null ? FileType.any : FileType.custom,
       allowMultiple: false,
       allowedExtensions: allowedExtensions,
-    ))
-        ?.files;
+      withData: true
+    ))?.files;
 
-    files = _filterFiles(files, allowedExtensions);
+    if (allowedExtensions == null)
+      files = _filterFiles(files, allowedExtensionsTmp);
 
-    // return files == null
-    //     ? null
-    //     : new PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
-
-    return files == null ? null : new PlatformFile(path: files.first.path, name: files.first.name, bytes: kIsWeb ? files.first.bytes: await readByteDataFromFile(files.first.path));
-
+    return (files == null || files.length == 0) ? null : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }
   return null;
 }
 
-List<web_picker.PlatformFile> _filterFiles(List<web_picker.PlatformFile> files, List<String> allowedExtensions) {
-  if (files == null || allowedExtensions == null) return null;
+// String _filterFile(String fileName, List<String> allowedExtensions) {
+//   return allowedExtensions.contains(fileName?.split('.').last) ? fileName : null;
+// }
+
+List<PlatformFile> _filterFiles(List<PlatformFile> files, List<String> allowedExtensions) {
+  if (files == null || allowedExtensions == null)
+    return files;
 
   return files.where((element) => allowedExtensions.contains(element.extension)).toList();
 }
 
-/// Open FileSystemPicker dialog to select a directory
-///
-/// Returns null if nothing was selected.
-///
-/// * [rootDirectory] specifies the root of the filesystem view.
-/// * [rootName] specifies the name of the filesystem view root in breadcrumbs, by default "Storage".
-/// * [title] specifies the text of the dialog title.
-Future<String> selectFolder(BuildContext context, {Directory rootDirectory, String rootName, String title}) async {
-  if (!kIsWeb) {
-    if (rootDirectory == null) {
-      var mainPath = await mainDirectory();
-      if (mainPath != null)
-        rootDirectory = Directory(mainPath);
-      else
-        return null;
-    }
-
-    if (title == null) title = i18n(context, 'common_exportfile_selectfolder_title');
-
-    return FilesystemPicker.open(
-      title: title,
-      context: context,
-      rootDirectory: rootDirectory,
-      rootName: rootName,
-      fsType: FilesystemType.folder,
-      pickText: i18n(context, 'common_exportfile_selectfolder'),
-      //folderIconColor: Colors.teal,
-      requestPermission: !kIsWeb ? () async => await Permission.storage.request().isGranted : null,
-    );
-  } else
-    return '/' + web_directory;
+bool _isAndroid() {
+  try {
+    return (!kIsWeb && Platform.isAndroid);
+  } catch (ex) {}
+  return false;
 }
+
+bool _hasUnsupportedTypes(List<String> allowedExtensions) {
+  if (allowedExtensions == null) return false;
+  if (!_isAndroid()) return false;
+
+  for (int i = 0; i < allowedExtensions.length; i++) {
+    if (unsupportedAndroidTypes.contains(allowedExtensions[i]))
+      return true;
+  }
+  return false;
+}
+
