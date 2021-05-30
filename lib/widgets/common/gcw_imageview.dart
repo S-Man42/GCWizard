@@ -19,8 +19,9 @@ import 'package:photo_view/photo_view.dart';
 class GCWImageViewData {
   final Uint8List bytes;
   final String description;
+  final bool marked;
 
-  const GCWImageViewData(this.bytes, {this.description});
+  const GCWImageViewData(this.bytes, {this.description, this.marked});
 }
 
 class GCWImageView extends StatefulWidget {

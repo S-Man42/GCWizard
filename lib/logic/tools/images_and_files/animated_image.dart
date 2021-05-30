@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive_io.dart';
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as Image;
 
 Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   if (jobData == null) {
@@ -20,10 +20,10 @@ Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImages, SendPort sendAsyncPort}) async {
   try {
     var progress = 0;
-    final decoder = img.findDecoderForData(bytes);
+    final decoder = Image.findDecoderForData(bytes);
 
     if (decoder == null) return null;
 
@@ -49,10 +49,10 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
         if (index < 0) {
           switch (extension) {
             case '.png':
-              imageList.add(img.encodePng(animation.frames[i]));
+              imageList.add(Image.encodePng(animation.frames[i]));
               break;
             default:
-              imageList.add(img.encodeGif(animation.frames[i]));
+              imageList.add(Image.encodeGif(animation.frames[i]));
               break;
           }
           linkList.add(i);
@@ -68,9 +68,12 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
       }
     }
 
+
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
     out.addAll({"linkList": linkList});
+
+    if (filterImages != null) filterImages(out, animation.frames);
 
     return out;
   } on Exception {
@@ -78,7 +81,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
   }
 }
 
-List<img.Image> _linkSameImages(List<img.Image> images) {
+List<Image.Image> _linkSameImages(List<Image.Image> images) {
   for (int i = 1; i < images.length; i++) {
     for (int x = 0; x < i; x++) {
       if (_checkSameHash(images, x) >= 0) continue;
@@ -101,11 +104,31 @@ bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
   return true;
 }
 
-int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
+int _checkSameHash(List<Image.Image> list, int maxSearchIndex) {
   var compareHash = list[maxSearchIndex].hashCode;
   for (int i = 0; i < maxSearchIndex; i++) if (list[i].hashCode == compareHash) return i;
 
   return -1;
+}
+
+List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List<Uint8List> imageList) {
+  const toler = 2;
+  for (var i=0; i < filteredList.length; i++ ) {
+    var compareImage = imageList[filteredList[i].first];
+    var image = imageList[imageIndex];
+
+    if (compareImages(compareImage, image, toler:toler)) {
+      filteredList[i].add(imageIndex);
+      return filteredList;
+    }
+  }
+
+  // not found -> new List
+  var newList = <int>[];
+  newList.add(imageIndex);
+  filteredList.add(newList);
+
+  return filteredList;
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
