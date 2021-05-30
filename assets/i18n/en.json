@@ -1586,7 +1586,7 @@
   "dates_weekday_saturday": "Saturday",
   "dates_weekday_sunday": "Sunday",
   "dates_calendar_title" : "Kalender",
-  "dates_calendar_description" : "Converting Dates between different Calandarsystems",
+  "dates_calendar_description" : "Converting Dates between different Calendar Systems",
   "dates_calendar_example" : "2459326.5 → 22.04.1968",
   "dates_calendar_system_juliandate" : "Julian Date",
   "dates_calendar_system_juliancalendar" : "Julian Calendar",
