@@ -3809,7 +3809,7 @@
   "vanity_multitap_mode_advanced": "Advanced",
   "vanity_multitap_spaceat": "Space → ",
   "vanity_words_list_title" : "Vanity: List of Numbers and words",
-  "vanity_words_list_description" : "Shows a list of Vanity-words representinmg numbers",
+  "vanity_words_list_description" : "Shows a list of Vanity-words representing numbers",
   "vanity_words_list_example" : "663 → ONE",
   "vanity_words_search_title" : "Vanity: Searches for numbers and words",
   "vanity_words_search_description" : "Converts Vanity-Numbers in numeral words",
