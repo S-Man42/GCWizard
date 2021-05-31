@@ -31,13 +31,11 @@ String decodeMessageFromImage(DecodeRequest req) {
   Image origin = decodeImage(req.imageData);
   Uint8List img = origin.getBytes();
 
-  // lay ra mang bit cuoi cung
   Uint8List extracted = Uint8List(img.length);
   for (int i = 0; i < img.length; i++) {
     extracted[i] = _extractLastBit(img[i]);
   }
 
-  // them data de tao thanh mang chia het cho 8
   int padSize = 8 - extracted.length % 8;
   Uint8List padded = Uint8List(extracted.length + padSize);
   for (int i = 0; i < extracted.length; ++i) {
@@ -47,7 +45,6 @@ String decodeMessageFromImage(DecodeRequest req) {
     padded[extracted.length + i] = 0;
   }
 
-  // chuyen mang bit thanh byte
   if ((padded.length % 8) != 0) {
     throw FlutterError('bits_contain_incomplete_byte');
   }
@@ -59,7 +56,6 @@ String decodeMessageFromImage(DecodeRequest req) {
     byteMsg[i] = byte;
   }
 
-  // remove het ky tu 0 con thua
   int lastNonZeroIdx = byteMsg.length - 1;
   while (byteMsg[lastNonZeroIdx] == 0) {
     --lastNonZeroIdx;
@@ -67,7 +63,6 @@ String decodeMessageFromImage(DecodeRequest req) {
   Uint8List sanitized = Uint8List.fromList(byteMsg.getRange(0, lastNonZeroIdx + 1).toList());
   String msg = String.fromCharCodes(sanitized);
 
-  // giai ma thong tin
   String token = req.key;
   if (req.canEncrypt()) {
     crypto.Key key = crypto.Key.fromUtf8(padKey(token));

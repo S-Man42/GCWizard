@@ -19,7 +19,6 @@ int _encodeOnePixel(int pixel, int msg) {
 Uint8List encodeMessageIntoImage(EncodeRequest req) {
   Image origin = decodeImage(req.imageData);
   Uint8List img = origin.getBytes();
-  // ma hoa thong tin
   String msg = req.message;
   String token = req.key;
   if (req.canEncrypt()) {
@@ -30,12 +29,10 @@ Uint8List encodeMessageIntoImage(EncodeRequest req) {
     msg = encrypted.base64;
   }
 
-  // kiem tra do dai cua anh so voi do dai cua thong tin da ma hoa
   if (img.length < msg.length * 8) {
     throw FlutterError('image_capacity_not_enough');
   }
 
-  // chuyen doi thong tin thanh mang 0, 1
   // 8 - 1 byte = 8 bit
   Uint8List byteData = Uint8List.fromList(msg.codeUnits);
   Uint8List expanded = Uint8List(msg.length * 8);
@@ -48,13 +45,11 @@ Uint8List encodeMessageIntoImage(EncodeRequest req) {
     }
   }
 
-  // an thong tin
   Uint8List encodedImg = img;
   for (int i = 0; i < img.length; ++i) {
     if (i < expanded.length) {
       encodedImg[i] = _encodeOnePixel(img[i], expanded[i]);
     } else {
-      // cac bit cuoi ko lien quan thi dua ve 0
       int lastBitMask = 254;
       encodedImg[i] = img[i] & lastBitMask;
     }
