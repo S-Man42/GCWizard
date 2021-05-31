@@ -1,15 +1,15 @@
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/decoder.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/encoder.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/decode_request.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/encode_request.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 const int MAX_LENGTH = 5000;
 
-Future<Uint8List> encodeStegano(PlatformFile file, String message, String key, String filename) async {
+Future<Uint8List> encodeStegano(local.PlatformFile file, String message, String key, String filename) async {
   Uint8List data = await getFileData(file);
   // the key is use to encrypt your message with AES256 algorithm
   EncodeRequest request = EncodeRequest(data, message, key: key, filename: filename);
@@ -17,7 +17,7 @@ Future<Uint8List> encodeStegano(PlatformFile file, String message, String key, S
   return response;
 }
 
-Future<String> decodeStegano(PlatformFile file, String key) async {
+Future<String> decodeStegano(local.PlatformFile file, String key) async {
   Uint8List data = await getFileData(file);
   // the key is use to decrypt your encrypted message with AES256 algorithm
   DecodeRequest request = DecodeRequest(data, key: key);

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/stegano.dart';
@@ -12,9 +11,10 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 class Stegano extends StatefulWidget {
-  final PlatformFile file;
+  final local.PlatformFile file;
 
   Stegano({Key key, this.file}) : super(key: key);
 
@@ -23,7 +23,7 @@ class Stegano extends StatefulWidget {
 }
 
 class _SteganoState extends State<Stegano> {
-  PlatformFile _file;
+  local.PlatformFile _file;
   Uint8List _bytesSource;
   String _currentInput = '';
   String _currentKey = '';
@@ -110,11 +110,10 @@ class _SteganoState extends State<Stegano> {
   }
 
   Future<void> _readFileFromPicker() async {
-    List<PlatformFile> files = await openFileExplorer(
+    local.PlatformFile file = await openFileExplorer(
       allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'],
     );
-    if (files != null) {
-      PlatformFile file = files.first;
+    if (file != null) {
       if (file == null) return;
       var bytesSrc = await getFileData(file);
       setState(() {
