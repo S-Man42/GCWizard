@@ -53,7 +53,8 @@ class GeneralSettingsState extends State<GeneralSettings> {
                                 child: {
                                   'de': 'Deutsch',
                                   'en': 'English',
-                                  'fr': 'Français'
+                                  'fr': 'Français',
+                                  'ko': '한국어 (Korean)'
                                 }[locale.languageCode ?? defaultLanguage],
                               );
                             }).toList(),

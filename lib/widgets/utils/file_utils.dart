@@ -1,18 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:universal_html/html.dart' as html;
 import 'package:collection/collection.dart';
-import 'package:ext_storage/ext_storage.dart';
+// import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
-import 'package:path/path.dart' as Path;
-import 'package:path_provider/path_provider.dart';
+// import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
-
-// final _logger = Logger('main');
 
 Map<List<int>, String> _fileTypes = {
   [0x50, 0x4B, 0x03, 0x04]: ".zip",
@@ -26,6 +23,9 @@ Map<List<int>, String> _fileTypes = {
   [0x42, 0x4D]: ".bmp",
   [0x47, 0x49, 0x46, 0x38, 0x39, 0x61]: ".gif",
   [0x47, 0x49, 0x46, 0x38, 0x37, 0x61]: ".gif",
+  [0x49, 0x49, 0x2A, 0x00]: ".tif",
+  [0x4D, 0x4D, 0x00, 0x2A]: ".tif",
+  [0x52, 0x49, 0x46, 0x46]: ".webp",
   [0x30, 0x26, 0xB2, 0x75]: ".wmv",
   [0x49, 0x44, 0x33, 0x2E]: ".mp3",
   [0x49, 0x44, 0x33, 0x03]: ".mp3",
@@ -34,28 +34,28 @@ Map<List<int>, String> _fileTypes = {
   [0x4D, 0x5A, 0x90, 0x00]: ".exe",
 };
 
-Future<String> _mainDirectory() async {
-  Directory _appDocDir;
-  if (Platform.isAndroid) {
-    //  _appDocDir = await getDownloadsDirectory();
-    // _appDocDir = await getExternalStorageDirectory();
-    String dloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
-    _appDocDir = await Directory(dloadDir);
-  } else {
-    _appDocDir = await getApplicationDocumentsDirectory();
-  }
+String web_directory = "Downloads";
 
-  final Directory _appDocDirFolder = Directory('${_appDocDir.path}');
-
-  var path;
-  if (await _appDocDirFolder.exists()) {
-    path = _appDocDirFolder.path;
-  } else {
-    final Directory _appDocDirNewFolder = await _appDocDirFolder.create(recursive: true);
-    path = _appDocDirNewFolder.path;
-  }
-  return path;
-}
+// Future<String> mainDirectory() async {
+//   Directory _appDocDir;
+//   if (Platform.isAndroid) {
+//     _appDocDir = await getExternalStorageDirectory();
+//     String dloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+//     _appDocDir = await Directory(dloadDir);
+//   } else
+//     _appDocDir = await getApplicationDocumentsDirectory();
+//
+//   final Directory _appDocDirFolder = Directory('${_appDocDir.path}');
+//
+//   var path;
+//   if (await _appDocDirFolder.exists()) {
+//     path = _appDocDirFolder.path;
+//   } else {
+//     final Directory _appDocDirNewFolder = await _appDocDirFolder.create(recursive: true);
+//     path = _appDocDirNewFolder.path;
+//   }
+//   return path;
+// }
 
 Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, {String subDirectory}) async {
   var status = await Permission.storage.request();
@@ -64,7 +64,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
   }
 
   var filePath = '';
-  File file;
+  File fileX;
 
   if (kIsWeb) {
     // var blob = new html.Blob([data], 'image/png');
@@ -73,39 +73,25 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     //   href: html.Url.createObjectUrl(blob),
     //   )..setAttribute("download", fileName)..click();
     //
-    // filePath = 'Downloads/$fileName';
+    // filePath = '/$web_directory/$fileName';
   } else {
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
       writer: (file) async {
         await file.writeAsBytes(data.buffer.asUint8List());
+        fileX = file;
       },
     );
-    if (fileInfo == null) {
-      // _logger.info('User canceled.');
-      return null;
-    }
-    filePath = fileInfo.identifier;
-    file = null;
-//    var path = await _mainDirectory();
+    if (fileInfo == null) return null;
 
-    //
-    // if (path == null)
-    //   return null;
-    // filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
-    // file = File(filePath);
-    //
-    // if (!await file.exists())
-    //   file.create();
-    //
-    // await file.writeAsBytes(data.buffer.asUint8List());
+    filePath = fileInfo.identifier;
   }
-  return {'path': filePath, 'file': file};
+  return {'path': filePath, 'file': fileX};
 }
 
 Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
   var filePath = '';
-  File file;
+  File fileX;
 
   if (kIsWeb) {
     // var blob = html.Blob([data], 'text/plain', 'native');
@@ -114,19 +100,20 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     //   href: html.Url.createObjectUrl(blob),
     // )..setAttribute("download", fileName)..click();
     //
-    // filePath = 'Downloads/$fileName';
+    // filePath = '/$web_directory/$fileName';
   } else {
-    var path = await _mainDirectory();
+    final fileInfo = await FilePickerWritable().openFileForCreate(
+      fileName: fileName,
+      writer: (file) async {
+        await file.writeAsString(data);
+        fileX = file;
+      },
+    );
+    if (fileInfo == null) return null;
 
-    if (path == null) return null;
-    filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
-    file = await File(filePath).create(recursive: true);
-
-    if (!await file.exists()) file.create();
-
-    await file.writeAsString(data);
+    filePath = fileInfo.identifier;
   }
-  return {'path': filePath, 'file': file};
+  return {'path': filePath, 'file': fileX};
 }
 
 shareFile(String path, String type) {
@@ -163,24 +150,11 @@ Future<String> readStringFromFile(String fileName) async {
   return fileIn.readAsString();
 }
 
-String getFileType(Uint8List blobBytes) {
+String getFileType(Uint8List blobBytes, {String defaultType = ".txt"}) {
   for (var key in _fileTypes.keys) {
     if (blobBytes.length >= key.length && ListEquality().equals(blobBytes.sublist(0, key.length), key))
       return _fileTypes[key];
   }
 
-  return ".txt";
-}
-
-String getFileExtension(String fileName) {
-  return Path.extension(fileName);
-}
-
-String getFileBaseNameWithoutExtension(String fileName) {
-  return Path.basenameWithoutExtension(fileName);
-}
-
-String changeExtension(String fileName, String extension) {
-  //return Path.basenameWithoutExtension(fileName)+extension;
-  return Path.setExtension(fileName, extension);
+  return defaultType;
 }

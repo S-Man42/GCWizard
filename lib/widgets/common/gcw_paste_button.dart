@@ -19,7 +19,8 @@ class GCWPasteButton extends StatefulWidget {
   final Widget customIcon;
   final Color backgroundColor;
 
-  const GCWPasteButton({Key key, this.onSelected, this.onLongPress, this.size, this.customIcon, this.backgroundColor}) : super(key: key);
+  const GCWPasteButton({Key key, this.onSelected, this.onLongPress, this.size, this.customIcon, this.backgroundColor})
+      : super(key: key);
 
   @override
   GCWPasteButtonState createState() => GCWPasteButtonState();
@@ -30,34 +31,34 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: GCWPopupMenu(
-          size: widget.size,
-          customIcon: widget.customIcon,
-          iconData: Icons.content_paste,
-          backgroundColor: widget.backgroundColor,
-          menuItemBuilder: (context) => _buildMenuItems(context),
-        ),
-    onLongPress: widget.onLongPress,
+        size: widget.size,
+        customIcon: widget.customIcon,
+        iconData: Icons.content_paste,
+        backgroundColor: widget.backgroundColor,
+        menuItemBuilder: (context) => _buildMenuItems(context),
+      ),
+      onLongPress: widget.onLongPress,
     );
   }
 
   _buildMenuItems(BuildContext context) {
     var menuItems = [
       GCWPopupMenuItem(
-          child: Text(i18n(context, 'common_clipboard_fromdeviceclipboard'), style: gcwDialogTextStyle()),
-          action: (index) {
-            Clipboard.getData('text/plain').then((data) {
-              if (data.text.length == 0) {
-                showToast(i18n(context, 'common_clipboard_notextdatafound'));
-                return;
-              }
+        child: Text(i18n(context, 'common_clipboard_fromdeviceclipboard'), style: gcwDialogTextStyle()),
+        action: (index) {
+          Clipboard.getData('text/plain').then((data) {
+            if (data.text.length == 0) {
+              showToast(i18n(context, 'common_clipboard_notextdatafound'));
+              return;
+            }
 
-              setState(() {
-                widget.onSelected(data.text);
-                insertIntoGCWClipboard(data.text);
-              });
+            setState(() {
+              widget.onSelected(data.text);
+              insertIntoGCWClipboard(data.text);
             });
-          },
-        ),
+          });
+        },
+      ),
       GCWPopupMenuItem(isDivider: true)
     ];
 

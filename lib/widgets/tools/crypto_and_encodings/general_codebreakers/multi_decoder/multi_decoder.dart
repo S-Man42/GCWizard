@@ -89,7 +89,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                         builder: (context) => GCWTool(
                               tool: MultiDecoderConfiguration(),
                               i18nPrefix: 'multidecoder_configuration',
-                              missingHelpLocales: [],
+                              missingHelpLocales: ['ko'],
                             ))).whenComplete(() {
                   setState(() {
                     _currentOutput = null;

@@ -9,26 +9,26 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview_fullscreen.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 class GCWImageViewData {
   final Uint8List bytes;
   final String description;
+  final bool marked;
 
-  const GCWImageViewData(this.bytes, {this.description});
+  const GCWImageViewData(this.bytes, {this.description, this.marked});
 }
 
 class GCWImageView extends StatefulWidget {
   final GCWImageViewData imageData;
   final bool toolBarRight;
-  final String extension;
-  final String fileName;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName})
-      : super(key: key);
+  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true}) : super(key: key);
 
   @override
   _GCWImageViewState createState() => _GCWImageViewState();
@@ -149,17 +149,19 @@ class _GCWImageViewState extends State<GCWImageView> {
           iconData: Icons.save,
           size: iconSize,
           onPressed: () {
-            _exportFile(context, widget.imageData.bytes, extension: widget.extension, fileName: widget.fileName);
+            _exportFile(context, widget.imageData.bytes);
           }),
       GCWPopupMenu(
           iconData: Icons.open_in_new,
           size: iconSize,
           menuItemBuilder: (context) => [
                 GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'imageview_openinmetadata'),
-                    action: (index) => setState(() {
-                          _openInMetadataViewer();
-                        })),
+                  child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'imageview_openinmetadata'),
+                  action: (index) => setState(() {
+                    _openInMetadataViewer();
+                  }),
+                  //action: (index) => _openInMetadataViewer,
+                ),
                 GCWPopupMenuItem(
                     child: iconedGCWPopupMenuItem(context, Icons.brush, 'imageview_openincolorcorrection'),
                     action: (index) => setState(() {
@@ -170,14 +172,16 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _openInMetadataViewer() {
-    // TODO
-    // Navigator.push(
-    //     context,
-    //     NoAnimationMaterialPageRoute(
-    //         builder: (context) => GCWTool(
-    //             tool: ImageMetadataViewer(),
-    //             i18nPrefix: '',
-    //             missingHelpLocales: [])));
+    PlatformFile file = PlatformFile(bytes: widget.imageData.bytes);
+    Navigator.push(
+        context,
+        NoAnimationMaterialPageRoute(
+            builder: (context) => GCWTool(
+                //tool: ImageMetadataViewer(),
+                tool: ExifReader(file: file),
+                toolName: i18n(context, 'exif_title'),
+                i18nPrefix: '',
+                missingHelpLocales: ['ko'])));
   }
 
   _openInColorCorrections() {
@@ -188,20 +192,13 @@ class _GCWImageViewState extends State<GCWImageView> {
     //         builder: (context) => GCWTool(
     //             tool: ImageColorCorrections(),
     //             i18nPrefix: '',
-    //             missingHelpLocales: [])));
+    //             missingHelpLocales: ['ko'])));
   }
 
-  _exportFile(BuildContext context, Uint8List data,
-      {String extension, String fileName, bool addTimestamp: true}) async {
+  _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    String fileExtension = getFileExtension(fileName);
-    String ext = extension ?? fileExtension ?? fileType;
-    String baseName = getFileBaseNameWithoutExtension(fileName);
-    baseName = baseName ?? 'imageview_export';
-    String timestamp = addTimestamp ? DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) : '';
-    String outputFilename = '${baseName}_${timestamp}${ext}';
-
-    var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
+    var value = await saveByteDataToFile(data.buffer.asByteData(),
+        'imageview_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }

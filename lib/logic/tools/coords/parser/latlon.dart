@@ -1,23 +1,4 @@
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
 final PATTERN_NO_NUMBERS = r'\s+?';
@@ -35,66 +16,72 @@ var regexEnd = '';
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
-  var coords = Map<String, LatLng>();
+List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
+  var coords = <BaseCoordinates>[];
 
   try {
-    LatLng coord = parseDMS(text, wholeString: wholeString);
-    if (coord != null) coords.addAll({keyCoordsDMS: coord});
+    BaseCoordinates coord = DMS.parse(text, wholeString: wholeString);
+    if (coord != null) coords.add(coord);
 
-    coord = parseDMM(text, wholeString: wholeString);
-    if (coord != null) coords.addAll({keyCoordsDMM: coord});
+    coord = DMM.parse(text, wholeString: wholeString);
+    if (coord != null) coords.add(coord);
 
-    coord = parseDEC(text, wholeString: wholeString);
-    if (coord != null) coords.addAll({keyCoordsDEC: coord});
+    coord = DEC.parse(text, wholeString: wholeString);
+    if (coord != null) coords.add(coord);
 
-    coord = parseUTM(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsUTM: coord});
+    coord = UTMREF.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseMGRS(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsMGRS: coord});
+    coord = MGRS.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseWaldmeister(text);
-    if (coord != null) coords.addAll({keyCoordsReverseWhereIGoWaldmeister: coord});
+    coord = Waldmeister.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseXYZ(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsXYZ: coord});
+    coord = XYZ.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseSwissGrid(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsSwissGrid: coord});
+    coord = SwissGrid.parse(text);
+    var swissGripPlus = SwissGridPlus.parse(text);
+    if (swissGripPlus != null &&
+        (swissGripPlus.easting.toInt().toString().length == 7 ||
+            swissGripPlus.northing.toInt().toString().length == 7)) {
+      if (coord != null) coords.add(swissGripPlus);
+      if (coord != null) coords.add(coord);
+    } else {
+      if (coord != null) coords.add(coord);
+      if (coord != null) coords.add(swissGripPlus);
+    }
 
-    coord = parseSwissGrid(text, defaultEllipsoid(), isSwissGridPlus: true);
-    if (coord != null) coords.addAll({keyCoordsSwissGridPlus: coord});
+    coord = GaussKrueger.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseGaussKrueger(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsGaussKrueger: coord});
+    coord = Maidenhead.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = maidenheadToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsMaidenhead: coord});
+    coord = Mercator.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseMercator(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsMercator: coord});
+    coord = NaturalAreaCode.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseNaturalAreaCode(text);
-    if (coord != null) coords.addAll({keyCoordsNaturalAreaCode: coord});
+    coord = Geohash.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = geohashToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsGeohash: coord});
+    coord = GeoHex.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = geoHexToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsGeoHex: coord});
+    coord = Geo3x3.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseGeo3x3(text);
-    if (coord != null) coords.addAll({keyCoordsGeo3x3: coord});
+    coord = OpenLocationCode.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = openLocationCodeToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsOpenLocationCode: coord});
+    coord = Quadtree.parse(text);
+    if (coord != null) coords.add(coord);
 
-    coord = parseQuadtree(text);
-    if (coord != null) coords.addAll({keyCoordsQuadtree: coord});
-
-    coord = parseSlippyMap(text);
-    if (coord != null) coords.addAll({keyCoordsSlippyMap: coord});
+    coord = SlippyMap.parse(text);
+    if (coord != null) coords.add(coord);
   } catch (e) {}
   return coords;
 }
@@ -102,13 +89,13 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
-  LatLng coord = parseDMS(text, wholeString: wholeString);
+  LatLng coord = DMS.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': keyCoordsDMS, 'coordinate': coord};
 
-  coord = parseDMM(text, wholeString: wholeString);
+  coord = DMM.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': keyCoordsDMM, 'coordinate': coord};
 
-  coord = parseDEC(text, wholeString: wholeString);
+  coord = DEC.parse(text, wholeString: wholeString)?.toLatLng();
   if (coord != null) return {'format': keyCoordsDEC, 'coordinate': coord};
 
   return null;

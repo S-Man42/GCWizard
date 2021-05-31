@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsQuadtree({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -15,7 +14,7 @@ class GCWCoordsQuadtree extends StatefulWidget {
 }
 
 class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
@@ -35,7 +34,10 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentCoord = latLonToQuadtree(widget.coordinates).join();
+      var quadtree = widget.coordinates is Quadtree
+          ? widget.coordinates as Quadtree
+          : Quadtree.fromLatLon(widget.coordinates.toLatLng());
+      _currentCoord = quadtree.toString();
 
       _controller.text = _currentCoord;
     }
@@ -54,16 +56,8 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var elements = _currentCoord.split('').map((character) => int.tryParse(character)).toList();
-
-    while (elements.length > 0) {
-      try {
-        LatLng coords = quadtreeToLatLon(elements);
-        widget.onChanged(coords);
-        break;
-      } catch (e) {
-        elements = elements.sublist(0, elements.length - 1);
-      }
-    }
+    try {
+      widget.onChanged(Quadtree.parse(_currentCoord));
+    } catch (e) {}
   }
 }

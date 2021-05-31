@@ -1,45 +1,81 @@
-import 'dart:typed_data';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'dart:async';
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+//import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:io' show Platform;
-import 'package:permission_handler/permission_handler.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
-/// useFileFilterOnAndroid -> for unknow mime types (for example gpx)
-Future<List<PlatformFile>> openFileExplorer({
-  FileType pickingType = FileType.any,
-  bool multiPick = false,
-  List<String> allowedExtensions,
-  bool useFileFilterOnAndroid = false}) async {
+// import 'file_utils.dart';
 
-  var status = await Permission.storage.request();
-  if (status != PermissionStatus.granted) {
-    return null;
-  }
+var unsupportedAndroidTypes = ['gpx'];
 
+/// Open File Picker dialog
+///
+/// Returns null if nothing was selected.
+///
+/// * [allowedExtensions] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
+Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) async {
   try {
-    List<String> allowedExtensionsTmp = allowedExtensions;
-    if (useFileFilterOnAndroid && _isAndroid())
-      allowedExtensions = null;
-
-    var files = (await FilePicker.platform.pickFiles(
-      type: allowedExtensions != null ? FileType.custom : pickingType,
-      allowMultiple: multiPick,
-      allowedExtensions: allowedExtensions,
-    ))?.files;
-
-    if (useFileFilterOnAndroid && _isAndroid())
-      files = _filterFiles(files, allowedExtensionsTmp);
-
-    return files;
-
-  } on PlatformException catch (e) {
-    print("Unsupported operation " + e.toString());
+    if (!kIsWeb)
+      //return _openMobileFileExplorer(allowedExtensions);
+      return _openWebFileExplorer(allowedExtensions);
+    else
+      /// web version
+      return _openWebFileExplorer(allowedExtensions);
   } catch (ex) {
     print(ex);
   }
   return null;
+}
+
+// Future<local.PlatformFile> _openMobileFileExplorer(List<String> allowedExtensions) async {
+//   final fileInfo = await FilePickerWritable().openFile((fileInfo, file) async {
+//     if (file != null && _filterFile(fileInfo?.fileName, allowedExtensions) != null)
+//       return (file == null) ? null : new local.PlatformFile(path: fileInfo.uri, name: fileInfo?.fileName, bytes: file.readAsBytesSync());
+//   });
+//   return fileInfo;
+// }
+
+
+Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) async {
+
+  try {
+    List<String> allowedExtensionsTmp = allowedExtensions;
+
+    if (allowedExtensions != null)
+      for (var i=0; i<allowedExtensions.length; i++)
+        allowedExtensions[i] = allowedExtensions[i].replaceFirst('.', '');
+
+    if (_hasUnsupportedTypes(allowedExtensions))
+      allowedExtensions = null;
+
+    var files = (await FilePicker.platform.pickFiles(
+      type: allowedExtensions == null ? FileType.any : FileType.custom,
+      allowMultiple: false,
+      allowedExtensions: allowedExtensions,
+      withData: true
+    ))?.files;
+
+    if (allowedExtensions == null)
+      files = _filterFiles(files, allowedExtensionsTmp);
+
+    return (files == null || files.length == 0) ? null : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
+  } on PlatformException catch (e) {
+    print("Unsupported operation " + e.toString());
+  }
+  return null;
+}
+
+// String _filterFile(String fileName, List<String> allowedExtensions) {
+//   return allowedExtensions.contains(fileName?.split('.').last) ? fileName : null;
+// }
+
+List<PlatformFile> _filterFiles(List<PlatformFile> files, List<String> allowedExtensions) {
+  if (files == null || allowedExtensions == null)
+    return files;
+
+  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
 }
 
 bool _isAndroid() {
@@ -49,22 +85,14 @@ bool _isAndroid() {
   return false;
 }
 
-Future<Uint8List> getFileData(PlatformFile file) async {
-  return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
-}
+bool _hasUnsupportedTypes(List<String> allowedExtensions) {
+  if (allowedExtensions == null) return false;
+  if (!_isAndroid()) return false;
 
-List<PlatformFile> _filterFiles(List<PlatformFile> files,List<String> allowedExtensions) {
-  if (files == null || allowedExtensions == null)
-    return null;
-
-  return files.where((element) => allowedExtensions.contains(element.extension)).toList();
-}
-
-Future<bool> clearCachedFiles() async {
-  return FilePicker.platform.clearTemporaryFiles();
-}
-
-Future<String> selectFolder() async {
-  return FilePicker.platform.getDirectoryPath();
+  for (int i = 0; i < allowedExtensions.length; i++) {
+    if (unsupportedAndroidTypes.contains(allowedExtensions[i]))
+      return true;
+  }
+  return false;
 }
 
