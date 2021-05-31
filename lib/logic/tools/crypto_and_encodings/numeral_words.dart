@@ -1464,12 +1464,19 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // simplify input
 
     // trim Klingon
-     print(input);
-     expr = RegExp(r"(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)bip (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)netlh (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(sad|sanid) (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)vatlh (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)mah (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)");
+    // identify complex klingon numbers
+    expr = RegExp(r"((pagh|wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?( )?(bip|netlh|sad|sanid|vatlh|mah)?)+");
+    if (expr.hasMatch(input)) {
+      helpText = input.replaceAllMapped(expr, (Match m) {
+        return _decodeMultipleKlingon(m.group(0));
+      });
+      input = helpText;
+    }
+    // change "-" to " "
+     expr = RegExp(r"((pagh|wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(-)?(bip|netlh|sad|sanid|vatlh|mah)?)+");
      if (expr.hasMatch(input)) {
-       print('hasmatch');
        helpText = input.replaceAllMapped(expr, (Match m) {
-         return _decodeMultipleKlingon(m.group(0));
+         return m.group(0).replaceAll('-', ' ');
        });
        input = helpText;
      }
@@ -1626,7 +1633,6 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // start decoding
     decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-' + "'" + ']'));
     decodeText.forEach((element) {
-      print('decode '+element);
       _alreadyFound = false;
       if (_isShadoks(element)) {
         output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element,
@@ -1751,9 +1757,10 @@ bool _isKlingon(String element) {
 }
 
 String _decodeKlingon(String element){
-  return element.replaceAll('pagh', '0').replaceAll("wa'", '1').replaceAll("cha'", '2').replaceAll('wej', '3').replaceAll('los', '4')
+  String result = element.replaceAll('pagh', '0').replaceAll("wa'", '1').replaceAll("cha'", '2').replaceAll('wej', '3').replaceAll('los', '4')
       .replaceAll('vagh', '5').replaceAll('jav', '6').replaceAll('soch', '7').replaceAll('chorgh', '8').replaceAll('hut', '9')
       .replaceAll('mah', '0').replaceAll('vatlh', '00').replaceAll('sad', '000').replaceAll('sanid', '000').replaceAll('netlh', '0000').replaceAll('bip', '00000');
+  return result;
 }
 
 String _decodeShadoks(String element) {
@@ -1770,9 +1777,12 @@ String _decodeMinion(String element) {
 }
 
 String _decodeMultipleKlingon(String kliNumber){
+  if (kliNumber == '')
+    return '';
   int number = 0;
-  kliNumber.split(' ').forEach((element) {
-    number = number + int.parse(_decodeKlingon(element));
+  kliNumber.replaceAll('-', ' ').split(' ').forEach((element) {
+    if (int.tryParse(_decodeKlingon(element)) != null)
+      number = number + int.parse(_decodeKlingon(element));
   });
   return number.toString();
 }
