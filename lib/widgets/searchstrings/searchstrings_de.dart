@@ -204,7 +204,7 @@ const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS =
     'farben farbkorrekturen anpassen invertieren gammawert saettigung rgb rot gruen blau helligkeit';
 const SEARCHSTRING_DE_IMAGES = 'bilder dateien bildbearbeitungen ';
 const SEARCHSTRING_DE_IMAGESANDFILESSELECTION = 'analysieren analysen';
-const SEARCHSTRING_DE_STEGANO = 'steganography';
+const SEARCHSTRING_DE_STEGANO = 'lsb steganography';
 const SEARCHSTRING_DE_IRRATIONALNUMBERS = 'irrationale zahlen nachkommastelle';
 const SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE = 'bereich';
 const SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';

@@ -189,12 +189,13 @@ const SEARCHSTRING_COMMON_HASHES_TIGER_192 = 'tiger192 tiger-192 ross anderson e
 const SEARCHSTRING_COMMON_HASHES_WHIRLPOOL_512 = 'whirlpool512 whirlpool-512 vincent rijmen paulo barreto';
 const SEARCHSTRING_COMMON_HEXADECIMAL = '16';
 const SEARCHSTRING_COMMON_HOMOPHONE = 'homophone';
-const SEARCHSTRING_COMMON_HOUDINI = 'harryhoudinicode harryhudinicode say pray bequick quickly speak now tell look answer please erikweisz';
+const SEARCHSTRING_COMMON_HOUDINI =
+    'harryhoudinicode harryhudinicode say pray bequick quickly speak now tell look answer please erikweisz';
 const SEARCHSTRING_COMMON_ICECODES = '1980 wmo sigrid';
 const SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS = '';
 const SEARCHSTRING_COMMON_IMAGES = '';
 const SEARCHSTRING_COMMON_IMAGESANDFILESSELECTION = '';
-const SEARCHSTRING_COMMON_STEGANO = 'stegano steganography';
+const SEARCHSTRING_COMMON_STEGANO = 'lsb stegano steganography';
 const SEARCHSTRING_COMMON_IRRATIONALNUMBERS = '';
 const SEARCHSTRING_COMMON_ITERATEDCROSSSUMRANGE = SEARCHSTRING_COMMON_CROSSSUMS;
 const SEARCHSTRING_COMMON_ITERATEDCROSSUMRANGEFREQUENCY = '';
