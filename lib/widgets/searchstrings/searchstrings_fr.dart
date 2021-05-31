@@ -264,6 +264,7 @@ const SEARCHSTRING_FR_PRIMES_NEARESTPRIME = 'successeur predecesseur suivant pro
 const SEARCHSTRING_FR_PRIMES_NTHPRIME = '';
 const SEARCHSTRING_FR_PRIMES_PRIMEINDEX = '';
 const SEARCHSTRING_FR_PROJECTILES = 'ballistique';
+const SEARCHSTRING_FR_QRCODE = 'qr code barre';
 const SEARCHSTRING_FR_QUADRATICEQUATION = 'equation second degré quadratique';
 const SEARCHSTRING_FR_RAILFENCE = 'cloture chasse chasseurs jardin';
 const SEARCHSTRING_FR_RALCOLORCODES = 'ralcouleurs ralcouleurcodes';

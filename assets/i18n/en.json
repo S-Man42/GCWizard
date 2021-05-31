@@ -2547,6 +2547,8 @@
   "projectiles_energy": "Kinetic Energy",
   "projectiles_mass": "Mass",
   "projectiles_velocity": "Velocity",
+  "qr_code_title": "QR code/ Barcode",
+  "qr_code_description": "Recognize QR code ",
   "quadratic_equation_title" : "Quadratic Equation",
   "quadratic_equation_description" : "Solving Quadratic Equations ax² + bx + c = 0",
   "quadratic_equation_explanation" : "Solving ax² + bx + c = 0",
