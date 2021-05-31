@@ -214,6 +214,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
