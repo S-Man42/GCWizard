@@ -34,6 +34,11 @@ class QrCodeState extends State<QrCode> {
   void initState() {
     super.initState();
     _inputController = TextEditingController(text: _currentInput);
+    if (widget.platformFile != null) {
+      _currentMode = GCWSwitchPosition.right;
+      _outData = widget.platformFile.bytes;
+      _updateOutput();
+    }
   }
 
   @override
@@ -44,10 +49,6 @@ class QrCodeState extends State<QrCode> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.platformFile != null) {
-      _currentMode = GCWSwitchPosition.left;
-      _outData = widget.platformFile.bytes;
-    }
 
     return Column(
       children: <Widget>[
