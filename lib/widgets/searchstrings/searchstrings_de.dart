@@ -6,6 +6,7 @@ const SEARCHSTRING_DE_ALPHABETVALUES =
     'bww buchstabenwerte quersummen alphanumerisch produkt alternierend buchstabenwortwerte kyrillisch russisch griechisch spanisch deutsch polnisch';
 const SEARCHSTRING_DE_AMSCO = '';
 const SEARCHSTRING_DE_ANIMATED_IMAGES = 'animiert bewegt bild';
+const SEARCHSTRING_DE_ANIMATED_IMAGES_MORSE_CODE = 'decoder';
 const SEARCHSTRING_DE_APPARENTTEMPERATURE = 'gefuehlte temperatur';
 const SEARCHSTRING_DE_APPARENTTEMPERATURE_HEATINDEX = 'luftfeuchtigkeit hitzeindex';
 const SEARCHSTRING_DE_APPARENTTEMPERATURE_HUMIDEX = 'luftfeuchtigkeit taupunkt';
@@ -104,6 +105,8 @@ const SEARCHSTRING_DE_COORDINATES_SEGMENTLINE = 'unterteilen einteilen teilungen
 const SEARCHSTRING_DE_COORDINATES_VARIABLECOORDINATEFORMULAS = 'variable wegpunkte';
 const SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION =
     'winkel wegpunktprojektionen wegpunktpeilungen richtungen rueckwaertspeilung';
+const SEARCHSTRING_DE_COUNTRIES = 'land laender nationen staaten internationales';
+const SEARCHSTRING_DE_COUNTRIES_CALLINGCODES = 'vorwahlen telefonnummern vorwahlnummern telephonnummern';
 const SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
 const SEARCHSTRING_DE_CROSSSUMS = 'iteriert  quersummen produkte alternierend alterniert iterierend';
 const SEARCHSTRING_DE_CROSSUM = '';
@@ -274,8 +277,10 @@ const SEARCHSTRING_DE_PRIMES_NEARESTPRIME = 'naechsten nachfolger naehester vorg
 const SEARCHSTRING_DE_PRIMES_NTHPRIME = 'positionen';
 const SEARCHSTRING_DE_PRIMES_PRIMEINDEX = 'positionen';
 const SEARCHSTRING_DE_PROJECTILES = 'geschosse projektile ballistik';
+const SEARCHSTRING_DE_QRCODE = 'qr barcode';
 const SEARCHSTRING_DE_QUADRATICEQUATION = 'quadratische gleichung';
 const SEARCHSTRING_DE_RAILFENCE = 'palisadenzaun gartenzaun lattenzaun jaegerzaun';
+const SEARCHSTRING_DE_RALCOLORCODES = 'ralfarbcodes ralfarben ralpaletten';
 const SEARCHSTRING_DE_RC4 = 'stromverschluesselung';
 const SEARCHSTRING_DE_RESISTOR = 'widerstand widerstaende';
 const SEARCHSTRING_DE_RESISTOREIA96 = '';

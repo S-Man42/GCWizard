@@ -6,6 +6,7 @@ const SEARCHSTRING_EN_ALPHABETVALUES =
     'alphanumeric lettervalues checksums crosssums digits alternate alphabetvalues cyrillic greek german spanish polish russian';
 const SEARCHSTRING_EN_AMSCO = '';
 const SEARCHSTRING_EN_ANIMATED_IMAGES = 'animated moved image';
+const SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE = 'encode decode';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE = 'apparent perceived temperature';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE_HEATINDEX = 'humidity heatindex';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE_HUMIDEX = 'humidity  canadian canada  dewpoint';
@@ -100,6 +101,8 @@ const SEARCHSTRING_EN_COORDINATES_SEGMENTLINE = 'segments segmentlines  regularl
 const SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS = 'waypoints flex';
 const SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION =
     'angles waypointprojections bearings cardinaldirections reverse projections ';
+const SEARCHSTRING_EN_COUNTRIES = 'countries country nations states internationals';
+const SEARCHSTRING_EN_COUNTRIES_CALLINGCODES = 'callingcodes prefixes areacodes preselection pre-selection';
 const SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY = 'frequency  occurrences';
 const SEARCHSTRING_EN_CROSSSUMS = 'crosssums digits alternated crosstotals iterated products digitalroot digitroot';
 const SEARCHSTRING_EN_CROSSUM = '';
@@ -269,8 +272,10 @@ const SEARCHSTRING_EN_PRIMES_NEARESTPRIME = 'next successor follower closest nea
 const SEARCHSTRING_EN_PRIMES_NTHPRIME = 'positions';
 const SEARCHSTRING_EN_PRIMES_PRIMEINDEX = 'positions';
 const SEARCHSTRING_EN_PROJECTILES = 'bullets projectiles ballistics ';
+const SEARCHSTRING_EN_QRCODE = 'qr barcode';
 const SEARCHSTRING_EN_QUADRATICEQUATION = 'quadratic equation';
 const SEARCHSTRING_EN_RAILFENCE = 'railfence redefence';
+const SEARCHSTRING_EN_RALCOLORCODES = 'ralcolorcodes ralcolors ralcolours ralcolourcodes';
 const SEARCHSTRING_EN_RC4 = 'stream cipher arcfour';
 const SEARCHSTRING_EN_RESISTOR = 'resistance resistors';
 const SEARCHSTRING_EN_RESISTOREIA96 = '';

@@ -24,6 +24,7 @@ import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/countries_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
@@ -209,10 +210,12 @@ import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -231,6 +234,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -291,6 +295,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
@@ -373,6 +378,21 @@ class Registry {
           category: ToolCategory.IMAGES_AND_FILES,
           missingHelpLocales: ['ko'],
           searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+            SEARCHSTRING_DE_ANIMATED_IMAGES,
+            SEARCHSTRING_EN_ANIMATED_IMAGES,
+            SEARCHSTRING_FR_ANIMATED_IMAGES
+          ]),
+      GCWTool(
+          tool: AnimatedImageMorseCode(),
+          i18nPrefix: 'animated_image_morse_code',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES_MORSE_CODE,
+            SEARCHSTRING_DE_ANIMATED_IMAGES_MORSE_CODE,
+            SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE,
+            SEARCHSTRING_FR_ANIMATED_IMAGES_MORSE_CODE,
             SEARCHSTRING_COMMON_ANIMATED_IMAGES,
             SEARCHSTRING_DE_ANIMATED_IMAGES,
             SEARCHSTRING_EN_ANIMATED_IMAGES,
@@ -610,6 +630,17 @@ class Registry {
         SEARCHSTRING_EN_COORDINATES,
         SEARCHSTRING_FR_COORDINATES
       ]),
+      GCWTool(
+          tool: CountriesSelection(),
+          i18nPrefix: 'countries_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: ['ko'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COORDINATES,
+            SEARCHSTRING_DE_COORDINATES,
+            SEARCHSTRING_EN_COORDINATES,
+            SEARCHSTRING_FR_COORDINATES
+          ]),
       GCWTool(
           tool: CrossSumSelection(),
           i18nPrefix: 'crosssum_selection',
@@ -1108,6 +1139,15 @@ class Registry {
             SEARCHSTRING_FR_PROJECTILES
           ]),
       GCWTool(
+          tool: QrCode(),
+          i18nPrefix: 'qr_code',
+          category: ToolCategory.IMAGES_AND_FILES,
+          searchStrings: [
+            SEARCHSTRING_DE_QRCODE,
+            SEARCHSTRING_EN_QRCODE,
+            SEARCHSTRING_FR_QRCODE
+          ]),
+      GCWTool(
           tool: QuadraticEquation(),
           i18nPrefix: 'quadratic_equation',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -1125,6 +1165,14 @@ class Registry {
         SEARCHSTRING_DE_RAILFENCE,
         SEARCHSTRING_EN_RAILFENCE,
         SEARCHSTRING_FR_RAILFENCE
+      ]),
+      GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', category: ToolCategory.SCIENCE_AND_TECHNOLOGY, missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_RALCOLORCODES,
+        SEARCHSTRING_DE_RALCOLORCODES,
+        SEARCHSTRING_EN_RALCOLORCODES,
+        SEARCHSTRING_FR_RALCOLORCODES
       ]),
       GCWTool(
           tool: RC4(),
@@ -2163,7 +2211,17 @@ class Registry {
             SEARCHSTRING_FR_COORDINATES_ELLIPSOIDTRANSFORM
           ]),
 
+      //Countries Selection ******************************************************************************************
+
+      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcodes', missingHelpLocales: ['ko'], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES_CALLINGCODES,
+        SEARCHSTRING_DE_COUNTRIES_CALLINGCODES,
+        SEARCHSTRING_EN_COUNTRIES_CALLINGCODES,
+        SEARCHSTRING_FR_COUNTRIES_CALLINGCODES
+      ]),
+
       //CrossSumSelection *******************************************************************************************
+
       GCWTool(tool: CrossSum(), i18nPrefix: 'crosssum_crosssum', missingHelpLocales: ['ko'], searchStrings: [
         SEARCHSTRING_COMMON_CROSSSUMS,
         SEARCHSTRING_DE_CROSSSUMS,
@@ -6445,9 +6503,6 @@ class Registry {
 
       return toolWidget;
     }).toList();
-
-    //Sort once for search
-    toolList.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
 
     buildIndexedStrings();
   }
