@@ -1436,7 +1436,7 @@
   "coords_antipodes_coordb": "Antipode",
   "coords_dmmoffset_title": "DMM Offset",
   "coords_dmmoffset_description": "Adds or subtracts integer numbers to DD° MM.MMM' representation of a coordinate",
-  "coords_dmmoffset_example": "N 45° 17.460' W 122° 24.800'; N - 500, W + 300 → N 45° 16.960' W 122° 25.100'",
+  "coords_dmmoffset_example": "N 45° 17.460'; N - 500 → N 45° 16.960'",
   "coords_dmmoffset_start": "Start",
   "coords_dmmoffset_end": "Destination",
   "coords_dmmoffset_offset": "Offset",
