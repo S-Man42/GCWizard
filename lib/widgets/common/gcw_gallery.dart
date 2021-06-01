@@ -112,7 +112,7 @@ class _GCWGalleryState extends State<GCWGallery> {
   }
 
   Widget imageDecoration(int index, bool currentImage) {
-    var marked = index < widget.imageData.length ? widget.imageData[index].marked : false;
+    var marked = (index < widget.imageData.length ? widget.imageData[index].marked : false) ?? false;
     if (currentImage)
       return Container(
           decoration: BoxDecoration(
