@@ -277,6 +277,7 @@ const SEARCHSTRING_DE_PRIMES_NEARESTPRIME = 'naechsten nachfolger naehester vorg
 const SEARCHSTRING_DE_PRIMES_NTHPRIME = 'positionen';
 const SEARCHSTRING_DE_PRIMES_PRIMEINDEX = 'positionen';
 const SEARCHSTRING_DE_PROJECTILES = 'geschosse projektile ballistik';
+const SEARCHSTRING_DE_QRCODE = 'qr barcode';
 const SEARCHSTRING_DE_QUADRATICEQUATION = 'quadratische gleichung';
 const SEARCHSTRING_DE_RAILFENCE = 'palisadenzaun gartenzaun lattenzaun jaegerzaun';
 const SEARCHSTRING_DE_RALCOLORCODES = 'ralfarbcodes ralfarben ralpaletten';
