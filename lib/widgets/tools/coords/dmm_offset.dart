@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/dmm_add_integers.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
@@ -12,12 +13,12 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 
-class DMMAddIntegers extends StatefulWidget {
+class DMMOffset extends StatefulWidget {
   @override
-  DMMAddIntegersState createState() => DMMAddIntegersState();
+  DMMOffsetState createState() => DMMOffsetState();
 }
 
-class DMMAddIntegersState extends State<DMMAddIntegers> {
+class DMMOffsetState extends State<DMMOffset> {
   var _currentCoords = defaultCoordinate;
 
   var _currentValues = [defaultCoordinate];
@@ -35,7 +36,7 @@ class DMMAddIntegersState extends State<DMMAddIntegers> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          title: i18n(context, 'coords_dmmaddintegers_start'),
+          title: i18n(context, 'coords_dmmoffset_start'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
@@ -45,6 +46,9 @@ class DMMAddIntegersState extends State<DMMAddIntegers> {
               _calculateOutput();
             });
           },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'coords_dmmoffset_offset'),
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'coords_common_latitude'),
@@ -62,6 +66,15 @@ class DMMAddIntegersState extends State<DMMAddIntegers> {
           onChanged: (value) {
             setState(() {
               _currentAddLongitude = value;
+              _calculateOutput();
+            });
+          },
+        ),
+        GCWCoordsOutputFormat(
+          coordFormat: _currentOutputFormat,
+          onChanged: (value) {
+            setState(() {
+              _currentOutputFormat = value;
               _calculateOutput();
             });
           },

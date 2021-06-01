@@ -86,7 +86,7 @@ import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
-import 'package:gc_wizard/widgets/tools/coords/dmm_add_integers.dart';
+import 'package:gc_wizard/widgets/tools/coords/dmm_offset.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/widgets/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
@@ -1931,9 +1931,9 @@ class Registry {
             SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS
           ]),
       GCWTool(
-          tool: DMMAddIntegers(),
-          i18nPrefix: 'coords_dmmaddintegers',
-          iconPath: 'assets/icons/coords/icon_free_map.png',
+          tool: DMMOffset(),
+          i18nPrefix: 'coords_dmmoffset',
+          iconPath: 'assets/icons/coords/icon_dmm_offset.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: ['ko'],
           searchStrings: [
