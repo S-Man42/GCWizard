@@ -214,6 +214,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -1135,6 +1136,15 @@ class Registry {
             SEARCHSTRING_DE_PROJECTILES,
             SEARCHSTRING_EN_PROJECTILES,
             SEARCHSTRING_FR_PROJECTILES
+          ]),
+      GCWTool(
+          tool: QrCode(),
+          i18nPrefix: 'qr_code',
+          category: ToolCategory.IMAGES_AND_FILES,
+          searchStrings: [
+            SEARCHSTRING_DE_QRCODE,
+            SEARCHSTRING_EN_QRCODE,
+            SEARCHSTRING_FR_QRCODE
           ]),
       GCWTool(
           tool: QuadraticEquation(),

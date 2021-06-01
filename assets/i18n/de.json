@@ -2497,6 +2497,8 @@
   "projectiles_energy": "Kin. Energie",
   "projectiles_mass": "Masse",
   "projectiles_velocity": "Geschwindigkeit",
+  "qr_code_title": "QR Code/Barcode",
+  "qr_code_description": "QR und Barcodes aus Bilddateien erkennen",
   "quadratic_equation_title" : "Quadratische Gleichung",
   "quadratic_equation_description" : "Lösen quadratischer Gleichungen",
   "quadratic_equation_hint_a" : "a",
