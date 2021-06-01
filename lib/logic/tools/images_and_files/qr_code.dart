@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'dart:ui' as ui;
