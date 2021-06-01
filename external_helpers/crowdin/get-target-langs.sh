@@ -80,6 +80,7 @@ echo "copy target files..."
 # cp -r $TMP/de/$BRANCH_NAME/en.json ../assets/i18n/de.json
 cp -r $TMP/de/en.json $TARGET_I18N/de.json
 cp -r $TMP/fr/en.json $TARGET_I18N/fr.json
+cp -r $TMP/ko/en.json $TARGET_I18N/ko.json
 
 rm -rf $ZIP
 rm -rf $TMP

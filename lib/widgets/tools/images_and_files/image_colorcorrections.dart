@@ -38,7 +38,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context).then((file) {
+              openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
                 if (file != null) {
                   _currentData = file.bytes;
                   _originalData = file.bytes;

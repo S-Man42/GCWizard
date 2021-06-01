@@ -316,7 +316,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: []))).whenComplete(() {
+                            missingHelpLocales: ['ko']))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
                       _persistanceAdapter.updateMapPolyline(child);
@@ -331,7 +331,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: []))).whenComplete(() {
+                            missingHelpLocales: ['ko']))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -599,7 +599,7 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(context, allowedExtensions: ['.gpx', '.kml', '.kmz']).then((file) {
+            openFileExplorer(allowedExtensions: ['gpx', 'kml', 'kmz']).then((file) {
               if (file != null) {
                 loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
                   setState(() {
@@ -764,7 +764,7 @@ class GCWMapViewState extends State<GCWMapView> {
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                                       i18nPrefix: 'coords_openmap_pointeditor',
-                                      missingHelpLocales: []))).whenComplete(() {
+                                      missingHelpLocales: ['ko']))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);

@@ -79,6 +79,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart'
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
@@ -92,6 +93,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/houdini.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
@@ -101,6 +103,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
@@ -129,9 +132,11 @@ import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -148,11 +153,13 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -169,6 +176,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/pe
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -333,6 +341,7 @@ class _MainViewState extends State<MainView> {
         className(AlphabetValues()),
         className(Amsco()),
         className(AnimatedImage()),
+        className(AnimatedImageMorseCode()),
         className(Antipodes()),
         className(ASCIIValues()),
         className(Atbash()),
@@ -350,6 +359,7 @@ class _MainViewState extends State<MainView> {
         className(Brainfk()),
         className(BurrowsWheeler()),
         className(Caesar()),
+        className(Calendar()),
         className(Catan()),
         className(CCITT1Selection()),
         className(CCITT2Selection()),
@@ -366,6 +376,8 @@ class _MainViewState extends State<MainView> {
         className(CombinationPermutation()),
         className(ComplexNumbers()),
         className(CoordinateAveraging()),
+        className(CountriesCallingCodes()),
+        className(Cow()),
         className(CrossBearing()),
         className(CrossSum()),
         className(CrossSumRange()),
@@ -401,6 +413,7 @@ class _MainViewState extends State<MainView> {
         className(Hexadecimal()),
         className(HexString2File()),
         className(Homophone()),
+        className(Houdini()),
         className(Humidex()),
         className(IceCodesSelection()),
         className(IntersectBearings()),
@@ -422,6 +435,7 @@ class _MainViewState extends State<MainView> {
         className(MoonPosition()),
         className(MoonRiseSet()),
         className(Morse()),
+        className(Navajo()),
         className(NumberSequenceSelection()),
         className(MultiDecoder()),
         className(NumeralBases()),
@@ -438,8 +452,10 @@ class _MainViewState extends State<MainView> {
         className(Polybios()),
         className(PrimesSelection()),
         className(Projectiles()),
+        className(QrCode()),
         className(QuadraticEquation()),
         className(RailFence()),
+        className(RALColorCodes()),
         className(RC4()),
         className(Resection()),
         className(ResistorSelection()),
@@ -501,8 +517,8 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _categoryList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    });
+    // _categoryList.sort((a, b) {
+    //   return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    // });
   }
 }
