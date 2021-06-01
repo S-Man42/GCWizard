@@ -6491,10 +6491,6 @@ class Registry {
       tool.indexedStrings = _removeDuplicates(_indexedStrings);
       return true;
     }).toList();
-
-    //Sort once for search
-    // indexedTools.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
-
   }
 }
 
