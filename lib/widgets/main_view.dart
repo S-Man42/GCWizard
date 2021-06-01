@@ -132,6 +132,7 @@ import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
@@ -338,6 +339,7 @@ class _MainViewState extends State<MainView> {
         className(AlphabetValues()),
         className(Amsco()),
         className(AnimatedImage()),
+        className(AnimatedImageMorseCode()),
         className(Antipodes()),
         className(ASCIIValues()),
         className(Atbash()),

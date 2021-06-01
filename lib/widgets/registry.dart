@@ -209,6 +209,7 @@ import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
@@ -375,6 +376,21 @@ class Registry {
           category: ToolCategory.IMAGES_AND_FILES,
           missingHelpLocales: ['ko'],
           searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+            SEARCHSTRING_DE_ANIMATED_IMAGES,
+            SEARCHSTRING_EN_ANIMATED_IMAGES,
+            SEARCHSTRING_FR_ANIMATED_IMAGES
+          ]),
+      GCWTool(
+          tool: AnimatedImageMorseCode(),
+          i18nPrefix: 'animated_image_morse_code',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES_MORSE_CODE,
+            SEARCHSTRING_DE_ANIMATED_IMAGES_MORSE_CODE,
+            SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE,
+            SEARCHSTRING_FR_ANIMATED_IMAGES_MORSE_CODE,
             SEARCHSTRING_COMMON_ANIMATED_IMAGES,
             SEARCHSTRING_DE_ANIMATED_IMAGES,
             SEARCHSTRING_EN_ANIMATED_IMAGES,
