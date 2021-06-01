@@ -75,7 +75,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
         defaultLanguageToolName:
             '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
-        missingHelpLocales: []);
+        missingHelpLocales: ['ko']);
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
@@ -177,7 +177,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
                 i18nPrefix:
                     '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
-                missingHelpLocales: [])));
+                missingHelpLocales: ['ko'])));
   }
 
   _buildGroupList(BuildContext context) {
@@ -389,6 +389,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 ),
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
-                missingHelpLocales: [])));
+                missingHelpLocales: ['ko'])));
   }
 }
