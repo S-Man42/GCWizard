@@ -8,13 +8,13 @@ environment:
 dependencies:
   archive: ^3.1.2
   auto_size_text: ^2.1.0
-  base32: ^2.0.0-nullsafety.1
+  base32: ^2.0.0
   cached_network_image: ^3.0.0
   diacritic: ^0.1.1
   file_picker: ^3.0.1
   file_picker_writable: ^2.0.0+1
-  exif: ^2.1.0
-  #ext_storage: ^1.0.3
+  encrypt: ^5.0.0
+  exif: ^2.2.0
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -31,7 +31,7 @@ dependencies:
   open_file: ^3.2.1
   package_info: ^2.0.0
   path: ^1.8.0
-  path_provider: ^2.0.1
+  path_provider: ^2.0.2
   permission_handler: ^8.0.0+2
   photo_view: ^0.11.1
   pointycastle: ^3.0.1
@@ -40,7 +40,7 @@ dependencies:
   qrscan: ^0.3.1
   qr_flutter: ^4.0.0
   scrollable_positioned_list: ^0.1.10
-  share_extend: ^1.1.9
+  share_extend: ^2.0.0
   touchable: ^0.2.0
   universal_html: ^2.0.4
   uuid: ^3.0.4

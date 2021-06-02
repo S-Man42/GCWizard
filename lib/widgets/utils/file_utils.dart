@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:universal_html/html.dart' as html;
+
 import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
+import 'package:path/path.dart' as Path;
 // import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
@@ -157,4 +158,17 @@ String getFileType(Uint8List blobBytes, {String defaultType = ".txt"}) {
   }
 
   return defaultType;
+}
+
+String getFileExtension(String fileName) {
+  return Path.extension(fileName);
+}
+
+String getFileBaseNameWithoutExtension(String fileName) {
+  return Path.basenameWithoutExtension(fileName);
+}
+
+String changeExtension(String fileName, String extension) {
+  //return Path.basenameWithoutExtension(fileName)+extension;
+  return Path.setExtension(fileName, extension);
 }
