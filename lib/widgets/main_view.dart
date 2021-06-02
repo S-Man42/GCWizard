@@ -329,9 +329,9 @@ class _MainViewState extends State<MainView> {
   }
 
   void _initStaticToolList() {
-    if (_toolList != null) {
-      return;
-    }
+    // if (_toolList != null) {
+    //   return;
+    // }
 
     _toolList = Registry.toolList.where((element) {
       return [

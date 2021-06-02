@@ -312,9 +312,9 @@ class Registry {
   static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
-    if (toolList != null) {
-      return;
-    }
+    // if (toolList != null) {
+    //   return;
+    // }
 
     toolList = [
       //MainSelection
