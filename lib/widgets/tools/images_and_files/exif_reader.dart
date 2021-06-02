@@ -228,19 +228,14 @@ class _ExifReaderState extends State<ExifReader> {
 
   Future<Image.Image> completeImageMetadata(PlatformFile platformFile) async {
     Uint8List data = platformFile.bytes;
-    return Image.decodeImage(data);
-
-    // ImageInput imageInput = getImageInput(platformFile);
-    // return ImageSizeGetter.getSize(imageInput);
+    Image.Image image;
+    try {
+      image = Image.decodeImage(data);
+    } catch (e) {
+      // Silent error
+    }
+    return image;
   }
-
-  // ImageInput getImageInput(PlatformFile platformFile) {
-  //   if (platformFile.path != null) {
-  //     return FileInput(File(platformFile.path));
-  //   } else {
-  //     return MemoryInput(platformFile.bytes);
-  //   }
-  // }
 
   String formatDate(DateTime datetime) {
     return (datetime == null) ? '' : DateFormat().format(datetime);
