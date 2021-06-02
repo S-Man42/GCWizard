@@ -86,6 +86,7 @@ import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
+import 'package:gc_wizard/widgets/tools/coords/dmm_offset.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/widgets/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
@@ -214,6 +215,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
@@ -1122,6 +1124,11 @@ class Registry {
             SEARCHSTRING_FR_PROJECTILES
           ]),
       GCWTool(
+          tool: QrCode(),
+          i18nPrefix: 'qr_code',
+          category: ToolCategory.IMAGES_AND_FILES,
+          searchStrings: [SEARCHSTRING_DE_QRCODE, SEARCHSTRING_EN_QRCODE, SEARCHSTRING_FR_QRCODE]),
+      GCWTool(
           tool: QuadraticEquation(),
           i18nPrefix: 'quadratic_equation',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -1537,6 +1544,14 @@ class Registry {
         SEARCHSTRING_DE_ASTRONOMY_SEASONS,
         SEARCHSTRING_EN_ASTRONOMY_SEASONS,
         SEARCHSTRING_FR_ASTRONOMY_SEASONS
+      ]),
+
+      //Babylon Numbers Selection **************************************************************************************
+      GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchStrings: [
+        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
       ]),
 
       //BaseSelection **************************************************************************************************
@@ -1963,17 +1978,24 @@ class Registry {
             SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS,
             SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS
           ]),
-
-      //Babylon Numbers Selection **************************************************************************************************
-      GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchStrings: [
-        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
-      ]),
-
-      //BaseSelection **************************************************************************************************
-
+      GCWTool(
+          tool: DMMOffset(),
+          i18nPrefix: 'coords_dmmoffset',
+          iconPath: 'assets/icons/coords/icon_dmm_offset.png',
+          category: ToolCategory.COORDINATES,
+          missingHelpLocales: [
+            'ko'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COORDINATES,
+            SEARCHSTRING_DE_COORDINATES,
+            SEARCHSTRING_EN_COORDINATES,
+            SEARCHSTRING_FR_COORDINATES,
+            SEARCHSTRING_COMMON_COORDINATES_MAPVIEW,
+            SEARCHSTRING_DE_COORDINATES_MAPVIEW,
+            SEARCHSTRING_EN_COORDINATES_MAPVIEW,
+            SEARCHSTRING_FR_COORDINATES_MAPVIEW
+          ]),
       GCWTool(
           tool: CoordinateAveraging(),
           i18nPrefix: 'coords_averaging',
@@ -6648,9 +6670,6 @@ class Registry {
 
       return toolWidget;
     }).toList();
-
-    //Sort once for search
-    toolList.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
 
     buildIndexedStrings();
   }
