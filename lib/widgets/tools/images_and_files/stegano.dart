@@ -33,6 +33,7 @@ class _SteganoState extends State<Stegano> {
   String _decodedText;
   String _decodingErrorText;
   String _encodingErrorText;
+  String _error2Text;
   GCWImageViewData _encodedPictureData;
   bool _encoding = false;
 
@@ -135,35 +136,67 @@ class _SteganoState extends State<Stegano> {
       _encodingErrorText = null;
       _decodingErrorText = null;
     });
-    if (isEncode()) {
-      Uint8List bytes;
-      String _error;
-      try {
-        bytes = await encodeStegano(_file, _currentInput, _currentKey, _file.name);
-      } catch (e) {
-        _error = e.toString();
-      }
 
-      setState(() {
-        _encoding = false;
-        _encodedPictureData = (bytes != null) ? GCWImageViewData(bytes) : null;
-        _encodingErrorText = _error;
-        _filenameTarget = changeExtension(_file.name, _extensionTarget);
-      });
+    if (isEncode()) {
+      _calculateOutputEncoding();
     } else {
-      String _text;
-      String _error;
+      _calculateOutputDecoding();
+    }
+  }
+
+  ///
+  /// Decoding section
+  ///
+  _calculateOutputDecoding() async {
+    String _text;
+    String _error;
+    String _error2;
+    if (_file == null) {
+      _error = i18n(context, 'stegano_decode_image_required');
+    } else {
       try {
         _text = await decodeStegano(_file, _currentKey);
       } catch (e) {
-        _error = e.toString();
+        _error = i18n(context, 'stegano_decoding_error');
+        _error2 = e.toString();
       }
-      setState(() {
-        _encoding = false;
-        _decodedText = _text;
-        _decodingErrorText = _error;
-      });
     }
+    setState(() {
+      _encoding = false;
+      _decodedText = _text;
+      _decodingErrorText = _error;
+      _error2Text = _error2;
+    });
+  }
+
+  ///
+  /// Encoding section
+  ///
+  _calculateOutputEncoding() async {
+    Uint8List bytes;
+    String _error;
+    String _error2;
+
+    if (_file == null) {
+      _error = i18n(context, 'stegano_encode_image_required');
+    } else if (_currentInput.isEmpty) {
+      _error = i18n(context, 'stegano_encode_message_required');
+    } else {
+      try {
+        bytes = await encodeStegano(_file, _currentInput, _currentKey, _file.name);
+      } catch (e) {
+        _error = i18n(context, 'stegano_encoding_error');
+        _error2 = e.toString();
+      }
+    }
+
+    setState(() {
+      _encoding = false;
+      _encodedPictureData = (bytes != null) ? GCWImageViewData(bytes) : null;
+      _encodingErrorText = _error;
+      _error2Text = _error2;
+      _filenameTarget = (_file != null) ? changeExtension(_file.name, _extensionTarget) : null;
+    });
   }
 
   bool isEncode() => (_currentMode == GCWSwitchPosition.left);
@@ -173,17 +206,19 @@ class _SteganoState extends State<Stegano> {
   }
 
   List<Widget> _buildOutputEncode() {
+    if (_encodingErrorText != null) {
+      var texts = [Text(_encodingErrorText)];
+      if (_error2Text != null) {
+        texts.add(Text(_error2Text));
+      }
+      return texts;
+    }
+
     if (_encoding) {
-      return [
-        Center(
-          child: CircularProgressIndicator(),
-        )
-      ];
+      return loading();
     }
     ;
-    if (_encodingErrorText != null) {
-      return [Text(i18n(context, 'stegano_encoding_error'))];
-    }
+
     if (_encodedPictureData == null) {
       return [];
     }
@@ -194,18 +229,18 @@ class _SteganoState extends State<Stegano> {
   }
 
   List<Widget> _buildOutputDecode() {
+    if (_decodingErrorText != null) {
+      var texts = [Text(_decodingErrorText)];
+      if (_error2Text != null) {
+        texts.add(Text(_error2Text));
+      }
+      return texts;
+    }
+
     if (_encoding) {
-      return [
-        Center(
-          child: CircularProgressIndicator(),
-        )
-      ];
+      return loading();
     }
     ;
-
-    if (_decodingErrorText != null) {
-      return [Text(i18n(context, 'stegano_decoding_error'))];
-    }
 
     if (_decodedText == null) {
       return [];
@@ -226,6 +261,19 @@ class _SteganoState extends State<Stegano> {
       GCWTextDivider(text: i18n(context, 'stegano_source_image')),
       //GCWImageView(imageData: GCWImageViewData(_bytesSource))
       Image.memory(_bytesSource)
+    ];
+  }
+
+  List<Widget> loading() {
+    return [
+      Center(
+        //child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+          strokeWidth: 20,
+        ),
+      )
     ];
   }
 }
