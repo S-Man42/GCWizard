@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 var unsupportedAndroidTypes = ['gpx'];
+var supportedImageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'];
 
 /// Open File Picker dialog
 ///

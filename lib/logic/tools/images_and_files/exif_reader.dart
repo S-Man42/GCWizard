@@ -123,7 +123,7 @@ String _formatExifValue(IfdTag tag) {
   switch (tag.tagType) {
     case 'ASCII':
       return tag.printable;
-    case ' Short':
+    case 'Short':
       return tag.printable;
     case 'Long':
       return tag.printable;

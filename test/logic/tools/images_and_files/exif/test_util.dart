@@ -19,7 +19,7 @@ List<FileSample> readSampleTest1() {
 }
 
 List<FileSample> readSampleTest2() {
-  String _path = Path.join(testDirPath, 'test-mark.jpg');
+  String _path = Path.join(testDirPath, 'test2.jpg');
   File _file = File(_path);
   return [FileSample(_file, 0, 0)];
 }

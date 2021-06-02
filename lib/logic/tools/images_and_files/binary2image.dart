@@ -106,7 +106,6 @@ Future<Uint8List> _binary2Image(String input) async {
             Rect.fromLTWH(column * pointSize + bounds, row * pointSize + bounds, pointSize, pointSize), paint);
     }
   }
-  ;
 
   final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
   final data = await img.toByteData(format: ui.ImageByteFormat.png);

@@ -1127,7 +1127,11 @@ class Registry {
           tool: QrCode(),
           i18nPrefix: 'qr_code',
           category: ToolCategory.IMAGES_AND_FILES,
-          searchStrings: [SEARCHSTRING_DE_QRCODE, SEARCHSTRING_EN_QRCODE, SEARCHSTRING_FR_QRCODE]),
+          searchStrings: [
+            SEARCHSTRING_DE_QRCODE,
+            SEARCHSTRING_EN_QRCODE,
+            SEARCHSTRING_FR_QRCODE
+          ]),
       GCWTool(
           tool: QuadraticEquation(),
           i18nPrefix: 'quadratic_equation',
@@ -1983,9 +1987,7 @@ class Registry {
           i18nPrefix: 'coords_dmmoffset',
           iconPath: 'assets/icons/coords/icon_dmm_offset.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'ko'
-          ],
+          missingHelpLocales: ['ko'],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
