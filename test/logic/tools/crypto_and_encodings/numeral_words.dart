@@ -415,22 +415,24 @@ void main(){
   group("NumeralWords.decodeNumeralwordsWordParts:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : 'Susi wacht einsam während Vater und Mutter zweifelnd Sand sieben. Null Bock, denkt sich Jörg. Ich lasse fünfe grade sein und kegel lieber alle Neune!', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false,
-        'expectedOutput' : [NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
-                            NumeralWordsDecodeOutput('1', 'eins', 'common_language_german'),
-                            NumeralWordsDecodeOutput('2', 'zwei', 'common_language_german'),
-                            NumeralWordsDecodeOutput('7', 'sieben', 'common_language_german'),
-                            NumeralWordsDecodeOutput('0', 'null', 'common_language_german'),
-                            NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
-                            NumeralWordsDecodeOutput('9', 'neun', 'common_language_german')]},
+        'expectedOutput' : [
+          NumeralWordsDecodeOutput('8', 'acht', 'common_language_german'),
+          NumeralWordsDecodeOutput('1', 'eins', 'common_language_german'),
+          NumeralWordsDecodeOutput('2', 'zwei', 'common_language_german'),
+          NumeralWordsDecodeOutput('7', 'sieben', 'common_language_german'),
+          NumeralWordsDecodeOutput('0', 'null', 'common_language_german'),
+          NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
+          NumeralWordsDecodeOutput('°', 'grad', 'common_language_german'),
+          NumeralWordsDecodeOutput('9', 'neun', 'common_language_german')]},
 
       {'input' : 'Hui trällert Balthasar. Null Bock auf nichts sondern den Sessel hüten um nicht die gute Laune zu verlieren. Und wahrlich, das ist ok.', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : false,
         'expectedOutput' : [
           NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
-          NumeralWordsDecodeOutput('1', 'ae', 'common_language_volapuek'),
+          NumeralWordsDecodeOutput('1', 'ae', 'numeralwords_language_sco'),
           NumeralWordsDecodeOutput('2', 'er', 'common_language_volapuek'),
           NumeralWordsDecodeOutput('8', 'ba', 'common_language_volapuek'),
           NumeralWordsDecodeOutput('1', 'bal', 'common_language_volapuek'),
-          NumeralWordsDecodeOutput('3', 'ba', 'common_language_volapuek'),
+          NumeralWordsDecodeOutput('3', 'ba', 'numeralwords_language_chi'),
           NumeralWordsDecodeOutput('0', 'null', 'common_language_german'),
           NumeralWordsDecodeOutput('', 'nul', 'common_language_danish'),
           NumeralWordsDecodeOutput('', 'nul', 'common_language_dutch'),
@@ -681,6 +683,9 @@ void main(){
           NumeralWordsDecodeOutput('0', 'zerum', 'common_language_latin'),
           NumeralWordsDecodeOutput('1', 'unus', 'common_language_latin'),
           NumeralWordsDecodeOutput('3', 'tria', 'common_language_latin'),
+          NumeralWordsDecodeOutput('°', 'gradus', 'common_language_latin'),
+          NumeralWordsDecodeOutput('0', 'zerum', 'common_language_latin'),
+          NumeralWordsDecodeOutput('1', 'unus', 'common_language_latin'),
           NumeralWordsDecodeOutput('.', 'punctum', 'common_language_latin'),
           NumeralWordsDecodeOutput('3', 'tria', 'common_language_latin'),
           NumeralWordsDecodeOutput('6', 'hexas', 'common_language_latin'),
@@ -737,7 +742,7 @@ void main(){
     });
   });
 
-    group("NumeralWords.Minions:", () {
+  group("NumeralWords.Minions:", () {
       List<Map<String, dynamic>> _inputsToExpected = [
         {
           'input': 'hana dul sae saesae saedul dulsae hanadulsae hanahana duldul',
@@ -773,7 +778,7 @@ void main(){
       });
     });
 
-    group("NumeralWords.Shadoks:", () {
+  group("NumeralWords.Shadoks:", () {
         List<Map<String, dynamic>> _inputsToExpected = [
           {
             'input': 'ga bu zo meu meumeu zobugameu zozo gazo gaga',
@@ -808,4 +813,44 @@ void main(){
           });
         });
       });
+
+  group("NumeralWords.Klingon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {
+        'input': "north         cha'maH-jav         cha' wa'vatlh 'ej loSmaH-Hut       chan         nineteen        pagh-wej-chorgh",
+        'language': NumeralWordsLanguage.ALL,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput('numeralwords_n', 'north', 'common_language_english'),
+          NumeralWordsDecodeOutput("20", "cha'mah", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("6", "jav", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("2", "cha'", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("100", "wa'vatlh", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("40", "losmah", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("9", "hut", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("numeralwords_e", 'chan', 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("19", 'nineteen', 'common_language_english'),
+          NumeralWordsDecodeOutput("0", 'pagh', 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("3", 'wej', 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("8", 'chorgh', 'numeralwords_language_kli'),
+        ]
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test(
+          'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(
+            removeAccents(elem['input'].toString().toLowerCase()),
+            elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
+
 }
