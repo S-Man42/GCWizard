@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:universal_html/html.dart' as html;
+
 import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
@@ -184,3 +184,4 @@ String changeExtension(String fileName, String extension) {
 String normalizePath(String path) {
   return normalize(path);
 }
+
