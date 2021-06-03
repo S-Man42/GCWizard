@@ -78,6 +78,9 @@ Future<Uint8List> _binary2Image(String input) async {
   var pointSize = 5.0;
   var lines = input.split('\n');
 
+  if (lines.length == 1)
+    lines.addAll([lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0]]);
+
   var width = 0.0;
   var height = 0.0;
 
