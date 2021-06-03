@@ -816,23 +816,70 @@ void main(){
 
   group("NumeralWords.Klingon:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {
+      {// GC8J08H
         'input': "north         cha'maH-jav         cha' wa'vatlh 'ej loSmaH-Hut       chan         nineteen        pagh-wej-chorgh",
         'language': NumeralWordsLanguage.ALL,
         'decodeMode': true,
         'expectedOutput': [
           NumeralWordsDecodeOutput('numeralwords_n', 'north', 'common_language_english'),
-          NumeralWordsDecodeOutput("20", "cha'mah", 'numeralwords_language_kli'),
-          NumeralWordsDecodeOutput("6", "jav", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("26", "cha'mah jav", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("2", "cha'", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("100", "wa'vatlh", 'numeralwords_language_kli'),
-          NumeralWordsDecodeOutput("40", "losmah", 'numeralwords_language_kli'),
-          NumeralWordsDecodeOutput("9", "hut", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("49", "losmah hut", 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("numeralwords_e", 'chan', 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("19", 'nineteen', 'common_language_english'),
           NumeralWordsDecodeOutput("0", 'pagh', 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("3", 'wej', 'numeralwords_language_kli'),
           NumeralWordsDecodeOutput("8", 'chorgh', 'numeralwords_language_kli'),
+        ]
+      },
+      {// http://klingon.wiki/De/Zahlen
+        'input': "vaghbIp loSvatlh wa'",
+        'language': NumeralWordsLanguage.KLI,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput("500401", "vaghbip losvatlh wa'", 'numeralwords_language_kli'),
+        ]
+      },
+      {// http://klingon.wiki/De/Zahlen
+        'input': "cha'maH wej",
+        'language': NumeralWordsLanguage.KLI,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput("23", "cha'mah wej", 'numeralwords_language_kli'),
+        ]
+      },
+      {
+        'input': "vaghbIp loSvatlh wa' chan nau cha'mah wej",
+        'language': NumeralWordsLanguage.ALL,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput("500401", "vaghbip losvatlh wa'", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("numeralwords_e", "chan", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("9", "nau", 'common_language_esperanto'),
+          NumeralWordsDecodeOutput("", "", 'numeralwords_language_meg'),
+          NumeralWordsDecodeOutput("23", "cha'mah wej", 'numeralwords_language_kli'),
+        ]
+      },
+      {
+        'input': "'oy' vaghmaH cha' Qoch cha'maH Soch ngev wejvatlh javmah Hut chan pagh wa'maH wej Qoch cha'maH hut ghob pagh Hutmah loS",
+        'language': NumeralWordsLanguage.KLI,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput("numeralwords_n", "'oy'", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("52", "vaghmah cha'", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("°", "qoch", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("27", "cha\'mah soch", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput(".", "ngev", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("369", "wejvatlh javmah hut", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("numeralwords_e", "chan", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("0", "pagh", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("13", "wa'mah wej", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("°", "qoch", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("29", "cha'mah hut", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput(".", "ghob", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("0", "pagh", 'numeralwords_language_kli'),
+          NumeralWordsDecodeOutput("94", "hutmah los", 'numeralwords_language_kli'),
         ]
       },
     ];
