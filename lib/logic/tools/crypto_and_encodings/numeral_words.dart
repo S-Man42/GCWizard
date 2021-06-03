@@ -538,7 +538,7 @@ final Map<String, String> RUSWordToNum = {
   'dwa': '2',
   'dwje': '2',
   'tri': '3',
-  'četýrje': '4',
+  'četýrje': '4', 
   'pjat': '5',
   'šest': '6',
   'sem': '7',
@@ -738,6 +738,7 @@ final Map<String, String> SOLWordToNum = {
 
 final Map<String, String> LATWordToNum = {
   'zerum': '0',
+  'nullum': '0',
   'unus': '1',
   'duo': '2',
   'tria': '3',
