@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 //import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
-
-// import 'file_utils.dart';
+import 'file_utils.dart';
 
 var unsupportedAndroidTypes = ['gpx'];
 var supportedImageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'];
@@ -55,18 +55,23 @@ Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) 
       type: allowedExtensions == null ? FileType.any : FileType.custom,
       allowMultiple: false,
       allowedExtensions: allowedExtensions,
-      withData: true
     ))?.files;
 
     if (allowedExtensions == null)
       files = _filterFiles(files, allowedExtensionsTmp);
 
-    return (files == null || files.length == 0) ? null : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
+    return (files == null || files.length == 0) ? null : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: await _getByteData(files.first));
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }
   return null;
 }
+
+Future<Uint8List> _getByteData(PlatformFile file) async {
+  return kIsWeb ? file.bytes : await readByteDataFromFile(file.path);
+}
+
+
 
 // String _filterFile(String fileName, List<String> allowedExtensions) {
 //   return allowedExtensions.contains(fileName?.split('.').last) ? fileName : null;
