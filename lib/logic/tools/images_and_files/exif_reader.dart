@@ -6,11 +6,17 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:latlong/latlong.dart';
 
 Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
-  Map<String, IfdTag> data = await readExifFromBytes(file.bytes,
-      details: true,
-      // debug: true, //XMP (experimental)
-      //strict: false,
-      truncate_tags: false);
+  Map<String, IfdTag> data;
+
+  try {
+    data = await readExifFromBytes(file.bytes,
+        details: true,
+        // debug: true, //XMP (experimental)
+        //strict: false,
+        truncate_tags: false);
+  } on Exception catch (e) {
+    // silent error
+  }
 
   if (data == null || data.isEmpty) {
     print("No EXIF information found\n");
