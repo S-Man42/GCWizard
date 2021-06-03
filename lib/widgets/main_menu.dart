@@ -106,8 +106,6 @@ buildMainMenu(BuildContext context) {
 }
 
 _buildSettingsItem(BuildContext context) {
-  print(i18n(context, 'mainmenu_settings_tools_title'));
-
   final settingsItems = [
     {
       'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
