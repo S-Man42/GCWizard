@@ -53,22 +53,21 @@ Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) 
     var files = (await FilePicker.platform.pickFiles(
             type: allowedExtensions == null ? FileType.any : FileType.custom,
             allowMultiple: false,
-            allowedExtensions: allowedExtensions,
-            withData: true))
+            allowedExtensions: allowedExtensions))
         ?.files;
 
     if (allowedExtensions == null) files = _filterFiles(files, allowedExtensionsTmp);
 
     return (files == null || files.length == 0)
         ? null
-        : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
+        : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: await _getFileData(files.first));
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }
   return null;
 }
 
-Future<Uint8List> getFileData(local.PlatformFile file) async {
+Future<Uint8List> _getFileData(PlatformFile file) async {
   return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
 }
 

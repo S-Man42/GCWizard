@@ -17,7 +17,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as Image;
 // import 'package:image_size_getter/file_input.dart';
 // import 'package:image_size_getter/image_size_getter.dart';
@@ -25,7 +25,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
 class ExifReader extends StatefulWidget {
-  final PlatformFile file;
+  final local.PlatformFile file;
 
   ExifReader({Key key, this.file}) : super(key: key);
 
@@ -35,7 +35,7 @@ class ExifReader extends StatefulWidget {
 
 class _ExifReaderState extends State<ExifReader> {
   Map<String, List<List<dynamic>>> tableTags;
-  PlatformFile file;
+  local.PlatformFile file;
   LatLng point;
   GCWImageViewData thumbnail;
   Image.Image image;
@@ -66,12 +66,12 @@ class _ExifReaderState extends State<ExifReader> {
   Future<void> _readFileFromPicker() async {
     var file = await openFileExplorer(allowedExtensions: supportedImageTypes);
     if (file != null) {
-      PlatformFile _file = file;
+      local.PlatformFile _file = file;
       return _readFile(_file);
     }
   }
 
-  Future<void> _readFile(PlatformFile _file) async {
+  Future<void> _readFile(local.PlatformFile _file) async {
     if (_file == null) return;
 
     Map<String, IfdTag> tags = await parseExif(_file);
@@ -180,7 +180,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section file
   ///
-  void _decorateFile(List<Widget> widgets, PlatformFile platformFile) {
+  void _decorateFile(List<Widget> widgets, local.PlatformFile platformFile) {
     if (platformFile != null) {
       File _file;
       if (platformFile.path != null) {
@@ -226,7 +226,7 @@ class _ExifReaderState extends State<ExifReader> {
     }
   }
 
-  Future<Image.Image> completeImageMetadata(PlatformFile platformFile) async {
+  Future<Image.Image> completeImageMetadata(local.PlatformFile platformFile) async {
     Uint8List data = platformFile.bytes;
     Image.Image image;
     try {

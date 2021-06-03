@@ -7,7 +7,7 @@ import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
-import 'package:path/path.dart' as Path;
+import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
@@ -76,6 +76,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     //
     // filePath = '/$web_directory/$fileName';
   } else {
+    fileName = _limitFileNameLength(fileName);
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
       writer: (file) async {
@@ -103,6 +104,7 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     //
     // filePath = '/$web_directory/$fileName';
   } else {
+    fileName = _limitFileNameLength(fileName);
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
       writer: (file) async {
@@ -115,6 +117,13 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     filePath = fileInfo.identifier;
   }
   return {'path': filePath, 'file': fileX};
+}
+
+String _limitFileNameLength(String fileName) {
+  const int maxLength = 30;
+  if (fileName.length <= maxLength) return fileName;
+  var extension = getFileExtension(fileName);
+  return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength - extension.length) + extension;
 }
 
 shareFile(String path, String type) {
@@ -161,14 +170,18 @@ String getFileType(Uint8List blobBytes, {String defaultType = ".txt"}) {
 }
 
 String getFileExtension(String fileName) {
-  return Path.extension(fileName);
+  return extension(fileName);
 }
 
 String getFileBaseNameWithoutExtension(String fileName) {
-  return Path.basenameWithoutExtension(fileName);
+  return basenameWithoutExtension(fileName);
 }
 
 String changeExtension(String fileName, String extension) {
-  //return Path.basenameWithoutExtension(fileName)+extension;
-  return Path.setExtension(fileName, extension);
+  return setExtension(fileName, extension);
 }
+
+String normalizePath(String path) {
+  return normalize(path);
+}
+

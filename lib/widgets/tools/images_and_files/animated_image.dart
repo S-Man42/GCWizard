@@ -16,11 +16,11 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:intl/intl.dart';
 
 class AnimatedImage extends StatefulWidget {
-  final PlatformFile platformFile;
+  final local.PlatformFile platformFile;
 
   const AnimatedImage({Key key, this.platformFile}) : super(key: key);
 
@@ -30,7 +30,7 @@ class AnimatedImage extends StatefulWidget {
 
 class AnimatedImageState extends State<AnimatedImage> {
   Map<String, dynamic> _outData;
-  PlatformFile _platformFile;
+  local.PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
   static var allowedExtensions = ['gif', 'png', 'webp'];

@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:xml/xml.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -16,7 +16,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adap
 import 'package:gc_wizard/persistence/map_view/model.dart';
 
 Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async {
-  switch (path.extension(fileName).toLowerCase()) {
+  switch (getFileExtension(fileName).toLowerCase()) {
     case '.gpx':
       var xml = String.fromCharCodes(bytes);
       return parseCoordinatesFile(xml);
