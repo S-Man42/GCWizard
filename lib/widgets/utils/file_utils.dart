@@ -123,7 +123,7 @@ String _limitFileNameLength(String fileName) {
   const int maxLength = 30;
   if (fileName.length <= maxLength) return fileName;
   var extension = getFileExtension(fileName);
-  return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength-extension.length) + extension;
+  return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength - extension.length) + extension;
 }
 
 shareFile(String path, String type) {

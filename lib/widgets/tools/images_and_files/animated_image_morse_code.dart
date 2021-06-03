@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart'  as local;
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -26,7 +26,7 @@ import 'package:intl/intl.dart';
 
 
 class AnimatedImageMorseCode extends StatefulWidget {
-  final PlatformFile platformFile;
+  final local.PlatformFile platformFile;
 
   const AnimatedImageMorseCode({Key key, this.platformFile})
       : super(key: key);
@@ -39,7 +39,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Map<String, dynamic> _outData;
   var _marked = <bool>[];
   Map<String, dynamic> _outText;
-  PlatformFile _platformFile;
+  local.PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
   bool _filtered = true;

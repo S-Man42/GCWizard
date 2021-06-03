@@ -112,14 +112,13 @@ class _SteganoState extends State<Stegano> {
 
   Future<void> _readFileFromPicker() async {
     local.PlatformFile file = await openFileExplorer(
-      allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'],
+      allowedExtensions: supportedImageTypes,
     );
     if (file != null) {
       if (file == null) return;
-      var bytesSrc = await getFileData(file);
       setState(() {
         _file = file;
-        _bytesSource = bytesSrc;
+        _bytesSource = file.bytes;
         // clear previous decoded text
         _decodedText = null;
       });
