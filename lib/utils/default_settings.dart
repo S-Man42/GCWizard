@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
@@ -77,6 +78,10 @@ void initDefaultSettings() {
 
   if (Prefs.get('mapview_mapviews') == null) {
     Prefs.setStringList('mapview_mapviews', []);
+  }
+
+  if (Prefs.get('mayacalendar_correlation') == null) {
+    Prefs.setString('mayacalendar_correlation', THOMPSON);
   }
 
   if (Prefs.get('multidecoder_tools') == null) {

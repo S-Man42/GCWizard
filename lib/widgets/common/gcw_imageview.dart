@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -27,8 +27,11 @@ class GCWImageViewData {
 class GCWImageView extends StatefulWidget {
   final GCWImageViewData imageData;
   final bool toolBarRight;
+  final String extension;
+  final String fileName;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true}) : super(key: key);
+  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName})
+      : super(key: key);
 
   @override
   _GCWImageViewState createState() => _GCWImageViewState();
@@ -172,7 +175,7 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _openInMetadataViewer() {
-    PlatformFile file = PlatformFile(bytes: widget.imageData.bytes);
+    local.PlatformFile file = local.PlatformFile(bytes: widget.imageData.bytes);
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute(
@@ -195,10 +198,17 @@ class _GCWImageViewState extends State<GCWImageView> {
     //             missingHelpLocales: ['ko'])));
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  _exportFile(BuildContext context, Uint8List data,
+      {String extension, String fileName, bool addTimestamp: true}) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(data.buffer.asByteData(),
-        'imageview_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+    String fileExtension = getFileExtension(fileName);
+    String ext = extension ?? fileExtension ?? fileType;
+    String baseName = getFileBaseNameWithoutExtension(fileName);
+    baseName = baseName ?? 'imageview_export';
+    String timestamp = addTimestamp ? DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) : '';
+    String outputFilename = '${baseName}_${timestamp}${ext}';
+
+    var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }
