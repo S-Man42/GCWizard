@@ -53,8 +53,7 @@ Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) 
     var files = (await FilePicker.platform.pickFiles(
             type: allowedExtensions == null ? FileType.any : FileType.custom,
             allowMultiple: false,
-            allowedExtensions: allowedExtensions,
-            withData: true))
+            allowedExtensions: allowedExtensions))
         ?.files;
 
     if (allowedExtensions == null) files = _filterFiles(files, allowedExtensionsTmp);
