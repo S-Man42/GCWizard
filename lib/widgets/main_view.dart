@@ -517,8 +517,8 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    // _categoryList.sort((a, b) {
-    //   return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    // });
+    _categoryList.sort((a, b) {
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
   }
 }
