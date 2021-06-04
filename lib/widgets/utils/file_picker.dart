@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
-var unsupportedAndroidTypes = ['gpx'];
+var unsupportedMobileTypes = ['gpx'];
 var supportedImageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'];
 
 /// Open File Picker dialog
@@ -91,10 +91,10 @@ bool _isAndroid() {
 
 bool _hasUnsupportedTypes(List<String> allowedExtensions) {
   if (allowedExtensions == null) return false;
-  if (!_isAndroid()) return false;
+  if (kIsWeb) return false;
 
   for (int i = 0; i < allowedExtensions.length; i++) {
-    if (unsupportedAndroidTypes.contains(allowedExtensions[i])) return true;
+    if (unsupportedMobileTypes.contains(allowedExtensions[i])) return true;
   }
   return false;
 }
