@@ -33,11 +33,11 @@ class KarolRobotState extends State<KarolRobot> {
   String _codeData;
 
   var _MASKINPUTFORMATTER_ENCODE = WrapperForMaskTextInputFormatter(
-      mask: '@' * 50000,
+      mask: '@' * 100,
       filter: {"@": RegExp(r'[A-Za-z0-9 .°,\n\r]')});
 
   var _MASKINPUTFORMATTER_DECODE = WrapperForMaskTextInputFormatter(
-      mask: "@" * 10000,
+      mask: "@" * 50000,
       filter: {"@": RegExp(r'[A-Za-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
