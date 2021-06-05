@@ -91,8 +91,6 @@ class KarolRobotState extends State<KarolRobot> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    print(_currentMode);
-    print(_currentEncode+'. .'+_currentDecode);
     String output = '';
     double size = 6.0;
     if (_currentMode == GCWSwitchPosition.left) {
