@@ -1,17 +1,20 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:intl/intl.dart';
 
 class KarolRobot extends StatefulWidget {
   @override
@@ -26,15 +29,19 @@ class KarolRobotState extends State<KarolRobot> {
   var _currentEncode = '';
   var _currentOutput = '';
 
+  Uint8List _outData;
+  String _codeData;
+
   var _MASKINPUTFORMATTER_ENCODE = WrapperForMaskTextInputFormatter(
-      mask: '@' * 5000,
+      mask: '@' * 50000,
       filter: {"@": RegExp(r'[A-Za-z0-9 .°,\n\r]')});
 
   var _MASKINPUTFORMATTER_DECODE = WrapperForMaskTextInputFormatter(
       mask: "@" * 10000,
-      filter: {"@": RegExp(r'[A-Za-z \n\r]')});
+      filter: {"@": RegExp(r'[A-Za-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentLanguageMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -75,16 +82,30 @@ class KarolRobotState extends State<KarolRobot> {
                 });
               },
             )
-        : GCWTextField(
-          controller: _encodeController,
-          hintText: i18n(context, 'karol_robot_hint_encode'),
-          inputFormatters: [_MASKINPUTFORMATTER_ENCODE],
-          onChanged: (text) {
-            setState(() {
-              _currentEncode = text;
-            });
-          },
-        ),
+        : Column(
+          children: <Widget>[
+            GCWTwoOptionsSwitch(
+              leftValue: i18n(context, 'common_language_german'),
+              rightValue: i18n(context, 'common_language_english'),
+              value: _currentLanguageMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentLanguageMode = value;
+                });
+              },
+            ),
+            GCWTextField(
+              controller: _encodeController,
+              hintText: i18n(context, 'karol_robot_hint_encode'),
+              inputFormatters: [_MASKINPUTFORMATTER_ENCODE],
+              onChanged: (text) {
+                setState(() {
+                  _currentEncode = text;
+                });
+              },
+            ),
+
+          ]),
         _buildOutput(context)
           ],
     );
@@ -96,23 +117,72 @@ class KarolRobotState extends State<KarolRobot> {
     if (_currentMode == GCWSwitchPosition.left) {
       output = KarolRobotOutputDecode(_currentDecode);
       size = 6.0;
+//      _createOutput(output.replaceAll('█', '1').replaceAll('░', '0'));
     }else{
-      output = KarolRobotOutputEncode(_currentEncode);
+      output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
       size = 16.0;
     }
-    return GCWDefaultOutput(
-            child: GCWOutputText(
-              text: output,
-//              isMonotype: true,
-              style: TextStyle(
-                fontFamily: 'Courier',
-                fontSize: size,
-                fontWeight: FontWeight.bold,
-                //letterSpacing: 0.0,
-                //height: 6,
-              ),
-            )
-    );
+    return
+      Column(
+          children: <Widget>[
+            GCWDefaultOutput(
+                child: GCWOutputText(
+                  text: output,
+                  style: TextStyle(
+                    fontFamily: 'Courier',
+                    fontSize: size,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+            ),
+            _currentMode == GCWSwitchPosition.left //decode
+            ? GCWDefaultOutput(
+                child: _buildGraphicOutput(),
+                trailing: GCWIconButton(
+                  iconData: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  iconColor: _outData == null ? Colors.grey : null,
+                  onPressed: () {
+                    _outData == null ? null : _exportFile(context, _outData);
+                  },
+                ))
+           : Container()
+          ]
+      );
+  }
+
+  _createOutput(String output) {
+    _outData = null;
+    _codeData = null;
+    binary2image(output, false, false).then((value) {
+      setState(() {
+        _outData = value;
+        scanBytes(_outData).then((value) {
+          setState(() {
+            _codeData = value;
+          });
+        });
+      });
+    });
+  }
+
+  Widget _buildGraphicOutput() {
+    if (_outData == null) return null;
+
+    return Column(children: <Widget>[
+      Image.memory(_outData),
+      _codeData != null
+          ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeData)
+          : Container(),
+    ]);
+  }
+
+  _exportFile(BuildContext context, Uint8List data) async {
+    var value = await saveByteDataToFile(
+        data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+
+    if (value != null)
+      showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(_outData));
   }
 
 }
