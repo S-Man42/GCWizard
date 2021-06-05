@@ -101,6 +101,7 @@ void main() {
       {'input' : 'TËΘ', 'positions' : '1.2', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Ë'},
       {'input' : 'TËΘ', 'positions' : '1.3', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Θ'},
       {'input' : 'TË-_Θ', 'positions' : '1.3', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Θ'},
+      {'input' : 'TË-_6', 'positions' : '1.3', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : '6'},
     ];
 
     _inputsToExpected.forEach((elem) {
