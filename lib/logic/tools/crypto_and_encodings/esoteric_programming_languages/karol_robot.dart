@@ -1,4 +1,7 @@
 // https://coord.info/GC4ZE0V
+// http://karel.sourceforge.net/
+// https://de.wikipedia.org/wiki/Robot_Karol
+// https://www.mebis.bayern.de/infoportal/faecher/mint/inf/robot-karol/
 
 String KarolRobotOutput(String program){
   if (program == '')
@@ -16,7 +19,6 @@ String KarolRobotOutput(String program){
   program.toLowerCase().split(' ').forEach((element) {
     if (!halt)
       if (expSchritt.hasMatch(element)) {
-        print(expSchritt.firstMatch(element).group(0).replaceAll('schritt', '').replaceAll('move', '').replaceAll('(', '').replaceAll(')', ''));
         int count = int.parse(expSchritt.firstMatch(element).group(0).replaceAll('schritt', '').replaceAll('move', '').replaceAll('(', '').replaceAll(')', '') );
         switch (direction) {
           case 'n' : y = y - count; break;
