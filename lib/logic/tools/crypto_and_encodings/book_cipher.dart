@@ -368,27 +368,28 @@ int _globalLetterPosition(_wordClass word, int letterPosition, List<_wordClass> 
 }
 
 String _removeNonLetters(String text, {bool startCharacter = false, bool lastCharacter = false}) {
-  if (!startCharacter & !lastCharacter) return text.replaceAll(RegExp(r"[^" + _validLetters() + "]"), '');
-  if (startCharacter) text = text.replaceAll(RegExp(r"^[^" + _validLetters() + "]"), '');
-  if (lastCharacter) text = text.replaceAll(RegExp(r"[^" + _validLetters() + r"]$"), '');
+  if (!startCharacter & !lastCharacter) return text.replaceAll(RegExp(r"[^" + _validCharacters() + "]"), '');
+  if (startCharacter) text = text.replaceAll(RegExp(r"^[^" + _validCharacters() + "]"), '');
+  if (lastCharacter) text = text.replaceAll(RegExp(r"[^" + _validCharacters() + r"]$"), '');
 
   return text;
 }
 
-String validLetters;
+String validCharacters;
 
-String _validLetters() {
-  if (validLetters != null) return validLetters;
+String _validCharacters() {
+  if (validCharacters != null) return validCharacters;
 
-  validLetters = '';
+  validCharacters = '';
   ALL_ALPHABETS.forEach((alphabet) {
     alphabet.alphabet.forEach((key, value) {
-      validLetters += key;
+      validCharacters += key;
     });
   });
-  validLetters =  removeDuplicateCharacters(validLetters);
-  validLetters += validLetters.toLowerCase();
-  return validLetters;
+  validCharacters =  removeDuplicateCharacters(validCharacters);
+  validCharacters += validCharacters.toLowerCase();
+  validCharacters += '0123456789';
+  return validCharacters;
 }
 
 Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordClass> wordList) {
