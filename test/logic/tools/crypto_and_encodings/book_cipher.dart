@@ -96,6 +96,11 @@ void main() {
       {'input' : text1, 'positions' : '1 3 8', 'searchFormat' : searchFormat.RowWordLetter, 'expectedOutput' : 'S'},
       {'input' : text1, 'positions' : '25 3', 'searchFormat' : searchFormat.WordLetter, 'expectedOutput' : 'L'},
       {'input' : text1, 'positions' : '4', 'searchFormat' : searchFormat.Letter, 'expectedOutput' : 'W'},
+      {'input' : 'TäΘ', 'positions' : '1.2', 'searchFormat' : searchFormat.SectionLetter, 'expectedOutput' : 'Ä'},
+      {'input' : 'TäΘ', 'positions' : '1.2', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Ä'},
+      {'input' : 'TËΘ', 'positions' : '1.2', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Ë'},
+      {'input' : 'TËΘ', 'positions' : '1.3', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Θ'},
+      {'input' : 'TË-_Θ', 'positions' : '1.3', 'searchFormat' : searchFormat.RowLetter, 'expectedOutput' : 'Θ'},
     ];
 
     _inputsToExpected.forEach((elem) {
