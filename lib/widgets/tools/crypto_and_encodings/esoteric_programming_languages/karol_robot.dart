@@ -8,7 +8,10 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class KarolRobot extends StatefulWidget {
   @override
@@ -16,23 +19,34 @@ class KarolRobot extends StatefulWidget {
 }
 
 class KarolRobotState extends State<KarolRobot> {
-  var _programmController;
-  var _outputController;
+  var _decodeController;
+  var _encodeController;
 
-  var _currentProgram = '';
+  var _currentDecode = '';
+  var _currentEncode = '';
   var _currentOutput = '';
+
+  var _MASKINPUTFORMATTER_ENCODE = WrapperForMaskTextInputFormatter(
+      mask: '@' * 5000,
+      filter: {"@": RegExp(r'[A-Za-z0-9 .°,\n\r]')});
+
+  var _MASKINPUTFORMATTER_DECODE = WrapperForMaskTextInputFormatter(
+      mask: "@" * 10000,
+      filter: {"@": RegExp(r'[A-Za-z \n\r]')});
+
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
-    _programmController = TextEditingController(text: _currentProgram);
-    _outputController = TextEditingController(text: _currentOutput);
+    _decodeController = TextEditingController(text: _currentDecode);
+    _encodeController = TextEditingController(text: _currentOutput);
   }
 
   @override
   void dispose() {
-    _programmController.dispose();
-    _outputController.dispose();
+    _decodeController.dispose();
+    _encodeController.dispose();
     super.dispose();
   }
 
@@ -40,29 +54,61 @@ class KarolRobotState extends State<KarolRobot> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-            GCWTextField(
-              controller: _programmController,
-              hintText: i18n(context, 'beatnik_hint_code'),
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'karol_robot_interpret'),
+          rightValue: i18n(context, 'karol_robot_generate'),
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left //decode
+        ? GCWTextField(
+              controller: _decodeController,
+              hintText: i18n(context, 'karol_robot_hint_decode'),
+              inputFormatters: [_MASKINPUTFORMATTER_DECODE],
               onChanged: (text) {
                 setState(() {
-                  _currentProgram = text;
+                  _currentDecode = text;
                 });
               },
-            ),
+            )
+        : GCWTextField(
+          controller: _encodeController,
+          hintText: i18n(context, 'karol_robot_hint_encode'),
+          inputFormatters: [_MASKINPUTFORMATTER_ENCODE],
+          onChanged: (text) {
+            setState(() {
+              _currentEncode = text;
+            });
+          },
+        ),
         _buildOutput(context)
           ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
-
+    print(_currentMode);
+    print(_currentEncode+'. .'+_currentDecode);
+    String output = '';
+    double size = 6.0;
+    if (_currentMode == GCWSwitchPosition.left) {
+      output = KarolRobotOutputDecode(_currentDecode);
+      size = 6.0;
+    }else{
+      output = KarolRobotOutputEncode(_currentEncode);
+      size = 16.0;
+    }
     return GCWDefaultOutput(
             child: GCWOutputText(
-              text: KarolRobotOutput(_currentProgram),
+              text: output,
 //              isMonotype: true,
               style: TextStyle(
                 fontFamily: 'Courier',
-                fontSize: 6,
+                fontSize: size,
                 fontWeight: FontWeight.bold,
                 //letterSpacing: 0.0,
                 //height: 6,
