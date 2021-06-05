@@ -142,6 +142,7 @@ const SEARCHSTRING_DE_ESOTERIC_BRAINFK = 'gehirn';
 const SEARCHSTRING_DE_ESOTERIC_CHEF = 'chef chefkoch kochrezepte rezepte kochen zutaten';
 const SEARCHSTRING_DE_ESOTERIC_COW = 'kuh muh kuehe rinder';
 const SEARCHSTRING_DE_ESOTERIC_DEADFISH = 'toterfisch';
+const SEARCHSTRING_DE_ESOTERIC_KAROL_ROBOT = "karol";
 const SEARCHSTRING_DE_ESOTERIC_MALBOLGE = 'hoelle';
 const SEARCHSTRING_DE_ESOTERIC_OOK = 'punkte fragezeichen ausrufezeichen affen orang-utans orangutans';
 const SEARCHSTRING_DE_ESOTERIC_WHITESPACELANGUAGE = 'leerzeichen tabulator zeilenumbruch';
