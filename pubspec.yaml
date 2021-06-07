@@ -25,7 +25,7 @@ dependencies:
   fluttertoast: ^8.0.3
   image: ^3.0.2
   intl: ^0.17.0
-  location: ^4.2.0
+  location: ^4.2.1
   mask_text_input_formatter: ^1.2.1
   math_expressions: ^2.1.0
   open_file: ^3.2.1
