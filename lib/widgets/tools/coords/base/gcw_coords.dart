@@ -71,7 +71,7 @@ class GCWCoordsState extends State<GCWCoords> {
 
     _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
     _setPastedCoordsFormat();
-    _currentValue = widget.coordinates ?? DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
+    _currentValue = (widget.coordinates ?? defaultCoordinate) == null ? null : DEC.fromLatLon(widget.coordinates ?? defaultCoordinate);
     _pastedCoords = _currentValue;
   }
 
