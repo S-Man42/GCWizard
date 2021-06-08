@@ -521,7 +521,7 @@ const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword texting messaging messages texts messager messenger';
 const SEARCHSTRING_EN_VANITYMULTITAP = 'multitap';
-const SEARCHSTRING_EN_VANITYSINGLETAP = '';
+const SEARCHSTRING_EN_VANITYSINGLETAP = 'singletap';
 const SEARCHSTRING_EN_VANITYTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_VANITYWORDSLIST = '';
 const SEARCHSTRING_EN_VIGENERE = '';
