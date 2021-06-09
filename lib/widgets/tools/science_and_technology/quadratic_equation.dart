@@ -16,9 +16,9 @@ class QuadraticEquation extends StatefulWidget {
 }
 
 class QuadraticEquationState extends State<QuadraticEquation> {
-  var _currentA = '';
-  var _currentB = '';
-  var _currentC = '';
+  var _currentA = '0.0';
+  var _currentB = '0.0';
+  var _currentC = '0.0';
   var _aController;
   var _bController;
   var _cController;
@@ -94,17 +94,24 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   Widget _buildOutput(BuildContext context) {
     Map<String, String> result = new Map<String, String>();
     result = SolveEquation(_currentA, _currentB, _currentC);
-    return GCWDefaultOutput(
-        child: Column(
-      children: columnedMultiLineOutput(
-          context,
-          result.entries.map((entry) {
-            if (entry.key.startsWith('quad'))
-              return [i18n(context, entry.key), i18n(context, entry.value)];
-            else
-              return [entry.key, entry.value];
-          }).toList(),
-          flexValues: [1, 1]),
-    ));
+    if (result[''] == null)
+      return GCWDefaultOutput(
+          child: Column(
+            children: columnedMultiLineOutput(
+                context,
+                result.entries.map((entry) {
+                  if (entry.key.startsWith('quad'))
+                    return [
+                      i18n(context, entry.key),
+                      i18n(context, entry.value)
+                    ];
+                  else
+                    return [entry.key, entry.value];
+                }).toList(),
+                flexValues: [1, 1]),
+          ));
+    else
+      return Container();
   }
+
 }
