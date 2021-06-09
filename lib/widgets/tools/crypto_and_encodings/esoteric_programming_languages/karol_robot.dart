@@ -34,11 +34,11 @@ class KarolRobotState extends State<KarolRobot> {
 
   var _MASKINPUTFORMATTER_ENCODE = WrapperForMaskTextInputFormatter(
       mask: '@' * 100,
-      filter: {"@": RegExp(r'[A-Za-z0-9 .°,\n\r]')});
+      filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9 .°,\n\r]')});
 
   var _MASKINPUTFORMATTER_DECODE = WrapperForMaskTextInputFormatter(
       mask: "@" * 50000,
-      filter: {"@": RegExp(r'[A-Za-z0-9() \n\r]')});
+      filter: {"@": RegExp(r'[A-ZÜüa-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentLanguageMode = GCWSwitchPosition.left;
@@ -79,6 +79,9 @@ class KarolRobotState extends State<KarolRobot> {
               onChanged: (text) {
                 setState(() {
                   _currentDecode = text;
+                  //var output = KarolRobotOutputDecode(_currentDecode);
+                  //_createOutput(output.replaceAll('█', '1').replaceAll('░', '0'));
+                  _createOutput(KarolRobotOutputDecode(_currentDecode));
                 });
               },
             )
@@ -114,11 +117,7 @@ class KarolRobotState extends State<KarolRobot> {
   Widget _buildOutput(BuildContext context) {
     String output = '';
     double size = 6.0;
-    if (_currentMode == GCWSwitchPosition.left) {
-      output = KarolRobotOutputDecode(_currentDecode);
-      size = 6.0;
-//      _createOutput(output.replaceAll('█', '1').replaceAll('░', '0'));
-    }else{
+    if (_currentMode == GCWSwitchPosition.right) {
       output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
       size = 16.0;
     }

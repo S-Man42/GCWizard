@@ -48,6 +48,49 @@ final KAROL_COMMANDS = {
   ',' : 'schritt(7) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(3) rechtsdrehen'
 };
 
+final KAROL_COLORS = {
+  'weiß' : '0',
+  'schwarz': '1',
+  'hellrot': '2',
+  'hellgelb': '3',
+  'hellgrün': '4',
+  'hellcyan': '5',
+  'hellblau': '6',
+  'hellmagenta': '7',
+  'rot': '8',
+  'gelb': '9',
+  'grün': 'A',
+  'cyan': 'B',
+  'blau': 'C',
+  'magenta': 'D',
+  'dunkelrot': 'E',
+  'dunkelgelb': 'F',
+  'dunkelgrün': 'G',
+  'dunkelcyan': 'H',
+  'dunkelblau': 'I',
+  'dunkelmagenta': 'J',
+  'white' : '0',
+  'black': '1',
+  'lightred': '2',
+  'lightyellow': '3',
+  'lightgreen': '4',
+  'lightcyan': '5',
+  'lightblue': '6',
+  'lightmagenta': '7',
+  'red': '8',
+  'yellow': '9',
+  'green': 'A',
+  'cyan': 'B',
+  'blue': 'C',
+  'magenta': 'D',
+  'darkred': 'E',
+  'darkyellow': 'F',
+  'darkgren': 'G',
+  'darkcyan': 'H',
+  'darkblue': 'I',
+  'darkmagenta': 'J',
+};
+
 String KarolRobotOutputEncode(String output, bool english){
   String program = '';
   int lineLength = 0;
@@ -76,18 +119,20 @@ String KarolRobotOutputEncode(String output, bool english){
 }
 
 String KarolRobotOutputDecode(String program){
-  if (program == '')
+  if (program == '' || program == null)
     return '';
+
   int x = 1;
   int y = 1;
   String direction = 's';
   int maxX = 1;
   int maxY = 1;
-  Map<String, int> world = new Map();
+  Map<String, String> world = new Map();
   bool halt = false;
 
   String output = '';
   RegExp expSchritt = RegExp(r'(schritt|move)\(\d+\)');
+  RegExp expHinlegen = RegExp(r'hinlegen\(\d+\)');
   program.toLowerCase().replaceAll('\n', '').split(' ').forEach((element) {
     if (!halt)
       if (expSchritt.hasMatch(element)) {
@@ -100,6 +145,24 @@ String KarolRobotOutputDecode(String program){
         }
         if (x > maxX) maxX = x;
         if (y > maxY) maxY = y;
+      } else if (expHinlegen.hasMatch(element)) {
+        String color = KAROL_COLORS[expSchritt.firstMatch(element).group(0).replaceAll('hinlegen', '').replaceAll('(', '').replaceAll(')', '')];
+        if (color == null)
+          color = '0';
+        switch (direction) {
+          case 'n':
+            world[x.toString() + '|' + (y - 1).toString()] = color;
+            break;
+          case 's':
+            world[x.toString() + '|' + (y + 1).toString()] = color;
+            break;
+          case 'e':
+            world[(x + 1).toString() + '|' + (y).toString()] = color;
+            break;
+          case 'w':
+            world[(x - 1).toString() + '|' + (y).toString()] = color;
+            break;
+        }
       }
       else
         switch (element) {
@@ -136,16 +199,16 @@ String KarolRobotOutputDecode(String program){
           case 'hinlegen':
             switch (direction) {
               case 'n':
-                world[x.toString() + '|' + (y - 1).toString()] = 1;
+                world[x.toString() + '|' + (y - 1).toString()] = '8';
                 break;
               case 's':
-                world[x.toString() + '|' + (y + 1).toString()] = 1;
+                world[x.toString() + '|' + (y + 1).toString()] = '8';
                 break;
               case 'e':
-                world[(x + 1).toString() + '|' + (y).toString()] = 1;
+                world[(x + 1).toString() + '|' + (y).toString()] = '8';
                 break;
               case 'w':
-                world[(x - 1).toString() + '|' + (y).toString()] = 1;
+                world[(x - 1).toString() + '|' + (y).toString()] = '8';
                 break;
             }
             break;
@@ -153,26 +216,26 @@ String KarolRobotOutputDecode(String program){
           case 'aufheben':
             switch (direction) {
               case 'n':
-                world[x.toString() + '|' + (y - 1).toString()] = 0;
+                world[x.toString() + '|' + (y - 1).toString()] = '0';
                 break;
               case 's':
-                world[x.toString() + '|' + (y + 1).toString()] = 0;
+                world[x.toString() + '|' + (y + 1).toString()] = '0';
                 break;
               case 'e':
-                world[(x + 1).toString() + '|' + (y).toString()] = 0;
+                world[(x + 1).toString() + '|' + (y).toString()] = '0';
                 break;
               case 'w':
-                world[(x - 1).toString() + '|' + (y).toString()] = 0;
+                world[(x - 1).toString() + '|' + (y).toString()] = '0';
                 break;
             }
             break;
           case 'putbeeper':
           case 'markesetzen':
-            world[x.toString() + '|' + (y ).toString()] = 1;
+            world[x.toString() + '|' + (y ).toString()] = '9';
             break;
           case 'pickbeeper':
           case 'markelöschen':
-            world[x.toString() + '|' + (y ).toString()] = 0;
+            world[x.toString() + '|' + (y ).toString()] = '0';
             break;
           case 'beenden':
             halt = true;
@@ -190,12 +253,9 @@ String KarolRobotOutputDecode(String program){
   for (y = 0; y < maxY; y++) {
     for (x = 0; x < maxX; x++) {
       if (binaryWorld[x][y] == null)
-        output = output + '░';
+        output = output + '0';
       else
-        if (binaryWorld[x][y] == 1)
-          output = output + '█';
-        else
-          output = output + '░';
+        output = output + binaryWorld[x][y];
     }
     output = output + '\n';
   }
