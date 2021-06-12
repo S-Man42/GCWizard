@@ -13,8 +13,11 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
+
+enum GCWImageViewButtons {FIT_TO_SCREEN, FULLSCREEN, SAVE, VIEW_IN_TOOLS}
 
 class GCWImageViewData {
   final Uint8List bytes;
@@ -29,8 +32,11 @@ class GCWImageView extends StatefulWidget {
   final bool toolBarRight;
   final String extension;
   final String fileName;
+  final Set<GCWImageViewButtons> suppressedButtons;
+  final int maxHeightInPreview;
+  final Function onBeforeFullscreen;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName})
+  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName, this.suppressedButtons, this.maxHeightInPreview, this.onBeforeFullscreen})
       : super(key: key);
 
   @override
@@ -39,6 +45,7 @@ class GCWImageView extends StatefulWidget {
 
 class _GCWImageViewState extends State<GCWImageView> {
   MemoryImage _image;
+  MemoryImage _previewImage;
 
   PhotoViewScaleStateController _scaleStateController;
 
@@ -54,10 +61,27 @@ class _GCWImageViewState extends State<GCWImageView> {
     super.dispose();
   }
 
+  _resizeImage() {
+    img.Image image = img.decodeImage(widget.imageData.bytes);
+    if (image.height > widget.maxHeightInPreview) {
+      img.Image resized = img.copyResize(image, height: widget.maxHeightInPreview);
+
+      return MemoryImage(img.encodePng(resized));
+    } else {
+      return MemoryImage(widget.imageData.bytes);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     try {
       if (widget.imageData != null) _image = MemoryImage(widget.imageData.bytes);
+
+      if (widget.maxHeightInPreview == null)
+        _previewImage = _image;
+      else {
+        _previewImage = _resizeImage();
+      }
     } catch (e) {
       _image = null;
     }
@@ -68,9 +92,10 @@ class _GCWImageViewState extends State<GCWImageView> {
             ? Row(
                 children: [
                   Expanded(child: _createPhotoView()),
-                  Column(
-                    children: _createToolbar(),
-                  )
+                  if (_hasToolButtons())
+                    Column(
+                      children: _createToolbar(),
+                    )
                 ],
               )
             : Column(
@@ -98,7 +123,7 @@ class _GCWImageViewState extends State<GCWImageView> {
           child: ClipRect(
             child: PhotoView(
               scaleStateController: _scaleStateController,
-              imageProvider: _image,
+              imageProvider: _previewImage,
               minScale: PhotoViewComputedScale.contained * 0.25,
               initialScale: PhotoViewComputedScale.contained,
             ),
@@ -115,6 +140,10 @@ class _GCWImageViewState extends State<GCWImageView> {
     );
   }
 
+  bool _hasToolButtons() {
+    return widget.suppressedButtons == null || widget.suppressedButtons.length < GCWImageViewButtons.values.length;
+  }
+
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
 
@@ -129,6 +158,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                     builder: (context) => GCWTool(
                           tool: GCWImageViewFullScreen(
                             imageProvider: _image,
+                            onBeforeFullscreen: widget.onBeforeFullscreen,
                           ),
                           autoScroll: false,
                           toolName: i18n(context, 'imageview_fullscreen_title'),

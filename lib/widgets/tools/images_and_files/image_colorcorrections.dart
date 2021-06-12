@@ -3,12 +3,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:image/image.dart' as img;
-
-enum _ImageType {JPEG, GIF, PNG, ICO, TARGA, READONLY_SUPPORT}
 
 class ImageColorCorrections extends StatefulWidget {
   @override
@@ -16,16 +15,36 @@ class ImageColorCorrections extends StatefulWidget {
 }
 
 class ImageColorCorrectionsState extends State<ImageColorCorrections> {
-  Uint8List _currentData;
+  int _PREVIEW_HEIGHT = 100;
+
   Uint8List _originalData;
 
-  _ImageType _currentImageType;
+  img.Image _currentPreview;
+  img.Image _originalPreview;
 
-  img.Image _currentImage;
+  var _currentSaturation = 1.0;
+  var _currentContrast = 1.0;
+  var _currentBrightness = 1.0;
+  var _currentExposure = 0.0;
+  var _currentGamma = 1.0;
+  var _currentHue = 0.0;
+  var _currentBlacks = 0.0;
+  var _currentWhites = 0.0;
+  var _currentMids = 0.0;
 
-  var _currentSaturation = 0.5;
+  var _currentInvert = false;
+  var _currentEdgeDetection = 0.0;
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  _currentDataInit() {
+    img.Image image = img.decodeImage(_originalData);
+
+    if (image.height > _PREVIEW_HEIGHT) {
+      img.Image resized = img.copyResize(image, height: _PREVIEW_HEIGHT);
+      return resized;
+    } else {
+      return image;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,80 +56,180 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
             setState(() {
               openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
                 if (file != null) {
-                  _currentData = file.bytes;
                   _originalData = file.bytes;
 
-                  _setImageType();
-
-                  if (_currentImageType == null) {
-                    _currentData = null;
-                  } else {
-                    _originalData = file.bytes;
-                    _currentImage = img.decodeImage(_currentData);
-                  }
+                  _originalPreview = _currentDataInit();
+                  _currentPreview = img.Image.from(_originalPreview);
 
                   setState(() {});
-
                 }
               });
             });
           },
         ),
-        if (_currentImage != null)
+        if (_currentPreview != null)
           GCWImageView(
             imageData: GCWImageViewData(_imageBytes()),
+            onBeforeFullscreen: _adjustToFullScreen
           ),
-        Slider(
-            value: _currentSaturation,
-            onChanged: (value) {
-              setState(() {
-                _currentSaturation = value;
-              });
-            }
-        )
+            Expanded(
+            child:
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              GCWOnOffSwitch(
+                  title: 'Invert',
+                  value: _currentInvert,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentInvert = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Saturation',
+                  value: _currentSaturation,
+                  min: 0.0,
+                  max: 1.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentSaturation = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Contrast',
+                  value: _currentContrast,
+                  min: 0.0,
+                  max: 1.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentContrast = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Brightness',
+                  value: _currentBrightness,
+                  min: 0.0,
+                  max: 1.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentBrightness = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Gamma',
+                  value: _currentGamma,
+                  min: 0.0,
+                  max: 1.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentGamma = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Hue',
+                  value: _currentHue,
+                  min: 0.0,
+                  max: 360.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentHue = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Blacks',
+                  value: _currentBlacks,
+                  min: 0.0,
+                  max: 1000.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentBlacks = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Whites',
+                  value: _currentWhites,
+                  min: 0.0,
+                  max: 1000.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentWhites = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Mids',
+                  value: _currentMids,
+                  min: 0.0,
+                  max: 1000.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentMids = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Edges',
+                  value: _currentEdgeDetection,
+                  min: 0.0,
+                  max: 1.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentEdgeDetection = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Exposure',
+                  value: _currentExposure,
+                  min: 0.0,
+                  max: 1.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentExposure = value;
+                    });
+                  }
+              ),
+            ],
+          ),
+        ))
       ],
     );
   }
 
-  _setImageType() {
-    var decoder = img.findDecoderForData(_currentData);
-
-    if (decoder is img.JpegDecoder)
-      _currentImageType = _ImageType.JPEG;
-    else if (decoder is img.PngDecoder)
-      _currentImageType = _ImageType.PNG;
-    else if (decoder is img.GifDecoder)
-      _currentImageType = _ImageType.GIF;
-    else if (decoder is img.TgaDecoder)
-      _currentImageType = _ImageType.TARGA;
-    else if (decoder is img.IcoDecoder)
-      _currentImageType = _ImageType.ICO;
-    else if (decoder != null)
-      _currentImageType = _ImageType.READONLY_SUPPORT;
-    else
-      _currentImageType = null;
+  _adjustToFullScreen(MemoryImage imageProvider) {
+    var image = _adjustColor(img.decodeImage(_originalData));
+    return MemoryImage(img.encodePng(image));
   }
 
-  _adjustColor() {
-    // return _currentImage;
-    print(_currentSaturation);
+  _adjustColor(img.Image image) {
+    if (_currentInvert)
+      image = img.invert(image);
 
-    _currentImage = img.adjustColor(img.decodeImage(_currentData),
-        saturation: _currentSaturation
+    if (_currentEdgeDetection > 0.0)
+      image = img.sobel(image, amount: _currentEdgeDetection);
+
+    return img.adjustColor(image,
+        saturation: _currentSaturation,
+        contrast: _currentContrast,
+      gamma: _currentGamma,
+      exposure: _currentExposure,
+      hue: _currentHue,
+      brightness: _currentBrightness,
+      // blacks: _currentBlacks.toInt(),
+      // whites: _currentWhites.toInt(),
+      // mids: _currentMids.toInt()
     );
-    return _currentImage;
   }
 
   _imageBytes() {
-    _adjustColor();
-
-    switch (_currentImageType) {
-      case _ImageType.JPEG: return img.encodeJpg(_currentImage);
-      case _ImageType.PNG: return img.encodePng(_currentImage);
-      case _ImageType.GIF: return img.encodeGif(_currentImage);
-      case _ImageType.ICO: return img.encodeIco(_currentImage);
-      case _ImageType.TARGA: return img.encodeTga(_currentImage);
-      case _ImageType.READONLY_SUPPORT: return img.encodePng(_currentImage);
-    }
+    _currentPreview = _adjustColor(img.Image.from(_originalPreview));
+    return img.encodePng(_currentPreview);
   }
 }
