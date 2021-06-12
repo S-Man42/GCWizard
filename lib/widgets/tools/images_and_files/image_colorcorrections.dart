@@ -31,6 +31,9 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   var _currentBlacks = 0.0;
   var _currentWhites = 0.0;
   var _currentMids = 0.0;
+  var _currentRed = 0.0;
+  var _currentGreen = 0.0;
+  var _currentBlue = 0.0;
 
   var _currentInvert = false;
   var _currentEdgeDetection = 0.0;
@@ -175,6 +178,39 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
+                  title: 'Red',
+                  value: _currentRed,
+                  min: -255.0,
+                  max: 255.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentRed = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Green',
+                  value: _currentGreen,
+                  min: -255.0,
+                  max: 255.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentGreen = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Blue',
+                  value: _currentBlue,
+                  min: -255.0,
+                  max: 255.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentBlue = value;
+                    });
+                  }
+              ),
+              GCWSlider(
                   title: 'Edges',
                   value: _currentEdgeDetection,
                   min: 0.0,
@@ -214,6 +250,9 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 
     if (_currentEdgeDetection > 0.0)
       image = img.sobel(image, amount: _currentEdgeDetection);
+
+    if (_currentRed != 0.0 || _currentGreen != 0.0 || _currentBlue != 0.0)
+      image = img.colorOffset(image, red: _currentRed.toInt(), green: _currentGreen.toInt(), blue: _currentBlue.toInt());
 
     return img.adjustColor(image,
         saturation: _currentSaturation,
