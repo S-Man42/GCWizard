@@ -224,7 +224,7 @@ class _SteganoState extends State<Stegano> {
     }
     return [
       GCWTextDivider(text: i18n(context, 'stegano_encoded_image')),
-      GCWImageView(imageData: _encodedPictureData, /*extension: _extensionTarget,*/ fileName: _filenameTarget),
+      GCWImageView(imageData: _encodedPictureData, fileName: _filenameTarget),
     ];
   }
 
@@ -257,11 +257,7 @@ class _SteganoState extends State<Stegano> {
     if (_bytesSource == null) {
       return [];
     }
-    return [
-      GCWTextDivider(text: i18n(context, 'stegano_source_image')),
-      //GCWImageView(imageData: GCWImageViewData(_bytesSource))
-      Image.memory(_bytesSource)
-    ];
+    return [GCWTextDivider(text: i18n(context, 'stegano_source_image')), Image.memory(_bytesSource)];
   }
 
   List<Widget> loading() {
