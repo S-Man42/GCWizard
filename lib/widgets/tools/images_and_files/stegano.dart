@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_circular_progress_indicator.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -264,15 +265,6 @@ class _SteganoState extends State<Stegano> {
   }
 
   List<Widget> loading() {
-    return [
-      Center(
-        //child: CircularProgressIndicator(),
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-          strokeWidth: 20,
-        ),
-      )
-    ];
+    return [GCWCircularProgressIndicator()];
   }
 }
