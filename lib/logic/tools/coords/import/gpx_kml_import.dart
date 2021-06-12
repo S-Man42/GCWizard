@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:xml/xml.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -16,7 +16,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adap
 import 'package:gc_wizard/persistence/map_view/model.dart';
 
 Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async {
-  switch (path.extension(fileName).toLowerCase()) {
+  switch (getFileExtension(fileName).toLowerCase()) {
     case '.gpx':
       var xml = String.fromCharCodes(bytes);
       return parseCoordinatesFile(xml);
@@ -78,7 +78,6 @@ class _GpxReader {
       _restoreCircles(points, lines);
       return _convertToMapViewDAO(points, lines);
     }
-    ;
     return null;
   }
 
@@ -102,7 +101,6 @@ class _GpxReader {
       if (lat != null && lon != null) {
         line.points.add(GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true));
       }
-      ;
     });
     return line;
   }
@@ -121,7 +119,7 @@ class _KmlReader {
 
         document.findAllElements('Placemark').forEach((xmlPlacemark) {
           var points = _readPoints(xmlPlacemark, parent);
-          if (points != null) lines.add(points);
+          if (points != null) lines.addAll(points);
         });
 
         _restorePoints(points, lines);
@@ -130,28 +128,58 @@ class _KmlReader {
         return _convertToMapViewDAO(points, lines);
       }
     }
-    ;
     return null;
   }
 
-  GCWMapPolyline _readPoints(XmlElement xmlElement, XmlElement styleParent) {
+  List<GCWMapPolyline> _readPoints(XmlElement xmlElement, XmlElement styleParent) {
+    var lines = <GCWMapPolyline>[];
+
     var group = xmlElement.getElement('Point');
     if (group == null) group = xmlElement.getElement('LineString');
-    ;
+    if (group == null) group = xmlElement.getElement('LinearRing');
+    if (group == null) {
+      group = xmlElement.getElement('Polygon');
+      if (group != null) {
+        group.findAllElements('outerBoundaryIs').forEach((boundery) {
+          var linesTmp = _readPoints(boundery, styleParent);
+          if (linesTmp != null) lines.addAll(linesTmp);
+        });
+        group.findAllElements('innerBoundaryIs').forEach((boundery) {
+          var linesTmp = _readPoints(boundery, styleParent);
+          if (linesTmp != null) lines.addAll(linesTmp);
+        });
+        if (lines.length == 0) return null;
+
+        return lines;
+      }
+    }
+    if (group == null) {
+      group = xmlElement.getElement('MultiGeometry');
+      if (group != null) {
+        group.children.forEach((child) {
+          var linesTmp = _readPoints(child, styleParent);
+          if (linesTmp != null) lines.addAll(linesTmp);
+        });
+        if (lines.length == 0) return null;
+
+        return lines;
+      }
+    }
     if (group == null) return null;
     var coords = group.getElement('coordinates');
     if (coords == null) return null;
 
+
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
     var regExp = RegExp(r'([\.0-9]+),([\.0-9]+),?([\.0-9]+)?');
+
 
     regExp.allMatches(coords.innerText).forEach((coordinates) {
       var lat = coordinates.group(2);
       var lon = coordinates.group(1);
       if (lat != null && lon != null) {
-        // Todo: Format wieder raus
         var wpt = GCWMapPoint(
-            point: new LatLng(double.tryParse(lat), double.tryParse(lon)), coordinateFormat: {'format': keyCoordsDMS});
+            point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
         wpt.markerText = xmlElement.getElement('description')?.innerText;
 
         if (line.points.length == 0)
@@ -161,12 +189,14 @@ class _KmlReader {
       }
     });
 
-    if (line.points.length == 0) return null;
+    if (line.points.length > 0) lines.add(line);
+    if (lines.length == 0) return null;
 
-    return line;
+    return lines;
   }
 
   GCWMapPoint _readPointStyleMap(GCWMapPoint point, String styleUrl, XmlElement styleParent) {
+    if (styleUrl == null) return point;
     if (styleUrl.startsWith('#')) styleUrl = styleUrl.replaceFirst('#', '');
 
     styleParent.findAllElements('StyleMap').forEach((xmlElement) {

@@ -10,7 +10,7 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 const int MAX_LENGTH = 5000;
 
 Future<Uint8List> encodeStegano(local.PlatformFile file, String message, String key, String filename) async {
-  Uint8List data = await getFileData(file);
+  Uint8List data = file.bytes;
   // the key is use to encrypt your message with AES256 algorithm
   EncodeRequest request = EncodeRequest(data, message, key: key, filename: filename);
   Uint8List response = await encodeMessageIntoImageAsync(request);
@@ -18,7 +18,7 @@ Future<Uint8List> encodeStegano(local.PlatformFile file, String message, String 
 }
 
 Future<String> decodeStegano(local.PlatformFile file, String key) async {
-  Uint8List data = await getFileData(file);
+  Uint8List data = file.bytes;
   // the key is use to decrypt your encrypted message with AES256 algorithm
   DecodeRequest request = DecodeRequest(data, key: key);
   String response = await decodeMessageFromImageAsync(request);

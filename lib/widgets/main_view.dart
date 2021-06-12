@@ -329,9 +329,9 @@ class _MainViewState extends State<MainView> {
   }
 
   void _initStaticToolList() {
-    if (_toolList != null) {
-      return;
-    }
+    // if (_toolList != null) {
+    //   return;
+    // }
 
     _toolList = Registry.toolList.where((element) {
       return [
@@ -517,8 +517,8 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    // _categoryList.sort((a, b) {
-    //   return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    // });
+    _categoryList.sort((a, b) {
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
   }
 }

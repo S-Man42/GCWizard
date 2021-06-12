@@ -4,7 +4,9 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/vigenere_breaker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:path/path.dart' as path;
+
 
 main() {
   generate_bigram();
@@ -54,8 +56,8 @@ bool generate_bigram() {
   _inputsToExpected.forEach((elem) async {
     var filePath =
         path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/";
-    var fileIn = File(path.normalize(filePath + elem['input']));
-    var fileOut = File(path.normalize(filePath + elem['fileOut']));
+    var fileIn = File(normalizePath(filePath + elem['input']));
+    var fileOut = File(normalizePath(filePath + elem['fileOut']));
 
     var _actual = await generateBigrams(fileIn, fileOut, elem['className'], elem['alphabet'], elem['replacementList']);
 
@@ -208,11 +210,8 @@ Map<String, int> _replaceBigramEntrys(
 List<List<int>> _fillBigramArray(Map<String, int> bigramsSource, String alphabet) {
   var bigrams = List<List<int>>(alphabet.length);
 
-  for (var row = 0; row < bigrams.length; row++) {
-    bigrams[row] = List<int>(bigrams.length);
-    bigrams[row].fillRange(0, bigrams[row].length, 0);
-  }
-  ;
+  for (var row = 0; row < bigrams.length; row++)
+    bigrams[row] = List.filled(bigrams.length, 0);
 
   bigramsSource.forEach((key, value) {
     var row = _charIndex(key[0], alphabet);

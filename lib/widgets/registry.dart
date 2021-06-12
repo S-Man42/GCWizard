@@ -5,10 +5,10 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
-import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_general.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/main_menu/settings_mayacalendar.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_tools.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
@@ -312,9 +312,9 @@ class Registry {
   static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
-    if (toolList != null) {
-      return;
-    }
+    // if (toolList != null) {
+    //   return;
+    // }
 
     toolList = [
       //MainSelection
@@ -3346,8 +3346,8 @@ class Registry {
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
-          tool: MayaCalendarSettings(),
-          i18nPrefix: 'settings_mayacalendar_correlation_number',
+          tool: ToolSettings(),
+          i18nPrefix: 'settings_tools',
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [

@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:tuple/tuple.dart';
 
 class _wordClass {
@@ -17,10 +19,12 @@ class _wordClass {
 
 enum searchFormat {
   SectionRowWord,
+  SectionLetter,
   RowWord,
   Word,
   SectionRowWordLetter,
   RowWordLetter,
+  RowLetter,
   WordLetter,
   Letter,
 }
@@ -76,8 +80,8 @@ String decodeFindWord(String input, String positions, searchFormat format) {
   if (input == null || input.length == 0) return "";
   if (positions == null || positions.length == 0) return "";
 
-  List<int> positionList = List<int>();
-  List<String> out = List<String>();
+  List<int> positionList = <int>[];
+  List<String> out = <String>[];
   int i = 0;
 
   RegExp regExp = new RegExp("[0-9]{1,}");
@@ -94,6 +98,12 @@ String decodeFindWord(String input, String positions, searchFormat format) {
           out.add(_findWord(wordList, format,
               section: positionList[i + 0], row: positionList[i + 1], word: positionList[i + 2]));
         i += 3;
+        break;
+
+      case searchFormat.SectionLetter:
+        if (i + 1 < positionList.length)
+          out.add(_findWord(wordList, format, section: positionList[i + 0], letter: positionList[i + 1]));
+        i += 2;
         break;
 
       case searchFormat.RowWord:
@@ -124,6 +134,12 @@ String decodeFindWord(String input, String positions, searchFormat format) {
         i += 3;
         break;
 
+      case searchFormat.RowLetter:
+        if (i + 1 < positionList.length)
+          out.add(_findWord(wordList, format, row: positionList[i + 0], letter: positionList[i + 1]));
+        i += 2;
+        break;
+
       case searchFormat.WordLetter:
         if (i + 1 < positionList.length)
           out.add(_findWord(wordList, format, word: positionList[i + 0], letter: positionList[i + 1]));
@@ -148,7 +164,7 @@ String encodeText(String input, String text, encodeOutFormat format) {
 
   var out = '';
   var wordList = _wordList(input);
-  var positionList = List<Tuple2<_wordClass, int>>();
+  var positionList = <Tuple2<_wordClass, int>>[];
   text = _removeNonLetters(text);
 
   text.split('').forEach((letter) {
@@ -249,6 +265,10 @@ String _findWord(List<_wordClass> wordList, searchFormat format,
       list = _filterRow(row, list);
       return _filterWord(word, list).Text;
 
+    case searchFormat.SectionLetter:
+      list = _filterSection(section, wordList);
+      return _filterLetter(letter, list);
+
     case searchFormat.RowWord:
       list = _filterRow(row, wordList);
       return _filterWord(word, list).Text;
@@ -269,6 +289,10 @@ String _findWord(List<_wordClass> wordList, searchFormat format,
       list = List<_wordClass>.from([wordEntry]);
       return _filterLetter(letter, list);
 
+    case searchFormat.RowLetter:
+      list = _filterRow(row, wordList);
+      return _filterLetter(letter, list);
+
     case searchFormat.WordLetter:
       wordEntry = _filterWord(word, wordList);
       list = List<_wordClass>.from([wordEntry]);
@@ -282,7 +306,7 @@ String _findWord(List<_wordClass> wordList, searchFormat format,
 }
 
 List<_wordClass> _filterSection(int index, List<_wordClass> wordList) {
-  var list = new List<_wordClass>();
+  var list = <_wordClass>[];
 
   wordList.forEach((item) {
     if (item.SectionIndex == index) list.add(item);
@@ -292,7 +316,7 @@ List<_wordClass> _filterSection(int index, List<_wordClass> wordList) {
 }
 
 List<_wordClass> _filterRow(int index, List<_wordClass> wordList) {
-  var list = new List<_wordClass>();
+  var list = <_wordClass>[];
   var rowIndex = 0;
   var lastRowIndex = 0;
   var sectionIndex = 0;
@@ -344,17 +368,34 @@ int _globalLetterPosition(_wordClass word, int letterPosition, List<_wordClass> 
 }
 
 String _removeNonLetters(String text, {bool startCharacter = false, bool lastCharacter = false}) {
-  if (!startCharacter & !lastCharacter) return text.replaceAll(RegExp(r"[!\W]"), '');
-  if (startCharacter) text = text.replaceAll(RegExp(r"^[!\W]"), '');
-  if (lastCharacter) text = text.replaceAll(RegExp(r"[!\W]$"), '');
+  if (!startCharacter & !lastCharacter) return text.replaceAll(RegExp(r"[^" + _validCharacters() + "]"), '');
+  if (startCharacter) text = text.replaceAll(RegExp(r"^[^" + _validCharacters() + "]"), '');
+  if (lastCharacter) text = text.replaceAll(RegExp(r"[^" + _validCharacters() + r"]$"), '');
 
   return text;
+}
+
+String validCharacters;
+
+String _validCharacters() {
+  if (validCharacters != null) return validCharacters;
+
+  validCharacters = '';
+  ALL_ALPHABETS.forEach((alphabet) {
+    alphabet.alphabet.forEach((key, value) {
+      validCharacters += key;
+    });
+  });
+  validCharacters =  removeDuplicateCharacters(validCharacters);
+  validCharacters += validCharacters.toLowerCase();
+  validCharacters += '0123456789';
+  return validCharacters;
 }
 
 Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordClass> wordList) {
   var letterCount = 0;
   var letterCountTmp = 0;
-  var letterWordList = List<_wordClass>();
+  var letterWordList = <_wordClass>[];
   var letterPosition = 0;
   var outWord = null;
   var outLetterPosition = 0;
@@ -391,7 +432,7 @@ Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordCla
 }
 
 List<_wordClass> _wordList(String input) {
-  var list = new List<_wordClass>();
+  var list = <_wordClass>[];
   int sectionIndex = 0;
   int rowIndex = 0;
   int wordIndex = 0;

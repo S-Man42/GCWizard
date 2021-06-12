@@ -50,6 +50,7 @@ class BookCipherState extends State<BookCipher> {
           i18n(context, 'book_cipher_row') +
           ", " +
           i18n(context, 'book_cipher_word'),
+      searchFormat.SectionLetter: i18n(context, 'book_cipher_section') + ", " + i18n(context, 'book_cipher_letter'),
       searchFormat.RowWord: i18n(context, 'book_cipher_row') + ", " + i18n(context, 'book_cipher_word'),
       searchFormat.Word: i18n(context, 'book_cipher_word'),
       searchFormat.SectionRowWordLetter: i18n(context, 'book_cipher_section') +
@@ -64,6 +65,7 @@ class BookCipherState extends State<BookCipher> {
           i18n(context, 'book_cipher_word') +
           ", " +
           i18n(context, 'book_cipher_letter'),
+      searchFormat.RowLetter: i18n(context, 'book_cipher_row') + ", " + i18n(context, 'book_cipher_letter'),
       searchFormat.WordLetter: i18n(context, 'book_cipher_word') + ", " + i18n(context, 'book_cipher_letter'),
       searchFormat.Letter: i18n(context, 'book_cipher_letter'),
     };

@@ -9,7 +9,6 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_circular_progress_indicator.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -18,13 +17,15 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as Image;
+// import 'package:image_size_getter/file_input.dart';
+// import 'package:image_size_getter/image_size_getter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
 class ExifReader extends StatefulWidget {
-  final PlatformFile file;
+  final local.PlatformFile file;
 
   ExifReader({Key key, this.file}) : super(key: key);
 
@@ -34,8 +35,7 @@ class ExifReader extends StatefulWidget {
 
 class _ExifReaderState extends State<ExifReader> {
   Map<String, List<List<dynamic>>> tableTags;
-  PlatformFile file;
-  bool loading = false;
+  local.PlatformFile file;
   LatLng point;
   GCWImageViewData thumbnail;
   Image.Image image;
@@ -66,17 +66,13 @@ class _ExifReaderState extends State<ExifReader> {
   Future<void> _readFileFromPicker() async {
     var file = await openFileExplorer(allowedExtensions: supportedImageTypes);
     if (file != null) {
-      PlatformFile _file = file;
+      local.PlatformFile _file = file;
       return _readFile(_file);
     }
   }
 
-  Future<void> _readFile(PlatformFile _file) async {
+  Future<void> _readFile(local.PlatformFile _file) async {
     if (_file == null) return;
-
-    setState(() {
-      loading = true;
-    });
 
     Map<String, IfdTag> tags = await parseExif(_file);
     GCWImageViewData _thumbnail;
@@ -84,29 +80,21 @@ class _ExifReaderState extends State<ExifReader> {
     Map _tableTags;
     Image.Image _image;
 
-    try {
-      if (tags != null) {
-        _thumbnail = completeThumbnail(tags);
-        _point = completeGPSData(tags);
-        _tableTags = buildTablesExif(tags);
-      }
-
-      _image = await completeImageMetadata(_file);
-
-      setState(() {
-        loading = false;
-        file = _file;
-        tableTags = _tableTags;
-        point = _point; // GPS Point
-        thumbnail = _thumbnail; // Thumbnail
-        image = _image;
-      });
-    } catch (e) {
-      // An error occured, but keep it silently to not pollute UI
-      setState(() {
-        loading = false;
-      });
+    if (tags != null) {
+      _thumbnail = completeThumbnail(tags);
+      _point = completeGPSData(tags);
+      _tableTags = buildTablesExif(tags);
     }
+
+    _image = await completeImageMetadata(_file);
+
+    setState(() {
+      file = _file;
+      tableTags = _tableTags;
+      point = _point; // GPS Point
+      thumbnail = _thumbnail; // Thumbnail
+      image = _image;
+    });
   }
 
   static void _sortTags(List tags) {
@@ -117,10 +105,6 @@ class _ExifReaderState extends State<ExifReader> {
 
   List _buildOutput(Map _tableTags) {
     List<Widget> widgets = [];
-    if (loading) {
-      return [GCWCircularProgressIndicator()];
-    }
-
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);
     _decorateThumbnail(widgets);
@@ -196,7 +180,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section file
   ///
-  void _decorateFile(List<Widget> widgets, PlatformFile platformFile) {
+  void _decorateFile(List<Widget> widgets, local.PlatformFile platformFile) {
     if (platformFile != null) {
       File _file;
       if (platformFile.path != null) {
@@ -242,7 +226,7 @@ class _ExifReaderState extends State<ExifReader> {
     }
   }
 
-  Future<Image.Image> completeImageMetadata(PlatformFile platformFile) async {
+  Future<Image.Image> completeImageMetadata(local.PlatformFile platformFile) async {
     Uint8List data = platformFile.bytes;
     Image.Image image;
     try {
@@ -254,7 +238,7 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   String formatDate(DateTime datetime) {
-    String loc = Localizations.localeOf(context).toString();
-    return (datetime == null) ? '' : DateFormat.yMd(loc).add_jms().format(datetime);
+    return (datetime == null) ? '' : DateFormat().format(datetime);
+    // return DateFormat.yMMMd().add_jm().format(datetime);
   }
 }

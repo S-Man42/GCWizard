@@ -187,7 +187,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               Prefs.setInt('clipboard_keep_entries_in_days', value);
             });
           },
-        ),
+        )
       ],
     );
   }
