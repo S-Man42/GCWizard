@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_circular_progress_indicator.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
@@ -40,7 +41,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                       if (!snapshot.hasData) {
                         // while data is loading:
                         return Center(
-                          child: CircularProgressIndicator(),
+                          child: GCWCircularProgressIndicator(),
                         );
                       } else {
                         // data loaded:
