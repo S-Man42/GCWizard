@@ -217,6 +217,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -1393,6 +1394,15 @@ class Registry {
           category: ToolCategory.CRYPTOGRAPHY,
           missingHelpLocales: ['ko'],
           searchStrings: []),
+      GCWTool(
+          tool: VisualCryptography(),
+          i18nPrefix: 'visual_cryptography',
+          category: ToolCategory.IMAGES_AND_FILES,
+          searchStrings: [
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
+          ]),
       GCWTool(tool: Z22(), i18nPrefix: 'z22', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
         'ko'
       ], searchStrings: [

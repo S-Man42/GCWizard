@@ -3860,6 +3860,8 @@
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
   "vigenerebreaker_error": "Ein Fehler trat auf: %s1",
+  "visual_cryptography_title": "Visuelle Kryptographie",
+  "visual_cryptography_description": "Visuelle Verschlüsselung in Teilbildern",
   "whitespace_language_title": "Whitespace",
   "whitespace_language_description": "Esoterische Programmiersprache aus 3 Zeichen (Leerzeichen, Tab, Enter)",
   "whitespace_language_example": "      → DFH",

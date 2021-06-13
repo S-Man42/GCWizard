@@ -7,7 +7,7 @@ import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
 
 
-Future<Map<String, dynamic>> analyseImageMorsCodeAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> analyseImageMorseCodeAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
     return null;

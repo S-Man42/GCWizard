@@ -138,6 +138,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -496,6 +497,7 @@ class _MainViewState extends State<MainView> {
         className(VariableCoordinateFormulas()),
         className(Vigenere()),
         className(VigenereBreaker()),
+        className(VisualCryptography()),
         className(Weekday()),
         className(WhitespaceLanguage()),
         className(WaypointProjection()),
