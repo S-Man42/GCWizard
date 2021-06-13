@@ -99,20 +99,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         Expanded(child: _decodeImage2 !=null ? Image.memory(_decodeImage2) : Container()),
       ]),
 
-      GCWDefaultOutput(child: _buildOutputDecode(),
-          trailing: Row (
-              children: <Widget>[
-                GCWIconButton(
-                  iconData: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  iconColor: _outData == null ? Colors.grey : null,
-                  onPressed: () {
-                    _outData == null ? null : _exportFile(context, _outData);
-                  },
-                )
-              ]
-          )
-      )
+      GCWDefaultOutput(child: _buildOutputDecode())
     ]);
   }
 
@@ -120,9 +107,28 @@ class VisualCryptographyState extends State<VisualCryptography> {
     if (_outData == null)
       return null;
 
-    return GCWImageView(
-      imageData: GCWImageViewData(_outData),
-      toolBarRight: false,
+    return Column(
+        children: <Widget>[
+          GCWImageView(
+            imageData: GCWImageViewData(_outData),
+            toolBarRight: false,
+            fileName: 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+          ),
+          GCWButton(
+            text: i18n(context, 'common_exportfile_openfile'),
+            onPressed: () {
+              setState(() {
+                var offset = offsetAutoCalc(_decodeImage1, _decodeImage2);
+                print("offsetX =" + offset.item1.toString() + " offsetY =" +offset.item2.toString());
+                // openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
+                //   if (file != null) {
+                //     _encodeImage = file.bytes;
+                //     _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
+                //   }
+                });
+              }
+          ),
+        ]
     );
   }
 
@@ -130,17 +136,17 @@ class VisualCryptographyState extends State<VisualCryptography> {
     return Column(
         children: <Widget>[
           GCWButton(
-              text: i18n(context, 'common_exportfile_openfile'),
-              onPressed: () {
-                setState(() {
-                  openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                    if (file != null) {
-                      _encodeImage = file.bytes;
-                      _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
-                    }
-                  });
+            text: i18n(context, 'common_exportfile_openfile'),
+            onPressed: () {
+              setState(() {
+                openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
+                  if (file != null) {
+                    _encodeImage = file.bytes;
+                    _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
+                  }
                 });
-              }
+              });
+            }
           ),
           GCWDefaultOutput(child: _buildOutputEncode())
         ]
@@ -165,14 +171,5 @@ class VisualCryptographyState extends State<VisualCryptography> {
           ),
         ]
     );
-  }
-
-
-  _exportFile(BuildContext context, Uint8List data) async {
-    var fileType = getFileType(data);
-    var value = await saveByteDataToFile(
-        data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
-
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }
 }
