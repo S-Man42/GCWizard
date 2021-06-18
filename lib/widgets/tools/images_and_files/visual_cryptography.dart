@@ -114,20 +114,25 @@ class VisualCryptographyState extends State<VisualCryptography> {
             toolBarRight: false,
             fileName: 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
           ),
-          GCWButton(
-            text: i18n(context, 'common_exportfile_openfile'),
-            onPressed: () {
-              setState(() {
-                var offset = offsetAutoCalc(_decodeImage1, _decodeImage2);
-                print("offsetX =" + offset.item1.toString() + " offsetY =" +offset.item2.toString());
-                // openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                //   if (file != null) {
-                //     _encodeImage = file.bytes;
-                //     _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
-                //   }
-                });
-              }
-          ),
+          Row(children: [
+            Expanded(child:
+              GCWButton(
+                text: i18n(context, 'common_exportfile_openfile'),
+                onPressed: () {
+                  setState(() {
+                    var offset = offsetAutoCalc(_decodeImage1, _decodeImage2);
+                    if (offset != null)
+                    print("offsetX =" + offset.item1.toString() + " offsetY =" +offset.item2.toString());
+                    // openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
+                    //   if (file != null) {
+                    //     _encodeImage = file.bytes;
+                    //     _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
+                    //   }
+                    });
+                  }
+              ),
+            )
+          ]),
         ]
     );
   }

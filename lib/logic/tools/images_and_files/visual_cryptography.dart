@@ -41,6 +41,7 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
   return targetImage;
 }
 
+  var counter1 = 0;
 Tuple2<int, int> offsetAutoCalc(Uint8List image1, Uint8List image2) {
   if (image1 == null || image2 == null) return null;
 
@@ -56,45 +57,44 @@ Tuple2<int, int> offsetAutoCalc(Uint8List image1, Uint8List image2) {
   var maxX = _image1.width + _image2.width - 2;
   var minY = -_image2.height + 2;
   var maxY = _image1.width + _image2.width - 2;
-
+counter1 = 0;
   for (var x = minX; x < maxX; x++) {
-    for (var y = minY; y < maxY; y++) {
+    //for (var y = minY; y < maxY; y++) {
+    var y = 0;
       var count = _calcBlackBlockCount(_image1, _image2, x, y);
-      if (count > maxCount)
-        result = Tuple2<int, int> (x,y);
-    }
+      if (count == null) return null;
+      if (count > maxCount) {
+        maxCount = count;
+        result = Tuple2<int, int> (x, y);
+      }
+    //}
   }
-
+print("counter2 =" +counter1.toString());
   return result;
 }
 
-int _calcBlackBlockCount(Image.Image image1, Image.Image image2, int offsetX, int offsetY) {
-  var counter = 0;
+Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
+  if (image1 == null || image2 == null) return null;
 
-  var minX = max(offsetX, 0);
-  var maxX = min(image1.width, image2.width + offsetX);
-  var minY = max(offsetY, 0);
-  var maxY = min(image1.height, image2.height + offsetY);
+  var _image1 = Image.decodeImage(image1);
+  var _image2 = Image.decodeImage(image2);
 
-  for (var x = minX; x < maxX; x+=2) {
-    for (var y = minY; y < maxY; y+=2) {
-      if (_blackResultPixel(image1.getPixel(x, y), image2.getPixel(x - offsetX, y - offsetY)) &&
-          _blackResultPixel(image1.getPixel(x+1, y), image2.getPixel(x+1 - offsetX, y - offsetY)) &&
-          _blackResultPixel(image1.getPixel(x, y+1), image2.getPixel(x - offsetX, y+1 - offsetY)) &&
-          _blackResultPixel(image1.getPixel(x+1, y+1), image2.getPixel(x+1 - offsetX, y+1 - offsetY)))
-            counter++;
+  if (_image1 == null || _image2 == null) return null;
+
+  var coreImageSize = _coreImageSize(_image1, _image2, offsetX, offsetY);
+  var image = Image.Image(coreImageSize.item2 - coreImageSize.item1, coreImageSize.item4 - coreImageSize.item3);
+
+  for (var x = coreImageSize.item1; x < coreImageSize.item2-1; x+=2) {
+    for (var y = coreImageSize.item3; y < coreImageSize.item4-1; y+=2) {
+      if (!(_blackArea(_image1, _image2, x, y, offsetX, offsetY)))
+        image.setPixel(x   - coreImageSize.item1, y   - coreImageSize.item3, Colors.white.value);
+        image.setPixel(x+1 - coreImageSize.item1, y   - coreImageSize.item3, Colors.white.value);
+        image.setPixel(x   - coreImageSize.item1, y+1 - coreImageSize.item3, Colors.white.value);
+        image.setPixel(x+1 - coreImageSize.item1, y+1 - coreImageSize.item3, Colors.white.value);
     }
   }
 
-  return counter;
-}
-
-bool _blackPixel(int color) {
-  return color == 0; //Image.getLuminance(color)<128; //Image.rgbToHsl(Image.getRed(color), Image.getGreen(color), Image.getBlue(color))[2];
-}
-
-bool _blackResultPixel(int color1, int color2) {
-  return (_blackPixel(color1) || _blackPixel(color2));
+  return Image.encodePng(image);
 }
 
 Tuple2<Uint8List, Uint8List> encodeImage(Uint8List image, int offsetX, int offsetY) {
@@ -154,4 +154,50 @@ Tuple2<List<bool>, List<bool>> _randomPixel(bool white) {
     bool2[i] = white ? bool1[i] : !bool1[i];
   }
   return Tuple2<List<bool>, List<bool>>(bool1, bool2);
+}
+
+int _calcBlackBlockCount(Image.Image image1, Image.Image image2, int offsetX, int offsetY) {
+  var counter = 0;
+  var coreImageSize = _coreImageSize(image1, image2, offsetX, offsetY);
+
+  for (var x = coreImageSize.item1; x < coreImageSize.item2-1; x+=2) {
+    for (var y = coreImageSize.item3; y < coreImageSize.item4-1; y+=2) {
+      try {
+        if (_blackArea(image1, image2, x, y, offsetX, offsetY))
+          counter++;
+      } catch (e) {
+        print(e);
+        print((x - offsetX).toString() + " " + (y - offsetY).toString()+ " " + image1.width.toString()+ " " + image1.height.toString() + " " + image2.width.toString()+ " " + image2.height.toString());
+        print(x.toString() + " " +y.toString()+ " " +image1.width.toString()+ " " +image2.width.toString()+ " " +offsetX.toString() + " " +offsetY.toString());
+        return null;
+      }
+      counter1++;
+    }
+  }
+
+  return counter;
+}
+
+bool _blackPixel(int color) {
+  return color == 0; //Image.getLuminance(color)<128; //Image.rgbToHsl(Image.getRed(color), Image.getGreen(color), Image.getBlue(color))[2];
+}
+
+bool _blackResultPixel(int color1, int color2) {
+  return (_blackPixel(color1) || _blackPixel(color2));
+}
+
+bool _blackArea(Image.Image image1, Image.Image image2, int x, int y, int offsetX, int offsetY) {
+  return _blackResultPixel(image1.getPixel(x,   y  ), image2.getPixel(x   - offsetX, y   - offsetY)) &&
+         _blackResultPixel(image1.getPixel(x+1, y  ), image2.getPixel(x+1 - offsetX, y   - offsetY)) &&
+         _blackResultPixel(image1.getPixel(x,   y+1), image2.getPixel(x   - offsetX, y+1 - offsetY)) &&
+         _blackResultPixel(image1.getPixel(x+1, y+1), image2.getPixel(x+1 - offsetX, y+1 - offsetY));
+}
+
+Tuple4<int, int, int, int> _coreImageSize(Image.Image image1, Image.Image image2, int offsetX, int offsetY) {
+  var minX = max(offsetX, 0);
+  var maxX = min(image1.width, image2.width + offsetX);
+  var minY = max(offsetY, 0);
+  var maxY = min(image1.height, image2.height + offsetY);
+
+  return Tuple4<int, int, int, int>(minX, maxX, minY, maxY);
 }
