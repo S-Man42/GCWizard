@@ -1,11 +1,14 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -28,7 +31,28 @@ class VisualCryptographyState extends State<VisualCryptography> {
   Uint8List _decodeImage2;
   Uint8List _outData;
   Uint8List _encodeImage;
+  var _decodeOffsets = Tuple2<int, int>(0, 0);
+  var _encodeOffsets = Tuple2<int, int>(0, 0);
+
   Tuple2<Uint8List, Uint8List> _encodeOutputImages;
+  TextEditingController _offsetXController;
+  TextEditingController _offsetYController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _offsetXController = TextEditingController(text: _decodeOffsets.item1.toString());
+    _offsetYController = TextEditingController(text: _decodeOffsets.item2.toString());
+  }
+
+  @override
+  void dispose() {
+    _offsetXController.dispose();
+    _offsetYController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,47 +83,78 @@ class VisualCryptographyState extends State<VisualCryptography> {
       ]),
       Row(children: [
         Expanded(child:
-        Column(children: [
-          GCWButton(
-            text: i18n(context, 'common_exportfile_openfile'),
-            onPressed: () {
-              openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                setState(() {
-                  if (file != null) {
-                    _decodeImage1 = file.bytes;
-                  }
+          Column(children: [
+            GCWButton(
+              text: i18n(context, 'common_exportfile_openfile'),
+              onPressed: () {
+                openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
+                  setState(() {
+                    if (file != null)
+                      _decodeImage1 = file.bytes;
+                  });
                 });
-              });
-            },
-          ),
-        ]),
+              },
+            ),
+          ]),
         ),
         Expanded(child:
-        Column(children: [
-          GCWButton(
-            text: i18n(context, 'common_exportfile_openfile'),
-            onPressed: () {
-              openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                setState(() {
-                  if (file != null) {
-                    _decodeImage2 = file?.bytes;
-                    setState(() {
-                      _outData = decodeImages(_decodeImage1, _decodeImage2, 0, 0);
-                    });
-                  }
+          Column(children: [
+            GCWButton(
+              text: i18n(context, 'common_exportfile_openfile'),
+              onPressed: () {
+                openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
+                  setState(() {
+                    if (file != null)
+                      _decodeImage2 = file?.bytes;
+                  });
                 });
-              });
-            },
-          ),
-        ]),
+              },
+            ),
+          ]),
         ),
       ]),
       Row(children: [
         Expanded(child: _decodeImage1 !=null ? Image.memory(_decodeImage1) : Container()),
         Expanded(child: _decodeImage2 !=null ? Image.memory(_decodeImage2) : Container()),
       ]),
+      GCWIntegerSpinner(
+        title: 'offsetX', //(context, 'trifid_block_size'),
+        value: _decodeOffsets.item1,
+        controller: _offsetXController,
+        onChanged: (value) {
+          _decodeOffsets = Tuple2<int, int>(value, _decodeOffsets.item2);
+        },
+      ),
+      GCWIntegerSpinner(
+        title: 'offsetY', //(context, 'trifid_block_size'),
+        value: _decodeOffsets.item2,
+        controller: _offsetYController,
+        onChanged: (value) {
+          _decodeOffsets = Tuple2<int, int>(_decodeOffsets.item1, value);
+        },
+      ),
+      _buildDecodeSubmitButton(),
 
-      GCWDefaultOutput(child: _buildOutputDecode())
+      Row(children: [
+        Expanded(child: Column(children: [_buildAutoOffsetXYButton()])),
+        Expanded(child: Column(children: [_buildAutoOffsetXButton()])),
+      ]),
+
+      GCWDefaultOutput(child: _buildOutputDecode(),
+        trailing: Row (
+          children: <Widget>[
+            GCWIconButton(
+            iconData: Icons.account_box_outlined,
+              size: IconButtonSize.SMALL,
+              iconColor: _outData != null ? null : Colors.grey,
+              onPressed: () {
+                setState(() {
+                  _outData = cleanImage(_decodeImage1, _decodeImage2, _decodeOffsets.item1, _decodeOffsets.item2);
+                });
+              },
+            ),
+        ])
+      )
     ]);
   }
 
@@ -114,25 +169,6 @@ class VisualCryptographyState extends State<VisualCryptography> {
             toolBarRight: false,
             fileName: 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
           ),
-          Row(children: [
-            Expanded(child:
-              GCWButton(
-                text: i18n(context, 'common_exportfile_openfile'),
-                onPressed: () {
-                  setState(() {
-                    var offset = offsetAutoCalc(_decodeImage1, _decodeImage2);
-                    if (offset != null)
-                    print("offsetX =" + offset.item1.toString() + " offsetY =" +offset.item2.toString());
-                    // openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                    //   if (file != null) {
-                    //     _encodeImage = file.bytes;
-                    //     _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
-                    //   }
-                    });
-                  }
-              ),
-            )
-          ]),
         ]
     );
   }
@@ -145,14 +181,37 @@ class VisualCryptographyState extends State<VisualCryptography> {
             onPressed: () {
               setState(() {
                 openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                  if (file != null) {
-                    _encodeImage = file.bytes;
-                    _encodeOutputImages = encodeImage(_encodeImage, 0, 0);
-                  }
+                  setState(() {
+                    if (file != null) {
+                      _encodeImage = file.bytes;
+                    }
+                  });
                 });
               });
             }
           ),
+
+          _encodeImage !=null ? Image.memory(_encodeImage) : Container(),
+
+          GCWIntegerSpinner(
+            title: 'offsetX', //(context, 'trifid_block_size'),
+            value: _decodeOffsets.item1,
+            controller: _offsetXController,
+            onChanged: (value) {
+              _encodeOffsets = Tuple2<int, int>(value, _encodeOffsets.item2);
+            },
+          ),
+          GCWIntegerSpinner(
+            title: 'offsetY', //(context, 'trifid_block_size'),
+            value: _decodeOffsets.item2,
+            controller: _offsetYController,
+            onChanged: (value) {
+              _encodeOffsets = Tuple2<int, int>(_encodeOffsets.item1, value);
+            },
+          ),
+
+          _buildEncodeSubmitButton(),
+
           GCWDefaultOutput(child: _buildOutputEncode())
         ]
     );
@@ -176,5 +235,145 @@ class VisualCryptographyState extends State<VisualCryptography> {
           ),
         ]
     );
+  }
+
+  Widget _buildDecodeSubmitButton() {
+    return GCWSubmitButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center(
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: decodeImagesAsync,
+                    parameter: _buildJobDataDecode(),
+                    onReady: (data) => _saveOutputDecode(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
+    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1, _decodeImage2, _decodeOffsets.item1, _decodeOffsets.item2));
+  }
+
+  _saveOutputDecode(Uint8List output) {
+    _outData = output;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  Widget _buildAutoOffsetXYButton() {
+    return GCWButton(
+      text: 'Auto XY',
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center(
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: offsetAutoCalcAsync,
+                  parameter: _buildJobDataOffsetAutoCalc(false),
+                  onReady: (data) => _saveOutputOffsetAutoCalc(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+    });
+  }
+
+  Widget _buildAutoOffsetXButton() {
+    return GCWButton(
+        text: 'Auto X',
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center(
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: offsetAutoCalcAsync,
+                    parameter: _buildJobDataOffsetAutoCalc(true),
+                    onReady: (data) => _saveOutputOffsetAutoCalc(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobDataOffsetAutoCalc(bool onlyX) async {
+    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1, _decodeImage2, null, onlyX ? _decodeOffsets.item2 : null));
+  }
+
+  _saveOutputOffsetAutoCalc(Tuple2<int, int> output) {
+    if (output != null) {
+      _decodeOffsets = output;
+      _offsetXController.text = _decodeOffsets.item1.toString();
+      _offsetYController.text = _decodeOffsets.item2.toString();
+
+      print("offsetX =" + output.item1.toString() + " offsetY =" +output.item2.toString());
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  Widget _buildEncodeSubmitButton() {
+    return GCWSubmitButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center(
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: encodeImagesAsync,
+                    parameter: _buildJobDataEncode(),
+                    onReady: (data) => _saveOutputEncode(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
+    return GCWAsyncExecuterParameters(Tuple3<Uint8List, int, int>(_encodeImage, _encodeOffsets.item1, _encodeOffsets.item2));
+  }
+
+  _saveOutputEncode(Tuple2<Uint8List, Uint8List> output) {
+    _encodeOutputImages = output;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

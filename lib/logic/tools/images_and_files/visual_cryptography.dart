@@ -1,13 +1,27 @@
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
 
-Uint8List decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
+Future<Uint8List> decodeImagesAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return null;
+  }
+
+  var output = await decodeImages(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+Future<Uint8List> decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
   if (image1 == null || image2 == null) return null;
-  offsetX = 1051;
+
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
 
@@ -17,8 +31,9 @@ Uint8List decodeImages(Uint8List image1, Uint8List image2, int offsetX, int offs
 
   image = _pasteImage(image, _image1, min(offsetX, 0).abs(), min(offsetY, 0).abs(), false);
   image = _pasteImage(image, _image2, max(offsetX, 0).abs(), max(offsetY, 0).abs(), true);
-  
-  return Image.encodePng(image);
+
+  Uint8List output = Image.encodePng(image);
+  return Future.value(output);
 }
 
 Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX, int offsetY, bool secondLayer) {
@@ -41,10 +56,22 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
   return targetImage;
 }
 
-  var counter1 = 0;
-Tuple2<int, int> offsetAutoCalc(Uint8List image1, Uint8List image2) {
-  if (image1 == null || image2 == null) return null;
+Future<Tuple2<int, int>> offsetAutoCalcAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return null;
+  }
 
+  var output = await offsetAutoCalc(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4, sendAsyncPort: jobData.sendAsyncPort);
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+Future<Tuple2<int, int>> offsetAutoCalc(Uint8List image1, Uint8List image2, int offsetX, int offsetY, {SendPort sendAsyncPort}) {
+  if (image1 == null || image2 == null) return null;
+var start_time = DateTime.now();
   var _image1 = Image.decodeImage(image1);
   var _image2 = Image.decodeImage(image2);
 
@@ -53,24 +80,33 @@ Tuple2<int, int> offsetAutoCalc(Uint8List image1, Uint8List image2) {
   Tuple2<int, int> result ;
   var maxCount = 0;
 
-  var minX = -_image2.width + 2;
-  var maxX = _image1.width + _image2.width - 2;
-  var minY = -_image2.height + 2;
-  var maxY = _image1.width + _image2.width - 2;
-counter1 = 0;
-  for (var x = minX; x < maxX; x++) {
-    //for (var y = minY; y < maxY; y++) {
-    var y = 0;
+  var minX = (offsetX==null) ? -_image2.width + 2 : offsetX;
+  var maxX = (offsetX==null) ? _image1.width + _image2.width - 2 : offsetX;
+  var minY = (offsetY==null) ? -_image2.height + 2 : offsetY;
+  var maxY = (offsetY==null) ? _image1.width + _image2.width - 2 : offsetY;
+  var progress = 0;
+  int _countCombinations = max(((maxX-minX+1)*(maxY-minY+1) ).toInt(), 1); // 100 steps
+  print(_countCombinations);
+
+  //sendAsyncPort.send({'progress': 0.0});
+  for (var x = minX; x <= maxX; x++) {
+    for (var y = minY; y <= maxY; y++) {
+      var y = 0;
       var count = _calcBlackBlockCount(_image1, _image2, x, y);
       if (count == null) return null;
       if (count > maxCount) {
         maxCount = count;
-        result = Tuple2<int, int> (x, y);
+        result = Tuple2<int, int>(x, y);
       }
-    //}
+    }
+    progress++;
+    if (sendAsyncPort != null && (progress % _countCombinations == 0)) {
+      sendAsyncPort.send({'progress': progress / _countCombinations });
+      print(progress / _countCombinations);
+    }
   }
-print("counter2 =" +counter1.toString());
-  return result;
+print("Time: " + (DateTime.now().difference(start_time)).inMilliseconds.toString());// result.item1 "counter2 =" +counter1.toString());
+  return Future.value( result);
 }
 
 Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offsetY) {
@@ -86,18 +122,32 @@ Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offset
 
   for (var x = coreImageSize.item1; x < coreImageSize.item2-1; x+=2) {
     for (var y = coreImageSize.item3; y < coreImageSize.item4-1; y+=2) {
-      if (!(_blackArea(_image1, _image2, x, y, offsetX, offsetY)))
+      if (!(_blackArea(_image1, _image2, x, y, offsetX, offsetY))) {
         image.setPixel(x   - coreImageSize.item1, y   - coreImageSize.item3, Colors.white.value);
         image.setPixel(x+1 - coreImageSize.item1, y   - coreImageSize.item3, Colors.white.value);
         image.setPixel(x   - coreImageSize.item1, y+1 - coreImageSize.item3, Colors.white.value);
         image.setPixel(x+1 - coreImageSize.item1, y+1 - coreImageSize.item3, Colors.white.value);
+      }
     }
   }
 
   return Image.encodePng(image);
 }
 
-Tuple2<Uint8List, Uint8List> encodeImage(Uint8List image, int offsetX, int offsetY) {
+Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return null;
+  }
+
+  var output = await encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3);
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, int offsetX, int offsetY) {
   if (image == null) return null;
 
   var _image = Image.decodeImage(image);
@@ -136,7 +186,7 @@ Tuple2<Uint8List, Uint8List> encodeImage(Uint8List image, int offsetX, int offse
     }
   }
 
-  return Tuple2<Uint8List, Uint8List>(Image.encodePng(image1), Image.encodePng(image2));
+  return Future.value(Tuple2<Uint8List, Uint8List>(Image.encodePng(image1), Image.encodePng(image2)));
 }
 
 Tuple2<List<bool>, List<bool>> _randomPixel(bool white) {
@@ -171,7 +221,6 @@ int _calcBlackBlockCount(Image.Image image1, Image.Image image2, int offsetX, in
         print(x.toString() + " " +y.toString()+ " " +image1.width.toString()+ " " +image2.width.toString()+ " " +offsetX.toString() + " " +offsetY.toString());
         return null;
       }
-      counter1++;
     }
   }
 
@@ -200,4 +249,14 @@ Tuple4<int, int, int, int> _coreImageSize(Image.Image image1, Image.Image image2
   var maxY = min(image1.height, image2.height + offsetY);
 
   return Tuple4<int, int, int, int>(minX, maxX, minY, maxY);
+}
+
+List<List<bool>> blackWhitheImage(Image.Image image) {
+  var bwImage = List.generate(image.height, (_) => List.filled(image.width, false));
+
+  for (var x = 0; x < image.width; x++) {
+    for (var y = 0; y < image.height; y++) {
+      bwImage[x][y] = _blackPixel(image.getPixel(x, y));
+    }
+  }
 }
