@@ -152,7 +152,7 @@ class _GCWImageViewState extends State<GCWImageView> {
           iconData: Icons.save,
           size: iconSize,
           onPressed: () {
-            _exportFile(context, widget.imageData.bytes);
+            _exportFile(context, widget.imageData.bytes, fileName: widget.fileName);
           }),
       GCWPopupMenu(
           iconData: Icons.open_in_new,

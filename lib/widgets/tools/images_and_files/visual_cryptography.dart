@@ -10,10 +10,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -35,21 +33,21 @@ class VisualCryptographyState extends State<VisualCryptography> {
   var _encodeOffsets = Tuple2<int, int>(0, 0);
 
   Tuple2<Uint8List, Uint8List> _encodeOutputImages;
-  TextEditingController _offsetXController;
-  TextEditingController _offsetYController;
+  TextEditingController _decodeOffsetXController;
+  TextEditingController _decodeOffsetYController;
 
   @override
   void initState() {
     super.initState();
 
-    _offsetXController = TextEditingController(text: _decodeOffsets.item1.toString());
-    _offsetYController = TextEditingController(text: _decodeOffsets.item2.toString());
+    _decodeOffsetXController = TextEditingController(text: _decodeOffsets.item1.toString());
+    _decodeOffsetYController = TextEditingController(text: _decodeOffsets.item2.toString());
   }
 
   @override
   void dispose() {
-    _offsetXController.dispose();
-    _offsetYController.dispose();
+    _decodeOffsetXController.dispose();
+    _decodeOffsetYController.dispose();
 
     super.dispose();
   }
@@ -78,8 +76,8 @@ class VisualCryptographyState extends State<VisualCryptography> {
   Widget _decodeWidgets() {
     return Column(children: [
       Row(children: [
-        Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_high_signal'))),
-        Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_low_signal'))),
+        Expanded(child: GCWTextDivider(text: 'Image 1')), //i18n(context, 'animated_image_morse_code_high_signal')
+        Expanded(child: GCWTextDivider(text: 'Image 2')),
       ]),
       Row(children: [
         Expanded(child:
@@ -120,17 +118,21 @@ class VisualCryptographyState extends State<VisualCryptography> {
       GCWIntegerSpinner(
         title: 'offsetX', //(context, 'trifid_block_size'),
         value: _decodeOffsets.item1,
-        controller: _offsetXController,
+        controller: _decodeOffsetXController,
         onChanged: (value) {
-          _decodeOffsets = Tuple2<int, int>(value, _decodeOffsets.item2);
+          setState(() {
+            _decodeOffsets = Tuple2<int, int>(value, _decodeOffsets.item2);
+          });
         },
       ),
       GCWIntegerSpinner(
         title: 'offsetY', //(context, 'trifid_block_size'),
         value: _decodeOffsets.item2,
-        controller: _offsetYController,
+        controller: _decodeOffsetYController,
         onChanged: (value) {
-          _decodeOffsets = Tuple2<int, int>(_decodeOffsets.item1, value);
+          setState(() {
+            _decodeOffsets = Tuple2<int, int>(_decodeOffsets.item1, value);
+          });
         },
       ),
       _buildDecodeSubmitButton(),
@@ -195,18 +197,20 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
           GCWIntegerSpinner(
             title: 'offsetX', //(context, 'trifid_block_size'),
-            value: _decodeOffsets.item1,
-            controller: _offsetXController,
+            value: _encodeOffsets.item1,
             onChanged: (value) {
-              _encodeOffsets = Tuple2<int, int>(value, _encodeOffsets.item2);
+              setState(() {
+                _encodeOffsets = Tuple2<int, int>(value, _encodeOffsets.item2);
+              });
             },
           ),
           GCWIntegerSpinner(
             title: 'offsetY', //(context, 'trifid_block_size'),
-            value: _decodeOffsets.item2,
-            controller: _offsetYController,
+            value: _encodeOffsets.item2,
             onChanged: (value) {
-              _encodeOffsets = Tuple2<int, int>(_encodeOffsets.item1, value);
+              setState(() {
+                _encodeOffsets = Tuple2<int, int>(_encodeOffsets.item1, value);
+              });
             },
           ),
 
@@ -329,16 +333,14 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   _saveOutputOffsetAutoCalc(Tuple2<int, int> output) {
     if (output != null) {
-      _decodeOffsets = output;
-      _offsetXController.text = _decodeOffsets.item1.toString();
-      _offsetYController.text = _decodeOffsets.item2.toString();
-
-      print("offsetX =" + output.item1.toString() + " offsetY =" +output.item2.toString());
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _decodeOffsets = output;
+          _decodeOffsetXController.text = _decodeOffsets.item1.toString();
+          _decodeOffsetYController.text = _decodeOffsets.item2.toString();
+        });
+      });
     }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
   }
 
   Widget _buildEncodeSubmitButton() {
