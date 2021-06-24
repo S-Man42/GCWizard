@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
 
+int whiteColor = Colors.white.value;
+int blackColor = Colors.black.value;
+
 Future<Uint8List> decodeImagesAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
@@ -40,15 +43,14 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
   if (secondLayer) {
     for (var x = 0; x < image.width; x++) {
       for (var y = 0; y < image.height; y++) {
-        if (_blackPixel(image.getPixel(x, y))) // black ??
-          targetImage.setPixel(x + offsetX, y + offsetY, Colors.black.value);
+        if (_blackPixel(image.getPixel(x, y)))
+          targetImage.setPixel(x + offsetX, y + offsetY, blackColor);
       }
     }
   } else {
     for (var x = 0; x < image.width; x++) {
       for (var y = 0; y < image.height; y++) {
-        if (!_blackPixel(image.getPixel(x, y)))  // white ??
-          targetImage.setPixel(x + offsetX, y + offsetY, Colors.white.value);
+         targetImage.setPixel(x + offsetX, y + offsetY, _blackPixel(image.getPixel(x, y)) ? blackColor : whiteColor);
       }
     }
   }
@@ -134,10 +136,10 @@ Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offset
   for (var x = coreImageSize.item1; x < coreImageSize.item2-1; x+=2) {
     for (var y = coreImageSize.item3; y < coreImageSize.item4-1; y+=2) {
       if (!(_blackArea(_image1, _image2, x, y, offsetX, offsetY))) {
-        image.setPixel(x   - coreImageSize.item1, y   - coreImageSize.item3, Colors.white.value);
-        image.setPixel(x+1 - coreImageSize.item1, y   - coreImageSize.item3, Colors.white.value);
-        image.setPixel(x   - coreImageSize.item1, y+1 - coreImageSize.item3, Colors.white.value);
-        image.setPixel(x+1 - coreImageSize.item1, y+1 - coreImageSize.item3, Colors.white.value);
+        image.setPixel(x   - coreImageSize.item1, y   - coreImageSize.item3, whiteColor);
+        image.setPixel(x+1 - coreImageSize.item1, y   - coreImageSize.item3, whiteColor);
+        image.setPixel(x   - coreImageSize.item1, y+1 - coreImageSize.item3, whiteColor);
+        image.setPixel(x+1 - coreImageSize.item1, y+1 - coreImageSize.item3, whiteColor);
       }
     }
   }
@@ -164,40 +166,40 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, int offsetX, i
   var _image = Image.decodeImage(image);
   if (_image == null) return null;
 
-  var image1 = Image.Image(_image.width*2, _image.height*2);
-  var image2 = Image.Image(_image.width*2, _image.height*2);
+
   var image1OffsetX = max(offsetX, 0).abs();
   var image1OffsetY = max(offsetY, 0).abs();
   var image2OffsetX = min(offsetX, 0).abs();
   var image2OffsetY = min(offsetY, 0).abs();
+  var image1 = Image.Image(_image.width*2 + image1OffsetX + image2OffsetX, _image.height*2 + image1OffsetY + image2OffsetY);
+  var image2 = Image.Image(image1.width, image1.height);
 
-  // init images with white noise
-  for (var x = 0; x < _image.width; x++) {
-    for (var y = 0; y < _image.height; y++) {
-      var pixel =  _randomPixel(false);
+  for (var x = -(image1OffsetX + image2OffsetX); x < image1OffsetX + image2OffsetX + _image.width; x++) {
+    for (var y = -(image1OffsetY + image2OffsetY); y < image1OffsetY + image2OffsetY + _image.height; y++) {
+      var pixel =  _checkLimits(x, y, _image.width, _image.height)
+          ? _randomPixel(_blackPixel(_image.getPixel(x, y)))
+          : _randomPixel(false) ;
       for (var x1=0; x1<2; x1++) {
         for (var y1=0; y1<2; y1++) {
-          if (pixel.item1[2*x1+y1]) image1.setPixel(x*2 + x1, y*2 + y1, Colors.white.value);
-          if (pixel.item2[2*x1+y1]) image2.setPixel(x*2 + x1, y*2 + y1, Colors.white.value);
-        }
-      }
-    }
-  }
+          var offsetX = x*2 + image1OffsetX + x1;
+          var offsetY = y*2 + image1OffsetY + y1;
+          if (_checkLimits(offsetX, offsetY, image1.width, image1.height))
+            image1.setPixel(offsetX, offsetY, pixel.item1[2*x1+y1] ? whiteColor : blackColor);
 
-  // draw overlapping areas
-  for (var x = 0; x < _image.width - offsetX.abs(); x++) {
-    for (var y = 0; y < _image.height - offsetY.abs(); y++) {
-      var pixel =  _randomPixel(_blackPixel(_image.getPixel(x, y)));
-      for (var x1=0; x1<2; x1++) {
-        for (var y1=0; y1<2; y1++) {
-          image1.setPixel((x + image1OffsetX)*2 + x1, (y + image1OffsetY)*2 + y1, (pixel.item1[2*x1+y1]) ? Colors.white.value : Colors.black.value);
-          image2.setPixel((x + image2OffsetX)*2 + x1, (y + image2OffsetY)*2 + y1, (pixel.item2[2*x1+y1]) ? Colors.white.value : Colors.black.value);
+          offsetX = x*2 + image2OffsetX + x1;
+          offsetY = y*2 + image2OffsetY + y1;
+          if (_checkLimits(offsetX, offsetY, image2.width, image2.height))
+            image2.setPixel(offsetX, offsetY, pixel.item2[2*x1+y1] ? whiteColor : blackColor);
         }
       }
     }
   }
 
   return Future.value(Tuple2<Uint8List, Uint8List>(Image.encodePng(image1), Image.encodePng(image2)));
+}
+
+bool _checkLimits(int x, int y, int width, int height) {
+  return x >= 0 && x < width && y >= 0 && y < height;
 }
 
 Tuple2<List<bool>, List<bool>> _randomPixel(bool black) {
@@ -232,22 +234,8 @@ int _calcBlackBlockCount(Image.Image image1, Image.Image image2, int offsetX, in
   return counter;
 }
 
-// int _calcBlackBlockCount1(List<List<bool>> image1, List<List<bool>> image2, int offsetX, int offsetY) {
-//   var counter = 0;
-//   var coreImageSize = _coreImageSize1(image1, image2, offsetX, offsetY);
-//
-//   for (var x = coreImageSize.item1; x < coreImageSize.item2-1; x+=2) {
-//     for (var y = coreImageSize.item3; y < coreImageSize.item4-1; y+=2) {
-//       if (_blackArea1(image1, image2, x, y, offsetX, offsetY))
-//         counter++;
-//     }
-//   }
-//
-//   return counter;
-// }
-
 bool _blackPixel(int color) {
-  return !(Image.getAlpha(color) == 0 || Image.getLuminance(color)>128);
+  return (Image.getAlpha(color) > 128 && Image.getLuminance(color) < 128);
 }
 
 bool _blackResultPixel(int color1, int color2) {
@@ -261,16 +249,6 @@ bool _blackArea(Image.Image image1, Image.Image image2, int x, int y, int offset
          _blackResultPixel(image1.getPixel(x+1, y+1), image2.getPixel(x+1 - offsetX, y+1 - offsetY));
 }
 
-// bool _blackArea1(List<List<bool>> image1, List<List<bool>> image2, int x, int y, int offsetX, int offsetY) {
-//   try {
-//     return (image1[x][y] || image2[x   - offsetX][y   - offsetY]) &&
-//         (image1[x+1][y] || image2[x+1 - offsetX][y   - offsetY]) &&
-//         (image1[x]   [y+1] || image2[x   - offsetX][y+1 - offsetY]) &&
-//         (image1[x+1][y+1] || image2[x+1 - offsetX] [y+1 - offsetY]);
-//   }catch (e)
-//   { x=x;}
-//
-// }
 
 Tuple4<int, int, int, int> _coreImageSize(Image.Image image1, Image.Image image2, int offsetX, int offsetY) {
   var minX = max(offsetX, 0);
@@ -280,24 +258,3 @@ Tuple4<int, int, int, int> _coreImageSize(Image.Image image1, Image.Image image2
 
   return Tuple4<int, int, int, int>(minX, maxX, minY, maxY);
 }
-
-// Tuple4<int, int, int, int> _coreImageSize1(List<List<bool>> image1, List<List<bool>> image2, int offsetX, int offsetY) {
-//   var minX = max(offsetX, 0);
-//   var maxX = min(image1.length, image2.length + offsetX);
-//   var minY = max(offsetY, 0);
-//   var maxY = min(image1.first.length, image2.first.length + offsetY);
-//
-//   return Tuple4<int, int, int, int>(minX, maxX, minY, maxY);
-// }
-
-// List<List<bool>> blackWhitheImage(Image.Image image) {
-//   var bwImage = List.generate(image.width, (_) => List.filled(image.height, false));
-//
-//   for (var x = 0; x < image.width; x++) {
-//     for (var y = 0; y < image.height; y++) {
-//       bwImage[x][y] = _blackPixel(image.getPixel(x, y));
-//     }
-//   }
-//
-//   return bwImage;
-// }

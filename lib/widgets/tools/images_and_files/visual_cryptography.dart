@@ -76,8 +76,8 @@ class VisualCryptographyState extends State<VisualCryptography> {
   Widget _decodeWidgets() {
     return Column(children: [
       Row(children: [
-        Expanded(child: GCWTextDivider(text: 'Image 1')), //i18n(context, 'animated_image_morse_code_high_signal')
-        Expanded(child: GCWTextDivider(text: 'Image 2')),
+        Expanded(child: GCWTextDivider(text: i18n(context, 'visual_cryptography_image') + ' 1')),
+        Expanded(child: GCWTextDivider(text: i18n(context, 'visual_cryptography_image') + ' 2')),
       ]),
       Row(children: [
         Expanded(child:
@@ -116,7 +116,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         Expanded(child: _decodeImage2 !=null ? Image.memory(_decodeImage2) : Container()),
       ]),
       GCWIntegerSpinner(
-        title: 'offsetX', //(context, 'trifid_block_size'),
+        title: i18n(context, 'visual_cryptography_offset') + ' X',
         value: _decodeOffsets.item1,
         controller: _decodeOffsetXController,
         onChanged: (value) {
@@ -126,7 +126,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         },
       ),
       GCWIntegerSpinner(
-        title: 'offsetY', //(context, 'trifid_block_size'),
+        title: i18n(context, 'visual_cryptography_offset') + ' Y',
         value: _decodeOffsets.item2,
         controller: _decodeOffsetYController,
         onChanged: (value) {
@@ -196,7 +196,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
           _encodeImage !=null ? Image.memory(_encodeImage) : Container(),
 
           GCWIntegerSpinner(
-            title: 'offsetX', //(context, 'trifid_block_size'),
+            title: i18n(context, 'visual_cryptography_offset') + ' X',
             value: _encodeOffsets.item1,
             onChanged: (value) {
               setState(() {
@@ -205,7 +205,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
             },
           ),
           GCWIntegerSpinner(
-            title: 'offsetY', //(context, 'trifid_block_size'),
+            title: i18n(context, 'visual_cryptography_offset') + ' Y',
             value: _encodeOffsets.item2,
             onChanged: (value) {
               setState(() {
@@ -279,7 +279,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _buildAutoOffsetXYButton() {
     return GCWButton(
-      text: 'Auto XY',
+      text: i18n(context, 'visual_cryptography_auto') + ' XY',
       onPressed: () async {
         await showDialog(
           context: context,
@@ -304,7 +304,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _buildAutoOffsetXButton() {
     return GCWButton(
-        text: 'Auto X',
+        text: i18n(context, 'visual_cryptography_auto') + ' X',
         onPressed: () async {
           await showDialog(
             context: context,
