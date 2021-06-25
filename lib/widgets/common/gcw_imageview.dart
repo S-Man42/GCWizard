@@ -35,8 +35,9 @@ class GCWImageView extends StatefulWidget {
   final Set<GCWImageViewButtons> suppressedButtons;
   final int maxHeightInPreview;
   final Function onBeforeFullscreen;
+  final Function onBeforeFullscreenAsync;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName, this.suppressedButtons, this.maxHeightInPreview, this.onBeforeFullscreen})
+  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName, this.suppressedButtons, this.maxHeightInPreview, this.onBeforeFullscreen, this.onBeforeFullscreenAsync})
       : super(key: key);
 
   @override
@@ -159,6 +160,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                           tool: GCWImageViewFullScreen(
                             imageProvider: _image,
                             onBeforeFullscreen: widget.onBeforeFullscreen,
+                            onBeforeFullscreenAsync: widget.onBeforeFullscreenAsync,
                           ),
                           autoScroll: false,
                           toolName: i18n(context, 'imageview_fullscreen_title'),
