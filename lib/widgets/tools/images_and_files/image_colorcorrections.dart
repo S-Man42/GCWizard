@@ -1,15 +1,22 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:image/image.dart' as img;
 
 class ImageColorCorrections extends StatefulWidget {
+  final Uint8List imageData;
+
+  const ImageColorCorrections({this.imageData});
+
   @override
   ImageColorCorrectionsState createState() => ImageColorCorrectionsState();
 }
@@ -22,20 +29,18 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   img.Image _currentPreview;
   img.Image _originalPreview;
 
-  var _currentSaturation = 1.0;
-  var _currentContrast = 1.0;
-  var _currentBrightness = 1.0;
-  var _currentExposure = 0.0;
+  var _currentSaturation = 0.0;
+  var _currentContrast = 0.0;
+  var _currentBrightness = 0.0;
+  var _currentExposure = 1.0;
   var _currentGamma = 1.0;
   var _currentHue = 0.0;
-  var _currentBlacks = 0.0;
-  var _currentWhites = 0.0;
-  var _currentMids = 0.0;
   var _currentRed = 0.0;
   var _currentGreen = 0.0;
   var _currentBlue = 0.0;
 
   var _currentInvert = false;
+  var _currentGrayscale = false;
   var _currentEdgeDetection = 0.0;
 
   _currentDataInit() {
@@ -46,6 +51,18 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       return resized;
     } else {
       return image;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.imageData != null) {
+      _originalData = widget.imageData;
+
+      _originalPreview = _currentDataInit();
+      _currentPreview = img.Image.from(_originalPreview);
     }
   }
 
@@ -70,18 +87,22 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
             });
           },
         ),
+        Container(), // Fixes a display issue
         if (_currentPreview != null)
           GCWImageView(
             imageData: GCWImageViewData(_imageBytes()),
-            onBeforeFullscreen: _adjustToFullScreen
+            onBeforeLoadBigImage: _adjustToFullScreen,
           ),
+        if (_currentPreview != null)
+            GCWTextDivider(text: i18n(context, 'image_colorcorrections_options'),),
+        if (_currentPreview != null)
             Expanded(
             child:
         SingleChildScrollView(
           child: Column(
             children: [
               GCWOnOffSwitch(
-                  title: 'Invert',
+                  title: i18n(context, 'image_colorcorrections_invert'),
                   value: _currentInvert,
                   onChanged: (value) {
                     setState(() {
@@ -89,10 +110,41 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                     });
                   }
               ),
+              GCWOnOffSwitch(
+                  title: i18n(context, 'image_colorcorrections_grayscale'),
+                  value: _currentGrayscale,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentGrayscale = value;
+                    });
+                  }
+              ),
               GCWSlider(
-                  title: 'Saturation',
-                  value: _currentSaturation,
+                  title: i18n(context, 'image_colorcorrections_brightness'),
+                  value: _currentBrightness,
+                  min: -255,
+                  max: 255,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentBrightness = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: i18n(context, 'image_colorcorrections_exposure'),
+                  value: _currentExposure,
                   min: 0.0,
+                  max: 2.0,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentExposure = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: i18n(context, 'image_colorcorrections_saturation'),
+                  value: _currentSaturation,
+                  min: -1.0,
                   max: 1.0,
                   onChanged: (value) {
                     setState(() {
@@ -101,10 +153,10 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Contrast',
+                  title: i18n(context, 'image_colorcorrections_contrast'),
                   value: _currentContrast,
-                  min: 0.0,
-                  max: 1.0,
+                  min: -255,
+                  max: 255,
                   onChanged: (value) {
                     setState(() {
                       _currentContrast = value;
@@ -112,21 +164,10 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Brightness',
-                  value: _currentBrightness,
-                  min: 0.0,
-                  max: 1.0,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentBrightness = value;
-                    });
-                  }
-              ),
-              GCWSlider(
-                  title: 'Gamma',
+                  title: i18n(context, 'image_colorcorrections_gamma'),
                   value: _currentGamma,
-                  min: 0.0,
-                  max: 1.0,
+                  min: 0.01,
+                  max: 6.99,
                   onChanged: (value) {
                     setState(() {
                       _currentGamma = value;
@@ -134,10 +175,10 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Hue',
+                  title: i18n(context, 'image_colorcorrections_hue'),
                   value: _currentHue,
-                  min: 0.0,
-                  max: 360.0,
+                  min: -180.0,
+                  max: 180.0,
                   onChanged: (value) {
                     setState(() {
                       _currentHue = value;
@@ -145,40 +186,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Blacks',
-                  value: _currentBlacks,
-                  min: 0.0,
-                  max: 1000.0,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentBlacks = value;
-                    });
-                  }
-              ),
-              GCWSlider(
-                  title: 'Whites',
-                  value: _currentWhites,
-                  min: 0.0,
-                  max: 1000.0,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentWhites = value;
-                    });
-                  }
-              ),
-              GCWSlider(
-                  title: 'Mids',
-                  value: _currentMids,
-                  min: 0.0,
-                  max: 1000.0,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentMids = value;
-                    });
-                  }
-              ),
-              GCWSlider(
-                  title: 'Red',
+                  title: i18n(context, 'image_colorcorrections_red'),
                   value: _currentRed,
                   min: -255.0,
                   max: 255.0,
@@ -189,7 +197,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Green',
+                  title: i18n(context, 'image_colorcorrections_green'),
                   value: _currentGreen,
                   min: -255.0,
                   max: 255.0,
@@ -200,7 +208,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Blue',
+                  title: i18n(context, 'image_colorcorrections_blue'),
                   value: _currentBlue,
                   min: -255.0,
                   max: 255.0,
@@ -211,7 +219,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Edges',
+                  title: i18n(context, 'image_colorcorrections_edges'),
                   value: _currentEdgeDetection,
                   min: 0.0,
                   max: 1.0,
@@ -220,18 +228,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                       _currentEdgeDetection = value;
                     });
                   }
-              ),
-              GCWSlider(
-                  title: 'Exposure',
-                  value: _currentExposure,
-                  min: 0.0,
-                  max: 1.0,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentExposure = value;
-                    });
-                  }
-              ),
+              )
             ],
           ),
         ))
@@ -239,32 +236,49 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     );
   }
 
-  _adjustToFullScreen(MemoryImage imageProvider) {
+  _adjustToFullScreen() {
     var image = _adjustColor(img.decodeImage(_originalData));
-    return MemoryImage(img.encodePng(image));
+    return img.encodePng(image);
   }
 
   _adjustColor(img.Image image) {
-    if (_currentInvert)
-      image = img.invert(image);
-
     if (_currentEdgeDetection > 0.0)
       image = img.sobel(image, amount: _currentEdgeDetection);
 
-    if (_currentRed != 0.0 || _currentGreen != 0.0 || _currentBlue != 0.0)
-      image = img.colorOffset(image, red: _currentRed.toInt(), green: _currentGreen.toInt(), blue: _currentBlue.toInt());
+    final pixels = image.getBytes();
+    for (var i = 0, len = pixels.length; i < len; i += 4) {
+      var pixel = RGBPixel(pixels[i].toDouble(), pixels[i + 1].toDouble(), pixels[i + 2].toDouble());
 
-    return img.adjustColor(image,
-        saturation: _currentSaturation,
-        contrast: _currentContrast,
-      gamma: _currentGamma,
-      exposure: _currentExposure,
-      hue: _currentHue,
-      brightness: _currentBrightness,
-      // blacks: _currentBlacks.toInt(),
-      // whites: _currentWhites.toInt(),
-      // mids: _currentMids.toInt()
-    );
+      if (_currentInvert)
+        pixel = invert(pixel);
+
+      if (_currentGrayscale)
+        pixel = grayscale(pixel);
+
+      if (_currentRed != 0.0 || _currentGreen != 0.0 || _currentBlue != 0.0)
+        pixel = colorOffset(pixel, _currentRed, _currentGreen, _currentBlue);
+
+      if (_currentBrightness != 0.0)
+        pixel = brightness(pixel, _currentBrightness);
+
+      if (_currentExposure != 1.0)
+        pixel = exposure(pixel, _currentExposure > 1.0 ? 3 * (_currentExposure - 1) + 1 : _currentExposure);
+
+      if (_currentSaturation != 0.0 || _currentHue != 0.0)
+        pixel = saturation(pixel, _currentSaturation, _currentHue);
+
+      if (_currentContrast != 0.0)
+        pixel = contrast(pixel, _currentContrast);
+
+      if (_currentGamma != 1.0)
+        pixel = gamma(pixel, _currentGamma);
+
+      pixels[i] = pixel.red.round().clamp(0, 255);
+      pixels[i + 1] = pixel.green.round().clamp(0, 255);
+      pixels[i + 2] = pixel.blue.round().clamp(0, 255);
+    }
+
+    return image;
   }
 
   _imageBytes() {

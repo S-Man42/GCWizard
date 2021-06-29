@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_imageview_fullscreen.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
@@ -34,9 +35,9 @@ class GCWImageView extends StatefulWidget {
   final String fileName;
   final Set<GCWImageViewButtons> suppressedButtons;
   final int maxHeightInPreview;
-  final Function onBeforeFullscreen;
+  final Function onBeforeLoadBigImage;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName, this.suppressedButtons, this.maxHeightInPreview, this.onBeforeFullscreen})
+  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName, this.suppressedButtons, this.maxHeightInPreview, this.onBeforeLoadBigImage})
       : super(key: key);
 
   @override
@@ -78,7 +79,7 @@ class _GCWImageViewState extends State<GCWImageView> {
       if (widget.imageData != null) _image = MemoryImage(widget.imageData.bytes);
 
       if (widget.maxHeightInPreview == null)
-        _previewImage = _image;
+        _previewImage = MemoryImage(widget.imageData.bytes);
       else {
         _previewImage = _resizeImage();
       }
@@ -157,8 +158,8 @@ class _GCWImageViewState extends State<GCWImageView> {
                 NoAnimationMaterialPageRoute(
                     builder: (context) => GCWTool(
                           tool: GCWImageViewFullScreen(
-                            imageProvider: _image,
-                            onBeforeFullscreen: widget.onBeforeFullscreen,
+                            imageData: widget.imageData.bytes,
+                            onBeforeFullscreen: widget.onBeforeLoadBigImage,
                           ),
                           autoScroll: false,
                           toolName: i18n(context, 'imageview_fullscreen_title'),
@@ -182,7 +183,14 @@ class _GCWImageViewState extends State<GCWImageView> {
           iconData: Icons.save,
           size: iconSize,
           onPressed: () {
-            _exportFile(context, widget.imageData.bytes);
+            var imgData;
+
+            if (widget.onBeforeLoadBigImage != null)
+              imgData = widget.onBeforeLoadBigImage();
+            else
+              imgData = widget.imageData.bytes;
+
+            _exportFile(context, imgData);
           }),
       GCWPopupMenu(
           iconData: Icons.open_in_new,
@@ -205,12 +213,13 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _openInMetadataViewer() {
-    local.PlatformFile file = local.PlatformFile(bytes: widget.imageData.bytes);
+    var imgData = widget.onBeforeLoadBigImage != null ? widget.onBeforeLoadBigImage() : widget.imageData.bytes;
+
+    local.PlatformFile file = local.PlatformFile(bytes: imgData);
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute(
             builder: (context) => GCWTool(
-                //tool: ImageMetadataViewer(),
                 tool: ExifReader(file: file),
                 toolName: i18n(context, 'exif_title'),
                 i18nPrefix: '',
@@ -218,28 +227,25 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _openInColorCorrections() {
-    // TODO
-    // Navigator.push(
-    //     context,
-    //     NoAnimationMaterialPageRoute(
-    //         builder: (context) => GCWTool(
-    //             tool: ImageColorCorrections(),
-    //             i18nPrefix: '',
-    //             missingHelpLocales: ['ko'])));
+    var imgData = widget.onBeforeLoadBigImage != null ? widget.onBeforeLoadBigImage() : widget.imageData.bytes;
+
+    Navigator.push(
+        context,
+        NoAnimationMaterialPageRoute(
+            builder: (context) => GCWTool(
+                tool: ImageColorCorrections(imageData: imgData),
+                toolName: i18n(context, 'image_colorcorrections_title'),
+                i18nPrefix: '',
+                autoScroll: false,
+                missingHelpLocales: ['ko'])));
   }
 
-  _exportFile(BuildContext context, Uint8List data,
-      {String extension, String fileName, bool addTimestamp: true}) async {
-    var fileType = getFileType(data);
-    String fileExtension = getFileExtension(fileName);
-    String ext = extension ?? fileExtension ?? fileType;
-    String baseName = getFileBaseNameWithoutExtension(fileName);
-    baseName = baseName ?? 'imageview_export';
-    String timestamp = addTimestamp ? DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) : '';
-    String outputFilename = '${baseName}_${timestamp}${ext}';
+  _exportFile(BuildContext context, Uint8List data) async {
+    String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+    String outputFilename = 'imageview_export_${timestamp}.png';
 
     var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    if (value != null) showExportedFileDialog(context, value['path'], fileType: '.png');
   }
 }

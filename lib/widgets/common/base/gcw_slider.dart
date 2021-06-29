@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWSlider extends StatefulWidget {
@@ -25,6 +26,15 @@ class GCWSlider extends StatefulWidget {
 class _GCWSliderState extends State<GCWSlider> {
   var _currentValue;
 
+  var _initialValue;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _initialValue = widget.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -42,6 +52,16 @@ class _GCWSliderState extends State<GCWSlider> {
               });
             }),
           flex: 3,
+        ),
+        GCWIconButton(
+          iconData: Icons.refresh,
+          size: IconButtonSize.SMALL,
+          onPressed: () {
+            setState(() {
+              _currentValue = _initialValue;
+              widget.onChanged(_currentValue);
+            });
+          },
         )
       ],
     );
