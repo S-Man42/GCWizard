@@ -1,7 +1,9 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
@@ -36,6 +38,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   var _currentBlue = 0.0;
 
   var _currentInvert = false;
+  var _currentGrayscale = false;
   var _currentEdgeDetection = 0.0;
 
   _currentDataInit() {
@@ -81,6 +84,15 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           child: Column(
             children: [
               GCWOnOffSwitch(
+                  title: 'Grayscale',
+                  value: _currentGrayscale,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentGrayscale = value;
+                    });
+                  }
+              ),
+              GCWOnOffSwitch(
                   title: 'Invert',
                   value: _currentInvert,
                   onChanged: (value) {
@@ -92,8 +104,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
               GCWSlider(
                   title: 'Saturation',
                   value: _currentSaturation,
-                  min: 0.0,
-                  max: 1.0,
+                  min: -255,
+                  max: 255,
                   onChanged: (value) {
                     setState(() {
                       _currentSaturation = value;
@@ -103,8 +115,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
               GCWSlider(
                   title: 'Contrast',
                   value: _currentContrast,
-                  min: 0.0,
-                  max: 1.0,
+                  min: -255,
+                  max: 255,
                   onChanged: (value) {
                     setState(() {
                       _currentContrast = value;
@@ -114,8 +126,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
               GCWSlider(
                   title: 'Brightness',
                   value: _currentBrightness,
-                  min: 0.0,
-                  max: 1.0,
+                  min: -255,
+                  max: 255,
                   onChanged: (value) {
                     setState(() {
                       _currentBrightness = value;
@@ -254,17 +266,40 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     if (_currentRed != 0.0 || _currentGreen != 0.0 || _currentBlue != 0.0)
       image = img.colorOffset(image, red: _currentRed.toInt(), green: _currentGreen.toInt(), blue: _currentBlue.toInt());
 
-    return img.adjustColor(image,
-        saturation: _currentSaturation,
-        contrast: _currentContrast,
-      gamma: _currentGamma,
-      exposure: _currentExposure,
-      hue: _currentHue,
-      brightness: _currentBrightness,
-      // blacks: _currentBlacks.toInt(),
-      // whites: _currentWhites.toInt(),
-      // mids: _currentMids.toInt()
-    );
+    final pixels = image.getBytes();
+    for (var i = 0, len = pixels.length; i < len; i += 4) {
+      var pixel = RGBPixel(pixels[i], pixels[i + 1], pixels[i + 2]);
+
+      if (_currentGrayscale)
+        pixel = grayscale(pixel);
+
+      if (_currentInvert)
+        pixel = invert(pixel);
+
+      if (_currentContrast != 0.0)
+        pixel = contrast(pixel, _currentContrast.toInt());
+
+      if (_currentBrightness != 0.0)
+        pixel = brightness(pixel, _currentBrightness.toInt());
+
+      pixels[i] = pixel.red;
+      pixels[i + 1] = pixel.green;
+      pixels[i + 2] = pixel.blue;
+    }
+
+    return image;
+
+    // return img.adjustColor(img.Image.from(image),
+    //     saturation: _currentSaturation,
+    //     // contrast: _currentContrast <= 1.0 ? _currentContrast : pow(_currentContrast, 4),
+    //   // gamma: _currentGamma,
+    //   // exposure: _currentExposure,
+    //   // hue: _currentHue,
+    //   // brightness: _currentBrightness,
+    //   // blacks: _currentBlacks.toInt(),
+    //   // whites: _currentWhites.toInt(),
+    //   // mids: _currentMids.toInt()
+    // );
   }
 
   _imageBytes() {
