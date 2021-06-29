@@ -24,7 +24,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   img.Image _currentPreview;
   img.Image _originalPreview;
 
-  var _currentSaturation = 1.0;
+  var _currentSaturation = 0.0;
   var _currentContrast = 1.0;
   var _currentBrightness = 1.0;
   var _currentExposure = 0.0;
@@ -84,15 +84,6 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           child: Column(
             children: [
               GCWOnOffSwitch(
-                  title: 'Grayscale',
-                  value: _currentGrayscale,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentGrayscale = value;
-                    });
-                  }
-              ),
-              GCWOnOffSwitch(
                   title: 'Invert',
                   value: _currentInvert,
                   onChanged: (value) {
@@ -101,25 +92,12 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                     });
                   }
               ),
-              GCWSlider(
-                  title: 'Saturation',
-                  value: _currentSaturation,
-                  min: -255,
-                  max: 255,
+              GCWOnOffSwitch(
+                  title: 'Grayscale',
+                  value: _currentGrayscale,
                   onChanged: (value) {
                     setState(() {
-                      _currentSaturation = value;
-                    });
-                  }
-              ),
-              GCWSlider(
-                  title: 'Contrast',
-                  value: _currentContrast,
-                  min: -255,
-                  max: 255,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentContrast = value;
+                      _currentGrayscale = value;
                     });
                   }
               ),
@@ -135,24 +113,46 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                   }
               ),
               GCWSlider(
-                  title: 'Gamma',
-                  value: _currentGamma,
-                  min: 0.0,
+                  title: 'Saturation',
+                  value: _currentSaturation,
+                  min: -1.0,
                   max: 1.0,
                   onChanged: (value) {
                     setState(() {
-                      _currentGamma = value;
+                      _currentSaturation = value;
                     });
                   }
               ),
               GCWSlider(
                   title: 'Hue',
                   value: _currentHue,
-                  min: 0.0,
-                  max: 360.0,
+                  min: -180.0,
+                  max: 180.0,
                   onChanged: (value) {
                     setState(() {
                       _currentHue = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Contrast',
+                  value: _currentContrast,
+                  min: -255,
+                  max: 255,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentContrast = value;
+                    });
+                  }
+              ),
+              GCWSlider(
+                  title: 'Gamma',
+                  value: _currentGamma,
+                  min: 0.01,
+                  max: 6.99,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentGamma = value;
                     });
                   }
               ),
@@ -257,34 +257,52 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   }
 
   _adjustColor(img.Image image) {
-    if (_currentInvert)
-      image = img.invert(image);
-
     if (_currentEdgeDetection > 0.0)
       image = img.sobel(image, amount: _currentEdgeDetection);
 
     if (_currentRed != 0.0 || _currentGreen != 0.0 || _currentBlue != 0.0)
       image = img.colorOffset(image, red: _currentRed.toInt(), green: _currentGreen.toInt(), blue: _currentBlue.toInt());
 
+    var s = false;
+
     final pixels = image.getBytes();
     for (var i = 0, len = pixels.length; i < len; i += 4) {
-      var pixel = RGBPixel(pixels[i], pixels[i + 1], pixels[i + 2]);
-
-      if (_currentGrayscale)
-        pixel = grayscale(pixel);
+      var pixel = RGBPixel(pixels[i].toDouble(), pixels[i + 1].toDouble(), pixels[i + 2].toDouble());
 
       if (_currentInvert)
         pixel = invert(pixel);
 
-      if (_currentContrast != 0.0)
-        pixel = contrast(pixel, _currentContrast.toInt());
+      if (_currentGrayscale)
+        pixel = grayscale(pixel);
 
       if (_currentBrightness != 0.0)
-        pixel = brightness(pixel, _currentBrightness.toInt());
+        pixel = brightness(pixel, _currentBrightness);
 
-      pixels[i] = pixel.red;
-      pixels[i + 1] = pixel.green;
-      pixels[i + 2] = pixel.blue;
+      if (_currentSaturation != 0.0 || _currentHue != 0.0)
+        pixel = saturation(pixel, _currentSaturation, _currentHue);
+
+      if (_currentContrast != 0.0)
+        pixel = contrast(pixel, _currentContrast);
+
+      // print('Contrast');
+      // print(pixel.red);
+
+      if (_currentGamma != 1.0)
+        pixel = gamma(pixel, _currentGamma);
+
+      // print('Gamma');
+      // print(pixel.red);
+
+      try {
+        // print(pixel.red);
+        pixels[i] = pixel.red.round().clamp(0, 255);
+        pixels[i + 1] = pixel.green.round().clamp(0, 255);
+        pixels[i + 2] = pixel.blue.round().clamp(0, 255);
+      } catch(e) {
+        // print(pixel);
+      }
+
+      s = true;
     }
 
     return image;
