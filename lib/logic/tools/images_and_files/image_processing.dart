@@ -90,6 +90,30 @@ RGBPixel saturation(RGBPixel pxl, double saturation, double hue) {
   return RGBPixel(newPxl.red, newPxl.green, newPxl.blue);
 }
 
+RGBPixel colorOffset(RGBPixel pxl, double red, double green, double blue) {
+
+  if (red != 0.0)
+    pxl.red = (pxl.red + red).clamp(0.0, 255.0);
+
+  if (green != 0.0)
+    pxl.green = (pxl.green + green).clamp(0.0, 255.0);
+
+  if (blue != 0.0)
+    pxl.blue = (pxl.blue + blue).clamp(0.0, 255.0);
+
+  return pxl;
+}
+
+RGBPixel exposure(RGBPixel pxl, double exposure) {
+  pxl.red = (pxl.red * exposure).clamp(0.0, 255.0);
+  pxl.green = (pxl.green * exposure).clamp(0.0, 255.0);
+  pxl.blue = (pxl.blue * exposure).clamp(0.0, 255.0);
+
+  return pxl;
+}
+
+
+
 
 
 

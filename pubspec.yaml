@@ -49,8 +49,6 @@ dependencies:
 dependency_overrides:
   logging: ^1.0.1
   tuple: ^2.0.0
-  image:
-    path: "E:/workspace/image"
 
 dev_dependencies:
   flutter_test:
