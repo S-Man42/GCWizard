@@ -16,8 +16,8 @@
 
 import 'dart:math';
 
-import 'package:latlong/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:latlong/latlong.dart';
 
 /// A separator used to break the code into two parts to aid memorability.
 const separator = '+'; // 43 Ascii
@@ -301,10 +301,28 @@ OpenLocationCode parseOpenLocationCode(String input) {
   return openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
 }
 
+String _sanitizeOLCode(String olc) {
+  olc = olc.replaceAll('+', '');
+  olc = olc.padRight(8, '0');
+
+  if (olc.length == 8) {
+    return olc + '+';
+  }
+
+  return olc.substring(0, 8) + '+' + olc.substring(8);
+}
+
 /// Decodes an Open Location Code into the location coordinates.
 LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
+  if (openLocationCode == null || openLocationCode.text == null || openLocationCode.text.isEmpty)
+    return null;
+
+  var len = openLocationCode.text.replaceAll('+', '').length;
+  if (len <= 10 && len.isOdd)
+    return null;
+
   try {
-    var code = openLocationCode.text;
+    var code = _sanitizeOLCode(openLocationCode.text);
     if (!_isFull(code)) {
       return null;
     }
