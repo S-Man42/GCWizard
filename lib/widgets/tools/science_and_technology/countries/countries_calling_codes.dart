@@ -38,23 +38,21 @@ class CountriesCallingCodesState extends State<CountriesCallingCodes> {
     var output;
 
     if (_currentSort == GCWSwitchPosition.left) {
-      data = COUNTRIES.values
-          .where((e) => e['calling_code'] != null && e['calling_code'].length > 0)
-          .map((e) {
-            return [i18n(context, e['name']), e['calling_code']];
-          }).toList();
+      data = COUNTRIES.values.where((e) => e['calling_code'] != null && e['calling_code'].length > 0).map((e) {
+        return [i18n(context, e['name']), e['calling_code']];
+      }).toList();
 
-      data.sort((a,b) {return a[0].compareTo(b[0]);});
+      data.sort((a, b) {
+        return a[0].compareTo(b[0]);
+      });
 
       output = columnedMultiLineOutput(context, data, flexValues: [2, 1]);
     } else {
-      data = COUNTRIES.values
-          .where((e) => e['calling_code'] != null && e['calling_code'].length > 0)
-          .map((e) {
+      data = COUNTRIES.values.where((e) => e['calling_code'] != null && e['calling_code'].length > 0).map((e) {
         return [e['calling_code'], i18n(context, e['name'])];
       }).toList();
 
-      data.sort((a,b) {
+      data.sort((a, b) {
         var result = a[0].compareTo(b[0]);
         if (result != 0) return result;
 

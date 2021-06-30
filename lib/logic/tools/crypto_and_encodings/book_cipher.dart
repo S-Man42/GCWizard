@@ -386,7 +386,7 @@ String _validCharacters() {
       validCharacters += key;
     });
   });
-  validCharacters =  removeDuplicateCharacters(validCharacters);
+  validCharacters = removeDuplicateCharacters(validCharacters);
   validCharacters += validCharacters.toLowerCase();
   validCharacters += '0123456789';
   return validCharacters;

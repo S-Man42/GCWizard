@@ -18,7 +18,7 @@ import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
-enum GCWImageViewButtons {FIT_TO_SCREEN, FULLSCREEN, SAVE, VIEW_IN_TOOLS}
+enum GCWImageViewButtons { FIT_TO_SCREEN, FULLSCREEN, SAVE, VIEW_IN_TOOLS }
 
 class GCWImageViewData {
   final Uint8List bytes;
@@ -37,7 +37,15 @@ class GCWImageView extends StatefulWidget {
   final int maxHeightInPreview;
   final Function onBeforeLoadBigImage;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName, this.suppressedButtons, this.maxHeightInPreview, this.onBeforeLoadBigImage})
+  const GCWImageView(
+      {Key key,
+      @required this.imageData,
+      this.toolBarRight: true,
+      this.extension,
+      this.fileName,
+      this.suppressedButtons,
+      this.maxHeightInPreview,
+      this.onBeforeLoadBigImage})
       : super(key: key);
 
   @override

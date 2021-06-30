@@ -41,26 +41,30 @@ class NavajoState extends State<Navajo> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-        ? GCWTextField(
-          controller: _encodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z- \.]')),],
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-              _calculateOutput();
-            });
-          },
-        )
-        : GCWTextField(
-          controller: _decodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z- \.]')),],
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-              _calculateOutput();
-            });
-          },
-        ),
+            ? GCWTextField(
+                controller: _encodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z- \.]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                    _calculateOutput();
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z- \.]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                    _calculateOutput();
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
