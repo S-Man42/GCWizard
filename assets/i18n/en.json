@@ -3021,6 +3021,7 @@
   "sudokusolver_clearcalculated": "Clear Calculation",
   "sudokusolver_clearall": "Clear all",
   "sudokusolver_error": "Could not be solved.",
+  "sudokusolver_maximumsolutions": "Maximum solutions reached; more possible",
   "summersimmerindex_title": "Summer Simmer Index",
   "summersimmerindex_description": "Apparent temperature from temperature and humidity",
   "summersimmerindex_example": "30°C (86°F) / 60% → 38°C (102°F)",

@@ -302,24 +302,27 @@ OpenLocationCode parseOpenLocationCode(String input) {
 }
 
 String _sanitizeOLCode(String olc) {
-  olc = olc.replaceAll('+', '');
-  olc = olc.padRight(8, '0');
+  var olcParts = olc.split('+');
+  var prefix = olcParts[0].padRight(8, '0');
 
-  if (olc.length == 8) {
-    return olc + '+';
-  }
+  var suffix = '';
+  if (prefix.length > 8) suffix = prefix.substring(8);
 
-  return olc.substring(0, 8) + '+' + olc.substring(8);
+  prefix = prefix.substring(0, 8) + '+';
+
+  if (olcParts.length > 1) suffix += olcParts[1];
+
+  if (suffix.length < 2) suffix = '';
+
+  return prefix + suffix;
 }
 
 /// Decodes an Open Location Code into the location coordinates.
 LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
-  if (openLocationCode == null || openLocationCode.text == null || openLocationCode.text.isEmpty)
-    return null;
+  if (openLocationCode == null || openLocationCode.text == null || openLocationCode.text.isEmpty) return null;
 
   var len = openLocationCode.text.replaceAll('+', '').length;
-  if (len <= 10 && len.isOdd)
-    return null;
+  if (len <= 10 && len.isOdd) return null;
 
   try {
     var code = _sanitizeOLCode(openLocationCode.text);
