@@ -127,7 +127,9 @@ class _GCWImageViewState extends State<GCWImageView> {
         Container(
           margin: EdgeInsets.only(
             left: widget.toolBarRight ? DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN,
-            right: widget.toolBarRight ? (_hasToolButtons() ? 5 * DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN) : DOUBLE_DEFAULT_MARGIN,
+            right: widget.toolBarRight
+                ? (_hasToolButtons() ? 5 * DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN)
+                : DOUBLE_DEFAULT_MARGIN,
           ),
           height: 250.0,
           child: ClipRect(
@@ -185,10 +187,7 @@ class _GCWImageViewState extends State<GCWImageView> {
           }),
       if (widget.suppressedButtons == null || widget.suppressedButtons.length == 1)
         widget.toolBarRight
-            ? Container(height: widget.suppressedButtons != null
-                && widget.suppressedButtons.length == 1
-                ? 108 : 60
-              )
+            ? Container(height: widget.suppressedButtons != null && widget.suppressedButtons.length == 1 ? 108 : 60)
             : Expanded(
                 child: Container(),
               ),
