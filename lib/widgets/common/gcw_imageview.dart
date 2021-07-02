@@ -18,7 +18,7 @@ import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
-enum GCWImageViewButtons { FIT_TO_SCREEN, FULLSCREEN, SAVE, VIEW_IN_TOOLS }
+enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
 
 class GCWImageViewData {
   final Uint8List bytes;
@@ -109,11 +109,12 @@ class _GCWImageViewState extends State<GCWImageView> {
               )
             : Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: _createToolbar(),
-                  ),
+                  if (_hasToolButtons())
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: _createToolbar(),
+                    ),
                   _createPhotoView(),
                 ],
               )
@@ -126,7 +127,7 @@ class _GCWImageViewState extends State<GCWImageView> {
         Container(
           margin: EdgeInsets.only(
             left: widget.toolBarRight ? DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN,
-            right: widget.toolBarRight ? 5 * DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN,
+            right: widget.toolBarRight ? (_hasToolButtons() ? 5 * DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN) : DOUBLE_DEFAULT_MARGIN,
           ),
           height: 250.0,
           child: ClipRect(
@@ -150,7 +151,7 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   bool _hasToolButtons() {
-    return widget.suppressedButtons == null || widget.suppressedButtons.length < GCWImageViewButtons.values.length;
+    return widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.ALL);
   }
 
   _createToolbar() {
@@ -182,41 +183,47 @@ class _GCWImageViewState extends State<GCWImageView> {
           onPressed: () {
             _scaleStateController.scaleState = PhotoViewScaleState.initial;
           }),
-      widget.toolBarRight
-          ? Container(height: 60)
-          : Expanded(
-              child: Container(),
-            ),
-      GCWIconButton(
-          iconData: Icons.save,
-          size: iconSize,
-          onPressed: () {
-            var imgData;
+      if (widget.suppressedButtons == null || widget.suppressedButtons.length == 1)
+        widget.toolBarRight
+            ? Container(height: widget.suppressedButtons != null
+                && widget.suppressedButtons.length == 1
+                ? 108 : 60
+              )
+            : Expanded(
+                child: Container(),
+              ),
+      if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.SAVE))
+        GCWIconButton(
+            iconData: Icons.save,
+            size: iconSize,
+            onPressed: () {
+              var imgData;
 
-            if (widget.onBeforeLoadBigImage != null)
-              imgData = widget.onBeforeLoadBigImage();
-            else
-              imgData = widget.imageData.bytes;
+              if (widget.onBeforeLoadBigImage != null)
+                imgData = widget.onBeforeLoadBigImage();
+              else
+                imgData = widget.imageData.bytes;
 
-            _exportFile(context, imgData);
-          }),
-      GCWPopupMenu(
-          iconData: Icons.open_in_new,
-          size: iconSize,
-          menuItemBuilder: (context) => [
-                GCWPopupMenuItem(
-                  child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'imageview_openinmetadata'),
-                  action: (index) => setState(() {
-                    _openInMetadataViewer();
-                  }),
-                  //action: (index) => _openInMetadataViewer,
-                ),
-                GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.brush, 'imageview_openincolorcorrection'),
+              _exportFile(context, imgData);
+            }),
+      if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
+        GCWPopupMenu(
+            iconData: Icons.open_in_new,
+            size: iconSize,
+            menuItemBuilder: (context) => [
+                  GCWPopupMenuItem(
+                    child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'imageview_openinmetadata'),
                     action: (index) => setState(() {
-                          _openInColorCorrections();
-                        })),
-              ])
+                      _openInMetadataViewer();
+                    }),
+                    //action: (index) => _openInMetadataViewer,
+                  ),
+                  GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.brush, 'imageview_openincolorcorrection'),
+                      action: (index) => setState(() {
+                            _openInColorCorrections();
+                          })),
+                ])
     ];
   }
 
