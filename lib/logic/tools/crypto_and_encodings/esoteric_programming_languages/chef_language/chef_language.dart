@@ -1,5 +1,3 @@
-// https://coord.info/GC6HRCE
-
 
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/kitchen.dart';

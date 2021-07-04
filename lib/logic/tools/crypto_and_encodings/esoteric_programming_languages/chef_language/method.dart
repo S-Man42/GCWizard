@@ -13,7 +13,7 @@ class Method {
   Method(String line, int n, language) {
     line = line.trim();
     this.n = n;
-    List<RegExp> matchers = new List<RegExp>();
+    List<RegExp> matchers = <RegExp>[];
     if (language == 'ENG') {
       matchers = matchersENG;
       if (matchers[0].hasMatch(line)) {
