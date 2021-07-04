@@ -538,7 +538,7 @@ final Map<String, String> RUSWordToNum = {
   'dwa': '2',
   'dwje': '2',
   'tri': '3',
-  'četýrje': '4', 
+  'četýrje': '4',
   'pjat': '5',
   'šest': '6',
   'sem': '7',
@@ -1021,7 +1021,7 @@ final Map<String, String> KLIWordToNum = {
   '\'oy\'': 'numeralwords_n',
   'ting\'ev': 'numeralwords_w',
   '\'evting': 'numeralwords_w',
-  'maH':  'numeralwords_w',
+  'maH': 'numeralwords_w',
 };
 final Map<String, String> VIEWordToNum = {
   'cê-rô': '0',
@@ -1482,7 +1482,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 
     // identify complex klingon numbers
     //expr = RegExp(r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)( |-)?(bip|netlh|sad|sanid|vatlh|mah))+( |-)?(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?\s");
-    expr = RegExp(r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)( |-)?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
+    expr = RegExp(
+        r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)( |-)?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
     if (expr.hasMatch(input)) {
       helpText = input.replaceAllMapped(expr, (Match m) {
         return _complexMultipleKlingon(m.group(0));
@@ -1491,14 +1492,14 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     }
 
     // identify single digits - change "-" to " "
-    expr = RegExp(r"(pagh|wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(-(pagh|wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut))+");
+    expr =
+        RegExp(r"(pagh|wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(-(pagh|wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut))+");
     if (expr.hasMatch(input)) {
       helpText = input.replaceAllMapped(expr, (Match m) {
         return m.group(0).replaceAll('-', ' ');
       });
       input = helpText;
     }
-
 
     // trim english: identify correct numeral words and remove spaces
     expr = RegExp(
@@ -1654,19 +1655,17 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     decodeText.forEach((element) {
       _alreadyFound = false;
       if (_isShadoks(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.SHA)) {
-        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element,
-            _languageList[NumeralWordsLanguage.SHA]));
-      }else if (_isMinion(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.MIN)) {
-        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element,
-            _languageList[NumeralWordsLanguage.MIN]));
-      } else if (_isKlingon(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.KLI)) {
-        output.add(NumeralWordsDecodeOutput(_decodeKlingon(element), element.replaceAll('€', ' ').trim(),
-            _languageList[NumeralWordsLanguage.KLI]));
+        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList[NumeralWordsLanguage.SHA]));
+      } else if (_isMinion(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.MIN)) {
+        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList[NumeralWordsLanguage.MIN]));
+      } else if (_isKlingon(element) &&
+          (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.KLI)) {
+        output.add(NumeralWordsDecodeOutput(
+            _decodeKlingon(element), element.replaceAll('€', ' ').trim(), _languageList[NumeralWordsLanguage.KLI]));
       } else if (_isNumeral(element)) {
         // checks - if is a number/digit
         output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
-      } else
-      {
+      } else {
         _alreadyFound = false;
         searchLanguages.forEach((key, value) {
           var result = _isNumeralWordTable(element, key, value); // checks - if element is part of a map
@@ -1720,16 +1719,14 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
                     oldValueInt = int.parse(value);
                   output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
                 } else {
-                  if (int.tryParse(value) == null)
-                    if (oldValueStr == value)
-                      output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
-                    else
-                      output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                  if (int.tryParse(value) == null) if (oldValueStr == value)
+                    output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
                   else
-                    if (oldValueInt == int.parse(value))
-                      output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
-                    else
-                      output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                    output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                  else if (oldValueInt == int.parse(value))
+                    output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                  else
+                    output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
                 }
               }
             });
@@ -1750,11 +1747,11 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 }
 
 bool _isShadoks(String element) {
-  if (element != '')
-    if (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') == '')
-      return true;
-    else
-      return false;
+  if (element != '') if (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') ==
+      '')
+    return true;
+  else
+    return false;
   else
     return false;
 }
@@ -1768,35 +1765,58 @@ bool _isMinion(String element) {
 
 bool _isKlingon(String element) {
   if (element != '')
-    return (element.replaceAll(' ', '').replaceAll('€', '')
-        .replaceAll('pagh', '').replaceAll("wa'", '').replaceAll("cha'", '').replaceAll('wej', '').replaceAll('los', '')
-        .replaceAll('vagh', '').replaceAll('jav', '').replaceAll('soch', '').replaceAll('chorgh', '').replaceAll('hut', '')
-        .replaceAll('mah', '').replaceAll('vatlh', '').replaceAll('sad', '').replaceAll('sanid', '').replaceAll('netlh', '').replaceAll('bip', '')
-        .replaceAll('chan', '') == '');
+    return (element
+            .replaceAll(' ', '')
+            .replaceAll('€', '')
+            .replaceAll('pagh', '')
+            .replaceAll("wa'", '')
+            .replaceAll("cha'", '')
+            .replaceAll('wej', '')
+            .replaceAll('los', '')
+            .replaceAll('vagh', '')
+            .replaceAll('jav', '')
+            .replaceAll('soch', '')
+            .replaceAll('chorgh', '')
+            .replaceAll('hut', '')
+            .replaceAll('mah', '')
+            .replaceAll('vatlh', '')
+            .replaceAll('sad', '')
+            .replaceAll('sanid', '')
+            .replaceAll('netlh', '')
+            .replaceAll('bip', '')
+            .replaceAll('chan', '') ==
+        '');
   else
     return false;
 }
 
-String _decodeKlingon(String element){
-  if (element == '')
-    return '';
+String _decodeKlingon(String element) {
+  if (element == '') return '';
   if (element[0] == '€' && element[element.length - 1] == '€')
     return _decodeMultipleKlingon(element.substring(1, element.length - 1));
-  if (element == 'chan')
-    return 'numeralwords_e';
-  if (element == "ting'ev" || element == "'evting" || element == 'maH')
-    return 'numeralwords_w';
-  if (element == "'oy'")
-    return 'numeralwords_n';
-  if (element == 'watlh')
-    return 'numeralwords_s';
-  if (element == 'ngev' || element == 'ghob')
-    return '.';
-  if (element == 'qoch')
-    return '°';
-  String result = element.replaceAll('pagh', '0').replaceAll("wa'", '1').replaceAll("cha'", '2').replaceAll('wej', '3').replaceAll('los', '4')
-      .replaceAll('vagh', '5').replaceAll('jav', '6').replaceAll('soch', '7').replaceAll('chorgh', '8').replaceAll('hut', '9')
-      .replaceAll('mah', '0').replaceAll('vatlh', '00').replaceAll('sad', '000').replaceAll('sanid', '000').replaceAll('netlh', '0000').replaceAll('bip', '00000');
+  if (element == 'chan') return 'numeralwords_e';
+  if (element == "ting'ev" || element == "'evting" || element == 'maH') return 'numeralwords_w';
+  if (element == "'oy'") return 'numeralwords_n';
+  if (element == 'watlh') return 'numeralwords_s';
+  if (element == 'ngev' || element == 'ghob') return '.';
+  if (element == 'qoch') return '°';
+  String result = element
+      .replaceAll('pagh', '0')
+      .replaceAll("wa'", '1')
+      .replaceAll("cha'", '2')
+      .replaceAll('wej', '3')
+      .replaceAll('los', '4')
+      .replaceAll('vagh', '5')
+      .replaceAll('jav', '6')
+      .replaceAll('soch', '7')
+      .replaceAll('chorgh', '8')
+      .replaceAll('hut', '9')
+      .replaceAll('mah', '0')
+      .replaceAll('vatlh', '00')
+      .replaceAll('sad', '000')
+      .replaceAll('sanid', '000')
+      .replaceAll('netlh', '0000')
+      .replaceAll('bip', '00000');
   return result;
 }
 
@@ -1813,18 +1833,16 @@ String _decodeMinion(String element) {
   return number.toString();
 }
 
-String _decodeMultipleKlingon(String kliNumber){
+String _decodeMultipleKlingon(String kliNumber) {
   kliNumber = kliNumber.trim();
-  if (kliNumber == '')
-    return '';
+  if (kliNumber == '') return '';
   int number = 0;
   kliNumber.split('€').forEach((element) {
-    if (int.tryParse(_decodeKlingon(element)) != null)
-      number = number + int.parse(_decodeKlingon(element));
+    if (int.tryParse(_decodeKlingon(element)) != null) number = number + int.parse(_decodeKlingon(element));
   });
   return number.toString();
 }
 
-String _complexMultipleKlingon(String kliNumber){
+String _complexMultipleKlingon(String kliNumber) {
   return '€' + kliNumber.trim().replaceAll('-', '€').replaceAll(' ', '€') + '€ ';
 }

@@ -68,12 +68,16 @@ void initDefaultSettings() {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
 
+  if (Prefs.get('default_length_unit') == null) {
+    Prefs.setString('default_length_unit', 'm');
+  }
+
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
 
-  if (Prefs.get('default_length_unit') == null) {
-    Prefs.setString('default_length_unit', 'm');
+  if (Prefs.get('imagecolorcorrections_maxpreviewheight') == null) {
+    Prefs.setInt('imagecolorcorrections_maxpreviewheight', 250);
   }
 
   if (Prefs.get('mapview_mapviews') == null) {

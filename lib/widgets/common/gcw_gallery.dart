@@ -9,8 +9,7 @@ class GCWGallery extends StatefulWidget {
   final List<GCWImageViewData> imageData;
   final Function onDoubleTap;
 
-  const GCWGallery({Key key, @required this.imageData, this.onDoubleTap})
-      : super(key: key);
+  const GCWGallery({Key key, @required this.imageData, this.onDoubleTap}) : super(key: key);
 
   @override
   _GCWGalleryState createState() => _GCWGalleryState();
@@ -91,22 +90,20 @@ class _GCWGalleryState extends State<GCWGallery> {
         margin: EdgeInsets.only(top: 10),
         height: 50,
         child: ScrollablePositionedList.builder(
-          itemScrollController: _scrollController,
-          itemCount: _validImages.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) =>
-            InkWell(
-              child: imageDecoration(index, _currentImageIndex == index),
-              onTap: () {
-                setState(() {
-                  _currentImageIndex = index;
-                });
-              },
-              onDoubleTap: () {
-                widget.onDoubleTap(index);
-              },
-            )
-        ),
+            itemScrollController: _scrollController,
+            itemCount: _validImages.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => InkWell(
+                  child: imageDecoration(index, _currentImageIndex == index),
+                  onTap: () {
+                    setState(() {
+                      _currentImageIndex = index;
+                    });
+                  },
+                  onDoubleTap: () {
+                    widget.onDoubleTap(index);
+                  },
+                )),
       )
     ]);
   }
@@ -116,17 +113,12 @@ class _GCWGalleryState extends State<GCWGallery> {
     if (currentImage)
       return Container(
           decoration: BoxDecoration(
-              border: Border.all(color: marked ? themeColors().focused() :  themeColors().accent(), width: 5)
-          ),
-          child: _validImages[index]
-      );
+              border: Border.all(color: marked ? themeColors().focused() : themeColors().accent(), width: 5)),
+          child: _validImages[index]);
     else if (marked)
       return Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: themeColors().focused() , width: 2)
-          ),
-          child: _validImages[index]
-      );
+          decoration: BoxDecoration(border: Border.all(color: themeColors().focused(), width: 2)),
+          child: _validImages[index]);
     else
       return _validImages[index];
   }
