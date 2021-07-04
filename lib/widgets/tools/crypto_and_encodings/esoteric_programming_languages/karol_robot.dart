@@ -121,36 +121,35 @@ class KarolRobotState extends State<KarolRobot> {
       output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
       size = 16.0;
     }
-    return
-      Column(
-          children: <Widget>[
-            GCWDefaultOutput(
-                child: GCWOutputText(
-                  text: output,
-                  style: TextStyle(
-                    fontFamily: 'Courier',
-                    fontSize: size,
-                    fontWeight: FontWeight.bold,
+    return Column(
+            children: <Widget>[
+              _currentMode == GCWSwitchPosition.left //decode
+                ? GCWDefaultOutput(
+                    child: _buildGraphicOutput(),
+                    trailing: GCWIconButton(
+                                iconData: Icons.save,
+                                size: IconButtonSize.SMALL,
+                                iconColor: _outData == null ? Colors.grey : null,
+                                onPressed: () {
+                                  _outData == null ? null : _exportFile(context, _outData);
+                                },
+                  ))
+                : GCWDefaultOutput(
+                    child: GCWOutputText(
+                            text: output,
+                            style: TextStyle(
+                                      fontFamily: 'Courier',
+                                      fontSize: size,
+                                      fontWeight: FontWeight.bold,
+                            ),
+                          )
                   ),
-                )
-            ),
-            _currentMode == GCWSwitchPosition.left //decode
-            ? GCWDefaultOutput(
-                child: _buildGraphicOutput(),
-                trailing: GCWIconButton(
-                  iconData: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  iconColor: _outData == null ? Colors.grey : null,
-                  onPressed: () {
-                    _outData == null ? null : _exportFile(context, _outData);
-                  },
-                ))
-           : Container()
           ]
       );
   }
 
   _createOutput(String output) {
+    print(output);
     _outData = null;
     _codeData = null;
     binary2image(output, false, false).then((value) {

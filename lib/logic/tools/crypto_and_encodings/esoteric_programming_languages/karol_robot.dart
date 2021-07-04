@@ -131,6 +131,7 @@ String KarolRobotOutputDecode(String program){
   bool halt = false;
 
   String output = '';
+  String color = '0';
   RegExp expSchritt = RegExp(r'(schritt|move)\(\d+\)');
   RegExp expHinlegen = RegExp(r'hinlegen\(\d+\)');
   program.toLowerCase().replaceAll('\n', '').split(' ').forEach((element) {
@@ -146,9 +147,9 @@ String KarolRobotOutputDecode(String program){
         if (x > maxX) maxX = x;
         if (y > maxY) maxY = y;
       } else if (expHinlegen.hasMatch(element)) {
-        String color = KAROL_COLORS[expSchritt.firstMatch(element).group(0).replaceAll('hinlegen', '').replaceAll('(', '').replaceAll(')', '')];
+        color = KAROL_COLORS[expSchritt.firstMatch(element).group(0).replaceAll('hinlegen', '').replaceAll('(', '').replaceAll(')', '')];
         if (color == null)
-          color = '0';
+          color = '8';
         switch (direction) {
           case 'n':
             world[x.toString() + '|' + (y - 1).toString()] = color;
@@ -199,16 +200,16 @@ String KarolRobotOutputDecode(String program){
           case 'hinlegen':
             switch (direction) {
               case 'n':
-                world[x.toString() + '|' + (y - 1).toString()] = '8';
+                world[x.toString() + '|' + (y - 1).toString()] = color;
                 break;
               case 's':
-                world[x.toString() + '|' + (y + 1).toString()] = '8';
+                world[x.toString() + '|' + (y + 1).toString()] = color;
                 break;
               case 'e':
-                world[(x + 1).toString() + '|' + (y).toString()] = '8';
+                world[(x + 1).toString() + '|' + (y).toString()] = color;
                 break;
               case 'w':
-                world[(x - 1).toString() + '|' + (y).toString()] = '8';
+                world[(x - 1).toString() + '|' + (y).toString()] = color;
                 break;
             }
             break;
