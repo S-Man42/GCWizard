@@ -132,12 +132,16 @@ String KarolRobotOutputDecode(String program){
 
   String output = '';
   String color = '0';
-  RegExp expSchritt = RegExp(r'(schritt|move)\(\d+\)');
-  RegExp expHinlegen = RegExp(r'hinlegen\(\d+\)');
+  int count = 0;
+  RegExp expSchritt = RegExp(r'(schritt|move)(\(\d+\))?');
+  RegExp expHinlegen = RegExp(r'hinlegen(\(\d+\))?');
   program.toLowerCase().replaceAll('\n', '').split(' ').forEach((element) {
     if (!halt)
       if (expSchritt.hasMatch(element)) {
-        int count = int.parse(expSchritt.firstMatch(element).group(0).replaceAll('schritt', '').replaceAll('move', '').replaceAll('(', '').replaceAll(')', '') );
+        if (int.tryParse(expSchritt.firstMatch(element).group(0).replaceAll('schritt', '').replaceAll('move', '').replaceAll('(', '').replaceAll(')', '')) == null)
+          count = 1;
+        else
+          count = int.parse(expSchritt.firstMatch(element).group(0).replaceAll('schritt', '').replaceAll('move', '').replaceAll('(', '').replaceAll(')', '') );
         switch (direction) {
           case 'n' : y = y - count; break;
           case 's' : y = y + count; break;
@@ -147,7 +151,7 @@ String KarolRobotOutputDecode(String program){
         if (x > maxX) maxX = x;
         if (y > maxY) maxY = y;
       } else if (expHinlegen.hasMatch(element)) {
-        color = KAROL_COLORS[expSchritt.firstMatch(element).group(0).replaceAll('hinlegen', '').replaceAll('(', '').replaceAll(')', '')];
+        color = KAROL_COLORS[element.replaceAll('hinlegen', '').replaceAll('(', '').replaceAll(')', '')];
         if (color == null)
           color = '8';
         switch (direction) {
@@ -244,8 +248,12 @@ String KarolRobotOutputDecode(String program){
         }
   }); //forEach command
 
-  var binaryWorld = List.generate(maxX, (y) => List(maxY), growable: false);
+print('maxX '+maxX.toString());
+  print('maxY '+maxY.toString());
+
+  var binaryWorld = List.generate(maxX + 1, (y) => List(maxY + 1), growable: false);
   world.forEach((key, value) {
+    print(key+':'+value);
     x = int.parse(key.split('|')[0]) - 1;
     y = int.parse(key.split('|')[1]) - 1;
     binaryWorld[x][y] = value;
@@ -253,6 +261,7 @@ String KarolRobotOutputDecode(String program){
 
   for (y = 0; y < maxY; y++) {
     for (x = 0; x < maxX; x++) {
+      print(y.toString()+'|'+x.toString());
       if (binaryWorld[x][y] == null)
         output = output + '0';
       else

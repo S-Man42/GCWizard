@@ -8,50 +8,24 @@ import 'package:gc_wizard/utils/common_utils.dart';
 Map<String, Color> colorMap = {
   '0': Colors.white,
   '1': Colors.black,
-  '2': Color(0xFFC0C0),
-
-  ///light red
-  '3': Color(0xFFFFC0),
-
-  ///light yellow
-  '4': Color(0xC0FFC0),
-
-  ///light green,
-  '5': Color(0xC0FFFF),
-
-  ///light cyan,
-  '6': Color(0xC0C0FF),
-
-  ///light blue
-  '7': Color(0xFFC0FF),
-
-  ///light magenta,
+  '2': Colors.redAccent, ///light red
+  '3': Colors.yellowAccent, //light yellow
+  '4': Colors.lightGreen,
+  '5': Colors.cyanAccent,//light cyan,
+  '6': Colors.lightBlue,
+  '7': Colors.purpleAccent[100], //light magenta,
   '8': Colors.red,
   '9': Colors.yellow,
   'A': Colors.green,
   'B': Colors.cyan,
   'C': Colors.blue,
-  'D': Color(0xFF00FF),
-
-  ///magenta,
-  'E': Color(0xC00000),
-
-  ///dark red,
-  'F': Color(0xC0C000),
-
-  ///dark yellow,
-  'G': Color(0x00C000),
-
-  ///dark green,
-  'H': Color(0x00C0C0),
-
-  ///dark cyan,
-  'I': Color(0x0000C0),
-
-  ///dark blue,
-  'J': Color(0xC000C0)
-
-  ///dark magenta
+  'D': Colors.purpleAccent, //magenta,
+  'E': Colors.brown,//dark red,
+  'F': Colors.orangeAccent,  //dark yellow,
+  'G': Colors.green[900],  //dark green,
+  'H': Colors.cyan[900],  //dark cyan,
+  'I': Colors.blue[900],  //dark blue,
+  'J': Colors.purple  //dark magenta
 };
 
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
@@ -72,6 +46,10 @@ Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) asy
     input = input.replaceAll(RegExp('[ ]'), '\n');
   }
 
+  return await _binary2Image(input);
+}
+
+Future<Uint8List> binaryColor2image(String input) async {
   return await _binary2Image(input);
 }
 
@@ -127,7 +105,8 @@ Future<Uint8List> _binary2Image(String input) async {
 
   if (lines.length == 1)
     lines.addAll([lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0]]);
-
+  print('image source');
+  print(lines);
   return input2Image(lines);
 }
 
@@ -154,10 +133,11 @@ Future<Uint8List> input2Image(List<String> lines,
 
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
   if (colors == null) colors = colorMap;
-
   for (int row = 0; row < lines.length; row++) {
+    print('line '+row.toString()+' '+lines[row]);
     for (int column = 0; column < lines[row].length; column++) {
       paint.color = Colors.white;
+      print('column '+column.toString()+' '+lines[row][column]+' => '+colors[lines[row][column]].toString());
       if (colors.containsKey(lines[row][column])) paint.color = colors[lines[row][column]];
 
       if (lines[row][column] != '0')
