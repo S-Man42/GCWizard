@@ -19,8 +19,9 @@ class BookCipherState extends State<BookCipher> {
   var _currentSearchMode = GCWSwitchPosition.right;
   var _currentMode = GCWSwitchPosition.left;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  var _spacesOn = true;
-  var _emptyLinesOn = true;
+  var _spacesOn = false;
+  var _emptyLinesOn = false;
+  var _ignoreSymbolsOn = true;
   var _ignoreSymbols = '.;+-:!?\'‘"&(){}[]/\\_';
   var _diacriticsOn = true;
   var _azOn = true;
@@ -125,6 +126,15 @@ class BookCipherState extends State<BookCipher> {
               _currentSearchMode = value;
             });
           },
+        ),
+        GCWOnOffSwitch(
+            title: i18n(context, 'book_cipher_only_first_word_letter'),
+            value: _onlyFirstWordLetter,
+            onChanged: (value) {
+              setState(() {
+                _onlyFirstWordLetter = value;
+              });
+            }
         ),
         GCWTwoOptionsSwitch(
           value: _currentSimpleMode,
@@ -280,7 +290,7 @@ class BookCipherState extends State<BookCipher> {
           }
         ),
         GCWOnOffSwitch(
-          title: i18n(context, 'Empty Lines'),
+          title: i18n(context, 'book_cipher_empty_lines'),
           value: _emptyLinesOn,
           onChanged: (value) {
             setState(() {
@@ -288,33 +298,24 @@ class BookCipherState extends State<BookCipher> {
             });
           }
         ),
-        Row(
-          children: [
-            Expanded(
-              child: GCWText(
-                text: i18n(context, 'book_cipher_ignore_symbols'),
-              ),
-            ),
-            Expanded(
-              child: GCWTextField(
-                controller: _ignoreSymbolsController,
-                hintText: '.;+-:!?''‘"&(){}[]/\\_',
-                onChanged: (text) {
-                  setState(() {
-                    _ignoreSymbols = text;
-                  });
-                }
-              ))
-            ]),
-          GCWOnOffSwitch(
-            title: i18n(context, 'book_cipher_only_first_word_letter'),
-            value: _onlyFirstWordLetter,
-            onChanged: (value) {
-              setState(() {
-                _onlyFirstWordLetter = value;
-              });
-            }
-          ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'book_cipher_ignore_symbols'),
+          value: _ignoreSymbolsOn,
+          onChanged: (value) {
+            setState(() {
+              _ignoreSymbolsOn = value;
+            });
+          }
+        ),
+        GCWTextField(
+          controller: _ignoreSymbolsController,
+          hintText: '.;+-:!?''‘"&(){}[]/\\_',
+          onChanged: (text) {
+            setState(() {
+              _ignoreSymbols = text;
+            });
+          }
+        ),
     ]);
   }
 
@@ -363,7 +364,7 @@ class BookCipherState extends State<BookCipher> {
             i18n(context, 'book_cipher_section'), i18n(context, 'book_cipher_row'), i18n(context, 'book_cipher_word'),
             spacesOn: _spacesOn,
             emptyLinesOn: _emptyLinesOn,
-            ignoreSymbols: _ignoreSymbols,
+            ignoreSymbols: _ignoreSymbolsOn ? _ignoreSymbols : null,
             diacriticsOn: _diacriticsOn,
             azOn: _azOn,
             numbersOn: _numbersOn,
