@@ -414,7 +414,6 @@ int _globalCharacterPosition(_wordClass word, int characterPosition, List<_wordC
   return text.length + characterPosition;
 }
 
-String validCharacters;
 
 Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordClass> wordList) {
   var letterCount = 0;

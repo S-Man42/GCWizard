@@ -44,9 +44,8 @@ Future<Uint8List> addImageBorder(ui.Image image, {double border = 10}) async {
   }
 }
 
-Future<ui.Image> _bytesToImage(Uint8List imgBytes) async{
+Future<ui.Image> _bytesToImage(Uint8List imgBytes) async {
   ui.Codec codec = await ui.instantiateImageCodec(imgBytes);
   ui.FrameInfo frame = await codec.getNextFrame();
   return frame.image;
 }
-

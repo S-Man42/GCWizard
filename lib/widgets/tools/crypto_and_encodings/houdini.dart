@@ -18,7 +18,6 @@ class HoudiniState extends State<Houdini> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentCryptMode = GCWSwitchPosition.left;
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -66,8 +65,7 @@ class HoudiniState extends State<Houdini> {
       outputs = decodeHoudini(_currentInput, _houdiniMode());
     }
 
-    if (outputs == null)
-      return GCWDefaultOutput();
+    if (outputs == null) return GCWDefaultOutput();
 
     if (outputs[10] == null || outputs[0] == outputs[10]) {
       return GCWDefaultOutput(child: outputs[0]);

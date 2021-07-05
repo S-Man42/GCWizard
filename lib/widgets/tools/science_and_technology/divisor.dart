@@ -49,11 +49,14 @@ class DivisorState extends State<Divisor> {
           },
         ),
         _currentCrosstotalMode == true
-        ? GCWDefaultOutput(child: buildDivisorList(_currentInputN).join(' '))
-        : GCWMultipleOutput(children: buildDivisorList(_currentInputN)),
+            ? GCWDefaultOutput(child: buildDivisorList(_currentInputN).join(' '))
+            : GCWMultipleOutput(children: buildDivisorList(_currentInputN)),
         _currentCrosstotalMode == true
-        ? GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN), suppressCharacterCounts : true)
-        : Container()
+            ? GCWCrosstotalOutput(
+                text: _currentInputN.toString(),
+                values: buildDivisorList(_currentInputN),
+                suppressCharacterCounts: true)
+            : Container()
       ],
     );
   }

@@ -480,7 +480,7 @@ const SEARCHSTRING_EN_SYMBOL_SUNUZ = '';
 const SEARCHSTRING_EN_SYMBOL_SURF = 'windsurfing surfride surfer surfriding surfride surfboard wavesurfing';
 const SEARCHSTRING_EN_SYMBOL_TAE = 'connector telecommunications connection unit';
 const SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS = 'numbers numerals indian';
-const SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights';
+const SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights templars templarcode';
 const SEARCHSTRING_EN_SYMBOL_TENCTONESE = '';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND = 'thelordoftherings elves elvish middleearth thirdera';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC =
@@ -519,9 +519,10 @@ const SEARCHSTRING_EN_TRIFID = '';
 const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
-const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
+const SEARCHSTRING_EN_VANITY =
+    'telephone keys buttons numbers keypad sms mobile cellphone phoneword texting messaging messages texts messager messenger';
 const SEARCHSTRING_EN_VANITYMULTITAP = 'multitap';
-const SEARCHSTRING_EN_VANITYSINGLETAP = '';
+const SEARCHSTRING_EN_VANITYSINGLETAP = 'singletap';
 const SEARCHSTRING_EN_VANITYTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_VANITYWORDSLIST = '';
 const SEARCHSTRING_EN_VIGENERE = '';

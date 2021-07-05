@@ -7,9 +7,11 @@ class GCWCrosstotalOutput extends StatefulWidget {
   final values;
   final String text;
   final suppressSums;
-  final suppressCharacterCounts ;
+  final suppressCharacterCounts;
 
-  const GCWCrosstotalOutput({this.text, this.values, Key key, this.suppressSums: false, this.suppressCharacterCounts : false}) : super(key: key);
+  const GCWCrosstotalOutput(
+      {this.text, this.values, Key key, this.suppressSums: false, this.suppressCharacterCounts: false})
+      : super(key: key);
 
   @override
   _GCWCrosstotalOutputState createState() => _GCWCrosstotalOutputState();
@@ -32,10 +34,10 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
       ];
     else
       crosstotalValues = [
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(values)],
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_letters'), countLetters(text)],
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)]
-    ];
+        widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(values)],
+        widget.suppressSums ? null : [i18n(context, 'crosstotal_count_letters'), countLetters(text)],
+        widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)]
+      ];
     var crosstotalValuesBody = [
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum'), sum(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum_alternated_back'), sumAlternatedBackward(values)],
