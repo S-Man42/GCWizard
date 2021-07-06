@@ -50,6 +50,7 @@ final KAROL_COMMANDS = {
 
 final KAROL_COLORS = {
   'weiß' : '0',
+  'weiss' : '0',
   'schwarz': '1',
   'hellrot': '2',
   'hellgelb': '3',
@@ -69,6 +70,11 @@ final KAROL_COLORS = {
   'dunkelcyan': 'H',
   'dunkelblau': 'I',
   'dunkelmagenta': 'J',
+  'orange': 'K',
+  'hellorange': 'L',
+  'dunkelorange': 'M',
+  'braun': 'N',
+  'dunkelbraun': 'O',
   'white' : '0',
   'black': '1',
   'lightred': '2',
@@ -89,6 +95,11 @@ final KAROL_COLORS = {
   'darkcyan': 'H',
   'darkblue': 'I',
   'darkmagenta': 'J',
+  'orange': 'K',
+  'darkorange': 'L',
+  'lightorange': 'M',
+  'brown': 'N',
+  'darkbrown': 'O',
 };
 
 String KarolRobotOutputEncode(String output, bool english){
@@ -168,8 +179,7 @@ String KarolRobotOutputDecode(String program){
             world[(x - 1).toString() + '|' + (y).toString()] = color;
             break;
         }
-      }
-      else
+      } else
         switch (element) {
           case 'move':
           case 'schritt' :
@@ -204,16 +214,16 @@ String KarolRobotOutputDecode(String program){
           case 'hinlegen':
             switch (direction) {
               case 'n':
-                world[x.toString() + '|' + (y - 1).toString()] = color;
+                world[x.toString() + '|' + (y - 1).toString()] = '8';
                 break;
               case 's':
-                world[x.toString() + '|' + (y + 1).toString()] = color;
+                world[x.toString() + '|' + (y + 1).toString()] = '8';
                 break;
               case 'e':
-                world[(x + 1).toString() + '|' + (y).toString()] = color;
+                world[(x + 1).toString() + '|' + (y).toString()] = '8';
                 break;
               case 'w':
-                world[(x - 1).toString() + '|' + (y).toString()] = color;
+                world[(x - 1).toString() + '|' + (y).toString()] = '8';
                 break;
             }
             break;
@@ -243,17 +253,14 @@ String KarolRobotOutputDecode(String program){
             world[x.toString() + '|' + (y ).toString()] = '0';
             break;
           case 'beenden':
+          case 'turnoff':
             halt = true;
             break;
         }
   }); //forEach command
 
-print('maxX '+maxX.toString());
-  print('maxY '+maxY.toString());
-
   var binaryWorld = List.generate(maxX + 1, (y) => List(maxY + 1), growable: false);
   world.forEach((key, value) {
-    print(key+':'+value);
     x = int.parse(key.split('|')[0]) - 1;
     y = int.parse(key.split('|')[1]) - 1;
     binaryWorld[x][y] = value;
@@ -261,7 +268,6 @@ print('maxX '+maxX.toString());
 
   for (y = 0; y < maxY; y++) {
     for (x = 0; x < maxX; x++) {
-      print(y.toString()+'|'+x.toString());
       if (binaryWorld[x][y] == null)
         output = output + '0';
       else

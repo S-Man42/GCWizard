@@ -27,7 +27,6 @@ class KarolRobotState extends State<KarolRobot> {
 
   var _currentDecode = '';
   var _currentEncode = '';
-  var _currentOutput = '';
 
   Uint8List _outData;
   String _codeData;
@@ -47,7 +46,7 @@ class KarolRobotState extends State<KarolRobot> {
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecode);
-    _encodeController = TextEditingController(text: _currentOutput);
+    _encodeController = TextEditingController(text: _currentEncode);
   }
 
   @override
@@ -79,8 +78,6 @@ class KarolRobotState extends State<KarolRobot> {
               onChanged: (text) {
                 setState(() {
                   _currentDecode = text;
-                  //var output = KarolRobotOutputDecode(_currentDecode);
-                  //_createOutput(output.replaceAll('█', '1').replaceAll('░', '0'));
                   _createOutput(KarolRobotOutputDecode(_currentDecode));
                 });
               },
@@ -117,7 +114,7 @@ class KarolRobotState extends State<KarolRobot> {
   Widget _buildOutput(BuildContext context) {
     String output = '';
     double size = 6.0;
-    if (_currentMode == GCWSwitchPosition.right) {
+    if (_currentMode == GCWSwitchPosition.right) { //encode
       output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
       size = 16.0;
     }

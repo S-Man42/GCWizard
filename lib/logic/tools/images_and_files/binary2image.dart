@@ -9,23 +9,28 @@ Map<String, Color> colorMap = {
   '0': Colors.white,
   '1': Colors.black,
   '2': Colors.redAccent, ///light red
-  '3': Colors.yellowAccent, //light yellow
+  '3': Colors.yellow.shade100, //light yellow
   '4': Colors.lightGreen,
   '5': Colors.cyanAccent,//light cyan,
   '6': Colors.lightBlue,
-  '7': Colors.purpleAccent[100], //light magenta,
+  '7': Colors.pinkAccent.shade100, //light magenta,
   '8': Colors.red,
-  '9': Colors.yellow,
+  '9': Colors.yellowAccent,
   'A': Colors.green,
   'B': Colors.cyan,
   'C': Colors.blue,
   'D': Colors.purpleAccent, //magenta,
-  'E': Colors.brown,//dark red,
-  'F': Colors.orangeAccent,  //dark yellow,
-  'G': Colors.green[900],  //dark green,
-  'H': Colors.cyan[900],  //dark cyan,
-  'I': Colors.blue[900],  //dark blue,
-  'J': Colors.purple  //dark magenta
+  'E': Colors.red.shade900,//dark red,
+  'F': Colors.yellow,  //dark yellow,
+  'G': Colors.green.shade900,  //dark green,
+  'H': Colors.cyan.shade900,  //dark cyan,
+  'I': Colors.blue.shade900,  //dark blue,
+  'J': Colors.purple,  //dark magenta
+  'K': Colors.orange,
+  'L': Colors.deepOrange,
+  'M': Colors.orangeAccent,
+  'N': Colors.brown,
+  'O': Colors.brown.shade900,
 };
 
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
@@ -101,12 +106,13 @@ String _filterInput(String input, String filter) {
 }
 
 Future<Uint8List> _binary2Image(String input) async {
+  if (input == '' || input == null)
+    return null;
+
   var lines = input.split('\n');
 
   if (lines.length == 1)
     lines.addAll([lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0], lines[0]]);
-  print('image source');
-  print(lines);
   return input2Image(lines);
 }
 
@@ -134,10 +140,8 @@ Future<Uint8List> input2Image(List<String> lines,
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
   if (colors == null) colors = colorMap;
   for (int row = 0; row < lines.length; row++) {
-    print('line '+row.toString()+' '+lines[row]);
     for (int column = 0; column < lines[row].length; column++) {
       paint.color = Colors.white;
-      print('column '+column.toString()+' '+lines[row][column]+' => '+colors[lines[row][column]].toString());
       if (colors.containsKey(lines[row][column])) paint.color = colors[lines[row][column]];
 
       if (lines[row][column] != '0')
