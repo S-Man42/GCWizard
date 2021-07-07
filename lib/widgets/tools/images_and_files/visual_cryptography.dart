@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -25,8 +27,8 @@ class VisualCryptography extends StatefulWidget {
 class VisualCryptographyState extends State<VisualCryptography> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  Uint8List _decodeImage1;
-  Uint8List _decodeImage2;
+  PlatformFile _decodeImage1;
+  PlatformFile _decodeImage2;
   Uint8List _outData;
   Uint8List _encodeImage;
   var _decodeOffsets = Tuple2<int, int>(0, 0);
@@ -88,7 +90,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
                 openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
                   setState(() {
                     if (file != null)
-                      _decodeImage1 = file.bytes;
+                      _decodeImage1 = file;
                   });
                 });
               },
@@ -103,7 +105,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
                 openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
                   setState(() {
                     if (file != null)
-                      _decodeImage2 = file?.bytes;
+                      _decodeImage2 = file;
                   });
                 });
               },
@@ -112,9 +114,10 @@ class VisualCryptographyState extends State<VisualCryptography> {
         ),
       ]),
       Row(children: [
-        Expanded(child: _decodeImage1 !=null ? Image.memory(_decodeImage1) : Container()),
-        Expanded(child: _decodeImage2 !=null ? Image.memory(_decodeImage2) : Container()),
+        Expanded(child: GCWText(align: Alignment.bottomCenter, text: _decodeImage1 == null ? "" : _decodeImage1.name)),
+        Expanded(child: GCWText(align: Alignment.bottomCenter, text: _decodeImage2 == null ? "" : _decodeImage2.name)),
       ]),
+      Container(height: 10),
       GCWIntegerSpinner(
         title: i18n(context, 'visual_cryptography_offset') + ' X',
         value: _decodeOffsets.item1,
@@ -142,21 +145,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
         Expanded(child: Column(children: [_buildAutoOffsetXButton()])),
       ]),
 
-      GCWDefaultOutput(child: _buildOutputDecode(),
-        trailing: Row (
-          children: <Widget>[
-            GCWIconButton(
-            iconData: Icons.account_box_outlined,
-              size: IconButtonSize.SMALL,
-              iconColor: _outData != null ? null : Colors.grey,
-              onPressed: () {
-                setState(() {
-                  _outData = cleanImage(_decodeImage1, _decodeImage2, _decodeOffsets.item1, _decodeOffsets.item2);
-                });
-              },
-            ),
-        ])
-      )
+      GCWDefaultOutput(child: _buildOutputDecode())
     ]);
   }
 
@@ -165,13 +154,21 @@ class VisualCryptographyState extends State<VisualCryptography> {
       return null;
 
     return Column(
-        children: <Widget>[
-          GCWImageView(
-            imageData: GCWImageViewData(_outData),
-            toolBarRight: false,
-            fileName: 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
-          ),
-        ]
+      children: <Widget>[
+        GCWImageView(
+          imageData: GCWImageViewData(_outData),
+          toolBarRight: false,
+          fileName: 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        ),
+        GCWButton(
+          text: i18n(context, 'visual_cryptography_clear'),
+          onPressed: () {
+            setState(() {
+              _outData = cleanImage(_decodeImage1?.bytes, _decodeImage2?.bytes, _decodeOffsets.item1, _decodeOffsets.item2);
+            });
+          },
+        ),
+      ]
     );
   }
 
@@ -266,7 +263,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
-    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1, _decodeImage2, _decodeOffsets.item1, _decodeOffsets.item2));
+    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1?.bytes, _decodeImage2?.bytes, _decodeOffsets.item1, _decodeOffsets.item2));
   }
 
   _saveOutputDecode(Uint8List output) {
@@ -328,7 +325,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataOffsetAutoCalc(bool onlyX) async {
-    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1, _decodeImage2, null, onlyX ? _decodeOffsets.item2 : null));
+    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(_decodeImage1?.bytes, _decodeImage2?.bytes, null, onlyX ? _decodeOffsets.item2 : null));
   }
 
   _saveOutputOffsetAutoCalc(Tuple2<int, int> output) {
