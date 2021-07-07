@@ -338,7 +338,6 @@
   "book_cipher_section": "부분",
   "book_cipher_row": "열",
   "book_cipher_word": "단어",
-  "book_cipher_letter": "문자",
   "book_cipher_text": "텍스트",
   "book_cipher_output_format": "출력 형식",
   "book_cipher_input_format": "위치 형식",
