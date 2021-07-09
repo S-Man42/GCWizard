@@ -6129,6 +6129,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_PIPELINE,
         SEARCHSTRING_FR_SYMBOL_PIPELINE
       ]),
+      GCWSymbolTableTool(symbolKey: 'pipeline_din2403', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_PIPELINE_DIN2403,
+        SEARCHSTRING_DE_SYMBOL_PIPELINE_DIN2403,
+        SEARCHSTRING_EN_SYMBOL_PIPELINE_DIN2403,
+        SEARCHSTRING_FR_SYMBOL_PIPELINE_DIN2403
+      ]),
       GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PIXEL,
         SEARCHSTRING_DE_SYMBOL_PIXEL,
