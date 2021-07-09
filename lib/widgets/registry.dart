@@ -236,6 +236,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -619,10 +622,10 @@ class Registry {
             'ko'
           ],
           searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES
+            SEARCHSTRING_COMMON_COUNTRIES,
+            SEARCHSTRING_DE_COUNTRIES,
+            SEARCHSTRING_EN_COUNTRIES,
+            SEARCHSTRING_FR_COUNTRIES,
           ]),
       GCWTool(
           tool: CrossSumSelection(),
@@ -2009,10 +2012,10 @@ class Registry {
             SEARCHSTRING_DE_COORDINATES,
             SEARCHSTRING_EN_COORDINATES,
             SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVARAGING,
-            SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING,
-            SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING,
-            SEARCHSTRING_FR_COORDINATES_COORDINATEAVARAGING
+            SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVERAGING,
+            SEARCHSTRING_DE_COORDINATES_COORDINATEAVERAGING,
+            SEARCHSTRING_EN_COORDINATES_COORDINATEAVERAGING,
+            SEARCHSTRING_FR_COORDINATES_COORDINATEAVERAGING
           ]),
       GCWTool(
           tool: CenterTwoPoints(),
@@ -2295,13 +2298,53 @@ class Registry {
 
       //Countries Selection ******************************************************************************************
 
-      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcodes', missingHelpLocales: [
+      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcode', missingHelpLocales: [
         'ko'
       ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
         SEARCHSTRING_COMMON_COUNTRIES_CALLINGCODES,
         SEARCHSTRING_DE_COUNTRIES_CALLINGCODES,
         SEARCHSTRING_EN_COUNTRIES_CALLINGCODES,
         SEARCHSTRING_FR_COUNTRIES_CALLINGCODES
+      ]),
+      GCWTool(tool: CountriesIOCCodes(), i18nPrefix: 'countries_ioccode', missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_COUNTRIES_IOCCODES,
+        SEARCHSTRING_DE_COUNTRIES_IOCCODES,
+        SEARCHSTRING_EN_COUNTRIES_IOCCODES,
+        SEARCHSTRING_FR_COUNTRIES_IOCCODES
+      ]),
+      GCWTool(tool: CountriesISOCodes(), i18nPrefix: 'countries_isocode', missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_COUNTRIES_ISOCODES,
+        SEARCHSTRING_DE_COUNTRIES_ISOCODES,
+        SEARCHSTRING_EN_COUNTRIES_ISOCODES,
+        SEARCHSTRING_FR_COUNTRIES_ISOCODES
+      ]),
+      GCWTool(tool: CountriesVehicleCodes(), i18nPrefix: 'countries_vehiclecode', missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_COUNTRIES_VEHICLECODES,
+        SEARCHSTRING_DE_COUNTRIES_VEHICLECODES,
+        SEARCHSTRING_EN_COUNTRIES_VEHICLECODES,
+        SEARCHSTRING_FR_COUNTRIES_VEHICLECODES
       ]),
 
       //CrossSumSelection *******************************************************************************************
