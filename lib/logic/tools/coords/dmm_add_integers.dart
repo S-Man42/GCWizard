@@ -1,4 +1,3 @@
-
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
