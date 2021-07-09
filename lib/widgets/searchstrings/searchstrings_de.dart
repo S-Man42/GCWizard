@@ -109,7 +109,8 @@ const SEARCHSTRING_DE_COUNTRIES = 'land laender nationen staaten internationales
 const SEARCHSTRING_DE_COUNTRIES_CALLINGCODES = 'vorwahlen telefonnummern vorwahlnummern telephonnummern';
 const SEARCHSTRING_DE_COUNTRIES_IOCCODES = 'internationalesolympischeskomitee olympiade sport';
 const SEARCHSTRING_DE_COUNTRIES_ISOCODES = 'internationaleorganisationfuernormung';
-const SEARCHSTRING_DE_COUNTRIES_VEHICLECODES = 'kraftfahrzeugkennzeichen laenderkennzeichen vehikels nummernschild kfz-kennzeichen kfzkennzeichen laenderkennung nationalitaetszeichen';
+const SEARCHSTRING_DE_COUNTRIES_VEHICLECODES =
+    'kraftfahrzeugkennzeichen laenderkennzeichen vehikels nummernschild kfz-kennzeichen kfzkennzeichen laenderkennung nationalitaetszeichen';
 const SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
 const SEARCHSTRING_DE_CROSSSUMS = 'iteriert  quersummen produkte alternierend alterniert iterierend';
 const SEARCHSTRING_DE_CROSSUM = '';

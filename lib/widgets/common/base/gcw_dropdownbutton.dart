@@ -27,53 +27,50 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
       children: [
         if (widget.title != null && widget.title.length > 0)
           Expanded(
-            child: GCWText(
-              text: widget.title + ':',
-            ),
-            flex: 1
-          ),
-        Expanded(
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-              height: 39,
-              margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(roundedBorderRadius),
-                border: Border.all(color: colors.accent(), style: BorderStyle.solid, width: 1.0),
+              child: GCWText(
+                text: widget.title + ':',
               ),
-              child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      size: 30,
-                      color: colors.accent(),
-                    ),
-                    value: widget.value ?? widget.items[0].value,
-                    items: widget.items.map((item) {
-                      return DropdownMenuItem(
-                          value: item.value, child: item.child is Widget ? item.child : _buildMenuItemChild(item));
-                    }).toList(),
-                    onChanged: widget.onChanged,
-                    style: TextStyle(fontSize: defaultFontSize()),
-                    selectedItemBuilder: widget.selectedItemBuilder ??
-                            (context) {
-                          return widget.items.map((item) {
-                            return Align(
-                              child: item.child is Widget
-                                  ? item.child
-                                  : Text(
-                                item.child.toString(),
-                                style: gcwTextStyle(),
-                              ),
-                              alignment: Alignment.centerLeft,
-                            );
-                          }).toList();
-                        },
-                  ))),
-            flex: 3
-        )
-
+              flex: 1),
+        Expanded(
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+                height: 39,
+                margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(roundedBorderRadius),
+                  border: Border.all(color: colors.accent(), style: BorderStyle.solid, width: 1.0),
+                ),
+                child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                  isExpanded: true,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    size: 30,
+                    color: colors.accent(),
+                  ),
+                  value: widget.value ?? widget.items[0].value,
+                  items: widget.items.map((item) {
+                    return DropdownMenuItem(
+                        value: item.value, child: item.child is Widget ? item.child : _buildMenuItemChild(item));
+                  }).toList(),
+                  onChanged: widget.onChanged,
+                  style: TextStyle(fontSize: defaultFontSize()),
+                  selectedItemBuilder: widget.selectedItemBuilder ??
+                      (context) {
+                        return widget.items.map((item) {
+                          return Align(
+                            child: item.child is Widget
+                                ? item.child
+                                : Text(
+                                    item.child.toString(),
+                                    style: gcwTextStyle(),
+                                  ),
+                            alignment: Alignment.centerLeft,
+                          );
+                        }).toList();
+                      },
+                ))),
+            flex: 3)
       ],
     );
   }

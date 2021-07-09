@@ -40,13 +40,17 @@ enum encodeOutFormat { SectionRowWordCharacter, RowWordCharacter, WordCharacter,
 
 String decodeSearchWord(
     String input, String word, decodeOutFormat format, String sectionLabel, String rowLabel, String wordLabel,
-    {bool spacesOn = true, bool emptyLinesOn = true, String ignoreSymbols, bool diacriticsOn = true, bool azOn = true, bool numbersOn = true,
+    {bool spacesOn = true,
+    bool emptyLinesOn = true,
+    String ignoreSymbols,
+    bool diacriticsOn = true,
+    bool azOn = true,
+    bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-
   if (input == null || input.length == 0) return "";
   if (word == null || word.length == 0) return "";
 
-  input =  _filterInput(input,
+  input = _filterInput(input,
       spacesOn: spacesOn,
       emptyLinesOn: emptyLinesOn,
       ignoreSymbols: ignoreSymbols,
@@ -89,9 +93,13 @@ String decodeSearchWord(
 }
 
 String decodeFindWord(String input, String positions, searchFormat format,
-    {bool spacesOn = true, bool emptyLinesOn = true, String ignoreSymbols, bool diacriticsOn = true, bool azOn = true, bool numbersOn = true,
+    {bool spacesOn = true,
+    bool emptyLinesOn = true,
+    String ignoreSymbols,
+    bool diacriticsOn = true,
+    bool azOn = true,
+    bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-
   if (input == null || input.length == 0) return "";
   if (positions == null || positions.length == 0) return "";
 
@@ -104,7 +112,7 @@ String decodeFindWord(String input, String positions, searchFormat format,
     positionList.add(int.tryParse(positions.substring(elem.start, elem.end)));
   });
 
-  input =  _filterInput(input,
+  input = _filterInput(input,
       spacesOn: spacesOn,
       emptyLinesOn: emptyLinesOn,
       ignoreSymbols: ignoreSymbols,
@@ -119,24 +127,30 @@ String decodeFindWord(String input, String positions, searchFormat format,
       case searchFormat.SectionRowWord:
         if (i + 2 < positionList.length)
           out.add(_findWord(wordList, format,
-              section: positionList[i + 0], row: positionList[i + 1], word: positionList[i + 2], onlyFirstWordLetter: onlyFirstWordLetter));
+              section: positionList[i + 0],
+              row: positionList[i + 1],
+              word: positionList[i + 2],
+              onlyFirstWordLetter: onlyFirstWordLetter));
         i += 3;
         break;
 
       case searchFormat.SectionCharacter:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format, section: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
+          out.add(_findWord(wordList, format,
+              section: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
         i += 2;
         break;
 
       case searchFormat.RowWord:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format, row: positionList[i + 0], word: positionList[i + 1], onlyFirstWordLetter: onlyFirstWordLetter));
+          out.add(_findWord(wordList, format,
+              row: positionList[i + 0], word: positionList[i + 1], onlyFirstWordLetter: onlyFirstWordLetter));
         i += 2;
         break;
 
       case searchFormat.Word:
-        if (i + 0 < positionList.length) out.add(_findWord(wordList, format, word: positionList[i + 0], onlyFirstWordLetter: onlyFirstWordLetter));
+        if (i + 0 < positionList.length)
+          out.add(_findWord(wordList, format, word: positionList[i + 0], onlyFirstWordLetter: onlyFirstWordLetter));
         i += 1;
         break;
 
@@ -154,24 +168,30 @@ String decodeFindWord(String input, String positions, searchFormat format,
       case searchFormat.RowWordCharacter:
         if (i + 2 < positionList.length)
           out.add(_findWord(wordList, format,
-              row: positionList[i + 0], word: positionList[i + 1], character: positionList[i + 2], onlyFirstWordLetter: false));
+              row: positionList[i + 0],
+              word: positionList[i + 1],
+              character: positionList[i + 2],
+              onlyFirstWordLetter: false));
         i += 3;
         break;
 
       case searchFormat.RowCharacter:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format, row: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
+          out.add(_findWord(wordList, format,
+              row: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
         i += 2;
         break;
 
       case searchFormat.WordCharacter:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format, word: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
+          out.add(_findWord(wordList, format,
+              word: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
         i += 2;
         break;
 
       case searchFormat.Character:
-        if (i + 0 < positionList.length) out.add(_findWord(wordList, format, character: positionList[i + 0], onlyFirstWordLetter: false));
+        if (i + 0 < positionList.length)
+          out.add(_findWord(wordList, format, character: positionList[i + 0], onlyFirstWordLetter: false));
         i += 1;
         break;
     }
@@ -183,13 +203,17 @@ String decodeFindWord(String input, String positions, searchFormat format,
 }
 
 String encodeText(String input, String text, encodeOutFormat format,
-    {bool spacesOn = true, bool emptyLinesOn = true, String ignoreSymbols, bool diacriticsOn = true, bool azOn = true, bool numbersOn = true,
+    {bool spacesOn = true,
+    bool emptyLinesOn = true,
+    String ignoreSymbols,
+    bool diacriticsOn = true,
+    bool azOn = true,
+    bool numbersOn = true,
     bool onlyFirstWordLetter = false}) {
-
   if (input == null || input.length == 0) return "";
   if (text == null || text.length == 0) return "";
 
-  input =  _filterInput(input,
+  input = _filterInput(input,
       spacesOn: spacesOn,
       emptyLinesOn: emptyLinesOn,
       ignoreSymbols: ignoreSymbols,
@@ -203,8 +227,7 @@ String encodeText(String input, String text, encodeOutFormat format,
 
   if (onlyFirstWordLetter)
     wordList.forEach((element) {
-      if (element.Text.length > 0)
-        element.Text = element.Text[0];
+      if (element.Text.length > 0) element.Text = element.Text[0];
     });
 
   text.split('').forEach((letter) {
@@ -390,7 +413,6 @@ _wordClass _onlyFirstWordLetter(_wordClass wordClass) {
   return new _wordClass(-1, -1, -1, "");
 }
 
-
 String _filterCharacter(int index, List<_wordClass> wordList) {
   var text = "";
 
@@ -478,16 +500,21 @@ List<_wordClass> _wordList(String input) {
 }
 
 String _filterInput(String input,
-    {bool spacesOn = true, bool emptyLinesOn = true, String ignoreSymbols, bool diacriticsOn = true, bool azOn = true, bool numbersOn = true}) {
-  if (!spacesOn) input = input.replaceAll(RegExp(r'[^\n\S]'),  '');
+    {bool spacesOn = true,
+    bool emptyLinesOn = true,
+    String ignoreSymbols,
+    bool diacriticsOn = true,
+    bool azOn = true,
+    bool numbersOn = true}) {
+  if (!spacesOn) input = input.replaceAll(RegExp(r'[^\n\S]'), '');
   if (!emptyLinesOn) {
     input = input.replaceAll('\n\n', '\n');
     input = input.replaceAll('\r\n\r\n', '\r\n');
   }
   if (ignoreSymbols != null) {
-    var filter = ignoreSymbols.split('')
-    .map((char) { return r'\' + char;})
-    .join();
+    var filter = ignoreSymbols.split('').map((char) {
+      return r'\' + char;
+    }).join();
     input = input.replaceAll(RegExp(r"[" + filter + "]"), '');
   }
   if (!diacriticsOn) input = _removeDiacritics(input);
@@ -502,10 +529,7 @@ String _removeDiacritics(String input) {
 
   if (copy != null) {
     if (input.length != copy.length) return copy;
-    for (var i=input.length-1; i>=0 ; i--)
-      if (input[i] != copy[i]) input = input.replaceRange(i, i+1, '');
+    for (var i = input.length - 1; i >= 0; i--) if (input[i] != copy[i]) input = input.replaceRange(i, i + 1, '');
   }
   return input;
 }
-
-

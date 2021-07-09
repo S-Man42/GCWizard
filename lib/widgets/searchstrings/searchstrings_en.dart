@@ -104,7 +104,8 @@ const SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION =
 const SEARCHSTRING_EN_COUNTRIES = 'countries country nations states internationals';
 const SEARCHSTRING_EN_COUNTRIES_CALLINGCODES = 'callingcodes prefixes areacodes preselection pre-selection';
 const SEARCHSTRING_EN_COUNTRIES_IOCCODES = 'internationalolympiccommittee olympia sports';
-const SEARCHSTRING_EN_COUNTRIES_ISOCODES = 'internationalorganizationforstandardization internationalorganisationforstandardisation';
+const SEARCHSTRING_EN_COUNTRIES_ISOCODES =
+    'internationalorganizationforstandardization internationalorganisationforstandardisation';
 const SEARCHSTRING_EN_COUNTRIES_VEHICLECODES = 'vehiclecodes carcodes countrycodes vehicleregistrationcodes';
 const SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY = 'frequency  occurrences';
 const SEARCHSTRING_EN_CROSSSUMS = 'crosssums digits alternated crosstotals iterated products digitalroot digitroot';

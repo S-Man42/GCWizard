@@ -54,11 +54,13 @@ class CountriesState extends State<Countries> {
                 _currentSort = value;
               });
             },
-            items: _currentSortList.asMap().map((index, field) {
-              return MapEntry(index,
-                GCWDropDownMenuItem(value: index, child: i18n(context, field))
-              );
-            }).values.toList(),
+            items: _currentSortList
+                .asMap()
+                .map((index, field) {
+                  return MapEntry(index, GCWDropDownMenuItem(value: index, child: i18n(context, field)));
+                })
+                .values
+                .toList(),
           ),
         GCWDefaultOutput(child: _buildOutput())
       ],
@@ -73,12 +75,10 @@ class CountriesState extends State<Countries> {
 
     var data = COUNTRIES.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
       if (_currentSort == 0) {
-
         var dataList = [i18n(context, e['name'])];
         dataList.addAll(widget.fields.map((field) => e[field]));
 
         return dataList;
-
       } else {
         var dataList = [e[field], i18n(context, e['name'])];
         dataList.addAll(widget.fields.where((f) => f != field).map((f) => e[f]));
