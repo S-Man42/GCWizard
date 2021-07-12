@@ -78,7 +78,7 @@ const SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS =
     'three midpoint center middle circumcircle circumscribed points medians';
 const SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS = 'midpoint center middle  two points';
 const SEARCHSTRING_EN_COORDINATES_COMPASSROSE = 'compassrose intercardinaldirections';
-const SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING = 'measurement averaging average';
+const SEARCHSTRING_EN_COORDINATES_COORDINATEAVERAGING = 'measurement averaging average';
 const SEARCHSTRING_EN_COORDINATES_COORDINATESSETTINGS = '';
 const SEARCHSTRING_EN_COORDINATES_CROSSBEARING = 'bearings angles intersections directions';
 const SEARCHSTRING_EN_COORDINATES_CROSSSUMSELECTION = '';
@@ -103,6 +103,10 @@ const SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION =
     'angles waypointprojections bearings cardinaldirections reverse projections ';
 const SEARCHSTRING_EN_COUNTRIES = 'countries country nations states internationals';
 const SEARCHSTRING_EN_COUNTRIES_CALLINGCODES = 'callingcodes prefixes areacodes preselection pre-selection';
+const SEARCHSTRING_EN_COUNTRIES_IOCCODES = 'internationalolympiccommittee olympia sports';
+const SEARCHSTRING_EN_COUNTRIES_ISOCODES =
+    'internationalorganizationforstandardization internationalorganisationforstandardisation';
+const SEARCHSTRING_EN_COUNTRIES_VEHICLECODES = 'vehiclecodes carcodes countrycodes vehicleregistrationcodes';
 const SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY = 'frequency  occurrences';
 const SEARCHSTRING_EN_CROSSSUMS = 'crosssums digits alternated crosstotals iterated products digitalroot digitroot';
 const SEARCHSTRING_EN_CROSSUM = '';
@@ -447,6 +451,7 @@ const SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_FOTAG = '';
 const SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_IEC60304 = '';
 const SEARCHSTRING_EN_SYMBOL_PHOENICIAN = 'phoenician';
 const SEARCHSTRING_EN_SYMBOL_PIPELINE = 'pipes pipelines';
+const SEARCHSTRING_EN_SYMBOL_PIPELINE_DIN2403 = 'pipes pipelines colors colours stripes';
 const SEARCHSTRING_EN_SYMBOL_PIXEL = '';
 const SEARCHSTRING_EN_SYMBOL_PLANET = '';
 const SEARCHSTRING_EN_SYMBOL_PLANETS =
