@@ -31,6 +31,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   PlatformFile _decodeImage2;
   Uint8List _outData;
   Uint8List _encodeImage;
+  int _encodeScale = 100;
   var _decodeOffsets = Tuple2<int, int>(0, 0);
   var _encodeOffsets = Tuple2<int, int>(0, 0);
 
@@ -140,10 +141,11 @@ class VisualCryptographyState extends State<VisualCryptography> {
       ),
       _buildDecodeSubmitButton(),
 
-      Row(children: [
-        Expanded(child: Column(children: [_buildAutoOffsetXYButton()])),
-        Expanded(child: Column(children: [_buildAutoOffsetXButton()])),
-      ]),
+      // Deactivate, to slow at the moment
+      // Row(children: [
+      //   Expanded(child: Column(children: [_buildAutoOffsetXYButton()])),
+      //   Expanded(child: Column(children: [_buildAutoOffsetXButton()])),
+      // ]),
 
       GCWDefaultOutput(child: _buildOutputDecode())
     ]);
@@ -207,6 +209,18 @@ class VisualCryptographyState extends State<VisualCryptography> {
             onChanged: (value) {
               setState(() {
                 _encodeOffsets = Tuple2<int, int>(_encodeOffsets.item1, value);
+              });
+            },
+          ),
+
+          GCWIntegerSpinner(
+            title: i18n(context, 'visual_cryptography_scale'),
+            value: _encodeScale,
+            min: 1,
+            max: 99999,
+            onChanged: (value) {
+              setState(() {
+                _encodeScale = value;
               });
             },
           ),
@@ -365,7 +379,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(Tuple3<Uint8List, int, int>(_encodeImage, _encodeOffsets.item1, _encodeOffsets.item2));
+    return GCWAsyncExecuterParameters(Tuple4<Uint8List, int, int, int>(_encodeImage, _encodeOffsets.item1, _encodeOffsets.item2, _encodeScale));
   }
 
   _saveOutputEncode(Tuple2<Uint8List, Uint8List> output) {

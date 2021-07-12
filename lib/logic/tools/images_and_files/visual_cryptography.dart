@@ -153,19 +153,21 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
     return null;
   }
 
-  var output = await encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3);
+  var output = await encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, int offsetX, int offsetY) {
+Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, int offsetX, int offsetY, int scale) {
   if (image == null) return null;
 
   var _image = Image.decodeImage(image);
   if (_image == null) return null;
 
+  if (scale > 0 && scale != 100)
+    _image = Image.copyResize(_image, height: (_image.height*scale/100).toInt());
 
   var image1OffsetX = max(offsetX, 0).abs();
   var image1OffsetY = max(offsetY, 0).abs();
