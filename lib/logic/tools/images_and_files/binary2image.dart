@@ -8,26 +8,51 @@ import 'package:gc_wizard/utils/common_utils.dart';
 Map<String, Color> colorMap = {
   '0': Colors.white,
   '1': Colors.black,
-  '2': Color(0xFFC0C0), ///light red
-  '3': Color(0xFFFFC0), ///light yellow
-  '4': Color(0xC0FFC0), ///light green,
-  '5': Color(0xC0FFFF), ///light cyan,
-  '6': Color(0xC0C0FF), ///light blue
-  '7': Color(0xFFC0FF), ///light magenta,
+  '2': Color(0xFFC0C0),
+
+  ///light red
+  '3': Color(0xFFFFC0),
+
+  ///light yellow
+  '4': Color(0xC0FFC0),
+
+  ///light green,
+  '5': Color(0xC0FFFF),
+
+  ///light cyan,
+  '6': Color(0xC0C0FF),
+
+  ///light blue
+  '7': Color(0xFFC0FF),
+
+  ///light magenta,
   '8': Colors.red,
   '9': Colors.yellow,
   'A': Colors.green,
   'B': Colors.cyan,
   'C': Colors.blue,
-  'D': Color(0xFF00FF), ///magenta,
-  'E': Color(0xC00000), ///dark red,
-  'F': Color(0xC0C000), ///dark yellow,
-  'G': Color(0x00C000), ///dark green,
-  'H': Color(0x00C0C0), ///dark cyan,
-  'I': Color(0x0000C0), ///dark blue,
-  'J': Color(0xC000C0)  ///dark magenta
-};
+  'D': Color(0xFF00FF),
 
+  ///magenta,
+  'E': Color(0xC00000),
+
+  ///dark red,
+  'F': Color(0xC0C000),
+
+  ///dark yellow,
+  'G': Color(0x00C000),
+
+  ///dark green,
+  'H': Color(0x00C0C0),
+
+  ///dark cyan,
+  'I': Color(0x0000C0),
+
+  ///dark blue,
+  'J': Color(0xC000C0)
+
+  ///dark magenta
+};
 
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
   var filter = _buildFilter(input);
@@ -106,7 +131,8 @@ Future<Uint8List> _binary2Image(String input) async {
   return input2Image(lines);
 }
 
-Future<Uint8List> input2Image(List<String> lines, { Map<String, Color> colors, int bounds = 10, double pointSize = 5.0}) async {
+Future<Uint8List> input2Image(List<String> lines,
+    {Map<String, Color> colors, int bounds = 10, double pointSize = 5.0}) async {
   var width = 0.0;
   var height = 0.0;
 
@@ -132,8 +158,7 @@ Future<Uint8List> input2Image(List<String> lines, { Map<String, Color> colors, i
   for (int row = 0; row < lines.length; row++) {
     for (int column = 0; column < lines[row].length; column++) {
       paint.color = Colors.white;
-      if (colors.containsKey(lines[row][column]))
-        paint.color = colors[lines[row][column]];
+      if (colors.containsKey(lines[row][column])) paint.color = colors[lines[row][column]];
 
       if (lines[row][column] != '0')
         canvas.drawRect(

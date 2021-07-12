@@ -1,13 +1,13 @@
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class GCWImageViewFullScreen extends StatefulWidget {
-  final ImageProvider imageProvider;
+  final Uint8List imageData;
   final Function onBeforeFullscreen;
-  final Function onBeforeFullscreenAsync;
 
-  const GCWImageViewFullScreen({Key key, @required this.imageProvider, this.onBeforeFullscreen, this.onBeforeFullscreenAsync}) : super(key: key);
+  const GCWImageViewFullScreen({Key key, @required this.imageData, this.onBeforeFullscreen}) : super(key: key);
 
   @override
   GCWImageViewFullScreenState createState() => GCWImageViewFullScreenState();
@@ -17,15 +17,13 @@ class GCWImageViewFullScreenState extends State<GCWImageViewFullScreen> {
   ImageProvider image;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
 
-    if (widget.onBeforeFullscreen != null)
-      image =  widget.onBeforeFullscreen(widget.imageProvider);
-    else if (widget.onBeforeFullscreenAsync != null)
-        image = await widget.onBeforeFullscreenAsync(widget.imageProvider);
-    else {
-      image = widget.imageProvider;
+    if (widget.onBeforeFullscreen != null) {
+      image = MemoryImage(widget.onBeforeFullscreen());
+    } else {
+      image = MemoryImage(widget.imageData);
     }
   }
 

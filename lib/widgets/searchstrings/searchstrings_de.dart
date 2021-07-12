@@ -80,7 +80,7 @@ const SEARCHSTRING_DE_COORDINATES_ANTIPODES = 'gegenueberliegende gegenpunkte an
 const SEARCHSTRING_DE_COORDINATES_CENTERTHREEPOINTS = 'drei mittelpunkt zentrum umkreis punkte seitenhalbierende';
 const SEARCHSTRING_DE_COORDINATES_CENTERTWOPOINTS = 'mittelpunkt zentrum zwei punkte';
 const SEARCHSTRING_DE_COORDINATES_COMPASSROSE = 'kompassrose himmelsrichtungen windrichtungen';
-const SEARCHSTRING_DE_COORDINATES_COORDINATEAVARAGING = 'einmessen einmessung ermitteln';
+const SEARCHSTRING_DE_COORDINATES_COORDINATEAVERAGING = 'einmessen einmessung ermitteln';
 const SEARCHSTRING_DE_COORDINATES_COORDINATESSETTINGS = '';
 const SEARCHSTRING_DE_COORDINATES_CROSSBEARING = 'winkel kreuzpeilungen richtungen';
 const SEARCHSTRING_DE_COORDINATES_CROSSSUMSELECTION = '';
@@ -107,6 +107,10 @@ const SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION =
     'winkel wegpunktprojektionen wegpunktpeilungen richtungen rueckwaertspeilung';
 const SEARCHSTRING_DE_COUNTRIES = 'land laender nationen staaten internationales';
 const SEARCHSTRING_DE_COUNTRIES_CALLINGCODES = 'vorwahlen telefonnummern vorwahlnummern telephonnummern';
+const SEARCHSTRING_DE_COUNTRIES_IOCCODES = 'internationalesolympischeskomitee olympiade sport';
+const SEARCHSTRING_DE_COUNTRIES_ISOCODES = 'internationaleorganisationfuernormung';
+const SEARCHSTRING_DE_COUNTRIES_VEHICLECODES =
+    'kraftfahrzeugkennzeichen laenderkennzeichen vehikels nummernschild kfz-kennzeichen kfzkennzeichen laenderkennung nationalitaetszeichen';
 const SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
 const SEARCHSTRING_DE_CROSSSUMS = 'iteriert  quersummen produkte alternierend alterniert iterierend';
 const SEARCHSTRING_DE_CROSSUM = '';
@@ -453,7 +457,8 @@ const SEARCHSTRING_DE_SYMBOL_OPTICALFIBER = 'lichtwellenleiter lichtleitkabel gl
 const SEARCHSTRING_DE_SYMBOL_OPTICAL_FIBER_FOTAG = '';
 const SEARCHSTRING_DE_SYMBOL_OPTICAL_FIBER_IEC60304 = '';
 const SEARCHSTRING_DE_SYMBOL_PHOENICIAN = 'phoenizisches';
-const SEARCHSTRING_DE_SYMBOL_PIPELINE = 'rohre';
+const SEARCHSTRING_DE_SYMBOL_PIPELINE = 'rohre roehren rohrleitungen';
+const SEARCHSTRING_DE_SYMBOL_PIPELINE_DIN2403 = 'rohre roehren rohrleitungen farben streifen';
 const SEARCHSTRING_DE_SYMBOL_PIXEL = '';
 const SEARCHSTRING_DE_SYMBOL_PLANET = '';
 const SEARCHSTRING_DE_SYMBOL_PLANETS =
@@ -526,7 +531,8 @@ const SEARCHSTRING_DE_TRIFID = '';
 const SEARCHSTRING_DE_TRITHEMIUS = '';
 const SEARCHSTRING_DE_UNITCONVERTER =
     'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';
-const SEARCHSTRING_DE_VANITY = 'telefontasten ziffern telefonnummern handy tasten tastatur texten nachrichten smsen simsen';
+const SEARCHSTRING_DE_VANITY =
+    'telefontasten ziffern telefonnummern handy tasten tastatur texten nachrichten smsen simsen';
 const SEARCHSTRING_DE_VANITYMULTITAP = '';
 const SEARCHSTRING_DE_VANITYSINGLETAP = '';
 const SEARCHSTRING_DE_VANITYTEXTSEARCH = 'textanalyse textsuche';

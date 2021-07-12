@@ -204,6 +204,7 @@ flutter:
     - assets/symbol_tables/optical_fiber_swisscom/
     - assets/symbol_tables/phoenician/
     - assets/symbol_tables/pipeline/
+    - assets/symbol_tables/pipeline_din2403/
     - assets/symbol_tables/pixel/
     - assets/symbol_tables/planet/
     - assets/symbol_tables/planets/

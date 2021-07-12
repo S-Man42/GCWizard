@@ -68,7 +68,6 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
       }
     }
 
-
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
     out.addAll({"linkList": linkList});
@@ -113,11 +112,11 @@ int _checkSameHash(List<Image.Image> list, int maxSearchIndex) {
 
 List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List<Uint8List> imageList) {
   const toler = 2;
-  for (var i=0; i < filteredList.length; i++ ) {
+  for (var i = 0; i < filteredList.length; i++) {
     var compareImage = imageList[filteredList[i].first];
     var image = imageList[imageIndex];
 
-    if (compareImages(compareImage, image, toler:toler)) {
+    if (compareImages(compareImage, image, toler: toler)) {
       filteredList[i].add(imageIndex);
       return filteredList;
     }

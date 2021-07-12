@@ -169,17 +169,14 @@ class _KmlReader {
     var coords = group.getElement('coordinates');
     if (coords == null) return null;
 
-
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
     var regExp = RegExp(r'([\.0-9]+),([\.0-9]+),?([\.0-9]+)?');
-
 
     regExp.allMatches(coords.innerText).forEach((coordinates) {
       var lat = coordinates.group(2);
       var lon = coordinates.group(1);
       if (lat != null && lon != null) {
-        var wpt = GCWMapPoint(
-            point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
+        var wpt = GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
         wpt.markerText = xmlElement.getElement('description')?.innerText;
 
         if (line.points.length == 0)

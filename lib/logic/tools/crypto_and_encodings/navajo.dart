@@ -656,7 +656,7 @@ Map NAVAJO_DECODE_DICTIONARY = switchMapKeyValue(NAVAJO_ENCODE_DICTIONARY);
 
 Map NAVAJO_DECODE_ALPHABET = switchMapKeyValue(NAVAJO_ENCODE_ALPHABET);
 
-String shrinkText(String input){
+String shrinkText(String input) {
   return input
       .replaceAll('COMMANDING GEN.', 'COMMANDINGGEN')
       .replaceAll('MAJOR GEN.', 'MAJORGEN')
@@ -692,7 +692,7 @@ String shrinkText(String input){
       .replaceAll('TRAFFIC DIAGRAM', 'TRAFFICDIAGRAM');
 }
 
-String enfoldText(String input){
+String enfoldText(String input) {
   return input
       .replaceAll('COMMANDINGGEN', 'COMMANDING GEN.')
       .replaceAll('MAJORGEN', 'MAJOR GEN.')
@@ -780,14 +780,12 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
   cipherText = cipherText.toUpperCase().replaceAll(RegExp(r'\s{3,}'), '  ');
   cipherText.split('  ').forEach((element) {
     element.split(' ').forEach((element) {
-      if (NAVAJO_DECODE_ALPHABET[element] == null)
-        if (useOnlyAlphabet)
-          result.add(UNKNOWN_ELEMENT);
-        else
-          if (NAVAJO_DECODE_DICTIONARY[element] == null)
-            result.add(UNKNOWN_ELEMENT);
-          else
-            result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
+      if (NAVAJO_DECODE_ALPHABET[element] == null) if (useOnlyAlphabet)
+        result.add(UNKNOWN_ELEMENT);
+      else if (NAVAJO_DECODE_DICTIONARY[element] == null)
+        result.add(UNKNOWN_ELEMENT);
+      else
+        result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
       else
         result.add(NAVAJO_DECODE_ALPHABET[element]);
     });
@@ -803,11 +801,10 @@ String encodeNavajo(String plainText, bool useOnlyAlphabet) {
   shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
     if (useOnlyAlphabet)
       result.add(encodeLetterWise(element));
+    else if (NAVAJO_ENCODE_DICTIONARY[element] == null)
+      result.add(encodeLetterWise(element));
     else
-      if (NAVAJO_ENCODE_DICTIONARY[element] == null)
-        result.add(encodeLetterWise(element));
-      else
-        result.add(NAVAJO_ENCODE_DICTIONARY[element]);
+      result.add(NAVAJO_ENCODE_DICTIONARY[element]);
     result.add('');
   });
   return result.join(' ').trim();

@@ -184,4 +184,3 @@ String changeExtension(String fileName, String extension) {
 String normalizePath(String path) {
   return normalize(path);
 }
-
