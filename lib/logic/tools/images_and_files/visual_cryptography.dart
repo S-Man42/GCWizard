@@ -200,6 +200,16 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, int offsetX, i
   return Future.value(Tuple2<Uint8List, Uint8List>(Image.encodePng(image1), Image.encodePng(image2)));
 }
 
+Future<String> encodeImageSize(Uint8List image, Tuple2<int, int> offsets, int scale) {
+  if (image == null) return Future.value(null);
+
+  var _image = Image.decodeImage(image);
+  if (_image == null) return Future.value(null);
+
+  return Future.value(((_image.width  * scale/100).toInt() * 2 + offsets.item1.abs()).toString() + "px * " +
+                      ((_image.height * scale/100).toInt() * 2 + offsets.item2.abs()).toString() + "px");
+}
+
 bool _checkLimits(int x, int y, int width, int height) {
   return x >= 0 && x < width && y >= 0 && y < height;
 }

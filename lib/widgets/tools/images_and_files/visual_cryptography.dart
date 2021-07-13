@@ -32,6 +32,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
   Uint8List _outData;
   Uint8List _encodeImage;
   int _encodeScale = 100;
+  String _encodeImageSize;
   var _decodeOffsets = Tuple2<int, int>(0, 0);
   var _encodeOffsets = Tuple2<int, int>(0, 0);
 
@@ -185,6 +186,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
                   setState(() {
                     if (file != null) {
                       _encodeImage = file.bytes;
+                      _updateEncodeImageSize();
                     }
                   });
                 });
@@ -200,6 +202,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
             onChanged: (value) {
               setState(() {
                 _encodeOffsets = Tuple2<int, int>(value, _encodeOffsets.item2);
+                _updateEncodeImageSize();
               });
             },
           ),
@@ -209,6 +212,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
             onChanged: (value) {
               setState(() {
                 _encodeOffsets = Tuple2<int, int>(_encodeOffsets.item1, value);
+                _updateEncodeImageSize();
               });
             },
           ),
@@ -221,15 +225,25 @@ class VisualCryptographyState extends State<VisualCryptography> {
             onChanged: (value) {
               setState(() {
                 _encodeScale = value;
+                _updateEncodeImageSize();
               });
             },
           ),
+          _encodeImageSize != null ? GCWText(align: Alignment.bottomCenter, text: _encodeImageSize) : Container(),
 
           _buildEncodeSubmitButton(),
 
           GCWDefaultOutput(child: _buildOutputEncode())
         ]
     );
+  }
+
+  _updateEncodeImageSize() {
+    encodeImageSize(_encodeImage, _encodeOffsets, _encodeScale).then((value) {
+      setState(() {
+        _encodeImageSize = value;
+      });
+    });
   }
 
   Widget _buildOutputEncode() {
@@ -240,12 +254,13 @@ class VisualCryptographyState extends State<VisualCryptography> {
         children: <Widget>[
           GCWImageView(
             imageData: GCWImageViewData(_encodeOutputImages.item1),
-            toolBarRight: false,
+            toolBarRight: true,
             fileName: 'image_export_1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
           ),
+          Container(height: 5),
           GCWImageView(
             imageData: GCWImageViewData(_encodeOutputImages.item2),
-            toolBarRight: false,
+            toolBarRight: true,
             fileName: 'image_export_2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
           ),
         ]
