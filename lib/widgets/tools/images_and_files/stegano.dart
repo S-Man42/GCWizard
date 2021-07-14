@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_circular_progress_indicator.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -223,7 +224,7 @@ class _SteganoState extends State<Stegano> {
     }
     return [
       GCWTextDivider(text: i18n(context, 'stegano_encoded_image')),
-      GCWImageView(imageData: _encodedPictureData, /*extension: _extensionTarget,*/ fileName: _filenameTarget),
+      GCWImageView(imageData: _encodedPictureData, fileName: _filenameTarget),
     ];
   }
 
@@ -256,23 +257,10 @@ class _SteganoState extends State<Stegano> {
     if (_bytesSource == null) {
       return [];
     }
-    return [
-      GCWTextDivider(text: i18n(context, 'stegano_source_image')),
-      //GCWImageView(imageData: GCWImageViewData(_bytesSource))
-      Image.memory(_bytesSource)
-    ];
+    return [GCWTextDivider(text: i18n(context, 'stegano_source_image')), Image.memory(_bytesSource)];
   }
 
   List<Widget> loading() {
-    return [
-      Center(
-        //child: CircularProgressIndicator(),
-        child: CircularProgressIndicator(
-          backgroundColor: Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-          strokeWidth: 20,
-        ),
-      )
-    ];
+    return [GCWCircularProgressIndicator()];
   }
 }
