@@ -3913,6 +3913,7 @@
   "visual_cryptography_auto": "Auto",
   "visual_cryptography_clear": "Clear image",
   "visual_cryptography_scale": "Scale (%)",
+  "visual_cryptography_outputsize": "Output Size",
   "whitespace_language_title": "Whitespace",
   "whitespace_language_description": "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
   "whitespace_language_example": "      → DFH",
