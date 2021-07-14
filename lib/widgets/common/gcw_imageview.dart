@@ -203,7 +203,7 @@ class _GCWImageViewState extends State<GCWImageView> {
               else
                 imgData = widget.imageData.bytes;
 
-              _exportFile(context, imgData);
+              _exportFile(context, imgData, fileName: widget.fileName, extension: widget.extension);
             }),
       if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
         GCWPopupMenu(
@@ -254,12 +254,15 @@ class _GCWImageViewState extends State<GCWImageView> {
                 missingHelpLocales: ['ko'])));
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  _exportFile(BuildContext context, Uint8List data, {String extension, String fileName}) async {
+    String fileType = extension ?? '.png';
+    String baseName = getFileBaseNameWithoutExtension(fileName);
+    baseName = baseName ?? 'imageview_export';
     String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    String outputFilename = 'imageview_export_${timestamp}.png';
+    String outputFilename = '${baseName}_${timestamp}${fileType}';
 
     var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: '.png');
+    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }
 }
