@@ -3864,7 +3864,6 @@
   "vigenerebreaker_key_length_max": "max",
   "vigenerebreaker_error": "Ein Fehler trat auf: %s1",
   "visual_cryptography_title": "Visuelle Kryptographie",
-  "visual_cryptography_description": "Visuelle Verschlüsselung in Teilbildern",
   "visual_cryptography_image": "Bild",
   "visual_cryptography_offset": "Offset",
   "visual_cryptography_auto": "Auto",
