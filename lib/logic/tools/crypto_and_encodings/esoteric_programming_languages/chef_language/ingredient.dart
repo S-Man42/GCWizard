@@ -13,7 +13,7 @@ class Ingredient {
     _errorList = new List<String>();
 
     //var tokens = ingredient.replaceAll('-', ' ').split(' ');
-    var tokens = ingredient.split(' ');
+    var tokens = ingredient.trim().split(' ');
     int i = 0;
     _state = State.Dry;
     if (RegExp(r'^([0-9]+)[ a-z]*').hasMatch(tokens[i])) {

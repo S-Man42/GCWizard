@@ -1704,8 +1704,9 @@ Pour contents of the mixing bowl into the baking dish.
 Puke vodka until wasted.
  
 Serves 1.
- 
- 
+  
+  
+  
  
 Drug coctail.
  
@@ -1742,6 +1743,9 @@ Fold the butter into the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
  
 Serves 1.
+ 
+ 
+ 
  
 Caramel Sauce.
  
@@ -1793,6 +1797,9 @@ Fold the butter into the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
  
 Serves 1.
+ 
+ 
+ 
  
 Caramel Sauce.
  
@@ -1959,6 +1966,7 @@ Refrigerate for 1 hour.''';
 
     // http://www.mike-worth.com/2013/03/31/baking-a-hello-world-cake/
     // the recipe has to be adapted: add "Serves 1.", "Pour the contents ... after serving with chocolate sauce"
+    // run smoothly in emulator
     var HelloWorld = '''Hello World Cake with Chocolate sauce.
     
     This prints hello world, while being tastier than Hello World Souffle. The main chef makes a " world!" cake, which he puts in the baking dish. When he gets the sous chef to make the "Hello" chocolate sauce, it gets put into the baking dish and then the whole thing is printed when he refrigerates the sauce. When actually cooking, I'm interpreting the chocolate sauce baking dish to be separate from the cake one and Liquify to mean either melt or blend depending on context.
@@ -2744,6 +2752,7 @@ Serves 1.''';
   });
 
   group("chef_language.correctFaultyRecipes", () {
+    // tests, if faulty recipes are corrected
 
     var NoTitle = '''Zutaten:
   49 Eier
@@ -2890,8 +2899,7 @@ Ingredients.
 1 einhornhaar
 
 Method.
-Clean mixing bowl. Put sauerkraut into mixing bowl. Remove einhornhaar. Combine schweine into mixing bowl. Add pfeffer. Put wasser into mixing bowl. Remove sauerkraut. Add einhornhaar. Put wasser into mixing bowl. Remove einhornhaar. Divide pfeffer into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl. Add sauerkraut. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Add einhornhaar. Put wasser into mixing bowl. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl.
-''';
+Clean mixing bowl. Put sauerkraut into mixing bowl. Remove einhornhaar. Combine schweine into mixing bowl. Add pfeffer. Put wasser into mixing bowl. Remove sauerkraut. Add einhornhaar. Put wasser into mixing bowl. Remove einhornhaar. Divide pfeffer into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl. Add sauerkraut. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Add einhornhaar. Put wasser into mixing bowl. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl.''';
 
     // GC9CAQJ Oma Krimhilds Strudel
     var GC9CAQJ = '''Oma Krimhildes Strudel 
@@ -2956,7 +2964,7 @@ Steinpilze in die Schüssel geben.
 Aprikosen  in die Schüssel geben.
 Champignons in die Schüssel geben.
 Honig in die Schüssel geben.
-Inhalt der Schlüssel auf dem Stövchen erhitzen.
+Inhalt der Schüssel auf dem Stövchen erhitzen.
 Schüssel in eine Servierschale stürzen.
 
 Portionen: 1.
@@ -3049,8 +3057,8 @@ Portionen: 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : GC6HRCE, 'expectedOutput' : ['21m296g E013 17.699N52 25.763']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJKorrigiert, 'expectedOutput' : ['Pausenbrot']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310']},  // works in emulator
+      {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJKorrigiert, 'expectedOutput' : ['Pausenbrot']}, // works in emulator
       {'language' : 'DEU', 'input' : '',  'recipe' : GC7NYHW, 'expectedOutput' : ['5256176325256.565452326932484857176324848.55249']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5T, 'expectedOutput' : ['783253491763250534651525332326932541763251494657515213106511010310110811032105110325410932Hö104101']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5TCorrect, 'expectedOutput' : ['N 51° 25.345  E 6° 31.934\r\nAngeln in 6m Höhe']},

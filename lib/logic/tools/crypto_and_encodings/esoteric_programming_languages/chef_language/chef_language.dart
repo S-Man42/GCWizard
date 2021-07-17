@@ -382,6 +382,15 @@ class Chef {
         recipe[i - 1] = recipe[i].trim();
       }
     }
+
+    // trim lines
+    for (int i = 1; i < recipe.length; i++) {
+      recipe[i] = recipe[i].trim();
+      // add blank lines before aux recipes
+      if (recipe[i].endsWith('.')){
+        //recipe[i] = '\n' + recipe[i];
+      }
+    }
     readRecipe = recipe.join('\n');
 
     // check and add missing title
@@ -461,8 +470,9 @@ class Chef {
       s0 = recipe[i];
     }
     readRecipe = recipe.join('\n');
-
+print(readRecipe);
     readRecipe.split("\n\n").forEach((element) {
+print('zeile '+element)  ;
       line = element.trim();
       if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
         if (progress > 3) {
