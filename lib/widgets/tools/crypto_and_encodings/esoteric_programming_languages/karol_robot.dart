@@ -86,16 +86,6 @@ class KarolRobotState extends State<KarolRobot> {
             )
         : Column(
           children: <Widget>[
-            // GCWTwoOptionsSwitch(
-            //   leftValue: i18n(context, 'common_language_german'),
-            //   rightValue: i18n(context, 'common_language_english'),
-            //   value: _currentLanguageMode,
-            //   onChanged: (value) {
-            //     setState(() {
-            //       _currentLanguageMode = value;
-            //     });
-            //   },
-            // ),
             GCWDropDownButton(
               value: _currentLanguage,
               onChanged: (value) {
@@ -131,7 +121,6 @@ class KarolRobotState extends State<KarolRobot> {
     String output = '';
     double size = 6.0;
     if (_currentMode == GCWSwitchPosition.right) { //encode
-      //output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
       output = KarolRobotOutputEncode(_currentEncode, (_currentLanguage));
       size = 16.0;
     }

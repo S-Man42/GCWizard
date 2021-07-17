@@ -51,10 +51,15 @@ final KAREL_ENCODING = {
 
 enum KAREL_LANGUAGES {DEU, ENG}
 
-Map<KAREL_LANGUAGES, String> KAREL_LANGUAGES_LIST = {
+final Map<KAREL_LANGUAGES, String> KAREL_LANGUAGES_LIST = {
   KAREL_LANGUAGES.DEU: 'common_language_german',
   KAREL_LANGUAGES.ENG: 'common_language_english',
 };
+
+//const Map<KAREL_LANGUAGES, String> AUFHEBEN = const {
+//  KAREL_LANGUAGES.DEU : 'aufheben',
+//  KAREL_LANGUAGES.ENG : 'pickbrick'
+//};
 
 const AUFHEBEN = 'aufheben';
 const HINLEGEN = 'hinlegen';
@@ -74,6 +79,18 @@ const PICKBEEPER = 'pickbeeper';
 const PUTBRICK = 'putbrick';
 const PICKBRICK = 'pickbrick';
 const TURNOFF = 'turnoff';
+
+Set SET_TURNLEFT = {LINKSDREHEN, TURNLEFT};
+Set SET_TURNRIGHT = {RECHTSDREHEN, TURNRIGHT};
+Set SET_MOVE = {SCHRITT, MOVE};
+Set SET_PICKBRICK = {AUFHEBEN, PICKBRICK};
+Set SET_PUTBRICK = {HINLEGEN, PUTBRICK};
+Set SET_PICKBEEPER = {MARKELOESCHEN, PICKBEEPER};
+Set SET_PUTBEEPER = {MARKESETZEN, PUTBEEPER};
+Set SET_HALT = {BEENDEN, TURNOFF};
+Set SET_WAIT = {WARTEN};
+Set SET_SOUND = {TON};
+
 
 final KAROL_COLORS = {
   'weiß' : '0',
@@ -149,7 +166,7 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language){
         lineLength = lineLength + 7;
     });
 
-    program = program + RECHTSDREHEN + ' ' + SCHRITT + '(' + lineLength.toString() + ')' + LINKSDREHEN + ' ' + SCHRITT + '(9) ';
+    program = program + RECHTSDREHEN + ' ' + SCHRITT + '(' + lineLength.toString() + ') ' + LINKSDREHEN + ' ' + SCHRITT + '(9) ';
 
     lineLength = 0;
   });
@@ -159,13 +176,24 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language){
       return program;
       break;
     case KAREL_LANGUAGES.ENG:
-      return program.replaceAll(SCHRITT, MOVE).replaceAll(LINKSDREHEN, TURNLEFT).replaceAll(RECHTSDREHEN, TURNRIGHT).replaceAll(MARKESETZEN, PUTBEEPER);
+      program = program.replaceAll(SCHRITT, MOVE).replaceAll(LINKSDREHEN, TURNLEFT).replaceAll(RECHTSDREHEN, TURNRIGHT).replaceAll(MARKESETZEN, PUTBEEPER);
+      //replace move(x) with move ... move x-times
+      RegExp expSchritt = RegExp(r'(move)(\(\d+\))?');
+      if (expSchritt.hasMatch(program)) {
+        program = program.replaceAllMapped(expSchritt, (Match m) {
+          List <String> MOVE_LIST = new List();
+          if (int.tryParse(m.group(0).replaceAll(MOVE, '').replaceAll('(', '').replaceAll(')', '') ) != null) {
+            for (int i = 0; i < int.parse(m.group(0).replaceAll(MOVE, '').replaceAll('(', '').replaceAll(')', '') ); i++)
+              MOVE_LIST.add('move');
+            return MOVE_LIST.join(' ');
+          } else {
+            return 'move';
+          }
+        });
+      }
+      return program;
       break;
   }
-  // if (english)
-  //   return program.replaceAll(SCHRITT, MOVE).replaceAll(LINKSDREHEN, TURNLEFT).replaceAll(RECHTSDREHEN, TURNRIGHT).replaceAll(MARKESETZEN, PUTBEEPER);
-  // else
-  //   return program;
 }
 
 String KarolRobotOutputDecode(String program){
@@ -218,84 +246,80 @@ String KarolRobotOutputDecode(String program){
             world[(x - 1).toString() + '|' + (y).toString()] = color;
             break;
         }
-      } else
-        switch (element) {
-          case MOVE:
-          case SCHRITT :
-            switch (direction) {
-              case DIRECTION.NORTH : y = y - 1; break;
-              case DIRECTION.SOUTH : y = y + 1; break;
-              case DIRECTION.WEST : x = x - 1; break;
-              case DIRECTION.EAST : x = x + 1; break;
-            }
-            if (x > maxX) maxX = x;
-            if (y > maxY) maxY = y;
-            break;
-          case TURNLEFT:
-          case LINKSDREHEN :
-            switch (direction) {
-              case DIRECTION.NORTH : direction = DIRECTION.WEST; break;
-              case DIRECTION.SOUTH : direction = DIRECTION.EAST; break;
-              case DIRECTION.WEST : direction = DIRECTION.SOUTH; break;
-              case DIRECTION.EAST : direction = DIRECTION.NORTH; break;
-            }
-            break;
-          case TURNRIGHT:
-          case RECHTSDREHEN :
-            switch (direction) {
-              case DIRECTION.NORTH : direction = DIRECTION.EAST; break;
-              case DIRECTION.SOUTH : direction = DIRECTION.WEST; break;
-              case DIRECTION.WEST : direction = DIRECTION.NORTH; break;
-              case DIRECTION.EAST : direction = DIRECTION.SOUTH; break;
-            }
-            break;
-          case PUTBRICK:
-          case HINLEGEN:
-            switch (direction) {
-              case DIRECTION.NORTH:
-                world[x.toString() + '|' + (y - 1).toString()] = '8';
-                break;
-              case DIRECTION.SOUTH:
-                world[x.toString() + '|' + (y + 1).toString()] = '8';
-                break;
-              case DIRECTION.EAST:
-                world[(x + 1).toString() + '|' + (y).toString()] = '8';
-                break;
-              case DIRECTION.WEST:
-                world[(x - 1).toString() + '|' + (y).toString()] = '8';
-                break;
-            }
-            break;
-          case PICKBRICK:
-          case AUFHEBEN:
-            switch (direction) {
-              case DIRECTION.NORTH:
-                world[x.toString() + '|' + (y - 1).toString()] = '0';
-                break;
-              case DIRECTION.SOUTH:
-                world[x.toString() + '|' + (y + 1).toString()] = '0';
-                break;
-              case DIRECTION.EAST:
-                world[(x + 1).toString() + '|' + (y).toString()] = '0';
-                break;
-              case DIRECTION.WEST:
-                world[(x - 1).toString() + '|' + (y).toString()] = '0';
-                break;
-            }
-            break;
-          case PUTBEEPER:
-          case MARKESETZEN:
-            world[x.toString() + '|' + (y ).toString()] = '9';
-            break;
-          case PICKBEEPER:
-          case MARKELOESCHEN:
-            world[x.toString() + '|' + (y ).toString()] = '0';
-            break;
-          case BEENDEN:
-          case TURNOFF:
-            halt = true;
-            break;
+      } else {
+        if (SET_MOVE.contains(element)) {
+          switch (direction) {
+            case DIRECTION.NORTH : y = y - 1; break;
+            case DIRECTION.SOUTH : y = y + 1; break;
+            case DIRECTION.WEST : x = x - 1; break;
+            case DIRECTION.EAST : x = x + 1; break;
+          }
+          if (x > maxX) maxX = x;
+          if (y > maxY) maxY = y;
+
+        } else if (SET_TURNLEFT.contains(element)) {
+          switch (direction) {
+            case DIRECTION.NORTH : direction = DIRECTION.WEST; break;
+            case DIRECTION.SOUTH : direction = DIRECTION.EAST; break;
+            case DIRECTION.WEST : direction = DIRECTION.SOUTH; break;
+            case DIRECTION.EAST : direction = DIRECTION.NORTH; break;
+          }
+
+        } else if (SET_TURNRIGHT.contains(element)) {
+          switch (direction) {
+            case DIRECTION.NORTH : direction = DIRECTION.EAST; break;
+            case DIRECTION.SOUTH : direction = DIRECTION.WEST; break;
+            case DIRECTION.WEST : direction = DIRECTION.NORTH; break;
+            case DIRECTION.EAST : direction = DIRECTION.SOUTH; break;
+          }
+
+        } else if (SET_PICKBRICK.contains(element)) {
+          switch (direction) {
+            case DIRECTION.NORTH:
+              world[x.toString() + '|' + (y - 1).toString()] = '0';
+              break;
+            case DIRECTION.SOUTH:
+              world[x.toString() + '|' + (y + 1).toString()] = '0';
+              break;
+            case DIRECTION.EAST:
+              world[(x + 1).toString() + '|' + (y).toString()] = '0';
+              break;
+            case DIRECTION.WEST:
+              world[(x - 1).toString() + '|' + (y).toString()] = '0';
+              break;
+          }
+
+        } else if (SET_PUTBRICK.contains(element)) {
+          switch (direction) {
+            case DIRECTION.NORTH:
+              world[x.toString() + '|' + (y - 1).toString()] = '8';
+              break;
+            case DIRECTION.SOUTH:
+              world[x.toString() + '|' + (y + 1).toString()] = '8';
+              break;
+            case DIRECTION.EAST:
+              world[(x + 1).toString() + '|' + (y).toString()] = '8';
+              break;
+            case DIRECTION.WEST:
+              world[(x - 1).toString() + '|' + (y).toString()] = '8';
+              break;
+          }
+
+        } else if (SET_PICKBEEPER.contains(element)) {
+          world[x.toString() + '|' + (y ).toString()] = '0';
+
+        } else if (SET_PUTBEEPER.contains(element)) {
+          world[x.toString() + '|' + (y ).toString()] = '9';
+
+        } else if (SET_HALT.contains(element)) {
+          halt = true;
+
+        } else if (SET_WAIT.contains(element)) {
+
+        } else if (SET_SOUND.contains(element)) {
+
         }
+      }
   }); //forEach command
 
   var binaryWorld = List.generate(maxX + 1, (y) => List(maxY + 1), growable: false);
