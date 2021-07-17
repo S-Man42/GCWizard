@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
@@ -34,15 +35,18 @@ class _GCWSliderState extends State<GCWSlider> {
         if ((widget.title ?? '').length > 0) Expanded(child: GCWText(text: widget.title + ':')),
         Expanded(
           child: Slider(
-              value: _currentValue ?? widget.value,
-              min: widget.min,
-              max: widget.max,
-              onChanged: (value) {
-                setState(() {
-                  _currentValue = value;
-                  widget.onChanged(_currentValue);
-                });
-              }),
+            value: widget.value ?? _currentValue,
+            min: widget.min,
+            max: widget.max,
+            onChanged: (value) {
+              setState(() {
+                _currentValue = value;
+                widget.onChanged(_currentValue);
+              });
+            },
+            activeColor: themeColors().switchThumb2(),
+            inactiveColor: themeColors().switchTrack2(),
+          ),
           flex: 3,
         ),
         GCWIconButton(
