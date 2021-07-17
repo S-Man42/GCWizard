@@ -2071,6 +2071,7 @@
   "karol_robot_interpret": "Interpreter",
   "karol_robot_hint_encode": "Text to write",
   "karol_robot_hint_decode": "Program to execute",
+  "karol_robot_graphicaloutput": "Show graphical output",
   "kenny_title": "Kenny's Code",
   "kenny_description": "One letter to a three-element group of m, p, f; inspired by 'South Park'",
   "kenny_example": "pmpmffpmfpmf",

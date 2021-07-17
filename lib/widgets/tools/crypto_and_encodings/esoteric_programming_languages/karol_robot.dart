@@ -10,6 +10,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -31,6 +32,8 @@ class KarolRobotState extends State<KarolRobot> {
 
   Uint8List _outData;
   String _codeData;
+  String _output = '';
+
 
   var _MASKINPUTFORMATTER_ENCODE = WrapperForMaskTextInputFormatter(
       mask: '@' * 100,
@@ -41,8 +44,8 @@ class KarolRobotState extends State<KarolRobot> {
       filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  //GCWSwitchPosition _currentLanguageMode = GCWSwitchPosition.left;
   var _currentLanguage = KAREL_LANGUAGES.DEU;
+  bool _graphicalOutput = false;
 
   @override
   void initState() {
@@ -107,10 +110,19 @@ class KarolRobotState extends State<KarolRobot> {
               onChanged: (text) {
                 setState(() {
                   _currentEncode = text;
+                  _createOutput(KarolRobotOutputDecode(KarolRobotOutputEncode(_currentEncode, _currentLanguage)));
                 });
               },
             ),
-
+            GCWOnOffSwitch(
+              title: i18n(context, 'karol_robot_graphicaloutput'),
+              value: _graphicalOutput,
+              onChanged: (value) {
+                setState(() {
+                  _graphicalOutput = value;
+                });
+              },
+            ),
           ]),
         _buildOutput(context)
           ],
@@ -118,10 +130,9 @@ class KarolRobotState extends State<KarolRobot> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String output = '';
     double size = 6.0;
     if (_currentMode == GCWSwitchPosition.right) { //encode
-      output = KarolRobotOutputEncode(_currentEncode, (_currentLanguage));
+      _output = KarolRobotOutputEncode(_currentEncode, _currentLanguage);
       size = 16.0;
     }
     return Column(
@@ -137,16 +148,32 @@ class KarolRobotState extends State<KarolRobot> {
                                   _outData == null ? null : _exportFile(context, _outData);
                                 },
                   ))
-                : GCWDefaultOutput(
-                    child: GCWOutputText(
-                            text: output,
-                            style: TextStyle(
-                                      fontFamily: 'Courier',
-                                      fontSize: size,
-                                      fontWeight: FontWeight.bold,
-                            ),
-                          )
+                : Column(
+                children: <Widget>[
+                  _graphicalOutput == true
+                  ? GCWOutput(
+                      child: _buildGraphicOutput(),
+                      trailing: GCWIconButton(
+                                  iconData: Icons.save,
+                                  size: IconButtonSize.SMALL,
+                                  iconColor: _outData == null ? Colors.grey : null,
+                                  onPressed: () {
+                                    _outData == null ? null : _exportFile(context, _outData);
+                                  },
+                                ))
+                  : Container(),
+                  GCWDefaultOutput(
+                      child: GCWOutputText(
+                        text: _output,
+                        style: TextStyle(
+                          fontFamily: 'Courier',
+                          fontSize: size,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                   ),
+                ]
+              )
           ]
       );
   }
