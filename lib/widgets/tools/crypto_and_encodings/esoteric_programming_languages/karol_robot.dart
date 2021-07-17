@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -37,10 +38,11 @@ class KarolRobotState extends State<KarolRobot> {
 
   var _MASKINPUTFORMATTER_DECODE = WrapperForMaskTextInputFormatter(
       mask: "@" * 50000,
-      filter: {"@": RegExp(r'[A-ZÜüa-z0-9() \n\r]')});
+      filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentLanguageMode = GCWSwitchPosition.left;
+  //GCWSwitchPosition _currentLanguageMode = GCWSwitchPosition.left;
+  var _currentLanguage = KAREL_LANGUAGES.DEU;
 
   @override
   void initState() {
@@ -84,15 +86,29 @@ class KarolRobotState extends State<KarolRobot> {
             )
         : Column(
           children: <Widget>[
-            GCWTwoOptionsSwitch(
-              leftValue: i18n(context, 'common_language_german'),
-              rightValue: i18n(context, 'common_language_english'),
-              value: _currentLanguageMode,
+            // GCWTwoOptionsSwitch(
+            //   leftValue: i18n(context, 'common_language_german'),
+            //   rightValue: i18n(context, 'common_language_english'),
+            //   value: _currentLanguageMode,
+            //   onChanged: (value) {
+            //     setState(() {
+            //       _currentLanguageMode = value;
+            //     });
+            //   },
+            // ),
+            GCWDropDownButton(
+              value: _currentLanguage,
               onChanged: (value) {
                 setState(() {
-                  _currentLanguageMode = value;
+                  _currentLanguage = value;
                 });
               },
+              items: KAREL_LANGUAGES_LIST.entries.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: i18n(context, mode.value),
+                );
+              }).toList(),
             ),
             GCWTextField(
               controller: _encodeController,
@@ -115,7 +131,8 @@ class KarolRobotState extends State<KarolRobot> {
     String output = '';
     double size = 6.0;
     if (_currentMode == GCWSwitchPosition.right) { //encode
-      output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
+      //output = KarolRobotOutputEncode(_currentEncode, (_currentLanguageMode == GCWSwitchPosition.right));
+      output = KarolRobotOutputEncode(_currentEncode, (_currentLanguage));
       size = 16.0;
     }
     return Column(

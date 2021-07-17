@@ -2066,7 +2066,7 @@
   "kamasutra_example": "ABC → NOP",
   "karol_robot_title": "Karel the Robot",
   "karol_robot_description": "Karel the Robot",
-  "karol_robot_example": "move turnLeft putBrick → █",
+  "karol_robot_example": "move turnLeft putbeeper → █",
   "karol_robot_generate": "Generator",
   "karol_robot_interpret": "Interpreter",
   "karol_robot_hint_encode": "Text to write",
