@@ -7,8 +7,10 @@ import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 class GeneralCodebreakersSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList =
-        Registry.toolList.where((element) => element.category == ToolCategory.GENERAL_CODEBREAKERS).toList();
+    final List<GCWTool> _toolList = Registry.toolList
+        .where(
+            (element) => element.categories != null && element.categories.contains(ToolCategory.GENERAL_CODEBREAKERS))
+        .toList();
     _toolList.sort((a, b) {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });

@@ -139,6 +139,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -155,6 +156,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -378,6 +382,9 @@ class _MainViewState extends State<MainView> {
         className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CountriesCallingCodes()),
+        className(CountriesIOCCodes()),
+        className(CountriesISOCodes()),
+        className(CountriesVehicleCodes()),
         className(Cow()),
         className(CrossBearing()),
         className(CrossSum()),
@@ -498,6 +505,7 @@ class _MainViewState extends State<MainView> {
         className(VariableCoordinateFormulas()),
         className(Vigenere()),
         className(VigenereBreaker()),
+        className(VisualCryptography()),
         className(Weekday()),
         className(WhitespaceLanguage()),
         className(WaypointProjection()),

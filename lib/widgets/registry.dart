@@ -218,6 +218,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -237,6 +238,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -319,7 +323,9 @@ class Registry {
 
     toolList = [
       //MainSelection
-      GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ABADDON,
@@ -327,7 +333,9 @@ class Registry {
         SEARCHSTRING_EN_ABADDON,
         SEARCHSTRING_FR_ABADDON
       ]),
-      GCWTool(tool: ADFGVX(), i18nPrefix: 'adfgvx', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: ADFGVX(), i18nPrefix: 'adfgvx', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ADFGVX,
@@ -335,7 +343,9 @@ class Registry {
         SEARCHSTRING_EN_ADFGVX,
         SEARCHSTRING_FR_ADFGVX
       ]),
-      GCWTool(tool: Affine(), i18nPrefix: 'affine', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Affine(), i18nPrefix: 'affine', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_AFFINE,
@@ -343,20 +353,19 @@ class Registry {
         SEARCHSTRING_EN_AFFINE,
         SEARCHSTRING_FR_AFFINE
       ]),
-      GCWTool(
-          tool: AlphabetValues(),
-          i18nPrefix: 'alphabetvalues',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ALPHABETVALUES,
-            SEARCHSTRING_DE_ALPHABETVALUES,
-            SEARCHSTRING_EN_ALPHABETVALUES,
-            SEARCHSTRING_FR_ALPHABETVALUES
-          ]),
-      GCWTool(tool: Amsco(), i18nPrefix: 'amsco', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: AlphabetValues(), i18nPrefix: 'alphabetvalues', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ALPHABETVALUES,
+        SEARCHSTRING_DE_ALPHABETVALUES,
+        SEARCHSTRING_EN_ALPHABETVALUES,
+        SEARCHSTRING_FR_ALPHABETVALUES
+      ]),
+      GCWTool(tool: Amsco(), i18nPrefix: 'amsco', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_AMSCO,
@@ -364,41 +373,37 @@ class Registry {
         SEARCHSTRING_EN_AMSCO,
         SEARCHSTRING_FR_AMSCO
       ]),
-      GCWTool(
-          tool: AnimatedImage(),
-          i18nPrefix: 'animated_image',
-          category: ToolCategory.IMAGES_AND_FILES,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
-            SEARCHSTRING_DE_ANIMATED_IMAGES,
-            SEARCHSTRING_EN_ANIMATED_IMAGES,
-            SEARCHSTRING_FR_ANIMATED_IMAGES
-          ]),
-      GCWTool(
-          tool: AnimatedImageMorseCode(),
-          i18nPrefix: 'animated_image_morse_code',
-          category: ToolCategory.IMAGES_AND_FILES,
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ANIMATED_IMAGES_MORSE_CODE,
-            SEARCHSTRING_DE_ANIMATED_IMAGES_MORSE_CODE,
-            SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE,
-            SEARCHSTRING_FR_ANIMATED_IMAGES_MORSE_CODE,
-            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
-            SEARCHSTRING_DE_ANIMATED_IMAGES,
-            SEARCHSTRING_EN_ANIMATED_IMAGES,
-            SEARCHSTRING_FR_ANIMATED_IMAGES
-          ]),
+      GCWTool(tool: AnimatedImage(), i18nPrefix: 'animated_image', categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+        SEARCHSTRING_DE_ANIMATED_IMAGES,
+        SEARCHSTRING_EN_ANIMATED_IMAGES,
+        SEARCHSTRING_FR_ANIMATED_IMAGES
+      ]),
+      GCWTool(tool: AnimatedImageMorseCode(), i18nPrefix: 'animated_image_morse_code', categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_ANIMATED_IMAGES_MORSE_CODE,
+        SEARCHSTRING_DE_ANIMATED_IMAGES_MORSE_CODE,
+        SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE,
+        SEARCHSTRING_FR_ANIMATED_IMAGES_MORSE_CODE,
+        SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+        SEARCHSTRING_DE_ANIMATED_IMAGES,
+        SEARCHSTRING_EN_ANIMATED_IMAGES,
+        SEARCHSTRING_FR_ANIMATED_IMAGES
+      ]),
       GCWTool(
           tool: ApparentTemperatureSelection(),
           i18nPrefix: 'apparenttemperature_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(tool: ASCIIValues(), i18nPrefix: 'asciivalues', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: ASCIIValues(), i18nPrefix: 'asciivalues', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ASCIIVALUES,
@@ -410,20 +415,19 @@ class Registry {
         SEARCHSTRING_EN_BINARY,
         SEARCHSTRING_FR_BINARY
       ]),
-      GCWTool(
-          tool: AstronomySelection(),
-          i18nPrefix: 'astronomy_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ASTRONOMY,
-            SEARCHSTRING_DE_ASTRONOMY,
-            SEARCHSTRING_EN_ASTRONOMY,
-            SEARCHSTRING_FR_ASTRONOMY
-          ]),
-      GCWTool(tool: Atbash(), i18nPrefix: 'atbash', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: AstronomySelection(), i18nPrefix: 'astronomy_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ASTRONOMY,
+        SEARCHSTRING_DE_ASTRONOMY,
+        SEARCHSTRING_EN_ASTRONOMY,
+        SEARCHSTRING_FR_ASTRONOMY
+      ]),
+      GCWTool(tool: Atbash(), i18nPrefix: 'atbash', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ATBASH,
@@ -434,10 +438,12 @@ class Registry {
       GCWTool(
           tool: BabylonNumbersSelection(),
           i18nPrefix: 'babylonnumbers_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(tool: Bacon(), i18nPrefix: 'bacon', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Bacon(), i18nPrefix: 'bacon', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_BACON,
@@ -452,37 +458,12 @@ class Registry {
       GCWTool(
           tool: BaseSelection(),
           i18nPrefix: 'base_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: BCDSelection(),
-          i18nPrefix: 'bcd_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_BINARY,
-            SEARCHSTRING_DE_BINARY,
-            SEARCHSTRING_EN_BINARY,
-            SEARCHSTRING_FR_BINARY
-          ]),
-      GCWTool(
-          tool: BeaufortSelection(),
-          i18nPrefix: 'beaufort_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['ko'],
-          searchStrings: []),
-      GCWTool(tool: Bifid(), i18nPrefix: 'bifid', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID
-      ]),
-      GCWTool(tool: Binary(), i18nPrefix: 'binary', category: ToolCategory.SCIENCE_AND_TECHNOLOGY, missingHelpLocales: [
+      GCWTool(tool: BCDSelection(), i18nPrefix: 'bcd_selection', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_BINARY,
@@ -491,15 +472,41 @@ class Registry {
         SEARCHSTRING_FR_BINARY
       ]),
       GCWTool(
-          tool: Binary2Image(),
-          i18nPrefix: 'binary2image',
-          category: ToolCategory.IMAGES_AND_FILES,
-          searchStrings: [
-            SEARCHSTRING_DE_HEXSTRING2FILE,
-            SEARCHSTRING_EN_HEXSTRING2FILE,
-            SEARCHSTRING_FR_HEXSTRING2FILE
-          ]),
-      GCWTool(tool: BookCipher(), i18nPrefix: 'book_cipher', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+          tool: BeaufortSelection(),
+          i18nPrefix: 'beaufort_selection',
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+          missingHelpLocales: ['ko'],
+          searchStrings: []),
+      GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_BIFID,
+        SEARCHSTRING_COMMON_BIFID,
+        SEARCHSTRING_COMMON_BIFID,
+        SEARCHSTRING_COMMON_BIFID
+      ]),
+      GCWTool(tool: Binary(), i18nPrefix: 'binary', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_BINARY,
+        SEARCHSTRING_DE_BINARY,
+        SEARCHSTRING_EN_BINARY,
+        SEARCHSTRING_FR_BINARY
+      ]),
+      GCWTool(tool: Binary2Image(), i18nPrefix: 'binary2image', categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], searchStrings: [
+        SEARCHSTRING_DE_HEXSTRING2FILE,
+        SEARCHSTRING_EN_HEXSTRING2FILE,
+        SEARCHSTRING_FR_HEXSTRING2FILE
+      ]),
+      GCWTool(tool: BookCipher(), i18nPrefix: 'book_cipher', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_BOOKCIPHER,
@@ -507,20 +514,19 @@ class Registry {
         SEARCHSTRING_EN_BOOKCIPHER,
         SEARCHSTRING_FR_BOOKCIPHER
       ]),
-      GCWTool(
-          tool: BurrowsWheeler(),
-          i18nPrefix: 'burrowswheeler',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_BURROESWHEELER,
-            SEARCHSTRING_DE_BURROESWHEELER,
-            SEARCHSTRING_EN_BURROESWHEELER,
-            SEARCHSTRING_FR_BURROESWHEELER
-          ]),
-      GCWTool(tool: Caesar(), i18nPrefix: 'caesar', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: BurrowsWheeler(), i18nPrefix: 'burrowswheeler', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_BURROESWHEELER,
+        SEARCHSTRING_DE_BURROESWHEELER,
+        SEARCHSTRING_EN_BURROESWHEELER,
+        SEARCHSTRING_FR_BURROESWHEELER
+      ]),
+      GCWTool(tool: Caesar(), i18nPrefix: 'caesar', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ROTATION,
@@ -532,7 +538,9 @@ class Registry {
         SEARCHSTRING_EN_CAESAR,
         SEARCHSTRING_FR_CAESAR
       ]),
-      GCWTool(tool: Catan(), i18nPrefix: 'catan', category: ToolCategory.GAMES, missingHelpLocales: [
+      GCWTool(tool: Catan(), i18nPrefix: 'catan', categories: [
+        ToolCategory.GAMES
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_CATAN,
@@ -543,22 +551,24 @@ class Registry {
       GCWTool(
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: CCITT2Selection(),
           i18nPrefix: 'ccitt2_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: Chao(),
           i18nPrefix: 'chao',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: [SEARCHSTRING_COMMON_CHAO, SEARCHSTRING_DE_CHAO, SEARCHSTRING_EN_CHAO, SEARCHSTRING_FR_CHAO]),
-      GCWTool(tool: CipherWheel(), i18nPrefix: 'cipherwheel', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: CipherWheel(), i18nPrefix: 'cipherwheel', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_CIPHERWHEEL,
@@ -569,41 +579,35 @@ class Registry {
       GCWTool(
           tool: CistercianNumbersSelection(),
           i18nPrefix: 'cistercian_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: ColorPicker(),
-          i18nPrefix: 'colors',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COLORPICKER,
-            SEARCHSTRING_DE_COLORPICKER,
-            SEARCHSTRING_EN_COLORPICKER,
-            SEARCHSTRING_FR_COLORPICKER
-          ]),
+      GCWTool(tool: ColorPicker(), i18nPrefix: 'colors', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COLORPICKER,
+        SEARCHSTRING_DE_COLORPICKER,
+        SEARCHSTRING_EN_COLORPICKER,
+        SEARCHSTRING_FR_COLORPICKER
+      ]),
       GCWTool(
           tool: CombinatoricsSelection(),
           i18nPrefix: 'combinatorics_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: ComplexNumbers(),
-          i18nPrefix: 'complex_numbers',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COMPLEXNUMBERS,
-            SEARCHSTRING_DE_COMPLEXNUMBERS,
-            SEARCHSTRING_EN_COMPLEXNUMBERS,
-            SEARCHSTRING_FR_COMPLEXNUMBERS
-          ]),
+      GCWTool(tool: ComplexNumbers(), i18nPrefix: 'complex_numbers', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COMPLEXNUMBERS,
+        SEARCHSTRING_DE_COMPLEXNUMBERS,
+        SEARCHSTRING_EN_COMPLEXNUMBERS,
+        SEARCHSTRING_FR_COMPLEXNUMBERS
+      ]),
       GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', missingHelpLocales: [
         'ko'
       ], searchStrings: [
@@ -612,23 +616,20 @@ class Registry {
         SEARCHSTRING_EN_COORDINATES,
         SEARCHSTRING_FR_COORDINATES
       ]),
-      GCWTool(
-          tool: CountriesSelection(),
-          i18nPrefix: 'countries_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES
-          ]),
+      GCWTool(tool: CountriesSelection(), i18nPrefix: 'countries_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+      ]),
       GCWTool(
           tool: CrossSumSelection(),
           i18nPrefix: 'crosssum_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(tool: CryptographySelection(), i18nPrefix: 'cryptography_selection', missingHelpLocales: [
@@ -639,97 +640,81 @@ class Registry {
         SEARCHSTRING_EN_CRYPTOGRAPHYSELECTION,
         SEARCHSTRING_FR_CRYPTOGRAPHYSELECTION
       ]),
-      GCWTool(
-          tool: DatesSelection(),
-          i18nPrefix: 'dates_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_DATES,
-            SEARCHSTRING_DE_DATES,
-            SEARCHSTRING_EN_DATES,
-            SEARCHSTRING_FR_DATES
-          ]),
-      GCWTool(
-          tool: Decabit(),
-          i18nPrefix: 'decabit',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_DECABIT,
-            SEARCHSTRING_DE_DECABIT,
-            SEARCHSTRING_EN_DECABIT,
-            SEARCHSTRING_FR_DECABIT
-          ]),
-      GCWTool(
-          tool: Divisor(),
-          i18nPrefix: 'divisor',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_DIVISOR,
-            SEARCHSTRING_DE_DIVISOR,
-            SEARCHSTRING_EN_DIVISOR,
-            SEARCHSTRING_FR_DIVISOR
-          ]),
+      GCWTool(tool: DatesSelection(), i18nPrefix: 'dates_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_DATES,
+        SEARCHSTRING_DE_DATES,
+        SEARCHSTRING_EN_DATES,
+        SEARCHSTRING_FR_DATES
+      ]),
+      GCWTool(tool: Decabit(), i18nPrefix: 'decabit', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_DECABIT,
+        SEARCHSTRING_DE_DECABIT,
+        SEARCHSTRING_EN_DECABIT,
+        SEARCHSTRING_FR_DECABIT
+      ]),
+      GCWTool(tool: Divisor(), i18nPrefix: 'divisor', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_DIVISOR,
+        SEARCHSTRING_DE_DIVISOR,
+        SEARCHSTRING_EN_DIVISOR,
+        SEARCHSTRING_FR_DIVISOR
+      ]),
       GCWTool(
           tool: DNASelection(),
           i18nPrefix: 'dna_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: SilverRatioSelection(),
-          i18nPrefix: 'silverratio_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-            SEARCHSTRING_DE_IRRATIONALNUMBERS,
-            SEARCHSTRING_EN_IRRATIONALNUMBERS,
-            SEARCHSTRING_FR_IRRATIONALNUMBERS
-          ]),
+      GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
       GCWTool(
           tool: DTMF(),
           i18nPrefix: 'dtmf',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: [SEARCHSTRING_COMMON_DTMF, SEARCHSTRING_DE_DTMF, SEARCHSTRING_EN_DTMF, SEARCHSTRING_FR_DTMF]),
-      GCWTool(
-          tool: EnclosedAreas(),
-          i18nPrefix: 'enclosedareas',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ENCLOSEDAREAS,
-            SEARCHSTRING_DE_ENCLOSEDAREAS,
-            SEARCHSTRING_EN_ENCLOSEDAREAS,
-            SEARCHSTRING_FR_ENCLOSEDAREAS
-          ]),
-      GCWTool(
-          tool: ESelection(),
-          i18nPrefix: 'e_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-            SEARCHSTRING_DE_IRRATIONALNUMBERS,
-            SEARCHSTRING_EN_IRRATIONALNUMBERS,
-            SEARCHSTRING_FR_IRRATIONALNUMBERS
-          ]),
-      GCWTool(tool: Enigma(), i18nPrefix: 'enigma', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: EnclosedAreas(), i18nPrefix: 'enclosedareas', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ENCLOSEDAREAS,
+        SEARCHSTRING_DE_ENCLOSEDAREAS,
+        SEARCHSTRING_EN_ENCLOSEDAREAS,
+        SEARCHSTRING_FR_ENCLOSEDAREAS
+      ]),
+      GCWTool(tool: ESelection(), i18nPrefix: 'e_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
+      GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ENIGMA,
@@ -740,7 +725,9 @@ class Registry {
       GCWTool(
           tool: EsotericProgrammingLanguageSelection(),
           i18nPrefix: 'esotericprogramminglanguages_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [
+            ToolCategory.CRYPTOGRAPHY
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -751,7 +738,9 @@ class Registry {
             SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
           ]),
-      GCWTool(tool: ExifReader(), i18nPrefix: 'exif', category: ToolCategory.IMAGES_AND_FILES, missingHelpLocales: [
+      GCWTool(tool: ExifReader(), i18nPrefix: 'exif', categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_EXIF,
@@ -785,10 +774,12 @@ class Registry {
       GCWTool(
           tool: Gade(),
           i18nPrefix: 'gade',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: [SEARCHSTRING_COMMON_GADE, SEARCHSTRING_DE_GADE, SEARCHSTRING_EN_GADE, SEARCHSTRING_FR_GADE]),
-      GCWTool(tool: GCCode(), i18nPrefix: 'gccode', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_GCCODE,
@@ -804,7 +795,9 @@ class Registry {
         SEARCHSTRING_EN_CODEBREAKER,
         SEARCHSTRING_FR_CODEBREAKER,
       ]),
-      GCWTool(tool: Gray(), i18nPrefix: 'gray', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Gray(), i18nPrefix: 'gray', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_BINARY,
@@ -819,32 +812,29 @@ class Registry {
       GCWTool(
           tool: HashSelection(),
           i18nPrefix: 'hashes_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: Hexadecimal(),
-          i18nPrefix: 'hexadecimal',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_HEXADECIMAL,
-            SEARCHSTRING_DE_HEXADECIMAL,
-            SEARCHSTRING_EN_HEXADECIMAL,
-            SEARCHSTRING_FR_HEXADECIMAL
-          ]),
-      GCWTool(
-          tool: HexString2File(),
-          i18nPrefix: 'hexstring2file',
-          category: ToolCategory.IMAGES_AND_FILES,
-          searchStrings: [
-            SEARCHSTRING_DE_HEXSTRING2FILE,
-            SEARCHSTRING_EN_HEXSTRING2FILE,
-            SEARCHSTRING_FR_HEXSTRING2FILE
-          ]),
-      GCWTool(tool: Homophone(), i18nPrefix: 'homophone', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Hexadecimal(), i18nPrefix: 'hexadecimal', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_HEXADECIMAL,
+        SEARCHSTRING_DE_HEXADECIMAL,
+        SEARCHSTRING_EN_HEXADECIMAL,
+        SEARCHSTRING_FR_HEXADECIMAL
+      ]),
+      GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], searchStrings: [
+        SEARCHSTRING_DE_HEXSTRING2FILE,
+        SEARCHSTRING_EN_HEXSTRING2FILE,
+        SEARCHSTRING_FR_HEXSTRING2FILE
+      ]),
+      GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_HOMOPHONE,
@@ -852,7 +842,9 @@ class Registry {
         SEARCHSTRING_EN_HOMOPHONE,
         SEARCHSTRING_FR_HOMOPHONE
       ]),
-      GCWTool(tool: Houdini(), i18nPrefix: 'houdini', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Houdini(), i18nPrefix: 'houdini', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_HOUDINI,
@@ -863,7 +855,7 @@ class Registry {
       GCWTool(
         tool: IceCodesSelection(),
         i18nPrefix: 'icecodes_selection',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         missingHelpLocales: ['ko'],
         searchStrings: [],
       ),
@@ -882,11 +874,9 @@ class Registry {
       GCWTool(
           tool: ImageColorCorrections(),
           autoScroll: false,
-          category: ToolCategory.IMAGES_AND_FILES,
+          categories: [ToolCategory.IMAGES_AND_FILES],
           i18nPrefix: 'image_colorcorrections',
-          missingHelpLocales: [
-            'ko'
-          ],
+          missingHelpLocales: ['ko'],
           searchStrings: [
             SEARCHSTRING_COMMON_IMAGES,
             SEARCHSTRING_DE_IMAGES,
@@ -897,18 +887,17 @@ class Registry {
             SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS,
             SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS
           ]),
-      GCWTool(
-          tool: Stegano(),
-          i18nPrefix: 'stegano',
-          category: ToolCategory.IMAGES_AND_FILES,
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_STEGANO,
-            SEARCHSTRING_DE_STEGANO,
-            SEARCHSTRING_EN_STEGANO,
-            SEARCHSTRING_FR_STEGANO
-          ]),
-      GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Stegano(), i18nPrefix: 'stegano', categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_STEGANO,
+        SEARCHSTRING_DE_STEGANO,
+        SEARCHSTRING_EN_STEGANO,
+        SEARCHSTRING_FR_STEGANO
+      ]),
+      GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ROTATION,
@@ -920,7 +909,9 @@ class Registry {
         SEARCHSTRING_EN_KAMASUTRA,
         SEARCHSTRING_FR_KAMASUTRA
       ]),
-      GCWTool(tool: Kenny(), i18nPrefix: 'kenny', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Kenny(), i18nPrefix: 'kenny', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_KENNY,
@@ -947,44 +938,44 @@ class Registry {
       GCWTool(
           tool: KeyboardSelection(),
           i18nPrefix: 'keyboard_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: LanguageGamesSelection(),
           i18nPrefix: 'languagegames_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: MayaCalendarSelection(),
+          categories: [ToolCategory.CRYPTOGRAPHY],
           i18nPrefix: 'mayacalendar_selection',
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: MayaNumbersSelection(),
           i18nPrefix: 'mayanumbers_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: MexicanArmyCipherWheel(),
-          i18nPrefix: 'mexicanarmycipherwheel',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_CIPHERWHEEL,
-            SEARCHSTRING_DE_CIPHERWHEEL,
-            SEARCHSTRING_EN_CIPHERWHEEL,
-            SEARCHSTRING_FR_CIPHERWHEEL,
-            SEARCHSTRING_COMMON_MEXICANARMYCIPHERWHEEL,
-            SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL,
-            SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL,
-            SEARCHSTRING_FR_MEXICANARMYCIPHERWHEEL
-          ]),
-      GCWTool(tool: Morse(), i18nPrefix: 'morse', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: MexicanArmyCipherWheel(), i18nPrefix: 'mexicanarmycipherwheel', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_CIPHERWHEEL,
+        SEARCHSTRING_DE_CIPHERWHEEL,
+        SEARCHSTRING_EN_CIPHERWHEEL,
+        SEARCHSTRING_FR_CIPHERWHEEL,
+        SEARCHSTRING_COMMON_MEXICANARMYCIPHERWHEEL,
+        SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL,
+        SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL,
+        SEARCHSTRING_FR_MEXICANARMYCIPHERWHEEL
+      ]),
+      GCWTool(tool: Morse(), i18nPrefix: 'morse', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_MORSE,
@@ -992,20 +983,19 @@ class Registry {
         SEARCHSTRING_EN_MORSE,
         SEARCHSTRING_FR_MORSE
       ]),
-      GCWTool(
-          tool: MultiDecoder(),
-          i18nPrefix: 'multidecoder',
-          category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_MULTIDECODER,
-            SEARCHSTRING_DE_MULTIDECODER,
-            SEARCHSTRING_EN_MULTIDECODER,
-            SEARCHSTRING_FR_MULTIDECODER
-          ]),
-      GCWTool(tool: Navajo(), i18nPrefix: 'navajo', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', categories: [
+        ToolCategory.GENERAL_CODEBREAKERS
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_MULTIDECODER,
+        SEARCHSTRING_DE_MULTIDECODER,
+        SEARCHSTRING_EN_MULTIDECODER,
+        SEARCHSTRING_FR_MULTIDECODER
+      ]),
+      GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_NAVAJO,
@@ -1016,33 +1006,32 @@ class Registry {
       GCWTool(
           tool: NumberSequenceSelection(),
           i18nPrefix: 'numbersequence',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: NumeralBases(),
-          i18nPrefix: 'numeralbases',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_BINARY,
-            SEARCHSTRING_DE_BINARY,
-            SEARCHSTRING_EN_BINARY,
-            SEARCHSTRING_FR_BINARY,
-            SEARCHSTRING_COMMON_NUMERALBASES,
-            SEARCHSTRING_DE_NUMERALBASES,
-            SEARCHSTRING_EN_NUMERALBASES,
-            SEARCHSTRING_FR_NUMERALBASES
-          ]),
+      GCWTool(tool: NumeralBases(), i18nPrefix: 'numeralbases', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_BINARY,
+        SEARCHSTRING_DE_BINARY,
+        SEARCHSTRING_EN_BINARY,
+        SEARCHSTRING_FR_BINARY,
+        SEARCHSTRING_COMMON_NUMERALBASES,
+        SEARCHSTRING_DE_NUMERALBASES,
+        SEARCHSTRING_EN_NUMERALBASES,
+        SEARCHSTRING_FR_NUMERALBASES
+      ]),
       GCWTool(
           tool: NumeralWordsSelection(),
           i18nPrefix: 'numeralwords_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(tool: OneTimePad(), i18nPrefix: 'onetimepad', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: OneTimePad(), i18nPrefix: 'onetimepad', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ONETIMEPAD,
@@ -1050,46 +1039,39 @@ class Registry {
         SEARCHSTRING_EN_ONETIMEPAD,
         SEARCHSTRING_FR_ONETIMEPAD
       ]),
-      GCWTool(
-          tool: PeriodicTableSelection(),
-          i18nPrefix: 'periodictable_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_PERIODICTABLE,
-            SEARCHSTRING_DE_PERIODICTABLE,
-            SEARCHSTRING_EN_PERIODICTABLE,
-            SEARCHSTRING_FR_PERIODICTABLE
-          ]),
-      GCWTool(
-          tool: PhiSelection(),
-          i18nPrefix: 'phi_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-            SEARCHSTRING_DE_IRRATIONALNUMBERS,
-            SEARCHSTRING_EN_IRRATIONALNUMBERS,
-            SEARCHSTRING_FR_IRRATIONALNUMBERS
-          ]),
-      GCWTool(
-          tool: PiSelection(),
-          i18nPrefix: 'pi_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-            SEARCHSTRING_DE_IRRATIONALNUMBERS,
-            SEARCHSTRING_EN_IRRATIONALNUMBERS,
-            SEARCHSTRING_FR_IRRATIONALNUMBERS
-          ]),
-      GCWTool(tool: Playfair(), i18nPrefix: 'playfair', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: PeriodicTableSelection(), i18nPrefix: 'periodictable_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_PERIODICTABLE,
+        SEARCHSTRING_DE_PERIODICTABLE,
+        SEARCHSTRING_EN_PERIODICTABLE,
+        SEARCHSTRING_FR_PERIODICTABLE
+      ]),
+      GCWTool(tool: PhiSelection(), i18nPrefix: 'phi_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
+      GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
+      GCWTool(tool: Playfair(), i18nPrefix: 'playfair', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_PLAYFAIR,
@@ -1097,7 +1079,9 @@ class Registry {
         SEARCHSTRING_EN_PLAYFAIR,
         SEARCHSTRING_FR_PLAYFAIR
       ]),
-      GCWTool(tool: Polybios(), i18nPrefix: 'polybios', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Polybios(), i18nPrefix: 'polybios', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_POLYBIOS,
@@ -1108,41 +1092,37 @@ class Registry {
       GCWTool(
           tool: PrimesSelection(),
           i18nPrefix: 'primes_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: Projectiles(),
-          i18nPrefix: 'projectiles',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_PROJECTILES,
-            SEARCHSTRING_DE_PROJECTILES,
-            SEARCHSTRING_EN_PROJECTILES,
-            SEARCHSTRING_FR_PROJECTILES
-          ]),
+      GCWTool(tool: Projectiles(), i18nPrefix: 'projectiles', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_PROJECTILES,
+        SEARCHSTRING_DE_PROJECTILES,
+        SEARCHSTRING_EN_PROJECTILES,
+        SEARCHSTRING_FR_PROJECTILES
+      ]),
       GCWTool(
           tool: QrCode(),
           i18nPrefix: 'qr_code',
-          category: ToolCategory.IMAGES_AND_FILES,
+          categories: [ToolCategory.IMAGES_AND_FILES],
           searchStrings: [SEARCHSTRING_DE_QRCODE, SEARCHSTRING_EN_QRCODE, SEARCHSTRING_FR_QRCODE]),
-      GCWTool(
-          tool: QuadraticEquation(),
-          i18nPrefix: 'quadratic_equation',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_QUADRATICEQUATION,
-            SEARCHSTRING_DE_QUADRATICEQUATION,
-            SEARCHSTRING_EN_QUADRATICEQUATION,
-            SEARCHSTRING_FR_QUADRATICEQUATION
-          ]),
-      GCWTool(tool: RailFence(), i18nPrefix: 'railfence', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: QuadraticEquation(), i18nPrefix: 'quadratic_equation', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_QUADRATICEQUATION,
+        SEARCHSTRING_DE_QUADRATICEQUATION,
+        SEARCHSTRING_EN_QUADRATICEQUATION,
+        SEARCHSTRING_FR_QUADRATICEQUATION
+      ]),
+      GCWTool(tool: RailFence(), i18nPrefix: 'railfence', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_RAILFENCE,
@@ -1150,32 +1130,31 @@ class Registry {
         SEARCHSTRING_EN_RAILFENCE,
         SEARCHSTRING_FR_RAILFENCE
       ]),
-      GCWTool(
-          tool: RALColorCodes(),
-          i18nPrefix: 'ralcolorcodes',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_RALCOLORCODES,
-            SEARCHSTRING_DE_RALCOLORCODES,
-            SEARCHSTRING_EN_RALCOLORCODES,
-            SEARCHSTRING_FR_RALCOLORCODES
-          ]),
+      GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_RALCOLORCODES,
+        SEARCHSTRING_DE_RALCOLORCODES,
+        SEARCHSTRING_EN_RALCOLORCODES,
+        SEARCHSTRING_FR_RALCOLORCODES
+      ]),
       GCWTool(
           tool: RC4(),
           i18nPrefix: 'rc4',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: [SEARCHSTRING_COMMON_RC4, SEARCHSTRING_DE_RC4, SEARCHSTRING_EN_RC4, SEARCHSTRING_FR_RC4]),
       GCWTool(
           tool: ResistorSelection(),
           i18nPrefix: 'resistor_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(tool: Reverse(), i18nPrefix: 'reverse', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Reverse(), i18nPrefix: 'reverse', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_REVERSE,
@@ -1186,35 +1165,29 @@ class Registry {
       GCWTool(
           tool: RomanNumbersSelection(),
           i18nPrefix: 'romannumbers',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: RotationSelection(),
-          i18nPrefix: 'rotation_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ROTATION,
-            SEARCHSTRING_DE_ROTATION,
-            SEARCHSTRING_EN_ROTATION,
-            SEARCHSTRING_FR_ROTATION
-          ]),
-      GCWTool(
-          tool: RSASelection(),
-          i18nPrefix: 'rsa_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_PRIMES,
-            SEARCHSTRING_DE_PRIMES,
-            SEARCHSTRING_EN_PRIMES,
-            SEARCHSTRING_FR_PRIMES
-          ]),
+      GCWTool(tool: RotationSelection(), i18nPrefix: 'rotation_selection', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ROTATION,
+        SEARCHSTRING_DE_ROTATION,
+        SEARCHSTRING_EN_ROTATION,
+        SEARCHSTRING_FR_ROTATION
+      ]),
+      GCWTool(tool: RSASelection(), i18nPrefix: 'rsa_selection', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_PRIMES,
+        SEARCHSTRING_DE_PRIMES,
+        SEARCHSTRING_EN_PRIMES,
+        SEARCHSTRING_FR_PRIMES
+      ]),
       GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', missingHelpLocales: [
         'ko'
       ], searchStrings: [
@@ -1223,7 +1196,9 @@ class Registry {
         SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION,
         SEARCHSTRING_FR_SCIENCEANDTECHNOLOGYSELECTION
       ]),
-      GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', category: ToolCategory.GAMES, missingHelpLocales: [
+      GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', categories: [
+        ToolCategory.GAMES
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_GAMES,
@@ -1238,16 +1213,18 @@ class Registry {
       GCWTool(
           tool: SegmentDisplaySelection(),
           i18nPrefix: 'segmentdisplay_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: ShadoksSelection(),
           i18nPrefix: 'shadoks_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(tool: Skytale(), i18nPrefix: 'skytale', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Skytale(), i18nPrefix: 'skytale', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_SKYTALE,
@@ -1255,7 +1232,9 @@ class Registry {
         SEARCHSTRING_EN_SKYTALE,
         SEARCHSTRING_FR_SKYTALE
       ]),
-      GCWTool(tool: Solitaire(), i18nPrefix: 'solitaire', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Solitaire(), i18nPrefix: 'solitaire', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_SOLITAIRE,
@@ -1263,50 +1242,43 @@ class Registry {
         SEARCHSTRING_EN_SOLITAIRE,
         SEARCHSTRING_FR_SOLITAIRE
       ]),
-      GCWTool(
-          tool: StraddlingCheckerboard(),
-          i18nPrefix: 'straddlingcheckerboard',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_STRADDLINGCHECKERBOARD,
-            SEARCHSTRING_DE_STRADDLINGCHECKERBOARD,
-            SEARCHSTRING_EN_STRADDLINGCHECKERBOARD,
-            SEARCHSTRING_FR_STRADDLINGCHECKERBOARD
-          ]),
-      GCWTool(
-          tool: Substitution(),
-          i18nPrefix: 'substitution',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_SUBSTITUTION,
-            SEARCHSTRING_DE_SUBSTITUTION,
-            SEARCHSTRING_EN_SUBSTITUTION,
-            SEARCHSTRING_FR_SUBSTITUTION
-          ]),
-      GCWTool(
-          tool: SubstitutionBreaker(),
-          i18nPrefix: 'substitutionbreaker',
-          category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_CODEBREAKER,
-            SEARCHSTRING_DE_CODEBREAKER,
-            SEARCHSTRING_EN_CODEBREAKER,
-            SEARCHSTRING_FR_CODEBREAKER,
-            SEARCHSTRING_COMMON_SUBSTITUTIONBREAKER,
-            SEARCHSTRING_DE_SUBSTITUTIONBREAKER,
-            SEARCHSTRING_EN_SUBSTITUTIONBREAKER,
-            SEARCHSTRING_FR_SUBSTITUTIONBREAKER
-          ]),
-      GCWTool(tool: SudokuSolver(), i18nPrefix: 'sudokusolver', category: ToolCategory.GAMES, missingHelpLocales: [
+      GCWTool(tool: StraddlingCheckerboard(), i18nPrefix: 'straddlingcheckerboard', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_STRADDLINGCHECKERBOARD,
+        SEARCHSTRING_DE_STRADDLINGCHECKERBOARD,
+        SEARCHSTRING_EN_STRADDLINGCHECKERBOARD,
+        SEARCHSTRING_FR_STRADDLINGCHECKERBOARD
+      ]),
+      GCWTool(tool: Substitution(), i18nPrefix: 'substitution', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_SUBSTITUTION,
+        SEARCHSTRING_DE_SUBSTITUTION,
+        SEARCHSTRING_EN_SUBSTITUTION,
+        SEARCHSTRING_FR_SUBSTITUTION
+      ]),
+      GCWTool(tool: SubstitutionBreaker(), i18nPrefix: 'substitutionbreaker', categories: [
+        ToolCategory.GENERAL_CODEBREAKERS
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_CODEBREAKER,
+        SEARCHSTRING_DE_CODEBREAKER,
+        SEARCHSTRING_EN_CODEBREAKER,
+        SEARCHSTRING_FR_CODEBREAKER,
+        SEARCHSTRING_COMMON_SUBSTITUTIONBREAKER,
+        SEARCHSTRING_DE_SUBSTITUTIONBREAKER,
+        SEARCHSTRING_EN_SUBSTITUTIONBREAKER,
+        SEARCHSTRING_FR_SUBSTITUTIONBREAKER
+      ]),
+      GCWTool(tool: SudokuSolver(), i18nPrefix: 'sudokusolver', categories: [
+        ToolCategory.GAMES
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_GAMES,
@@ -1332,7 +1304,9 @@ class Registry {
         missingHelpLocales: ['ko'],
         searchStrings: [],
       ),
-      GCWTool(tool: TapCode(), i18nPrefix: 'tapcode', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: TapCode(), i18nPrefix: 'tapcode', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_TAPCODE,
@@ -1340,7 +1314,9 @@ class Registry {
         SEARCHSTRING_EN_TAPCODE,
         SEARCHSTRING_FR_TAPCODE
       ]),
-      GCWTool(tool: Tapir(), i18nPrefix: 'tapir', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: Tapir(), i18nPrefix: 'tapir', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_TAPIR,
@@ -1348,49 +1324,55 @@ class Registry {
         SEARCHSTRING_EN_TAPIR,
         SEARCHSTRING_FR_TAPIR
       ]),
-      GCWTool(
-          tool: Trifid(),
-          i18nPrefix: 'trifid',
-          missingHelpLocales: ['ko'],
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: [
-            SEARCHSTRING_COMMON_TRIFID,
-            SEARCHSTRING_DE_TRIFID,
-            SEARCHSTRING_EN_TRIFID,
-            SEARCHSTRING_FR_TRIFID
-          ]),
+      GCWTool(tool: Trifid(), i18nPrefix: 'trifid', missingHelpLocales: [
+        'ko'
+      ], categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_TRIFID,
+        SEARCHSTRING_DE_TRIFID,
+        SEARCHSTRING_EN_TRIFID,
+        SEARCHSTRING_FR_TRIFID
+      ]),
       GCWTool(
           tool: TomTomSelection(),
           i18nPrefix: 'tomtom_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(
-          tool: UnitConverter(),
-          i18nPrefix: 'unitconverter',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_UNITCONVERTER,
-            SEARCHSTRING_DE_UNITCONVERTER,
-            SEARCHSTRING_EN_UNITCONVERTER,
-            SEARCHSTRING_FR_UNITCONVERTER
-          ]),
+      GCWTool(tool: UnitConverter(), i18nPrefix: 'unitconverter', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_UNITCONVERTER,
+        SEARCHSTRING_DE_UNITCONVERTER,
+        SEARCHSTRING_EN_UNITCONVERTER,
+        SEARCHSTRING_FR_UNITCONVERTER
+      ]),
       GCWTool(
           tool: VanitySelection(),
           i18nPrefix: 'vanity_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
       GCWTool(
           tool: VigenereSelection(),
           i18nPrefix: 'vigenere_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
+          categories: [ToolCategory.CRYPTOGRAPHY],
           missingHelpLocales: ['ko'],
           searchStrings: []),
-      GCWTool(tool: Z22(), i18nPrefix: 'z22', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+      GCWTool(tool: VisualCryptography(), i18nPrefix: 'visual_cryptography', categories: [
+        ToolCategory.IMAGES_AND_FILES,
+        ToolCategory.CRYPTOGRAPHY
+      ], searchStrings: [
+        SEARCHSTRING_DE_HEXSTRING2FILE,
+        SEARCHSTRING_EN_HEXSTRING2FILE,
+        SEARCHSTRING_FR_HEXSTRING2FILE
+      ]),
+      GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], missingHelpLocales: [
         'ko'
       ], searchStrings: [
         SEARCHSTRING_COMMON_CCITT2,
@@ -1884,7 +1866,9 @@ class Registry {
           tool: WaypointProjection(),
           i18nPrefix: 'coords_waypointprojection',
           iconPath: 'assets/icons/coords/icon_waypoint_projection.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -1906,7 +1890,9 @@ class Registry {
           tool: DistanceBearing(),
           i18nPrefix: 'coords_distancebearing',
           iconPath: 'assets/icons/coords/icon_distance_and_bearing.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -1924,7 +1910,9 @@ class Registry {
           tool: FormatConverter(),
           i18nPrefix: 'coords_formatconverter',
           iconPath: 'assets/icons/coords/icon_format_converter.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -1943,7 +1931,9 @@ class Registry {
           autoScroll: false,
           i18nPrefix: 'coords_openmap',
           iconPath: 'assets/icons/coords/icon_free_map.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -1961,7 +1951,9 @@ class Registry {
           tool: VariableCoordinateFormulas(),
           i18nPrefix: 'coords_variablecoordinate',
           iconPath: 'assets/icons/coords/icon_variable_coordinate.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -1983,7 +1975,9 @@ class Registry {
           tool: DMMOffset(),
           i18nPrefix: 'coords_dmmoffset',
           iconPath: 'assets/icons/coords/icon_dmm_offset.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2001,7 +1995,9 @@ class Registry {
           tool: CoordinateAveraging(),
           i18nPrefix: 'coords_averaging',
           iconPath: 'assets/icons/coords/icon_coordinate_measurement.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2010,16 +2006,18 @@ class Registry {
             SEARCHSTRING_DE_COORDINATES,
             SEARCHSTRING_EN_COORDINATES,
             SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVARAGING,
-            SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING,
-            SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING,
-            SEARCHSTRING_FR_COORDINATES_COORDINATEAVARAGING
+            SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVERAGING,
+            SEARCHSTRING_DE_COORDINATES_COORDINATEAVERAGING,
+            SEARCHSTRING_EN_COORDINATES_COORDINATEAVERAGING,
+            SEARCHSTRING_FR_COORDINATES_COORDINATEAVERAGING
           ]),
       GCWTool(
           tool: CenterTwoPoints(),
           i18nPrefix: 'coords_centertwopoints',
           iconPath: 'assets/icons/coords/icon_center_two_points.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2037,7 +2035,9 @@ class Registry {
           tool: CenterThreePoints(),
           i18nPrefix: 'coords_centerthreepoints',
           iconPath: 'assets/icons/coords/icon_center_three_points.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2055,7 +2055,9 @@ class Registry {
           tool: SegmentLine(),
           i18nPrefix: 'coords_segmentline',
           iconPath: 'assets/icons/coords/icon_segment_line.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2073,7 +2075,9 @@ class Registry {
           tool: SegmentBearings(),
           i18nPrefix: 'coords_segmentbearings',
           iconPath: 'assets/icons/coords/icon_segment_bearings.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2091,7 +2095,9 @@ class Registry {
           tool: CrossBearing(),
           i18nPrefix: 'coords_crossbearing',
           iconPath: 'assets/icons/coords/icon_cross_bearing.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2109,7 +2115,9 @@ class Registry {
           tool: IntersectBearings(),
           i18nPrefix: 'coords_intersectbearings',
           iconPath: 'assets/icons/coords/icon_intersect_bearings.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2131,7 +2139,9 @@ class Registry {
           tool: IntersectFourPoints(),
           i18nPrefix: 'coords_intersectfourpoints',
           iconPath: 'assets/icons/coords/icon_intersect_four_points.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2149,7 +2159,9 @@ class Registry {
           tool: IntersectGeodeticAndCircle(),
           i18nPrefix: 'coords_intersectbearingcircle',
           iconPath: 'assets/icons/coords/icon_intersect_bearing_and_circle.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2171,7 +2183,9 @@ class Registry {
           tool: IntersectTwoCircles(),
           i18nPrefix: 'coords_intersecttwocircles',
           iconPath: 'assets/icons/coords/icon_intersect_two_circles.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2189,7 +2203,9 @@ class Registry {
           tool: IntersectThreeCircles(),
           i18nPrefix: 'coords_intersectthreecircles',
           iconPath: 'assets/icons/coords/icon_intersect_three_circles.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2207,7 +2223,9 @@ class Registry {
           tool: Antipodes(),
           i18nPrefix: 'coords_antipodes',
           iconPath: 'assets/icons/coords/icon_antipodes.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2225,7 +2243,9 @@ class Registry {
           tool: Intersection(),
           i18nPrefix: 'coords_intersection',
           iconPath: 'assets/icons/coords/icon_intersection.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2243,7 +2263,9 @@ class Registry {
           tool: Resection(),
           i18nPrefix: 'coords_resection',
           iconPath: 'assets/icons/coords/icon_resection.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2261,7 +2283,9 @@ class Registry {
           tool: EquilateralTriangle(),
           i18nPrefix: 'coords_equilateraltriangle',
           iconPath: 'assets/icons/coords/icon_equilateral_triangle.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2279,7 +2303,9 @@ class Registry {
           tool: EllipsoidTransform(),
           i18nPrefix: 'coords_ellipsoidtransform',
           iconPath: 'assets/icons/coords/icon_ellipsoid_transform.png',
-          category: ToolCategory.COORDINATES,
+          categories: [
+            ToolCategory.COORDINATES
+          ],
           missingHelpLocales: [
             'ko'
           ],
@@ -2296,13 +2322,53 @@ class Registry {
 
       //Countries Selection ******************************************************************************************
 
-      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcodes', missingHelpLocales: [
+      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcode', missingHelpLocales: [
         'ko'
       ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
         SEARCHSTRING_COMMON_COUNTRIES_CALLINGCODES,
         SEARCHSTRING_DE_COUNTRIES_CALLINGCODES,
         SEARCHSTRING_EN_COUNTRIES_CALLINGCODES,
         SEARCHSTRING_FR_COUNTRIES_CALLINGCODES
+      ]),
+      GCWTool(tool: CountriesIOCCodes(), i18nPrefix: 'countries_ioccode', missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_COUNTRIES_IOCCODES,
+        SEARCHSTRING_DE_COUNTRIES_IOCCODES,
+        SEARCHSTRING_EN_COUNTRIES_IOCCODES,
+        SEARCHSTRING_FR_COUNTRIES_IOCCODES
+      ]),
+      GCWTool(tool: CountriesISOCodes(), i18nPrefix: 'countries_isocode', missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_COUNTRIES_ISOCODES,
+        SEARCHSTRING_DE_COUNTRIES_ISOCODES,
+        SEARCHSTRING_EN_COUNTRIES_ISOCODES,
+        SEARCHSTRING_FR_COUNTRIES_ISOCODES
+      ]),
+      GCWTool(tool: CountriesVehicleCodes(), i18nPrefix: 'countries_vehiclecode', missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_COUNTRIES_VEHICLECODES,
+        SEARCHSTRING_DE_COUNTRIES_VEHICLECODES,
+        SEARCHSTRING_EN_COUNTRIES_VEHICLECODES,
+        SEARCHSTRING_FR_COUNTRIES_VEHICLECODES
       ]),
 
       //CrossSumSelection *******************************************************************************************
@@ -2673,27 +2739,24 @@ class Registry {
       ]),
 
       //Hash Selection *****************************************************************************************
-      GCWTool(
-          tool: HashBreaker(),
-          i18nPrefix: 'hashes_hashbreaker',
-          category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_CODEBREAKER,
-            SEARCHSTRING_DE_CODEBREAKER,
-            SEARCHSTRING_EN_CODEBREAKER,
-            SEARCHSTRING_FR_CODEBREAKER,
-            SEARCHSTRING_COMMON_HASHES,
-            SEARCHSTRING_DE_HASHES,
-            SEARCHSTRING_EN_HASHES,
-            SEARCHSTRING_FR_HASHES,
-            SEARCHSTRING_COMMON_HASHBREAKER,
-            SEARCHSTRING_DE_HASHBREAKER,
-            SEARCHSTRING_EN_HASHBREAKER,
-            SEARCHSTRING_FR_HASHBREAKER
-          ]),
+      GCWTool(tool: HashBreaker(), i18nPrefix: 'hashes_hashbreaker', categories: [
+        ToolCategory.GENERAL_CODEBREAKERS
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_CODEBREAKER,
+        SEARCHSTRING_DE_CODEBREAKER,
+        SEARCHSTRING_EN_CODEBREAKER,
+        SEARCHSTRING_FR_CODEBREAKER,
+        SEARCHSTRING_COMMON_HASHES,
+        SEARCHSTRING_DE_HASHES,
+        SEARCHSTRING_EN_HASHES,
+        SEARCHSTRING_FR_HASHES,
+        SEARCHSTRING_COMMON_HASHBREAKER,
+        SEARCHSTRING_DE_HASHBREAKER,
+        SEARCHSTRING_EN_HASHBREAKER,
+        SEARCHSTRING_FR_HASHBREAKER
+      ]),
       GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', missingHelpLocales: [
         'ko'
       ], searchStrings: [
@@ -6095,6 +6158,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_PIPELINE,
         SEARCHSTRING_FR_SYMBOL_PIPELINE
       ]),
+      GCWSymbolTableTool(symbolKey: 'pipeline_din2403', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_PIPELINE_DIN2403,
+        SEARCHSTRING_DE_SYMBOL_PIPELINE_DIN2403,
+        SEARCHSTRING_EN_SYMBOL_PIPELINE_DIN2403,
+        SEARCHSTRING_FR_SYMBOL_PIPELINE_DIN2403
+      ]),
       GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PIXEL,
         SEARCHSTRING_DE_SYMBOL_PIXEL,
@@ -6592,31 +6661,28 @@ class Registry {
       ]),
 
       //VigenereSelection *******************************************************************************************
-      GCWTool(
-          tool: VigenereBreaker(),
-          i18nPrefix: 'vigenerebreaker',
-          category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'ko'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_CODEBREAKER,
-            SEARCHSTRING_DE_CODEBREAKER,
-            SEARCHSTRING_EN_CODEBREAKER,
-            SEARCHSTRING_FR_CODEBREAKER,
-            SEARCHSTRING_COMMON_VIGENEREBREAKER,
-            SEARCHSTRING_DE_VIGENEREBREAKER,
-            SEARCHSTRING_EN_VIGENEREBREAKER,
-            SEARCHSTRING_FR_VIGENEREBREAKER,
-            SEARCHSTRING_COMMON_VIGENERE,
-            SEARCHSTRING_DE_VIGENERE,
-            SEARCHSTRING_EN_VIGENERE,
-            SEARCHSTRING_FR_VIGENERE,
-            SEARCHSTRING_COMMON_ROTATION,
-            SEARCHSTRING_DE_ROTATION,
-            SEARCHSTRING_EN_ROTATION,
-            SEARCHSTRING_FR_ROTATION,
-          ]),
+      GCWTool(tool: VigenereBreaker(), i18nPrefix: 'vigenerebreaker', categories: [
+        ToolCategory.GENERAL_CODEBREAKERS
+      ], missingHelpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_CODEBREAKER,
+        SEARCHSTRING_DE_CODEBREAKER,
+        SEARCHSTRING_EN_CODEBREAKER,
+        SEARCHSTRING_FR_CODEBREAKER,
+        SEARCHSTRING_COMMON_VIGENEREBREAKER,
+        SEARCHSTRING_DE_VIGENEREBREAKER,
+        SEARCHSTRING_EN_VIGENEREBREAKER,
+        SEARCHSTRING_FR_VIGENEREBREAKER,
+        SEARCHSTRING_COMMON_VIGENERE,
+        SEARCHSTRING_DE_VIGENERE,
+        SEARCHSTRING_EN_VIGENERE,
+        SEARCHSTRING_FR_VIGENERE,
+        SEARCHSTRING_COMMON_ROTATION,
+        SEARCHSTRING_DE_ROTATION,
+        SEARCHSTRING_EN_ROTATION,
+        SEARCHSTRING_FR_ROTATION,
+      ]),
       GCWTool(tool: Vigenere(), i18nPrefix: 'vigenere', missingHelpLocales: [
         'ko'
       ], searchStrings: [
