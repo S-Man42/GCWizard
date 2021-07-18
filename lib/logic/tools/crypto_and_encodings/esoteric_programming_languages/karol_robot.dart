@@ -49,13 +49,15 @@ final KAREL_ENCODING = {
   ',' : 'schritt(7) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(3) rechtsdrehen'
 };
 
-enum KAREL_LANGUAGES {DEU, ENG}
+enum KAREL_LANGUAGES {DEU, ENG, FRA}
 
 final Map<KAREL_LANGUAGES, String> KAREL_LANGUAGES_LIST = {
   KAREL_LANGUAGES.DEU: 'common_language_german',
   KAREL_LANGUAGES.ENG: 'common_language_english',
+  KAREL_LANGUAGES.FRA: 'common_language_french',
 };
 
+// GERMAN
 const _AUFHEBEN = 'aufheben';
 const _HINLEGEN = 'hinlegen';
 const _SCHRITT = 'schritt';
@@ -66,6 +68,8 @@ const _RECHTSDREHEN = 'rechtsdrehen';
 const _BEENDEN = 'beenden';
 const _TON = 'ton';
 const _WARTEN = 'warten';
+
+// ENGLISH
 const _MOVE = 'move';
 const _TURNLEFT = 'turnleft';
 const _TURNRIGHT = 'turnright';
@@ -75,16 +79,28 @@ const _PUTBRICK = 'putbrick';
 const _PICKBRICK = 'pickbrick';
 const _TURNOFF = 'turnoff';
 
-Set _SET_TURNLEFT = {_LINKSDREHEN, _TURNLEFT};
-Set _SET_TURNRIGHT = {_RECHTSDREHEN, _TURNRIGHT};
-Set _SET_MOVE = {_SCHRITT, _MOVE};
-Set _SET_PICKBRICK = {_AUFHEBEN, _PICKBRICK};
-Set _SET_PUTBRICK = {_HINLEGEN, _PUTBRICK};
-Set _SET_PICKBEEPER = {_MARKELOESCHEN, _PICKBEEPER};
-Set _SET_PUTBEEPER = {_MARKESETZEN, _PUTBEEPER};
-Set _SET_HALT = {_BEENDEN, _TURNOFF};
-Set _SET_WAIT = {_WARTEN};
-Set _SET_SOUND = {_TON};
+//FRENCH
+const _RAMASSER = 'ramasser';
+const _ALLONGER = 'allonger';
+const _ETAPE = 'etape';
+const _MARQUEETABLIE = 'marqueetablie';
+const _MARQUESUPPRESION = 'marquesuppression';
+const _TOURNERGAUCHE = 'tournergauche';
+const _TOURNERDROIT = 'tournerdroit';
+const _FINIR = 'finir';
+const _SON = 'son';
+const _ATTENDRE = 'attendre';
+
+Set _SET_TURNLEFT = {_LINKSDREHEN, _TURNLEFT, _TOURNERGAUCHE};
+Set _SET_TURNRIGHT = {_RECHTSDREHEN, _TURNRIGHT, _TOURNERDROIT};
+Set _SET_MOVE = {_SCHRITT, _MOVE, _ETAPE};
+Set _SET_PICKBRICK = {_AUFHEBEN, _PICKBRICK, _RAMASSER};
+Set _SET_PUTBRICK = {_HINLEGEN, _PUTBRICK, _ALLONGER};
+Set _SET_PICKBEEPER = {_MARKELOESCHEN, _PICKBEEPER, _MARQUESUPPRESION};
+Set _SET_PUTBEEPER = {_MARKESETZEN, _PUTBEEPER, _MARQUEETABLIE};
+Set _SET_HALT = {_BEENDEN, _TURNOFF, _FINIR};
+Set _SET_WAIT = {_WARTEN, _ATTENDRE};
+Set _SET_SOUND = {_TON, _SON};
 
 
 final _KAROL_COLORS = {
@@ -117,6 +133,7 @@ final _KAROL_COLORS = {
   'dunkelorange': 'M',
   'braun': 'N',
   'dunkelbraun': 'O',
+  // ENGLISH
   'white' : '0',
   'black': '1',
   'lightred': '2',
@@ -142,6 +159,32 @@ final _KAROL_COLORS = {
   'lightorange': 'M',
   'brown': 'N',
   'darkbrown': 'O',
+  // FRENCH
+  'blanc' : '0',
+  'noir': '1',
+  'rougeclair': '2',
+  'jauneclair': '3',
+  'vertclair': '4',
+  'cyanclair': '5',
+  'bleuclair': '6',
+  'magentaclair': '7',
+  'rouge': '8',
+  'jaune': '9',
+  'vert': 'A',
+  'cyan': 'B',
+  'bleu': 'C',
+  'magenta': 'D',
+  'rougefonce': 'E',
+  'jaunefonce': 'F',
+  'vertfonce': 'G',
+  'cyanfonce': 'H',
+  'bleufonce': 'I',
+  'magentafonce': 'J',
+  'orange': 'K',
+  'orangeclair': 'L',
+  'orangefonce': 'M',
+  'brun': 'N',
+  'brun fonce': 'O',
 };
 
 enum _KAROL_DIRECTION {SOUTH, NORTH, EAST, WEST}
@@ -190,6 +233,10 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language){
       }
       return program;
       break;
+    case KAREL_LANGUAGES.FRA:
+      program = program.replaceAll(_SCHRITT, _ETAPE).replaceAll(_LINKSDREHEN, _TOURNERGAUCHE).replaceAll(_RECHTSDREHEN, _TOURNERDROIT).replaceAll(_MARKESETZEN, _MARQUEETABLIE);
+      return program;
+      break;
   }
 }
 
@@ -208,15 +255,15 @@ String KarolRobotOutputDecode(String program){
   String output = '';
   String color = '0';
   int count = 0;
-  RegExp expSchritt = RegExp(r'(schritt|move)(\(\d+\))?');
-  RegExp expHinlegen = RegExp(r'hinlegen(\(\d+\))?');
-  program.toLowerCase().replaceAll('\n', '').split(' ').forEach((element) {
+  RegExp expSchritt = RegExp(r'(schritt|move|etape)(\(\d+\))?');
+  RegExp expHinlegen = RegExp(r'(hinlegen|putbrick|allonger)(\(\d+\))?');
+  program.toLowerCase().replaceAll('light ', 'light').replaceAll('dark ', 'dark').replaceAll(' clair', 'clair').replaceAll(' fonc', 'fonc').replaceAll('\n', '').split(' ').forEach((element) {
     if (!halt)
       if (expSchritt.hasMatch(element)) {
-        if (int.tryParse(expSchritt.firstMatch(element).group(0).replaceAll(_SCHRITT, '').replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '')) == null)
+        if (int.tryParse(expSchritt.firstMatch(element).group(0).replaceAll(_SCHRITT, '').replaceAll(_MOVE, '').replaceAll(_ETAPE, '').replaceAll('(', '').replaceAll(')', '')) == null)
           count = 1;
         else
-          count = int.parse(expSchritt.firstMatch(element).group(0).replaceAll(_SCHRITT, '').replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '') );
+          count = int.parse(expSchritt.firstMatch(element).group(0).replaceAll(_SCHRITT, '').replaceAll(_MOVE, '').replaceAll(_ETAPE, '').replaceAll('(', '').replaceAll(')', '') );
         switch (direction) {
           case _KAROL_DIRECTION.NORTH : y = y - count; break;
           case _KAROL_DIRECTION.SOUTH : y = y + count; break;
@@ -226,7 +273,7 @@ String KarolRobotOutputDecode(String program){
         if (x > maxX) maxX = x;
         if (y > maxY) maxY = y;
       } else if (expHinlegen.hasMatch(element)) {
-        color = _KAROL_COLORS[element.replaceAll(_HINLEGEN, '').replaceAll('(', '').replaceAll(')', '')];
+        color = _KAROL_COLORS[element.replaceAll(_HINLEGEN, '').replaceAll(_PUTBRICK, '').replaceAll(_ALLONGER, '').replaceAll('(', '').replaceAll(')', '')];
         if (color == null)
           color = '8';
         switch (direction) {
