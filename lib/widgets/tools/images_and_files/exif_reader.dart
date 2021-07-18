@@ -9,6 +9,7 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_circular_progress_indicator.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -39,6 +40,7 @@ class _ExifReaderState extends State<ExifReader> {
   LatLng point;
   GCWImageViewData thumbnail;
   Image.Image image;
+  bool loading = false;
 
   @override
   initState() {
@@ -74,27 +76,40 @@ class _ExifReaderState extends State<ExifReader> {
   Future<void> _readFile(local.PlatformFile _file) async {
     if (_file == null) return;
 
+    setState(() {
+      loading = true;
+    });
+
     Map<String, IfdTag> tags = await parseExif(_file);
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
     Image.Image _image;
 
-    if (tags != null) {
-      _thumbnail = completeThumbnail(tags);
-      _point = completeGPSData(tags);
-      _tableTags = buildTablesExif(tags);
+    try {
+      if (tags != null) {
+        _thumbnail = completeThumbnail(tags);
+        _point = completeGPSData(tags);
+        _tableTags = buildTablesExif(tags);
+      }
+
+      _image = await completeImageMetadata(_file);
+
+      setState(() {
+        loading = false;
+
+        file = _file;
+        tableTags = _tableTags;
+        point = _point; // GPS Point
+        thumbnail = _thumbnail; // Thumbnail
+        image = _image;
+      });
+    } catch (e) {
+      // An error occured, but keep it silently to not pollute UI
+      setState(() {
+        loading = false;
+      });
     }
-
-    _image = await completeImageMetadata(_file);
-
-    setState(() {
-      file = _file;
-      tableTags = _tableTags;
-      point = _point; // GPS Point
-      thumbnail = _thumbnail; // Thumbnail
-      image = _image;
-    });
   }
 
   static void _sortTags(List tags) {
@@ -104,6 +119,10 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   List _buildOutput(Map _tableTags) {
+    if (loading) {
+      return [GCWCircularProgressIndicator()];
+    }
+
     List<Widget> widgets = [];
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);
@@ -238,7 +257,7 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   String formatDate(DateTime datetime) {
-    return (datetime == null) ? '' : DateFormat().format(datetime);
-    // return DateFormat.yMMMd().add_jm().format(datetime);
+    String loc = Localizations.localeOf(context).toString();
+    return (datetime == null) ? '' : DateFormat.yMd(loc).add_jms().format(datetime);
   }
 }
