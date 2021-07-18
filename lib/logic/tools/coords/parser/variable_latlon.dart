@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class ParseVariableLatLonJobData {
   final String coordinate;

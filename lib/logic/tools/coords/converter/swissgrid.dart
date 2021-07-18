@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 SwissGridPlus latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
   SwissGrid swissGrid = SwissGrid.fromLatLon(coord, ells);
@@ -51,8 +51,8 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   double E2 = ellsBessel.e2;
   double alpha = sqrt(1 + (E2 / (1 - E2)) * pow(cos(lat0), 4));
   double b0 = asin(sin(lat0) / alpha);
-  double K = log(tan(PI / 4.0 + b0 / 2.0)) -
-      alpha * log(tan(PI / 4.0 + lat0 / 2.0)) +
+  double K = log(tan(pi / 4.0 + b0 / 2.0)) -
+      alpha * log(tan(pi / 4.0 + lat0 / 2.0)) +
       (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
   double R = (a * sqrt(1 - E2)) / (1 - E2 * pow(sin(lat0), 2));
 
@@ -60,8 +60,8 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   var lon = newCoord.longitudeInRad;
 
   double S =
-      alpha * log(tan(PI / 4.0 + lat / 2.0)) - (alpha * E) / 2.0 * log((1 + E * sin(lat)) / (1 - E * sin(lat))) + K;
-  double b = 2 * (atan(exp(S)) - PI / 4.0);
+      alpha * log(tan(pi / 4.0 + lat / 2.0)) - (alpha * E) / 2.0 * log((1 + E * sin(lat)) / (1 - E * sin(lat))) + K;
+  double b = 2 * (atan(exp(S)) - pi / 4.0);
   double l = alpha * (lon - lon0);
 
   double l_ = atan(sin(l) / (sin(b0) * tan(b) + cos(b0) * cos(l)));
@@ -95,13 +95,13 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   double E2 = ellsBessel.e2;
   double alpha = sqrt(1 + (E2 / (1 - E2)) * pow(cos(lat0), 4));
   double b0 = asin(sin(lat0) / alpha);
-  double K = log(tan(PI / 4.0 + b0 / 2.0)) -
-      alpha * log(tan(PI / 4.0 + lat0 / 2.0)) +
+  double K = log(tan(pi / 4.0 + b0 / 2.0)) -
+      alpha * log(tan(pi / 4.0 + lat0 / 2.0)) +
       (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
   double R = (a * sqrt(1 - E2)) / (1 - E2 * pow(sin(lat0), 2));
 
   double l_ = y / R;
-  double b_ = 2 * (atan(exp(x / R)) - PI / 4.0);
+  double b_ = 2 * (atan(exp(x / R)) - pi / 4.0);
 
   double b = asin(cos(b0) * sin(b_) + sin(b0) * cos(b_) * cos(l_));
   double l = atan(sin(l_) / (cos(b0) * cos(l_) - sin(b0) * tan(b_)));
@@ -113,8 +113,8 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
 
   while ((phi - lat).abs() > epsilon) {
     phi = lat;
-    double S = 1 / alpha * (log(tan(PI / 4.0 + b / 2.0)) - K) + E * log(tan(PI / 4.0 + (asin(E * sin(lat)) / 2.0)));
-    lat = 2 * atan(exp(S)) - PI / 2.0;
+    double S = 1 / alpha * (log(tan(pi / 4.0 + b / 2.0)) - K) + E * log(tan(pi / 4.0 + (asin(E * sin(lat)) / 2.0)));
+    lat = 2 * atan(exp(S)) - pi / 2.0;
   }
 
   int X = -1;

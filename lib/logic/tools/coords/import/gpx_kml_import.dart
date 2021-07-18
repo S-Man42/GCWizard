@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:xml/xml.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';

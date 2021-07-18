@@ -6,7 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectBearingJobData {
   final LatLng coord1;

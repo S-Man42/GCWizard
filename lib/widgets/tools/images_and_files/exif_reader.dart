@@ -22,7 +22,7 @@ import 'package:image/image.dart' as Image;
 // import 'package:image_size_getter/file_input.dart';
 // import 'package:image_size_getter/image_size_getter.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class ExifReader extends StatefulWidget {
   final local.PlatformFile file;

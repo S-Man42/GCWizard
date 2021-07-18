@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 
 LatLng dmmToLatLon(DMM dmm) {

@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/astronomi
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/utils.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class SunPosition {
   double distanceToEarthCenter;
