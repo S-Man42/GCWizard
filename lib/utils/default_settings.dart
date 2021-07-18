@@ -84,7 +84,6 @@ void initDefaultSettings() {
       'WaypointProjection_coords_waypointprojection',
     ]);
   }
-  print(Prefs.getStringList('favorites'));
 
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
