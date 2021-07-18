@@ -72,6 +72,20 @@ void initDefaultSettings() {
     Prefs.setString('default_length_unit', 'm');
   }
 
+  var _favorites = Prefs.getStringList('favorites');
+  if (_favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
+    Prefs.setStringList('favorites', [
+      'AlphabetValues_alphabetvalues',
+      'ASCIIValues_asciivalues',
+      'Binary_binary',
+      'Hexadecimal_hexadecimal',
+      'Rot13_rotation_rot13',
+      'SymbolTableSelection_symboltables_selection',
+      'WaypointProjection_coords_waypointprojection',
+    ]);
+  }
+  print(Prefs.getStringList('favorites'));
+
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
@@ -105,11 +119,11 @@ void initDefaultSettings() {
   }
 
   if (Prefs.get('tabs_default_tab') == null) {
-    Prefs.setInt('tabs_default_tab', 0);
+    Prefs.setInt('tabs_default_tab', 2);
   }
 
   if (Prefs.get('tabs_last_viewed_tab') == null) {
-    Prefs.setInt('tabs_last_viewed_tab', 0);
+    Prefs.setInt('tabs_last_viewed_tab', 2);
   }
 
   if (Prefs.get('theme_color') == null) {
