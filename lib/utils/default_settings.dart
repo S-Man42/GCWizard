@@ -64,6 +64,10 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
+  if (Prefs.get('coord_map_circle_colorfilled') == null) {
+    Prefs.setBool('coord_map_circle_colorfilled', false);
+  }
+
   if (Prefs.get('coord_variablecoordinate_formulas') == null) {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
@@ -77,8 +81,6 @@ void initDefaultSettings() {
     Prefs.setStringList('favorites', [
       'AlphabetValues_alphabetvalues',
       'ASCIIValues_asciivalues',
-      'Binary_binary',
-      'Hexadecimal_hexadecimal',
       'Rot13_rotation_rot13',
       'SymbolTableSelection_symboltables_selection',
       'WaypointProjection_coords_waypointprojection',

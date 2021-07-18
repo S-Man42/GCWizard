@@ -253,6 +253,9 @@ class GCWMapViewState extends State<GCWMapView> {
         !_locationSubscription.isPaused &&
         _currentAccuracy != null &&
         _currentPosition != null) {
+      var filled = Prefs.get('coord_map_circle_colorfilled');
+      var circleColor = COLOR_MAP_USERPOSITION.withOpacity(filled ?? false ? 0.3 : 0.0);
+
       layers.add(CircleLayerWidget(
           options: CircleLayerOptions(circles: [
         CircleMarker(
@@ -260,7 +263,7 @@ class GCWMapViewState extends State<GCWMapView> {
           borderStrokeWidth: 1,
           useRadiusInMeter: true,
           radius: _currentAccuracy,
-          color: Colors.white.withOpacity(0.0), // hack for: without color
+          color: circleColor,
           borderColor: COLOR_MAP_USERPOSITION,
         )
       ])));
