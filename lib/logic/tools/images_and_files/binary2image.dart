@@ -54,7 +54,7 @@ Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) asy
   return await _binary2Image(input);
 }
 
-Future<Uint8List> binaryColor2image(String input) async {
+Future<Uint8List> byteColor2image(String input) async {
   return await _binary2Image(input);
 }
 

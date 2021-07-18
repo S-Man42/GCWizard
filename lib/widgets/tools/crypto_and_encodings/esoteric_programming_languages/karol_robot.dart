@@ -174,7 +174,7 @@ class KarolRobotState extends State<KarolRobot> {
   _createOutput(String output) {
     _outData = null;
     _codeData = null;
-    binaryColor2image(output).then((value) {
+    byteColor2image(output).then((value) {
       setState(() {
         _outData = value;
         scanBytes(_outData).then((value) {
