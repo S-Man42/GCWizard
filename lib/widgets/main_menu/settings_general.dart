@@ -4,6 +4,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -16,6 +17,21 @@ import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+var _LANGUAGES = {
+  'da': {'name_native': '🇩🇰 Dansk','percent_translated': 3},
+  'de': {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},
+  'en': {'name_native': '🇬🇧🇺🇸 English', 'percent_translated': 100},
+  'es': {'name_native': '🇪🇸 Español', 'percent_translated': 4},
+  'fr': {'name_native': '🇫🇷 Français', 'percent_translated': 100},
+  'it': {'name_native': '🇮🇹 Italiano', 'percent_translated': 11},
+  'ko': {'name_native': '🇰🇷 한국어', 'percent_translated': 100},
+  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 14},
+  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 6},
+  'ru': {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 10},
+  'tr': {'name_native': '🇹🇷 Türkçe', 'percent_translated': 17},
+};
 
 class GeneralSettings extends StatefulWidget {
   @override
@@ -48,14 +64,18 @@ class GeneralSettingsState extends State<GeneralSettings> {
 
                         return GCWStatefulDropDownButton(
                             items: supportedLocales.map((locale) {
+                              Map<String, dynamic> language = _LANGUAGES[locale.languageCode ?? defaultLanguage];
+                              String languageName = language['name_native'];
+
+                              var subtitle;
+                              if (language['percent_translated'] < 100) {
+                                subtitle = i18n(context, 'settings_general_i18n_language_partlytranslated', parameters: [language['percent_translated']]);
+                              }
+
                               return GCWDropDownMenuItem(
                                 value: locale.languageCode ?? defaultLanguage,
-                                child: {
-                                  'de': 'Deutsch',
-                                  'en': 'English',
-                                  'fr': 'Français',
-                                  'ko': '한국어 (Korean)'
-                                }[locale.languageCode ?? defaultLanguage],
+                                child: languageName,
+                                subtitle: subtitle
                               );
                             }).toList(),
                             value: currentLocale.languageCode ?? defaultLanguage,
@@ -65,6 +85,18 @@ class GeneralSettingsState extends State<GeneralSettings> {
                       }
                     })),
           ],
+        ),
+        Container(
+          child: InkWell(
+            child: Text(
+              i18n(context, 'settings_general_i18n_language_contributetranslation'),
+              style: gcwHyperlinkTextStyle(),
+            ),
+            onTap: () {
+              launch(i18n(context, 'about_crowdin_url'));
+            },
+          ),
+          padding: EdgeInsets.only(bottom: 10 * DEFAULT_MARGIN, top: 5 * DEFAULT_MARGIN),
         ),
         Row(children: [
           Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_defaultlengthunit'))),

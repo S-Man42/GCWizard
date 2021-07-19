@@ -77,7 +77,6 @@ void initDefaultSettings() {
   }
 
   var _favorites = Prefs.getStringList('favorites');
-  print(_favorites);
   if (_favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
     Prefs.setStringList('favorites', [
       'AlphabetValues_alphabetvalues',
