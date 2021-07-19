@@ -2898,7 +2898,7 @@ Ingredients.
 Method.
 Clean mixing bowl. Put sauerkraut into mixing bowl. Remove einhornhaar. Combine schweine into mixing bowl. Add pfeffer. Put wasser into mixing bowl. Remove sauerkraut. Add einhornhaar. Put wasser into mixing bowl. Remove einhornhaar. Divide pfeffer into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl. Add sauerkraut. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Add einhornhaar. Put wasser into mixing bowl. Put sauerkraut into mixing bowl. Combine sauerkraut into mixing bowl. Put schweine into mixing bowl. Combine petersilie into mixing bowl.''';
 
-    // GC9CAQJ Oma Krimhilds Strudel
+    // https://www.geocaching.com/geocache/GC9CAQJ #18 Oma Krimhildes gesunder Strudel
     var GC9CAQJ = '''Oma Krimhildes Strudel 
 
 Zutaten:
@@ -3052,6 +3052,27 @@ Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel
 
 Portionen: 1.''';
 
+    // https://www.geocaching.com/geocache/GC82M59_oma-gerdas-bunter-strudel
+    var GC82M59 = '''Rezept: Oma Gerdas bunter Strudel.
+
+Dieses Rezept hat mir die gute alte Oma Gerda vererbt. Ich besuchte Sie jeden Sonntag um 11:30 Uhr in Ihrer kleinen Wohnung im 3. Stock eines Mehrfamilienhauses und brachte ihr 14 Gänseblümchen, die ich vor dem Haus auf einer großen Wiese pflückte.
+
+Zutaten:
+147 Eier
+48 g Mehl
+48 ml Milch
+52 ml Wasser
+32 g Zucker
+58 Teelöffel Honig
+49 g Limetten
+17 Gurken
+2 Tomaten
+
+Zubereitung:
+Eier aus dem Kühlschrank nehmen. Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Wasser in die Schüssel geben. Gurken aus dem Kühlschrank nehmen. Gurken dazugeben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Gurken kombinieren. Tomaten dazugeben. Mehl in die Schüssel geben. Limetten in die Schüssel geben. Gurken dazugeben. Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.''';
+
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : GC6HRCE, 'expectedOutput' : ['21m296g E013 17.699N52 25.763']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC9CAQJ, 'expectedOutput' : ['809711711510111098114ot1310']},  // works in emulator
@@ -3059,6 +3080,7 @@ Portionen: 1.''';
       {'language' : 'DEU', 'input' : '',  'recipe' : GC7NYHW, 'expectedOutput' : ['5256176325256.565452326932484857176324848.55249']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5T, 'expectedOutput' : ['783253491763250534651525332326932541763251494657515213106511010310110811032105110325410932Hö104101']},
       {'language' : 'DEU', 'input' : '',  'recipe' : GC8WY5TCorrect, 'expectedOutput' : ['N 51° 25.345  E 6° 31.934\r\nAngeln in 6m Höhe']},
+      {'language' : 'DEU', 'input' : '109 3',  'recipe' : GC82M59, 'expectedOutput' : ['5248176327048109']}, //52 48 176 3270 48 109
     ];
 
     _inputsToExpected.forEach((elem) {
