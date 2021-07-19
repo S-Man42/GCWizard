@@ -403,6 +403,8 @@ class Chef {
     // remove blank lines inside sections ingredients, methods
     bool ingredientSection = false;
     bool methodSection = false;
+    bool auxRecipe = false;
+
     for (int i = 0; i < recipe.length - 1; i++) {
       if (recipe[i].startsWith("ingredients") || recipe[i].startsWith("zutaten")) ingredientSection = true;
 
@@ -418,6 +420,7 @@ class Chef {
 
       if (recipe[i].startsWith("serves") || recipe[i].startsWith("portionen")) {
         methodSection = false;
+        auxRecipe = true;
       }
 
       if ((recipe[i] == '' || recipe[i] == '\n') && ingredientSection) {
@@ -447,7 +450,8 @@ class Chef {
             recipe[i + 1].startsWith("portionen") ||
             isMethod(recipe[i + 1])) {
         } else {
-          recipe.removeAt(i);
+          if (!auxRecipe)
+            recipe.removeAt(i);
         }
       }
     }
@@ -470,9 +474,7 @@ class Chef {
       s0 = recipe[i];
     }
     readRecipe = recipe.join('\n');
-print(readRecipe);
     readRecipe.split("\n\n").forEach((element) {
-print('zeile '+element)  ;
       line = element.trim();
       if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
         if (progress > 3) {

@@ -1704,9 +1704,6 @@ Pour contents of the mixing bowl into the baking dish.
 Puke vodka until wasted.
  
 Serves 1.
-  
-  
-  
  
 Drug coctail.
  
@@ -2004,7 +2001,6 @@ Serve with chocolate sauce.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
-
 
 chocolate sauce.
 
@@ -2848,6 +2844,7 @@ Portionen: 1.''';
 
   group("chef_language.realGeoCaches", () {
 
+    // https://www.geocaching.com/geocache/GC6HRCE_leckerster-cache-der-welt
     var GC6HRCE = '''Zesty caching stew with gummy bears.
 
 The only thing better than a stew is a super-easy stew topped with gummy bears - try this one and let me know what you think. On October 27th 2019 I had to refine the recipe with Haxe. If you have cooked this before, please cook it again. It's improved a lot.
