@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 final List<Map<String, dynamic>> inputsToExpectedDMS = [
   {'text': '52° 12\' 30.15" N 20° 12\' 30.15" E', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},

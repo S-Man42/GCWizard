@@ -29,7 +29,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 class GCWCoords extends StatefulWidget {

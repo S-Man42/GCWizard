@@ -84,7 +84,7 @@ class GCWToolActionButtonsEntry {
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
-  final ToolCategory category;
+  final List<ToolCategory> categories;
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
@@ -108,7 +108,7 @@ class GCWTool extends StatefulWidget {
       this.toolName,
       this.defaultLanguageToolName,
       this.i18nPrefix,
-      this.category,
+      this.categories,
       this.autoScroll: true,
       this.iconPath,
       this.searchStrings,

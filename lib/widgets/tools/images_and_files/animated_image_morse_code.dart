@@ -368,7 +368,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         return Center(
           child: Container(
             child: GCWAsyncExecuter(
-              isolatedFunction: analyseImageMorsCodeAsync,
+              isolatedFunction: analyseImageMorseCodeAsync,
               parameter: _buildJobDataDecode(),
               onReady: (data) => _saveOutputDecode(data),
               isOverlay: true,

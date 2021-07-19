@@ -198,6 +198,6 @@ String encodeVanitySingletap(String input, PhoneModel model) {
 
   return encodeVanityMultitap(input, model, PhoneInputLanguage.UNSPECIFIED)['output']
       .split(' ')
-      .map((group) => group[0])
+      .map((group) => group == null || group.isEmpty ? '' : group[0])
       .join();
 }

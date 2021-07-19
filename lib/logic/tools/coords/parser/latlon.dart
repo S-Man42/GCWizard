@@ -1,5 +1,5 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 final PATTERN_NO_NUMBERS = r'\s+?';
 final PATTERN_NOTHING_OR_NO_NUMBERS = r'\s*?';

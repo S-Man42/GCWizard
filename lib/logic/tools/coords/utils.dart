@@ -19,7 +19,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 double mod(double x, double y) {
   return x - y * (x / y).floor();

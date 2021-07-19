@@ -156,6 +156,21 @@ class _GCWImageViewState extends State<GCWImageView> {
     return widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.ALL);
   }
 
+  _openInFullScreen(Uint8List imgData) {
+    Navigator.push(
+        context,
+        NoAnimationMaterialPageRoute(
+            builder: (context) => GCWTool(
+                  tool: GCWImageViewFullScreen(
+                    imageData: imgData,
+                  ),
+                  autoScroll: false,
+                  toolName: i18n(context, 'imageview_fullscreen_title'),
+                  defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
+                  suppressHelpButton: true,
+                )));
+  }
+
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
 
@@ -164,20 +179,13 @@ class _GCWImageViewState extends State<GCWImageView> {
           iconData: Icons.zoom_out_map,
           size: iconSize,
           onPressed: () {
-            Navigator.push(
-                context,
-                NoAnimationMaterialPageRoute(
-                    builder: (context) => GCWTool(
-                          tool: GCWImageViewFullScreen(
-                            imageData: widget.imageData.bytes,
-                            onBeforeFullscreen: widget.onBeforeLoadBigImage,
-                          ),
-                          autoScroll: false,
-                          toolName: i18n(context, 'imageview_fullscreen_title'),
-                          defaultLanguageToolName:
-                              i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
-                          suppressHelpButton: true,
-                        )));
+            if (widget.onBeforeLoadBigImage != null) {
+              widget.onBeforeLoadBigImage().then((imgData) {
+                _openInFullScreen(imgData);
+              });
+            } else {
+              _openInFullScreen(widget.imageData.bytes);
+            }
           }),
       GCWIconButton(
           iconData: Icons.fit_screen,
@@ -197,13 +205,14 @@ class _GCWImageViewState extends State<GCWImageView> {
             size: iconSize,
             onPressed: () {
               var imgData;
-
-              if (widget.onBeforeLoadBigImage != null)
-                imgData = widget.onBeforeLoadBigImage();
-              else
+              if (widget.onBeforeLoadBigImage != null) {
+                widget.onBeforeLoadBigImage().then((imgData) {
+                  _exportFile(context, imgData);
+                });
+              } else {
                 imgData = widget.imageData.bytes;
-
-              _exportFile(context, imgData);
+                _exportFile(context, imgData);
+              }
             }),
       if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
         GCWPopupMenu(
@@ -213,22 +222,32 @@ class _GCWImageViewState extends State<GCWImageView> {
                   GCWPopupMenuItem(
                     child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'imageview_openinmetadata'),
                     action: (index) => setState(() {
-                      _openInMetadataViewer();
+                      if (widget.onBeforeLoadBigImage != null) {
+                        widget.onBeforeLoadBigImage().then((imgData) {
+                          _openInMetadataViewer(imgData);
+                        });
+                      } else {
+                        _openInMetadataViewer(widget.imageData.bytes);
+                      }
                     }),
                     //action: (index) => _openInMetadataViewer,
                   ),
                   GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.brush, 'imageview_openincolorcorrection'),
                       action: (index) => setState(() {
-                            _openInColorCorrections();
+                            if (widget.onBeforeLoadBigImage != null) {
+                              widget.onBeforeLoadBigImage().then((imgData) {
+                                _openInColorCorrections(imgData);
+                              });
+                            } else {
+                              _openInColorCorrections(widget.imageData.bytes);
+                            }
                           })),
                 ])
     ];
   }
 
-  _openInMetadataViewer() {
-    var imgData = widget.onBeforeLoadBigImage != null ? widget.onBeforeLoadBigImage() : widget.imageData.bytes;
-
+  _openInMetadataViewer(Uint8List imgData) {
     local.PlatformFile file = local.PlatformFile(bytes: imgData);
     Navigator.push(
         context,
@@ -240,9 +259,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                 missingHelpLocales: ['ko'])));
   }
 
-  _openInColorCorrections() {
-    var imgData = widget.onBeforeLoadBigImage != null ? widget.onBeforeLoadBigImage() : widget.imageData.bytes;
-
+  _openInColorCorrections(Uint8List imgData) {
     Navigator.push(
         context,
         NoAnimationMaterialPageRoute(
