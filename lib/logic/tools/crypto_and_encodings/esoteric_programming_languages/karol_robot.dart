@@ -252,8 +252,7 @@ String KarolRobotOutputDecode(String program){
   Map<String, String> world = new Map();
   bool halt = false;
 
-  String output = '';
-  String color = '0';
+  String color = '#';
   int count = 0;
   RegExp expSchritt = RegExp(r'(schritt|move|etape)(\(\d+\))?');
   RegExp expHinlegen = RegExp(r'(hinlegen|putbrick|allonger)(\(\d+\))?');
@@ -320,16 +319,16 @@ String KarolRobotOutputDecode(String program){
         } else if (_SET_PICKBRICK.contains(element)) {
           switch (direction) {
             case _KAROL_DIRECTION.NORTH:
-              world[x.toString() + '|' + (y - 1).toString()] = '0';
+              world[x.toString() + '|' + (y - 1).toString()] = '#';
               break;
             case _KAROL_DIRECTION.SOUTH:
-              world[x.toString() + '|' + (y + 1).toString()] = '0';
+              world[x.toString() + '|' + (y + 1).toString()] = '#';
               break;
             case _KAROL_DIRECTION.EAST:
-              world[(x + 1).toString() + '|' + (y).toString()] = '0';
+              world[(x + 1).toString() + '|' + (y).toString()] = '#';
               break;
             case _KAROL_DIRECTION.WEST:
-              world[(x - 1).toString() + '|' + (y).toString()] = '0';
+              world[(x - 1).toString() + '|' + (y).toString()] = '#';
               break;
           }
 
@@ -350,7 +349,7 @@ String KarolRobotOutputDecode(String program){
           }
 
         } else if (_SET_PICKBEEPER.contains(element)) {
-          world[x.toString() + '|' + (y ).toString()] = '0';
+          world[x.toString() + '|' + (y ).toString()] = '#';
 
         } else if (_SET_PUTBEEPER.contains(element)) {
           world[x.toString() + '|' + (y ).toString()] = '9';
@@ -373,14 +372,18 @@ String KarolRobotOutputDecode(String program){
     binaryWorld[x][y] = value;
   });
 
+  String outputLine = '##';
+  List<String> output = new List();
+  output.add(outputLine.padRight(maxX + 1, '#'));
   for (y = 0; y < maxY; y++) {
-    for (x = 0; x < maxX; x++) {
+    outputLine = '##';
+    for (x = 0; x < maxX - 1; x++) {
       if (binaryWorld[x][y] == null)
-        output = output + '0';
+        outputLine = outputLine + '#';
       else
-        output = output + binaryWorld[x][y];
+        outputLine = outputLine + binaryWorld[x][y];
     }
-    output = output + '\n';
+    output.add(outputLine);
   }
-  return output;
+  return output.join('\n');
 }

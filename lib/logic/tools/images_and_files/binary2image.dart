@@ -31,6 +31,7 @@ Map<String, Color> colorMap = {
   'M': Colors.orangeAccent,
   'N': Colors.brown,
   'O': Colors.brown.shade900,
+  '#': Colors.grey.shade300,
 };
 
 Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) async {
