@@ -8,7 +8,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "020",
     "iso3166_2": "AD",
     "ioc": "AND",
-    "flag": "Andorra.png"
   },
   "UnitedArabEmirates": {
     "name": "common_country_UnitedArabEmirates",
@@ -19,7 +18,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "784",
     "iso3166_2": "AE",
     "ioc": "UAE",
-    "flag": "United_Arab_Emirates.png"
   },
   "Afghanistan": {
     "name": "common_country_Afghanistan",
@@ -30,7 +28,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "004",
     "iso3166_2": "AF",
     "ioc": "AFG",
-    "flag": "Afghanistan.png"
   },
   "AntiguaandBarbuda": {
     "name": "common_country_AntiguaandBarbuda",
@@ -41,7 +38,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "028",
     "iso3166_2": "AG",
     "ioc": "ANT",
-    "flag": "Antigua_and_Barbuda.png"
   },
   "Anguilla": {
     "name": "common_country_Anguilla",
@@ -52,7 +48,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "660",
     "iso3166_2": "AI",
     "ioc": "",
-    "flag": "Anguilla.png"
   },
   "Albania": {
     "name": "common_country_Albania",
@@ -63,7 +58,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "008",
     "iso3166_2": "AL",
     "ioc": "ALB",
-    "flag": "Albania.png"
   },
   "Armenia": {
     "name": "common_country_Armenia",
@@ -74,7 +68,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "051",
     "iso3166_2": "AM",
     "ioc": "ARM",
-    "flag": "Armenia.png"
   },
   "NetherlandsAntilles": {
     "name": "common_country_NetherlandsAntilles",
@@ -85,7 +78,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Netherlands_Antilles.png"
   },
   "Angola": {
     "name": "common_country_Angola",
@@ -96,7 +88,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "024",
     "iso3166_2": "AO",
     "ioc": "ANG",
-    "flag": "Angola.png"
   },
   "Antarctica": {
     "name": "common_country_Antarctica",
@@ -107,7 +98,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "010",
     "iso3166_2": "AQ",
     "ioc": "",
-    "flag": "Antarctica.png"
   },
   "BritishAntarcticTerritory": {
     "name": "common_country_BritishAntarcticTerritory",
@@ -118,7 +108,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "AQ",
     "ioc": "",
-    "flag": "British_Antarctic_Territory.png"
   },
   "RossDependency": {
     "name": "common_country_RossDependency",
@@ -129,7 +118,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "AQ",
     "ioc": "",
-    "flag": "Ross_Dependency.png"
   },
   "Argentina": {
     "name": "common_country_Argentina",
@@ -140,7 +128,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "032",
     "iso3166_2": "AR",
     "ioc": "ARG",
-    "flag": "Argentina.png"
   },
   "AmericanSamoa": {
     "name": "common_country_AmericanSamoa",
@@ -151,7 +138,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "016",
     "iso3166_2": "AS",
     "ioc": "ASA",
-    "flag": "American_Samoa.png"
   },
   "Austria": {
     "name": "common_country_Austria",
@@ -162,7 +148,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "040",
     "iso3166_2": "AT",
     "ioc": "AUT",
-    "flag": "Austria.png"
   },
   "Australia": {
     "name": "common_country_Australia",
@@ -173,7 +158,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "036",
     "iso3166_2": "AU",
     "ioc": "AUS",
-    "flag": "Australia.png"
   },
   "Aruba": {
     "name": "common_country_Aruba",
@@ -184,10 +168,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "533",
     "iso3166_2": "AW",
     "ioc": "ARU",
-    "flag": "Aruba.png"
   },
   "ÅlandIslands": {
-    "name": "common_country_ÅlandIslands",
+    "name": "common_country_AlandIslands",
     "callingcode": "+358 18",
     "vehiclecode": "AX",
     "iso3166_1_2": "AX",
@@ -195,7 +178,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "248",
     "iso3166_2": "AX",
     "ioc": "",
-    "flag": "Aland.png"
   },
   "Azerbaijan": {
     "name": "common_country_Azerbaijan",
@@ -206,7 +188,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "031",
     "iso3166_2": "AZ",
     "ioc": "AZE",
-    "flag": "Azerbaijan.png"
   },
   "BosniaandHerzegovina": {
     "name": "common_country_BosniaandHerzegovina",
@@ -217,7 +198,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "070",
     "iso3166_2": "BA",
     "ioc": "BIH",
-    "flag": "Bosnia_and_Herzegovina.png"
   },
   "Barbados": {
     "name": "common_country_Barbados",
@@ -228,7 +208,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "052",
     "iso3166_2": "BB",
     "ioc": "BAR",
-    "flag": "Barbados.png"
   },
   "Bangladesh": {
     "name": "common_country_Bangladesh",
@@ -239,7 +218,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "050",
     "iso3166_2": "BD",
     "ioc": "BAN",
-    "flag": "Bangladesh.png"
   },
   "Belgium": {
     "name": "common_country_Belgium",
@@ -250,7 +228,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "056",
     "iso3166_2": "BE",
     "ioc": "BEL",
-    "flag": "Belgium.png"
   },
   "BurkinaFaso": {
     "name": "common_country_BurkinaFaso",
@@ -261,7 +238,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "854",
     "iso3166_2": "BF",
     "ioc": "BUR",
-    "flag": "Burkina_Faso.png"
   },
   "Bulgaria": {
     "name": "common_country_Bulgaria",
@@ -272,7 +248,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "100",
     "iso3166_2": "BG",
     "ioc": "BUL",
-    "flag": "Bulgaria.png"
   },
   "Bahrain": {
     "name": "common_country_Bahrain",
@@ -283,7 +258,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "048",
     "iso3166_2": "BH",
     "ioc": "BRN",
-    "flag": "Bahrain.png"
   },
   "Burundi": {
     "name": "common_country_Burundi",
@@ -294,7 +268,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "108",
     "iso3166_2": "BI",
     "ioc": "BDI",
-    "flag": "Burundi.png"
   },
   "Benin": {
     "name": "common_country_Benin",
@@ -305,10 +278,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "204",
     "iso3166_2": "BJ",
     "ioc": "BEN",
-    "flag": "Benin.png"
   },
   "SaintBarthélemy": {
-    "name": "common_country_SaintBarthélemy",
+    "name": "common_country_SaintBarthelemy",
     "callingcode": "",
     "vehiclecode": "",
     "iso3166_1_2": "BL",
@@ -316,7 +288,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "652",
     "iso3166_2": "BL",
     "ioc": "",
-    "flag": "Saint_Barthelemy.png"
   },
   "Bermuda": {
     "name": "common_country_Bermuda",
@@ -327,7 +298,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "060",
     "iso3166_2": "BM",
     "ioc": "BER",
-    "flag": "Bermuda.png"
   },
   "Brunei": {
     "name": "common_country_Brunei",
@@ -338,7 +308,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "096",
     "iso3166_2": "BN",
     "ioc": "BRU",
-    "flag": "Brunei.png"
   },
   "Bolivia": {
     "name": "common_country_Bolivia",
@@ -349,7 +318,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "068",
     "iso3166_2": "BO",
     "ioc": "BOL",
-    "flag": "Bolivia.png"
   },
   "Bonaire": {
     "name": "common_country_Bonaire",
@@ -360,7 +328,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "535",
     "iso3166_2": "BQ",
     "ioc": "",
-    "flag": "Bonaire.png"
   },
   "Saba": {
     "name": "common_country_Saba",
@@ -371,7 +338,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "BQ",
     "ioc": "",
-    "flag": "Saba.png"
   },
   "SintEustatius": {
     "name": "common_country_SintEustatius",
@@ -382,7 +348,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "BQ",
     "ioc": "",
-    "flag": "Sint_Eustatius.png"
   },
   "Brazil": {
     "name": "common_country_Brazil",
@@ -393,7 +358,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "076",
     "iso3166_2": "BR",
     "ioc": "BRA",
-    "flag": "Brazil.png"
   },
   "Bahamas": {
     "name": "common_country_Bahamas",
@@ -404,7 +368,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "044",
     "iso3166_2": "BS",
     "ioc": "BAH",
-    "flag": "Bahamas.png"
   },
   "Bhutan": {
     "name": "common_country_Bhutan",
@@ -415,7 +378,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "064",
     "iso3166_2": "BT",
     "ioc": "BHU",
-    "flag": "Bhutan.png"
   },
   "BouvetIsland": {
     "name": "common_country_BouvetIsland",
@@ -425,8 +387,7 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_3": "BVT",
     "iso3166_1_n": "074",
     "iso3166_2": "BV",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "Botswana": {
     "name": "common_country_Botswana",
@@ -437,7 +398,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "072",
     "iso3166_2": "BW",
     "ioc": "BOT",
-    "flag": "Botswana.png"
   },
   "Belarus": {
     "name": "common_country_Belarus",
@@ -448,7 +408,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "112",
     "iso3166_2": "BY",
     "ioc": "BLR",
-    "flag": "Belarus.png"
   },
   "Belize": {
     "name": "common_country_Belize",
@@ -459,7 +418,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "084",
     "iso3166_2": "BZ",
     "ioc": "BIZ",
-    "flag": "Belize.png"
   },
   "Canada": {
     "name": "common_country_Canada",
@@ -470,7 +428,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "124",
     "iso3166_2": "CA",
     "ioc": "CAN",
-    "flag": "Canada.png"
   },
   "CocosIslands": {
     "name": "common_country_CocosIslands",
@@ -481,10 +438,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "166",
     "iso3166_2": "CC",
     "ioc": "",
-    "flag": "Cocos_Islands.png"
   },
   "DemocraticRepublicoftheCongo/Kinshasa": {
-    "name": "common_country_DemocraticRepublicoftheCongo/Kinshasa",
+    "name": "common_country_DemocraticRepublicoftheCongo",
     "callingcode": "+243",
     "vehiclecode": "CGO",
     "iso3166_1_2": "CD",
@@ -492,10 +448,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "180",
     "iso3166_2": "CD",
     "ioc": "COD",
-    "flag": "Democratic_Republic_of_the_Congo.png"
   },
   "RepublicoftheCongo/Brazzaville": {
-    "name": "common_country_RepublicoftheCongo/Brazzaville",
+    "name": "common_country_RepublicoftheCongo",
     "callingcode": "+242",
     "vehiclecode": "RCB",
     "iso3166_1_2": "CD",
@@ -503,7 +458,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "180",
     "iso3166_2": "CG",
     "ioc": "CGO",
-    "flag": "Republic_of_the_Congo.png"
   },
   "CentralAfricanRepublic": {
     "name": "common_country_CentralAfricanRepublic",
@@ -514,7 +468,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "140",
     "iso3166_2": "CF",
     "ioc": "CAF",
-    "flag": "Central_African_Republic.png"
   },
   "Switzerland": {
     "name": "common_country_Switzerland",
@@ -525,10 +478,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "756",
     "iso3166_2": "CH",
     "ioc": "SUI",
-    "flag": "Switzerland.png"
   },
   "IvoryCoast(Côted'Ivoire)": {
-    "name": "common_country_IvoryCoast(Côted'Ivoire)",
+    "name": "common_country_CotedIvoire",
     "callingcode": "+225",
     "vehiclecode": "CI",
     "iso3166_1_2": "CI",
@@ -536,7 +488,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "384",
     "iso3166_2": "CI",
     "ioc": "CIV",
-    "flag": "Cote_d_Ivoire.png"
   },
   "CookIslands": {
     "name": "common_country_CookIslands",
@@ -547,7 +498,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "184",
     "iso3166_2": "CK",
     "ioc": "COK",
-    "flag": "Cook_Islands.png"
   },
   "Chile": {
     "name": "common_country_Chile",
@@ -558,7 +508,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "152",
     "iso3166_2": "CL",
     "ioc": "CHI",
-    "flag": "Chile.png"
   },
   "Cameroon": {
     "name": "common_country_Cameroon",
@@ -569,10 +518,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "120",
     "iso3166_2": "CM",
     "ioc": "CMR",
-    "flag": "Cameroon.png"
   },
   "China": {
-    "name": "common_country_China",
+    "name": "common_country_PeoplesRepublicofChina",
     "callingcode": "+86",
     "vehiclecode": "CHN",
     "iso3166_1_2": "CN",
@@ -580,7 +528,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "156",
     "iso3166_2": "CN",
     "ioc": "CHN",
-    "flag": "Peoples_Republic_of_China.png"
   },
   "Colombia": {
     "name": "common_country_Colombia",
@@ -591,7 +538,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "170",
     "iso3166_2": "CO",
     "ioc": "COL",
-    "flag": "Colombia.png"
   },
   "CostaRica": {
     "name": "common_country_CostaRica",
@@ -602,7 +548,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "188",
     "iso3166_2": "CR",
     "ioc": "CRC",
-    "flag": "Costa_Rica.png"
   },
   "Cuba": {
     "name": "common_country_Cuba",
@@ -613,7 +558,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "192",
     "iso3166_2": "CU",
     "ioc": "CUB",
-    "flag": "Cuba.png"
   },
   "CapeVerde": {
     "name": "common_country_CapeVerde",
@@ -624,10 +568,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "132",
     "iso3166_2": "CV",
     "ioc": "CPV",
-    "flag": "Cape_Verde.png"
   },
   "Curaçao": {
-    "name": "common_country_Curaçao",
+    "name": "common_country_Curacao",
     "callingcode": "+599",
     "vehiclecode": "NA",
     "iso3166_1_2": "CW",
@@ -635,7 +578,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "531",
     "iso3166_2": "CW",
     "ioc": "",
-    "flag": "Curacao.png"
   },
   "ChristmasIsland": {
     "name": "common_country_ChristmasIsland",
@@ -646,7 +588,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "162",
     "iso3166_2": "CX",
     "ioc": "",
-    "flag": "Christmas_Island.png"
   },
   "Cyprus": {
     "name": "common_country_Cyprus",
@@ -657,7 +598,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "196",
     "iso3166_2": "CY",
     "ioc": "CYP",
-    "flag": "Cyprus.png"
   },
   "CzechRepublic": {
     "name": "common_country_CzechRepublic",
@@ -668,7 +608,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "203",
     "iso3166_2": "CZ",
     "ioc": "CZE",
-    "flag": "Czech_Republic.png"
   },
   "Germany": {
     "name": "common_country_Germany",
@@ -679,7 +618,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "276",
     "iso3166_2": "DE",
     "ioc": "GER",
-    "flag": "Germany.png"
   },
   "Djibouti": {
     "name": "common_country_Djibouti",
@@ -690,7 +628,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "262",
     "iso3166_2": "DJ",
     "ioc": "DJI",
-    "flag": "Djibouti.png"
   },
   "Denmark": {
     "name": "common_country_Denmark",
@@ -701,7 +638,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "208",
     "iso3166_2": "DK",
     "ioc": "DEN",
-    "flag": "Denmark.png"
   },
   "Dominica": {
     "name": "common_country_Dominica",
@@ -712,7 +648,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "212",
     "iso3166_2": "DM",
     "ioc": "DMA",
-    "flag": "Dominica.png"
   },
   "DominicanRepublic": {
     "name": "common_country_DominicanRepublic",
@@ -723,7 +658,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "214",
     "iso3166_2": "DO",
     "ioc": "DOM",
-    "flag": "Dominican_Republic.png"
   },
   "Algeria": {
     "name": "common_country_Algeria",
@@ -734,7 +668,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "012",
     "iso3166_2": "DZ",
     "ioc": "ALG",
-    "flag": "Algeria.png"
   },
   "Ecuador": {
     "name": "common_country_Ecuador",
@@ -745,7 +678,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "218",
     "iso3166_2": "EC",
     "ioc": "ECU",
-    "flag": "Ecuador.png"
   },
   "Estonia": {
     "name": "common_country_Estonia",
@@ -756,7 +688,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "233",
     "iso3166_2": "EE",
     "ioc": "EST",
-    "flag": "Estonia.png"
   },
   "Egypt": {
     "name": "common_country_Egypt",
@@ -767,7 +698,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "818",
     "iso3166_2": "EG",
     "ioc": "EGY",
-    "flag": "Egypt.png"
   },
   "SahrawiArabDemocraticRepublic": {
     "name": "common_country_SahrawiArabDemocraticRepublic",
@@ -778,7 +708,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "732",
     "iso3166_2": "EH",
     "ioc": "",
-    "flag": "Sahrawi_Arab_Democratic_Republic.png"
   },
   "Eritrea": {
     "name": "common_country_Eritrea",
@@ -789,7 +718,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "232",
     "iso3166_2": "ER",
     "ioc": "ERI",
-    "flag": "Eritrea.png"
   },
   "Spain": {
     "name": "common_country_Spain",
@@ -800,7 +728,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "724",
     "iso3166_2": "ES",
     "ioc": "ESP",
-    "flag": "Spain.png"
   },
   "Ethiopia": {
     "name": "common_country_Ethiopia",
@@ -811,7 +738,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "231",
     "iso3166_2": "ET",
     "ioc": "ETH",
-    "flag": "Ethiopia.png"
   },
   "Finland": {
     "name": "common_country_Finland",
@@ -822,7 +748,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "246",
     "iso3166_2": "FI",
     "ioc": "FIN",
-    "flag": "Finland.png"
   },
   "Fiji": {
     "name": "common_country_Fiji",
@@ -833,7 +758,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "242",
     "iso3166_2": "FJ",
     "ioc": "FIJ",
-    "flag": "Fiji.png"
   },
   "FalklandIslands": {
     "name": "common_country_FalklandIslands",
@@ -844,7 +768,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "238",
     "iso3166_2": "FK",
     "ioc": "",
-    "flag": "Falkland_Islands.png"
   },
   "Micronesia": {
     "name": "common_country_Micronesia",
@@ -855,7 +778,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "583",
     "iso3166_2": "FM",
     "ioc": "FSM",
-    "flag": "Federated_States_of_Micronesia.png"
   },
   "FaroeIslands": {
     "name": "common_country_FaroeIslands",
@@ -866,7 +788,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "234",
     "iso3166_2": "FO",
     "ioc": "",
-    "flag": "Faroe_Islands.png"
   },
   "France": {
     "name": "common_country_France",
@@ -877,7 +798,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "250",
     "iso3166_2": "FR",
     "ioc": "FRA",
-    "flag": "France.png"
   },
   "Gabon": {
     "name": "common_country_Gabon",
@@ -888,10 +808,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "266",
     "iso3166_2": "GA",
     "ioc": "GAB",
-    "flag": "Gabon.png"
   },
   "GreatBritain": {
-    "name": "common_country_GreatBritain",
+    "name": "common_country_UnitedKingdom",
     "callingcode": "+44",
     "vehiclecode": "GB",
     "iso3166_1_2": "GB",
@@ -899,7 +818,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "826",
     "iso3166_2": "GB",
     "ioc": "GBR",
-    "flag": "United_Kingdom.png"
   },
   "Grenada": {
     "name": "common_country_Grenada",
@@ -910,7 +828,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "308",
     "iso3166_2": "GD",
     "ioc": "GRN",
-    "flag": "Grenada.png"
   },
   "Georgia": {
     "name": "common_country_Georgia",
@@ -921,7 +838,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "268",
     "iso3166_2": "GE",
     "ioc": "GEO",
-    "flag": "Georgia.png"
   },
   "FrenchGuiana": {
     "name": "common_country_FrenchGuiana",
@@ -932,7 +848,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "254",
     "iso3166_2": "GF",
     "ioc": "",
-    "flag": "French_Guiana.png"
   },
   "Alderney": {
     "name": "common_country_Alderney",
@@ -943,10 +858,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "GG",
     "ioc": "",
-    "flag": "Alderney.png"
   },
   "BailiwickofGuernsey": {
-    "name": "common_country_BailiwickofGuernsey",
+    "name": "common_country_Guernsey",
     "callingcode": "+44 1481",
     "vehiclecode": "GBG",
     "iso3166_1_2": "GG",
@@ -954,7 +868,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "831",
     "iso3166_2": "GG",
     "ioc": "",
-    "flag": "Guernsey.png"
   },
   "Ghana": {
     "name": "common_country_Ghana",
@@ -965,7 +878,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "288",
     "iso3166_2": "GH",
     "ioc": "GHA",
-    "flag": "Ghana.png"
   },
   "Gibraltar": {
     "name": "common_country_Gibraltar",
@@ -976,7 +888,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "292",
     "iso3166_2": "GI",
     "ioc": "",
-    "flag": "Gibraltar.png"
   },
   "Greenland": {
     "name": "common_country_Greenland",
@@ -987,7 +898,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "304",
     "iso3166_2": "GL",
     "ioc": "",
-    "flag": "Greenland.png"
   },
   "Gambia": {
     "name": "common_country_Gambia",
@@ -998,7 +908,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "270",
     "iso3166_2": "GM",
     "ioc": "GAM",
-    "flag": "Gambia.png"
   },
   "Guinea": {
     "name": "common_country_Guinea",
@@ -1009,7 +918,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "324",
     "iso3166_2": "GN",
     "ioc": "GUI",
-    "flag": "Guinea.png"
   },
   "Guadeloupe": {
     "name": "common_country_Guadeloupe",
@@ -1020,7 +928,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "312",
     "iso3166_2": "GP",
     "ioc": "",
-    "flag": "Guadeloupe.png"
   },
   "EquatorialGuinea": {
     "name": "common_country_EquatorialGuinea",
@@ -1031,7 +938,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "226",
     "iso3166_2": "GQ",
     "ioc": "GEQ",
-    "flag": "Equatorial_Guinea.png"
   },
   "Greece": {
     "name": "common_country_Greece",
@@ -1042,7 +948,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "300",
     "iso3166_2": "GR",
     "ioc": "GRE",
-    "flag": "Greece.png"
   },
   "SouthGeorgiaandtheSouthSandwichIslands": {
     "name": "common_country_SouthGeorgiaandtheSouthSandwichIslands",
@@ -1053,7 +958,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "239",
     "iso3166_2": "GS",
     "ioc": "",
-    "flag": "South_Georgia_and_the_South_Sandwich_Islands.png"
   },
   "Guatemala": {
     "name": "common_country_Guatemala",
@@ -1064,7 +968,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "320",
     "iso3166_2": "GT",
     "ioc": "GUA",
-    "flag": "Guatemala.png"
   },
   "Guam": {
     "name": "common_country_Guam",
@@ -1075,10 +978,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "316",
     "iso3166_2": "GU",
     "ioc": "GUM",
-    "flag": "Guam.png"
   },
   "Guinea-Bissau": {
-    "name": "common_country_Guinea-Bissau",
+    "name": "common_country_GuineaBissau",
     "callingcode": "+245",
     "vehiclecode": "GUB",
     "iso3166_1_2": "GW",
@@ -1086,7 +988,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "624",
     "iso3166_2": "GW",
     "ioc": "GBS",
-    "flag": "Guinea-Bissau.png"
   },
   "Guyana": {
     "name": "common_country_Guyana",
@@ -1097,7 +998,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "328",
     "iso3166_2": "GY",
     "ioc": "GUY",
-    "flag": "Guyana.png"
   },
   "HongKong": {
     "name": "common_country_HongKong",
@@ -1108,7 +1008,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "344",
     "iso3166_2": "HK",
     "ioc": "HKG",
-    "flag": "Hong_Kong.png"
   },
   "HeardIslandandMcDonaldIslands": {
     "name": "common_country_HeardIslandandMcDonaldIslands",
@@ -1118,8 +1017,7 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_3": "HMD",
     "iso3166_1_n": "334",
     "iso3166_2": "HM",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "Honduras": {
     "name": "common_country_Honduras",
@@ -1130,7 +1028,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "340",
     "iso3166_2": "HN",
     "ioc": "HON",
-    "flag": "Honduras.png"
   },
   "Croatia": {
     "name": "common_country_Croatia",
@@ -1141,7 +1038,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "191",
     "iso3166_2": "HR",
     "ioc": "CRO",
-    "flag": "Croatia.png"
   },
   "Haiti": {
     "name": "common_country_Haiti",
@@ -1152,7 +1048,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "332",
     "iso3166_2": "HT",
     "ioc": "HAI",
-    "flag": "Haiti.png"
   },
   "Hungary": {
     "name": "common_country_Hungary",
@@ -1163,7 +1058,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "348",
     "iso3166_2": "HU",
     "ioc": "HUN",
-    "flag": "Hungary.png"
   },
   "CanaryIslands": {
     "name": "common_country_CanaryIslands",
@@ -1174,7 +1068,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "ES-CN",
     "ioc": "",
-    "flag": "Canary_Islands.png"
   },
   "Indonesia": {
     "name": "common_country_Indonesia",
@@ -1185,7 +1078,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "360",
     "iso3166_2": "ID",
     "ioc": "INA",
-    "flag": "Indonesia.png"
   },
   "Ireland": {
     "name": "common_country_Ireland",
@@ -1196,7 +1088,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "372",
     "iso3166_2": "IE",
     "ioc": "IRL",
-    "flag": "Ireland.png"
   },
   "Israel": {
     "name": "common_country_Israel",
@@ -1207,7 +1098,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "376",
     "iso3166_2": "IL",
     "ioc": "ISR",
-    "flag": "Israel.png"
   },
   "IsleofMan": {
     "name": "common_country_IsleofMan",
@@ -1218,7 +1108,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "833",
     "iso3166_2": "IM",
     "ioc": "",
-    "flag": "Isle_of_Man.png"
   },
   "India": {
     "name": "common_country_India",
@@ -1229,10 +1118,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "356",
     "iso3166_2": "IN",
     "ioc": "IND",
-    "flag": "India.png"
   },
   "BritishIndianOceanTerrirory": {
-    "name": "common_country_BritishIndianOceanTerrirory",
+    "name": "common_country_BritishIndianOceanTerritory",
     "callingcode": "",
     "vehiclecode": "",
     "iso3166_1_2": "IO",
@@ -1240,7 +1128,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "086",
     "iso3166_2": "IO",
     "ioc": "",
-    "flag": "Commissioner_of_the_British_Indian_Ocean_Territory.png"
   },
   "Iraq": {
     "name": "common_country_Iraq",
@@ -1251,7 +1138,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "368",
     "iso3166_2": "IQ",
     "ioc": "IRQ",
-    "flag": "Iraq.png"
   },
   "Iran": {
     "name": "common_country_Iran",
@@ -1262,7 +1148,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "364",
     "iso3166_2": "IR",
     "ioc": "IRI",
-    "flag": "Iran.png"
   },
   "Iceland": {
     "name": "common_country_Iceland",
@@ -1273,7 +1158,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "352",
     "iso3166_2": "IS",
     "ioc": "ISL",
-    "flag": "Iceland.png"
   },
   "Italy": {
     "name": "common_country_Italy",
@@ -1284,7 +1168,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "380",
     "iso3166_2": "IT",
     "ioc": "ITA",
-    "flag": "Italy.png"
   },
   "Jersey": {
     "name": "common_country_Jersey",
@@ -1295,7 +1178,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "832",
     "iso3166_2": "JE",
     "ioc": "",
-    "flag": "Jersey.png"
   },
   "Jamaica": {
     "name": "common_country_Jamaica",
@@ -1306,7 +1188,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "388",
     "iso3166_2": "JM",
     "ioc": "JAM",
-    "flag": "Jamaica.png"
   },
   "Jordan": {
     "name": "common_country_Jordan",
@@ -1317,7 +1198,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "400",
     "iso3166_2": "JO",
     "ioc": "JOR",
-    "flag": "Jordan.png"
   },
   "Japan": {
     "name": "common_country_Japan",
@@ -1328,7 +1208,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "392",
     "iso3166_2": "JP",
     "ioc": "JPN",
-    "flag": "Japan.png"
   },
   "Kenya": {
     "name": "common_country_Kenya",
@@ -1339,7 +1218,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "404",
     "iso3166_2": "KE",
     "ioc": "KEN",
-    "flag": "Kenya.png"
   },
   "Kyrgyzstan": {
     "name": "common_country_Kyrgyzstan",
@@ -1350,7 +1228,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "417",
     "iso3166_2": "KG",
     "ioc": "KGZ",
-    "flag": "Kyrgyzstan.png"
   },
   "Cambodia": {
     "name": "common_country_Cambodia",
@@ -1361,10 +1238,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "116",
     "iso3166_2": "KH",
     "ioc": "CAM",
-    "flag": "Cambodia.png"
   },
   "Kiribati(GilbertIslands)": {
-    "name": "common_country_Kiribati(GilbertIslands)",
+    "name": "common_country_Kiribati",
     "callingcode": "+686",
     "vehiclecode": "KIR",
     "iso3166_1_2": "KI",
@@ -1372,7 +1248,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "296",
     "iso3166_2": "KI",
     "ioc": "KIR",
-    "flag": "Kiribati.png"
   },
   "Comoros": {
     "name": "common_country_Comoros",
@@ -1383,10 +1258,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "174",
     "iso3166_2": "KM",
     "ioc": "COM",
-    "flag": "Comoros.png"
   },
   "SaintKitts": {
-    "name": "common_country_SaintKitts",
+    "name": "common_country_SaintKittsandNevis",
     "callingcode": "+1",
     "vehiclecode": "KAN",
     "iso3166_1_2": "KN",
@@ -1394,10 +1268,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "659",
     "iso3166_2": "KN",
     "ioc": "SKN",
-    "flag": "Saint_Kitts_and_Nevis.png"
   },
   "NorthKorea(DemocraticPeople'sRepublicofKorea)": {
-    "name": "common_country_NorthKorea(DemocraticPeople'sRepublicofKorea)",
+    "name": "common_country_NorthKorea",
     "callingcode": "+850",
     "vehiclecode": "KP",
     "iso3166_1_2": "KP",
@@ -1405,10 +1278,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "408",
     "iso3166_2": "KP",
     "ioc": "PRK",
-    "flag": "North_Korea.png"
   },
   "SouthKorea(RepublicofKorea)": {
-    "name": "common_country_SouthKorea(RepublicofKorea)",
+    "name": "common_country_SouthKorea",
     "callingcode": "+82",
     "vehiclecode": "ROK",
     "iso3166_1_2": "KR",
@@ -1416,7 +1288,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "410",
     "iso3166_2": "KR",
     "ioc": "KOR",
-    "flag": "South_Korea.png"
   },
   "Kuwait": {
     "name": "common_country_Kuwait",
@@ -1427,7 +1298,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "414",
     "iso3166_2": "KW",
     "ioc": "KUW",
-    "flag": "Kuwait.png"
   },
   "CaymanIslands": {
     "name": "common_country_CaymanIslands",
@@ -1438,7 +1308,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "136",
     "iso3166_2": "KY",
     "ioc": "CAY",
-    "flag": "Cayman_Islands.png"
   },
   "Kazakhstan": {
     "name": "common_country_Kazakhstan",
@@ -1449,7 +1318,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "398",
     "iso3166_2": "KZ",
     "ioc": "KAZ",
-    "flag": "Kazakhstan.png"
   },
   "Laos": {
     "name": "common_country_Laos",
@@ -1460,7 +1328,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "418",
     "iso3166_2": "LA",
     "ioc": "LAO",
-    "flag": "Laos.png"
   },
   "Lebanon": {
     "name": "common_country_Lebanon",
@@ -1471,7 +1338,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "422",
     "iso3166_2": "LB",
     "ioc": "LBN",
-    "flag": "Lebanon.png"
   },
   "SaintLucia": {
     "name": "common_country_SaintLucia",
@@ -1482,7 +1348,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "662",
     "iso3166_2": "LC",
     "ioc": "LCA",
-    "flag": "Saint_Lucia.png"
   },
   "Liechtenstein": {
     "name": "common_country_Liechtenstein",
@@ -1493,7 +1358,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "438",
     "iso3166_2": "LI",
     "ioc": "LIE",
-    "flag": "Liechtenstein.png"
   },
   "SriLanka": {
     "name": "common_country_SriLanka",
@@ -1504,7 +1368,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "144",
     "iso3166_2": "LK",
     "ioc": "SRI",
-    "flag": "Sri_Lanka.png"
   },
   "Liberia": {
     "name": "common_country_Liberia",
@@ -1515,7 +1378,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "430",
     "iso3166_2": "LR",
     "ioc": "LBR",
-    "flag": "Liberia.png"
   },
   "Lesotho": {
     "name": "common_country_Lesotho",
@@ -1526,7 +1388,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "426",
     "iso3166_2": "LS",
     "ioc": "LES",
-    "flag": "Lesotho.png"
   },
   "Lithuania": {
     "name": "common_country_Lithuania",
@@ -1537,7 +1398,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "440",
     "iso3166_2": "LT",
     "ioc": "LTU",
-    "flag": "Lithuania.png"
   },
   "Luxembourg": {
     "name": "common_country_Luxembourg",
@@ -1548,7 +1408,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "442",
     "iso3166_2": "LU",
     "ioc": "LUX",
-    "flag": "Luxembourg.png"
   },
   "Latvia": {
     "name": "common_country_Latvia",
@@ -1559,7 +1418,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "428",
     "iso3166_2": "LV",
     "ioc": "LAT",
-    "flag": "Latvia.png"
   },
   "Libya": {
     "name": "common_country_Libya",
@@ -1570,7 +1428,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "434",
     "iso3166_2": "LY",
     "ioc": "LBA",
-    "flag": "Libya.png"
   },
   "Morocco": {
     "name": "common_country_Morocco",
@@ -1581,7 +1438,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "504",
     "iso3166_2": "MA",
     "ioc": "MAR",
-    "flag": "Morocco.png"
   },
   "Monaco": {
     "name": "common_country_Monaco",
@@ -1592,7 +1448,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "492",
     "iso3166_2": "MC",
     "ioc": "MON",
-    "flag": "Monaco.png"
   },
   "Moldova": {
     "name": "common_country_Moldova",
@@ -1603,7 +1458,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "498",
     "iso3166_2": "MD",
     "ioc": "MDA",
-    "flag": "Moldova.png"
   },
   "Montenegro": {
     "name": "common_country_Montenegro",
@@ -1614,7 +1468,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "499",
     "iso3166_2": "ME",
     "ioc": "MNE",
-    "flag": "Montenegro.png"
   },
   "CollectivityofSaintMartin": {
     "name": "common_country_CollectivityofSaintMartin",
@@ -1624,8 +1477,7 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_3": "MAF",
     "iso3166_1_n": "663",
     "iso3166_2": "MF",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "Madagascar": {
     "name": "common_country_Madagascar",
@@ -1636,7 +1488,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "450",
     "iso3166_2": "MG",
     "ioc": "MAD",
-    "flag": "Madagascar.png"
   },
   "MarshallIslands": {
     "name": "common_country_MarshallIslands",
@@ -1647,7 +1498,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "584",
     "iso3166_2": "MH",
     "ioc": "MHL",
-    "flag": "Marshall_Islands.png"
   },
   "NorthMacedonia": {
     "name": "common_country_NorthMacedonia",
@@ -1658,7 +1508,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "807",
     "iso3166_2": "MK",
     "ioc": "MKD",
-    "flag": "North_Macedonia.png"
   },
   "Mali": {
     "name": "common_country_Mali",
@@ -1669,7 +1518,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "466",
     "iso3166_2": "ML",
     "ioc": "MLI",
-    "flag": "Mali.png"
   },
   "Myanmar": {
     "name": "common_country_Myanmar",
@@ -1680,7 +1528,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "104",
     "iso3166_2": "MM",
     "ioc": "MYA",
-    "flag": "Myanmar.png"
   },
   "Mongolia": {
     "name": "common_country_Mongolia",
@@ -1691,7 +1538,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "496",
     "iso3166_2": "MN",
     "ioc": "MGL",
-    "flag": "Mongolia.png"
   },
   "Macau": {
     "name": "common_country_Macau",
@@ -1702,7 +1548,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "446",
     "iso3166_2": "MO",
     "ioc": "",
-    "flag": "Macau.png"
   },
   "NorthernMarianaIslands": {
     "name": "common_country_NorthernMarianaIslands",
@@ -1713,7 +1558,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "580",
     "iso3166_2": "MP",
     "ioc": "",
-    "flag": "Northern_Mariana_Islands.png"
   },
   "Martinique": {
     "name": "common_country_Martinique",
@@ -1724,7 +1568,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "474",
     "iso3166_2": "MQ",
     "ioc": "",
-    "flag": "Martinique.png"
   },
   "Mauritania": {
     "name": "common_country_Mauritania",
@@ -1735,7 +1578,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "478",
     "iso3166_2": "MR",
     "ioc": "MTN",
-    "flag": "Mauritania.png"
   },
   "Montserrat": {
     "name": "common_country_Montserrat",
@@ -1746,7 +1588,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "500",
     "iso3166_2": "MS",
     "ioc": "",
-    "flag": "Montserrat.png"
   },
   "Malta": {
     "name": "common_country_Malta",
@@ -1757,7 +1598,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "470",
     "iso3166_2": "MT",
     "ioc": "MLT",
-    "flag": "Malta.png"
   },
   "Mauritius": {
     "name": "common_country_Mauritius",
@@ -1768,7 +1608,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "480",
     "iso3166_2": "MU",
     "ioc": "MRI",
-    "flag": "Mauritius.png"
   },
   "Maldives": {
     "name": "common_country_Maldives",
@@ -1779,7 +1618,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "462",
     "iso3166_2": "MV",
     "ioc": "MDV",
-    "flag": "Maldives.png"
   },
   "Malawi": {
     "name": "common_country_Malawi",
@@ -1790,7 +1628,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "454",
     "iso3166_2": "MW",
     "ioc": "MAW",
-    "flag": "Malawi.png"
   },
   "Mexico": {
     "name": "common_country_Mexico",
@@ -1801,7 +1638,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "484",
     "iso3166_2": "MX",
     "ioc": "MEX",
-    "flag": "Mexico.png"
   },
   "Malaysia": {
     "name": "common_country_Malaysia",
@@ -1812,7 +1648,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "458",
     "iso3166_2": "MY",
     "ioc": "MAS",
-    "flag": "Malaysia.png"
   },
   "Mozambique": {
     "name": "common_country_Mozambique",
@@ -1823,7 +1658,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "508",
     "iso3166_2": "MZ",
     "ioc": "MOZ",
-    "flag": "Mozambique.png"
   },
   "Namibia": {
     "name": "common_country_Namibia",
@@ -1834,7 +1668,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "516",
     "iso3166_2": "NA",
     "ioc": "NAM",
-    "flag": "Namibia.png"
   },
   "NewCaledonia": {
     "name": "common_country_NewCaledonia",
@@ -1845,7 +1678,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "540",
     "iso3166_2": "NC",
     "ioc": "",
-    "flag": "FLNKS.png"
   },
   "Niger": {
     "name": "common_country_Niger",
@@ -1856,7 +1688,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "562",
     "iso3166_2": "NE",
     "ioc": "NIG",
-    "flag": "Niger.png"
   },
   "NorfolkIsland": {
     "name": "common_country_NorfolkIsland",
@@ -1867,7 +1698,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "574",
     "iso3166_2": "NF",
     "ioc": "",
-    "flag": "Norfolk_Island.png"
   },
   "Nigeria": {
     "name": "common_country_Nigeria",
@@ -1878,7 +1708,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "566",
     "iso3166_2": "NG",
     "ioc": "NGR",
-    "flag": "Nigeria.png"
   },
   "Nicaragua": {
     "name": "common_country_Nicaragua",
@@ -1889,7 +1718,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "558",
     "iso3166_2": "NI",
     "ioc": "NCA",
-    "flag": "Nicaragua.png"
   },
   "NorthernIreland": {
     "name": "common_country_NorthernIreland",
@@ -1900,7 +1728,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "GB",
     "ioc": "",
-    "flag": "Northern_Ireland.png"
   },
   "Netherlands": {
     "name": "common_country_Netherlands",
@@ -1911,7 +1738,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "528",
     "iso3166_2": "NL",
     "ioc": "NED",
-    "flag": "Netherlands.png"
   },
   "Norway": {
     "name": "common_country_Norway",
@@ -1922,7 +1748,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "578",
     "iso3166_2": "NO",
     "ioc": "NOR",
-    "flag": "Norway.png"
   },
   "Nepal": {
     "name": "common_country_Nepal",
@@ -1933,7 +1758,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "524",
     "iso3166_2": "NP",
     "ioc": "NEP",
-    "flag": "Nepal.png"
   },
   "Nauru": {
     "name": "common_country_Nauru",
@@ -1944,7 +1768,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "520",
     "iso3166_2": "NR",
     "ioc": "NRU",
-    "flag": "Nauru.png"
   },
   "Niue": {
     "name": "common_country_Niue",
@@ -1955,7 +1778,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "570",
     "iso3166_2": "NU",
     "ioc": "",
-    "flag": "Niue.png"
   },
   "NewZealand": {
     "name": "common_country_NewZealand",
@@ -1966,7 +1788,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "554",
     "iso3166_2": "NZ",
     "ioc": "NZL",
-    "flag": "New_Zealand.png"
   },
   "Oman": {
     "name": "common_country_Oman",
@@ -1977,7 +1798,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "512",
     "iso3166_2": "OM",
     "ioc": "OMA",
-    "flag": "Oman.png"
   },
   "Panama": {
     "name": "common_country_Panama",
@@ -1988,7 +1808,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "591",
     "iso3166_2": "PA",
     "ioc": "PAN",
-    "flag": "Panama.png"
   },
   "Peru": {
     "name": "common_country_Peru",
@@ -1999,7 +1818,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "604",
     "iso3166_2": "PE",
     "ioc": "PER",
-    "flag": "Peru.png"
   },
   "FrenchPolynesia": {
     "name": "common_country_FrenchPolynesia",
@@ -2010,7 +1828,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "258",
     "iso3166_2": "PF",
     "ioc": "",
-    "flag": "French_Polynesia.png"
   },
   "PapuaNewGuinea": {
     "name": "common_country_PapuaNewGuinea",
@@ -2021,7 +1838,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "598",
     "iso3166_2": "PG",
     "ioc": "PNG",
-    "flag": "Papua_New_Guinea.png"
   },
   "Philippines": {
     "name": "common_country_Philippines",
@@ -2032,7 +1848,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "608",
     "iso3166_2": "PH",
     "ioc": "PHI",
-    "flag": "Philippines.png"
   },
   "Pakistan": {
     "name": "common_country_Pakistan",
@@ -2043,7 +1858,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "586",
     "iso3166_2": "PK",
     "ioc": "PAK",
-    "flag": "Pakistan.png"
   },
   "Poland": {
     "name": "common_country_Poland",
@@ -2054,10 +1868,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "616",
     "iso3166_2": "PL",
     "ioc": "POL",
-    "flag": "Poland.png"
   },
   "Saint-PierreandMiquelon": {
-    "name": "common_country_Saint-PierreandMiquelon",
+    "name": "common_country_SaintPierreandMiquelon",
     "callingcode": "+508",
     "vehiclecode": "",
     "iso3166_1_2": "PM",
@@ -2065,7 +1878,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "666",
     "iso3166_2": "PM",
     "ioc": "",
-    "flag": "Saint-Pierre_and_Miquelon.png"
   },
   "PitcairnIslands": {
     "name": "common_country_PitcairnIslands",
@@ -2076,7 +1888,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "612",
     "iso3166_2": "PN",
     "ioc": "",
-    "flag": "Pitcairn_Islands.png"
   },
   "PuertoRico": {
     "name": "common_country_PuertoRico",
@@ -2087,10 +1898,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "630",
     "iso3166_2": "PR",
     "ioc": "PUR",
-    "flag": "Puerto_Rico.png"
   },
   "PalestinianAutonomousTerritories": {
-    "name": "common_country_PalestinianAutonomousTerritories",
+    "name": "common_country_Palestine",
     "callingcode": "+970",
     "vehiclecode": "WB",
     "iso3166_1_2": "PS",
@@ -2098,7 +1908,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "275",
     "iso3166_2": "PS",
     "ioc": "PLE",
-    "flag": "Palestine.png"
   },
   "Portugal": {
     "name": "common_country_Portugal",
@@ -2109,7 +1918,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "620",
     "iso3166_2": "PT",
     "ioc": "POR",
-    "flag": "Portugal.png"
   },
   "Azores": {
     "name": "common_country_Azores",
@@ -2120,7 +1928,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "PT",
     "ioc": "",
-    "flag": "Azores.png"
   },
   "Madeira": {
     "name": "common_country_Madeira",
@@ -2131,7 +1938,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "PT",
     "ioc": "",
-    "flag": "Madeira.png"
   },
   "Palau": {
     "name": "common_country_Palau",
@@ -2142,7 +1948,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "585",
     "iso3166_2": "PW",
     "ioc": "PLW",
-    "flag": "Palau.png"
   },
   "Paraguay": {
     "name": "common_country_Paraguay",
@@ -2153,7 +1958,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "600",
     "iso3166_2": "PY",
     "ioc": "PAR",
-    "flag": "Paraguay.png"
   },
   "Qatar": {
     "name": "common_country_Qatar",
@@ -2164,18 +1968,16 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "634",
     "iso3166_2": "QA",
     "ioc": "QAT",
-    "flag": "Qatar.png"
   },
   "Réunion": {
-    "name": "common_country_Réunion",
+    "name": "common_country_Reunion",
     "callingcode": "+262",
     "vehiclecode": "",
     "iso3166_1_2": "RE",
     "iso3166_1_3": "REU",
     "iso3166_1_n": "638",
     "iso3166_2": "RE",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "Romania": {
     "name": "common_country_Romania",
@@ -2186,7 +1988,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "642",
     "iso3166_2": "RO",
     "ioc": "ROU",
-    "flag": "Romania.png"
   },
   "Serbia": {
     "name": "common_country_Serbia",
@@ -2197,7 +1998,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "688",
     "iso3166_2": "RS",
     "ioc": "SRB",
-    "flag": "Serbia.png"
   },
   "Russia": {
     "name": "common_country_Russia",
@@ -2208,7 +2008,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "643",
     "iso3166_2": "RU",
     "ioc": "RUS",
-    "flag": "Russia.png"
   },
   "Rwanda": {
     "name": "common_country_Rwanda",
@@ -2219,7 +2018,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "646",
     "iso3166_2": "RW",
     "ioc": "RWA",
-    "flag": "Rwanda.png"
   },
   "SaudiArabia": {
     "name": "common_country_SaudiArabia",
@@ -2230,7 +2028,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "682",
     "iso3166_2": "SA",
     "ioc": "KSA",
-    "flag": "Saudi_Arabia.png"
   },
   "SolomonIslands": {
     "name": "common_country_SolomonIslands",
@@ -2241,7 +2038,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "90",
     "iso3166_2": "SB",
     "ioc": "SOL",
-    "flag": "Solomon_Islands.png"
   },
   "Seychelles": {
     "name": "common_country_Seychelles",
@@ -2252,7 +2048,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "690",
     "iso3166_2": "SC",
     "ioc": "SEY",
-    "flag": "Seychelles.png"
   },
   "Sudan": {
     "name": "common_country_Sudan",
@@ -2263,7 +2058,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "729",
     "iso3166_2": "SD",
     "ioc": "SUD",
-    "flag": "Sudan.png"
   },
   "Sweden": {
     "name": "common_country_Sweden",
@@ -2274,7 +2068,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "752",
     "iso3166_2": "SE",
     "ioc": "SWE",
-    "flag": "Sweden.png"
   },
   "Singapore": {
     "name": "common_country_Singapore",
@@ -2285,7 +2078,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "702",
     "iso3166_2": "SG",
     "ioc": "SGP",
-    "flag": "Singapore.png"
   },
   "TristandaCunha": {
     "name": "common_country_TristandaCunha",
@@ -2296,10 +2088,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "654",
     "iso3166_2": "SH",
     "ioc": "",
-    "flag": "Tristan_da_Cunha.png"
   },
   "Ascension": {
-    "name": "common_country_Ascension",
+    "name": "common_country_AscensionIsland",
     "callingcode": "+247",
     "vehiclecode": "",
     "iso3166_1_2": "SH-AC",
@@ -2307,10 +2098,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "SH",
     "ioc": "",
-    "flag": "Ascension_Island.png"
   },
   "St.Helena": {
-    "name": "common_country_St.Helena",
+    "name": "common_country_SaintHelena",
     "callingcode": "+290",
     "vehiclecode": "",
     "iso3166_1_2": "SH-HL",
@@ -2318,7 +2108,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "SH",
     "ioc": "",
-    "flag": "Saint_Helena.png"
   },
   "Slovenia": {
     "name": "common_country_Slovenia",
@@ -2329,7 +2118,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "705",
     "iso3166_2": "SI",
     "ioc": "SLO",
-    "flag": "Slovenia.png"
   },
   "SvalbardandJanMayen": {
     "name": "common_country_SvalbardandJanMayen",
@@ -2339,8 +2127,7 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_3": "SJM",
     "iso3166_1_n": "744",
     "iso3166_2": "SJ",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "Slovakia": {
     "name": "common_country_Slovakia",
@@ -2351,7 +2138,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "703",
     "iso3166_2": "SK",
     "ioc": "SVK",
-    "flag": "Slovakia.png"
   },
   "SierraLeone": {
     "name": "common_country_SierraLeone",
@@ -2362,7 +2148,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "694",
     "iso3166_2": "SL",
     "ioc": "SLE",
-    "flag": "Sierra_Leone.png"
   },
   "SanMarino": {
     "name": "common_country_SanMarino",
@@ -2373,7 +2158,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "674",
     "iso3166_2": "SM",
     "ioc": "SMR",
-    "flag": "San_Marino.png"
   },
   "Senegal": {
     "name": "common_country_Senegal",
@@ -2384,7 +2168,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "686",
     "iso3166_2": "SN",
     "ioc": "SEN",
-    "flag": "Senegal.png"
   },
   "Somalia": {
     "name": "common_country_Somalia",
@@ -2395,7 +2178,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "706",
     "iso3166_2": "SO",
     "ioc": "SOM",
-    "flag": "Somalia.png"
   },
   "Somaliland": {
     "name": "common_country_Somaliland",
@@ -2406,7 +2188,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "SO",
     "ioc": "",
-    "flag": "Somaliland.png"
   },
   "Suriname": {
     "name": "common_country_Suriname",
@@ -2417,7 +2198,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "740",
     "iso3166_2": "SR",
     "ioc": "SUR",
-    "flag": "Suriname.png"
   },
   "SouthSudan": {
     "name": "common_country_SouthSudan",
@@ -2428,10 +2208,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "728",
     "iso3166_2": "SS",
     "ioc": "SSD",
-    "flag": "South_Sudan.png"
   },
   "SãoToméandPríncipe": {
-    "name": "common_country_SãoToméandPríncipe",
+    "name": "common_country_SaoTomeandPrincipe",
     "callingcode": "+239",
     "vehiclecode": "STP",
     "iso3166_1_2": "ST",
@@ -2439,7 +2218,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "678",
     "iso3166_2": "ST",
     "ioc": "STP",
-    "flag": "Sao_Tome_and_Principe.png"
   },
   "ElSalvador": {
     "name": "common_country_ElSalvador",
@@ -2450,7 +2228,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "222",
     "iso3166_2": "SV",
     "ioc": "ESA",
-    "flag": "El_Salvador.png"
   },
   "SintMaarten": {
     "name": "common_country_SintMaarten",
@@ -2461,7 +2238,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "534",
     "iso3166_2": "SX",
     "ioc": "",
-    "flag": "Sint_Maarten.png"
   },
   "Syria": {
     "name": "common_country_Syria",
@@ -2472,7 +2248,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "760",
     "iso3166_2": "SY",
     "ioc": "SYR",
-    "flag": "Syria.png"
   },
   "Eswatini": {
     "name": "common_country_Eswatini",
@@ -2483,7 +2258,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "748",
     "iso3166_2": "SZ",
     "ioc": "SWZ",
-    "flag": "Eswatini.png"
   },
   "TurksandCaicosIslands": {
     "name": "common_country_TurksandCaicosIslands",
@@ -2494,7 +2268,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "796",
     "iso3166_2": "TC",
     "ioc": "",
-    "flag": "Turks_and_Caicos_Islands.png"
   },
   "Chad": {
     "name": "common_country_Chad",
@@ -2505,7 +2278,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "148",
     "iso3166_2": "TD",
     "ioc": "CHA",
-    "flag": "Chad.png"
   },
   "FrenchSouthernandAntarcticLands": {
     "name": "common_country_FrenchSouthernandAntarcticLands",
@@ -2516,7 +2288,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "260",
     "iso3166_2": "TF",
     "ioc": "",
-    "flag": "French_Southern_and_Antarctic_Lands.png"
   },
   "Togo": {
     "name": "common_country_Togo",
@@ -2527,7 +2298,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "768",
     "iso3166_2": "TG",
     "ioc": "TOG",
-    "flag": "Togo.png"
   },
   "Thailand": {
     "name": "common_country_Thailand",
@@ -2538,7 +2308,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "764",
     "iso3166_2": "TH",
     "ioc": "THA",
-    "flag": "Thailand.png"
   },
   "Tajikistan": {
     "name": "common_country_Tajikistan",
@@ -2549,7 +2318,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "762",
     "iso3166_2": "TJ",
     "ioc": "TJK",
-    "flag": "Tajikistan.png"
   },
   "Tokelau": {
     "name": "common_country_Tokelau",
@@ -2560,7 +2328,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "772",
     "iso3166_2": "TK",
     "ioc": "",
-    "flag": "Tokelau.png"
   },
   "EastTimor": {
     "name": "common_country_EastTimor",
@@ -2571,7 +2338,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "626",
     "iso3166_2": "TL",
     "ioc": "TLS",
-    "flag": "East_Timor.png"
   },
   "Turkmenistan": {
     "name": "common_country_Turkmenistan",
@@ -2582,7 +2348,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "795",
     "iso3166_2": "TM",
     "ioc": "TKM",
-    "flag": "Turkmenistan.png"
   },
   "Tunisia": {
     "name": "common_country_Tunisia",
@@ -2593,7 +2358,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "788",
     "iso3166_2": "TN",
     "ioc": "TUN",
-    "flag": "Tunisia.png"
   },
   "Tonga": {
     "name": "common_country_Tonga",
@@ -2604,7 +2368,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "776",
     "iso3166_2": "TO",
     "ioc": "TGA",
-    "flag": "Tonga.png"
   },
   "Turkey": {
     "name": "common_country_Turkey",
@@ -2615,7 +2378,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "792",
     "iso3166_2": "TR",
     "ioc": "TUR",
-    "flag": "Turkey.png"
   },
   "TrinidadandTobago": {
     "name": "common_country_TrinidadandTobago",
@@ -2626,10 +2388,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "780",
     "iso3166_2": "TT",
     "ioc": "TTO",
-    "flag": "Trinidad_and_Tobago.png"
   },
   "Tuvalu(ElliceIslands)": {
-    "name": "common_country_Tuvalu(ElliceIslands)",
+    "name": "common_country_Tuvalu",
     "callingcode": "+688",
     "vehiclecode": "TUV",
     "iso3166_1_2": "TV",
@@ -2637,7 +2398,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "798",
     "iso3166_2": "TV",
     "ioc": "TUV",
-    "flag": "Tuvalu.png"
   },
   "Taiwan": {
     "name": "common_country_Taiwan",
@@ -2648,7 +2408,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "158",
     "iso3166_2": "TW",
     "ioc": "TPE",
-    "flag": "Taiwan.png"
   },
   "Tanzania": {
     "name": "common_country_Tanzania",
@@ -2659,7 +2418,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "834",
     "iso3166_2": "TZ",
     "ioc": "TAN",
-    "flag": "Tanzania.png"
   },
   "Ukraine": {
     "name": "common_country_Ukraine",
@@ -2670,7 +2428,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "804",
     "iso3166_2": "UA",
     "ioc": "UKR",
-    "flag": "Ukraine.png"
   },
   "Uganda": {
     "name": "common_country_Uganda",
@@ -2681,7 +2438,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "800",
     "iso3166_2": "UG",
     "ioc": "UGA",
-    "flag": "Uganda.png"
   },
   "JohnstonAtoll": {
     "name": "common_country_JohnstonAtoll",
@@ -2692,7 +2448,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "UM",
     "ioc": "",
-    "flag": "Johnston_Atoll.png"
   },
   "UnitedStatesMinorOutlyingIslands": {
     "name": "common_country_UnitedStatesMinorOutlyingIslands",
@@ -2702,8 +2457,7 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_3": "UMI",
     "iso3166_1_n": "581",
     "iso3166_2": "UM",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "USA": {
     "name": "common_country_USA",
@@ -2714,7 +2468,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "840",
     "iso3166_2": "US",
     "ioc": "USA",
-    "flag": "USA.png"
   },
   "Hawaii": {
     "name": "common_country_Hawaii",
@@ -2725,7 +2478,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "US",
     "ioc": "",
-    "flag": "Hawaii.png"
   },
   "Uruguay": {
     "name": "common_country_Uruguay",
@@ -2736,7 +2488,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "858",
     "iso3166_2": "UY",
     "ioc": "URU",
-    "flag": "Uruguay.png"
   },
   "Uzbekistan": {
     "name": "common_country_Uzbekistan",
@@ -2747,7 +2498,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "860",
     "iso3166_2": "UZ",
     "ioc": "UZB",
-    "flag": "Uzbekistan.png"
   },
   "VaticanCity": {
     "name": "common_country_VaticanCity",
@@ -2758,10 +2508,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "336",
     "iso3166_2": "VA",
     "ioc": "",
-    "flag": "Vatican_City.png"
   },
   "St.VincentandtheGrenadines": {
-    "name": "common_country_St.VincentandtheGrenadines",
+    "name": "common_country_SaintVincentandtheGrenadines",
     "callingcode": "+1",
     "vehiclecode": "WV",
     "iso3166_1_2": "VC",
@@ -2769,7 +2518,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "670",
     "iso3166_2": "VC",
     "ioc": "VIN",
-    "flag": "Saint_Vincent_and_the_Grenadines.png"
   },
   "Venezuela": {
     "name": "common_country_Venezuela",
@@ -2780,7 +2528,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "862",
     "iso3166_2": "VE",
     "ioc": "VEN",
-    "flag": "Venezuela.png"
   },
   "BritishVirginIslands": {
     "name": "common_country_BritishVirginIslands",
@@ -2791,10 +2538,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "92",
     "iso3166_2": "VG",
     "ioc": "IVB",
-    "flag": "British_Virgin_Islands.png"
   },
   "VirginIslands(USA)": {
-    "name": "common_country_VirginIslands(USA)",
+    "name": "common_country_UnitedStatesVirginIslands",
     "callingcode": "",
     "vehiclecode": "",
     "iso3166_1_2": "VI",
@@ -2802,7 +2548,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "850",
     "iso3166_2": "VI",
     "ioc": "",
-    "flag": "United_States_Virgin_Islands.png"
   },
   "Vietnam": {
     "name": "common_country_Vietnam",
@@ -2813,7 +2558,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "704",
     "iso3166_2": "VN",
     "ioc": "VIE",
-    "flag": "Vietnam.png"
   },
   "Vanuatu": {
     "name": "common_country_Vanuatu",
@@ -2824,7 +2568,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "548",
     "iso3166_2": "VU",
     "ioc": "VAN",
-    "flag": "Vanuatu.png"
   },
   "WallisandFutuna": {
     "name": "common_country_WallisandFutuna",
@@ -2835,7 +2578,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "876",
     "iso3166_2": "WF",
     "ioc": "",
-    "flag": "Wallis_and_Futuna.png"
   },
   "Samoa": {
     "name": "common_country_Samoa",
@@ -2846,7 +2588,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "882",
     "iso3166_2": "WS",
     "ioc": "SAM",
-    "flag": "Samoa.png"
   },
   "Kosovo": {
     "name": "common_country_Kosovo",
@@ -2857,7 +2598,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "KOS",
-    "flag": "Kosovo.png"
   },
   "Yemen": {
     "name": "common_country_Yemen",
@@ -2868,7 +2608,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "887",
     "iso3166_2": "YE",
     "ioc": "YEM",
-    "flag": "Yemen.png"
   },
   "Mayotte": {
     "name": "common_country_Mayotte",
@@ -2878,8 +2617,7 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_3": "MYT",
     "iso3166_1_n": "175",
     "iso3166_2": "YT",
-    "ioc": "",
-    "flag": ".png"
+    "ioc": ""
   },
   "SouthAfrica": {
     "name": "common_country_SouthAfrica",
@@ -2890,7 +2628,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "710",
     "iso3166_2": "ZA",
     "ioc": "RSA",
-    "flag": "South_Africa.png"
   },
   "Zambia": {
     "name": "common_country_Zambia",
@@ -2901,7 +2638,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "894",
     "iso3166_2": "ZM",
     "ioc": "ZAM",
-    "flag": "Zambia.png"
   },
   "Zimbabwe": {
     "name": "common_country_Zimbabwe",
@@ -2912,10 +2648,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "716",
     "iso3166_2": "ZW",
     "ioc": "ZIM",
-    "flag": "Zimbabwe.png"
   },
   "Abkhazia": {
-    "name": "common_country_Abkhazia",
+    "name": "common_country_RepublicofAbkhazia",
     "callingcode": "+7",
     "vehiclecode": "ABH",
     "iso3166_1_2": "",
@@ -2923,7 +2658,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Republic_of_Abkhazia.png"
   },
   "Ceuta": {
     "name": "common_country_Ceuta",
@@ -2934,7 +2668,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "ES-CE",
     "ioc": "",
-    "flag": "Ceuta.png"
   },
   "ChathamIslands": {
     "name": "common_country_ChathamIslands",
@@ -2945,7 +2678,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "NZ-CIT",
     "ioc": "",
-    "flag": "Chatham_Islands.png"
   },
   "EasterIsland": {
     "name": "common_country_EasterIsland",
@@ -2956,10 +2688,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Easter_Island.png"
   },
   "JuanFernándezIslands": {
-    "name": "common_country_JuanFernándezIslands",
+    "name": "common_country_JuanFernandezIslands",
     "callingcode": "",
     "vehiclecode": "",
     "iso3166_1_2": "",
@@ -2967,7 +2698,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Juan_Fernandez.png"
   },
   "Melilla": {
     "name": "common_country_Melilla",
@@ -2978,10 +2708,9 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "ES-ML",
     "ioc": "",
-    "flag": "Melilla.png"
   },
   "RepublicofArtsakh": {
-    "name": "common_country_RepublicofArtsakh",
+    "name": "common_country_Artsakh",
     "callingcode": "+374 47",
     "vehiclecode": "",
     "iso3166_1_2": "",
@@ -2989,7 +2718,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Artsakh.png"
   },
   "SouthOssetia": {
     "name": "common_country_SouthOssetia",
@@ -3000,7 +2728,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "South_Ossetia.png"
   },
   "Tibet": {
     "name": "common_country_Tibet",
@@ -3011,7 +2738,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Tibet.png"
   },
   "Transnistria": {
     "name": "common_country_Transnistria",
@@ -3022,7 +2748,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Transnistria.png"
   },
   "TurkishRepublicofNorthernCyprus": {
     "name": "common_country_TurkishRepublicofNorthernCyprus",
@@ -3033,7 +2758,6 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Turkish_Republic_of_Northern_Cyprus.png"
   },
   "WakeIsland": {
     "name": "common_country_WakeIsland",
@@ -3044,6 +2768,5 @@ Map<String, Map<String, String>> COUNTRIES = {
     "iso3166_1_n": "",
     "iso3166_2": "",
     "ioc": "",
-    "flag": "Wake_Island.png"
   },
 };

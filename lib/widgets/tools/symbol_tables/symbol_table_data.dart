@@ -16,6 +16,7 @@ class _SymbolTableConstants {
   final CONFIG_FILENAME = 'config.file';
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
   final CONFIG_TRANSLATE = 'translate';
+  final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
   final CONFIG_CASESENSITIVE = 'case_sensitive';
   final CONFIG_SPECIALSORT = 'special_sort';
   final CONFIG_IGNORE = 'ignore';
@@ -200,7 +201,12 @@ class SymbolTableData {
     if (config[_constants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
       key = config[_constants.CONFIG_SPECIALMAPPINGS][imageKey];
     } else if (config[_constants.CONFIG_TRANSLATE] != null && config[_constants.CONFIG_TRANSLATE].contains(imageKey)) {
-      key = i18n(_context, 'symboltables_' + _symbolKey + '_' + imageKey);
+      var translationPrefix = config[_constants.CONFIG_TRANSLATION_PREFIX];
+      if (translationPrefix != null && translationPrefix.length > 0) {
+        key = i18n(_context, translationPrefix + imageKey);
+      } else {
+        key = i18n(_context, 'symboltables_' + _symbolKey + '_' + imageKey);
+      }
       setTranslateable = true;
     } else {
       key = imageKey;

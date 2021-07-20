@@ -5471,6 +5471,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
       ]),
+      GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_COLOR_TOKKI,
+        SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI,
+        SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
+        SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
+      ]),
       GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_COVENANT,
         SEARCHSTRING_DE_SYMBOL_COVENANT,

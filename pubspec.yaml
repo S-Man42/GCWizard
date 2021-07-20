@@ -101,6 +101,7 @@ flutter:
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
+    - assets/symbol_tables/country_flags/
     - assets/symbol_tables/covenant/
     - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/cyrillic_numbers/
