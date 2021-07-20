@@ -64,12 +64,29 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
+  if (Prefs.get('coord_map_circle_colorfilled') == null) {
+    Prefs.setBool('coord_map_circle_colorfilled', false);
+  }
+
   if (Prefs.get('coord_variablecoordinate_formulas') == null) {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
 
   if (Prefs.get('default_length_unit') == null) {
     Prefs.setString('default_length_unit', 'm');
+  }
+
+  var _favorites = Prefs.getStringList('favorites');
+  if (_favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
+    Prefs.setStringList('favorites', [
+      'AlphabetValues_alphabetvalues',
+      'ASCIIValues_asciivalues',
+      'Morse_morse',
+      'RomanNumbers_romannumbers',
+      'Rot13_rotation_rot13',
+      'SymbolTableSelection_symboltables_selection',
+      'WaypointProjection_coords_waypointprojection',
+    ]);
   }
 
   if (Prefs.get('formulasolver_formulas') == null) {
@@ -105,11 +122,11 @@ void initDefaultSettings() {
   }
 
   if (Prefs.get('tabs_default_tab') == null) {
-    Prefs.setInt('tabs_default_tab', 0);
+    Prefs.setInt('tabs_default_tab', 2);
   }
 
   if (Prefs.get('tabs_last_viewed_tab') == null) {
-    Prefs.setInt('tabs_last_viewed_tab', 0);
+    Prefs.setInt('tabs_last_viewed_tab', 2);
   }
 
   if (Prefs.get('theme_color') == null) {

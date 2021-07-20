@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 abstract class IntervalCalculator {
   final _MAX_CELLCOUNT = 10000;
@@ -103,10 +103,10 @@ abstract class IntervalCalculator {
 
   List<LatLng> check() {
     var easternCells = CoordinateCell(
-        latInterval: Interval(a: -PI / 2.0, b: PI / 2.0), lonInterval: Interval(a: 0.0, b: PI), ellipsoid: ells);
+        latInterval: Interval(a: -pi / 2.0, b: pi / 2.0), lonInterval: Interval(a: 0.0, b: pi), ellipsoid: ells);
 
     var westernCells = CoordinateCell(
-        latInterval: Interval(a: -PI / 2.0, b: PI / 2.0), lonInterval: Interval(a: -PI, b: 0.0), ellipsoid: ells);
+        latInterval: Interval(a: -pi / 2.0, b: pi / 2.0), lonInterval: Interval(a: -pi, b: 0.0), ellipsoid: ells);
 
     _initializeCells(easternCells);
     _initializeCells(westernCells);

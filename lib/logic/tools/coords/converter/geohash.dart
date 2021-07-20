@@ -1,4 +1,4 @@
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 List<Map<String, String>> _alphabet = [

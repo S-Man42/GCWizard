@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class Interval {
   final double a;

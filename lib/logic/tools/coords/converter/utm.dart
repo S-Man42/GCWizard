@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 final double _k0 = 0.9996;
-final double _drad = PI / 180.0;
+final double _drad = pi / 180.0;
 final String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 
 UTMREF latLonToUTM(LatLng coord, Ellipsoid ells) {

@@ -39,7 +39,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -174,7 +174,7 @@ class GCWMapViewState extends State<GCWMapView> {
       });
     }
 
-    var layer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
+    var tileLayerOptions = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
         ? TileLayerOptions(
             urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
             additionalOptions: {'accessToken': _mapBoxToken},
@@ -184,7 +184,7 @@ class GCWMapViewState extends State<GCWMapView> {
             subdomains: ['a', 'b', 'c'],
             tileProvider: CachedNetworkTileProvider());
 
-    var layers = <LayerOptions>[layer];
+    var layers = <Widget>[TileLayerWidget(options: tileLayerOptions)];
     layers.addAll(_buildLinesAndMarkersLayers());
 
     return Listener(
@@ -199,7 +199,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   minZoom: 1.0,
                   maxZoom: 18.0,
                   interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
-                  plugins: [PopupMarkerPlugin(), TappablePolylineMapPlugin()],
+                  plugins: [TappablePolylineMapPlugin()],
                   onTap: (_) => _popupLayerController.hidePopup(),
                   onLongPress: widget.isEditable
                       ? (LatLng coordinate) {
@@ -212,7 +212,8 @@ class GCWMapViewState extends State<GCWMapView> {
                           });
                         }
                       : null),
-              layers: layers,
+              children: layers,
+              // layers: layers,
             ),
             Positioned(top: 15.0, right: 15.0, child: Column(children: _buildLayerButtons())),
             widget.isEditable
@@ -244,24 +245,28 @@ class GCWMapViewState extends State<GCWMapView> {
         ));
   }
 
-  List<LayerOptions> _buildLinesAndMarkersLayers() {
-    var layers = <LayerOptions>[];
+  List<Widget> _buildLinesAndMarkersLayers() {
+    var layers = <Widget>[];
 
     // build accuracy circle for user position
     if (_locationSubscription != null &&
         !_locationSubscription.isPaused &&
         _currentAccuracy != null &&
         _currentPosition != null) {
-      layers.add(CircleLayerOptions(circles: [
+      var filled = Prefs.get('coord_map_circle_colorfilled');
+      var circleColor = COLOR_MAP_USERPOSITION.withOpacity(filled ?? false ? 0.3 : 0.0);
+
+      layers.add(CircleLayerWidget(
+          options: CircleLayerOptions(circles: [
         CircleMarker(
           point: _currentPosition,
           borderStrokeWidth: 1,
           useRadiusInMeter: true,
           radius: _currentAccuracy,
-          color: Colors.white.withOpacity(0.0), // hack for: without color
+          color: circleColor,
           borderColor: COLOR_MAP_USERPOSITION,
         )
-      ]));
+      ])));
     }
 
     List<Marker> _markers = _buildMarkers();
@@ -271,18 +276,18 @@ class GCWMapViewState extends State<GCWMapView> {
     _polylines.addAll(_circlePolylines);
 
     layers.addAll([
-      TappablePolylineLayerOptions(
-          polylineCulling: true,
-          polylines: _polylines,
-          onTap: (polyline) => _showPolylineDialog(polyline),
-          onMiss: () {} //Bug in framework: https://github.com/OwnWeb/flutter_map_tappable_polyline/issues/20
-          ),
-      MarkerLayerOptions(markers: _markers),
-      PopupMarkerLayerOptions(
-          markers: _markers,
-          popupSnap: PopupSnap.top,
-          popupController: _popupLayerController,
-          popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker)),
+      TappablePolylineLayerWidget(
+          options: TappablePolylineLayerOptions(
+        polylineCulling: true,
+        polylines: _polylines,
+        onTap: (polyline) => _showPolylineDialog(polyline),
+      )),
+      PopupMarkerLayerWidget(
+          options: PopupMarkerLayerOptions(
+              markers: _markers,
+              popupSnap: PopupSnap.markerTop,
+              popupController: _popupLayerController,
+              popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker))),
     ]);
 
     return layers;
@@ -316,7 +321,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: ['ko']))).whenComplete(() {
+                            helpLocales: ['de','en','fr']))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
                       _persistanceAdapter.updateMapPolyline(child);
@@ -331,7 +336,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: ['ko']))).whenComplete(() {
+                            helpLocales: ['de','en','fr']))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -764,7 +769,7 @@ class GCWMapViewState extends State<GCWMapView> {
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                                       i18nPrefix: 'coords_openmap_pointeditor',
-                                      missingHelpLocales: ['ko']))).whenComplete(() {
+                                      helpLocales: ['de','en','fr']))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
