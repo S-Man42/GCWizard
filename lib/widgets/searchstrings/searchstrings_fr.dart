@@ -19,6 +19,7 @@ const SEARCHSTRING_FR_ASTRONOMY_MOONPOSITION = 'phase age signe illumine';
 const SEARCHSTRING_FR_ASTRONOMY_POSITION = 'signe zodiaque diametre hauteur observateur etoile';
 const SEARCHSTRING_FR_ASTRONOMY_RISESET = 'croissant fixant point culminant midi';
 const SEARCHSTRING_FR_ASTRONOMY_SEASONS = 'saisons automne printemps ete hiver soleil paques ';
+const SEARCHSTRING_FR_ASTRONOMY_SHADOW_LENGTH = 'ombre longeur portée';
 const SEARCHSTRING_FR_ASTRONOMY_SUN = 'soleil';
 const SEARCHSTRING_FR_ASTRONOMY_SUNRISESET = 'matin aube soir aube civile astronomique nautique';
 const SEARCHSTRING_FR_ATBASH = 'hebreu inverser inversions arriere';

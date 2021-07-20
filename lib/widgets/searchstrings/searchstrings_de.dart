@@ -22,6 +22,7 @@ const SEARCHSTRING_DE_ASTRONOMY_POSITION =
 const SEARCHSTRING_DE_ASTRONOMY_RISESET = 'aufgang aufgaenge untergang untergaenge mittag kulmination';
 const SEARCHSTRING_DE_ASTRONOMY_SEASONS =
     'jahreszeiten herbst fruehling sommer winter sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster';
+const SEARCHSTRING_DE_ASTRONOMY_SHADOW_LENGTH = 'schattenlaenge wurf';
 const SEARCHSTRING_DE_ASTRONOMY_SUN = 'sonne';
 const SEARCHSTRING_DE_ASTRONOMY_SUNRISESET =
     'morgendaemmerung abenddaemmerung zivile buergerliche astronomische nautische';
