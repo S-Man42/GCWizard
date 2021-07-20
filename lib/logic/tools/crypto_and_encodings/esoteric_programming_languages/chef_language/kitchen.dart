@@ -374,17 +374,19 @@ class Kitchen {
               //error.removeRange(0, error.length-1);
               error.addAll(k.error);
               continue methodloop;
-            } else if (con != null)
-              mixingbowls[0].combine(con);
-            else {
-              valid = false;
-              error.addAll([
-                Messages[language]['chef_error_runtime'],
-                Messages[language]['chef_error_runtime_method_aux_recipe'],
-                Messages[language]['chef_error_runtime_method_aux_recipe_return']
-              ]);
-              return null;
-            }
+            } else
+              if (con != null)
+                mixingbowls[0].combine(con);
+              else {
+                valid = false;
+                error.addAll([
+                  Messages[language]['chef_error_runtime'],
+                  Messages[language]['chef_error_runtime_method_aux_recipe'],
+                  Messages[language]['chef_error_runtime_method_aux_recipe_return'],
+                  '=> ' + m.auxrecipe,
+                ]);
+                return null;
+              }
           } catch (e) {
             valid = false;
             exception = true;
