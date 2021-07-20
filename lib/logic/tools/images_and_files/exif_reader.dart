@@ -2,15 +2,21 @@ import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
-import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:latlong2/latlong.dart';
 
-Future<Map<String, IfdTag>> parseExif(PlatformFile file) async {
-  Map<String, IfdTag> data = await readExifFromBytes(file.bytes,
-      details: true,
-      // debug: true, //XMP (experimental)
-      //strict: false,
-      truncate_tags: false);
+Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
+  Map<String, IfdTag> data;
+
+  try {
+    data = await readExifFromBytes(file.bytes,
+        details: true,
+        // debug: true, //XMP (experimental)
+        //strict: false,
+        truncateTags: false);
+  } on Exception catch (e) {
+    // silent error
+  }
 
   if (data == null || data.isEmpty) {
     print("No EXIF information found\n");
@@ -24,12 +30,12 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
     print('File has JPEG thumbnail');
     var _jpgBytes = data['JPEGThumbnail'].values;
     data.remove('JPEGThumbnail');
-    return GCWImageViewData(_jpgBytes);
+    return GCWImageViewData(_jpgBytes.toList());
   } else if (data.containsKey('TIFFThumbnail')) {
     print('File has TIFF thumbnail');
     var _tiffBytes = data['TIFFThumbnail'].values;
     data.remove('TIFFThumbnail');
-    return GCWImageViewData(_tiffBytes);
+    return GCWImageViewData(_tiffBytes.toList());
   }
   return null;
 }
@@ -68,7 +74,7 @@ LatLng completeGPSData(Map<String, IfdTag> data) {
 }
 
 double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
-  return getCoordDecFromText(tag.values, latlngRef, isLatitude);
+  return getCoordDecFromText(tag.values.toList(), latlngRef, isLatitude);
 }
 
 double getCoordDecFromText(List<dynamic> values, String latlngRef, bool isLatitude) {

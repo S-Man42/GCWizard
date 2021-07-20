@@ -13,7 +13,7 @@ class Method {
   Method(String line, int n, language) {
     line = line.trim();
     this.n = n;
-    List<RegExp> matchers = new List<RegExp>();
+    List<RegExp> matchers = <RegExp>[];
     if (language == 'ENG') {
       matchers = matchersENG;
       if (matchers[0].hasMatch(line)) {
@@ -166,7 +166,7 @@ class Method {
         ingredient = matchers[4].firstMatch(line).group(2);
         mixingbowl =
             (matchers[4].firstMatch(line).group(7) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(7))) - 1;
-      } else if (matchers[5].hasMatch(line)) {
+      } else if (matchers[5].hasMatch(line)) { //RegExp(r'^inhalt(e)? der ((\d+)(ten) )?(rühr)?schüssel( auf dem stövchen)?( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
         //inhalt der schüssel verflüssigen
         type = Type.SchuesselErhitzen;
         mixingbowl =

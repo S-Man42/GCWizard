@@ -79,7 +79,7 @@ const SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS =
     'three midpoint center middle circumcircle circumscribed points medians';
 const SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS = 'midpoint center middle  two points';
 const SEARCHSTRING_EN_COORDINATES_COMPASSROSE = 'compassrose intercardinaldirections';
-const SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING = 'measurement averaging average';
+const SEARCHSTRING_EN_COORDINATES_COORDINATEAVERAGING = 'measurement averaging average';
 const SEARCHSTRING_EN_COORDINATES_COORDINATESSETTINGS = '';
 const SEARCHSTRING_EN_COORDINATES_CROSSBEARING = 'bearings angles intersections directions';
 const SEARCHSTRING_EN_COORDINATES_CROSSSUMSELECTION = '';
@@ -104,6 +104,10 @@ const SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION =
     'angles waypointprojections bearings cardinaldirections reverse projections ';
 const SEARCHSTRING_EN_COUNTRIES = 'countries country nations states internationals';
 const SEARCHSTRING_EN_COUNTRIES_CALLINGCODES = 'callingcodes prefixes areacodes preselection pre-selection';
+const SEARCHSTRING_EN_COUNTRIES_IOCCODES = 'internationalolympiccommittee olympia sports';
+const SEARCHSTRING_EN_COUNTRIES_ISOCODES =
+    'internationalorganizationforstandardization internationalorganisationforstandardisation';
+const SEARCHSTRING_EN_COUNTRIES_VEHICLECODES = 'vehiclecodes carcodes countrycodes vehicleregistrationcodes';
 const SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY = 'frequency  occurrences';
 const SEARCHSTRING_EN_CROSSSUMS = 'crosssums digits alternated crosstotals iterated products digitalroot digitroot';
 const SEARCHSTRING_EN_CROSSUM = '';
@@ -200,6 +204,7 @@ const SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS =
     'colors colours colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green';
 const SEARCHSTRING_EN_IMAGES = 'pictures images paintings files ';
 const SEARCHSTRING_EN_IMAGESANDFILESSELECTION = 'analyze analyse analysis';
+const SEARCHSTRING_EN_STEGANO = 'lsb steganography';
 const SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrational number fraction decimal digit';
 const SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE = 'range';
 const SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY = 'frequency  occurrences';
@@ -447,6 +452,7 @@ const SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_FOTAG = '';
 const SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_IEC60304 = '';
 const SEARCHSTRING_EN_SYMBOL_PHOENICIAN = 'phoenician';
 const SEARCHSTRING_EN_SYMBOL_PIPELINE = 'pipes pipelines';
+const SEARCHSTRING_EN_SYMBOL_PIPELINE_DIN2403 = 'pipes pipelines colors colours stripes';
 const SEARCHSTRING_EN_SYMBOL_PIXEL = '';
 const SEARCHSTRING_EN_SYMBOL_PLANET = '';
 const SEARCHSTRING_EN_SYMBOL_PLANETS =
@@ -480,7 +486,7 @@ const SEARCHSTRING_EN_SYMBOL_SUNUZ = '';
 const SEARCHSTRING_EN_SYMBOL_SURF = 'windsurfing surfride surfer surfriding surfride surfboard wavesurfing';
 const SEARCHSTRING_EN_SYMBOL_TAE = 'connector telecommunications connection unit';
 const SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS = 'numbers numerals indian';
-const SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights';
+const SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights templars templarcode';
 const SEARCHSTRING_EN_SYMBOL_TENCTONESE = '';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND = 'thelordoftherings elves elvish middleearth thirdera';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC =
@@ -519,9 +525,10 @@ const SEARCHSTRING_EN_TRIFID = '';
 const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
-const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
+const SEARCHSTRING_EN_VANITY =
+    'telephone keys buttons numbers keypad sms mobile cellphone phoneword texting messaging messages texts messager messenger';
 const SEARCHSTRING_EN_VANITYMULTITAP = 'multitap';
-const SEARCHSTRING_EN_VANITYSINGLETAP = '';
+const SEARCHSTRING_EN_VANITYSINGLETAP = 'singletap';
 const SEARCHSTRING_EN_VANITYTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_VANITYWORDSLIST = '';
 const SEARCHSTRING_EN_VIGENERE = '';

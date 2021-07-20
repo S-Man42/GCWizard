@@ -160,12 +160,12 @@ final VanityToRUS = {
   '392': 'DWA',
   '3953': 'DWJE',
   '874': 'TRI',
-  '2389743': 'ČETÝRIE',
+  '2389743': 'ČETÝRJE',
   '7528': 'PJAT',
   '7378': 'ŠEST',
   '736': 'SEM',
   '86736': 'VOSEM',
-  '3538528': 'DJEVJAT',
+  '3538528': 'DJÈVJAT',
 };
 final VanityToVOL = {
   '737': 'SER',
@@ -189,7 +189,7 @@ final VanityToEPO = {
   '737': 'SES',
   '737': 'SEP',
   '65': 'OK',
-  '628': 'NAǓ',
+  '628': 'NAŬ',
 };
 final VanityToSOL = {
   '765': 'SOLDO',
