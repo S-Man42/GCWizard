@@ -1528,7 +1528,7 @@ class Registry {
         SEARCHSTRING_EN_ASTRONOMY_SEASONS,
         SEARCHSTRING_FR_ASTRONOMY_SEASONS
       ]),
-      GCWTool(tool: ShadowLength(), i18nPrefix: 'shadowlength', missingHelpLocales: [], searchStrings: [
+      GCWTool(tool: ShadowLength(), i18nPrefix: 'shadowlength', helpLocales: ['de','en','fr'], searchStrings: [
         SEARCHSTRING_COMMON_ASTRONOMY,
         SEARCHSTRING_DE_ASTRONOMY,
         SEARCHSTRING_EN_ASTRONOMY,
