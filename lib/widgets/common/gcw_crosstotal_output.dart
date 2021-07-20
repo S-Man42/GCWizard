@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/crosstotals.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+
+enum CROSSTOTAL_INPUT_TYPE {LETTERS, NUMBERS}
 
 class GCWCrosstotalOutput extends StatefulWidget {
   final values;
   final String text;
   final suppressSums;
-  final suppressCharacterCounts;
+  final CROSSTOTAL_INPUT_TYPE inputType;
 
   const GCWCrosstotalOutput(
-      {this.text, this.values, Key key, this.suppressSums: false, this.suppressCharacterCounts: false})
+      {this.text, this.values, Key key, this.suppressSums: false, this.inputType: CROSSTOTAL_INPUT_TYPE.LETTERS})
       : super(key: key);
 
   @override
@@ -27,23 +30,26 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     var text = widget.text;
     List<int> values = List.from(widget.values);
 
-    var crosstotalValues;
-    if (widget.suppressCharacterCounts)
-      crosstotalValues = [
+    var crosstotalValuesCommon = [
+      widget.suppressSums ? null : [i18n(context, 'crosstotal_sum') + (widget.inputType == CROSSTOTAL_INPUT_TYPE.LETTERS ? '\n(${i18n(context, 'common_wordvalue')})' : ''), sum(values)],
+      [i18n(context, 'crosstotal_sum_crosssum'), sumCrossSum(values)],
+      [i18n(context, 'crosstotal_sum_crosssum_iterated'), sumCrossSumIterated(values)],
+    ];
+
+    var crosstotalValuesOthers;
+    if (widget.inputType == CROSSTOTAL_INPUT_TYPE.NUMBERS)
+      crosstotalValuesOthers = [
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_numbers'), countCharacters(values)],
       ];
     else
-      crosstotalValues = [
+      crosstotalValuesOthers = [
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(values)],
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_letters'), countLetters(text)],
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)]
       ];
     var crosstotalValuesBody = [
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_sum'), sum(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum_alternated_back'), sumAlternatedBackward(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum_alternated_forward'), sumAlternatedForward(values)],
-      [i18n(context, 'crosstotal_sum_crosssum'), sumCrossSum(values)],
-      [i18n(context, 'crosstotal_sum_crosssum_iterated'), sumCrossSumIterated(values)],
       [
         i18n(context, 'crosstotal_sum_crosssum_alternated_back'),
         sumCrossSumAlternatedBackward(values) ?? i18n(context, 'common_notdefined')
@@ -81,7 +87,21 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
         crossProductAlternated(values) ?? i18n(context, 'common_notdefined')
       ],
     ];
-    crosstotalValues.addAll(crosstotalValuesBody);
-    return Column(children: columnedMultiLineOutput(context, crosstotalValues, flexValues: [2, 1]));
+    crosstotalValuesOthers.addAll(crosstotalValuesBody);
+
+    return Column(
+      children: [
+        GCWTextDivider(text: i18n(context, 'crosstotal_commonsums'), topSpace: 0),
+        Column(
+          children: columnedMultiLineOutput(context, crosstotalValuesCommon, flexValues: [2, 1]),
+        ),
+        GCWTextDivider(text: i18n(context, 'crosstotal_othersums')),
+        Column(
+          children: columnedMultiLineOutput(context, crosstotalValuesOthers, flexValues: [2, 1]),
+        ),
+      ],
+    );
+
+    return Column(children: columnedMultiLineOutput(context, crosstotalValuesOthers, flexValues: [2, 1]));
   }
 }

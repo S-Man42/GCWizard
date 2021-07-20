@@ -8,8 +8,9 @@ class GCWTextDivider extends StatefulWidget {
   final Widget trailing;
   final bottom;
   final TextStyle style;
+  final double topSpace;
 
-  const GCWTextDivider({Key key, this.text: '', this.trailing, this.bottom, this.style}) : super(key: key);
+  const GCWTextDivider({Key key, this.text: '', this.trailing, this.bottom, this.style, this.topSpace}) : super(key: key);
 
   @override
   _GCWTextDividerState createState() => _GCWTextDividerState();
@@ -22,7 +23,7 @@ class _GCWTextDividerState extends State<GCWTextDivider> {
     final minDividerWidth = 100.0;
 
     return Container(
-        margin: EdgeInsets.only(top: 25.0, bottom: widget.bottom ?? 10.0),
+        margin: EdgeInsets.only(top: widget.topSpace ?? 25.0, bottom: widget.bottom ?? 10.0),
         child: Row(children: <Widget>[
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: screenWidth - minDividerWidth),
