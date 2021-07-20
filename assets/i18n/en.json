@@ -2851,7 +2851,7 @@
   "romannumbers_title": "Roman Numbers",
   "romannumbers_description": "Roman numbers with and without subtraction rule",
   "romannumbers_example": "42 → XLII",
-  "romannumbers_subtractionrule": "IIII → IV",
+  "romannumbers_withoutsubtractionrule": "Output (only Addition, no Subtraction Rule)",
   "romannumbers_numberstoroman": "123 → Roman",
   "romannumbers_romantonumbers": "Roman → 123",
   "rotation_selection_title": "Rotation (ROT-X)",
