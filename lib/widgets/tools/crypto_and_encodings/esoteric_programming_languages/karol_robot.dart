@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -30,8 +31,11 @@ class KarolRobotState extends State<KarolRobot> {
   var _currentDecode = '';
   var _currentEncode = '';
 
-  Uint8List _outData;
-  String _codeData;
+  Uint8List _outEncodeData;
+  Uint8List _outDecodeData;
+  String _codeEncodeData;
+  String _codeDecodeData;
+
   String _output = '';
 
 
@@ -45,7 +49,6 @@ class KarolRobotState extends State<KarolRobot> {
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   var _currentLanguage = KAREL_LANGUAGES.DEU;
-  bool _graphicalOutput = false;
 
   @override
   void initState() {
@@ -83,7 +86,7 @@ class KarolRobotState extends State<KarolRobot> {
               onChanged: (text) {
                 setState(() {
                   _currentDecode = text;
-                  _createOutput(KarolRobotOutputDecode(_currentDecode));
+                  _createDecodeOutput(KarolRobotOutputDecode(_currentDecode));
                 });
               },
             )
@@ -110,16 +113,7 @@ class KarolRobotState extends State<KarolRobot> {
               onChanged: (text) {
                 setState(() {
                   _currentEncode = text;
-                  _createOutput(KarolRobotOutputDecode(KarolRobotOutputEncode(_currentEncode, _currentLanguage)));
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              title: i18n(context, 'karol_robot_graphicaloutput'),
-              value: _graphicalOutput,
-              onChanged: (value) {
-                setState(() {
-                  _graphicalOutput = value;
+                  _createEncodeOutput(KarolRobotOutputDecode(KarolRobotOutputEncode(_currentEncode, _currentLanguage)));
                 });
               },
             ),
@@ -139,22 +133,24 @@ class KarolRobotState extends State<KarolRobot> {
             children: <Widget>[
               _currentMode == GCWSwitchPosition.left //decode
                 ? GCWDefaultOutput(
-                    child: _buildGraphicOutput(),
+                    child: _buildGraphicDecodeOutput(),
                     trailing: GCWIconButton(
                                 iconData: Icons.save,
                                 size: IconButtonSize.SMALL,
-                                iconColor: _outData == null ? Colors.grey : null,
+                                iconColor: _outDecodeData == null ? Colors.grey : null,
                                 onPressed: () {
-                                  _outData == null ? null : _exportFile(context, _outData);
+                                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
                                 },
-                  ))
+                              )
+                  )
                 : Column(
                 children: <Widget>[
-                  _graphicalOutput == true
-                  ? GCWOutput(
-                      child: _buildGraphicOutput(),
-                    )
-                  : Container(),
+                  GCWTextDivider(
+                    text: i18n(context, 'karol_robot_graphicaloutput'),
+                  ),
+                  GCWOutput(
+                      child: _buildGraphicEncodeOutput(),
+                    ),
                   GCWDefaultOutput(
                       child: GCWOutputText(
                         text: _output,
@@ -171,28 +167,54 @@ class KarolRobotState extends State<KarolRobot> {
       );
   }
 
-  _createOutput(String output) {
-    _outData = null;
-    _codeData = null;
+  _createDecodeOutput(String output) {
+    _outDecodeData = null;
+    _codeDecodeData = null;
     byteColor2image(output).then((value) {
       setState(() {
-        _outData = value;
-        scanBytes(_outData).then((value) {
+        _outDecodeData = value;
+        scanBytes(_outDecodeData).then((value) {
           setState(() {
-            _codeData = value;
+            _codeDecodeData = value;
           });
         });
       });
     });
   }
 
-  Widget _buildGraphicOutput() {
-    if (_outData == null) return null;
+  _createEncodeOutput(String output) {
+    _outEncodeData = null;
+    _codeEncodeData = null;
+    byteColor2image(output).then((value) {
+      setState(() {
+        _outEncodeData = value;
+        scanBytes(_outEncodeData).then((value) {
+          setState(() {
+            _codeEncodeData = value;
+          });
+        });
+      });
+    });
+  }
+
+  Widget _buildGraphicDecodeOutput() {
+    if (_outDecodeData == null) return null;
 
     return Column(children: <Widget>[
-      Image.memory(_outData),
-      _codeData != null
-          ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeData)
+      Image.memory(_outDecodeData),
+      _codeDecodeData != null
+          ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeDecodeData)
+          : Container(),
+    ]);
+  }
+
+  Widget _buildGraphicEncodeOutput() {
+    if (_outEncodeData == null) return Container();
+
+    return Column(children: <Widget>[
+      Image.memory(_outEncodeData),
+      _codeEncodeData != null
+          ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeEncodeData)
           : Container(),
     ]);
   }
@@ -202,7 +224,7 @@ class KarolRobotState extends State<KarolRobot> {
         data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
-      showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(_outData));
+      showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(data));
   }
 
 }
