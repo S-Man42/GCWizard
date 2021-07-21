@@ -111,6 +111,7 @@ const SEARCHSTRING_DE_COUNTRIES_IOCCODES = 'internationalesolympischeskomitee ol
 const SEARCHSTRING_DE_COUNTRIES_ISOCODES = 'internationaleorganisationfuernormung';
 const SEARCHSTRING_DE_COUNTRIES_VEHICLECODES =
     'kraftfahrzeugkennzeichen laenderkennzeichen vehikels nummernschild kfz-kennzeichen kfzkennzeichen laenderkennung nationalitaetszeichen';
+const SEARCHSTRING_DE_COUNTRIES_FLAGS = 'laenderflaggen laenderfahnen';
 const SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
 const SEARCHSTRING_DE_CROSSSUMS = 'iteriert  quersummen produkte alternierend alterniert iterierend';
 const SEARCHSTRING_DE_CROSSUM = '';

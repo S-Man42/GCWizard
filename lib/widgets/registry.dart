@@ -240,6 +240,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countri
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/country_flags.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -2368,6 +2369,22 @@ class Registry {
         SEARCHSTRING_DE_COUNTRIES_VEHICLECODES,
         SEARCHSTRING_EN_COUNTRIES_VEHICLECODES,
         SEARCHSTRING_FR_COUNTRIES_VEHICLECODES
+      ]),
+      GCWTool(tool: CountriesFlags(), i18nPrefix: 'countries_flags', helpLocales: [
+        'de','en','fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
+        SEARCHSTRING_DE_SYMBOL_FLAGS,
+        SEARCHSTRING_EN_SYMBOL_FLAGS,
+        SEARCHSTRING_FR_SYMBOL_FLAGS,
+        SEARCHSTRING_COMMON_COUNTRIES_FLAGS,
+        SEARCHSTRING_DE_COUNTRIES_FLAGS,
+        SEARCHSTRING_EN_COUNTRIES_FLAGS,
+        SEARCHSTRING_FR_COUNTRIES_FLAGS
       ]),
 
       //CrossSumSelection *******************************************************************************************
@@ -5472,10 +5489,18 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
       ]),
       GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_COLOR_TOKKI,
-        SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI,
-        SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
-        SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
+        SEARCHSTRING_COMMON_COUNTRIES,
+        SEARCHSTRING_DE_COUNTRIES,
+        SEARCHSTRING_EN_COUNTRIES,
+        SEARCHSTRING_FR_COUNTRIES,
+        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
+        SEARCHSTRING_DE_SYMBOL_FLAGS,
+        SEARCHSTRING_EN_SYMBOL_FLAGS,
+        SEARCHSTRING_FR_SYMBOL_FLAGS,
+        SEARCHSTRING_COMMON_COUNTRIES_FLAGS,
+        SEARCHSTRING_DE_COUNTRIES_FLAGS,
+        SEARCHSTRING_EN_COUNTRIES_FLAGS,
+        SEARCHSTRING_FR_COUNTRIES_FLAGS
       ]),
       GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_COVENANT,

@@ -101,6 +101,7 @@ const SEARCHSTRING_FR_COUNTRIES_CALLINGCODES = 'indicatifdepays indicatiftelepho
 const SEARCHSTRING_FR_COUNTRIES_IOCCODES = 'comiteinternationalolympiques';
 const SEARCHSTRING_FR_COUNTRIES_ISOCODES = 'organisationinternationaledenormalisation';
 const SEARCHSTRING_FR_COUNTRIES_VEHICLECODES = 'plaque d\'immatriculation reconnaissance';
+const SEARCHSTRING_FR_COUNTRIES_FLAGS = '';
 const SEARCHSTRING_FR_CROSSSUMRANGEFREQUENCY = 'frequences presence apparition';
 const SEARCHSTRING_FR_CROSSSUMS = 'diaphonie diaphonique iteree alternance';
 const SEARCHSTRING_FR_CROSSUM = '';

@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specialsorts.dart';
-import 'package:archive/archive.dart';
-import 'package:archive/archive_io.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
@@ -162,7 +161,7 @@ class SymbolTableData {
     });
 
     if (config[_constants.CONFIG_SPECIALSORT] == null || config[_constants.CONFIG_SPECIALSORT] == false) {
-      _sort = _defaultSort;
+      _sort = defaultSymbolSort;
     } else {
       switch (_symbolKey) {
         case "notes_names_altoclef":
@@ -184,7 +183,7 @@ class SymbolTableData {
           _sort = specialSortTrafficSignsGermany;
           break;
         default:
-          _sort = _defaultSort;
+          _sort = defaultSymbolSort;
           break;
       }
     }
@@ -233,6 +232,7 @@ class SymbolTableData {
 
     if (imagePaths.isEmpty) return;
 
+    print(imagePaths.first);
     // Read the Zip file from disk.
     final bytes = await DefaultAssetBundle.of(_context).load(imagePaths.first);
     InputStream input = new InputStream(bytes.buffer.asByteData());
@@ -255,7 +255,7 @@ class SymbolTableData {
     images.sort(_sort);
   }
 
-  int _defaultSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
+  int defaultSymbolSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
     var keyA = a.keys.first;
     var keyB = b.keys.first;
 

@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countri
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/country_flags.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class CountriesSelection extends GCWSelection {
@@ -18,6 +19,7 @@ class CountriesSelection extends GCWSelection {
         className(CountriesIOCCodes()),
         className(CountriesISOCodes()),
         className(CountriesVehicleCodes()),
+        className(CountriesFlags()),
       ].contains(className(element.tool));
     }).toList();
 

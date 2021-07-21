@@ -158,6 +158,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countri
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/country_flags.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -381,6 +382,7 @@ class _MainViewState extends State<MainView> {
         className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CountriesCallingCodes()),
+        className(CountriesFlags()),
         className(CountriesIOCCodes()),
         className(CountriesISOCodes()),
         className(CountriesVehicleCodes()),
