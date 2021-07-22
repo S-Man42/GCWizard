@@ -256,8 +256,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "POM",
 "icao": "AYPY",
 },
-"Rabaul Airport, Rabaul, Papua New Guinea" : {
-"name": "Rabaul Airport, Rabaul, Papua New Guinea",
+"Rabaul Airport" : {
+"name": "Rabaul Airport",
 "iata": "RAB",
 "icao": "AYRB",
 },
@@ -3731,8 +3731,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "POR",
 "icao": "EFPO",
 },
-"Rovaniemi Airport, Rovaniemi, Finland" : {
-"name": "Rovaniemi Airport, Rovaniemi, Finland",
+"Rovaniemi Airport" : {
+"name": "Rovaniemi Airport",
 "iata": "RVN",
 "icao": "EFRN",
 },
@@ -4671,13 +4671,13 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "LUX",
 "icao": "ELLX",
 },
-"Ålesund Airport, Vigra" : {
-"name": "Ålesund Airport, Vigra",
+"Ålesund Airport" : {
+"name": "Ålesund Airport",
 "iata": "AES",
 "icao": "ENAL",
 },
-"Andøya Airport, Andenes" : {
-"name": "Andøya Airport, Andenes",
+"Andøya Airport" : {
+"name": "Andøya Airport",
 "iata": "ANX",
 "icao": "ENAN",
 },
@@ -4686,13 +4686,13 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "ALF",
 "icao": "ENAT",
 },
-"Førde Airport, Bringeland" : {
-"name": "Førde Airport, Bringeland",
+"Førde Airport" : {
+"name": "Førde Airport",
 "iata": "FDE",
 "icao": "ENBL",
 },
-"Brønnøysund Airport, Brønnøy" : {
-"name": "Brønnøysund Airport, Brønnøy",
+"Brønnøysund Airport" : {
+"name": "Brønnøysund Airport",
 "iata": "BNN",
 "icao": "ENBN",
 },
@@ -4716,8 +4716,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BVG",
 "icao": "ENBV",
 },
-"Kristiansand Airport, Kjevik" : {
-"name": "Kristiansand Airport, Kjevik",
+"Kristiansand Airport" : {
+"name": "Kristiansand Airport",
 "iata": "KRS",
 "icao": "ENCN",
 },
@@ -4731,13 +4731,13 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BDU",
 "icao": "ENDU",
 },
-"Harstad/Narvik Airport, Evenes" : {
-"name": "Harstad/Narvik Airport, Evenes",
+"Harstad/Narvik Airport" : {
+"name": "Harstad/Narvik Airport",
 "iata": "EVE",
 "icao": "ENEV",
 },
-"Fagernes Airport, Leirin" : {
-"name": "Fagernes Airport, Leirin",
+"Fagernes Airport" : {
+"name": "Fagernes Airport",
 "iata": "VDB",
 "icao": "ENFG",
 },
@@ -4746,18 +4746,18 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "FRO",
 "icao": "ENFL",
 },
-"Oslo Airport, Gardermoen" : {
-"name": "Oslo Airport, Gardermoen",
+"Oslo Airport" : {
+"name": "Oslo Airport",
 "iata": "OSL",
 "icao": "ENGM",
 },
-"Hamar Airport, Stafsberg" : {
-"name": "Hamar Airport, Stafsberg",
+"Hamar Airport" : {
+"name": "Hamar Airport",
 "iata": "HMR",
 "icao": "ENHA",
 },
-"Haugesund Airport, Karmøy" : {
-"name": "Haugesund Airport, Karmøy",
+"Haugesund Airport" : {
+"name": "Haugesund Airport",
 "iata": "HAU",
 "icao": "ENHD",
 },
@@ -4771,8 +4771,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "HAA",
 "icao": "ENHK",
 },
-"Honningsvåg Airport, Valan" : {
-"name": "Honningsvåg Airport, Valan",
+"Honningsvåg Airport" : {
+"name": "Honningsvåg Airport",
 "iata": "HVG",
 "icao": "ENHV",
 },
@@ -4781,18 +4781,18 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "QKX",
 "icao": "ENKA",
 },
-"Kristiansund Airport, Kvernberget" : {
-"name": "Kristiansund Airport, Kvernberget",
+"Kristiansund Airport" : {
+"name": "Kristiansund Airport",
 "iata": "KSU",
 "icao": "ENKB",
 },
-"Gol Airport, Klanten,Norway" : {
-"name": "Gol Airport, Klanten,Norway",
+"Gol Airport" : {
+"name": "Gol Airport",
 "iata": "GLL",
 "icao": "ENKL",
 },
-"Kirkenes Airport, Høybuktmoen" : {
-"name": "Kirkenes Airport, Høybuktmoen",
+"Kirkenes Airport" : {
+"name": "Kirkenes Airport",
 "iata": "KKN",
 "icao": "ENKR",
 },
@@ -4811,33 +4811,33 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "MEH",
 "icao": "ENMH",
 },
-"Molde Airport, Årø" : {
-"name": "Molde Airport, Årø",
+"Molde Airport" : {
+"name": "Molde Airport",
 "iata": "MOL",
 "icao": "ENML",
 },
-"Mosjøen Airport, Kjærstad" : {
-"name": "Mosjøen Airport, Kjærstad",
+"Mosjøen Airport" : {
+"name": "Mosjøen Airport",
 "iata": "MJF",
 "icao": "ENMS",
 },
-"Lakselv Airport, Banak" : {
-"name": "Lakselv Airport, Banak",
+"Lakselv Airport" : {
+"name": "Lakselv Airport",
 "iata": "LKL",
 "icao": "ENNA",
 },
-"Narvik Airport, Framnes" : {
-"name": "Narvik Airport, Framnes",
+"Narvik Airport" : {
+"name": "Narvik Airport",
 "iata": "NVK",
 "icao": "ENNK",
 },
-"Namsos Airport, Høknesøra" : {
-"name": "Namsos Airport, Høknesøra",
+"Namsos Airport" : {
+"name": "Namsos Airport",
 "iata": "OSY",
 "icao": "ENNM",
 },
-"Notodden Airport, Tuven," : {
-"name": "Notodden Airport, Tuven,",
+"Notodden Airport" : {
+"name": "Notodden Airport",
 "iata": "NTB",
 "icao": "ENNO",
 },
@@ -4846,18 +4846,18 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "OLA",
 "icao": "ENOL",
 },
-"Ørsta/Volda Airport, Hovden" : {
-"name": "Ørsta/Volda Airport, Hovden",
+"Ørsta/Volda Airport" : {
+"name": "Ørsta/Volda Airport",
 "iata": "HOV",
 "icao": "ENOV",
 },
-"Mo i Rana Airport, Røssvoll" : {
-"name": "Mo i Rana Airport, Røssvoll",
+"Mo i Rana Airport" : {
+"name": "Mo i Rana Airport",
 "iata": "MQN",
 "icao": "ENRA",
 },
-"Rørvik Airport, Ryum" : {
-"name": "Rørvik Airport, Ryum",
+"Rørvik Airport" : {
+"name": "Rørvik Airport",
 "iata": "RVK",
 "icao": "ENRM",
 },
@@ -4876,38 +4876,38 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "RYG",
 "icao": "ENRY",
 },
-"Stord Airport, Sørstokken" : {
-"name": "Stord Airport, Sørstokken",
+"Stord Airport" : {
+"name": "Stord Airport",
 "iata": "SRP",
 "icao": "ENSA",
 },
-"Svalbard Airport, Longyear" : {
-"name": "Svalbard Airport, Longyear",
+"Svalbard Airport," : {
+"name": "Svalbard Airport",
 "iata": "LYR",
 "icao": "ENSB",
 },
-"Sandane Airport, Anda" : {
-"name": "Sandane Airport, Anda",
+"Sandane Airport" : {
+"name": "Sandane Airport",
 "iata": "SDN",
 "icao": "ENSD",
 },
-"Sogndal Airport, Haukåsen" : {
-"name": "Sogndal Airport, Haukåsen",
+"Sogndal Airport" : {
+"name": "Sogndal Airport",
 "iata": "SOG",
 "icao": "ENSG",
 },
-"Svolvær Airport, Helle" : {
-"name": "Svolvær Airport, Helle",
+"Svolvær Airport" : {
+"name": "Svolvær Airport",
 "iata": "SVJ",
 "icao": "ENSH",
 },
-"Stokmarknes Airport, Skagen" : {
-"name": "Stokmarknes Airport, Skagen",
+"Stokmarknes Airport" : {
+"name": "Stokmarknes Airport",
 "iata": "SKN",
 "icao": "ENSK",
 },
-"Skien Airport, Geiteryggen" : {
-"name": "Skien Airport, Geiteryggen",
+"Skien Airport" : {
+"name": "Skien Airport",
 "iata": "SKE",
 "icao": "ENSN",
 },
@@ -4921,13 +4921,13 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "SOJ",
 "icao": "ENSR",
 },
-"Vardø Airport, Svartnes" : {
-"name": "Vardø Airport, Svartnes",
+"Vardø Airport" : {
+"name": "Vardø Airport",
 "iata": "VAW",
 "icao": "ENSS",
 },
-"Sandnessjøen Airport, Stokka" : {
-"name": "Sandnessjøen Airport, Stokka",
+"Sandnessjøen Airport" : {
+"name": "Sandnessjøen Airport",
 "iata": "SSJ",
 "icao": "ENST",
 },
@@ -4936,13 +4936,13 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "TOS",
 "icao": "ENTC",
 },
-"Sandefjord Airport, Torp" : {
-"name": "Sandefjord Airport, Torp",
+"Sandefjord Airport" : {
+"name": "Sandefjord Airport",
 "iata": "TRF",
 "icao": "ENTO",
 },
-"Trondheim Airport, Værnes" : {
-"name": "Trondheim Airport, Værnes",
+"Trondheim Airport" : {
+"name": "Trondheim Airport",
 "iata": "TRD",
 "icao": "ENVA",
 },
@@ -4956,8 +4956,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "VRY",
 "icao": "ENVR",
 },
-"Stavanger Airport, Sola" : {
-"name": "Stavanger Airport, Sola",
+"Stavanger Airport" : {
+"name": "Stavanger Airport",
 "iata": "SVG",
 "icao": "ENZV",
 },
@@ -8336,8 +8336,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "RAI",
 "icao": "GVFM",
 },
-"Maio Airport, Maio, Cape Verde" : {
-"name": "Maio Airport, Maio, Cape Verde",
+"Maio Airport" : {
+"name": "Maio Airport",
 "iata": "MMO",
 "icao": "GVMA",
 },
@@ -8516,8 +8516,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "MTF",
 "icao": "HAMT",
 },
-"Negele Boran, Ethiopia" : {
-"name": "Negele Boran, Ethiopia",
+"Negele Boran" : {
+"name": "Negele Boran",
 "iata": "EGL",
 "icao": "HANG",
 },
@@ -8941,8 +8941,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "WIL",
 "icao": "HKNW",
 },
-"Nanyuki, Kenya" : {
-"name": "Nanyuki, Kenya",
+"Nanyuki" : {
+"name": "Nanyuki",
 "iata": "NYK",
 "icao": "HKNY",
 },
@@ -13201,8 +13201,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "HQZ",
 "icao": "KHQZ",
 },
-"Hermiston Municipal Airport, Hermiston, Oregon, United State" : {
-"name": "Hermiston Municipal Airport, Hermiston, Oregon, United State",
+"Hermiston Municipal Airport" : {
+"name": "Hermiston Municipal Airport",
 "iata": "HES",
 "icao": "KHRI",
 },
@@ -17226,8 +17226,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "RYN",
 "icao": "KRYN",
 },
-"Watertown Municipal Airport, Watertown, Wisconsin, United St" : {
-"name": "Watertown Municipal Airport, Watertown, Wisconsin, United St",
+"Watertown Municipal Airport" : {
+"name": "Watertown Municipal Airport",
 "iata": "RYV",
 "icao": "KRYV",
 },
@@ -19201,8 +19201,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "GRO",
 "icao": "LEGE",
 },
-"Granada-Jaen Airport, Spain." : {
-"name": "Granada-Jaen Airport, Spain.",
+"Granada-Jaen Airport" : {
+"name": "Granada-Jaen Airport",
 "iata": "GRX",
 "icao": "LEGR",
 },
@@ -20256,8 +20256,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "KLX",
 "icao": "LGKL",
 },
-"Kos Island International Airport, Hippocrates" : {
-"name": "Kos Island International Airport, Hippocrates",
+"Kos Island International Airport" : {
+"name": "Kos Island International Airport",
 "iata": "KGS",
 "icao": "LGKO",
 },
@@ -20341,8 +20341,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "PVK",
 "icao": "LGPZ",
 },
-"Rhodes International Airport, Diagoras" : {
-"name": "Rhodes International Airport, Diagoras",
+"Rhodes International Airport" : {
+"name": "Rhodes International Airport",
 "iata": "RHO",
 "icao": "LGRP",
 },
@@ -20396,8 +20396,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "SKG",
 "icao": "LGTS",
 },
-"Zakynthos International Airport, Dionysios Solomos" : {
-"name": "Zakynthos International Airport, Dionysios Solomos",
+"Zakynthos International Airport" : {
+"name": "Zakynthos International Airport",
 "iata": "ZTH",
 "icao": "LGZA",
 },

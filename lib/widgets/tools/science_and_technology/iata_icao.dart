@@ -53,7 +53,7 @@ class IATAICAOState extends State<IATAICAO> {
     var output;
 
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
-    print(field);
+
     var flexValues = List<int>.generate(3, (index) => 1);
 
     var data = IATA_ICAO_CODES.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
@@ -78,7 +78,7 @@ class IATAICAOState extends State<IATAICAO> {
     } else {
       flexValues.insert(1, widget.fields.length + 1);
     }
-print(data);
+
     data.sort((a, b) {
       var result = a[0].compareTo(b[0]);
       if (result != 0) return result;
