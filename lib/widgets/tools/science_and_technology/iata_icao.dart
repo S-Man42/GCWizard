@@ -66,7 +66,7 @@ class IATAICAOState extends State<IATAICAO> {
 
         return dataList;
       } else {
-        var dataList = [e[field], i18n(context, e['name'])];
+        var dataList = [e[field], e['name']];
         dataList.addAll(widget.fields.where((f) => f != field).map((f) => e[f]));
 
         return dataList;

@@ -1,3 +1,5 @@
+// https://airportcodes.aero/name
+
 Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "Thomas C Russell Field" : {
 "name": "Thomas C Russell Field",
@@ -4244,8 +4246,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "CBG",
 "icao": "EGSC",
 },
-"Ipswich Airport ipw? Ipswich, England (closed 1996)" : {
-"name": "Ipswich Airport ipw? Ipswich, England (closed 1996)",
+"Ipswich Airport (closed 1996)" : {
+"name": "Ipswich Airport (closed 1996)",
 "iata": "IPW",
 "icao": "EGSE",
 },
@@ -5004,8 +5006,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "QEO",
 "icao": "EPKW",
 },
-"?ód? W?adys?aw Reymont Airport" : {
-"name": "?ód? W?adys?aw Reymont Airport",
+"Lódz Wladyslaw Reymont Airport" : {
+"name": "Lódz Wladyslaw Reymont Airport",
 "iata": "LCJ",
 "icao": "EPLL",
 },
@@ -5029,8 +5031,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "QPM",
 "icao": "EPOP",
 },
-"Pozna?-?awica Airport" : {
-"name": "Pozna?-?awica Airport",
+"Poznan-Lawica Airport" : {
+"name": "Poznan-Lawica Airport",
 "iata": "POZ",
 "icao": "EPPO",
 },
@@ -5054,8 +5056,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "WAW",
 "icao": "EPWA",
 },
-"Copernicus Airport Wroc?aw" : {
-"name": "Copernicus Airport Wroc?aw",
+"Copernicus Airport Wroclaw" : {
+"name": "Copernicus Airport Wroclaw",
 "iata": "WRO",
 "icao": "EPWR",
 },
@@ -12814,8 +12816,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "GWO",
 "icao": "KGWO",
 },
-"Gwinner Airport (Roger Melroe Field)? Gwinner, North Dakota," : {
-"name": "Gwinner Airport (Roger Melroe Field)? Gwinner, North Dakota,",
+"Gwinner Airport (Roger Melroe Field)" : {
+"name": "Gwinner Airport (Roger Melroe Field)",
 "iata": "GWR",
 "icao": "KGWR",
 },
@@ -20769,8 +20771,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "MBX",
 "icao": "LJMB",
 },
-"Portoro? Airport" : {
-"name": "Portoro? Airport",
+"Portoroz Airport" : {
+"name": "Portoroz Airport",
 "iata": "POW",
 "icao": "LJPZ",
 },
@@ -20789,8 +20791,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "KLV",
 "icao": "LKKV",
 },
-"Mariánské LáznÄ› Airport" : {
-"name": "Mariánské LáznÄ› Airport",
+"Mariánské Lázně Airport" : {
+"name": "Mariánské Lázně Airport",
 "iata": "MKA",
 "icao": "LKMR",
 },
@@ -20804,8 +20806,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "PED",
 "icao": "LKPD",
 },
-"PÅ™erov Air Base" : {
-"name": "PÅ™erov Air Base",
+"Prerov Air Base" : {
+"name": "Prerov Air Base",
 "iata": "PRV",
 "icao": "LKPO",
 },
@@ -20814,8 +20816,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "PRG",
 "icao": "LKPR",
 },
-"Brno-Tu?any Airport" : {
-"name": "Brno-Tu?any Airport",
+"Brno-Tuřany Airport" : {
+"name": "Brno-Tuřany Airport",
 "iata": "BRQ",
 "icao": "LKTB",
 },
@@ -21104,8 +21106,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BBU",
 "icao": "LRBS",
 },
-"Mihail Kog?lniceanu International Airport" : {
-"name": "Mihail Kog?lniceanu International Airport",
+"Mihail Kogǎlniceanu International Airport" : {
+"name": "Mihail Kogǎlniceanu International Airport",
 "iata": "CND",
 "icao": "LRCK",
 },
@@ -21114,8 +21116,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "CLJ",
 "icao": "LRCL",
 },
-"Caransebe? Airport" : {
-"name": "Caransebe? Airport",
+"Caransebeş Airport" : {
+"name": "Caransebeş Airport",
 "iata": "CSB",
 "icao": "LRCS",
 },
@@ -21164,8 +21166,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "TCE",
 "icao": "LRTC",
 },
-"Târgu Mure? International Airport" : {
-"name": "Târgu Mure? International Airport",
+"Târgu Mureş International Airport" : {
+"name": "Târgu Mureş International Airport",
 "iata": "TGM",
 "icao": "LRTM",
 },
@@ -21354,8 +21356,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BZI",
 "icao": "LTBF",
 },
-"Band?rma Airport" : {
-"name": "Band?rma Airport",
+"Bandirma Airport" : {
+"name": "Bandirma Airport",
 "iata": "BDM",
 "icao": "LTBG",
 },
@@ -21364,8 +21366,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "CKZ",
 "icao": "LTBH",
 },
-"Eski?ehir Airport" : {
-"name": "Eski?ehir Airport",
+"Eskişehir Airport" : {
+"name": "Eskişehir Airport",
 "iata": "ESK",
 "icao": "LTBI",
 },
@@ -21379,8 +21381,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "IGL",
 "icao": "LTBL",
 },
-"U?ak Airport" : {
-"name": "U?ak Airport",
+"Uşak Airport" : {
+"name": "Uşak Airport",
 "iata": "USQ",
 "icao": "LTBO",
 },
@@ -21419,8 +21421,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "EZS",
 "icao": "LTCA",
 },
-"Diyarbak?r Airport" : {
-"name": "Diyarbak?r Airport",
+"Diyarbakir Airport" : {
+"name": "Diyarbakir Airport",
 "iata": "DIY",
 "icao": "LTCC",
 },
@@ -21439,8 +21441,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "KSY",
 "icao": "LTCF",
 },
-"Trabzon Airport? Trabzon, Turkey" : {
-"name": "Trabzon Airport? Trabzon, Turkey",
+"Trabzon Airport" : {
+"name": "Trabzon Airport",
 "iata": "TZX",
 "icao": "LTCG",
 },
@@ -21479,8 +21481,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "SIC",
 "icao": "LTCM",
 },
-"Kahramanmara? Airport" : {
-"name": "Kahramanmara? Airport",
+"Kahramanmaraş Airport" : {
+"name": "Kahramanmaraş Airport",
 "iata": "KCM",
 "icao": "LTCN",
 },
@@ -21549,8 +21551,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BZY",
 "icao": "LUBL",
 },
-"Chi?in?u International Airport" : {
-"name": "Chi?in?u International Airport",
+"Chisinau International Airport" : {
+"name": "Chisinau International Airport",
 "iata": "KIV",
 "icao": "LUKK",
 },
@@ -21589,13 +21591,13 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BJY",
 "icao": "LYBT",
 },
-"Äakovica Airfield" : {
-"name": "Äakovica Airfield",
+"Äakovica Airfield" : {
+"name": "Äakovica Airfield",
 "iata": "GJA",
 "icao": "LYDK",
 },
-"Ni? Constantine the Great Airport" : {
-"name": "Ni? Constantine the Great Airport",
+"Niš Constantine the Great Airport" : {
+"name": "Niš Constantine the Great Airport",
 "iata": "INI",
 "icao": "LYNI",
 },
@@ -21614,8 +21616,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "TIV",
 "icao": "LYTV",
 },
-"U?ice-Ponikve Airport" : {
-"name": "U?ice-Ponikve Airport",
+"U Ice-Ponikve Airport" : {
+"name": "U Ice-Ponikve Airport",
 "iata": "UZC",
 "icao": "LYUZ",
 },
@@ -21624,8 +21626,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BTS",
 "icao": "LZIB",
 },
-"Ko?ice Airport" : {
-"name": "Ko?ice Airport",
+"Košice Airport" : {
+"name": "Košice Airport",
 "iata": "KSC",
 "icao": "LZKZ",
 },
@@ -23194,8 +23196,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "EUA",
 "icao": "NFTE",
 },
-"Fua?amotu International Airport" : {
-"name": "Fua?amotu International Airport",
+"Fua'amotu International Airport" : {
+"name": "Fua'amotu International Airport",
 "iata": "TBU",
 "icao": "NFTF",
 },
@@ -24619,8 +24621,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "RZR",
 "icao": "OINR",
 },
-"Sari, Iran" : {
-"name": "Sari, Iran",
+"Sari" : {
+"name": "Sari",
 "iata": "SRY",
 "icao": "OINZ",
 },
@@ -24959,8 +24961,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "MPD",
 "icao": "OPMP",
 },
-"Minhas, Kamra Airport" : {
-"name": "Minhas, Kamra Airport",
+"Minhas" : {
+"name": "Minhas",
 "iata": "MNS",
 "icao": "OPMS",
 },
@@ -26314,8 +26316,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "HCN",
 "icao": "RCKW",
 },
-"Taichung, Taiwan" : {
-"name": "Taichung, Taiwan",
+"Taichung" : {
+"name": "Taichung",
 "iata": "TXG",
 "icao": "RCLG",
 },
@@ -27164,8 +27166,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "BQA",
 "icao": "RPUR",
 },
-"San Fernando Airport, San Fernando City, La Union, Philippin" : {
-"name": "San Fernando Airport, San Fernando City, La Union, Philippin",
+"San Fernando Airport" : {
+"name": "San Fernando Airport",
 "iata": "SFE",
 "icao": "RPUS",
 },
@@ -28224,8 +28226,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "NAT",
 "icao": "SBNT",
 },
-"Oiapoque Airport ; Oiapoque, Amapa , Brasil" : {
-"name": "Oiapoque Airport ; Oiapoque, Amapa , Brasil",
+"Oiapoque Airport" : {
+"name": "Oiapoque Airport",
 "iata": "OYK",
 "icao": "SBOI",
 },
@@ -29254,8 +29256,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "MCJ",
 "icao": "SKLM",
 },
-"La Pedrera Airport La Pedrera, Colombia" : {
-"name": "La Pedrera Airport La Pedrera, Colombia",
+"La Pedrera Airport La Pedrera" : {
+"name": "La Pedrera Airport La Pedrera",
 "iata": "LPD",
 "icao": "SKLP",
 },
@@ -29379,8 +29381,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "PSO",
 "icao": "SKPS",
 },
-"El Embrujo Airport Providencia Island, Colombia" : {
-"name": "El Embrujo Airport Providencia Island, Colombia",
+"El Embrujo Airport Providencia Island" : {
+"name": "El Embrujo Airport Providencia Island",
 "iata": "PVA",
 "icao": "SKPV",
 },
@@ -29874,8 +29876,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "GMS",
 "icao": "SNGM",
 },
-"Garanhuns, Pernambuco, Brazil" : {
-"name": "Garanhuns, Pernambuco, Brazil",
+"Garanhuns" : {
+"name": "Garanhuns",
 "iata": "QGP",
 "icao": "SNGN",
 },
@@ -30914,8 +30916,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "VLN",
 "icao": "SVVA",
 },
-"Juan Pablo Perez Alfonso Airport? El Vigía, Venezuela" : {
-"name": "Juan Pablo Perez Alfonso Airport? El Vigía, Venezuela",
+"Juan Pablo Perez Alfonso Airport" : {
+"name": "Juan Pablo Perez Alfonso Airport",
 "iata": "VIG",
 "icao": "SVVG",
 },
@@ -32094,8 +32096,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "KSZ",
 "icao": "ULKK",
 },
-"Pulkovo Airport, Rzhevka Airport" : {
-"name": "Pulkovo Airport, Rzhevka Airport",
+"Pulkovo Airport" : {
+"name": "Pulkovo Airport",
 "iata": "LED",
 "icao": "ULLI",
 },
@@ -32119,8 +32121,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "PKV",
 "icao": "ULOO",
 },
-"Besovets Airport, Petrozavodsk, Russia" : {
-"name": "Besovets Airport, Petrozavodsk, Russia",
+"Besovets Airport" : {
+"name": "Besovets Airport",
 "iata": "PES",
 "icao": "ULPB",
 },
@@ -32451,7 +32453,7 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 },
 "Roschino Airport" : {
 "name": "Roschino Airport",
-"iata": "TJ?",
+"iata": "TJM",
 "icao": "USTR",
 },
 "Roshchino International Airport" : {
@@ -32629,8 +32631,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "IKT",
 "icao": "UUII",
 },
-"Belgorod, Russia" : {
-"name": "Belgorod, Russia",
+"Belgorod" : {
+"name": "Belgorod",
 "iata": "EGO",
 "icao": "UUOB",
 },
@@ -33474,8 +33476,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "SLV",
 "icao": "VISM",
 },
-"Sheikh Ul Alam International Airport, Srinagar, India" : {
-"name": "Sheikh Ul Alam International Airport, Srinagar, India",
+"Sheikh Ul Alam International Airport" : {
+"name": "Sheikh Ul Alam International Airport",
 "iata": "SXR",
 "icao": "VISR",
 },
@@ -34789,8 +34791,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "DOB",
 "icao": "WAPD",
 },
-"Mangole Airport, Falabisahaya" : {
-"name": "Mangole Airport, Falabisahaya",
+"Mangole Airport" : {
+"name": "Mangole Airport",
 "iata": "MAL",
 "icao": "WAPE",
 },
@@ -34799,8 +34801,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "NRE",
 "icao": "WAPG",
 },
-"Oesman Sadik Airport, Labuha" : {
-"name": "Oesman Sadik Airport, Labuha",
+"Oesman Sadik Airport" : {
+"name": "Oesman Sadik Airport",
 "iata": "LAH",
 "icao": "WAPH",
 },
@@ -35639,8 +35641,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "WGP",
 "icao": "WRRW",
 },
-"Paya Lebar Airbase, Paya Lebar, Singapore" : {
-"name": "Paya Lebar Airbase, Paya Lebar, Singapore",
+"Paya Lebar Airbase" : {
+"name": "Paya Lebar Airbase",
 "iata": "QPG",
 "icao": "WSAP",
 },
@@ -37394,8 +37396,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "PKT",
 "icao": "YPKT",
 },
-"Kununurra Airport? Kununurra, Western Australia" : {
-"name": "Kununurra Airport? Kununurra, Western Australia",
+"Kununurra Airport" : {
+"name": "Kununurra Airport",
 "iata": "KNX",
 "icao": "YPKU",
 },
@@ -37669,8 +37671,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
 "iata": "HLS",
 "icao": "YSTH",
 },
-"Tamworth, New South Wales, Australia" : {
-"name": "Tamworth, New South Wales, Australia",
+"Tamworth": {
+"name": "Tamworth",
 "iata": "TMW",
 "icao": "YSTW",
 },
