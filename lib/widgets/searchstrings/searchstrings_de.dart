@@ -204,6 +204,7 @@ const SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
 const SEARCHSTRING_DE_HEXSTRING2FILE = 'hexadezimal datei';
 const SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
 const SEARCHSTRING_DE_HOUDINI = 'seance';
+const SEARCHSTRING_DE_IATAICAO = '';
 const SEARCHSTRING_DE_ICECODES = 'ostsee eiscodes gewaesser schnee schnelzen eisberg';
 const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS =
     'farben farbkorrekturen anpassen invertieren gammawert saettigung rgb rot gruen blau helligkeit';
