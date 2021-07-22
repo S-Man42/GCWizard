@@ -37,7 +37,6 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('values: ${elem['values']}, ref: ${elem['ref']}, isLat : ${elem['isLat']}', () {
         var _actual = getCoordDecFromText(elem['values'], elem['ref'], elem['isLat']);
-        print(_actual);
         expect(_actual, elem['expectedOutput']);
       });
     });

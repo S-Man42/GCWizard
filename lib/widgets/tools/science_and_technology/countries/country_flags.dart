@@ -36,12 +36,11 @@ class CountriesFlagsState extends State<CountriesFlags> {
     _images = archive
         .map((file) {
       var key = i18n(context, _KEY_PREFIX + file.name.split('.png')[0]);
+
       var data = file.content;
 
       return {key: new SymbolData(path: file.name, bytes: data)};
     }).toList();
-
-    print(_images);
 
     _images.sort((a,b) => a.keys.first.compareTo(b.keys.first));
 
@@ -71,8 +70,10 @@ class CountriesFlagsState extends State<CountriesFlags> {
             });
           },
         ),
-        Container(height: 20),
-        Image.memory(_images.firstWhere((element) => element.keys.first == _currentImageKey).values.first.bytes)
+        Container(
+          child: Image.memory(_images.firstWhere((element) => element.keys.first == _currentImageKey).values.first.bytes),
+          padding: EdgeInsets.only(top: 20),
+        ),
       ],
     );
   }

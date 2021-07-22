@@ -29,7 +29,6 @@ runSamplesTestGps(
   expect(tags.length, isNonZero);
   expect(tags, contains("GPS GPSLatitude"));
   var lat = tags["GPS GPSLatitude"];
-  print(lat);
 
   LatLng _point = completeGPSData(tags);
   expect(_point, isNotNull);
