@@ -199,6 +199,7 @@ const SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
 const SEARCHSTRING_EN_HEXSTRING2FILE = 'hexadecimal file';
 const SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
 const SEARCHSTRING_EN_HOUDINI = 'seance';
+const SEARCHSTRING_EN_IATAICAO = '';
 const SEARCHSTRING_EN_ICECODES = 'balticsea ice floe melting snow iceberg icecodes';
 const SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS =
     'colors colours colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green';

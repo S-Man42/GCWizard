@@ -257,6 +257,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
@@ -852,6 +853,18 @@ class Registry {
         SEARCHSTRING_EN_HOUDINI,
         SEARCHSTRING_FR_HOUDINI
       ]),
+      GCWTool(
+        tool: IATAICAO(),
+        i18nPrefix: 'iataicao',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        helpLocales: ['de','en','fr'],
+        searchStrings: [
+          SEARCHSTRING_COMMON_IATAICAO,
+          SEARCHSTRING_DE_IATAICAO,
+          SEARCHSTRING_EN_IATAICAO,
+          SEARCHSTRING_FR_IATAICAO
+        ],
+      ),
       GCWTool(
         tool: IceCodesSelection(),
         i18nPrefix: 'icecodes_selection',
