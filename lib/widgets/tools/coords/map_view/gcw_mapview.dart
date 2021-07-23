@@ -280,7 +280,7 @@ class GCWMapViewState extends State<GCWMapView> {
           options: TappablePolylineLayerOptions(
         polylineCulling: true,
         polylines: _polylines,
-        onTap: (polyline) => _showPolylineDialog(polyline),
+        onTap: (polylines, details) => _showPolylineDialog(polylines.first),
       )),
       PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
