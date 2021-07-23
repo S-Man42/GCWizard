@@ -80,7 +80,6 @@ void initDefaultSettings() {
   if (_favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
     Prefs.setStringList('favorites', [
       'AlphabetValues_alphabetvalues',
-      'ASCIIValues_asciivalues',
       'Morse_morse',
       'RomanNumbers_romannumbers',
       'Rot13_rotation_rot13',
