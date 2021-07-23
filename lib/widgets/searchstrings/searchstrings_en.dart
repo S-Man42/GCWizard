@@ -142,6 +142,7 @@ const SEARCHSTRING_EN_ESOTERIC_BRAINFK = 'brain';
 const SEARCHSTRING_EN_ESOTERIC_CHEF = 'ingredients cooking cook recipes';
 const SEARCHSTRING_EN_ESOTERIC_COW = 'cows moo';
 const SEARCHSTRING_EN_ESOTERIC_DEADFISH = '';
+const SEARCHSTRING_EN_ESOTERIC_KAROL_ROBOT = "karel";
 const SEARCHSTRING_EN_ESOTERIC_MALBOLGE = 'hell';
 const SEARCHSTRING_EN_ESOTERIC_OOK = 'monkeys apes dots questionsmarks exclamationmarks';
 const SEARCHSTRING_EN_ESOTERIC_WHITESPACELANGUAGE = 'space linefeed';

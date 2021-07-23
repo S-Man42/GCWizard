@@ -135,6 +135,7 @@ const SEARCHSTRING_FR_ESOTERIC_BRAINFK = 'cerveau niquer';
 const SEARCHSTRING_FR_ESOTERIC_CHEF = 'cuisinier recettes cuisine';
 const SEARCHSTRING_FR_ESOTERIC_COW = 'vaches';
 const SEARCHSTRING_FR_ESOTERIC_DEADFISH = 'poisson mort';
+const SEARCHSTRING_FR_ESOTERIC_KAROL_ROBOT = "karel";
 const SEARCHSTRING_FR_ESOTERIC_MALBOLGE = 'enfer';
 const SEARCHSTRING_FR_ESOTERIC_OOK = 'exclamation interrogation singe orang-outans';
 const SEARCHSTRING_FR_ESOTERIC_WHITESPACELANGUAGE = 'onglet vide saut';
