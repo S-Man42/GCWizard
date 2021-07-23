@@ -518,6 +518,10 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
+    _toolList.sort((a, b) {
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
+
     _categoryList = Registry.toolList.where((element) {
       return [
         className(CoordsSelection()),

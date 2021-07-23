@@ -2,15 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/sun_position.dart' as logic;
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +32,9 @@ class ShadowLengthState extends State<ShadowLength> {
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
   var _currentHeight = 0.0;
+
+  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+  Length _currentOutputLength = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +65,26 @@ class ShadowLengthState extends State<ShadowLength> {
         GCWTextDivider(
           text: i18n(context, 'shadowlength_height'),
         ),
-        GCWDoubleSpinner(
+        GCWDistance(
           value: _currentHeight,
-          min: 0.0,
-          numberDecimalDigits: 3,
+          unit: _currentInputLength,
           onChanged: (value) {
             setState(() {
               _currentHeight = value;
             });
-          }),
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'shadowlength_outputunit')
+        ),
+        GCWUnitDropDownButton(
+            unitList: allLengths(),
+            value: _currentOutputLength,
+            onChanged: (Length value) {
+              setState(() {
+                _currentOutputLength = value;
+              });
+            }),
         _buildOutput()
       ],
     );
@@ -77,21 +97,29 @@ class ShadowLengthState extends State<ShadowLength> {
     logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
     var _currentLength = _currentHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
     var lengthOutput = '';
+
     if(_currentLength < 0)
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
-    else
-      lengthOutput =  format.format(_currentLength) + ' m';
-    var outputsLength = [[i18n(context, 'shadowlength_length'), lengthOutput]];
-    var rowsLengthData = columnedMultiLineOutput(context, outputsLength);
-    rowsLengthData.insert(0, GCWTextDivider(text: i18n(context, 'shadowlength_shadow')));
+    else {
+      _currentLength = _currentOutputLength.fromMeter(_currentLength);
+      lengthOutput = format.format(_currentLength) + ' ' + _currentOutputLength.symbol;
+    }
+
+    var outputShadow = GCWDefaultOutput(
+      child: i18n(context, 'shadowlength_length') + ': $lengthOutput',
+      copyText: _currentLength.toString(),
+    );
+
     var outputsSun = [
       [i18n(context, 'astronomy_position_azimuth'), format.format(sunPosition.azimuth) + '°'],
       [i18n(context, 'astronomy_position_altitude'), format.format(sunPosition.altitude) + '°'],
     ];
+
     var rowsSunData = columnedMultiLineOutput(context, outputsSun);
     rowsSunData.insert(0, GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title')));
-    var output = rowsLengthData;
-    output.addAll(rowsSunData);
+
+    var output = rowsSunData;
+    output.insert(0, outputShadow);
     return Column(children: output);
   }
 }
