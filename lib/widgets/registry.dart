@@ -230,6 +230,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_ri
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
@@ -1528,6 +1529,16 @@ class Registry {
         SEARCHSTRING_DE_ASTRONOMY_SEASONS,
         SEARCHSTRING_EN_ASTRONOMY_SEASONS,
         SEARCHSTRING_FR_ASTRONOMY_SEASONS
+      ]),
+      GCWTool(tool: ShadowLength(), i18nPrefix: 'shadowlength', helpLocales: ['de','en','fr'], searchStrings: [
+        SEARCHSTRING_COMMON_ASTRONOMY,
+        SEARCHSTRING_DE_ASTRONOMY,
+        SEARCHSTRING_EN_ASTRONOMY,
+        SEARCHSTRING_FR_ASTRONOMY,
+        SEARCHSTRING_COMMON_ASTRONOMY_SHADOW_LENGTH,
+        SEARCHSTRING_DE_ASTRONOMY_SHADOW_LENGTH,
+        SEARCHSTRING_EN_ASTRONOMY_SHADOW_LENGTH,
+        SEARCHSTRING_FR_ASTRONOMY_SHADOW_LENGTH
       ]),
 
       //Babylon Numbers Selection **************************************************************************************
