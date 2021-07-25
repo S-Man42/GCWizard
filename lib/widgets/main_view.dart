@@ -188,6 +188,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/f
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
+import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -515,6 +516,7 @@ class _MainViewState extends State<MainView> {
         className(WaypointProjection()),
         className(Windchill()),
         className(Z22()),
+        className(Zodiac()),
       ].contains(className(element.tool));
     }).toList();
 

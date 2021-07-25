@@ -8,10 +8,12 @@ import 'package:gc_wizard/utils/common_utils.dart';
 Map<String, Color> colorMap = {
   '0': Colors.white,
   '1': Colors.black,
-  '2': Colors.redAccent, ///light red
+  '2': Colors.redAccent,
+
+  ///light red
   '3': Colors.yellow.shade100, //light yellow
   '4': Colors.lightGreen,
-  '5': Colors.cyanAccent,//light cyan,
+  '5': Colors.cyanAccent, //light cyan,
   '6': Colors.lightBlue,
   '7': Colors.pinkAccent.shade100, //light magenta,
   '8': Colors.red,
@@ -20,12 +22,12 @@ Map<String, Color> colorMap = {
   'B': Colors.cyan,
   'C': Colors.blue,
   'D': Colors.purpleAccent, //magenta,
-  'E': Colors.red.shade900,//dark red,
-  'F': Colors.yellow,  //dark yellow,
-  'G': Colors.green.shade900,  //dark green,
-  'H': Colors.cyan.shade900,  //dark cyan,
-  'I': Colors.blue.shade900,  //dark blue,
-  'J': Colors.purple,  //dark magenta
+  'E': Colors.red.shade900, //dark red,
+  'F': Colors.yellow, //dark yellow,
+  'G': Colors.green.shade900, //dark green,
+  'H': Colors.cyan.shade900, //dark cyan,
+  'I': Colors.blue.shade900, //dark blue,
+  'J': Colors.purple, //dark magenta
   'K': Colors.orange,
   'L': Colors.deepOrange,
   'M': Colors.orangeAccent,
@@ -107,8 +109,7 @@ String _filterInput(String input, String filter) {
 }
 
 Future<Uint8List> _binary2Image(String input) async {
-  if (input == '' || input == null)
-    return null;
+  if (input == '' || input == null) return null;
 
   var lines = input.split('\n');
 

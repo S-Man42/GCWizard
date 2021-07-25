@@ -166,7 +166,8 @@ class Method {
         ingredient = matchers[4].firstMatch(line).group(2);
         mixingbowl =
             (matchers[4].firstMatch(line).group(7) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(7))) - 1;
-      } else if (matchers[5].hasMatch(line)) { //RegExp(r'^inhalt(e)? der ((\d+)(ten) )?(rühr)?schüssel( auf dem stövchen)?( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
+      } else if (matchers[5].hasMatch(line)) {
+        //RegExp(r'^inhalt(e)? der ((\d+)(ten) )?(rühr)?schüssel( auf dem stövchen)?( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
         //inhalt der schüssel verflüssigen
         type = Type.SchuesselErhitzen;
         mixingbowl =

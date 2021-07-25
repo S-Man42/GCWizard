@@ -74,9 +74,7 @@ class ShadowLengthState extends State<ShadowLength> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'shadowlength_outputunit')
-        ),
+        GCWTextDivider(text: i18n(context, 'shadowlength_outputunit')),
         GCWUnitDropDownButton(
             unitList: allLengths(),
             value: _currentOutputLength,
@@ -94,11 +92,12 @@ class ShadowLengthState extends State<ShadowLength> {
     var format = NumberFormat('0.000');
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
     var sunPosition =
-    logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
-    var _currentLength = _currentHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
+        logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
+    var _currentLength =
+        _currentHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
     var lengthOutput = '';
 
-    if(_currentLength < 0)
+    if (_currentLength < 0)
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
     else {
       _currentLength = _currentOutputLength.fromMeter(_currentLength);

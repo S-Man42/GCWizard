@@ -5,51 +5,88 @@
 // https://www.cs.mtsu.edu/~untch/karel/
 // https://en.wikipedia.org/wiki/Karel_(programming_language)
 
-
 final KAREL_ENCODING = {
-  ' ' : 'linksdrehen schritt(7) rechtsdrehen',
-  'A' : 'schritt(3) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen linksdrehen schritt schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt schritt markesetzen rechtsdrehen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) rechtsdrehen schritt(3) rechtsdrehen',
-  'B' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(3) linksdrehen markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
-  'C' : 'schritt(2) linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(3) rechtsdrehen',
-  'D' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
-  'E' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) markesetzen schritt markesetzen rechtsdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt linksdrehen linksdrehen',
-  'F' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt linksdrehen linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt(3) rechtsdrehen',
-  'G' : 'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) linksdrehen linksdrehen',
-  'H' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen  schritt rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(4) markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
-  'I' : 'schritt linksdrehen markesetzen schritt rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt(2) markesetzen linksdrehen schritt(6) markesetzen schritt(1) rechtsdrehen schritt(3) rechtsdrehen',
-  'J' : 'schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(7) rechtsdrehen',
-  'K' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(3) linksdrehen schritt linksdrehen linksdrehen',
-  'L' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt(7) linksdrehen linksdrehen',
-  'M' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(5) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(7) linksdrehen linksdrehen',
-  'N' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(6) rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
-  'O' : 'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt  linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt rechtsdrehen schritt(7) rechtsdrehen',
-  'P' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
-  'Q' : 'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen rechtsdrehen schritt(2) markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
-  'R' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
-  'S' : 'schritt(2) linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen',
-  'T' : 'schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(2) linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
-  'U' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt  linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
-  'V' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
-  'W' : 'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(2) linksdrehen schritt(4) markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(6) rechtsdrehen rechtsdrehen',
-  'X' : 'schritt markesetzen schritt markesetzen schritt(4) markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(2) markesetzen schritt(2) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen linksdrehen schritt(2) markesetzen schritt(2) rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt(4) markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
-  'Y' : 'schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
-  'Z' : 'schritt linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
-  '0' : 'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt(3) rechtsdrehen schritt(4) rechtsdrehen',
-  '1' : 'schritt schritt schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(7) rechtsdrehen schritt(3) rechtsdrehen',
-  '2' : 'schritt schritt schritt markesetzen linksdrehen linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(7) rechtsdrehen schritt(3) rechtsdrehen',
-  '3' : 'schritt schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(2) rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen',
-  '4' : 'linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt(2) markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
-  '5' : 'linksdrehen schritt(4) rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen',
-  '6' : 'linksdrehen schritt(4) rechtsdrehen schritt(2) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(7) rechtsdrehen',
-  '7' : 'schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
-  '8' : 'schritt(3) linksdrehen linksdrehen markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(3) rechtsdrehen',
-  '9' : 'schritt(3) markesetzen linksdrehen linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(2) rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) rechtsdrehen schritt(4) rechtsdrehen',
-  '°' : 'schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(4) rechtsdrehen',
-  '.' : 'schritt(7) markesetzen linksdrehen schritt(3) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
-  ',' : 'schritt(7) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(3) rechtsdrehen'
+  ' ': 'linksdrehen schritt(7) rechtsdrehen',
+  'A':
+      'schritt(3) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen linksdrehen schritt schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt schritt markesetzen rechtsdrehen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) rechtsdrehen schritt(3) rechtsdrehen',
+  'B':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(3) linksdrehen markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
+  'C':
+      'schritt(2) linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(3) rechtsdrehen',
+  'D':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
+  'E':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) markesetzen schritt markesetzen rechtsdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt linksdrehen linksdrehen',
+  'F':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt linksdrehen linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt(3) rechtsdrehen',
+  'G':
+      'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(2) linksdrehen linksdrehen',
+  'H':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(3) rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen  schritt rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(4) markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
+  'I':
+      'schritt linksdrehen markesetzen schritt rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt(2) markesetzen linksdrehen schritt(6) markesetzen schritt(1) rechtsdrehen schritt(3) rechtsdrehen',
+  'J':
+      'schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(7) rechtsdrehen',
+  'K':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(3) linksdrehen schritt linksdrehen linksdrehen',
+  'L':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt(7) linksdrehen linksdrehen',
+  'M':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(5) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(7) linksdrehen linksdrehen',
+  'N':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(6) rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
+  'O':
+      'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt  linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt rechtsdrehen schritt(7) rechtsdrehen',
+  'P':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) rechtsdrehen markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
+  'Q':
+      'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen rechtsdrehen schritt(2) markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
+  'R':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(6) rechtsdrehen',
+  'S':
+      'schritt(2) linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen',
+  'T':
+      'schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(2) linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
+  'U':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt  linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
+  'V':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
+  'W':
+      'schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(2) linksdrehen schritt(4) markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(6) rechtsdrehen rechtsdrehen',
+  'X':
+      'schritt markesetzen schritt markesetzen schritt(4) markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(2) markesetzen schritt(2) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen linksdrehen schritt(2) markesetzen schritt(2) rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt(4) markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
+  'Y':
+      'schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt linksdrehen schritt(3) markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt(3) rechtsdrehen',
+  'Z':
+      'schritt linksdrehen markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt(3) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
+  '0':
+      'schritt(2) markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt(3) rechtsdrehen schritt(4) rechtsdrehen',
+  '1':
+      'schritt schritt schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(7) rechtsdrehen schritt(3) rechtsdrehen',
+  '2':
+      'schritt schritt schritt markesetzen linksdrehen linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(7) rechtsdrehen schritt(3) rechtsdrehen',
+  '3':
+      'schritt schritt markesetzen linksdrehen schritt linksdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen rechtsdrehen schritt(2) rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen',
+  '4':
+      'linksdrehen schritt rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(3) linksdrehen schritt linksdrehen schritt markesetzen schritt markesetzen schritt(2) markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
+  '5':
+      'linksdrehen schritt(4) rechtsdrehen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(7) rechtsdrehen',
+  '6':
+      'linksdrehen schritt(4) rechtsdrehen schritt(2) markesetzen rechtsdrehen schritt rechtsdrehen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(7) rechtsdrehen',
+  '7':
+      'schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen rechtsdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen rechtsdrehen schritt linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt(5) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
+  '8':
+      'schritt(3) linksdrehen linksdrehen markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt linksdrehen schritt markesetzen schritt markesetzen schritt(5) rechtsdrehen schritt(3) rechtsdrehen',
+  '9':
+      'schritt(3) markesetzen linksdrehen linksdrehen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen schritt rechtsdrehen schritt markesetzen schritt(2) rechtsdrehen schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt(4) rechtsdrehen schritt(4) rechtsdrehen',
+  '°':
+      'schritt markesetzen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen schritt markesetzen linksdrehen schritt markesetzen rechtsdrehen schritt rechtsdrehen schritt(4) rechtsdrehen',
+  '.': 'schritt(7) markesetzen linksdrehen schritt(3) linksdrehen schritt(7) rechtsdrehen rechtsdrehen',
+  ',':
+      'schritt(7) markesetzen linksdrehen schritt linksdrehen schritt markesetzen schritt(6) rechtsdrehen schritt(3) rechtsdrehen'
 };
 
-enum KAREL_LANGUAGES {DEU, ENG, FRA}
+enum KAREL_LANGUAGES { DEU, ENG, FRA }
 
 final Map<KAREL_LANGUAGES, String> KAREL_LANGUAGES_LIST = {
   KAREL_LANGUAGES.DEU: 'common_language_german',
@@ -102,10 +139,9 @@ Set _SET_HALT = {_BEENDEN, _TURNOFF, _FINIR};
 Set _SET_WAIT = {_WARTEN, _ATTENDRE};
 Set _SET_SOUND = {_TON, _SON};
 
-
 final _KAROL_COLORS = {
-  'weiß' : '0',
-  'weiss' : '0',
+  'weiß': '0',
+  'weiss': '0',
   'schwarz': '1',
   'hellrot': '2',
   'hellgelb': '3',
@@ -134,7 +170,7 @@ final _KAROL_COLORS = {
   'braun': 'N',
   'dunkelbraun': 'O',
   // ENGLISH
-  'white' : '0',
+  'white': '0',
   'black': '1',
   'lightred': '2',
   'lightyellow': '3',
@@ -160,7 +196,7 @@ final _KAROL_COLORS = {
   'brown': 'N',
   'darkbrown': 'O',
   // FRENCH
-  'blanc' : '0',
+  'blanc': '0',
   'noir': '1',
   'rougeclair': '2',
   'jauneclair': '3',
@@ -187,26 +223,35 @@ final _KAROL_COLORS = {
   'brun fonce': 'O',
 };
 
-enum _KAROL_DIRECTION {SOUTH, NORTH, EAST, WEST}
+enum _KAROL_DIRECTION { SOUTH, NORTH, EAST, WEST }
 
-String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language){
+String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language) {
   String program = '';
   int lineLength = 0;
-  if (output == '' || output == null)
-    return '';
+  if (output == '' || output == null) return '';
 
   output.trim().toUpperCase().split('\n').forEach((line) {
     line.split('').forEach((char) {
       program = program + KAREL_ENCODING[char] + ' ';
       if (char == '.')
-          lineLength = lineLength + 3;
+        lineLength = lineLength + 3;
       else if (char == 'I' || char == '1' || char == '°')
         lineLength = lineLength + 5;
       else
         lineLength = lineLength + 7;
     });
 
-    program = program + _RECHTSDREHEN + ' ' + _SCHRITT + '(' + lineLength.toString() + ') ' + _LINKSDREHEN + ' ' + _SCHRITT + '(9) ';
+    program = program +
+        _RECHTSDREHEN +
+        ' ' +
+        _SCHRITT +
+        '(' +
+        lineLength.toString() +
+        ') ' +
+        _LINKSDREHEN +
+        ' ' +
+        _SCHRITT +
+        '(9) ';
 
     lineLength = 0;
   });
@@ -216,15 +261,20 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language){
       return program;
       break;
     case KAREL_LANGUAGES.ENG:
-      program = program.replaceAll(_SCHRITT, _MOVE).replaceAll(_LINKSDREHEN, _TURNLEFT).replaceAll(_RECHTSDREHEN, _TURNRIGHT).replaceAll(_MARKESETZEN, _PUTBEEPER);
+      program = program
+          .replaceAll(_SCHRITT, _MOVE)
+          .replaceAll(_LINKSDREHEN, _TURNLEFT)
+          .replaceAll(_RECHTSDREHEN, _TURNRIGHT)
+          .replaceAll(_MARKESETZEN, _PUTBEEPER);
       //replace move(x) with move ... move x-times
       RegExp expSchritt = RegExp(r'(move)(\(\d+\))?');
       if (expSchritt.hasMatch(program)) {
         program = program.replaceAllMapped(expSchritt, (Match m) {
-          List <String> MOVE_LIST = new List();
-          if (int.tryParse(m.group(0).replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '') ) != null) {
-            for (int i = 0; i < int.parse(m.group(0).replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '') ); i++)
-              MOVE_LIST.add('move');
+          List<String> MOVE_LIST = new List();
+          if (int.tryParse(m.group(0).replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', '')) != null) {
+            for (int i = 0;
+                i < int.parse(m.group(0).replaceAll(_MOVE, '').replaceAll('(', '').replaceAll(')', ''));
+                i++) MOVE_LIST.add('move');
             return MOVE_LIST.join(' ');
           } else {
             return 'move';
@@ -234,15 +284,18 @@ String KarolRobotOutputEncode(String output, KAREL_LANGUAGES language){
       return program;
       break;
     case KAREL_LANGUAGES.FRA:
-      program = program.replaceAll(_SCHRITT, _ETAPE).replaceAll(_LINKSDREHEN, _TOURNERGAUCHE).replaceAll(_RECHTSDREHEN, _TOURNERDROIT).replaceAll(_MARKESETZEN, _MARQUEETABLIE);
+      program = program
+          .replaceAll(_SCHRITT, _ETAPE)
+          .replaceAll(_LINKSDREHEN, _TOURNERGAUCHE)
+          .replaceAll(_RECHTSDREHEN, _TOURNERDROIT)
+          .replaceAll(_MARKESETZEN, _MARQUEETABLIE);
       return program;
       break;
   }
 }
 
-String KarolRobotOutputDecode(String program){
-  if (program == '' || program == null)
-    return '';
+String KarolRobotOutputDecode(String program) {
+  if (program == '' || program == null) return '';
 
   int x = 1;
   int y = 1;
@@ -256,113 +309,160 @@ String KarolRobotOutputDecode(String program){
   int count = 0;
   RegExp expSchritt = RegExp(r'(schritt|move|etape)(\(\d+\))?');
   RegExp expHinlegen = RegExp(r'(hinlegen|putbrick|allonger)(\(\d+\))?');
-  program.toLowerCase().replaceAll('light ', 'light').replaceAll('dark ', 'dark').replaceAll(' clair', 'clair').replaceAll(' fonc', 'fonc').replaceAll('\n', '').split(' ').forEach((element) {
-    if (!halt)
-      if (expSchritt.hasMatch(element)) {
-        if (int.tryParse(expSchritt.firstMatch(element).group(0).replaceAll(_SCHRITT, '').replaceAll(_MOVE, '').replaceAll(_ETAPE, '').replaceAll('(', '').replaceAll(')', '')) == null)
-          count = 1;
-        else
-          count = int.parse(expSchritt.firstMatch(element).group(0).replaceAll(_SCHRITT, '').replaceAll(_MOVE, '').replaceAll(_ETAPE, '').replaceAll('(', '').replaceAll(')', '') );
+  program
+      .toLowerCase()
+      .replaceAll('light ', 'light')
+      .replaceAll('dark ', 'dark')
+      .replaceAll(' clair', 'clair')
+      .replaceAll(' fonc', 'fonc')
+      .replaceAll('\n', '')
+      .split(' ')
+      .forEach((element) {
+    if (!halt) if (expSchritt.hasMatch(element)) {
+      if (int.tryParse(expSchritt
+              .firstMatch(element)
+              .group(0)
+              .replaceAll(_SCHRITT, '')
+              .replaceAll(_MOVE, '')
+              .replaceAll(_ETAPE, '')
+              .replaceAll('(', '')
+              .replaceAll(')', '')) ==
+          null)
+        count = 1;
+      else
+        count = int.parse(expSchritt
+            .firstMatch(element)
+            .group(0)
+            .replaceAll(_SCHRITT, '')
+            .replaceAll(_MOVE, '')
+            .replaceAll(_ETAPE, '')
+            .replaceAll('(', '')
+            .replaceAll(')', ''));
+      switch (direction) {
+        case _KAROL_DIRECTION.NORTH:
+          y = y - count;
+          break;
+        case _KAROL_DIRECTION.SOUTH:
+          y = y + count;
+          break;
+        case _KAROL_DIRECTION.WEST:
+          x = x - count;
+          break;
+        case _KAROL_DIRECTION.EAST:
+          x = x + count;
+          break;
+      }
+      if (x > maxX) maxX = x;
+      if (y > maxY) maxY = y;
+    } else if (expHinlegen.hasMatch(element)) {
+      color = _KAROL_COLORS[element
+          .replaceAll(_HINLEGEN, '')
+          .replaceAll(_PUTBRICK, '')
+          .replaceAll(_ALLONGER, '')
+          .replaceAll('(', '')
+          .replaceAll(')', '')];
+      if (color == null) color = '8';
+      switch (direction) {
+        case _KAROL_DIRECTION.NORTH:
+          world[x.toString() + '|' + (y - 1).toString()] = color;
+          break;
+        case _KAROL_DIRECTION.SOUTH:
+          world[x.toString() + '|' + (y + 1).toString()] = color;
+          break;
+        case _KAROL_DIRECTION.EAST:
+          world[(x + 1).toString() + '|' + (y).toString()] = color;
+          break;
+        case _KAROL_DIRECTION.WEST:
+          world[(x - 1).toString() + '|' + (y).toString()] = color;
+          break;
+      }
+    } else {
+      if (_SET_MOVE.contains(element)) {
         switch (direction) {
-          case _KAROL_DIRECTION.NORTH : y = y - count; break;
-          case _KAROL_DIRECTION.SOUTH : y = y + count; break;
-          case _KAROL_DIRECTION.WEST : x = x - count; break;
-          case _KAROL_DIRECTION.EAST : x = x + count; break;
+          case _KAROL_DIRECTION.NORTH:
+            y = y - 1;
+            break;
+          case _KAROL_DIRECTION.SOUTH:
+            y = y + 1;
+            break;
+          case _KAROL_DIRECTION.WEST:
+            x = x - 1;
+            break;
+          case _KAROL_DIRECTION.EAST:
+            x = x + 1;
+            break;
         }
         if (x > maxX) maxX = x;
         if (y > maxY) maxY = y;
-      } else if (expHinlegen.hasMatch(element)) {
-        color = _KAROL_COLORS[element.replaceAll(_HINLEGEN, '').replaceAll(_PUTBRICK, '').replaceAll(_ALLONGER, '').replaceAll('(', '').replaceAll(')', '')];
-        if (color == null)
-          color = '8';
+      } else if (_SET_TURNLEFT.contains(element)) {
         switch (direction) {
           case _KAROL_DIRECTION.NORTH:
-            world[x.toString() + '|' + (y - 1).toString()] = color;
+            direction = _KAROL_DIRECTION.WEST;
             break;
           case _KAROL_DIRECTION.SOUTH:
-            world[x.toString() + '|' + (y + 1).toString()] = color;
-            break;
-          case _KAROL_DIRECTION.EAST:
-            world[(x + 1).toString() + '|' + (y).toString()] = color;
+            direction = _KAROL_DIRECTION.EAST;
             break;
           case _KAROL_DIRECTION.WEST:
-            world[(x - 1).toString() + '|' + (y).toString()] = color;
+            direction = _KAROL_DIRECTION.SOUTH;
+            break;
+          case _KAROL_DIRECTION.EAST:
+            direction = _KAROL_DIRECTION.NORTH;
             break;
         }
-      } else {
-        if (_SET_MOVE.contains(element)) {
-          switch (direction) {
-            case _KAROL_DIRECTION.NORTH : y = y - 1; break;
-            case _KAROL_DIRECTION.SOUTH : y = y + 1; break;
-            case _KAROL_DIRECTION.WEST : x = x - 1; break;
-            case _KAROL_DIRECTION.EAST : x = x + 1; break;
-          }
-          if (x > maxX) maxX = x;
-          if (y > maxY) maxY = y;
-
-        } else if (_SET_TURNLEFT.contains(element)) {
-          switch (direction) {
-            case _KAROL_DIRECTION.NORTH : direction = _KAROL_DIRECTION.WEST; break;
-            case _KAROL_DIRECTION.SOUTH : direction = _KAROL_DIRECTION.EAST; break;
-            case _KAROL_DIRECTION.WEST : direction = _KAROL_DIRECTION.SOUTH; break;
-            case _KAROL_DIRECTION.EAST : direction = _KAROL_DIRECTION.NORTH; break;
-          }
-
-        } else if (_SET_TURNRIGHT.contains(element)) {
-          switch (direction) {
-            case _KAROL_DIRECTION.NORTH : direction = _KAROL_DIRECTION.EAST; break;
-            case _KAROL_DIRECTION.SOUTH : direction = _KAROL_DIRECTION.WEST; break;
-            case _KAROL_DIRECTION.WEST : direction = _KAROL_DIRECTION.NORTH; break;
-            case _KAROL_DIRECTION.EAST : direction = _KAROL_DIRECTION.SOUTH; break;
-          }
-
-        } else if (_SET_PICKBRICK.contains(element)) {
-          switch (direction) {
-            case _KAROL_DIRECTION.NORTH:
-              world[x.toString() + '|' + (y - 1).toString()] = '#';
-              break;
-            case _KAROL_DIRECTION.SOUTH:
-              world[x.toString() + '|' + (y + 1).toString()] = '#';
-              break;
-            case _KAROL_DIRECTION.EAST:
-              world[(x + 1).toString() + '|' + (y).toString()] = '#';
-              break;
-            case _KAROL_DIRECTION.WEST:
-              world[(x - 1).toString() + '|' + (y).toString()] = '#';
-              break;
-          }
-
-        } else if (_SET_PUTBRICK.contains(element)) {
-          switch (direction) {
-            case _KAROL_DIRECTION.NORTH:
-              world[x.toString() + '|' + (y - 1).toString()] = '8';
-              break;
-            case _KAROL_DIRECTION.SOUTH:
-              world[x.toString() + '|' + (y + 1).toString()] = '8';
-              break;
-            case _KAROL_DIRECTION.EAST:
-              world[(x + 1).toString() + '|' + (y).toString()] = '8';
-              break;
-            case _KAROL_DIRECTION.WEST:
-              world[(x - 1).toString() + '|' + (y).toString()] = '8';
-              break;
-          }
-
-        } else if (_SET_PICKBEEPER.contains(element)) {
-          world[x.toString() + '|' + (y ).toString()] = '#';
-
-        } else if (_SET_PUTBEEPER.contains(element)) {
-          world[x.toString() + '|' + (y ).toString()] = '9';
-
-        } else if (_SET_HALT.contains(element)) {
-          halt = true;
-
-        } else if (_SET_WAIT.contains(element)) {
-
-        } else if (_SET_SOUND.contains(element)) {
-
+      } else if (_SET_TURNRIGHT.contains(element)) {
+        switch (direction) {
+          case _KAROL_DIRECTION.NORTH:
+            direction = _KAROL_DIRECTION.EAST;
+            break;
+          case _KAROL_DIRECTION.SOUTH:
+            direction = _KAROL_DIRECTION.WEST;
+            break;
+          case _KAROL_DIRECTION.WEST:
+            direction = _KAROL_DIRECTION.NORTH;
+            break;
+          case _KAROL_DIRECTION.EAST:
+            direction = _KAROL_DIRECTION.SOUTH;
+            break;
         }
-      }
+      } else if (_SET_PICKBRICK.contains(element)) {
+        switch (direction) {
+          case _KAROL_DIRECTION.NORTH:
+            world[x.toString() + '|' + (y - 1).toString()] = '#';
+            break;
+          case _KAROL_DIRECTION.SOUTH:
+            world[x.toString() + '|' + (y + 1).toString()] = '#';
+            break;
+          case _KAROL_DIRECTION.EAST:
+            world[(x + 1).toString() + '|' + (y).toString()] = '#';
+            break;
+          case _KAROL_DIRECTION.WEST:
+            world[(x - 1).toString() + '|' + (y).toString()] = '#';
+            break;
+        }
+      } else if (_SET_PUTBRICK.contains(element)) {
+        switch (direction) {
+          case _KAROL_DIRECTION.NORTH:
+            world[x.toString() + '|' + (y - 1).toString()] = '8';
+            break;
+          case _KAROL_DIRECTION.SOUTH:
+            world[x.toString() + '|' + (y + 1).toString()] = '8';
+            break;
+          case _KAROL_DIRECTION.EAST:
+            world[(x + 1).toString() + '|' + (y).toString()] = '8';
+            break;
+          case _KAROL_DIRECTION.WEST:
+            world[(x - 1).toString() + '|' + (y).toString()] = '8';
+            break;
+        }
+      } else if (_SET_PICKBEEPER.contains(element)) {
+        world[x.toString() + '|' + (y).toString()] = '#';
+      } else if (_SET_PUTBEEPER.contains(element)) {
+        world[x.toString() + '|' + (y).toString()] = '9';
+      } else if (_SET_HALT.contains(element)) {
+        halt = true;
+      } else if (_SET_WAIT.contains(element)) {
+      } else if (_SET_SOUND.contains(element)) {}
+    }
   }); //forEach command
 
   var binaryWorld = List.generate(maxX + 1, (y) => List(maxY + 1), growable: false);

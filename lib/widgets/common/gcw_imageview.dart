@@ -256,7 +256,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                 tool: ExifReader(file: file),
                 toolName: i18n(context, 'exif_title'),
                 i18nPrefix: '',
-                helpLocales: ['de','en','fr'])));
+                helpLocales: ['de', 'en', 'fr'])));
   }
 
   _openInColorCorrections(Uint8List imgData) {
@@ -268,7 +268,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                 toolName: i18n(context, 'image_colorcorrections_title'),
                 i18nPrefix: '',
                 autoScroll: false,
-                helpLocales: ['de','en','fr'])));
+                helpLocales: ['de', 'en', 'fr'])));
   }
 
   _exportFile(BuildContext context, Uint8List data) async {

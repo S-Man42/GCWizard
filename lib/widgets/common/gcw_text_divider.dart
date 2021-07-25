@@ -10,7 +10,8 @@ class GCWTextDivider extends StatefulWidget {
   final TextStyle style;
   final double topSpace;
 
-  const GCWTextDivider({Key key, this.text: '', this.trailing, this.bottom, this.style, this.topSpace}) : super(key: key);
+  const GCWTextDivider({Key key, this.text: '', this.trailing, this.bottom, this.style, this.topSpace})
+      : super(key: key);
 
   @override
   _GCWTextDividerState createState() => _GCWTextDividerState();

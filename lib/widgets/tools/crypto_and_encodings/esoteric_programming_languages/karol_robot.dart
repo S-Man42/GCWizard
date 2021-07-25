@@ -38,14 +38,11 @@ class KarolRobotState extends State<KarolRobot> {
 
   String _output = '';
 
+  var _MASKINPUTFORMATTER_ENCODE =
+      WrapperForMaskTextInputFormatter(mask: '@' * 100, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9 .°,\n\r]')});
 
-  var _MASKINPUTFORMATTER_ENCODE = WrapperForMaskTextInputFormatter(
-      mask: '@' * 100,
-      filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9 .°,\n\r]')});
-
-  var _MASKINPUTFORMATTER_DECODE = WrapperForMaskTextInputFormatter(
-      mask: "@" * 50000,
-      filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
+  var _MASKINPUTFORMATTER_DECODE =
+      WrapperForMaskTextInputFormatter(mask: "@" * 50000, filter: {"@": RegExp(r'[A-ZÄÖÜäöüa-z0-9() \n\r]')});
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   var _currentLanguage = KAREL_LANGUAGES.DEU;
@@ -79,92 +76,87 @@ class KarolRobotState extends State<KarolRobot> {
           },
         ),
         _currentMode == GCWSwitchPosition.left //decode
-        ? GCWTextField(
-              controller: _decodeController,
-              hintText: i18n(context, 'karol_robot_hint_decode'),
-              inputFormatters: [_MASKINPUTFORMATTER_DECODE],
-              onChanged: (text) {
-                setState(() {
-                  _currentDecode = text;
-                  _createDecodeOutput(KarolRobotOutputDecode(_currentDecode));
-                });
-              },
-            )
-        : Column(
-          children: <Widget>[
-            GCWDropDownButton(
-              value: _currentLanguage,
-              onChanged: (value) {
-                setState(() {
-                  _currentLanguage = value;
-                });
-              },
-              items: KAREL_LANGUAGES_LIST.entries.map((mode) {
-                return GCWDropDownMenuItem(
-                  value: mode.key,
-                  child: i18n(context, mode.value),
-                );
-              }).toList(),
-            ),
-            GCWTextField(
-              controller: _encodeController,
-              hintText: i18n(context, 'karol_robot_hint_encode'),
-              inputFormatters: [_MASKINPUTFORMATTER_ENCODE],
-              onChanged: (text) {
-                setState(() {
-                  _currentEncode = text;
-                  _createEncodeOutput(KarolRobotOutputDecode(KarolRobotOutputEncode(_currentEncode, _currentLanguage)));
-                });
-              },
-            ),
-          ]),
+            ? GCWTextField(
+                controller: _decodeController,
+                hintText: i18n(context, 'karol_robot_hint_decode'),
+                inputFormatters: [_MASKINPUTFORMATTER_DECODE],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecode = text;
+                    _createDecodeOutput(KarolRobotOutputDecode(_currentDecode));
+                  });
+                },
+              )
+            : Column(children: <Widget>[
+                GCWDropDownButton(
+                  value: _currentLanguage,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentLanguage = value;
+                    });
+                  },
+                  items: KAREL_LANGUAGES_LIST.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode.key,
+                      child: i18n(context, mode.value),
+                    );
+                  }).toList(),
+                ),
+                GCWTextField(
+                  controller: _encodeController,
+                  hintText: i18n(context, 'karol_robot_hint_encode'),
+                  inputFormatters: [_MASKINPUTFORMATTER_ENCODE],
+                  onChanged: (text) {
+                    setState(() {
+                      _currentEncode = text;
+                      _createEncodeOutput(
+                          KarolRobotOutputDecode(KarolRobotOutputEncode(_currentEncode, _currentLanguage)));
+                    });
+                  },
+                ),
+              ]),
         _buildOutput(context)
-          ],
+      ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
     double size = 6.0;
-    if (_currentMode == GCWSwitchPosition.right) { //encode
+    if (_currentMode == GCWSwitchPosition.right) {
+      //encode
       _output = KarolRobotOutputEncode(_currentEncode, _currentLanguage);
       size = 16.0;
     }
-    return Column(
-            children: <Widget>[
-              _currentMode == GCWSwitchPosition.left //decode
-                ? GCWDefaultOutput(
-                    child: _buildGraphicDecodeOutput(),
-                    trailing: GCWIconButton(
-                                iconData: Icons.save,
-                                size: IconButtonSize.SMALL,
-                                iconColor: _outDecodeData == null ? Colors.grey : null,
-                                onPressed: () {
-                                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
-                                },
-                              )
-                  )
-                : Column(
-                children: <Widget>[
-                  GCWTextDivider(
-                    text: i18n(context, 'karol_robot_graphicaloutput'),
-                  ),
-                  GCWOutput(
-                      child: _buildGraphicEncodeOutput(),
-                    ),
-                  GCWDefaultOutput(
-                      child: GCWOutputText(
-                        text: _output,
-                        style: TextStyle(
-                          fontFamily: 'Courier',
-                          fontSize: size,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                  ),
-                ]
-              )
-          ]
-      );
+    return Column(children: <Widget>[
+      _currentMode == GCWSwitchPosition.left //decode
+          ? GCWDefaultOutput(
+              child: _buildGraphicDecodeOutput(),
+              trailing: GCWIconButton(
+                iconData: Icons.save,
+                size: IconButtonSize.SMALL,
+                iconColor: _outDecodeData == null ? Colors.grey : null,
+                onPressed: () {
+                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
+                },
+              ))
+          : Column(children: <Widget>[
+              GCWTextDivider(
+                text: i18n(context, 'karol_robot_graphicaloutput'),
+              ),
+              GCWOutput(
+                child: _buildGraphicEncodeOutput(),
+              ),
+              GCWDefaultOutput(
+                  child: GCWOutputText(
+                text: _output,
+                style: TextStyle(
+                  fontFamily: 'Courier',
+                  fontSize: size,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+            ])
+    ]);
   }
 
   _createDecodeOutput(String output) {
@@ -226,5 +218,4 @@ class KarolRobotState extends State<KarolRobot> {
     if (value != null)
       showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(data));
   }
-
 }

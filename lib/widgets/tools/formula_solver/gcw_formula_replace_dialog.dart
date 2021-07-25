@@ -51,32 +51,33 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
     return Column(
       children: [
         GCWTextDivider(
-          text: i18n(context, 'formulasolver_formulas_modifiedformula'),
-          style: textStyle,
-          topSpace: 0,
-          trailing: widget.formulas == null || widget.formulas.length <= 1 ? Container() : Row(
-            children: [
-              GCWIconButton(
-                iconData: Icons.arrow_back_ios,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _currentFormulaIndex = modulo(_currentFormulaIndex - 1, widget.formulas.length);
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.arrow_forward_ios,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _currentFormulaIndex = modulo(_currentFormulaIndex + 1, widget.formulas.length);
-                  });
-                },
-              )
-            ],
-          )
-        ),
+            text: i18n(context, 'formulasolver_formulas_modifiedformula'),
+            style: textStyle,
+            topSpace: 0,
+            trailing: widget.formulas == null || widget.formulas.length <= 1
+                ? Container()
+                : Row(
+                    children: [
+                      GCWIconButton(
+                        iconData: Icons.arrow_back_ios,
+                        size: IconButtonSize.SMALL,
+                        onPressed: () {
+                          setState(() {
+                            _currentFormulaIndex = modulo(_currentFormulaIndex - 1, widget.formulas.length);
+                          });
+                        },
+                      ),
+                      GCWIconButton(
+                        iconData: Icons.arrow_forward_ios,
+                        size: IconButtonSize.SMALL,
+                        onPressed: () {
+                          setState(() {
+                            _currentFormulaIndex = modulo(_currentFormulaIndex + 1, widget.formulas.length);
+                          });
+                        },
+                      )
+                    ],
+                  )),
         GCWText(
           text: _buildNewFormula(widget.formulas)[_currentFormulaIndex],
           style: textStyle,
