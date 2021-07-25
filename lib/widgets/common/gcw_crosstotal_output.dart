@@ -97,7 +97,7 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
 
     return Column(
       children: [
-        GCWTextDivider(text: i18n(context, 'crosstotal_commonsums'), topSpace: 0),
+        GCWTextDivider(text: i18n(context, 'crosstotal_commonsums'), suppressTopSpace: true),
         Column(
           children: columnedMultiLineOutput(context, crosstotalValuesCommon, flexValues: [2, 1]),
         ),

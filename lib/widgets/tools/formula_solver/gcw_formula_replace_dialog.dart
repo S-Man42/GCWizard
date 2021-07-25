@@ -53,7 +53,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
         GCWTextDivider(
             text: i18n(context, 'formulasolver_formulas_modifiedformula'),
             style: textStyle,
-            topSpace: 0,
+            suppressTopSpace: true,
             trailing: widget.formulas == null || widget.formulas.length <= 1
                 ? Container()
                 : Row(
@@ -61,6 +61,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
                       GCWIconButton(
                         iconData: Icons.arrow_back_ios,
                         size: IconButtonSize.SMALL,
+                        iconColor: gcwDialogTextStyle().color,
                         onPressed: () {
                           setState(() {
                             _currentFormulaIndex = modulo(_currentFormulaIndex - 1, widget.formulas.length);
@@ -70,6 +71,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
                       GCWIconButton(
                         iconData: Icons.arrow_forward_ios,
                         size: IconButtonSize.SMALL,
+                        iconColor: gcwDialogTextStyle().color,
                         onPressed: () {
                           setState(() {
                             _currentFormulaIndex = modulo(_currentFormulaIndex + 1, widget.formulas.length);

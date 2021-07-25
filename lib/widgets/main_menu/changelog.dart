@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:intl/intl.dart';
@@ -40,12 +41,16 @@ class ChangelogState extends State<Changelog> {
   Widget build(BuildContext context) {
     var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
 
+    var index = 0;
     var content = Column(
         children: _changelogs.entries.map((changelog) {
       return Column(
         children: <Widget>[
-          GCWTextDivider(text: '${changelog.key} (${dateFormat.format(changelog.value)})'),
-          GCWText(text: i18n(context, 'changelog_' + changelog.key))
+          GCWExpandableTextDivider(
+            text: '${changelog.key} (${dateFormat.format(changelog.value)})',
+            expanded: index++ == 0,
+            child: GCWText(text: i18n(context, 'changelog_' + changelog.key)),
+          )
         ],
       );
     }).toList());
