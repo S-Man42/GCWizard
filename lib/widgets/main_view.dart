@@ -258,13 +258,13 @@ class _MainViewState extends State<MainView> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
+      var countAppOpened = Prefs.getInt('app_count_opened');
+
+      if (countAppOpened > 1 && Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
         _showWhatsNewDialog();
         Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
         return;
       }
-
-      var countAppOpened = Prefs.getInt('app_count_opened');
 
       if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
         showGCWAlertDialog(

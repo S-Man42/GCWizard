@@ -23,10 +23,6 @@ void initDefaultSettings() {
     Prefs.setInt('app_count_opened', Prefs.getInt('app_count_opened') + 1);
   }
 
-  if (Prefs.get('changelog_displayed') == null) {
-    Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
-  }
-
   if (Prefs.get('clipboard_max_items') == null) {
     Prefs.setInt('clipboard_max_items', 10);
   }
