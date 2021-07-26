@@ -1090,6 +1090,8 @@
   "common_support_title": "Do you want to support us?",
   "common_support_text": "You opened the GC Wizard %s1 times.\n\nThank you so much for using it!\n\n- Do like to support us with a coffee?\n- Do you want to contribute own content?",
   "common_support_link": "https://blog.gcwizard.net/support-and-contribute/",
+  "common_newversion_title": "New Version: %s1",
+  "common_newversion_showchangelog": "Full Changelog",
   "common_unit_prefix_exa": "Exa",
   "common_unit_prefix_peta": "Peta",
   "common_unit_prefix_tera": "Tera",

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/main_menu.dart';
+import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
@@ -190,6 +193,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/s
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -222,7 +226,44 @@ class _MainViewState extends State<MainView> {
       });
     });
 
+    _showWhatsNewDialog() {
+      const _MAX_ENTRIES = 10;
+
+      var mostRecentChangelogVersion = CHANGELOG.keys.first;
+      var entries = i18n(context, 'changelog_' + mostRecentChangelogVersion).split('\n').map((entry) => entry.split('(')[0]).toList();
+      if (entries.length > _MAX_ENTRIES) {
+        entries = entries.sublist(0, _MAX_ENTRIES);
+        entries.add('...');
+      }
+
+      showGCWDialog(
+          context,
+          i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
+          Text(entries.join('\n')),
+          [
+            GCWDialogButton(text: i18n(context, 'common_newversion_showchangelog'), onPressed: () {
+              Navigator.push(
+                  context,
+                  NoAnimationMaterialPageRoute(
+                      builder: (context) => Registry.toolList.firstWhere(
+                              (tool) => className(tool.tool) == className(Changelog())
+                      )
+                  )
+              );
+            }),
+            GCWDialogButton(text: i18n(context, 'common_ok'))
+          ],
+          cancelButton: false
+      );
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
+        _showWhatsNewDialog();
+        Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
+        return;
+      }
+
       var countAppOpened = Prefs.getInt('app_count_opened');
 
       if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
@@ -230,9 +271,7 @@ class _MainViewState extends State<MainView> {
           context,
           i18n(context, 'common_support_title'),
           i18n(context, 'common_support_text', parameters: [Prefs.getInt('app_count_opened')]),
-          () {
-            launch(i18n(context, 'common_support_link'));
-          },
+          () => launch(i18n(context, 'common_support_link')),
         );
       }
     });
@@ -337,9 +376,6 @@ class _MainViewState extends State<MainView> {
   }
 
   void _initStaticToolList() {
-    // if (_toolList != null) {
-    //   return;
-    // }
 
     _toolList = Registry.toolList.where((element) {
       return [

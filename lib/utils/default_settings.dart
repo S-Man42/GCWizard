@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:prefs/prefs.dart';
 
 void initDefaultSettings() {
@@ -20,6 +21,10 @@ void initDefaultSettings() {
     Prefs.setInt('app_count_opened', 1);
   } else {
     Prefs.setInt('app_count_opened', Prefs.getInt('app_count_opened') + 1);
+  }
+
+  if (Prefs.get('changelog_displayed') == null) {
+    Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
   }
 
   if (Prefs.get('clipboard_max_items') == null) {
