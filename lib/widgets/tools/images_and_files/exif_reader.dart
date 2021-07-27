@@ -104,6 +104,8 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   List _buildOutput(Map _tableTags) {
+    print(file.name);
+
     List<Widget> widgets = [];
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);

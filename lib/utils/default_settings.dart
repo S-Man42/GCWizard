@@ -5,7 +5,6 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:prefs/prefs.dart';
 
 void initDefaultSettings() {
@@ -65,10 +64,6 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
-  if (Prefs.get('coord_map_circle_colorfilled') == null) {
-    Prefs.setBool('coord_map_circle_colorfilled', false);
-  }
-
   if (Prefs.get('coord_variablecoordinate_formulas') == null) {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
@@ -95,6 +90,10 @@ void initDefaultSettings() {
 
   if (Prefs.get('imagecolorcorrections_maxpreviewheight') == null) {
     Prefs.setInt('imagecolorcorrections_maxpreviewheight', 250);
+  }
+
+  if (Prefs.get('mapview_circle_colorfilled') == null) {
+    Prefs.setBool('mapview_circle_colorfilled', false);
   }
 
   if (Prefs.get('mapview_mapviews') == null) {

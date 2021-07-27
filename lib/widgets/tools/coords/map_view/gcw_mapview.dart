@@ -253,7 +253,7 @@ class GCWMapViewState extends State<GCWMapView> {
         !_locationSubscription.isPaused &&
         _currentAccuracy != null &&
         _currentPosition != null) {
-      var filled = Prefs.get('coord_map_circle_colorfilled');
+      var filled = Prefs.get('mapview_circle_colorfilled');
       var circleColor = COLOR_MAP_USERPOSITION.withOpacity(filled ?? false ? 0.3 : 0.0);
 
       layers.add(CircleLayerWidget(
