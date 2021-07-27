@@ -367,7 +367,7 @@ class _AdjustColorInput {
 img.Image _doAdjustColor(_AdjustColorInput input) {
   img.Image image = img.Image.from(input.image);
 
-  if (input.edgeDetection > 0.0) image = img.sobel(input.image, amount: input.edgeDetection);
+  if (input.edgeDetection > 0.0) image = img.sobel(image, amount: input.edgeDetection);
 
   final pixels = image.getBytes();
   for (var i = 0, len = pixels.length; i < len; i += 4) {
