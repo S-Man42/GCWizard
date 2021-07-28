@@ -100,8 +100,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           expanded: widget.imageData == null,
           supportedFileTypes: supportedImageTypes,
           onLoaded: (value) {
-            if (value == null)
-              return;
+            if (value == null) return;
 
             setState(() {
               _originalData = value.bytes;

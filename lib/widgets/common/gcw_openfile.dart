@@ -44,8 +44,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentOpenExpanded == null)
-      _currentOpenExpanded = widget.expanded ?? true;
+    if (_currentOpenExpanded == null) _currentOpenExpanded = widget.expanded ?? true;
 
     return Column(
       children: [
@@ -97,8 +96,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           }
 
                           _currentUrl = value;
-                        }
-                    ),
+                        }),
                     GCWButton(
                       text: i18n(context, 'common_loadfile_load'),
                       onPressed: () {
@@ -106,8 +104,10 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           return;
                         }
 
-                        if (widget.supportedFileTypes != null && widget.supportedFileTypes.firstWhere((suffix) => _currentUrl.endsWith(suffix), orElse: () => null) == null)
-                          return;
+                        if (widget.supportedFileTypes != null &&
+                            widget.supportedFileTypes
+                                    .firstWhere((suffix) => _currentUrl.endsWith(suffix), orElse: () => null) ==
+                                null) return;
 
                         http.get(Uri.parse(_currentUrl)).then((http.Response response) {
                           setState(() {
@@ -117,8 +117,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           widget.onLoaded(PlatformFile(
                               name: Uri.decodeFull(_currentUrl).split('/').last,
                               path: _currentUrl,
-                              bytes: response.bodyBytes
-                          ));
+                              bytes: response.bodyBytes));
                         });
                       },
                     )

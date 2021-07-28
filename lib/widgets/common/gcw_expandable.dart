@@ -23,15 +23,13 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
     setState(() {
       _currentExpanded = !_currentExpanded;
 
-      if (widget.onChanged != null)
-        widget.onChanged(_currentExpanded);
+      if (widget.onChanged != null) widget.onChanged(_currentExpanded);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_currentExpanded == null || widget.onChanged != null)
-      _currentExpanded = widget.expanded;
+    if (_currentExpanded == null || widget.onChanged != null) _currentExpanded = widget.expanded;
 
     return Column(
       children: [
@@ -41,7 +39,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
             suppressTopSpace: true,
             style: widget.style,
             bottom: 0.0,
-            trailing: GCWIconButton (
+            trailing: GCWIconButton(
               iconData: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
               size: IconButtonSize.TINY,
               onPressed: () => _toggleExpand(),

@@ -230,7 +230,10 @@ class _MainViewState extends State<MainView> {
       const _MAX_ENTRIES = 10;
 
       var mostRecentChangelogVersion = CHANGELOG.keys.first;
-      var entries = i18n(context, 'changelog_' + mostRecentChangelogVersion).split('\n').map((entry) => entry.split('(')[0]).toList();
+      var entries = i18n(context, 'changelog_' + mostRecentChangelogVersion)
+          .split('\n')
+          .map((entry) => entry.split('(')[0])
+          .toList();
       if (entries.length > _MAX_ENTRIES) {
         entries = entries.sublist(0, _MAX_ENTRIES);
         entries.add('...');
@@ -241,20 +244,18 @@ class _MainViewState extends State<MainView> {
           i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
           Text(entries.join('\n')),
           [
-            GCWDialogButton(text: i18n(context, 'common_newversion_showchangelog'), onPressed: () {
-              Navigator.push(
-                  context,
-                  NoAnimationMaterialPageRoute(
-                      builder: (context) => Registry.toolList.firstWhere(
-                              (tool) => className(tool.tool) == className(Changelog())
-                      )
-                  )
-              );
-            }),
+            GCWDialogButton(
+                text: i18n(context, 'common_newversion_showchangelog'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      NoAnimationMaterialPageRoute(
+                          builder: (context) =>
+                              Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Changelog()))));
+                }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
-          cancelButton: false
-      );
+          cancelButton: false);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -376,7 +377,6 @@ class _MainViewState extends State<MainView> {
   }
 
   void _initStaticToolList() {
-
     _toolList = Registry.toolList.where((element) {
       return [
         className(Abaddon()),

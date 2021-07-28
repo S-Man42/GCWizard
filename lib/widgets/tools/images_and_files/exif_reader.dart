@@ -53,8 +53,7 @@ class _ExifReaderState extends State<ExifReader> {
           expanded: widget.file == null,
           supportedFileTypes: supportedImageTypes,
           onLoaded: (_file) {
-            if (_file == null)
-              return;
+            if (_file == null) return;
 
             _readFile(_file);
           },
@@ -111,10 +110,10 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWOutput(
-          title: i18n(context, "exif_section_thumbnail"),
-          child: GCWImageView(imageData: thumbnail),
-          //suppressCopyButton: false,
-         ));
+        title: i18n(context, "exif_section_thumbnail"),
+        child: GCWImageView(imageData: thumbnail),
+        //suppressCopyButton: false,
+      ));
     }
   }
 
@@ -147,7 +146,6 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateExifSections(List<Widget> widgets, Map<String, List<List<dynamic>>> _tableTags) {
     if (_tableTags != null) {
       _tableTags.forEach((section, tags) {
-
         widgets.add(GCWOutput(
             title: i18n(context, "exif_section_" + section) ?? section ?? '',
             child: Column(
@@ -173,12 +171,12 @@ class _ExifReaderState extends State<ExifReader> {
       var lastModified;
       try {
         lastModified = formatDate(_file?.lastModifiedSync());
-      } catch(e) {}
+      } catch (e) {}
 
       var lastAccessed;
       try {
         lastAccessed = formatDate(_file?.lastAccessedSync());
-      } catch(e) {}
+      } catch (e) {}
 
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_file"),
