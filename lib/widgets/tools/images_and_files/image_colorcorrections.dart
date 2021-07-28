@@ -109,11 +109,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
               return;
 
             setState(() {
-              if (value is PlatformFile) {
-                _originalData = value.bytes;
-              } else if (value is http.Response) {
-                _originalData = value.bodyBytes;
-              }
+              _originalData = value.bytes;
 
               _originalPreview = _currentDataInit();
               _currentPreview = img.Image.from(_originalPreview);

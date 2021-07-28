@@ -90,7 +90,11 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                     return;
 
                   http.get(Uri.parse(_currentUrl)).then((http.Response response) {
-                    widget.onLoaded(response);
+                    widget.onLoaded(PlatformFile(
+                      name: _currentUrl.split('/').last,
+                      path: _currentUrl,
+                      bytes: response.bodyBytes
+                    ));
                   });
                 },
               )
