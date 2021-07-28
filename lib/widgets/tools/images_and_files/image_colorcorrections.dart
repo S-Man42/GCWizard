@@ -3,16 +3,22 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
+import 'package:http/http.dart' as http;
 
 class ImageColorCorrections extends StatefulWidget {
   final Uint8List imageData;
@@ -24,6 +30,9 @@ class ImageColorCorrections extends StatefulWidget {
 }
 
 class ImageColorCorrectionsState extends State<ImageColorCorrections> {
+  var _urlController;
+  var _currentUrl;
+
   Uint8List _originalData;
   Uint8List _convertedOutputImage;
 
@@ -61,6 +70,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   void initState() {
     super.initState();
 
+    _urlController = TextEditingController(text: _currentUrl);
+
     if (widget.imageData != null) {
       _originalData = widget.imageData;
 
@@ -91,24 +102,30 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWButton(
-          text: i18n(context, 'common_exportfile_openfile'),
-          onPressed: () {
+        GCWOpenFile(
+          supportedFileTypes: supportedImageTypes,
+          onLoaded: (value) {
+            if (value == null)
+              return;
+
             setState(() {
-              openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                if (file != null) {
-                  _originalData = file.bytes;
+              if (value is PlatformFile) {
+                _originalData = value.bytes;
+              } else if (value is http.Response) {
+                _originalData = value.bodyBytes;
+              }
 
-                  _originalPreview = _currentDataInit();
-                  _currentPreview = img.Image.from(_originalPreview);
+              _originalPreview = _currentDataInit();
+              _currentPreview = img.Image.from(_originalPreview);
 
-                  _resetInputs();
-                }
-              });
+              _resetInputs();
             });
           },
         ),
-        Container(), // Fixes a display issue
+        Container(
+          child: GCWDivider(),
+          padding: EdgeInsets.only(bottom: 10.0),
+        ), // Fixes a display issue
         if (_currentPreview != null)
           GCWImageView(
             imageData: _originalData == null ? null : GCWImageViewData(_imageBytes()),
