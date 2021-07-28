@@ -12,8 +12,9 @@ import 'package:http/http.dart' as http;
 class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
   final List<String> supportedFileTypes;
+  final bool expanded;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes}) : super(key: key);
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded}) : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -23,7 +24,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   var _urlController;
   var _currentUrl;
 
-  var _currentOpenExpanded = true;
+  var _currentOpenExpanded;
 
   var _currentMode = GCWSwitchPosition.left;
 
@@ -43,6 +44,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   @override
   Widget build(BuildContext context) {
+    if (_currentOpenExpanded == null)
+      _currentOpenExpanded = widget.expanded ?? true;
+
     return Column(
       children: [
         GCWExpandableTextDivider(
