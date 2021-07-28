@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -53,10 +54,19 @@ class _ExifReaderState extends State<ExifReader> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        GCWButton(
-          text: i18n(context, 'open_file'),
-          onPressed: _readFileFromPicker,
+        GCWOpenFile(
+          supportedFileTypes: supportedImageTypes,
+          onLoaded: (_file) {
+            if (_file == null)
+              return;
+
+            _readFile(_file);
+          },
         ),
+        // GCWButton(
+        //   text: i18n(context, 'open_file'),
+        //   onPressed: _readFileFromPicker,
+        // ),
         Container(),
         ..._buildOutput(tableTags)
       ],
@@ -104,8 +114,6 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   List _buildOutput(Map _tableTags) {
-    print(file.name);
-
     List<Widget> widgets = [];
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);
@@ -189,6 +197,16 @@ class _ExifReaderState extends State<ExifReader> {
         _file = File(platformFile.path);
       }
 
+      var lastModified;
+      try {
+        lastModified = formatDate(_file?.lastModifiedSync());
+      } catch(e) {}
+
+      var lastAccessed;
+      try {
+        lastAccessed = formatDate(_file?.lastAccessedSync());
+      } catch(e) {}
+
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_file"),
           child: Column(
@@ -198,8 +216,8 @@ class _ExifReaderState extends State<ExifReader> {
               ["name", platformFile.name ?? ''],
               ["path", platformFile.path ?? ''],
               ["size", platformFile.bytes?.length ?? 0],
-              ["lastModified", formatDate(_file?.lastModifiedSync())],
-              ["lastAccessed", formatDate(_file?.lastAccessedSync())],
+              lastModified != null ? ["lastModified", formatDate(_file?.lastModifiedSync())] : null,
+              lastAccessed != null ? ["lastAccessed", formatDate(_file?.lastAccessedSync())] : null,
               ["extension", platformFile.extension ?? '']
             ],
           ))));

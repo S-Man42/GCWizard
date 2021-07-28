@@ -111,7 +111,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           });
 
                           widget.onLoaded(PlatformFile(
-                              name: _currentUrl.split('/').last,
+                              name: Uri.decodeFull(_currentUrl).split('/').last,
                               path: _currentUrl,
                               bytes: response.bodyBytes
                           ));
