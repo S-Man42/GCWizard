@@ -3,23 +3,16 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
-import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
-import 'package:http/http.dart' as http;
 
 class ImageColorCorrections extends StatefulWidget {
   final Uint8List imageData;
@@ -104,6 +97,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
+          expanded: widget.imageData == null,
           supportedFileTypes: supportedImageTypes,
           onLoaded: (value) {
             if (value == null)
