@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
@@ -118,10 +119,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
             });
           },
         ),
-        Container(
-          child: GCWDivider(),
-          padding: EdgeInsets.only(bottom: 10.0),
-        ), // Fixes a display issue
+        Container(), // Fixes a display issue
         if (_currentPreview != null)
           GCWImageView(
             imageData: _originalData == null ? null : GCWImageViewData(_imageBytes()),

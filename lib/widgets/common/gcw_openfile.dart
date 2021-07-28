@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -22,6 +22,8 @@ class GCWOpenFile extends StatefulWidget {
 class _GCWOpenFileState extends State<GCWOpenFile> {
   var _urlController;
   var _currentUrl;
+
+  var _currentOpenExpanded = true;
 
   var _currentMode = GCWSwitchPosition.left;
 
@@ -43,63 +45,89 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          title: i18n(context, 'common_loadfile_open'),
-          leftValue: i18n(context, 'common_loadfile_open_file'),
-          rightValue: i18n(context, 'common_loadfile_open_url'),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'common_loadfile_showopen'),
+          expanded: _currentOpenExpanded,
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentOpenExpanded = value;
             });
           },
-        ),
-        if (_currentMode == GCWSwitchPosition.left)
-          GCWButton(
-            text: i18n(context, 'common_loadfile_open'),
-            onPressed: () {
-              openFileExplorer(allowedExtensions: widget.supportedFileTypes).then((PlatformFile file) {
-                if (file != null) {
-                  widget.onLoaded(file);
-                }
-              });
-            },
-          ),
-        if (_currentMode == GCWSwitchPosition.right)
-          Column(
+          child: Column(
             children: [
-              GCWTextField(
-                controller: _urlController,
-                onChanged: (String value) {
-                  if (value == null || value.isEmpty) {
-                    _currentUrl = null;
-                    return;
-                  }
-
-                  _currentUrl = value;
-                }
-              ),
-              GCWButton(
-                text: i18n(context, 'common_loadfile_load'),
-                onPressed: () {
-                  if (_currentUrl == null) {
-                    return;
-                  }
-
-                  if (widget.supportedFileTypes != null && widget.supportedFileTypes.firstWhere((suffix) => _currentUrl.endsWith(suffix), orElse: () => null) == null)
-                    return;
-
-                  http.get(Uri.parse(_currentUrl)).then((http.Response response) {
-                    widget.onLoaded(PlatformFile(
-                      name: _currentUrl.split('/').last,
-                      path: _currentUrl,
-                      bytes: response.bodyBytes
-                    ));
+              GCWTwoOptionsSwitch(
+                value: _currentMode,
+                title: i18n(context, 'common_loadfile_openfrom'),
+                leftValue: i18n(context, 'common_loadfile_openfrom_file'),
+                rightValue: i18n(context, 'common_loadfile_openfrom_url'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentMode = value;
                   });
                 },
-              )
+              ),
+              if (_currentMode == GCWSwitchPosition.left)
+                GCWButton(
+                  text: i18n(context, 'common_loadfile_open'),
+                  onPressed: () {
+                    openFileExplorer(allowedExtensions: widget.supportedFileTypes).then((PlatformFile file) {
+                      if (file != null) {
+                        setState(() {
+                          _currentOpenExpanded = false;
+                        });
+
+                        widget.onLoaded(file);
+                      }
+                    });
+                  },
+                ),
+              if (_currentMode == GCWSwitchPosition.right)
+                Column(
+                  children: [
+                    GCWTextField(
+                        controller: _urlController,
+                        onChanged: (String value) {
+                          if (value == null || value.isEmpty) {
+                            _currentUrl = null;
+                            return;
+                          }
+
+                          _currentUrl = value;
+                        }
+                    ),
+                    GCWButton(
+                      text: i18n(context, 'common_loadfile_load'),
+                      onPressed: () {
+                        if (_currentUrl == null) {
+                          return;
+                        }
+
+                        if (widget.supportedFileTypes != null && widget.supportedFileTypes.firstWhere((suffix) => _currentUrl.endsWith(suffix), orElse: () => null) == null)
+                          return;
+
+                        http.get(Uri.parse(_currentUrl)).then((http.Response response) {
+                          setState(() {
+                            _currentOpenExpanded = false;
+                          });
+
+                          widget.onLoaded(PlatformFile(
+                              name: _currentUrl.split('/').last,
+                              path: _currentUrl,
+                              bytes: response.bodyBytes
+                          ));
+                        });
+                      },
+                    )
+                  ],
+                )
             ],
-          )
+          ),
+        ),
+        if (_currentOpenExpanded)
+          Container(
+            child: GCWDivider(),
+            padding: EdgeInsets.only(bottom: 10.0),
+          ),
       ],
     );
   }

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 class GCWExpandableTextDivider extends StatefulWidget {
@@ -10,8 +7,9 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final TextStyle style;
   final bool expanded;
   final Widget child;
+  final Function onChanged;
 
-  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child})
+  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child, this.onChanged})
       : super(key: key);
 
   @override
@@ -21,32 +19,40 @@ class GCWExpandableTextDivider extends StatefulWidget {
 class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
   var _currentExpanded;
 
+  _toggleExpand() {
+    setState(() {
+      _currentExpanded = !_currentExpanded;
+
+      if (widget.onChanged != null)
+        widget.onChanged(_currentExpanded);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_currentExpanded == null)
-      _currentExpanded = widget.expanded ?? true;
+    if (_currentExpanded == null || widget.onChanged != null)
+      _currentExpanded = widget.expanded;
 
     return Column(
       children: [
-        GCWTextDivider(
-          text: widget.text,
-          suppressTopSpace: true,
-          style: widget.style,
-          bottom: 0.0,
-          trailing: GCWIconButton (
-            iconData: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-            size: IconButtonSize.TINY,
-            onPressed: () {
-              setState(() {
-                _currentExpanded = !_currentExpanded;
-              });
-            },
+        InkWell(
+          child: GCWTextDivider(
+            text: widget.text,
+            suppressTopSpace: true,
+            style: widget.style,
+            bottom: 0.0,
+            trailing: GCWIconButton (
+              iconData: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+              size: IconButtonSize.TINY,
+              onPressed: () => _toggleExpand(),
+            ),
           ),
+          onTap: () => _toggleExpand(),
         ),
         if (_currentExpanded)
           Container(
             child: widget.child,
-          )
+          ),
       ],
     );
   }
