@@ -1,6 +1,5 @@
-
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 LatLng addIntegersToDMM(LatLng coord, Map<String, int> valuesToAdd) {
   DMM dmm = DMM.fromLatLon(coord);

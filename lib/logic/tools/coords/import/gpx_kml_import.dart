@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:xml/xml.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -169,17 +169,14 @@ class _KmlReader {
     var coords = group.getElement('coordinates');
     if (coords == null) return null;
 
-
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
     var regExp = RegExp(r'([\.0-9]+),([\.0-9]+),?([\.0-9]+)?');
-
 
     regExp.allMatches(coords.innerText).forEach((coordinates) {
       var lat = coordinates.group(2);
       var lon = coordinates.group(1);
       if (lat != null && lon != null) {
-        var wpt = GCWMapPoint(
-            point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
+        var wpt = GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
         wpt.markerText = xmlElement.getElement('description')?.innerText;
 
         if (line.points.length == 0)

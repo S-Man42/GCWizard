@@ -7,7 +7,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:path/path.dart' as path;
 
-
 main() {
   generate_bigram();
 }
@@ -210,8 +209,7 @@ Map<String, int> _replaceBigramEntrys(
 List<List<int>> _fillBigramArray(Map<String, int> bigramsSource, String alphabet) {
   var bigrams = List<List<int>>(alphabet.length);
 
-  for (var row = 0; row < bigrams.length; row++)
-    bigrams[row] = List.filled(bigrams.length, 0);
+  for (var row = 0; row < bigrams.length; row++) bigrams[row] = List.filled(bigrams.length, 0);
 
   bigramsSource.forEach((key, value) {
     var row = _charIndex(key[0], alphabet);

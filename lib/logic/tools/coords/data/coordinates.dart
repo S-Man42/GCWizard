@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 

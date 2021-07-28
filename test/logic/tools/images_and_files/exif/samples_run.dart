@@ -5,7 +5,7 @@ import 'package:exif/exif.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 runSamplesTest(FileSystemEntity file) async {
   Uint8List content = _getFileData(file.path);
@@ -29,7 +29,6 @@ runSamplesTestGps(
   expect(tags.length, isNonZero);
   expect(tags, contains("GPS GPSLatitude"));
   var lat = tags["GPS GPSLatitude"];
-  print(lat);
 
   LatLng _point = completeGPSData(tags);
   expect(_point, isNotNull);

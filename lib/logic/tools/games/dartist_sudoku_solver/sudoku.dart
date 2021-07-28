@@ -15,6 +15,9 @@
 
 import "dart:math" as Math;
 
+int _MAX_SOLUTIONS = 1000;
+int _FOUND_SOLUTIONS = 0;
+
 List<String> _cross(String A, String B) => A.split('').expand((a) => B.split('').map((b) => a + b)).toList();
 
 const String _digits = '123456789';
@@ -89,27 +92,52 @@ Map _eliminate(Map values, String s, String d) {
 }
 
 /// Search
-List<List<int>> solve(List<List<int>> grid) {
-  var result = _search(_parse_grid(grid));
-  if (result == null) return null;
+List<List<List<int>>> solve(List<List<int>> grid, {int maxSolutions}) {
+  if (maxSolutions != null && maxSolutions > 0) _MAX_SOLUTIONS = maxSolutions;
 
-  List<List<int>> output = [];
-  for (int i = 0; i < 9; i++) {
-    var column = <int>[];
-    for (int j = 0; j < 9; j++) {
-      column.add(int.tryParse(result[_rows[i] + _cols[j]]));
+  _FOUND_SOLUTIONS = 0;
+
+  var results = _searchAll(_parse_grid(grid));
+  if (results == null || results.isEmpty) return null;
+
+  List<List<List<int>>> outputs = [];
+
+  for (Map result in results) {
+    List<List<int>> output = [];
+    for (int i = 0; i < 9; i++) {
+      var column = <int>[];
+      for (int j = 0; j < 9; j++) {
+        column.add(int.tryParse(result[_rows[i] + _cols[j]]));
+      }
+      output.add(column);
     }
-    output.add(column);
+    outputs.add(output);
   }
 
-  return output;
+  return outputs;
 }
 
-Map _search(Map values) {
-  if (values == null) return null;
-  if (_squares.every((s) => values[s].length == 1)) return values;
+List<Map> _searchAll(Map values) {
+  if (values == null || _FOUND_SOLUTIONS >= _MAX_SOLUTIONS) return null;
+
+  if (_squares.every((s) => values[s].length == 1)) {
+    _FOUND_SOLUTIONS++;
+    return <Map>[values];
+  }
+  ;
+
   var s2 = _order(_squares.where((s) => values[s].length > 1).toList(), on: (s) => values[s].length).first;
-  return _some(values[s2].split('').map((d) => _search(_assign(new Map.from(values), s2, d))));
+
+  var output = <Map>[];
+
+  values[s2].split('').forEach((d) {
+    var result = _searchAll(_assign(new Map.from(values), s2, d));
+    if (result == null) return;
+
+    output.addAll(result.where((element) => element != null));
+  });
+
+  return output;
 }
 
 _wrap(value, fn(x)) => fn(value);
@@ -127,12 +155,4 @@ _order(List seq, {Comparator by, List<Comparator> byAll, on(x), List<Function> o
                       (_on) => _on(a).compareTo(_on(b)))))
                 : (seq..sort());
 
-List _zip(a, b) {
-  var n = Math.min<int>(a.length, b.length);
-  var z = new List(n);
-  for (var i = 0; i < n; i++) z[i] = [a.elementAt(i), b.elementAt(i)];
-  return z;
-}
-
-dynamic _some(Iterable seq) => seq.firstWhere((e) => e != null, orElse: () => null);
 bool _all(Iterable seq) => seq.every((e) => e != null);

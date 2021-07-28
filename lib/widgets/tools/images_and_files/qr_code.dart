@@ -49,7 +49,6 @@ class QrCodeState extends State<QrCode> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
@@ -77,10 +76,7 @@ class QrCodeState extends State<QrCode> {
                   });
                 },
               ),
-        ((_currentMode == GCWSwitchPosition.right) && (_outData != null))
-            ? Image.memory(_outData)
-            : Container(),
-
+        ((_currentMode == GCWSwitchPosition.right) && (_outData != null)) ? Image.memory(_outData) : Container(),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -91,15 +87,16 @@ class QrCodeState extends State<QrCode> {
         ),
         GCWDefaultOutput(
             child: _buildOutput(),
-            trailing: (_currentMode == GCWSwitchPosition.right) ? null :
-              GCWIconButton(
-                iconData: Icons.save,
-                size: IconButtonSize.SMALL,
-                iconColor: _outDataEncrypt == null ? Colors.grey : null,
-                onPressed: () {
-                  _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
-                },
-              ))
+            trailing: (_currentMode == GCWSwitchPosition.right)
+                ? null
+                : GCWIconButton(
+                    iconData: Icons.save,
+                    size: IconButtonSize.SMALL,
+                    iconColor: _outDataEncrypt == null ? Colors.grey : null,
+                    onPressed: () {
+                      _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
+                    },
+                  ))
       ],
     );
   }

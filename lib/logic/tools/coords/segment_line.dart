@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 Map<String, dynamic> segmentLine(LatLng coord1, LatLng coord2, int countSegments, Ellipsoid ells) {
   if (countSegments < 2) return null;

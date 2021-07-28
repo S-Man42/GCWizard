@@ -1,11 +1,32 @@
-enum HoudiniMode {NUMBERS, LETTERS}
+enum HoudiniMode { NUMBERS, LETTERS }
 
-final _KEYWORDS_NUMBERS = {'1': 'PRAY', '2': 'ANSWER', '3': 'SAY', '4': 'NOW', '5': 'TELL', '6': 'PLEASE', '7': 'SPEAK', '8': 'QUICKLY', '9': 'LOOK', '0': 'BEQUICK'};
-final _KEYWORDS_LETTERS = {'A': 'PRAY', 'B': 'ANSWER', 'C': 'SAY', 'D': 'NOW', 'E': 'TELL', 'F': 'PLEASE', 'G': 'SPEAK', 'H': 'QUICKLY', 'I': 'LOOK', 'J': 'BEQUICK'};
+final _KEYWORDS_NUMBERS = {
+  '1': 'PRAY',
+  '2': 'ANSWER',
+  '3': 'SAY',
+  '4': 'NOW',
+  '5': 'TELL',
+  '6': 'PLEASE',
+  '7': 'SPEAK',
+  '8': 'QUICKLY',
+  '9': 'LOOK',
+  '0': 'BEQUICK'
+};
+final _KEYWORDS_LETTERS = {
+  'A': 'PRAY',
+  'B': 'ANSWER',
+  'C': 'SAY',
+  'D': 'NOW',
+  'E': 'TELL',
+  'F': 'PLEASE',
+  'G': 'SPEAK',
+  'H': 'QUICKLY',
+  'I': 'LOOK',
+  'J': 'BEQUICK'
+};
 
 Map<int, String> decodeHoudini(String input, HoudiniMode mode) {
-  if (input == null || input.isEmpty)
-    return null;
+  if (input == null || input.isEmpty) return null;
 
   var replaceMap;
   if (mode == HoudiniMode.LETTERS) {
@@ -24,8 +45,7 @@ Map<int, String> decodeHoudini(String input, HoudiniMode mode) {
     output10 = output10.replaceAll(value, key);
   });
 
-  if (mode == HoudiniMode.NUMBERS)
-    return {0: output0, 10: output10};
+  if (mode == HoudiniMode.NUMBERS) return {0: output0, 10: output10};
 
   return {0: output0};
 }
@@ -35,8 +55,7 @@ Map<int, String> _encodeHoudiniNumbers(String input) {
   var output10 = input.replaceAll('10', '0');
 
   _KEYWORDS_NUMBERS.forEach((key, value) {
-    if (value == 'BEQUICK')
-      value = 'BE QUICK';
+    if (value == 'BEQUICK') value = 'BE QUICK';
 
     output0 = output0.replaceAll(key, value + ' ');
     output10 = output10.replaceAll(key, value + ' ');
@@ -59,8 +78,7 @@ Map<int, String> _encodeHoudiniLetters(String input) {
 }
 
 Map<int, String> encodeHoudini(String input, HoudiniMode mode) {
-  if (input == null || input.isEmpty)
-    return null;
+  if (input == null || input.isEmpty) return null;
 
   if (mode == HoudiniMode.LETTERS) {
     return _encodeHoudiniLetters(input);

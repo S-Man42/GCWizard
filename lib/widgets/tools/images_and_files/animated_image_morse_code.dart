@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart'  as local;
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -24,12 +24,10 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
 
-
 class AnimatedImageMorseCode extends StatefulWidget {
   final local.PlatformFile platformFile;
 
-  const AnimatedImageMorseCode({Key key, this.platformFile})
-      : super(key: key);
+  const AnimatedImageMorseCode({Key key, this.platformFile}) : super(key: key);
 
   @override
   AnimatedImageMorseCodeState createState() => AnimatedImageMorseCodeState();
@@ -75,28 +73,22 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       _analysePlatformFileAsync();
     }
 
-    return Column(
-      children: <Widget>[
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
-        _currentMode == GCWSwitchPosition.right ?
-          _decodeWidgets()
-        :
-          _encodeWidgets()
-      ]
-    );
+    return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        value: _currentMode,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+          });
+        },
+      ),
+      _currentMode == GCWSwitchPosition.right ? _decodeWidgets() : _encodeWidgets()
+    ]);
   }
 
   Widget _decodeWidgets() {
-    return Column(
-      children: <Widget>[
-        GCWButton(
+    return Column(children: <Widget>[
+      GCWButton(
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
@@ -109,106 +101,95 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                 }
               });
             });
-          }
-        ),
+          }),
       GCWText(
         text: _outData == null ? "" : _platformFile.name,
       ),
-      GCWDefaultOutput(child: _buildOutputDecode(),
-        trailing: Row (
-            children: <Widget>[
-              GCWIconButton(
-                iconData: _filtered ? Icons.filter_alt :Icons.filter_alt_outlined,
-                size: IconButtonSize.SMALL,
-                iconColor: _outData != null ? null : Colors.grey,
-                onPressed: () {
-                  setState(() {
-                    _filtered = !_filtered;
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.play_arrow,
-                size: IconButtonSize.SMALL,
-                iconColor: _outData != null && !_play ? null : Colors.grey,
-                onPressed: () {
-                  setState(() {
-                    _play = (_outData != null);
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.stop,
-                size: IconButtonSize.SMALL,
-                iconColor: _play ? null : Colors.grey,
-                onPressed: () {
-                  setState(() {
-                    _play = false;
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.save,
-                size: IconButtonSize.SMALL,
-                iconColor: _outData == null ? Colors.grey : null,
-                onPressed: () {
-                  _outData == null ? null : _exportFiles(context,_platformFile.name, _outData["images"]);
-                },
-              )
-            ]
-          )
-        )
-      ]
-    );
-  }
-
-  Widget _buildOutputDecode() {
-    if (_outData == null)
-      return null;
-
-    return Column(
-        children: <Widget>[
-          _play
-              ?
-          Image.memory(_platformFile.bytes)
-              :
-          _filtered
-            ?
-            GCWGallery(
-              imageData: _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
-              onDoubleTap: (index) {
+      GCWDefaultOutput(
+          child: _buildOutputDecode(),
+          trailing: Row(children: <Widget>[
+            GCWIconButton(
+              iconData: _filtered ? Icons.filter_alt : Icons.filter_alt_outlined,
+              size: IconButtonSize.SMALL,
+              iconColor: _outData != null ? null : Colors.grey,
+              onPressed: () {
                 setState(() {
-                  List<List<int>> imagesFiltered = _outData["imagesFiltered"];
-
-                  _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
-                  _markedListSetColumn (imagesFiltered[index], _marked[imagesFiltered[index].first]);
-                  _outText = decodeMorseCode(_outData["durations"], _marked);
-                });
-              },
-            )
-            :
-            GCWGallery(
-              imageData: _convertImageData(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
-              onDoubleTap: (index) {
-                setState(() {
-                  if (_marked != null && index < _marked.length)
-                    _marked[index] = !_marked[index];
-                  _outText = decodeMorseCode(_outData["durations"], _marked);
+                  _filtered = !_filtered;
                 });
               },
             ),
+            GCWIconButton(
+              iconData: Icons.play_arrow,
+              size: IconButtonSize.SMALL,
+              iconColor: _outData != null && !_play ? null : Colors.grey,
+              onPressed: () {
+                setState(() {
+                  _play = (_outData != null);
+                });
+              },
+            ),
+            GCWIconButton(
+              iconData: Icons.stop,
+              size: IconButtonSize.SMALL,
+              iconColor: _play ? null : Colors.grey,
+              onPressed: () {
+                setState(() {
+                  _play = false;
+                });
+              },
+            ),
+            GCWIconButton(
+              iconData: Icons.save,
+              size: IconButtonSize.SMALL,
+              iconColor: _outData == null ? Colors.grey : null,
+              onPressed: () {
+                _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
+              },
+            )
+          ]))
+    ]);
+  }
 
-          _buildDecodeOutput(),
-        ]);
+  Widget _buildOutputDecode() {
+    if (_outData == null) return null;
+
+    return Column(children: <Widget>[
+      _play
+          ? Image.memory(_platformFile.bytes)
+          : _filtered
+              ? GCWGallery(
+                  imageData:
+                      _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
+                  onDoubleTap: (index) {
+                    setState(() {
+                      List<List<int>> imagesFiltered = _outData["imagesFiltered"];
+
+                      _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
+                      _markedListSetColumn(imagesFiltered[index], _marked[imagesFiltered[index].first]);
+                      _outText = decodeMorseCode(_outData["durations"], _marked);
+                    });
+                  },
+                )
+              : GCWGallery(
+                  imageData: _convertImageData(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
+                  onDoubleTap: (index) {
+                    setState(() {
+                      if (_marked != null && index < _marked.length) _marked[index] = !_marked[index];
+                      _outText = decodeMorseCode(_outData["durations"], _marked);
+                    });
+                  },
+                ),
+      _buildDecodeOutput(),
+    ]);
   }
 
   Widget _buildDecodeOutput() {
-
-    return Column(
-        children: <Widget>[
-          GCWDefaultOutput( child: GCWOutputText(text: _outText == null ? "" : _outText["text"])),
-          GCWOutput(title: i18n(context, 'animated_image_morse_code_morse_code'), child: GCWOutputText(text: _outText == null ? "" : _outText["morse"])),
-        ]);
+    return Column(children: <Widget>[
+      GCWDefaultOutput(child: GCWOutputText(text: _outText == null ? "" : _outText["text"])),
+      GCWOutput(
+          title: i18n(context, 'animated_image_morse_code_morse_code'),
+          child: GCWOutputText(text: _outText == null ? "" : _outText["morse"])),
+    ]);
   }
 
   Widget _encodeWidgets() {
@@ -218,8 +199,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(child: GCWTextDivider(text: i18n(context, 'animated_image_morse_code_low_signal'))),
       ]),
       Row(children: [
-        Expanded(child:
-          Column(children: [
+        Expanded(
+          child: Column(children: [
             GCWButton(
               text: i18n(context, 'common_exportfile_openfile'),
               onPressed: () {
@@ -232,43 +213,43 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                 });
               },
             ),
-            ]),
-          ),
-        Expanded(child:
-          Column(children: [
+          ]),
+        ),
+        Expanded(
+          child: Column(children: [
             GCWButton(
               text: i18n(context, 'common_exportfile_openfile'),
               onPressed: () {
                 openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
                   setState(() {
                     if (file != null) {
-                    _lowImage = file?.bytes;
-                  }
+                      _lowImage = file?.bytes;
+                    }
+                  });
                 });
-              });
-            },
-          ),
+              },
+            ),
           ]),
         ),
       ]),
       Row(children: [
-        Expanded(child: _highImage !=null ? Image.memory(_highImage) : Container()),
-        Expanded(child: _lowImage !=null ? Image.memory(_lowImage) : Container()),
+        Expanded(child: _highImage != null ? Image.memory(_highImage) : Container()),
+        Expanded(child: _lowImage != null ? Image.memory(_lowImage) : Container()),
       ]),
       Row(children: <Widget>[
         Expanded(child: GCWText(text: i18n(context, 'animated_image_morse_code_dot_duration') + ':'), flex: 1),
         Expanded(
-          child: GCWIntegerSpinner(
-            controller: _currentDotDurationController,
-            min: 0,
-            max: 999999,
-            onChanged: (value) {
-              setState(() {
-                _currentDotDuration = value;
-              });
-            },
-          ),
-          flex: 2),
+            child: GCWIntegerSpinner(
+              controller: _currentDotDurationController,
+              min: 0,
+              max: 999999,
+              onChanged: (value) {
+                setState(() {
+                  _currentDotDuration = value;
+                });
+              },
+            ),
+            flex: 2),
       ]),
       GCWTextField(
         controller: _currentInputController,
@@ -279,9 +260,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         },
       ),
       _buildEncodeSubmitButton(),
-      GCWDefaultOutput(child: _buildOutputEncode(),
-        trailing: Row (
-          children: <Widget>[
+      GCWDefaultOutput(
+          child: _buildOutputEncode(),
+          trailing: Row(children: <Widget>[
             GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
@@ -290,9 +271,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                 _encodeOutputImage == null ? null : _exportFile(context, _encodeOutputImage);
               },
             )
-          ]
-        )
-      )
+          ]))
     ]);
   }
 
@@ -320,18 +299,13 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   Widget _buildOutputEncode() {
-    if (_encodeOutputImage == null)
-      return null;
+    if (_encodeOutputImage == null) return null;
 
-    return Column(
-        children: <Widget>[
-          Image.memory(_encodeOutputImage)
-        ]
-    );
+    return Column(children: <Widget>[Image.memory(_encodeOutputImage)]);
   }
 
   _initMarkedList(List<Uint8List> images, List<List<int>> imagesFiltered) {
-    if (_marked == null || _marked.length != images.length ) {
+    if (_marked == null || _marked.length != images.length) {
       _marked = List.filled(images.length, false);
 
       // first image default as high signal
@@ -347,7 +321,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     });
   }
 
-  List<GCWImageViewData> _convertImageDataFiltered( List<Uint8List> images, List<int> durations, List<List<int>> imagesFiltered) {
+  List<GCWImageViewData> _convertImageDataFiltered(
+      List<Uint8List> images, List<int> durations, List<List<int>> imagesFiltered) {
     var list = <GCWImageViewData>[];
 
     if (images != null) {
@@ -365,7 +340,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return list;
   }
 
-  List<GCWImageViewData> _convertImageData(List<Uint8List> images, List<int> durations, List<List<int>> imagesFiltered) {
+  List<GCWImageViewData> _convertImageData(
+      List<Uint8List> images, List<int> durations, List<List<int>> imagesFiltered) {
     var list = <GCWImageViewData>[];
 
     if (images != null) {
@@ -373,7 +349,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       _initMarkedList(images, imagesFiltered);
 
       for (var i = 0; i < images.length; i++) {
-        String description = (i+1).toString() + '/$imageCount';
+        String description = (i + 1).toString() + '/$imageCount';
         if ((durations != null) && (i < durations.length)) {
           description += ': ' + durations[i].toString() + ' ms';
         }
@@ -385,24 +361,24 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   _analysePlatformFileAsync() async {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: analyseImageMorsCodeAsync,
-                parameter: _buildJobDataDecode(),
-                onReady: (data) => _saveOutputDecode(data),
-                isOverlay: true,
-              ),
-              height: 220,
-              width: 150,
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: Container(
+            child: GCWAsyncExecuter(
+              isolatedFunction: analyseImageMorseCodeAsync,
+              parameter: _buildJobDataDecode(),
+              onReady: (data) => _saveOutputDecode(data),
+              isOverlay: true,
             ),
-          );
-        },
-      );
+            height: 220,
+            width: 150,
+          ),
+        );
+      },
+    );
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
@@ -410,7 +386,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, String, int>(_highImage, _lowImage, _currentInput, _currentDotDuration));
+    return GCWAsyncExecuterParameters(
+        Tuple4<Uint8List, Uint8List, String, int>(_highImage, _lowImage, _currentInput, _currentDotDuration));
   }
 
   _saveOutputDecode(Map<String, dynamic> output) {
@@ -442,8 +419,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = '.zip';
-      var value = await saveByteDataToFile(
-          bytes.buffer.asByteData(), 'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+      var value = await saveByteDataToFile(bytes.buffer.asByteData(),
+          'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
 
       if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
     });
@@ -451,8 +428,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(
-        data.buffer.asByteData(), 'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+    var value = await saveByteDataToFile(data.buffer.asByteData(),
+        'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }

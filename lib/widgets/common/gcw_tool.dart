@@ -84,13 +84,13 @@ class GCWToolActionButtonsEntry {
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
-  final ToolCategory category;
+  final List<ToolCategory> categories;
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
   String indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
-  final List<String> missingHelpLocales;
+  final List<String> helpLocales;
   final bool suppressHelpButton;
 
   var icon;
@@ -108,12 +108,12 @@ class GCWTool extends StatefulWidget {
       this.toolName,
       this.defaultLanguageToolName,
       this.i18nPrefix,
-      this.category,
+      this.categories,
       this.autoScroll: true,
       this.iconPath,
       this.searchStrings,
       this.buttonList,
-      this.missingHelpLocales,
+      this.helpLocales,
       this.suppressHelpButton: false})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -160,6 +160,7 @@ class _GCWToolState extends State<GCWTool> {
           widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
 
     return Scaffold(
+        resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(
           title: Text(_toolName),
           actions: _buildButtons(),
@@ -189,7 +190,7 @@ class _GCWToolState extends State<GCWTool> {
 
   bool _needsDefaultHelp(Locale appLocale) {
     return !isLocaleSupported(appLocale) ||
-        (widget.missingHelpLocales != null && widget.missingHelpLocales.contains(appLocale.languageCode));
+        (widget.helpLocales == null || !widget.helpLocales.contains(appLocale.languageCode));
   }
 
   Widget _buildHelpButton() {

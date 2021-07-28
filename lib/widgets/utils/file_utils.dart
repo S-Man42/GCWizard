@@ -170,11 +170,11 @@ String getFileType(Uint8List blobBytes, {String defaultType = ".txt"}) {
 }
 
 String getFileExtension(String fileName) {
-  return extension(fileName);
+  return fileName == null ? null : extension(fileName);
 }
 
 String getFileBaseNameWithoutExtension(String fileName) {
-  return basenameWithoutExtension(fileName);
+  return fileName == null ? null : basenameWithoutExtension(fileName);
 }
 
 String changeExtension(String fileName, String extension) {
@@ -184,4 +184,3 @@ String changeExtension(String fileName, String extension) {
 String normalizePath(String path) {
   return normalize(path);
 }
-

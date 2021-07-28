@@ -178,7 +178,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
         tool: FormulaSolverFormulas(group: group),
         toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
         defaultLanguageToolName: '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
-        missingHelpLocales: ['ko'],
+        helpLocales: ['de', 'en', 'fr'],
       );
 
       Future _navigateToSubPage(context) async {

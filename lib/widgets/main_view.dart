@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/main_menu.dart';
+import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
@@ -81,6 +84,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
@@ -138,6 +142,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -145,6 +150,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperat
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
@@ -154,6 +160,10 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/country_flags.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -181,7 +191,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/f
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
+import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -214,17 +226,52 @@ class _MainViewState extends State<MainView> {
       });
     });
 
+    _showWhatsNewDialog() {
+      const _MAX_ENTRIES = 10;
+
+      var mostRecentChangelogVersion = CHANGELOG.keys.first;
+      var entries = i18n(context, 'changelog_' + mostRecentChangelogVersion).split('\n').map((entry) => entry.split('(')[0]).toList();
+      if (entries.length > _MAX_ENTRIES) {
+        entries = entries.sublist(0, _MAX_ENTRIES);
+        entries.add('...');
+      }
+
+      showGCWDialog(
+          context,
+          i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
+          Text(entries.join('\n')),
+          [
+            GCWDialogButton(text: i18n(context, 'common_newversion_showchangelog'), onPressed: () {
+              Navigator.push(
+                  context,
+                  NoAnimationMaterialPageRoute(
+                      builder: (context) => Registry.toolList.firstWhere(
+                              (tool) => className(tool.tool) == className(Changelog())
+                      )
+                  )
+              );
+            }),
+            GCWDialogButton(text: i18n(context, 'common_ok'))
+          ],
+          cancelButton: false
+      );
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt('app_count_opened');
+
+      if (countAppOpened > 1 && Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
+        _showWhatsNewDialog();
+        Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
+        return;
+      }
 
       if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
           i18n(context, 'common_support_text', parameters: [Prefs.getInt('app_count_opened')]),
-          () {
-            launch(i18n(context, 'common_support_link'));
-          },
+          () => launch(i18n(context, 'common_support_link')),
         );
       }
     });
@@ -329,9 +376,6 @@ class _MainViewState extends State<MainView> {
   }
 
   void _initStaticToolList() {
-    // if (_toolList != null) {
-    //   return;
-    // }
 
     _toolList = Registry.toolList.where((element) {
       return [
@@ -377,6 +421,10 @@ class _MainViewState extends State<MainView> {
         className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CountriesCallingCodes()),
+        className(CountriesFlags()),
+        className(CountriesIOCCodes()),
+        className(CountriesISOCodes()),
+        className(CountriesVehicleCodes()),
         className(Cow()),
         className(CrossBearing()),
         className(CrossSum()),
@@ -425,6 +473,7 @@ class _MainViewState extends State<MainView> {
         className(IteratedCrossSumRange()),
         className(IteratedCrossSumRangeFrequency()),
         className(Kamasutra()),
+        className(KarolRobot()),
         className(Kenny()),
         className(KeyboardSelection()),
         className(Malbolge()),
@@ -469,6 +518,7 @@ class _MainViewState extends State<MainView> {
         className(RotationGeneral()),
         className(RSASelection()),
         className(Scrabble()),
+        className(ShadowLength()),
         className(ShadoksSelection()),
         className(Seasons()),
         className(SevenSegments()),
@@ -496,13 +546,19 @@ class _MainViewState extends State<MainView> {
         className(VariableCoordinateFormulas()),
         className(Vigenere()),
         className(VigenereBreaker()),
+        className(VisualCryptography()),
         className(Weekday()),
         className(WhitespaceLanguage()),
         className(WaypointProjection()),
         className(Windchill()),
         className(Z22()),
+        className(Zodiac()),
       ].contains(className(element.tool));
     }).toList();
+
+    _toolList.sort((a, b) {
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
 
     _categoryList = Registry.toolList.where((element) {
       return [

@@ -18,7 +18,8 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: '########+##########', filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')});
+      mask: '**#################',
+      filter: {"*": RegExp(r'[23456789CFGHJMPQRVcfghjmpqrv]'), "#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx+]')});
 
   @override
   void initState() {

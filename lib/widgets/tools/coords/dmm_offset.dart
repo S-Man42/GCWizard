@@ -88,7 +88,9 @@ class DMMOffsetState extends State<DMMOffset> {
   }
 
   _calculateOutput() {
-    _currentValues = [addIntegersToDMM(_currentCoords, {'latitude': _currentAddLatitude, 'longitude': _currentAddLongitude})];
+    _currentValues = [
+      addIntegersToDMM(_currentCoords, {'latitude': _currentAddLatitude, 'longitude': _currentAddLongitude})
+    ];
 
     _currentMapPoints = [
       GCWMapPoint(

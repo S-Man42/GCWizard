@@ -5,7 +5,9 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class RomanNumbers extends StatefulWidget {
@@ -21,8 +23,6 @@ class RomanNumbersState extends State<RomanNumbers> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   RomanNumberType _currentRomanNumbersTypeMode = RomanNumberType.USE_SUBTRACTION_RULE;
-
-  String _output = '';
 
   @override
   void initState() {
@@ -51,7 +51,6 @@ class RomanNumbersState extends State<RomanNumbers> {
                 onChanged: (text) {
                   setState(() {
                     _currentEncodeInput = text;
-                    _calculateOutput();
                   });
                 },
               )
@@ -60,7 +59,6 @@ class RomanNumbersState extends State<RomanNumbers> {
                 onChanged: (text) {
                   setState(() {
                     _currentDecodeInput = text;
-                    _calculateOutput();
                   });
                 },
               ),
@@ -71,32 +69,40 @@ class RomanNumbersState extends State<RomanNumbers> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-              _calculateOutput();
             });
           },
         ),
-        GCWOnOffSwitch(
-          title: i18n(context, 'romannumbers_subtractionrule'),
-          value: _currentRomanNumbersTypeMode == RomanNumberType.USE_SUBTRACTION_RULE,
-          onChanged: (value) {
-            setState(() {
-              _currentRomanNumbersTypeMode =
-                  value ? RomanNumberType.USE_SUBTRACTION_RULE : RomanNumberType.ONLY_ADDITION;
-              _calculateOutput();
-            });
-          },
-        ),
-        GCWDefaultOutput(child: _output)
+        _buildOutput()
       ],
     );
   }
 
-  _calculateOutput() {
+  _buildOutput() {
+    List<dynamic> output;
+
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeRomanNumbers(_currentEncodeInput['value'], type: _currentRomanNumbersTypeMode) ?? '';
+      if (_currentEncodeInput == null || _currentEncodeInput['text'] == null || _currentEncodeInput['text'].isEmpty)
+        return GCWDefaultOutput();
+
+      output = [
+        encodeRomanNumbers(_currentEncodeInput['value'], type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
+        encodeRomanNumbers(_currentEncodeInput['value'], type: RomanNumberType.ONLY_ADDITION) ?? ''
+      ];
     } else {
-      var value = decodeRomanNumbers(_currentDecodeInput, type: _currentRomanNumbersTypeMode);
-      _output = value == null ? '' : value.toString();
+      if (_currentDecodeInput == null || _currentDecodeInput.isEmpty) return GCWDefaultOutput();
+
+      output = [
+        decodeRomanNumbers(_currentDecodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
+        decodeRomanNumbers(_currentDecodeInput, type: RomanNumberType.ONLY_ADDITION) ?? ''
+      ];
     }
+
+    return GCWMultipleOutput(children: [
+      output[0],
+      GCWOutput(
+        child: output[1],
+        title: i18n(context, 'romannumbers_withoutsubtractionrule'),
+      )
+    ]);
   }
 }

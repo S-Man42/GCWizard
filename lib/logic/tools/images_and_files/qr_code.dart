@@ -7,7 +7,10 @@ import 'dart:ui' as ui;
 /// Parse to code string with uint8list
 Future<String> scanBytes(Uint8List bytes) async {
   if (bytes == null) return null;
-  return scanner.scanBytes(bytes);
+  try {
+    return scanner.scanBytes(bytes);
+  } catch (e) {}
+  return null;
 }
 
 /// Generating Bar Code
@@ -44,9 +47,8 @@ Future<Uint8List> addImageBorder(ui.Image image, {double border = 10}) async {
   }
 }
 
-Future<ui.Image> _bytesToImage(Uint8List imgBytes) async{
+Future<ui.Image> _bytesToImage(Uint8List imgBytes) async {
   ui.Codec codec = await ui.instantiateImageCodec(imgBytes);
   ui.FrameInfo frame = await codec.getNextFrame();
   return frame.image;
 }
-

@@ -538,6 +538,6 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
         builder: (context) => GCWTool(
             tool: PeriodicTableDataView(atomicNumber: atomicNumber),
             i18nPrefix: 'periodictable_dataview',
-            missingHelpLocales: ['ko'])));
+            helpLocales: ['de', 'en', 'fr'])));
   }
 }
