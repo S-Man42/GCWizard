@@ -321,10 +321,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 }
 
 Future<img.Image> _adjustColorAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = _doAdjustColor(jobData.parameters);
 

@@ -42,10 +42,7 @@ _sanitizeForFormula(String formula) {
 }
 
 Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = parseVariableLatLon(jobData.parameters.coordinate, jobData.parameters.substitutions,
       projectionData: jobData.parameters.projectionData);

@@ -58,10 +58,8 @@ var _progressStep = 1;
 var _sendAsyncPort;
 
 Future<VigenereBreakerResult> break_cipherAsync(dynamic jobData) async {
-  if (jobData.parameters == null) {
-    jobData.sendAsyncPort.send(null);
-    return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
-  }
+  if (jobData.parameters == null) return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
+
   _sendAsyncPort = jobData.sendAsyncPort;
 
   var output = break_cipher(
