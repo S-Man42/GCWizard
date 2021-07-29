@@ -104,7 +104,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
           toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
           defaultLanguageToolName:
               '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
-          helpLocales: ['de','en','fr']);
+          helpLocales: ['de', 'en', 'fr']);
 
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {

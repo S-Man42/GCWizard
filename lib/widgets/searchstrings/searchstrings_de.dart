@@ -22,6 +22,7 @@ const SEARCHSTRING_DE_ASTRONOMY_POSITION =
 const SEARCHSTRING_DE_ASTRONOMY_RISESET = 'aufgang aufgaenge untergang untergaenge mittag kulmination';
 const SEARCHSTRING_DE_ASTRONOMY_SEASONS =
     'jahreszeiten herbst fruehling sommer winter sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster';
+const SEARCHSTRING_DE_ASTRONOMY_SHADOW_LENGTH = 'schattenlaenge wurf';
 const SEARCHSTRING_DE_ASTRONOMY_SUN = 'sonne';
 const SEARCHSTRING_DE_ASTRONOMY_SUNRISESET =
     'morgendaemmerung abenddaemmerung zivile buergerliche astronomische nautische';
@@ -147,6 +148,7 @@ const SEARCHSTRING_DE_ESOTERIC_BRAINFK = 'gehirn';
 const SEARCHSTRING_DE_ESOTERIC_CHEF = 'chef chefkoch kochrezepte rezepte kochen zutaten';
 const SEARCHSTRING_DE_ESOTERIC_COW = 'kuh muh kuehe rinder';
 const SEARCHSTRING_DE_ESOTERIC_DEADFISH = 'toterfisch';
+const SEARCHSTRING_DE_ESOTERIC_KAROL_ROBOT = "karol";
 const SEARCHSTRING_DE_ESOTERIC_MALBOLGE = 'hoelle';
 const SEARCHSTRING_DE_ESOTERIC_OOK = 'punkte fragezeichen ausrufezeichen affen orang-utans orangutans';
 const SEARCHSTRING_DE_ESOTERIC_WHITESPACELANGUAGE = 'leerzeichen tabulator zeilenumbruch';
@@ -325,7 +327,7 @@ const SEARCHSTRING_DE_SUBSTITUTIONBREAKER = 'monoalphabetische ersetzen austausc
 const SEARCHSTRING_DE_SYMBOL = 'symbole zeichen tabellen codes bilder schriften';
 const SEARCHSTRING_DE_SYMBOL_ADLAM = 'west africa guinea nigeria liberia';
 const SEARCHSTRING_DE_SYMBOL_ALBHED = 'rollenspiel';
-const SEARCHSTRING_DE_SYMBOL_ALCHEMY = 'alchemie elemente';
+const SEARCHSTRING_DE_SYMBOL_ALCHEMY = 'alchemie elemente erde feuer wasser luft';
 const SEARCHSTRING_DE_SYMBOL_ALCHEMY_ALPHABET = 'alchemie';
 const SEARCHSTRING_DE_SYMBOL_ALPHABETUM_ARABUM = 'arabisch';
 const SEARCHSTRING_DE_SYMBOL_ALPHABETUM_EGIPTIORUM = 'aegyptisch';

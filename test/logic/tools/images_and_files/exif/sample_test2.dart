@@ -36,7 +36,6 @@ main() async {
     var file = fileSamples[0].file;
     var tags = await readExifFromFile(file);
     expect(tags.length, isNonZero);
-    print(tags);
     // Camera make     : Apple
     expect(tags['Image Make'].printable, equals('Apple'));
     // Camera model    : iPhone 4S

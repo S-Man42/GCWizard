@@ -36,7 +36,8 @@ class FormulaParser {
     'abs',
     'floor',
     'sgn',
-    'e'
+    'e',
+    'ceil'
   ];
 
   FormulaParser() {

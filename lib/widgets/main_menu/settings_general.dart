@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 var _LANGUAGES = {
-  'da': {'name_native': '🇩🇰 Dansk','percent_translated': 3},
+  'da': {'name_native': '🇩🇰 Dansk', 'percent_translated': 3},
   'de': {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},
   'en': {'name_native': '🇬🇧🇺🇸 English', 'percent_translated': 100},
   'es': {'name_native': '🇪🇸 Español', 'percent_translated': 4},
@@ -69,14 +69,14 @@ class GeneralSettingsState extends State<GeneralSettings> {
 
                               var subtitle;
                               if (language['percent_translated'] < 100) {
-                                subtitle = i18n(context, 'settings_general_i18n_language_partlytranslated', parameters: [language['percent_translated']]);
+                                subtitle = i18n(context, 'settings_general_i18n_language_partlytranslated',
+                                    parameters: [language['percent_translated']]);
                               }
 
                               return GCWDropDownMenuItem(
-                                value: locale.languageCode ?? defaultLanguage,
-                                child: languageName,
-                                subtitle: subtitle
-                              );
+                                  value: locale.languageCode ?? defaultLanguage,
+                                  child: languageName,
+                                  subtitle: subtitle);
                             }).toList(),
                             value: currentLocale.languageCode ?? defaultLanguage,
                             onChanged: (newValue) {

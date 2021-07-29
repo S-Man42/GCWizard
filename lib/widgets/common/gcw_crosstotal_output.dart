@@ -4,7 +4,7 @@ import 'package:gc_wizard/utils/crosstotals.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-enum CROSSTOTAL_INPUT_TYPE {LETTERS, NUMBERS}
+enum CROSSTOTAL_INPUT_TYPE { LETTERS, NUMBERS }
 
 class GCWCrosstotalOutput extends StatefulWidget {
   final values;
@@ -31,7 +31,13 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     List<int> values = List.from(widget.values);
 
     var crosstotalValuesCommon = [
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_sum') + (widget.inputType == CROSSTOTAL_INPUT_TYPE.LETTERS ? '\n(${i18n(context, 'common_wordvalue')})' : ''), sum(values)],
+      widget.suppressSums
+          ? null
+          : [
+              i18n(context, 'crosstotal_sum') +
+                  (widget.inputType == CROSSTOTAL_INPUT_TYPE.LETTERS ? '\n(${i18n(context, 'common_wordvalue')})' : ''),
+              sum(values)
+            ],
       [i18n(context, 'crosstotal_sum_crosssum'), sumCrossSum(values)],
       [i18n(context, 'crosstotal_sum_crosssum_iterated'), sumCrossSumIterated(values)],
     ];
@@ -91,7 +97,7 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
 
     return Column(
       children: [
-        GCWTextDivider(text: i18n(context, 'crosstotal_commonsums'), topSpace: 0),
+        GCWTextDivider(text: i18n(context, 'crosstotal_commonsums'), suppressTopSpace: true),
         Column(
           children: columnedMultiLineOutput(context, crosstotalValuesCommon, flexValues: [2, 1]),
         ),

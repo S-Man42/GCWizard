@@ -64,10 +64,6 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
-  if (Prefs.get('coord_map_circle_colorfilled') == null) {
-    Prefs.setBool('coord_map_circle_colorfilled', false);
-  }
-
   if (Prefs.get('coord_variablecoordinate_formulas') == null) {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
@@ -80,7 +76,6 @@ void initDefaultSettings() {
   if (_favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
     Prefs.setStringList('favorites', [
       'AlphabetValues_alphabetvalues',
-      'ASCIIValues_asciivalues',
       'Morse_morse',
       'RomanNumbers_romannumbers',
       'Rot13_rotation_rot13',
@@ -95,6 +90,10 @@ void initDefaultSettings() {
 
   if (Prefs.get('imagecolorcorrections_maxpreviewheight') == null) {
     Prefs.setInt('imagecolorcorrections_maxpreviewheight', 250);
+  }
+
+  if (Prefs.get('mapview_circle_colorfilled') == null) {
+    Prefs.setBool('mapview_circle_colorfilled', false);
   }
 
   if (Prefs.get('mapview_mapviews') == null) {

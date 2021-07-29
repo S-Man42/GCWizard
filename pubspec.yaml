@@ -21,10 +21,9 @@ dependencies:
     sdk: flutter
   flutter_map: ^0.13.1
   flutter_map_marker_popup: ^1.0.0+2
-  flutter_map_tappable_polyline:
-    git:
-      url: https://github.com/S-Man42/flutter_map_tappable_polyline.git
+  flutter_map_tappable_polyline: ^3.0.0
   fluttertoast: ^8.0.3
+  http: ^0.13.3
   image: ^3.0.2
   intl: ^0.17.0
   location: ^4.3.0

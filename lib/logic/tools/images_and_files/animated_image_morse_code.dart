@@ -72,7 +72,6 @@ Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String in
     input = input.replaceAll('* ', ' ');
     if (input[input.length - 1] == '*' && input.length > 1) input = input.substring(0, input.length - 1);
 
-    print("#" + input + "#");
     var duration = ditDuration;
     var on = false;
     var outList = <bool>[];

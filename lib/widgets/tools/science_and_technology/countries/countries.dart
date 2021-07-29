@@ -75,9 +75,6 @@ class CountriesState extends State<Countries> {
 
     var data = COUNTRIES.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
       if (_currentSort == 0) {
-        if (i18n(context, e['name']) == null) {
-          print(e['name']);
-        }
         var dataList = [i18n(context, e['name'])];
         dataList.addAll(widget.fields.map((field) => e[field]));
 

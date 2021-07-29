@@ -7,7 +7,10 @@ import 'dart:ui' as ui;
 /// Parse to code string with uint8list
 Future<String> scanBytes(Uint8List bytes) async {
   if (bytes == null) return null;
-  return scanner.scanBytes(bytes);
+  try {
+    return scanner.scanBytes(bytes);
+  } catch (e) {}
+  return null;
 }
 
 /// Generating Bar Code

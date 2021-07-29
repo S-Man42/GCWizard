@@ -59,10 +59,11 @@ class DivisorState extends State<Divisor> {
     return Column(
       children: [
         GCWDefaultOutput(
-          child: _currentCrosstotalMode ? divs.join(' ') :
-            Column(
-              children: columnedMultiLineOutput(context, divs.map((e) => [e]).toList()),
-            ),
+          child: _currentCrosstotalMode
+              ? divs.join(' ')
+              : Column(
+                  children: columnedMultiLineOutput(context, divs.map((e) => [e]).toList()),
+                ),
         ),
         if (_currentCrosstotalMode)
           GCWCrosstotalOutput(

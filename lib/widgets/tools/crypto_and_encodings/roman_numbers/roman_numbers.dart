@@ -78,7 +78,6 @@ class RomanNumbersState extends State<RomanNumbers> {
   }
 
   _buildOutput() {
-
     List<dynamic> output;
 
     if (_currentMode == GCWSwitchPosition.left) {
@@ -90,8 +89,7 @@ class RomanNumbersState extends State<RomanNumbers> {
         encodeRomanNumbers(_currentEncodeInput['value'], type: RomanNumberType.ONLY_ADDITION) ?? ''
       ];
     } else {
-      if (_currentDecodeInput == null || _currentDecodeInput.isEmpty)
-        return GCWDefaultOutput();
+      if (_currentDecodeInput == null || _currentDecodeInput.isEmpty) return GCWDefaultOutput();
 
       output = [
         decodeRomanNumbers(_currentDecodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
@@ -99,14 +97,12 @@ class RomanNumbersState extends State<RomanNumbers> {
       ];
     }
 
-    return GCWMultipleOutput(
-        children: [
-          output[0],
-          GCWOutput(
-            child: output[1],
-            title: i18n(context, 'romannumbers_withoutsubtractionrule'),
-          )
-        ]
-    );
+    return GCWMultipleOutput(children: [
+      output[0],
+      GCWOutput(
+        child: output[1],
+        title: i18n(context, 'romannumbers_withoutsubtractionrule'),
+      )
+    ]);
   }
 }

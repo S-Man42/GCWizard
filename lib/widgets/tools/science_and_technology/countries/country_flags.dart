@@ -1,4 +1,3 @@
-
 import 'package:archive/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -12,7 +11,6 @@ class CountriesFlags extends StatefulWidget {
 }
 
 class CountriesFlagsState extends State<CountriesFlags> {
-
   var _ASSET_PATH = 'assets/symbol_tables/country_flags/country_flags.zip';
   var _KEY_PREFIX = 'common_country_';
 
@@ -33,17 +31,15 @@ class CountriesFlagsState extends State<CountriesFlags> {
     // Decode the Zip file
     final archive = ZipDecoder().decodeBuffer(input);
 
-    _images = archive
-        .map((file) {
+    _images = archive.map((file) {
       var key = i18n(context, _KEY_PREFIX + file.name.split('.png')[0]);
+
       var data = file.content;
 
       return {key: new SymbolData(path: file.name, bytes: data)};
     }).toList();
 
-    print(_images);
-
-    _images.sort((a,b) => a.keys.first.compareTo(b.keys.first));
+    _images.sort((a, b) => a.keys.first.compareTo(b.keys.first));
 
     setState(() {
       _currentImageKey = _images.first.keys.first;
@@ -52,18 +48,14 @@ class CountriesFlagsState extends State<CountriesFlags> {
 
   @override
   Widget build(BuildContext context) {
-    if (_images == null)
-      return Container();
+    if (_images == null) return Container();
 
     return Column(
       children: [
         GCWDropDownButton(
           value: _currentImageKey,
           items: _images.map((image) {
-            return GCWDropDownMenuItem(
-              value: image.keys.first,
-              child: image.keys.first
-            );
+            return GCWDropDownMenuItem(value: image.keys.first, child: image.keys.first);
           }).toList(),
           onChanged: (newValue) {
             setState(() {
@@ -71,8 +63,11 @@ class CountriesFlagsState extends State<CountriesFlags> {
             });
           },
         ),
-        Container(height: 20),
-        Image.memory(_images.firstWhere((element) => element.keys.first == _currentImageKey).values.first.bytes)
+        Container(
+          child:
+              Image.memory(_images.firstWhere((element) => element.keys.first == _currentImageKey).values.first.bytes),
+          padding: EdgeInsets.only(top: 20),
+        ),
       ],
     );
   }

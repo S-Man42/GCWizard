@@ -3,34 +3,36 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_checkbox.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-String output;
+List<String> _output;
 
-showFormulaReplaceDialog(BuildContext context, Formula formula,
+showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
     {Widget contentWidget, int dialogHeight, Function onOkPressed}) {
   showGCWDialog(
       context,
       i18n(context, 'formulasolver_formulas_modifyformula'),
-      GCWFormulaReplace(formula: formula.formula),
+      GCWFormulaReplace(formulas: formulas.map((formula) => formula.formula).toList()),
       [
         GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-              if (onOkPressed != null) onOkPressed(output);
+              if (onOkPressed != null) onOkPressed(_output);
             })
       ],
       cancelButton: true);
 }
 
 class GCWFormulaReplace extends StatefulWidget {
-  final String formula;
+  final List<String> formulas;
 
-  const GCWFormulaReplace({Key key, this.formula}) : super(key: key);
+  const GCWFormulaReplace({Key key, this.formulas}) : super(key: key);
 
   @override
   GCWFormulaReplaceState createState() => GCWFormulaReplaceState();
@@ -42,13 +44,44 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
 
   var textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 
+  var _currentFormulaIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GCWTextDivider(text: i18n(context, 'formulasolver_formulas_modifiedformula'), style: textStyle),
+        GCWTextDivider(
+            text: i18n(context, 'formulasolver_formulas_modifiedformula'),
+            style: textStyle,
+            suppressTopSpace: true,
+            trailing: widget.formulas == null || widget.formulas.length <= 1
+                ? Container()
+                : Row(
+                    children: [
+                      GCWIconButton(
+                        iconData: Icons.arrow_back_ios,
+                        size: IconButtonSize.SMALL,
+                        iconColor: gcwDialogTextStyle().color,
+                        onPressed: () {
+                          setState(() {
+                            _currentFormulaIndex = modulo(_currentFormulaIndex - 1, widget.formulas.length);
+                          });
+                        },
+                      ),
+                      GCWIconButton(
+                        iconData: Icons.arrow_forward_ios,
+                        size: IconButtonSize.SMALL,
+                        iconColor: gcwDialogTextStyle().color,
+                        onPressed: () {
+                          setState(() {
+                            _currentFormulaIndex = modulo(_currentFormulaIndex + 1, widget.formulas.length);
+                          });
+                        },
+                      )
+                    ],
+                  )),
         GCWText(
-          text: _buildNewFormula(widget.formula),
+          text: _buildNewFormula(widget.formulas)[_currentFormulaIndex],
           style: textStyle,
         ),
         Container(
@@ -62,7 +95,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           onChanged: (value) {
             setState(() {
               _currentValueBracket = value;
-              _buildNewFormula(widget.formula);
+              _buildNewFormula(widget.formulas);
             });
           },
           fillColor: MaterialStateColor.resolveWith(getFillColor),
@@ -77,7 +110,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           onChanged: (value) {
             setState(() {
               _currentValueMultiply = value;
-              _buildNewFormula(widget.formula);
+              _buildNewFormula(widget.formulas);
             });
           },
           fillColor: MaterialStateColor.resolveWith(getFillColor),
@@ -97,31 +130,43 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
     return Colors.black;
   }
 
-  String _buildNewFormula(String formula) {
-    output = formula;
+  List<String> _buildNewFormula(List<String> formulas) {
+    if (formulas == null || formulas.isEmpty) {
+      return <String>[];
+    }
 
-    if (output == null || output == "") return output;
+    _output = List.from(formulas);
 
     if (_currentValueBracket) {
       int ignoreBracket = 0;
 
-      output = output.split('').map((e) {
-        switch (e) {
-          case '[':
-          case '(':
-            e = (ignoreBracket == 0) ? '[' : e;
-            ignoreBracket += 1;
-            break;
-          case ']':
-          case ')':
-            ignoreBracket -= 1;
-            e = (ignoreBracket == 0) ? ']' : e;
-            break;
+      _output = _output.map((formula) {
+        if (formula == null || formula.isEmpty) {
+          return null;
         }
-        return e;
-      }).join();
+
+        return formula.split('').map((e) {
+          switch (e) {
+            case '[':
+            case '(':
+              e = (ignoreBracket == 0) ? '[' : e;
+              ignoreBracket += 1;
+              break;
+            case ']':
+            case ')':
+              ignoreBracket -= 1;
+              e = (ignoreBracket == 0) ? ']' : e;
+              break;
+          }
+          return e;
+        }).join();
+      }).toList();
     }
-    if (_currentValueMultiply) output = output.replaceAll(RegExp(r'[xX]'), '*');
-    return output;
+
+    if (_currentValueMultiply) {
+      _output = _output.map((formula) => formula..replaceAll(RegExp(r'[xX]'), '*')).toList();
+    }
+
+    return _output;
   }
 }

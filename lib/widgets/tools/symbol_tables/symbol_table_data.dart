@@ -231,7 +231,7 @@ class SymbolTableData {
         .toList();
 
     if (imagePaths.isEmpty) return;
-    
+
     // Read the Zip file from disk.
     final bytes = await DefaultAssetBundle.of(_context).load(imagePaths.first);
     InputStream input = new InputStream(bytes.buffer.asByteData());

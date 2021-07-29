@@ -18,5 +18,5 @@ class PlatformFile {
   final Uint8List bytes;
 
   /// File extension for this file.
-  String get extension => name?.split('.').last;
+  String get extension => (name == null) ? null : name.split('.').last;
 }

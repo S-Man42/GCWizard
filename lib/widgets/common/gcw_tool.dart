@@ -160,6 +160,7 @@ class _GCWToolState extends State<GCWTool> {
           widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
 
     return Scaffold(
+        resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(
           title: Text(_toolName),
           actions: _buildButtons(),

@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/kitchen.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/recipe.dart';
@@ -387,7 +386,7 @@ class Chef {
     for (int i = 1; i < recipe.length; i++) {
       recipe[i] = recipe[i].trim();
       // add blank lines before aux recipes
-      if (recipe[i].endsWith('.')){
+      if (recipe[i].endsWith('.')) {
         //recipe[i] = '\n' + recipe[i];
       }
     }
@@ -450,8 +449,7 @@ class Chef {
             recipe[i + 1].startsWith("portionen") ||
             isMethod(recipe[i + 1])) {
         } else {
-          if (!auxRecipe)
-            recipe.removeAt(i);
+          if (!auxRecipe) recipe.removeAt(i);
         }
       }
     }

@@ -140,7 +140,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
                         builder: (context) => GCWTool(
                             tool: Substitution(input: _currentOutput.ciphertext, substitutions: substitutions),
                             i18nPrefix: 'substitution',
-                            helpLocales: ['de','en','fr'])));
+                            helpLocales: ['de', 'en', 'fr'])));
               },
             )
           ],

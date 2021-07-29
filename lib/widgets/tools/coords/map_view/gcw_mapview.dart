@@ -253,7 +253,7 @@ class GCWMapViewState extends State<GCWMapView> {
         !_locationSubscription.isPaused &&
         _currentAccuracy != null &&
         _currentPosition != null) {
-      var filled = Prefs.get('coord_map_circle_colorfilled');
+      var filled = Prefs.get('mapview_circle_colorfilled');
       var circleColor = COLOR_MAP_USERPOSITION.withOpacity(filled ?? false ? 0.3 : 0.0);
 
       layers.add(CircleLayerWidget(
@@ -280,7 +280,7 @@ class GCWMapViewState extends State<GCWMapView> {
           options: TappablePolylineLayerOptions(
         polylineCulling: true,
         polylines: _polylines,
-        onTap: (polyline) => _showPolylineDialog(polyline),
+        onTap: (polylines, details) => _showPolylineDialog(polylines.first),
       )),
       PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
@@ -321,7 +321,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            helpLocales: ['de','en','fr']))).whenComplete(() {
+                            helpLocales: ['de', 'en', 'fr']))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
                       _persistanceAdapter.updateMapPolyline(child);
@@ -336,7 +336,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            helpLocales: ['de','en','fr']))).whenComplete(() {
+                            helpLocales: ['de', 'en', 'fr']))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -769,7 +769,7 @@ class GCWMapViewState extends State<GCWMapView> {
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                                       i18nPrefix: 'coords_openmap_pointeditor',
-                                      helpLocales: ['de','en','fr']))).whenComplete(() {
+                                      helpLocales: ['de', 'en', 'fr']))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
