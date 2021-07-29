@@ -8,10 +8,7 @@ import 'package:archive/archive_io.dart';
 import 'package:image/image.dart' as Image;
 
 Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 

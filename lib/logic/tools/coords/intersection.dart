@@ -15,10 +15,7 @@ class IntersectionJobData {
 }
 
 Future<List<LatLng>> intersectionAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersection(jobData.parameters.coord1, jobData.parameters.alpha, jobData.parameters.coord2,
       jobData.parameters.beta, jobData.parameters.ells);

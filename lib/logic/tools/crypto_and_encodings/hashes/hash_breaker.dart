@@ -27,6 +27,8 @@ Map<String, dynamic> preCheck(Map<String, String> substitutions) {
 }
 
 Future<Map<String, dynamic>> breakHashAsync(dynamic jobData) async {
+  if (jobData == null) return null;
+
   var output = breakHash(jobData.parameters.input, jobData.parameters.searchMask, jobData.parameters.substitutions,
       jobData.parameters.hashFunction,
       sendAsyncPort: jobData.sendAsyncPort);

@@ -55,10 +55,7 @@ List<Intersect> _distIntersection(
 }
 
 Future<List<Intersect>> intersectThreeCirclesAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersectThreeCircles(
       jobData.parameters.coord1,
