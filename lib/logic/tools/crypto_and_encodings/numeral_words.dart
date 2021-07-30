@@ -71,6 +71,11 @@ enum NumeralWordsLanguage {
   LOJ,
   JAP,
   CHI,
+  KOR,
+  SINOKOR,
+  HANJA,
+  HANGULKOR,
+  HANGULSINOKOR,
   MIN,
   SHA,
   ALL,
@@ -117,7 +122,6 @@ final Map<String, String> DEUWordToNum = {
   'west': 'numeralwords_w',
   'sued': 'numeralwords_s',
 };
-
 final Map<String, String> ENGWordToNum = {
   'zero': '0',
   'one': '1',
@@ -158,7 +162,6 @@ final Map<String, String> ENGWordToNum = {
   'west': 'numeralwords_w',
   'south': 'numeralwords_s'
 };
-
 final Map<String, String> DNKWordToNum = {
   'nul': '0',
   'en': '1',
@@ -198,7 +201,6 @@ final Map<String, String> DNKWordToNum = {
   'vest': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
-
 final Map<String, String> NLDWordToNum = {
   'nul': '0',
   'een': '1',
@@ -238,7 +240,6 @@ final Map<String, String> NLDWordToNum = {
   'west': 'numeralwords_w',
   'zuid': 'numeralwords_s'
 };
-
 final Map<String, String> SWEWordToNum = {
   'noll': '0',
   'en': '1',
@@ -279,7 +280,6 @@ final Map<String, String> SWEWordToNum = {
   'väst': 'numeralwords_w',
   'syd': 'numeralwords_s'
 };
-
 final Map<String, String> NORWordToNum = {
   'nul': '0',
   'en': '1',
@@ -321,7 +321,6 @@ final Map<String, String> NORWordToNum = {
   'vest': 'numeralwords_w',
   'sør': 'numeralwords_s'
 };
-
 final Map<String, String> ITAWordToNum = {
   'zero': '0',
   'uno': '1',
@@ -361,7 +360,6 @@ final Map<String, String> ITAWordToNum = {
   'west': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
-
 final Map<String, String> FRAWordToNum = {
   'zéro': '0',
   'un': '1',
@@ -402,7 +400,6 @@ final Map<String, String> FRAWordToNum = {
   'oest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
-
 final Map<String, String> ESPWordToNum = {
   'cero': '0',
   'uno': '1',
@@ -443,7 +440,6 @@ final Map<String, String> ESPWordToNum = {
   'oeste': 'numeralwords_w',
   'sur': 'numeralwords_s'
 };
-
 final Map<String, String> PORWordToNum = {
   'zero': '0',
   'um': '1',
@@ -485,7 +481,6 @@ final Map<String, String> PORWordToNum = {
   'oeste': 'numeralwords_w',
   'sul': 'numeralwords_s'
 };
-
 final Map<String, String> POLWordToNum = {
   'zero': '0',
   'jeden': '1',
@@ -528,7 +523,6 @@ final Map<String, String> POLWordToNum = {
   'zachód': 'numeralwords_w',
   'południe': 'numeralwords_s'
 };
-
 final Map<String, String> RUSWordToNum = {
   'nol': '0',
   'nul': '0',
@@ -571,7 +565,6 @@ final Map<String, String> RUSWordToNum = {
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s'
 };
-
 final Map<String, String> KYRWordToNum = {
   'ноль': '0',
   'нуль': '0',
@@ -615,7 +608,6 @@ final Map<String, String> KYRWordToNum = {
   'Запад': 'numeralwords_w',
   'юг': 'numeralwords_s'
 };
-
 final Map<String, String> VOLWordToNum = {
   'ser': '0',
   'bal': '1',
@@ -654,7 +646,6 @@ final Map<String, String> VOLWordToNum = {
   'lofued': 'numeralwords_e',
   'vesued': 'numeralwords_w',
 };
-
 final Map<String, String> EPOWordToNum = {
   'nulo': '0',
   'unu': '1',
@@ -696,7 +687,6 @@ final Map<String, String> EPOWordToNum = {
   'grado': 'grad',
   'punkto': 'punkt',
 };
-
 final Map<String, String> SOLWordToNum = {
   'soldo': '0',
   'redodo': '1',
@@ -735,7 +725,6 @@ final Map<String, String> SOLWordToNum = {
   'famidosi': 'grad',
   'relaresol': 'punkt',
 };
-
 final Map<String, String> LATWordToNum = {
   'zerum': '0',
   'nullum': '0',
@@ -777,7 +766,6 @@ final Map<String, String> LATWordToNum = {
   'west': 'numeralwords_w',
   'meridies': 'numeralwords_s',
 };
-
 final Map<String, String> MAPWordToNum = {
   'kinhe': '1',
   'epu': '2',
@@ -865,7 +853,9 @@ final Map<String, String> TURWordToNum = {
   'yedi': '7',
   'sekiz': '8',
   'dokuz': '9',
-  'on ': '10',
+  'on': '10',
+  'yüz': '100',
+  'bin':'1000',
 };
 final Map<String, String> BREWordToNum = {
   'mann': '0',
@@ -1102,6 +1092,239 @@ final Map<String, String> SHAWordToNum = {
   'zobu': '9',
   'zozo': '10',
 };
+final Map<String, String> HANGULSINOKORWordToNum = {
+  '영': '0',
+  '령': '0',
+  '령': '0',
+  '일': '1',
+  '이': '2',
+  '삼': '3',
+  '사': '4',
+  '오': '5',
+  '육': '6',
+  '륙': '6',
+  '칠': '7',
+  '팔': '8',
+  '구': '9',
+  '십': '10',
+  '십일': '11',
+  '십이': '12',
+  '십삼': '13',
+  '십사': '14',
+  '십오': '15',
+  '십육': '16',
+  '십륙': '16',
+  '십칠': '17',
+  '십팔': '18',
+  '십구': '19',
+  '이십': '20',
+  '삼십': '30',
+  '사십': '40',
+  '오십': '50',
+  '육십': '60',
+  '륙십': '60',
+  '칠십': '70',
+  '팔십': '80',
+  '구십': '90',
+  '백': '100',
+  '천': '1000',
+  '만': '10000',
+};
+final Map<String, String> HANGULKORWordToNum = {
+  '하나': '1',
+  '하': '1',
+  '두': '2',
+  '둘': '2',
+  '세': '3',
+  '셋': '3',
+  '네': '4',
+  '넷': '4',
+  '다섯': '5',
+  '여섯': '6',
+  '일곱': '7',
+  '여덟': '8',
+  '아': '9',
+  '열': '10',
+  '열한': '11',
+  '열하나': '11',
+  '열두': '12',
+  '열둘': '12',
+  '열세': '13',
+  '열셋': '13',
+  '열네': '14',
+  '열넷': '14',
+  '열다섯': '15',
+  '열여섯': '16',
+  '열일곱': '17',
+  '열여덟': '18',
+  '열아': '19',
+  '스물': '20',
+  '서른': '30',
+  '마흔': '40',
+  '쉰': '50',
+  '예순': '60',
+  '일흔': '70',
+  '여든': '80',
+  '아흔': '90',
+  '온': '100',
+  '즈믄': '1000',
+  '드먼': '10000',
+  '골': '10000',
+};
+final Map<String, String> HANJAWordToNum = {
+  '零': '0',
+  '空': '0',
+  '一': '1',
+  '二': '2',
+  '三': '3',
+  '四': '4',
+  '五': '5',
+  '六': '6',
+  '七': '7',
+  '八': '8',
+  '九': '9',
+  '十': '10',
+  '十一': '11',
+  '十二': '12',
+  '十三': '13',
+  '十四': '14',
+  '十五': '15',
+  '十六': '16',
+  '十七': '17',
+  '十八': '18',
+  '十九': '19',
+  '二十': '20',
+  '三十': '30',
+  '四十': '40',
+  '五十': '50',
+  '六十': '60',
+  '七十': '70',
+  '八十': '80',
+  '九十': '90',
+  '百': '100',
+  '千': '1000',
+  '萬': '10000'
+};
+final Map<String, String> KORWordToNum = {
+  'hana': '1',
+  'hah-nah': '1',
+  'han': '1',
+  'du': '2',
+  'dul': '2',
+  'dool': '2',
+  'seht': '3',
+  'set': '3',
+  'se': '3',
+  'neht': '4',
+  'net': '4',
+  'ne': '4',
+  'dausut': '5',
+  'dahsuht': '5',
+  'daseot': '5',
+  'dseot': '5',
+  'yeoseot': '6',
+  'yeosut': '6',
+  'yuhsuht': '6',
+  'ilgob': '7',
+  'ilgub': '7',
+  'ilgup': '7',
+  'ilgop': '7',
+  'eelgob': '7',
+  'yeodeol': '8',
+  'ahop': '9',
+  'ah-hope': '9',
+  'ahhob': '9',
+  'yeol': '10',
+  'yuhl': '10',
+  'yeolhana': '11',
+  'yeolhan': '11',
+  'yeoldul': '12',
+  'yeoldool': '12',
+  'yeoldu': '12',
+  'yeolseht': '13',
+  'yeolset': '13',
+  'yeolse': '13',
+  'yeolneht': '14',
+  'yeolnet': '14',
+  'yeolne': '14',
+  'yeol': '15',
+  'yeol': '15',
+  'yeol': '15',
+  'yeol': '16',
+  'yeol': '17',
+  'yeol': '18',
+  'yeol': '19',
+  'semul': '20',
+  'semu': '20',
+  'seoreun': '30',
+  'maheun': '40',
+  'swin': '50',
+  'yesun': '60',
+  'ilheun': '70',
+  'yeodeun': '80',
+  'aheun': '90',
+  'on': '100',
+  'jeumeun': '1000',
+  'deumeun': '10000',
+  'gol': '10000',
+};
+final Map<String, String> SINOKORWordToNum = {
+  'yeong': '0',
+  'ryeong': '0',
+  'eel': '1',
+  'il': '1',
+  'ee': '2',
+  'i': '2',
+  'sam': '3',
+  'sahm': '3',
+  'sa': '4',
+  'sah': '4',
+  'o': '5',
+  'oh': '5',
+  'yuk': '6',
+  'ryuk': '6',
+  'yoogh': '6',
+  'chil': '7',
+  'pal': '8',
+  'pahl': '8',
+  'gu': '9',
+  'goo': '9',
+  'sip': '10',
+  'sib': '10',
+  'sibil': '11',
+  'sipil': '11',
+  'sipi': '12',
+  'sibi': '12',
+  'sibsam': '13',
+  'sipsam': '13',
+  'sipsa': '14',
+  'sibsa': '14',
+  'sibo': '15',
+  'sipo': '15',
+  'sibyuk': '16',
+  'sipyuk': '16',
+  'sipryuk': '16',
+  'sim-nyuk': '16',
+  'sibchil': '17',
+  'sipchil': '17',
+  'sippal': '18',
+  'sibpal': '18',
+  'sibgu': '19',
+  'sipgu': '19',
+  'isip': '20',
+  'samsip': '30',
+  'sasip': '40',
+  'osip': '50',
+  'yuksip': '60',
+  'ryuksip': '60',
+  'chilsip': '70',
+  'palsip': '80',
+  'gusip': '90',
+  'shib': '10',
+  'baek': '100',
+  'cheon': '1000',
+  'man': '10000',
+};
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DEU: 'common_language_german',
@@ -1119,6 +1342,11 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.KYR: 'numeralwords_language_kyr',
   NumeralWordsLanguage.JAP: 'numeralwords_language_jap',
   NumeralWordsLanguage.CHI: 'numeralwords_language_chi',
+  NumeralWordsLanguage.KOR: 'common_language_korean',
+  NumeralWordsLanguage.SINOKOR: 'common_language_sino_korean',
+  NumeralWordsLanguage.HANJA: 'common_language_hanja',
+  NumeralWordsLanguage.HANGULKOR: 'common_language_hangul_korean',
+  NumeralWordsLanguage.HANGULSINOKOR: 'common_language_hangul_sino_korean',
   NumeralWordsLanguage.UNG: 'numeralwords_language_ung',
   NumeralWordsLanguage.PER: 'numeralwords_language_per',
   NumeralWordsLanguage.AMH: 'numeralwords_language_amh',
@@ -1166,6 +1394,11 @@ Map NumWords = {
   NumeralWordsLanguage.KYR: KYRWordToNum,
   NumeralWordsLanguage.JAP: JAPWordToNum,
   NumeralWordsLanguage.CHI: CHIWordToNum,
+  NumeralWordsLanguage.KOR: KORWordToNum,
+  NumeralWordsLanguage.SINOKOR: SINOKORWordToNum,
+  NumeralWordsLanguage.HANJA: HANJAWordToNum,
+  NumeralWordsLanguage.HANGULKOR: HANGULKORWordToNum,
+  NumeralWordsLanguage.HANGULSINOKOR: HANGULSINOKORWordToNum,
   NumeralWordsLanguage.VOL: VOLWordToNum,
   NumeralWordsLanguage.EPO: EPOWordToNum,
   NumeralWordsLanguage.SOL: SOLWordToNum,
@@ -1469,6 +1702,17 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     String inputToDecode;
 
     // simplify input
+
+    // trim korean
+    input = input.replaceAll('hah - nah', 'hah-nah')
+        .replaceAll('dah suht', 'dahsuht')
+        .replaceAll('yuh suht', 'yuhsuht')
+        .replaceAll('eel gob', 'eelgob')
+        .replaceAll('yuh duh', 'yuhduh')
+        .replaceAll('ah hob', 'ahhob')
+        .replaceAll('-sip', 'sip')
+        .replaceAll('sip-', 'sip')
+        .replaceAll('yeol-', 'yeol');
 
     // trim Klingon
     // identify west
