@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+import 'dart:math';
+
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
@@ -143,4 +147,171 @@ String _formatExifValue(IfdTag tag) {
     default:
       return tag.printable;
   }
+}
+
+Uint8List extraData(Uint8List data) {
+  if (data == null) return null;
+  int imageLength;
+
+  switch (getFileType(data)) {
+    case '.jpg':
+      imageLength = jpgImageSize(data);
+      break;
+    case '.png':
+      imageLength = pngImageSize(data);
+      break;
+    case '.gif':
+      imageLength = gifImageSize(data);
+      break;
+    default:
+      return null;
+  }
+
+  if ((imageLength != null) & (imageLength > 0) & (data.length > imageLength))
+    return Uint8List.fromList(data.sublist(imageLength));
+
+  return null;
+}
+
+int jpgImageSize(Uint8List data) {
+  var sum = 0;
+  if (data == null) return null;
+  if (getFileType(data) != '.jpg') return null;
+
+  for (int i = 0; i < data.length - 2; i++) {
+    // Segment ?
+    if ((data[i] == 0xFF) & (data[i + 1] == 0xD8)) {
+      var offset = 0;
+      sum += 2;
+      do {
+        offset = _jpgSegmentLength(data, sum);
+        sum += offset;
+      } while (offset > 0);
+
+      sum += _jpgSosSegmentLength(data, sum);
+
+      return sum;
+    }
+  }
+
+  return sum;
+}
+
+int _jpgSegmentLength(Uint8List data, int offset) {
+  // Data Segment and not SOS Segment
+  if ((offset + 3 < data.length) & (data[offset] == 0xFF) & (data[offset + 1] != 0xDA))
+    return 256 * data[offset + 2] + data[offset + 3] + 2;
+  return 0;
+}
+
+int _jpgSosSegmentLength(Uint8List data, int offset) {
+  //  SOS Segment ?
+  if ((offset + 1 < data.length) & (data[offset] == 0xFF) & (data[offset + 1] == 0xDA))
+  for (int i = offset + 2; i < data.length - 1; i++)
+    // EOI-Segment ?
+    if (data[i] == 0xFF && data[i + 1] == 0xD9)
+      return i - offset + 2;
+
+  return 0;
+}
+
+int pngImageSize(Uint8List data) {
+
+  var startIndex = 0;
+  var endIndex = 0;
+  if (data == null) return null;
+  if (getFileType(data) != '.png') return null;
+
+  for (int i = 0; i < data.length - 3; i++)
+  {
+    // IDAT ??
+    if ((data[i] == 0x49) & (data[i + 1] == 0x44) & (data[i + 2] == 0x41) & (data[i + 3] == 0x54)) {
+      startIndex = i + 4;
+      break;
+    }
+  }
+
+  if (startIndex > 0) {
+    for (int i = startIndex; i < data.length - 7; i++)
+    {
+      // IEND ??
+      if ((data[i] == 0x49) & (data[i + 1] == 0x45) & (data[i + 2] == 0x4E) & (data[i + 3] == 0x44) &
+      (data[i + 4] == 0xAE) & (data[i + 5] == 0x42) & (data[i + 6] == 0x60) & (data[i + 7] == 0x82)) {
+        endIndex = i + 4 + 4;
+        break;
+      }
+    }
+  }
+
+  return endIndex;
+}
+
+int gifImageSize(Uint8List data) {
+  if (data == null) return null;
+  if (getFileType(data) != '.gif') return null;
+
+  var offset = "GIF89a".length; //GIF Signature
+  offset += 7; //Screen Descriptor
+
+  //Global Color Map
+  offset = _gifColorMap(data, offset, -3);
+
+  do {
+    if (offset + 1 >= data.length) return data.length;
+
+    // Application Extension, Comment Extension
+    if ((data[offset] == 0x21) & ((data[offset + 1] == 0xFF) | (data[offset] == 0xFE)))
+      offset = _gifExtensionBlock(data, offset);
+    else
+    {
+      //Graphics Control Extension (option)
+      offset = _gifExtensionBlock(data, offset);
+
+      if (offset + 1 >= data.length) return data.length;
+
+      if ((data[offset] == 0x21) & (data[offset + 1] == 0xFF))
+        // Plain Text Extension
+        offset = _gifExtensionBlock(data, offset);
+      else {
+        //Image Descriptor
+        offset += 10;
+
+        //Local Color Map
+        offset = _gifColorMap(data, offset, -1);
+
+        //Image Data
+        offset += 1;
+        while ((offset < data.length) & (data[offset] != 0))
+        {
+          offset += 1;
+          offset += data[offset - 1];
+        }
+
+        offset += 1; //Terminator 0x00
+      }
+    }
+  } while ((offset >= data.length) | (data[offset] != 0x3B));
+  offset += 1; //0x3B
+
+  return min(offset, data.length);
+}
+
+int _gifExtensionBlock(Uint8List data, int offset) {
+  if (offset >= data.length) return data.length;
+  if (data[offset] == 0x21) {
+    offset += 3;
+    offset += data[offset - 1];
+    offset += 1; //Terminator 0x00
+  }
+  return offset;
+}
+
+int _gifColorMap(Uint8List data, int offset, int countOffset) {
+  if (offset >= data.length) return data.length;
+  if ((data[offset + countOffset] & 0x80) != 0) {
+    var bitsPerPixel = (data[offset + countOffset] & 0x7) + 1;
+    offset += (pow(2, bitsPerPixel) * 3).toInt();
+  }
+
+  return offset;
 }

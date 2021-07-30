@@ -91,70 +91,7 @@ class HexString2FileState extends State<HexString2File> {
 
       if (_outData == null) return null;
 
-      var mimeType = getMimeType(getFileType(_outData));
-
-      switch (mimeType) {
-        case MIMETYPE.IMAGE:
-          try {
-            return Image.memory(_outData);
-          } catch (e) {
-            return getFileType(_outData).replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
-          }
-
-          return null;
-
-        case MIMETYPE.TEXT:
-          return String.fromCharCodes(_outData);
-
-        case MIMETYPE.ARCHIV:
-          String fileNames = '';
-          String extension = getFileType(_outData);
-          if (extension.endsWith('.zip')) {
-            try {
-              InputStream input = new InputStream(_outData.buffer.asByteData());
-              // Decode the Zip file
-              final archive = ZipDecoder().decodeBuffer(input);
-              fileNames = archive.map((file) {
-                if (file.isFile)
-                  return ('-> ' + file.name);
-                else
-                  return '';
-              }).join('\n');
-            } catch (e) {}
-
-            return 'zip-' +
-                i18n(context, 'hexstring2file_file') +
-                ' -> ' +
-                i18n(context, 'hexstring2file_content') +
-                '\n' +
-                fileNames;
-          } else if (extension.endsWith('.tar')) {
-            try {
-              InputStream input = new InputStream(_outData.buffer.asByteData());
-              // Decode the Zip file
-              final archive = TarDecoder().decodeBuffer(input);
-              fileNames = archive.map((file) {
-                if (file.isFile)
-                  return ('-> ' + file.name);
-                else
-                  return '';
-              }).join('\n');
-            } catch (e) {}
-
-            return 'tar-' +
-                i18n(context, 'hexstring2file_file') +
-                ' -> ' +
-                i18n(context, 'hexstring2file_content') +
-                '\n' +
-                fileNames;
-          } else {
-            fileNames = extension.replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
-          }
-
-          return fileNames;
-        default:
-          return getFileType(_outData).replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
-      }
+      return hexDataOutput(context, _outData);
     } else {
       if (_outData == null) return null;
 
@@ -162,11 +99,84 @@ class HexString2FileState extends State<HexString2File> {
     }
   }
 
+
+
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(data.buffer.asByteData(),
         "hexstring_export_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+  }
+}
+
+hexDataOutput(BuildContext context, Uint8List _outData) {
+  if (_outData == null) return '';
+  var mimeType = getMimeType(getFileType(_outData));
+
+  switch (mimeType) {
+    case MIMETYPE.IMAGE:
+      try {
+        return Image.memory(_outData);
+      } catch (e) {
+        return getFileType(_outData).replaceFirst('.', '') + '-' +
+            i18n(context, 'hexstring2file_file');
+      }
+
+      return null;
+
+    case MIMETYPE.TEXT:
+      return String.fromCharCodes(_outData);
+
+    case MIMETYPE.ARCHIV:
+      String fileNames = '';
+      String extension = getFileType(_outData);
+      if (extension.endsWith('.zip')) {
+        try {
+          InputStream input = new InputStream(_outData.buffer.asByteData());
+          // Decode the Zip file
+          final archive = ZipDecoder().decodeBuffer(input);
+          fileNames = archive.map((file) {
+            if (file.isFile)
+              return ('-> ' + file.name);
+            else
+              return '';
+          }).join('\n');
+        } catch (e) {}
+
+        return 'zip-' +
+            i18n(context, 'hexstring2file_file') +
+            ' -> ' +
+            i18n(context, 'hexstring2file_content') +
+            '\n' +
+            fileNames;
+      } else if (extension.endsWith('.tar')) {
+        try {
+          InputStream input = new InputStream(_outData.buffer.asByteData());
+          // Decode the Zip file
+          final archive = TarDecoder().decodeBuffer(input);
+          fileNames = archive.map((file) {
+            if (file.isFile)
+              return ('-> ' + file.name);
+            else
+              return '';
+          }).join('\n');
+        } catch (e) {}
+
+        return 'tar-' +
+            i18n(context, 'hexstring2file_file') +
+            ' -> ' +
+            i18n(context, 'hexstring2file_content') +
+            '\n' +
+            fileNames;
+      } else {
+        fileNames = extension.replaceFirst('.', '') + '-' +
+            i18n(context, 'hexstring2file_file');
+      }
+
+      return fileNames;
+    default:
+      return getFileType(_outData).replaceFirst('.', '') + '-' +
+          i18n(context, 'hexstring2file_file');
   }
 }
