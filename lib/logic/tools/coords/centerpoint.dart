@@ -23,10 +23,7 @@ Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoi
 }
 
 Future<List<Map<String, dynamic>>> centerPointThreePointsAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = centerPointThreePoints(
       jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.coord3, jobData.parameters.ells);

@@ -7,10 +7,7 @@ import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
 
 Future<Map<String, dynamic>> analyseImageMorseCodeAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
@@ -38,10 +35,7 @@ Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort se
 }
 
 Future<Uint8List> createImageAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await createImage(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,

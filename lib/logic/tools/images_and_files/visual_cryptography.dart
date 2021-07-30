@@ -10,10 +10,7 @@ int whiteColor = Colors.white.value;
 int blackColor = Colors.black.value;
 
 Future<Uint8List> decodeImagesAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await decodeImages(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);
@@ -60,10 +57,7 @@ Image.Image _pasteImage(Image.Image targetImage, Image.Image image, int offsetX,
 }
 
 Future<Tuple2<int, int>> offsetAutoCalcAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await offsetAutoCalc(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4,
@@ -153,10 +147,7 @@ Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offset
 }
 
 Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await encodeImage(
       jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4);

@@ -35,10 +35,7 @@ class SubstitutionBreakerResult {
 }
 
 Future<SubstitutionBreakerResult> break_cipherAsync(dynamic jobData) async {
-  if (jobData.parameters == null) {
-    jobData.sendAsyncPort.send(null);
-    return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
-  }
+  if (jobData.parameters == null) return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
   var output = break_cipher(jobData.parameters.input, jobData.parameters.quadgrams);
 
