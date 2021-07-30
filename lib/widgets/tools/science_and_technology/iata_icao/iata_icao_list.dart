@@ -5,14 +5,14 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class IATAICAO extends StatefulWidget {
-  final List<String> fields = ['iata', 'icao'];
+class IATAICAOList extends StatefulWidget {
+  final List<String> fields = ['IATA', 'ICAO', 'Location_served'];
 
   @override
-  IATAICAOState createState() => IATAICAOState();
+  IATAICAOListState createState() => IATAICAOListState();
 }
 
-class IATAICAOState extends State<IATAICAO> {
+class IATAICAOListState extends State<IATAICAOList> {
   var _currentSort = 0;
   List<String> _currentSortList;
 
@@ -54,7 +54,7 @@ class IATAICAOState extends State<IATAICAO> {
 
     var field = _currentSort == 0 ? widget.fields[0] : widget.fields[_currentSort - 1];
 
-    var flexValues = List<int>.generate(3, (index) => 1);
+    var flexValues = List<int>.generate(4, (index) => 1);
 
     var data = IATA_ICAO_CODES.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
       if (_currentSort == 0) {
