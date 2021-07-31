@@ -36,14 +36,6 @@ class BrailleState extends State<Braille> {
         : Prefs.get('symboltables_countcolumns_landscape');
 
     return Column(children: <Widget>[
-      GCWTwoOptionsSwitch(
-        value: _currentMode,
-        onChanged: (value) {
-          setState(() {
-            _currentMode = value;
-          });
-        },
-      ),
       GCWDropDownButton(
         value: _currentLanguage,
         onChanged: (value) {
@@ -57,6 +49,14 @@ class BrailleState extends State<Braille> {
             child: i18n(context, mode.value),
           );
         }).toList(),
+      ),
+      GCWTwoOptionsSwitch(
+        value: _currentMode,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+          });
+        },
       ),
       _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWTextField(

@@ -11,7 +11,7 @@ class BrailleSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey == 'braille')
+      if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey.startsWith('braille_'))
         return true;
 
       return [
