@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specialsorts.dart';
-import 'package:archive/archive.dart';
-import 'package:archive/archive_io.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
@@ -16,6 +15,7 @@ class _SymbolTableConstants {
   final CONFIG_FILENAME = 'config.file';
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
   final CONFIG_TRANSLATE = 'translate';
+  final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
   final CONFIG_CASESENSITIVE = 'case_sensitive';
   final CONFIG_SPECIALSORT = 'special_sort';
   final CONFIG_IGNORE = 'ignore';
@@ -33,6 +33,8 @@ class _SymbolTableConstants {
     "apostrophe_out": "'",
     "parentheses_open": "(",
     "parentheses_close": ")",
+    "guillemet_in": "«",
+    "guillemet_out": "»",
     "quotation": "\"",
     "quotation_in": "\"",
     "quotation_out": "\"",
@@ -89,6 +91,7 @@ class _SymbolTableConstants {
     "O_acute": "Ó",
     "O_grave": "Ò",
     "O_circumflex": "Ô",
+    "OE_together": "Œ",
     "R_acute": "Ŕ",
     "S_acute": "Ś",
     "U_acute": "Ú",
@@ -96,6 +99,8 @@ class _SymbolTableConstants {
     "U_circumflex": "Û",
     "Z_acute": "Ź",
     "ae_umlaut": "ä",
+    "ae_together": "æ",
+    "oe_together": "œ",
     "oe_umlaut": "ö",
     "ue_umlaut": "ü",
     "n_tilde": "ñ",
@@ -156,7 +161,7 @@ class SymbolTableData {
     });
 
     if (config[_constants.CONFIG_SPECIALSORT] == null || config[_constants.CONFIG_SPECIALSORT] == false) {
-      _sort = _defaultSort;
+      _sort = defaultSymbolSort;
     } else {
       switch (_symbolKey) {
         case "notes_names_altoclef":
@@ -178,7 +183,7 @@ class SymbolTableData {
           _sort = specialSortTrafficSignsGermany;
           break;
         default:
-          _sort = _defaultSort;
+          _sort = defaultSymbolSort;
           break;
       }
     }
@@ -195,7 +200,12 @@ class SymbolTableData {
     if (config[_constants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
       key = config[_constants.CONFIG_SPECIALMAPPINGS][imageKey];
     } else if (config[_constants.CONFIG_TRANSLATE] != null && config[_constants.CONFIG_TRANSLATE].contains(imageKey)) {
-      key = i18n(_context, 'symboltables_' + _symbolKey + '_' + imageKey);
+      var translationPrefix = config[_constants.CONFIG_TRANSLATION_PREFIX];
+      if (translationPrefix != null && translationPrefix.length > 0) {
+        key = i18n(_context, translationPrefix + imageKey);
+      } else {
+        key = i18n(_context, 'symboltables_' + _symbolKey + '_' + imageKey);
+      }
       setTranslateable = true;
     } else {
       key = imageKey;
@@ -244,7 +254,7 @@ class SymbolTableData {
     images.sort(_sort);
   }
 
-  int _defaultSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
+  int defaultSymbolSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
     var keyA = a.keys.first;
     var keyB = b.keys.first;
 

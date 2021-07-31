@@ -8,11 +8,10 @@ import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsUTM extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsUTM({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -21,9 +20,9 @@ class GCWCoordsUTM extends StatefulWidget {
 }
 
 class GCWCoordsUTMState extends State<GCWCoordsUTM> {
-  var _LonZoneController;
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _LonZoneController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentLatZone = 'U';
   var _currentLonZone = {'text': '', 'value': 0};
@@ -50,7 +49,9 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var utm = latLonToUTM(widget.coordinates, defaultEllipsoid());
+      var utm = widget.coordinates is UTMREF
+          ? widget.coordinates as UTMREF
+          : UTMREF.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentLonZone['value'] = utm.zone.lonZone;
       _currentEasting['value'] = utm.easting;
       _currentNorthing['value'] = utm.northing;
@@ -126,7 +127,6 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
     var utm = UTMREF(zone, _currentEasting['value'], _currentNorthing['value']);
 
-    LatLng coords = UTMREFtoLatLon(utm, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(utm);
   }
 }

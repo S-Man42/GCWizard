@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsXYZ extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsXYZ({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -16,9 +14,9 @@ class GCWCoordsXYZ extends StatefulWidget {
 }
 
 class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
-  var _ControllerX;
-  var _ControllerY;
-  var _ControllerZ;
+  TextEditingController _ControllerX;
+  TextEditingController _ControllerY;
+  TextEditingController _ControllerZ;
 
   var _currentX = 0.0;
   var _currentY = 0.0;
@@ -43,7 +41,9 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var xyz = latLonToXYZ(widget.coordinates, defaultEllipsoid());
+      var xyz = widget.coordinates is XYZ
+          ? widget.coordinates as XYZ
+          : XYZ.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentX = xyz.x;
       _currentY = xyz.y;
       _currentZ = xyz.z;
@@ -91,9 +91,6 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var xyz = XYZ(_currentX, _currentY, _currentZ);
-
-    LatLng coords = xyzToLatLon(xyz, defaultEllipsoid());
-    widget.onChanged(coords);
+    // widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
   }
 }

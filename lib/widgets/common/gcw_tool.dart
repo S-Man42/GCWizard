@@ -16,6 +16,7 @@ enum ToolCategory {
   FORMULA_SOLVER,
   GAMES,
   GENERAL_CODEBREAKERS,
+  IMAGES_AND_FILES,
   SCIENCE_AND_TECHNOLOGY,
   SYMBOL_TABLES
 }
@@ -25,6 +26,9 @@ final _SEARCH_BLACKLIST = {
   'chiffre',
   'cipher',
   'chiffrement',
+  'schlüssel',
+  'calculator',
+  'checker',
   'der',
   'die',
   'das',
@@ -62,11 +66,7 @@ final _SEARCH_BLACKLIST = {
   'ou',
 };
 
-final _SEARCH_WHITELIST = {
-  'd ni': "d'ni",
-  'd or': "d'or",
-  'mando a': "mando'a",
-};
+final _SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
@@ -84,12 +84,13 @@ class GCWToolActionButtonsEntry {
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
-  final ToolCategory category;
+  final List<ToolCategory> categories;
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
+  String indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
-  final List<String> missingHelpLocales;
+  final List<String> helpLocales;
   final bool suppressHelpButton;
 
   var icon;
@@ -107,12 +108,12 @@ class GCWTool extends StatefulWidget {
       this.toolName,
       this.defaultLanguageToolName,
       this.i18nPrefix,
-      this.category,
+      this.categories,
       this.autoScroll: true,
       this.iconPath,
       this.searchStrings,
       this.buttonList,
-      this.missingHelpLocales,
+      this.helpLocales,
       this.suppressHelpButton: false})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -159,6 +160,7 @@ class _GCWToolState extends State<GCWTool> {
           widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
 
     return Scaffold(
+        resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(
           title: Text(_toolName),
           actions: _buildButtons(),
@@ -177,7 +179,10 @@ class _GCWToolState extends State<GCWTool> {
         .replaceAll('/', ' ')
         .replaceAll(' - ', ' ')
         .replaceAll(':', '')
-        .replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
+        .replaceAll('bit)', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '');
+    //.replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
     text = substitution(text, _SEARCH_WHITELIST);
     text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
@@ -185,7 +190,7 @@ class _GCWToolState extends State<GCWTool> {
 
   bool _needsDefaultHelp(Locale appLocale) {
     return !isLocaleSupported(appLocale) ||
-        (widget.missingHelpLocales != null && widget.missingHelpLocales.contains(appLocale.languageCode));
+        (widget.helpLocales == null || !widget.helpLocales.contains(appLocale.languageCode));
   }
 
   Widget _buildHelpButton() {
@@ -261,6 +266,13 @@ class _GCWToolState extends State<GCWTool> {
 
     if (widget.autoScroll == false) return widget.tool;
 
-    return SingleChildScrollView(child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
+    return Scrollbar(
+      child: SingleChildScrollView(
+        child: Padding(
+          child: widget.tool,
+          padding: EdgeInsets.all(10),
+        ),
+      ),
+    );
   }
 }

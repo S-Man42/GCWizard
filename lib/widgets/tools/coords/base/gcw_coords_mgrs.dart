@@ -8,11 +8,10 @@ import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsMGRS extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsMGRS({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -21,9 +20,9 @@ class GCWCoordsMGRS extends StatefulWidget {
 }
 
 class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
-  var _LonZoneController;
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _LonZoneController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentLatZone = 'A';
   var _currentDigraphEasting = 'A';
@@ -53,7 +52,9 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var mgrs = latLonToMGRS(widget.coordinates, defaultEllipsoid());
+      var mgrs = widget.coordinates is MGRS
+          ? widget.coordinates as MGRS
+          : MGRS.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mgrs.easting;
       _currentNorthing['value'] = mgrs.northing;
 
@@ -182,8 +183,6 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
     var mgrs = MGRS(zone, _currentDigraphEasting + _currentDigraphNorthing, easting, northing);
 
-    LatLng coords = mgrsToLatLon(mgrs, defaultEllipsoid());
-
-    widget.onChanged(coords);
+    widget.onChanged(mgrs);
   }
 }

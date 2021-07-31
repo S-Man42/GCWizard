@@ -1,7 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   group("CoordinateCell.bearingTo_[-10,10],[-10,10]:", () {

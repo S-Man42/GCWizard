@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_ri
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class AstronomySelection extends GCWSelection {
@@ -22,6 +23,7 @@ class AstronomySelection extends GCWSelection {
         className(MoonPosition()),
         className(EasterSelection()),
         className(Seasons()),
+        className(ShadowLength()),
       ].contains(className(element.tool));
     }).toList();
 

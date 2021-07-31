@@ -1,8 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.mgrs.parseLatLon:", () {
@@ -22,7 +21,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseMGRS(elem['text'], ells);
+        var _actual = MGRS.parse(elem['text'])?.toLatLng(ells: ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

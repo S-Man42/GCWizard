@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/segment_line.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class CenterPointJobData {
   final LatLng coord1;
@@ -23,10 +23,7 @@ Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoi
 }
 
 Future<List<Map<String, dynamic>>> centerPointThreePointsAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = centerPointThreePoints(
       jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.coord3, jobData.parameters.ells);

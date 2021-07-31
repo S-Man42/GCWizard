@@ -1,0 +1,14 @@
+{
+	"translate" : [
+		"acids",
+		"air",
+		"flammable_gases",
+		"flammable_liquids",
+		"lyes",
+		"non-flammable_gases",
+		"non-flammable_liquids",
+		"oxygen",
+		"steam",
+		"water"
+	]
+}

@@ -35,7 +35,7 @@ double calc_fitnessBigrams(String txt, Bigrams bigrams) {
   if ((bigrams == null) || (bigrams.alphabet == null) || (bigrams.bigrams == null)) return null;
 
   var fitness = 0;
-  var plain_bin = List<int>();
+  var plain_bin = <int>[];
 
   iterateText(txt, bigrams.alphabet).forEach((char) {
     plain_bin.add(char);
@@ -48,9 +48,8 @@ double calc_fitnessBigrams(String txt, Bigrams bigrams) {
   for (var idx = 0; idx < (plain_bin.length - 1); idx++) {
     var ch1 = plain_bin[idx];
     var ch2 = plain_bin[idx + 1];
-    fitness += bigrams.bigrams[ch1][ch2];
+    if (ch1 >= 0 && ch2 >= 0) fitness += bigrams.bigrams[ch1][ch2];
   }
-  ;
 
   return fitness / 10000 / (plain_bin.length - 1);
 }

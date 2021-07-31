@@ -1,7 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 final List<Map<String, dynamic>> inputsToExpectedDEC = [
   {'text': '52.12312 N 20.12312 E', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
@@ -64,7 +63,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseDEC(elem['text']);
+        var _actual = DEC.parse(elem['text'])?.toLatLng();
         expect(_actual, elem['expectedOutput']['coordinate']);
       });
     });

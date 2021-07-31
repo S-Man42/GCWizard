@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
 class MapViewPersistenceAdapter {
@@ -20,13 +20,14 @@ class MapViewPersistenceAdapter {
     _initializeMapView();
   }
 
-  MapPointDAO _gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
+  static MapPointDAO gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
     return MapPointDAO(
       gcwMapPoint.uuid,
       gcwMapPoint.markerText,
       gcwMapPoint.point.latitude,
       gcwMapPoint.point.longitude,
       gcwMapPoint.coordinateFormat['format'],
+      gcwMapPoint.isVisible,
       colorToHexString(gcwMapPoint.color),
       gcwMapPoint.hasCircle() ? gcwMapPoint.circle.radius : null,
       gcwMapPoint.circleColorSameAsPointColor,
@@ -40,6 +41,7 @@ class MapViewPersistenceAdapter {
         markerText: mapPointDAO.name,
         point: LatLng(mapPointDAO.latitude, mapPointDAO.longitude),
         coordinateFormat: {'format': mapPointDAO.coordinateFormat},
+        isVisible: mapPointDAO.isVisible,
         color: hexStringToColor(mapPointDAO.color),
         circle: mapPointDAO.radius != null
             ? GCWMapCircle(radius: mapPointDAO.radius, color: hexStringToColor(mapPointDAO.circleColor))
@@ -48,7 +50,7 @@ class MapViewPersistenceAdapter {
         isEditable: true);
   }
 
-  MapPolylineDAO _gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
+  static MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
     return MapPolylineDAO(gcwMapPolyline.uuid, gcwMapPolyline.points.map((point) => point.uuid).toList(),
         colorToHexString(gcwMapPolyline.color));
   }
@@ -57,6 +59,7 @@ class MapViewPersistenceAdapter {
     return GCWMapPolyline(
         uuid: mapPolylineDAO.uuid,
         points: mapPolylineDAO.pointUUIDs
+            .where((uuid) => mapWidget.points.firstWhere((point) => point.uuid == uuid, orElse: () => null) != null)
             .map((uuid) => mapWidget.points.firstWhere((point) => point.uuid == uuid))
             .toList(),
         color: hexStringToColor(mapPolylineDAO.color));
@@ -79,7 +82,7 @@ class MapViewPersistenceAdapter {
     if (mapWidget.points.length > 0) {
       _mapViewDAO.points.addAll(mapWidget.points
           .where((point) => !_mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
-          .map((point) => _gcwMapPointToMapPointDAO(point))
+          .map((point) => gcwMapPointToMapPointDAO(point))
           .toList());
     }
 
@@ -97,7 +100,7 @@ class MapViewPersistenceAdapter {
       _mapViewDAO.polylines.addAll(mapWidget.polylines
           .where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
-          .map((polyline) => _gcwMapPolylineToMapPolylineDAO(polyline))
+          .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
           .toList());
     }
 
@@ -121,7 +124,7 @@ class MapViewPersistenceAdapter {
         color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
         circleColorSameAsPointColor: true);
 
-    insertMapPointDAO(_gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
+    insertMapPointDAO(gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
 
     mapWidget.points.add(mapPoint);
     return mapPoint;
@@ -144,6 +147,7 @@ class MapViewPersistenceAdapter {
     mapPointDAO.latitude = mapPoint.point.latitude;
     mapPointDAO.longitude = mapPoint.point.longitude;
     mapPointDAO.coordinateFormat = mapPoint.coordinateFormat['format'];
+    mapPointDAO.isVisible = mapPoint.isVisible;
     mapPointDAO.color = colorToHexString(mapPoint.color);
     mapPointDAO.radius = mapPoint.hasCircle() ? mapPoint.circle.radius : null;
     mapPointDAO.circleColorSameAsColor = mapPoint.circleColorSameAsPointColor;
@@ -222,7 +226,7 @@ class MapViewPersistenceAdapter {
   GCWMapPolyline createMapPolyline() {
     var polyline = GCWMapPolyline(points: []);
     mapWidget.polylines.add(polyline);
-    insertMapPolylineDAO(_gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
+    insertMapPolylineDAO(gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
 
     return polyline;
   }
@@ -254,13 +258,19 @@ class MapViewPersistenceAdapter {
       json = _restoreUUIDs(json);
       var viewData = restoreJsonMapViewData(json);
       if (viewData != null) {
-        _addMapViewDAO(viewData);
-        _restoreMapViewDAO();
-        updateMapViews();
+        addViewData(viewData);
         return true;
       }
     } on Exception {}
     return false;
+  }
+
+  addViewData(MapViewDAO viewData) {
+    if (viewData != null) {
+      _addMapViewDAO(viewData);
+      _restoreMapViewDAO();
+      updateMapViews();
+    }
   }
 
   String _replaceJsonMarker(String json, bool restore) {
@@ -269,6 +279,7 @@ class MapViewPersistenceAdapter {
       "\"pointUUIDs\":": "\"pointIDs\":",
       "\"latitude\":": "\"lat\":",
       "\"longitude\":": "\"lon\":",
+      "\"isVisible\":": "\"visible\":",
       "\"coordinateFormat\":": "\"format\":",
       "\"circleColorSameAsColor\":": "\"sameColor\":"
     };
@@ -279,13 +290,17 @@ class MapViewPersistenceAdapter {
   }
 
   String _removeEmptyElements(String json) {
-    var regExp = RegExp("(\")([\^\"]+)(\":null,)");
-    var regExp1 = RegExp("(,\")([\^\"]+)(\":null})");
-    var regExp2 = RegExp("(\"name\":\"\",)");
+    var regExpList = {
+      "(\")([\^\"]+)(\":null,)": "",
+      "(,\")([\^\"]+)(\":null})": "}",
+      "(\"name\":\"\",)": "",
+      "(\"isVisible\":true,)": "",
+      "(\"isVisible\":true})": "}"
+    };
 
-    json = json.replaceAll(regExp, "");
-    json = json.replaceAll(regExp1, "}");
-    json = json.replaceAll(regExp2, "");
+    regExpList.forEach((key, value) {
+      json = json.replaceAll(RegExp(key), value);
+    });
     return json;
   }
 

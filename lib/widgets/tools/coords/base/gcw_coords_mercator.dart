@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsMercator extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsMercator({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -17,8 +15,8 @@ class GCWCoordsMercator extends StatefulWidget {
 }
 
 class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};
@@ -40,7 +38,9 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var mercator = latLonToMercator(widget.coordinates, defaultEllipsoid());
+      var mercator = widget.coordinates is Mercator
+          ? widget.coordinates as Mercator
+          : Mercator.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mercator.easting;
       _currentNorthing['value'] = mercator.northing;
 
@@ -73,7 +73,6 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
   _setCurrentValueAndEmitOnChange() {
     var mercator = Mercator(_currentEasting['value'], _currentNorthing['value']);
 
-    LatLng coords = mercatorToLatLon(mercator, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(mercator);
   }
 }

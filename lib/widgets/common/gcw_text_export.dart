@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'gcw_exported_file_dialog.dart';
 
 enum TextExportMode { TEXT, QR }
@@ -142,11 +142,11 @@ Future<Map<String, dynamic>> _exportEncryption(String text, TextExportMode mode,
     final data = await toQrImageData(text);
 
     return await saveByteDataToFile(
-        data, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data.buffer.asByteData(), exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }
 
-Future<ByteData> toQrImageData(String text) async {
+Future<Uint8List> toQrImageData(String text) async {
   try {
     var image = await QrPainter(
             data: text,
@@ -156,19 +156,7 @@ Future<ByteData> toQrImageData(String text) async {
             gapless: true)
         .toImage(300);
 
-    final canvasRecorder = ui.PictureRecorder();
-    final rect = Rect.fromLTWH(0, 0, image.width + 20.0, image.height + 20.0);
-    final canvas = Canvas(canvasRecorder, rect);
-    final paint = Paint()
-      ..color = COLOR_QR_BACKGROUND
-      ..style = PaintingStyle.fill;
-
-    canvas.drawRect(rect, paint);
-    canvas.drawImage(image, Offset(10, 10), paint);
-    image = await canvasRecorder.endRecording().toImage(rect.width.floor(), rect.height.floor());
-
-    final data = await image.toByteData(format: ui.ImageByteFormat.png);
-    return data.buffer.asByteData();
+    return addImageBorder(image);
   } catch (e) {
     throw e;
   }

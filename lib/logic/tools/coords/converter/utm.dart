@@ -1,11 +1,10 @@
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 final double _k0 = 0.9996;
-final double _drad = PI / 180.0;
+final double _drad = pi / 180.0;
 final String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 
 UTMREF latLonToUTM(LatLng coord, Ellipsoid ells) {
@@ -17,7 +16,7 @@ UTMREF latLonToUTM(LatLng coord, Ellipsoid ells) {
 
   double phi = lat * _drad;
 
-  UTMZone utmZone = getZone(coord);
+  UTMZone utmZone = _getZone(coord);
 
   int zcm = 3 + 6 * (utmZone.lonZone - 1) - 180;
   double esq = (1 - (b / a) * (b / a));
@@ -106,7 +105,7 @@ LatLng UTMREFtoLatLon(UTMREF coord, Ellipsoid ells) {
   return LatLng(lat, lng);
 }
 
-UTMZone getZone(LatLng coord) {
+UTMZone _getZone(LatLng coord) {
   var lat = coord.latitude;
   var lon = coord.longitude;
 
@@ -147,12 +146,7 @@ UTMZone getZone(LatLng coord) {
   return UTMZone(lonZoneRegular, lonZone, latZone);
 }
 
-String latLonToUTMString(LatLng coord, Ellipsoid ells) {
-  UTMREF utm = latLonToUTM(coord, ells);
-  return '${utm.zone.lonZone} ${utm.zone.latZone} ${doubleFormat.format(utm.easting)} ${doubleFormat.format(utm.northing)}';
-}
-
-LatLng parseUTM(String input, Ellipsoid ells) {
+UTMREF parseUTM(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _lonZoneString = '';
@@ -226,5 +220,5 @@ LatLng parseUTM(String input, Ellipsoid ells) {
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var utm = UTMREF(zone, _easting, _northing);
 
-  return UTMREFtoLatLon(utm, ells);
+  return utm;
 }

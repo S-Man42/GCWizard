@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   var x = xyz.x;
@@ -38,14 +37,7 @@ XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
   return XYZ(x, y, z);
 }
 
-String latLonToXYZString(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
-  XYZ xyz = latLonToXYZ(coord, ells, h: h);
-
-  var numberFormat = NumberFormat('0.######');
-  return 'X: ${numberFormat.format(xyz.x)}\nY: ${numberFormat.format(xyz.y)}\nZ: ${numberFormat.format(xyz.z)}';
-}
-
-LatLng parseXYZ(String input, Ellipsoid ells) {
+XYZ parseXYZ(String input) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
 
@@ -79,5 +71,5 @@ LatLng parseXYZ(String input, Ellipsoid ells) {
 
   if (x == null || y == null || z == null) return null;
 
-  return xyzToLatLon(XYZ(x, y, z), ells);
+  return XYZ(x, y, z);
 }

@@ -1,8 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Parser.swissgrid.parseLatLon:", () {
@@ -20,7 +19,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseSwissGrid(elem['text'], ells);
+        var _actual = SwissGrid.parse(elem['text'])?.toLatLng(ells: ells);;
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {
@@ -46,7 +45,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseSwissGrid(elem['text'], ells, isSwissGridPlus: true);
+        var _actual = SwissGridPlus.parse(elem['text'])?.toLatLng(ells: ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

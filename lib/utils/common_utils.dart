@@ -93,8 +93,10 @@ String removeAccents(String text) {
   return removeDiacritics(out);
 }
 
+final RegExp reNonLetters = RegExp(r'[^A-Za-z]');
+
 String removeNonLetters(String text) {
-  return text.replaceAll(RegExp(r'[^A-Za-z]'), '');
+  return text.replaceAll(reNonLetters, '');
 }
 
 String insertCharacter(String text, int index, String character) {
@@ -261,6 +263,8 @@ String applyAlphabetModification(String input, AlphabetModificationMode mode) {
 
 bool isUpperCase(String letter) {
   if (letter == null || letter.length == 0) return false;
+  if (letter == 'ß') return false;
+  if (letter == 'ẞ') return true; // Capital ß
 
   return (letter.toUpperCase() == letter);
 }
@@ -290,4 +294,17 @@ int countCharacters(String input, String characters) {
   if (input == null || characters == null) return 0;
 
   return input.replaceAll(RegExp('[^$characters]'), '').length;
+}
+
+bool allSameCharacters(String input) {
+  if (input == null || input.isEmpty) return null;
+
+  var firstCharacter = input[0];
+  return input.replaceAll(firstCharacter, '').length == 0;
+}
+
+bool isOnlyLetters(String input) {
+  if (input == null || input.isEmpty) return false;
+
+  return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').length == 0;
 }

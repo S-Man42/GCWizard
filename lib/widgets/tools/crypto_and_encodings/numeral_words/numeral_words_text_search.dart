@@ -93,9 +93,9 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
           (_currentDecodeMode == GCWSwitchPosition.left));
       for (int i = 0; i < detailedOutput.length; i++) {
         if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
-          output = output + i18n(context, detailedOutput[i].number);
+          output = output + ' ' + i18n(context, detailedOutput[i].number);
         else
-          output = output + ' ' + detailedOutput[i].number;
+          output = output + '' + detailedOutput[i].number;
       }
     } else {
       output = i18n(context, 'numeralwords_language_not_implemented');
@@ -109,7 +109,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     String columnDataRowLanguage;
     if (_currentLanguage == NumeralWordsLanguage.ALL) {
       for (int i = 0; i < detailedOutput.length; i++) {
-        columnDataRowNumber = detailedOutput[i].number;
+        if (detailedOutput[i].number.startsWith('numeralwords_'))
+          columnDataRowNumber = i18n(context, detailedOutput[i].number);
+        else
+          columnDataRowNumber = detailedOutput[i].number;
         if (detailedOutput[i].numWord.startsWith('numeralwords_'))
           columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
         else

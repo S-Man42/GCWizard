@@ -4,14 +4,12 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
-SwissGrid latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
-  SwissGrid sg = latLonToSwissGrid(coord, ells);
-  sg.easting += 2000000;
-  sg.northing += 1000000;
+SwissGridPlus latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
+  SwissGrid swissGrid = SwissGrid.fromLatLon(coord, ells);
 
-  return sg;
+  return SwissGridPlus(swissGrid.easting + 2000000, swissGrid.northing + 1000000);
 }
 
 SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
@@ -38,11 +36,11 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
       break;
   }
 
-  LatLng newCoord;
+  LatLng newCoord = coord;
   if (x >= 0) {
     newCoord = ellipsoidTransformLatLng(coord, x, false, false);
   }
-  newCoord = ellipsoidTransformLatLng(coord, 5, true, false);
+  newCoord = ellipsoidTransformLatLng(newCoord, 5, true, false);
 
   double lat0 = degToRadian(46.952405555555556); //Bern
   double lon0 = degToRadian(7.439583333333333);
@@ -53,8 +51,8 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   double E2 = ellsBessel.e2;
   double alpha = sqrt(1 + (E2 / (1 - E2)) * pow(cos(lat0), 4));
   double b0 = asin(sin(lat0) / alpha);
-  double K = log(tan(PI / 4.0 + b0 / 2.0)) -
-      alpha * log(tan(PI / 4.0 + lat0 / 2.0)) +
+  double K = log(tan(pi / 4.0 + b0 / 2.0)) -
+      alpha * log(tan(pi / 4.0 + lat0 / 2.0)) +
       (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
   double R = (a * sqrt(1 - E2)) / (1 - E2 * pow(sin(lat0), 2));
 
@@ -62,8 +60,8 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   var lon = newCoord.longitudeInRad;
 
   double S =
-      alpha * log(tan(PI / 4.0 + lat / 2.0)) - (alpha * E) / 2.0 * log((1 + E * sin(lat)) / (1 - E * sin(lat))) + K;
-  double b = 2 * (atan(exp(S)) - PI / 4.0);
+      alpha * log(tan(pi / 4.0 + lat / 2.0)) - (alpha * E) / 2.0 * log((1 + E * sin(lat)) / (1 - E * sin(lat))) + K;
+  double b = 2 * (atan(exp(S)) - pi / 4.0);
   double l = alpha * (lon - lon0);
 
   double l_ = atan(sin(l) / (sin(b0) * tan(b) + cos(b0) * cos(l)));
@@ -78,11 +76,10 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   return SwissGrid(Y, X);
 }
 
-LatLng swissGridPlusToLatLon(SwissGrid coord, Ellipsoid ells) {
-  coord.easting -= 2000000;
-  coord.northing -= 1000000;
+LatLng swissGridPlusToLatLon(SwissGridPlus coord, Ellipsoid ells) {
+  var swissGripPlus = SwissGrid(coord.easting - 2000000, coord.northing - 1000000);
 
-  return swissGridToLatLon(coord, ells);
+  return swissGridToLatLon(swissGripPlus, ells);
 }
 
 LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
@@ -98,13 +95,13 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   double E2 = ellsBessel.e2;
   double alpha = sqrt(1 + (E2 / (1 - E2)) * pow(cos(lat0), 4));
   double b0 = asin(sin(lat0) / alpha);
-  double K = log(tan(PI / 4.0 + b0 / 2.0)) -
-      alpha * log(tan(PI / 4.0 + lat0 / 2.0)) +
+  double K = log(tan(pi / 4.0 + b0 / 2.0)) -
+      alpha * log(tan(pi / 4.0 + lat0 / 2.0)) +
       (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
   double R = (a * sqrt(1 - E2)) / (1 - E2 * pow(sin(lat0), 2));
 
   double l_ = y / R;
-  double b_ = 2 * (atan(exp(x / R)) - PI / 4.0);
+  double b_ = 2 * (atan(exp(x / R)) - pi / 4.0);
 
   double b = asin(cos(b0) * sin(b_) + sin(b0) * cos(b_) * cos(l_));
   double l = atan(sin(l_) / (cos(b0) * cos(l_) - sin(b0) * tan(b_)));
@@ -116,8 +113,8 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
 
   while ((phi - lat).abs() > epsilon) {
     phi = lat;
-    double S = 1 / alpha * (log(tan(PI / 4.0 + b / 2.0)) - K) + E * log(tan(PI / 4.0 + (asin(E * sin(lat)) / 2.0)));
-    lat = 2 * atan(exp(S)) - PI / 2.0;
+    double S = 1 / alpha * (log(tan(pi / 4.0 + b / 2.0)) - K) + E * log(tan(pi / 4.0 + (asin(E * sin(lat)) / 2.0)));
+    lat = 2 * atan(exp(S)) - pi / 2.0;
   }
 
   int X = -1;
@@ -148,19 +145,7 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-String latLonToSwissGridPlusString(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = latLonToSwissGridPlus(coord, ells);
-
-  return 'Y: ${swissGrid.easting}\nX: ${swissGrid.northing}';
-}
-
-String decToSwissGridString(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = latLonToSwissGrid(coord, ells);
-
-  return 'Y: ${swissGrid.easting}\nX: ${swissGrid.northing}';
-}
-
-LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
+SwissGrid parseSwissGrid(String input) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';
@@ -189,7 +174,10 @@ LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  if (isSwissGridPlus) return swissGridPlusToLatLon(SwissGrid(_easting, _northing), ells);
+  return SwissGrid(_easting, _northing);
+}
 
-  return swissGridToLatLon(SwissGrid(_easting, _northing), ells);
+SwissGridPlus parseSwissGridPlus(String input) {
+  var swissGrid = SwissGrid.parse(input);
+  return swissGrid == null ? null : SwissGridPlus(swissGrid.easting, swissGrid.northing);
 }

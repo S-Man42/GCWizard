@@ -2,7 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 String digraphLettersEast = "ABCDEFGHJKLMNPQRSTUVWXYZ"; //without I and O
 String digraphLettersNorth = "ABCDEFGHJKLMNPQRSTUV";
@@ -24,7 +24,7 @@ String _constructDigraph(int zone, double easting, double northing) {
 }
 
 MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
-  UTMREF _utm = latLonToUTM(coord, ells);
+  UTMREF _utm = UTMREF.fromLatLon(coord, ells);
 
   var _digraph = _constructDigraph(_utm.zone.lonZone, _utm.easting / 100000.0, _utm.northing / 100000.0);
 
@@ -32,11 +32,6 @@ MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
   var _northing = _utm.northing - 100000 * (_utm.northing / 100000.0).floor();
 
   return MGRS(_utm.zone, _digraph, _easting, _northing);
-}
-
-String latLonToMGRSString(LatLng coord, Ellipsoid ells) {
-  MGRS mgrs = latLonToMGRS(coord, ells);
-  return '${mgrs.utmZone.lonZone}${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
 }
 
 List<List<dynamic>> latitudeBandConstants = [
@@ -142,7 +137,7 @@ LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
   return UTMREFtoLatLon(utm, ells);
 }
 
-LatLng parseMGRS(String input, Ellipsoid ells) {
+MGRS parseMGRS(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _lonZoneString = '';
@@ -188,7 +183,7 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var mgrs = MGRS(zone, _digraph, _easting, _northing);
 
-  return mgrsToLatLon(mgrs, ells);
+  return mgrs;
 }
 
 // East values must be between 1 and 99 999. Missing digits are filled in at the back.

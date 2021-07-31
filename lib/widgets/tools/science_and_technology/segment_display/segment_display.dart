@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dar
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -230,7 +231,16 @@ class SegmentDisplayState extends State<SegmentDisplay> {
               });
             },
           )
-        ])
+        ]),
+        GCWTextDivider(text: i18n(context, 'segmentdisplay_encodemode_visualsegments_input')),
+        GCWText(
+            text: decodeSegment(
+                _currentDisplays.map((character) {
+                  if (character == null) return UNKNOWN_ELEMENT;
+
+                  return character.join();
+                }).join(' '),
+                widget.type)['text'])
       ],
     );
   }

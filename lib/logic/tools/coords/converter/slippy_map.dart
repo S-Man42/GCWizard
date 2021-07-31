@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 // Source: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
 
@@ -24,14 +24,7 @@ SlippyMap latLonToSlippyMap(LatLng coords, double zoom) {
   return SlippyMap(x, y, zoom);
 }
 
-String latLonToSlippyMapString(LatLng coords, double zoom) {
-  var slippyMap = latLonToSlippyMap(coords, zoom);
-
-  var numberFormat = NumberFormat('0.######');
-  return 'X: ${numberFormat.format(slippyMap.x)}\nY: ${numberFormat.format(slippyMap.y)}';
-}
-
-LatLng parseSlippyMap(String input, {zoom: 10.0}) {
+SlippyMap parseSlippyMap(String input, {zoom: 10.0}) {
   RegExp regExp = RegExp(r'^\s*([\0-9\.]+)(\s*,\s*|\s+)([\0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var xString = '';
@@ -60,5 +53,5 @@ LatLng parseSlippyMap(String input, {zoom: 10.0}) {
   var y = double.tryParse(yString);
   if (y == null) return null;
 
-  return slippyMapToLatLon(SlippyMap(x, y, zoom));
+  return SlippyMap(x, y, zoom);
 }

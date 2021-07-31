@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 
 LatLng dmmToLatLon(DMM dmm) {
@@ -20,7 +20,7 @@ double _DMMPartToDouble(DMMPart dmmPart) {
 }
 
 DMM latLonToDMM(LatLng coord) {
-  return _DECToDMM(latLonToDEC(coord));
+  return _DECToDMM(DEC.fromLatLon(coord));
 }
 
 DMM _DECToDMM(DEC coord) {
@@ -41,26 +41,20 @@ DMMPart _doubleToDMMPart(double value) {
   return DMMPart(_sign, _degrees, _minutes);
 }
 
-String latLonToDMMString(LatLng coord, [int precision]) {
-  var dmm = latLonToDMM(coord);
-
-  return '${dmm.latitude.format(precision)}\n${dmm.longitude.format(precision)}';
-}
-
 DMM normalize(DMM coord) {
   return _DECToDMM(_DMMToDEC(coord));
 }
 
-LatLng parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
-  text = prepareInput(text, wholeString: wholeString);
-  if (text == null) return null;
+DMM parseDMM(String input, {leftPadMilliMinutes: false, wholeString: false}) {
+  input = prepareInput(input, wholeString: wholeString);
+  if (input == null) return null;
 
-  var parsedTrailingSigns = _parseDMMTrailingSigns(text, leftPadMilliMinutes);
+  var parsedTrailingSigns = _parseDMMTrailingSigns(input, leftPadMilliMinutes);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DMM + regexEnd, caseSensitive: false);
-  if (regex.hasMatch(text)) {
-    var matches = regex.firstMatch(text);
+  if (regex.hasMatch(input)) {
+    var matches = regex.firstMatch(input);
 
     var latSign = sign(matches.group(1));
     var latDegrees = int.tryParse(matches.group(2));
@@ -88,7 +82,7 @@ LatLng parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
     }
     var lon = DMMLongitude(lonSign, lonDegrees, lonMinutes);
 
-    return dmmToLatLon(DMM(lat, lon));
+    return DMM(lat, lon);
   }
 
   return null;
@@ -103,7 +97,7 @@ double _leftPadDMMMilliMinutes(String minutes, String milliMinutes) {
   return double.tryParse('$minuteValue.${milliMinuteValue % 1000}');
 }
 
-LatLng _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
+DMM _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
   RegExp regex = RegExp(PATTERN_DMM_TRAILINGSIGN + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(text)) {
@@ -135,7 +129,7 @@ LatLng _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
     }
     var lon = DMMLongitude(lonSign, lonDegrees, lonMinutes);
 
-    return dmmToLatLon(DMM(lat, lon));
+    return DMM(lat, lon);
   }
 
   return null;

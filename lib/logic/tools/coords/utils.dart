@@ -19,7 +19,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 double mod(double x, double y) {
   return x - y * (x / y).floor();
@@ -53,45 +53,45 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
 
   switch (_outputFormat['format']) {
     case keyCoordsDEC:
-      return latLonToDECString(_coords, precision);
+      return DEC.fromLatLon(_coords).toString(precision);
     case keyCoordsDMM:
-      return latLonToDMMString(_coords, precision);
+      return DMM.fromLatLon(_coords).toString(precision);
     case keyCoordsDMS:
-      return latLonToDMSString(_coords, precision);
+      return DMS.fromLatLon(_coords).toString(precision);
     case keyCoordsUTM:
-      return latLonToUTMString(_coords, ells);
+      return UTMREF.fromLatLon(_coords, ells).toString();
     case keyCoordsMGRS:
-      return latLonToMGRSString(_coords, ells);
+      return MGRS.fromLatLon(_coords, ells).toString();
     case keyCoordsXYZ:
-      return latLonToXYZString(_coords, ells);
+      return XYZ.fromLatLon(_coords, ells).toString();
     case keyCoordsSwissGrid:
-      return decToSwissGridString(_coords, ells);
+      return SwissGrid.fromLatLon(_coords, ells).toString();
     case keyCoordsSwissGridPlus:
-      return latLonToSwissGridPlusString(_coords, ells);
+      return SwissGridPlus.fromLatLon(_coords, ells).toString();
     case keyCoordsGaussKrueger:
-      return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
+      return GaussKrueger.fromLatLon(_coords, _getGKCode(), ells).toString();
     case keyCoordsMaidenhead:
-      return latLonToMaidenhead(_coords);
+      return Maidenhead.fromLatLon(_coords).toString();
     case keyCoordsMercator:
-      return latLonToMercator(_coords, ells).toString();
+      return Mercator.fromLatLon(_coords, ells).toString();
     case keyCoordsNaturalAreaCode:
-      return latLonToNaturalAreaCode(_coords).toString();
+      return NaturalAreaCode.fromLatLon(_coords).toString();
     case keyCoordsSlippyMap:
-      return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
+      return SlippyMap.fromLatLon(_coords, double.tryParse(_outputFormat['subtype'])).toString();
     case keyCoordsGeohash:
-      return latLonToGeohash(_coords, 14);
+      return Geohash.fromLatLon(_coords, 14).toString();
     case keyCoordsGeoHex:
-      return latLonToGeoHex(_coords, 20);
+      return GeoHex.fromLatLon(_coords, 20).toString();
     case keyCoordsGeo3x3:
-      return latLonToGeo3x3(_coords, 20);
+      return Geo3x3.fromLatLon(_coords, 20).toString();
     case keyCoordsOpenLocationCode:
-      return latLonToOpenLocationCode(_coords, codeLength: 14);
+      return OpenLocationCode.fromLatLon(_coords, codeLength: 14).toString();
     case keyCoordsQuadtree:
-      return latLonToQuadtree(_coords).join();
+      return Quadtree.fromLatLon(_coords).toString();
     case keyCoordsReverseWhereIGoWaldmeister:
-      return latLonToWaldmeisterString(_coords);
+      return Waldmeister.fromLatLon(_coords).toString();
     default:
-      return latLonToDECString(_coords);
+      return DEC.fromLatLon(_coords).toString();
   }
 }
 
@@ -101,4 +101,8 @@ int coordinateSign(double value) {
 
 bool coordEquals(LatLng coords1, LatLng coords2, {tolerance: 1e-10}) {
   return doubleEquals(coords1.latitude, coords2.latitude) && doubleEquals(coords1.longitude, coords2.longitude);
+}
+
+double normalizeBearing(double bearing) {
+  return modulo(bearing, 360.0);
 }

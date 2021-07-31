@@ -12,7 +12,8 @@ class Ingredient {
   Ingredient(String ingredient) {
     _errorList = new List<String>();
 
-    var tokens = ingredient.replaceAll('-', ' ').split(' ');
+    //var tokens = ingredient.replaceAll('-', ' ').split(' ');
+    var tokens = ingredient.trim().split(' ');
     int i = 0;
     _state = State.Dry;
     if (RegExp(r'^([0-9]+)[ a-z]*').hasMatch(tokens[i])) {
@@ -44,6 +45,32 @@ class Ingredient {
       _name = _name + tokens[i] + (i == tokens.length - 1 ? '' : ' ');
       i++;
     }
+    _name = _name
+        .replaceAll('teaspoons', '')
+        .replaceAll('teaspoon', '')
+        .replaceAll('tablespoons', '')
+        .replaceAll('tablespoon', '')
+        .replaceAll('tassen', '')
+        .replaceAll('tasse', '')
+        .replaceAll('cups', '')
+        .replaceAll('cup', '')
+        .replaceAll('teelöffel', '')
+        .replaceAll('esslöffel', '')
+        .replaceAll('spritzer', '')
+        .replaceAll('tropfen', '')
+        .replaceAll('heaped', '')
+        .replaceAll('level', '')
+        .replaceAll('gestrichen', '')
+        .replaceAll('gehäuft', '')
+        .replaceAll('dashes', '')
+        .replaceAll('dash', '')
+        .replaceAll('drops', '')
+        .replaceAll('drop', '')
+        .replaceAll('pinches', '')
+        .replaceAll('pinch', '')
+        .replaceAll('prisen', '')
+        .replaceAll('prise', '')
+        .trim();
     if (_name == '') {
       _name = 'INVALID';
     }

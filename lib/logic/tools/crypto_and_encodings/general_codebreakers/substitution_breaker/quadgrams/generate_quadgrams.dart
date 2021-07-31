@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/generate_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:path/path.dart' as path;
 
 // main() {
@@ -38,10 +39,10 @@ bool generate_quadgram() {
 
   _inputsToExpected.forEach((elem) async {
     var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
-    var fileIn = File(path.normalize(filePath + elem['input']));
-    var fileOut = File(path.normalize(filePath + elem['fileOut']));
+    var fileIn = File(normalizePath(filePath + elem['input']));
+    var fileOut = File(normalizePath(filePath + elem['fileOut']));
     filePath = path.current + "/assets/quadgrams/";
-    var fileAsset = File(path.normalize(filePath + elem['assetName']));
+    var fileAsset = File(normalizePath(filePath + elem['assetName']));
 
     var _actual =
         await generateQuadgrams(fileIn, fileOut, fileAsset, elem['className'], elem['assetName'], elem['alphabet']);

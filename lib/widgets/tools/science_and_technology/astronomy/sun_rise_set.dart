@@ -80,7 +80,7 @@ class SunRiseSetState extends State<SunRiseSet> {
             : formatHoursToHHmmss(sunRise.civilMorning)
       ],
       [
-        i18n(context, 'astronomy_riseset_rise'),
+        i18n(context, 'astronomy_riseset_sunrise'),
         sunRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.rise)
       ],
       [
@@ -88,7 +88,7 @@ class SunRiseSetState extends State<SunRiseSet> {
         sunRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.transit)
       ],
       [
-        i18n(context, 'astronomy_riseset_set'),
+        i18n(context, 'astronomy_riseset_sunset'),
         sunRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.set)
       ],
       [

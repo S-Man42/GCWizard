@@ -1,8 +1,8 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
+import 'package:latlong2/latlong.dart';
 
 class ResectionJobData {
   final LatLng coord1;
@@ -99,10 +99,7 @@ class _ResectionCalculator extends IntervalCalculator {
 }
 
 Future<List<LatLng>> resectionAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = resection(jobData.parameters.coord1, jobData.parameters.angle12, jobData.parameters.coord2,
       jobData.parameters.angle23, jobData.parameters.coord3, jobData.parameters.ells);
@@ -115,9 +112,12 @@ Future<List<LatLng>> resectionAsync(dynamic jobData) async {
 List<LatLng> resection(LatLng coord1, double angle12, LatLng coord2, double angle23, LatLng coord3, Ellipsoid ells) {
   var minDistance = 1e-7;
 
-  if (coordEquals(coord1, coord2, tolerance: minDistance) ||
-      coordEquals(coord1, coord3, tolerance: minDistance) ||
-      coordEquals(coord2, coord3, tolerance: minDistance)) return [];
+  angle12 = utils.normalizeBearing(angle12);
+  angle23 = utils.normalizeBearing(angle23);
+
+  if (utils.coordEquals(coord1, coord2, tolerance: minDistance) ||
+      utils.coordEquals(coord1, coord3, tolerance: minDistance) ||
+      utils.coordEquals(coord2, coord3, tolerance: minDistance)) return [];
 
   return _ResectionCalculator(
           {'coord1': coord1, 'angle12': angle12, 'coord2': coord2, 'angle23': angle23, 'coord3': coord3}, ells)

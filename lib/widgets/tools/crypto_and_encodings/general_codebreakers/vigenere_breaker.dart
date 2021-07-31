@@ -26,6 +26,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   VigenereBreakerAlphabet _currentAlphabet = VigenereBreakerAlphabet.GERMAN;
   VigenereBreakerResult _currentOutput = null;
   bool _currentAutokey = false;
+  bool _currentNonLetters = false;
   var _minKeyLengthController;
   var _maxKeyLengthController;
   int _minKeyLength = 3;
@@ -73,6 +74,16 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             });
           },
         ),
+        _currentAutokey == false
+            ? GCWOnOffSwitch(
+                title: i18n(context, 'vigenere_ignorenonletters'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentNonLetters = value;
+                  });
+                },
+              )
+            : Container(),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
         GCWDropDownButton(
           value: _currentAlphabet,
@@ -182,6 +193,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
     return GCWAsyncExecuterParameters(VigenereBreakerJobData(
         input: _currentInput,
         vigenereBreakerType: _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE,
+        ignoreNonLetters: _currentAutokey ? true : _currentNonLetters,
         alphabet: _currentAlphabet,
         keyLengthMin: _minKeyLength,
         keyLengthMax: _maxKeyLength));

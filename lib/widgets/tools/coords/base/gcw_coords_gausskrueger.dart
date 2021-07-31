@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsGaussKrueger extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
   final String subtype;
 
   const GCWCoordsGaussKrueger({Key key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
@@ -19,8 +17,8 @@ class GCWCoordsGaussKrueger extends StatefulWidget {
 }
 
 class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
-  var _eastingController;
-  var _northingController;
+  TextEditingController _eastingController;
+  TextEditingController _northingController;
 
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};
@@ -48,13 +46,18 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var gauskrueger = latLonToGaussKrueger(widget.coordinates, _currentSubtype, defaultEllipsoid());
-      _currentEasting['value'] = gauskrueger.easting;
-      _currentNorthing['value'] = gauskrueger.northing;
-      _currentSubtype = gauskrueger.code;
+      var gausskrueger = widget.coordinates is GaussKrueger
+          ? widget.coordinates as GaussKrueger
+          : GaussKrueger.fromLatLon(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
+      _currentEasting['value'] = gausskrueger.easting;
+      _currentNorthing['value'] = gausskrueger.northing;
+      _currentSubtype = gausskrueger.code;
 
       _eastingController.text = _currentEasting['value'].toString();
       _northingController.text = _currentNorthing['value'].toString();
+    } else if (_subtypeChanged()) {
+      _currentSubtype = _getSubTypeCode(widget.subtype);
+      WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
     return Column(children: <Widget>[
@@ -124,11 +127,14 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
     return subtype;
   }
 
+  bool _subtypeChanged() {
+    return _currentSubtype != _getSubTypeCode(widget.subtype);
+  }
+
   _setCurrentValueAndEmitOnChange() {
     var code = _currentSubtype;
     var gaussKrueger = GaussKrueger(code, _currentEasting['value'], _currentNorthing['value']);
-    LatLng coords = gaussKruegerToLatLon(gaussKrueger, defaultEllipsoid());
 
-    widget.onChanged(coords);
+    widget.onChanged(gaussKrueger);
   }
 }

@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
-import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
+import 'package:latlong2/latlong.dart';
 
 class Interval {
   final double a;
@@ -129,7 +130,7 @@ class CoordinateCell {
         if (bearingA == bearingB) continue;
 
         var angle = bearingA - bearingB;
-        var normalizedAngle = normalizeBearing(angle);
+        var normalizedAngle = utils.normalizeBearing(angle);
 
         if (normalizedAngle <= 180.0 && normalizedAngle > maxAngle) {
           maxAngle = normalizedAngle;

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsSlippyMap extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
   final String zoom;
 
   const GCWCoordsSlippyMap({Key key, this.onChanged, this.coordinates, this.zoom: '10.0'}) : super(key: key);
@@ -16,8 +14,8 @@ class GCWCoordsSlippyMap extends StatefulWidget {
 }
 
 class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
-  var _xController;
-  var _yController;
+  TextEditingController _xController;
+  TextEditingController _yController;
 
   var _currentX = {'text': '', 'value': 0.0};
   var _currentY = {'text': '', 'value': 0.0};
@@ -45,18 +43,17 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var slippyMap = latLonToSlippyMap(widget.coordinates, double.tryParse(widget.zoom));
+      var slippyMap = widget.coordinates is SlippyMap
+          ? widget.coordinates as SlippyMap
+          : SlippyMap.fromLatLon(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
       _currentX['value'] = slippyMap.x;
       _currentY['value'] = slippyMap.y;
 
       _xController.text = _currentX['value'].toString();
       _yController.text = _currentY['value'].toString();
-    }
-    if (_currentZoom != widget.zoom) {
-      _xController.clear();
-      _yController.clear();
-
+    } else if (_subtypeChanged()) {
       _currentZoom = widget.zoom;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
     return Column(children: <Widget>[
@@ -83,10 +80,11 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
     ]);
   }
 
-  _setCurrentValueAndEmitOnChange() {
-    var slippyMap = SlippyMap(_currentX['value'], _currentY['value'], double.tryParse(_currentZoom));
-    LatLng coords = slippyMapToLatLon(slippyMap);
+  bool _subtypeChanged() {
+    return _currentZoom != widget.zoom;
+  }
 
-    widget.onChanged(coords);
+  _setCurrentValueAndEmitOnChange() {
+    widget.onChanged(SlippyMap(_currentX['value'], _currentY['value'], double.tryParse(_currentZoom)));
   }
 }

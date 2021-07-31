@@ -4,8 +4,9 @@ import 'package:gc_wizard/logic/tools/coords/centerpoint.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectBearingJobData {
   final LatLng coord1;
@@ -25,10 +26,7 @@ class IntersectBearingJobData {
 }
 
 Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersectBearings(jobData.parameters.coord1, jobData.parameters.az13, jobData.parameters.coord2,
       jobData.parameters.az23, jobData.parameters.ells, jobData.parameters.crossbearing);
@@ -44,6 +42,9 @@ Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
 // although there is always such a point between to geodetics (e.g. at the back side of the sphere)
 
 LatLng intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23, Ellipsoid ells, bool crossbearing) {
+  az13 = utils.normalizeBearing(az13);
+  az23 = utils.normalizeBearing(az23);
+
   var _centerCalc = centerPointTwoPoints(coord1, coord2, ells);
   LatLng calculatedPoint = _centerCalc['centerPoint'];
   double dist = _centerCalc['distance'];
@@ -124,6 +125,8 @@ class IntersectFourPointsJobData {
 }
 
 Future<LatLng> intersectFourPointsAsync(dynamic jobData) async {
+  if (jobData == null) return null;
+
   var output = intersectFourPoints(jobData.parameters.coord11, jobData.parameters.coord12, jobData.parameters.coord21,
       jobData.parameters.coord22, jobData.parameters.ells);
 

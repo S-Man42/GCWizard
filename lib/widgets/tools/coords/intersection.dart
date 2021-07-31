@@ -15,7 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class Intersection extends StatefulWidget {
   @override
@@ -174,19 +174,25 @@ class IntersectionState extends State<Intersection> {
         _crsBA = crs.bearingBToA + _currentAngle2['value'];
       }
 
+      GCWMapPoint endPoint1MapPoint;
+      GCWMapPoint endPoint2MapPoint;
+
       if (intersection == null) {
         var dist = distanceBearing(_currentCoords1, _currentCoords2, ells).distance;
         var endPoint1 = projection(_currentCoords1, _crsAB, dist * 3, ells);
         var endPoint2 = projection(_currentCoords2, _crsBA, dist * 3, ells);
 
+        endPoint1MapPoint = GCWMapPoint(point: endPoint1, isVisible: false);
+        endPoint2MapPoint = GCWMapPoint(point: endPoint2, isVisible: false);
+
         _currentMapPolylines.addAll([
           GCWMapPolyline(
-              points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
+              points: [_currentMapPoints[0], endPoint1MapPoint],
               color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
                   .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
                   .toColor()),
           GCWMapPolyline(
-              points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
+              points: [_currentMapPoints[1], endPoint2MapPoint],
               color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
                   .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
                   .toColor()),
@@ -198,19 +204,24 @@ class IntersectionState extends State<Intersection> {
         var distance2ToIntersect = distanceBearing(_currentCoords2, intersection, ells).distance;
         var endPoint2 = projection(_currentCoords2, _crsBA, distance2ToIntersect * 1.5, ells);
 
+        endPoint1MapPoint = GCWMapPoint(point: endPoint1, isVisible: false);
+        endPoint2MapPoint = GCWMapPoint(point: endPoint2, isVisible: false);
+
         _currentMapPolylines.addAll([
           GCWMapPolyline(
-              points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
+              points: [_currentMapPoints[0], endPoint1MapPoint],
               color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
                   .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
                   .toColor()),
           GCWMapPolyline(
-              points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
+              points: [_currentMapPoints[1], endPoint2MapPoint],
               color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
                   .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
                   .toColor()),
         ]);
       }
+
+      _currentMapPoints.addAll([endPoint1MapPoint, endPoint2MapPoint]);
     });
 
     if (_currentIntersections == null || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
