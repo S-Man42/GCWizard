@@ -43223,6 +43223,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "ICAO": "YWSL",
     "Location_served": "Sale, Victoria, Australia"
   },
+  "SXF" : {
+    "name": "Berlin-Schönefeld",
+    "IATA": "SXF",
+    "ICAO": "EDDB",
+    "Location_served": "Berlin, Germany"
+  },
   "SXG" : {
     "name": "Senanga Airport",
     "IATA": "SXG",
@@ -44524,6 +44530,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "IATA": "THE",
     "ICAO": "SBTE",
     "Location_served": "Teresina, Piauí, Brazil"
+  },
+  "THF" : {
+    "name": "Berlin-Tempelhof",
+    "IATA": "THF",
+    "ICAO": "EDDI",
+    "Location_served": "Berlin, Germany"
   },
   "THG" : {
     "name": "Thangool Airport",
@@ -46463,7 +46475,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "ICAO": "KTXK",
     "Location_served": "Texarkana, Arkansas, United States"
   },
-  "TXM" : {
+  "TXL" : {
+    "name": "Berlin Tegel 'Otto Lilienthal'",
+    "IATA": "TXL",
+    "ICAO": "EDDT",
+    "Location_served": "Berlin, Germany"
+  },  "TXM" : {
     "name": "Teminabuan Airport",
     "IATA": "TXM",
     "ICAO": "WAST",
