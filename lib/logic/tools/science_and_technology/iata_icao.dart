@@ -16805,6 +16805,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "ICAO": "",
     "Location_served": "Glen Dale, West Virginia, United States"
   },
+  "GWW" : {
+    "name": "Berlin Gatow",
+    "IATA": "GWW",
+    "ICAO": "EDBG",
+    "Location_served": "Berlin, Germany"
+  },
   "GWY" : {
     "name": "Galway Airport",
     "IATA": "GWY",
@@ -43224,7 +43230,7 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "Location_served": "Sale, Victoria, Australia"
   },
   "SXF" : {
-    "name": "Berlin-Schönefeld",
+    "name": "Berlin Schönefeld",
     "IATA": "SXF",
     "ICAO": "EDDB",
     "Location_served": "Berlin, Germany"
@@ -44532,7 +44538,7 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "Location_served": "Teresina, Piauí, Brazil"
   },
   "THF" : {
-    "name": "Berlin-Tempelhof",
+    "name": "Berlin Tempelhof",
     "IATA": "THF",
     "ICAO": "EDDI",
     "Location_served": "Berlin, Germany"
