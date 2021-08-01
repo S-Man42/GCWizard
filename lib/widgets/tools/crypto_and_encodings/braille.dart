@@ -26,7 +26,7 @@ class BrailleState extends State<Braille> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
-  var _currentLanguage = BrailleLanguage.DE;
+  var _currentLanguage = BrailleLanguage.DEU;
 
   @override
   Widget build(BuildContext context) {

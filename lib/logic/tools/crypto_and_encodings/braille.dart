@@ -13,12 +13,17 @@ import 'package:gc_wizard/utils/constants.dart';
 // https://fr.wikipedia.org/wiki/Braille
 // https://www.pharmabraille.com/wp-content/uploads/2015/01/CBFU_edition_internationale.pdf
 
-enum BrailleLanguage { DE, EN, FR }
+
+// http://www.braille.ch/index.html#computer
+
+
+enum BrailleLanguage { DEU, ENG, FRA, EUR }
 
 Map<BrailleLanguage, String> BRAILLE_LANGUAGES = {
-  BrailleLanguage.DE: 'common_language_german',
-  BrailleLanguage.EN: 'braille_language_english',
-  BrailleLanguage.FR: 'common_language_french',
+  BrailleLanguage.DEU: 'common_language_german',
+  BrailleLanguage.ENG: 'braille_language_english',
+  BrailleLanguage.FRA: 'common_language_french',
+  BrailleLanguage.EUR: 'braille_language_euro',
 };
 
 final Map<String, List<String>> _charsToSegmentsDEU = {
@@ -279,10 +284,237 @@ final Map<String, List<String>> _charsToSegmentsFRA = {
   '%': ['2', '5', '6'],
   '_': ['3', '6'],
 };
+final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/braille/computerbraille-text.html
+  ' ': [], // 32
+  '!': ['5'],
+  '"': ['4'],
+  '#': ['3', '4', '5', '6'],
+  '\$': ['4', '6'],
+  '%': ['1', '2', '3', '4', '5', '6'],
+  '&': ['1', '2', '3', '4', '6'],
+  "'": ['6'],
+  '(': ['2', '3', '6'],
+  ')': ['3', '5', '6'],
+  '*': ['3', '5'],
+  '+': ['2', '3', '5'],
+  ',': ['2'],
+  '-': ['3', '6'],
+  '.': ['3'],
+  '/': ['2', '5', '6'],
+  '0': ['3', '4', '6'], //  48
+  '1': ['1', '6'],
+  '2': ['1', '2', '6'],
+  '3': ['1', '4', '6'],
+  '4': ['1', '4', '5', '6'],
+  '5': ['1', '5', '6'],
+  '6': ['1', '2', '4', '6'],
+  '7': ['1', '2', '4', '5', '6'],
+  '8': ['1', '2', '5', '6'],
+  '9': ['2', '4', '6'],
+  ':': ['2', '5'],
+  ';': ['2', '3'],
+  '<': ['5', '6'],
+  '=': ['2', '3', '5', '6'],
+  '>': ['4', '5'],
+  '?': ['2', '6'], //  63
+  '@': ['3', '4', '5', '7'], //  64
+  'A': ['1', '7'], //  65
+  'B': ['1', '2', '7'],
+  'C': ['1', '4', '7'],
+  'D': ['1', '4', '5', '7'],
+  'E': ['1', '5', '7'],
+  'F': ['1', '4', '2', '7'],
+  'G': ['1', '4', '2', '5', '7'],
+  'H': ['1', '2', '5', '7'],
+  'I': ['4', '2', '7'],
+  'J': ['4', '2', '5', '7'],
+  'K': ['1', '3', '7'],
+  'L': ['1', '2', '3', '7'],
+  'M': ['1', '4', '3', '7'],
+  'N': ['1', '4', '5', '3', '7'],
+  'O': ['1', '5', '3', '7'],
+  'P': ['1', '4', '2', '3', '7'],
+  'Q': ['1', '4', '2', '5', '3', '7'],
+  'R': ['1', '2', '5', '3', '7'],
+  'S': ['4', '2', '3', '7'],
+  'T': ['4', '2', '5', '3', '7'],
+  'U': ['1', '3', '6', '7'],
+  'V': ['1', '2', '3', '3', '7'],
+  'W': ['4', '2', '5', '6', '7'],
+  'X': ['1', '4', '3', '6', '7'],
+  'Y': ['1', '4', '5', '3', '6', '7'],
+  'Z': ['1', '5', '3', '6', '7'],
+  '[': ['1', '2', '3', '5', '6', '7'],
+  '\\': ['3', '4', '7'],
+  ']': ['2', '3', '4', '5', '6', '7'],
+  '^': ['2', '3', '4', '6', '7'],  //  94 x286e
+  '_': ['4', '5', '6', '7'],
+  '`': ['3', '4', '5'],
+  'a': ['1'],
+  'b': ['1', '2'],
+  'c': ['1', '4'],
+  'd': ['1', '4', '5'],
+  'e': ['1', '5'],
+  'f': ['1', '4', '2'],
+  'g': ['1', '4', '2', '5'],
+  'h': ['1', '2', '5'],
+  'i': ['4', '2'],
+  'j': ['4', '2', '5'],
+  'k': ['1', '3'],
+  'l': ['1', '2', '3'],
+  'm': ['1', '4', '3'],
+  'n': ['1', '4', '5', '3'],
+  'o': ['1', '5', '3'],
+  'p': ['1', '4', '2', '3'],
+  'q': ['1', '4', '2', '5', '3'],
+  'r': ['1', '2', '5', '3'],
+  's': ['4', '2', '3'],
+  't': ['4', '2', '5', '3'],
+  'u': ['1', '3', '6'],
+  'v': ['1', '2', '3', '3'],
+  'w': ['4', '2', '5', '6'],
+  'x': ['1', '4', '3', '6'],
+  'y': ['1', '4', '5', '3', '6'],
+  'z': ['1', '5', '3', '6'],
+  '{': ['1', '2', '3', '5', '6'],
+  '|': ['3', '4'],
+  '}': ['2', '3', '4', '5', '6'],
+  '~': ['2', '3', '4', '6'],
+  //'': [],                                      // 127 x2858 [DEL]
+  '€': ['4', '5', '7'],                          // 128 x28
+  //'': [],                                      // 129 x2800 [HOP]
+  '‚': ['3', '6', '7', '8'],                     // 130 x28e4
+  'ƒ': ['7', '8'],                               // 131 x28c0
+  '„': ['1', '2', '3', '4', '5', '6', '7'],      // 132 x287f
+  '…': ['1', '2', '3', '4', '5', '6', '8'],      // 133 x28bf
+  '†': ['1', '2', '4', '8'],                     // 134 x288b
+  '‡': ['1', '2', '4', '5', '8'],                // 135 x289b
+  'ˆ': ['3', '7', '8'],                          // 136 x28c4
+  '‰': ['2', '4', '8'],                          // 137 x288a
+  'Š': ['6', '7', '8'],                          // 138 x28e0
+  '‹': ['2', '7'],                               // 139 x2842
+  'Œ': ['2', '3', '7'],                          // 140 x2846
+  //'': [],                                      // 141 x2852 [RI]
+  'Ž': ['1', '2', '5', '6', '7'],                // 142 x2873
+  //'': [],                                      // 143 x286b [SS3]
+  //'': [],                                      // 144 x28eb [DCS]
+  '‘': ['2', '3', '5', '6', '7'],                // 145 x2876
+  '’': ['2', '3', '6', '7'],                     // 146 x2866
+  '“': ['1', '3', '8'],                          // 147 x2885
+  '”': ['1', '2', '3', '8'],                     // 148 x2887
+  '•': ['2', '7', '8'],                          // 149 x28c2
+  '–': ['2', '3', '7', '8'],                     // 150 x28c6
+  '—': ['1', '3', '5', '6', '8'],                // 151 x28b5
+  //'': [],                                      // 152 x28fb [SOS]
+  '™': ['1', '2', '4', '5', '6', '7', '8'],      // 153 x28fb
+  'š': ['2', '6', '7', '8'],                     // 154 x28e2
+  '›': ['1', '2', '3', '4', '5', '8'],           // 155 x289f
+  'œ': ['6', '7'],                               // 156 x2860
+  //'': [],                                      // 157 x287b [OSC]
+  'ž': ['2', '3', '5', '6', '7', '8'],           // 158 x28f6
+  'Ÿ': ['1', '2', '3', '4', '5', '6', '7', '8'], // 159 x28ff
+  '': [], // 160 x28
+  '': [], // 161 x28
+  '': [], // 162 x28
+  '': [], // 163 x28
+  '': [], // 164 x28
+  '': [], // 165 x28
+  '': [], // 166 x28
+  '': [], // 167 x28
+  '': [], // 168 x28
+  '': [], // 169 x28
+  '': [], // 170 x28
+  '': [], // 171 x28
+  '': [], // 172 x28
+  '': [], // 173 x28
+  '': [], // 174 x28
+  '': [], // 175 x28
+  '': [], // 176 x28
+  '': [], // 177 x28
+  '': [], // 178 x28
+  '': [], // 179 x28
+  '': [], // 180 x28
+  '': [], // 181 x28
+  '': [], // 182 x28
+  '': [], // 183 x28
+  '': [], // 184 x28
+  '': [], // 185 x28
+  '': [], // 186 x28
+  '': [], // 187 x28
+  '': [], // 188 x28
+  '': [], // 189 x28
+  '': [], // 190 x28
+  '': [], // 191 x28
+  '': [], // 192 x28
+  '': [], // 193 x28
+  '': [], // 194 x28
+  '': [], // 195 x28
+  '': [], // 196 x28
+  '': [], // 197 x28
+  '': [], // 198 x28
+  '': [], // 199 x28
+  '': [], // 200 x28
+  '': [], // 201 x28
+  '': [], // 202 x28
+  '': [], // 203 x28
+  '': [], // 204 x28
+  '': [], // 205 x28
+  '': [], // 206 x28
+  '': [], // 207 x28
+  '': [], // 208 x28
+  '': [], // 209 x28
+  '': [], // 210 x28
+  '': [], // 211 x28
+  '': [], // 212 x28
+  '': [], // 213 x28
+  '': [], // 214 x28
+  '': [], // 215 x28
+  '': [], // 216 x28
+  '': [], // 217 x28
+  '': [], // 218 x28
+  '': [], // 219 x28
+  '': [], // 220 x28
+  '': [], // 221 x28
+  '': [], // 222 x28
+  '': [], // 223 x28
+  '': [], // 224 x28
+  '': [], // 225 x28
+  '': [], // 226 x28
+  '': [], // 227 x28
+  '': [], // 228 x28
+  '': [], // 229 x28
+  '': [], // 230 x28
+  '': [], // 231 x28
+  '': [], // 232 x28
+  '': [], // 233 x28
+  '': [], // 234 x28
+  '': [], // 235 x28
+  '': [], // 236 x28
+  '': [], // 237 x28
+  '': [], // 238 x28
+  '': [], // 239 x28
+  '': [], // 240 x28
+  '': [], // 241 x28
+  '': [], // 242 x28
+  '': [], // 243 x28
+  '': [], // 244 x28
+  '': [], // 245 x28
+  '': [], // 246 x28
+  '': [], // 247 x28
+  '': [], // 248 x28
+  '': [], // 249 x28
+  '': [], // 250 x28
+  '': [], // 251 x28
+  '': [], // 252 x28
+  '': [], // 253 x28
+  '': [], // 254 x28
+  '': [], // 255 x28
+};
 
 var _segmentsToCharsDEU = switchMapKeyValue(_charsToSegmentsDEU);
 var _segmentsToCharsENG = switchMapKeyValue(_charsToSegmentsENG);
 var _segmentsToCharsFRA = switchMapKeyValue(_charsToSegmentsFRA);
+var _segmentsToCharsEUR = switchMapKeyValue(_charsToSegmentsEUR);
 
 final Numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 final Letters = {
@@ -390,245 +622,295 @@ bool _isMathmatical(String s) {
   return Mathmatical.contains(s);
 }
 
+List<List<String>> _encodeBrailleEUR(String input) {
+  List<String> inputs = input.split('');
+  List<List<String>> result = new List<List<String>>();
 
-List<List<String>> encodeBraille(String input, BrailleLanguage language) {
-  if (input == null) return [];
-
-  var _charsToSegments;
-
-  switch (language) {
-    case BrailleLanguage.DE:
-      _charsToSegments = _charsToSegmentsDEU;
-      break;
-    case BrailleLanguage.EN:
-      _charsToSegments = _charsToSegmentsENG;
-      break;
-    case BrailleLanguage.FR:
-      _charsToSegments = _charsToSegmentsFRA;
-      break;
+  for (int i = 0; i < inputs.length; i++) {
+    result.add(_charsToSegmentsEUR[inputs[i]]);
   }
+  return result;
+}
 
+List<List<String>> _encodeBrailleDEU(String input) {
   bool numberFollows = false;
 
   List<String> inputs = input.split('');
   List<List<String>> result = new List<List<String>>();
+
   for (int i = 0; i < inputs.length; i++) {
-    if (language == BrailleLanguage.DE) {
-
-    } else if (language == BrailleLanguage.EN) {
-
-    } else if (language == BrailleLanguage.FR) {
-
-    };
-
-
     if (_isNumber(inputs[i])) {
       if (!numberFollows) {
-        result.add(_charsToSegments['#']);
+        result.add(_charsToSegmentsDEU['#']);
         numberFollows = true;
       }
       if (i < inputs.length - 1 && inputs[i + 1] == '.') {
-        result.add(_ordinalNumber(inputs[i], _charsToSegments));
+        result.add(_ordinalNumber(inputs[i], _charsToSegmentsDEU));
         i++;
       } else
-        result.add(_charsToSegments[inputs[i]]);
-    } else if (language == BrailleLanguage.DE) {
+        result.add(_charsToSegmentsDEU[inputs[i]]);
+    } else {
       if (!_isMathmatical(inputs[i])) numberFollows = false;
       if (_isCapital(inputs[i])) {
-        result.add(_charsToSegments['\$']);
+        result.add(_charsToSegmentsDEU['\$']);
         inputs[i] = inputs[i].toLowerCase();
       }
       if (inputs[i] == 's' && i < inputs.length - 1 && inputs[i + 1] == 't') {
-        result.add(_charsToSegments['st']);
+        result.add(_charsToSegmentsDEU['st']);
         i++;
       } else if (inputs[i] == 'a' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['au']);
+        result.add(_charsToSegmentsDEU['au']);
         i++;
       } else if (inputs[i] == 'e' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['eu']);
+        result.add(_charsToSegmentsDEU['eu']);
         i++;
       } else if (inputs[i] == 'e' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'i') {
-        result.add(_charsToSegments['ei']);
+        result.add(_charsToSegmentsDEU['ei']);
         i++;
       } else if (inputs[i] == 'ä' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'U') {
-        result.add(_charsToSegments['äu']);
+        result.add(_charsToSegmentsDEU['äu']);
         i++;
       } else if (inputs[i] == 'i' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'e') {
-        result.add(_charsToSegments['ie']);
+        result.add(_charsToSegmentsDEU['ie']);
         i++;
       } else if (inputs[i] == 'c' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['ch']);
+        result.add(_charsToSegmentsDEU['ch']);
         i++;
       } else if (inputs[i] == 's' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'c' &&
           inputs[i + 2] == 'h') {
-        result.add(_charsToSegments['sch']);
+        result.add(_charsToSegmentsDEU['sch']);
         i = i + 2;
       } else
-        result.add(_charsToSegments[inputs[i]]);
-    } else if (language == BrailleLanguage.EN) {
+        result.add(_charsToSegmentsDEU[inputs[i]]);
+    }
+  }
+  return result;
+}
+
+List<List<String>> _encodeBrailleENG(String input) {
+
+  bool numberFollows = false;
+
+  List<String> inputs = input.split('');
+  List<List<String>> result = new List<List<String>>();
+
+  for (int i = 0; i < inputs.length; i++) {
+    if (_isNumber(inputs[i])) {
+      if (!numberFollows) {
+        result.add(_charsToSegmentsENG['#']);
+        numberFollows = true;
+      }
+      if (i < inputs.length - 1 && inputs[i + 1] == '.') {
+        result.add(_ordinalNumber(inputs[i], _charsToSegmentsENG));
+        i++;
+      } else
+        result.add(_charsToSegmentsENG[inputs[i]]);
+    } else {
       if (!_isMathmatical(inputs[i])) numberFollows = false;
       if (inputs[i] == 'C' && i < inputs.length - 1 && inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['CH']);
+        result.add(_charsToSegmentsENG['CH']);
         i++;
       } else if (inputs[i] == 'G' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['GH']);
+        result.add(_charsToSegmentsENG['GH']);
         i++;
       } else if (inputs[i] == 'S' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['SH']);
+        result.add(_charsToSegmentsENG['SH']);
         i++;
       } else if (inputs[i] == 'T' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['TH']);
+        result.add(_charsToSegmentsENG['TH']);
         i++;
       } else if (inputs[i] == 'W' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['WH']);
+        result.add(_charsToSegmentsENG['WH']);
         i++;
       } else if (inputs[i] == 'E' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'D') {
-        result.add(_charsToSegments['ED']);
+        result.add(_charsToSegmentsENG['ED']);
         i++;
       } else if (inputs[i] == 'E' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'R') {
-        result.add(_charsToSegments['ER']);
+        result.add(_charsToSegmentsENG['ER']);
         i++;
       } else if (inputs[i] == 'O' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'U') {
-        result.add(_charsToSegments['OU']);
+        result.add(_charsToSegmentsENG['OU']);
         i++;
       } else if (inputs[i] == 'O' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'W') {
-        result.add(_charsToSegments['OW']);
+        result.add(_charsToSegmentsENG['OW']);
         i++;
       } else if (inputs[i] == 'I' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'N') {
-        result.add(_charsToSegments['IN']);
+        result.add(_charsToSegmentsENG['IN']);
         i++;
       } else if (inputs[i] == 'E' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'A') {
-        result.add(_charsToSegments['EA']);
+        result.add(_charsToSegmentsENG['EA']);
         i++;
       } else if (inputs[i] == 'B' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'B') {
-        result.add(_charsToSegments['BB']);
+        result.add(_charsToSegmentsENG['BB']);
         i++;
       } else if (inputs[i] == 'C' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'C') {
-        result.add(_charsToSegments['CC']);
+        result.add(_charsToSegmentsENG['CC']);
         i++;
       } else if (inputs[i] == 'D' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'D') {
-        result.add(_charsToSegments['DD']);
+        result.add(_charsToSegmentsENG['DD']);
         i++;
       } else if (inputs[i] == 'E' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'N') {
-        result.add(_charsToSegments['EN']);
+        result.add(_charsToSegmentsENG['EN']);
         i++;
       } else if (inputs[i] == 'F' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'F') {
-        result.add(_charsToSegments['FF']);
+        result.add(_charsToSegmentsENG['FF']);
         i++;
       } else if (inputs[i] == 'G' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'G') {
-        result.add(_charsToSegments['GG']);
+        result.add(_charsToSegmentsENG['GG']);
         i++;
       } else if (inputs[i] == 'S' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'T') {
-        result.add(_charsToSegments['ST']);
+        result.add(_charsToSegmentsENG['ST']);
         i++;
       } else if (inputs[i] == 'A' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'R') {
-        result.add(_charsToSegments['AR']);
+        result.add(_charsToSegmentsENG['AR']);
         i++;
       } else if (inputs[i] == 'O' &&
           i < inputs.length - 1 &&
           inputs[i + 1] == 'F') {
-        result.add(_charsToSegments['OF']);
+        result.add(_charsToSegmentsENG['OF']);
         i++;
       } else if (inputs[i] == 'S' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'C' &&
           inputs[i + 2] == 'H') {
-        result.add(_charsToSegments['SCH']);
+        result.add(_charsToSegmentsENG['SCH']);
         i = i + 2;
       } else if (inputs[i] == 'A' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'N' &&
           inputs[i + 2] == 'D') {
-        result.add(_charsToSegments['AND']);
+        result.add(_charsToSegmentsENG['AND']);
         i = i + 2;
       } else if (inputs[i] == 'F' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'O' &&
           inputs[i + 2] == 'R') {
-        result.add(_charsToSegments['FOR']);
+        result.add(_charsToSegmentsENG['FOR']);
         i = i + 2;
       } else if (inputs[i] == 'T' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'H' &&
           inputs[i + 2] == 'E') {
-        result.add(_charsToSegments['THE']);
+        result.add(_charsToSegmentsENG['THE']);
         i = i + 2;
       } else if (inputs[i] == 'I' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'N' &&
           inputs[i + 2] == 'G') {
-        result.add(_charsToSegments['ING']);
+        result.add(_charsToSegmentsENG['ING']);
         i = i + 2;
       } else if (inputs[i] == 'B' &&
           i < inputs.length - 2 &&
           inputs[i + 1] == 'L' &&
           inputs[i + 2] == 'E') {
-        result.add(_charsToSegments['BLE']);
+        result.add(_charsToSegmentsENG['BLE']);
         i = i + 2;
       } else if (inputs[i] == 'W' &&
           i < inputs.length - 3 &&
           inputs[i + 1] == 'I' &&
           inputs[i + 2] == 'T' &&
           inputs[i + 3] == 'H') {
-        result.add(_charsToSegments['WITH']);
+        result.add(_charsToSegmentsENG['WITH']);
         i = i + 2;
       } else
-        result.add(_charsToSegments[inputs[i]]);
-    } else if (language == BrailleLanguage.FR) {
-      if (!_isMathmatical(inputs[i])) numberFollows = false;
+        result.add(_charsToSegmentsENG[inputs[i]]);
     }
   }
   return result;
+}
+
+List<List<String>> _encodeBrailleFRA(String input) {
+  bool numberFollows = false;
+
+  List<String> inputs = input.split('');
+  List<List<String>> result = new List<List<String>>();
+
+  for (int i = 0; i < inputs.length; i++) {
+    if (_isNumber(inputs[i])) {
+      if (!numberFollows) {
+        result.add(_charsToSegmentsFRA['#']);
+        numberFollows = true;
+      }
+      if (i < inputs.length - 1 && inputs[i + 1] == '.') {
+        result.add(_ordinalNumber(inputs[i], _charsToSegmentsFRA));
+        i++;
+      } else
+        result.add(_charsToSegmentsFRA[inputs[i]]);
+    } else {
+      if (!_isMathmatical(inputs[i])) numberFollows = false;
+    }
+  }
+
+  return result;
+}
+
+List<List<String>> encodeBraille(String input, BrailleLanguage language) {
+  if (input == null) return [];
+
+  switch (language) {
+    case BrailleLanguage.DEU:
+      return _encodeBrailleDEU(input);
+      break;
+    case BrailleLanguage.ENG:
+      return _encodeBrailleENG(input);
+      break;
+    case BrailleLanguage.FRA:
+      return _encodeBrailleFRA(input);
+      break;
+    case BrailleLanguage.EUR:
+      return _encodeBrailleEUR(input);
+      break;
+  }
 }
 
 Map<String, dynamic> decodeBraille(
@@ -642,14 +924,17 @@ Map<String, dynamic> decodeBraille(
   var displays = <List<String>>[];
   var _segmentsToChars;
   switch (language) {
-    case BrailleLanguage.DE:
+    case BrailleLanguage.DEU:
       _segmentsToChars = _segmentsToCharsDEU;
       break;
-    case BrailleLanguage.EN:
+    case BrailleLanguage.ENG:
       _segmentsToChars = _segmentsToCharsENG;
       break;
-    case BrailleLanguage.FR:
+    case BrailleLanguage.FRA:
       _segmentsToChars = _segmentsToCharsFRA;
+      break;
+    case BrailleLanguage.EUR:
+      _segmentsToChars = _segmentsToCharsEUR;
       break;
   }
 

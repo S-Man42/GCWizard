@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false};
+const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false, '7': false, '8': false};
 
 class BrailleSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -69,6 +69,24 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80),
+            size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
+            paint, onTapDown: (tapDetail) {
+          setSegmentState('6', !currentSegments['6']);
+        });
+
+        paint.color = currentSegments['7'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        canvas.drawCircle(
+            Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10,
+                size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 110),
+            size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
+            paint, onTapDown: (tapDetail) {
+          setSegmentState('3', !currentSegments['3']);
+        });
+
+        paint.color = currentSegments['8'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        canvas.drawCircle(
+            Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 40,
+                size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 110),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
           setSegmentState('6', !currentSegments['6']);
