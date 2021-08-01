@@ -141,6 +141,9 @@ flutter:
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/greek_numerals/
+    - assets/symbol_tables/hangul_korean/
+    - assets/symbol_tables/hangul_sino_korean/
+    - assets/symbol_tables/hanja/
     - assets/symbol_tables/hazard/
     - assets/symbol_tables/hebrew/
     - assets/symbol_tables/hebrew_v2/

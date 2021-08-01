@@ -27,7 +27,7 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
                   cancelButton: false);
             },
           )
-        : null,
+        : Container(),
     GCWDialogButton(
       text: 'GPX',
       onPressed: () async {
