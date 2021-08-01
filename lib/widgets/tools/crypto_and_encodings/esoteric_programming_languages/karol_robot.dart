@@ -33,8 +33,6 @@ class KarolRobotState extends State<KarolRobot> {
 
   Uint8List _outEncodeData;
   Uint8List _outDecodeData;
-//  String _codeEncodeData;
-//  String _codeDecodeData;
 
   String _output = '';
 
@@ -161,15 +159,9 @@ class KarolRobotState extends State<KarolRobot> {
 
   _createDecodeOutput(String output) {
     _outDecodeData = null;
-//    _codeDecodeData = null;
     byteColor2image(output).then((value) {
       setState(() {
         _outDecodeData = value;
-//        scanBytes(_outDecodeData).then((value) {
-//          setState(() {
-//            _codeDecodeData = value;
-//          });
-//        });
       });
     });
   }
@@ -179,24 +171,14 @@ class KarolRobotState extends State<KarolRobot> {
 
     return Column(children: <Widget>[
       Image.memory(_outDecodeData),
-//      _codeDecodeData != null
-//          ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeDecodeData)
-//          : Container(),
     ]);
   }
 
   _createEncodeOutput(String output) {
     _outEncodeData = null;
-//    _codeEncodeData = null;
     byteColor2image(output).then((value) {
       setState(() {
         _outEncodeData = value;
-
-        /*scanBytes(_outEncodeData).then((value) {
-            setState(() {
-              _codeEncodeData = value;
-            });
-          });*/
       });
     });
   }
@@ -206,9 +188,6 @@ class KarolRobotState extends State<KarolRobot> {
 
     return Column(children: <Widget>[
       Image.memory(_outEncodeData),
- //     _codeEncodeData != null
- //         ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeEncodeData)
- //         : Container(),
     ]);
   }
 
