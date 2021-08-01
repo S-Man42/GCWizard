@@ -397,6 +397,9 @@ const SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES = 'attribute';
 const SEARCHSTRING_DE_SYMBOL_GENREICH = 'genreich';
 const SEARCHSTRING_DE_SYMBOL_GNOMMISH = 'gnomisch';
 const SEARCHSTRING_DE_SYMBOL_GREEK_NUMERALS = 'zahlen ziffern griechisches zahlschrift';
+const SEARCHSTRING_DE_SYMBOL_HANJA = '';
+const SEARCHSTRING_DE_SYMBOL_HANGUL = 'hangeul';
+const SEARCHSTRING_DE_SYMBOL_SINO_KOREAN = 'sinokoreanisch';
 const SEARCHSTRING_DE_SYMBOL_HAZARD =
     'gefahren gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen';
 const SEARCHSTRING_DE_SYMBOL_HEBREW = 'hebraeisches juden juedisches';
