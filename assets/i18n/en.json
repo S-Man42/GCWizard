@@ -3204,6 +3204,8 @@
   "symboltables_braille_en_capital_follows": "CAPITAL FOLLOWS",
   "symboltables_braille_en_number_follows": "NUMBER FOLLOWS",
   "symboltables_braille_en_mathmatics_follows": "MATHMATICS FOLLOWS",
+  "symboltables_braille_eu_title": "Euro-Braille (ISO 8859-1)",
+  "symboltables_braille_eu_description": "Tactile signs for blind people - ISO 8859-1",
   "symboltables_braille_fr_title": "Braille (French)",
   "symboltables_braille_fr_description": "Tactile signs for blind people - French adaption",
   "symboltables_braille_fr_capital_follows": "CAPITAL FOLLOWS",

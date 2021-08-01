@@ -57,6 +57,7 @@ const SEARCHSTRING_DE_BIFID = '';
 const SEARCHSTRING_DE_BINARY = 'dezimal binaer dual zahlen';
 const SEARCHSTRING_DE_BOOKCIPHER = 'buchstabe buechercode buchchiffre buecherchiffre buchcode zeile absatz position';
 const SEARCHSTRING_DE_BRAILLE = 'blindenschrift punkte';
+const SEARCHSTRING_DE_BRAILLE_EURO = '';
 const SEARCHSTRING_DE_BURROESWHEELER = '';
 const SEARCHSTRING_DE_CAESAR = '';
 const SEARCHSTRING_DE_CATAN = 'diesiedlervoncatan brettspiel';

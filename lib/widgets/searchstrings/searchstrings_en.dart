@@ -54,6 +54,7 @@ const SEARCHSTRING_EN_BIFID = '';
 const SEARCHSTRING_EN_BINARY = 'binary numbers decimal';
 const SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';
 const SEARCHSTRING_EN_BRAILLE = 'tactiles dots points';
+const SEARCHSTRING_EN_BRAILLE_EURO = '';
 const SEARCHSTRING_EN_BURROESWHEELER = '';
 const SEARCHSTRING_EN_CAESAR = '';
 const SEARCHSTRING_EN_CATAN = 'thesettlerofcatan tabletopgame boardgame';

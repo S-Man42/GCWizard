@@ -5746,6 +5746,16 @@ class Registry {
         SEARCHSTRING_EN_BRAILLE,
         SEARCHSTRING_FR_BRAILLE
       ]),
+      GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_BRAILLE,
+        SEARCHSTRING_DE_BRAILLE,
+        SEARCHSTRING_EN_BRAILLE,
+        SEARCHSTRING_FR_BRAILLE,
+        SEARCHSTRING_COMMON_BRAILLE_EURO,
+        SEARCHSTRING_DE_BRAILLE_EURO,
+        SEARCHSTRING_EN_BRAILLE_EURO,
+        SEARCHSTRING_FR_BRAILLE_EURO
+      ]),
       GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BRAILLE,
         SEARCHSTRING_DE_BRAILLE,
