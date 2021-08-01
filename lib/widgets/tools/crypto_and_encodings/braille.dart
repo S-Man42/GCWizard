@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_euro_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
@@ -140,7 +141,14 @@ class BrailleState extends State<Braille> {
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
-              Expanded(
+              _currentLanguage == BrailleLanguage.EUR
+              ? Expanded(
+                child: BrailleEuroSegmentDisplay(
+                  segments: currentDisplay,
+                  onChanged: onChanged,
+                ),
+              )
+              : Expanded(
                 child: BrailleSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
@@ -182,7 +190,10 @@ class BrailleState extends State<Braille> {
   _buildDigitalOutput(countColumns, segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return BrailleSegmentDisplay(segments: displayedSegments, readOnly: true);
+      if (_currentLanguage == BrailleLanguage.EUR)
+        return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: true);
+      else
+        return BrailleSegmentDisplay(segments: displayedSegments, readOnly: true);
     }).toList();
     return buildSegmentDisplayOutput(countColumns, displays);
   }

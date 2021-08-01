@@ -3,14 +3,14 @@ import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false};
+const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false, '7': false, '8': false};
 
-class BrailleSegmentDisplay extends NSegmentDisplay {
+class BrailleEuroSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
 
-  BrailleSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
+  BrailleEuroSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
       : super(
       key: key,
       initialSegments: _INITIAL_SEGMENTS,
@@ -74,5 +74,22 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
           setSegmentState('6', !currentSegments['6']);
         });
 
+        paint.color = currentSegments['7'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        canvas.drawCircle(
+            Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10,
+                size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 110),
+            size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
+            paint, onTapDown: (tapDetail) {
+          setSegmentState('7', !currentSegments['7']);
+        });
+
+        paint.color = currentSegments['8'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        canvas.drawCircle(
+            Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 40,
+                size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 110),
+            size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
+            paint, onTapDown: (tapDetail) {
+          setSegmentState('8', !currentSegments['8']);
+        });
       });
 }
