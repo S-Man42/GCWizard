@@ -35,7 +35,6 @@ import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_s
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/iata_icao_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
@@ -260,8 +259,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao/iata_icao_list.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao/iata_icao_search.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
@@ -935,8 +933,8 @@ class Registry {
         SEARCHSTRING_FR_HOUDINI
       ]),
       GCWTool(
-        tool: IATAICAOSelection(),
-        i18nPrefix: 'iataicao_selection',
+        tool: IATAICAOSearch(),
+        i18nPrefix: 'iataicao',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         helpLocales: ['de','en','fr'],
         searchStrings: [
@@ -946,6 +944,7 @@ class Registry {
           SEARCHSTRING_FR_IATAICAO
         ],
       ),
+
       GCWTool(
         tool: IceCodesSelection(),
         i18nPrefix: 'icecodes_selection',
@@ -3795,30 +3794,6 @@ class Registry {
         SEARCHSTRING_EN_HASHES_BLAKE2B_512,
         SEARCHSTRING_FR_HASHES_BLAKE2B_512,
       ]),
-
-      // IATA ICAO Selection *********************************************************************************************
-      GCWTool(
-        tool: IATAICAOList(),
-        i18nPrefix: 'iataicao_list',
-        helpLocales: ['de','en','fr'],
-        searchStrings: [
-          SEARCHSTRING_COMMON_IATAICAO,
-          SEARCHSTRING_DE_IATAICAO,
-          SEARCHSTRING_EN_IATAICAO,
-          SEARCHSTRING_FR_IATAICAO
-        ],
-      ),
-      GCWTool(
-        tool: IATAICAOSearch(),
-        i18nPrefix: 'iataicao_search',
-        helpLocales: ['de','en','fr'],
-        searchStrings: [
-          SEARCHSTRING_COMMON_IATAICAO,
-          SEARCHSTRING_DE_IATAICAO,
-          SEARCHSTRING_EN_IATAICAO,
-          SEARCHSTRING_FR_IATAICAO
-        ],
-      ),
 
       // IceCodeSelection *********************************************************************************************
       GCWTool(

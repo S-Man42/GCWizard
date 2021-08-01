@@ -22,6 +22,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
   String _currentInputName = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentCode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -55,13 +56,28 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
             });
           },
         )
-            : GCWTextField(
-          controller: _inputControllerCode,
-          onChanged: (text) {
-            setState(() {
-              _currentInputCode = text;
-            });
-          },
+            : Column(
+          children: <Widget>[
+              GCWTwoOptionsSwitch(
+                value: _currentCode,
+                title: i18n(context, 'iataicao_search'),
+                leftValue: i18n(context, 'iataicao_iata'),
+                rightValue: i18n(context, 'iataicao_icao'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentCode = value;
+                  });
+                },
+              ),
+              GCWTextField(
+                controller: _inputControllerCode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputCode = text;
+                  });
+                },
+              ),
+          ],
         ),
         GCWDefaultOutput(child: _buildOutput())
       ],
@@ -108,32 +124,53 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       List<int> flexValues = List<int>.generate(4, (index) => 1);
       var output;
 
-      var  data = IATA_ICAO_CODES
-          .values.where((e) => ((e['IATA'] != null && e['IATA'].startsWith(_currentInputCode.toUpperCase())) ||
-                                                  (e['ICAO'] != null && e['ICAO'].startsWith(_currentInputCode.toUpperCase()))))
-          .map((e) {
-              var dataList = [];
-              dataList.addAll(['IATA', 'ICAO', 'name', 'Location_served'].where((f) => (f != 'IATA' || f != 'ICAO')).map((f) => e[f]));
-
+      if (_currentCode == GCWSwitchPosition.left) { // search for IATA
+        var data = IATA_ICAO_CODES
+            .values.where((e) => (e['IATA'] != null && e['IATA'].startsWith(_currentInputCode.toUpperCase())))
+            .map((e) {
+              var dataList = [e['IATA']];
+              dataList.addAll(['IATA', 'ICAO', 'name', 'Location_served'].where((f) => (f != 'IATA')).map((f) => e[f]));
               return dataList;
+            })
+            .toList();
+        flexValues = [1, 1, 2, 2];
 
-          })
-          .toList();
+        data.sort((a, b) {
+          var result = a[0].compareTo(b[0]);
+          if (result != 0) return result;
 
-      flexValues = [1, 1, 2, 2];
+          return a[1].compareTo(b[1]);
+        });
 
-      data.sort((a, b) {
-        var result = a[0].compareTo(b[0]);
-        if (result != 0) return result;
+        output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1);
 
-        return a[1].compareTo(b[1]);
-      });
+        return Column(
+          children: output,
+        );
+      } else {
+        var data = IATA_ICAO_CODES
+            .values.where((e) => (e['ICAO'] != null && e['ICAO'].startsWith(_currentInputCode.toUpperCase())))
+            .map((e) {
+              var dataList = [e['ICAO']];
+              dataList.addAll(['ICAO', 'IATA', 'name', 'Location_served'].where((f) => (f != 'ICAO')).map((f) => e[f]));
+              return dataList;
+            })
+            .toList();
+        flexValues = [1, 1, 2, 2];
 
-      output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1);
+        data.sort((a, b) {
+          var result = a[0].compareTo(b[0]);
+          if (result != 0) return result;
 
-      return Column(
-        children: output,
-      );
+          return a[1].compareTo(b[1]);
+        });
+
+        output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1);
+
+        return Column(
+          children: output,
+        );
+      }
     }
 
   }

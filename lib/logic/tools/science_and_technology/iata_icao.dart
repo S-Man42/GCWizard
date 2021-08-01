@@ -46482,11 +46482,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "Location_served": "Texarkana, Arkansas, United States"
   },
   "TXL" : {
-    "name": "Berlin Tegel 'Otto Lilienthal'",
+    "name": "Berlin Tegel International Airport 'Otto Lilienthal'",
     "IATA": "TXL",
     "ICAO": "EDDT",
     "Location_served": "Berlin, Germany"
-  },  "TXM" : {
+  },
+  "TXM" : {
     "name": "Teminabuan Airport",
     "IATA": "TXM",
     "ICAO": "WAST",
