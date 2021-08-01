@@ -357,6 +357,7 @@
   "braille_output" : "Single Characters",
   "braille_language_english" : "English Braille Grade 1",
   "braille_language_euro" : "Euro-Braille/Computer-Braille (8 dots)",
+  "braille_language_simple" : "Simple Braille - only A-Z, 0-9",
   "brainfk_title": "Brainf**k",
   "brainfk_description": "Esoteric programming language with 8 characters (incl. derivates like Ook, PikaLang, ...)",
   "brainfk_example": ">++++++++[<++++++++>-]<++.",

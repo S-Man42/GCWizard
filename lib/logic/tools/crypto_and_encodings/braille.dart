@@ -17,9 +17,10 @@ import 'package:gc_wizard/utils/constants.dart';
 // http://www.braille.ch/index.html#computer
 
 
-enum BrailleLanguage { DEU, ENG, FRA, EUR }
+enum BrailleLanguage { SIMPLE, DEU, ENG, FRA, EUR }
 
 Map<BrailleLanguage, String> BRAILLE_LANGUAGES = {
+  BrailleLanguage.SIMPLE: 'braille_language_simple',
   BrailleLanguage.DEU: 'common_language_german',
   BrailleLanguage.ENG: 'braille_language_english',
   BrailleLanguage.FRA: 'common_language_french',
@@ -297,6 +298,38 @@ final Map<String, List<String>> _charsToSegmentsFRA = {
   '_': ['3', '6'],
 };
 final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/braille/computerbraille-text.html
+  'NUL': ['3', '4', '5', '7', '8'],
+  'SOH': ['1', '7', '8'],
+  'STX': ['1', '2', '7', '8'],
+  'ETX': ['1', '4', '7', '8'],
+  'EOT': ['1', '4', '5', '7', '8'],
+  'ENQ': ['1', '5', '7', '8'],
+  'ACK': ['1', '2', '4', '7', '8'],
+  'BEL': ['1', '2', '4', '5', '7', '8'],
+  'BS': ['1', '2', '5', '7', '8'],
+  'HT': ['2', '4', '7', '8'],
+  'LF': ['2', '4', '5', '7', '8'],
+  'VT': ['1', '3', '7', '8'],
+  'FF': ['1', '2', '3', '7', '8'],
+  'CR': ['1', '3', '4', '7', '8'],
+  'SO': ['1', '3', '4', '5', '7', '8'],
+  'SI': ['1', '3', '5', '7', '8'],
+  'DLE': ['1', '2', '3', '4', '7', '8'],
+  'DC1': ['1', '2', '3', '4', '5', '7', '8'],
+  'DC2': ['1', '2', '3', '5', '7', '8'],
+  'DC3': ['2', '3', '4', '7', '8'],
+  'DC4': ['2', '3', '4', '5', '7', '8'],
+  'NAK': ['1', '3', '6', '7', '8'],
+  'SYN': ['1', '2', '3', '6', '7', '8'],
+  'ETB': ['2', '4', '5', '6', '7', '8'],
+  'CAN': ['1', '3', '4', '6', '7', '8'],
+  'EM': ['1', '3', '4', '5', '6', '7', '8'],
+  'SUB': ['1', '3', '5', '6', '7', '8'],
+  'ESC': ['1', '2', '3', '5', '6', '7', '8'],
+  'FS': ['3', '4', '7', '8'],
+  'GS': ['2', '3', '4', '5', '6', '7', '8'],
+  'RS': ['2', '3', '4', '6', '7', '8'],
+  'US': ['4', '5', '6', '7', '8'],
   ' ': [], // 32
   '!': ['5'],
   '"': ['4'],
@@ -367,34 +400,34 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   'c': ['1', '4'],
   'd': ['1', '4', '5'],
   'e': ['1', '5'],
-  'f': ['1', '4', '2'],
-  'g': ['1', '4', '2', '5'],
+  'f': ['1', '2', '4'],
+  'g': ['1', '2', '4', '5'],
   'h': ['1', '2', '5'],
-  'i': ['4', '2'],
-  'j': ['4', '2', '5'],
+  'i': ['2', '4'],
+  'j': ['2', '4', '5'],
   'k': ['1', '3'],
   'l': ['1', '2', '3'],
-  'm': ['1', '4', '3'],
-  'n': ['1', '4', '5', '3'],
-  'o': ['1', '5', '3'],
-  'p': ['1', '4', '2', '3'],
-  'q': ['1', '4', '2', '5', '3'],
-  'r': ['1', '2', '5', '3'],
-  's': ['4', '2', '3'],
-  't': ['4', '2', '5', '3'],
+  'm': ['1', '3', '4'],
+  'n': ['1', '3', '4', '5'],
+  'o': ['1', '3', '5'],
+  'p': ['1', '2', '3', '4'],
+  'q': ['1', '2', '3', '4', '5'],
+  'r': ['1', '2', '3', '5'],
+  's': ['2', '3', '4'],
+  't': ['2', '3', '4', '5'],
   'u': ['1', '3', '6'],
   'v': ['1', '2', '3', '3'],
   'w': ['2', '4', '5', '6'],
-  'x': ['1', '4', '3', '6'],
-  'y': ['1', '4', '5', '3', '6'],
-  'z': ['1', '5', '3', '6'],
+  'x': ['1', '3', '4', '6'],
+  'y': ['1', '3', '4', '5', '6'],
+  'z': ['1', '3', '5', '6'],
   '{': ['1', '2', '3', '5', '6'],
   '|': ['3', '4'],
   '}': ['2', '3', '4', '5', '6'],
   '~': ['2', '3', '4', '6'],
-  //'': [],                                      // 127 x2858 [DEL]
+  'DEL': ['4', '5', '6'],                                      // 127 x2858 [DEL]
   '€': ['4', '5', '7'],                          // 128 x28
-  //'': [],                                      // 129 x2800 [HOP]
+  'HOP': ['8'],                                      // 129 x2800 [HOP]
   '‚': ['3', '6', '7', '8'],                     // 130 x28e4
   'ƒ': ['7', '8'],                               // 131 x28c0
   '„': ['1', '2', '3', '4', '5', '6', '7'],      // 132 x287f
@@ -406,10 +439,10 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   'Š': ['6', '7', '8'],                          // 138 x28e0
   '‹': ['2', '7'],                               // 139 x2842
   'Œ': ['2', '3', '7'],                          // 140 x2846
-  //'': [],                                      // 141 x2852 [RI]
+  'RI': ['2', '5', '7'],                                      // 141 x2852 [RI]
   'Ž': ['1', '2', '5', '6', '7'],                // 142 x2873
-  //'': [],                                      // 143 x286b [SS3]
-  //'': [],                                      // 144 x28eb [DCS]
+  'SS3': ['1', '2', '4', '6', '7'],                                      // 143 x286b [SS3]
+  'DCS': ['1', '2', '4', '6', '7', '8'],                                      // 144 x28eb [DCS]
   '‘': ['2', '3', '5', '6', '7'],                // 145 x2876
   '’': ['2', '3', '6', '7'],                     // 146 x2866
   '“': ['1', '3', '8'],                          // 147 x2885
@@ -417,12 +450,12 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   '•': ['2', '7', '8'],                          // 149 x28c2
   '–': ['2', '3', '7', '8'],                     // 150 x28c6
   '—': ['1', '3', '5', '6', '8'],                // 151 x28b5
-  //'': [],                                      // 152 x28fb [SOS]
+  'SOS': ['2', '5', '7', '8'],                                      // 152 x28fb [SOS]
   '™': ['1', '2', '4', '5', '6', '7', '8'],      // 153 x28fb
   'š': ['2', '6', '7', '8'],                     // 154 x28e2
   '›': ['1', '2', '3', '4', '5', '8'],           // 155 x289f
   'œ': ['6', '7'],                               // 156 x2860
-  //'': [],                                      // 157 x287b [OSC]
+  'OSC': ['1', '2', '4', '5', '6', '7'],                                      // 157 x287b [OSC]
   'ž': ['2', '3', '5', '6', '7', '8'],           // 158 x28f6
   'Ÿ': ['1', '2', '3', '4', '5', '6', '7', '8'], // 159 x28ff
   ' ': ['7'],                                    // 160 x2840
@@ -656,6 +689,21 @@ List<List<String>> _encodeBrailleEUR(String input) {
 
   for (int i = 0; i < inputs.length; i++) {
     result.add(_charsToSegmentsEUR[inputs[i]]);
+  }
+  return result;
+}
+
+List<List<String>> _encodeBrailleSIMPLE(String input) {
+
+  List<String> inputs = input.split('');
+  List<List<String>> result = [];
+
+  Map<String, List<String>> _charsToSegments;
+  _charsToSegments.addAll(_charsToSegmentsLetters);
+  _charsToSegments.addAll(_charsToSegmentsDigits);
+
+  for (int i = 0; i < inputs.length; i++) {
+    result.add(_charsToSegments[inputs[i]]);
   }
   return result;
 }
@@ -931,6 +979,9 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   if (input == null) return [];
 
   switch (language) {
+    case BrailleLanguage.SIMPLE:
+      return _encodeBrailleSIMPLE(input);
+      break;
     case BrailleLanguage.DEU:
       return _encodeBrailleDEU(input);
       break;
@@ -973,6 +1024,38 @@ Map<String, dynamic> _decodeEURBraille(List<String> inputs) {
   }).toList();
 
   return {'displays': displays, 'chars': text};
+}
+
+Map<String, dynamic> _decodeSIMPLEBraille(List<String> inputs) {
+  var displays = <List<String>>[];
+
+  List<String> text = inputs.where((input) => input != null).map((input) {
+    var char = '';
+    var charH = '';
+    var display = <String>[];
+    input.split('').forEach((element) {
+      display.add(element);
+    });
+
+    if (_segmentsToCharsLetters.map((key, value) =>
+        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+        null)
+      char = char + UNKNOWN_ELEMENT;
+    else {
+      charH = _segmentsToCharsLetters.map((key, value) =>
+          MapEntry(key.join(), value.toString()))[input.split('').join()];
+      if (_LetterToDigit[charH] != null)
+        charH = '(' + charH.toUpperCase() + '|' + _LetterToDigit[charH] + ')';
+        char = char + charH;
+    }
+
+    displays.add(display);
+
+    return char;
+  }).toList();
+
+  return {'displays': displays, 'chars': text};
+
 }
 
 Map<String, dynamic> _decodeDEUBraille(List<String> inputs) {
@@ -1041,6 +1124,7 @@ Map<String, dynamic> _decodeDEUBraille(List<String> inputs) {
   return {'displays': displays, 'chars': text};
 
 }
+
 Map<String, dynamic> _decodeENGBraille(List<String> inputs) {
 
   return {
@@ -1056,25 +1140,28 @@ Map<String, dynamic> _decodeFRABraille(List<String> inputs) {
   };
 }
 
-Map<String, dynamic> decodeBraille(List<String> inputs, BrailleLanguage language) {
-  if (inputs == null || inputs.length == 0)
+Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language) {
+  if (input == null || input.length == 0)
     return {
       'displays': [[]],
       'chars': [0]
     };
 
   switch (language) {
+    case BrailleLanguage.SIMPLE:
+      return _decodeSIMPLEBraille(input);
+      break;
     case BrailleLanguage.DEU:
-      return _decodeDEUBraille(inputs);
+      return _decodeDEUBraille(input);
       break;
     case BrailleLanguage.ENG:
-      return _decodeENGBraille(inputs);
+      return _decodeENGBraille(input);
       break;
     case BrailleLanguage.FRA:
-      return _decodeFRABraille(inputs);
+      return _decodeFRABraille(input);
       break;
     case BrailleLanguage.EUR:
-      return _decodeEURBraille(inputs);
+      return _decodeEURBraille(input);
       break;
   }
 }
