@@ -245,7 +245,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   void _decorateExtraData(List<Widget> widgets) {
     if (file == null) return;
-      var _extraData = extraData(file.bytes);
+    var _extraData = extraData(file.bytes);
 
       widgets.add(GCWOutput(
         title: i18n(context, "exif_section_extra_data"),
@@ -255,7 +255,7 @@ class _ExifReaderState extends State<ExifReader> {
           size: IconButtonSize.SMALL,
           iconColor: _extraData == null ? Colors.grey : null,
           onPressed: () {
-            _extraData == null ? null : _exportFile(context, _extraData);
+            _extraData == null ? null : _exportFile(context, _extraData?.first);
           },
         ))
       );
