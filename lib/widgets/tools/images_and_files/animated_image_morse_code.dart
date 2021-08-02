@@ -21,7 +21,6 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
 
 class AnimatedImageMorseCode extends StatefulWidget {
