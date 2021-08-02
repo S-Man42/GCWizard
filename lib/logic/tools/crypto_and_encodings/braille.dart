@@ -1,6 +1,10 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 // https://www.pharmabraille.com/wp-content/uploads/2014/11/World-Braille-Usage-Third-Edition-1.pdf
+// - English   p. 175 ff
+// - French    p. 180 ff
+// - German    p. 182 ff
+
 
 // https://de.wikipedia.org/wiki/Brailleschrift
 // https://www.pharmabraille.com/wp-content/uploads/2015/01/system_d_blindenschrift_7620.pdf
@@ -28,32 +32,33 @@ Map<BrailleLanguage, String> BRAILLE_LANGUAGES = {
 };
 
 final Map<String, List<String>> _charsToSegmentsLetters = {
+  ' ': [],
   'a': ['1'],
   'b': ['1', '2'],
   'c': ['1', '4'],
   'd': ['1', '4', '5'],
   'e': ['1', '5'],
   'f': ['1', '4', '2'],
-  'g': ['1', '4', '2', '5'],
+  'g': ['1', '2', '4', '5'],
   'h': ['1', '2', '5'],
-  'i': ['4', '2'],
-  'j': ['4', '2', '5'],
+  'i': ['2', '4'],
+  'j': ['2', '4', '5'],
   'k': ['1', '3'],
   'l': ['1', '2', '3'],
-  'm': ['1', '4', '3'],
-  'n': ['1', '4', '5', '3'],
-  'o': ['1', '5', '3'],
-  'p': ['1', '4', '2', '3'],
-  'q': ['1', '4', '2', '5', '3'],
-  'r': ['1', '2', '5', '3'],
-  's': ['4', '2', '3'],
-  't': ['4', '2', '5', '3'],
+  'm': ['1', '3', '4'],
+  'n': ['1', '3', '4', '5'],
+  'o': ['1', '3', '5'],
+  'p': ['1', '2', '3', '4'],
+  'q': ['1', '2', '3', '4', '5'],
+  'r': ['1', '2', '3', '5'],
+  's': ['2', '3', '4'],
+  't': ['2', '3', '4', '5'],
   'u': ['1', '3', '6'],
-  'v': ['1', '2', '3', '3'],
-  'w': ['4', '2', '5', '6'],
-  'x': ['1', '4', '3', '6'],
-  'y': ['1', '4', '5', '3', '6'],
-  'z': ['1', '5', '3', '6'],
+  'v': ['1', '2', '3', '6'],
+  'w': ['2', '4', '5', '6'],
+  'x': ['1', '3', '4', '6'],
+  'y': ['1', '3', '4', '5', '6'],
+  'z': ['1', '3', '5', '6'],
 };
 
 final Map<String, List<String>> _charsToSegmentsDigits = {
@@ -62,11 +67,11 @@ final Map<String, List<String>> _charsToSegmentsDigits = {
   '3': ['1', '4'],
   '4': ['1', '4', '5'],
   '5': ['1', '5'],
-  '6': ['1', '4', '2'],
+  '6': ['1', '2', '4'],
   '7': ['1', '4', '2', '5'],
   '8': ['1', '2', '5'],
-  '9': ['4', '2'],
-  '0': ['4', '2', '5'],
+  '9': ['2', '4'],
+  '0': ['2', '4', '5'],
 };
 
 final Map<String, List<String>> _charsToSegmentsDEU = {
@@ -89,7 +94,6 @@ final Map<String, List<String>> _charsToSegmentsDEU = {
   "'": ['6'], // small letters follows
   '§': ['4', '3', '6'],
   // Vollschrift
-  ' ': [],
   'au': ['1', '6'],
   'eu': ['1', '2', '6'],
   'ei': ['1', '4', '6'],
@@ -120,43 +124,6 @@ final Map<String, List<String>> _charsToSegmentsDEU = {
 
 };
 final Map<String, List<String>> _charsToSegmentsENG = {
-  ' ': [],
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '4'],
-  '4': ['1', '4', '5'],
-  '5': ['1', '5'],
-  '6': ['1', '4', '2'],
-  '7': ['1', '4', '2', '5'],
-  '8': ['1', '2', '5'],
-  '9': ['4', '2'],
-  '0': ['4', '2', '5'],
-  'a': ['a'],
-  'b': ['1', '2'],
-  'c': ['1', '4'],
-  'd': ['1', '4', '5'],
-  'e': ['1', '5'],
-  'f': ['1', '4', '2'],
-  'g': ['1', '4', '2', '5'],
-  'h': ['1', '2', '5'],
-  'i': ['4', '2'],
-  'j': ['4', '2', '5'],
-  'k': ['1', '3'],
-  'l': ['1', '2', '3'],
-  'm': ['1', '4', '3'],
-  'n': ['1', '4', '5', '3'],
-  'o': ['1', '5', '3'],
-  'p': ['1', '4', '2', '3'],
-  'q': ['1', '4', '2', '5', '3'],
-  'r': ['1', '2', '5', '3'],
-  's': ['4', '2', '3'],
-  't': ['4', '2', '5', '3'],
-  'u': ['1', '3', '6'],
-  'v': ['1', '2', '3', '3'],
-  'w': ['4', '2', '5', '6'],
-  'x': ['1', '4', '3', '6'],
-  'y': ['1', '4', '5', '3', '6'],
-  'z': ['1', '5', '3', '6'],
   'and': ['1', '4', '2', '3', '6'],
   'for': ['1', '4', '2', '5', '3', '6'],
   'of': ['1', '2', '5', '3', '6'],
@@ -201,33 +168,6 @@ final Map<String, List<String>> _charsToSegmentsENG = {
   '_': ['3', '6'],
 };
 final Map<String, List<String>> _charsToSegmentsFRA = {
-  ' ': [],
-  'a': ['1'],
-  'b': ['1', '2'],
-  'c': ['1', '4'],
-  'd': ['1', '4', '5'],
-  'e': ['1', '5'],
-  'f': ['1', '4', '2'],
-  'g': ['1', '4', '2', '5'],
-  'h': ['1', '2', '5'],
-  'i': ['4', '2'],
-  'j': ['4', '2', '5'],
-  'k': ['1', '3'],
-  'l': ['1', '2', '3'],
-  'm': ['1', '4', '3'],
-  'n': ['1', '4', '5', '3'],
-  'o': ['1', '5', '3'],
-  'p': ['1', '4', '2', '3'],
-  'q': ['1', '4', '2', '5', '3'],
-  'r': ['1', '2', '5', '3'],
-  's': ['4', '2', '3'],
-  't': ['4', '2', '5', '3'],
-  'u': ['1', '3', '6'],
-  'v': ['1', '2', '3', '3'],
-  'w': ['4', '2', '5', '6'],
-  'x': ['1', '4', '3', '6'],
-  'y': ['1', '4', '5', '3', '6'],
-  'z': ['1', '5', '3', '6'],
   'à': ['1', '2', '5', '3', '6'],
   'â': ['1', '6'],
   'ç': ['1', '4', '2', '3', '6'],
@@ -698,7 +638,7 @@ List<List<String>> _encodeBrailleSIMPLE(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
-  Map<String, List<String>> _charsToSegments;
+  Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
   _charsToSegments.addAll(_charsToSegmentsLetters);
   _charsToSegments.addAll(_charsToSegmentsDigits);
 
@@ -1046,7 +986,7 @@ Map<String, dynamic> _decodeSIMPLEBraille(List<String> inputs) {
           MapEntry(key.join(), value.toString()))[input.split('').join()];
       if (_LetterToDigit[charH] != null)
         charH = '(' + charH.toUpperCase() + '|' + _LetterToDigit[charH] + ')';
-        char = char + charH;
+        char = char + charH.toUpperCase();
     }
 
     displays.add(display);
