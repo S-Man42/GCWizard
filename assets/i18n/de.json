@@ -1712,6 +1712,7 @@
   "esotericprogramminglanguages_selection_title": "Esoterische Programmiersprachen",
   "esotericprogramminglanguages_selection_description": "Interpreter und Generatoren für seltsame Programmiersprachen (z.B. Brainf**k, Ook, Whitespace, ...)",
   "exif_title": "Exif- und Metadatenansicht",
+  "exif_section_extra_data": "Extra Daten",
   "exif_section_file": "Datei",
   "exif_section_general": "Allgemein",
   "exif_section_image": "Bild",
