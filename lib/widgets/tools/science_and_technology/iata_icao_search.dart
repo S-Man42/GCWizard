@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/iata_icao.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -12,9 +13,6 @@ class IATAICAOSearch extends StatefulWidget {
 }
 
 class IATAICAOSearchState extends State<IATAICAOSearch> {
-  var _currentSearch = 0;
-  List<String> _currentSearchList;
-
   var _inputControllerCode;
   var _inputControllerName;
 
@@ -24,12 +22,21 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentCode = GCWSwitchPosition.left;
 
+  var _output;
+
   @override
   void initState() {
     super.initState();
     _inputControllerCode = TextEditingController(text: _currentInputCode);
     _inputControllerName = TextEditingController(text: _currentInputName);
-    _currentSearchList = ['iataicao_name', 'iataicao_iata', 'iataicao_icao'];
+  }
+
+  @override
+  void dispose() {
+    _inputControllerCode.dispose();
+    _inputControllerName.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -44,15 +51,18 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+              _output = null;
             });
           },
         ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
           controller: _inputControllerName,
+          hintText: i18n(context, 'iataicao_search_contains'),
           onChanged: (text) {
             setState(() {
               _currentInputName = text;
+              _output = null;
             });
           },
         )
@@ -66,20 +76,30 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
                 onChanged: (value) {
                   setState(() {
                     _currentCode = value;
+                    _output = null;
                   });
                 },
               ),
               GCWTextField(
                 controller: _inputControllerCode,
+                hintText: i18n(context, 'iataicao_search_startswith'),
                 onChanged: (text) {
                   setState(() {
                     _currentInputCode = text;
+                    _output = null;
                   });
                 },
               ),
           ],
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWSubmitButton(
+          onPressed: () {
+            setState(() {
+              _output = _buildOutput();
+            });
+          },
+        ),
+        GCWDefaultOutput(child: _output)
       ],
     );
   }
@@ -95,7 +115,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       var output;
 
       data = IATA_ICAO_CODES
-          .values.where((e) => e['name'] != null && e['name'].toLowerCase().startsWith(_currentInputName.toLowerCase()))
+          .values.where((e) => e['name'] != null && e['name'].toLowerCase().contains(_currentInputName.toLowerCase()))
           .map((e) {
               if (e['name'] == null) {
                 print(e['name']);
@@ -110,8 +130,9 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
 
       flexValues = [2, 1, 1, 2];
       data.sort((a, b) => a[0].compareTo(b[0]));
+      data.insert(0, [i18n(context, 'common_name'), i18n(context, 'iataicao_iata'), i18n(context, 'iataicao_icao'), i18n(context, 'common_place')]);
 
-      output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1);
+      output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1, hasHeader: true);
 
       return Column(
         children: output,
@@ -142,7 +163,8 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
           return a[1].compareTo(b[1]);
         });
 
-        output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1);
+        data.insert(0, [i18n(context, 'iataicao_iata'), i18n(context, 'iataicao_icao'), i18n(context, 'common_name'), i18n(context, 'common_place')]);
+        output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 2, hasHeader: true);
 
         return Column(
           children: output,
@@ -165,7 +187,8 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
           return a[1].compareTo(b[1]);
         });
 
-        output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1);
+        data.insert(0, [i18n(context, 'iataicao_icao'), i18n(context, 'iataicao_iata'), i18n(context, 'common_name'), i18n(context, 'common_place')]);
+        output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 2, hasHeader: true);
 
         return Column(
           children: output,

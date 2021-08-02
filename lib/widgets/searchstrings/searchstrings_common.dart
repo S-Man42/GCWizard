@@ -197,7 +197,7 @@ const SEARCHSTRING_COMMON_HEXADECIMAL = '16';
 const SEARCHSTRING_COMMON_HOMOPHONE = 'homophone';
 const SEARCHSTRING_COMMON_HOUDINI =
     'harryhoudinicode harryhudinicode say pray bequick quickly speak now tell look answer please erikweisz';
-const SEARCHSTRING_COMMON_IATAICAO = 'iata icao airport';
+const SEARCHSTRING_COMMON_IATAICAO = 'iata icao internationalairtransportassociation internationalcivilaviationorganization internationalcivilaviationorganisation';
 const SEARCHSTRING_COMMON_ICECODES = '1980 wmo sigrid';
 const SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS = '';
 const SEARCHSTRING_COMMON_IMAGES = '';
