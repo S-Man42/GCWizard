@@ -1,13 +1,12 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -52,30 +51,26 @@ class QrCodeState extends State<QrCode> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
-            ? GCWButton(
-                text: i18n(context, 'common_exportfile_openfile'),
-                onPressed: () {
-                  setState(
-                    () {
-                      openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                        if (file != null) {
-                          _outData = file.bytes;
-                          _updateOutput();
-                        }
-                      });
-                    },
-                  );
-                })
-            : GCWTextField(
-                controller: _inputController,
-                maxLength: 999,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInput = value;
-                    _updateOutput();
-                  });
-                },
-              ),
+          ? GCWOpenFile(
+              expanded: _outData == null,
+              supportedFileTypes: supportedImageTypes,
+              onLoaded: (_file) {
+                if (_file != null) {
+                  _outData = _file.bytes;
+                  _updateOutput();
+                }
+              },
+            )
+          : GCWTextField(
+              controller: _inputController,
+              maxLength: 999,
+              onChanged: (value) {
+                setState(() {
+                  _currentInput = value;
+                  _updateOutput();
+                });
+              },
+            ),
         ((_currentMode == GCWSwitchPosition.right) && (_outData != null)) ? Image.memory(_outData) : Container(),
         GCWTwoOptionsSwitch(
           value: _currentMode,
@@ -86,17 +81,17 @@ class QrCodeState extends State<QrCode> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput(),
-            trailing: (_currentMode == GCWSwitchPosition.right)
-                ? null
-                : GCWIconButton(
-                    iconData: Icons.save,
-                    size: IconButtonSize.SMALL,
-                    iconColor: _outDataEncrypt == null ? Colors.grey : null,
-                    onPressed: () {
-                      _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
-                    },
-                  ))
+          child: _buildOutput(),
+          trailing: (_currentMode == GCWSwitchPosition.right)
+            ? null
+            : GCWIconButton(
+                iconData: Icons.save,
+                size: IconButtonSize.SMALL,
+                iconColor: _outDataEncrypt == null ? Colors.grey : null,
+                onPressed: () {
+                  _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
+                },
+              ))
       ],
     );
   }

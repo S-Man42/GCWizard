@@ -6,11 +6,11 @@ import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -43,19 +43,16 @@ class AnimatedImageState extends State<AnimatedImage> {
     }
 
     return Column(children: <Widget>[
-      GCWButton(
-          text: i18n(context, 'common_exportfile_openfile'),
-          onPressed: () {
-            setState(() {
-              openFileExplorer(allowedExtensions: ['gif', 'png', 'webp']).then((file) {
-                if (file != null) {
-                  _platformFile = file;
-                  _analysePlatformFileAsync();
-                }
-                ;
-              });
-            });
-          }),
+      GCWOpenFile(
+        expanded: _platformFile == null,
+        supportedFileTypes: AnimatedImageState.allowedExtensions,
+        onLoaded: (_file) {
+          if (_file != null) {
+            _platformFile = _file;
+            _analysePlatformFileAsync();
+          }
+        },
+      ),
       GCWText(
         text: _outData == null ? "" : _platformFile.name,
       ),

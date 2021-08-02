@@ -3051,7 +3051,6 @@
   "spoonlanguage_title": "Spoon Language",
   "spoonlanguage_description": "Game Language, Secret Language",
   "spoonlanguage_example": "Spoon → spolewoolewon",
-  "open_image": "Open image",
   "stegano_title": "LSB Steganography",
   "stegano_description": "Encode / Decode data hidden inside image using LSB steganography technic",
   "stegano_input": "Message",

@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
@@ -91,9 +92,16 @@ class _SteganoState extends State<Stegano> {
             });
           },
         ),
-        GCWButton(
-          text: i18n(context, 'open_image'),
-          onPressed: _readFileFromPicker,
+        GCWOpenFile(
+          expanded: widget.file == null,
+          supportedFileTypes: supportedImageTypes,
+          onLoaded: (file) {
+            if (file == null) return;
+            _file = file;
+            _bytesSource = file.bytes;
+            // clear previous decoded text
+            _decodedText = null;
+          },
         ),
         ..._buildImageSource(),
         GCWButton(
@@ -108,21 +116,6 @@ class _SteganoState extends State<Stegano> {
         ..._buildOutput()
       ],
     );
-  }
-
-  Future<void> _readFileFromPicker() async {
-    local.PlatformFile file = await openFileExplorer(
-      allowedExtensions: supportedImageTypes,
-    );
-    if (file != null) {
-      if (file == null) return;
-      setState(() {
-        _file = file;
-        _bytesSource = file.bytes;
-        // clear previous decoded text
-        _decodedText = null;
-      });
-    }
   }
 
   _calculateOutput() async {
