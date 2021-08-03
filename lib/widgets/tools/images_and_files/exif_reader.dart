@@ -7,6 +7,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
@@ -55,7 +56,7 @@ class _ExifReaderState extends State<ExifReader> {
       children: <Widget>[
         GCWOpenFile(
           expanded: widget.file == null,
-          supportedFileTypes: supportedImageTypes,
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (_file) {
             if (_file == null) return;
 
@@ -264,7 +265,7 @@ class _ExifReaderState extends State<ExifReader> {
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(data.buffer.asByteData(),
-        "extra_data_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+        "extra_data_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }

@@ -219,10 +219,6 @@ Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   return Tuple3<int, int, int>(t1, t2, t3);
 }
 
-Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
-  animated_image.createZipFile(fileName, imageList);
-}
-
 List<List<int>> _searchHighSignalImage(List<Image.Image> frames, List<List<int>> filteredList) {
   if (filteredList.length == 2) {
     var brightestImage = _searchBrightestImage(frames[filteredList[0][0]], frames[filteredList[1][0]]);

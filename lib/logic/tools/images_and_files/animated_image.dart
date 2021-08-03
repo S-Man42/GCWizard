@@ -31,7 +31,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
     var imageList = <Uint8List>[];
     var durations = <int>[];
     var linkList = <int>[];
-    var extension = getFileType(bytes);
+    FileType extension = getFileType(bytes);
 
     if (animation != null) {
       animation?.frames.forEach((image) {
@@ -45,7 +45,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
         var index = _checkSameHash(animation.frames, i);
         if (index < 0) {
           switch (extension) {
-            case '.png':
+            case FileType.PNG:
               imageList.add(Image.encodePng(animation.frames[i]));
               break;
             default:
@@ -125,42 +125,4 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   filteredList.add(newList);
 
   return filteredList;
-}
-
-Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
-  try {
-    String tmpDir = (await getTemporaryDirectory()).path;
-    var counter = 0;
-    var zipPath = '$tmpDir/gcwizardtmp.zip';
-    var pointIndex = fileName.lastIndexOf('.');
-    var extension = getFileType(imageList[0]);
-    if (pointIndex > 0) fileName = fileName.substring(0, pointIndex);
-
-    var encoder = ZipFileEncoder();
-    encoder.create(zipPath);
-
-    for (Uint8List imageBytes in imageList) {
-      counter++;
-      var fileNameZip = '$fileName' + '_$counter$extension';
-      var tmpPath = '$tmpDir/$fileNameZip';
-      if (File(tmpPath).existsSync()) File(tmpPath).delete();
-
-      File imageFileTmp = new File(tmpPath);
-      imageFileTmp = await imageFileTmp.create();
-      imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
-
-      encoder.addFile(imageFileTmp, fileNameZip);
-      imageFileTmp.delete();
-    }
-    ;
-
-    encoder.close();
-
-    var bytes = File(encoder.zip_path).readAsBytesSync();
-    await File(encoder.zip_path).delete();
-
-    return bytes;
-  } on Exception {
-    return null;
-  }
 }

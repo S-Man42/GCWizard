@@ -1,34 +1,13 @@
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-enum MIMETYPE { IMAGE, ARCHIV, DATA, TEXT }
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 Uint8List hexstring2file(String input) {
   if (_isBinary(input))
     return _binaryString2bytes(input);
   else
     return _hexString2bytes(input);
-}
-
-MIMETYPE getMimeType(String fileName) {
-  if (fileName.endsWith('.jpg') ||
-      fileName.endsWith('.gif') ||
-      fileName.endsWith('.png') ||
-      fileName.endsWith('.bmp') ||
-      fileName.endsWith('.tif') ||
-      fileName.endsWith('.tiff') ||
-      fileName.endsWith('.webp'))
-    return MIMETYPE.IMAGE;
-  else if (fileName.endsWith('.zip') ||
-      fileName.endsWith('.rar') ||
-      fileName.endsWith('.7z') ||
-      fileName.endsWith('.tar'))
-    return MIMETYPE.ARCHIV;
-  else if (fileName.endsWith('.txt'))
-    return MIMETYPE.TEXT;
-  else
-    return MIMETYPE.DATA;
 }
 
 String file2hexstring(Uint8List input) {

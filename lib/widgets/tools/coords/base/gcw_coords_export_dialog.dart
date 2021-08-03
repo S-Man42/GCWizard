@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_export.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
 showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
@@ -32,7 +33,7 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
       text: 'GPX',
       onPressed: () async {
         coordinatesExport.exportCoordinates(fileName, points, polylines).then((value) {
-          _showExportedFileDialog(context, value, '.gpx');
+          _showExportedFileDialog(context, value, FileType.GPX);
         });
       },
     ),
@@ -40,13 +41,13 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
       text: 'KML',
       onPressed: () async {
         coordinatesExport.exportCoordinates(fileName, points, polylines, kmlFormat: true).then((value) {
-          _showExportedFileDialog(context, value, '.kml');
+          _showExportedFileDialog(context, value, FileType.KML);
         });
       },
     )
   ]);
 }
 
-_showExportedFileDialog(BuildContext context, Map<String, dynamic> value, String type) {
+_showExportedFileDialog(BuildContext context, Map<String, dynamic> value, FileType type) {
   if (value != null) showExportedFileDialog(context, value['path'], fileType: type);
 }

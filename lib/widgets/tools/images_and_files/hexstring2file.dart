@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
@@ -17,7 +17,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
-  final PlatformFile platformFile;
+  final filePicker.PlatformFile platformFile;
 
   const HexString2File({Key key, this.platformFile}) : super(key: key);
 
@@ -97,7 +97,7 @@ class HexString2FileState extends State<HexString2File> {
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(data.buffer.asByteData(),
-        "hexstring_export_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+        "hexstring_export_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }
@@ -107,34 +107,34 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
   if (outData == null) return Container();
 
   var children = outData.map((_outData) {
-    var mimeType = getMimeType(getFileType(_outData));
+    var _class = fileClass(getFileType(_outData));
 
-    switch (mimeType) {
-      case MIMETYPE.IMAGE:
+    switch (_class) {
+      case FileClass.IMAGE:
         try {
           return Image.memory(_outData);
         } catch (e) {
         }
         return _fileWidget(context, getFileType(_outData));
 
-      case MIMETYPE.TEXT:
+      case FileClass.TEXT:
         return GCWOutputText(text: String.fromCharCodes(_outData));
 
-      case MIMETYPE.ARCHIV:
-        String extension = getFileType(_outData);
-        if (extension.endsWith('.zip')) {
+      case FileClass.ARCHIVE:
+        FileType fileType = getFileType(_outData);
+        if (fileType == FileType.ZIP) {
           try {
             InputStream input = new InputStream(_outData.buffer.asByteData());
-            return (_archiveWidget(context, ZipDecoder().decodeBuffer(input) , 'zip'));
+            return (_archiveWidget(context, ZipDecoder().decodeBuffer(input) , fileType));
           } catch (e) {}
-        } else if (extension.endsWith('.tar')) {
+        } else if (fileType == FileType.TAR) {
           try {
             InputStream input = new InputStream(_outData.buffer.asByteData());
-            return (_archiveWidget(context, TarDecoder().decodeBuffer(input), 'tar'));
+            return (_archiveWidget(context, TarDecoder().decodeBuffer(input), fileType));
           } catch (e) {}
 
         } else {
-          return _fileWidget(context, extension);
+          return _fileWidget(context, fileType);
         }
         break;
       default:
@@ -146,8 +146,10 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
   return Column(children: children);
 }
 
-Widget _archiveWidget(BuildContext context, Archive archive, String type) {
-  var text  = type + "-" + i18n(context, 'hexstring2file_file') + ' -> ' +
+Widget _archiveWidget(BuildContext context, Archive archive, FileType fileType) {
+  var type = fileType.toString().split('.')[1];
+
+  var text  = type + '-' + i18n(context, 'hexstring2file_file') + ' -> ' +
       i18n(context, 'hexstring2file_content') + '\n';
 
   text += archive.where((element) => element.isFile).map((file) {
@@ -157,8 +159,9 @@ Widget _archiveWidget(BuildContext context, Archive archive, String type) {
   return GCWOutputText(text: text);
 }
 
-Widget _fileWidget(BuildContext context, String fileName) {
-  return GCWOutputText(text: fileName.replaceFirst('.', '') + '-' +
-        i18n(context, 'hexstring2file_file'));
+Widget _fileWidget(BuildContext context, FileType fileType) {
+  var extension = fileExtension(fileType);
+
+  return GCWOutputText(text: extension + '-' + i18n(context, 'hexstring2file_file'));
 }
 

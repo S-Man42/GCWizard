@@ -196,6 +196,6 @@ class KarolRobotState extends State<KarolRobot> {
         data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
-      showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(data));
+      showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
   }
 }
