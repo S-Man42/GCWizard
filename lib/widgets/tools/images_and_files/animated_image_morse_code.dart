@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -10,7 +11,6 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -21,7 +21,6 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
 
 class AnimatedImageMorseCode extends StatefulWidget {
@@ -88,20 +87,16 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   Widget _decodeWidgets() {
     return Column(children: <Widget>[
-      GCWButton(
-          text: i18n(context, 'common_exportfile_openfile'),
-          onPressed: () {
-            setState(() {
-              openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
-                if (file != null) {
-                  _platformFile = file;
-                  _outData = null;
-                  _outText = null;
-                  _analysePlatformFileAsync();
-                }
-              });
-            });
-          }),
+      GCWOpenFile(
+        expanded: _platformFile == null,
+        supportedFileTypes: AnimatedImageState.allowedExtensions,
+        onLoaded: (_file) {
+          if (_file != null) {
+            _platformFile = _file;
+            _analysePlatformFileAsync();
+          }
+        },
+      ),
       GCWText(
         text: _outData == null ? "" : _platformFile.name,
       ),
@@ -201,32 +196,22 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       Row(children: [
         Expanded(
           child: Column(children: [
-            GCWButton(
-              text: i18n(context, 'common_exportfile_openfile'),
-              onPressed: () {
-                openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
-                  setState(() {
-                    if (file != null) {
-                      _highImage = file.bytes;
-                    }
-                  });
-                });
+            GCWOpenFile(
+              expanded: _highImage == null,
+              supportedFileTypes: AnimatedImageState.allowedExtensions,
+              onLoaded: (_file) {
+                if (_file != null) _highImage = _file.bytes;
               },
             ),
           ]),
         ),
         Expanded(
           child: Column(children: [
-            GCWButton(
-              text: i18n(context, 'common_exportfile_openfile'),
-              onPressed: () {
-                openFileExplorer(allowedExtensions: AnimatedImageState.allowedExtensions).then((file) {
-                  setState(() {
-                    if (file != null) {
-                      _lowImage = file?.bytes;
-                    }
-                  });
-                });
+            GCWOpenFile(
+              expanded: _lowImage == null,
+              supportedFileTypes: AnimatedImageState.allowedExtensions,
+              onLoaded: (_file) {
+                if (_file != null) _lowImage = _file.bytes;
               },
             ),
           ]),

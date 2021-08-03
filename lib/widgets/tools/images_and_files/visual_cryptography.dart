@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -67,28 +68,22 @@ class VisualCryptographyState extends State<VisualCryptography> {
       Row(children: [
         Expanded(
           child: Column(children: [
-            GCWButton(
-              text: i18n(context, 'common_exportfile_openfile'),
-              onPressed: () {
-                openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                  setState(() {
-                    if (file != null) _decodeImage1 = file;
-                  });
-                });
+            GCWOpenFile(
+              expanded: _decodeImage1 == null,
+              supportedFileTypes: supportedImageTypes,
+              onLoaded: (_file) {
+                if (_file != null) _decodeImage1 = _file;
               },
             ),
           ]),
         ),
         Expanded(
           child: Column(children: [
-            GCWButton(
-              text: i18n(context, 'common_exportfile_openfile'),
-              onPressed: () {
-                openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                  setState(() {
-                    if (file != null) _decodeImage2 = file;
-                  });
-                });
+            GCWOpenFile(
+              expanded: _decodeImage2 == null,
+              supportedFileTypes: supportedImageTypes,
+              onLoaded: (_file) {
+                if (_file != null) _decodeImage2 = _file;
               },
             ),
           ]),
@@ -151,20 +146,16 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _encodeWidgets() {
     return Column(children: <Widget>[
-      GCWButton(
-          text: i18n(context, 'common_exportfile_openfile'),
-          onPressed: () {
-            setState(() {
-              openFileExplorer(allowedExtensions: supportedImageTypes).then((file) {
-                setState(() {
-                  if (file != null) {
-                    _encodeImage = file.bytes;
-                    encodeImageSize();
-                  }
-                });
-              });
-            });
-          }),
+      GCWOpenFile(
+        expanded: _encodeImage == null,
+        supportedFileTypes: supportedImageTypes,
+        onLoaded: (_file) {
+          if (_file != null) {
+            _encodeImage = _file.bytes;
+            encodeImageSize();
+          }
+        },
+      ),
 
       _encodeImage != null ? Image.memory(_encodeImage) : Container(),
 
