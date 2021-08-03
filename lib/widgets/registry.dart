@@ -517,11 +517,7 @@ class Registry {
     i18nPrefix: 'beaufort_selection',
     categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_BEAUFORT,
-            SEARCHSTRING_DE_BEAUFORT,
-            SEARCHSTRING_EN_BEAUFORT,
-            SEARCHSTRING_FR_BEAUFORT]),
+          searchStrings: []),
       GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [

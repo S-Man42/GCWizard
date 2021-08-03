@@ -5,16 +5,10 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false, '7': false, '8': false};
 
-const _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH = 70;
+const _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH = 51;
 const _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT = 130;
+const _EUROBRAILLE_RADIUS = 12;
 
-double _relativeX(Size size, double x) {
-  return size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * x;
-}
-
-double _relativeY(Size size, double y) {
-  return size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * y;
-}
 
 class BrailleEuroSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -35,7 +29,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 20),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('1', !currentSegments['1']);
         });
@@ -44,7 +38,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 20),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('4', !currentSegments['4']);
         });
@@ -53,7 +47,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 50),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('2', !currentSegments['2']);
         });
@@ -62,7 +56,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 50),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('5', !currentSegments['5']);
         });
@@ -71,7 +65,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 80),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('3', !currentSegments['3']);
         });
@@ -80,7 +74,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 80),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('6', !currentSegments['6']);
         });
@@ -89,7 +83,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 110),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('7', !currentSegments['7']);
         });
@@ -98,7 +92,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
         canvas.drawCircle(
             Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 110),
-            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * 10,
+            size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
             paint, onTapDown: (tapDetail) {
           setSegmentState('8', !currentSegments['8']);
         });

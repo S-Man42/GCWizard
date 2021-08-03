@@ -4,6 +4,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -26,6 +27,7 @@ class BrailleState extends State<Braille> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
+  var _currentSimpleMode = GCWSwitchPosition.left;
 
   var _currentLanguage = BrailleLanguage.SIMPLE;
 
@@ -61,17 +63,35 @@ class BrailleState extends State<Braille> {
       ),
       _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWTextField(
-        controller: _encodeController,
-        onChanged: (text) {
-          setState(() {
-            _currentEncodeInput = text;
-          });
-        },
-      )
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
           : Column(
         // decrpyt: input segment => output number
-        children: <Widget>[_buildVisualDecryption()],
-      ),
+              children: <Widget>[
+                _currentLanguage == BrailleLanguage.SIMPLE
+                ? Column(
+                  children: <Widget>[
+                    GCWTwoOptionsSwitch(
+                      value: _currentSimpleMode,
+                      leftValue: i18n(context, "braille_simple_mode_letters"),
+                      rightValue: i18n(context, "braille_simple_mode_digits"),
+                      onChanged: (value) {
+                        setState(() {
+                          _currentSimpleMode = value;
+                        });
+                      },
+                    ),
+                   ],
+                )
+                : Container(),
+                _buildVisualDecryption()
+              ],
+            ),
       GCWTextDivider(
         text: i18n(context, 'segmentdisplay_displayoutput'),
         trailing: Row(
@@ -213,7 +233,7 @@ class BrailleState extends State<Braille> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBraille(output, _currentLanguage);
+      segments = decodeBraille(output, _currentLanguage, (_currentSimpleMode == GCWSwitchPosition.left));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
