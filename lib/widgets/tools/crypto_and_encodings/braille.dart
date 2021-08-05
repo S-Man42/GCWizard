@@ -28,8 +28,9 @@ class BrailleState extends State<Braille> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
   var _currentSimpleMode = GCWSwitchPosition.left;
+  var _currentSimpleFrench = false;
 
-  var _currentLanguage = BrailleLanguage.SIMPLE;
+  var _currentLanguage = BrailleLanguage.SIMPLE_1;
 
   @override
   Widget build(BuildContext context) {
@@ -73,22 +74,48 @@ class BrailleState extends State<Braille> {
           : Column(
         // decrpyt: input segment => output number
               children: <Widget>[
-                _currentLanguage == BrailleLanguage.SIMPLE
+                _currentLanguage == BrailleLanguage.SIMPLE_1
                 ? Column(
-                  children: <Widget>[
-                    GCWTwoOptionsSwitch(
-                      value: _currentSimpleMode,
-                      leftValue: i18n(context, "braille_simple_mode_letters"),
-                      rightValue: i18n(context, "braille_simple_mode_digits"),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentSimpleMode = value;
-                        });
-                      },
-                    ),
-                   ],
-                )
+                    children: <Widget>[
+                      GCWTwoOptionsSwitch(
+                        value: _currentSimpleMode,
+                        leftValue: i18n(context, "braille_simple_mode_letters"),
+                        rightValue: i18n(context, "braille_simple_mode_digits"),
+                        onChanged: (value) {
+                          setState(() {
+                            _currentSimpleMode = value;
+                          });
+                        },
+                      ),
+                      _currentSimpleMode == GCWSwitchPosition.right
+                      ? GCWOnOffSwitch(
+                          value: _currentSimpleFrench,
+                          title: i18n(context, 'braille_language_digits_french'),
+                          onChanged: (value) {
+                            setState(() {
+                              _currentSimpleFrench = value;
+                            });
+                          },
+                        )
+                      : Container(),
+                     ],
+                    )
                 : Container(),
+                _currentLanguage == BrailleLanguage.SIMPLE_2
+                    ? Column(
+                        children: <Widget>[
+                          GCWOnOffSwitch(
+                            value: _currentSimpleFrench,
+                            title: i18n(context, 'braille_language_digits_french'),
+                            onChanged: (value) {
+                              setState(() {
+                                _currentSimpleFrench = value;
+                              });
+                            },
+                          ),
+                        ],
+                )
+                    : Container(),
                 _buildVisualDecryption()
               ],
             ),
@@ -233,7 +260,7 @@ class BrailleState extends State<Braille> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBraille(output, _currentLanguage, (_currentSimpleMode == GCWSwitchPosition.left));
+      segments = decodeBraille(output, _currentLanguage, (_currentSimpleMode == GCWSwitchPosition.left), _currentSimpleFrench);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
