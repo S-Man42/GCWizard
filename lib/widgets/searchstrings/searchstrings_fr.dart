@@ -53,6 +53,7 @@ const SEARCHSTRING_FR_BIFID = '';
 const SEARCHSTRING_FR_BINARY = 'decimale binaire numeros';
 const SEARCHSTRING_FR_BOOKCIPHER = 'lettre ligne paragraphe livre';
 const SEARCHSTRING_FR_BRAILLE = '';
+const SEARCHSTRING_FR_BRAILLE_EURO = '';
 const SEARCHSTRING_FR_BURROESWHEELER = '';
 const SEARCHSTRING_FR_CAESAR = '';
 const SEARCHSTRING_FR_CATAN = 'lescolonsdecatane';

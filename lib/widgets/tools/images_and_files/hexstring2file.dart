@@ -2,22 +2,22 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
-  final PlatformFile platformFile;
+  final filePicker.PlatformFile platformFile;
 
   const HexString2File({Key key, this.platformFile}) : super(key: key);
 
@@ -40,20 +40,15 @@ class HexString2FileState extends State<HexString2File> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-            ? GCWButton(
-                text: i18n(context, 'common_exportfile_openfile'),
-                onPressed: () {
-                  setState(
-                    () {
-                      openFileExplorer().then((file) {
-                        if (file != null) {
-                          _outData = file.bytes;
-                          setState(() {});
-                        }
-                      });
-                    },
-                  );
-                })
+            ? GCWOpenFile(
+                expanded: _outData == null,
+                onLoaded: (_file) {
+                  if (_file != null) {
+                    _outData = _file.bytes;
+                    setState(() {});
+                  }
+                },
+              )
             : GCWTextField(
                 onChanged: (value) {
                   setState(() {
@@ -91,70 +86,7 @@ class HexString2FileState extends State<HexString2File> {
 
       if (_outData == null) return null;
 
-      var mimeType = getMimeType(getFileType(_outData));
-
-      switch (mimeType) {
-        case MIMETYPE.IMAGE:
-          try {
-            return Image.memory(_outData);
-          } catch (e) {
-            return getFileType(_outData).replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
-          }
-
-          return null;
-
-        case MIMETYPE.TEXT:
-          return String.fromCharCodes(_outData);
-
-        case MIMETYPE.ARCHIV:
-          String fileNames = '';
-          String extension = getFileType(_outData);
-          if (extension.endsWith('.zip')) {
-            try {
-              InputStream input = new InputStream(_outData.buffer.asByteData());
-              // Decode the Zip file
-              final archive = ZipDecoder().decodeBuffer(input);
-              fileNames = archive.map((file) {
-                if (file.isFile)
-                  return ('-> ' + file.name);
-                else
-                  return '';
-              }).join('\n');
-            } catch (e) {}
-
-            return 'zip-' +
-                i18n(context, 'hexstring2file_file') +
-                ' -> ' +
-                i18n(context, 'hexstring2file_content') +
-                '\n' +
-                fileNames;
-          } else if (extension.endsWith('.tar')) {
-            try {
-              InputStream input = new InputStream(_outData.buffer.asByteData());
-              // Decode the Zip file
-              final archive = TarDecoder().decodeBuffer(input);
-              fileNames = archive.map((file) {
-                if (file.isFile)
-                  return ('-> ' + file.name);
-                else
-                  return '';
-              }).join('\n');
-            } catch (e) {}
-
-            return 'tar-' +
-                i18n(context, 'hexstring2file_file') +
-                ' -> ' +
-                i18n(context, 'hexstring2file_content') +
-                '\n' +
-                fileNames;
-          } else {
-            fileNames = extension.replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
-          }
-
-          return fileNames;
-        default:
-          return getFileType(_outData).replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
-      }
+      return hexDataOutput(context, <Uint8List>[_outData]);
     } else {
       if (_outData == null) return null;
 
@@ -165,8 +97,71 @@ class HexString2FileState extends State<HexString2File> {
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(data.buffer.asByteData(),
-        "hexstring_export_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+        "hexstring_export_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }
 }
+
+Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
+  if (outData == null) return Container();
+
+  var children = outData.map((_outData) {
+    var _class = fileClass(getFileType(_outData));
+
+    switch (_class) {
+      case FileClass.IMAGE:
+        try {
+          return Image.memory(_outData);
+        } catch (e) {
+        }
+        return _fileWidget(context, getFileType(_outData));
+
+      case FileClass.TEXT:
+        return GCWOutputText(text: String.fromCharCodes(_outData));
+
+      case FileClass.ARCHIVE:
+        FileType fileType = getFileType(_outData);
+        if (fileType == FileType.ZIP) {
+          try {
+            InputStream input = new InputStream(_outData.buffer.asByteData());
+            return (_archiveWidget(context, ZipDecoder().decodeBuffer(input) , fileType));
+          } catch (e) {}
+        } else if (fileType == FileType.TAR) {
+          try {
+            InputStream input = new InputStream(_outData.buffer.asByteData());
+            return (_archiveWidget(context, TarDecoder().decodeBuffer(input), fileType));
+          } catch (e) {}
+
+        } else {
+          return _fileWidget(context, fileType);
+        }
+        break;
+      default:
+        return _fileWidget(context, getFileType(_outData));
+    }
+    return Container();
+  }).toList();
+
+  return Column(children: children);
+}
+
+Widget _archiveWidget(BuildContext context, Archive archive, FileType fileType) {
+  var type = fileType.toString().split('.')[1];
+
+  var text  = type + '-' + i18n(context, 'hexstring2file_file') + ' -> ' +
+      i18n(context, 'hexstring2file_content') + '\n';
+
+  text += archive.where((element) => element.isFile).map((file) {
+    return ('-> ' + file.name);
+  }).join('\n');
+
+  return GCWOutputText(text: text);
+}
+
+Widget _fileWidget(BuildContext context, FileType fileType) {
+  var extension = fileExtension(fileType);
+
+  return GCWOutputText(text: extension + '-' + i18n(context, 'hexstring2file_file'));
+}
+

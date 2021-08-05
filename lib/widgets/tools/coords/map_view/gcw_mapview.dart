@@ -36,6 +36,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mappolyline_editor.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
@@ -604,7 +605,7 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedExtensions: ['gpx', 'kml', 'kmz']).then((file) {
+            openFileExplorer(allowedFileTypes: [FileType.GPX, FileType.KML, FileType.KMZ]).then((file) {
               if (file != null) {
                 loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
                   setState(() {

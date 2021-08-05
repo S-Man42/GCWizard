@@ -15,6 +15,16 @@ TextStyle gcwTextStyle() {
   return TextStyle(color: themeColors().mainFont(), fontSize: defaultFontSize(), fontFamily: 'Roboto Condensed');
 }
 
+TextStyle gcwBetaStyle() {
+  return TextStyle(
+    // backgroundColor: themeColors().accent(),
+    color: themeColors().dialogText(),
+    fontSize: defaultFontSize() - 4,
+    fontWeight: FontWeight.bold,
+    letterSpacing: 1.7
+  );
+}
+
 TextStyle gcwMonotypeTextStyle() {
   return TextStyle(fontSize: defaultFontSize(), fontFamily: 'Courier', fontWeight: FontWeight.bold);
 }

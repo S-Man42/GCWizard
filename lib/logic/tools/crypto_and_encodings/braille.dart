@@ -29,21 +29,26 @@ import 'package:gc_wizard/utils/constants.dart';
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 
 
+//<<<<<<< HEAD
 
-enum BrailleLanguage { SIMPLE_1, SIMPLE_2, DEU, ENG, FRA, EUR }
+//enum BrailleLanguage { SIMPLE_1, SIMPLE_2, DEU, ENG, FRA, EUR }
 
-Map<BrailleLanguage, String> BRAILLE_LANGUAGES = {
-  BrailleLanguage.SIMPLE_1: 'braille_language_simple_1',
-  BrailleLanguage.SIMPLE_2: 'braille_language_simple_2',
-  BrailleLanguage.DEU: 'braille_language_german',
-  BrailleLanguage.ENG: 'braille_language_english',
-  BrailleLanguage.FRA: 'braille_language_french',
-  BrailleLanguage.EUR: 'braille_language_euro',
-};
+//Map<BrailleLanguage, String> BRAILLE_LANGUAGES = {
+//  BrailleLanguage.SIMPLE_1: 'braille_language_simple_1',
+//  BrailleLanguage.SIMPLE_2: 'braille_language_simple_2',
+//  BrailleLanguage.DEU: 'braille_language_german',
+//  BrailleLanguage.ENG: 'braille_language_english',
+//  BrailleLanguage.FRA: 'braille_language_french',
+//  BrailleLanguage.EUR: 'braille_language_euro',
+//};
 
 final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
 final SWITCH_ANTOINE = ['6'];
 
+//=======
+enum BrailleLanguage { BASIC, SIMPLE, DEU, ENG, FRA, EUR }
+
+//>>>>>>> ab52daa84340850ebac274a090e0375e25d063dd
 final Map<String, List<String>> _charsToSegmentsLetters = {
   ' ': [],
   'a': ['1'],
@@ -756,7 +761,7 @@ List<List<String>> _encodeBrailleEUR(String input) {
   return result;
 }
 
-List<List<String>> _encodeBrailleSIMPLE_1(String input) {
+List<List<String>> _encodeBrailleBASIC(String input) {
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -771,7 +776,7 @@ List<List<String>> _encodeBrailleSIMPLE_1(String input) {
   return result;
 }
 
-List<List<String>> _encodeBrailleSIMPLE_2(String input) {
+List<List<String>> _encodeBrailleSIMPLE(String input) {
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -1083,11 +1088,11 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   if (input == null) return [];
 
   switch (language) {
-    case BrailleLanguage.SIMPLE_1:
-      return _encodeBrailleSIMPLE_1(input);
+    case BrailleLanguage.BASIC:
+      return _encodeBrailleBASIC(input);
       break;
-    case BrailleLanguage.SIMPLE_2:
-      return _encodeBrailleSIMPLE_2(input);
+    case BrailleLanguage.SIMPLE:
+      return _encodeBrailleSIMPLE(input);
       break;
     case BrailleLanguage.DEU:
       return _encodeBrailleDEU(input);
@@ -1106,7 +1111,7 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
 
 
 
-Map<String, dynamic> _decodeEURBraille(List<String> inputs) {
+Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
   var displays = <List<String>>[];
 
   List<String> text = inputs.where((input) => input != null).map((input) {
@@ -1133,7 +1138,7 @@ Map<String, dynamic> _decodeEURBraille(List<String> inputs) {
   return {'displays': displays, 'chars': text};
 }
 
-Map<String, dynamic> _decodeSIMPLEBraille_1(List<String> inputs, bool letters, bool french) {
+Map<String, dynamic> _decodeBrailleBASIC(List<String> inputs, bool letters, bool french) {
   var displays = <List<String>>[];
 
   var _segmentsToCharsSIMPLEBraille_1 = _segmentsToCharsLetters;
@@ -1179,7 +1184,7 @@ Map<String, dynamic> _decodeSIMPLEBraille_1(List<String> inputs, bool letters, b
   return {'displays': displays, 'chars': text};
 }
 
-Map<String, dynamic> _decodeSIMPLEBraille_2(List<String> inputs, bool french) {
+Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
   var displays = <List<String>>[];
 
   var _segmentsToCharsSIMPLEBraille_2 = _segmentsToCharsLetters;
@@ -1235,7 +1240,7 @@ Map<String, dynamic> _decodeSIMPLEBraille_2(List<String> inputs, bool french) {
 
 }
 
-Map<String, dynamic> _decodeDEUBraille(List<String> inputs) {
+Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
   var displays = <List<String>>[];
 
   bool numberFollows = false;
@@ -1305,14 +1310,14 @@ Map<String, dynamic> _decodeDEUBraille(List<String> inputs) {
 
 }
 
-Map<String, dynamic> _decodeENGBraille(List<String> inputs) {
+Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
 
   return {
     'displays': [[]],
     'chars': [0]
   };
 }
-Map<String, dynamic> _decodeFRABraille(List<String> inputs) {
+Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
 
   return {
     'displays': [[]],
@@ -1328,23 +1333,23 @@ Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language,
     };
 
   switch (language) {
-    case BrailleLanguage.SIMPLE_1:
-      return _decodeSIMPLEBraille_1(input, letters, french);
+    case BrailleLanguage.BASIC:
+      return _decodeBrailleBASIC(input, letters, french);
       break;
-    case BrailleLanguage.SIMPLE_2:
-      return _decodeSIMPLEBraille_2(input, french);
+    case BrailleLanguage.SIMPLE:
+      return _decodeBrailleSIMPLE(input, french);
       break;
     case BrailleLanguage.DEU:
-      return _decodeDEUBraille(input);
+      return _decodeBrailleDEU(input);
       break;
     case BrailleLanguage.ENG:
-      return _decodeENGBraille(input);
+      return _decodeBrailleENG(input);
       break;
     case BrailleLanguage.FRA:
-      return _decodeFRABraille(input);
+      return _decodeBrailleFRA(input);
       break;
     case BrailleLanguage.EUR:
-      return _decodeEURBraille(input);
+      return _decodeBrailleEUR(input);
       break;
   }
 }

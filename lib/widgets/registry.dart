@@ -389,7 +389,7 @@ class Registry {
         SEARCHSTRING_EN_AMSCO,
         SEARCHSTRING_FR_AMSCO
       ]),
-      GCWTool(tool: AnimatedImage(), i18nPrefix: 'animated_image', categories: [
+      GCWTool(tool: AnimatedImage(), i18nPrefix: 'animated_image', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], helpLocales: [
         'de',
@@ -401,7 +401,7 @@ class Registry {
         SEARCHSTRING_EN_ANIMATED_IMAGES,
         SEARCHSTRING_FR_ANIMATED_IMAGES
       ]),
-      GCWTool(tool: AnimatedImageMorseCode(), i18nPrefix: 'animated_image_morse_code', categories: [
+      GCWTool(tool: AnimatedImageMorseCode(), i18nPrefix: 'animated_image_morse_code', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], helpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ANIMATED_IMAGES_MORSE_CODE,
@@ -505,12 +505,7 @@ class Registry {
           i18nPrefix: 'braille_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
     helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_BRAILLE,
-            SEARCHSTRING_DE_BRAILLE,
-            SEARCHSTRING_EN_BRAILLE,
-            SEARCHSTRING_FR_BRAILLE
-          ]),
+          searchStrings: []),
 
     GCWTool(
     tool: BeaufortSelection(),
@@ -542,7 +537,7 @@ class Registry {
         SEARCHSTRING_EN_BINARY,
         SEARCHSTRING_FR_BINARY
       ]),
-      GCWTool(tool: Binary2Image(), i18nPrefix: 'binary2image', categories: [
+      GCWTool(tool: Binary2Image(), i18nPrefix: 'binary2image', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], searchStrings: [
         SEARCHSTRING_DE_HEXSTRING2FILE,
@@ -820,7 +815,7 @@ class Registry {
             SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
           ]),
-      GCWTool(tool: ExifReader(), i18nPrefix: 'exif', categories: [
+      GCWTool(tool: ExifReader(), i18nPrefix: 'exif', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], helpLocales: [
         'de',
@@ -917,7 +912,7 @@ class Registry {
         SEARCHSTRING_EN_HEXADECIMAL,
         SEARCHSTRING_FR_HEXADECIMAL
       ]),
-      GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', categories: [
+      GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], searchStrings: [
         SEARCHSTRING_DE_HEXSTRING2FILE,
@@ -968,7 +963,7 @@ class Registry {
         helpLocales: ['de', 'en', 'fr'],
         searchStrings: [],
       ),
-      GCWTool(tool: ImagesAndFilesSelection(), i18nPrefix: 'imagesandfiles_selection', helpLocales: [
+      GCWTool(tool: ImagesAndFilesSelection(), i18nPrefix: 'imagesandfiles_selection', isBeta: true, helpLocales: [
         'de',
         'en',
         'fr'
@@ -988,6 +983,7 @@ class Registry {
           categories: [ToolCategory.IMAGES_AND_FILES],
           i18nPrefix: 'image_colorcorrections',
           helpLocales: ['de', 'en', 'fr'],
+          isBeta: true,
           searchStrings: [
             SEARCHSTRING_COMMON_IMAGES,
             SEARCHSTRING_DE_IMAGES,
@@ -998,7 +994,7 @@ class Registry {
             SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS,
             SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS
           ]),
-      GCWTool(tool: Stegano(), i18nPrefix: 'stegano', categories: [
+      GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], helpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_STEGANO,
@@ -1251,6 +1247,7 @@ class Registry {
       GCWTool(
           tool: QrCode(),
           i18nPrefix: 'qr_code',
+          isBeta: true,
           categories: [ToolCategory.IMAGES_AND_FILES],
           searchStrings: [SEARCHSTRING_DE_QRCODE, SEARCHSTRING_EN_QRCODE, SEARCHSTRING_FR_QRCODE]),
       GCWTool(tool: QuadraticEquation(), i18nPrefix: 'quadratic_equation', categories: [
@@ -1541,7 +1538,7 @@ class Registry {
           categories: [ToolCategory.CRYPTOGRAPHY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
-      GCWTool(tool: VisualCryptography(), i18nPrefix: 'visual_cryptography', categories: [
+      GCWTool(tool: VisualCryptography(), i18nPrefix: 'visual_cryptography', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES,
         ToolCategory.CRYPTOGRAPHY
       ], searchStrings: [
@@ -2105,7 +2102,12 @@ class Registry {
           tool: CistercianNumbers(),
           i18nPrefix: 'cistercian',
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_CISTERCIAN]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_CISTERCIAN,
+            SEARCHSTRING_DE_CISTERCIAN,
+            SEARCHSTRING_EN_CISTERCIAN,
+            SEARCHSTRING_FR_CISTERCIAN
+          ]),
 
       //CombinatoricsSelection ***************************************************************************************
       GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', helpLocales: [
@@ -5786,6 +5788,16 @@ class Registry {
         SEARCHSTRING_DE_BRAILLE,
         SEARCHSTRING_EN_BRAILLE,
         SEARCHSTRING_FR_BRAILLE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_BRAILLE,
+        SEARCHSTRING_DE_BRAILLE,
+        SEARCHSTRING_EN_BRAILLE,
+        SEARCHSTRING_FR_BRAILLE,
+        SEARCHSTRING_COMMON_BRAILLE_EURO,
+        SEARCHSTRING_DE_BRAILLE_EURO,
+        SEARCHSTRING_EN_BRAILLE_EURO,
+        SEARCHSTRING_FR_BRAILLE_EURO
       ]),
       GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BRAILLE,

@@ -7,14 +7,19 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
@@ -51,7 +56,7 @@ class _ExifReaderState extends State<ExifReader> {
       children: <Widget>[
         GCWOpenFile(
           expanded: widget.file == null,
-          supportedFileTypes: supportedImageTypes,
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (_file) {
             if (_file == null) return;
 
@@ -101,6 +106,7 @@ class _ExifReaderState extends State<ExifReader> {
     _decorateImage(widgets, image);
     _decorateGps(widgets);
     _decorateExifSections(widgets, _tableTags);
+    _decorateExtraData(widgets);
     return widgets;
   }
 
@@ -233,5 +239,34 @@ class _ExifReaderState extends State<ExifReader> {
   String formatDate(DateTime datetime) {
     String loc = Localizations.localeOf(context).toString();
     return (datetime == null) ? '' : DateFormat.yMd(loc).add_jms().format(datetime);
+  }
+
+  ///
+  /// Section extra data
+  ///
+  void _decorateExtraData(List<Widget> widgets) {
+    if (file == null) return;
+    var _extraData = extraData(file.bytes);
+
+      widgets.add(GCWOutput(
+        title: i18n(context, "exif_section_extra_data"),
+        child: hexDataOutput(context, _extraData),
+        trailing: GCWIconButton(
+          iconData: Icons.save,
+          size: IconButtonSize.SMALL,
+          iconColor: _extraData == null ? Colors.grey : null,
+          onPressed: () {
+            _extraData == null ? null : _exportFile(context, _extraData?.first);
+          },
+        ))
+      );
+  }
+
+  _exportFile(BuildContext context, Uint8List data) async {
+    var fileType = getFileType(data);
+    var value = await saveByteDataToFile(data.buffer.asByteData(),
+        "extra_data_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+
+    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
   }
 }

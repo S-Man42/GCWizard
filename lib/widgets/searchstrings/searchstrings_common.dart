@@ -52,6 +52,7 @@ const SEARCHSTRING_COMMON_BIFID = 'bifid felix delastelle polybios polybius tran
 const SEARCHSTRING_COMMON_BINARY = '';
 const SEARCHSTRING_COMMON_BOOKCIPHER = '';
 const SEARCHSTRING_COMMON_BRAILLE = 'braille';
+const SEARCHSTRING_COMMON_BRAILLE_EURO = 'euro computer iso 8859-1 din 32982 ansi';
 const SEARCHSTRING_COMMON_BURROESWHEELER = 'burrows wheeler transformation bwt bzip2';
 const SEARCHSTRING_COMMON_CAESAR = 'caesar';
 const SEARCHSTRING_COMMON_CATAN = '';

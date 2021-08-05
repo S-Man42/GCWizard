@@ -6,12 +6,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:http/http.dart' as http;
 
 class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
-  final List<String> supportedFileTypes;
+  final List<FileType> supportedFileTypes;
   final bool expanded;
 
   const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded}) : super(key: key);
@@ -73,7 +74,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 GCWButton(
                   text: i18n(context, 'common_loadfile_open'),
                   onPressed: () {
-                    openFileExplorer(allowedExtensions: widget.supportedFileTypes).then((PlatformFile file) {
+                    openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((PlatformFile file) {
                       if (file != null) {
                         setState(() {
                           _currentOpenExpanded = false;
@@ -104,10 +105,11 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           return;
                         }
 
-                        if (widget.supportedFileTypes != null &&
-                            widget.supportedFileTypes
-                                    .firstWhere((suffix) => _currentUrl.endsWith(suffix), orElse: () => null) ==
-                                null) return;
+                        var _urlFileType = fileTypeByExtension(_currentUrl);
+
+                        if (_urlFileType == null || (widget.supportedFileTypes != null &&
+                           !widget.supportedFileTypes.contains(_urlFileType)))
+                          return;
 
                         http.get(Uri.parse(_currentUrl)).then((http.Response response) {
                           setState(() {
