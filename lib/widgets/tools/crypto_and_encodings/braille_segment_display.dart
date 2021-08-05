@@ -5,8 +5,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false};
 
-const _BRAILLE_RELATIVE_DISPLAY_WIDTH = 52;
-const _BRAILLE_RELATIVE_DISPLAY_HEIGHT = 99;
+const _BRAILLE_RELATIVE_DISPLAY_WIDTH = 50;
+const _BRAILLE_RELATIVE_DISPLAY_HEIGHT = 100;
 const _BRAILLE_RADIUS = 10;
 
 class BrailleSegmentDisplay extends NSegmentDisplay {
@@ -24,58 +24,25 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
       type: SegmentDisplayType.CUSTOM,
       customPaint: (canvas, size, currentSegments, setSegmentState) {
         var paint = defaultSegmentPaint();
-        paint.color = currentSegments['1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-        canvas.drawCircle(
-            Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
-                size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * 20),
-            size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
-            paint, onTapDown: (tapDetail) {
-          setSegmentState('1', !currentSegments['1']);
-        });
 
-        paint.color = currentSegments['4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-        canvas.drawCircle(
-            Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
-                size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * 20),
-            size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
-            paint, onTapDown: (tapDetail) {
-          setSegmentState('4', !currentSegments['4']);
-        });
+        var circles = {
+          '1': [15, 20],
+          '2': [15, 50],
+          '3': [15, 80],
+          '4': [35, 20],
+          '5': [35, 50],
+          '6': [35, 80]
+        };
 
-        paint.color = currentSegments['2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-        canvas.drawCircle(
-            Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
-                size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * 50),
-            size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
-            paint, onTapDown: (tapDetail) {
-          setSegmentState('2', !currentSegments['2']);
-        });
-
-        paint.color = currentSegments['5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-        canvas.drawCircle(
-            Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
-                size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * 50),
-            size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
-            paint, onTapDown: (tapDetail) {
-          setSegmentState('5', !currentSegments['5']);
-        });
-
-        paint.color = currentSegments['3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-        canvas.drawCircle(
-            Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * 10,
-                size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * 80),
-            size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
-            paint, onTapDown: (tapDetail) {
-          setSegmentState('3', !currentSegments['3']);
-        });
-
-        paint.color = currentSegments['6'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-        canvas.drawCircle(
-            Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * 40,
-                size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * 80),
-            size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
-            paint, onTapDown: (tapDetail) {
-          setSegmentState('6', !currentSegments['6']);
+        circles.forEach((key, value) {
+          paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+          canvas.drawCircle(
+              Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * value[0],
+                  size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1]),
+              size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS,
+              paint, onTapDown: (tapDetail) {
+            setSegmentState(key, !currentSegments[key]);
+          });
         });
 
       });

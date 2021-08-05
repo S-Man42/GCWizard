@@ -4,6 +4,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -15,6 +16,14 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_euro_segmen
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
+
+Map<BrailleLanguage, Map<String, String>> _BRAILLE_LANGUAGES = {
+  BrailleLanguage.SIMPLE: {'title': 'braille_language_simple', 'subtitle': 'braille_language_simple_description'},
+  BrailleLanguage.DEU: {'title': 'common_language_german', 'subtitle': 'braille_language_german_description'},
+  BrailleLanguage.ENG: {'title': 'common_language_english', 'subtitle': 'braille_language_english_description'},
+  BrailleLanguage.FRA: {'title': 'common_language_french', 'subtitle': 'braille_language_french_description'},
+  BrailleLanguage.EUR: {'title': 'braille_language_euro'},
+};
 
 class Braille extends StatefulWidget {
   @override
@@ -46,10 +55,11 @@ class BrailleState extends State<Braille> {
             _currentLanguage = value;
           });
         },
-        items: BRAILLE_LANGUAGES.entries.map((mode) {
+        items: _BRAILLE_LANGUAGES.entries.map((mode) {
           return GCWDropDownMenuItem(
             value: mode.key,
-            child: i18n(context, mode.value),
+            child: i18n(context, mode.value['title']),
+            subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
           );
         }).toList(),
       ),
@@ -237,7 +247,7 @@ class BrailleState extends State<Braille> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWOutput(title: i18n(context, 'braille_output'), child: segments['chars'].join(' ')),
+          GCWDefaultOutput(child: segments['chars'].join()),
         ],
       );
     }

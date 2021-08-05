@@ -505,12 +505,7 @@ class Registry {
           i18nPrefix: 'braille_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
     helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_BRAILLE,
-            SEARCHSTRING_DE_BRAILLE,
-            SEARCHSTRING_EN_BRAILLE,
-            SEARCHSTRING_FR_BRAILLE
-          ]),
+          searchStrings: []),
 
     GCWTool(
     tool: BeaufortSelection(),
@@ -2105,7 +2100,12 @@ class Registry {
           tool: CistercianNumbers(),
           i18nPrefix: 'cistercian',
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_CISTERCIAN]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_CISTERCIAN,
+            SEARCHSTRING_DE_CISTERCIAN,
+            SEARCHSTRING_EN_CISTERCIAN,
+            SEARCHSTRING_FR_CISTERCIAN
+          ]),
 
       //CombinatoricsSelection ***************************************************************************************
       GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', helpLocales: [
