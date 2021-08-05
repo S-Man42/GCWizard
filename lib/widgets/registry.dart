@@ -19,6 +19,7 @@ import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart'
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
@@ -133,6 +134,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
@@ -497,10 +499,18 @@ class Registry {
         SEARCHSTRING_EN_BINARY,
         SEARCHSTRING_FR_BINARY
       ]),
+
       GCWTool(
-          tool: BeaufortSelection(),
-          i18nPrefix: 'beaufort_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+          tool: BrailleSelection(),
+          i18nPrefix: 'braille_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+    helpLocales: ['de', 'en', 'fr'],
+          searchStrings: []),
+
+    GCWTool(
+    tool: BeaufortSelection(),
+    i18nPrefix: 'beaufort_selection',
+    categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
       GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
@@ -586,6 +596,7 @@ class Registry {
         SEARCHSTRING_EN_CATAN,
         SEARCHSTRING_FR_CATAN
       ]),
+
       GCWTool(
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
@@ -2063,6 +2074,17 @@ class Registry {
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: [SEARCHSTRING_COMMON_BEAUFORT]),
 
+      //Braille Selection ****************************************************************
+      GCWTool(
+          tool: Braille(),
+          i18nPrefix: 'braille',
+          searchStrings: [
+            SEARCHSTRING_COMMON_BRAILLE,
+            SEARCHSTRING_DE_BRAILLE,
+            SEARCHSTRING_EN_BRAILLE,
+            SEARCHSTRING_FR_BRAILLE
+          ]),
+
       //CCITT*Selection **********************************************************************************************
       GCWTool(
           tool: CCITT1(),
@@ -2080,7 +2102,12 @@ class Registry {
           tool: CistercianNumbers(),
           i18nPrefix: 'cistercian',
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_CISTERCIAN]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_CISTERCIAN,
+            SEARCHSTRING_DE_CISTERCIAN,
+            SEARCHSTRING_EN_CISTERCIAN,
+            SEARCHSTRING_FR_CISTERCIAN
+          ]),
 
       //CombinatoricsSelection ***************************************************************************************
       GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', helpLocales: [
