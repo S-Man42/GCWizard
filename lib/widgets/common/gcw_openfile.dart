@@ -23,7 +23,7 @@ class GCWOpenFile extends StatefulWidget {
 
 class _GCWOpenFileState extends State<GCWOpenFile> {
   var _urlController;
-  var _currentUrl;
+  String _currentUrl;
 
   var _currentOpenExpanded;
 
@@ -111,15 +111,20 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                            !widget.supportedFileTypes.contains(_urlFileType)))
                           return;
 
-                        http.get(Uri.parse(_currentUrl)).then((http.Response response) {
-                          setState(() {
-                            _currentOpenExpanded = false;
-                          });
+                        _getUri(_currentUrl).then((uri) {
+                          if (uri == null)
+                            return;
 
-                          widget.onLoaded(PlatformFile(
-                              name: Uri.decodeFull(_currentUrl).split('/').last,
-                              path: _currentUrl,
-                              bytes: response.bodyBytes));
+                          http.get(uri).then((http.Response response) {
+                            setState(() {
+                              _currentOpenExpanded = false;
+                            });
+
+                            widget.onLoaded(PlatformFile(
+                                name: Uri.decodeFull(_currentUrl).split('/').last,
+                                path: _currentUrl,
+                                bytes: response.bodyBytes));
+                          });
                         });
                       },
                     )
@@ -135,5 +140,28 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           ),
       ],
     );
+  }
+
+  _getUri(String url) async {
+    const _HTTP = 'http://';
+    const _HTTPS = 'https://';
+
+    var prefixes = [_HTTP, _HTTPS];
+    if (url.startsWith(_HTTP)) {
+      url = url.replaceAll(_HTTP, '');
+    } else if (url.startsWith(_HTTPS)) {
+      prefixes = [''];
+    }
+
+    for (var prefix in prefixes) {
+      try {
+        Uri uri = Uri.parse(prefix + url);
+        var response = await http.head(uri);
+        if (response.statusCode == 200)
+          return uri;
+      } catch (e) {}
+    }
+
+    return null;
   }
 }
