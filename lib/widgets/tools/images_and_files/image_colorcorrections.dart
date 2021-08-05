@@ -98,7 +98,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       children: <Widget>[
         GCWOpenFile(
           expanded: widget.imageData == null,
-          supportedFileTypes: supportedImageTypes,
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (value) {
             if (value == null) return;
 

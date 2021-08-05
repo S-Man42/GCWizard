@@ -277,6 +277,6 @@ class _GCWImageViewState extends State<GCWImageView> {
 
     var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: '.png');
+    if (value != null) showExportedFileDialog(context, value['path'], fileType: FileType.PNG);
   }
 }

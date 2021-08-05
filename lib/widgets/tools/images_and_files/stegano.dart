@@ -94,7 +94,7 @@ class _SteganoState extends State<Stegano> {
         ),
         GCWOpenFile(
           expanded: widget.file == null,
-          supportedFileTypes: supportedImageTypes,
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (file) {
             if (file == null) return;
             _file = file;

@@ -70,7 +70,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
           child: Column(children: [
             GCWOpenFile(
               expanded: _decodeImage1 == null,
-              supportedFileTypes: supportedImageTypes,
+              supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
                 if (_file != null) _decodeImage1 = _file;
               },
@@ -81,7 +81,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
           child: Column(children: [
             GCWOpenFile(
               expanded: _decodeImage2 == null,
-              supportedFileTypes: supportedImageTypes,
+              supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
                 if (_file != null) _decodeImage2 = _file;
               },
@@ -148,7 +148,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
     return Column(children: <Widget>[
       GCWOpenFile(
         expanded: _encodeImage == null,
-        supportedFileTypes: supportedImageTypes,
+        supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
           if (_file != null) {
             _encodeImage = _file.bytes;

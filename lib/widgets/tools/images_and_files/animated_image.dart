@@ -1,15 +1,16 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
-import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -32,7 +33,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   local.PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
-  static var allowedExtensions = ['gif', 'png', 'webp'];
+  static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
   @override
   Widget build(BuildContext context) {
@@ -190,9 +191,9 @@ class AnimatedImageState extends State<AnimatedImage> {
 
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, data).then((bytes) async {
-      var fileType = '.zip';
+      var fileType = FileType.ZIP;
       var value = await saveByteDataToFile(bytes.buffer.asByteData(),
-          'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
+          'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
       if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
     });
