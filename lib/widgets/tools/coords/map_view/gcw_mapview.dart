@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
@@ -38,6 +39,7 @@ import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -604,15 +606,8 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedExtensions: ['gpx', 'kml', 'kmz']).then((file) {
-              if (file != null) {
-                loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
-                  setState(() {
-                    _mapController.fitBounds(_getBounds());
-                  });
-                });
-              }
-            });
+            showOpenFileDialog(context, ['gpx', 'kml', 'kmz'],
+                loadCoordinatesFile);
           });
         },
       ),
@@ -834,10 +829,15 @@ class GCWMapViewState extends State<GCWMapView> {
     return (viewData != null);
   }
 
-  Future<bool> loadCoordinatesFile(String fileName, Uint8List bytes) async {
+  Future<bool> loadCoordinatesFile(PlatformFile file) async {
+    if (file == null) return false;
     try {
-      await importCoordinatesFile(fileName, bytes).then((viewData) {
+      await importCoordinatesFile(file.name, file.bytes).then((viewData) {
         if (viewData != null) _persistanceAdapter.addViewData(viewData);
+
+        setState(() {
+          _mapController.fitBounds(_getBounds());
+        });
 
         return (viewData != null);
       });
