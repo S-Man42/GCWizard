@@ -92,6 +92,7 @@ class GCWTool extends StatefulWidget {
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> helpLocales;
   final bool suppressHelpButton;
+  final isBeta;
 
   var icon;
   var _id = '';
@@ -114,6 +115,7 @@ class GCWTool extends StatefulWidget {
       this.searchStrings,
       this.buttonList,
       this.helpLocales,
+      this.isBeta: false,
       this.suppressHelpButton: false})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
