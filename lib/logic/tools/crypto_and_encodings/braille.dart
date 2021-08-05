@@ -29,26 +29,12 @@ import 'package:gc_wizard/utils/constants.dart';
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 
 
-//<<<<<<< HEAD
-
-//enum BrailleLanguage { SIMPLE_1, SIMPLE_2, DEU, ENG, FRA, EUR }
-
-//Map<BrailleLanguage, String> BRAILLE_LANGUAGES = {
-//  BrailleLanguage.SIMPLE_1: 'braille_language_simple_1',
-//  BrailleLanguage.SIMPLE_2: 'braille_language_simple_2',
-//  BrailleLanguage.DEU: 'braille_language_german',
-//  BrailleLanguage.ENG: 'braille_language_english',
-//  BrailleLanguage.FRA: 'braille_language_french',
-//  BrailleLanguage.EUR: 'braille_language_euro',
-//};
 
 final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
 final SWITCH_ANTOINE = ['6'];
 
-//=======
 enum BrailleLanguage { BASIC, SIMPLE, DEU, ENG, FRA, EUR }
 
-//>>>>>>> ab52daa84340850ebac274a090e0375e25d063dd
 final Map<String, List<String>> _charsToSegmentsLetters = {
   ' ': [],
   'a': ['1'],
