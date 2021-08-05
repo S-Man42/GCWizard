@@ -23,9 +23,9 @@ import 'package:gc_wizard/utils/constants.dart';
 
 // Examples
 // DEU GC1WPAE Braille https://www.geocaching.com/geocache/GC1WPAE_braille
-// USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
-// NLD GC5PZ8Z Braille https://www.geocaching.com/geocache/GC5PZ8Z_braille
 // DEU GC1N24V Code Braille https://www.geocaching.com/geocache/GC1N24V_code-braille
+// NLD GC5PZ8Z Braille https://www.geocaching.com/geocache/GC5PZ8Z_braille
+// USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 
 
@@ -672,6 +672,7 @@ final _CapitalLetters = {
   'Z'
 };
 final _Mathmatical = {'+', '-', '*', '/', '(', ')', '[', ']', ',', '.', ':'};
+final _AntoineLetters = {'â', 'ê', 'î', 'ô', 'û', 'ë', 'ï', 'ü', 'œ', 'NUMBERFOLLOWS'};
 
 final Map _LetterToDigit = {
   'a': '1',
@@ -735,16 +736,6 @@ bool _isNumber(String s) {
 }
 bool _isMathmatical(String s) {
   return _Mathmatical.contains(s);
-}
-
-List<List<String>> _encodeBrailleEUR(String input) {
-  List<String> inputs = input.split('');
-  List<List<String>> result = [];
-
-  for (int i = 0; i < inputs.length; i++) {
-    result.add(_charsToSegmentsEUR[inputs[i]]);
-  }
-  return result;
 }
 
 List<List<String>> _encodeBrailleBASIC(String input) {
@@ -1070,6 +1061,16 @@ List<List<String>> _encodeBrailleFRA(String input) {
   return result;
 }
 
+List<List<String>> _encodeBrailleEUR(String input) {
+  List<String> inputs = input.split('');
+  List<List<String>> result = [];
+
+  for (int i = 0; i < inputs.length; i++) {
+    result.add(_charsToSegmentsEUR[inputs[i]]);
+  }
+  return result;
+}
+
 List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   if (input == null) return [];
 
@@ -1096,33 +1097,6 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
 }
 
 
-
-Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
-  var displays = <List<String>>[];
-
-  List<String> text = inputs.where((input) => input != null).map((input) {
-    var display = <String>[];
-    var char = '';
-
-    input.split('').forEach((element) {
-      display.add(element);
-    });
-
-    if (_segmentsToCharsEUR.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null)
-      char = char + UNKNOWN_ELEMENT;
-    else {
-      char = char +  _segmentsToCharsEUR.map((key, value) =>
-          MapEntry(key.join(), value.toString()))[input.split('').join()];
-    }
-    displays.add(display);
-
-    return char;
-  }).toList();
-
-  return {'displays': displays, 'chars': text};
-}
 
 Map<String, dynamic> _decodeBrailleBASIC(List<String> inputs, bool letters, bool french) {
   var displays = <List<String>>[];
@@ -1173,54 +1147,107 @@ Map<String, dynamic> _decodeBrailleBASIC(List<String> inputs, bool letters, bool
 Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
   var displays = <List<String>>[];
 
-  var _segmentsToCharsSIMPLEBraille_2 = _segmentsToCharsLetters;
-  _segmentsToCharsSIMPLEBraille_2.addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+  Map <List<String>, String>_segmentsToCharsSIMPLEBraille = new Map <List<String>, String>();
+  _segmentsToCharsSIMPLEBraille.addAll(_segmentsToCharsLetters);
+  _segmentsToCharsSIMPLEBraille.addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+
+  Map <List<String>, String>_segmentsToCharsSIMPLEBrailleFrench = new Map <List<String>, String>();
+  _segmentsToCharsSIMPLEBrailleFrench.addAll(_segmentsToCharsLetters);
+  _segmentsToCharsSIMPLEBrailleFrench.addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBrailleFrench.addAll({SWITCH_ANTOINE: 'ANTOINENUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBrailleFrench.addAll(_segmentsToCharsAntoineLetters);
+
+  bool _numberFollows = false;
+  bool _antoinenumberFollows = false;
+
+  List<String> text = [];
 
   if (french) {
-    _segmentsToCharsSIMPLEBraille_2.addAll({SWITCH_ANTOINE: 'ANTOINENUMBERFOLLOWS'});
-    _segmentsToCharsSIMPLEBraille_2.addAll(_segmentsToCharsAntoineLetters);
-  }
-  bool numberFollows = false;
-  bool antoine = false;
+    _numberFollows = false;
+    _antoinenumberFollows = false;
+    text = inputs.where((input) => input != null).map((input) {
+      var char = '';
+      var charH = '';
+      var display = <String>[];
+      input.split('').forEach((element) {
+        display.add(element);
+      });
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
-    var char = '';
-    var charH = '';
-    var display = <String>[];
-    input.split('').forEach((element) {
-      display.add(element);
-    });
+      if (_segmentsToCharsSIMPLEBrailleFrench.map((key, value) =>
+          MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+          null)
+        char = char + UNKNOWN_ELEMENT;
+      else {
+        charH = _segmentsToCharsSIMPLEBrailleFrench.map((key, value) =>
+            MapEntry(key.join(), value.toString()))[input.split('').join()];
+        if (charH == 'NUMBERFOLLOWS') {
+          _numberFollows = true;
+        } else if (charH == 'ANTOINENUMBERFOLLOWS') {
+          _antoinenumberFollows = true;
+          _numberFollows = false;
+        } else if (charH == ' ') {
+          _numberFollows = false;
+          _antoinenumberFollows = false;
+        } else { // no switch but char to analyze
+          if (_numberFollows) {
+            if (_LetterToDigit[charH] == null) {
+              _numberFollows = false;
+            } else {
+              charH = _LetterToDigit[charH];
+            }
+          } else if (_antoinenumberFollows) {
+            if (_AntoineToDigit[charH] == null)
+              _numberFollows = false;
+            else {
+              charH = _AntoineToDigit[charH];
+            }
+          } else if (_AntoineLetters.contains(charH))
+              charH = UNKNOWN_ELEMENT;
 
-    if (_segmentsToCharsSIMPLEBraille_2.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null)
-      char = char + UNKNOWN_ELEMENT;
-    else {
-      charH = _segmentsToCharsSIMPLEBraille_2.map((key, value) =>
-          MapEntry(key.join(), value.toString()))[input.split('').join()];
-
-      print(charH);
-      if (charH == 'NUMBERFOLLOWS' || charH == 'ANTOINENUMBERFOLLOWS') {
-        numberFollows = true;
-        if (charH == 'ANTOINENUMBERFOLLOWS')
-          antoine = true;
-      } else if (charH == ' ') {
-        numberFollows = false;
-        
-      } else { // no switch
-        if (numberFollows) {
-          if (_LetterToDigit[charH] == null && _AntoineToDigit[charH] == null)
-            numberFollows = false;
-          else
-            charH = _LetterToDigit[charH] == null ? _AntoineToDigit[charH] : _LetterToDigit[charH];
+          char = char + charH;
         }
-        char = char + charH;
       }
-    }
-    displays.add(display);
+      displays.add(display);
 
-    return char;
-  }).toList();
+      return char;
+    }).toList();
+  } else {
+    _numberFollows = false;
+    text = inputs.where((input) => input != null).map((input) {
+      var char = '';
+      var charH = '';
+      var display = <String>[];
+      input.split('').forEach((element) {
+        display.add(element);
+      });
+
+      if (_segmentsToCharsSIMPLEBraille.map((key, value) =>
+          MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+          null)
+        char = char + UNKNOWN_ELEMENT;
+      else {
+        charH = _segmentsToCharsSIMPLEBraille.map((key, value) =>
+            MapEntry(key.join(), value.toString()))[input.split('').join()];
+
+        if (charH == 'NUMBERFOLLOWS') {
+          _numberFollows = true;
+        } else if (charH == ' ') {
+          _numberFollows = false;
+        } else { // no switch
+          if (_numberFollows) {
+            if (_LetterToDigit[charH] == null)
+              _numberFollows = false;
+            else
+              charH = _LetterToDigit[charH];
+          }
+          char = char + charH;
+        }
+      }
+      displays.add(display);
+
+      return char;
+    }).toList();
+  }
 
   return {'displays': displays, 'chars': text};
 
@@ -1303,12 +1330,40 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
     'chars': [0]
   };
 }
+
 Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
 
   return {
     'displays': [[]],
     'chars': [0]
   };
+}
+
+Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
+  var displays = <List<String>>[];
+
+  List<String> text = inputs.where((input) => input != null).map((input) {
+    var display = <String>[];
+    var char = '';
+
+    input.split('').forEach((element) {
+      display.add(element);
+    });
+
+    if (_segmentsToCharsEUR.map((key, value) =>
+        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+        null)
+      char = char + UNKNOWN_ELEMENT;
+    else {
+      char = char +  _segmentsToCharsEUR.map((key, value) =>
+          MapEntry(key.join(), value.toString()))[input.split('').join()];
+    }
+    displays.add(display);
+
+    return char;
+  }).toList();
+
+  return {'displays': displays, 'chars': text};
 }
 
 Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language, bool letters, bool french) {
