@@ -25,8 +25,6 @@ import 'package:gc_wizard/utils/constants.dart';
 // USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 
-final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
-final SWITCH_ANTOINE = ['6'];
 
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
@@ -134,7 +132,8 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
     '.': ['3'],
     '-': ['3', '6'],
     "'": ['6'],
-    '§': ['3', '4', '6'],  },
+    '§': ['3', '4', '6'],
+  },
   BrailleLanguage.ENG : {
     ',': ['2'],
     ';': ['2', '3'],
@@ -205,12 +204,23 @@ final Map<String, List<String>> _charsToSegmentsAntoine = {
 };
 
 
-final _DEUswitches = {
-  'ONECAPITALFOLLOWS',
-  'CAPITALFOLLOWS',
-  'SMALLLETTERFOLLOWS',
-  'NUMBERFOLLOWS',
+final Map<BrailleLanguage, List<String>>_Switches = {
+  BrailleLanguage.DEU : [
+    'ONECAPITALFOLLOWS',
+    'CAPITALFOLLOWS',
+    'SMALLLETTERFOLLOWS',
+    'NUMBERFOLLOWS',
+  ],
+  BrailleLanguage.ENG : [
+  ],
+  BrailleLanguage.FRA : [
+  ],
+
 };
+
+final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
+final SWITCH_ANTOINE = ['6'];
+
 
 final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches = {
   BrailleLanguage.STD : {
@@ -250,7 +260,6 @@ final Map<String, List<String>> _charsToSegmentsLettersAntoine = {
   'œ': ['2', '4', '6'], // 9
   'NUMBERFOLLOWS': ['3', '4', '5', '6'], // 0
 };
-
 
 
 
@@ -517,6 +526,7 @@ final Map<String, List<String>> _charsToSegmentsEUR = {
 
 
 final _Numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
 final _SmallLetters = {
   'a',
   'b',
@@ -545,6 +555,7 @@ final _SmallLetters = {
   'y',
   'z'
 };
+
 final _CapitalLetters = {
   'A',
   'B',
@@ -1185,7 +1196,7 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
       text.add(UNKNOWN_ELEMENT);
    } else {
       charH = BrailleToChar[input];
-      if (_DEUswitches.contains(charH)) {
+      if (_Switches[BrailleLanguage.DEU].contains(charH)) {
         if (charH == 'ONECAPITALFOLLOWS')
           oneCapitalFollows = true;
         else if (charH == "CAPITALFOLLOWS")
