@@ -21,23 +21,14 @@ class HexViewer extends StatefulWidget {
 }
 
 class HexViewerState extends State<HexViewer> {
-  List<String> _hexData;
+  String _hexData;
 
   var _currentLines = 0;
-
-  List<String> _fileDataToHexData(PlatformFile fileData) {
-    var hexDataRaw = file2hexstring(fileData.bytes);
-    hexDataRaw = insertEveryNthCharacter(hexDataRaw, 16 * 2, '\n');
-    return hexDataRaw
-        .split('\n')
-        .map((block) => insertEveryNthCharacter(block, 2, ' '))
-        .toList();
-  }
 
   @override
   Widget build(BuildContext context) {
     if (widget.platformFile != null) {
-      _hexData = _fileDataToHexData(widget.platformFile);
+      _hexData = file2hexstring(widget.platformFile.bytes);
     }
 
     return Column(
@@ -46,7 +37,7 @@ class HexViewerState extends State<HexViewer> {
           expanded: _hexData == null,
           onLoaded: (_file) {
             if (_file != null) {
-              _hexData = _fileDataToHexData(_file);
+              _hexData = file2hexstring(_file.bytes);
 
               setState(() {});
             }
@@ -64,9 +55,13 @@ class HexViewerState extends State<HexViewer> {
 
     const MAX_LINES = 100;
 
-    var hexTextList = _hexData.sublist(_currentLines, min(_currentLines + MAX_LINES, _hexData.length));
+    var hexStrStart = _currentLines * 16 * 2;
+    var hexStrEnd = hexStrStart + 16 * 2 * MAX_LINES;
+    var hexDataStr = _hexData.substring(hexStrStart, min(hexStrEnd, _hexData.length));
+    var hexText = insertEveryNthCharacter(hexDataStr, 16 * 2, '\n');
+    var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2)).toList();
+    hexText = hexTextList.join('\n');
 
-    var hexText = hexTextList.join('\n');
     var asciiText = hexTextList.map((line) {
       return line.split(' ').map((hexValue) {
         var charCode = int.tryParse(hexValue, radix: 16);
