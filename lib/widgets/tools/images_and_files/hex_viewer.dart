@@ -22,6 +22,10 @@ class HexViewer extends StatefulWidget {
 
 class HexViewerState extends State<HexViewer> {
   String _hexData;
+  int _hexDataLines;
+
+  final _MAX_LINES = 100;
+  final _CHARS_PER_LINE = 16 * 2;
 
   var _currentLines = 0;
 
@@ -36,8 +40,13 @@ class HexViewerState extends State<HexViewer> {
         GCWOpenFile(
           expanded: _hexData == null,
           onLoaded: (_file) {
+            _currentLines = 0;
             if (_file != null) {
               _hexData = file2hexstring(_file.bytes);
+              _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
+
+              print(_hexData.length);
+              print(_hexDataLines);
 
               setState(() {});
             }
@@ -53,12 +62,10 @@ class HexViewerState extends State<HexViewer> {
   _buildOutput() {
     if (_hexData == null) return null;
 
-    const MAX_LINES = 100;
-
-    var hexStrStart = _currentLines * 16 * 2;
-    var hexStrEnd = hexStrStart + 16 * 2 * MAX_LINES;
+    var hexStrStart = _currentLines * _CHARS_PER_LINE;
+    var hexStrEnd = hexStrStart + _CHARS_PER_LINE * _MAX_LINES;
     var hexDataStr = _hexData.substring(hexStrStart, min(hexStrEnd, _hexData.length));
-    var hexText = insertEveryNthCharacter(hexDataStr, 16 * 2, '\n');
+    var hexText = insertEveryNthCharacter(hexDataStr, _CHARS_PER_LINE, '\n');
     var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2)).toList();
     hexText = hexTextList.join('\n');
 
@@ -74,7 +81,7 @@ class HexViewerState extends State<HexViewer> {
 
     return Column(
       children: [
-        if (_hexData.length > MAX_LINES)
+        if (_hexData.length > _MAX_LINES)
           Container(
             child: Row(
               children: [
@@ -82,16 +89,21 @@ class HexViewerState extends State<HexViewer> {
                   iconData: Icons.arrow_back_ios,
                   onPressed: () {
                     setState(() {
-                      _currentLines -= MAX_LINES;
+                      print(_hexDataLines);
+                      print(_currentLines);
+
+                      _currentLines -= _MAX_LINES;
+                      print(_currentLines);
                       if (_currentLines < 0) {
-                        _currentLines = (_hexData.length ~/ MAX_LINES) * MAX_LINES;
+                        _currentLines = (_hexDataLines ~/ _MAX_LINES) * _MAX_LINES;
+                        print(_currentLines);
                       }
                     });
                   },
                 ),
                 Expanded(
                   child: GCWText(
-                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + MAX_LINES, _hexData.length)} / ${_hexData.length}',
+                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines)} / $_hexDataLines',
                     align: Alignment.center,
                   ),
                 ),
@@ -99,8 +111,8 @@ class HexViewerState extends State<HexViewer> {
                   iconData: Icons.arrow_forward_ios,
                   onPressed: () {
                     setState(() {
-                      _currentLines += MAX_LINES;
-                      if (_currentLines > _hexData.length) {
+                      _currentLines += _MAX_LINES;
+                      if (_currentLines > _hexDataLines) {
                         _currentLines = 0;
                       }
                     });
