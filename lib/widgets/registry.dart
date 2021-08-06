@@ -216,6 +216,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
@@ -743,18 +744,6 @@ class Registry {
           categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
-      GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS
-      ]),
       GCWTool(
           tool: DTMF(),
           i18nPrefix: 'dtmf',
@@ -915,9 +904,26 @@ class Registry {
       GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], searchStrings: [
+        SEARCHSTRING_COMMON_HEXADECIMAL,
+        SEARCHSTRING_DE_HEXADECIMAL,
+        SEARCHSTRING_EN_HEXADECIMAL,
+        SEARCHSTRING_FR_HEXADECIMAL,
+        SEARCHSTRING_COMMON_HEXSTRING2FILE,
         SEARCHSTRING_DE_HEXSTRING2FILE,
         SEARCHSTRING_EN_HEXSTRING2FILE,
         SEARCHSTRING_FR_HEXSTRING2FILE
+      ]),
+      GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_HEXADECIMAL,
+        SEARCHSTRING_DE_HEXADECIMAL,
+        SEARCHSTRING_EN_HEXADECIMAL,
+        SEARCHSTRING_FR_HEXADECIMAL,
+        SEARCHSTRING_COMMON_HEXVIEWER,
+        SEARCHSTRING_DE_HEXVIEWER,
+        SEARCHSTRING_EN_HEXVIEWER,
+        SEARCHSTRING_FR_HEXVIEWER
       ]),
       GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
         ToolCategory.CRYPTOGRAPHY
@@ -1378,6 +1384,18 @@ class Registry {
           categories: [ToolCategory.CRYPTOGRAPHY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
+      GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
       GCWTool(tool: Skytale(), i18nPrefix: 'skytale', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [

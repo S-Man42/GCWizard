@@ -105,11 +105,12 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           return;
                         }
 
-                        var _urlFileType = fileTypeByExtension(_currentUrl);
+                        if (widget.supportedFileTypes != null) {
+                          var _urlFileType = fileTypeByExtension(_currentUrl);
 
-                        if (_urlFileType == null || (widget.supportedFileTypes != null &&
-                           !widget.supportedFileTypes.contains(_urlFileType)))
-                          return;
+                          if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType))
+                            return;
+                        }
 
                         _getUri(_currentUrl).then((uri) {
                           if (uri == null)

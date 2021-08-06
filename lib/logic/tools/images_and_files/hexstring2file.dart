@@ -15,7 +15,7 @@ String file2hexstring(Uint8List input) {
 
   var output = input.map((byte) {
     return byte.toRadixString(16).padLeft(2, '0');
-  }).join(' ');
+  }).join();
 
   return output.toUpperCase();
 }

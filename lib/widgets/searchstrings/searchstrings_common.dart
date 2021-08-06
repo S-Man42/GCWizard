@@ -194,7 +194,9 @@ const SEARCHSTRING_COMMON_HASHES_SHA512_224 = 'sha512t sha-512t sha2-512t 224bit
 const SEARCHSTRING_COMMON_HASHES_SHA512_256 = 'sha512t sha-512t sha2-512t 256bits sha512/256 sha-512/256 sha2-512/256';
 const SEARCHSTRING_COMMON_HASHES_TIGER_192 = 'tiger192 tiger-192 ross anderson eli biham';
 const SEARCHSTRING_COMMON_HASHES_WHIRLPOOL_512 = 'whirlpool512 whirlpool-512 vincent rijmen paulo barreto';
-const SEARCHSTRING_COMMON_HEXADECIMAL = '16';
+const SEARCHSTRING_COMMON_HEXADECIMAL = 'hexcode 16';
+const SEARCHSTRING_COMMON_HEXSTRING2FILE = '';
+const SEARCHSTRING_COMMON_HEXVIEWER = '';
 const SEARCHSTRING_COMMON_HOMOPHONE = 'homophone';
 const SEARCHSTRING_COMMON_HOUDINI =
     'harryhoudinicode harryhudinicode say pray bequick quickly speak now tell look answer please erikweisz';

@@ -193,6 +193,7 @@ const SEARCHSTRING_FR_HASHES_TIGER_192 = '';
 const SEARCHSTRING_FR_HASHES_WHIRLPOOL_512 = '';
 const SEARCHSTRING_FR_HEXADECIMAL = '';
 const SEARCHSTRING_FR_HEXSTRING2FILE = 'hexadecimal fichier';
+const SEARCHSTRING_FR_HEXVIEWER = '';
 const SEARCHSTRING_FR_HOMOPHONE = '';
 const SEARCHSTRING_FR_HOUDINI = 'seance';
 const SEARCHSTRING_FR_IATAICAO = 'organisationdelaviationcivileinternationale associationdutransportaerieninternational codesdaerodrome codesdaeroport codesdaeronefs avions airesdatterrissage lieuxdatterrissage aviation aerospatiale';
