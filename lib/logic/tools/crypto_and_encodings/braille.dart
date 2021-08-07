@@ -217,9 +217,7 @@ final Map<BrailleLanguage, List<String>>_Switches = {
     'NUMBERFOLLOWS',
   ],
   BrailleLanguage.FRA : [
-    'ONECAPITALFOLLOWS',
-    'CAPITALFOLLOWS',
-    'SMALLLETTERFOLLOWS',
+    'CAPITALS',
     'NUMBERFOLLOWS',
     'ANTOINE'
   ],
@@ -979,7 +977,6 @@ List<List<String>> _encodeBrailleENG(String input) {
 }
 
 List<List<String>> _encodeBrailleFRA(String input) {
-  bool numberFollows = false;
   bool stateNumberFollows = false;
   bool stateCapitals = false;
 
@@ -992,19 +989,25 @@ List<List<String>> _encodeBrailleFRA(String input) {
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
-
   for (int i = 0; i < inputs.length; i++) {
     // identify composed characters
     if (_CharsSymbolsComposed[BrailleLanguage.FRA].contains(inputs[i]))
       result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.FRA][inputs[i]]);
     else
     if (_isNumber(inputs[i])) {
-      if (!numberFollows) {
+      if (!stateNumberFollows) {
         result.add(SWITCH_NUMBERFOLLOWS);
-        numberFollows = true;
+        stateNumberFollows = true;
       }
       result.add(_charsToSegments[inputs[i]]);
     } else {
+      if (_isSmallLetter(inputs[i])) {
+        if (stateCapitals) stateCapitals = false;
+      }
+      if (_isCapital(inputs[i])) {
+        result.add(_CharsToSegmentsSwitches[BrailleLanguage.FRA]['CAPITALS']);
+        inputs[i] = inputs[i].toLowerCase();
+      }
       result.add(_charsToSegments[inputs[i]]);
     }
   }

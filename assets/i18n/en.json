@@ -359,7 +359,7 @@
   "braille_language_simple_description" : "Only a-z, 0-9",
   "braille_language_german_description" : "a-z, äöüß, A-Z, ÄÖÜ, 0-9, basic set of punctuation symbols based on Braille Commission of the German-speaking Countries, 2005",
   "braille_language_english_description" : "a-z, A-Z, 0-9, basic set of punctuation symbols based on English Braille Grade 1",
-  "braille_language_french_description" : "a-z, áàâéèë…, A-Z, ÁÀÂÈÈÊ…, 0-9, basic set of punctuation symbols based on Code braille français uniformisé, Septembre 2008",
+  "braille_language_french_description" : "a-z, àâéèë…, A-Z, ÀÂÈÈÊ…, 0-9, basic set of punctuation symbols based on Code braille français uniformisé, Septembre 2008",
   "braille_language_euro" : "Euro-Braille/Computer-Braille (8 dots)",
   "braille_simple_mode_letters" : "Letters",
   "braille_simple_mode_digits" : "Digits",
