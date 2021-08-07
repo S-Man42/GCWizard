@@ -162,10 +162,16 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
   }
 };
 
-final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsMulti = {
+final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
   BrailleLanguage.DEU : {},
   BrailleLanguage.ENG : {},
   BrailleLanguage.FRA : {},
+};
+
+final Map<BrailleLanguage, List<String>> _CharsSymbolsComposed = {
+  BrailleLanguage.DEU : [],
+  BrailleLanguage.ENG : [],
+  BrailleLanguage.FRA : [],
 };
 
 final Map<String, List<String>> _charsToSegmentsDigits = {
@@ -195,6 +201,9 @@ final Map<String, List<String>> _charsToSegmentsAntoine = {
 };
 
 
+final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
+final SWITCH_ANTOINE = ['6'];
+
 final Map<BrailleLanguage, List<String>>_Switches = {
   BrailleLanguage.DEU : [
     'ONECAPITALFOLLOWS',
@@ -208,10 +217,6 @@ final Map<BrailleLanguage, List<String>>_Switches = {
   ],
 
 };
-
-final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
-final SWITCH_ANTOINE = ['6'];
-
 
 final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches = {
   BrailleLanguage.STD : {
@@ -719,69 +724,72 @@ List<List<String>> _encodeBrailleDEU(String input) {
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.DEU]);
 
   for (int i = 0; i < inputs.length; i++) {
-
-    if (_isNumber(inputs[i])) {
-      if (!stateNumberFollows) {
-        result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['NUMBERFOLLOWS']);
-        stateNumberFollows = true;
-      }
-      result.add(_charsToSegments[inputs[i]]);
-    } else {
-      if (_isSmallLetter(inputs[i])) {
-        if (stateCapitals) stateCapitals = false;
-      }
-      if (_isCapital(inputs[i])) {
-        // check following letter
-        if (i < inputs.length - 1 && _isSmallLetter(inputs[i + 1]))
-          result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['ONECAPITALFOLLOWS']);
-        else {
-          result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['CAPITALFOLLOWS']);
-          stateCapitals = true;
+    // identify composed characters
+    if (_CharsSymbolsComposed[BrailleLanguage.DEU].contains(inputs[i]))
+      result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.DEU][inputs[i]]);
+    else
+      if (_isNumber(inputs[i])) {
+        if (!stateNumberFollows) {
+          result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['NUMBERFOLLOWS']);
+          stateNumberFollows = true;
         }
-        inputs[i] = inputs[i].toLowerCase();
-      }
-      if (inputs[i] == 's' && i < inputs.length - 1 && inputs[i + 1] == 't') {
-        result.add(_charsToSegments['st']);
-        i++;
-      } else if (inputs[i] == 'a' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['au']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['eu']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'i') {
-        result.add(_charsToSegments['ei']);
-        i++;
-      } else if (inputs[i] == 'ä' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'U') {
-        result.add(_charsToSegments['äu']);
-        i++;
-      } else if (inputs[i] == 'i' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'e') {
-        result.add(_charsToSegments['ie']);
-        i++;
-      } else if (inputs[i] == 'c' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['ch']);
-        i++;
-      } else if (inputs[i] == 's' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'c' &&
-          inputs[i + 2] == 'h') {
-        result.add(_charsToSegments['sch']);
-        i = i + 2;
-      } else
         result.add(_charsToSegments[inputs[i]]);
-    }
+      } else {
+        if (_isSmallLetter(inputs[i])) {
+          if (stateCapitals) stateCapitals = false;
+        }
+        if (_isCapital(inputs[i])) {
+          // check following letter
+          if (i < inputs.length - 1 && _isSmallLetter(inputs[i + 1]))
+            result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['ONECAPITALFOLLOWS']);
+          else {
+            result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['CAPITALFOLLOWS']);
+            stateCapitals = true;
+          }
+          inputs[i] = inputs[i].toLowerCase();
+        }
+        if (inputs[i] == 's' && i < inputs.length - 1 && inputs[i + 1] == 't') {
+          result.add(_charsToSegments['st']);
+          i++;
+        } else if (inputs[i] == 'a' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'u') {
+          result.add(_charsToSegments['au']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'u') {
+          result.add(_charsToSegments['eu']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'i') {
+          result.add(_charsToSegments['ei']);
+          i++;
+        } else if (inputs[i] == 'ä' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'U') {
+          result.add(_charsToSegments['äu']);
+          i++;
+        } else if (inputs[i] == 'i' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'e') {
+          result.add(_charsToSegments['ie']);
+          i++;
+        } else if (inputs[i] == 'c' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['ch']);
+          i++;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'c' &&
+            inputs[i + 2] == 'h') {
+          result.add(_charsToSegments['sch']);
+          i = i + 2;
+        } else
+          result.add(_charsToSegments[inputs[i]]);
+      }
   }
   return result;
 }
@@ -802,153 +810,157 @@ List<List<String>> _encodeBrailleENG(String input) {
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (_isNumber(inputs[i])) {
+    // identify composed characters
+    if (_CharsSymbolsComposed[BrailleLanguage.ENG].contains(inputs[i]))
+      result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.ENG][inputs[i]]);
+    else
+      if (_isNumber(inputs[i])) {
       if (!numberFollows) {
         result.add(SWITCH_NUMBERFOLLOWS);
         numberFollows = true;
       }
       result.add(_charsToSegments[inputs[i]]);
-    } else {
-      if (inputs[i] == 'w' &&
-          i < inputs.length - 3 &&
-          inputs[i + 1] == 'i' &&
-          inputs[i + 2] == 't' &&
-          inputs[i + 3] == 'h') {
-        result.add(_charsToSegments['with']);
-        i = i + 3;
-      } else if (inputs[i] == 't' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'h' &&
-          inputs[i + 2] == 'e') {
-        result.add(_charsToSegments['the']);
-        i = i + 2;
-      } else if (inputs[i] == 'i' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'n' &&
-          inputs[i + 2] == 'g') {
-        result.add(_charsToSegments['ing']);
-        i = i + 2;
-      } else if (inputs[i] == 's' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'c' &&
-          inputs[i + 2] == 'h') {
-        result.add(_charsToSegments['sch']);
-        i = i + 2;
-      } else if (inputs[i] == 'a' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'n' &&
-          inputs[i + 2] == 'd') {
-        result.add(_charsToSegments['and']);
-        i = i + 2;
-      } else if (inputs[i] == 'f' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'o' &&
-          inputs[i + 2] == 'r') {
-        result.add(_charsToSegments['for']);
-        i = i + 2;
-      } else if (inputs[i] == 'c' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['ch']);
-        i++;
-      } else if (inputs[i] == 'g' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['gh']);
-        i++;
-      } else if (inputs[i] == 's' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['sh']);
-        i++;
-      } else if (inputs[i] == 't' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['th']);
-        i++;
-      } else if (inputs[i] == 'w' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['wh']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'd') {
-        result.add(_charsToSegments['ed']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'r') {
-        result.add(_charsToSegments['er']);
-        i++;
-      } else if (inputs[i] == 'o' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['ou']);
-        i++;
-      } else if (inputs[i] == 'o' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'w') {
-        result.add(_charsToSegments['ow']);
-        i++;
-      } else if (inputs[i] == 'i' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'n') {
-        result.add(_charsToSegments['in']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'a') {
-        result.add(_charsToSegments['ea']);
-        i++;
-      } else if (inputs[i] == 'b' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'b') {
-        result.add(_charsToSegments['bb']);
-        i++;
-      } else if (inputs[i] == 'c' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'c') {
-        result.add(_charsToSegments['cc']);
-        i++;
-      } else if (inputs[i] == 'd' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'd') {
-        result.add(_charsToSegments['dd']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'n') {
-        result.add(_charsToSegments['en']);
-        i++;
-      } else if (inputs[i] == 'f' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'f') {
-        result.add(_charsToSegments['ff']);
-        i++;
-      } else if (inputs[i] == 'g' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'g') {
-        result.add(_charsToSegments['gg']);
-        i++;
-      } else if (inputs[i] == 's' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 't') {
-        result.add(_charsToSegments['st']);
-        i++;
-      } else if (inputs[i] == 'a' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'r') {
-        result.add(_charsToSegments['ar']);
-        i++;
-      } else if (inputs[i] == 'o' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'f') {
-        result.add(_charsToSegments['of']);
-        i++;
-      } else
-        result.add(_charsToSegments[inputs[i]]);
-    }
+      } else {
+        if (inputs[i] == 'w' &&
+            i < inputs.length - 3 &&
+            inputs[i + 1] == 'i' &&
+            inputs[i + 2] == 't' &&
+            inputs[i + 3] == 'h') {
+          result.add(_charsToSegments['with']);
+          i = i + 3;
+        } else if (inputs[i] == 't' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'h' &&
+            inputs[i + 2] == 'e') {
+          result.add(_charsToSegments['the']);
+          i = i + 2;
+        } else if (inputs[i] == 'i' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'n' &&
+            inputs[i + 2] == 'g') {
+          result.add(_charsToSegments['ing']);
+          i = i + 2;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'c' &&
+            inputs[i + 2] == 'h') {
+          result.add(_charsToSegments['sch']);
+          i = i + 2;
+        } else if (inputs[i] == 'a' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'n' &&
+            inputs[i + 2] == 'd') {
+          result.add(_charsToSegments['and']);
+          i = i + 2;
+        } else if (inputs[i] == 'f' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'o' &&
+            inputs[i + 2] == 'r') {
+          result.add(_charsToSegments['for']);
+          i = i + 2;
+        } else if (inputs[i] == 'c' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['ch']);
+          i++;
+        } else if (inputs[i] == 'g' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['gh']);
+          i++;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['sh']);
+          i++;
+        } else if (inputs[i] == 't' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['th']);
+          i++;
+        } else if (inputs[i] == 'w' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['wh']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'd') {
+          result.add(_charsToSegments['ed']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'r') {
+          result.add(_charsToSegments['er']);
+          i++;
+        } else if (inputs[i] == 'o' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'u') {
+          result.add(_charsToSegments['ou']);
+          i++;
+        } else if (inputs[i] == 'o' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'w') {
+          result.add(_charsToSegments['ow']);
+          i++;
+        } else if (inputs[i] == 'i' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'n') {
+          result.add(_charsToSegments['in']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'a') {
+          result.add(_charsToSegments['ea']);
+          i++;
+        } else if (inputs[i] == 'b' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'b') {
+          result.add(_charsToSegments['bb']);
+          i++;
+        } else if (inputs[i] == 'c' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'c') {
+          result.add(_charsToSegments['cc']);
+          i++;
+        } else if (inputs[i] == 'd' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'd') {
+          result.add(_charsToSegments['dd']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'n') {
+          result.add(_charsToSegments['en']);
+          i++;
+        } else if (inputs[i] == 'f' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'f') {
+          result.add(_charsToSegments['ff']);
+          i++;
+        } else if (inputs[i] == 'g' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'g') {
+          result.add(_charsToSegments['gg']);
+          i++;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 't') {
+          result.add(_charsToSegments['st']);
+          i++;
+        } else if (inputs[i] == 'a' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'r') {
+          result.add(_charsToSegments['ar']);
+          i++;
+        } else if (inputs[i] == 'o' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'f') {
+          result.add(_charsToSegments['of']);
+          i++;
+        } else
+          result.add(_charsToSegments[inputs[i]]);
+      }
   }
   return result;
 }
@@ -967,15 +979,19 @@ List<List<String>> _encodeBrailleFRA(String input) {
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (_isNumber(inputs[i])) {
-      if (!numberFollows) {
-        result.add(_charsToSegments['#']);
-        numberFollows = true;
+    // identify composed characters
+    if (_CharsSymbolsComposed[BrailleLanguage.FRA].contains(inputs[i]))
+      result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.FRA][inputs[i]]);
+    else
+      if (_isNumber(inputs[i])) {
+        if (!numberFollows) {
+          result.add(_charsToSegments['#']);
+          numberFollows = true;
+        }
+        result.add(_charsToSegments[inputs[i]]);
+      } else {
+        numberFollows = false;
       }
-      result.add(_charsToSegments[inputs[i]]);
-    } else {
-      numberFollows = false;
-    }
   }
 
   return result;
