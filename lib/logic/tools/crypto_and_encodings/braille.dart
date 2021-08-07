@@ -73,11 +73,13 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = 
     'ie': ['3', '4', '6'],
   },
   BrailleLanguage.ENG : {
+    // strong contractions - 10.3
     'and': ['1', '2', '3', '4', '6'],
     'for': ['1', '2', '3', '4', '5', '6'],
     'of': ['1', '2', '3', '5', '6'],
     'the': ['2', '3', '4', '6'],
     'with': ['2', '3', '4', '5', '6'],
+    // strong groupsigns - 10.4
     'ch': ['1', '6'],
     'gh': ['1', '2', '6'],
     'sh': ['1', '4', '6'],
@@ -88,15 +90,16 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = 
     'ou': ['1', '2', '5', '6'],
     'ow': ['2', '4', '6'],
     'st': ['3', '4'], //    or /
-    'ar': ['3', '4', '5'],
     'ing': ['3', '4', '6'],
-    'ble': ['3', '4', '5', '6'],
+    'ar': ['3', '4', '5'],
+    // lower groupsigns
+    'ea': ['2'],
     'bb': ['2', '3'],
     'cc': ['2', '5'],
-    'en': ['2', '6'],
     'ff': ['2', '3', '5'],
+    'gg': ['2', '3', '5', '6'],
+    'en': ['2', '6'],
     'in': ['3', '5'],
-    'by': ['3', '5', '6'],
   },
   BrailleLanguage.FRA : {
     'à': ['1', '2', '3', '5', '6'],
@@ -118,11 +121,12 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = 
 
 final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = {
   BrailleLanguage.STD :   {
-  },
-  BrailleLanguage.DEU : {
     ',': ['2'],
     ';': ['2', '3'],
     ':': ['2', '5'],
+    '-': ['3', '6'],
+  },
+  BrailleLanguage.DEU : {
     '?': ['2', '6'],
     '!': ['2', '3', '5'],
     '(': ['2', '3', '5', '6'],
@@ -130,37 +134,21 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
     '„': ['2', '3', '6'],
     '“': ['3', '5', '6'],
     '.': ['3'],
-    '-': ['3', '6'],
     "'": ['6'],
     '§': ['3', '4', '6'],
   },
   BrailleLanguage.ENG : {
-    ',': ['2'],
-    ';': ['2', '3'],
-    ':': ['2', '5'],
     '.': ['2', '5', '6'],
     '?': ['2', '3', '6'],
     '!': ['2', '3', '5'],
-    '+': ['2', '3', '5'],
-    '#': ['3', '4', '5', '6'], // number follows
-    '=': ['2', '3', '5', '6'],
-    '-': ['3', '6'],
-    '§': ['3', '4', '6'],
-    '"': ['2', '3', '6'],
-    "'": ['4'],
-    '~': ['5'],
-    '>': ['4', '5'],
-    '<': ['5', '6'],
-    '/': ['3', '4'],
-    '_': ['3', '6'],
+    "'": ['3'],
   },
   BrailleLanguage.FRA : {
-    ',': ['2'],
-    ';': ['2', '3'],
-    ':': ['2', '5'],
     '.': ['2', '5', '6'],
     '?': ['2', '6'],
     '!': ['2', '3', '5'],
+    '(': ['2', '3', '6'],
+    ')': ['3', '5', '6'],
     '"': ['2', '3', '5', '6'],
     '«': ['2', '3', '5', '6'],
     '»': ['2', '3', '5', '6'],
@@ -168,13 +156,16 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
     '”': ['2', '3', '5', '6'],
     '‘': ['2', '3', '5', '6'],
     '’': ['2', '3', '5', '6'],
-    '(': ['2', '3', '6'],
-    ')': ['3', '5', '6'],
     "'": ['3'],
     '/': ['3', '4'],
     '@': ['3', '4', '5'],
-    '-': ['3', '6'],
   }
+};
+
+final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsMulti = {
+  BrailleLanguage.DEU : {},
+  BrailleLanguage.ENG : {},
+  BrailleLanguage.FRA : {},
 };
 
 final Map<String, List<String>> _charsToSegmentsDigits = {
@@ -553,7 +544,25 @@ final _SmallLetters = {
   'w',
   'x',
   'y',
-  'z'
+  'z',
+  'ä',
+  'ö',
+  'ü',
+  'ß',
+  'á',
+  'à',
+  'â',
+  'ç',
+  'è',
+  'é',
+  'ê',
+  'ë',
+  'î',
+  'ï',
+  'ô',
+  'œ',
+  'ù',
+  'û',
 };
 
 final _CapitalLetters = {
@@ -582,7 +591,24 @@ final _CapitalLetters = {
   'W',
   'X',
   'Y',
-  'Z'
+  'Z',
+  'Ä',
+  'Ö',
+  'Ü',
+  'Á',
+  'À',
+  'Â',
+  'Ç',
+  'È',
+  'É',
+  'Ê',
+  'Ë',
+  'Î',
+  'Ï',
+  'Ô',
+  'Œ',
+  'Ù',
+  'Û',
 };
 
 final _AntoineLetters = {
@@ -687,6 +713,7 @@ List<List<String>> _encodeBrailleDEU(String input) {
 
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
   _charsToSegments.addAll(_charsToSegmentsDigits);
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.DEU]);
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.DEU]);
@@ -769,6 +796,7 @@ List<List<String>> _encodeBrailleENG(String input) {
   _charsToSegments.addAll(_charsToSegmentsDigits);
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.ENG]);
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.ENG]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -817,12 +845,6 @@ List<List<String>> _encodeBrailleENG(String input) {
           inputs[i + 1] == 'o' &&
           inputs[i + 2] == 'r') {
         result.add(_charsToSegments['for']);
-        i = i + 2;
-      } else if (inputs[i] == 'b' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'l' &&
-          inputs[i + 2] == 'e') {
-        result.add(_charsToSegments['ble']);
         i = i + 2;
       } else if (inputs[i] == 'c' &&
           i < inputs.length - 1 &&
@@ -939,6 +961,7 @@ List<List<String>> _encodeBrailleFRA(String input) {
   _charsToSegments.addAll(_charsToSegmentsDigits);
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.FRA]);
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.FRA]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -1066,7 +1089,7 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
 
   List<String> text = [];
 
-  if (french) {
+  if (french) { // decode including french chiffre antoine
     _numberFollows = false;
     _antoinenumberFollows = false;
     text = inputs.where((input) => input != null).map((input) {
@@ -1197,16 +1220,18 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
    } else {
       charH = BrailleToChar[input];
       if (_Switches[BrailleLanguage.DEU].contains(charH)) {
-        if (charH == 'ONECAPITALFOLLOWS')
+        if (charH == 'ONECAPITALFOLLOWS') {
           oneCapitalFollows = true;
-        else if (charH == "CAPITALFOLLOWS")
+        }else if (charH == "CAPITALFOLLOWS") {
           capitalFollows = true;
-        else if ((charH == 'NUMBERFOLLOWS') && !numberFollows)
+        }else if ((charH == 'NUMBERFOLLOWS') && !numberFollows) {
           numberFollows = true;
+        }
       } else if (charH == ' ') {
         numberFollows = false;
         capitalFollows = false;
         oneCapitalFollows = false;
+        text.add(charH);
       } else {
         // no switch
         if (numberFollows) {
@@ -1220,9 +1245,8 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
         } else if (capitalFollows) {
           charH = charH.toUpperCase();
         }
-        char = char + charH;
+        text.add(charH);
       }
-      text.add(charH);
     };
   }
 
