@@ -352,6 +352,7 @@ const SEARCHSTRING_EN_SYMBOL_CHAPPE_V2 = '';
 const SEARCHSTRING_EN_SYMBOL_CHAPPE_V3 = '';
 const SEARCHSTRING_EN_SYMBOL_CHEROKEE = 'syllabary indians';
 const SEARCHSTRING_EN_SYMBOL_CHINESE_NUMERALS = 'chinese numbers numerals';
+const SEARCHSTRING_EN_SYMBOL_COLOR_ADD = '';
 const SEARCHSTRING_EN_SYMBOL_COLOR_CODE = 'red green blue colorcode colourcode colors colours';
 const SEARCHSTRING_EN_SYMBOL_COLOR_HONEY = 'colors colours six bees honeycombs';
 const SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI = 'woven carpet colours colors six';
@@ -446,6 +447,7 @@ const SEARCHSTRING_EN_SYMBOL_MUSICA =
     'notes instruments piano piano drums flute oboe viola trumpet guitar trombone violin flute';
 const SEARCHSTRING_EN_SYMBOL_NAZCAAN = '';
 const SEARCHSTRING_EN_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE = 'newzealand';
+const SEARCHSTRING_EN_SYMBOL_NIESSEN = '';
 const SEARCHSTRING_EN_SYMBOL_NOTES_DOREMI = 'music notesystem';
 const SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_ALTOCLEF = 'music notenames hashtag flat sharp';
 const SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_BASSCLEF = 'music notenamesscale hashtag flat sharp';

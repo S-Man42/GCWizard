@@ -357,6 +357,7 @@ const SEARCHSTRING_DE_SYMBOL_CHAPPE_V2 = '';
 const SEARCHSTRING_DE_SYMBOL_CHAPPE_V3 = '';
 const SEARCHSTRING_DE_SYMBOL_CHEROKEE = 'silbenschrift indianer';
 const SEARCHSTRING_DE_SYMBOL_CHINESE_NUMERALS = 'chinesisches zahlen ziffern';
+const SEARCHSTRING_DE_SYMBOL_COLOR_ADD = '';
 const SEARCHSTRING_DE_SYMBOL_COLOR_CODE = 'rot gruen blau farbcode farben';
 const SEARCHSTRING_DE_SYMBOL_COLOR_HONEY = 'farbcode farben bienenwaben sechs';
 const SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI = 'farbcode webteppich gewebter farben';
@@ -450,6 +451,7 @@ const SEARCHSTRING_DE_SYMBOL_MUSICA =
     'noten instrumente piano klavier schlagzeug floete oboe bratsche trompete gitarre posaune geige fluegel';
 const SEARCHSTRING_DE_SYMBOL_NAZCAAN = '';
 const SEARCHSTRING_DE_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE = 'neuseeland neuseelaendisches';
+const SEARCHSTRING_DE_SYMBOL_NIESSEN = '';
 const SEARCHSTRING_DE_SYMBOL_NOTES_DOREMI = 'musik notensystem';
 const SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_ALTOCLEF =
     'musik notennamen altschluessel tonleiter bassvorzeichen kreuzvorzeichen';
