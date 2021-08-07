@@ -15,6 +15,7 @@ import 'package:gc_wizard/utils/constants.dart';
 
 // https://fr.wikipedia.org/wiki/Braille
 // https://www.pharmabraille.com/wp-content/uploads/2015/01/CBFU_edition_internationale.pdf
+// https://www.rnib.org.uk/sites/default/files/using_the_braille_french_code_2007_tc20909.pdf
 
 // http://www.braille.ch/index.html#computer
 
@@ -216,6 +217,11 @@ final Map<BrailleLanguage, List<String>>_Switches = {
     'NUMBERFOLLOWS',
   ],
   BrailleLanguage.FRA : [
+    'ONECAPITALFOLLOWS',
+    'CAPITALFOLLOWS',
+    'SMALLLETTERFOLLOWS',
+    'NUMBERFOLLOWS',
+    'ANTOINE'
   ],
 
 };
@@ -235,9 +241,10 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches =
     'NUMBERFOLLOWS': ['3', '4', '5', '6'],
   },
   BrailleLanguage.FRA : {
-    'CAPITALFOLLOWS': ['4', '5'],
+    'CAPITALS': ['4', '6'],
+    'SMALLLETTERFOLLOWS': ['4'],
     'NUMBERFOLLOWS': ['3', '4', '5', '6'],
-    'MATHFOLLOWS': ['6']
+    'ANTOINE': ['6']
   },
 
 };
@@ -795,7 +802,11 @@ List<List<String>> _encodeBrailleDEU(String input) {
 }
 
 List<List<String>> _encodeBrailleENG(String input) {
-  bool numberFollows = false;
+  bool stateNumberFollows = false;
+  bool stateCapitals = false;
+
+  List<String> inputs = input.split('');
+  List<List<String>> result = [];
 
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
@@ -804,21 +815,25 @@ List<List<String>> _encodeBrailleENG(String input) {
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.ENG]);
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.ENG]);
 
-  List<String> inputs = input.split('');
-  List<List<String>> result = [];
-
   for (int i = 0; i < inputs.length; i++) {
     // identify composed characters
     if (_CharsSymbolsComposed[BrailleLanguage.ENG].contains(inputs[i]))
       result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.ENG][inputs[i]]);
     else
       if (_isNumber(inputs[i])) {
-      if (!numberFollows) {
+      if (!stateNumberFollows) {
         result.add(SWITCH_NUMBERFOLLOWS);
-        numberFollows = true;
+        stateNumberFollows = true;
       }
       result.add(_charsToSegments[inputs[i]]);
       } else {
+        if (_isSmallLetter(inputs[i])) {
+          if (stateCapitals) stateCapitals = false;
+        }
+        if (_isCapital(inputs[i])) {
+          result.add(_CharsToSegmentsSwitches[BrailleLanguage.ENG]['CAPITALS']);
+          inputs[i] = inputs[i].toLowerCase();
+        }
         if (inputs[i] == 'w' &&
             i < inputs.length - 3 &&
             inputs[i + 1] == 'i' &&
@@ -965,13 +980,15 @@ List<List<String>> _encodeBrailleENG(String input) {
 
 List<List<String>> _encodeBrailleFRA(String input) {
   bool numberFollows = false;
+  bool stateNumberFollows = false;
+  bool stateCapitals = false;
 
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
   _charsToSegments.addAll(_charsToSegmentsDigits);
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.FRA]);
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.FRA]);
-  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -981,17 +998,16 @@ List<List<String>> _encodeBrailleFRA(String input) {
     if (_CharsSymbolsComposed[BrailleLanguage.FRA].contains(inputs[i]))
       result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.FRA][inputs[i]]);
     else
-      if (_isNumber(inputs[i])) {
-        if (!numberFollows) {
-          result.add(_charsToSegments['#']);
-          numberFollows = true;
-        }
-        result.add(_charsToSegments[inputs[i]]);
-      } else {
-        numberFollows = false;
+    if (_isNumber(inputs[i])) {
+      if (!numberFollows) {
+        result.add(SWITCH_NUMBERFOLLOWS);
+        numberFollows = true;
       }
+      result.add(_charsToSegments[inputs[i]]);
+    } else {
+      result.add(_charsToSegments[inputs[i]]);
+    }
   }
-
   return result;
 }
 
