@@ -212,6 +212,8 @@ final Map<BrailleLanguage, List<String>>_Switches = {
     'NUMBERFOLLOWS',
   ],
   BrailleLanguage.ENG : [
+    'CAPITALS',
+    'NUMBERFOLLOWS',
   ],
   BrailleLanguage.FRA : [
   ],
@@ -229,9 +231,7 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches =
     'NUMBERFOLLOWS': ['3', '4', '5', '6'],
   },
   BrailleLanguage.ENG : {
-    'ONECAPITALFOLLOWS': ['4', '6'],
-    'CAPITALFOLLOWS': ['4', '5'],
-    'SMALLLETTERFOLLOWS': ['6'],
+    'CAPITALS': ['6'],
     'NUMBERFOLLOWS': ['3', '4', '5', '6'],
   },
   BrailleLanguage.FRA : {
@@ -794,17 +794,15 @@ List<List<String>> _encodeBrailleDEU(String input) {
   return result;
 }
 
-
-
 List<List<String>> _encodeBrailleENG(String input) {
   bool numberFollows = false;
 
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
   _charsToSegments.addAll(_charsToSegmentsDigits);
   _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.ENG]);
   _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.ENG]);
-  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -1081,8 +1079,6 @@ Map<String, dynamic> _decodeBrailleBASIC(
   return {'displays': displays, 'chars': text};
 }
 
-
-
 Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
   var displays = <List<String>>[];
 
@@ -1198,8 +1194,6 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
   return {'displays': displays, 'chars': text};
 }
 
-
-
 Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
   var displays = <List<String>>[];
 
@@ -1208,7 +1202,6 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
   bool oneCapitalFollows = false;
 
   String input = '';
-  String char = '';
   String charH = '';
   List<String> text = [];
   int maxLength = inputs.length;
@@ -1219,6 +1212,7 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
   switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.DEU]).forEach((key, value) {BrailleToChar[key.join()] = value;});
   switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.DEU]).forEach((key, value) {BrailleToChar[key.join()] = value;});
   switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
 
   for (int i = 0; i < maxLength; i++) {
     input = inputs[i];
@@ -1263,13 +1257,11 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
         }
         text.add(charH);
       }
-    };
+    }
   }
 
   return {'displays': displays, 'chars': text};
 }
-
-
 
 Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
 // TO DO
@@ -1288,9 +1280,10 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
   // Build Map for decoding
   Map <String, String> BrailleToChar = new Map <String, String>();
   switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
-  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
-  switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
   switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
 
   for (int i = 0; i < maxLength; i++) {
     input = inputs[i];
@@ -1307,14 +1300,43 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
       text.add(UNKNOWN_ELEMENT);
     } else {
       charH = BrailleToChar[input];
-
-
+      if (_Switches[BrailleLanguage.ENG].contains(charH)) {
+        if (charH == 'CAPITALS') {
+          if (i + 1 < maxLength)
+            switch (inputs[i + 1]) {
+              case '6' : capitalFollows = true;
+                break;
+              case '3' : capitalFollows = false;
+                break;
+              default: oneCapitalFollows = true;
+            }
+        } else if ((charH == 'NUMBERFOLLOWS') && !numberFollows) {
+          numberFollows = true;
+        }
+      } else if (charH == ' ') {
+        numberFollows = false;
+        capitalFollows = false;
+        oneCapitalFollows = false;
+        text.add(charH);
+      } else {
+        // no switch
+        if (numberFollows) {
+          if (_LetterToDigit[charH] == null)
+            numberFollows = false;
+          else
+            charH = _LetterToDigit[charH];
+        } else if (oneCapitalFollows) {
+          charH = charH.toUpperCase();
+          oneCapitalFollows = false;
+        } else if (capitalFollows) {
+          charH = charH.toUpperCase();
+        }
+        text.add(charH);
+      }
     }
   }
   return {'displays': displays, 'chars': text};
 }
-
-
 
 Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
 // TO DO
@@ -1337,6 +1359,7 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
   switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.FRA]).forEach((key, value) {BrailleToChar[key.join()] = value;});
   switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.FRA]).forEach((key, value) {BrailleToChar[key.join()] = value;});
   switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
 
   for (int i = 0; i < maxLength; i++) {
     input = inputs[i];
