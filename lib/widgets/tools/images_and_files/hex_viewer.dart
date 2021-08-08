@@ -21,6 +21,9 @@ class HexViewer extends StatefulWidget {
 }
 
 class HexViewerState extends State<HexViewer> {
+  ScrollController _scrollControllerHex;
+  ScrollController _scrollControllerASCII;
+
   String _hexData;
   int _hexDataLines;
 
@@ -28,6 +31,25 @@ class HexViewerState extends State<HexViewer> {
   final _CHARS_PER_LINE = 16 * 2;
 
   var _currentLines = 0;
+
+  var _isHexScrolling = false;
+  var _isASCIIScrolling = false;
+
+  @override
+  void initState() {
+    _scrollControllerHex = ScrollController();
+    _scrollControllerASCII = ScrollController();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollControllerHex.dispose();
+    _scrollControllerASCII.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +67,6 @@ class HexViewerState extends State<HexViewer> {
               _hexData = file2hexstring(_file.bytes);
               _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
 
-              print(_hexData.length);
-              print(_hexDataLines);
-
               setState(() {});
             }
           },
@@ -59,6 +78,11 @@ class HexViewerState extends State<HexViewer> {
     );
   }
 
+  _resetScrollViews() {
+    _scrollControllerASCII.jumpTo(0.0);
+    _scrollControllerHex.jumpTo(0.0);
+  }
+
   _buildOutput() {
     if (_hexData == null) return null;
 
@@ -66,11 +90,14 @@ class HexViewerState extends State<HexViewer> {
     var hexStrEnd = hexStrStart + _CHARS_PER_LINE * _MAX_LINES;
     var hexDataStr = _hexData.substring(hexStrStart, min(hexStrEnd, _hexData.length));
     var hexText = insertEveryNthCharacter(hexDataStr, _CHARS_PER_LINE, '\n');
-    var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2)).toList();
+    var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2) + ' ').toList();
     hexText = hexTextList.join('\n');
 
     var asciiText = hexTextList.map((line) {
       return line.split(' ').map((hexValue) {
+        if (hexValue == null || hexValue.isEmpty)
+          return '';
+
         var charCode = int.tryParse(hexValue, radix: 16);
         if (charCode < 32)
           return '.';
@@ -89,15 +116,12 @@ class HexViewerState extends State<HexViewer> {
                   iconData: Icons.arrow_back_ios,
                   onPressed: () {
                     setState(() {
-                      print(_hexDataLines);
-                      print(_currentLines);
-
                       _currentLines -= _MAX_LINES;
-                      print(_currentLines);
                       if (_currentLines < 0) {
                         _currentLines = (_hexDataLines ~/ _MAX_LINES) * _MAX_LINES;
-                        print(_currentLines);
                       }
+
+                      _resetScrollViews();
                     });
                   },
                 ),
@@ -115,6 +139,8 @@ class HexViewerState extends State<HexViewer> {
                       if (_currentLines > _hexDataLines) {
                         _currentLines = 0;
                       }
+
+                      _resetScrollViews();
                     });
                   },
                 )
@@ -126,28 +152,69 @@ class HexViewerState extends State<HexViewer> {
           children: [
             Expanded(
               child: Container (
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: GCWText(
-                    text: hexText,
-                    style: gcwMonotypeTextStyle(),
+                child: NotificationListener<ScrollNotification>(
+                  child: SingleChildScrollView(
+                    controller: _scrollControllerHex,
+                    scrollDirection: Axis.horizontal,
+                    child: GCWText(
+                      text: hexText,
+                      style: gcwMonotypeTextStyle(),
+                    ),
                   ),
+                  onNotification: (ScrollNotification scrollNotification) {
+                    if (_isASCIIScrolling)
+                      return false;
+
+                    if (scrollNotification is ScrollStartNotification) {
+                      _isHexScrolling = true;
+                    } else if (scrollNotification is ScrollEndNotification) {
+                      _isHexScrolling = false;
+                    } else if (scrollNotification is ScrollUpdateNotification) {
+                      _scrollControllerASCII.position.jumpTo(
+                        _scrollControllerASCII.position.maxScrollExtent * _scrollControllerHex.position.pixels / _scrollControllerHex.position.maxScrollExtent
+                      );
+                    }
+
+                    return true;
+                  },
                 ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN * 5),
               ),
-              flex: 2,
+              flex: 15,
+            ),
+            Expanded(
+              child: Container(),
+              flex: 1
             ),
             Expanded(
               child: Container(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: GCWText(
-                    text: asciiText,
-                    style: gcwMonotypeTextStyle(),
+                child: NotificationListener<ScrollNotification>(
+                  child: SingleChildScrollView(
+                    controller: _scrollControllerASCII,
+                    scrollDirection: Axis.horizontal,
+                    child: GCWText(
+                      text: asciiText,
+                      style: gcwMonotypeTextStyle(),
+                    ),
                   ),
+                  onNotification: (ScrollNotification scrollNotification) {
+                    if (_isHexScrolling)
+                      return false;
+
+                    if (scrollNotification is ScrollStartNotification) {
+                      _isASCIIScrolling = true;
+                    } else if (scrollNotification is ScrollEndNotification) {
+                      _isASCIIScrolling = false;
+                    } else if (scrollNotification is ScrollUpdateNotification) {
+                      _scrollControllerHex.position.jumpTo(
+                          _scrollControllerHex.position.maxScrollExtent * _scrollControllerASCII.position.pixels / _scrollControllerASCII.position.maxScrollExtent
+                      );
+                    }
+
+                    return true;
+                  },
                 ),
-                padding: EdgeInsets.only(left: DEFAULT_MARGIN * 7),
               ),
+              flex: 5
             )
           ],
         )
