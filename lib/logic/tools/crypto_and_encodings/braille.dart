@@ -163,15 +163,78 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
   }
 };
 
-final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
-  BrailleLanguage.DEU : {},
-  BrailleLanguage.ENG : {},
-  BrailleLanguage.FRA : {},
+final _MODIFIER_4 = ['4'];
+final _MODIFIER_5 = ['5'];
+final _MODIFIER_6 = ['6'];
+final _MODIFIER_45 = ['4', '5'];
+final _MODIFIER_46 = ['4', '6'];
+final _MODIFIER_456 = ['4', '5', '6'];
+final _MODIFIER_3456 = ['3', '4', '5', '6'];
+
+final _CharsetModifier = {
+  _MODIFIER_4.join(''),
+  _MODIFIER_5.join(''),
+  _MODIFIER_6.join(''),
+  _MODIFIER_45.join(''),
+  _MODIFIER_46.join(''),
+  _MODIFIER_456.join(''),
+  _MODIFIER_3456.join('')
 };
 
-final Map<BrailleLanguage, List<String>> _CharsSymbolsComposed = {
-  BrailleLanguage.DEU : [],
-  BrailleLanguage.ENG : [],
+final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
+  BrailleLanguage.DEU : {
+    '[': [_MODIFIER_6, ['2', '3', '5', '6']],
+    ']': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '@': [_MODIFIER_4, ['3', '4', '5']],
+    '°': [_MODIFIER_4, ['3', '5', '6']],
+    '_': [_MODIFIER_4, ['4', '5', '6']],
+    '"': [_MODIFIER_4, ['3', '5'], ['3', '5']],
+    '&': [_MODIFIER_5, ['1', '3', '6']],
+    '/': [_MODIFIER_5, ['2']],
+    '|': [_MODIFIER_456, ['1', '2', '3']],
+    '\\': [_MODIFIER_4, ['3', '4']],
+    '%': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6']],
+  },
+  BrailleLanguage.ENG : {
+    '§' : [],
+    '@' : [],
+    '°' : [],
+    '&' : [],
+    '/' : [],
+    '|' : [],
+    '"' : [],
+    '%' : [],
+    '_' : [],
+    '\\' : [],
+    '#' : [],
+    '~' : [],
+    '[' : [_MODIFIER_46, ['1', '2', '6']],
+    ']' : [_MODIFIER_46, ['3', '4', '5']],
+    '{' : [_MODIFIER_46, ['1', '2', '6']],
+    '}' : [_MODIFIER_456, ['3', '4', '5']],
+    '(' : [_MODIFIER_5, ['1', '2', '6']],
+    ')' : [_MODIFIER_5, ['3', '4', '5']],
+    '„' : [_MODIFIER_45, ['2', '3', '6']],
+    '“' : [_MODIFIER_45, ['3', '5', '6']],
+    '«' : [_MODIFIER_456, ['3', '5', '6']],
+    '»' : [_MODIFIER_456, ['2', '3', '6']],
+    '‘' : [_MODIFIER_6, ['2', '3', '6']],
+    '’' : [_MODIFIER_6, ['3', '5', '6']],
+  },
+  BrailleLanguage.FRA : {
+    '' : [],
+    '' : [],
+    '' : [],
+    '' : [],
+    '' : [],
+    '' : [],
+    '' : [],
+  },
+};
+
+final Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
+  BrailleLanguage.DEU : ['[', ']', '@', '°', '&', '/', '|', '\\', '_', '%', '"'],
+  BrailleLanguage.ENG : ['(', ')', '[', ']', '{', '}', '„', '“', '«', '»', '‘', '’', '§', '@', '°', '&', '/', '|', '"', '%', '_', '\\', '#', '~'],
   BrailleLanguage.FRA : [],
 };
 
@@ -219,7 +282,7 @@ final Map<BrailleLanguage, List<String>>_Switches = {
   BrailleLanguage.FRA : [
     'CAPITALS',
     'NUMBERFOLLOWS',
-    'ANTOINE'
+    'ANTOINENUMBERFOLLOWS'
   ],
 
 };
@@ -240,9 +303,8 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches =
   },
   BrailleLanguage.FRA : {
     'CAPITALS': ['4', '6'],
-    'SMALLLETTERFOLLOWS': ['4'],
     'NUMBERFOLLOWS': ['3', '4', '5', '6'],
-    'ANTOINE': ['6']
+    'ANTOINENUMBERFOLLOWS': ['6']
   },
 
 };
@@ -730,7 +792,7 @@ List<List<String>> _encodeBrailleDEU(String input) {
 
   for (int i = 0; i < inputs.length; i++) {
     // identify composed characters
-    if (_CharsSymbolsComposed[BrailleLanguage.DEU].contains(inputs[i]))
+    if (_CharsetSymbolsComposed[BrailleLanguage.DEU].contains(inputs[i]))
       result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.DEU][inputs[i]]);
     else
       if (_isNumber(inputs[i])) {
@@ -815,7 +877,7 @@ List<List<String>> _encodeBrailleENG(String input) {
 
   for (int i = 0; i < inputs.length; i++) {
     // identify composed characters
-    if (_CharsSymbolsComposed[BrailleLanguage.ENG].contains(inputs[i]))
+    if (_CharsetSymbolsComposed[BrailleLanguage.ENG].contains(inputs[i]))
       result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.ENG][inputs[i]]);
     else
       if (_isNumber(inputs[i])) {
@@ -991,7 +1053,7 @@ List<List<String>> _encodeBrailleFRA(String input) {
   List<List<String>> result = [];
   for (int i = 0; i < inputs.length; i++) {
     // identify composed characters
-    if (_CharsSymbolsComposed[BrailleLanguage.FRA].contains(inputs[i]))
+    if (_CharsetSymbolsComposed[BrailleLanguage.FRA].contains(inputs[i]))
       result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.FRA][inputs[i]]);
     else
     if (_isNumber(inputs[i])) {
@@ -1291,7 +1353,6 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
   bool oneCapitalFollows = false;
 
   String input = '';
-  String char = '';
   String charH = '';
   List<String> text = [];
   int maxLength = inputs.length;
@@ -1364,10 +1425,9 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
   bool numberFollows = false;
   bool capitalFollows = false;
   bool oneCapitalFollows = false;
-  bool smallLettersFollows = false;
+  bool antoineNumberFollows = false;
 
   String input = '';
-  String char = '';
   String charH = '';
   List<String> text = [];
   int maxLength = inputs.length;
@@ -1395,8 +1455,61 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
       text.add(UNKNOWN_ELEMENT);
     } else {
       charH = BrailleToChar[input];
-
-
+      if (_Switches[BrailleLanguage.FRA].contains(charH)) {
+        if (charH == 'CAPITALS') {
+          if (i + 1 < maxLength)
+            switch (inputs[i + 1]) {
+              case '46' : capitalFollows = true;
+              break;
+              default: oneCapitalFollows = true;
+            }
+        } else if ((charH == 'NUMBERFOLLOWS') && antoineNumberFollows) {
+          numberFollows = false;
+          text.add('0');
+        } else if ((charH == 'NUMBERFOLLOWS') && !numberFollows) {
+          numberFollows = true;
+        } else if ((charH == 'ANTOINENUMBERFOLLOWS')) {
+          antoineNumberFollows = true;
+        }
+      } else if (charH == ' ') {
+        numberFollows = false;
+        capitalFollows = false;
+        oneCapitalFollows = false;
+        antoineNumberFollows = false;
+        text.add(charH);
+      } else {
+        // no switch
+        if (numberFollows) {
+          if (_LetterToDigit[charH] == null)
+            numberFollows = false;
+          else
+            charH = _LetterToDigit[charH];
+        } if (antoineNumberFollows) {
+            if (_AntoineToDigit[charH] == null)
+              antoineNumberFollows = false;
+            else
+              charH = _AntoineToDigit[charH];
+  //            switch (input) {
+  //              case '16': charH = '1'; break;
+  //              case '126': charH = '2'; break;
+  //              case '146': charH = '3'; break;
+  //              case '1456': charH = '4'; break;
+  //              case '156': charH = '5'; break;
+  //              case '1246': charH = '6'; break;
+  //              case '12456': charH = '7'; break;
+  //              case '1256': charH = '8'; break;
+  //              case '246': charH = '9'; break;
+  //              case '3456': charH = '0'; break;
+  //            }
+              //charH = _LetterToDigit[charH];
+        } else if (oneCapitalFollows) {
+          charH = charH.toUpperCase();
+          oneCapitalFollows = false;
+        } else if (capitalFollows) {
+          charH = charH.toUpperCase();
+        }
+        text.add(charH);
+      }
     }
   }
   return {'displays': displays, 'chars': text};}
