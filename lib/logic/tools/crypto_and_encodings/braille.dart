@@ -169,6 +169,7 @@ final _MODIFIER_6 = ['6'];
 final _MODIFIER_45 = ['4', '5'];
 final _MODIFIER_46 = ['4', '6'];
 final _MODIFIER_345 = ['3', '4', '5'];
+final _MODIFIER_356 = ['3', '5', '6'];
 final _MODIFIER_456 = ['4', '5', '6'];
 final _MODIFIER_3456 = ['3', '4', '5', '6'];
 
@@ -179,6 +180,7 @@ final _CharsetModifier = {
   _MODIFIER_45.join(''),
   _MODIFIER_46.join(''),
   _MODIFIER_345.join(''),
+  _MODIFIER_356.join(''),
   _MODIFIER_456.join(''),
   _MODIFIER_3456.join('')
 };
@@ -224,20 +226,24 @@ final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymb
     '’' : [_MODIFIER_6, ['3', '5', '6']],
   },
   BrailleLanguage.FRA : {
-    '' : [],
-    '' : [],
-    '' : [],
-    '' : [],
-    '' : [],
-    '' : [],
-    '' : [],
+    '[' : [_MODIFIER_45, ['2', '3', '6']],
+    ']' : [_MODIFIER_356, ['1', '2']],
+    '{' : [_MODIFIER_6, ['6'], ['2', '3', '6']],
+    '}' : [_MODIFIER_356, ['3'], ['3']],
+    '§' : [_MODIFIER_5, ['1', '2', '3', '4', '5', '6']],
+    '°' : [_MODIFIER_5, ['1', '3', '5']],
+    '%' : [_MODIFIER_5, ['3', '4', '6']],
+    '_' : [_MODIFIER_5, ['3', '6']],
+    '\\' : [_MODIFIER_5, ['3', '4']],
+    '#' : [_MODIFIER_5, ['3', '4', '5', '6']],
+    '~' : [_MODIFIER_5, ['2', '6']],
   },
 };
 
 final Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
   BrailleLanguage.DEU : ['[', ']', '@', '°', '&', '/', '|', '\\', '_', '%', '"'],
   BrailleLanguage.ENG : ['(', ')', '[', ']', '{', '}', '„', '“', '«', '»', '‘', '’', '§', '@', '°', '&', '/', '|', '"', '%', '_', '\\', '#', '~'],
-  BrailleLanguage.FRA : [],
+  BrailleLanguage.FRA : ['[', ']', '{', '}', '§', '°', '%', '_', '\\', '#', '~', ],
 };
 
 final Map<String, List<String>> _charsToSegmentsDigits = {
