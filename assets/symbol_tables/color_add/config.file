@@ -1,5 +1,6 @@
 {
 	"case_sensitive" : false,
+	"translation_prefix": "common_color_",
 	"translate" : [
 	"white",
 	"black",

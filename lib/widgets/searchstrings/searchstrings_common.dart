@@ -66,6 +66,7 @@ const SEARCHSTRING_COMMON_CHRONOGRAM = '';
 const SEARCHSTRING_COMMON_CIPHERWHEEL = '';
 const SEARCHSTRING_COMMON_CISTERCIAN = '';
 const SEARCHSTRING_COMMON_CODEBREAKER = '';
+const SEARCHSTRING_COMMON_COLOR = '';
 const SEARCHSTRING_COMMON_COLORPICKER =
     'pal ntsc rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode key magenta cyan  cmyk luma chroma';
 const SEARCHSTRING_COMMON_COMBINATORICS = '';
