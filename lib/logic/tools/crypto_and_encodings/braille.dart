@@ -235,6 +235,15 @@ final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymb
     '|': [_MODIFIER_456, ['1', '2', '3']],
     '\\': [_MODIFIER_4, ['3', '4']],
     '%': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6']],
+    '+': [_MODIFIER_4 , ['2', '3', '5']],
+    '=': [_MODIFIER_4 , ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4 , ['2', '4', '6'], ['3']],
+    '>': [_MODIFIER_4 , ['1', '3', '5'], ['2']],
+    '^': [_MODIFIER_4 , ['3', '4', '6']],
+    '*': [_MODIFIER_4 , ['3', '4', '6']],
+    '÷': [_MODIFIER_4 , ['3', '5']],
+    '×': [_MODIFIER_4 , ['2', '5'], ['2', '5']],
+    '‰': [_MODIFIER_3456 , ['2', '4', '5'], ['3', '5', '6'], ['3', '5', '6']],
   },
   BrailleLanguage.ENG : {
     '§' : [_MODIFIER_45, ['2', '3', '4']],
@@ -261,6 +270,14 @@ final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymb
     '»' : [_MODIFIER_456, ['2', '3', '6']],
     '‘' : [_MODIFIER_6, ['2', '3', '6']],
     '’' : [_MODIFIER_6, ['3', '5', '6']],
+    '+': [_MODIFIER_5 , ['2', '3', '5']],
+    '=': [_MODIFIER_5 , ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4 , ['1', '2', '6']],
+    '>': [_MODIFIER_4 , ['3', '4', '5']],
+    '^': [_MODIFIER_4 , ['2', '6']],
+    '*': [_MODIFIER_5 , ['3', '5']],
+    '÷': [_MODIFIER_5 , ['3', '4']],
+    '×': [_MODIFIER_5 , ['2', '3', '6']],
   },
   BrailleLanguage.FRA : {
     '[' : [_MODIFIER_45, ['2', '3', '6']],
@@ -274,13 +291,21 @@ final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymb
     '\\' : [_MODIFIER_5, ['3', '4']],
     '#' : [_MODIFIER_5, ['3', '4', '5', '6']],
     '~' : [_MODIFIER_5, ['2', '6']],
+    '+': [_MODIFIER_6 , ['2', '3', '5']],
+    '=': [_MODIFIER_6 , ['2', '3', '5', '6']],
+    '<': [_MODIFIER_5 , ['1', '2', '6']],
+    '>': [_MODIFIER_5 , ['3', '4', '5']],
+    '*': [_MODIFIER_5 , ['3', '5']],
+    '÷': [_MODIFIER_6 , ['2', '5']],
+    '×': [_MODIFIER_6 , ['3', '5']],
+    '‰': [_MODIFIER_5 , ['3', '4', '6'], ['3', '4', '6']],
   },
 };
 
 final Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
-  BrailleLanguage.DEU : ['[', ']', '@', '°', '&', '/', '|', '\\', '_', '%', '"'],
-  BrailleLanguage.ENG : ['(', ')', '[', ']', '{', '}', '„', '“', '«', '»', '‘', '’', '§', '@', '°', '&', '/', '|', '"', '%', '_', '\\', '#', '~'],
-  BrailleLanguage.FRA : ['[', ']', '{', '}', '§', '°', '%', '_', '\\', '#', '~', ],
+  BrailleLanguage.DEU : ['[', ']', '@', '°', '&', '/', '|', '\\', '_', '%', '"', '+', '=', '<', '>', '^', '*', '÷', '×', '‰'],
+  BrailleLanguage.ENG : ['(', ')', '[', ']', '{', '}', '„', '“', '«', '»', '‘', '’', '§', '@', '°', '&', '/', '|', '"', '%', '_', '\\', '#', '~', '+', '=', '<', '>', '^', '*', '÷', '×'],
+  BrailleLanguage.FRA : ['[', ']', '{', '}', '§', '°', '%', '_', '\\', '#', '~', '+', '=', '<', '>', '*', '÷', '×', '‰' ],
 };
 
 final Map<String, List<String>> _charsToSegmentsDigits = {
@@ -1349,8 +1374,15 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
       if (_Modifier[BrailleLanguage.DEU].contains(input)) {
         switch (input) {
           case '4':
-            if (i + 2 < maxLength && inputs[i + 1] == '35' && inputs[i + 2] == '35') {
-              text.add('"');
+            if (i + 2 < maxLength){
+              if (inputs[i + 1] == '35' && inputs[i + 2] == '35')
+                text.add('"');
+              if (inputs[i + 1] == '25' && inputs[i + 2] == '25')
+                text.add('÷');
+              if (inputs[i + 1] == '246' && inputs[i + 2] == '3')
+                text.add('<');
+              if (inputs[i + 1] == '135' && inputs[i + 2] == '2')
+                text.add('>');
               var display = <String>[];
               inputs[i + 1].split('').forEach((element) {
                 display.add(element);
@@ -1365,10 +1397,15 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
             }
             else if (i + 1 < maxLength) {
               switch (inputs[i + 1]) {
+                case '235': text.add('+'); break;
+                case '2356': text.add('='); break;
                 case '345': text.add('@'); break;
+                case '346': text.add('^'); break;
                 case '356': text.add('°'); break;
                 case '456': text.add('_'); break;
                 case '34': text.add('\\'); break;
+                case '35': text.add('*'); break;
+                case '236': text.add('×'); break;
               }
               var display = <String>[];
               inputs[i + 1].split('').forEach((element) {
@@ -1433,6 +1470,25 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
             }
             break;
           case '3456':
+            if (i + 3 < maxLength && inputs[i + 1] == '245' && inputs[i + 2] == '356' && inputs[i + 3] == '356') {
+              text.add('‰');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 3;
+            }
             if (i + 2 < maxLength && inputs[i + 1] == '245' && inputs[i + 2] == '356') {
               text.add('%');
               var display = <String>[];
@@ -1517,8 +1573,6 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
     displays.add(display);
 
     // Build text
-    print(_Modifier[BrailleLanguage.ENG]);
-    print(input+' '+charH);
     if (BrailleToChar[input] == null) {
       text.add(UNKNOWN_ELEMENT);
     } else {
@@ -1531,6 +1585,9 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
                 case '1': text.add('@'); break;
                 case '35': text.add('~'); break;
                 case '12346': text.add('&'); break;
+                case '126': text.add('<'); break;
+                case '345': text.add('>'); break;
+                case '26': text.add('^'); break;
               }
               var display = <String>[];
               inputs[i + 1].split('').forEach((element) {
@@ -1543,8 +1600,13 @@ Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
           case '5':
             if (i + 1 < maxLength) {
               switch (inputs[i + 1]) {
+                case '35': text.add('*'); break;
+                case '34': text.add('÷'); break;
+                case '236': text.add('×'); break;
                 case '126': text.add('('); break;
                 case '345': text.add(')'); break;
+                case '235': text.add('+'); break;
+                case '2356': text.add('='); break;
               }
               var display = <String>[];
               inputs[i + 1].split('').forEach((element) {
@@ -1715,6 +1777,20 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
       if (_Modifier[BrailleLanguage.FRA].contains(input)) {
         switch (input) {
           case '5':
+            if (i + 2 < maxLength && inputs[i + 1] == '346' && inputs[i + 2] == '346') {
+              text.add('‰');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;
+            }
             if (i + 1 < maxLength) {
               switch (inputs[i + 1]) {
                 case '123456': text.add('§'); break;
@@ -1724,6 +1800,9 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
                 case '34': text.add('\\'); break;
                 case '3456': text.add('#'); break;
                 case '26': text.add('~'); break;
+                case '126': text.add('>'); break;
+                case '345': text.add('<'); break;
+                case '35': text.add('*'); break;
               }
               var display = <String>[];
               inputs[i + 1].split('').forEach((element) {
@@ -1747,6 +1826,20 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
               });
               displays.add(display);
               i = i + 2;
+            }
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '25': text.add('÷'); break;
+                case '35': text.add('+'); break;
+                case '235': text.add('×'); break;
+                case '2356': text.add('='); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
             }
             break;
           case '45':
