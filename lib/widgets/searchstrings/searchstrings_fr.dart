@@ -263,6 +263,7 @@ const SEARCHSTRING_FR_PHI = 'section doree';
 const SEARCHSTRING_FR_PHIDECIMALRANGE = 'sections';
 const SEARCHSTRING_FR_PHINTHDECIMAL = '';
 const SEARCHSTRING_FR_PHISEARCH = 'inclus contenir';
+const SEARCHSTRING_FR_PIANO = 'frequences';
 const SEARCHSTRING_FR_PI = 'cercle';
 const SEARCHSTRING_FR_PIDECIMALRANGE = 'sections';
 const SEARCHSTRING_FR_PINTHDECIMAL = '';
