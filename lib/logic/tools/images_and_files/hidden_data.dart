@@ -16,6 +16,15 @@ List<Uint8List> extraData(Uint8List data, {List<Uint8List> resultList}) {
     case FileType.GIF:
       imageLength = gifImageSize(data);
       break;
+    case FileType.BMP:
+      imageLength = bmpImageSize(data);
+      break;
+    case FileType.ZIP:
+      imageLength = zipFileSize(data);
+      break;
+    case FileType.RAR:
+      imageLength = rarFileSize(data);
+      break;
     default:
       return resultList;
   }

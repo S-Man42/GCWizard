@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:convert';
 
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
@@ -14,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:tuple/tuple.dart';
 
 enum FileType {ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ}
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
@@ -83,7 +85,8 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['rar'],
     'magic_bytes': [
       [0x1F, 0x8B, 0x08, 0x00],
-      [0x52, 0x61, 0x72, 0x21]
+      [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00],
+      [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00]
     ],
     'file_class' : FileClass.ARCHIVE
   },
@@ -465,6 +468,166 @@ int _gifColorMap(Uint8List data, int offset, int countOffset) {
   }
 
   return offset;
+}
+
+int zipFileSize(Uint8List data) {
+  if (data == null) return null;
+  if (getFileType(data) != '.zip') return null;
+
+  var offset = 0;
+  if (offset + 30 > data.length) return null;
+
+  // ZIP Signature file header
+  while ((data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x03) & (data[offset + 3] == 0x04)) {
+    offset += 30;
+
+    var fileNameLength = data.buffer.asByteData(offset - 4, 2).getInt16(0, Endian.little);
+    var extraFieldLength = data.buffer.asByteData(offset - 2, 2).getInt16(0, Endian.little);
+    var compressedSize = data.buffer.asByteData(offset - 12, 4).getInt32(0, Endian.little);
+
+    offset += fileNameLength + extraFieldLength + compressedSize;
+  }
+
+  bool fileHeaderFound = false;
+  do {
+    if (offset + 4 >= data.length) return offset;
+
+    fileHeaderFound = false;
+    // central directory file header
+    if ((data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x01) & (data[offset + 3] == 0x02)) {
+      if (offset + 46 > data.length) return null;
+
+      offset += 46;
+      var fileNameLength = data.buffer.asByteData(offset - 18, 2).getInt16(0, Endian.little);
+      var extraFieldLength = data.buffer.asByteData(offset - 16, 2).getInt16(0, Endian.little);
+      var commentLength = data.buffer.asByteData(offset - 14, 2).getInt16(0, Endian.little);
+
+      offset += fileNameLength + extraFieldLength + commentLength;
+      fileHeaderFound = true;
+    }
+
+    // header end central directory
+    else if ((data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x05) & (data[offset + 3] == 0x06)) {
+      if (offset + 22 > data.length) return null;
+
+      offset += 22;
+      var commentLength = data.buffer.asByteData(offset - 2, 2).getInt16(0, Endian.little);
+      offset += commentLength;
+    }
+  } while (fileHeaderFound);
+
+  return offset;
+}
+
+int bmpImageSize(Uint8List data) {
+  if (data == null) return null;
+  if (getFileType(data) != FileType.BMP) return null;
+
+  var offset = 0;
+
+  return data.buffer.asByteData(offset + 2).getInt32(0, Endian.little);
+}
+
+int rarFileSize(Uint8List data) {
+  if (data == null) return null;
+  if (getFileType(data) != FileType.RAR) return null;
+
+  var offset = 0;
+  bool archiveBlockFound = false;
+  var fileNames = <String>[];
+
+  // header RAR 5.0
+  if ((data[offset] == 0x52) & (data[offset + 1] == 0x61) & (data[offset + 2] == 0x72) & (data[offset + 3] == 0x21) & (data[offset + 4] == 0x1A) & (data[offset + 5] == 0x07) & (data[offset + 6] == 0x01) & (data[offset + 7] == 0x00)) {
+    offset += 8;
+    // header < RAR 5.0
+  } else if ((data[offset] == 0x52) & (data[offset + 1] == 0x61) & (data[offset + 2] == 0x72) & (data[offset + 3] == 0x21) & (data[offset + 4] == 0x1A) & (data[offset + 5] == 0x07) & (data[offset + 6] == 0x00)) {
+    offset += 7;
+  }
+
+  do {
+    archiveBlockFound = false;
+
+    offset += 4; // HeaderCRC32
+
+    var dataSizeAdd = 0;
+    var headerSize = _rarVint(data, offset);
+    offset += headerSize.item2;
+    var headerTypePos = offset;
+
+    var headerType = _rarVint(data, offset);
+    offset += headerType.item2;
+
+    var headerFlags = _rarVint(data, offset);
+    offset += headerFlags.item2;
+
+    switch (headerType.item1) {
+      case 1: // Main archive header
+        archiveBlockFound = true;
+        break;
+      case 2: // file header
+      case 3: // service header
+        archiveBlockFound = true;
+
+        if ((headerFlags.item1 & 0x01) != 0)
+          offset += _rarVint(data, offset).item2; // Extra area size
+
+        if ((headerFlags.item1 & 0x02) != 0) {
+          var dataSize = _rarVint(data, offset);
+          offset += dataSize.item2;
+          dataSizeAdd = dataSize.item1;
+        }
+
+        offset += _rarVint(data, offset).item2; // File flags
+        offset += _rarVint(data, offset).item2; // unpacked size
+        offset += _rarVint(data, offset).item2; // attributes
+        if ((headerFlags.item1 & 0x02) != 0) offset += 4; // mtime
+        if ((headerFlags.item1 & 0x04) != 0) offset += 4; // data CRC32
+        offset += _rarVint(data, offset).item2; // Compression information
+        offset += _rarVint(data, offset).item2; // Host OS
+
+        var nameLength = _rarVint(data, offset); // Name length
+        offset += nameLength.item2;
+
+        var nameArray = data.sublist(offset, nameLength.item1);
+        var name = utf8.decode(nameArray);
+        if ((name != null) & (name.length > 0))
+          fileNames.add(name);
+        offset += nameLength.item1; //Name
+
+        break;
+      case 4: // Archive encryption header
+        archiveBlockFound = true;
+
+        offset += _rarVint(data, offset).item2; // Encryption version
+        offset += _rarVint(data, offset).item2; // Encryption flags
+        offset += 1; // KDF count
+        offset += 16; // Salt
+        offset += 12; // Check value
+
+        break;
+      case 5: // End of archive header
+        offset += _rarVint(data, offset).item2; // End of archive flags
+
+        break;
+    }
+    offset = headerTypePos + headerSize.item1+ dataSizeAdd;
+
+  } while (archiveBlockFound);
+
+  return offset;
+}
+
+Tuple2<int, int> _rarVint(Uint8List data, int offset) {
+  var index = 0;
+  var value = 0;
+  if (offset >= data.length) return Tuple2<int, int>(0, 0);
+
+  do {
+    value |= ((data[offset + index] & 0x7F) << index * 7);
+    index++;
+  } while (((offset + index) >= data.length) | ((data[offset + index - 1] & 0x80) != 0));
+
+  return new Tuple2<int, int>(value, index);
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
