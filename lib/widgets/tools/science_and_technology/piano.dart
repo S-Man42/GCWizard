@@ -73,17 +73,12 @@ class PianoState extends State<Piano> {
 
             return dataList;
           } else {
-            var dataList = [e[field], i18n(context, e['number'])];
+            var dataList = [e[field], e['number']];
             dataList.addAll(fields.where((f) => f != field).map((f) => e[f]));
 
             return dataList;
           }
         }).toList();
-    //if (_currentSort == 0) {
-    //  flexValues.insert(0, fields.length + 1);
-    //} else {
-    //  flexValues.insert(1, fields.length + 1);
-    //}
 
     data.sort((a, b) {
       var result = a[0].compareTo(b[0]);
