@@ -21,12 +21,12 @@ final Map<String, List<String>> WASD_ENCODE = {
   '1' : ['WW', 'SS'],
   '2' : ['DSASD', 'AWDWS'],
   '3' : ['DSADSA', 'DWADWA'],
-  '4' : ['SDWSS', 'SDSWW', 'WWSAW'],
+  '4' : ['SDWSS', 'SDSWW', 'WWSAW', 'SSWAD'],
   '5' : ['DWAWD', 'ASDSA'],
-  '6' : ['ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW'],
+  '6' : ['ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW', 'SDWAWD', 'SDWAW', 'SDSAW'],
   '7' : ['WWA', 'DSS'],
   '8' : ['DSAWSSDW', 'WDSASDW', 'SAWDWAS'],
-  '9' : ['AWDSSA', 'AWDSS', 'DWWASD', 'WWASD'],
+  '9' : ['ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'SSWAWS', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD'],
   ' ' : [' ']
 };
 
@@ -52,6 +52,7 @@ final Map<String, String> WASD_DECODE = {
   'SDWSS' : '4',
   'SDSWW' : '4',
   'WWSAW' : '4',
+  'SSWAD' : '4',
   'DWAWD' : '5',
   'ASDSA' : '5',
   'ASSDWA' : '6',
@@ -59,14 +60,28 @@ final Map<String, String> WASD_DECODE = {
   'DSAWW' : '6',
   'DSAWWD' : '6',
   'ASDSAW' : '6',
+  'SDWAWD' : '6',
+  'SDWAW' : '6',
+  'SDSAW' : '6',
   'WWA' : '7',
-  'DSS' : ' ',
+  'DSS' : '7',
   'DSAWSSDW' : '8',
   'WDSASDW' : '8',
   'SAWDWAS' : '8',
+  'WASDSAW' : '8',
+  'SDWAWDS' : '8',
+  'ASDSWW' : '9',
+  'AWDSS' : '9',
+  'WASDS' : '9',
   'AWDSSA' : '9',
-  'DWWASD' : '9',
+  'WASDSA' : '9',
+  'ASDSADWW' : '9',
+  'SSWAWS' : '9',
   'WWASD' : '9',
+  'WAWDS' : '9',
+  'DWWASD' : '9',
+  'DWAWDS': '9',
+  'SSADWAWD': '9',
   ' ' : ' '
 };
 
@@ -85,7 +100,10 @@ String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
   }
   List<String> result = [];
   decode.split(' ').forEach((element) {
-    result.add(WASD_DECODE[element].toString());
+    if (WASD_DECODE[element] == null)
+      result.add(UNKNOWW_ELEMENT);
+    else
+    result.add(WASD_DECODE[element]);
   });
   return result.join(' ');
 }
