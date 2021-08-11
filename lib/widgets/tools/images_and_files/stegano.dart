@@ -124,7 +124,8 @@ class _SteganoState extends State<Stegano> {
       _encodedPictureData = null;
       // clear previous decoded text
       _decodedText = null;
-      _encoding = true;
+      // disable Loader for now
+      // _encoding = true;
       _encodingErrorText = null;
       _decodingErrorText = null;
     });
@@ -263,7 +264,7 @@ class _SteganoState extends State<Stegano> {
         child: CircularProgressIndicator(
           backgroundColor: Colors.white,
           valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-          strokeWidth: 20,
+          strokeWidth: 8, //20,
         ),
       )
     ];
