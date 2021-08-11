@@ -7,6 +7,9 @@
 
 import 'dart:math';
 
+import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
+
 enum WASD_TYPE  {WASD, IJKM, ESDF, CUSTOM}
 
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
@@ -27,10 +30,12 @@ final Map<String, List<String>> WASD_ENCODE = {
   '7' : ['WWA', 'DSS'],
   '8' : ['DSAWSSDW', 'WDSASDW', 'SAWDWAS'],
   '9' : ['ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'SSWAWS', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD'],
-  ' ' : [' ']
+  ' ' : [' '],
+  '.' : ['.']
 };
 
-final Map<String, String> WASD_DECODE = {
+final Map<List<String>, String> WASD_DECODE = switchMapKeyValue(WASD_ENCODE);
+/*{
   'ASSDWW' : '0',
   'SSDWWA' : '0',
   'SDWWAS' : '0',
@@ -83,7 +88,7 @@ final Map<String, String> WASD_DECODE = {
   'DWAWDS': '9',
   'SSADWAWD': '9',
   ' ' : ' '
-};
+};*/
 
 String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
   if (input == '' || input == null)
@@ -91,21 +96,30 @@ String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
 
   String decode = '';
   switch (controls) {
-    case WASD_TYPE.IJKM : decode = input.replaceAll('W', 'I').replaceAll('A', 'J').replaceAll('S', 'M').replaceAll('D', 'K');
+    case WASD_TYPE.IJKM : decode = input.replaceAll('I', 'W').replaceAll('J', 'A').replaceAll('M', 'S').replaceAll('K', 'D');
       break;
-    case WASD_TYPE.ESDF : decode = input.replaceAll('W', 'E').replaceAll('A', 'S').replaceAll('S', 'D').replaceAll('D', 'F');
+    case WASD_TYPE.ESDF : decode = input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
       break;
-    case WASD_TYPE.CUSTOM : decode = input.replaceAll('W', controlSet[0]).replaceAll('A', controlSet[1]).replaceAll('S', controlSet[2]).replaceAll('D', controlSet[3]);
+    case WASD_TYPE.CUSTOM : decode = input.replaceAll( controlSet[0], 'W').replaceAll(controlSet[1], 'A').replaceAll(controlSet[2], 'S').replaceAll(controlSet[3], 'D');
       break;
   }
-  List<String> result = [];
+
+  List<String> resultDecode = [];
+  bool found = false;
+  String result;
   decode.split(' ').forEach((element) {
-    if (WASD_DECODE[element] == null)
-      result.add(UNKNOWW_ELEMENT);
+    WASD_DECODE.forEach((key, value) {
+      if (key.contains(element))
+        found = true;
+      result = value;
+    });
+    if (found)
+      resultDecode.add(result);
     else
-    result.add(WASD_DECODE[element]);
+      resultDecode.add(UNKNOWN_ELEMENT);
+
   });
-  return result.join(' ');
+  return resultDecode.join(' ');
 }
 
 String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
