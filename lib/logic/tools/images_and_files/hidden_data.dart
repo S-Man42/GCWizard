@@ -25,6 +25,9 @@ List<Uint8List> extraData(Uint8List data, {List<Uint8List> resultList}) {
     case FileType.RAR:
       imageLength = rarFileSize(data);
       break;
+    case FileType.MP3:
+      imageLength = mp3FileSize(data);
+      break;
     default:
       return resultList;
   }

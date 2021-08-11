@@ -8,6 +8,7 @@ import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
@@ -107,8 +108,10 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.MP3 : {
     'extensions': ['mp3'],
     'magic_bytes': [
-      [0x49, 0x44, 0x33, 0x2E],
-      [0x49, 0x44, 0x33, 0x03]
+      [0x49, 0x44, 0x33],
+      [0xFF, 0xFB],
+      [0xFF, 0xF3],
+      [0xFF, 0xF2]
     ],
     'file_class' : FileClass.SOUND
   },
@@ -539,10 +542,7 @@ int rarFileSize(Uint8List data) {
   // header RAR 5.0
   if ((data[offset] == 0x52) & (data[offset + 1] == 0x61) & (data[offset + 2] == 0x72) & (data[offset + 3] == 0x21) & (data[offset + 4] == 0x1A) & (data[offset + 5] == 0x07) & (data[offset + 6] == 0x01) & (data[offset + 7] == 0x00)) {
     offset += 8;
-    // header < RAR 5.0
-  } else if ((data[offset] == 0x52) & (data[offset + 1] == 0x61) & (data[offset + 2] == 0x72) & (data[offset + 3] == 0x21) & (data[offset + 4] == 0x1A) & (data[offset + 5] == 0x07) & (data[offset + 6] == 0x00)) {
-    offset += 7;
-  }
+  } else return null;
 
   do {
     archiveBlockFound = false;
@@ -572,7 +572,7 @@ int rarFileSize(Uint8List data) {
           offset += _rarVint(data, offset).item2; // Extra area size
 
         if ((headerFlags.item1 & 0x02) != 0) {
-          var dataSize = _rarVint(data, offset);
+          var dataSize = _rarVint(data, offset); // Data size
           offset += dataSize.item2;
           dataSizeAdd = dataSize.item1;
         }
@@ -625,10 +625,82 @@ Tuple2<int, int> _rarVint(Uint8List data, int offset) {
   do {
     value |= ((data[offset + index] & 0x7F) << index * 7);
     index++;
-  } while (((offset + index) >= data.length) | ((data[offset + index - 1] & 0x80) != 0));
+  } while (((offset + index) < data.length) & ((data[offset + index - 1] & 0x80) != 0));
 
   return new Tuple2<int, int>(value, index);
 }
+
+int mp3FileSize(Uint8List data) {
+  if (data == null) return null;
+  if (getFileType(data) != FileType.MP3) return null;
+
+  int offset = 0;
+  bool frameFound = false;
+  var bitRates = <int>[ 0, 32000, 40000, 48000, 56000, 64000, 80000, 96000, 112000, 128000, 160000, 192000, 224000, 256000, 320000 ];
+  var sampleRates = <int>[ 44100, 48000, 32000 ];
+
+  do {
+    frameFound = false;
+
+    if ((offset + 4 < data.length) && (data[offset] == 0xFF) & ((data[offset + 1] & 0xE0) == 0xE0)) {// Frame Header
+
+      var bitrateIndex = (data[offset + 2] & 0xF0) >> 4;
+      if ((bitrateIndex <= 0) | (bitrateIndex > bitRates.length))
+        return null;
+
+      var sampleRateIndex = (data[offset + 2] & 0xC) >> 2;
+      if ((sampleRateIndex < 0) | (sampleRateIndex > sampleRates.length))
+        return null;
+
+      var padding = (data[offset + 2] & 0x02) != 0 ? 1 : 0;
+
+      var frameLen = ((144 * bitRates[bitrateIndex] / sampleRates[sampleRateIndex]) + padding).toInt();
+      frameFound = true;
+      offset += frameLen;
+
+    } else if ((offset + 3 < data.length) && (data[offset] == 0x54) & (data[offset + 1] == 0x41) & (data[offset + 2] == 0x47)) {//ID3v1/ ID3v1.1 TAG
+
+      offset += 3; // TAG
+      offset += 30; // title
+      offset += 30; // artist
+      offset += 30; // album
+      offset += 4; // year
+      offset += 30; // comment
+      offset += 1; // genre
+      
+    } else if ((offset + 3 < data.length) &&
+        (((data[offset] == 0x49) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x33)) | //  ID3v2
+        ((data[offset] == 0x33) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x49)))) {//  ID3v2 Footer
+
+      var footer = (data[offset] == 0x33) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x49);//  ID3v2 Footer
+      offset += 10;
+      var extendedHeader = ((data[offset - 5] & 0x40) != 0);
+      offset += mp3Vint(data, offset - 4); //bigEndian
+
+      // extendedHeader
+      if (extendedHeader) {
+        offset += mp3Vint(data, offset); //bigEndian
+        offset += 4;
+      }
+
+      frameFound = !footer;
+    }
+  } while (frameFound);
+
+  return offset;
+}
+
+int mp3Vint(Uint8List data, int offset) {
+  var value = 0;
+  if (offset + 3 >= data.length) return 0;
+
+  // big EndianFormat
+  for (int i = 0; i < 4; i++)
+    value |= ((data[offset + 3 - i] & 0x7F) << i * 7);
+
+  return value;
+}
+
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
   try {
