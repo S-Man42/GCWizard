@@ -50,6 +50,7 @@ const SEARCHSTRING_EN_BCDPETHERICK = '';
 const SEARCHSTRING_EN_BCDSTIBITZ = '';
 const SEARCHSTRING_EN_BCDTOMPKINS = '';
 const SEARCHSTRING_EN_BEAUFORT = 'scala windforce beaufortscale windspeed knots windspeed storm hurricanes';
+final SEARCHSTRING_EN_BEGHILOS = 'calculator mirrored turned';
 const SEARCHSTRING_EN_BIFID = '';
 const SEARCHSTRING_EN_BINARY = 'binary numbers decimal';
 const SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';

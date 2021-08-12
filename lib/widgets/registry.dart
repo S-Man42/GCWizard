@@ -132,6 +132,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille.dart';
@@ -514,6 +515,20 @@ class Registry {
     categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
+      GCWTool(tool: Beghilos(), i18nPrefix: 'beghilos',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BEGHILOS,
+            SEARCHSTRING_DE_BEGHILOS,
+            SEARCHSTRING_EN_BEGHILOS,
+            SEARCHSTRING_FR_BEGHILOS,
+            SEARCHSTRING_DE_SEGMENTS,
+            SEARCHSTRING_EN_SEGMENTS,
+            SEARCHSTRING_FR_SEGMENTS,
+            SEARCHSTRING_DE_SEGMENTS_SEVEN,
+            SEARCHSTRING_EN_SEGMENTS_SEVEN,
+            SEARCHSTRING_FR_SEGMENTS_SEVEN
+          ]),
       GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
