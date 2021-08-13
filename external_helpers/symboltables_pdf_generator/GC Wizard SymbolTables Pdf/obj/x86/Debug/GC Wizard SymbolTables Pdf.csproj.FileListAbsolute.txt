@@ -74,3 +74,14 @@ D:\GitHub\GCWizard Test\external_helpers\symboltables_pdf_generator\GC Wizard Sy
 D:\GitHub\GCWizard Test\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.mainForm.resources
 D:\GitHub\GCWizard Test\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.Properties.Resources.resources
 D:\GitHub\GCWizard Test\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.GenerateResource.Cache
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\GC Wizard SymbolTables Pdf.exe.config
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.exe
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.pdb
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\GC Wizard SymbolTables Pdf.exe
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\GC Wizard SymbolTables Pdf.pdb
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\PdfSharp.pdb
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\bin\Debug\de\PdfSharp.resources.dll
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csprojResolveAssemblyReference.cache
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.mainForm.resources
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.Properties.Resources.resources
+D:\GitHub\GCWizard\external_helpers\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.GenerateResource.Cache
