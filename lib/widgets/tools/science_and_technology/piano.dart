@@ -13,13 +13,14 @@ class Piano extends StatefulWidget {
 }
 
 class PianoState extends State<Piano> {
-  var _currentSwitchSort = GCWSwitchPosition.left;
   var _currentSort = 0;
-  var _currentPianoKey;
   var _currentIndex = 0;
-  List<String> _currentSortList = ['piano_number', 'piano_color', 'piano_frequency', 'piano_helmholtz', 'piano_scientific', 'piano_german', 'piano_midi', 'piano_latine'];
+  List<String> _currentSortList = ['piano_number', 'piano_color', 'piano_frequency', 'piano_helmholtz', 'piano_scientific', 'piano_german', 'piano_midi', 'piano_latin'];
 
-  List<String> fields = ['color', 'frequency', 'helmholtz', 'scientific', 'german', 'midi', 'latine'];
+  List<String> fields = ['color', 'frequency', 'helmholtz', 'scientific', 'german', 'midi', 'latin'];
+
+  var _currentColor = GCWSwitchPosition.left;
+  var _isColorSort = false;
 
   @override
   void initState() {
@@ -37,125 +38,86 @@ class PianoState extends State<Piano> {
           onChanged: (value) {
             setState(() {
               _currentSort = value;
+              _isColorSort = _currentSort == 1;
             });
             field = _currentSort == 0 ? fields[0] : fields[_currentSort - 1];
           },
           items: _currentSortList
               .asMap()
               .map((index, field) {
-            return MapEntry(index, GCWDropDownMenuItem(value: index, child: i18n(context, field)));
-          })
+                return MapEntry(index, GCWDropDownMenuItem(value: index, child: i18n(context, field)));
+              })
               .values
               .toList(),
         ),
-        GCWDropDownSpinner(
-          index: _currentIndex,
-          items: PIANO_KEYS
-              .values
-              .where((e) => e[field] != null && e[field].length > 0)
-              .map((e) {
-                if (_currentSort == 0) {
-                  //var dataList = [e['number']];
-                  //dataList.addAll(fields.map((field) => e[field]));
-                  //return dataList;
-                  return e['number'];
-                } else {
-                  //var dataList = [e[field]];
-                  //dataList.addAll(fields.where((f) => f != field).map((f) => e[f]));
-
-                  //return dataList;
-                  return e[field];
-                }
-              }).toList(),
+        _isColorSort
+         ? GCWTwoOptionsSwitch(
+          title: i18n(context, 'piano_color'),
+          leftValue: i18n(context, 'common_color_white'),
+          rightValue: i18n(context, 'common_color_black'),
+          value: _currentColor,
           onChanged: (value) {
             setState(() {
-              _currentIndex = value;
+              _currentColor = value;
             });
           },
-        ),
+        )
+         : GCWDropDownSpinner(
+            index: _currentIndex,
+            items: PIANO_KEYS
+                .values
+                .where((e) => e[field] != null && e[field].length > 0)
+                .map((e) {
+                  if (_currentSort == 0) {
+                    return e['number'];
+                  } else {
+                    return e[field];
+                  }
+                }).toList(),
+            onChanged: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+          ),
         GCWDefaultOutput(
           child: Column(
             children: _buildOutput(),
           ),
         ),
-        //GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   _buildOutput() {
-    var field = fields[0];
-    var data = PIANO_KEYS
-        .values
-        .where((e) => e[field] != null && e[field].length > 0)
-        .map((e) {
- //     if (_currentSort == 0) {
-        var dataList = [e['number']];
-        dataList.addAll(fields.map((field) => e[field]));
-        return dataList;
-//      } else {
-//        var dataList = [e[field], e['number']];
-//        dataList.addAll(fields.where((f) => f != field).map((f) => e[f]));
-//        return dataList;
-//      }
-    }).toList();
-// print(data[_currentIndex]);
-    return columnedMultiLineOutput(context, [
-      [i18n(context, 'piano_number'), data[_currentIndex][0]],
-      [i18n(context, 'piano_color'), data[_currentIndex][1]],
-      [i18n(context, 'piano_frequency'), data[_currentIndex][2]],
-      [i18n(context, 'piano_helmholtz'), data[_currentIndex][3]],
-      [i18n(context, 'piano_scientific'), data[_currentIndex][4]],
-    [i18n(context, 'piano_german'), data[_currentIndex][5]],
-    [i18n(context, 'piano_midi'), data[_currentIndex][6]],
-    [i18n(context, 'piano_latine'), data[_currentIndex][7]],
-    ], flexValues: [
-      1,
-      2
-    ]);
-/*    var output;
-    var field = _currentSort == 0 ? fields[0] : fields[_currentSort - 1];
-    Map<int, List<int>> flexValues = {
-      0 : [1, 2, 2, 3, 3, 3, 3, 1],
-      1 : [2, 2, 3, 3, 3, 3, 1, 2],
-      2 : [2, 3, 3, 3, 3, 1, 1, 2],
-      3 : [3, 3, 3, 3, 1, 1, 2, 2],
-      4 : [3, 3, 3, 1, 1, 2, 2, 3],
-      5 : [3, 3, 1, 1, 2, 2, 3, 3],
-      6 : [3, 1, 1, 2, 2, 3, 3, 3],
-      7 : [1, 1, 2, 2, 3, 3, 3, 3],
-    };
-    //var flexValues = List<int>.generate(fields.length, (index) => 1);
+    if (_isColorSort) {
+      var chosenColor = _currentColor == GCWSwitchPosition.left ? 'white' : 'black';
+      var data = PIANO_KEYS.entries
+          .where((element) => element.value['color'].endsWith(chosenColor))
+          .map((element) {
+        return [
+          element.value['number'],
+          element.value['frequency']
+        ];
+      }).toList();
 
-    var data = PIANO_KEYS
-        .values
-        .where((e) => e[field] != null && e[field].length > 0)
-        .map((e) {
-          if (_currentSort == 0) {
-            var dataList = [e['number']];
-            dataList.addAll(fields.map((field) => e[field]));
+      data.insert(0, [i18n(context, 'piano_number'), i18n(context, 'piano_frequency')]);
 
-            return dataList;
-          } else {
-            var dataList = [e[field], e['number']];
-            dataList.addAll(fields.where((f) => f != field).map((f) => e[f]));
-
-            return dataList;
-          }
-        }).toList();
-
-    data.sort((a, b) {
-      var result = a[0].compareTo(b[0]);
-      if (result != 0) return result;
-
-      return a[1].compareTo(b[1]);
-    });
-
-    output = columnedMultiLineOutput(context, data, flexValues: flexValues[_currentSort], copyColumn: 1);
-
-    return Column(
-      children: output,
-    );
-  }*/
+      return columnedMultiLineOutput(context, data, hasHeader: true, flexValues: [1, 2]);
+    } else {
+      return columnedMultiLineOutput(context, [
+        [i18n(context, 'piano_number'), PIANO_KEYS[_currentIndex + 1]['number']],
+        [i18n(context, 'piano_color'), i18n(context, PIANO_KEYS[_currentIndex + 1]['color'])],
+        [i18n(context, 'piano_frequency'), PIANO_KEYS[_currentIndex + 1]['frequency']],
+        [i18n(context, 'piano_helmholtz'), PIANO_KEYS[_currentIndex + 1]['helmholtz']],
+        [i18n(context, 'piano_scientific'), PIANO_KEYS[_currentIndex + 1]['scientific']],
+        [i18n(context, 'piano_german'), PIANO_KEYS[_currentIndex + 1]['german']],
+        [i18n(context, 'piano_midi'), PIANO_KEYS[_currentIndex + 1]['midi']],
+        [i18n(context, 'piano_latin'), PIANO_KEYS[_currentIndex + 1]['latin']],
+      ], flexValues: [
+        1,
+        2
+      ]);
+    }
   }
 }
