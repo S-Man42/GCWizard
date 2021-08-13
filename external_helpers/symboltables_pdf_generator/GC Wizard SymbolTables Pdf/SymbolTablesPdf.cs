@@ -22,6 +22,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         const string CONFIG_SPECIALMAPPINGS = "special_mappings";
         const string CONFIG_TRANSLATE = "translate";
         const string CONFIG_CASESENSITIVE = "case_sensitive";
+        const string CONFIG_TRANSLATIONPREFIX = "translation_prefix";
         const string CONFIG_SPECIALSORT = "special_sort";
         const string CONFIG_IGNORE = "ignore";
 
@@ -299,6 +300,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             Dictionary<String, String> mappingList = null;
             bool caseSensitive = false;
             bool specialSort = false;
+            String translationPrefixConfig = null;
 
             if (File.Exists(Path.Combine(configFilePath)))
             {
@@ -307,9 +309,9 @@ namespace GC_Wizard_SymbolTables_Pdf
                 translateables = new List<String>();
                 ignoreList = parseIgnoreConfig(fileContent);
                 mappingList = parseMappingConfig(fileContent);
-                caseSensitive = parseCaseSesitiveConfig(fileContent);
+                caseSensitive = parseCaseSensitiveConfig(fileContent);
                 specialSort = parseSpecialSortConfig(fileContent);
-
+                translationPrefixConfig = parseTranslationPrefixConfig(fileContent);
             }
             else
                 mappingList = parseMappingConfig(null);
@@ -324,7 +326,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                         var symbol = entry.FullName;
                         if (ignoreList == null || ignoreList.Count == 0 || !ignoreList.Contains(Path.GetFileNameWithoutExtension(symbol)))
                         {
-                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables);
+                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables, translationPrefixConfig);
                             var stream = new MemoryStream();
                             entry.Open().CopyTo(stream);
 
@@ -480,7 +482,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             return new Dictionary<String, String>(CONFIG_SPECIAL_CHARS);
         }
 
-        private bool parseCaseSesitiveConfig(String fileContent)
+        private bool parseCaseSensitiveConfig(String fileContent)
         {
             var regex = new Regex(@"(\""" + CONFIG_CASESENSITIVE + @"\""\s *:)\s(true)");
             bool value = false;
@@ -506,8 +508,13 @@ namespace GC_Wizard_SymbolTables_Pdf
             return value;
         }
 
+        private String parseTranslationPrefixConfig(String fileContent)
+        {
+            return getEntryValue(fileContent, CONFIG_TRANSLATIONPREFIX);
+        }
 
-        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables)
+
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
         {
             var fileName = Path.GetFileNameWithoutExtension(symbolPath);
             var overlay = fileName;
@@ -519,7 +526,10 @@ namespace GC_Wizard_SymbolTables_Pdf
                 overlay = mappingList[overlay];
             else if (translateList != null && translateList.Contains(overlay))
             {
-                overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                if (String.IsNullOrEmpty(translationPrefix))
+                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                else
+                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
                 translateables.Add(overlay);
             }
 
@@ -957,28 +967,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 {
                     if (!int.TryParse(keyB, out intB))
                     {
-                        if (translateables != null && translateables.Contains(keyA))
-                        {
-                            if (translateables.Contains(keyB))
-                            {
-                                return keyA.CompareTo(keyB);
-                            }
-                            else
-                            {
-                                return 1;
-                            }
-                        }
-                        else
-                        {
-                            if (translateables != null && translateables.Contains(keyB))
-                            {
-                                return -1;
-                            }
-                            else
-                            {
-                                return lowerCase(keyA, keyB);
-                            }
-                        }
+                        return lowerCase(keyA, keyB);
                     }
                     else
                         return 1;
