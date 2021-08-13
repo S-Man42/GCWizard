@@ -140,6 +140,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
@@ -186,6 +187,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
@@ -463,6 +465,7 @@ class _MainViewState extends State<MainView> {
         className(HashSelection()),
         className(Hexadecimal()),
         className(HexString2File()),
+        className(HexViewer()),
         className(Homophone()),
         className(Houdini()),
         className(Humidex()),
@@ -499,6 +502,7 @@ class _MainViewState extends State<MainView> {
         className(PeriodicTableDataView()),
         className(Permutation()),
         className(PhiSelection()),
+        className(Piano()),
         className(PiSelection()),
         className(PigLatin()),
         className(Playfair()),

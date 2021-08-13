@@ -216,6 +216,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
@@ -295,6 +296,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
@@ -743,18 +745,6 @@ class Registry {
           categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
-      GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS
-      ]),
       GCWTool(
           tool: DTMF(),
           i18nPrefix: 'dtmf',
@@ -915,9 +905,26 @@ class Registry {
       GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], searchStrings: [
+        SEARCHSTRING_COMMON_HEXADECIMAL,
+        SEARCHSTRING_DE_HEXADECIMAL,
+        SEARCHSTRING_EN_HEXADECIMAL,
+        SEARCHSTRING_FR_HEXADECIMAL,
+        SEARCHSTRING_COMMON_HEXSTRING2FILE,
         SEARCHSTRING_DE_HEXSTRING2FILE,
         SEARCHSTRING_EN_HEXSTRING2FILE,
         SEARCHSTRING_FR_HEXSTRING2FILE
+      ]),
+      GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_HEXADECIMAL,
+        SEARCHSTRING_DE_HEXADECIMAL,
+        SEARCHSTRING_EN_HEXADECIMAL,
+        SEARCHSTRING_FR_HEXADECIMAL,
+        SEARCHSTRING_COMMON_HEXVIEWER,
+        SEARCHSTRING_DE_HEXVIEWER,
+        SEARCHSTRING_EN_HEXVIEWER,
+        SEARCHSTRING_FR_HEXVIEWER
       ]),
       GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
         ToolCategory.CRYPTOGRAPHY
@@ -989,6 +996,10 @@ class Registry {
             SEARCHSTRING_DE_IMAGES,
             SEARCHSTRING_EN_IMAGES,
             SEARCHSTRING_FR_IMAGES,
+            SEARCHSTRING_COMMON_COLOR,
+            SEARCHSTRING_DE_COLOR,
+            SEARCHSTRING_EN_COLOR,
+            SEARCHSTRING_FR_COLOR,
             SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS,
             SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS,
             SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS,
@@ -1190,6 +1201,18 @@ class Registry {
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
         SEARCHSTRING_FR_IRRATIONALNUMBERS
       ]),
+      GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_PIANO,
+        SEARCHSTRING_DE_PIANO,
+        SEARCHSTRING_EN_PIANO,
+        SEARCHSTRING_FR_PIANO
+      ]),
       GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
         ToolCategory.SCIENCE_AND_TECHNOLOGY
       ], helpLocales: [
@@ -1281,6 +1304,10 @@ class Registry {
         'en',
         'fr'
       ], searchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_RALCOLORCODES,
         SEARCHSTRING_DE_RALCOLORCODES,
         SEARCHSTRING_EN_RALCOLORCODES,
@@ -1378,6 +1405,18 @@ class Registry {
           categories: [ToolCategory.CRYPTOGRAPHY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
+      GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
       GCWTool(tool: Skytale(), i18nPrefix: 'skytale', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
@@ -5398,6 +5437,10 @@ class Registry {
         SEARCHSTRING_DE_RESISTOR,
         SEARCHSTRING_EN_RESISTOR,
         SEARCHSTRING_FR_RESISTOR,
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_RESISTOR_COLORCODE,
         SEARCHSTRING_DE_RESISTOR_COLORCODE,
         SEARCHSTRING_EN_RESISTOR_COLORCODE,
@@ -5875,19 +5918,37 @@ class Registry {
         SEARCHSTRING_EN_CISTERCIAN,
         SEARCHSTRING_FR_CISTERCIAN
       ]),
+      GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_COLOR_ADD,
+        SEARCHSTRING_DE_SYMBOL_COLOR_ADD,
+        SEARCHSTRING_EN_SYMBOL_COLOR_ADD,
+        SEARCHSTRING_FR_SYMBOL_COLOR_ADD
+      ]),
       GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_COLOR_CODE,
         SEARCHSTRING_DE_SYMBOL_COLOR_CODE,
         SEARCHSTRING_EN_SYMBOL_COLOR_CODE,
         SEARCHSTRING_FR_SYMBOL_COLOR_CODE
       ]),
       GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_COLOR_HONEY,
         SEARCHSTRING_DE_SYMBOL_COLOR_HONEY,
         SEARCHSTRING_EN_SYMBOL_COLOR_HONEY,
         SEARCHSTRING_FR_SYMBOL_COLOR_HONEY
       ]),
       GCWSymbolTableTool(symbolKey: 'color_tokki', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
@@ -5966,6 +6027,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_DNI
       ]),
       GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_DNI_COLORS,
         SEARCHSTRING_DE_SYMBOL_DNI_COLORS,
         SEARCHSTRING_EN_SYMBOL_DNI_COLORS,
@@ -6208,6 +6273,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_HEBREW_V2
       ]),
       GCWSymbolTableTool(symbolKey: 'hexahue', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_HEXAHUE,
         SEARCHSTRING_DE_SYMBOL_HEXAHUE,
         SEARCHSTRING_EN_SYMBOL_HEXAHUE,
@@ -6374,6 +6443,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_KLINGON_KLINZHAI
       ]),
       GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_KREMPEL,
         SEARCHSTRING_DE_SYMBOL_KREMPEL,
         SEARCHSTRING_EN_SYMBOL_KREMPEL,
@@ -6521,6 +6594,16 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE,
         SEARCHSTRING_FR_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE
       ]),
+      GCWSymbolTableTool(symbolKey: 'niessen', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
+        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
+        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
+        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
+        SEARCHSTRING_COMMON_SYMBOL_NIESSEN,
+        SEARCHSTRING_DE_SYMBOL_NIESSEN,
+        SEARCHSTRING_EN_SYMBOL_NIESSEN,
+        SEARCHSTRING_FR_SYMBOL_NIESSEN
+      ]),
       GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_DOREMI,
         SEARCHSTRING_DE_SYMBOL_NOTES_DOREMI,
@@ -6612,6 +6695,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_PIPELINE
       ]),
       GCWSymbolTableTool(symbolKey: 'pipeline_din2403', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_COLOR,
+        SEARCHSTRING_DE_COLOR,
+        SEARCHSTRING_EN_COLOR,
+        SEARCHSTRING_FR_COLOR,
         SEARCHSTRING_COMMON_SYMBOL_PIPELINE_DIN2403,
         SEARCHSTRING_DE_SYMBOL_PIPELINE_DIN2403,
         SEARCHSTRING_EN_SYMBOL_PIPELINE_DIN2403,

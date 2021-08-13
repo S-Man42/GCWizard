@@ -110,16 +110,25 @@ String insertCharacter(String text, int index, String character) {
 }
 
 String insertSpaceEveryNthCharacter(String input, int n) {
+  return insertEveryNthCharacter(input, n, ' ');
+}
+
+String insertEveryNthCharacter(String input, int n, String textToInsert) {
   if (n == null || n <= 0) return input; //TODO Exception
 
   String out = '';
   int i = 0;
   while (i < input.length) {
-    out += input.substring(i, min(i + n, input.length)) + ' ';
+    if (input.length - i <= n) {
+      out += input.substring(i);
+      break;
+    }
+
+    out += input.substring(i, min(i + n, input.length)) + textToInsert;
     i += n;
   }
 
-  return out.trim();
+  return out;
 }
 
 String formatDaysToNearestUnit(double days) {

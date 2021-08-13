@@ -169,7 +169,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
 
 FileType fileTypeByExtension(String extension) {
   extension = extension.split('.').last;
-  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(extension), orElse: null);
+  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(extension), orElse: () => null);
 }
 
 String fileExtension(FileType type) {
