@@ -1174,11 +1174,11 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
 
 
 Map<String, dynamic> _decodeBrailleBASIC(
-    List<String> inputs, bool letters, bool french) {
+    List<String> inputs, bool letters, bool includingFrenchAntoine) {
   var displays = <List<String>>[];
 
   var _segmentsToCharsBASICBraille = switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]);
-  if (french) _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
+  if (includingFrenchAntoine) _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
@@ -1195,15 +1195,17 @@ Map<String, dynamic> _decodeBrailleBASIC(
     } else {
       charH = _segmentsToCharsBASICBraille.map((key, value) =>
           MapEntry(key.join(), value.toString()))[input.split('').join()];
-
       if (letters)
         char = char + charH;
       else // digits
-      if (french) {
-        if (_isNumber(charH))
-          char = char + charH;
-        else
+      if (includingFrenchAntoine) {
+        if ((_LetterToDigit[charH] == null) && (_AntoineToDigit[charH] == null))
           char = char + UNKNOWN_ELEMENT;
+        else
+          if (_LetterToDigit[charH] == null)
+            char = char + _AntoineToDigit[charH];
+          else
+            char = char + _LetterToDigit[charH];
       } else {
         if (_LetterToDigit[charH] == null)
           char = char + UNKNOWN_ELEMENT;
@@ -1220,7 +1222,7 @@ Map<String, dynamic> _decodeBrailleBASIC(
   return {'displays': displays, 'chars': text};
 }
 
-Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
+Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool includingFrenchAntoine) {
   var displays = <List<String>>[];
 
   Map<List<String>, String> _segmentsToCharsSIMPLEBraille =
@@ -1242,7 +1244,7 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool french) {
 
   List<String> text = [];
 
-  if (french) { // decode including french chiffre antoine
+  if (includingFrenchAntoine) { // decode including french chiffre antoine
     _numberFollows = false;
     _antoinenumberFollows = false;
     text = inputs.where((input) => input != null).map((input) {

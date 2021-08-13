@@ -363,7 +363,7 @@
   "braille_language_euro" : "Euro-Braille/Computer-Braille (8 dots)",
   "braille_simple_mode_letters" : "Letters",
   "braille_simple_mode_digits" : "Digits",
-  "braille_language_digits_french" : "incl. French Code Antoine",
+  "braille_language_digits_french" : "French 'Antoine'",
   "brainfk_title": "Brainf**k",
   "brainfk_description": "Esoteric programming language with 8 characters (incl. derivates like Ook, PikaLang, ...)",
   "brainfk_example": ">++++++++[<++++++++>-]<++.",
