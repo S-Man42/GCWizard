@@ -5,7 +5,6 @@ import 'package:gc_wizard/utils/constants.dart';
 // - French    p. 180 ff
 // - German    p. 182 ff
 
-
 // https://de.wikipedia.org/wiki/Brailleschrift
 // https://www.pharmabraille.com/wp-content/uploads/2015/01/system_d_blindenschrift_7620.pdf
 
@@ -16,49 +15,297 @@ import 'package:gc_wizard/utils/constants.dart';
 
 // https://fr.wikipedia.org/wiki/Braille
 // https://www.pharmabraille.com/wp-content/uploads/2015/01/CBFU_edition_internationale.pdf
-
+// https://www.rnib.org.uk/sites/default/files/using_the_braille_french_code_2007_tc20909.pdf
 
 // http://www.braille.ch/index.html#computer
 
-
 // Examples
 // DEU GC1WPAE Braille https://www.geocaching.com/geocache/GC1WPAE_braille
-// USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
-// NLD GC5PZ8Z Braille https://www.geocaching.com/geocache/GC5PZ8Z_braille
 // DEU GC1N24V Code Braille https://www.geocaching.com/geocache/GC1N24V_code-braille
+// NLD GC5PZ8Z Braille https://www.geocaching.com/geocache/GC5PZ8Z_braille
+// USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 
 
-enum BrailleLanguage { SIMPLE, DEU, ENG, FRA, EUR }
+enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
-final Map<String, List<String>> _charsToSegmentsLetters = {
-  ' ': [],
-  'a': ['1'],
-  'b': ['1', '2'],
-  'c': ['1', '4'],
-  'd': ['1', '4', '5'],
-  'e': ['1', '5'],
-  'f': ['1', '2', '4'],
-  'g': ['1', '2', '4', '5'],
-  'h': ['1', '2', '5'],
-  'i': ['2', '4'],
-  'j': ['2', '4', '5'],
-  'k': ['1', '3'],
-  'l': ['1', '2', '3'],
-  'm': ['1', '3', '4'],
-  'n': ['1', '3', '4', '5'],
-  'o': ['1', '3', '5'],
-  'p': ['1', '2', '3', '4'],
-  'q': ['1', '2', '3', '4', '5'],
-  'r': ['1', '2', '3', '5'],
-  's': ['2', '3', '4'],
-  't': ['2', '3', '4', '5'],
-  'u': ['1', '3', '6'],
-  'v': ['1', '2', '3', '6'],
-  'w': ['2', '4', '5', '6'],
-  'x': ['1', '3', '4', '6'],
-  'y': ['1', '3', '4', '5', '6'],
-  'z': ['1', '3', '5', '6'],
+final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = {
+  BrailleLanguage.STD :   {
+    ' ': [],
+    'a': ['1'],
+    'b': ['1', '2'],
+    'c': ['1', '4'],
+    'd': ['1', '4', '5'],
+    'e': ['1', '5'],
+    'f': ['1', '2', '4'],
+    'g': ['1', '2', '4', '5'],
+    'h': ['1', '2', '5'],
+    'i': ['2', '4'],
+    'j': ['2', '4', '5'],
+    'k': ['1', '3'],
+    'l': ['1', '2', '3'],
+    'm': ['1', '3', '4'],
+    'n': ['1', '3', '4', '5'],
+    'o': ['1', '3', '5'],
+    'p': ['1', '2', '3', '4'],
+    'q': ['1', '2', '3', '4', '5'],
+    'r': ['1', '2', '3', '5'],
+    's': ['2', '3', '4'],
+    't': ['2', '3', '4', '5'],
+    'u': ['1', '3', '6'],
+    'v': ['1', '2', '3', '6'],
+    'w': ['2', '4', '5', '6'],
+    'x': ['1', '3', '4', '6'],
+    'y': ['1', '3', '4', '5', '6'],
+    'z': ['1', '3', '5', '6'],
+  },
+  BrailleLanguage.DEU : {
+    'ä': ['3', '4', '5'],
+    'ö': ['2', '4', '6'],
+    'ü': ['1', '2', '5', '6'],
+    'ß': ['2', '3', '4', '6'],
+    'au': ['1', '6'],
+    'eu': ['1', '2', '6'],
+    'ei': ['1', '4', '6'],
+    'ch': ['1', '4', '5', '6'],
+    'sch': ['1', '5', '6'],
+    'st': ['2', '3', '4', '5', '6'],
+    'äu': ['3', '4'],
+    'ie': ['3', '4', '6'],
+  },
+  BrailleLanguage.ENG : {
+    // strong contractions - 10.3
+    'and': ['1', '2', '3', '4', '6'],
+    'for': ['1', '2', '3', '4', '5', '6'],
+    'of': ['1', '2', '3', '5', '6'],
+    'the': ['2', '3', '4', '6'],
+    'with': ['2', '3', '4', '5', '6'],
+    // strong groupsigns - 10.4
+    'ch': ['1', '6'],
+    'gh': ['1', '2', '6'],
+    'sh': ['1', '4', '6'],
+    'th': ['1', '4', '5', '6'],
+    'wh': ['1', '5', '6'],
+    'ed': ['1', '2', '4', '6'],
+    'er': ['1', '2', '4', '5', '6'],
+    'ou': ['1', '2', '5', '6'],
+    'ow': ['2', '4', '6'],
+    'st': ['3', '4'], //    or /
+    'ing': ['3', '4', '6'],
+    'ar': ['3', '4', '5'],
+    // lower groupsigns
+    'ea': ['2'],
+    'bb': ['2', '3'],
+    'cc': ['2', '5'],
+    'ff': ['2', '3', '5'],
+    'gg': ['2', '3', '5', '6'],
+    'en': ['2', '6'],
+    'in': ['3', '5'],
+  },
+  BrailleLanguage.FRA : {
+    'à': ['1', '2', '3', '5', '6'],
+    'â': ['1', '6'],
+    'ç': ['1', '2', '3', '4', '6'],
+    'è': ['2', '3', '4', '6'],
+    'é': ['1', '2', '3', '4', '5', '6'],
+    'ê': ['1', '2', '6'],
+    'ë': ['1', '2', '4', '6'],
+    'î': ['1', '4', '6'],
+    'ï': ['1', '2', '4', '5', '6'],
+    'ô': ['1', '4', '5', '6'],
+    'œ': ['2', '4', '6'],
+    'ù': ['2', '3', '4', '5', '6'],
+    'û': ['1', '5', '6'],
+    'ü': ['1', '2', '5', '6'],
+  }
+};
+
+final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = {
+  BrailleLanguage.STD :   {
+    ',': ['2'],
+    ';': ['2', '3'],
+    ':': ['2', '5'],
+    '-': ['3', '6'],
+  },
+  BrailleLanguage.DEU : {
+    '?': ['2', '6'],
+    '!': ['2', '3', '5'],
+    '(': ['2', '3', '5', '6'],
+    ')': ['2', '3', '5', '6'],
+    '„': ['2', '3', '6'],
+    '“': ['3', '5', '6'],
+    '.': ['3'],
+    "'": ['6'],
+    '§': ['3', '4', '6'],
+  },
+  BrailleLanguage.ENG : {
+    '.': ['2', '5', '6'],
+    '?': ['2', '3', '6'],
+    '!': ['2', '3', '5'],
+    "'": ['3'],
+  },
+  BrailleLanguage.FRA : {
+    '.': ['2', '5', '6'],
+    '?': ['2', '6'],
+    '!': ['2', '3', '5'],
+    '(': ['2', '3', '6'],
+    ')': ['3', '5', '6'],
+    '"': ['2', '3', '5', '6'],
+    '«': ['2', '3', '5', '6'],
+    '»': ['2', '3', '5', '6'],
+    '“': ['2', '3', '5', '6'],
+    '”': ['2', '3', '5', '6'],
+    '‘': ['2', '3', '5', '6'],
+    '’': ['2', '3', '5', '6'],
+    "'": ['3'],
+    '/': ['3', '4'],
+    '@': ['3', '4', '5'],
+  }
+};
+
+final _MODIFIER_4 = ['4'];
+final _MODIFIER_5 = ['5'];
+final _MODIFIER_6 = ['6'];
+final _MODIFIER_45 = ['4', '5'];
+final _MODIFIER_46 = ['4', '6'];
+final _MODIFIER_345 = ['3', '4', '5'];
+final _MODIFIER_356 = ['3', '5', '6'];
+final _MODIFIER_456 = ['4', '5', '6'];
+final _MODIFIER_3456 = ['3', '4', '5', '6'];
+
+final Map <BrailleLanguage, List<String>>_Modifier = {
+  BrailleLanguage.DEU : [
+    _MODIFIER_4.join(''),
+    _MODIFIER_5.join(''),
+    _MODIFIER_6.join(''),
+    _MODIFIER_456.join(''),
+    _MODIFIER_3456.join('')
+  ],
+  BrailleLanguage.ENG :[
+    _MODIFIER_4.join(''),
+    _MODIFIER_5.join(''),
+    _MODIFIER_6.join(''),
+    _MODIFIER_45.join(''),
+    _MODIFIER_46.join(''),
+    _MODIFIER_345.join(''),
+    _MODIFIER_456.join(''),
+],
+  BrailleLanguage.FRA : [
+    _MODIFIER_5.join(''),
+    _MODIFIER_6.join(''),
+    _MODIFIER_45.join(''),
+    _MODIFIER_356.join(''),
+  ]
+};
+
+final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsModifier = {
+  BrailleLanguage.DEU : {
+    _MODIFIER_4.join(''): ['4'],
+    _MODIFIER_5.join(''): ['5'],
+    _MODIFIER_6.join(''): ['6'],
+    _MODIFIER_456.join(''): ['4', '5', '6'],
+    _MODIFIER_3456.join(''): ['3', '4', '5', '6']
+  },
+  BrailleLanguage.ENG : {
+    _MODIFIER_4.join(''): ['4'],
+    _MODIFIER_5.join(''): ['5'],
+    _MODIFIER_6.join(''): ['6'],
+    _MODIFIER_45.join(''): ['4', '5'],
+    _MODIFIER_46.join(''): ['4', '6'],
+    _MODIFIER_345.join(''): ['3', '4', '5'],
+    _MODIFIER_456.join(''): ['4', '5', '6'],
+  },
+  BrailleLanguage.FRA : {
+    _MODIFIER_5.join(''): ['5'],
+    _MODIFIER_6.join(''): ['6'],
+    _MODIFIER_45.join(''): ['4', '5'],
+    _MODIFIER_356.join(''): ['3', '5', '6'],
+  },
+};
+final Map<BrailleLanguage, Map<String, List<List<String>>>> _CharsToSegmentsSymbolsComposed = {
+  BrailleLanguage.DEU : {
+    '[': [_MODIFIER_6, ['2', '3', '5', '6']],
+    ']': [_MODIFIER_6, ['2', '3', '5', '6']],
+    '@': [_MODIFIER_4, ['3', '4', '5']],
+    '°': [_MODIFIER_4, ['3', '5', '6']],
+    '_': [_MODIFIER_4, ['4', '5', '6']],
+    '"': [_MODIFIER_4, ['3', '5'], ['3', '5']],
+    '&': [_MODIFIER_5, ['1', '3', '6']],
+    '/': [_MODIFIER_5, ['2']],
+    '|': [_MODIFIER_456, ['1', '2', '3']],
+    '\\': [_MODIFIER_4, ['3', '4']],
+    '%': [_MODIFIER_3456, ['2', '4', '5'], ['3', '5', '6']],
+    '+': [_MODIFIER_4 , ['2', '3', '5']],
+    '=': [_MODIFIER_4 , ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4 , ['2', '4', '6'], ['3']],
+    '>': [_MODIFIER_4 , ['1', '3', '5'], ['2']],
+    '^': [_MODIFIER_4 , ['3', '4', '6']],
+    '*': [_MODIFIER_4 , ['3', '4', '6']],
+    '÷': [_MODIFIER_4 , ['3', '5']],
+    '×': [_MODIFIER_4 , ['2', '5'], ['2', '5']],
+    '‰': [_MODIFIER_3456 , ['2', '4', '5'], ['3', '5', '6'], ['3', '5', '6']],
+  },
+  BrailleLanguage.ENG : {
+    '§' : [_MODIFIER_45, ['2', '3', '4']],
+    '@' : [_MODIFIER_4, ['1']],
+    '°' : [_MODIFIER_45, ['2', '4', '5']],
+    '&' : [_MODIFIER_4, ['1', '2', '3', '4', '6']],
+    '/' : [_MODIFIER_456, ['3', '4']],
+    '|' : [_MODIFIER_456, ['1', '2', '5', '6']],
+    '"' : [_MODIFIER_6, ['2', '3', '5', '6']],
+    '%' : [_MODIFIER_46, ['3', '5', '6']],
+    '_' : [_MODIFIER_46, ['3', '6']],
+    '\\' : [_MODIFIER_345, ['1', '6']],
+    '#' : [_MODIFIER_456, ['1', '4', '5', '6']],
+    '~' : [_MODIFIER_4, ['3', '5']],
+    '[' : [_MODIFIER_46, ['1', '2', '6']],
+    ']' : [_MODIFIER_46, ['3', '4', '5']],
+    '{' : [_MODIFIER_46, ['1', '2', '6']],
+    '}' : [_MODIFIER_456, ['3', '4', '5']],
+    '(' : [_MODIFIER_5, ['1', '2', '6']],
+    ')' : [_MODIFIER_5, ['3', '4', '5']],
+    '„' : [_MODIFIER_45, ['2', '3', '6']],
+    '“' : [_MODIFIER_45, ['3', '5', '6']],
+    '«' : [_MODIFIER_456, ['3', '5', '6']],
+    '»' : [_MODIFIER_456, ['2', '3', '6']],
+    '‘' : [_MODIFIER_6, ['2', '3', '6']],
+    '’' : [_MODIFIER_6, ['3', '5', '6']],
+    '+': [_MODIFIER_5 , ['2', '3', '5']],
+    '=': [_MODIFIER_5 , ['2', '3', '5', '6']],
+    '<': [_MODIFIER_4 , ['1', '2', '6']],
+    '>': [_MODIFIER_4 , ['3', '4', '5']],
+    '^': [_MODIFIER_4 , ['2', '6']],
+    '*': [_MODIFIER_5 , ['3', '5']],
+    '÷': [_MODIFIER_5 , ['3', '4']],
+    '×': [_MODIFIER_5 , ['2', '3', '6']],
+  },
+  BrailleLanguage.FRA : {
+    '[' : [_MODIFIER_45, ['2', '3', '6']],
+    ']' : [_MODIFIER_356, ['1', '2']],
+    '{' : [_MODIFIER_6, ['6'], ['2', '3', '6']],
+    '}' : [_MODIFIER_356, ['3'], ['3']],
+    '§' : [_MODIFIER_5, ['1', '2', '3', '4', '5', '6']],
+    '°' : [_MODIFIER_5, ['1', '3', '5']],
+    '%' : [_MODIFIER_5, ['3', '4', '6']],
+    '_' : [_MODIFIER_5, ['3', '6']],
+    '\\' : [_MODIFIER_5, ['3', '4']],
+    '#' : [_MODIFIER_5, ['3', '4', '5', '6']],
+    '~' : [_MODIFIER_5, ['2', '6']],
+    '+': [_MODIFIER_6 , ['2', '3', '5']],
+    '=': [_MODIFIER_6 , ['2', '3', '5', '6']],
+    '<': [_MODIFIER_5 , ['1', '2', '6']],
+    '>': [_MODIFIER_5 , ['3', '4', '5']],
+    '*': [_MODIFIER_5 , ['3', '5']],
+    '÷': [_MODIFIER_6 , ['2', '5']],
+    '×': [_MODIFIER_6 , ['3', '5']],
+    '‰': [_MODIFIER_5 , ['3', '4', '6'], ['3', '4', '6']],
+  },
+};
+
+final Map<BrailleLanguage, List<String>> _CharsetSymbolsComposed = {
+  BrailleLanguage.DEU : ['[', ']', '@', '°', '&', '/', '|', '\\', '_', '%', '"', '+', '=', '<', '>', '^', '*', '÷', '×', '‰'],
+  BrailleLanguage.ENG : ['(', ')', '[', ']', '{', '}', '„', '“', '«', '»', '‘', '’', '§', '@', '°', '&', '/', '|', '"', '%', '_', '\\', '#', '~', '+', '=', '<', '>', '^', '*', '÷', '×'],
+  BrailleLanguage.FRA : ['[', ']', '{', '}', '§', '°', '%', '_', '\\', '#', '~', '+', '=', '<', '>', '*', '÷', '×', '‰' ],
 };
 
 final Map<String, List<String>> _charsToSegmentsDigits = {
@@ -68,250 +315,81 @@ final Map<String, List<String>> _charsToSegmentsDigits = {
   '4': ['1', '4', '5'],
   '5': ['1', '5'],
   '6': ['1', '2', '4'],
-  '7': ['1', '4', '2', '5'],
+  '7': ['1', '2', '4', '5'],
   '8': ['1', '2', '5'],
   '9': ['2', '4'],
   '0': ['2', '4', '5'],
 };
 
-final Map<String, List<String>> _charsToSegmentsDEULetters = {
-  'ä': ['3', '4', '5'],
-  'ö': ['2', '4', '6'],
-  'ü': ['1', '2', '5', '6'],
-  'ß': ['2', '3', '4', '6'],
-  // Vollschrift
-  'au': ['1', '6'],
-  'eu': ['1', '2', '6'],
-  'ei': ['1', '4', '6'],
-  'ch': ['1', '4', '5', '6'],
-  'sch': ['1', '5', '6'],
-  'st': ['2', '3', '4', '5', '6'],
-  'äu': ['3', '4'],
-  'ie': ['3', '4', '6'],
-};
-final Map<String, List<String>> _charsToSegmentsDEUSymbols = {
-  // Basis Interpunktions- und Sonderzeichen
-  ',': ['2'],
-  ';': ['2', '3'],
-  ':': ['2', '5'],
-  '?': ['2', '6'],
-  '!': ['2', '3', '5'],
-  '(': ['2', '3', '5', '6'],
-  ')': ['2', '3', '5', '6'],
-  '»': ['2', '3', '6'],
-  '«': ['3', '5', '6'],
-  '.': ['3'],
-  '-': ['3', '6'],
-  "'": ['6'], // small letters follows
-  '§': ['3', '4', '6'],
-  // Mathematische Zeichen
-  '+': ['2', '3', '5'],
-  '=': ['2', '3', '5', '6'],
-  '/': ['2', '5', '6'],
-  // others
-  ']': ['2', '3', '4', '5', '6'],
-  '[': ['1', '2', '3', '5', '6'],
-  '^': ['1', '2', '4', '5', '6'],
-  '`': ['1', '2', '4', '6'],
-  '~': ['5'],
-  '>': ['4', '5'],
-  '<': ['5', '6'],
-  '_': ['4', '5', '6'],
-  '#': ['3', '4', '5', '6'],
+final Map<String, List<String>> _charsToSegmentsAntoine = {
+  '1': ['1', '6'],
+  '2': ['1', '2', '6'],
+  '3': ['1', '4', '6'],
+  '4': ['1', '4', '5', '6'],
+  '5': ['1', '5', '6'],
+  '6': ['1', '2', '4', '6'],
+  '7': ['1', '2', '4', '5', '6'],
+  '8': ['1', '2', '5', '6'],
+  '9': ['2', '4', '6'],
+  '0': ['3', '4', '5', '6'],
 };
 
-final _DEUmulti = {'—', '*', '[', ']', '‘', '|', '…', '→', '←', '&', '%', '‰', '°', '’', '"', '\\', '@', '€', '£', '\$', '¢'};
-final Map<String, List<List<String>>> _charsetDEUmulti = {
-  '—' : [['6'], ['3', '6']],
-  '*' : [['6'], ['3', '5']],
-  '[' : [['6'], ['2', '3', '5', '6']],
-  ']' : [['6'], ['2', '3', '5', '6']],
-  '‘' : [['6'], ['3', '5', '6']],
-  '|' : [['4', '5', '6'], ['1', '2', '3']],
-  '…' : [['3'], ['3'], ['3']],
-  '→' : [['2', '5'], ['2', '5'], ['1', '3', '5']],
-  '←' : [['2', '4', '6'], ['2', '5'], ['2', '5']],
-  '&' : [['5'], ['1', '3', '6']],
-  '%' : [['3', '4', '5', '6'], ['2', '4', '5'], ['3', '5', '6']],
-  '‰' : [['3', '4', '5', '6'], ['2', '4', '5'], ['3', '5', '6'], ['3', '5', '6']],
-  '°' : [['4'], ['3', '5', '6']],
-  '’' : [['4'], ['3', '5']],
-  '"' : [['4'], ['3', '5'], ['3', '5']],
-  '\\' : [['4'], ['3', '4']],
-  '@' : [['4'], ['3', '4', '5']],
-  '€' : [['4'], ['1', '5']],
-  '£' : [['4'], ['4', '5', '6']],
-  '\$' : [['4'], ['2', '3', '4']],
-  '¢' : [['4'], ['1', '4']],
+
+final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
+final SWITCH_ANTOINE = ['6'];
+
+final Map<BrailleLanguage, List<String>>_Switches = {
+  BrailleLanguage.DEU : [
+    'ONECAPITALFOLLOWS',
+    'CAPITALFOLLOWS',
+    'SMALLLETTERFOLLOWS',
+    'NUMBERFOLLOWS',
+  ],
+  BrailleLanguage.ENG : [
+    'CAPITALS',
+    'NUMBERFOLLOWS',
+  ],
+  BrailleLanguage.FRA : [
+    'CAPITALS',
+    'NUMBERFOLLOWS',
+    'ANTOINENUMBERFOLLOWS'
+  ],
+
 };
 
-final _DEUswitches = {'ONECAPITALFOLLOWS', 'CAPITALFOLLOWS', 'SMALLLETTERFOLLOWS', 'NUMBERFOLLOWS', 'MATHFOLLOWS'};
-final Map<String, List<String>> _charsetDEUswitches = {
-  'ONECAPITALFOLLOWS' : ['4', '6'],
-  'CAPITALFOLLOWS' : ['4', '5'],
-  'SMALLLETTERFOLLOWS' : ['6'],
-  'NUMBERFOLLOWS' : ['3', '4', '5', '6'],
-  'MATHFOLLOWS' : ['4']
-};
-var _segmentsToDEUswitches = switchMapKeyValue(_charsetDEUswitches);
-
-
-final Map<String, List<String>> _charsToSegmentsENGLetters = {
-  'and': ['1', '2', '3', '4', '6'],
-  'for': ['1', '2', '3', '4', '5', '6'],
-  'of': ['1', '2', '3', '5', '6'],
-  'the': ['2', '3', '4', '6'],
-  'with': ['2', '3', '4', '5', '6'],
-  'ch': ['1', '6'],
-  'gh': ['1', '2', '6'],
-  'sh': ['1', '4', '6'],
-  'th': ['1', '4', '5', '6'],
-  'wh': ['1', '5', '6'],
-  'ed': ['1', '2', '4', '6'],
-  'er': ['1', '2', '4', '5', '6'],
-  'ou': ['1', '2', '5', '6'],
-  'ow': ['2', '4', '6'],
-  'st': ['3', '4'], //    or /
-  'ar': ['3', '4', '5'],
-  'ing': ['3', '4', '6'],
-  'ble': ['3', '4', '5', '6'],
-  'bb': ['2', '3'],
-  'cc': ['2', '5'],
-  'en': ['2', '6'],
-  'ff': ['2', '3', '5'],
-  'in': ['3', '5'],
-  'by': ['3', '5', '6'],
-};
-final Map<String, List<String>> _charsToSegmentsENGSymbols = {
-  ',': ['2'],
-  ';': ['2', '3'],
-  ':': ['2', '5'],
-  '.': ['2', '5', '6'],
-  '?': ['2', '3', '6'],
-  '!': ['2', '3', '5'],
-  '+': ['2', '3', '5'],
-  '#': ['3', '4', '5', '6'], // number follows
-  '=': ['2', '3', '5', '6'],
-  '-': ['3', '6'],
-  '§': ['3', '4', '6'],
-  '"': ['2', '3', '6'],
-  "'": ['4'],
-  '~': ['5'],
-  '>': ['4', '5'],
-  '<': ['5', '6'],
-  '/': ['3', '4'],
-  '_': ['3', '6'],
-};
-final Map<String, List<String>> _charsToSegmentsFRALetters = {
-  'à': ['1', '2', '3', '5', '6'],
-  'â': ['1', '6'],
-  'ç': ['1', '2', '3', '4', '6'],
-  'è': ['2', '3', '4', '6'],
-  'é': ['1', '2', '3', '4', '5', '6'],
-  'ê': ['1', '2', '6'],
-  'ë': ['1', '2', '4', '6'],
-  'î': ['1', '4', '6'],
-  'ï': ['1', '2', '4', '5', '6'],
-  'ô': ['1', '4', '5', '6'],
-  'œ': ['2', '4', '6'],
-  'ù': ['2', '3', '4', '5', '6'],
-  'û': ['1', '5', '6'],
-  'ü': ['1', '2', '5', '6'],
-};
-final Map<String, List<String>> _charsToSegmentsFRASymbols = {
-  // Punctuation
-  ',': ['2'],
-  ';': ['2', '3'],
-  ':': ['2', '5'],
-  '.': ['2', '5', '6'],
-  '?': ['2', '6'],
-  '!': ['2', '3', '5'],
-  '"': ['2', '3', '5', '6'],
-  '«': ['2', '3', '5', '6'],
-  '»': ['2', '3', '5', '6'],
-  '“': ['2', '3', '5', '6'],
-  '”': ['2', '3', '5', '6'],
-  '‘': ['2', '3', '5', '6'],
-  '’': ['2', '3', '5', '6'],
-  '(': ['2', '3', '6'],
-  ')': ['3', '5', '6'],
-  "'": ['3'],
-  '/': ['3', '4'],
-  '@': ['3', '4', '5'],
-  '-': ['3', '6'],
+final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches = {
+  BrailleLanguage.DEU : {
+    'ONECAPITALFOLLOWS': ['4', '6'],
+    'CAPITALFOLLOWS': ['4', '5'],
+    'SMALLLETTERFOLLOWS': ['6'],
+    'NUMBERFOLLOWS': ['3', '4', '5', '6'],
+  },
+  BrailleLanguage.ENG : {
+    'CAPITALS': ['6'],
+    'NUMBERFOLLOWS': ['3', '4', '5', '6'],
+  },
+  BrailleLanguage.FRA : {
+    'CAPITALS': ['4', '6'],
+    'NUMBERFOLLOWS': ['3', '4', '5', '6'],
+    'ANTOINENUMBERFOLLOWS': ['6']
+  },
 };
 
-final _FRAmath = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '=', '×', '÷'};
-final Map<String, List<List<String>>> _charsetFRAmath = {
-  //  mathmatics symbols or number follows  ['6'],
-  '1': [['6'], ['1', '6']],
-  '2': [['6'], ['1', '2', '6']],
-  '3': [['6'], ['1', '4', '6']],
-  '4': [['6'], ['1', '4', '5', '6']],
-  '5': [['6'], ['1', '5', '6']],
-  '6': [['6'], ['1', '2', '4', '6']],
-  '7': [['6'], ['1', '2', '4', '5', '6']],
-  '8': [['6'], ['1', '2', '5', '6']],
-  '9': [['6'], ['2', '4', '6']],
-  '0': [['6'], ['3', '4', '5', '6']],
-  '+': [['6'], ['2', '3', '5']],
-  '-': [['6'], ['3', '6']],
-  '=': [['6'], ['2', '3', '5', '6']],
-  '×': [['6'], ['2', '3']],
-  '÷': [['6'], ['2', '5']],
-};
-final _FRAmulti = {'☐', '↔', '…', '→', '←', '–', '¢', '€', '£', 'µ', 'π', '\$', '¥', '≤', '≥', '[', ']',
-'©', '°', '§', '®', '™', '&', '<', '>', '~', '*', '\\', '#', '%', '‰', '_', '{', '}'};
-final Map<String, List<List<String>>> _charsetFRAmulti = {
-  //  typographic symbols follows
-  '☐': [['1', '2', '3', '4', '6'], ['1', '3', '4', '5', '6']],
-  '↔': [['2', '4', '6'], ['2', '5'], ['1', '3', '5']],
-  '←': [['2', '4', '6'], ['2', '5'], ['2', '5']],
-  '→': [['2', '5'], ['2', '5'], ['1', '3', '5']],
-  '…': [['2', '5', '6'], ['2', '5', '6'], ['2', '5', '6']],
-  '–': [['3', '6'], ['3', '6']],
-  //  typographic symbols follows  ['4', '5'],
-  '¢': [['4', '5'], ['1', '4']],
-  '€': [['4', '5'], ['1', '5']],
-  '£': [['4', '5'], ['1', '2', '3']],
-  'µ': [['4', '5'], ['1', '3', '4']],
-  'π': [['4', '5'], ['1', '2', '3', '4']],
-  '\$': [['4', '5'], ['2', '3', '4']],
-  '¥': [['4', '5'], ['1', '3', '4', '5', '6']],
-  '≤': [['4', '5'], ['1', '2', '6']],
-  '≥': [['4', '5'], ['3', '4', '5']],
-  '[': [['4', '5'], ['2', '3', '6']],
-  ']': [['3', '5', '6'], ['1', '2']],
-//  typographic symbols follows  ['5'],
-  '©': [['5'], ['1', '4']],
-  '°': [['5'], ['1', '3', '5']],
-  '§': [['5'], ['1', '2', '3', '4']],
-  '®': [['5'], ['1', '2', '3', '5']],
-  '™': [['5'], ['2', '3', '4', '5']],
-  '&': [['5'], ['1', '2', '3', '4', '5', '6']],
-  '<': [['5'], ['1', '2', '6']],
-  '>': [['5'], ['3', '4', '5']],
-  '~': [['5'], ['2', '6']],
-  '*': [['5'], ['3', '5']],
-  '\\': [['5'], ['3', '4']],
-  '#': [['5'], ['3', '4', '5', '6']],
-  '%': [['5'], ['3', '4', '6']],
-  '‰': [['5'], ['3', '4', '6'], ['3', '4', '6']],
-  '_': [['5'], ['3', '6']],
-  '{': [['6'], ['6'], ['2', '3', '6']],
-  '}': [['3', '5', '6'], ['3'], ['3']],
+final Map<String, List<String>> _charsToSegmentsLettersAntoine = {
+  'â': ['1', '6'], // 1
+  'ê': ['1', '2', '6'], // 2
+  'î': ['1', '4', '6'], // 3
+  'ô': ['1', '4', '5', '6'], // 4
+  'û': ['1', '5', '6'], // 5
+  'ë': ['1', '2', '4', '6'], // 6
+  'ï': ['1', '2', '4', '5', '6'], // 7
+  'ü': ['1', '2', '5', '6'], // 8
+  'œ': ['2', '4', '6'], // 9
+  'NUMBERFOLLOWS': ['3', '4', '5', '6'], // 0
 };
 
-final _FRAswitches = {'CAPITALFOLLOWS', 'NUMBERFOLLOWS', 'MATHFOLLOWS'};
-final Map<String, List<String>> _charsetFRAswitches = {
-  'CAPITALFOLLOWS' : ['4', '5'],
-  'NUMBERFOLLOWS' : ['3', '4', '5', '6'],
-  'MATHFOLLOWS' : ['6']
-};
-var _segmentsToFRAswitches = switchMapKeyValue(_charsetFRAswitches);
-
-
-final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/braille/computerbraille-text.html
+final Map<String, List<String>> _charsToSegmentsEUR = {
+  // http://fakoo.de/braille/computerbraille-text.html
   'NUL': ['3', '4', '5', '7', '8'],
   'SOH': ['1', '7', '8'],
   'STX': ['1', '2', '7', '8'],
@@ -344,7 +422,7 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   'GS': ['2', '3', '4', '5', '6', '7', '8'],
   'RS': ['2', '3', '4', '6', '7', '8'],
   'US': ['4', '5', '6', '7', '8'],
-  ' ': [], // 32
+  ' ': [],
   '!': ['5'],
   '"': ['4'],
   '#': ['3', '4', '5', '6'],
@@ -360,7 +438,7 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   '-': ['3', '6'],
   '.': ['3'],
   '/': ['2', '5', '6'],
-  '0': ['3', '4', '6'], //  48
+  '0': ['3', '4', '6'],
   '1': ['1', '6'],
   '2': ['1', '2', '6'],
   '3': ['1', '4', '6'],
@@ -375,9 +453,9 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   '<': ['5', '6'],
   '=': ['2', '3', '5', '6'],
   '>': ['4', '5'],
-  '?': ['2', '6'], //  63
-  '@': ['3', '4', '5', '7'], //  64
-  'A': ['1', '7'], //  65
+  '?': ['2', '6'],
+  '@': ['3', '4', '5', '7'],
+  'A': ['1', '7'],
   'B': ['1', '2', '7'],
   'C': ['1', '4', '7'],
   'D': ['1', '4', '5', '7'],
@@ -406,7 +484,7 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   '[': ['1', '2', '3', '5', '6', '7'],
   '\\': ['3', '4', '7'],
   ']': ['2', '3', '4', '5', '6', '7'],
-  '^': ['2', '3', '4', '6', '7'],  //  94 x286e
+  '^': ['2', '3', '4', '6', '7'],
   '_': ['4', '5', '6', '7'],
   '`': ['3', '4', '5'],
   'a': ['1'],
@@ -439,150 +517,139 @@ final Map<String, List<String>> _charsToSegmentsEUR = { // http://fakoo.de/brail
   '|': ['3', '4'],
   '}': ['2', '3', '4', '5', '6'],
   '~': ['2', '3', '4', '6'],
-  'DEL': ['4', '5', '6'],                                      // 127 x2858 [DEL]
-  '€': ['4', '5', '7'],                          // 128 x28
-  'HOP': ['8'],                                      // 129 x2800 [HOP]
-  '‚': ['3', '6', '7', '8'],                     // 130 x28e4
-  'ƒ': ['7', '8'],                               // 131 x28c0
-  '„': ['1', '2', '3', '4', '5', '6', '7'],      // 132 x287f
-  '…': ['1', '2', '3', '4', '5', '6', '8'],      // 133 x28bf
-  '†': ['1', '2', '4', '8'],                     // 134 x288b
-  '‡': ['1', '2', '4', '5', '8'],                // 135 x289b
-  'ˆ': ['3', '7', '8'],                          // 136 x28c4
-  '‰': ['2', '4', '8'],                          // 137 x288a
-  'Š': ['6', '7', '8'],                          // 138 x28e0
-  '‹': ['2', '7'],                               // 139 x2842
-  'Œ': ['2', '3', '7'],                          // 140 x2846
-  'RI': ['2', '5', '7'],                                      // 141 x2852 [RI]
-  'Ž': ['1', '2', '5', '6', '7'],                // 142 x2873
-  'SS3': ['1', '2', '4', '6', '7'],                                      // 143 x286b [SS3]
-  'DCS': ['1', '2', '4', '6', '7', '8'],                                      // 144 x28eb [DCS]
-  '‘': ['2', '3', '5', '6', '7'],                // 145 x2876
-  '’': ['2', '3', '6', '7'],                     // 146 x2866
-  '“': ['1', '3', '8'],                          // 147 x2885
-  '”': ['1', '2', '3', '8'],                     // 148 x2887
-  '•': ['2', '7', '8'],                          // 149 x28c2
-  '–': ['2', '3', '7', '8'],                     // 150 x28c6
-  '—': ['1', '3', '5', '6', '8'],                // 151 x28b5
-  'SOS': ['2', '5', '7', '8'],                                      // 152 x28fb [SOS]
-  '™': ['1', '2', '4', '5', '6', '7', '8'],      // 153 x28fb
-  'š': ['2', '6', '7', '8'],                     // 154 x28e2
-  '›': ['1', '2', '3', '4', '5', '8'],           // 155 x289f
-  'œ': ['6', '7'],                               // 156 x2860
-  'OSC': ['1', '2', '4', '5', '6', '7'],                                      // 157 x287b [OSC]
-  'ž': ['2', '3', '5', '6', '7', '8'],           // 158 x28f6
-  'Ÿ': ['1', '2', '3', '4', '5', '6', '7', '8'], // 159 x28ff
-  ' ': ['7'],                                    // 160 x2840
-  '¡': ['3', '6', '7'], // 161 x28
-  '¢': ['5', '8'], // 162 x28
-  '£': ['4', '6', '7'],// 163 x28
-  '¤': ['4', '6', '7', '8'], // 164 x28
-  '¥': ['4', '6', '8'], // 165 x28
-  '¦': ['1', '5', '8'], // 166 x28
-  '§': ['3', '5', '7'], // 167 x28
-  '¨': ['4', '8'], // 168 x28
-  '©': ['1', '2', '3', '4', '6', '8'], // 169 x28
-  'ª': ['1', '2', '5', '8'], // 170 x28
-  '«': ['5', '6', '7', '8'], // 171 x28
-  '¬': ['2', '5', '6', '7', '8'], // 172 x28
-  //'': [], // 173 x28
-  '®': ['1', '2', '3', '5', '8'], // 174 x28
-  '¯': ['4', '5', '8'], // 175 x28
-  '°': ['4', '5', '6', '8'], // 176 x28
-  '±': ['2', '3', '5', '7', '8'], // 177 x28
-  '²': ['1', '2', '8'], // 178 x28
-  '³': ['1', '4', '8'], // 179 x28
-  '´': ['5', '6', '8'], // 180 x28
-  'µ': ['1', '3', '4', '8'], // 181 x28
-  '¶': ['1', '4', '5', '8'], // 182 x28
-  '·': ['3', '7'], // 183 x28
-  '¸': ['6', '8'], // 184 x28
-  '¹': ['1', '8'], // 185 x28
-  'º': ['2', '4', '5', '8'], // 186 x28
-  '»': ['4', '5', '7', '8'], // 187 x28
-  '¼': ['1', '3', '6', '8'], // 188 x28
-  '½': ['1', '2', '3', '6', '8'], // 189 x28
-  '¾': ['1', '3', '4', '6', '8'], // 190 x28
-  '¿': ['3', '8'], // 191 x28
-  'À': ['2', '3', '6', '7', '8'], // 192 x28
-  'Á': ['2', '8'], // 193 x28
-  'Â': ['1', '6', '7'], // 194 x28
-  'Ã': ['3', '4', '6', '7'], // 195 x28
-  'Ä': ['5', '6', '7'], // 196 x28
-  'Å': ['3', '4', '5', '6', '7'], // 197 x28
-  'Æ': ['4', '7'], // 198 x28
-  'Ç': ['1', '2', '3', '4', '6', '7'], // 199 x28
-  'È': ['3', '5', '7', '8'], // 200 x28
-  'É': ['2', '3', '8'], // 201 x28
-  'Ê': ['1', '2', '6', '7'], // 202 x28
-  'Ë': ['2', '3', '5', '8'], // 203 x28
-  'Ì': ['5', '7'], // 204 x28
-  'Í': ['2', '5', '8'], // 205 x28
-  'Î': ['1', '4', '6', '7'], // 206 x28
-  'Ï': ['2', '3', '5', '6', '8'], // 207 x28
-  'Ð': ['3', '5', '6', '7'], // 208 x28
-  'Ñ': ['2', '5', '6', '7'], // 209 x28
-  'Ò': ['5', '7', '8'], // 210 x28
-  'Ó': ['2', '5', '6', '8'], // 211 x28
-  'Ô': ['1', '4', '5', '6', '7'], // 212 x28
-  'Õ': ['2', '6', '7'], // 213 x28
-  'Ö': ['3', '5', '8'], // 214 x28
-  '×': ['2', '3', '4', '8'], // 215 x28
-  'Ø': ['2', '4', '6', '7'], // 216 x28
-  'Ù': ['3', '5', '6', '7', '8'], // 217 x28
-  'Ú': ['2', '6', '8'], // 218 x28
-  'Û': ['1', '5', '6', '7'], // 219 x28
-  'Ü': ['2', '3', '6', '8'], // 220 x28
-  'Ý': ['3', '5', '6', '8'], // 221 x28
-  'Þ': ['2', '3', '5', '7'], // 222 x28
-  'ß': ['3', '4', '5', '6', '8'], // 223 x28
-  'à': ['1', '2', '3', '5', '6', '8'], // 224 x28
-  'á': ['1', '6', '8'], // 225 x28
-  'â': ['1', '6', '7', '8'], // 226 x28
-  'ã': ['3', '4', '6', '7', '8'], // 227 x28
-  'ä': ['3', '4', '5', '8'], // 228 x28
-  'å': ['3', '4', '5', '6', '7', '8'], // 229 x28
-  'æ': ['4', '7', '8'], // 230 x28
-  'ç': ['1', '2', '3', '4', '6', '7', '8'], // 231 x28
-  'è': ['2', '3', '4', '6', '8'], // 232 x28
-  'é': ['1', '2', '6', '8'], // 233 x28
-  'ê': ['1', '2', '6', '7', '8'], // 234 x28
-  'ë': ['1', '2', '4', '6', '8'], // 235 x28
-  'ì': ['3', '4', '8'], // 236 x28
-  'í': ['1', '4', '6', '8'], // 237 x28
-  'î': ['1', '4', '6', '7', '8'], // 238 x28
-  'ï': ['1', '2', '4', '5', '6', '8'], // 239 x28
-  'ð': ['2', '3', '4', '5', '8'], // 240 x28
-  'ñ': ['1', '3', '4', '5', '8'], // 241 x28
-  'ò': ['3', '4', '6', '8'], // 242 x28
-  'ó': ['1', '4', '5', '6', '8'], // 243 x28
-  'ô': ['1', '4', '5', '6', '7', '8'], // 244 x28
-  'õ': ['1', '3','5', '8'], // 245 x28,
-  'ö': ['2', '4', '6', '8'], // 246 x28
-  '÷': ['1', '2', '5', '6', '7', '8'], // 247 x28
-  'ø': ['2', '4', '6', '7', '8'], // 248 x28
-  'ù': ['2', '3', '4', '5', '6', '8'], // 249 x28
-  'ú': ['1', '5', '6', '8'], // 250 x28
-  'û': ['1', '5', '6', '7', '8'], // 251 x28
-  'ü': ['1', '2', '5', '6', '8'], // 252 x28
-  'ý': ['2', '4', '5', '6', '8'], // 253 x28
-  'þ': ['1', '2', '3', '4', '8'], // 254 x28
-  'ÿ': ['1', '3', '4', '5', '6', '8'], // 255 x28
+  'DEL': ['4', '5', '6'],
+  '€': ['4', '5', '7'],
+  'HOP': ['8'],
+  '‚': ['3', '6', '7', '8'],
+  'ƒ': ['7', '8'],
+  '„': ['1', '2', '3', '4', '5', '6', '7'],
+  '…': ['1', '2', '3', '4', '5', '6', '8'],
+  '†': ['1', '2', '4', '8'],
+  '‡': ['1', '2', '4', '5', '8'],
+  'ˆ': ['3', '7', '8'],
+  '‰': ['2', '4', '8'],
+  'Š': ['6', '7', '8'],
+  '‹': ['2', '7'],
+  'Œ': ['2', '3', '7'],
+  'RI': ['2', '5', '7'],
+  'Ž': ['1', '2', '5', '6', '7'],
+  'SS3': ['1', '2', '4', '6', '7'],
+  'DCS': ['1', '2', '4', '6', '7', '8'],
+  '‘': ['2', '3', '5', '6', '7'],
+  '’': ['2', '3', '6', '7'],
+  '“': ['1', '3', '8'],
+  '”': ['1', '2', '3', '8'],
+  '•': ['2', '7', '8'],
+  '–': ['2', '3', '7', '8'],
+  '—': ['1', '3', '5', '6', '8'],
+  'SOS': ['2', '5', '7', '8'],
+  '™': ['1', '2', '4', '5', '6', '7', '8'],
+  'š': ['2', '6', '7', '8'],
+  '›': ['1', '2', '3', '4', '5', '8'],
+  'œ': ['6', '7'],
+  'OSC': ['1', '2', '4', '5', '6', '7'],
+  'ž': ['2', '3', '5', '6', '7', '8'],
+  'Ÿ': ['1', '2', '3', '4', '5', '6', '7', '8'],
+  ' ': ['7'],
+  '¡': ['3', '6', '7'],
+  '¢': ['5', '8'],
+  '£': ['4', '6', '7'],
+  '¤': ['4', '6', '7', '8'],
+  '¥': ['4', '6', '8'],
+  '¦': ['1', '5', '8'],
+  '§': ['3', '5', '7'],
+  '¨': ['4', '8'],
+  '©': ['1', '2', '3', '4', '6', '8'],
+  'ª': ['1', '2', '5', '8'],
+  '«': ['5', '6', '7', '8'],
+  '¬': ['2', '5', '6', '7', '8'],
+  //'': [],
+  '®': ['1', '2', '3', '5', '8'],
+  '¯': ['4', '5', '8'],
+  '°': ['4', '5', '6', '8'],
+  '±': ['2', '3', '5', '7', '8'],
+  '²': ['1', '2', '8'],
+  '³': ['1', '4', '8'],
+  '´': ['5', '6', '8'],
+  'µ': ['1', '3', '4', '8'],
+  '¶': ['1', '4', '5', '8'],
+  '·': ['3', '7'],
+  '¸': ['6', '8'],
+  '¹': ['1', '8'],
+  'º': ['2', '4', '5', '8'],
+  '»': ['4', '5', '7', '8'],
+  '¼': ['1', '3', '6', '8'],
+  '½': ['1', '2', '3', '6', '8'],
+  '¾': ['1', '3', '4', '6', '8'],
+  '¿': ['3', '8'],
+  'À': ['2', '3', '6', '7', '8'],
+  'Á': ['2', '8'],
+  'Â': ['1', '6', '7'],
+  'Ã': ['3', '4', '6', '7'],
+  'Ä': ['5', '6', '7'],
+  'Å': ['3', '4', '5', '6', '7'],
+  'Æ': ['4', '7'],
+  'Ç': ['1', '2', '3', '4', '6', '7'],
+  'È': ['3', '5', '7', '8'],
+  'É': ['2', '3', '8'],
+  'Ê': ['1', '2', '6', '7'],
+  'Ë': ['2', '3', '5', '8'],
+  'Ì': ['5', '7'],
+  'Í': ['2', '5', '8'],
+  'Î': ['1', '4', '6', '7'],
+  'Ï': ['2', '3', '5', '6', '8'],
+  'Ð': ['3', '5', '6', '7'],
+  'Ñ': ['2', '5', '6', '7'],
+  'Ò': ['5', '7', '8'],
+  'Ó': ['2', '5', '6', '8'],
+  'Ô': ['1', '4', '5', '6', '7'],
+  'Õ': ['2', '6', '7'],
+  'Ö': ['3', '5', '8'],
+  '×': ['2', '3', '4', '8'],
+  'Ø': ['2', '4', '6', '7'],
+  'Ù': ['3', '5', '6', '7', '8'],
+  'Ú': ['2', '6', '8'],
+  'Û': ['1', '5', '6', '7'],
+  'Ü': ['2', '3', '6', '8'],
+  'Ý': ['3', '5', '6', '8'],
+  'Þ': ['2', '3', '5', '7'],
+  'ß': ['3', '4', '5', '6', '8'],
+  'à': ['1', '2', '3', '5', '6', '8'],
+  'á': ['1', '6', '8'],
+  'â': ['1', '6', '7', '8'],
+  'ã': ['3', '4', '6', '7', '8'],
+  'ä': ['3', '4', '5', '8'],
+  'å': ['3', '4', '5', '6', '7', '8'],
+  'æ': ['4', '7', '8'],
+  'ç': ['1', '2', '3', '4', '6', '7', '8'],
+  'è': ['2', '3', '4', '6', '8'],
+  'é': ['1', '2', '6', '8'],
+  'ê': ['1', '2', '6', '7', '8'],
+  'ë': ['1', '2', '4', '6', '8'],
+  'ì': ['3', '4', '8'],
+  'í': ['1', '4', '6', '8'],
+  'î': ['1', '4', '6', '7', '8'],
+  'ï': ['1', '2', '4', '5', '6', '8'],
+  'ð': ['2', '3', '4', '5', '8'],
+  'ñ': ['1', '3', '4', '5', '8'],
+  'ò': ['3', '4', '6', '8'],
+  'ó': ['1', '4', '5', '6', '8'],
+  'ô': ['1', '4', '5', '6', '7', '8'],
+  'õ': ['1', '3', '5', '8'],
+  'ö': ['2', '4', '6', '8'],
+  '÷': ['1', '2', '5', '6', '7', '8'],
+  'ø': ['2', '4', '6', '7', '8'],
+  'ù': ['2', '3', '4', '5', '6', '8'],
+  'ú': ['1', '5', '6', '8'],
+  'û': ['1', '5', '6', '7', '8'],
+  'ü': ['1', '2', '5', '6', '8'],
+  'ý': ['2', '4', '5', '6', '8'],
+  'þ': ['1', '2', '3', '4', '8'],
+  'ÿ': ['1', '3', '4', '5', '6', '8'],
 };
 
-var _segmentsToCharsLetters = switchMapKeyValue(_charsToSegmentsLetters);
-var _segmentsToCharsDigit = switchMapKeyValue(_charsToSegmentsDigits);
-var _segmentsToCharsDEULetters = switchMapKeyValue(_charsToSegmentsDEULetters);
-var _segmentsToCharsDEUSymbols = switchMapKeyValue(_charsToSegmentsDEUSymbols);
-
-
-var _segmentsToCharsENGLetters = switchMapKeyValue(_charsToSegmentsENGLetters);
-var _segmentsToCharsENGSymbols = switchMapKeyValue(_charsToSegmentsENGSymbols);
-var _segmentsToCharsFRALetters = switchMapKeyValue(_charsToSegmentsFRALetters);
-var _segmentsToCharsFRASymbols = switchMapKeyValue(_charsToSegmentsFRASymbols);
-var _segmentsToCharsEUR = switchMapKeyValue(_charsToSegmentsEUR);
-
 final _Numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
 final _SmallLetters = {
   'a',
   'b',
@@ -609,8 +676,27 @@ final _SmallLetters = {
   'w',
   'x',
   'y',
-  'z'
+  'z',
+  'ä',
+  'ö',
+  'ü',
+  'ß',
+  'á',
+  'à',
+  'â',
+  'ç',
+  'è',
+  'é',
+  'ê',
+  'ë',
+  'î',
+  'ï',
+  'ô',
+  'œ',
+  'ù',
+  'û',
 };
+
 final _CapitalLetters = {
   'A',
   'B',
@@ -637,9 +723,38 @@ final _CapitalLetters = {
   'W',
   'X',
   'Y',
-  'Z'
+  'Z',
+  'Ä',
+  'Ö',
+  'Ü',
+  'Á',
+  'À',
+  'Â',
+  'Ç',
+  'È',
+  'É',
+  'Ê',
+  'Ë',
+  'Î',
+  'Ï',
+  'Ô',
+  'Œ',
+  'Ù',
+  'Û',
 };
-final _Mathmatical = {'+', '-', '*', '/', '(', ')', '[', ']', ',', '.', ':'};
+
+final _AntoineLetters = {
+  'â',
+  'ê',
+  'î',
+  'ô',
+  'û',
+  'ë',
+  'ï',
+  'ü',
+  'œ',
+  'NUMBERFOLLOWS'
+};
 
 final Map _LetterToDigit = {
   'a': '1',
@@ -654,39 +769,68 @@ final Map _LetterToDigit = {
   'j': '0',
 };
 
+final Map _AntoineToDigit = {
+  'â': '1',
+  'ê': '2',
+  'î': '3',
+  'ô': '4',
+  'û': '5',
+  'ë': '6',
+  'ï': '7',
+  'ü': '8',
+  'œ': '9',
+  'NUMBERFOLLOWS': '0',
+};
+
+
+
 bool _isSmallLetter(String s) {
   return _SmallLetters.contains(s);
 }
+
 bool _isCapital(String s) {
   return _CapitalLetters.contains(s);
 }
+
 bool _isNumber(String s) {
   return _Numbers.contains(s);
 }
-bool _isMathmatical(String s) {
-  return _Mathmatical.contains(s);
-}
 
-List<List<String>> _encodeBrailleEUR(String input) {
+
+
+List<List<String>> _encodeBrailleBASIC(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
+  Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_charsToSegmentsDigits);
+
   for (int i = 0; i < inputs.length; i++) {
-    result.add(_charsToSegmentsEUR[inputs[i]]);
+    result.add(_charsToSegments[inputs[i].toLowerCase()]);
   }
   return result;
 }
 
 List<List<String>> _encodeBrailleSIMPLE(String input) {
-
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
+  bool numberFollows = false;
+
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
-  _charsToSegments.addAll(_charsToSegmentsLetters);
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
   _charsToSegments.addAll(_charsToSegmentsDigits);
 
   for (int i = 0; i < inputs.length; i++) {
+    if (_isNumber(inputs[i])) {
+      if (!numberFollows) {
+        result.add(SWITCH_NUMBERFOLLOWS);
+        numberFollows = true;
+      }
+    } else {
+      numberFollows = false;
+    }
     result.add(_charsToSegments[inputs[i].toLowerCase()]);
   }
   return result;
@@ -700,278 +844,305 @@ List<List<String>> _encodeBrailleDEU(String input) {
   List<List<String>> result = [];
 
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
-  _charsToSegments.addAll(_charsToSegmentsLetters);
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
   _charsToSegments.addAll(_charsToSegmentsDigits);
-  _charsToSegments.addAll(_charsToSegmentsDEULetters);
-  _charsToSegments.addAll(_charsToSegmentsDEUSymbols);
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.DEU]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.DEU]);
 
   for (int i = 0; i < inputs.length; i++) {
-    if (_DEUmulti.contains(inputs[i]))
-      result.addAll(_charsetDEUmulti[inputs[i]]);
-
-    if (_isNumber(inputs[i])) {
-      if (!stateNumberFollows) {
-        result.add(_charsetDEUswitches['NUMBERFOLLOWS']);
-        stateNumberFollows = true;
-      }
-      result.add(_charsToSegments[inputs[i]]);
-    } else {
-      if (!_isMathmatical(inputs[i])) stateNumberFollows = false;
-      if (_isSmallLetter(inputs[i])) {
-        if (stateCapitals)
-          stateCapitals = false;
-      }
-      if (_isCapital(inputs[i])) {
-        // check following letter
-        if (i < inputs.length - 1 && _isSmallLetter(inputs[i + 1]) )
-          result.add(_charsetDEUswitches['ONECAPITALFOLLOWS']);
-        else {
-          result.add(_charsetDEUswitches['CAPITALFOLLOWS']);
-          stateCapitals = true;
+    // identify composed characters
+    if (_CharsetSymbolsComposed[BrailleLanguage.DEU].contains(inputs[i]))
+      result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.DEU][inputs[i]]);
+    else
+      if (_isNumber(inputs[i])) {
+        if (!stateNumberFollows) {
+          result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['NUMBERFOLLOWS']);
+          stateNumberFollows = true;
         }
-        inputs[i] = inputs[i].toLowerCase();
-      }
-      if (inputs[i] == 's' && i < inputs.length - 1 && inputs[i + 1] == 't') {
-        result.add(_charsToSegments['st']);
-        i++;
-      } else if (inputs[i] == 'a' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['au']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'u') {
-        result.add(_charsToSegments['eu']);
-        i++;
-      } else if (inputs[i] == 'e' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'i') {
-        result.add(_charsToSegments['ei']);
-        i++;
-      } else if (inputs[i] == 'ä' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'U') {
-        result.add(_charsToSegments['äu']);
-        i++;
-      } else if (inputs[i] == 'i' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'e') {
-        result.add(_charsToSegments['ie']);
-        i++;
-      } else if (inputs[i] == 'c' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'h') {
-        result.add(_charsToSegments['ch']);
-        i++;
-      } else if (inputs[i] == 's' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'c' &&
-          inputs[i + 2] == 'h') {
-        result.add(_charsToSegments['sch']);
-        i = i + 2;
-      } else
         result.add(_charsToSegments[inputs[i]]);
-    }
+      } else {
+        if (_isSmallLetter(inputs[i])) {
+          if (stateCapitals) stateCapitals = false;
+        }
+        if (_isCapital(inputs[i])) {
+          // check following letter
+          if (i < inputs.length - 1 && _isSmallLetter(inputs[i + 1]))
+            result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['ONECAPITALFOLLOWS']);
+          else {
+            result.add(_CharsToSegmentsSwitches[BrailleLanguage.DEU]['CAPITALFOLLOWS']);
+            stateCapitals = true;
+          }
+          inputs[i] = inputs[i].toLowerCase();
+        }
+        if (inputs[i] == 's' && i < inputs.length - 1 && inputs[i + 1] == 't') {
+          result.add(_charsToSegments['st']);
+          i++;
+        } else if (inputs[i] == 'a' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'u') {
+          result.add(_charsToSegments['au']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'u') {
+          result.add(_charsToSegments['eu']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'i') {
+          result.add(_charsToSegments['ei']);
+          i++;
+        } else if (inputs[i] == 'ä' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'U') {
+          result.add(_charsToSegments['äu']);
+          i++;
+        } else if (inputs[i] == 'i' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'e') {
+          result.add(_charsToSegments['ie']);
+          i++;
+        } else if (inputs[i] == 'c' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['ch']);
+          i++;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'c' &&
+            inputs[i + 2] == 'h') {
+          result.add(_charsToSegments['sch']);
+          i = i + 2;
+        } else
+          result.add(_charsToSegments[inputs[i]]);
+      }
   }
   return result;
 }
 
 List<List<String>> _encodeBrailleENG(String input) {
-
-  bool numberFollows = false;
-
-  Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
-  _charsToSegments.addAll(_charsToSegmentsLetters);
-  _charsToSegments.addAll(_charsToSegmentsDigits);
-  _charsToSegments.addAll(_charsToSegmentsENGLetters);
-  _charsToSegments.addAll(_charsToSegmentsENGSymbols);
+  bool stateNumberFollows = false;
+  bool stateCapitals = false;
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
+  Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_charsToSegmentsDigits);
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.ENG]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.ENG]);
+
   for (int i = 0; i < inputs.length; i++) {
-    if (_isNumber(inputs[i])) {
-      if (!numberFollows) {
-        result.add(_charsToSegments['#']);
-        numberFollows = true;
+    // identify composed characters
+    if (_CharsetSymbolsComposed[BrailleLanguage.ENG].contains(inputs[i]))
+      result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.ENG][inputs[i]]);
+    else
+      if (_isNumber(inputs[i])) {
+      if (!stateNumberFollows) {
+        result.add(SWITCH_NUMBERFOLLOWS);
+        stateNumberFollows = true;
       }
       result.add(_charsToSegments[inputs[i]]);
-    } else {
-      if (!_isMathmatical(inputs[i])) numberFollows = false;
-      if (inputs[i] == 'C' && i < inputs.length - 1 && inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['CH']);
-        i++;
-      } else if (inputs[i] == 'G' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['GH']);
-        i++;
-      } else if (inputs[i] == 'S' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['SH']);
-        i++;
-      } else if (inputs[i] == 'T' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['TH']);
-        i++;
-      } else if (inputs[i] == 'W' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'H') {
-        result.add(_charsToSegments['WH']);
-        i++;
-      } else if (inputs[i] == 'E' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'D') {
-        result.add(_charsToSegments['ED']);
-        i++;
-      } else if (inputs[i] == 'E' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'R') {
-        result.add(_charsToSegments['ER']);
-        i++;
-      } else if (inputs[i] == 'O' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'U') {
-        result.add(_charsToSegments['OU']);
-        i++;
-      } else if (inputs[i] == 'O' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'W') {
-        result.add(_charsToSegments['OW']);
-        i++;
-      } else if (inputs[i] == 'I' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'N') {
-        result.add(_charsToSegments['IN']);
-        i++;
-      } else if (inputs[i] == 'E' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'A') {
-        result.add(_charsToSegments['EA']);
-        i++;
-      } else if (inputs[i] == 'B' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'B') {
-        result.add(_charsToSegments['BB']);
-        i++;
-      } else if (inputs[i] == 'C' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'C') {
-        result.add(_charsToSegments['CC']);
-        i++;
-      } else if (inputs[i] == 'D' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'D') {
-        result.add(_charsToSegments['DD']);
-        i++;
-      } else if (inputs[i] == 'E' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'N') {
-        result.add(_charsToSegments['EN']);
-        i++;
-      } else if (inputs[i] == 'F' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'F') {
-        result.add(_charsToSegments['FF']);
-        i++;
-      } else if (inputs[i] == 'G' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'G') {
-        result.add(_charsToSegments['GG']);
-        i++;
-      } else if (inputs[i] == 'S' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'T') {
-        result.add(_charsToSegments['ST']);
-        i++;
-      } else if (inputs[i] == 'A' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'R') {
-        result.add(_charsToSegments['AR']);
-        i++;
-      } else if (inputs[i] == 'O' &&
-          i < inputs.length - 1 &&
-          inputs[i + 1] == 'F') {
-        result.add(_charsToSegments['OF']);
-        i++;
-      } else if (inputs[i] == 'S' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'C' &&
-          inputs[i + 2] == 'H') {
-        result.add(_charsToSegments['SCH']);
-        i = i + 2;
-      } else if (inputs[i] == 'A' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'N' &&
-          inputs[i + 2] == 'D') {
-        result.add(_charsToSegments['AND']);
-        i = i + 2;
-      } else if (inputs[i] == 'F' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'O' &&
-          inputs[i + 2] == 'R') {
-        result.add(_charsToSegments['FOR']);
-        i = i + 2;
-      } else if (inputs[i] == 'T' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'H' &&
-          inputs[i + 2] == 'E') {
-        result.add(_charsToSegments['THE']);
-        i = i + 2;
-      } else if (inputs[i] == 'I' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'N' &&
-          inputs[i + 2] == 'G') {
-        result.add(_charsToSegments['ING']);
-        i = i + 2;
-      } else if (inputs[i] == 'B' &&
-          i < inputs.length - 2 &&
-          inputs[i + 1] == 'L' &&
-          inputs[i + 2] == 'E') {
-        result.add(_charsToSegments['BLE']);
-        i = i + 2;
-      } else if (inputs[i] == 'W' &&
-          i < inputs.length - 3 &&
-          inputs[i + 1] == 'I' &&
-          inputs[i + 2] == 'T' &&
-          inputs[i + 3] == 'H') {
-        result.add(_charsToSegments['WITH']);
-        i = i + 2;
-      } else
-        result.add(_charsToSegments[inputs[i]]);
-    }
+      } else {
+        if (_isSmallLetter(inputs[i])) {
+          if (stateCapitals) stateCapitals = false;
+        }
+        if (_isCapital(inputs[i])) {
+          result.add(_CharsToSegmentsSwitches[BrailleLanguage.ENG]['CAPITALS']);
+          inputs[i] = inputs[i].toLowerCase();
+        }
+        if (inputs[i] == 'w' &&
+            i < inputs.length - 3 &&
+            inputs[i + 1] == 'i' &&
+            inputs[i + 2] == 't' &&
+            inputs[i + 3] == 'h') {
+          result.add(_charsToSegments['with']);
+          i = i + 3;
+        } else if (inputs[i] == 't' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'h' &&
+            inputs[i + 2] == 'e') {
+          result.add(_charsToSegments['the']);
+          i = i + 2;
+        } else if (inputs[i] == 'i' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'n' &&
+            inputs[i + 2] == 'g') {
+          result.add(_charsToSegments['ing']);
+          i = i + 2;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'c' &&
+            inputs[i + 2] == 'h') {
+          result.add(_charsToSegments['sch']);
+          i = i + 2;
+        } else if (inputs[i] == 'a' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'n' &&
+            inputs[i + 2] == 'd') {
+          result.add(_charsToSegments['and']);
+          i = i + 2;
+        } else if (inputs[i] == 'f' &&
+            i < inputs.length - 2 &&
+            inputs[i + 1] == 'o' &&
+            inputs[i + 2] == 'r') {
+          result.add(_charsToSegments['for']);
+          i = i + 2;
+        } else if (inputs[i] == 'c' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['ch']);
+          i++;
+        } else if (inputs[i] == 'g' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['gh']);
+          i++;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['sh']);
+          i++;
+        } else if (inputs[i] == 't' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['th']);
+          i++;
+        } else if (inputs[i] == 'w' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'h') {
+          result.add(_charsToSegments['wh']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'd') {
+          result.add(_charsToSegments['ed']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'r') {
+          result.add(_charsToSegments['er']);
+          i++;
+        } else if (inputs[i] == 'o' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'u') {
+          result.add(_charsToSegments['ou']);
+          i++;
+        } else if (inputs[i] == 'o' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'w') {
+          result.add(_charsToSegments['ow']);
+          i++;
+        } else if (inputs[i] == 'i' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'n') {
+          result.add(_charsToSegments['in']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'a') {
+          result.add(_charsToSegments['ea']);
+          i++;
+        } else if (inputs[i] == 'b' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'b') {
+          result.add(_charsToSegments['bb']);
+          i++;
+        } else if (inputs[i] == 'c' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'c') {
+          result.add(_charsToSegments['cc']);
+          i++;
+        } else if (inputs[i] == 'd' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'd') {
+          result.add(_charsToSegments['dd']);
+          i++;
+        } else if (inputs[i] == 'e' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'n') {
+          result.add(_charsToSegments['en']);
+          i++;
+        } else if (inputs[i] == 'f' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'f') {
+          result.add(_charsToSegments['ff']);
+          i++;
+        } else if (inputs[i] == 'g' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'g') {
+          result.add(_charsToSegments['gg']);
+          i++;
+        } else if (inputs[i] == 's' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 't') {
+          result.add(_charsToSegments['st']);
+          i++;
+        } else if (inputs[i] == 'a' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'r') {
+          result.add(_charsToSegments['ar']);
+          i++;
+        } else if (inputs[i] == 'o' &&
+            i < inputs.length - 1 &&
+            inputs[i + 1] == 'f') {
+          result.add(_charsToSegments['of']);
+          i++;
+        } else
+          result.add(_charsToSegments[inputs[i]]);
+      }
   }
   return result;
 }
 
 List<List<String>> _encodeBrailleFRA(String input) {
-  bool numberFollows = false;
+  bool stateNumberFollows = false;
+  bool stateCapitals = false;
 
   Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
-  _charsToSegments.addAll(_charsToSegmentsLetters);
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.STD]);
   _charsToSegments.addAll(_charsToSegmentsDigits);
-  _charsToSegments.addAll(_charsToSegmentsFRALetters);
-  _charsToSegments.addAll(_charsToSegmentsFRASymbols);
+  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.FRA]);
+  _charsToSegments.addAll(_CharsToSegmentsSymbols[BrailleLanguage.FRA]);
 
+  List<String> inputs = input.split('');
+  List<List<String>> result = [];
+  for (int i = 0; i < inputs.length; i++) {
+    // identify composed characters
+    if (_CharsetSymbolsComposed[BrailleLanguage.FRA].contains(inputs[i]))
+      result.addAll(_CharsToSegmentsSymbolsComposed[BrailleLanguage.FRA][inputs[i]]);
+    else
+    if (_isNumber(inputs[i])) {
+      if (!stateNumberFollows) {
+        result.add(SWITCH_NUMBERFOLLOWS);
+        stateNumberFollows = true;
+      }
+      result.add(_charsToSegments[inputs[i]]);
+    } else {
+      if (_isSmallLetter(inputs[i])) {
+        if (stateCapitals) stateCapitals = false;
+      }
+      if (_isCapital(inputs[i])) {
+        result.add(_CharsToSegmentsSwitches[BrailleLanguage.FRA]['CAPITALS']);
+        inputs[i] = inputs[i].toLowerCase();
+      }
+      result.add(_charsToSegments[inputs[i]]);
+    }
+  }
+  return result;
+}
 
+List<List<String>> _encodeBrailleEUR(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (_isNumber(inputs[i])) {
-      if (!numberFollows) {
-        result.add(_charsToSegments['#']);
-        numberFollows = true;
-      }
-      result.add(_charsToSegments[inputs[i]]);
-    } else {
-      if (!_isMathmatical(inputs[i])) numberFollows = false;
-    }
+    result.add(_charsToSegmentsEUR[inputs[i]]);
   }
-
   return result;
 }
 
@@ -979,6 +1150,9 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   if (input == null) return [];
 
   switch (language) {
+    case BrailleLanguage.BASIC:
+      return _encodeBrailleBASIC(input);
+      break;
     case BrailleLanguage.SIMPLE:
       return _encodeBrailleSIMPLE(input);
       break;
@@ -999,35 +1173,12 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
 
 
 
-Map<String, dynamic> _decodeEURBraille(List<String> inputs) {
+Map<String, dynamic> _decodeBrailleBASIC(
+    List<String> inputs, bool letters, bool includingFrenchAntoine) {
   var displays = <List<String>>[];
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
-    var display = <String>[];
-    var char = '';
-
-    input.split('').forEach((element) {
-      display.add(element);
-    });
-
-    if (_segmentsToCharsEUR.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null)
-      char = char + UNKNOWN_ELEMENT;
-    else {
-      char = char +  _segmentsToCharsEUR.map((key, value) =>
-          MapEntry(key.join(), value.toString()))[input.split('').join()];
-    }
-    displays.add(display);
-
-    return char;
-  }).toList();
-
-  return {'displays': displays, 'chars': text};
-}
-
-Map<String, dynamic> _decodeSIMPLEBraille(List<String> inputs, bool letters) {
-  var displays = <List<String>>[];
+  var _segmentsToCharsBASICBraille = switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]);
+  if (includingFrenchAntoine) _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
@@ -1037,20 +1188,30 @@ Map<String, dynamic> _decodeSIMPLEBraille(List<String> inputs, bool letters) {
       display.add(element);
     });
 
-    if (_segmentsToCharsLetters.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null)
+    if (_segmentsToCharsBASICBraille.map((key, value) =>
+            MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+        null) {
       char = char + UNKNOWN_ELEMENT;
-    else {
-      charH = _segmentsToCharsLetters.map((key, value) =>
+    } else {
+      charH = _segmentsToCharsBASICBraille.map((key, value) =>
           MapEntry(key.join(), value.toString()))[input.split('').join()];
       if (letters)
-        char = char + charH.toUpperCase();
-      else
+        char = char + charH;
+      else // digits
+      if (includingFrenchAntoine) {
+        if ((_LetterToDigit[charH] == null) && (_AntoineToDigit[charH] == null))
+          char = char + UNKNOWN_ELEMENT;
+        else
+          if (_LetterToDigit[charH] == null)
+            char = char + _AntoineToDigit[charH];
+          else
+            char = char + _LetterToDigit[charH];
+      } else {
         if (_LetterToDigit[charH] == null)
           char = char + UNKNOWN_ELEMENT;
         else
           char = char + _LetterToDigit[charH];
+      }
     }
 
     displays.add(display);
@@ -1059,95 +1220,746 @@ Map<String, dynamic> _decodeSIMPLEBraille(List<String> inputs, bool letters) {
   }).toList();
 
   return {'displays': displays, 'chars': text};
-
 }
 
-Map<String, dynamic> _decodeDEUBraille(List<String> inputs) {
+Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool includingFrenchAntoine) {
+  var displays = <List<String>>[];
+
+  Map<List<String>, String> _segmentsToCharsSIMPLEBraille =
+      new Map<List<String>, String>();
+  _segmentsToCharsSIMPLEBraille.addAll(switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]));
+  _segmentsToCharsSIMPLEBraille.addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+
+  Map<List<String>, String> _segmentsToCharsSIMPLEBrailleFrench =
+      new Map<List<String>, String>();
+  _segmentsToCharsSIMPLEBrailleFrench.addAll(switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]));
+  _segmentsToCharsSIMPLEBrailleFrench
+      .addAll({SWITCH_NUMBERFOLLOWS: 'NUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBrailleFrench
+      .addAll({SWITCH_ANTOINE: 'ANTOINENUMBERFOLLOWS'});
+  _segmentsToCharsSIMPLEBrailleFrench.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
+
+  bool _numberFollows = false;
+  bool _antoinenumberFollows = false;
+
+  List<String> text = [];
+
+  if (includingFrenchAntoine) { // decode including french chiffre antoine
+    _numberFollows = false;
+    _antoinenumberFollows = false;
+    text = inputs.where((input) => input != null).map((input) {
+      var char = '';
+      var charH = '';
+      var display = <String>[];
+      input.split('').forEach((element) {
+        display.add(element);
+      });
+
+      if (_segmentsToCharsSIMPLEBrailleFrench.map((key, value) =>
+              MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+          null)
+        char = char + UNKNOWN_ELEMENT;
+      else {
+        charH = _segmentsToCharsSIMPLEBrailleFrench.map((key, value) =>
+            MapEntry(key.join(), value.toString()))[input.split('').join()];
+        if (charH == 'NUMBERFOLLOWS') {
+          _numberFollows = true;
+        } else if (charH == 'ANTOINENUMBERFOLLOWS') {
+          _antoinenumberFollows = true;
+          _numberFollows = false;
+        } else if (charH == ' ') {
+          _numberFollows = false;
+          _antoinenumberFollows = false;
+          char = char + charH;
+        } else {
+          // no switch but char to analyze
+          if (_numberFollows) {
+            if (_LetterToDigit[charH] == null) {
+              _numberFollows = false;
+            } else {
+              charH = _LetterToDigit[charH];
+            }
+          } else if (_antoinenumberFollows) {
+            if (_AntoineToDigit[charH] == null)
+              _numberFollows = false;
+            else {
+              charH = _AntoineToDigit[charH];
+            }
+          } else if (_AntoineLetters.contains(charH)) charH = UNKNOWN_ELEMENT;
+
+          char = char + charH;
+        }
+      }
+      displays.add(display);
+
+      return char;
+    }).toList();
+  } else {
+    _numberFollows = false;
+    text = inputs.where((input) => input != null).map((input) {
+      var char = '';
+      var charH = '';
+      var display = <String>[];
+      input.split('').forEach((element) {
+        display.add(element);
+      });
+
+      if (_segmentsToCharsSIMPLEBraille.map((key, value) =>
+              MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+          null)
+        char = char + UNKNOWN_ELEMENT;
+      else {
+        charH = _segmentsToCharsSIMPLEBraille.map((key, value) =>
+            MapEntry(key.join(), value.toString()))[input.split('').join()];
+
+        if (charH == 'NUMBERFOLLOWS') {
+          _numberFollows = true;
+        } else if (charH == ' ') {
+          _numberFollows = false;
+          char = char + charH;
+        } else {
+          // no switch
+          if (_numberFollows) {
+            if (_LetterToDigit[charH] == null)
+              _numberFollows = false;
+            else
+              charH = _LetterToDigit[charH];
+          }
+          char = char + charH;
+        }
+      }
+      displays.add(display);
+
+      return char;
+    }).toList();
+  }
+
+  return {'displays': displays, 'chars': text};
+}
+
+Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
   var displays = <List<String>>[];
 
   bool numberFollows = false;
   bool capitalFollows = false;
   bool oneCapitalFollows = false;
-  bool smallLettersFollows = false;
 
-  List<String> text = inputs.where((input) => input != null).map((input) {
-    var char = '';
-    var charH = '';
+  String input = '';
+  String charH = '';
+  List<String> text = [];
+  int maxLength = inputs.length;
+
+  // Build Map for decoding
+  Map <String, String> BrailleToChar = new Map <String, String>();
+  switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.DEU]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.DEU]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.DEU]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsModifier[BrailleLanguage.DEU]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+
+  for (int i = 0; i < maxLength; i++) {
+    input = inputs[i];
+
+    // Build displays
     var display = <String>[];
     input.split('').forEach((element) {
       display.add(element);
     });
+    displays.add(display);
 
-    Map<List<String>, String> _segmentsToChars = new Map<List<String>, String>();
-    _segmentsToChars.addAll(_segmentsToCharsDEULetters);
-    _segmentsToChars.addAll(_segmentsToCharsDEUSymbols);
-    _segmentsToChars.addAll(_segmentsToDEUswitches);
-    _segmentsToChars.addAll(_segmentsToCharsLetters);
-
-    if (_segmentsToChars.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null)
-      char = char + UNKNOWN_ELEMENT;
-    else {
-      charH = _segmentsToChars.map((key, value) =>
-          MapEntry(key.join(), value.toString()))[input.split('').join()];
-
-      if (_DEUswitches.contains(charH)) {
-        if (charH == 'ONECAPITALFOLLOWS')
+    // Build text
+    if (BrailleToChar[input] == null) {
+      text.add(UNKNOWN_ELEMENT);
+   } else {
+      charH = BrailleToChar[input];
+      if (_Modifier[BrailleLanguage.DEU].contains(input)) {
+        switch (input) {
+          case '4':
+            if (i + 2 < maxLength){
+              if (inputs[i + 1] == '35' && inputs[i + 2] == '35')
+                text.add('"');
+              if (inputs[i + 1] == '25' && inputs[i + 2] == '25')
+                text.add('÷');
+              if (inputs[i + 1] == '246' && inputs[i + 2] == '3')
+                text.add('<');
+              if (inputs[i + 1] == '135' && inputs[i + 2] == '2')
+                text.add('>');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;;
+            }
+            else if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '235': text.add('+'); break;
+                case '2356': text.add('='); break;
+                case '345': text.add('@'); break;
+                case '346': text.add('^'); break;
+                case '356': text.add('°'); break;
+                case '456': text.add('_'); break;
+                case '34': text.add('\\'); break;
+                case '35': text.add('*'); break;
+                case '236': text.add('×'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;;
+            }
+            break;
+          case '5':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '2': text.add('/'); break;
+                case '136': text.add('&'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '6':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '2356': text.add('[]'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '456':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '123': text.add('|'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            if (i + 2 < maxLength && inputs[i + 1] == '3' && inputs[i + 2] == '3') {
+              text.add('}');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;
+            }
+            break;
+          case '3456':
+            if (i + 3 < maxLength && inputs[i + 1] == '245' && inputs[i + 2] == '356' && inputs[i + 3] == '356') {
+              text.add('‰');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 3;
+            }
+            if (i + 2 < maxLength && inputs[i + 1] == '245' && inputs[i + 2] == '356') {
+              text.add('%');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;
+            }
+            break;
+        }
+      }
+      else if (_Switches[BrailleLanguage.DEU].contains(charH)) {
+        if (charH == 'ONECAPITALFOLLOWS') {
           oneCapitalFollows = true;
-        else if (charH == "cf")
+        }else if (charH == "CAPITALFOLLOWS") {
           capitalFollows = true;
-        else if (charH == "slf")
-          smallLettersFollows = false;
-        else if (charH == 'NUMBERFOLLOWS')
+        }else if ((charH == 'NUMBERFOLLOWS') && !numberFollows) {
           numberFollows = true;
+        }
       } else if (charH == ' ') {
-         numberFollows = false;
-         capitalFollows = false;
-         oneCapitalFollows = false;
-         smallLettersFollows = false;
-      } else { // no switch
+        numberFollows = false;
+        capitalFollows = false;
+        oneCapitalFollows = false;
+        text.add(charH);
+      } else {
+        // no switch
         if (numberFollows) {
           if (_LetterToDigit[charH] == null)
             numberFollows = false;
           else
             charH = _LetterToDigit[charH];
         } else if (oneCapitalFollows) {
-            charH = charH.toUpperCase();
-            oneCapitalFollows = false;
-          }
-        else if (capitalFollows) {
+          charH = charH.toUpperCase();
+          oneCapitalFollows = false;
+        } else if (capitalFollows) {
           charH = charH.toUpperCase();
         }
-        char = char + charH;
+        text.add(charH);
+      }
+    }
+  }
+
+  return {'displays': displays, 'chars': text};
+}
+
+Map<String, dynamic> _decodeBrailleENG(List<String> inputs) {
+// TO DO
+  var displays = <List<String>>[];
+
+  bool numberFollows = false;
+  bool capitalFollows = false;
+  bool oneCapitalFollows = false;
+
+  String input = '';
+  String charH = '';
+  List<String> text = [];
+  int maxLength = inputs.length;
+
+  // Build Map for decoding
+  Map <String, String> BrailleToChar = new Map <String, String>();
+  switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsModifier[BrailleLanguage.ENG]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+
+  for (int i = 0; i < maxLength; i++) {
+    input = inputs[i];
+
+    // Build displays
+    var display = <String>[];
+    input.split('').forEach((element) {
+      display.add(element);
+    });
+    displays.add(display);
+
+    // Build text
+    if (BrailleToChar[input] == null) {
+      text.add(UNKNOWN_ELEMENT);
+    } else {
+      charH = BrailleToChar[input];
+      if (_Modifier[BrailleLanguage.ENG].contains(input)) {
+        switch (input) {
+          case '4':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '1': text.add('@'); break;
+                case '35': text.add('~'); break;
+                case '12346': text.add('&'); break;
+                case '126': text.add('<'); break;
+                case '345': text.add('>'); break;
+                case '26': text.add('^'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '5':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '35': text.add('*'); break;
+                case '34': text.add('÷'); break;
+                case '236': text.add('×'); break;
+                case '126': text.add('('); break;
+                case '345': text.add(')'); break;
+                case '235': text.add('+'); break;
+                case '2356': text.add('='); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '6':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '236': text.add('‘'); break;
+                case '356': text.add('’'); break;
+                case '2356': text.add('"'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '45':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '236': text.add('„'); break;
+                case '356': text.add('“'); break;
+                case '234': text.add('&'); break;
+                case '245': text.add('°'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '46':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '126': text.add('['); break;
+                case '345': text.add(']'); break;
+                case '356': text.add('%'); break;
+                case '36': text.add('_'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '345':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '16': text.add('\\'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '456':
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '126': text.add('{'); break;
+                case '345': text.add('}'); break;
+                case '236': text.add('«'); break;
+                case '356': text.add('»'); break;
+                case '34': text.add('/'); break;
+                case '1256': text.add('|'); break;
+                case '356': text.add('%'); break;
+                case '1456': text.add('#'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
         }
       }
+      else if (_Switches[BrailleLanguage.ENG].contains(charH)) {
+        if (charH == 'CAPITALS') {
+          if (i + 1 < maxLength)
+            switch (inputs[i + 1]) {
+              case '6' : capitalFollows = true;
+                break;
+              case '3' : capitalFollows = false;
+                break;
+              default: oneCapitalFollows = true;
+            }
+        } else if ((charH == 'NUMBERFOLLOWS') && !numberFollows) {
+          numberFollows = true;
+        }
+      } else if (charH == ' ') {
+        numberFollows = false;
+        capitalFollows = false;
+        oneCapitalFollows = false;
+        text.add(charH);
+      } else {
+        // no switch
+        if (numberFollows) {
+          if (_LetterToDigit[charH] == null)
+            numberFollows = false;
+          else
+            charH = _LetterToDigit[charH];
+        } else if (oneCapitalFollows) {
+          charH = charH.toUpperCase();
+          oneCapitalFollows = false;
+        } else if (capitalFollows) {
+          charH = charH.toUpperCase();
+        }
+        text.add(charH);
+      }
+    }
+  }
+  return {'displays': displays, 'chars': text};
+}
 
+Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
+// TO DO
+  var displays = <List<String>>[];
+
+  bool numberFollows = false;
+  bool capitalFollows = false;
+  bool oneCapitalFollows = false;
+  bool antoineNumberFollows = false;
+
+  String input = '';
+  String charH = '';
+  List<String> text = [];
+  int maxLength = inputs.length;
+
+  // Build Map for decoding
+  Map <String, String> BrailleToChar = new Map <String, String>();
+  switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.FRA]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.FRA]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSwitches[BrailleLanguage.FRA]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsModifier[BrailleLanguage.FRA]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+  switchMapKeyValue(_CharsToSegmentsSymbols[BrailleLanguage.STD]).forEach((key, value) {BrailleToChar[key.join()] = value;});
+
+  for (int i = 0; i < maxLength; i++) {
+    input = inputs[i];
+
+    // Build displays
+    var display = <String>[];
+    input.split('').forEach((element) {
+      display.add(element);
+    });
+    displays.add(display);
+
+    // Build text
+    if (BrailleToChar[input] == null) {
+      text.add(UNKNOWN_ELEMENT);
+    } else {
+      charH = BrailleToChar[input];
+      if (_Modifier[BrailleLanguage.FRA].contains(input)) {
+        switch (input) {
+          case '5':
+            if (i + 2 < maxLength && inputs[i + 1] == '346' && inputs[i + 2] == '346') {
+              text.add('‰');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;
+            }
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '123456': text.add('§'); break;
+                case '135': text.add('°'); break;
+                case '346': text.add('%'); break;
+                case '36': text.add('_'); break;
+                case '34': text.add('\\'); break;
+                case '3456': text.add('#'); break;
+                case '26': text.add('~'); break;
+                case '126': text.add('>'); break;
+                case '345': text.add('<'); break;
+                case '35': text.add('*'); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '6':
+            if (i + 2 < maxLength && inputs[i + 1] == '6' && inputs[i + 2] == '236') {
+              text.add('{');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;
+            }
+            if (i + 1 < maxLength) {
+              switch (inputs[i + 1]) {
+                case '25': text.add('÷'); break;
+                case '35': text.add('+'); break;
+                case '235': text.add('×'); break;
+                case '2356': text.add('='); break;
+              }
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '45':
+            if (i + 1 < maxLength && inputs[i + 1] == '236') {
+              text.add('[');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            break;
+          case '356':
+            if (i + 1 < maxLength && inputs[i + 1] == '12') {
+              text.add(']');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 1;
+            }
+            if (i + 2 < maxLength && inputs[i + 1] == '3' && inputs[i + 2] == '3') {
+              text.add('}');
+              var display = <String>[];
+              inputs[i + 1].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              display = <String>[];
+              inputs[i + 2].split('').forEach((element) {
+                display.add(element);
+              });
+              displays.add(display);
+              i = i + 2;
+            }
+            break;
+        }
+      }
+      else if (_Switches[BrailleLanguage.FRA].contains(charH)) {
+        if (charH == 'CAPITALS') {
+          if (i + 1 < maxLength)
+            switch (inputs[i + 1]) {
+              case '46' : capitalFollows = true;
+              break;
+              default: oneCapitalFollows = true;
+            }
+        } else if ((charH == 'NUMBERFOLLOWS') && antoineNumberFollows) {
+          numberFollows = false;
+          text.add('0');
+        } else if ((charH == 'NUMBERFOLLOWS') && !numberFollows) {
+          numberFollows = true;
+        } else if ((charH == 'ANTOINENUMBERFOLLOWS')) {
+          antoineNumberFollows = true;
+        }
+      } else if (charH == ' ') {
+        numberFollows = false;
+        capitalFollows = false;
+        oneCapitalFollows = false;
+        antoineNumberFollows = false;
+        text.add(charH);
+      } else {
+        // no switch
+        if (numberFollows) {
+          if (_LetterToDigit[charH] == null)
+            numberFollows = false;
+          else
+            charH = _LetterToDigit[charH];
+        } if (antoineNumberFollows) {
+            if (_AntoineToDigit[charH] == null)
+              antoineNumberFollows = false;
+            else
+              charH = _AntoineToDigit[charH];
+       } else if (oneCapitalFollows) {
+          charH = charH.toUpperCase();
+          oneCapitalFollows = false;
+        } else if (capitalFollows) {
+          charH = charH.toUpperCase();
+        }
+        text.add(charH);
+      }
+    }
+  }
+  return {'displays': displays, 'chars': text};}
+
+
+
+Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
+  var displays = <List<String>>[];
+
+  List<String> text = inputs.where((input) => input != null).map((input) {
+    var display = <String>[];
+    var char = '';
+
+    input.split('').forEach((element) {
+      display.add(element);
+    });
+
+    if (switchMapKeyValue(_charsToSegmentsEUR).map((key, value) =>
+            MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+        null)
+      char = char + UNKNOWN_ELEMENT;
+    else {
+      char = char +
+          switchMapKeyValue(_charsToSegmentsEUR).map((key, value) =>
+              MapEntry(key.join(), value.toString()))[input.split('').join()];
+    }
     displays.add(display);
 
     return char;
   }).toList();
 
   return {'displays': displays, 'chars': text};
-
 }
 
-Map<String, dynamic> _decodeENGBraille(List<String> inputs) {
-
-  return {
-    'displays': [[]],
-    'chars': [0]
-  };
-}
-Map<String, dynamic> _decodeFRABraille(List<String> inputs) {
-
-  return {
-    'displays': [[]],
-    'chars': [0]
-  };
-}
-
-Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language, bool letters) {
+Map<String, dynamic> decodeBraille(
+    List<String> input, BrailleLanguage language, bool letters, bool french) {
   if (input == null || input.length == 0)
     return {
       'displays': [[]],
@@ -1155,20 +1967,23 @@ Map<String, dynamic> decodeBraille(List<String> input, BrailleLanguage language,
     };
 
   switch (language) {
+    case BrailleLanguage.BASIC:
+      return _decodeBrailleBASIC(input, letters, french);
+      break;
     case BrailleLanguage.SIMPLE:
-      return _decodeSIMPLEBraille(input, letters);
+      return _decodeBrailleSIMPLE(input, french);
       break;
     case BrailleLanguage.DEU:
-      return _decodeDEUBraille(input);
+      return _decodeBrailleDEU(input);
       break;
     case BrailleLanguage.ENG:
-      return _decodeENGBraille(input);
+      return _decodeBrailleENG(input);
       break;
     case BrailleLanguage.FRA:
-      return _decodeFRABraille(input);
+      return _decodeBrailleFRA(input);
       break;
     case BrailleLanguage.EUR:
-      return _decodeEURBraille(input);
+      return _decodeBrailleEUR(input);
       break;
   }
 }
