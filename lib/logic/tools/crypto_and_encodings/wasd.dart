@@ -73,35 +73,37 @@ String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
     default: return result.join(' ');
   }
 }
+String _normalizeDecodingInput(String input, WASD_TYPE controls, List<String> controlSet){
+  input = input.toUpperCase().replaceAll('.', ' ');
+  switch (controls) {
+    case WASD_TYPE.WASD : return input;
+    break;
+    case WASD_TYPE.IJMK : return input.replaceAll('I', 'W').replaceAll('J', 'A').replaceAll('M', 'S').replaceAll('K', 'D');
+    break;
+    case WASD_TYPE.ESDF : return input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
+    break;
+    case WASD_TYPE.ULDR : return input.replaceAll('U', 'W').replaceAll('L', 'A').replaceAll('D', 'S').replaceAll('R', 'D');
+    break;
+    case WASD_TYPE.OLUR : return input.replaceAll('O', 'W').replaceAll('L', 'A').replaceAll('U', 'S').replaceAll('R', 'D');
+    break;
+    case WASD_TYPE.VLZR : return input.replaceAll('V', 'W').replaceAll('L', 'A').replaceAll('Z', 'S').replaceAll('R', 'D');
+    break;
+    case WASD_TYPE.WQSE : return input.replaceAll('Q', 'A').replaceAll('E', 'D');
+    break;
+    case WASD_TYPE.CUSTOM : return input.replaceAll( controlSet[0].toUpperCase(), 'W').replaceAll(controlSet[1].toUpperCase(), 'A').replaceAll(controlSet[2].toUpperCase(), 'S').replaceAll(controlSet[3].toUpperCase(), 'D');
+    break;
+  }
+}
 
 String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
   if (input == '' || input == null)
     return '';
 
-  input = input.toUpperCase().replaceAll('.', ' ');
-  String decode = '';
-  switch (controls) {
-    case WASD_TYPE.WASD : decode = input;
-      break;
-    case WASD_TYPE.IJMK : decode = input.replaceAll('I', 'W').replaceAll('J', 'A').replaceAll('M', 'S').replaceAll('K', 'D');
-      break;
-    case WASD_TYPE.ESDF : decode = input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
-      break;
-    case WASD_TYPE.ULDR : decode = input.replaceAll('U', 'W').replaceAll('L', 'A').replaceAll('D', 'S').replaceAll('R', 'D');
-      break;
-    case WASD_TYPE.OLUR : decode = input.replaceAll('O', 'W').replaceAll('L', 'A').replaceAll('U', 'S').replaceAll('R', 'D');
-      break;
-    case WASD_TYPE.VLZR : decode = input.replaceAll('V', 'W').replaceAll('L', 'A').replaceAll('Z', 'S').replaceAll('R', 'D');
-      break;
-    case WASD_TYPE.WQSE : decode = input.replaceAll('Q', 'A').replaceAll('E', 'D');
-      break;
-    case WASD_TYPE.CUSTOM : decode = input.replaceAll( controlSet[0].toUpperCase(), 'W').replaceAll(controlSet[1].toUpperCase(), 'A').replaceAll(controlSet[2].toUpperCase(), 'S').replaceAll(controlSet[3].toUpperCase(), 'D');
-      break;
-  }
   List<String> resultDecode = [];
   bool found = false;
   String result;
-  decode.split(' ').forEach((element) {
+
+  _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((element) {
     if (element != '') {
       WASD_DECODE.forEach((key, value) {
         if (key.contains(element)) {
@@ -133,30 +135,9 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
   Map<String, String> world = new Map();
 
-  // normalize
-  String decode = '';
-  input = input.toUpperCase().replaceAll('.', ' ');
-  switch (controls) {
-    case WASD_TYPE.WASD : decode = input;
-      break;
-    case WASD_TYPE.IJMK : decode = input.replaceAll('I', 'W').replaceAll('J', 'A').replaceAll('M', 'S').replaceAll('K', 'D');
-      break;
-    case WASD_TYPE.ESDF : decode = input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
-      break;
-    case WASD_TYPE.ULDR : decode = input.replaceAll('U', 'W').replaceAll('L', 'A').replaceAll('D', 'S').replaceAll('R', 'D');
-      break;
-    case WASD_TYPE.OLUR : decode = input.replaceAll('O', 'W').replaceAll('L', 'A').replaceAll('U', 'S').replaceAll('R', 'D');
-      break;
-    case WASD_TYPE.VLZR : decode = input.replaceAll('V', 'W').replaceAll('L', 'A').replaceAll('Z', 'S').replaceAll('R', 'D');
-      break;
-    case WASD_TYPE.WQSE : decode = input.replaceAll('Q', 'A').replaceAll('E', 'D');
-      break;
-    case WASD_TYPE.CUSTOM : decode = input.replaceAll( controlSet[0], 'W').replaceAll(controlSet[1], 'A').replaceAll(controlSet[2], 'S').replaceAll(controlSet[3], 'D');
-      break;
-  }
-
   var direction = _WASD_DIRECTION.UP;
-  decode.split(' ').forEach((word) {
+  
+  _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((word) {
     y = 0;
     x = maxX + 9;
     word.split('').forEach((element) {
