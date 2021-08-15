@@ -1,8 +1,8 @@
 // https://www.geocaching.com/geocache/GC8PJEQ
 //
-// ASSDWW.DSAWSSDW.WWDSSA.WWA.WDSASDW
+// ASSDWW.DSAWSSDW.WWDSSA.WWA.WDSASDW   => 08078
 //
-// SDWSS.AWDSSA.SAWDWAS.ASSDWA.DWWASS
+// SDWSS.AWDSSA.SAWDWAS.ASSDWA.DWWASS   => 49860
 //
 
 import 'dart:math';
@@ -10,16 +10,17 @@ import 'dart:math';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum WASD_TYPE  {WASD, IJMK, ESDF, ULDR, VLZR, WQSE, CUSTOM}
+enum WASD_TYPE  {WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, CUSTOM}
 enum _WASD_DIRECTION {UP, DOWN, LEFT, RIGHT}
 
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.WASD: 'wasd_keyboard_wasd',
-  WASD_TYPE.IJMK: 'wasd_keyboard_ijkm',
   WASD_TYPE.ESDF: 'wasd_keyboard_esdf',
-  WASD_TYPE.ULDR: 'wasd_keyboard_uldr' ,
-  WASD_TYPE.VLZR: 'wasd_keyboard_vlzr',
   WASD_TYPE.WQSE: 'wasd_keyboard_wqse',
+  WASD_TYPE.IJMK: 'wasd_keyboard_ijkm',
+  WASD_TYPE.ULDR: 'wasd_keyboard_uldr' ,
+  WASD_TYPE.OLUR: 'wasd_keyboard_olur' ,
+  WASD_TYPE.VLZR: 'wasd_keyboard_vlzr',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
@@ -33,7 +34,7 @@ final Map<String, List<String>> WASD_ENCODE = {
   '6' : ['ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW', 'SDWAWD', 'SDWAW', 'SDSAW'],
   '7' : ['WWA', 'DSS'],
   '8' : ['SDSAWDWA', 'DSASDWAW', 'WDSASDW', 'SAWDWAS', 'WASDSAW', 'SDWAWDS', 'ASDSAWDW', 'SASDWAWD', 'WDWASDSA', 'DWAWDSAS',
-    'AWDWASDS', 'WAWDSASD', 'WWDSADSA', 'DWADWASS', 'WWASDASD', 'AWDAWDSS', 'SSDWADWA', 'DSASAWW', 'SSAWDAWD', 'ASDASDWW'],
+    'AWDWASDS', 'WAWDSASD', 'WWDSADSA', 'DWADWASS', 'WWASDASD', 'AWDAWDSS', 'SSDWADWA', 'DSASAWW', 'SSAWDAWD', 'ASDASDWW', 'DSAWSSDW'],
   '9' : ['ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'SSWAWS', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD'],
   ' ' : [' '],
   '.' : ['.']
@@ -61,6 +62,8 @@ String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
       break;
     case WASD_TYPE.ULDR : return result.join(' ').replaceAll('W', 'U').replaceAll('A', 'L').replaceAll('D', 'R').replaceAll('S', 'D');
       break;
+    case WASD_TYPE.OLUR : return result.join(' ').replaceAll('W', 'O').replaceAll('A', 'L').replaceAll('D', 'U').replaceAll('S', 'D');
+      break;
     case WASD_TYPE.VLZR : return result.join(' ').replaceAll('W', 'V').replaceAll('A', 'L').replaceAll('S', 'Z').replaceAll('D', 'R');
       break;
     case WASD_TYPE.WQSE : return result.join(' ').replaceAll('A', 'Q').replaceAll('D', 'E');
@@ -74,7 +77,8 @@ String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
 String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
   if (input == '' || input == null)
     return '';
-  input = input.toUpperCase();
+
+  input = input.toUpperCase().replaceAll('.', ' ');
   String decode = '';
   switch (controls) {
     case WASD_TYPE.WASD : decode = input;
@@ -84,6 +88,8 @@ String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
     case WASD_TYPE.ESDF : decode = input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
       break;
     case WASD_TYPE.ULDR : decode = input.replaceAll('U', 'W').replaceAll('L', 'A').replaceAll('D', 'S').replaceAll('R', 'D');
+      break;
+    case WASD_TYPE.OLUR : decode = input.replaceAll('O', 'W').replaceAll('L', 'A').replaceAll('U', 'S').replaceAll('R', 'D');
       break;
     case WASD_TYPE.VLZR : decode = input.replaceAll('V', 'W').replaceAll('L', 'A').replaceAll('Z', 'S').replaceAll('R', 'D');
       break;
@@ -129,7 +135,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
   // normalize
   String decode = '';
-  input = input.toUpperCase();
+  input = input.toUpperCase().replaceAll('.', ' ');
   switch (controls) {
     case WASD_TYPE.WASD : decode = input;
       break;
@@ -138,6 +144,8 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
     case WASD_TYPE.ESDF : decode = input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
       break;
     case WASD_TYPE.ULDR : decode = input.replaceAll('U', 'W').replaceAll('L', 'A').replaceAll('D', 'S').replaceAll('R', 'D');
+      break;
+    case WASD_TYPE.OLUR : decode = input.replaceAll('O', 'W').replaceAll('L', 'A').replaceAll('U', 'S').replaceAll('R', 'D');
       break;
     case WASD_TYPE.VLZR : decode = input.replaceAll('V', 'W').replaceAll('L', 'A').replaceAll('Z', 'S').replaceAll('R', 'D');
       break;
