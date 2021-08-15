@@ -81,6 +81,7 @@ const SEARCHSTRING_DE_COMPLEXNUMBERS = 'komplexe zahlen polar kartesische realte
 const SEARCHSTRING_DE_COORDINATES = 'koordinaten';
 const SEARCHSTRING_DE_COORDINATES_ANTIPODES = 'gegenueberliegende gegenpunkte antipoden';
 const SEARCHSTRING_DE_COORDINATES_CENTERTHREEPOINTS = 'drei mittelpunkt zentrum umkreis punkte seitenhalbierende';
+const SEARCHSTRING_DE_COORDINATES_CENTROID = 'mittelpunkt schwerpunkt arithmetischesmittel';
 const SEARCHSTRING_DE_COORDINATES_CENTERTWOPOINTS = 'mittelpunkt zentrum zwei punkte';
 const SEARCHSTRING_DE_COORDINATES_COMPASSROSE = 'kompassrose himmelsrichtungen windrichtungen';
 const SEARCHSTRING_DE_COORDINATES_COORDINATEAVERAGING = 'einmessen einmessung ermitteln';

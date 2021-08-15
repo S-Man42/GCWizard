@@ -78,8 +78,9 @@ const SEARCHSTRING_EN_COMPLEXNUMBERS = 'complex numbers  polar cartesian imagina
 const SEARCHSTRING_EN_COORDINATES = 'coordinates';
 const SEARCHSTRING_EN_COORDINATES_ANTIPODES = 'oppositeside';
 const SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS =
-    'three midpoint center middle circumcircle circumscribed points medians';
-const SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS = 'midpoint center middle  two points';
+    'three midpoint centerpoint middle circumcircle circumscribed points medians';
+const SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS = 'midpoint centerpoint middle  two points';
+const SEARCHSTRING_EN_COORDINATES_CENTROID = 'midpoint centerpoint arithmeticmean';
 const SEARCHSTRING_EN_COORDINATES_COMPASSROSE = 'compassrose intercardinaldirections';
 const SEARCHSTRING_EN_COORDINATES_COORDINATEAVERAGING = 'measurement averaging average';
 const SEARCHSTRING_EN_COORDINATES_COORDINATESSETTINGS = '';

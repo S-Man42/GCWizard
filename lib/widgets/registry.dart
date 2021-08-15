@@ -84,6 +84,7 @@ import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -2381,6 +2382,28 @@ class Registry {
             SEARCHSTRING_DE_COORDINATES_CENTERTWOPOINTS,
             SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS,
             SEARCHSTRING_FR_COORDINATES_CENTERTWOPOINTS
+          ]),
+      GCWTool(
+          tool: Centroid(),
+          i18nPrefix: 'coords_centroid',
+          iconPath: 'assets/icons/coords/icon_centroid.png',
+          categories: [
+            ToolCategory.COORDINATES
+          ],
+          helpLocales: [
+            'de',
+            'en',
+            'fr'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COORDINATES,
+            SEARCHSTRING_DE_COORDINATES,
+            SEARCHSTRING_EN_COORDINATES,
+            SEARCHSTRING_FR_COORDINATES,
+            SEARCHSTRING_COMMON_COORDINATES_CENTROID,
+            SEARCHSTRING_DE_COORDINATES_CENTROID,
+            SEARCHSTRING_EN_COORDINATES_CENTROID,
+            SEARCHSTRING_FR_COORDINATES_CENTROID
           ]),
       GCWTool(
           tool: CenterThreePoints(),
