@@ -32,8 +32,8 @@ class WASDState extends State<WASD> {
   var _currentLeft = 'A';
   var _currentDown = 'S';
   var _currentRight = 'D';
-  var _currentMode = GCWSwitchPosition.left;
-  var _currentEncodeMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right; // decode
+  var _currentDecodeMode = GCWSwitchPosition.left; // text
   var _currentKeyboardControls = WASD_TYPE.WASD;
 
   Uint8List _outDecodeData;
@@ -86,8 +86,8 @@ class WASDState extends State<WASD> {
             );
           }).toList(),
         ),
-        _currentKeyboardControls == WASD_TYPE.CUSTOM
-        ? Column(
+        if (_currentKeyboardControls == WASD_TYPE.CUSTOM)
+          Column(
             children: <Widget>[
               GCWTextField(
                   hintText: i18n(context, 'wasd_custom_up'),
@@ -122,42 +122,44 @@ class WASDState extends State<WASD> {
                     });
                   }),
             ],
-          )
-        : Container(),
-        _currentMode == GCWSwitchPosition.right
-        ? GCWTwoOptionsSwitch(
+          ),
+        if (_currentMode == GCWSwitchPosition.right) // decode
+          GCWTwoOptionsSwitch(
             title: i18n(context, 'wasd_decode_mode'),
             leftValue: i18n(context, 'wasd_encode_text'),
             rightValue: i18n(context, 'wasd_encode_graphic'),
-            value: _currentEncodeMode,
+            value: _currentDecodeMode,
             onChanged: (value) {
               setState(() {
-                _currentEncodeMode = value;
+                _currentDecodeMode = value;
               });
             },
-          )
-        : Container(),
-        _currentMode == GCWSwitchPosition.left
-        ? GCWTextField(
+          ),
+        if (_currentMode == GCWSwitchPosition.left) // encode
+          GCWTextField(
             controller: _encodeController,
             onChanged: (text) {
               setState(() {
                 _currentEncodeInput = text;
               });
             })
-        : GCWTextField(
+        else // decode
+          GCWTextField(
             controller: _decodeController,
             onChanged: (text) {
               setState(() {
                 _currentDecodeInput = text;
-                if (_currentEncodeMode == GCWSwitchPosition.left)
-                  _createDecodeOutput(decodeWASDGraphic(_currentDecodeInput.toUpperCase(), _currentKeyboardControls, [_currentUp, _currentLeft, _currentDown, _currentRight]));
+                   _createGraphicOutputData(decodeWASDGraphic(
+                       _currentDecodeInput,
+                       _currentKeyboardControls,
+                       [_currentUp, _currentLeft, _currentDown, _currentRight]));
               });
             }),
-        _currentMode == GCWSwitchPosition.left //encode
-        ? GCWDefaultOutput(child: _buildOutput())
-        :  _currentEncodeMode == GCWSwitchPosition.right //graphic
-            ? GCWDefaultOutput(
+        if (_currentMode == GCWSwitchPosition.left) //encode
+          GCWDefaultOutput(child: _buildOutput())
+        else // decode
+          if (_currentDecodeMode == GCWSwitchPosition.right) //graphic
+            GCWDefaultOutput(
                 child: _buildGraphicDecodeOutput(),
                 trailing: GCWIconButton(
                   iconData: Icons.save,
@@ -167,14 +169,15 @@ class WASDState extends State<WASD> {
                     _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
                   },
                 ))
-            : GCWDefaultOutput(child: _buildOutput())
+          else
+            GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
-  _createDecodeOutput(String output) {
+  _createGraphicOutputData(String output) {
     _outDecodeData = null;
-    byteColor2image(output).then((value) {
+    binary2image(output, false, false).then((value) {
       setState(() {
         _outDecodeData = value;
       });
@@ -199,9 +202,9 @@ class WASDState extends State<WASD> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
-      return decodeWASD(_currentDecodeInput.toUpperCase(), _currentKeyboardControls, [_currentUp, _currentLeft, _currentDown, _currentRight]);
+      return decodeWASD(_currentDecodeInput, _currentKeyboardControls, [_currentUp, _currentLeft, _currentDown, _currentRight]);
     } else {
-      return encodeWASD(_currentEncodeInput.toUpperCase(), _currentKeyboardControls, [_currentUp, _currentLeft, _currentDown, _currentRight]);
+      return encodeWASD(_currentEncodeInput, _currentKeyboardControls, [_currentUp, _currentLeft, _currentDown, _currentRight]);
     }
   }
 }
