@@ -6,7 +6,6 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
@@ -18,6 +17,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/u
 import 'package:prefs/prefs.dart';
 
 Map<BrailleLanguage, Map<String, String>> _BRAILLE_LANGUAGES = {
+  BrailleLanguage.BASIC: {'title': 'braille_language_basic', 'subtitle': 'braille_language_basic_description'},
   BrailleLanguage.SIMPLE: {'title': 'braille_language_simple', 'subtitle': 'braille_language_simple_description'},
   BrailleLanguage.DEU: {'title': 'common_language_german', 'subtitle': 'braille_language_german_description'},
   BrailleLanguage.ENG: {'title': 'common_language_english', 'subtitle': 'braille_language_english_description'},
@@ -37,8 +37,9 @@ class BrailleState extends State<Braille> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
   var _currentSimpleMode = GCWSwitchPosition.left;
+  var _currentIncludingFrenchAntoine = false;
 
-  var _currentLanguage = BrailleLanguage.SIMPLE;
+  var _currentLanguage = BrailleLanguage.BASIC;
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +72,8 @@ class BrailleState extends State<Braille> {
           });
         },
       ),
-      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
-          ? GCWTextField(
+      if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
+        GCWTextField(
               controller: _encodeController,
               onChanged: (text) {
                 setState(() {
@@ -80,25 +81,49 @@ class BrailleState extends State<Braille> {
                 });
               },
             )
-          : Column(
+        else
+          Column(
         // decrpyt: input segment => output number
               children: <Widget>[
-                _currentLanguage == BrailleLanguage.SIMPLE
-                ? Column(
-                  children: <Widget>[
-                    GCWTwoOptionsSwitch(
-                      value: _currentSimpleMode,
-                      leftValue: i18n(context, "braille_simple_mode_letters"),
-                      rightValue: i18n(context, "braille_simple_mode_digits"),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentSimpleMode = value;
-                        });
-                      },
+                if (_currentLanguage == BrailleLanguage.BASIC)
+                  Column(
+                    children: <Widget>[
+                      GCWTwoOptionsSwitch(
+                        value: _currentSimpleMode,
+                        leftValue: i18n(context, "braille_simple_mode_letters"),
+                        rightValue: i18n(context, "braille_simple_mode_digits"),
+                        onChanged: (value) {
+                          setState(() {
+                            _currentSimpleMode = value;
+                          });
+                        },
+                      ),
+                      if (_currentSimpleMode == GCWSwitchPosition.right)
+                        GCWOnOffSwitch(
+                          value: _currentIncludingFrenchAntoine,
+                          title: i18n(context, 'braille_language_digits_french'),
+                          onChanged: (value) {
+                            setState(() {
+                              _currentIncludingFrenchAntoine = value;
+                            });
+                          },
+                        ),
+                     ],
                     ),
-                   ],
-                )
-                : Container(),
+                if (_currentLanguage == BrailleLanguage.SIMPLE)
+                  Column(
+                        children: <Widget>[
+                          GCWOnOffSwitch(
+                            value: _currentIncludingFrenchAntoine,
+                            title: i18n(context, 'braille_language_digits_french'),
+                            onChanged: (value) {
+                              setState(() {
+                                _currentIncludingFrenchAntoine = value;
+                              });
+                            },
+                          ),
+                        ],
+                ),
                 _buildVisualDecryption()
               ],
             ),
@@ -171,14 +196,15 @@ class BrailleState extends State<Braille> {
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
-              _currentLanguage == BrailleLanguage.EUR
-              ? Expanded(
+              if (_currentLanguage == BrailleLanguage.EUR)
+                Expanded(
                 child: BrailleEuroSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
               )
-              : Expanded(
+              else
+                Expanded(
                 child: BrailleSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
@@ -243,7 +269,7 @@ class BrailleState extends State<Braille> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBraille(output, _currentLanguage, (_currentSimpleMode == GCWSwitchPosition.left));
+      segments = decodeBraille(output, _currentLanguage, (_currentSimpleMode == GCWSwitchPosition.left), _currentIncludingFrenchAntoine);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),

@@ -297,6 +297,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
@@ -1200,6 +1201,18 @@ class Registry {
         SEARCHSTRING_DE_IRRATIONALNUMBERS,
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
         SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
+      GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_PIANO,
+        SEARCHSTRING_DE_PIANO,
+        SEARCHSTRING_EN_PIANO,
+        SEARCHSTRING_FR_PIANO
       ]),
       GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
         ToolCategory.SCIENCE_AND_TECHNOLOGY
