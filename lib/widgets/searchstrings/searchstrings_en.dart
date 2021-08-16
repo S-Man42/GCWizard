@@ -156,7 +156,8 @@ const SEARCHSTRING_EN_GADE = 'street';
 const SEARCHSTRING_EN_GAMES = 'games';
 const SEARCHSTRING_EN_GAMES_SCRABBLE =
     'germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers';
-const SEARCHSTRING_EN_GAMES_SUDOKUSOLVER = 'grid';
+const SEARCHSTRING_EN_GAMES_SUDOKUSOLVER = 'grid sudokusolver';
+const SEARCHSTRING_EN_GAUSSWEBERTELEGRAPH = 'plus minus left right';
 const SEARCHSTRING_EN_GCCODE = 'hexadecimal';
 const SEARCHSTRING_EN_GLAGOLITIC = 'glagolitic slavic slavian';
 const SEARCHSTRING_EN_GRAY = 'distance';
@@ -307,8 +308,9 @@ const SEARCHSTRING_EN_RSA_DCHECKER = 'check private key';
 const SEARCHSTRING_EN_RSA_ECHECKER = 'check public key';
 const SEARCHSTRING_EN_RSA_NCALCULATOR = 'calculate';
 const SEARCHSTRING_EN_RSA_PHICALCULATOR = 'calculate';
+const SEARCHSTRING_EN_SCHILLINGCANNSTATT = 'left right';
 const SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION =
-    'sciences technology technologies maths mathematics physics chemistry electronics biology';
+    'sciences technology technologies maths mathematics physics chemistry electronics biology weather musics geography';
 const SEARCHSTRING_EN_SEGMENTS = 'display segments';
 const SEARCHSTRING_EN_SEGMENTS_FOURTEEN = 'fourteen';
 const SEARCHSTRING_EN_SEGMENTS_SEVEN = 'seven';
@@ -533,6 +535,7 @@ const SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS = 'zodiacs zodiacsigns astrology horosc
 const SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS_LATIN = 'latin';
 const SEARCHSTRING_EN_TAPCODE = 'tap tapcode';
 const SEARCHSTRING_EN_TAPIR = 'security army';
+const SEARCHSTRING_EN_TELEGRAPH = 'telegraphs telecommunications';
 const SEARCHSTRING_EN_TOMTOM = '';
 const SEARCHSTRING_EN_TRIFID = '';
 const SEARCHSTRING_EN_TRITHEMIUS = '';

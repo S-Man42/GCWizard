@@ -90,6 +90,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
@@ -122,6 +123,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/schilling_cannstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
@@ -457,6 +459,7 @@ class _MainViewState extends State<MainView> {
         className(FormulaSolverFormulaGroups()),
         className(FourteenSegments()),
         className(Gade()),
+        className(GaussWeberTelegraph()),
         className(GCCode()),
         className(Gray()),
         className(Gronsfeld()),
@@ -525,6 +528,7 @@ class _MainViewState extends State<MainView> {
         className(Rot47()),
         className(RotationGeneral()),
         className(RSASelection()),
+        className(SchillingCannstattTelegraph()),
         className(Scrabble()),
         className(ShadowLength()),
         className(ShadoksSelection()),

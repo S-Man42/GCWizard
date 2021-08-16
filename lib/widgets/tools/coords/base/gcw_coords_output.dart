@@ -64,16 +64,16 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
     var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
     return GCWMultipleOutput(
-        title: widget.title,
+        titles: [widget.title],
         children: _children,
-        trailing: GCWIconButton(
+        trailings: [GCWIconButton(
           iconData: Icons.save,
           size: IconButtonSize.SMALL,
           iconColor: _isNoOutput ? Colors.grey : null,
           onPressed: () {
             _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
           },
-        ));
+        )]);
   }
 
   _openInMap({freeMap: false}) {
