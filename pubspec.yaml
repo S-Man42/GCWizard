@@ -92,6 +92,8 @@ flutter:
     - assets/symbol_tables/british_sign_language/
     - assets/symbol_tables/chain_of_death_direction/
     - assets/symbol_tables/chain_of_death_pairs/
+    - assets/symbol_tables/chappe_1794/
+    - assets/symbol_tables/chappe_1809/
     - assets/symbol_tables/chappe_v1/
     - assets/symbol_tables/chappe_v2/
     - assets/symbol_tables/chappe_v3/
@@ -102,6 +104,7 @@ flutter:
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
+    - assets/symbol_tables/cookewheatstone_oneneedle/
     - assets/symbol_tables/country_flags/
     - assets/symbol_tables/covenant/
     - assets/symbol_tables/cyrillic/
