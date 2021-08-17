@@ -32,7 +32,7 @@ List<Uint8List> extraData(Uint8List data, {List<Uint8List> resultList}) {
       return resultList;
   }
 
-  if ((imageLength != null) & (imageLength > 0) & (data.length > imageLength)) {
+  if ((imageLength != null) && (imageLength > 0) && (data.length > imageLength)) {
     if (resultList == null) resultList = <Uint8List>[];
     // result data
     var result = data.sublist(imageLength);
