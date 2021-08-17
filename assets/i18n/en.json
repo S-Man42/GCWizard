@@ -308,6 +308,7 @@
   "beghilos_title" : "Beghilos",
   "beghilos_description" : "Seven-segment digits upside down",
   "beghilos_example" : "7718 → BILL",
+  "beghilos_encode_hint" : "Enter Numbers",
   "bifid_title": "Bifid Cipher",
   "bifid_description": "Cipher based on a square with an additional transposition",
   "bifid_example": "HELLO → FNNVD",

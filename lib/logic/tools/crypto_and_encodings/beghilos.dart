@@ -2,10 +2,12 @@ import 'package:gc_wizard/utils/common_utils.dart';
 
 final _AlphabetMap = {
   'B': '8', 'E': '3', 'G': '9', 'g': '6', 'h': '4', 'I': '1', 'L': '7', 'O': '0', 'S': '5', 'Z': '2', ' ': ' ', '.': '.'};
-
+final _AlphabetMapExtension = {'b': '8', 'e': '3', 'H': '4', 'i': '1', 'l': '7', 'o': '0', 's': '5', 'z': '2'};
 
 String decodeBeghilos(String input) {
-  return _translateBeghilos(input, _AlphabetMap);
+  var alphabetMap = Map<String,String>.from(_AlphabetMap);
+  alphabetMap.addAll(_AlphabetMapExtension);
+  return _translateBeghilos(input, alphabetMap);
 }
 
 String encodeBeghilos(String input) {
@@ -25,3 +27,4 @@ String _translateBeghilos(String input, Map<String, String> alphabetMap) {
   output = output.trim();
   return output.split('').reversed.join('');
 }
+

@@ -308,6 +308,7 @@
   "beghilos_title" : "Beghilos",
   "beghilos_description" : "Auf dem kopf stehende Sieben-Segment-Ziffern",
   "beghilos_example" : "7353 → ESEL",
+  "beghilos_encode_hint" : "Zahlen eingeben ",
   "bifid_title": "Bifid Chiffre",
   "bifid_description": "Verschlüsselung basierend auf einem Quadrat mit zusätzlicher Transposition",
   "bifid_example": "HALLO → FNNAD",
