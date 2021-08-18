@@ -2,6 +2,7 @@ const SEARCHSTRING_EN_ABADDON = '';
 const SEARCHSTRING_EN_ABOUT = 'about';
 const SEARCHSTRING_EN_ADFGVX = '';
 const SEARCHSTRING_EN_AFFINE = '';
+const SEARCHSTRING_EN_ALCOHOLMASS = 'alcoholmass alcoholweight amount';
 const SEARCHSTRING_EN_ALPHABETVALUES =
     'alphanumeric lettervalues checksums crosssums digits alternate alphabetvalues cyrillic greek german spanish polish russian';
 const SEARCHSTRING_EN_AMSCO = '';
@@ -52,6 +53,7 @@ const SEARCHSTRING_EN_BCDTOMPKINS = '';
 const SEARCHSTRING_EN_BEAUFORT = 'scala windforce beaufortscale windspeed knots windspeed storm hurricanes';
 const SEARCHSTRING_EN_BIFID = '';
 const SEARCHSTRING_EN_BINARY = 'binary numbers decimal';
+const SEARCHSTRING_EN_BLOODALCOHOLCONTENT = 'bloodalcoholcontent ebac bloodalcoholconcentration bloodalcohollevel alcoholintoxination permilles';
 const SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';
 const SEARCHSTRING_EN_BRAILLE = 'tactiles dots points';
 const SEARCHSTRING_EN_BRAILLE_EURO = '';

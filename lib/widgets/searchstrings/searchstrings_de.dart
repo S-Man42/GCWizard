@@ -2,6 +2,7 @@ const SEARCHSTRING_DE_ABADDON = '';
 const SEARCHSTRING_DE_ABOUT = 'ueber';
 const SEARCHSTRING_DE_ADFGVX = '';
 const SEARCHSTRING_DE_AFFINE = '';
+const SEARCHSTRING_DE_ALCOHOLMASS = 'alkoholmasse alkoholgewicht alkoholmenge';
 const SEARCHSTRING_DE_ALPHABETVALUES =
     'bww buchstabenwerte quersummen alphanumerisch produkt alternierend buchstabenwortwerte kyrillisch russisch griechisch spanisch deutsch polnisch';
 const SEARCHSTRING_DE_AMSCO = '';
@@ -55,6 +56,7 @@ const SEARCHSTRING_DE_BCDTOMPKINS = '';
 const SEARCHSTRING_DE_BEAUFORT = 'skala windstaerke knoten windgeschwindigkeit orkane windboeen brisen';
 const SEARCHSTRING_DE_BIFID = '';
 const SEARCHSTRING_DE_BINARY = 'dezimal binaer dual zahlen';
+const SEARCHSTRING_DE_BLOODALCOHOLCONTENT = 'promillerechner blutalkoholgehalt blutalkohollevel blutalkohollevel blutalkoholkonzentration bak';
 const SEARCHSTRING_DE_BOOKCIPHER = 'buchstabe buechercode buchchiffre buecherchiffre buchcode zeile absatz position';
 const SEARCHSTRING_DE_BRAILLE = 'blindenschrift punkte';
 const SEARCHSTRING_DE_BRAILLE_EURO = '';

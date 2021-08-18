@@ -2,6 +2,7 @@ const SEARCHSTRING_FR_ABADDON = '';
 const SEARCHSTRING_FR_ABOUT = 'a';
 const SEARCHSTRING_FR_ADFGVX = '';
 const SEARCHSTRING_FR_AFFINE = '';
+const SEARCHSTRING_FR_ALCOHOLMASS = 'masse alcool poids quantite';
 const SEARCHSTRING_FR_ALPHABETVALUES =
     'valeur des lettres somme croisee produit alphanumerique alternance des lettres valeur des mots cyrillique russe grec espagnol allemand polonais';
 const SEARCHSTRING_FR_AMSCO = '';
@@ -51,6 +52,7 @@ const SEARCHSTRING_FR_BCDTOMPKINS = '';
 const SEARCHSTRING_FR_BEAUFORT = 'rafale vent tempete vitesse force';
 const SEARCHSTRING_FR_BIFID = '';
 const SEARCHSTRING_FR_BINARY = 'decimale binaire numeros';
+const SEARCHSTRING_FR_BLOODALCOHOLCONTENT = 'alcoolemie sang';
 const SEARCHSTRING_FR_BOOKCIPHER = 'lettre ligne paragraphe livre';
 const SEARCHSTRING_FR_BRAILLE = '';
 const SEARCHSTRING_FR_BRAILLE_EURO = '';

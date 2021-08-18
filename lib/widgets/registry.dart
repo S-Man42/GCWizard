@@ -225,6 +225,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -239,6 +240,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_ris
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -328,10 +330,6 @@ class Registry {
   static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
-    // if (toolList != null) {
-    //   return;
-    // }
-
     toolList = [
       //MainSelection
       GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
@@ -369,6 +367,18 @@ class Registry {
         SEARCHSTRING_DE_AFFINE,
         SEARCHSTRING_EN_AFFINE,
         SEARCHSTRING_FR_AFFINE
+      ]),
+      GCWTool(tool: AlcoholMass(), i18nPrefix: 'alcoholmass', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ALCOHOLMASS,
+        SEARCHSTRING_DE_ALCOHOLMASS,
+        SEARCHSTRING_EN_ALCOHOLMASS,
+        SEARCHSTRING_FR_ALCOHOLMASS
       ]),
       GCWTool(tool: AlphabetValues(), i18nPrefix: 'alphabetvalues', categories: [
         ToolCategory.CRYPTOGRAPHY
@@ -504,7 +514,22 @@ class Registry {
         SEARCHSTRING_EN_BINARY,
         SEARCHSTRING_FR_BINARY
       ]),
-
+      GCWTool(tool: BloodAlcoholContent(), i18nPrefix: 'bloodalcoholcontent', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ALCOHOLMASS,
+        SEARCHSTRING_DE_ALCOHOLMASS,
+        SEARCHSTRING_EN_ALCOHOLMASS,
+        SEARCHSTRING_FR_ALCOHOLMASS,
+        SEARCHSTRING_COMMON_BLOODALCOHOLCONTENT,
+        SEARCHSTRING_DE_BLOODALCOHOLCONTENT,
+        SEARCHSTRING_EN_BLOODALCOHOLCONTENT,
+        SEARCHSTRING_FR_BLOODALCOHOLCONTENT
+      ]),
       GCWTool(
           tool: BrailleSelection(),
           i18nPrefix: 'braille_selection',

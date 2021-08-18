@@ -147,6 +147,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -158,6 +159,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -388,6 +390,7 @@ class _MainViewState extends State<MainView> {
         className(Abaddon()),
         className(ADFGVX()),
         className(Affine()),
+        className(AlcoholMass()),
         className(AlphabetValues()),
         className(Amsco()),
         className(AnimatedImage()),
@@ -405,6 +408,7 @@ class _MainViewState extends State<MainView> {
         className(Bifid()),
         className(Binary()),
         className(Binary2Image()),
+        className(BloodAlcoholContent()),
         className(BookCipher()),
         className(BrailleSelection()),
         className(Brainfk()),
