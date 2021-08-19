@@ -87,7 +87,6 @@ class BeghilosState extends State<Beghilos> {
   Widget _buildOutput(countColumns) {
     var rows = <Widget>[];
     var textOutput = _currentMode == GCWSwitchPosition.left ? decodeBeghilos(_currentInputDecode) : encodeBeghilos(_currentInputEncode['text']);
-    rows.add(GCWDefaultOutput(child:  textOutput));
 
     if ((textOutput != null) & (textOutput != '')) {
       rows.add(GCWTextDivider(
@@ -126,6 +125,8 @@ class BeghilosState extends State<Beghilos> {
       _currentDisplays = encodeSegment(
           _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode['text'], SegmentDisplayType.SEVEN);
       rows.add(_buildDigitalOutput(countColumns, _currentDisplays));
+
+      rows.add(GCWDefaultOutput(child:  textOutput));
     }
     return Column(
       children: rows,
@@ -133,12 +134,15 @@ class BeghilosState extends State<Beghilos> {
   }
 
   Widget _buildDigitalOutput(countColumns, List<List<String>> segments) {
-    var displays = segments.where((character) => character != null).map((character) {
+    var displays = segments.reversed.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
-          return SevenSegmentDisplay(
-            segments: displayedSegments,
-            readOnly: true,
+          return Transform.rotate(
+            angle: pi,
+            child: SevenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            )
           );
 
     }).toList();
