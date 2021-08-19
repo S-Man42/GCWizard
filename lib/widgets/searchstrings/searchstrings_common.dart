@@ -49,6 +49,7 @@ const SEARCHSTRING_COMMON_BCDPETHERICK = 'petherick';
 const SEARCHSTRING_COMMON_BCDSTIBITZ = 'stibitz';
 const SEARCHSTRING_COMMON_BCDTOMPKINS = 'tompkins';
 const SEARCHSTRING_COMMON_BEAUFORT = 'beaufort';
+final SEARCHSTRING_COMMON_BEGHILOS = 'beghilos';
 const SEARCHSTRING_COMMON_BIFID = 'bifid felix delastelle polybios polybius transposition';
 const SEARCHSTRING_COMMON_BINARY = '';
 const SEARCHSTRING_COMMON_BLOODALCOHOLCONTENT = '';

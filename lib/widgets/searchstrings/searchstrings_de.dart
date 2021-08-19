@@ -54,6 +54,7 @@ const SEARCHSTRING_DE_BCDPETHERICK = '';
 const SEARCHSTRING_DE_BCDSTIBITZ = '';
 const SEARCHSTRING_DE_BCDTOMPKINS = '';
 const SEARCHSTRING_DE_BEAUFORT = 'skala windstaerke knoten windgeschwindigkeit orkane windboeen brisen';
+final SEARCHSTRING_DE_BEGHILOS = 'taschenrechner spiegelverkehrt umgedreht aufdenkopfgestellt';
 const SEARCHSTRING_DE_BIFID = '';
 const SEARCHSTRING_DE_BINARY = 'dezimal binaer dual zahlen';
 const SEARCHSTRING_DE_BLOODALCOHOLCONTENT = 'promillerechner blutalkoholgehalt blutalkohollevel blutalkohollevel blutalkoholkonzentration bak';
