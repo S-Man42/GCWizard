@@ -465,7 +465,9 @@ String KarolRobotOutputDecode(String program) {
     }
   }); //forEach command
 
-  var binaryWorld = List.generate(maxX + 1, (y) => List(maxY + 1), growable: false);
+  maxX = maxX + 2;
+  maxY = maxY + 2;
+  var binaryWorld = List.generate(maxX , (y) => List(maxY), growable: false);
   world.forEach((key, value) {
     x = int.parse(key.split('|')[0]) - 1;
     y = int.parse(key.split('|')[1]) - 1;
@@ -477,7 +479,7 @@ String KarolRobotOutputDecode(String program) {
   output.add(outputLine.padRight(maxX + 1, '#'));
   for (y = 0; y < maxY; y++) {
     outputLine = '##';
-    for (x = 0; x < maxX - 1; x++) {
+    for (x = 0; x < maxX; x++) {
       if (binaryWorld[x][y] == null)
         outputLine = outputLine + '#';
       else
