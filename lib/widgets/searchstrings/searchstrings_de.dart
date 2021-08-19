@@ -159,6 +159,7 @@ const SEARCHSTRING_DE_ESOTERIC_OOK = 'punkte fragezeichen ausrufezeichen affen o
 const SEARCHSTRING_DE_ESOTERIC_WHITESPACELANGUAGE = 'leerzeichen tabulator zeilenumbruch';
 const SEARCHSTRING_DE_EXIF = 'exif';
 const SEARCHSTRING_DE_FORMULASOLVER = 'formelrechner';
+const SEARCHSTRING_DE_FOX = 'fuchscode';
 const SEARCHSTRING_DE_GADE = 'straße';
 const SEARCHSTRING_DE_GAMES = 'spiele';
 const SEARCHSTRING_DE_GAMES_SCRABBLE =

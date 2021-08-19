@@ -1844,6 +1844,8 @@
   "formulasolver_values_key": "제목",
   "formulasolver_values_value": "값",
   "formulasolver_values_currentvalues": "생성된 변수",
+  "fox_title": "Fox Code",
+  "fox_example": "FOX → 17 27 37",
   "gade_title": "길 (Gade)",
   "gade_description": "길 (Gade)에 따라 문자 계산",
   "games_selection_title": "게임",

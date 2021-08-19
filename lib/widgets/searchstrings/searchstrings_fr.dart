@@ -147,6 +147,7 @@ const SEARCHSTRING_FR_ESOTERIC_OOK = 'exclamation interrogation singe orang-outa
 const SEARCHSTRING_FR_ESOTERIC_WHITESPACELANGUAGE = 'onglet vide saut';
 const SEARCHSTRING_FR_EXIF = 'exif';
 const SEARCHSTRING_FR_FORMULASOLVER = 'calculatuer formule';
+const SEARCHSTRING_FR_FOX = '';
 const SEARCHSTRING_FR_GADE = 'rue';
 const SEARCHSTRING_FR_GAMES = 'jeux';
 const SEARCHSTRING_FR_GAMES_SCRABBLE =

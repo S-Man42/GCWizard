@@ -154,6 +154,7 @@ const SEARCHSTRING_EN_ESOTERIC_OOK = 'monkeys apes dots questionsmarks exclamati
 const SEARCHSTRING_EN_ESOTERIC_WHITESPACELANGUAGE = 'space linefeed';
 const SEARCHSTRING_EN_EXIF = 'exif';
 const SEARCHSTRING_EN_FORMULASOLVER = 'formulasolver formelsolver';
+const SEARCHSTRING_EN_FOX = '';
 const SEARCHSTRING_EN_GADE = 'street';
 const SEARCHSTRING_EN_GAMES = 'games';
 const SEARCHSTRING_EN_GAMES_SCRABBLE =

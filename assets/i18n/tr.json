@@ -1844,6 +1844,8 @@
   "formulasolver_values_key": "Adı",
   "formulasolver_values_value": "Değer",
   "formulasolver_values_currentvalues": "Oluşturulmuş Değişkenler",
+  "fox_title": "Fox Code",
+  "fox_example": "FOX → 17 27 37",
   "gade_title": "Gade",
   "gade_description": "Calculating letters according to Gade",
   "games_selection_title": "Oyunlar",

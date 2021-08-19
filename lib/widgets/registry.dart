@@ -154,6 +154,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
@@ -845,7 +846,6 @@ class Registry {
         SEARCHSTRING_EN_EXIF,
         SEARCHSTRING_FR_EXIF,
       ]),
-
       GCWTool(
         tool: FormulaSolverFormulaGroups(),
         i18nPrefix: 'formulasolver',
@@ -857,6 +857,12 @@ class Registry {
           SEARCHSTRING_FR_FORMULASOLVER,
         ],
       ),
+      GCWTool(
+          tool: Fox(),
+          i18nPrefix: 'fox',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [SEARCHSTRING_COMMON_FOX, SEARCHSTRING_DE_FOX, SEARCHSTRING_EN_FOX, SEARCHSTRING_FR_FOX]),
       GCWTool(
           tool: Gade(),
           i18nPrefix: 'gade',
