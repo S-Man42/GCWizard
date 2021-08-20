@@ -97,10 +97,13 @@ class _SteganoState extends State<Stegano> {
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (file) {
             if (file == null) return;
-            _file = file;
-            _bytesSource = file.bytes;
-            // clear previous decoded text
-            _decodedText = null;
+            setState(() {
+              _file = file;
+              _bytesSource = file.bytes;
+              // clear previous decoded text
+              _encodedPictureData = null;
+              _decodedText = null;
+            });
           },
         ),
         ..._buildImageSource(),
