@@ -16,7 +16,6 @@ String file2hexstring(Uint8List input) {
 
   input.forEach((byte) {
     sb.write(byte.toRadixString(16).padLeft(2, '0')) ;
-    sb.write(' ') ;
   });
 
   return sb.toString().toUpperCase();

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
@@ -81,6 +84,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                         });
 
                         widget.onLoaded(file);
+                      } else {
+                        showToast(i18n(context, 'common_loadfile_exception_nofile'));
                       }
                     });
                   },
@@ -101,44 +106,36 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                     GCWButton(
                       text: i18n(context, 'common_loadfile_load'),
                       onPressed: () {
-                        print('ENTER');
-
                         if (_currentUrl == null) {
+                          showToast(i18n(context, 'common_loadfile_exception_url'));
                           return;
                         }
-
-
-                        print('PRE SUPPORTED');
 
                         if (widget.supportedFileTypes != null) {
                           var _urlFileType = fileTypeByExtension(_currentUrl);
 
-                          print(_urlFileType);
-                          print(widget.supportedFileTypes);
-
-                          if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType))
+                          if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
+                            showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
                             return;
+                          }
                         }
 
-                        print('PRE URL');
-
                         _getUri(_currentUrl).then((uri) {
-                          print('ENTER URL');
-
                           if (uri == null) {
-                            print('määääääh');
+                            showToast(i18n(context, 'common_loadfile_exception_url'));
                             return;
                           }
 
-                          http.get(uri).then((http.Response response) {
-                            print('ENTER GET');
-
+                          http.get(uri).timeout(
+                            Duration(seconds: 10),
+                            onTimeout: () {
+                              return http.Response('Error', 500);
+                            }
+                          ).then((http.Response response) {
                             if (response.statusCode != 200) {
-                              print('mööööp');
+                              showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
                               return;
                             }
-
-                            print(response.statusCode);
 
                             setState(() {
                               _currentOpenExpanded = false;

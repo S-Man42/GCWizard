@@ -86,6 +86,8 @@ class HexViewerState extends State<HexViewer> {
   _buildOutput() {
     if (_hexData == null) return null;
 
+    print(_hexData);
+
     var hexStrStart = _currentLines * _CHARS_PER_LINE;
     var hexStrEnd = hexStrStart + _CHARS_PER_LINE * _MAX_LINES;
     var hexDataStr = _hexData.substring(hexStrStart, min(hexStrEnd, _hexData.length));

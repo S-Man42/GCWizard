@@ -152,27 +152,6 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
 };
 
-// Future<String> mainDirectory() async {
-//   Directory _appDocDir;
-//   if (Platform.isAndroid) {
-//     _appDocDir = await getExternalStorageDirectory();
-//     String dloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
-//     _appDocDir = await Directory(dloadDir);
-//   } else
-//     _appDocDir = await getApplicationDocumentsDirectory();
-//
-//   final Directory _appDocDirFolder = Directory('${_appDocDir.path}');
-//
-//   var path;
-//   if (await _appDocDirFolder.exists()) {
-//     path = _appDocDirFolder.path;
-//   } else {
-//     final Directory _appDocDirNewFolder = await _appDocDirFolder.create(recursive: true);
-//     path = _appDocDirNewFolder.path;
-//   }
-//   return path;
-// }
-
 FileType fileTypeByExtension(String extension) {
   extension = extension.split('.').last;
   return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(extension), orElse: () => null);
@@ -314,6 +293,15 @@ Future<Uint8List> readByteDataFromFile(String fileName) async {
 Future<String> readStringFromFile(String fileName) async {
   var fileIn = File(fileName);
   return fileIn.readAsString();
+}
+
+bool isImage(Uint8List blobBytes) {
+  try {
+    FileType fileType = getFileType(blobBytes);
+    return _FILE_TYPES[fileType]['file_class'] == FileClass.IMAGE;
+  } catch(e) {
+    return false;
+  }
 }
 
 FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT}) {
