@@ -151,9 +151,9 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
 };
 
-FileType fileTypeByExtension(String extension) {
-  extension = extension.split('.').last;
-  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(extension), orElse: () => null);
+FileType fileTypeByFilename(String fileName) {
+  fileName = fileName.split('.').last;
+  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(fileName), orElse: () => null);
 }
 
 String fileExtension(FileType type) {
