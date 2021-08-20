@@ -312,6 +312,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_pri
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -1388,6 +1389,17 @@ class Registry {
           categories: [ToolCategory.CRYPTOGRAPHY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: [SEARCHSTRING_COMMON_RC4, SEARCHSTRING_DE_RC4, SEARCHSTRING_EN_RC4, SEARCHSTRING_FR_RC4]),
+      GCWTool(
+          tool: Recycling(),
+          i18nPrefix: 'recycling',
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_RECYCLING,
+            SEARCHSTRING_DE_RECYCLING,
+            SEARCHSTRING_EN_RECYCLING,
+            SEARCHSTRING_FR_RECYCLING,
+          ]),
       GCWTool(
           tool: ResistorSelection(),
           i18nPrefix: 'resistor_selection',

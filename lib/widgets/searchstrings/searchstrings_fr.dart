@@ -289,6 +289,7 @@ const SEARCHSTRING_FR_QUADRATICEQUATION = 'equation second degré quadratique';
 const SEARCHSTRING_FR_RAILFENCE = 'cloture chasse chasseurs jardin';
 const SEARCHSTRING_FR_RALCOLORCODES = 'ralcouleurs ralcouleurcodes';
 const SEARCHSTRING_FR_RC4 = 'verrouillage dalimentation';
+const SEARCHSTRING_FR_RECYCLING = 'separationdesdechets';
 const SEARCHSTRING_FR_RESISTOR = '';
 const SEARCHSTRING_FR_RESISTOREIA96 = '';
 const SEARCHSTRING_FR_RESISTOR_COLORCODE = '';

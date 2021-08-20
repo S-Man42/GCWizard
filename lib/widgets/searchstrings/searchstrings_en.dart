@@ -297,6 +297,7 @@ const SEARCHSTRING_EN_QUADRATICEQUATION = 'quadratic equation';
 const SEARCHSTRING_EN_RAILFENCE = 'railfence redefence';
 const SEARCHSTRING_EN_RALCOLORCODES = 'ralcolorcodes ralcolors ralcolours ralcolourcodes';
 const SEARCHSTRING_EN_RC4 = 'stream cipher arcfour';
+const SEARCHSTRING_EN_RECYCLING = 'waste litter recyclables separation material';
 const SEARCHSTRING_EN_RESISTOR = 'resistance resistors';
 const SEARCHSTRING_EN_RESISTOREIA96 = '';
 const SEARCHSTRING_EN_RESISTOR_COLORCODE = 'colorcodes';

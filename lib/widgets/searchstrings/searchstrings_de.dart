@@ -302,6 +302,7 @@ const SEARCHSTRING_DE_QUADRATICEQUATION = 'quadratische gleichung';
 const SEARCHSTRING_DE_RAILFENCE = 'palisadenzaun gartenzaun lattenzaun jaegerzaun';
 const SEARCHSTRING_DE_RALCOLORCODES = 'ralfarbcodes ralpaletten';
 const SEARCHSTRING_DE_RC4 = 'stromverschluesselung';
+const SEARCHSTRING_DE_RECYCLING = 'abfallentsorgung muelltrennung wertstoffe gruenerpunkt material';
 const SEARCHSTRING_DE_RESISTOR = 'widerstand widerstaende';
 const SEARCHSTRING_DE_RESISTOREIA96 = '';
 const SEARCHSTRING_DE_RESISTOR_COLORCODE = 'farbcodes';
