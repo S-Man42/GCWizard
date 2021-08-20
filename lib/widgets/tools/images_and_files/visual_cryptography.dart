@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/images_and_files/visual_cryptography.dart'
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
@@ -72,6 +73,11 @@ class VisualCryptographyState extends State<VisualCryptography> {
               expanded: _decodeImage1 == null,
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
+                if (_file == null) {
+                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                  return;
+                }
+
                 if (_file != null) _decodeImage1 = _file;
               },
             ),
@@ -83,6 +89,11 @@ class VisualCryptographyState extends State<VisualCryptography> {
               expanded: _decodeImage2 == null,
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
+                if (_file == null) {
+                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                  return;
+                }
+
                 if (_file != null) _decodeImage2 = _file;
               },
             ),
@@ -150,6 +161,11 @@ class VisualCryptographyState extends State<VisualCryptography> {
         expanded: _encodeImage == null,
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
+          if (_file == null) {
+            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            return;
+          }
+
           if (_file != null) {
             _encodeImage = _file.bytes;
             encodeImageSize();

@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
@@ -45,6 +46,11 @@ class AnimatedImageState extends State<AnimatedImage> {
         expanded: _platformFile == null,
         supportedFileTypes: AnimatedImageState.allowedExtensions,
         onLoaded: (_file) {
+          if (_file == null) {
+            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            return;
+          }
+
           if (_file != null) {
             _platformFile = _file;
             _analysePlatformFileAsync();

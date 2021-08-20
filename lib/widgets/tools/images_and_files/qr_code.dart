@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
@@ -55,6 +57,11 @@ class QrCodeState extends State<QrCode> {
               expanded: _outData == null,
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
+                if (_file == null) {
+                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                  return;
+                }
+
                 if (_file != null) {
                   _outData = _file.bytes;
                   _updateOutput();
