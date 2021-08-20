@@ -1,0 +1,33 @@
+{
+	"case_sensitive" : false,
+	"translation_prefix": "common_color_",
+	"translate" : [
+	"white",
+	"black",
+	"red",
+	"yellow",
+	"blue",
+	"orange",
+	"green",
+	"brown",
+	"purple",
+	"grey",
+	"dark grey",
+	"silver",
+	"gold",
+	"light red",
+	"light yellow",
+	"light blue",
+	"light orange",
+	"light green",
+	"light brown",
+	"light purple",
+	"dark red",
+	"dark yellow",
+	"dark blue",
+	"dark orange",
+	"dark green",
+	"dark brown",
+	"dark purple"
+	]
+}

@@ -5,12 +5,14 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
 
@@ -92,6 +94,10 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     });
   }
 
+  bool _validateData(Uint8List bytes) {
+    return isImage(bytes);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -100,7 +106,10 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           expanded: widget.imageData == null,
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (value) {
-            if (value == null) return;
+            if (value == null || !_validateData(value.bytes)) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
 
             setState(() {
               _originalData = value.bytes;

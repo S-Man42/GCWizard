@@ -14,7 +14,6 @@ class Houdini extends StatefulWidget {
 class HoudiniState extends State<Houdini> {
   String _currentInput = '';
 
-  Map<int, String> _output = {0: '', 10: ''};
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentCryptMode = GCWSwitchPosition.left;
 

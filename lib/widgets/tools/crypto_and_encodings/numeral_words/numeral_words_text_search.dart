@@ -5,6 +5,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -57,30 +58,27 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
             );
           }).toList(),
         ),
-        Column(
-          children: <Widget>[
-            GCWTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
-            GCWTwoOptionsSwitch(
-              value: _currentDecodeMode,
-              leftValue: i18n(context, 'numeralwords_decodemode_left'),
-              rightValue: i18n(context, 'numeralwords_decodemode_right'),
-              onChanged: (value) {
-                setState(() {
-                  _currentDecodeMode = value;
-                });
-              },
-            )
-          ],
+        GCWTextField(
+          controller: _decodeController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecodeInput = text;
+            });
+          },
         ),
-        GCWTextDivider(text: i18n(context, 'common_output')),
-        _buildOutput(context)
+        GCWTwoOptionsSwitch(
+          value: _currentDecodeMode,
+          leftValue: i18n(context, 'numeralwords_decodemode_left'),
+          rightValue: i18n(context, 'numeralwords_decodemode_right'),
+          onChanged: (value) {
+            setState(() {
+              _currentDecodeMode = value;
+            });
+          },
+        ),
+        GCWDefaultOutput(
+          child: _buildOutput(context),
+        )
       ],
     );
   }
@@ -95,7 +93,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
           output = output + ' ' + i18n(context, detailedOutput[i].number);
         else
-          output = output + '' + detailedOutput[i].number;
+          output = output + detailedOutput[i].number;
       }
     } else {
       output = i18n(context, 'numeralwords_language_not_implemented');

@@ -12,12 +12,13 @@ Uint8List hexstring2file(String input) {
 
 String file2hexstring(Uint8List input) {
   if (input == null) return null;
+  var sb = StringBuffer();
 
-  var output = input.map((byte) {
-    return byte.toRadixString(16).padLeft(2, '0');
-  }).join(' ');
+  input.forEach((byte) {
+    sb.write(byte.toRadixString(16).padLeft(2, '0')) ;
+  });
 
-  return output.toUpperCase();
+  return sb.toString().toUpperCase();
 }
 
 Uint8List _hexString2bytes(String input) {

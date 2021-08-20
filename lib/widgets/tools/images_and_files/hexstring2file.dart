@@ -17,9 +17,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
-  final filePicker.PlatformFile platformFile;
-
-  const HexString2File({Key key, this.platformFile}) : super(key: key);
+  const HexString2File({Key key}) : super(key: key);
 
   @override
   HexString2FileState createState() => HexString2FileState();
@@ -28,44 +26,19 @@ class HexString2File extends StatefulWidget {
 class HexString2FileState extends State<HexString2File> {
   var _currentInput = '';
   Uint8List _outData;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.platformFile != null) {
-      _currentMode = GCWSwitchPosition.left;
-      _outData = widget.platformFile.bytes;
-    }
 
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left
-            ? GCWOpenFile(
-                expanded: _outData == null,
-                onLoaded: (_file) {
-                  if (_file != null) {
-                    _outData = _file.bytes;
-                    setState(() {});
-                  }
-                },
-              )
-            : GCWTextField(
-                onChanged: (value) {
-                  setState(() {
-                    _currentInput = value;
-                  });
-                },
-              ),
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentInput = null;
-              _outData = null;
-              _currentMode = value;
-            });
-          },
-        ),
+        GCWTextField(
+            onChanged: (value) {
+              setState(() {
+                _currentInput = value;
+              });
+            },
+          ),
         GCWDefaultOutput(
             child: _buildOutput(),
             trailing: GCWIconButton(
@@ -81,17 +54,11 @@ class HexString2FileState extends State<HexString2File> {
   }
 
   _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.right) {
-      _outData = hexstring2file(_currentInput);
+    _outData = hexstring2file(_currentInput);
 
-      if (_outData == null) return null;
+    if (_outData == null) return null;
 
-      return hexDataOutput(context, <Uint8List>[_outData]);
-    } else {
-      if (_outData == null) return null;
-
-      return file2hexstring(_outData);
-    }
+    return hexDataOutput(context, <Uint8List>[_outData]);
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
