@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -210,7 +211,6 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     return null;
 
   var filePath = '';
-  File fileX;
 
   if (kIsWeb) {
     // var blob = new html.Blob([data], 'image/png');
@@ -226,14 +226,13 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
       fileName: fileName,
       writer: (file) async {
         await file.writeAsBytes(data.buffer.asUint8List());
-        fileX = file;
       },
     );
     if (fileInfo == null) return null;
 
-    filePath = fileInfo.identifier;
+    filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
   }
-  return {'path': filePath, 'file': fileX};
+  return {'path': filePath, 'bytes': data.buffer.asUint8List()};
 }
 
 Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {

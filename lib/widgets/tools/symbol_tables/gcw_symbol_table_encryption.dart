@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'dart:typed_data';
@@ -109,7 +110,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                       context,
                       value['path'],
                       contentWidget: Container(
-                        child: value['file'] == null ? null : Image.file(value['file']),
+                        child: value['bytes'] == null ? null : Image.memory(value['bytes']),
                         margin: EdgeInsets.only(top: 25),
                         decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
                       ),
