@@ -393,6 +393,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < images.length; i++) {
         images[i] = images[linkList[i]];
       }
+    } else {
+      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      return;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
