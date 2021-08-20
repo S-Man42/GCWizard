@@ -105,15 +105,17 @@ class PianoState extends State<Piano> {
 
       return columnedMultiLineOutput(context, data, hasHeader: true, flexValues: [1, 2]);
     } else {
+      var keyNumber = PIANO_KEYS.keys.toList()[_currentIndex];
+
       return columnedMultiLineOutput(context, [
-        [i18n(context, 'piano_number'), PIANO_KEYS[_currentIndex + 1]['number']],
-        [i18n(context, 'piano_color'), i18n(context, PIANO_KEYS[_currentIndex + 1]['color'])],
-        [i18n(context, 'piano_frequency'), PIANO_KEYS[_currentIndex + 1]['frequency']],
-        [i18n(context, 'piano_helmholtz'), PIANO_KEYS[_currentIndex + 1]['helmholtz']],
-        [i18n(context, 'piano_scientific'), PIANO_KEYS[_currentIndex + 1]['scientific']],
-        [i18n(context, 'piano_german'), PIANO_KEYS[_currentIndex + 1]['german']],
-        [i18n(context, 'piano_midi'), PIANO_KEYS[_currentIndex + 1]['midi']],
-        [i18n(context, 'piano_latin'), PIANO_KEYS[_currentIndex + 1]['latin']],
+        [i18n(context, 'piano_number'), PIANO_KEYS[keyNumber]['number']],
+        [i18n(context, 'piano_color'), i18n(context, PIANO_KEYS[keyNumber]['color'])],
+        [i18n(context, 'piano_frequency'), PIANO_KEYS[keyNumber]['frequency']],
+        [i18n(context, 'piano_helmholtz'), PIANO_KEYS[keyNumber]['helmholtz']],
+        [i18n(context, 'piano_scientific'), PIANO_KEYS[keyNumber]['scientific']],
+        [i18n(context, 'piano_german'), PIANO_KEYS[keyNumber]['german']],
+        [i18n(context, 'piano_midi'), PIANO_KEYS[keyNumber]['midi']],
+        [i18n(context, 'piano_latin'), PIANO_KEYS[keyNumber]['latin']],
       ], flexValues: [
         1,
         2

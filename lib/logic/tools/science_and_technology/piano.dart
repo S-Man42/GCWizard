@@ -5,7 +5,7 @@
 
 Map<int, Map<String, dynamic>> PIANO_KEYS = {
   89: {
-    "number" : 89,
+    "number" : "89 (-8)",
     "color": "common_color_white",
     "frequency": "16.35160",
     "helmholtz": "C͵͵ sub-contra-octave",
@@ -15,7 +15,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do-1"
   },
   90: {
-    "number" : 90,
+    "number" : "90 (-7)",
     "color": "common_color_black",
     "frequency": "17.32391",
     "helmholtz": "C♯͵͵/D♭͵͵",
@@ -25,7 +25,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do-1#"
   },
   91: {
-    "number" : 91,
+    "number" : "91 (-6)",
     "color": "common_color_white",
     "frequency": "18.35405",
     "helmholtz": "D͵͵",
@@ -35,7 +35,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re-1"
   },
   92: {
-    "number" : 92,
+    "number" : "92 (-5)",
     "color": "common_color_black",
     "frequency": "19.44544",
     "helmholtz": "D♯͵͵/E♭͵͵",
@@ -45,7 +45,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re-1#"
   },
   93: {
-    "number" : 93,
+    "number" : "93 (-4)",
     "color": "common_color_white",
     "frequency": "20.60172",
     "helmholtz": "E͵͵",
@@ -55,7 +55,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi-1"
   },
   94: {
-    "number" : 94,
+    "number" : "94 (-3)",
     "color": "common_color_white",
     "frequency": "21.82676",
     "helmholtz": "F͵͵",
@@ -65,7 +65,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa-1"
   },
   95: {
-    "number" : 95,
+    "number" : "95 (-2)",
     "color": "common_color_black",
     "frequency": "23.12465",
     "helmholtz": "F♯͵͵/G♭͵͵",
@@ -75,7 +75,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa-1#"
   },
   96: {
-    "number" : 96,
+    "number" : "96 (-1)",
     "color": "common_color_white",
     "frequency": "24.49971",
     "helmholtz": "G͵͵",
@@ -85,7 +85,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "SOl-1"
   },
   97: {
-    "number" : 97,
+    "number" : "97 (0)",
     "color": "common_color_black",
     "frequency": "25.95654",
     "helmholtz": "G♯͵͵/A♭͵͵",
@@ -95,7 +95,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol-1#"
   },
   1: {
-    "number" : 1,
+    "number" : "1",
     "color": "common_color_white",
     "frequency": "27.50000",
     "helmholtz": "A͵͵",
@@ -105,7 +105,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La-1"
   },
   2: {
-    "number" : 2,
+    "number" : "2",
     "color": "common_color_black",
     "frequency": "29.13524",
     "helmholtz": "A♯͵͵/B♭͵͵",
@@ -115,7 +115,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La-1#"
   },
   3: {
-    "number" : 3,
+    "number" : "3",
     "color": "common_color_white",
     "frequency": "30.86771",
     "helmholtz": "B͵͵",
@@ -125,7 +125,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si-1"
   },
   4: {
-    "number" : 4,
+    "number" : "4",
     "color": "common_color_white",
     "frequency": "32.70320",
     "helmholtz": "C͵ contra-octave",
@@ -135,7 +135,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do0"
   },
   5: {
-    "number" : 5,
+    "number" : "5",
     "color": "common_color_black",
     "frequency": "34.64783",
     "helmholtz": "C♯͵/D♭͵",
@@ -145,7 +145,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do0#"
   },
   6: {
-    "number" : 6,
+    "number" : "6",
     "color": "common_color_white",
     "frequency": "36.70810",
     "helmholtz": "D͵",
@@ -155,7 +155,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re0"
   },
   7: {
-    "number" : 7,
+    "number" : "7",
     "color": "common_color_black",
     "frequency": "38.89087",
     "helmholtz": "D♯͵/E♭͵",
@@ -165,7 +165,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re0#"
   },
   8: {
-    "number" : 8,
+    "number" : "8",
     "color": "common_color_white",
     "frequency": "41.20344",
     "helmholtz": "E͵",
@@ -175,7 +175,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi0"
   },
   9: {
-    "number" : 9,
+    "number" : "9",
     "color": "common_color_white",
     "frequency": "43.65353",
     "helmholtz": "F͵",
@@ -185,7 +185,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa0"
   },
   10: {
-    "number" : 10,
+    "number" : "10",
     "color": "common_color_black",
     "frequency": "46.24930",
     "helmholtz": "F♯͵/G♭͵",
@@ -195,7 +195,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa0#"
   },
   11: {
-    "number" : 11,
+    "number" : "11",
     "color": "common_color_white",
     "frequency": "48.99943",
     "helmholtz": "G͵",
@@ -205,7 +205,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol0"
   },
   12: {
-    "number" : 12,
+    "number" : "12",
     "color": "common_color_black",
     "frequency": "51.91309",
     "helmholtz": "G♯͵/A♭͵",
@@ -215,7 +215,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol0#"
   },
   13: {
-    "number" : 13,
+    "number" : "13",
     "color": "common_color_white",
     "frequency": "55.00000",
     "helmholtz": "A͵",
@@ -225,7 +225,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La0"
   },
   14: {
-    "number" : 14,
+    "number" : "14",
     "color": "common_color_black",
     "frequency": "58.27047",
     "helmholtz": "A♯͵/B♭͵",
@@ -235,7 +235,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La0#"
   },
   15: {
-    "number" : 15,
+    "number" : "15",
     "color": "common_color_white",
     "frequency": "61.73541",
     "helmholtz": "B͵",
@@ -245,7 +245,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si0"
   },
   16: {
-    "number" : 16,
+    "number" : "16",
     "color": "common_color_white",
     "frequency": "65.40639",
     "helmholtz": "C great octave",
@@ -255,7 +255,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do1"
   },
   17: {
-    "number" : 17,
+    "number" : "17",
     "color": "common_color_black",
     "frequency": "69.29566",
     "helmholtz": "C♯/D♭",
@@ -265,7 +265,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do1#"
   },
   18: {
-    "number" : 18,
+    "number" : "18",
     "color": "common_color_white",
     "frequency": "73.41619",
     "helmholtz": "D",
@@ -275,7 +275,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re1"
   },
   19: {
-    "number" : 19,
+    "number" : "19",
     "color": "common_color_black",
     "frequency": "77.78175",
     "helmholtz": "D♯/E♭",
@@ -285,7 +285,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re1#"
   },
   20: {
-    "number" : 20,
+    "number" : "20",
     "color": "common_color_white",
     "frequency": "82.40689",
     "helmholtz": "E",
@@ -295,7 +295,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi1"
   },
   21: {
-    "number" : 21,
+    "number" : "21",
     "color": "common_color_white",
     "frequency": "87.30706",
     "helmholtz": "F",
@@ -305,7 +305,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa1"
   },
   22: {
-    "number" : 22,
+    "number" : "22",
     "color": "common_color_black",
     "frequency": "92.49861",
     "helmholtz": "F♯/G♭",
@@ -315,7 +315,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa1#"
   },
   23: {
-    "number" : 23,
+    "number" : "23",
     "color": "common_color_white",
     "frequency": "97.99886",
     "helmholtz": "G",
@@ -325,7 +325,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol1"
   },
   24: {
-    "number" : 24,
+    "number" : "24",
     "color": "common_color_black",
     "frequency": "103.8262",
     "helmholtz": "G♯/A♭",
@@ -335,7 +335,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol1#"
   },
   25: {
-    "number" : 25,
+    "number" : "25",
     "color": "common_color_white",
     "frequency": "110.0000",
     "helmholtz": "A",
@@ -345,7 +345,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La1"
   },
   26: {
-    "number" : 26,
+    "number" : "26",
     "color": "common_color_black",
     "frequency": "116.5409",
     "helmholtz": "A♯/B♭",
@@ -355,7 +355,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La1#"
   },
   27: {
-    "number" : 27,
+    "number" : "27",
     "color": "common_color_white",
     "frequency": "123.4708",
     "helmholtz": "B",
@@ -365,7 +365,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si1"
   },
   28: {
-    "number" : 28,
+    "number" : "28",
     "color": "common_color_white",
     "frequency": "130.8128",
     "helmholtz": "c small octave",
@@ -375,7 +375,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do2"
   },
   29: {
-    "number" : 29,
+    "number" : "29",
     "color": "common_color_black",
     "frequency": "138.5913",
     "helmholtz": "c♯/d♭",
@@ -385,7 +385,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do2#"
   },
   30: {
-    "number" : 30,
+    "number" : "30",
     "color": "common_color_white",
     "frequency": "146.8324",
     "helmholtz": "d",
@@ -395,7 +395,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re2"
   },
   31: {
-    "number" : 31,
+    "number" : "31",
     "color": "common_color_black",
     "frequency": "155.5635",
     "helmholtz": "d♯/e♭",
@@ -405,7 +405,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re2#"
   },
   32: {
-    "number" : 32,
+    "number" : "32",
     "color": "common_color_white",
     "frequency": "164.8138",
     "helmholtz": "e",
@@ -415,7 +415,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi2"
   },
   33: {
-    "number" : 33,
+    "number" : "33",
     "color": "common_color_white",
     "frequency": "174.6141",
     "helmholtz": "f",
@@ -425,7 +425,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa2"
   },
   34: {
-    "number" : 34,
+    "number" : "34",
     "color": "common_color_black",
     "frequency": "184.9972",
     "helmholtz": "f♯/g♭",
@@ -435,7 +435,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa2#"
   },
   35: {
-    "number" : 35,
+    "number" : "35",
     "color": "common_color_white",
     "frequency": "195.9977",
     "helmholtz": "g",
@@ -445,7 +445,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol2"
   },
   36: {
-    "number" : 36,
+    "number" : "36",
     "color": "common_color_black",
     "frequency": "207.6523",
     "helmholtz": "g♯/a♭",
@@ -455,7 +455,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol2#"
   },
   37: {
-    "number" : 37,
+    "number" : "37",
     "color": "common_color_white",
     "frequency": "220.0000",
     "helmholtz": "a",
@@ -465,7 +465,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La2"
   },
   38: {
-    "number" : 38,
+    "number" : "38",
     "color": "common_color_black",
     "frequency": "233.0819",
     "helmholtz": "a♯/b♭",
@@ -475,7 +475,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La2#"
   },
   39: {
-    "number" : 39,
+    "number" : "39",
     "color": "common_color_white",
     "frequency": "246.9417",
     "helmholtz": "b",
@@ -485,7 +485,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si2"
   },
   40: {
-    "number" : 40,
+    "number" : "40",
     "color": "common_color_white",
     "frequency": "261.6256",
     "helmholtz": "c′ 1-line octave",
@@ -495,7 +495,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do3"
   },
   41: {
-    "number" : 41,
+    "number" : "41",
     "color": "common_color_black",
     "frequency": "277.1826",
     "helmholtz": "c♯′/d♭′",
@@ -505,7 +505,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do3#"
   },
   42: {
-    "number" : 42,
+    "number" : "42",
     "color": "common_color_white",
     "frequency": "293.6648",
     "helmholtz": "d′",
@@ -515,7 +515,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re3"
   },
   43: {
-    "number" : 43,
+    "number" : "43",
     "color": "common_color_black",
     "frequency": "311.1270",
     "helmholtz": "d♯′/e♭′",
@@ -525,7 +525,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re3#"
   },
   44: {
-    "number" : 44,
+    "number" : "44",
     "color": "common_color_white",
     "frequency": "329.6276",
     "helmholtz": "e′",
@@ -535,7 +535,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi3"
   },
   45: {
-    "number" : 45,
+    "number" : "45",
     "color": "common_color_white",
     "frequency": "349.2282",
     "helmholtz": "f′",
@@ -545,7 +545,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa3"
   },
   46: {
-    "number" : 46,
+    "number" : "46",
     "color": "common_color_black",
     "frequency": "369.9944",
     "helmholtz": "f♯′/g♭′",
@@ -555,7 +555,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa3#"
   },
   47: {
-    "number" : 47,
+    "number" : "47",
     "color": "common_color_white",
     "frequency": "391.9954",
     "helmholtz": "g′",
@@ -565,7 +565,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol3"
   },
   48: {
-    "number" : 48,
+    "number" : "48",
     "color": "common_color_black",
     "frequency": "415.3047",
     "helmholtz": "g♯′/a♭′",
@@ -575,7 +575,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol3#"
   },
   49: {
-    "number" : 49,
+    "number" : "49",
     "color": "common_color_white",
     "frequency": "440.0000",
     "helmholtz": "a′",
@@ -585,7 +585,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La3"
   },
   50: {
-    "number" : 50,
+    "number" : "50",
     "color": "common_color_black",
     "frequency": "466.1638",
     "helmholtz": "a♯′/b♭′",
@@ -595,7 +595,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La3#"
   },
   51: {
-    "number" : 51,
+    "number" : "51",
     "color": "common_color_white",
     "frequency": "493.8833",
     "helmholtz": "b′",
@@ -605,7 +605,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si3"
   },
   52: {
-    "number" : 52,
+    "number" : "52",
     "color": "common_color_white",
     "frequency": "523.2511",
     "helmholtz": "c′′ 2-line octave",
@@ -615,7 +615,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do4"
   },
   53: {
-    "number" : 53,
+    "number" : "53",
     "color": "common_color_black",
     "frequency": "554.3653",
     "helmholtz": "c♯′′/d♭′′",
@@ -625,7 +625,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do4#"
   },
   54: {
-    "number" : 54,
+    "number" : "54",
     "color": "common_color_white",
     "frequency": "587.3295",
     "helmholtz": "d′′",
@@ -635,7 +635,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re4"
   },
   55: {
-    "number" : 55,
+    "number" : "55",
     "color": "common_color_black",
     "frequency": "622.2540",
     "helmholtz": "d♯′′/e♭′′",
@@ -645,7 +645,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re4#"
   },
   56: {
-    "number" : 56,
+    "number" : "56",
     "color": "common_color_white",
     "frequency": "659.2551",
     "helmholtz": "e′′",
@@ -655,7 +655,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi4"
   },
   57: {
-    "number" : 57,
+    "number" : "57",
     "color": "common_color_white",
     "frequency": "698.4565",
     "helmholtz": "f′′",
@@ -665,7 +665,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa4"
   },
   58: {
-    "number" : 58,
+    "number" : "58",
     "color": "common_color_black",
     "frequency": "739.9888",
     "helmholtz": "f♯′′/g♭′′",
@@ -675,7 +675,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa4#"
   },
   59: {
-    "number" : 59,
+    "number" : "59",
     "color": "common_color_white",
     "frequency": "783.9909",
     "helmholtz": "g′′",
@@ -685,7 +685,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol4"
   },
   60: {
-    "number" : 60,
+    "number" : "60",
     "color": "common_color_black",
     "frequency": "830.6094",
     "helmholtz": "g♯′′/a♭′′",
@@ -695,7 +695,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol4#"
   },
   61: {
-    "number" : 61,
+    "number" : "61",
     "color": "common_color_white",
     "frequency": "880.0000",
     "helmholtz": "a′′",
@@ -705,7 +705,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La4"
   },
   62: {
-    "number" : 62,
+    "number" : "62",
     "color": "common_color_black",
     "frequency": "932.3275",
     "helmholtz": "a♯′′/b♭′′",
@@ -715,7 +715,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La4#"
   },
   63: {
-    "number" : 63,
+    "number" : "63",
     "color": "common_color_white",
     "frequency": "987.7666",
     "helmholtz": "b′′",
@@ -725,7 +725,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si4"
   },
   64: {
-    "number" : 64,
+    "number" : "64",
     "color": "common_color_white",
     "frequency": "1046.502",
     "helmholtz": "c′′′ 3-line octave",
@@ -735,7 +735,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do5"
   },
   65: {
-    "number" : 65,
+    "number" : "65",
     "color": "common_color_black",
     "frequency": "1108.731",
     "helmholtz": "c♯′′′/d♭′′′",
@@ -745,7 +745,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do5#"
   },
   66: {
-    "number" : 66,
+    "number" : "66",
     "color": "common_color_white",
     "frequency": "1174.659",
     "helmholtz": "d′′′",
@@ -755,7 +755,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re5"
   },
   67: {
-    "number" : 67,
+    "number" : "67",
     "color": "common_color_black",
     "frequency": "1244.508",
     "helmholtz": "d♯′′′/e♭′′′",
@@ -765,7 +765,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re5#"
   },
   68: {
-    "number" : 68,
+    "number" : "68",
     "color": "common_color_white",
     "frequency": "1318.510",
     "helmholtz": "e′′′",
@@ -775,7 +775,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi5"
   },
   69: {
-    "number" : 69,
+    "number" : "69",
     "color": "common_color_white",
     "frequency": "1396.913",
     "helmholtz": "f′′′",
@@ -785,7 +785,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa5"
   },
   70: {
-    "number" : 70,
+    "number" : "70",
     "color": "common_color_black",
     "frequency": "1479.978",
     "helmholtz": "f♯′′′/g♭′′′",
@@ -795,7 +795,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa5#"
   },
   71: {
-    "number" : 71,
+    "number" : "71",
     "color": "common_color_white",
     "frequency": "1567.982",
     "helmholtz": "g′′′",
@@ -805,7 +805,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol5"
   },
   72: {
-    "number" : 72,
+    "number" : "72",
     "color": "common_color_black",
     "frequency": "1661.219",
     "helmholtz": "g♯′′′/a♭′′′",
@@ -815,7 +815,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol5#"
   },
   73: {
-    "number" : 73,
+    "number" : "73",
     "color": "common_color_white",
     "frequency": "1760.000",
     "helmholtz": "a′′′",
@@ -825,7 +825,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La5"
   },
   74: {
-    "number" : 74,
+    "number" : "74",
     "color": "common_color_black",
     "frequency": "1864.655",
     "helmholtz": "a♯′′′/b♭′′′",
@@ -835,7 +835,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La5#"
   },
   75: {
-    "number" : 75,
+    "number" : "75",
     "color": "common_color_white",
     "frequency": "1975.533",
     "helmholtz": "b′′′",
@@ -845,7 +845,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si5"
   },
   76: {
-    "number" : 76,
+    "number" : "76",
     "color": "common_color_white",
     "frequency": "2093.005",
     "helmholtz": "c′′′′ 4-line octave",
@@ -855,7 +855,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do6"
   },
   77: {
-    "number" : 77,
+    "number" : "77",
     "color": "common_color_black",
     "frequency": "2217.461",
     "helmholtz": "c♯′′′′/d♭′′′′",
@@ -865,7 +865,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do6#"
   },
   78: {
-    "number" : 78,
+    "number" : "78",
     "color": "common_color_white",
     "frequency": "2349.318",
     "helmholtz": "d′′′′",
@@ -875,7 +875,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re6"
   },
   79: {
-    "number" : 79,
+    "number" : "79",
     "color": "common_color_black",
     "frequency": "2489.016",
     "helmholtz": "d♯′′′′/e♭′′′′",
@@ -885,7 +885,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re6#"
   },
   80: {
-    "number" : 80,
+    "number" : "80",
     "color": "common_color_white",
     "frequency": "2637.020",
     "helmholtz": "e′′′′",
@@ -895,7 +895,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi6"
   },
   81: {
-    "number" : 81,
+    "number" : "81",
     "color": "common_color_white",
     "frequency": "2793.826",
     "helmholtz": "f′′′′",
@@ -905,7 +905,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa6"
   },
   82: {
-    "number" : 82,
+    "number" : "82",
     "color": "common_color_black",
     "frequency": "2959.955",
     "helmholtz": "f♯′′′′/g♭′′′′",
@@ -915,7 +915,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa6#"
   },
   83: {
-    "number" : 83,
+    "number" : "83",
     "color": "common_color_white",
     "frequency": "3135.963",
     "helmholtz": "g′′′′",
@@ -925,7 +925,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol6"
   },
   84: {
-    "number" : 84,
+    "number" : "84",
     "color": "common_color_black",
     "frequency": "3322.438",
     "helmholtz": "g♯′′′′/a♭′′′′",
@@ -935,7 +935,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol6#"
   },
   85: {
-    "number" : 85,
+    "number" : "85",
     "color": "common_color_white",
     "frequency": "3520.000",
     "helmholtz": "a′′′′",
@@ -945,7 +945,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La6"
   },
   86: {
-    "number" : 86,
+    "number" : "86",
     "color": "common_color_black",
     "frequency": "3729.310",
     "helmholtz": "a♯′′′′/b♭′′′′",
@@ -955,7 +955,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La6#"
   },
   87: {
-    "number" : 87,
+    "number" : "87",
     "color": "common_color_white",
     "frequency": "3951.066",
     "helmholtz": "b′′′′",
@@ -965,7 +965,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Si6"
   },
   88: {
-    "number" : 88,
+    "number" : "88",
     "color": "common_color_white",
     "frequency": "4186.009",
     "helmholtz": "c′′′′′ 5-line octave",
@@ -975,7 +975,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do7"
   },
   98: {
-    "number" : 98,
+    "number" : "98 (89)",
     "color": "common_color_black",
     "frequency": "4434.922",
     "helmholtz": "c♯′′′′′/d♭′′′′′",
@@ -985,7 +985,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Do7#"
   },
   99: {
-    "number" : 90,
+    "number" : "99 (90)",
     "color": "common_color_white",
     "frequency": "4698.636",
     "helmholtz": "d′′′′′",
@@ -995,7 +995,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re7"
   },
   100: {
-    "number" : 100,
+    "number" : "100 (91)",
     "color": "common_color_black",
     "frequency": "4978.032",
     "helmholtz": "d♯′′′′′/e♭′′′′′",
@@ -1005,7 +1005,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Re7#"
   },
   101: {
-    "number" : 101,
+    "number" : "101 (92)",
     "color": "common_color_white",
     "frequency": "5274.041",
     "helmholtz": "e′′′′′",
@@ -1015,7 +1015,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Mi7"
   },
   102: {
-    "number" : 102,
+    "number" : "102 (93)",
     "color": "common_color_white",
     "frequency": "5587.652",
     "helmholtz": "f′′′′′",
@@ -1025,7 +1025,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa7"
   },
   103: {
-    "number" : 103,
+    "number" : "103 (94)",
     "color": "common_color_black",
     "frequency": "5919.911",
     "helmholtz": "f♯′′′′′/g♭′′′′′",
@@ -1035,7 +1035,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Fa7#"
   },
   104: {
-    "number" : 104,
+    "number" : "104 (95)",
     "color": "common_color_white",
     "frequency": "6271.927",
     "helmholtz": "g′′′′′",
@@ -1045,7 +1045,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol7"
   },
   105: {
-    "number" : 105,
+    "number" : "105 (96)",
     "color": "common_color_black",
     "frequency": "6644.875",
     "helmholtz": "g♯′′′′′/a♭′′′′′",
@@ -1055,7 +1055,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "Sol7#"
   },
   106: {
-    "number" : 106,
+    "number" : "106 (97)",
     "color": "common_color_white",
     "frequency": "7040.000",
     "helmholtz": "a′′′′′",
@@ -1065,7 +1065,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La7"
   },
   107: {
-    "number" : 107,
+    "number" : "107 (98)",
     "color": "common_color_black",
     "frequency": "7458.620",
     "helmholtz": "a♯′′′′′/b♭′′′′′",
@@ -1075,7 +1075,7 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "latin": "La6#"
   },
   108: {
-    "number" : 108,
+    "number" : "108 (99)",
     "color": "common_color_white",
     "frequency": "7902.133",
     "helmholtz": "b′′′′′",
