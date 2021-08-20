@@ -6,7 +6,6 @@ import 'dart:typed_data';
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
@@ -132,21 +131,21 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.GPX : {
     'extensions': ['gpx'],
-    'magic_bytes': [<int>[]],
+    'magic_bytes': [],
     'file_class' : FileClass.DATA,
     'mime_type' : 'application/gpx+xml',
     'uniform_type_identifier': 'com.topografix.gpx'
   },
   FileType.KML : {
     'extensions': ['kml'],
-    'magic_bytes': [<int>[]],
+    'magic_bytes': [],
     'file_class' : FileClass.DATA,
     'mime_type' : 'application/vnd.google-earth.kml+xml',
     'uniform_type_identifier': 'com.google.earth.kml'
   },
   FileType.KMZ : {
     'extensions': ['kmz'],
-    'magic_bytes': [<int>[]],
+    'magic_bytes': [],
     'file_class' : FileClass.DATA,
     'mime_type' : 'application/vnd.google-earth.kmz'
   },
@@ -158,7 +157,6 @@ FileType fileTypeByExtension(String extension) {
 }
 
 String fileExtension(FileType type) {
-  if (type == null) return '';
   return _FILE_TYPES[type]['extensions'].first;
 }
 
@@ -175,7 +173,6 @@ List<FileType> fileTypesByFileClass (FileClass _fileClass) {
 }
 
 FileClass fileClass(FileType type) {
-  if (type == null) return null;
   return _FILE_TYPES[type]['file_class'];
 }
 
@@ -234,7 +231,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     );
     if (fileInfo == null) return null;
 
-    filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
+    filePath = fileInfo.identifier;
   }
   return {'path': filePath, 'file': fileX};
 }
@@ -262,7 +259,7 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     );
     if (fileInfo == null) return null;
 
-    filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
+    filePath = fileInfo.identifier;
   }
   return {'path': filePath, 'file': fileX};
 }
@@ -310,7 +307,6 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
   for (var fileType in _FILE_TYPES.keys) {
     var _magicBytes = magicBytes(fileType);
 
-    if ((_magicBytes == null) | (_magicBytes.length == 0) | (_magicBytes[0].length == 0)) return null;
     for (var bytes in _magicBytes) {
       if (blobBytes.length >= bytes.length && ListEquality().equals(blobBytes.sublist(0, bytes.length), bytes))
         return fileType;
@@ -732,7 +728,8 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
 
       encoder.addFile(imageFileTmp, fileNameZip);
       imageFileTmp.delete();
-    };
+    }
+    ;
 
     encoder.close();
 

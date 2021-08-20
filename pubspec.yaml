@@ -17,7 +17,6 @@ dependencies:
   exif: ^3.0.0
   flutter:
     sdk: flutter
-  flutter_absolute_path: ^1.0.6
   flutter_localizations:
     sdk: flutter
   flutter_map: ^0.13.1
