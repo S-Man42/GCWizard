@@ -4,6 +4,96 @@
 
 
 Map<int, Map<String, dynamic>> PIANO_KEYS = {
+  89: {
+    "number" : 89,
+    "color": "common_color_white",
+    "frequency": "16.35160",
+    "helmholtz": "C͵͵ sub-contra-octave",
+    "scientific": "C0 Double Pedal C",
+    "german": "C2",
+    "midi": "C-1",
+    "latin": "Do-1"
+  },
+  90: {
+    "number" : 90,
+    "color": "common_color_black",
+    "frequency": "17.32391",
+    "helmholtz": "C♯͵͵/D♭͵͵",
+    "scientific": "C♯0/D♭0",
+    "german": "Cis2/Des2",
+    "midi": "C#-1/D♭-1",
+    "latin": "Do-1#"
+  },
+  91: {
+    "number" : 91,
+    "color": "common_color_white",
+    "frequency": "18.35405",
+    "helmholtz": "D͵͵",
+    "scientific": "D0",
+    "german": "D2",
+    "midi": "D-1",
+    "latin": "Re-1"
+  },
+  92: {
+    "number" : 92,
+    "color": "common_color_black",
+    "frequency": "19.44544",
+    "helmholtz": "D♯͵͵/E♭͵͵",
+    "scientific": "D♯0/E♭0",
+    "german": "Dis2/Es2",
+    "midi": "D#-1/E♭-1",
+    "latin": "Re-1#"
+  },
+  93: {
+    "number" : 93,
+    "color": "common_color_white",
+    "frequency": "20.60172",
+    "helmholtz": "E͵͵",
+    "scientific": "E0",
+    "german": "E2",
+    "midi": "E-1",
+    "latin": "Mi-1"
+  },
+  94: {
+    "number" : 94,
+    "color": "common_color_white",
+    "frequency": "21.82676",
+    "helmholtz": "F͵͵",
+    "scientific": "F0",
+    "german": "F2",
+    "midi": "F-1",
+    "latin": "Fa-1"
+  },
+  95: {
+    "number" : 95,
+    "color": "common_color_black",
+    "frequency": "23.12465",
+    "helmholtz": "F♯͵͵/G♭͵͵",
+    "scientific": "F♯0/G♭0",
+    "german": "Fis2/Ges2",
+    "midi": "F#-1/G♭-1",
+    "latin": "Fa-1#"
+  },
+  96: {
+    "number" : 96,
+    "color": "common_color_white",
+    "frequency": "24.49971",
+    "helmholtz": "G͵͵",
+    "scientific": "G0",
+    "german": "G2",
+    "midi": "G-1",
+    "latin": "SOl-1"
+  },
+  97: {
+    "number" : 97,
+    "color": "common_color_black",
+    "frequency": "25.95654",
+    "helmholtz": "G♯͵͵/A♭͵͵",
+    "scientific": "G♯0/A♭0",
+    "german": "Gis2/As2",
+    "midi": "G#-1/A♭-1",
+    "latin": "Sol-1#"
+  },
   1: {
     "number" : 1,
     "color": "common_color_white",
@@ -883,96 +973,6 @@ Map<int, Map<String, dynamic>> PIANO_KEYS = {
     "german": "c5",
     "midi": "D7",
     "latin": "Do7"
-  },
-  89: {
-    "number" : 89,
-    "color": "common_color_white",
-    "frequency": "16.35160",
-    "helmholtz": "C͵͵ sub-contra-octave",
-    "scientific": "C0 Double Pedal C",
-    "german": "C2",
-    "midi": "C-1",
-    "latin": "Do-1"
-  },
-  90: {
-    "number" : 90,
-    "color": "common_color_black",
-    "frequency": "17.32391",
-    "helmholtz": "C♯͵͵/D♭͵͵",
-    "scientific": "C♯0/D♭0",
-    "german": "Cis2/Des2",
-    "midi": "C#-1/D♭-1",
-    "latin": "Do-1#"
-  },
-  91: {
-    "number" : 91,
-    "color": "common_color_white",
-    "frequency": "18.35405",
-    "helmholtz": "D͵͵",
-    "scientific": "D0",
-    "german": "D2",
-    "midi": "D-1",
-    "latin": "Re-1"
-  },
-  92: {
-    "number" : 92,
-    "color": "common_color_black",
-    "frequency": "19.44544",
-    "helmholtz": "D♯͵͵/E♭͵͵",
-    "scientific": "D♯0/E♭0",
-    "german": "Dis2/Es2",
-    "midi": "D#-1/E♭-1",
-    "latin": "Re-1#"
-  },
-  93: {
-    "number" : 93,
-    "color": "common_color_white",
-    "frequency": "20.60172",
-    "helmholtz": "E͵͵",
-    "scientific": "E0",
-    "german": "E2",
-    "midi": "E-1",
-    "latin": "Mi-1"
-  },
-  94: {
-    "number" : 94,
-    "color": "common_color_white",
-    "frequency": "21.82676",
-    "helmholtz": "F͵͵",
-    "scientific": "F0",
-    "german": "F2",
-    "midi": "F-1",
-    "latin": "Fa-1"
-  },
-  95: {
-    "number" : 95,
-    "color": "common_color_black",
-    "frequency": "23.12465",
-    "helmholtz": "F♯͵͵/G♭͵͵",
-    "scientific": "F♯0/G♭0",
-    "german": "Fis2/Ges2",
-    "midi": "F#-1/G♭-1",
-    "latin": "Fa-1#"
-  },
-  96: {
-    "number" : 96,
-    "color": "common_color_white",
-    "frequency": "24.49971",
-    "helmholtz": "G͵͵",
-    "scientific": "G0",
-    "german": "G2",
-    "midi": "G-1",
-    "latin": "SOl-1"
-  },
-  97: {
-    "number" : 97,
-    "color": "common_color_black",
-    "frequency": "25.95654",
-    "helmholtz": "G♯͵͵/A♭͵͵",
-    "scientific": "G♯0/A♭0",
-    "german": "Gis2/As2",
-    "midi": "G#-1/A♭-1",
-    "latin": "Sol-1#"
   },
   98: {
     "number" : 98,
