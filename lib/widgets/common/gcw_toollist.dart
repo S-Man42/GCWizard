@@ -52,14 +52,12 @@ class _GCWToolListState extends State<GCWToolList> {
               margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
               color: themeColors().accent(),
             ),
-            // Text(
-            //   'BETA',
-            //   style: gcwBetaStyle(),
-            // ),
-          Text(
-            tool.toolName,
-            style: gcwTextStyle(),
-          ),
+          Expanded(
+            child: Text(
+              tool.toolName,
+              style: gcwTextStyle(),
+            ),
+          )
         ],
       ),
       subtitle: _buildSubtitle(context, tool),

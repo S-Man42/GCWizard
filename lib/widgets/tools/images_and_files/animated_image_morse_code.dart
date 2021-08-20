@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
@@ -92,6 +93,11 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         expanded: _platformFile == null,
         supportedFileTypes: AnimatedImageState.allowedExtensions,
         onLoaded: (_file) {
+          if (_file == null) {
+            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            return;
+          }
+
           if (_file != null) {
             _platformFile = _file;
             _analysePlatformFileAsync();
@@ -387,6 +393,9 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       for (int i = 0; i < images.length; i++) {
         images[i] = images[linkList[i]];
       }
+    } else {
+      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      return;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

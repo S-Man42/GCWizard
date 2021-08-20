@@ -6,17 +6,15 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 class GCWMultipleOutput extends StatefulWidget {
   final List<dynamic> children;
   final bool suppressDefaultTitle;
-  final Widget trailing;
-  final Function onExportCoordinates;
-  final String title;
+  final List<Widget> trailings;
+  final List<String> titles;
 
   const GCWMultipleOutput(
       {Key key,
       @required this.children,
       this.suppressDefaultTitle: false,
-      this.trailing,
-      this.onExportCoordinates,
-      this.title})
+      this.trailings,
+      this.titles})
       : super(key: key);
 
   @override
@@ -26,17 +24,36 @@ class GCWMultipleOutput extends StatefulWidget {
 class _GCWMultipleOutputState extends State<GCWMultipleOutput> {
   @override
   Widget build(BuildContext context) {
-    var children = widget.children.map((child) {
-      if (child is Widget) return child;
+    List<Widget> children = widget.children.asMap().map((index, child) {
+      Widget value;
 
-      return GCWOutput(
-        child: child.toString(),
-      );
-    }).toList();
+      if (child is Widget) {
+        value = child;
+      } else {
+        var title;
+        var trailing;
 
-    if (!widget.suppressDefaultTitle)
-      children.insert(
-          0, GCWTextDivider(text: this.widget.title ?? i18n(context, 'common_output'), trailing: widget.trailing));
+        if (!widget.suppressDefaultTitle) {
+          if (widget.titles != null && (index < widget.titles.length)) {
+            title = widget.titles[index];
+          } else if (index == 0) {
+            title = i18n(context, 'common_output');
+          }
+
+          if (widget.trailings != null && (index < widget.trailings.length)) {
+            trailing = widget.trailings[index];
+          }
+        }
+
+        value = GCWOutput(
+          title: title,
+          trailing: trailing,
+          child: child.toString(),
+        );
+      }
+
+      return MapEntry(index, value);
+    }).values.toList();
 
     return Column(children: children);
   }

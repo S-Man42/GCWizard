@@ -84,6 +84,7 @@ import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -132,6 +133,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille.dart';
@@ -153,7 +155,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
@@ -196,6 +200,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/schilling_cannstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
@@ -223,6 +228,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -237,6 +243,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_ris
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -306,6 +313,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_pri
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -326,10 +334,6 @@ class Registry {
   static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
-    // if (toolList != null) {
-    //   return;
-    // }
-
     toolList = [
       //MainSelection
       GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
@@ -367,6 +371,18 @@ class Registry {
         SEARCHSTRING_DE_AFFINE,
         SEARCHSTRING_EN_AFFINE,
         SEARCHSTRING_FR_AFFINE
+      ]),
+      GCWTool(tool: AlcoholMass(), i18nPrefix: 'alcoholmass', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ALCOHOLMASS,
+        SEARCHSTRING_DE_ALCOHOLMASS,
+        SEARCHSTRING_EN_ALCOHOLMASS,
+        SEARCHSTRING_FR_ALCOHOLMASS
       ]),
       GCWTool(tool: AlphabetValues(), i18nPrefix: 'alphabetvalues', categories: [
         ToolCategory.CRYPTOGRAPHY
@@ -502,7 +518,22 @@ class Registry {
         SEARCHSTRING_EN_BINARY,
         SEARCHSTRING_FR_BINARY
       ]),
-
+      GCWTool(tool: BloodAlcoholContent(), i18nPrefix: 'bloodalcoholcontent', categories: [
+        ToolCategory.SCIENCE_AND_TECHNOLOGY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ALCOHOLMASS,
+        SEARCHSTRING_DE_ALCOHOLMASS,
+        SEARCHSTRING_EN_ALCOHOLMASS,
+        SEARCHSTRING_FR_ALCOHOLMASS,
+        SEARCHSTRING_COMMON_BLOODALCOHOLCONTENT,
+        SEARCHSTRING_DE_BLOODALCOHOLCONTENT,
+        SEARCHSTRING_EN_BLOODALCOHOLCONTENT,
+        SEARCHSTRING_FR_BLOODALCOHOLCONTENT
+      ]),
       GCWTool(
           tool: BrailleSelection(),
           i18nPrefix: 'braille_selection',
@@ -516,6 +547,20 @@ class Registry {
     categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: []),
+      GCWTool(tool: Beghilos(), i18nPrefix: 'beghilos',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BEGHILOS,
+            SEARCHSTRING_DE_BEGHILOS,
+            SEARCHSTRING_EN_BEGHILOS,
+            SEARCHSTRING_FR_BEGHILOS,
+            SEARCHSTRING_DE_SEGMENTS,
+            SEARCHSTRING_EN_SEGMENTS,
+            SEARCHSTRING_FR_SEGMENTS,
+            SEARCHSTRING_DE_SEGMENTS_SEVEN,
+            SEARCHSTRING_EN_SEGMENTS_SEVEN,
+            SEARCHSTRING_FR_SEGMENTS_SEVEN
+          ]),
       GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
@@ -543,6 +588,11 @@ class Registry {
       GCWTool(tool: Binary2Image(), i18nPrefix: 'binary2image', isBeta: true, categories: [
         ToolCategory.IMAGES_AND_FILES
       ], searchStrings: [
+        SEARCHSTRING_COMMON_BINARY,
+        SEARCHSTRING_DE_BINARY,
+        SEARCHSTRING_EN_BINARY,
+        SEARCHSTRING_FR_BINARY,
+        SEARCHSTRING_COMMON_HEXSTRING2FILE,
         SEARCHSTRING_DE_HEXSTRING2FILE,
         SEARCHSTRING_EN_HEXSTRING2FILE,
         SEARCHSTRING_FR_HEXSTRING2FILE
@@ -818,7 +868,6 @@ class Registry {
         SEARCHSTRING_EN_EXIF,
         SEARCHSTRING_FR_EXIF,
       ]),
-
       GCWTool(
         tool: FormulaSolverFormulaGroups(),
         i18nPrefix: 'formulasolver',
@@ -831,6 +880,18 @@ class Registry {
         ],
       ),
       GCWTool(
+          tool: Fox(),
+          i18nPrefix: 'fox',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [SEARCHSTRING_COMMON_FOX, SEARCHSTRING_DE_FOX, SEARCHSTRING_EN_FOX, SEARCHSTRING_FR_FOX]),
+      GCWTool(
+          tool: Gade(),
+          i18nPrefix: 'gade',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [SEARCHSTRING_COMMON_GADE, SEARCHSTRING_DE_GADE, SEARCHSTRING_EN_GADE, SEARCHSTRING_FR_GADE]),
+      GCWTool(
         tool: GamesSelection(),
         i18nPrefix: 'games_selection',
         helpLocales: ['de', 'en', 'fr'],
@@ -842,11 +903,20 @@ class Registry {
         ],
       ),
       GCWTool(
-          tool: Gade(),
-          i18nPrefix: 'gade',
+          tool: GaussWeberTelegraph(),
+          i18nPrefix: 'gausswebertelegraph',
           categories: [ToolCategory.CRYPTOGRAPHY],
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_GADE, SEARCHSTRING_DE_GADE, SEARCHSTRING_EN_GADE, SEARCHSTRING_FR_GADE]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_GAUSSWEBERTELEGRAPH,
+            SEARCHSTRING_DE_GAUSSWEBERTELEGRAPH,
+            SEARCHSTRING_EN_GAUSSWEBERTELEGRAPH,
+            SEARCHSTRING_FR_GAUSSWEBERTELEGRAPH,
+          ]),
       GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
@@ -1321,6 +1391,17 @@ class Registry {
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: [SEARCHSTRING_COMMON_RC4, SEARCHSTRING_DE_RC4, SEARCHSTRING_EN_RC4, SEARCHSTRING_FR_RC4]),
       GCWTool(
+          tool: Recycling(),
+          i18nPrefix: 'recycling',
+          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_RECYCLING,
+            SEARCHSTRING_DE_RECYCLING,
+            SEARCHSTRING_EN_RECYCLING,
+            SEARCHSTRING_FR_RECYCLING,
+          ]),
+      GCWTool(
           tool: ResistorSelection(),
           i18nPrefix: 'resistor_selection',
           categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
@@ -1368,6 +1449,21 @@ class Registry {
         SEARCHSTRING_EN_PRIMES,
         SEARCHSTRING_FR_PRIMES
       ]),
+      GCWTool(
+          tool: SchillingCannstattTelegraph(),
+          i18nPrefix: 'schillingcannstatt',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_SCHILLINGCANNSTATT,
+            SEARCHSTRING_DE_SCHILLINGCANNSTATT,
+            SEARCHSTRING_EN_SCHILLINGCANNSTATT,
+            SEARCHSTRING_FR_SCHILLINGCANNSTATT,
+          ]),
       GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', helpLocales: [
         'de',
         'en',
@@ -2394,6 +2490,28 @@ class Registry {
             SEARCHSTRING_DE_COORDINATES_CENTERTWOPOINTS,
             SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS,
             SEARCHSTRING_FR_COORDINATES_CENTERTWOPOINTS
+          ]),
+      GCWTool(
+          tool: Centroid(),
+          i18nPrefix: 'coords_centroid',
+          iconPath: 'assets/icons/coords/icon_centroid.png',
+          categories: [
+            ToolCategory.COORDINATES
+          ],
+          helpLocales: [
+            'de',
+            'en',
+            'fr'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COORDINATES,
+            SEARCHSTRING_DE_COORDINATES,
+            SEARCHSTRING_EN_COORDINATES,
+            SEARCHSTRING_FR_COORDINATES,
+            SEARCHSTRING_COMMON_COORDINATES_CENTROID,
+            SEARCHSTRING_DE_COORDINATES_CENTROID,
+            SEARCHSTRING_EN_COORDINATES_CENTROID,
+            SEARCHSTRING_FR_COORDINATES_CENTROID
           ]),
       GCWTool(
           tool: CenterThreePoints(),
@@ -5792,10 +5910,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_BARBIER
       ]),
       GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_BARCODE39,
         SEARCHSTRING_DE_BARCODE39,
         SEARCHSTRING_EN_BARCODE39,
@@ -5883,7 +6001,39 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_CHAIN_OF_DEATH_PAIRS,
         SEARCHSTRING_FR_SYMBOL_CHAIN_OF_DEATH_PAIRS,
       ]),
+      GCWSymbolTableTool(symbolKey: 'chappe_1794', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
+        SEARCHSTRING_DE_SYMBOL_CHAPPE,
+        SEARCHSTRING_EN_SYMBOL_CHAPPE,
+        SEARCHSTRING_FR_SYMBOL_CHAPPE,
+        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_1794,
+        SEARCHSTRING_DE_SYMBOL_CHAPPE_1794,
+        SEARCHSTRING_EN_SYMBOL_CHAPPE_1794,
+        SEARCHSTRING_FR_SYMBOL_CHAPPE_1794
+      ]),
+      GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
+        SEARCHSTRING_DE_SYMBOL_CHAPPE,
+        SEARCHSTRING_EN_SYMBOL_CHAPPE,
+        SEARCHSTRING_FR_SYMBOL_CHAPPE,
+        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_1809,
+        SEARCHSTRING_DE_SYMBOL_CHAPPE_1809,
+        SEARCHSTRING_EN_SYMBOL_CHAPPE_1809,
+        SEARCHSTRING_FR_SYMBOL_CHAPPE_1809
+      ]),
       GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
         SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
         SEARCHSTRING_DE_SYMBOL_CHAPPE,
         SEARCHSTRING_EN_SYMBOL_CHAPPE,
@@ -5894,6 +6044,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_CHAPPE_V1
       ]),
       GCWSymbolTableTool(symbolKey: 'chappe_v2', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
         SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
         SEARCHSTRING_DE_SYMBOL_CHAPPE,
         SEARCHSTRING_EN_SYMBOL_CHAPPE,
@@ -5904,6 +6058,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_CHAPPE_V2
       ]),
       GCWSymbolTableTool(symbolKey: 'chappe_v3', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
         SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
         SEARCHSTRING_DE_SYMBOL_CHAPPE,
         SEARCHSTRING_EN_SYMBOL_CHAPPE,
@@ -5966,6 +6124,20 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
+      ]),
+      GCWSymbolTableTool(symbolKey: 'cookewheatstone_oneneedle', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_ONENEEDLE,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_ONENEEDLE,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_ONENEEDLE,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_ONENEEDLE
       ]),
       GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: [
         SEARCHSTRING_COMMON_COUNTRIES,
@@ -6215,7 +6387,13 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_GARGISH,
         SEARCHSTRING_FR_SYMBOL_GARGISH
       ]),
-      GCWSymbolTableTool(symbolKey: 'gc_attributes', symbolSearchStrings: [
+      GCWSymbolTableTool(symbolKey: 'gc_attributes_ids', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_FR_SYMBOL_GC_ATTRIBUTES
+      ]),
+      GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
         SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
         SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
@@ -6428,10 +6606,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_KABOUTER_ABC_1947
       ]),
       GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_SYMBOL_KARTRAK,
         SEARCHSTRING_DE_SYMBOL_KARTRAK,
         SEARCHSTRING_EN_SYMBOL_KARTRAK,
@@ -6724,10 +6902,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_PIXEL
       ]),
       GCWSymbolTableTool(symbolKey: 'planet', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_SYMBOL_PLANET,
         SEARCHSTRING_DE_SYMBOL_PLANET,
         SEARCHSTRING_EN_SYMBOL_PLANET,
@@ -6746,30 +6924,30 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_POKEMON_UNOWN
       ]),
       GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_SYMBOL_POSTCODE01247,
         SEARCHSTRING_DE_SYMBOL_POSTCODE01247,
         SEARCHSTRING_EN_SYMBOL_POSTCODE01247,
         SEARCHSTRING_FR_SYMBOL_POSTCODE01247
       ]),
       GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_SYMBOL_POSTCODE8421,
         SEARCHSTRING_DE_SYMBOL_POSTCODE8421,
         SEARCHSTRING_EN_SYMBOL_POSTCODE8421,
         SEARCHSTRING_FR_SYMBOL_POSTCODE8421
       ]),
       GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_SYMBOL_POSTNET,
         SEARCHSTRING_DE_SYMBOL_POSTNET,
         SEARCHSTRING_EN_SYMBOL_POSTNET,
@@ -6830,10 +7008,10 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_RHESUS
       ]),
       GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
-        SEARCHSTRING_DE_SYMBOL_BARCODES,
-        SEARCHSTRING_EN_SYMBOL_BARCODES,
-        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_BARCODES,
+        SEARCHSTRING_DE_BARCODES,
+        SEARCHSTRING_EN_BARCODES,
+        SEARCHSTRING_FR_BARCODES,
         SEARCHSTRING_COMMON_SYMBOL_RM4SCC,
         SEARCHSTRING_DE_SYMBOL_RM4SCC,
         SEARCHSTRING_EN_SYMBOL_RM4SCC,

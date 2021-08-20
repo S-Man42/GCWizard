@@ -9,6 +9,8 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
@@ -41,6 +43,8 @@ class _ExifReaderState extends State<ExifReader> {
   GCWImageViewData thumbnail;
   Image.Image image;
 
+  var _fileLoaded = false;
+
   @override
   initState() {
     super.initState();
@@ -58,7 +62,10 @@ class _ExifReaderState extends State<ExifReader> {
           expanded: widget.file == null,
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (_file) {
-            if (_file == null) return;
+            if (_file == null) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
 
             _readFile(_file);
           },
@@ -73,6 +80,12 @@ class _ExifReaderState extends State<ExifReader> {
     if (_file == null) return;
 
     Map<String, IfdTag> tags = await parseExif(_file);
+    if (tags == null) {
+      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      _fileLoaded = false;
+      return;
+    }
+
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
@@ -86,6 +99,7 @@ class _ExifReaderState extends State<ExifReader> {
       }
 
       _image = await _completeImageMetadata(_file);
+      _fileLoaded = true;
 
       setState(() {
         file = _file;
@@ -100,6 +114,12 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   List _buildOutput(Map _tableTags) {
+    if (!_fileLoaded) {
+      return [
+        GCWDefaultOutput()
+      ];
+    }
+
     List<Widget> widgets = [];
     _decorateThumbnail(widgets);
     _decorateFile(widgets, file);

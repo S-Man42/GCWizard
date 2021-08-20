@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-buildSegmentDisplayOutput(countColumns, displays) {
+Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays) {
   var rows = <Widget>[];
   var countRows = (displays.length / countColumns).floor();
 

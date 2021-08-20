@@ -16,11 +16,23 @@ List<Uint8List> extraData(Uint8List data, {List<Uint8List> resultList}) {
     case FileType.GIF:
       imageLength = gifImageSize(data);
       break;
+    case FileType.BMP:
+      imageLength = bmpImageSize(data);
+      break;
+    case FileType.ZIP:
+      imageLength = zipFileSize(data);
+      break;
+    case FileType.RAR:
+      imageLength = rarFileSize(data);
+      break;
+    case FileType.MP3:
+      imageLength = mp3FileSize(data);
+      break;
     default:
       return resultList;
   }
 
-  if ((imageLength != null) & (imageLength > 0) & (data.length > imageLength)) {
+  if ((imageLength != null) && (imageLength > 0) && (data.length > imageLength)) {
     if (resultList == null) resultList = <Uint8List>[];
     // result data
     var result = data.sublist(imageLength);
@@ -32,4 +44,17 @@ List<Uint8List> extraData(Uint8List data, {List<Uint8List> resultList}) {
   }
 
   return resultList;
+}
+
+Uint8List mergeFiles(List<dynamic> data) {
+  if (data == null) return null;
+  var result = <int>[];
+
+  data.forEach((element) {
+    if (element is Uint8List)
+      result.addAll(element);
+    else if (element is String)
+      result.addAll(Uint8List.fromList(element.toString().codeUnits));
+  });
+  return Uint8List.fromList(result);
 }
