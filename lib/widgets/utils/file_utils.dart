@@ -204,11 +204,26 @@ String uniformTypeIdentifier(FileType type) {
   return _FILE_TYPES[type]['uniform_type_identifier'];
 }
 
-Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, {String subDirectory}) async {
-  var status = await Permission.storage.request();
-  if (status != PermissionStatus.granted) {
-    return null;
+Future<bool> checkStoragePermission() async {
+  var _permissionStatus = await Permission.storage.status;
+
+  if (_permissionStatus.isPermanentlyDenied)
+    return false;
+
+  if (!_permissionStatus.isGranted) {
+    await Permission.storage.request();
+
+    if (!await Permission.storage.isGranted)
+      return false;
   }
+
+  return true;
+}
+
+Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, {String subDirectory}) async {
+  var storagePermission = await checkStoragePermission();
+  if (!storagePermission)
+    return null;
 
   var filePath = '';
   File fileX;

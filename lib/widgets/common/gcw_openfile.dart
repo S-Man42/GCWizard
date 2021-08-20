@@ -101,22 +101,45 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                     GCWButton(
                       text: i18n(context, 'common_loadfile_load'),
                       onPressed: () {
+                        print('ENTER');
+
                         if (_currentUrl == null) {
                           return;
                         }
 
+
+                        print('PRE SUPPORTED');
+
                         if (widget.supportedFileTypes != null) {
                           var _urlFileType = fileTypeByExtension(_currentUrl);
+
+                          print(_urlFileType);
+                          print(widget.supportedFileTypes);
 
                           if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType))
                             return;
                         }
 
+                        print('PRE URL');
+
                         _getUri(_currentUrl).then((uri) {
-                          if (uri == null)
+                          print('ENTER URL');
+
+                          if (uri == null) {
+                            print('määääääh');
                             return;
+                          }
 
                           http.get(uri).then((http.Response response) {
+                            print('ENTER GET');
+
+                            if (response.statusCode != 200) {
+                              print('mööööp');
+                              return;
+                            }
+
+                            print(response.statusCode);
+
                             setState(() {
                               _currentOpenExpanded = false;
                             });

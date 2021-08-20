@@ -31,7 +31,6 @@ class AnimatedImage extends StatefulWidget {
 class AnimatedImageState extends State<AnimatedImage> {
   Map<String, dynamic> _outData;
   local.PlatformFile _platformFile;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
   static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
