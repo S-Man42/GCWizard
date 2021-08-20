@@ -4,14 +4,26 @@
 //
 // SDWSS.AWDSSA.SAWDWAS.ASSDWA.DWWASS   => 49860
 //
+// ss dsasd dsadsa sdwawd asdsa ssdwwa ww sswaw dwawd asdsa sdwss wwa wasdsaw wwsaw ww awdwa awdwa ss sdsww asdsa dwadwass ss sawwds
+// wdddsaasasdsdwwdss wdwaaaaaaaaaaaaaaaasssa
 
 import 'dart:math';
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
+class Offset{
+  final int xOffset;
+  final int yOffset;
+  final int leftBorder;
+  Offset(this.xOffset, this.yOffset, this.leftBorder);
+}
+
+
 enum WASD_TYPE  {WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, CUSTOM}
 enum _WASD_DIRECTION {UP, DOWN, LEFT, RIGHT}
+enum _CURSOR_POSITION {LEFT, RIGHT}
+final _SEGMENT_LENGTH = 5;
 
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.WASD: 'wasd_keyboard_wasd',
@@ -27,9 +39,9 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
 final Map<String, List<String>> WASD_ENCODE = {
   '0' : ['ASSDWW', 'SSDWWA', 'SDWWAS', 'DWWASS', 'WWASSD', 'WASSDW', 'WWDSSA', 'WDSSAW', 'DSSAWW', 'SSAWWD', 'SAWWDS', 'AWWDSS'],
   '1' : ['WW', 'SS'],
-  '2' : ['DSASD', 'AWDWS'],
+  '2' : ['DSASD', 'AWDWA'],
   '3' : ['DSADSA', 'DWADWA'],
-  '4' : ['SDWSS', 'SDSWW', 'WWSAW', 'SSWAD'],
+  '4' : ['SDWSS', 'SDSWW', 'WWSAW', 'SSWAW'],
   '5' : ['DWAWD', 'ASDSA'],
   '6' : ['ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW', 'SDWAWD', 'SDWAW', 'SDSAW'],
   '7' : ['WWA', 'DSS'],
@@ -73,6 +85,7 @@ String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
     default: return result.join(' ');
   }
 }
+
 String _normalizeDecodingInput(String input, WASD_TYPE controls, List<String> controlSet){
   input = input.toUpperCase().replaceAll('.', ' ');
   switch (controls) {
@@ -119,7 +132,49 @@ String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
         resultDecode.add(UNKNOWN_ELEMENT);
     }
   });
-  return resultDecode.join(' ');
+  return resultDecode.join('');
+}
+
+Offset analyseOffset(String encodedText) {
+  int peak = 0;
+  int valley = 0;
+  int position = 0;
+  int xOffset = 0;
+  int yOffset = 0;
+  int rightBorder = 0;
+  _CURSOR_POSITION cursor = _CURSOR_POSITION.RIGHT;
+  for (int i = 0; i < encodedText.length; i++) {
+    switch (encodedText[i]){
+      case 'W':
+        if (cursor == _CURSOR_POSITION.LEFT)
+          rightBorder = 1;
+        position++;
+        if (position > peak)
+          peak = position;
+        break;
+      case 'S':
+        if (cursor == _CURSOR_POSITION.LEFT)
+          rightBorder = 1;
+        position--;
+        if (position < valley)
+          valley = position;
+        break;
+      case 'A':
+        xOffset = xOffset + _SEGMENT_LENGTH + 1;
+        cursor = _CURSOR_POSITION.LEFT;
+        break;
+    }
+  }
+  if (peak == 2) {
+    yOffset = 0;
+  }
+  else if (valley == -2) {
+    yOffset = -_SEGMENT_LENGTH - _SEGMENT_LENGTH - 1;
+  } else {
+    yOffset = -_SEGMENT_LENGTH - 1;
+  }
+print('xoffset '+xOffset.toString());
+  return Offset(xOffset, yOffset, rightBorder);
 }
 
 String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlSet){
@@ -132,17 +187,28 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
   int maxY = 0;
   int minX = 0;
   int minY = 0;
+  _CURSOR_POSITION cursor = _CURSOR_POSITION.RIGHT;
+  int leftBorder = 0;
+  int rightBorder = 0;
 
   Map<String, String> world = new Map();
 
   var direction = _WASD_DIRECTION.UP;
   
-  _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((word) {
-    y = 0;
-    x = maxX + 9;
+  List<String> wordList = _normalizeDecodingInput(input, controls, controlSet).split(' ');
+  String word = '';
+
+  for (int i = 0; i < wordList.length; i++) {
+    word = wordList[i];
+    y = analyseOffset(word).yOffset;
+
     word.split('').forEach((element) {
       switch (element){
         case 'W':  // forward, up
+        if (cursor == _CURSOR_POSITION.LEFT)
+          leftBorder = 1;
+        if (cursor == _CURSOR_POSITION.RIGHT)
+          rightBorder = 1;
           switch (direction) {
             case _WASD_DIRECTION.UP:
               y--;
@@ -161,7 +227,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           if (x < minX) minX = x;
           if (y > maxY) maxY = y;
           if (x > maxX) maxX = x;
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y--; world[x.toString() + '|' + (y).toString()] = '1';
             if (y < minY)
               minY = y;
@@ -170,6 +236,10 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           break;
 
         case 'S':  // back, down
+          if (cursor == _CURSOR_POSITION.LEFT)
+            leftBorder = 1;
+          if (cursor == _CURSOR_POSITION.RIGHT)
+            rightBorder = 1;
           switch (direction) {
             case _WASD_DIRECTION.UP:
               y--;
@@ -188,7 +258,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           if (x < minX) minX = x;
           if (y > maxY) maxY = y;
           if (x > maxX) maxX = x;
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++; world[x.toString() + '|' + (y).toString()] = '1';
             if (y > maxY)
               maxY = y;
@@ -197,6 +267,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           break;
 
         case 'A':  // left
+          cursor = _CURSOR_POSITION.LEFT;
           switch (direction) {
             case _WASD_DIRECTION.UP:
               y--;
@@ -215,7 +286,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           if (x < minX) minX = x;
           if (y > maxY) maxY = y;
           if (x > maxX) maxX = x;
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x--; world[x.toString() + '|' + (y).toString()] = '1';
             if (x < minX)
               minX = x;
@@ -224,6 +295,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           break;
 
         case 'D':  // right
+          cursor = _CURSOR_POSITION.RIGHT;
           switch (direction) {
             case _WASD_DIRECTION.UP:
               y--;
@@ -242,7 +314,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           if (x < minX) minX = x;
           if (y > maxY) maxY = y;
           if (x > maxX) maxX = x;
-          for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x++; world[x.toString() + '|' + (y).toString()] = '1';
             if (x > maxX)
               maxX = x;
@@ -251,7 +323,14 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
           break;
       }
     });
-  });
+    print('maxx '+maxX.toString());
+    if (i < wordList.length - 1)
+      if (cursor == _CURSOR_POSITION.LEFT)
+        x = maxX + _SEGMENT_LENGTH + 2 + rightBorder + analyseOffset(wordList[i + 1]).xOffset + analyseOffset(word).leftBorder;
+      else
+        x = maxX + 2 + rightBorder + analyseOffset(wordList[i + 1]).xOffset + analyseOffset(wordList[i + 1]).leftBorder;
+
+  };
 
   var binaryWorld = List.generate(maxX - minX + 1, (y) => List(maxY - minY + 1), growable: false);
   world.forEach((key, value) {

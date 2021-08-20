@@ -4236,6 +4236,7 @@
   "wasd_keyboard_vlzr" : "VLZR",
   "wasd_keyboard_wqse" : "WQSE",
   "wasd_keyboard_custom" : "Custom controls",
+  "wasd_control_set" : "Control set",
   "wasd_custom_up" : "⬆",
   "wasd_custom_down" : "⬇",
   "wasd_custom_right" : "➞",

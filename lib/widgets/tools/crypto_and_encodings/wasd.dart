@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -33,10 +34,11 @@ class WASDState extends State<WASD> {
   var _currentDown = 'S';
   var _currentRight = 'D';
   var _currentMode = GCWSwitchPosition.right; // decode
-  var _currentDecodeMode = GCWSwitchPosition.left; // text
+//  var _currentDecodeMode = GCWSwitchPosition.left; // text
   var _currentKeyboardControls = WASD_TYPE.WASD;
 
   Uint8List _outDecodeData;
+  Uint8List _outEncodeData;
 
   @override
   void initState() {
@@ -64,13 +66,33 @@ class WASDState extends State<WASD> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
+        if (_currentMode == GCWSwitchPosition.left) // encode
+          GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                  _createGraphicOutputEncodeData(decodeWASDGraphic(
+                      encodeWASD(_currentEncodeInput,_currentKeyboardControls,
+                          [_currentUp, _currentLeft, _currentDown, _currentRight]),
+                      _currentKeyboardControls,
+                      [_currentUp, _currentLeft, _currentDown, _currentRight]));
+                });
+              })
+        else // decode
+          GCWTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                  _createGraphicOutputDecodeData(decodeWASDGraphic(
+                      _currentDecodeInput,
+                      _currentKeyboardControls,
+                      [_currentUp, _currentLeft, _currentDown, _currentRight]));
+                });
+              }),
+        GCWTextDivider(
+          text: i18n(context, 'wasd_control_set'),
         ),
         GCWDropDownButton(
           value: _currentKeyboardControls,
@@ -123,42 +145,15 @@ class WASDState extends State<WASD> {
                   }),
             ],
           ),
-        if (_currentMode == GCWSwitchPosition.right) // decode
-          GCWTwoOptionsSwitch(
-            title: i18n(context, 'wasd_decode_mode'),
-            leftValue: i18n(context, 'wasd_encode_text'),
-            rightValue: i18n(context, 'wasd_encode_graphic'),
-            value: _currentDecodeMode,
-            onChanged: (value) {
-              setState(() {
-                _currentDecodeMode = value;
-              });
-            },
-          ),
-        if (_currentMode == GCWSwitchPosition.left) // encode
-          GCWTextField(
-            controller: _encodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentEncodeInput = text;
-              });
-            })
-        else // decode
-          GCWTextField(
-            controller: _decodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentDecodeInput = text;
-                   _createGraphicOutputData(decodeWASDGraphic(
-                       _currentDecodeInput,
-                       _currentKeyboardControls,
-                       [_currentUp, _currentLeft, _currentDown, _currentRight]));
-              });
-            }),
-        if (_currentMode == GCWSwitchPosition.left) //encode
-          GCWDefaultOutput(child: _buildOutput())
-        else // decode
-          if (_currentDecodeMode == GCWSwitchPosition.right) //graphic
+        GCWTwoOptionsSwitch( // switch between encrypt and decrypt
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+         if (_currentMode == GCWSwitchPosition.right) //decode
             GCWDefaultOutput(
                 child: _buildGraphicDecodeOutput(),
                 trailing: GCWIconButton(
@@ -169,13 +164,23 @@ class WASDState extends State<WASD> {
                     _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
                   },
                 ))
-          else
-            GCWDefaultOutput(child: _buildOutput())
+         else
+           GCWDefaultOutput(
+               child: _buildGraphicEncodeOutput(),
+               trailing: GCWIconButton(
+                 iconData: Icons.save,
+                 size: IconButtonSize.SMALL,
+                 iconColor: _outEncodeData == null ? Colors.grey : null,
+                 onPressed: () {
+                   _outEncodeData == null ? null : _exportFile(context, _outEncodeData);
+                 },
+               )),
+         GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
-  _createGraphicOutputData(String output) {
+  _createGraphicOutputDecodeData(String output) {
     _outDecodeData = null;
     binary2image(output, false, false).then((value) {
       setState(() {
@@ -189,6 +194,23 @@ class WASDState extends State<WASD> {
 
     return Column(children: <Widget>[
       Image.memory(_outDecodeData),
+    ]);
+  }
+
+  _createGraphicOutputEncodeData(String output) {
+    _outEncodeData = null;
+    binary2image(output, false, false).then((value) {
+      setState(() {
+        _outEncodeData = value;
+      });
+    });
+  }
+
+  Widget _buildGraphicEncodeOutput() {
+    if (_outEncodeData == null) return null;
+
+    return Column(children: <Widget>[
+      Image.memory(_outEncodeData),
     ]);
   }
 
