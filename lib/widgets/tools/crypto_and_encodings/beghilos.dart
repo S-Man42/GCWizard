@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -28,6 +29,8 @@ class BeghilosState extends State<Beghilos> {
   var _currentInputDecode = '';
   var _currentMode = GCWSwitchPosition.right;
   var _currentDisplays = <List<String>>[];
+
+  var _currentUpsideDown = true;
 
   @override
   void initState() {
@@ -88,57 +91,73 @@ class BeghilosState extends State<Beghilos> {
     var rows = <Widget>[];
     var textOutput = _currentMode == GCWSwitchPosition.left ? decodeBeghilos(_currentInputDecode) : encodeBeghilos(_currentInputEncode['text']);
 
-    if ((textOutput != null) & (textOutput != '')) {
-      rows.add(GCWTextDivider(
-        text: i18n(context, 'segmentdisplay_displayoutput'),
-        trailing: Row(
-          children: <Widget>[
-            GCWIconButton(
+    if (textOutput == null || textOutput.isEmpty)
+      return GCWDefaultOutput();
+
+    rows.add(GCWTextDivider(
+      text: i18n(context, 'segmentdisplay_displayoutput'),
+      trailing: Row(
+        children: <Widget>[
+          Container(
+            child: GCWIconButton(
+              iconData: Icons.rotate_left,
               size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
               onPressed: () {
                 setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  final mediaQueryData = MediaQuery.of(context);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  _currentUpsideDown = !_currentUpsideDown;
                 });
               },
             ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-                  final mediaQueryData = MediaQuery.of(context);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            )
-          ],
-        ),
-      ));
-      _currentDisplays = encodeSegment(
-          _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode['text'], SegmentDisplayType.SEVEN);
-      rows.add(_buildDigitalOutput(countColumns, _currentDisplays));
+            padding: EdgeInsets.only(right: 10.0),
+          ),
+          GCWIconButton(
+            size: IconButtonSize.SMALL,
+            iconData: Icons.zoom_in,
+            onPressed: () {
+              setState(() {
+                int newCountColumn = max(countColumns - 1, 1);
+                final mediaQueryData = MediaQuery.of(context);
+                mediaQueryData.orientation == Orientation.portrait
+                    ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                    : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+              });
+            },
+          ),
+          GCWIconButton(
+            size: IconButtonSize.SMALL,
+            iconData: Icons.zoom_out,
+            onPressed: () {
+              setState(() {
+                int newCountColumn = countColumns + 1;
+                final mediaQueryData = MediaQuery.of(context);
+                mediaQueryData.orientation == Orientation.portrait
+                    ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                    : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+              });
+            },
+          )
+        ],
+      ),
+    ));
+    _currentDisplays = encodeSegment(
+        _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode['text'], SegmentDisplayType.SEVEN);
+    rows.add(_buildDigitalOutput(countColumns, _currentDisplays));
 
-      rows.add(GCWDefaultOutput(child:  textOutput));
-    }
+    rows.add(GCWDefaultOutput(child:  textOutput));
+
     return Column(
       children: rows,
     );
   }
 
   Widget _buildDigitalOutput(countColumns, List<List<String>> segments) {
-    var displays = segments.reversed.where((character) => character != null).map((character) {
+    var list = _currentUpsideDown ? segments.reversed : segments;
+
+    var displays = list.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
           return Transform.rotate(
-            angle: pi,
+            angle: _currentUpsideDown ? pi : 0,
             child: SevenSegmentDisplay(
               segments: displayedSegments,
               readOnly: true,

@@ -14,7 +14,7 @@ class Piano extends StatefulWidget {
 
 class PianoState extends State<Piano> {
   var _currentSort = 0;
-  var _currentIndex = 0;
+  var _currentIndex = 9; // Key number 1
   List<String> _currentSortList = ['piano_number', 'piano_color', 'piano_frequency', 'piano_helmholtz', 'piano_scientific', 'piano_german', 'piano_midi', 'piano_latin'];
 
   List<String> fields = ['color', 'frequency', 'helmholtz', 'scientific', 'german', 'midi', 'latin'];
