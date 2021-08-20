@@ -128,7 +128,7 @@ const SEARCHSTRING_DE_CRYPTOGRAPHYSELECTION =
     'verschluesselung entschluesselung verschluesseln entschluesseln kryptographie kryptografie codes chiffre';
 const SEARCHSTRING_DE_DATES = 'datum';
 const SEARCHSTRING_DE_DATES_DAYCALCULATOR = 'tagesrechner tagerechner';
-const SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden minuten sekunden';
+const SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden minuten sekunden zeitenrechner';
 const SEARCHSTRING_DE_DATES_WEEKDAY = 'wochentage';
 const SEARCHSTRING_DE_DATES_CALENDAR = 'julianisches datum gregorianisches datum kalender';
 const SEARCHSTRING_DE_DECABIT = 'impulsraster rundsteuertechnik';
