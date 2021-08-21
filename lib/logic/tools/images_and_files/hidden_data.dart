@@ -1,46 +1,73 @@
 import 'dart:typed_data';
 
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
-List<Uint8List> extraData(Uint8List data, {List<Uint8List> resultList}) {
-  if (data == null) return resultList;
-  int imageLength;
+List<PlatformFile> hiddenData(PlatformFile data) {
+  if (data == null)
+    return [];
 
-  switch (getFileType(data)) {
-    case FileType.JPEG:
-      imageLength = jpgImageSize(data);
-      break;
-    case FileType.PNG:
-      imageLength = pngImageSize(data);
-      break;
-    case FileType.GIF:
-      imageLength = gifImageSize(data);
-      break;
-    case FileType.BMP:
-      imageLength = bmpImageSize(data);
-      break;
-    case FileType.ZIP:
-      imageLength = zipFileSize(data);
-      break;
-    case FileType.RAR:
-      imageLength = rarFileSize(data);
-      break;
-    case FileType.MP3:
-      imageLength = mp3FileSize(data);
-      break;
-    default:
-      return resultList;
-  }
+  var resultList = <PlatformFile>[];
+  var fileCounter = 0;
 
-  if ((imageLength != null) && (imageLength > 0) && (data.length > imageLength)) {
-    if (resultList == null) resultList = <Uint8List>[];
-    // result data
-    var result = data.sublist(imageLength);
-    // remove result from sourece data
-    data = data.sublist(0, imageLength);
-    resultList = extraData(result, resultList: resultList);
+  var bytes = data.bytes;
 
-    resultList.add(result);
+  while (bytes != null && bytes.length > 0) {
+    int imageLength;
+    FileType detectedFileType = getFileType(bytes);
+
+    switch (detectedFileType) {
+      case FileType.JPEG:
+        imageLength = jpgImageSize(bytes);
+        break;
+      case FileType.PNG:
+        imageLength = pngImageSize(bytes);
+        break;
+      case FileType.GIF:
+        imageLength = gifImageSize(bytes);
+        break;
+      case FileType.BMP:
+        imageLength = bmpImageSize(bytes);
+        break;
+      case FileType.ZIP:
+        imageLength = zipFileSize(bytes);
+        break;
+      case FileType.RAR:
+        imageLength = rarFileSize(bytes);
+        break;
+      case FileType.MP3:
+        imageLength = mp3FileSize(bytes);
+        break;
+      default:
+        return resultList;
+    }
+
+    var resultBytes;
+    if ((imageLength != null) && (imageLength > 0) && (bytes.length > imageLength)) {
+      resultBytes = bytes.sublist(0, imageLength);
+      // remove result from source data
+      bytes = bytes.sublist(imageLength);
+    } else {
+      resultBytes = bytes;
+      bytes = null;
+    }
+
+    if (fileCounter > 0) {
+      var children;
+      if (fileClass(detectedFileType) == FileClass.ARCHIVE) {
+        children = extractArchive(PlatformFile(bytes: resultBytes));
+      }
+
+      var result = PlatformFile(
+        name: 'hidden_file_$fileCounter.${fileExtension(detectedFileType)}',
+        bytes: resultBytes,
+        children: children
+      );
+
+      resultList.add(result);
+    }
+
+    fileCounter++;
   }
 
   return resultList;

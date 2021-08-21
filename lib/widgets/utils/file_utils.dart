@@ -10,6 +10,7 @@ import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,7 +25,7 @@ enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.JPEG : {
     'extensions': ['jpg', 'jpeg'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0xFF, 0xD8, 0xFF, 0xE0],
       [0xFF, 0xD8, 0xFF, 0xE1],
       [0xFF, 0xD8, 0xFF, 0xFE]
@@ -33,7 +34,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.GIF : {
     'extensions': ['gif'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x47, 0x49, 0x46, 0x38, 0x39, 0x61],
       [0x47, 0x49, 0x46, 0x38, 0x37, 0x61]
     ],
@@ -41,21 +42,21 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.PNG : {
     'extensions': ['png'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x89, 0x50, 0x4E, 0x47]
     ],
     'file_class' : FileClass.IMAGE
   },
   FileType.BMP : {
     'extensions': ['bmp'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x42, 0x4D]
     ],
     'file_class' : FileClass.IMAGE
   },
   FileType.TIFF : {
     'extensions': ['tiff', 'tif'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x49, 0x49, 0x2A, 0x00],
       [0x4D, 0x4D, 0x00, 0x2A]
     ],
@@ -63,28 +64,28 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.WEBP : {
     'extensions': ['webp'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x52, 0x49, 0x46, 0x46]
     ],
     'file_class' : FileClass.IMAGE
   },
   FileType.ZIP : {
     'extensions': ['zip'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x50, 0x4B, 0x03, 0x04]
     ],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.TAR : {
     'extensions': ['tar'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x75, 0x73, 0x74, 0x61, 0x72]
     ],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.RAR : {
     'extensions': ['rar'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x1F, 0x8B, 0x08, 0x00],
       [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00],
       [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00]
@@ -93,21 +94,21 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.SEVEN_ZIP : {
     'extensions': ['7z', '7zip'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x30, 0x26, 0xB2, 0x75]
     ],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.WMV : {
     'extensions': ['wmv'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x30, 0x26, 0xB2, 0x75]
     ],
     'file_class' : FileClass.SOUND
   },
   FileType.MP3 : {
     'extensions': ['mp3'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x49, 0x44, 0x33],
       [0xFF, 0xFB],
       [0xFF, 0xF3],
@@ -115,16 +116,21 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     ],
     'file_class' : FileClass.SOUND
   },
+  FileType.TXT : {
+    'extensions': ['txt'],
+    'magic_bytes': <List<int>>[],
+    'file_class' : FileClass.DATA
+  },
   FileType.PDF : {
     'extensions': ['pdf'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x25, 0x50, 0x44, 0x46]
     ],
     'file_class' : FileClass.DATA
   },
   FileType.EXE : {
     'extensions': ['exe'],
-    'magic_bytes': [
+    'magic_bytes': <List<int>>[
       [0x4D, 0x5A, 0x50, 0x00],
       [0x4D, 0x5A, 0x90, 0x00]
     ],
@@ -132,21 +138,21 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.GPX : {
     'extensions': ['gpx'],
-    'magic_bytes': [],
+    'magic_bytes': <List<int>>[],
     'file_class' : FileClass.DATA,
     'mime_type' : 'application/gpx+xml',
     'uniform_type_identifier': 'com.topografix.gpx'
   },
   FileType.KML : {
     'extensions': ['kml'],
-    'magic_bytes': [],
+    'magic_bytes': <List<int>>[],
     'file_class' : FileClass.DATA,
     'mime_type' : 'application/vnd.google-earth.kml+xml',
     'uniform_type_identifier': 'com.google.earth.kml'
   },
   FileType.KMZ : {
     'extensions': ['kmz'],
-    'magic_bytes': [],
+    'magic_bytes': <List<int>>[],
     'file_class' : FileClass.DATA,
     'mime_type' : 'application/vnd.google-earth.kmz'
   },
@@ -676,11 +682,11 @@ int mp3FileSize(Uint8List data) {
       var footer = (data[offset] == 0x33) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x49);//  ID3v2 Footer
       offset += 10;
       var extendedHeader = ((data[offset - 5] & 0x40) != 0);
-      offset += mp3Vint(data, offset - 4); //bigEndian
+      offset += _mp3Vint(data, offset - 4); //bigEndian
 
       // extendedHeader
       if (extendedHeader) {
-        offset += mp3Vint(data, offset); //bigEndian
+        offset += _mp3Vint(data, offset); //bigEndian
         offset += 4;
       }
 
@@ -691,7 +697,7 @@ int mp3FileSize(Uint8List data) {
   return offset;
 }
 
-int mp3Vint(Uint8List data, int offset) {
+int _mp3Vint(Uint8List data, int offset) {
   var value = 0;
   if (offset + 3 >= data.length) return 0;
 
@@ -701,7 +707,6 @@ int mp3Vint(Uint8List data, int offset) {
 
   return value;
 }
-
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
   try {
@@ -737,6 +742,42 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
 
     return bytes;
   } on Exception {
+    return null;
+  }
+}
+
+List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
+  return archive.files.map((ArchiveFile file) {
+    if (!file.isFile)
+      return null;
+
+    return PlatformFile(
+      name: file.name,
+      bytes: file.content
+    );
+  }).where((file) => file != null).toList();
+}
+
+List<PlatformFile> extractArchive(PlatformFile file) {
+  if (fileClass(file.fileType) != FileClass.ARCHIVE)
+    return null;
+
+  try {
+    InputStream input = new InputStream(file.bytes.buffer.asByteData());
+    switch (file.fileType) {
+      case FileType.ZIP:
+        return _archiveToPlatformFileList(ZipDecoder().decodeBuffer(input));
+        break;
+      case FileType.TAR:
+        return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
+        break;
+      case FileType.RAR:
+        return null;
+        break;
+      default:
+        return null;
+    }
+  } catch(e) {
     return null;
   }
 }

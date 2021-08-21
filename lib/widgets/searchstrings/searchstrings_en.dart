@@ -209,6 +209,7 @@ const SEARCHSTRING_EN_HASHES_WHIRLPOOL_512 = '';
 const SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
 const SEARCHSTRING_EN_HEXSTRING2FILE = 'hexadecimal file';
 const SEARCHSTRING_EN_HEXVIEWER = 'hexadecimalviewer hexviewer hexdecoder files';
+const SEARCHSTRING_EN_HIDDENDATA = 'hiddenarchive hiddendata hiddenzip appendedarchive appendeddata appendedzip';
 const SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
 const SEARCHSTRING_EN_HOUDINI = 'seance';
 const SEARCHSTRING_EN_IATAICAO = 'airfieldcodes airportcodes aerodromecodes aircrafts planes landingareas landingplaces aviation aerospace';

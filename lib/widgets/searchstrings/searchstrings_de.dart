@@ -214,6 +214,7 @@ const SEARCHSTRING_DE_HASHES_WHIRLPOOL_512 = '';
 const SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
 const SEARCHSTRING_DE_HEXSTRING2FILE = 'hexadezimal datei';
 const SEARCHSTRING_DE_HEXVIEWER = 'hexansicht hexadezimalansicht dateien';
+const SEARCHSTRING_DE_HIDDENDATA = 'verstecktedaten verstecktedateien verstecktesarchive versteckteszip angehaengetesarchiv angehaengtedaten angehaengtedateien angehaengteszzip';
 const SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
 const SEARCHSTRING_DE_HOUDINI = 'seance';
 const SEARCHSTRING_DE_IATAICAO = 'flughafencodes flugplatzcodes landeplatz landeplaetze landeflaechen flugzeuge internationalezivilluftfahrtorganisation';

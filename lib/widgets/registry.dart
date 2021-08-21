@@ -137,6 +137,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -996,6 +997,14 @@ class Registry {
         SEARCHSTRING_DE_HEXVIEWER,
         SEARCHSTRING_EN_HEXVIEWER,
         SEARCHSTRING_FR_HEXVIEWER
+      ]),
+      GCWTool(tool: HiddenData(), i18nPrefix: 'hiddendata', isBeta: true, categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_HIDDENDATA,
+        SEARCHSTRING_DE_HIDDENDATA,
+        SEARCHSTRING_EN_HIDDENDATA,
+        SEARCHSTRING_FR_HIDDENDATA
       ]),
       GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
         ToolCategory.CRYPTOGRAPHY

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -10,6 +11,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 class HexViewer extends StatefulWidget {
@@ -54,8 +57,9 @@ class HexViewerState extends State<HexViewer> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.platformFile != null) {
+    if (_hexData == null && widget.platformFile != null) {
       _hexData = file2hexstring(widget.platformFile.bytes);
+      _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
     }
 
     return Column(
@@ -91,8 +95,6 @@ class HexViewerState extends State<HexViewer> {
 
   _buildOutput() {
     if (_hexData == null) return null;
-
-    print(_hexData);
 
     var hexStrStart = _currentLines * _CHARS_PER_LINE;
     var hexStrEnd = hexStrStart + _CHARS_PER_LINE * _MAX_LINES;
@@ -229,4 +231,15 @@ class HexViewerState extends State<HexViewer> {
       ],
     );
   }
+}
+
+openInHexViewer(BuildContext context, Uint8List data) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute(
+          builder: (context) => GCWTool(
+              tool: HexViewer(platformFile: PlatformFile(bytes: data)),
+              toolName: i18n(context, 'hexviewer_title'),
+              i18nPrefix: '',
+              helpLocales: ['de', 'en', 'fr'])));
 }

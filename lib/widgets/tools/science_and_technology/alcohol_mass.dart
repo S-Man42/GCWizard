@@ -39,8 +39,6 @@ class AlcoholMassState extends State<AlcoholMass> {
         GCWDropDownButton(
           value: _currentMode,
           items: _MODES.map((mode) {
-            print(mode);
-
             return GCWDropDownMenuItem(
               value: mode,
               child: i18n(context, mode)

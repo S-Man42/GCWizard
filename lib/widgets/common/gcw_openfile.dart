@@ -17,8 +17,10 @@ class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
   final List<FileType> supportedFileTypes;
   final bool expanded;
+  final String title;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded}) : super(key: key);
+
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded, this.title}) : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -53,7 +55,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     return Column(
       children: [
         GCWExpandableTextDivider(
-          text: i18n(context, 'common_loadfile_showopen'),
+          text: widget.title ?? i18n(context, 'common_loadfile_showopen'),
           expanded: _currentOpenExpanded,
           onChanged: (value) {
             setState(() {
@@ -153,12 +155,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                 )
             ],
           ),
-        ),
-        if (_currentOpenExpanded)
-          Container(
-            child: GCWDivider(),
-            padding: EdgeInsets.only(bottom: 10.0),
-          ),
+        )
       ],
     );
   }

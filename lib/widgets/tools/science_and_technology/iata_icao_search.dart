@@ -117,9 +117,6 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       data = IATA_ICAO_CODES
           .values.where((e) => e['name'] != null && e['name'].toLowerCase().contains(_currentInputName.toLowerCase()))
           .map((e) {
-              if (e['name'] == null) {
-                print(e['name']);
-              }
               var dataList = [e['name']];
               dataList.addAll(['IATA', 'ICAO', 'Location_served'].map((field) => e[field]));
 
