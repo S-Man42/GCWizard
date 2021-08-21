@@ -1,22 +1,25 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_euro_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
-Map<BrailleLanguage, Map<String, String>> _BRAILLE_LANGUAGES = {
+import 'braille_euro_segment_display.dart';
+import 'braille_segment_display.dart';
+
+Map<BrailleLanguage, Map<String, String>> BRAILLE_LANGUAGES = {
   BrailleLanguage.BASIC: {'title': 'braille_language_basic', 'subtitle': 'braille_language_basic_description'},
   BrailleLanguage.SIMPLE: {'title': 'braille_language_simple', 'subtitle': 'braille_language_simple_description'},
   BrailleLanguage.DEU: {'title': 'common_language_german', 'subtitle': 'braille_language_german_description'},
@@ -42,6 +45,19 @@ class BrailleState extends State<Braille> {
   var _currentLanguage = BrailleLanguage.BASIC;
 
   @override
+  void initState() {
+    super.initState();
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+  }
+
+  @override
+  void dispose() {
+    _encodeController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
@@ -56,7 +72,7 @@ class BrailleState extends State<Braille> {
             _currentLanguage = value;
           });
         },
-        items: _BRAILLE_LANGUAGES.entries.map((mode) {
+        items: BRAILLE_LANGUAGES.entries.map((mode) {
           return GCWDropDownMenuItem(
             value: mode.key,
             child: i18n(context, mode.value['title']),
@@ -258,10 +274,14 @@ class BrailleState extends State<Braille> {
     var segments;
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeBraille(_currentEncodeInput, _currentLanguage);
+      List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
+          GCWOutput(
+            title: i18n(context, 'braille_output_numbers'),
+            child: segments.map((segment) => segment.join()).join(' ')
+          )
         ],
       );
     } else {

@@ -26,7 +26,6 @@ import 'package:gc_wizard/utils/constants.dart';
 // USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 
-
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
 final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = {
@@ -1958,6 +1957,16 @@ Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
   return {'displays': displays, 'chars': text};
 }
 
+List<String> _sanitizeDecodeInput(List<String> input, BrailleLanguage language) {
+  var pattern = language == BrailleLanguage.EUR ? RegExp(r'[^1-8]') : RegExp(r'[^1-6]');
+
+  return input.map((code) {
+    var chars = code.replaceAll(pattern, '').split('').toList();
+    chars.sort();
+    return chars.join();
+  }).toList();
+}
+
 Map<String, dynamic> decodeBraille(
     List<String> input, BrailleLanguage language, bool letters, bool french) {
   if (input == null || input.length == 0)
@@ -1965,6 +1974,8 @@ Map<String, dynamic> decodeBraille(
       'displays': [[]],
       'chars': [0]
     };
+
+  input = _sanitizeDecodeInput(input, language);
 
   switch (language) {
     case BrailleLanguage.BASIC:

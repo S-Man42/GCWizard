@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
@@ -26,7 +27,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
             readOnly: readOnly,
             onChanged: onChanged,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (canvas, size, currentSegments, setSegmentState) {
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState) {
               var paint = defaultSegmentPaint();
 
               paint.color = currentSegments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
@@ -41,7 +42,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
               pathA.close();
 
-              canvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
                 setSegmentState('a', !currentSegments['a']);
               });
 
@@ -57,7 +58,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 65);
               pathB.close();
 
-              canvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
                 setSegmentState('b', !currentSegments['b']);
               });
 
@@ -73,12 +74,12 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
               pathC.close();
 
-              canvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
                 setSegmentState('c', !currentSegments['c']);
               });
 
               paint.color = currentSegments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-              canvas.drawCircle(
+              canvas.touchCanvas.drawCircle(
                   Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10.5,
                       size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 18.2),
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 6.8,
@@ -87,7 +88,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
               });
 
               paint.color = currentSegments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-              canvas.drawCircle(
+              canvas.touchCanvas.drawCircle(
                   Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 28.5,
                       size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 18.2),
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 6.8,
@@ -96,7 +97,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
               });
 
               paint.color = currentSegments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-              canvas.drawCircle(
+              canvas.touchCanvas.drawCircle(
                   Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 46.5,
                       size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 18.2),
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 6.8,
@@ -105,7 +106,7 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
               });
 
               paint.color = currentSegments['g'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-              canvas.drawCircle(
+              canvas.touchCanvas.drawCircle(
                   Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64.5,
                       size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 18.2),
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 6.8,

@@ -136,7 +136,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
@@ -2213,6 +2214,15 @@ class Registry {
       GCWTool(
           tool: Braille(),
           i18nPrefix: 'braille',
+          searchStrings: [
+            SEARCHSTRING_COMMON_BRAILLE,
+            SEARCHSTRING_DE_BRAILLE,
+            SEARCHSTRING_EN_BRAILLE,
+            SEARCHSTRING_FR_BRAILLE
+          ]),
+      GCWTool(
+          tool: BrailleDotNumbers(),
+          i18nPrefix: 'brailledotnumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_BRAILLE,
             SEARCHSTRING_DE_BRAILLE,
