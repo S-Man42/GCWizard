@@ -39,7 +39,8 @@ List<PlatformFile> hiddenData(PlatformFile data) {
         imageLength = mp3FileSize(bytes);
         break;
       default:
-        return resultList;
+        imageLength = bytes.length;
+        break;
     }
 
     var resultBytes;
