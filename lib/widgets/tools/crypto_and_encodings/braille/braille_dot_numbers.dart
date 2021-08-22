@@ -29,7 +29,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
   String _currentEncodeInput = '';
   String _currentDecodeInput = '';
 
-  var _currentLanguage = BrailleLanguage.BASIC;
+  var _currentLanguage = BrailleLanguage.SIMPLE;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -125,27 +125,31 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       if (_currentDecodeInput == null || _currentDecodeInput.isEmpty)
         return GCWDefaultOutput();
 
-      var segments = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), _currentLanguage, true, true);
+      var segments = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), _currentLanguage, true);
       var segmentsBasicDigits;
-      if (_currentLanguage == BrailleLanguage.BASIC) {
-        segmentsBasicDigits = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), _currentLanguage, false, true);
+      var segmentsBasicLetters;
+      if (_currentLanguage == BrailleLanguage.SIMPLE) {
+        segmentsBasicDigits = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), BrailleLanguage.BASIC, false);
+        segmentsBasicLetters = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), BrailleLanguage.BASIC, true);
       }
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           if (_currentLanguage != BrailleLanguage.BASIC)
-            GCWDefaultOutput(child: segments['chars'].join().toUpperCase()),
-          if (_currentLanguage == BrailleLanguage.BASIC)
+            GCWDefaultOutput(child: segments['chars'].join()),
+          if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
-                GCWOutput(
-                  title: 'brailledotnumbers_basic_letters',
-                  child: segments['chars'].join().toUpperCase(),
-                ),
-                GCWOutput(
-                  title: 'brailledotnumbers_basic_digits',
-                  child: segmentsBasicDigits['chars'].join().toUpperCase(),
-                ),
+                if (segmentsBasicLetters['chars'].join().toUpperCase() != segments['chars'].join())
+                  GCWOutput(
+                    title: i18n(context, 'brailledotnumbers_basic_letters'),
+                    child: segmentsBasicLetters['chars'].join().toUpperCase(),
+                  ),
+                if (segmentsBasicDigits['chars'].join().toUpperCase() != segments['chars'].join())
+                  GCWOutput(
+                    title: i18n(context,'brailledotnumbers_basic_digits'),
+                    child: segmentsBasicDigits['chars'].join().toUpperCase(),
+                  ),
               ],
             )
         ],
