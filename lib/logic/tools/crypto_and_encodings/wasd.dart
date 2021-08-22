@@ -21,7 +21,7 @@ class Offset{
 
 
 enum WASD_TYPE  {WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, CUSTOM}
-enum _WASD_DIRECTION {UP, DOWN, LEFT, RIGHT}
+enum _WASD_DIRECTION {UP, DOWN, LEFT, RIGHT, START}
 enum _CURSOR_POSITION {LEFT, RIGHT}
 final _SEGMENT_LENGTH = 5;
 
@@ -37,7 +37,7 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
 };
 
 final Map<String, List<String>> WASD_ENCODE = {
-  '0' : ['ASSDWW', 'SSDWWA', 'SDWWAS', 'DWWASS', 'WWASSD', 'WASSDW', 'WWDSSA', 'WDSSAW', 'DSSAWW', 'SSAWWD', 'SAWWDS', 'AWWDSS'],
+  '0' : ['ASSDWW', 'SSDWWA', 'SDWWAS', 'DWWASS', 'WWASSD', 'WASSDW', 'WWDSSA', 'WDSSAW', 'DSSAWW', 'SSAWWD', 'SAWWDS', 'AWWDSS', 'DSSAWWD'],
   '1' : ['WW', 'SS'],
   '2' : ['DSASD', 'AWDWA'],
   '3' : ['DSADSA', 'DWADWA'],
@@ -145,6 +145,10 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
   int maxLetterY = 0;
   int minLetterX = 0;
   int minLetterY = 0;
+  int xOffset = 0;
+  int yOffset = 0;
+  int xSentence = 0;
+  int ySentence = 0;
   int maxSentenceX = 0;
   int maxSentenceY = 0;
   int minSentenceX = 0;
@@ -152,16 +156,22 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
   Map<String, String> sentence = new Map();
 
-  var direction = _WASD_DIRECTION.UP;
+  var direction = _WASD_DIRECTION.START;
   
   _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((word) {
-
+print(word + ' ###################################################################');
     // draw picture per letter
     // transform/normalize picture
     // align picture in world
 
     y = 0;
     x = 0;
+    maxLetterX = 0;
+    maxLetterY = 0;
+    minLetterX = 0;
+    minLetterY = 0;
+    direction = _WASD_DIRECTION.START;
+
     Map<String, String> letter = new Map();
 
     word.split('').forEach((element) {
@@ -181,16 +191,14 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
               x++;
               break;
           }
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            y--; letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          direction = _WASD_DIRECTION.UP;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
           if (x > maxLetterX) maxLetterX = x;
-          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
-            y--; letter[x.toString() + '|' + (y).toString()] = '1';
-            if (y < minLetterY)
-              minLetterY = y;
-          }
-          direction = _WASD_DIRECTION.UP;
           break;
 
         case 'S':  // back, down
@@ -208,16 +216,14 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
               x++;
               break;
           }
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            y++; letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          direction = _WASD_DIRECTION.DOWN;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
           if (x > maxLetterX) maxLetterX = x;
-          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
-            y++; letter[x.toString() + '|' + (y).toString()] = '1';
-            if (y > maxLetterY)
-              maxLetterY = y;
-          }
-          direction = _WASD_DIRECTION.DOWN;
           break;
 
         case 'A':  // left
@@ -235,16 +241,14 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
               x++;
               break;
           }
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            x--; letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          direction = _WASD_DIRECTION.LEFT;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
           if (x > maxLetterX) maxLetterX = x;
-          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
-            x--; letter[x.toString() + '|' + (y).toString()] = '1';
-            if (x < minLetterX)
-              minLetterX = x;
-          }
-          direction = _WASD_DIRECTION.LEFT;
           break;
 
         case 'D':  // right
@@ -262,37 +266,79 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
               x++;
               break;
           }
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            x++; letter[x.toString() + '|' + (y).toString()] = '1';
+          }
+          direction = _WASD_DIRECTION.RIGHT;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
           if (x > maxLetterX) maxLetterX = x;
-          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
-            x++; letter[x.toString() + '|' + (y).toString()] = '1';
-            if (x > maxLetterX)
-              maxLetterX = x;
-          }
-          direction = _WASD_DIRECTION.RIGHT;
           break;
       }
+      if (maxLetterY > maxSentenceY)
+        maxSentenceY = maxLetterY;
+      if (minLetterY < minSentenceY)
+        minSentenceY = minLetterY;
     }); // for Each letter
-    print('x: '+minLetterX.toString()+' '+maxLetterX.toString());
-    print('y: '+minLetterY.toString()+' '+maxLetterY.toString());
-    print(letter);
+print('[x|y] '+'['+minLetterX.toString()+'...'+maxLetterX.toString()+'|'+minLetterY.toString()+'...'+maxLetterY.toString()+'] => '+'['+(maxLetterX-minLetterX).toString()+'|'+(maxLetterY-minLetterY).toString()+']');
+print('letter            '+letter.toString());
+
     // transform/normalize letter
-    maxSentenceX = maxSentenceX + maxLetterX + 2;
-    if (maxLetterY > maxSentenceY)
-      maxSentenceY = maxLetterY;
+    xOffset = 0;
+    yOffset = 0;
+    if (maxLetterY - minLetterY == 0) {
+        yOffset = 0;
+    } else if (maxLetterY - minLetterY == 5) {
+      if (maxLetterY == 5)
+        yOffset = -5;
+    } else if (maxLetterY - minLetterY == 6) {
+      if (maxLetterY == 6)
+        yOffset = -6;
+    } else if (maxLetterY - minLetterY == 10) {
+      if (maxLetterY == 10)
+        yOffset = -10;
+    } else if (maxLetterY - minLetterY == 11) {
+      if (maxLetterY == 11)
+        yOffset = -11;
+    } else if (maxLetterY - minLetterY == 12) {
+      if (maxLetterY == 12)
+        yOffset = -12;
+    } else if (maxLetterY - minLetterY == 18) {
+    if (maxLetterY == 5)
+      yOffset = -5;
+    } else
+      yOffset = 13 + minLetterY;
 
+    xOffset = 0 - minLetterX;
+print('offset (x,y) '+xOffset.toString()+' '+yOffset.toString());
+
+    Map<String, String> transformedLetter = new Map();
+    letter.forEach((key, value) {
+      transformedLetter[(int.parse(key.split('|')[0]) + xOffset).toString() + '|' + (int.parse(key.split('|')[1]) - yOffset).toString()] = value;
+    });
+
+print('transformedLetter '+transformedLetter.toString());
     // add letter to sentence
+    transformedLetter.forEach((key, value) {
+      sentence[(int.parse(key.split('|')[0]) + maxSentenceX).toString() + '|' + (int.parse(key.split('|')[1])).toString()] = value;
+    });
 
+    maxSentenceX = maxSentenceX + 7 + 2;
+print('sentence          '+sentence.toString());
   }); // forEach word
 
-  var binaryWorld = List.generate(maxSentenceX - minSentenceX + 1, (y) => List(maxSentenceY - minSentenceY + 1), growable: false);
+  // build bitmap
+  print('world [x|y] '+'['+maxSentenceX.toString()+'|'+minSentenceY.toString()+'...'+maxSentenceY.toString()+']');
+  var binaryWorld = List.generate(maxSentenceX + 3, (y) => List(maxSentenceY - minSentenceY + 3), growable: false);
   sentence.forEach((key, value) {
-    x = - minSentenceX + int.parse(key.split('|')[0]);
-    y = - minSentenceY + int.parse(key.split('|')[1]);
+    print('      [x|y] '+'['+key.split('|')[0]+'|'+key.split('|')[1]+']');
+    x = int.parse(key.split('|')[0]);
+    y = int.parse(key.split('|')[1]) - minSentenceY;
     binaryWorld[x][y] = value;
   });
+
+  // build output
   String outputLine = '##';
   List<String> output = new List();
   output.add(outputLine.padRight(maxSentenceX + 1, '#'));
