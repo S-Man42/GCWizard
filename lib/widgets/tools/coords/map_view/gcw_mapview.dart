@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
@@ -14,10 +13,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/import/gpx_kml_import.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -26,7 +25,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_openfile_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
@@ -39,7 +38,7 @@ import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -508,26 +507,6 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildEditButtons() {
     var buttons = [
-      GCWPasteButton(
-          backgroundColor: COLOR_MAP_ICONBUTTONS,
-          customIcon: _createIconButtonIcons(Icons.content_paste),
-          onSelected: (text) {
-            if (_persistanceAdapter.setJsonMapViewData(text)) {
-              setState(() {
-                _mapController.fitBounds(_getBounds());
-              });
-            } else {
-              var pastedCoordinate = _parseCoords(text);
-              if (pastedCoordinate == null) return;
-
-              setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
-                    coordinateFormat: {'format': pastedCoordinate.first.key});
-                _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
-              });
-            }
-            ;
-          }),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
@@ -606,16 +585,7 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            showOpenFileDialog(context, [FileType.GPX, FileType.KML, FileType.KMZ],
-                loadCoordinatesFile).then((file) {
-              if (file != null) {
-                loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
-                  setState(() {
-                    _mapController.fitBounds(_getBounds());
-                  });
-                });
-              }
-            });
+            showOpenFileDialog(context, [FileType.GPX, FileType.KML, FileType.KMZ], loadCoordinatesFile);
           });
         },
       ),
@@ -832,21 +802,34 @@ class GCWMapViewState extends State<GCWMapView> {
     var viewData = parseCoordinatesFile(xml);
     if (viewData == null) viewData = parseCoordinatesFile(xml, kmlFormat: true);
 
-    if (viewData != null) _persistanceAdapter.addViewData(viewData);
+    if (viewData != null) {
+      setState(() {
+        _persistanceAdapter.addViewData(viewData);
+      });
+    }
 
     return (viewData != null);
   }
 
-  Future<bool> loadCoordinatesFile(String fileName, Uint8List bytes) async {
-    try {
-      await importCoordinatesFile(fileName, bytes).then((viewData) {
-        if (viewData != null) _persistanceAdapter.addViewData(viewData);
+  Future<bool> loadCoordinatesFile(PlatformFile file) async {
+    if (file == null)
+      return false;
 
-        return (viewData != null);
+    try {
+      await importCoordinatesFile(file).then((viewData) {
+        if (viewData == null)
+          return false;
+
+        setState(() {
+          _isPolylineDrawing = false;
+          _persistanceAdapter.addViewData(viewData);
+        });
+
+        return true;
       });
     } catch (exception) {}
-    return false;
-  }
+      return false;
+    }
 }
 
 class _GCWMarker extends Marker {
