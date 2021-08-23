@@ -119,7 +119,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.TXT : {
     'extensions': ['txt'],
     'magic_bytes': <List<int>>[],
-    'file_class' : FileClass.DATA
+    'file_class' : FileClass.TEXT
   },
   FileType.PDF : {
     'extensions': ['pdf'],
