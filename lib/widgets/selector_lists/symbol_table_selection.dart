@@ -19,7 +19,6 @@ class SymbolTableSelection extends GCWSelection {
     }).toList();
 
     _toolList.sort((a, b) {
-      print(a.i18nPrefix);
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
