@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:xml/xml.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +16,20 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
 
-Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async {
-  switch (getFileExtension(fileName).toLowerCase()) {
-    case '.gpx':
-      var xml = String.fromCharCodes(bytes);
+Future<MapViewDAO> importCoordinatesFile(PlatformFile file) async {
+  var type = fileTypeByFilename(file.name);
+
+  switch (type) {
+    case FileType.GPX:
+      var xml = String.fromCharCodes(file.bytes);
       return parseCoordinatesFile(xml);
       break;
-    case '.kml':
-      var xml = String.fromCharCodes(bytes);
+    case FileType.KML:
+      var xml = String.fromCharCodes(file.bytes);
       return parseCoordinatesFile(xml, kmlFormat: true);
       break;
-    case '.kmz':
-      InputStream input = new InputStream(bytes.buffer.asByteData());
+    case FileType.KMZ:
+      InputStream input = new InputStream(file.bytes.buffer.asByteData());
       // Decode the Zip file
       final archive = ZipDecoder().decodeBuffer(input);
       if (archive.files.isNotEmpty) {
@@ -37,7 +40,7 @@ Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async
       }
       break;
   }
-  ;
+
   return null;
 }
 

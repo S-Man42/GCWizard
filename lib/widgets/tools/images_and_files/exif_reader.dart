@@ -77,19 +77,22 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFile(local.PlatformFile _file) async {
-    if (_file == null) return;
+    Image.Image _image;
 
-    Map<String, IfdTag> tags = await parseExif(_file);
-    if (tags == null) {
+    if (_file != null)
+      _image = await _completeImageMetadata(_file);
+
+    if (_file == null || _image == null) {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       _fileLoaded = false;
       return;
     }
 
+    Map<String, IfdTag> tags = await parseExif(_file);
+
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
-    Image.Image _image;
 
     try {
       if (tags != null) {
@@ -98,7 +101,6 @@ class _ExifReaderState extends State<ExifReader> {
         _tableTags = buildTablesExif(tags);
       }
 
-      _image = await _completeImageMetadata(_file);
       _fileLoaded = true;
 
       setState(() {

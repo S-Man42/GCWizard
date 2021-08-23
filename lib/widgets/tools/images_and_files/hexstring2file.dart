@@ -63,7 +63,7 @@ class HexString2FileState extends State<HexString2File> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(data.buffer.asByteData(),
+    var value = await saveByteDataToFile(data,
         "hexstring_export_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);

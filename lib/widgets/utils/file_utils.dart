@@ -8,7 +8,6 @@ import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/services.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:open_file/open_file.dart';
@@ -119,7 +118,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.TXT : {
     'extensions': ['txt'],
     'magic_bytes': <List<int>>[],
-    'file_class' : FileClass.DATA
+    'file_class' : FileClass.TEXT
   },
   FileType.PDF : {
     'extensions': ['pdf'],
@@ -158,9 +157,9 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
 };
 
-FileType fileTypeByExtension(String extension) {
-  extension = extension.split('.').last;
-  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(extension), orElse: () => null);
+FileType fileTypeByFilename(String fileName) {
+  fileName = fileName.split('.').last;
+  return _FILE_TYPES.keys.firstWhere((type) => _FILE_TYPES[type]['extensions'].contains(fileName), orElse: () => null);
 }
 
 String fileExtension(FileType type) {
@@ -211,12 +210,15 @@ Future<bool> checkStoragePermission() async {
   return true;
 }
 
-Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, {String subDirectory}) async {
+Future<Map<String, dynamic>> saveByteDataToFile(Uint8List data, String fileName, {String subDirectory}) async {
   var storagePermission = await checkStoragePermission();
   if (!storagePermission)
     return null;
 
   var filePath = '';
+
+  while (data.last == 0)
+    data.removeLast();
 
   if (kIsWeb) {
     // var blob = new html.Blob([data], 'image/png');
@@ -231,14 +233,14 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
       writer: (file) async {
-        await file.writeAsBytes(data.buffer.asUint8List());
+        await file.writeAsBytes(data);
       },
     );
     if (fileInfo == null) return null;
 
     filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
   }
-  return {'path': filePath, 'bytes': data.buffer.asUint8List()};
+  return {'path': filePath, 'bytes': data};
 }
 
 Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
@@ -264,7 +266,7 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     );
     if (fileInfo == null) return null;
 
-    filePath = fileInfo.identifier;
+    filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
   }
   return {'path': filePath, 'file': fileX};
 }

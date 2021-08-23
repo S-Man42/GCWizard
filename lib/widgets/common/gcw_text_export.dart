@@ -142,7 +142,7 @@ Future<Map<String, dynamic>> _exportEncryption(String text, TextExportMode mode,
     final data = await toQrImageData(text);
 
     return await saveByteDataToFile(
-        data.buffer.asByteData(), exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }
 

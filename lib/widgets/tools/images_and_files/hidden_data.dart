@@ -12,13 +12,12 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -199,27 +198,6 @@ class HiddenDataState extends State<HiddenData> {
       ),
     ];
 
-    switch (file.fileClass) {
-      case FileClass.IMAGE:
-        actions.addAll([
-          GCWPopupMenuItem(
-            child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
-            action: (index) => setState(() {
-              openInMetadataViewer(context, file.bytes);
-            }),
-          ),
-          GCWPopupMenuItem(
-              child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
-              action: (index) => setState(() {
-                openInColorCorrections(context, file.bytes);
-              }),
-          )
-        ]);
-        break;
-      default:
-        break;
-    }
-
     return GCWPopupMenu(
         iconData: Icons.open_in_new,
         size: IconButtonSize.SMALL,
@@ -243,11 +221,19 @@ class HiddenDataState extends State<HiddenData> {
                 padding: EdgeInsets.only(right: 10)
               ),
               Expanded(
-                child: GCWText(
-                    text: file.name,
-                    style: gcwTextStyle().copyWith(
+                child: Column(
+                  children: [
+                    GCWText(
+                      text: file.name,
+                      style: gcwTextStyle().copyWith(
                         fontWeight: hasChildren ? FontWeight.bold : FontWeight.normal
-                    )
+                      )
+                    ),
+                    if (file.fileClass == FileClass.IMAGE)
+                      GCWImageView(imageData: GCWImageViewData(file.bytes)),
+                    if (file.fileClass == FileClass.TEXT)
+                      GCWText(style: gcwMonotypeTextStyle(), text: String.fromCharCodes(file.bytes))
+                  ],
                 ),
                 flex: 10
               )
@@ -279,7 +265,7 @@ class HiddenDataState extends State<HiddenData> {
   }
 
   _exportFile(BuildContext context, PlatformFile file) async {
-    var value = await saveByteDataToFile(file.bytes.buffer.asByteData(), file.name);
+    var value = await saveByteDataToFile(file.bytes, file.name);
     if (value != null) showExportedFileDialog(context, value['path'], fileType: file.fileType);
   }
 }

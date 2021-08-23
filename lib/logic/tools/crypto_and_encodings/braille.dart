@@ -25,8 +25,17 @@ import 'package:gc_wizard/utils/constants.dart';
 // NLD GC5PZ8Z Braille https://www.geocaching.com/geocache/GC5PZ8Z_braille
 // USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
+// DEU GC73VZK Den findet man auch blind (reloaded) https://www.geocaching.com/geocache/GC73VZK_den-findet-man-auch-blind-reloaded
 
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
+
+Map<BrailleLanguage, Map<String, String>> BRAILLE_LANGUAGES = {
+  BrailleLanguage.SIMPLE: {'title': 'braille_language_simple', 'subtitle': 'braille_language_simple_description'},
+  BrailleLanguage.DEU: {'title': 'common_language_german', 'subtitle': 'braille_language_german_description'},
+  BrailleLanguage.ENG: {'title': 'common_language_english', 'subtitle': 'braille_language_english_description'},
+  BrailleLanguage.FRA: {'title': 'common_language_french', 'subtitle': 'braille_language_french_description'},
+  BrailleLanguage.EUR: {'title': 'braille_language_euro'},
+};
 
 final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsLetters = {
   BrailleLanguage.STD :   {
@@ -333,9 +342,9 @@ final Map<String, List<String>> _charsToSegmentsAntoine = {
   '0': ['3', '4', '5', '6'],
 };
 
-
 final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
 final SWITCH_ANTOINE = ['6'];
+final SWITCH_LETTERFOLLOWS = ['6'];
 
 final Map<BrailleLanguage, List<String>>_Switches = {
   BrailleLanguage.DEU : [
@@ -649,6 +658,8 @@ final Map<String, List<String>> _charsToSegmentsEUR = {
 
 final _Numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
+final _NumberLetters = {'j', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'};
+
 final _SmallLetters = {
   'a',
   'b',
@@ -795,19 +806,15 @@ bool _isNumber(String s) {
   return _Numbers.contains(s);
 }
 
+bool _isNumberLetter(String s) {
+  return _NumberLetters.contains(s);
+}
 
-
-List<List<String>> _encodeBrailleBASIC(String input) {
-  List<String> inputs = input.split('');
-  List<List<String>> result = [];
-
-  Map<String, List<String>> _charsToSegments = new Map<String, List<String>>();
-  _charsToSegments.addAll(_CharsToSegmentsLetters[BrailleLanguage.STD]);
-  _charsToSegments.addAll(_charsToSegmentsDigits);
-
-  for (int i = 0; i < inputs.length; i++) {
-    result.add(_charsToSegments[inputs[i].toLowerCase()]);
-  }
+bool _isOnlyDigitsSpace(String s) {
+  bool result = true;
+  for (int i = 0; i < s.length; i++)
+    if (s[i] != ' ' || !_isNumber(s[i]))
+      result = false;
   return result;
 }
 
@@ -828,6 +835,8 @@ List<List<String>> _encodeBrailleSIMPLE(String input) {
         numberFollows = true;
       }
     } else {
+      if (_isNumberLetter(inputs[i]) && numberFollows)
+        result.add(SWITCH_LETTERFOLLOWS);
       numberFollows = false;
     }
     result.add(_charsToSegments[inputs[i].toLowerCase()]);
@@ -861,6 +870,8 @@ List<List<String>> _encodeBrailleDEU(String input) {
         }
         result.add(_charsToSegments[inputs[i]]);
       } else {
+        if (_isNumberLetter(inputs[i]) && stateNumberFollows)
+          result.add(SWITCH_LETTERFOLLOWS);
         if (_isSmallLetter(inputs[i])) {
           if (stateCapitals) stateCapitals = false;
         }
@@ -1149,9 +1160,6 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   if (input == null) return [];
 
   switch (language) {
-    case BrailleLanguage.BASIC:
-      return _encodeBrailleBASIC(input);
-      break;
     case BrailleLanguage.SIMPLE:
       return _encodeBrailleSIMPLE(input);
       break;
@@ -1170,14 +1178,15 @@ List<List<String>> encodeBraille(String input, BrailleLanguage language) {
   }
 }
 
-
-
 Map<String, dynamic> _decodeBrailleBASIC(
-    List<String> inputs, bool letters, bool includingFrenchAntoine) {
+    List<String> inputs, bool letters) {
   var displays = <List<String>>[];
 
+  var antoineMap = Map<String, List<String>>.from(_charsToSegmentsLettersAntoine);
+  antoineMap.remove('NUMBERFOLLOWS');
+
   var _segmentsToCharsBASICBraille = switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]);
-  if (includingFrenchAntoine) _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
+  _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(antoineMap));
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
@@ -1188,7 +1197,7 @@ Map<String, dynamic> _decodeBrailleBASIC(
     });
 
     if (_segmentsToCharsBASICBraille.map((key, value) =>
-            MapEntry(key.join(), value.toString()))[input.split('').join()] ==
+        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
         null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
@@ -1197,20 +1206,13 @@ Map<String, dynamic> _decodeBrailleBASIC(
       if (letters)
         char = char + charH;
       else // digits
-      if (includingFrenchAntoine) {
         if ((_LetterToDigit[charH] == null) && (_AntoineToDigit[charH] == null))
           char = char + UNKNOWN_ELEMENT;
         else
-          if (_LetterToDigit[charH] == null)
-            char = char + _AntoineToDigit[charH];
-          else
-            char = char + _LetterToDigit[charH];
-      } else {
         if (_LetterToDigit[charH] == null)
-          char = char + UNKNOWN_ELEMENT;
+          char = char + _AntoineToDigit[charH];
         else
           char = char + _LetterToDigit[charH];
-      }
     }
 
     displays.add(display);
@@ -1221,7 +1223,7 @@ Map<String, dynamic> _decodeBrailleBASIC(
   return {'displays': displays, 'chars': text};
 }
 
-Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool includingFrenchAntoine) {
+Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {
   var displays = <List<String>>[];
 
   Map<List<String>, String> _segmentsToCharsSIMPLEBraille =
@@ -1243,7 +1245,7 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool includingFre
 
   List<String> text = [];
 
-  if (includingFrenchAntoine) { // decode including french chiffre antoine
+   // decode including french chiffre antoine
     _numberFollows = false;
     _antoinenumberFollows = false;
     text = inputs.where((input) => input != null).map((input) {
@@ -1293,46 +1295,6 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs, bool includingFre
 
       return char;
     }).toList();
-  } else {
-    _numberFollows = false;
-    text = inputs.where((input) => input != null).map((input) {
-      var char = '';
-      var charH = '';
-      var display = <String>[];
-      input.split('').forEach((element) {
-        display.add(element);
-      });
-
-      if (_segmentsToCharsSIMPLEBraille.map((key, value) =>
-              MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-          null)
-        char = char + UNKNOWN_ELEMENT;
-      else {
-        charH = _segmentsToCharsSIMPLEBraille.map((key, value) =>
-            MapEntry(key.join(), value.toString()))[input.split('').join()];
-
-        if (charH == 'NUMBERFOLLOWS') {
-          _numberFollows = true;
-        } else if (charH == ' ') {
-          _numberFollows = false;
-          char = char + charH;
-        } else {
-          // no switch
-          if (_numberFollows) {
-            if (_LetterToDigit[charH] == null)
-              _numberFollows = false;
-            else
-              charH = _LetterToDigit[charH];
-          }
-          char = char + charH;
-        }
-      }
-      displays.add(display);
-
-      return char;
-    }).toList();
-  }
-
   return {'displays': displays, 'chars': text};
 }
 
@@ -1441,6 +1403,8 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
               });
               displays.add(display);
               i = i + 1;
+            } else{
+
             }
             break;
           case '456':
@@ -1489,7 +1453,7 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
               });
               displays.add(display);
               i = i + 3;
-            }
+            } else
             if (i + 2 < maxLength && inputs[i + 1] == '245' && inputs[i + 2] == '356') {
               text.add('%');
               var display = <String>[];
@@ -1503,7 +1467,8 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
               });
               displays.add(display);
               i = i + 2;
-            }
+            } else
+              numberFollows = true;
             break;
         }
       }
@@ -1523,10 +1488,11 @@ Map<String, dynamic> _decodeBrailleDEU(List<String> inputs) {
       } else {
         // no switch
         if (numberFollows) {
-          if (_LetterToDigit[charH] == null)
+          if (charH != '.' && _LetterToDigit[charH] == null)
             numberFollows = false;
           else
-            charH = _LetterToDigit[charH];
+            if (charH != '.')
+              charH = _LetterToDigit[charH];
         } else if (oneCapitalFollows) {
           charH = charH.toUpperCase();
           oneCapitalFollows = false;
@@ -1927,8 +1893,6 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
   }
   return {'displays': displays, 'chars': text};}
 
-
-
 Map<String, dynamic> _decodeBrailleEUR(List<String> inputs) {
   var displays = <List<String>>[];
 
@@ -1968,7 +1932,7 @@ List<String> _sanitizeDecodeInput(List<String> input, BrailleLanguage language) 
 }
 
 Map<String, dynamic> decodeBraille(
-    List<String> input, BrailleLanguage language, bool letters, bool french) {
+    List<String> input, BrailleLanguage language, bool letters) {
   if (input == null || input.length == 0)
     return {
       'displays': [[]],
@@ -1979,10 +1943,10 @@ Map<String, dynamic> decodeBraille(
 
   switch (language) {
     case BrailleLanguage.BASIC:
-      return _decodeBrailleBASIC(input, letters, french);
+      return _decodeBrailleBASIC(input, letters);
       break;
     case BrailleLanguage.SIMPLE:
-      return _decodeBrailleSIMPLE(input, french);
+      return _decodeBrailleSIMPLE(input);
       break;
     case BrailleLanguage.DEU:
       return _decodeBrailleDEU(input);

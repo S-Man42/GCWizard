@@ -84,6 +84,7 @@ flutter:
     - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot/
     - assets/symbol_tables/birds_on_a_wire/
+    - assets/symbol_tables/birkenbihl/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
     - assets/symbol_tables/braille_de/
@@ -100,12 +101,15 @@ flutter:
     - assets/symbol_tables/chappe_v3/
     - assets/symbol_tables/cherokee/
     - assets/symbol_tables/chinese_numerals/
+    - assets/symbol_tables/cirth_erebor/
     - assets/symbol_tables/cistercian/
     - assets/symbol_tables/color_add/
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
-    - assets/symbol_tables/cookewheatstone_oneneedle/
+    - assets/symbol_tables/cookewheatstone_1/
+    - assets/symbol_tables/cookewheatstone_2/
+    - assets/symbol_tables/cookewheatstone_5/
     - assets/symbol_tables/country_flags/
     - assets/symbol_tables/covenant/
     - assets/symbol_tables/cyrillic/

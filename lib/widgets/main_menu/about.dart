@@ -140,6 +140,7 @@ class AboutState extends State<About> {
                       text: [
                             '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
                             '\'capoaira\' (Code)',
+                            'Cavit A. (Translation TR)',
                             'Dennis \'dennistreysa\' (Code)',
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
                             '\'Geo-Link\' (Hardware & Symbol Tables)',
@@ -152,6 +153,19 @@ class AboutState extends State<About> {
                             'Udo J. (Code)',
                             '\'wollpirat\' (Food, Tea & more)'
                           ].join('\n') +
+                          '\n'),
+                  TextSpan(text: i18n(context, 'about_translators') + '\n', style: boldTextStyle),
+                  TextSpan(
+                      text: [
+                        '\'alantheandroid\' (IT)',
+                        'Cavit A. (TR)',
+                        '\'crazedllama\' (KO)',
+                        '\'j_janus (PL)',
+                        '\'Johan-V (NL)',
+                        'Paul Z. (NL)',
+                        'Paweł B. (PL)',
+                        '\'Xoyn\' (RU)',
+                      ].join('\n') +
                           '\n')
                 ], style: gcwTextStyle()),
               ),
@@ -182,7 +196,6 @@ class AboutState extends State<About> {
                     'Palk \'geogedoens.de\'',
                     '\'Pamakaru\'',
                     'Pascal M.',
-                    'Paweł B.',
                     'Peter S.-H.',
                     '\'radlerandi\'',
                     '\'Sechsfüssler\'',
