@@ -211,6 +211,13 @@ class HiddenDataState extends State<HiddenData> {
 
       var actionButton = _buildActionButton(file);
 
+      var text;
+      if (file.fileClass == FileClass.TEXT) {
+        text = String.fromCharCodes(file.bytes);
+        if (text != null && text.length > 100)
+          text = text.substring(0, 100) + '...';
+      }
+
       return Column(
         children: [
           Row (
@@ -232,7 +239,7 @@ class HiddenDataState extends State<HiddenData> {
                     if (file.fileClass == FileClass.IMAGE)
                       GCWImageView(imageData: GCWImageViewData(file.bytes)),
                     if (file.fileClass == FileClass.TEXT)
-                      GCWText(style: gcwMonotypeTextStyle(), text: String.fromCharCodes(file.bytes))
+                      GCWText(style: gcwMonotypeTextStyle(), text: text)
                   ],
                 ),
                 flex: 10
