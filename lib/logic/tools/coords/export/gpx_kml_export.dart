@@ -59,10 +59,12 @@ class _GpxWriter {
       builder.attribute('xmlns:gsak', 'http://www.gsak.net/xmlv1/6');
 
       if (points != null) {
-        for (var i = 0; i < points.length; i++) {
-          if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), points[i]);
-          _writePoint(builder, true, name, 'S' + i.toString(), points[i]);
-        }
+        var i = 0;
+        points.where((point) => point.isVisible).forEach((point) {
+          if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), point);
+          _writePoint(builder, true, name, 'S' + i.toString(), point);
+          i++;
+        });
       }
 
       var circles = points.where((point) => point.hasCircle()).map((point) => point.circle).toList();
@@ -75,7 +77,7 @@ class _GpxWriter {
 
       if (polylines != null) {
         polylines.forEach((geodetic) {
-          _writeLines(builder, name, 'line', geodetic.shape);
+          _writeLines(builder, name, 'line', geodetic.points.map((mapPoint) => mapPoint.point).toList());
         });
       }
     });
