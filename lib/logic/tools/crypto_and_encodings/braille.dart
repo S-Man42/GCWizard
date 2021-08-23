@@ -342,7 +342,6 @@ final Map<String, List<String>> _charsToSegmentsAntoine = {
   '0': ['3', '4', '5', '6'],
 };
 
-
 final SWITCH_NUMBERFOLLOWS = ['3', '4', '5', '6'];
 final SWITCH_ANTOINE = ['6'];
 final SWITCH_LETTERFOLLOWS = ['6'];
@@ -1183,8 +1182,13 @@ Map<String, dynamic> _decodeBrailleBASIC(
     List<String> inputs, bool letters) {
   var displays = <List<String>>[];
 
+  var antoineMap = Map<String, List<String>>.from(_charsToSegmentsLettersAntoine);
+  antoineMap.remove('NUMBERFOLLOWS');
+
   var _segmentsToCharsBASICBraille = switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]);
-  _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(_charsToSegmentsLettersAntoine));
+  _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(antoineMap));
+  _segmentsToCharsBASICBraille;
+  print(_segmentsToCharsBASICBraille);
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';

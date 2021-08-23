@@ -246,7 +246,7 @@ class BrailleState extends State<Braille> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join()),
+          GCWDefaultOutput(child: segments['chars'].join().toUpperCase()),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
