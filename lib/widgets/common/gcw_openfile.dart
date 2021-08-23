@@ -72,7 +72,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           title: widget.title ?? i18n(context, 'common_loadfile_openfrom'),
           leftValue: i18n(context, 'common_loadfile_openfrom_file'),
           rightValue: i18n(context, 'common_loadfile_openfrom_url'),
-          expanded: _currentOpenExpanded,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
@@ -170,7 +169,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             },
             child: content
           ),
-        )
       ],
     );
   }
