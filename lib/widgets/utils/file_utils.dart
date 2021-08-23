@@ -753,7 +753,8 @@ List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
 
     return PlatformFile(
       name: file.name,
-      bytes: file.content
+      bytes: file.content,
+      children: <PlatformFile>[]
     );
   }).where((file) => file != null).toList();
 }

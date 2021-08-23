@@ -3,12 +3,11 @@ import 'dart:typed_data';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
-List<PlatformFile> hiddenData(PlatformFile data) {
+List<PlatformFile> hiddenData(PlatformFile data, { bool ignoreFirstEntry = true}) {
   if (data == null)
     return [];
 
   var resultList = <PlatformFile>[];
-  var fileCounter = 0;
 
   var bytes = data.bytes;
 
@@ -53,8 +52,9 @@ List<PlatformFile> hiddenData(PlatformFile data) {
       bytes = null;
     }
 
-    if (fileCounter > 0) {
-      var children;
+    var fileCounter = resultList.length;
+    //if (fileCounter > 0 || !ignoreFirstEntry) {
+      List<PlatformFile> children;
       if (fileClass(detectedFileType) == FileClass.ARCHIVE) {
         children = extractArchive(PlatformFile(bytes: resultBytes));
       }
@@ -62,16 +62,57 @@ List<PlatformFile> hiddenData(PlatformFile data) {
       var result = PlatformFile(
         name: 'hidden_file_$fileCounter.${fileExtension(detectedFileType)}',
         bytes: resultBytes,
-        children: children
+        children: children == null ? <PlatformFile>[] : children
       );
 
       resultList.add(result);
-    }
 
-    fileCounter++;
+      var magicBytesList = List<List<int>>.from(magicBytes(FileType.JPEG));
+      magicBytesList.addAll(magicBytes(FileType.PNG));
+      magicBytesList.addAll(magicBytes(FileType.GIF));
+      magicBytesList.addAll(magicBytes(FileType.ZIP));
+      magicBytesList.addAll(magicBytes(FileType.RAR));
+      if (children == null)
+        searchMagicBytes(result, magicBytesList);
+      else {
+        children.forEach((element) {
+          searchMagicBytes(element, magicBytesList);
+          element == element;
+        });
+      }
+    //}
   }
-
+  if (ignoreFirstEntry && resultList.length>0) resultList.removeAt(0);
   return resultList;
+}
+
+searchMagicBytes(PlatformFile data, List<List<int>> magicBytesList) {
+  magicBytesList.forEach((magicBytes) {
+    var bytes = data.bytes;
+    for (int i = 1; i < bytes.length; i++) {
+      if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
+        var valid = true;
+        for (int offset = 1; offset < magicBytes.length; offset++) {
+          if (bytes[i + offset] != magicBytes[offset]) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) {
+          var children = hiddenData(PlatformFile(bytes: bytes.sublist(i)), ignoreFirstEntry: false);
+          if ((children != null) && (children.length > 0)) {
+            if (data.children == null)
+              data = PlatformFile(path: data.path,
+                                  name: data.name,
+                                  bytes: data.bytes,
+                                  children: children);
+            else
+              data.children.addAll(children);
+          }
+        }
+      }
+    }
+  });
 }
 
 Uint8List mergeFiles(List<dynamic> data) {
