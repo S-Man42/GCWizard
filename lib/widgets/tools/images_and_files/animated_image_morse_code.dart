@@ -414,7 +414,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = FileType.ZIP;
-      var value = await saveByteDataToFile(bytes.buffer.asByteData(),
+      var value = await saveByteDataToFile(bytes,
           'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
       if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
@@ -423,7 +423,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(data.buffer.asByteData(),
+    var value = await saveByteDataToFile(data,
         'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);

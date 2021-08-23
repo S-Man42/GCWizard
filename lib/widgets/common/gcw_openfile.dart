@@ -68,7 +68,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       children: [
         GCWTwoOptionsSwitch(
           value: _currentMode,
-          alternativeColor: true,
+          alternativeColor: widget.isDialog,
           title: widget.title ?? i18n(context, 'common_loadfile_openfrom'),
           leftValue: i18n(context, 'common_loadfile_openfrom_file'),
           rightValue: i18n(context, 'common_loadfile_openfrom_url'),

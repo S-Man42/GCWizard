@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'dart:math';
-import 'dart:ui' as ui;
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -263,6 +262,6 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return await saveByteDataToFile(
-        data, widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data.buffer.asUint8List(), widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

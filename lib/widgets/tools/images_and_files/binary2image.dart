@@ -90,7 +90,7 @@ class Binary2ImageState extends State<Binary2Image> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(
-        data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
       showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(_outData));

@@ -264,7 +264,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     String outputFilename = 'imageview_export_${timestamp}.png';
 
-    var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
+    var value = await saveByteDataToFile(data, outputFilename);
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: FileType.PNG);
   }

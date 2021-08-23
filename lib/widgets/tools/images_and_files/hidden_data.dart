@@ -17,9 +17,7 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -267,7 +265,7 @@ class HiddenDataState extends State<HiddenData> {
   }
 
   _exportFile(BuildContext context, PlatformFile file) async {
-    var value = await saveByteDataToFile(file.bytes.buffer.asByteData(), file.name);
+    var value = await saveByteDataToFile(file.bytes, file.name);
     if (value != null) showExportedFileDialog(context, value['path'], fileType: file.fileType);
   }
 }
