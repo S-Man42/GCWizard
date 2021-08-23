@@ -1187,8 +1187,6 @@ Map<String, dynamic> _decodeBrailleBASIC(
 
   var _segmentsToCharsBASICBraille = switchMapKeyValue(_CharsToSegmentsLetters[BrailleLanguage.STD]);
   _segmentsToCharsBASICBraille.addAll(switchMapKeyValue(antoineMap));
-  _segmentsToCharsBASICBraille;
-  print(_segmentsToCharsBASICBraille);
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
