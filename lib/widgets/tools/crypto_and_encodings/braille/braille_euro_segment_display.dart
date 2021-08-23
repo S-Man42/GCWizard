@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
@@ -23,7 +25,7 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
       readOnly: readOnly,
       onChanged: onChanged,
       type: SegmentDisplayType.CUSTOM,
-      customPaint: (canvas, size, currentSegments, setSegmentState) {
+      customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState) {
         var paint = defaultSegmentPaint();
 
         var circles = {
@@ -39,13 +41,31 @@ class BrailleEuroSegmentDisplay extends NSegmentDisplay {
 
         circles.forEach((key, value) {
           paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-          canvas.drawCircle(
+
+          var pointSize = size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS;
+
+          canvas.touchCanvas.drawCircle(
               Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * value[0],
                   size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1]),
               size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * _EUROBRAILLE_RADIUS,
               paint, onTapDown: (tapDetail) {
             setSegmentState(key, !currentSegments[key]);
           });
+
+          if (size.height < 50)
+            return;
+
+          TextSpan span = TextSpan(
+              style: gcwTextStyle().copyWith(color: Colors.white, fontSize: pointSize * 1.3),
+              text: key);
+          TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+          textPainter.layout();
+
+          textPainter.paint(
+              canvas.canvas,
+              Offset(size.width / _EUROBRAILLE_RELATIVE_DISPLAY_WIDTH * value[0] - textPainter.width * 0.5,
+              size.height / _EUROBRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1] - textPainter.height * 0.5)
+          );
         });
       });
 }

@@ -11,8 +11,10 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
 
@@ -407,4 +409,16 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   }
 
   return image;
+}
+
+openInColorCorrections(BuildContext context, Uint8List imgData) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute(
+          builder: (context) => GCWTool(
+              tool: ImageColorCorrections(imageData: imgData),
+              toolName: i18n(context, 'image_colorcorrections_title'),
+              i18nPrefix: '',
+              autoScroll: false,
+              helpLocales: ['de', 'en', 'fr'])));
 }

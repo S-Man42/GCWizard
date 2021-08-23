@@ -18,8 +18,9 @@ class GCWOpenFile extends StatefulWidget {
   final List<FileType> supportedFileTypes;
   final bool expanded;
   final bool isDialog;
+  final String title;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded, this.isDialog: false}) : super(key: key);
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded, this.title, this.isDialog: false}) : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -68,9 +69,10 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         GCWTwoOptionsSwitch(
           value: _currentMode,
           alternativeColor: true,
-          title: i18n(context, 'common_loadfile_openfrom'),
+          title: widget.title ?? i18n(context, 'common_loadfile_openfrom'),
           leftValue: i18n(context, 'common_loadfile_openfrom_file'),
           rightValue: i18n(context, 'common_loadfile_openfrom_url'),
+          expanded: _currentOpenExpanded,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
@@ -168,11 +170,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             },
             child: content
           ),
-        if (!widget.isDialog && _currentOpenExpanded)
-          Container(
-            child: GCWDivider(),
-            padding: EdgeInsets.only(bottom: 10.0),
-          ),
+        )
       ],
     );
   }

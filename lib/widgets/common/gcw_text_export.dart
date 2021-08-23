@@ -126,7 +126,7 @@ exportFile(String text, String exportLabel, TextExportMode mode, BuildContext co
       value['path'],
       contentWidget: mode == TextExportMode.QR
           ? Container(
-              child: value['file'] == null ? null : Image.file(value['file']),
+              child: value['bytes'] == null ? null : Image.memory(value['bytes']),
               margin: EdgeInsets.only(top: 25),
               decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
             )

@@ -1,29 +1,22 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_euro_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
-Map<BrailleLanguage, Map<String, String>> _BRAILLE_LANGUAGES = {
-  BrailleLanguage.BASIC: {'title': 'braille_language_basic', 'subtitle': 'braille_language_basic_description'},
-  BrailleLanguage.SIMPLE: {'title': 'braille_language_simple', 'subtitle': 'braille_language_simple_description'},
-  BrailleLanguage.DEU: {'title': 'common_language_german', 'subtitle': 'braille_language_german_description'},
-  BrailleLanguage.ENG: {'title': 'common_language_english', 'subtitle': 'braille_language_english_description'},
-  BrailleLanguage.FRA: {'title': 'common_language_french', 'subtitle': 'braille_language_french_description'},
-  BrailleLanguage.EUR: {'title': 'braille_language_euro'},
-};
+import 'braille_euro_segment_display.dart';
+import 'braille_segment_display.dart';
 
 class Braille extends StatefulWidget {
   @override
@@ -36,10 +29,21 @@ class BrailleState extends State<Braille> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
-  var _currentSimpleMode = GCWSwitchPosition.left;
-  var _currentIncludingFrenchAntoine = false;
 
-  var _currentLanguage = BrailleLanguage.BASIC;
+  var _currentLanguage = BrailleLanguage.SIMPLE;
+
+  @override
+  void initState() {
+    super.initState();
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+  }
+
+  @override
+  void dispose() {
+    _encodeController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class BrailleState extends State<Braille> {
             _currentLanguage = value;
           });
         },
-        items: _BRAILLE_LANGUAGES.entries.map((mode) {
+        items: BRAILLE_LANGUAGES.entries.map((mode) {
           return GCWDropDownMenuItem(
             value: mode.key,
             child: i18n(context, mode.value['title']),
@@ -85,45 +89,6 @@ class BrailleState extends State<Braille> {
           Column(
         // decrpyt: input segment => output number
               children: <Widget>[
-                if (_currentLanguage == BrailleLanguage.BASIC)
-                  Column(
-                    children: <Widget>[
-                      GCWTwoOptionsSwitch(
-                        value: _currentSimpleMode,
-                        leftValue: i18n(context, "braille_simple_mode_letters"),
-                        rightValue: i18n(context, "braille_simple_mode_digits"),
-                        onChanged: (value) {
-                          setState(() {
-                            _currentSimpleMode = value;
-                          });
-                        },
-                      ),
-                      if (_currentSimpleMode == GCWSwitchPosition.right)
-                        GCWOnOffSwitch(
-                          value: _currentIncludingFrenchAntoine,
-                          title: i18n(context, 'braille_language_digits_french'),
-                          onChanged: (value) {
-                            setState(() {
-                              _currentIncludingFrenchAntoine = value;
-                            });
-                          },
-                        ),
-                     ],
-                    ),
-                if (_currentLanguage == BrailleLanguage.SIMPLE)
-                  Column(
-                        children: <Widget>[
-                          GCWOnOffSwitch(
-                            value: _currentIncludingFrenchAntoine,
-                            title: i18n(context, 'braille_language_digits_french'),
-                            onChanged: (value) {
-                              setState(() {
-                                _currentIncludingFrenchAntoine = value;
-                              });
-                            },
-                          ),
-                        ],
-                ),
                 _buildVisualDecryption()
               ],
             ),
@@ -256,12 +221,18 @@ class BrailleState extends State<Braille> {
 
   _buildOutput(countColumns) {
     var segments;
+    var segmentsBasicDigits;
+    var segmentsBasicLetters;
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeBraille(_currentEncodeInput, _currentLanguage);
+      List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
+          GCWOutput(
+            title: i18n(context, 'braille_output_numbers'),
+            child: segments.map((segment) => segment.join()).join(' ')
+          )
         ],
       );
     } else {
@@ -269,12 +240,28 @@ class BrailleState extends State<Braille> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBraille(output, _currentLanguage, (_currentSimpleMode == GCWSwitchPosition.left), _currentIncludingFrenchAntoine);
+      segments = decodeBraille(output, _currentLanguage, false);
+      segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
+      segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join()),
-        ],
+          GCWDefaultOutput(child: segments['chars'].join().toUpperCase()),
+          if (_currentLanguage == BrailleLanguage.SIMPLE)
+            Column(
+              children: [
+                if (segmentsBasicLetters['chars'].join().toUpperCase() != segments['chars'].join())
+                  GCWOutput(
+                    title: i18n(context, 'brailledotnumbers_basic_letters'),
+                    child: segmentsBasicLetters['chars'].join().toUpperCase(),
+                  ),
+                if (segmentsBasicDigits['chars'].join().toUpperCase() != segments['chars'].join())
+                  GCWOutput(
+                    title: i18n(context,'brailledotnumbers_basic_digits'),
+                    child: segmentsBasicDigits['chars'].join().toUpperCase(),
+                  ),
+              ],
+            )        ],
       );
     }
   }
