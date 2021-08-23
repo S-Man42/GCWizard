@@ -59,7 +59,7 @@ class HexViewerState extends State<HexViewer> {
   Widget build(BuildContext context) {
     if (_hexData == null && widget.platformFile != null) {
       _hexData = file2hexstring(widget.platformFile.bytes);
-      _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
+      _hexDataLines = (_hexData.length / _CHARS_PER_LINE).ceil();
     }
 
     return Column(
@@ -75,7 +75,7 @@ class HexViewerState extends State<HexViewer> {
 
             if (_file != null) {
               _hexData = file2hexstring(_file.bytes);
-              _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
+              _hexDataLines = (_hexData.length / _CHARS_PER_LINE).ceil();
 
               setState(() {});
             }

@@ -3,12 +3,11 @@ import 'dart:typed_data';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
-List<PlatformFile> hiddenData(PlatformFile data, { bool ignoreFirstEntry = true}) {
+List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicBytes = false, int fileIndex = 0}) {
   if (data == null)
     return [];
 
   var resultList = <PlatformFile>[];
-
   var bytes = data.bytes;
 
   while (bytes != null && bytes.length > 0) {
@@ -52,61 +51,59 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool ignoreFirstEntry = true}
       bytes = null;
     }
 
-    var fileCounter = resultList.length;
-    //if (fileCounter > 0 || !ignoreFirstEntry) {
-      List<PlatformFile> children;
-      if (fileClass(detectedFileType) == FileClass.ARCHIVE) {
-        children = extractArchive(PlatformFile(bytes: resultBytes));
-      }
+    List<PlatformFile> children;
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
+      children = extractArchive(PlatformFile(bytes: resultBytes));
 
-      var result = PlatformFile(
-        name: 'hidden_file_$fileCounter.${fileExtension(detectedFileType)}',
-        bytes: resultBytes,
-        children: children == null ? <PlatformFile>[] : children
-      );
+    var fileCounter = fileIndex + resultList.length;
+    var result = PlatformFile(
+      name: 'hidden_file_$fileCounter.${fileExtension(detectedFileType)}',
+      bytes: resultBytes,
+      children: children
+    );
 
-      resultList.add(result);
+    resultList.add(result);
 
-      var magicBytesList = List<List<int>>.from(magicBytes(FileType.JPEG));
-      magicBytesList.addAll(magicBytes(FileType.PNG));
-      magicBytesList.addAll(magicBytes(FileType.GIF));
-      magicBytesList.addAll(magicBytes(FileType.ZIP));
-      magicBytesList.addAll(magicBytes(FileType.RAR));
-      if (children == null)
-        searchMagicBytes(result, magicBytesList);
-      else {
-        children.forEach((element) {
-          searchMagicBytes(element, magicBytesList);
-          element == element;
-        });
-      }
-    //}
+    if (calledFromSearchMagicBytes) break;
   }
-  if (ignoreFirstEntry && resultList.length>0) resultList.removeAt(0);
+
+  if (!calledFromSearchMagicBytes) {
+    if (resultList.length > 0) resultList.removeAt(0);
+
+    var magicBytesList = List<List<int>>.from(magicBytes(FileType.JPEG));
+    magicBytesList.addAll(magicBytes(FileType.PNG));
+    magicBytesList.addAll(magicBytes(FileType.GIF));
+    magicBytesList.addAll(magicBytes(FileType.ZIP));
+    magicBytesList.addAll(magicBytes(FileType.RAR));
+
+    resultList.forEach((result) {
+      if ((result.children == null) || (result.children.length == 0))
+        searchMagicBytes(result, magicBytesList);
+      else
+        result.children.forEach((element) {searchMagicBytes(element, magicBytesList);});
+    });
+  }
   return resultList;
 }
 
 searchMagicBytes(PlatformFile data, List<List<int>> magicBytesList) {
+
   magicBytesList.forEach((magicBytes) {
     var bytes = data.bytes;
     for (int i = 1; i < bytes.length; i++) {
       if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
-        var valid = true;
+        var validMagicBytes = true;
         for (int offset = 1; offset < magicBytes.length; offset++) {
           if (bytes[i + offset] != magicBytes[offset]) {
-            valid = false;
+            validMagicBytes = false;
             break;
           }
         }
-        if (valid) {
-          var children = hiddenData(PlatformFile(bytes: bytes.sublist(i)), ignoreFirstEntry: false);
+
+        if (validMagicBytes) {
+          var children = hiddenData(PlatformFile(bytes: bytes.sublist(i)), calledFromSearchMagicBytes: true, fileIndex: data.children.length + 1);
           if ((children != null) && (children.length > 0)) {
-            if (data.children == null)
-              data = PlatformFile(path: data.path,
-                                  name: data.name,
-                                  bytes: data.bytes,
-                                  children: children);
-            else
+            if (data.children != null)
               data.children.addAll(children);
           }
         }
