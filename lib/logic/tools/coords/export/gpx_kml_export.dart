@@ -61,8 +61,7 @@ class _GpxWriter {
       if (points != null) {
         var i = 0;
         points.where((point) => point.isVisible).forEach((point) {
-          if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), point);
-          _writePoint(builder, true, name, 'S' + i.toString(), point);
+          _writePoint(builder, (i != 0), name, 'S' + i.toString(), point);
           i++;
         });
       }
