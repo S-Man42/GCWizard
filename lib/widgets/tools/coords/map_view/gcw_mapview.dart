@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
@@ -605,7 +606,8 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedFileTypes: [FileType.GPX, FileType.KML, FileType.KMZ]).then((file) {
+            showOpenFileDialog(context, [FileType.GPX, FileType.KML, FileType.KMZ],
+                loadCoordinatesFile).then((file) {
               if (file != null) {
                 loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
                   setState(() {
