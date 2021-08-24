@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -30,6 +31,7 @@ class HexViewerState extends State<HexViewer> {
 
   String _hexData;
   int _hexDataLines;
+  Uint8List _bytes;
 
   final _MAX_LINES = 100;
   final _CHARS_PER_LINE = 16 * 2;
@@ -55,11 +57,16 @@ class HexViewerState extends State<HexViewer> {
     super.dispose();
   }
 
+  _setData(Uint8List bytes) {
+    _bytes = bytes;
+    _hexData = file2hexstring(bytes);
+    _hexDataLines = (_hexData.length / _CHARS_PER_LINE).ceil();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_hexData == null && widget.platformFile != null) {
-      _hexData = file2hexstring(widget.platformFile.bytes);
-      _hexDataLines = (_hexData.length / _CHARS_PER_LINE).ceil();
+      _setData(widget.platformFile.bytes);
     }
 
     return Column(
@@ -74,8 +81,7 @@ class HexViewerState extends State<HexViewer> {
             }
 
             if (_file != null) {
-              _hexData = file2hexstring(_file.bytes);
-              _hexDataLines = (_hexData.length / _CHARS_PER_LINE).ceil();
+              _setData(_file.bytes);
 
               setState(() {});
             }
@@ -83,6 +89,13 @@ class HexViewerState extends State<HexViewer> {
         ),
         GCWDefaultOutput(
           child: _buildOutput(),
+          trailing: GCWIconButton(
+            iconData: Icons.text_snippet_outlined,
+            size: IconButtonSize.SMALL,
+            onPressed: () {
+              openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
+            },
+          )
         )
       ],
     );

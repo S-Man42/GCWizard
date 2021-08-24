@@ -12,6 +12,7 @@ class GCWTextField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final TextInputType keyboardType;
   final hintText;
+  final hintColor;
   final labelText;
   final FocusNode focusNode;
   final autofocus;
@@ -29,6 +30,7 @@ class GCWTextField extends StatefulWidget {
       this.inputFormatters,
       this.keyboardType,
       this.hintText,
+      this.hintColor,
       this.labelText,
       this.focusNode,
       this.autofocus,
@@ -72,6 +74,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             autocorrect: false,
             decoration: InputDecoration(
                 hintText: widget.hintText,
+                hintStyle: gcwTextStyle().copyWith(color: widget.hintColor ?? themeColors().textFieldHintText()),
                 labelText: widget.labelText,
                 fillColor: widget.filled ? colors.textFieldFill() : null,
                 filled: widget.filled,

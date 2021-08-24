@@ -48,8 +48,11 @@ class _ExifReaderState extends State<ExifReader> {
   @override
   initState() {
     super.initState();
-    file = widget.file;
-    _readFile(file);
+
+    if (widget.file != null) {
+      file = widget.file;
+      _readFile(file);
+    }
   }
 
   @override

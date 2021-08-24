@@ -1,9 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
@@ -55,12 +58,13 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     var urlTextField = GCWTextField(
       controller: _urlController,
       filled: widget.isDialog,
+      hintText: i18n(context, 'common_loadfile_openfrom_url_address'),
+      hintColor: widget.isDialog ? Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
       onChanged: (String value) {
-        if (value == null || value.isEmpty) {
+        if (value == null || value.trim().isEmpty) {
           _currentUrl = null;
           return;
         }
-
         _currentUrl = value;
      });
 
@@ -96,17 +100,20 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             },
           ),
         if (_currentMode == GCWSwitchPosition.right)
-          Column(
+          Row(
             children: [
               widget.isDialog
                 ? Container(
                   child: urlTextField,
                   width: 220,
-                  height: 50
+                  height: 50,
+                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
                 )
-                : urlTextField,
-              GCWButton(
-                text: i18n(context, 'common_loadfile_load'),
+                :
+              Expanded(child: urlTextField),
+              GCWIconButton(
+                iconData: Icons.search,
+                iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
                 onPressed: () {
                   if (_currentUrl == null) {
                     showToast(i18n(context, 'common_loadfile_exception_url'));
@@ -122,7 +129,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                     }
                   }
 
-                  _getUri(_currentUrl).then((uri) {
+                  _getUri(_currentUrl.trim()).then((uri) {
                     if (uri == null) {
                       showToast(i18n(context, 'common_loadfile_exception_url'));
                       return;

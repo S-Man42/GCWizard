@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/rendering.dart';
@@ -316,4 +317,17 @@ bool isOnlyLetters(String input) {
   if (input == null || input.isEmpty) return false;
 
   return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').length == 0;
+}
+
+Uint8List trimNullBytes(Uint8List bytes) {
+  if (bytes == null)
+    return null;
+
+  var tempList = List<int>.from(bytes);
+  while (tempList.last == 0)
+    tempList.removeLast();
+  while (tempList.first == 0)
+    tempList.removeAt(0);
+
+  return Uint8List.fromList(tempList);
 }

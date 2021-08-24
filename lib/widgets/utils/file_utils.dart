@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
@@ -217,8 +218,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(Uint8List data, String fileName,
 
   var filePath = '';
 
-  while (data.last == 0)
-    data.removeLast();
+  data = trimNullBytes(data);
 
   if (kIsWeb) {
     // var blob = new html.Blob([data], 'image/png');
@@ -315,7 +315,7 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
     var _magicBytes = magicBytes(fileType);
 
     for (var bytes in _magicBytes) {
-      if (blobBytes.length >= bytes.length && ListEquality().equals(blobBytes.sublist(0, bytes.length), bytes))
+      if (blobBytes != null && blobBytes.length >= bytes.length && ListEquality().equals(blobBytes.sublist(0, bytes.length), bytes))
         return fileType;
     }
   }
@@ -753,9 +753,14 @@ List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
     if (!file.isFile)
       return null;
 
+    var content;
+    try {
+      content = file.content;
+    } catch (e) {}
+
     return PlatformFile(
       name: file.name,
-      bytes: file.content
+      bytes: content
     );
   }).where((file) => file != null).toList();
 }
@@ -769,10 +774,8 @@ List<PlatformFile> extractArchive(PlatformFile file) {
     switch (file.fileType) {
       case FileType.ZIP:
         return _archiveToPlatformFileList(ZipDecoder().decodeBuffer(input));
-        break;
       case FileType.TAR:
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
-        break;
       case FileType.RAR:
         return null;
         break;

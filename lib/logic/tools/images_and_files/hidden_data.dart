@@ -1,7 +1,10 @@
 import 'dart:typed_data';
 
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
+
+const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
 List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicBytes = false, int fileIndex = 0}) {
   if (data == null)
@@ -57,8 +60,8 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
 
     var fileCounter = fileIndex + resultList.length;
     var result = PlatformFile(
-      name: 'hidden_file_$fileCounter.${fileExtension(detectedFileType)}',
-      bytes: resultBytes,
+      name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter',
+      bytes: trimNullBytes(resultBytes),
       children: children
     );
 
@@ -78,18 +81,21 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
 
     resultList.forEach((result) {
       if ((result.children == null) || (result.children.length == 0))
-        searchMagicBytes(result, magicBytesList);
+        _searchMagicBytes(result, magicBytesList);
       else
-        result.children.forEach((element) {searchMagicBytes(element, magicBytesList);});
+        result.children.forEach((element) {_searchMagicBytes(element, magicBytesList);});
     });
   }
   return resultList;
 }
 
-searchMagicBytes(PlatformFile data, List<List<int>> magicBytesList) {
+_searchMagicBytes(PlatformFile data, List<List<int>> magicBytesList) {
 
   magicBytesList.forEach((magicBytes) {
     var bytes = data.bytes;
+    if (bytes == null)
+      return;
+
     for (int i = 1; i < bytes.length; i++) {
       if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
         var validMagicBytes = true;
@@ -118,7 +124,7 @@ Uint8List mergeFiles(List<dynamic> data) {
 
   data.forEach((element) {
     if (element is Uint8List)
-      result.addAll(element);
+      result.addAll(trimNullBytes(element));
     else if (element is String)
       result.addAll(Uint8List.fromList(element.toString().codeUnits));
   });
