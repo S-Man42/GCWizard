@@ -585,7 +585,7 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            showOpenFileDialog(context, [FileType.GPX, FileType.KML, FileType.KMZ], loadCoordinatesFile);
+            showOpenFileDialog(context, [FileType.GPX, FileType.KML, FileType.KMZ], _loadCoordinatesFile);
           });
         },
       ),
@@ -811,7 +811,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return (viewData != null);
   }
 
-  Future<bool> loadCoordinatesFile(PlatformFile file) async {
+  Future<bool> _loadCoordinatesFile(PlatformFile file) async {
     if (file == null)
       return false;
 
@@ -823,6 +823,7 @@ class GCWMapViewState extends State<GCWMapView> {
         setState(() {
           _isPolylineDrawing = false;
           _persistanceAdapter.addViewData(viewData);
+          _mapController.fitBounds(_getBounds());
         });
 
         return true;
