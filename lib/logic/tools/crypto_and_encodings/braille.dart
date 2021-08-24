@@ -810,14 +810,6 @@ bool _isNumberLetter(String s) {
   return _NumberLetters.contains(s);
 }
 
-bool _isOnlyDigitsSpace(String s) {
-  bool result = true;
-  for (int i = 0; i < s.length; i++)
-    if (s[i] != ' ' || !_isNumber(s[i]))
-      result = false;
-  return result;
-}
-
 List<List<String>> _encodeBrailleSIMPLE(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -839,7 +831,8 @@ List<List<String>> _encodeBrailleSIMPLE(String input) {
         result.add(SWITCH_LETTERFOLLOWS);
       numberFollows = false;
     }
-    result.add(_charsToSegments[inputs[i].toLowerCase()]);
+    if (_charsToSegments[inputs[i].toLowerCase()] != null)
+      result.add(_charsToSegments[inputs[i].toLowerCase()]);
   }
   return result;
 }
@@ -925,7 +918,8 @@ List<List<String>> _encodeBrailleDEU(String input) {
           result.add(_charsToSegments['sch']);
           i = i + 2;
         } else
-          result.add(_charsToSegments[inputs[i]]);
+          if (_charsToSegments[inputs[i]] != null)
+            result.add(_charsToSegments[inputs[i]]);
       }
   }
   return result;
@@ -1102,7 +1096,8 @@ List<List<String>> _encodeBrailleENG(String input) {
           result.add(_charsToSegments['of']);
           i++;
         } else
-          result.add(_charsToSegments[inputs[i]]);
+          if (_charsToSegments[inputs[i]] != null)
+            result.add(_charsToSegments[inputs[i]]);
       }
   }
   return result;
@@ -1140,7 +1135,8 @@ List<List<String>> _encodeBrailleFRA(String input) {
         result.add(_CharsToSegmentsSwitches[BrailleLanguage.FRA]['CAPITALS']);
         inputs[i] = inputs[i].toLowerCase();
       }
-      result.add(_charsToSegments[inputs[i]]);
+      if (_charsToSegments[inputs[i]] != null)
+        result.add(_charsToSegments[inputs[i]]);
     }
   }
   return result;
