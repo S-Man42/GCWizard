@@ -60,7 +60,15 @@ class _GpxWriter {
 
       if (points != null) {
         var i = 0;
-        points.where((point) => point.isVisible).forEach((point) {
+        var filteredPoints = points.where((point) => point.isVisible & !point.hasCircle()).toList();
+
+        if (polylines != null) {
+          polylines.forEach((geodetic) {
+            filteredPoints.removeWhere((point) => geodetic.points.contains(point));
+          });
+        };
+
+        filteredPoints.forEach((point) {
           _writePoint(builder, (i != 0), name, 'S' + i.toString(), point);
           i++;
         });
