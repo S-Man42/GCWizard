@@ -14,6 +14,7 @@ class NSegmentDisplay extends StatefulWidget {
   final Function onChanged;
 
   final Function customPaint;
+  NSegmentDisplayState nSegmentDisplayState;
 
   NSegmentDisplay(
       {Key key,
@@ -26,11 +27,15 @@ class NSegmentDisplay extends StatefulWidget {
       this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
       : super(key: key);
 
+
   @override
-  NSegmentDisplayState createState() => NSegmentDisplayState();
+  NSegmentDisplayState createState() {
+    nSegmentDisplayState = NSegmentDisplayState();
+    return nSegmentDisplayState;
+  }
 
   Future<ui.Image> get renderedImage async {
-    return NSegmentDisplayState().renderedImage;
+    return nSegmentDisplayState.renderedImage;
   }
 }
 

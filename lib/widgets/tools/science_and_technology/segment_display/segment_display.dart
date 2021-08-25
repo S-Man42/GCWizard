@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
@@ -8,6 +9,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -16,6 +18,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/16_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/7_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
 import 'base/n_segment_display.dart';
@@ -37,7 +41,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
-  NSegmentDisplay displayWidget;
+  List<dynamic> displayOutputWidget;
 
   @override
   void initState() {
@@ -139,14 +143,15 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             GCWIconButton(
               size: IconButtonSize.SMALL,
               iconData: Icons.save,
-              onPressed: ()  {
-                setState(() async {
-                  var image = await displayWidget.renderedImage;
-                  image = image;
-                });
+              onPressed: ()  async {
+                  await buildSegmentDisplayImage(countColumns, displayOutputWidget).then((image) {
+                    if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                      _exportFile(context, data.buffer.asUint8List());
+                    });
+
+                  });
               },
             )
-
           ],
         ),
       ),
@@ -154,8 +159,9 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     ]);
   }
 
-  _buildVisualEncryption() {
+  Widget _buildVisualEncryption() {
     Map<String, bool> currentDisplay;
+    NSegmentDisplay displayWidget;
 
     var displays = _currentDisplays;
     if (displays != null && displays.length > 0)
@@ -258,8 +264,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
-    var displays = segments.where((character) => character != null).map((character) {
+  Widget _buildDigitalOutput(countColumns, segments) {
+    displayOutputWidget = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
       switch (widget.type) {
@@ -283,7 +289,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       }
     }).toList();
 
-    return buildSegmentDisplayOutput(countColumns, displays);
+    return buildSegmentDisplayOutput(countColumns, displayOutputWidget);
   }
 
   _buildOutput(countColumns) {
@@ -314,4 +320,12 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       );
     }
   }
+}
+
+_exportFile(BuildContext context, Uint8List data) async {
+  var value = await saveByteDataToFile(
+      data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+
+  if (value != null)
+    showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
 }
