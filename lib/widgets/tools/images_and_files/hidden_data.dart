@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -16,6 +17,7 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -91,7 +93,6 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         GCWOpenFile(
           title: i18n(context, 'hiddendata_openpublicfile'),
-          expanded: _publicFile == null,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -103,19 +104,19 @@ class HiddenDataState extends State<HiddenData> {
             });
           },
         ),
-        Container(
-          child:GCWTwoOptionsSwitch(
-            title: i18n(context, 'hiddendata_hide'),
-            leftValue: i18n(context, 'hiddendata_hide_text'),
-            rightValue: i18n(context, 'hiddendata_hide_file'),
-            value: _currentHideMode,
-            onChanged: (value) {
-              setState(() {
-                _currentHideMode = value;
-              });
-            },
-          ),
-          padding: EdgeInsets.symmetric(vertical: 30)
+        GCWTextDivider(
+          text: i18n(context, 'hiddendata_opensecretfile')
+        ),
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'hiddendata_hide'),
+          leftValue: i18n(context, 'hiddendata_hide_text'),
+          rightValue: i18n(context, 'hiddendata_hide_file'),
+          value: _currentHideMode,
+          onChanged: (value) {
+            setState(() {
+              _currentHideMode = value;
+            });
+          },
         ),
         if (_currentHideMode == GCWSwitchPosition.left)
           GCWTextField(
@@ -126,8 +127,6 @@ class HiddenDataState extends State<HiddenData> {
           ),
         if (_currentHideMode == GCWSwitchPosition.right)
           GCWOpenFile(
-            title: i18n(context, 'hiddendata_opensecretfile'),
-            expanded: _secretFile == null,
             onLoaded: (_openedFile) {
               if (_openedFile == null) {
                 showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -139,6 +138,10 @@ class HiddenDataState extends State<HiddenData> {
               });
             },
           ),
+        Container(
+          height: 15
+        ),
+        GCWDivider(),
         GCWButton(
           text: i18n(context, 'hiddendata_hideandsave'),
           onPressed: () {
@@ -163,7 +166,6 @@ class HiddenDataState extends State<HiddenData> {
     return Column(
       children: [
         GCWOpenFile(
-          expanded: _unHideFile == null,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -344,6 +346,5 @@ openInHiddenData(BuildContext context, {Uint8List data, PlatformFile file}) {
               tool: HiddenData(platformFile: file ?? PlatformFile(bytes: data)),
               toolName: i18n(context, 'hiddendata_title'),
               i18nPrefix: '',
-              autoScroll: false,
               helpLocales: ['de', 'en', 'fr'])));
 }

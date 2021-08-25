@@ -5,12 +5,12 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -19,11 +19,10 @@ import 'package:http/http.dart' as http;
 class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
   final List<FileType> supportedFileTypes;
-  final bool expanded;
   final bool isDialog;
   final String title;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.expanded, this.title, this.isDialog: false}) : super(key: key);
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false}) : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -33,9 +32,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   var _urlController;
   String _currentUrl;
 
-  var _currentOpenExpanded;
-
   var _currentMode = GCWSwitchPosition.left;
+  String _loadedFile;
+  var _currentExpanded = true;
 
   @override
   void initState() {
@@ -53,8 +52,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentOpenExpanded == null) _currentOpenExpanded = widget.expanded ?? true;
-
     var urlTextField = GCWTextField(
       controller: _urlController,
       filled: widget.isDialog,
@@ -73,7 +70,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         GCWTwoOptionsSwitch(
           value: _currentMode,
           alternativeColor: widget.isDialog,
-          title: widget.title ?? i18n(context, 'common_loadfile_openfrom'),
+          title: i18n(context, 'common_loadfile_openfrom'),
           leftValue: i18n(context, 'common_loadfile_openfrom_file'),
           rightValue: i18n(context, 'common_loadfile_openfrom_url'),
           onChanged: (value) {
@@ -86,12 +83,13 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           GCWButton(
             text: i18n(context, 'common_loadfile_open'),
             onPressed: () {
+              _currentExpanded = true;
               openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((PlatformFile file) {
                 if (file != null) {
                   setState(() {
-                    _currentOpenExpanded = false;
+                    _loadedFile = file.name;
+                    _currentExpanded = false;
                   });
-
                   widget.onLoaded(file);
                 } else {
                   showToast(i18n(context, 'common_loadfile_exception_nofile'));
@@ -109,54 +107,58 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                   height: 50,
                   padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
                 )
-                :
-              Expanded(child: urlTextField),
-              GCWIconButton(
-                iconData: Icons.search,
-                iconColor: widget.isDialog ? themeColors().dialogText() : themeColors().mainFont(),
-                onPressed: () {
-                  if (_currentUrl == null) {
-                    showToast(i18n(context, 'common_loadfile_exception_url'));
-                    return;
-                  }
+                : Expanded(child: urlTextField),
+              Container(
+                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                child: GCWButton(
+                  text: i18n(context, 'common_loadfile_open'),
+                  onPressed: () {
+                    _currentExpanded = true;
 
-                  if (widget.supportedFileTypes != null) {
-                    var _urlFileType = fileTypeByFilename(_currentUrl);
-
-                    if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
-                      showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
-                      return;
-                    }
-                  }
-
-                  _getUri(_currentUrl.trim()).then((uri) {
-                    if (uri == null) {
+                    if (_currentUrl == null) {
                       showToast(i18n(context, 'common_loadfile_exception_url'));
                       return;
                     }
 
-                    http.get(uri).timeout(
-                        Duration(seconds: 10),
-                        onTimeout: () {
-                          return http.Response('Error', 500);
-                        }
-                    ).then((http.Response response) {
-                      if (response.statusCode != 200) {
-                        showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
+                    if (widget.supportedFileTypes != null) {
+                      var _urlFileType = fileTypeByFilename(_currentUrl);
+
+                      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
+                        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+                        return;
+                      }
+                    }
+
+                    _getUri(_currentUrl.trim()).then((uri) {
+                      if (uri == null) {
+                        showToast(i18n(context, 'common_loadfile_exception_url'));
                         return;
                       }
 
-                      setState(() {
-                        _currentOpenExpanded = false;
-                      });
+                      http.get(uri).timeout(
+                          Duration(seconds: 10),
+                          onTimeout: () {
+                            return http.Response('Error', 500);
+                          }
+                      ).then((http.Response response) {
+                        if (response.statusCode != 200) {
+                          showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
+                          return;
+                        }
 
-                      widget.onLoaded(PlatformFile(
-                          name: Uri.decodeFull(_currentUrl).split('/').last,
-                          path: _currentUrl,
-                          bytes: response.bodyBytes));
+                        setState(() {
+                          _loadedFile = uri.toString();
+                          _currentExpanded = false;
+                        });
+
+                        widget.onLoaded(PlatformFile(
+                            name: Uri.decodeFull(_currentUrl).split('/').last,
+                            path: _currentUrl,
+                            bytes: response.bodyBytes));
+                      });
                     });
-                  });
-                },
+                  },
+                )
               )
             ],
           )
@@ -167,15 +169,24 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       children: [
         widget.isDialog ? content :
           GCWExpandableTextDivider(
-            text: i18n(context, 'common_loadfile_showopen'),
-            expanded: _currentOpenExpanded,
+            text: i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title + ')' : ''),
+            expanded: _currentExpanded,
             onChanged: (value) {
               setState(() {
-                _currentOpenExpanded = value;
+                _currentExpanded = value;
               });
             },
             child: content
           ),
+        if (_currentExpanded && _loadedFile != null)
+          GCWText(
+            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + _loadedFile,
+            style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 4),
+          ),
+        if (!_currentExpanded && _loadedFile != null)
+          GCWText(
+            text: i18n(context, 'common_loadfile_loaded') + ': ' + _loadedFile,
+          )
       ],
     );
   }

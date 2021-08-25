@@ -62,49 +62,32 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _decodeWidgets() {
     return Column(children: [
-      Row(children: [
-        Expanded(child: GCWTextDivider(text: i18n(context, 'visual_cryptography_image') + ' 1')),
-        Expanded(child: GCWTextDivider(text: i18n(context, 'visual_cryptography_image') + ' 2')),
-      ]),
-      Row(children: [
-        Expanded(
-          child: Column(children: [
-            GCWOpenFile(
-              expanded: _decodeImage1 == null,
-              supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-              onLoaded: (_file) {
-                if (_file == null) {
-                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                  return;
-                }
+      GCWOpenFile(
+        title: i18n(context, 'visual_cryptography_image') + ' 1',
+        supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        onLoaded: (_file) {
+          if (_file == null) {
+            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            return;
+          }
 
-                if (_file != null) _decodeImage1 = _file;
-              },
-            ),
-          ]),
-        ),
-        Expanded(
-          child: Column(children: [
-            GCWOpenFile(
-              expanded: _decodeImage2 == null,
-              supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-              onLoaded: (_file) {
-                if (_file == null) {
-                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                  return;
-                }
+          if (_file != null) _decodeImage1 = _file;
+        },
+      ),
+      Container(height: 20),
+      GCWOpenFile(
+        title: i18n(context, 'visual_cryptography_image') + ' 2',
+        supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        onLoaded: (_file) {
+          if (_file == null) {
+            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            return;
+          }
 
-                if (_file != null) _decodeImage2 = _file;
-              },
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Expanded(child: GCWText(align: Alignment.bottomCenter, text: _decodeImage1 == null ? "" : _decodeImage1.name)),
-        Expanded(child: GCWText(align: Alignment.bottomCenter, text: _decodeImage2 == null ? "" : _decodeImage2.name)),
-      ]),
-      Container(height: 10),
+          if (_file != null) _decodeImage2 = _file;
+        },
+      ),
+      Container(height: 25),
       GCWIntegerSpinner(
         title: i18n(context, 'visual_cryptography_offset') + ' X',
         value: _decodeOffsetsX,
@@ -142,7 +125,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
       GCWImageView(
         imageData: GCWImageViewData(_outData),
         toolBarRight: false,
-        fileName: 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
       GCWButton(
         text: i18n(context, 'visual_cryptography_clear'),
@@ -158,7 +141,6 @@ class VisualCryptographyState extends State<VisualCryptography> {
   Widget _encodeWidgets() {
     return Column(children: <Widget>[
       GCWOpenFile(
-        expanded: _encodeImage == null,
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         onLoaded: (_file) {
           if (_file == null) {
@@ -267,13 +249,13 @@ class VisualCryptographyState extends State<VisualCryptography> {
       GCWImageView(
         imageData: GCWImageViewData(_encodeOutputImages.item1),
         toolBarRight: true,
-        fileName: 'image_export_1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: 'img1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
       Container(height: 5),
       GCWImageView(
         imageData: GCWImageViewData(_encodeOutputImages.item2),
         toolBarRight: true,
-        fileName: 'image_export_2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+        fileName: 'img2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
     ]);
   }

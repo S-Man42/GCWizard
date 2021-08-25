@@ -117,7 +117,7 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                             'Andy \'Puma66\' (Special Support)',
-                            'Andreas \'TeamBirdy2404\' (Symbol Tables)',
+                            'Andreas \'TeamBirdy2404\' (Manual & Symbol Tables)',
                             'Ludovic Valente \'LudoO\' (Code & Translation FR)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
@@ -154,6 +154,11 @@ class AboutState extends State<About> {
                             '\'wollpirat\' (Food, Tea & more)'
                           ].join('\n') +
                           '\n'),
+                ], style: gcwTextStyle()),
+              ),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(children: [
                   TextSpan(text: i18n(context, 'about_translators') + '\n', style: boldTextStyle),
                   TextSpan(
                       text: [

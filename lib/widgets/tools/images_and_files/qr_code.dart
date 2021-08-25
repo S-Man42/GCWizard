@@ -54,7 +54,6 @@ class QrCodeState extends State<QrCode> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
           ? GCWOpenFile(
-              expanded: _outData == null,
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
                 if (_file == null) {

@@ -58,14 +58,17 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
     if (fileClass(detectedFileType) == FileClass.ARCHIVE)
       children = extractArchive(PlatformFile(bytes: resultBytes));
 
-    var fileCounter = fileIndex + resultList.length;
-    var result = PlatformFile(
-      name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter',
-      bytes: trimNullBytes(resultBytes),
-      children: children
-    );
+    resultBytes = trimNullBytes(resultBytes);
+    if (resultBytes.length > 0) {
+      var fileCounter = fileIndex + resultList.length;
+      var result = PlatformFile(
+          name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter',
+          bytes: resultBytes,
+          children: children
+      );
 
-    resultList.add(result);
+      resultList.add(result);
+    }
 
     if (calledFromSearchMagicBytes) break;
   }
