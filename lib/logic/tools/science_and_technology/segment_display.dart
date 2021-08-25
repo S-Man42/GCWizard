@@ -518,7 +518,7 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
 }
 
 Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
-  if (input == null || input == '') return {'displays': [], 'text': ''};
+  if (input == null || input == '') return {'displays': <List<String>>[], 'text': ''};
   var baseSegments;
 
   switch (segmentType) {
