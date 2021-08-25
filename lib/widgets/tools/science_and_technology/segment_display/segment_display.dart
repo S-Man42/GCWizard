@@ -18,6 +18,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
+import 'base/n_segment_display.dart';
+
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
 
@@ -35,6 +37,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
+  NSegmentDisplay displayWidget;
 
   @override
   void initState() {
@@ -132,7 +135,18 @@ class SegmentDisplayState extends State<SegmentDisplay> {
                       : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                 });
               },
+            ),
+            GCWIconButton(
+              size: IconButtonSize.SMALL,
+              iconData: Icons.save,
+              onPressed: ()  {
+                setState(() async {
+                  var image = await displayWidget.renderedImage;
+                  image = image;
+                });
+              },
             )
+
           ],
         ),
       ),
@@ -149,7 +163,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     else
       currentDisplay = {};
 
-    var displayWidget;
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
