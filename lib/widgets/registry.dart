@@ -2212,7 +2212,12 @@ class Registry {
           tool: Beaufort(),
           i18nPrefix: 'beaufort',
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_BEAUFORT]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_BEAUFORT,
+            SEARCHSTRING_DE_BEAUFORT,
+            SEARCHSTRING_EN_BEAUFORT,
+            SEARCHSTRING_FR_BEAUFORT,
+          ]),
 
       //Braille Selection ****************************************************************
       GCWTool(

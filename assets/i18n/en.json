@@ -1923,6 +1923,8 @@
   "hashes_hashbreaker_searchconfiguration_searchmask": "Search Mask",
   "hashes_hashbreaker_hashtobreak": "Hash to find",
   "hashes_hashbreaker_solutionnotfound": "No solution found within the given range.",
+  "hashes_hashbreaker_manycombinations_title": "Warning: Many combinations!",
+  "hashes_hashbreaker_manycombinations_text": "The chosen value ranges result in %s1 combinations.\n\nTesting all combinations could take much time.\n\nAre you sure?",
   "heatindex_title": "Heat Index",
   "heatindex_description": "Apparent temperature from temperature and humidity",
   "heatindex_example": "30°C (86°F) / 60% → 33°C (91°F)",

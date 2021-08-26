@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
@@ -128,9 +129,8 @@ class _HashBreakerState extends State<HashBreaker> {
         onRemoveEntry: _removeEntry);
   }
 
-  Widget _buildSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog(
+  _onDoCalculation() async {
+    await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -148,15 +148,30 @@ class _HashBreakerState extends State<HashBreaker> {
           );
         },
       );
-    });
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    _currentOutput = '';
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        var countCombinations = preCheck(_getSubstitutions());
 
+        if (countCombinations['status'] == 'high_count') {
+          showGCWAlertDialog(
+            context,
+            i18n(context, 'hashes_hashbreaker_manycombinations_title'),
+            i18n(context, 'hashes_hashbreaker_manycombinations_text', parameters: [countCombinations['count']]),
+            () async {
+              _onDoCalculation();
+            },
+          );
+        } else {
+          _onDoCalculation();
+        }
+      },
+    );
+  }
+
+  Map<String, String> _getSubstitutions() {
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
@@ -168,6 +183,17 @@ class _HashBreakerState extends State<HashBreaker> {
         _currentToInput.length > 0) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
+
+    return _substitutions;
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    _currentOutput = '';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+
+    var _substitutions = _getSubstitutions();
 
     return GCWAsyncExecuterParameters(HashBreakerJobData(
         input: _currentInput,
