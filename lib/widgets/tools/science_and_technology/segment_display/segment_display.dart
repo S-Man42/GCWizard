@@ -41,7 +41,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
-  List<dynamic> displayOutputWidget;
+  List<NSegmentDisplay> _displayOutputWidget;
 
   @override
   void initState() {
@@ -143,8 +143,9 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             GCWIconButton(
               size: IconButtonSize.SMALL,
               iconData: Icons.save,
+              iconColor: _displayOutputWidget == null || _displayOutputWidget.length == 0 ? Colors.grey : null,
               onPressed: ()  async {
-                  await buildSegmentDisplayImage(countColumns, displayOutputWidget).then((image) {
+                  await buildSegmentDisplayImage(countColumns, _displayOutputWidget).then((image) {
                     if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                       _exportFile(context, data.buffer.asUint8List());
                     });
@@ -264,8 +265,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     );
   }
 
-  Widget _buildDigitalOutput(countColumns, segments) {
-    displayOutputWidget = segments.where((character) => character != null).map((character) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
+    _displayOutputWidget = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
       switch (widget.type) {
@@ -289,12 +290,12 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       }
     }).toList();
 
-    return buildSegmentDisplayOutput(countColumns, displayOutputWidget);
+    return buildSegmentDisplayOutput(countColumns, _displayOutputWidget);
   }
 
-  _buildOutput(countColumns) {
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
-      var segments;
+      List<List<String>> segments;
       if (_currentEncryptMode == GCWSwitchPosition.left)
         segments = encodeSegment(_currentEncodeInput, widget.type);
       else
@@ -320,12 +321,13 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       );
     }
   }
+
+  _exportFile(BuildContext context, Uint8List data) async {
+    var value = await saveByteDataToFile(
+        data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+
+    if (value != null)
+      showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
+  }
 }
 
-_exportFile(BuildContext context, Uint8List data) async {
-  var value = await saveByteDataToFile(
-      data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
-
-  if (value != null)
-    showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
-}

@@ -480,7 +480,7 @@ final Map<List<String>, String> _Segment16ToAZ = {
 };
 
 List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
-  if (input == null || input == '') return [];
+  if (input == null || input == '') return <List<String>>[];
 
   var AZToSegment;
   switch (segmentType) {
@@ -518,7 +518,7 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
 }
 
 Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
-  if (input == null || input == '') return {'displays': [], 'text': ''};
+  if (input == null || input == '') return {'displays': <List<String>>[], 'text': ''};
   var baseSegments;
 
   switch (segmentType) {

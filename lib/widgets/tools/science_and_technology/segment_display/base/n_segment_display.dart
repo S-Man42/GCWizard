@@ -31,11 +31,17 @@ class NSegmentDisplay extends StatefulWidget {
   @override
   NSegmentDisplayState createState() {
     nSegmentDisplayState = NSegmentDisplayState();
+    print('createState Base ' + key.toString());
     return nSegmentDisplayState;
   }
 
   Future<ui.Image> get renderedImage async {
-    return nSegmentDisplayState.renderedImage;
+    // if (_NSegmentDisplayState == null) {
+    //   _NSegmentDisplayState = _NSegmentDisplayState();
+    //   print('createState renderedImage ' + key.toString());
+    // }
+    print('renderedImage Base ' + key.toString());
+      return createState().renderedImage;
   }
 }
 
@@ -76,7 +82,6 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
     );
   }
 
-  static const double _overSampleScale = 4;
   Future<ui.Image> get renderedImage async {
     if (widget.segments != null) {
       _segments = Map.from(widget.segments);
@@ -94,7 +99,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
     final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {}, customPaint: widget.customPaint);
 
     canvas.save();
-    canvas.scale(_overSampleScale);
+    //canvas.scale(_overSampleScale);
     painter.paint(canvas, size);
     canvas.restore();
     final data = recorder.endRecording()

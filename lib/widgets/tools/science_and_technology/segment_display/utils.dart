@@ -42,7 +42,7 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays) {
   );
 }
 
-Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<dynamic> displays) async {
+Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays) async {
   var width = 0.0;
   var height = 0.0;
   var bounds = 5.0;
@@ -56,8 +56,8 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<dynamic> displa
 
   // create images
   displays.forEach((display) {
-    if (display == NSegmentDisplay)
-      (display as NSegmentDisplay).renderedImage.then((image) => images.add(image));
+    print('build Image ' + display.key.toString());
+    if (display != null) display.renderedImage.then((image) => images.add(image));
   });
 
   // calc image size
