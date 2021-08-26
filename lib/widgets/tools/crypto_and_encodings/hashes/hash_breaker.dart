@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
@@ -11,6 +12,8 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
+
+final _ALERT_COMBINATIONS = 100000;
 
 class HashBreaker extends StatefulWidget {
   final Function hashFunction;
@@ -153,13 +156,13 @@ class _HashBreakerState extends State<HashBreaker> {
   Widget _buildSubmitButton() {
     return GCWSubmitButton(
       onPressed: () async {
-        var countCombinations = preCheck(_getSubstitutions());
+        var countCombinations = preCheckCombinations(_getSubstitutions());
 
-        if (countCombinations['status'] == 'high_count') {
+        if (countCombinations >= _ALERT_COMBINATIONS) {
           showGCWAlertDialog(
             context,
             i18n(context, 'hashes_hashbreaker_manycombinations_title'),
-            i18n(context, 'hashes_hashbreaker_manycombinations_text', parameters: [countCombinations['count']]),
+            i18n(context, 'hashes_hashbreaker_manycombinations_text', parameters: [countCombinations]),
             () async {
               _onDoCalculation();
             },

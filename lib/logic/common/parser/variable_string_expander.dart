@@ -242,3 +242,10 @@ class VariableStringExpander {
     return _results;
   }
 }
+
+int preCheckCombinations(Map<String, String> substitutions) {
+  var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
+  var count = expander.run(onlyPrecheck: true);
+
+  return count[0]['count'];
+}
