@@ -16,6 +16,7 @@ import 'package:gc_wizard/utils/constants.dart';
 // https://fr.wikipedia.org/wiki/Braille
 // https://www.pharmabraille.com/wp-content/uploads/2015/01/CBFU_edition_internationale.pdf
 // https://www.rnib.org.uk/sites/default/files/using_the_braille_french_code_2007_tc20909.pdf
+// https://chezdom.net/wp-content/uploads/2008/07/notation_mathematique_braille2.pdf
 
 // http://www.braille.ch/index.html#computer
 
@@ -176,6 +177,7 @@ final _MODIFIER_5 = ['5'];
 final _MODIFIER_6 = ['6'];
 final _MODIFIER_45 = ['4', '5'];
 final _MODIFIER_46 = ['4', '6'];
+final _MODIFIER_56 = ['5', '6'];
 final _MODIFIER_345 = ['3', '4', '5'];
 final _MODIFIER_356 = ['3', '5', '6'];
 final _MODIFIER_456 = ['4', '5', '6'];
@@ -202,6 +204,7 @@ final Map <BrailleLanguage, List<String>>_Modifier = {
     _MODIFIER_5.join(''),
     _MODIFIER_6.join(''),
     _MODIFIER_45.join(''),
+    _MODIFIER_56.join(''),
     _MODIFIER_356.join(''),
   ]
 };
@@ -360,7 +363,8 @@ final Map<BrailleLanguage, List<String>>_Switches = {
   BrailleLanguage.FRA : [
     'CAPITALS',
     'NUMBERFOLLOWS',
-    'ANTOINENUMBERFOLLOWS'
+    'ANTOINENUMBERFOLLOWS',
+    'BASE'
   ],
 
 };
@@ -379,7 +383,8 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSwitches =
   BrailleLanguage.FRA : {
     'CAPITALS': ['4', '6'],
     'NUMBERFOLLOWS': ['3', '4', '5', '6'],
-    'ANTOINENUMBERFOLLOWS': ['6']
+    'ANTOINENUMBERFOLLOWS': ['6'],
+    'BASE' : ['5', '6']
   },
 };
 
@@ -1796,6 +1801,9 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
                 case '35': text.add('+'); break;
                 case '235': text.add('×'); break;
                 case '2356': text.add('='); break;
+                default:
+                  if (_AntoineLetters.contains(BrailleToChar[inputs[i + 1]]))
+                    text.add(_AntoineToDigit[BrailleToChar[inputs[i + 1]]]);
               }
               var display = <String>[];
               inputs[i + 1].split('').forEach((element) {
@@ -1804,6 +1812,7 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
               displays.add(display);
               i = i + 1;
             }
+            antoineNumberFollows = true;
             break;
           case '45':
             if (i + 1 < maxLength && inputs[i + 1] == '236') {
@@ -1815,6 +1824,9 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
               displays.add(display);
               i = i + 1;
             }
+            break;
+          case '56':
+            antoineNumberFollows = false;
             break;
           case '356':
             if (i + 1 < maxLength && inputs[i + 1] == '12') {
@@ -1873,9 +1885,7 @@ Map<String, dynamic> _decodeBrailleFRA(List<String> inputs) {
           else
             charH = _LetterToDigit[charH];
         } if (antoineNumberFollows) {
-            if (_AntoineToDigit[charH] == null)
-              antoineNumberFollows = false;
-            else
+            if (_AntoineToDigit[charH] != null)
               charH = _AntoineToDigit[charH];
        } else if (oneCapitalFollows) {
           charH = charH.toUpperCase();
