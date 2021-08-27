@@ -193,7 +193,7 @@ class KarolRobotState extends State<KarolRobot> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(
-        data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
       showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));

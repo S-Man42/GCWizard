@@ -72,7 +72,6 @@ class HexViewerState extends State<HexViewer> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          expanded: _hexData == null,
           onLoaded: (_file) {
             _currentLines = 0;
             if (_file == null) {

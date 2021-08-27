@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
@@ -28,10 +29,10 @@ Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) a
 
     if (allowedFileTypes == null) files = _filterFiles(files, allowedFileTypes);
 
-    return (files == null || files.length == 0)
-        ? null
-        : new local.PlatformFile(
-            path: files.first.path, name: files.first.name, bytes: await _getFileData(files.first));
+    if (files == null || files.length == 0)
+      return null;
+
+    return local.PlatformFile(path: files.first.path, name: files.first.name, bytes: await _getFileData(files.first));
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }

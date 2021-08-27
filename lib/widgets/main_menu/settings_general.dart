@@ -20,17 +20,17 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 var _LANGUAGES = {
-  'da': {'name_native': '🇩🇰 Dansk', 'percent_translated': 3},
+  'da': {'name_native': '🇩🇰 Dansk', 'percent_translated': 4},
   'de': {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},
   'en': {'name_native': '🇬🇧🇺🇸 English', 'percent_translated': 100},
   'es': {'name_native': '🇪🇸 Español', 'percent_translated': 4},
   'fr': {'name_native': '🇫🇷 Français', 'percent_translated': 100},
   'it': {'name_native': '🇮🇹 Italiano', 'percent_translated': 11},
   'ko': {'name_native': '🇰🇷 한국어', 'percent_translated': 100},
-  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 14},
-  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 6},
-  'ru': {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 10},
-  'tr': {'name_native': '🇹🇷 Türkçe', 'percent_translated': 17},
+  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 20},
+  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 16},
+  'ru': {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 9},
+  'tr': {'name_native': '🇹🇷 Türkçe', 'percent_translated': 15},
 };
 
 class GeneralSettings extends StatefulWidget {
