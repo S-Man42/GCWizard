@@ -1,21 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_euro_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:prefs/prefs.dart';
 
 class BrailleDotNumbers extends StatefulWidget {
   @override
@@ -53,11 +47,6 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
-
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -102,12 +91,12 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
             });
           },
         ),
-        _buildOutput(countColumns)
+        _buildOutput()
       ],
     );
   }
 
-  _buildOutput(countColumns) {
+  _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentEncodeInput == null || _currentEncodeInput.isEmpty)
         return GCWDefaultOutput();
@@ -115,7 +104,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments),
+          _buildDigitalOutput(segments),
           GCWDefaultOutput(
             child: segments.map((segment) => segment.join()).join(' ')
           )
@@ -134,7 +123,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
       }
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
+          _buildDigitalOutput(segments['displays']),
           if (_currentLanguage != BrailleLanguage.BASIC)
             GCWDefaultOutput(child: segments['chars'].join()),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
@@ -157,53 +146,17 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
     }
   }
 
-  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
-    var displays = segments.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      if (_currentLanguage == BrailleLanguage.EUR)
-        return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: true);
-      else
-        return BrailleSegmentDisplay(segments: displayedSegments, readOnly: true);
-    }).toList();
-
-    final mediaQueryData = MediaQuery.of(context);
-
-    return Column(
-      children: [
-        GCWTextDivider(
-          text: i18n(context, 'segmentdisplay_displayoutput'),
-          trailing: Row(
-            children: <Widget>[
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_in,
-                onPressed: () {
-                  setState(() {
-                    int newCountColumn = max(countColumns - 1, 1);
-                    mediaQueryData.orientation == Orientation.portrait
-                        ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                        : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                  });
-                },
-              ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_out,
-                onPressed: () {
-                  setState(() {
-                    int newCountColumn = countColumns + 1;
-
-                    mediaQueryData.orientation == Orientation.portrait
-                        ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                        : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-        buildSegmentDisplayOutput(countColumns, displays)
-      ],
+  Widget _buildDigitalOutput(List<List<String>> segments) {
+    return GCWDisplayOutput(
+      upsideDownButton: true,
+      segmentFunction:(displayedSegments, readOnly) {
+        if (_currentLanguage == BrailleLanguage.EUR)
+          return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        else
+          return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+      },
+      segments: segments,
+      readOnly: true
     );
   }
 }

@@ -83,7 +83,6 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
               onPressed: () {
                 setState(() {
                   int newCountColumn = countColumns + 1;
-
                   mediaQueryData.orientation == Orientation.portrait
                       ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
                       : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
@@ -118,15 +117,15 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
     _displays = list.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       return widget.segmentFunction(displayedSegments, widget.readOnly);
-
-      /*return Transform.rotate(
-          angle: _currentUpsideDown ? pi : 0,
-          child: widget.segmentFunction(displayedSegments, widget.readOnly)
-      ).child;*/
-
     }).toList();
 
-    return buildSegmentDisplayOutput(countColumns, _displays);
+    var viewList = !_currentUpsideDown ? _displays : _displays.map((display) {
+      return Transform.rotate(
+          angle: _currentUpsideDown ? pi : 0,
+          child: display
+      );
+    }).toList();
+    return buildSegmentDisplayOutput(countColumns, viewList);
   }
 }
 
