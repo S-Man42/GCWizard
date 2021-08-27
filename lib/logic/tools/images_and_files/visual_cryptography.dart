@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
 
@@ -34,7 +35,7 @@ Future<Uint8List> decodeImages(Uint8List image1, Uint8List image2, int offsetX, 
   image = _pasteImage(image, _image1, min(offsetX, 0).abs(), min(offsetY, 0).abs(), false);
   image = _pasteImage(image, _image2, max(offsetX, 0).abs(), max(offsetY, 0).abs(), true);
 
-  Uint8List output = Image.encodePng(image);
+  Uint8List output = encodeTrimmedPng(image);
   return Future.value(output);
 }
 
@@ -143,7 +144,7 @@ Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offset
     }
   }
 
-  return Image.encodePng(image);
+  return encodeTrimmedPng(image);
 }
 
 Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
@@ -194,7 +195,7 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, int offsetX, i
     }
   }
 
-  return Future.value(Tuple2<Uint8List, Uint8List>(Image.encodePng(image1), Image.encodePng(image2)));
+  return Future.value(Tuple2<Uint8List, Uint8List>(encodeTrimmedPng(image1), encodeTrimmedPng(image2)));
 }
 
 bool _checkLimits(int x, int y, int width, int height) {

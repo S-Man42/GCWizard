@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -21,8 +22,10 @@ class GCWOpenFile extends StatefulWidget {
   final List<FileType> supportedFileTypes;
   final bool isDialog;
   final String title;
+  final bool trimNullBytes;
+  final PlatformFile file;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false}) : super(key: key);
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.trimNullBytes: false, this.file}) : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -33,8 +36,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   String _currentUrl;
 
   var _currentMode = GCWSwitchPosition.left;
-  String _loadedFile;
   var _currentExpanded = true;
+
+  PlatformFile _loadedFile;
 
   @override
   void initState() {
@@ -52,6 +56,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   @override
   Widget build(BuildContext context) {
+    if (_loadedFile == null && widget.file != null)
+      _loadedFile = widget.file;
+
     var urlTextField = GCWTextField(
       controller: _urlController,
       filled: widget.isDialog,
@@ -84,10 +91,10 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             text: i18n(context, 'common_loadfile_open'),
             onPressed: () {
               _currentExpanded = true;
-              openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((PlatformFile file) {
+              openFileExplorer(allowedFileTypes: widget.supportedFileTypes, trimNullBytes: widget.trimNullBytes).then((PlatformFile file) {
                 if (file != null) {
                   setState(() {
-                    _loadedFile = file.name;
+                    _loadedFile = file;
                     _currentExpanded = false;
                   });
                   widget.onLoaded(file);
@@ -146,15 +153,23 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
                           return;
                         }
 
+                        var bytes;
+                        if (widget.trimNullBytes) {
+                          bytes = trimNullBytes(response.bodyBytes);
+                        } else {
+                          bytes = response.bodyBytes;
+                        }
+
+                        _loadedFile = PlatformFile(
+                            name: Uri.decodeFull(_currentUrl).split('/').last,
+                            path: _currentUrl,
+                            bytes: bytes);
+
                         setState(() {
-                          _loadedFile = uri.toString();
                           _currentExpanded = false;
                         });
 
-                        widget.onLoaded(PlatformFile(
-                            name: Uri.decodeFull(_currentUrl).split('/').last,
-                            path: _currentUrl,
-                            bytes: response.bodyBytes));
+                        widget.onLoaded(_loadedFile);
                       });
                     });
                   },
@@ -180,12 +195,12 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           ),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + _loadedFile,
+            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + _loadedFile.name,
             style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 4),
           ),
         if (!_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_loaded') + ': ' + _loadedFile,
+            text: i18n(context, 'common_loadfile_loaded') + ': ' + _loadedFile.name,
           )
       ],
     );
@@ -236,3 +251,5 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
       []
   );
 }
+
+

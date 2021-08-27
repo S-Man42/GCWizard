@@ -46,7 +46,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
         if (index < 0) {
           switch (extension) {
             case FileType.PNG:
-              imageList.add(Image.encodePng(animation.frames[i]));
+              imageList.add(encodeTrimmedPng(animation.frames[i]));
               break;
             default:
               imageList.add(Image.encodeGif(animation.frames[i]));

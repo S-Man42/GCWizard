@@ -91,6 +91,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: AnimatedImageState.allowedExtensions,
+        trimNullBytes: true,
         onLoaded: (_file) {
           if (_file == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -204,6 +205,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: Column(children: [
             GCWOpenFile(
               supportedFileTypes: AnimatedImageState.allowedExtensions,
+              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file != null) _highImage = _file.bytes;
               },
@@ -214,6 +216,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: Column(children: [
             GCWOpenFile(
               supportedFileTypes: AnimatedImageState.allowedExtensions,
+              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file != null) _lowImage = _file.bytes;
               },
@@ -414,7 +417,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
       var value = await saveByteDataToFile(bytes,
           'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-      if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+      if (value != null) showExportedFileDialog(context, fileType: fileType);
     });
   }
 
@@ -423,6 +426,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     var value = await saveByteDataToFile(data,
         'anim_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
 }

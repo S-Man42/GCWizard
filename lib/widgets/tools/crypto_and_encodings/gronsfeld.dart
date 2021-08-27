@@ -68,6 +68,7 @@ class GronsfeldState extends State<Gronsfeld> {
         ),
         GCWOnOffSwitch(
           title: i18n(context, 'vigenere_autokey'),
+          value: _currentAutokey,
           onChanged: (value) {
             setState(() {
               _currentAutokey = value;

@@ -22,7 +22,7 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
       this.title,
       this.leftValue,
       this.rightValue,
-      this.value,
+      @required this.value,
       this.alternativeColor: false,
       this.notitle: false})
       : super(key: key);

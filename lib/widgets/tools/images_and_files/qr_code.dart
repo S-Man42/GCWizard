@@ -55,6 +55,7 @@ class QrCodeState extends State<QrCode> {
         _currentMode == GCWSwitchPosition.right
           ? GCWOpenFile(
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file == null) {
                   showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -134,8 +135,8 @@ class QrCodeState extends State<QrCode> {
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(
-        data, "qrcode_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+        data, "img_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
 }

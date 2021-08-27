@@ -68,6 +68,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
         ),
         GCWOnOffSwitch(
           title: i18n(context, 'vigenere_autokey'),
+          value: _currentAutokey,
           onChanged: (value) {
             setState(() {
               _currentAutokey = value;
@@ -77,6 +78,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
         _currentAutokey == false
             ? GCWOnOffSwitch(
                 title: i18n(context, 'vigenere_ignorenonletters'),
+                value: _currentNonLetters,
                 onChanged: (value) {
                   setState(() {
                     _currentNonLetters = value;

@@ -11,7 +11,7 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
     return [];
 
   var resultList = <PlatformFile>[];
-  var bytes = data.bytes;
+  var bytes = trimNullBytes(data.bytes);
 
   while (bytes != null && bytes.length > 0) {
     int imageLength;
@@ -131,5 +131,6 @@ Uint8List mergeFiles(List<dynamic> data) {
     else if (element is String)
       result.addAll(Uint8List.fromList(element.toString().codeUnits));
   });
-  return Uint8List.fromList(result);
+
+  return trimNullBytes(Uint8List.fromList(result));
 }

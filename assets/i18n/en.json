@@ -1103,6 +1103,7 @@
   "common_exportfile_saveoutput": "Save Output",
   "common_exportfile_selectfolder": "Save file to this folder",
   "common_exportfile_selectfolder_title": "Save to folder",
+  "common_exportfile_couldntwrite": "Could not write file.",
   "common_loadfile_showopen": "Open File",
   "common_loadfile_openfrom": "From",
   "common_loadfile_openfrom_file": "Device",
