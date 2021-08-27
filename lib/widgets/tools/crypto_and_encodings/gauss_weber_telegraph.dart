@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/gauss_weber_telegraph
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class GaussWeberTelegraph extends StatefulWidget {
@@ -81,9 +82,11 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
         var outputOriginal = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
-        return GCWMultipleOutput(
-          children: [outputOriginal, outputAlt],
-          titles: [i18n(context, 'gausswebertelegraph_original'), i18n(context, 'gausswebertelegraph_alternative')],
+        return Column(
+          children: [
+            GCWOutput(child: outputOriginal, title: i18n(context, 'gausswebertelegraph_original')),
+            GCWOutput(child: outputAlt, title: i18n(context, 'gausswebertelegraph_alternative')),
+          ]
         );
       } else {
         var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;

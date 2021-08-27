@@ -1,18 +1,16 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -193,9 +191,9 @@ class KarolRobotState extends State<KarolRobot> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(
-        data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
-      showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
+      showExportedFileDialog(context, fileType: FileType.PNG);
   }
 }

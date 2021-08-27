@@ -8,14 +8,14 @@ import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
-import 'package:open_file/open_file.dart';
+import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:share_extend/share_extend.dart';
 import 'package:tuple/tuple.dart';
 
 enum FileType {ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ}
@@ -210,15 +210,12 @@ Future<bool> checkStoragePermission() async {
   return true;
 }
 
-Future<Map<String, dynamic>> saveByteDataToFile(Uint8List data, String fileName, {String subDirectory}) async {
+Future<Uint8List> saveByteDataToFile(Uint8List data, String fileName, {String subDirectory}) async {
   var storagePermission = await checkStoragePermission();
-  if (!storagePermission)
+  if (!storagePermission) {
+    showToast('common_exportfile_nowritepermission');
     return null;
-
-  var filePath = '';
-
-  while (data.last == 0)
-    data.removeLast();
+  }
 
   if (kIsWeb) {
     // var blob = new html.Blob([data], 'image/png');
@@ -236,15 +233,16 @@ Future<Map<String, dynamic>> saveByteDataToFile(Uint8List data, String fileName,
         await file.writeAsBytes(data);
       },
     );
-    if (fileInfo == null) return null;
-
-    filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
+    if (fileInfo == null) {
+      showToast('common_exportfile_couldntwrite');
+      return null;
+    }
   }
-  return {'path': filePath, 'bytes': data};
+
+  return data;
 }
 
-Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
-  var filePath = '';
+Future<File> saveStringToFile(String data, String fileName, {String subDirectory}) async {
   File fileX;
 
   if (kIsWeb) {
@@ -265,10 +263,8 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
       },
     );
     if (fileInfo == null) return null;
-
-    filePath = await FlutterAbsolutePath.getAbsolutePath(fileInfo.identifier);
   }
-  return {'path': filePath, 'file': fileX};
+  return fileX;
 }
 
 String _limitFileNameLength(String fileName) {
@@ -276,19 +272,6 @@ String _limitFileNameLength(String fileName) {
   if (fileName.length <= maxLength) return fileName;
   var extension = getFileExtension(fileName);
   return getFileBaseNameWithoutExtension(fileName).substring(0, maxLength - extension.length) + extension;
-}
-
-shareFile(String path, FileType type) {
-  ShareExtend.share(path, "file");
-}
-
-openFile(String path, FileType type) {
-  if (type != null) {
-    OpenFile.open(path,
-      type: mimeType(type),
-      uti: uniformTypeIdentifier(type));
-  } else
-    OpenFile.open(path);
 }
 
 Future<Uint8List> readByteDataFromFile(String fileName) async {
@@ -315,7 +298,7 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
     var _magicBytes = magicBytes(fileType);
 
     for (var bytes in _magicBytes) {
-      if (blobBytes.length >= bytes.length && ListEquality().equals(blobBytes.sublist(0, bytes.length), bytes))
+      if (blobBytes != null && blobBytes.length >= bytes.length && ListEquality().equals(blobBytes.sublist(0, bytes.length), bytes))
         return fileType;
     }
   }
@@ -753,9 +736,14 @@ List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
     if (!file.isFile)
       return null;
 
+    var content;
+    try {
+      content = file.content;
+    } catch (e) {}
+
     return PlatformFile(
       name: file.name,
-      bytes: file.content
+      bytes: content
     );
   }).where((file) => file != null).toList();
 }
@@ -769,10 +757,8 @@ List<PlatformFile> extractArchive(PlatformFile file) {
     switch (file.fileType) {
       case FileType.ZIP:
         return _archiveToPlatformFileList(ZipDecoder().decodeBuffer(input));
-        break;
       case FileType.TAR:
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
-        break;
       case FileType.RAR:
         return null;
         break;
@@ -782,4 +768,9 @@ List<PlatformFile> extractArchive(PlatformFile file) {
   } catch(e) {
     return null;
   }
+}
+
+Uint8List encodeTrimmedPng(img.Image image) {
+  var out = img.encodePng(image);
+  return trimNullBytes(out);
 }

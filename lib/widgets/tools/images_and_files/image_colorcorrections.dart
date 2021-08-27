@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -28,9 +29,6 @@ class ImageColorCorrections extends StatefulWidget {
 }
 
 class ImageColorCorrectionsState extends State<ImageColorCorrections> {
-  var _urlController;
-  var _currentUrl;
-
   Uint8List _originalData;
   Uint8List _convertedOutputImage;
 
@@ -68,8 +66,6 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   void initState() {
     super.initState();
 
-    _urlController = TextEditingController(text: _currentUrl);
-
     if (widget.imageData != null) {
       _originalData = widget.imageData;
 
@@ -105,8 +101,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          expanded: widget.imageData == null,
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+          trimNullBytes: true,
           onLoaded: (value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -309,7 +305,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   }
 
   _saveOutputAdjustColor(img.Image output) {
-    if (output != null) _convertedOutputImage = img.encodePng(output);
+    if (output != null) _convertedOutputImage = encodeTrimmedPng(output);
   }
 
   img.Image _adjustColor(img.Image image) {
@@ -331,7 +327,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
 
   _imageBytes() {
     _currentPreview = _adjustColor(_originalPreview);
-    return img.encodePng(_currentPreview);
+    return encodeTrimmedPng(_currentPreview);
   }
 }
 

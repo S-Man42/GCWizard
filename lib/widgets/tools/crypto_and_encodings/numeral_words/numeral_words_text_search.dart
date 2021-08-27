@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
@@ -23,15 +25,12 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
   var _currentLanguage = NumeralWordsLanguage.ALL;
 
-  Map<NumeralWordsLanguage, String> _languageList;
+  Map<String, NumeralWordsLanguage> _languageList;
 
   @override
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
-
-    _languageList = {NumeralWordsLanguage.ALL: 'numeralwords_language_all'};
-    _languageList.addAll(NUMERALWORDS_LANGUAGES);
   }
 
   @override
@@ -42,6 +41,18 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   @override
   Widget build(BuildContext context) {
+    if (_languageList == null) {
+      var sorted = SplayTreeMap<String, NumeralWordsLanguage>.from(
+          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(
+              i18n(context, key),
+              value
+          ))
+      );
+
+      _languageList = {i18n(context, 'numeralwords_language_all'): NumeralWordsLanguage.ALL};
+      _languageList.addAll(sorted);
+    }
+
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -53,8 +64,8 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
           },
           items: _languageList.entries.map((mode) {
             return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value),
+              value: mode.value,
+              child: mode.key,
             );
           }).toList(),
         ),

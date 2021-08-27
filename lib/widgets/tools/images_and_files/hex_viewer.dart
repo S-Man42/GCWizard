@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -29,7 +30,8 @@ class HexViewerState extends State<HexViewer> {
   ScrollController _scrollControllerASCII;
 
   String _hexData;
-  int _hexDataLines;
+  double _hexDataLines;
+  Uint8List _bytes;
 
   final _MAX_LINES = 100;
   final _CHARS_PER_LINE = 16 * 2;
@@ -55,17 +57,21 @@ class HexViewerState extends State<HexViewer> {
     super.dispose();
   }
 
+  _setData(Uint8List bytes) {
+    _bytes = bytes;
+    _hexData = file2hexstring(bytes);
+    _hexDataLines = _hexData.length / _CHARS_PER_LINE;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_hexData == null && widget.platformFile != null) {
-      _hexData = file2hexstring(widget.platformFile.bytes);
-      _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
+      _setData(widget.platformFile.bytes);
     }
 
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          expanded: _hexData == null,
           onLoaded: (_file) {
             _currentLines = 0;
             if (_file == null) {
@@ -74,8 +80,7 @@ class HexViewerState extends State<HexViewer> {
             }
 
             if (_file != null) {
-              _hexData = file2hexstring(_file.bytes);
-              _hexDataLines = (_hexData.length / _CHARS_PER_LINE).floor();
+              _setData(_file.bytes);
 
               setState(() {});
             }
@@ -83,6 +88,13 @@ class HexViewerState extends State<HexViewer> {
         ),
         GCWDefaultOutput(
           child: _buildOutput(),
+          trailing: GCWIconButton(
+            iconData: Icons.text_snippet_outlined,
+            size: IconButtonSize.SMALL,
+            onPressed: () {
+              openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
+            },
+          )
         )
       ],
     );
@@ -128,7 +140,7 @@ class HexViewerState extends State<HexViewer> {
                     setState(() {
                       _currentLines -= _MAX_LINES;
                       if (_currentLines < 0) {
-                        _currentLines = (_hexDataLines ~/ _MAX_LINES) * _MAX_LINES;
+                        _currentLines = (_hexDataLines.floor() ~/ _MAX_LINES) * _MAX_LINES;
                       }
 
                       _resetScrollViews();
@@ -137,7 +149,7 @@ class HexViewerState extends State<HexViewer> {
                 ),
                 Expanded(
                   child: GCWText(
-                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines)} / $_hexDataLines',
+                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines.ceil())} / ${_hexDataLines.ceil()}',
                     align: Alignment.center,
                   ),
                 ),

@@ -27,6 +27,7 @@ class DeadfishState extends State<Deadfish> {
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'deadfish_mode_left'),
           rightValue: i18n(context, 'deadfish_mode_right'),
+          value: _currentDeadfishMode,
           onChanged: (value) {
             setState(() {
               _currentDeadfishMode = value;

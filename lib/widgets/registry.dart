@@ -733,12 +733,7 @@ class Registry {
         'de',
         'en',
         'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-      ]),
+      ], searchStrings: []),
       GCWTool(
           tool: CrossSumSelection(),
           i18nPrefix: 'crosssum_selection',
@@ -1607,11 +1602,11 @@ class Registry {
         tool: SymbolTableSelection(),
         buttonList: [
           GCWToolActionButtonsEntry(
-              true,
-              'symboltables_selection_download_link',
-              'symboltables_selection_download_dialog_title',
-              'symboltables_selection_download_dialog_text',
-              Icons.file_download),
+              showDialog: true,
+              url: 'symboltables_selection_download_link',
+              title: 'symboltables_selection_download_dialog_title',
+              text: 'symboltables_selection_download_dialog_text',
+              icon: Icons.file_download),
         ],
         i18nPrefix: 'symboltables_selection',
         helpLocales: ['de', 'en', 'fr'],
@@ -2217,7 +2212,12 @@ class Registry {
           tool: Beaufort(),
           i18nPrefix: 'beaufort',
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_BEAUFORT]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_BEAUFORT,
+            SEARCHSTRING_DE_BEAUFORT,
+            SEARCHSTRING_EN_BEAUFORT,
+            SEARCHSTRING_FR_BEAUFORT,
+          ]),
 
       //Braille Selection ****************************************************************
       GCWTool(

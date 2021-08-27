@@ -32,7 +32,6 @@ class DivisorState extends State<Divisor> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          title: i18n(context, 'numbersequence_inputn'),
           min: 0,
           value: _currentInputN,
           onChanged: (value) {

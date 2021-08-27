@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:xml/xml.dart';
 import 'package:intl/intl.dart';
@@ -5,7 +6,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+Future<File> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
@@ -60,9 +61,16 @@ class _GpxWriter {
 
       if (points != null) {
         var i = 0;
-        points.where((point) => point.isVisible).forEach((point) {
-          if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), point);
-          _writePoint(builder, true, name, 'S' + i.toString(), point);
+        var filteredPoints = points.where((point) => point.isVisible & !point.hasCircle()).toList();
+
+        if (polylines != null) {
+          polylines.forEach((geodetic) {
+            filteredPoints.removeWhere((point) => geodetic.points.contains(point));
+          });
+        };
+
+        filteredPoints.forEach((point) {
+          _writePoint(builder, (i != 0), name, 'S' + i.toString(), point);
           i++;
         });
       }

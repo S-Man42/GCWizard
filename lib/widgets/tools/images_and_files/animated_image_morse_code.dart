@@ -90,8 +90,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Widget _decodeWidgets() {
     return Column(children: <Widget>[
       GCWOpenFile(
-        expanded: _platformFile == null,
         supportedFileTypes: AnimatedImageState.allowedExtensions,
+        trimNullBytes: true,
         onLoaded: (_file) {
           if (_file == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -204,8 +204,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(
           child: Column(children: [
             GCWOpenFile(
-              expanded: _highImage == null,
               supportedFileTypes: AnimatedImageState.allowedExtensions,
+              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file != null) _highImage = _file.bytes;
               },
@@ -215,8 +215,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         Expanded(
           child: Column(children: [
             GCWOpenFile(
-              expanded: _lowImage == null,
               supportedFileTypes: AnimatedImageState.allowedExtensions,
+              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file != null) _lowImage = _file.bytes;
               },
@@ -415,17 +415,17 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = FileType.ZIP;
       var value = await saveByteDataToFile(bytes,
-          'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+          'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-      if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+      if (value != null) showExportedFileDialog(context, fileType: fileType);
     });
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(data,
-        'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+        'anim_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
 }

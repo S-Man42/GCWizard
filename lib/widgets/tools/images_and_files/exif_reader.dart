@@ -48,8 +48,11 @@ class _ExifReaderState extends State<ExifReader> {
   @override
   initState() {
     super.initState();
-    file = widget.file;
-    _readFile(file);
+
+    if (widget.file != null) {
+      file = widget.file;
+      _readFile(file);
+    }
   }
 
   @override
@@ -59,7 +62,6 @@ class _ExifReaderState extends State<ExifReader> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         GCWOpenFile(
-          expanded: widget.file == null,
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (_file) {
             if (_file == null) {
@@ -138,7 +140,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWOutput(
-        title: i18n(context, "exif_section_thumbnail"),
+        title: i18n(context, 'exif_section_thumbnail'),
         child: GCWImageView(imageData: thumbnail),
         //suppressCopyButton: false,
       ));
@@ -213,11 +215,10 @@ class _ExifReaderState extends State<ExifReader> {
             context,
             [
               [i18n(context, 'exif_filename'), platformFile.name ?? ''],
-              [i18n(context, 'exif_path'), platformFile.path ?? ''],
               [i18n(context, 'exif_filesize_bytes'), platformFile.bytes?.length ?? 0],
               [i18n(context, 'exif_filesize_kb'), (platformFile.bytes?.length / 1024).ceil() ?? 0],
-              lastModified != null ? ["lastModified", formatDate(_file?.lastModifiedSync())] : null,
-              lastAccessed != null ? ["lastAccessed", formatDate(_file?.lastAccessedSync())] : null,
+              lastModified != null ? ['lastModified', formatDate(_file?.lastModifiedSync())] : null,
+              lastAccessed != null ? ['lastAccessed', formatDate(_file?.lastAccessedSync())] : null,
               [i18n(context, 'exif_extension'), platformFile.extension ?? '']
             ],
           ))));
@@ -227,7 +228,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateImage(List<Widget> widgets, Image.Image image) {
     if (image != null) {
       widgets.add(GCWOutput(
-          title: i18n(context, "exif_section_image"),
+          title: i18n(context, 'exif_section_image'),
           child: Column(
               children: columnedMultiLineOutput(
             context,
@@ -275,9 +276,9 @@ class _ExifReaderState extends State<ExifReader> {
 
     widgets.add(
       GCWOutput(
-        title: i18n(context, "hiddendata_title"),
+        title: i18n(context, 'hiddendata_title'),
         child: GCWButton(
-          text: i18n(context, "exif_showhiddendata"),
+          text: i18n(context, 'exif_showhiddendata'),
           onPressed: () {
             openInHiddenData(context, file: file);
           },

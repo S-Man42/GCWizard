@@ -11,6 +11,10 @@ class ImagesAndFilesSelection extends GCWSelection {
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.IMAGES_AND_FILES))
         .toList();
 
+    _toolList.sort((a, b) {
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
+
     return Container(child: GCWToolList(toolList: _toolList));
   }
 }
