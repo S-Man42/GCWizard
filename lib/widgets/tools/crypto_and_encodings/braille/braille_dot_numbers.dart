@@ -157,7 +157,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
     }
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       if (_currentLanguage == BrailleLanguage.EUR)

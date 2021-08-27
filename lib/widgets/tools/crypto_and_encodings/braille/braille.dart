@@ -208,7 +208,7 @@ class BrailleState extends State<Braille> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       if (_currentLanguage == BrailleLanguage.EUR)
@@ -219,10 +219,7 @@ class BrailleState extends State<Braille> {
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
-  _buildOutput(countColumns) {
-    var segments;
-    var segmentsBasicDigits;
-    var segmentsBasicLetters;
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
       List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
@@ -240,9 +237,9 @@ class BrailleState extends State<Braille> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBraille(output, _currentLanguage, false);
-      segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
-      segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
+      var segments = decodeBraille(output, _currentLanguage, false);
+      var segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
+      var segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),

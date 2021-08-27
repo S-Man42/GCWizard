@@ -182,7 +182,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
@@ -190,11 +190,10 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeCistercian(_currentEncodeInput);
+      var segments = encodeCistercian(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
@@ -205,7 +204,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).join(' ');
-      segments = decodeCistercian(output);
+      var segments = decodeCistercian(output);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),

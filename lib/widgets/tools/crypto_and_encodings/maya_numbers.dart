@@ -163,7 +163,7 @@ class MayaNumbersState extends State<MayaNumbers> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
@@ -171,11 +171,10 @@ class MayaNumbersState extends State<MayaNumbers> {
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaNumbers(_currentEncodeInput);
+      var segments = encodeMayaNumbers(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
@@ -186,7 +185,7 @@ class MayaNumbersState extends State<MayaNumbers> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeMayaNumbers(output);
+      var segments = decodeMayaNumbers(output);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),

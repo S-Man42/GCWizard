@@ -162,7 +162,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
@@ -170,11 +170,10 @@ class BabylonNumbersState extends State<BabylonNumbers> {
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeBabylonNumbers(_currentEncodeInput);
+      var segments = encodeBabylonNumbers(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
@@ -185,7 +184,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBabylonNumbers(output);
+      var segments = decodeBabylonNumbers(output);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),

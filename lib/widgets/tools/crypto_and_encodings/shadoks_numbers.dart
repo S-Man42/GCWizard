@@ -191,7 +191,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     return result;
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       displayedSegments.putIfAbsent('a', () => false);
@@ -201,11 +201,10 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeShadoksNumbers(_currentEncodeInput);
+      var segments = encodeShadoksNumbers(_currentEncodeInput);
 
       return Column(
         children: <Widget>[
@@ -226,7 +225,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         if (character != null) return character.join();
       }).toList();
 
-      segments = decodeShadoksNumbers(output);
+      var segments = decodeShadoksNumbers(output);
 
       return Column(
         children: <Widget>[

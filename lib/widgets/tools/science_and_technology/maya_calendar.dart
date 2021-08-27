@@ -177,7 +177,7 @@ class MayaCalendarState extends State<MayaCalendar> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
       return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
@@ -185,13 +185,12 @@ class MayaCalendarState extends State<MayaCalendar> {
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput(int countColumns) {
     Map outputDates = new Map();
 
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaCalendar(_currentEncodeInput);
+      var segments = encodeMayaCalendar(_currentEncodeInput);
       var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
       var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
 
@@ -225,7 +224,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeMayaCalendar(output);
+      var segments = decodeMayaCalendar(output);
       var gregorian = MayaDayCountToGregorianCalendar(segments['vigesimal']);
       var julian = MayaDayCountToJulianCalendar(segments['vigesimal']);
 
@@ -254,7 +253,7 @@ class MayaCalendarState extends State<MayaCalendar> {
     }
   }
 
-  String _DateOutputToString(context, DateOutput date) {
+  String _DateOutputToString(BuildContext context, DateOutput date) {
     final Locale appLocale = Localizations.localeOf(context);
     switch (appLocale.languageCode) {
       case 'de':

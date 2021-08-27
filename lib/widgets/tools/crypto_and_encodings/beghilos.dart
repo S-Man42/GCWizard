@@ -150,7 +150,7 @@ class BeghilosState extends State<Beghilos> {
     );
   }
 
-  Widget _buildDigitalOutput(countColumns, List<List<String>> segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var list = _currentUpsideDown ? segments.reversed : segments;
 
     var displays = list.where((character) => character != null).map((character) {

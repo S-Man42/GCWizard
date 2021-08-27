@@ -37,7 +37,6 @@ class NSegmentDisplay extends StatefulWidget {
 
 class NSegmentDisplayState extends State<NSegmentDisplay> {
   Map<String, bool> _segments;
-  final GlobalKey<NSegmentDisplayState> myKey = new GlobalKey<NSegmentDisplayState>();
 
   @override
   Widget build(BuildContext context) {

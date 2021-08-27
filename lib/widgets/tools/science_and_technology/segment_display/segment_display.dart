@@ -264,7 +264,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     );
   }
 
-  Widget _buildDigitalOutput(int countColumns,List<List<String>> segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     _displayOutputWidget = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
@@ -292,7 +292,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     return buildSegmentDisplayOutput(countColumns, _displayOutputWidget);
   }
 
-  _buildOutput(countColumns) {
+  Widget _buildOutput(int countColumns) {
     if (_currentMode == GCWSwitchPosition.left) {
       List<List<String>> segments;
       if (_currentEncryptMode == GCWSwitchPosition.left)
