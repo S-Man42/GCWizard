@@ -9,10 +9,12 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/7_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -87,7 +89,7 @@ class BeghilosState extends State<Beghilos> {
     );
   }
 
-  Widget _buildOutput(countColumns) {
+  Widget _buildOutput(int countColumns) {
     var rows = <Widget>[];
     var textOutput = _currentMode == GCWSwitchPosition.left ? decodeBeghilos(_currentInputDecode) : encodeBeghilos(_currentInputEncode['text']);
 
@@ -141,7 +143,15 @@ class BeghilosState extends State<Beghilos> {
     ));
     _currentDisplays = encodeSegment(
         _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode['text'], SegmentDisplayType.SEVEN);
-    rows.add(_buildDigitalOutput(countColumns, _currentDisplays));
+
+    //rows.add(_buildDigitalOutput(countColumns, _currentDisplays));
+    rows.add(GCWDisplayOutput(upsideDownButton: true,
+      segmentFunction:(displayedSegments, readOnly) {
+        return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+      },
+      segments: _currentDisplays,
+      readOnly: true
+    ));
 
     rows.add(GCWDefaultOutput(child:  textOutput));
 
@@ -150,22 +160,27 @@ class BeghilosState extends State<Beghilos> {
     );
   }
 
-  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
+  NSegmentDisplay segmentDisplay(Map<String, bool> segments, bool readOnly)
+  {
+    return SevenSegmentDisplay(segments: segments, readOnly: readOnly);
+  }
+
+  /*Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
     var list = _currentUpsideDown ? segments.reversed : segments;
 
     var displays = list.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
-          return Transform.rotate(
+          var child = Transform.rotate(
             angle: _currentUpsideDown ? pi : 0,
             child: SevenSegmentDisplay(
               segments: displayedSegments,
               readOnly: true,
             )
           );
-
+return child; //(child as NSegmentDisplay);
     }).toList();
 
     return buildSegmentDisplayOutput(countColumns, displays);
-  }
+  }*/
 }

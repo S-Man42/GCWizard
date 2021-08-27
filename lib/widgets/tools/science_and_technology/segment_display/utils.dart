@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 
-Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays) {
+Widget buildSegmentDisplayOutput(int countColumns, List<NSegmentDisplay> displays) {
   var rows = <Widget>[];
   var countRows = (displays.length / countColumns).floor();
 
