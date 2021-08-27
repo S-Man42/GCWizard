@@ -249,6 +249,7 @@ class BrailleState extends State<Braille> {
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
+                GCWDefaultOutput(child: segments['chars'].join()),
                 if (segmentsBasicLetters['chars'].join().toUpperCase() != segments['chars'].join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_letters'),

@@ -27,6 +27,12 @@ import 'package:gc_wizard/utils/constants.dart';
 // USA GC5X6C8 Braille Numbers https://www.geocaching.com/geocache/GC5X6C8_braille-numbers
 // USA GC7QK85 (Braille Cube)³ https://www.geocaching.com/geocache/GC7QK85_braille-cube
 // DEU GC73VZK Den findet man auch blind (reloaded) https://www.geocaching.com/geocache/GC73VZK_den-findet-man-auch-blind-reloaded
+// BEL GC1AGDX Braille https://www.geocaching.com/geocache/GC1AGDX_braille#
+// FRA GC4QBNA Bonus Braille 4 https://www.geocaching.com/geocache/GC4QBNA_bonus-braille-4
+// FRA GC4QBHW Bonus Braille 3 https://www.geocaching.com/geocache/GC4QBHW
+// FRA GC4QBHK Bonus Braille 2 https://www.geocaching.com/geocache/GC4QBHK
+// FRA GC4QBHC Bonus Braille 1 https://www.geocaching.com/geocache/GC4QBHC
+
 
 enum BrailleLanguage { BASIC, SIMPLE, STD, DEU, ENG, FRA, EUR }
 
