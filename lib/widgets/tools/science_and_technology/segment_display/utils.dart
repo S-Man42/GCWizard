@@ -55,10 +55,8 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   if (displays == null) return null;
 
   // create images
-  displays.forEach((display) {
-    print('build Image ' + display.key.toString());
-    if (display != null) display.renderedImage.then((image) => images.add(image));
-  });
+  for (var i= 0; i < displays.length; i++)
+     images.add(await displays[i].renderedImage);
 
   // calc image size
   images.forEach((image) {

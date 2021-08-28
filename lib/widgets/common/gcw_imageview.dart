@@ -1,21 +1,17 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview_fullscreen.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
@@ -158,21 +154,6 @@ class _GCWImageViewState extends State<GCWImageView> {
     return widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.ALL);
   }
 
-  _openInFullScreen(Uint8List imgData) {
-    Navigator.push(
-        context,
-        NoAnimationMaterialPageRoute(
-            builder: (context) => GCWTool(
-                  tool: GCWImageViewFullScreen(
-                    imageData: imgData,
-                  ),
-                  autoScroll: false,
-                  toolName: i18n(context, 'imageview_fullscreen_title'),
-                  defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
-                  suppressHelpButton: true,
-                )));
-  }
-
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
 
@@ -183,10 +164,10 @@ class _GCWImageViewState extends State<GCWImageView> {
           onPressed: () {
             if (widget.onBeforeLoadBigImage != null) {
               widget.onBeforeLoadBigImage().then((imgData) {
-                _openInFullScreen(imgData);
+                openInFullScreen(context, imgData);
               });
             } else {
-              _openInFullScreen(widget.imageData.bytes);
+              openInFullScreen(context, widget.imageData.bytes);
             }
           }),
       GCWIconButton(
@@ -262,7 +243,7 @@ class _GCWImageViewState extends State<GCWImageView> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-    String outputFilename = 'imageview_export_${timestamp}.png';
+    String outputFilename = 'img_${timestamp}.png';
 
     var value = await saveByteDataToFile(data, outputFilename);
 

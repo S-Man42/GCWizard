@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
@@ -12,6 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
 
 class QrCode extends StatefulWidget {
@@ -54,7 +54,6 @@ class QrCodeState extends State<QrCode> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
           ? GCWOpenFile(
-              expanded: _outData == null,
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
               onLoaded: (_file) {
                 if (_file == null) {
