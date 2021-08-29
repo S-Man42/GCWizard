@@ -70,6 +70,7 @@ class ScrabbleState extends State<Scrabble> {
           title: i18n(context, 'scrabble_mode'),
           leftValue: i18n(context, 'scrabble_mode_values'),
           rightValue: i18n(context, 'scrabble_mode_frequency'),
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

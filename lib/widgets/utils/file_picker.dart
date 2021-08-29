@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/utils/common_utils.dart' as utils;
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
@@ -16,7 +16,7 @@ final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) async {
+Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes, bool trimNullBytes: false}) async {
   try {
     if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = null;
 
@@ -28,10 +28,15 @@ Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) a
 
     if (allowedFileTypes == null) files = _filterFiles(files, allowedFileTypes);
 
-    return (files == null || files.length == 0)
-        ? null
-        : new local.PlatformFile(
-            path: files.first.path, name: files.first.name, bytes: await _getFileData(files.first));
+    if (files == null || files.length == 0)
+      return null;
+
+    var bytes = await _getFileData(files.first);
+    if (trimNullBytes) {
+      bytes = utils.trimNullBytes(bytes);
+    }
+
+    return local.PlatformFile(path: files.first.path, name: files.first.name, bytes: bytes);
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }

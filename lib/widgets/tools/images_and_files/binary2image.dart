@@ -1,7 +1,9 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -9,7 +11,6 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:intl/intl.dart';
 
 class Binary2Image extends StatefulWidget {
@@ -90,9 +91,9 @@ class Binary2ImageState extends State<Binary2Image> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(
-        data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
-      showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(_outData));
+      showExportedFileDialog(context, fileType: FileType.PNG);
   }
 }

@@ -136,7 +136,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
@@ -732,12 +734,7 @@ class Registry {
         'de',
         'en',
         'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-      ]),
+      ], searchStrings: []),
       GCWTool(
           tool: CrossSumSelection(),
           i18nPrefix: 'crosssum_selection',
@@ -996,6 +993,14 @@ class Registry {
         SEARCHSTRING_DE_HEXVIEWER,
         SEARCHSTRING_EN_HEXVIEWER,
         SEARCHSTRING_FR_HEXVIEWER
+      ]),
+      GCWTool(tool: HiddenData(), i18nPrefix: 'hiddendata', isBeta: true, categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_HIDDENDATA,
+        SEARCHSTRING_DE_HIDDENDATA,
+        SEARCHSTRING_EN_HIDDENDATA,
+        SEARCHSTRING_FR_HIDDENDATA
       ]),
       GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
         ToolCategory.CRYPTOGRAPHY
@@ -1598,11 +1603,11 @@ class Registry {
         tool: SymbolTableSelection(),
         buttonList: [
           GCWToolActionButtonsEntry(
-              true,
-              'symboltables_selection_download_link',
-              'symboltables_selection_download_dialog_title',
-              'symboltables_selection_download_dialog_text',
-              Icons.file_download),
+              showDialog: true,
+              url: 'symboltables_selection_download_link',
+              title: 'symboltables_selection_download_dialog_title',
+              text: 'symboltables_selection_download_dialog_text',
+              icon: Icons.file_download),
         ],
         i18nPrefix: 'symboltables_selection',
         helpLocales: ['de', 'en', 'fr'],
@@ -2220,12 +2225,26 @@ class Registry {
           tool: Beaufort(),
           i18nPrefix: 'beaufort',
           helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_BEAUFORT]),
+          searchStrings: [
+            SEARCHSTRING_COMMON_BEAUFORT,
+            SEARCHSTRING_DE_BEAUFORT,
+            SEARCHSTRING_EN_BEAUFORT,
+            SEARCHSTRING_FR_BEAUFORT,
+          ]),
 
       //Braille Selection ****************************************************************
       GCWTool(
           tool: Braille(),
           i18nPrefix: 'braille',
+          searchStrings: [
+            SEARCHSTRING_COMMON_BRAILLE,
+            SEARCHSTRING_DE_BRAILLE,
+            SEARCHSTRING_EN_BRAILLE,
+            SEARCHSTRING_FR_BRAILLE
+          ]),
+      GCWTool(
+          tool: BrailleDotNumbers(),
+          i18nPrefix: 'brailledotnumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_BRAILLE,
             SEARCHSTRING_DE_BRAILLE,
@@ -5822,6 +5841,14 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_ALCHEMY_ALPHABET
       ]),
       GCWSymbolTableTool(symbolKey: 'angerthas_cirth', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_COMMON_SYMBOL_RUNES,
+        SEARCHSTRING_DE_SYMBOL_RUNES,
+        SEARCHSTRING_EN_SYMBOL_RUNES,
+        SEARCHSTRING_FR_SYMBOL_RUNES,
         SEARCHSTRING_COMMON_SYMBOL_ANGERTHAS_CIRTH,
         SEARCHSTRING_DE_SYMBOL_ANGERTHAS_CIRTH,
         SEARCHSTRING_EN_SYMBOL_ANGERTHAS_CIRTH,
@@ -5938,6 +5965,12 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_BIRDS_ON_A_WIRE,
         SEARCHSTRING_EN_SYMBOL_BIRDS_ON_A_WIRE,
         SEARCHSTRING_FR_SYMBOL_BIRDS_ON_A_WIRE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'birkenbihl', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_BIRKENBIHL,
+        SEARCHSTRING_DE_SYMBOL_BIRKENBIHL,
+        SEARCHSTRING_EN_SYMBOL_BIRKENBIHL,
+        SEARCHSTRING_FR_SYMBOL_BIRKENBIHL
       ]),
       GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BLOX,
@@ -6083,6 +6116,20 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_CHINESE_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_CHINESE_NUMERALS
       ]),
+      GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RUNES,
+        SEARCHSTRING_DE_SYMBOL_RUNES,
+        SEARCHSTRING_EN_SYMBOL_RUNES,
+        SEARCHSTRING_FR_SYMBOL_RUNES,
+        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_COMMON_SYMBOL_CIRTHEREBOR,
+        SEARCHSTRING_DE_SYMBOL_CIRTHEREBOR,
+        SEARCHSTRING_EN_SYMBOL_CIRTHEREBOR,
+        SEARCHSTRING_FR_SYMBOL_CIRTHEREBOR
+      ]),
       GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_CISTERCIAN,
         SEARCHSTRING_DE_CISTERCIAN,
@@ -6125,7 +6172,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
       ]),
-      GCWSymbolTableTool(symbolKey: 'cookewheatstone_oneneedle', symbolSearchStrings: [
+      GCWSymbolTableTool(symbolKey: 'cookewheatstone_1', symbolSearchStrings: [
         SEARCHSTRING_COMMON_TELEGRAPH,
         SEARCHSTRING_DE_TELEGRAPH,
         SEARCHSTRING_EN_TELEGRAPH,
@@ -6134,10 +6181,38 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
         SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
         SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_ONENEEDLE,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_ONENEEDLE,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_ONENEEDLE,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_ONENEEDLE
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_1,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_1,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_1,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_1
+      ]),
+      GCWSymbolTableTool(symbolKey: 'cookewheatstone_2', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_2,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_2,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_2,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_2
+      ]),
+      GCWSymbolTableTool(symbolKey: 'cookewheatstone_5', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
+        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_5,
+        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_5,
+        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_5,
+        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_5
       ]),
       GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: [
         SEARCHSTRING_COMMON_COUNTRIES,
@@ -6486,6 +6561,14 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_HIEROGLYPHS
       ]),
       GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_COMMON_SYMBOL_RUNES,
+        SEARCHSTRING_DE_SYMBOL_RUNES,
+        SEARCHSTRING_EN_SYMBOL_RUNES,
+        SEARCHSTRING_FR_SYMBOL_RUNES,
         SEARCHSTRING_COMMON_SYMBOL_HOBBIT_RUNES,
         SEARCHSTRING_DE_SYMBOL_HOBBIT_RUNES,
         SEARCHSTRING_EN_SYMBOL_HOBBIT_RUNES,
@@ -7133,18 +7216,30 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_TENCTONESE
       ]),
       GCWSymbolTableTool(symbolKey: 'tengwar_beleriand', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
         SEARCHSTRING_COMMON_SYMBOL_TENGWAR_BELERIAND,
         SEARCHSTRING_DE_SYMBOL_TENGWAR_BELERIAND,
         SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND,
         SEARCHSTRING_FR_SYMBOL_TENGWAR_BELERIAND
       ]),
       GCWSymbolTableTool(symbolKey: 'tengwar_classic', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
         SEARCHSTRING_COMMON_SYMBOL_TENGWAR_CLASSIC,
         SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC,
         SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC,
         SEARCHSTRING_FR_SYMBOL_TENGWAR_CLASSIC
       ]),
       GCWSymbolTableTool(symbolKey: 'tengwar_general', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
+        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
         SEARCHSTRING_COMMON_SYMBOL_TENGWAR_GENERAL,
         SEARCHSTRING_DE_SYMBOL_TENGWAR_GENERAL,
         SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL,

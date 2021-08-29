@@ -145,6 +145,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
@@ -477,6 +478,7 @@ class _MainViewState extends State<MainView> {
         className(Hexadecimal()),
         className(HexString2File()),
         className(HexViewer()),
+        className(HiddenData()),
         className(Homophone()),
         className(Houdini()),
         className(Humidex()),

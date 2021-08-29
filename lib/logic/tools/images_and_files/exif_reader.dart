@@ -1,10 +1,8 @@
-import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 

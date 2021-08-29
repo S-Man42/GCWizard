@@ -155,5 +155,5 @@ Future<Uint8List> input2Image(List<String> lines,
   final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
   final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-  return data.buffer.asUint8List();
+  return trimNullBytes(data.buffer.asUint8List());
 }

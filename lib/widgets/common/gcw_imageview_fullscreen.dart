@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:photo_view/photo_view.dart';
 
 class GCWImageViewFullScreen extends StatefulWidget {
@@ -26,4 +29,19 @@ class GCWImageViewFullScreenState extends State<GCWImageViewFullScreen> {
   Widget build(BuildContext context) {
     return PhotoView(imageProvider: image);
   }
+}
+
+openInFullScreen(BuildContext context, Uint8List imgData) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute(
+          builder: (context) => GCWTool(
+            tool: GCWImageViewFullScreen(
+              imageData: imgData,
+            ),
+            autoScroll: false,
+            toolName: i18n(context, 'imageview_fullscreen_title'),
+            defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
+            suppressHelpButton: true,
+          )));
 }

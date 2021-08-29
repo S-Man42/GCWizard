@@ -26,6 +26,7 @@ class EnclosedAreasState extends State<EnclosedAreas> {
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'enclosedareas_with4'),
           rightValue: i18n(context, 'enclosedareas_without4'),
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

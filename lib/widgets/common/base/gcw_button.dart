@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GCWButton extends StatefulWidget {
   final String text;

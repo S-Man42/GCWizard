@@ -1,8 +1,6 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'dart:isolate';
 
-final _ALARM_COUNT = 100000;
-
 class HashBreakerJobData {
   final String input;
   final String searchMask;
@@ -15,15 +13,6 @@ class HashBreakerJobData {
     this.substitutions = null,
     this.hashFunction = null,
   });
-}
-
-Map<String, dynamic> preCheck(Map<String, String> substitutions) {
-  var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
-  var count = expander.run(onlyPrecheck: true);
-
-  if (count[0]['count'] >= _ALARM_COUNT) return {'status': 'high_count', 'count': count[0]['count']};
-
-  return {'status': 'ok'};
 }
 
 Future<Map<String, dynamic>> breakHashAsync(dynamic jobData) async {

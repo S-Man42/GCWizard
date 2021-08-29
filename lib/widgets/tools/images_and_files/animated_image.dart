@@ -43,8 +43,8 @@ class AnimatedImageState extends State<AnimatedImage> {
 
     return Column(children: <Widget>[
       GCWOpenFile(
-        expanded: _platformFile == null,
         supportedFileTypes: AnimatedImageState.allowedExtensions,
+        trimNullBytes: true,
         onLoaded: (_file) {
           if (_file == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -199,10 +199,10 @@ class AnimatedImageState extends State<AnimatedImage> {
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = FileType.ZIP;
-      var value = await saveByteDataToFile(bytes.buffer.asByteData(),
-          'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+      var value = await saveByteDataToFile(bytes,
+          'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-      if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+      if (value != null) showExportedFileDialog(context, fileType: fileType);
     });
   }
 }

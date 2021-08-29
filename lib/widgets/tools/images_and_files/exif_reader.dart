@@ -8,20 +8,20 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
@@ -48,8 +48,11 @@ class _ExifReaderState extends State<ExifReader> {
   @override
   initState() {
     super.initState();
-    file = widget.file;
-    _readFile(file);
+
+    if (widget.file != null) {
+      file = widget.file;
+      _readFile(file);
+    }
   }
 
   @override
@@ -59,7 +62,6 @@ class _ExifReaderState extends State<ExifReader> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         GCWOpenFile(
-          expanded: widget.file == null,
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (_file) {
             if (_file == null) {
@@ -77,19 +79,22 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFile(local.PlatformFile _file) async {
-    if (_file == null) return;
+    Image.Image _image;
 
-    Map<String, IfdTag> tags = await parseExif(_file);
-    if (tags == null) {
+    if (_file != null)
+      _image = await _completeImageMetadata(_file);
+
+    if (_file == null || _image == null) {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       _fileLoaded = false;
       return;
     }
 
+    Map<String, IfdTag> tags = await parseExif(_file);
+
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
-    Image.Image _image;
 
     try {
       if (tags != null) {
@@ -98,7 +103,6 @@ class _ExifReaderState extends State<ExifReader> {
         _tableTags = buildTablesExif(tags);
       }
 
-      _image = await _completeImageMetadata(_file);
       _fileLoaded = true;
 
       setState(() {
@@ -136,7 +140,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWOutput(
-        title: i18n(context, "exif_section_thumbnail"),
+        title: i18n(context, 'exif_section_thumbnail'),
         child: GCWImageView(imageData: thumbnail),
         //suppressCopyButton: false,
       ));
@@ -211,11 +215,10 @@ class _ExifReaderState extends State<ExifReader> {
             context,
             [
               [i18n(context, 'exif_filename'), platformFile.name ?? ''],
-              [i18n(context, 'exif_path'), platformFile.path ?? ''],
               [i18n(context, 'exif_filesize_bytes'), platformFile.bytes?.length ?? 0],
               [i18n(context, 'exif_filesize_kb'), (platformFile.bytes?.length / 1024).ceil() ?? 0],
-              lastModified != null ? ["lastModified", formatDate(_file?.lastModifiedSync())] : null,
-              lastAccessed != null ? ["lastAccessed", formatDate(_file?.lastAccessedSync())] : null,
+              lastModified != null ? ['lastModified', formatDate(_file?.lastModifiedSync())] : null,
+              lastAccessed != null ? ['lastAccessed', formatDate(_file?.lastAccessedSync())] : null,
               [i18n(context, 'exif_extension'), platformFile.extension ?? '']
             ],
           ))));
@@ -225,7 +228,7 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateImage(List<Widget> widgets, Image.Image image) {
     if (image != null) {
       widgets.add(GCWOutput(
-          title: i18n(context, "exif_section_image"),
+          title: i18n(context, 'exif_section_image'),
           child: Column(
               children: columnedMultiLineOutput(
             context,
@@ -266,27 +269,33 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   void _decorateExtraData(List<Widget> widgets) {
     if (file == null) return;
-    var _extraData = extraData(file.bytes);
+    var _hiddenData = hiddenData(file);
 
-      widgets.add(GCWOutput(
-        title: i18n(context, "exif_section_extra_data"),
-        child: hexDataOutput(context, _extraData),
-        trailing: GCWIconButton(
-          iconData: Icons.save,
-          size: IconButtonSize.SMALL,
-          iconColor: _extraData == null ? Colors.grey : null,
+    if (_hiddenData == null || _hiddenData.isEmpty)
+      return;
+
+    widgets.add(
+      GCWOutput(
+        title: i18n(context, 'hiddendata_title'),
+        child: GCWButton(
+          text: i18n(context, 'exif_showhiddendata'),
           onPressed: () {
-            _extraData == null ? null : _exportFile(context, _extraData?.first);
+            openInHiddenData(context, file: file);
           },
-        ))
-      );
+        )
+      )
+    );
   }
+}
 
-  _exportFile(BuildContext context, Uint8List data) async {
-    var fileType = getFileType(data);
-    var value = await saveByteDataToFile(data.buffer.asByteData(),
-        "extra_data_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
-
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
-  }
+openInMetadataViewer(BuildContext context, Uint8List imgData) {
+  local.PlatformFile file = local.PlatformFile(bytes: imgData);
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute(
+          builder: (context) => GCWTool(
+              tool: ExifReader(file: file),
+              toolName: i18n(context, 'exif_title'),
+              i18nPrefix: '',
+              helpLocales: ['de', 'en', 'fr'])));
 }
