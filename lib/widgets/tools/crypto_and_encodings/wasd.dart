@@ -3,8 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
@@ -109,40 +111,79 @@ class WASDState extends State<WASD> {
           }).toList(),
         ),
         if (_currentKeyboardControls == WASD_TYPE.CUSTOM)
-          Column(
+          Row(
             children: <Widget>[
-              GCWTextField(
-                  hintText: i18n(context, 'wasd_custom_up'),
-                  controller: _upController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentUp = text;
-                    });
-                  }),
-              GCWTextField(
-                  hintText: i18n(context, 'wasd_custom_down'),
-                  controller: _downController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentDown = text;
-                    });
-                  }),
-              GCWTextField(
-                  hintText: i18n(context, 'wasd_custom_left'),
-                  controller: _leftController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentLeft = text;
-                    });
-                  }),
-              GCWTextField(
-                  hintText: i18n(context, 'wasd_custom_right'),
-                  controller: _rightController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentRight = text;
-                    });
-                  }),
+              Expanded(
+                child: Column(
+                    children: <Widget>[
+                      GCWTextDivider(
+                        text: i18n(context, 'wasd_custom_up'),
+                      ),
+                      GCWTextField(
+                          hintText: i18n(context, 'wasd_custom_up'),
+                          controller: _upController,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentUp = text;
+                            });
+                          }),
+                    ]
+                ),
+              ),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              Expanded(
+                  child: Column(
+                      children: <Widget>[
+                        GCWTextDivider(
+                          text: i18n(context, 'wasd_custom_down'),
+                        ),
+                        GCWTextField(
+                            hintText: i18n(context, 'wasd_custom_down'),
+                            controller: _downController,
+                            onChanged: (text) {
+                              setState(() {
+                                _currentDown = text;
+                              });
+                            }),
+                      ]
+                  ),
+              ),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              Expanded(
+                  child: Column(
+                      children: <Widget>[
+                        GCWTextDivider(
+                          text: i18n(context, 'wasd_custom_left'),
+                        ),
+                        GCWTextField(
+                            hintText: i18n(context, 'wasd_custom_left'),
+                            controller: _leftController,
+                            onChanged: (text) {
+                              setState(() {
+                                _currentLeft = text;
+                              });
+                            }),
+                      ]
+                  ),
+              ),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              Expanded(
+                  child: Column(
+                      children: <Widget>[
+                        GCWTextDivider(
+                          text: i18n(context, 'wasd_custom_right'),
+                        ),
+                        GCWTextField(
+                            hintText: i18n(context, 'wasd_custom_right'),
+                            controller: _rightController,
+                            onChanged: (text) {
+                              setState(() {
+                                _currentRight = text;
+                              });
+                            }),
+                      ]
+                  )
+              ),
             ],
           ),
         GCWTwoOptionsSwitch( // switch between encrypt and decrypt
@@ -216,10 +257,10 @@ class WASDState extends State<WASD> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(
-        data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null)
-      showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
+      showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
   }
 
   _buildOutput() {

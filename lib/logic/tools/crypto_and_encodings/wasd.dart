@@ -37,17 +37,38 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
 };
 
 final Map<String, List<String>> WASD_ENCODE = {
-  '0' : ['ASSDWW', 'SSDWWA', 'SDWWAS', 'DWWASS', 'WWASSD', 'WASSDW', 'WWDSSA', 'WDSSAW', 'DSSAWW', 'SSAWWD', 'SAWWDS', 'AWWDSS', 'DSSAWWD'],
-  '1' : ['WW', 'SS'],
-  '2' : ['DSASD', 'AWDWA'],
-  '3' : ['DSADSA', 'DWADWA'],
-  '4' : ['SDWSS', 'SDSWW', 'WWSAW', 'SSWAW'],
-  '5' : ['DWAWD', 'ASDSA'],
-  '6' : ['ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW', 'SDWAWD', 'SDWAW', 'SDSAW'],
-  '7' : ['WWA', 'DSS'],
-  '8' : ['SDSAWDWA', 'DSASDWAW', 'WDSASDW', 'SAWDWAS', 'WASDSAW', 'SDWAWDS', 'ASDSAWDW', 'SASDWAWD', 'WDWASDSA', 'DWAWDSAS',
-    'AWDWASDS', 'WAWDSASD', 'WWDSADSA', 'DWADWASS', 'WWASDASD', 'AWDAWDSS', 'SSDWADWA', 'DSASAWW', 'SSAWDAWD', 'ASDASDWW', 'DSAWSSDW'],
-  '9' : ['ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'SSWAWS', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD'],
+  // 0 ASSDWW SSDWWA SDWWAS DWWASS WWASSD WASSDW WWDSSA WDSSAW DSSAWW SSAWWD SAWWDS AWWDSS
+  // 1 WW SS
+  // 2 DSASD AWDWA
+  // 3 DSADSA DWADWA
+  // 4 SDWSS SDSWW WWSAW SSWAW
+  // 5 DWAWD ASDSA
+  // 6 ASSDWA SSDWA DSAWWD DSAWW ASDSAW SDWAWD SDWAW SDSAW
+  // 7 WWA DSS
+  // 8 SDSAWDWA DSASDWAW WDSASDW SAWDWAS WASDSAW SDWAWDS ASDSAWDW SASDWAWD WDWASDSA DWAWDSAS AWDWASDS WAWDSASD WWDSADSA DWADWASS WWASDASD AWDAWDSS SSDWADWA DSADSAWW SSAWDAWD ASDASDWW DSAWSSDW
+  // 9 ASDSWW AWDSS WASDS AWDSSA WASDSA ASDSADWW WWASD WAWDS DWWASD DWAWDS SSADWAWD
+  '0' : [
+    'ASSDWW', 'SSDWWA', 'SDWWAS', 'DWWASS', 'WWASSD', 'WASSDW',
+    'WWDSSA', 'WDSSAW', 'DSSAWW', 'SSAWWD', 'SAWWDS', 'AWWDSS'],
+  '1' : [
+    'WW', 'SS'],
+  '2' : [
+    'DSASD', 'AWDWA'],
+  '3' : [
+    'DSADSA', 'DWADWA'],
+  '4' : [
+    'SDWSS', 'SDSWW', 'WWSAW', 'SSWAW'],
+  '5' : [
+    'DWAWD', 'ASDSA'],
+  '6' : [
+    'ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW', 'SDWAWD', 'SDWAW', 'SDSAW'],
+  '7' : [
+    'WWA', 'DSS'],
+  '8' : [
+    'SDSAWDWA', 'DSASDWAW', 'WDSASDW', 'SAWDWAS', 'WASDSAW', 'SDWAWDS', 'ASDSAWDW', 'SASDWAWD', 'WDWASDSA', 'DWAWDSAS',
+    'AWDWASDS', 'WAWDSASD', 'WWDSADSA', 'DWADWASS', 'WWASDASD', 'AWDAWDSS', 'SSDWADWA', 'DSADSAWW', 'SSAWDAWD', 'ASDASDWW', 'DSAWSSDW'],
+  '9' : [
+    'ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD'],
   ' ' : [' '],
   '.' : ['.']
 };
@@ -159,7 +180,6 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
   var direction = _WASD_DIRECTION.START;
   
   _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((word) {
-print(word + ' ###################################################################');
     // draw picture per letter
     // transform/normalize picture
     // align picture in world
@@ -176,38 +196,13 @@ print(word + ' #################################################################
 
     word.split('').forEach((element) {
       switch (element){
-        case 'W':  // forward, up
-          switch (direction) {
-            case _WASD_DIRECTION.UP:
-              y--;
-              break;
-            case _WASD_DIRECTION.DOWN:
-              y++;
-              break;
-            case _WASD_DIRECTION.LEFT:
-              x--;
-              break;
-            case _WASD_DIRECTION.RIGHT:
-              x++;
-              break;
-          }
-          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
-            y--; letter[x.toString() + '|' + (y).toString()] = '1';
-          }
-          direction = _WASD_DIRECTION.UP;
-          if (y < minLetterY) minLetterY = y;
-          if (x < minLetterX) minLetterX = x;
-          if (y > maxLetterY) maxLetterY = y;
-          if (x > maxLetterX) maxLetterX = x;
-          break;
-
         case 'S':  // back, down
           switch (direction) {
             case _WASD_DIRECTION.UP:
-              y--;
+              y++;
               break;
             case _WASD_DIRECTION.DOWN:
-              y++;
+              y--;
               break;
             case _WASD_DIRECTION.LEFT:
               x--;
@@ -219,6 +214,31 @@ print(word + ' #################################################################
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++; letter[x.toString() + '|' + (y).toString()] = '1';
           }
+          direction = _WASD_DIRECTION.UP;
+          if (y < minLetterY) minLetterY = y;
+          if (x < minLetterX) minLetterX = x;
+          if (y > maxLetterY) maxLetterY = y;
+          if (x > maxLetterX) maxLetterX = x;
+          break;
+
+        case 'W':  // forward, up
+          switch (direction) {
+            case _WASD_DIRECTION.UP:
+              y++;
+              break;
+            case _WASD_DIRECTION.DOWN:
+              y--;
+              break;
+            case _WASD_DIRECTION.LEFT:
+              x--;
+              break;
+            case _WASD_DIRECTION.RIGHT:
+              x++;
+              break;
+          }
+          for (int i = 0; i < _SEGMENT_LENGTH; i++) {
+            y--; letter[x.toString() + '|' + (y).toString()] = '1';
+          }
           direction = _WASD_DIRECTION.DOWN;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
@@ -229,10 +249,10 @@ print(word + ' #################################################################
         case 'A':  // left
           switch (direction) {
             case _WASD_DIRECTION.UP:
-              y--;
+              y++;
               break;
             case _WASD_DIRECTION.DOWN:
-              y++;
+              y--;
               break;
             case _WASD_DIRECTION.LEFT:
               x--;
@@ -254,10 +274,10 @@ print(word + ' #################################################################
         case 'D':  // right
           switch (direction) {
             case _WASD_DIRECTION.UP:
-              y--;
+              y++;
               break;
             case _WASD_DIRECTION.DOWN:
-              y++;
+              y--;
               break;
             case _WASD_DIRECTION.LEFT:
               x--;
@@ -281,60 +301,38 @@ print(word + ' #################################################################
       if (minLetterY < minSentenceY)
         minSentenceY = minLetterY;
     }); // for Each letter
-print('[x|y] '+'['+minLetterX.toString()+'...'+maxLetterX.toString()+'|'+minLetterY.toString()+'...'+maxLetterY.toString()+'] => '+'['+(maxLetterX-minLetterX).toString()+'|'+(maxLetterY-minLetterY).toString()+']');
-print('letter            '+letter.toString());
 
     // transform/normalize letter
     xOffset = 0;
     yOffset = 0;
-    if (maxLetterY - minLetterY == 0) {
-        yOffset = 0;
-    } else if (maxLetterY - minLetterY == 5) {
-      if (maxLetterY == 5)
-        yOffset = -5;
-    } else if (maxLetterY - minLetterY == 6) {
-      if (maxLetterY == 6)
-        yOffset = -6;
-    } else if (maxLetterY - minLetterY == 10) {
-      if (maxLetterY == 10)
-        yOffset = -10;
-    } else if (maxLetterY - minLetterY == 11) {
-      if (maxLetterY == 11)
-        yOffset = -11;
-    } else if (maxLetterY - minLetterY == 12) {
-      if (maxLetterY == 12)
-        yOffset = -12;
-    } else if (maxLetterY - minLetterY == 18) {
-    if (maxLetterY == 5)
-      yOffset = -5;
-    } else
-      yOffset = 13 + minLetterY;
+    if (minLetterY == -5)
+      minLetterY = -6;
+    if (minLetterY == -11)
+      minLetterY = -12;
+    if (minLetterY < 0)
+      yOffset = -1 * minLetterY;
 
-    xOffset = 0 - minLetterX;
-print('offset (x,y) '+xOffset.toString()+' '+yOffset.toString());
+    if (minLetterX < 0)
+      xOffset = -1 * minLetterX;
 
     Map<String, String> transformedLetter = new Map();
     letter.forEach((key, value) {
-      transformedLetter[(int.parse(key.split('|')[0]) + xOffset).toString() + '|' + (int.parse(key.split('|')[1]) - yOffset).toString()] = value;
+      transformedLetter[(int.parse(key.split('|')[0]) + xOffset).toString() + '|' + (int.parse(key.split('|')[1]) + yOffset).toString()] = value;
     });
 
-print('transformedLetter '+transformedLetter.toString());
     // add letter to sentence
     transformedLetter.forEach((key, value) {
       sentence[(int.parse(key.split('|')[0]) + maxSentenceX).toString() + '|' + (int.parse(key.split('|')[1])).toString()] = value;
     });
 
-    maxSentenceX = maxSentenceX + 7 + 2;
-print('sentence          '+sentence.toString());
+    maxSentenceX = maxSentenceX + (maxLetterX - minLetterX) + 4;
   }); // forEach word
 
   // build bitmap
-  print('world [x|y] '+'['+maxSentenceX.toString()+'|'+minSentenceY.toString()+'...'+maxSentenceY.toString()+']');
-  var binaryWorld = List.generate(maxSentenceX + 3, (y) => List(maxSentenceY - minSentenceY + 3), growable: false);
+  var binaryWorld = List.generate(maxSentenceX + 3, (y) => List(maxSentenceY - minSentenceY + 1), growable: false);
   sentence.forEach((key, value) {
-    print('      [x|y] '+'['+key.split('|')[0]+'|'+key.split('|')[1]+']');
     x = int.parse(key.split('|')[0]);
-    y = int.parse(key.split('|')[1]) - minSentenceY;
+    y = int.parse(key.split('|')[1]);
     binaryWorld[x][y] = value;
   });
 
