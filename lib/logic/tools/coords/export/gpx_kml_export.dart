@@ -185,7 +185,7 @@ class _KmlWriter {
           for (i = 0; i < points.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'waypoint' + i.toString());
-              _writeElement(builder, 'color', _ColorCode(filteredPonts[i].color));
+              _writeElement(builder, 'color', _ColorCode(points[i].color));
               builder.element('IconStyle', nest: () {
                 builder.element('Icon', nest: () {
                   _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
