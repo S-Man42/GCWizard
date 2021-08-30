@@ -1823,7 +1823,7 @@
   "exif_width" : "Width (px)",
   "exif_height" : "Height (px)",
   "exif_lastaccessed" : "Last Accessed",
-  "exif_openinmetadata": "Open in Exif/Metadata Viewer",
+  "exif_openinmetadata": "Open in Metadata Viewer",
   "paste_image": "Paste image",
   "formulasolver_title": "Formula Solver",
   "formulasolver_description": "Create formulas for stages and finals, add variables, solve them",
