@@ -246,10 +246,10 @@ class BrailleState extends State<Braille> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join().toUpperCase()),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
+                GCWDefaultOutput(child: segments['chars'].join()),
                 if (segmentsBasicLetters['chars'].join().toUpperCase() != segments['chars'].join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_letters'),
@@ -261,7 +261,10 @@ class BrailleState extends State<Braille> {
                     child: segmentsBasicDigits['chars'].join().toUpperCase(),
                   ),
               ],
-            )        ],
+            )
+          else
+            GCWDefaultOutput(child: segments['chars'].join()),
+          ],
       );
     }
   }

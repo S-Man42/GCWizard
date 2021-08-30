@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -7,7 +6,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
@@ -45,15 +43,37 @@ Future<MapViewDAO> importCoordinatesFile(PlatformFile file) async {
 }
 
 MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
+  MapViewDAO result = null;
   try {
     var xmlDoc = XmlDocument.parse(xml);
     if (kmlFormat)
-      return _KmlReader()._parse(xmlDoc);
+      result = _KmlReader()._parse(xmlDoc);
     else
-      return _GpxReader()._parse(xmlDoc);
+      result = _GpxReader()._parse(xmlDoc);
   } catch (e) {
     return null;
   }
+
+  // merge points
+  if ((result != null) && (result.points != null)) {
+    for (var x = 0; x < result.points.length; x++)
+      for (var y = x+1; y < result.points.length; y++)
+        if ((result.points[x].latitude == result.points[y].latitude) &&
+            (result.points[x].longitude == result.points[y].longitude))  {
+
+          if (result.polylines != null) {
+            result.polylines.forEach((polyline) {
+              for(var i = 0; i < polyline.pointUUIDs.length; i++)
+                if (polyline.pointUUIDs[i] == result.points[y].uuid)
+                  polyline.pointUUIDs[i] = result.points[x].uuid;
+            });
+          }
+          result.points.removeAt(y);
+          y--;
+        }
+  }
+
+  return result;
 }
 
 /// Convert GPX-XML into points
