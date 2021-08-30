@@ -11,7 +11,7 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
     return [];
 
   var resultList = <PlatformFile>[];
-  var bytes = trimNullBytes(data.bytes);
+  var bytes = data.bytes;
 
   while (bytes != null && bytes.length > 0) {
     int imageLength;

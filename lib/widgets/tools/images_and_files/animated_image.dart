@@ -52,8 +52,10 @@ class AnimatedImageState extends State<AnimatedImage> {
           }
 
           if (_file != null) {
-            _platformFile = _file;
-            _analysePlatformFileAsync();
+            setState(() {
+              _platformFile = _file;
+              _analysePlatformFileAsync();
+            });
           }
         },
       ),

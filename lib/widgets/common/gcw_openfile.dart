@@ -54,11 +54,82 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (_loadedFile == null && widget.file != null)
-      _loadedFile = widget.file;
+  _buildOpenFromDevice() {
+    return GCWButton(
+      text: i18n(context, 'common_loadfile_open'),
+      onPressed: () {
+        _currentExpanded = true;
+        openFileExplorer(allowedFileTypes: widget.supportedFileTypes, trimNullBytes: widget.trimNullBytes).then((PlatformFile file) {
+          if (file != null) {
+            setState(() {
+              _loadedFile = file;
+              _currentExpanded = false;
+            });
+            widget.onLoaded(file);
+          } else {
+            showToast(i18n(context, 'common_loadfile_exception_nofile'));
+          }
+        });
+      },
+    );
+  }
 
+  _onPressedOpenFromURL() {
+    _currentExpanded = true;
+
+    if (_currentUrl == null) {
+      showToast(i18n(context, 'common_loadfile_exception_url'));
+      return;
+    }
+
+    if (widget.supportedFileTypes != null) {
+      var _urlFileType = fileTypeByFilename(_currentUrl);
+
+      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
+        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+        return;
+      }
+    }
+
+    _getUri(_currentUrl.trim()).then((uri) {
+      if (uri == null) {
+        showToast(i18n(context, 'common_loadfile_exception_url'));
+        return;
+      }
+
+      http.get(uri).timeout(
+          Duration(seconds: 10),
+          onTimeout: () {
+            return http.Response('Error', 500);
+          }
+      ).then((http.Response response) {
+        if (response.statusCode != 200) {
+          showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
+          return;
+        }
+
+        var bytes;
+        if (widget.trimNullBytes) {
+          bytes = trimNullBytes(response.bodyBytes);
+        } else {
+          bytes = response.bodyBytes;
+        }
+
+        _loadedFile = PlatformFile(
+            name: Uri.decodeFull(_currentUrl).split('/').last,
+            path: _currentUrl,
+            bytes: bytes);
+
+        setState(() {
+          _currentExpanded = false;
+        });
+
+        widget.onLoaded(_loadedFile);
+      });
+    });
+  }
+
+  _buildOpenFromURL() {
     var urlTextField = GCWTextField(
       controller: _urlController,
       filled: widget.isDialog,
@@ -70,7 +141,43 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           return;
         }
         _currentUrl = value;
-     });
+      }
+    );
+
+    if (widget.isDialog) {
+      return Column(
+        children: [
+          Container(
+            child: urlTextField,
+            width: 220,
+            height: 50,
+          ),
+          GCWButton(
+            text: i18n(context, 'common_loadfile_open'),
+            onPressed: _onPressedOpenFromURL,
+          )
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          Expanded(child: urlTextField),
+          Container(
+            padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+            child: GCWButton(
+              text: i18n(context, 'common_loadfile_open'),
+              onPressed: _onPressedOpenFromURL,
+            )
+          )
+        ],
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loadedFile == null && widget.file != null)
+      _loadedFile = widget.file;
 
     var content = Column(
       children: [
@@ -87,96 +194,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           },
         ),
         if (_currentMode == GCWSwitchPosition.left)
-          GCWButton(
-            text: i18n(context, 'common_loadfile_open'),
-            onPressed: () {
-              _currentExpanded = true;
-              openFileExplorer(allowedFileTypes: widget.supportedFileTypes, trimNullBytes: widget.trimNullBytes).then((PlatformFile file) {
-                if (file != null) {
-                  setState(() {
-                    _loadedFile = file;
-                    _currentExpanded = false;
-                  });
-                  widget.onLoaded(file);
-                } else {
-                  showToast(i18n(context, 'common_loadfile_exception_nofile'));
-                }
-              });
-            },
-          ),
+          _buildOpenFromDevice(),
         if (_currentMode == GCWSwitchPosition.right)
-          Row(
-            children: [
-              widget.isDialog
-                ? Container(
-                  child: urlTextField,
-                  width: 220,
-                  height: 50,
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
-                )
-                : Expanded(child: urlTextField),
-              Container(
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                child: GCWButton(
-                  text: i18n(context, 'common_loadfile_open'),
-                  onPressed: () {
-                    _currentExpanded = true;
-
-                    if (_currentUrl == null) {
-                      showToast(i18n(context, 'common_loadfile_exception_url'));
-                      return;
-                    }
-
-                    if (widget.supportedFileTypes != null) {
-                      var _urlFileType = fileTypeByFilename(_currentUrl);
-
-                      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
-                        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
-                        return;
-                      }
-                    }
-
-                    _getUri(_currentUrl.trim()).then((uri) {
-                      if (uri == null) {
-                        showToast(i18n(context, 'common_loadfile_exception_url'));
-                        return;
-                      }
-
-                      http.get(uri).timeout(
-                          Duration(seconds: 10),
-                          onTimeout: () {
-                            return http.Response('Error', 500);
-                          }
-                      ).then((http.Response response) {
-                        if (response.statusCode != 200) {
-                          showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
-                          return;
-                        }
-
-                        var bytes;
-                        if (widget.trimNullBytes) {
-                          bytes = trimNullBytes(response.bodyBytes);
-                        } else {
-                          bytes = response.bodyBytes;
-                        }
-
-                        _loadedFile = PlatformFile(
-                            name: Uri.decodeFull(_currentUrl).split('/').last,
-                            path: _currentUrl,
-                            bytes: bytes);
-
-                        setState(() {
-                          _currentExpanded = false;
-                        });
-
-                        widget.onLoaded(_loadedFile);
-                      });
-                    });
-                  },
-                )
-              )
-            ],
-          )
+          _buildOpenFromURL(),
       ],
     );
 

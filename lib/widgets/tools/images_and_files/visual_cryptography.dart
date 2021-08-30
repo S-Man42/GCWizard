@@ -74,7 +74,9 @@ class VisualCryptographyState extends State<VisualCryptography> {
             return;
           }
 
-          if (_file != null) _decodeImage1 = _file;
+          setState(() {
+            _decodeImage1 = _file;
+          });
         },
       ),
       Container(height: 20),
@@ -89,7 +91,9 @@ class VisualCryptographyState extends State<VisualCryptography> {
             return;
           }
 
-          if (_file != null) _decodeImage2 = _file;
+          setState(() {
+            _decodeImage2 = _file;
+          });
         },
       ),
       Container(height: 25),
@@ -155,10 +159,10 @@ class VisualCryptographyState extends State<VisualCryptography> {
             return;
           }
 
-          if (_file != null) {
+          setState(() {
             _encodeImage = _file;
             encodeImageSize();
-          }
+          });
         },
       ),
       

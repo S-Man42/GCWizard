@@ -99,8 +99,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           }
 
           if (_file != null) {
-            _platformFile = _file;
-            _analysePlatformFileAsync();
+            setState(() {
+              _platformFile = _file;
+              _analysePlatformFileAsync();
+            });
           }
         },
       ),
@@ -207,7 +209,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               supportedFileTypes: AnimatedImageState.allowedExtensions,
               trimNullBytes: true,
               onLoaded: (_file) {
-                if (_file != null) _highImage = _file.bytes;
+                if (_file != null)
+                  setState(() {
+                    _highImage = _file.bytes;
+                  });
               },
             ),
           ]),
@@ -218,7 +223,10 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               supportedFileTypes: AnimatedImageState.allowedExtensions,
               trimNullBytes: true,
               onLoaded: (_file) {
-                if (_file != null) _lowImage = _file.bytes;
+                if (_file != null)
+                  setState(() {
+                    _lowImage = _file.bytes;
+                  });
               },
             ),
           ]),
