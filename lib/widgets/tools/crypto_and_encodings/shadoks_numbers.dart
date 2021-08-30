@@ -167,7 +167,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
             segmentFunction:(displayedSegments, readOnly) {
               return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
             },
-            segments: _currentDisplays,
+            segments: segments,
             readOnly: true
           ),
           GCWOutput(
@@ -192,9 +192,9 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
         children: <Widget>[
           GCWDisplayOutput(
             segmentFunction:(displayedSegments, readOnly) {
-              return _ShadoksNumbersSegmentDisplay(segments: segments['displays'], readOnly: readOnly);
+              return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
             },
-            segments: _currentDisplays,
+            segments: segments['displays'],
             readOnly: true
           ),
           GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments['numbers'].join(' ')),

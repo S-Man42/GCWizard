@@ -1931,7 +1931,7 @@ Map<String, dynamic> decodeBraille(
     List<String> input, BrailleLanguage language, bool letters) {
   if (input == null || input.length == 0)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'chars': [0]
     };
 

@@ -105,7 +105,7 @@ List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 115
 Map<String, dynamic> encodeMayaCalendar(int input) {
   if (input == null)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'numbers': [0],
       'vigesimal': 0
     };
@@ -142,7 +142,7 @@ List<int> _longCountToList(int numberDec) {
 Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'numbers': [0],
       'vigesimal': 0
     };

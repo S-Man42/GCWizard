@@ -28,7 +28,7 @@ class NSegmentDisplay extends StatefulWidget {
       : super(key: key);
 
   @override
-  NSegmentDisplayState createState()  =>NSegmentDisplayState();
+  NSegmentDisplayState createState() => NSegmentDisplayState();
 
   Future<ui.Image> get renderedImage async {
     return nSegmentDisplayState.renderedImage;

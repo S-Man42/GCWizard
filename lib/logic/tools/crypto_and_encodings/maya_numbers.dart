@@ -25,7 +25,7 @@ final Map<int, List<String>> _numbersToSegments = {
 };
 
 List<List<String>> encodeMayaNumbers(int input) {
-  if (input == null) return [];
+  if (input == null) return <List<String>>[];
 
   var vigesimal = convertBase(input.toString(), 10, 20);
   return vigesimal.split('').map((digit) {
@@ -36,7 +36,7 @@ List<List<String>> encodeMayaNumbers(int input) {
 Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'numbers': [0],
       'vigesimal': BigInt.zero
     };

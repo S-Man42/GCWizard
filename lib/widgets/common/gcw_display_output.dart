@@ -93,7 +93,7 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 iconData: Icons.save,
-                iconColor:  (_displays == null) || (_displays.length == 0) ? Colors.grey : null,
+                iconColor:  (widget.segments == null) || (widget.segments.length == 0) ? Colors.grey : null,
                 onPressed: ()  async {
                   await buildSegmentDisplayImage(countColumns, _displays).then((image) {
                     if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
@@ -102,7 +102,7 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 10.0),
+              padding: EdgeInsets.only(left: 10.0),
             )
           ],
         ),
