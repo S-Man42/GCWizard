@@ -61,15 +61,7 @@ class _GpxWriter {
 
       if (points != null) {
         var i = 0;
-        var filteredPoints = points.where((point) => point.isVisible & !point.hasCircle()).toList();
-
-        if (polylines != null) {
-          polylines.forEach((geodetic) {
-            filteredPoints.removeWhere((point) => geodetic.points.contains(point));
-          });
-        };
-
-        filteredPoints.forEach((point) {
+        points.forEach((point) {
           _writePoint(builder, (i != 0), name, 'S' + i.toString(), point);
           i++;
         });
@@ -194,7 +186,7 @@ class _KmlWriter {
           for (i = 0; i < points.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'waypoint' + i.toString());
-              _writeElement(builder, 'color', _ColorCode(points[i].color));
+              _writeElement(builder, 'color', _ColorCode(filteredPonts[i].color));
               builder.element('IconStyle', nest: () {
                 builder.element('Icon', nest: () {
                   _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
@@ -270,7 +262,7 @@ class _KmlWriter {
 
         if (polylines != null && polylines.length > 0) {
           for (i = 0; i < polylines.length; i++) {
-            _writeLines(builder, 'line', polylines[i].shape, '#polyline' + i.toString());
+            _writeLines(builder, 'line', polylines[i].points.map((mapPoint) => mapPoint.point).toList(), '#polyline' + i.toString());
           }
         }
       });
