@@ -66,8 +66,18 @@ MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
               for(var i = 0; i < polyline.pointUUIDs.length; i++)
                 if (polyline.pointUUIDs[i] == result.points[y].uuid)
                   polyline.pointUUIDs[i] = result.points[x].uuid;
+                else if (polyline.pointUUIDs[i] == result.points[x].uuid)
+                  result.points[x].color = '#000000';
             });
           }
+          result.points[x].name = result.points[x].name ?? result.points[y].name;
+          result.points[x].color = (result.points[x].color == null) | (result.points[x].color == '#000000')
+                                    ? result.points[y].color : result.points[x].color;
+          result.points[x].radius = result.points[x].radius ?? result.points[y].radius;
+          result.points[x].circleColor = (result.points[x].circleColor == null) | (result.points[x].circleColor == '#000000')
+                                          ? result.points[y].circleColor : result.points[x].circleColor;
+          result.points[x].circleColorSameAsColor |= result.points[y].circleColorSameAsColor;
+
           result.points.removeAt(y);
           y--;
         }
@@ -314,8 +324,8 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
     dist = distanceBearing(wpt.point, center.point, ells).distance;
     if ((dist - radius).abs() > distToller) return false;
   });
-  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius);
-  center.circleColorSameAsPointColor = (center.color == line.color);
+  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius, color: line.color);
+  center.circleColorSameAsPointColor = (center.color == center.circle.color);
   return true;
 }
 
