@@ -8,6 +8,7 @@ import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -80,6 +81,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x75, 0x73, 0x74, 0x61, 0x72]
     ],
+    'magic_bytes_offset': 257,
     'file_class' : FileClass.ARCHIVE
   },
   FileType.RAR : {
@@ -184,6 +186,10 @@ FileClass fileClass(FileType type) {
 
 List<List<int>> magicBytes(FileType type) {
   return _FILE_TYPES[type]['magic_bytes'];
+}
+
+int magicBytesOffset(FileType type) {
+  return _FILE_TYPES[type]['magic_bytes_offset'];
 }
 
 String mimeType(FileType type) {
@@ -296,9 +302,10 @@ bool isImage(Uint8List blobBytes) {
 FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT}) {
   for (var fileType in _FILE_TYPES.keys) {
     var _magicBytes = magicBytes(fileType);
+    var offset = magicBytesOffset(fileType) ?? 0;
 
     for (var bytes in _magicBytes) {
-      if (blobBytes != null && blobBytes.length >= bytes.length && ListEquality().equals(blobBytes.sublist(0, bytes.length), bytes))
+      if (blobBytes != null && (blobBytes.length + offset) >= bytes.length && ListEquality().equals(blobBytes.sublist(offset, offset+ bytes.length), bytes))
         return fileType;
     }
   }
@@ -692,6 +699,57 @@ int _mp3Vint(Uint8List data, int offset) {
 
   return value;
 }
+
+int tarFileSize(Uint8List data) {
+  if (data == null) return null;
+  if (getFileType(data) != FileType.TAR) return null;
+
+  const int headerSize = 512;
+  const int blockSize = 512;
+  var magicByteOffset = magicBytesOffset(FileType.TAR) ?? 0;
+  var offset = 0;
+  var fileNames = <String>[];
+
+  while (offset + headerSize < data.length) {
+    // ustar
+    if ((data[offset + magicByteOffset] == 0x75) &
+    (data[offset + magicByteOffset + 1] == 0x73) &
+    (data[offset + magicByteOffset + 2] == 0x74) &
+    (data[offset + magicByteOffset + 3] == 0x61) &
+    (data[offset + magicByteOffset + 4] == 0x72)) {
+      //0       100 File name
+      //100     8   File mode(octal)
+      //108     8   Owner's numeric user ID (octal)
+      //116     8   Group's numeric user ID (octal)
+      //124     12  File size in bytes(octal)
+      //136     12  Last modification time in numeric Unix time format(octal)
+      //148     8   Checksum for header record
+      //156     1   Link indicator(file type)
+      //157     100     Name of linked file
+
+      var fileSizeString = convertBase(utf8.decode(trimNullBytes(
+          Uint8List.fromList(data.skip(offset + 124).take(12).toList()))), 8, 10);
+      if ((fileSizeString == null) || (fileSizeString == '')) return null;
+      var fileSize = int.parse(fileSizeString);
+      var usedSize = (fileSize / blockSize.toDouble()).ceil() * blockSize + headerSize;
+      if ((fileSize < 0) || ((offset + usedSize) > data.length))
+        return null;
+      offset += usedSize.toInt();
+      fileNames.add(utf8.decode(trimNullBytes(
+          Uint8List.fromList(data.skip(offset + 0).take(100).toList()))));
+    } else
+      break;
+  }
+
+  if ((offset + 2 * blockSize) <= data.length)
+    offset = data.skip(offset).take(2 * blockSize).any((element) => element == 0x0)
+            ? offset + (2 * blockSize) : null;
+  else
+    offset = null;
+
+  return offset;
+}
+
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
   try {
