@@ -3,8 +3,8 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
   "ETEB" : {
     "name": "Army Heliport Ansbach",
     "IATA": "",
-    "ICAO": "ETHA",
-    "Location_served": "bach, Bavaria, Germany"
+    "ICAO": "ETEB",
+    "Location_served": "Ansbach, Bavaria, Germany"
   },
   "ETIC" : {
     "name": "Army Air Field Grafenwöhr",
