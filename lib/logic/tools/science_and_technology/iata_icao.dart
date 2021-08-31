@@ -1,5 +1,59 @@
 // https://de.wikipedia.org/wiki/Liste_der_Fliegerhorste_in_Deutschland
 Map<String, Map<String, String>> IATA_ICAO_CODES = {
+  "ETEB" : {
+    "name": "Army Heliport Ansbach",
+    "IATA": "",
+    "ICAO": "ETHA",
+    "Location_served": "bach, Bavaria, Germany"
+  },
+  "ETIC" : {
+    "name": "Army Air Field Grafenwöhr",
+    "IATA": "",
+    "ICAO": "ETIC",
+    "Location_served": "Grafenwöhr, Bavaria, Germany"
+  },
+  "ETEK" : {
+    "name": "Army Air Field Baumholder",
+    "IATA": "",
+    "ICAO": "ETEK",
+    "Location_served": "Baumholder, Rhineland Palatinate, Germany"
+  },
+  "ETIH" : {
+    "name": "Army Air Field Hohenfels",
+    "IATA": "",
+    "ICAO": "ETIH",
+    "Location_served": "Hohenfels, Bavaria, Germany"
+  },
+  "ETOI" : {
+    "name": "Army Air Field Vilseck",
+    "IATA": "",
+    "ICAO": "ETOI",
+    "Location_served": "Vilseck, Bavaria, Germany"
+  },
+  "ETIK" : {
+    "name": "Army Heliport Illesheim",
+    "IATA": "",
+    "ICAO": "ETIK",
+    "Location_served": "Illesheim, Bavaria, Germany"
+  },
+  "ETED" : {
+    "name": "Army Heliport Kaiserslautern",
+    "IATA": "",
+    "ICAO": "ETED",
+    "Location_served": "Kaiserslautern, Rhineland Palatinate, Germany"
+  },
+  "ETIP" : {
+    "name": "Army Heliport Landstuhl",
+    "IATA": "",
+    "ICAO": "ETIP",
+    "Location_served": "Landstuhl, Rhineland Palatinate, Germany"
+  },
+  "ETIY" : {
+    "name": "Army Heliport Landstuhl",
+    "IATA": "",
+    "ICAO": "ETIY",
+    "Location_served": "Landstuhl, Rhineland Palatinate, Germany"
+  },
   "ETHA" : {
     "name": "Army Air Field Altenstadt",
     "IATA": "",
