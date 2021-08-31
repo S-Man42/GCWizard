@@ -1,4 +1,95 @@
+// https://de.wikipedia.org/wiki/Liste_der_Fliegerhorste_in_Deutschland
 Map<String, Map<String, String>> IATA_ICAO_CODES = {
+  "ETHA" : {
+    "name": "Army Air Field Altenstadt",
+    "IATA": "",
+    "ICAO": "ETHA",
+    "Location_served": "Altenstadt, Bavaria, Germany"
+  },
+  "ETHB" : {
+    "name": "Army Air Field Bückeburg",
+    "IATA": "",
+    "ICAO": "ETHB",
+    "Location_served": "Bückeburg, Lower Saxony, Germany"
+  },
+  "ETHL" : {
+    "name": "Air Field Laupheim",
+    "IATA": "",
+    "ICAO": "ETHL",
+    "Location_served": "Laupheim, Bavaria, Germany"
+  },
+  "ETHS" : {
+    "name": "Army Air Field Faßberg",
+    "IATA": "",
+    "ICAO": "ETHS",
+    "Location_served": "Faßberg, Lower Saxony, Germany"
+  },
+  "ETHN" : {
+    "name": "Army Air Field Niederstetten",
+    "IATA": "",
+    "ICAO": "ETHN",
+    "Location_served": "Niederstetten, Baden-Württemberg, Germany"
+  },
+  "ETNT" : {
+    "name": "Air Base Wittmund",
+    "IATA": "",
+    "ICAO": "ETNT",
+    "Location_served": "Wittmund, Lower Saxony, Germany"
+  },
+  "ETNW" : {
+    "name": "Air Base Wunstorf",
+    "IATA": "",
+    "ICAO": "ETNW",
+    "Location_served": "Wunstorf, Lower Saxony, Germany"
+  },
+  "ETNH" : {
+    "name": "Air Base Hohn",
+    "IATA": "",
+    "ICAO": "ETNH",
+    "Location_served": "Hohn, Schleswig Holstein, Germany"
+  },
+  "ETND" : {
+    "name": "Air Base Diepholz",
+    "IATA": "",
+    "ICAO": "ETND",
+    "Location_served": "Diepholz, Lower Saxony, Germany"
+  },
+  "ETSA" : {
+    "name": "Air Base Landsberg",
+    "IATA": "",
+    "ICAO": "ETSA",
+    "Location_served": "Landsberg, Bavaria, Germany"
+  },
+  "ETSH" : {
+    "name": "Air Base Holzdorf",
+    "IATA": "",
+    "ICAO": "ETSH",
+    "Location_served": "Holzdorf, Sachsen Anhalt, Germany"
+  },
+  "ETSN" : {
+    "name": "Air Base Neuburg",
+    "IATA": "",
+    "ICAO": "ETSN",
+    "Location_served": "Neuburg, Bavaria, Germany"
+  },
+  "ETSL" : {
+    "name": "Air Base Lechfeld",
+    "IATA": "",
+    "ICAO": "ETSL",
+    "Location_served": "Klosterlechfeld, Bavaria, Germany"
+  },
+  "ETSB" : {
+    "name": "Air Base Büchel",
+    "IATA": "",
+    "ICAO": "ETSB",
+    "Location_served": "Büchel, North Rhine Westphanlia, Germany"
+  },
+  "ETWM" : {
+    "name": "Air Field Meppen",
+    "IATA": "",
+    "ICAO": "ETWM",
+    "Location_served": "Meppen, Lower Saxony, Germany"
+  },
   "AAA" : {
     "name": "Anaa Airport",
     "IATA": "AAA",
@@ -31493,6 +31584,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "ICAO": "EGES",
     "Location_served": "Sanday, Scotland, United Kingdom"
   },
+  "NDZ" : {
+    "name": "Nordholz Air Base",
+    "IATA": "NDZ",
+    "ICAO": "ETMN",
+    "Location_served": "Nordholz, Lower Saxony, Germany"
+  },
   "NEC" : {
     "name": "Necochea Airport",
     "IATA": "NEC",
@@ -37792,6 +37889,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "IATA": "QLR",
     "ICAO": "LPMR",
     "Location_served": "Monte Real, Portugal"
+  },
+  "QOE" : {
+    "name": "Nörvenich Air Base",
+    "IATA": "QOE",
+    "ICAO": "ETNN",
+    "Location_served": "Nörvenich, North Rhine Westphalia, Germany"
   },
   "QOW" : {
     "name": "Sam Mbakwe Airport",
@@ -53752,6 +53855,12 @@ Map<String, Map<String, String>> IATA_ICAO_CODES = {
     "IATA": "ZCL",
     "ICAO": "MMZC",
     "Location_served": "Zacatecas City, Zacatecas, Mexico"
+  },
+  "ZCN" : {
+    "name": "Army Airfield Celle",
+    "IATA": "ZCN",
+    "ICAO": "ETHC",
+    "Location_served": "Celle, Lower Saxony, Germany"
   },
   "ZCO" : {
     "name": "La Araucanía Airport",
