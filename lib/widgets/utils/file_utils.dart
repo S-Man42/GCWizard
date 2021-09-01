@@ -305,7 +305,7 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
     var offset = magicBytesOffset(fileType) ?? 0;
 
     for (var bytes in _magicBytes) {
-      if (blobBytes != null && (blobBytes.length + offset) >= bytes.length && ListEquality().equals(blobBytes.sublist(offset, offset+ bytes.length), bytes))
+      if (blobBytes != null && (blobBytes.length >= (bytes.length  + offset)) && ListEquality().equals(blobBytes.sublist(offset, offset+ bytes.length), bytes))
         return fileType;
     }
   }
