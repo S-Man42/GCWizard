@@ -42,10 +42,11 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays) {
   );
 }
 
-Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays) async {
+Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays, bool upsideDown) async {
   var width = 0.0;
   var height = 0.0;
-  var bounds = 5.0;
+  var bounds = 3.0;
+  var padding = 2.0;
   var columnCounter = 0;
   var rowWidth = 0.0;
   var rowHeight = 0.0;
@@ -60,9 +61,9 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
   // calc image size
   images.forEach((image) {
-    rowWidth += image.width;
+    rowWidth += image.width + 2 * padding;
     width = max(width, rowWidth);
-    rowHeight = max(rowHeight, image.height.toDouble());
+    rowHeight = max(rowHeight, image.height.toDouble() + 2 * padding);
     columnCounter++;
 
     if (columnCounter >= countColumns) {
@@ -96,15 +97,24 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
       if (imageIndex < images.length) {
         var image = images[imageIndex];
-
-        canvas.drawImage(image, offset, paint);
-
-        offset.translate(image.width.toDouble(), 0);
-        rowHeight = max(rowHeight, image.height.toDouble());
+        var middlePoint = ui.Offset(offset.dx + padding + image.width/ 2,
+                                    offset.dy + padding + image.height/ 2);
+        if (upsideDown) {
+          canvas.translate(middlePoint.dx, middlePoint.dy);
+          canvas.rotate(pi);
+          canvas.translate(-middlePoint.dx, -middlePoint.dy);
+        }
+        canvas.drawImage(image, offset.translate(padding, padding), paint);
+        if (upsideDown) {
+          canvas.translate(middlePoint.dx, middlePoint.dy);
+          canvas.rotate(pi);
+          canvas.translate(-middlePoint.dx, -middlePoint.dy);
+        }
+        offset = offset.translate(image.width.toDouble() + 2 * padding, 0);
+        rowHeight = max(rowHeight, image.height.toDouble() + 2 * padding);
       }
     }
-    offset.translate(0, rowHeight);
+    offset = offset.translate(0, rowHeight);
   }
-
   return canvasRecorder.endRecording().toImage(width.toInt(), height.toInt());
 }

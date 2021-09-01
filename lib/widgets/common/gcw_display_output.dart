@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -93,16 +92,16 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 iconData: Icons.save,
-                iconColor:  (_displays == null) || (_displays.length == 0) ? Colors.grey : null,
+                iconColor:  (widget.segments == null) || (widget.segments.length == 0) ? Colors.grey : null,
                 onPressed: ()  async {
-                  await buildSegmentDisplayImage(countColumns, _displays).then((image) {
+                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
                     if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                       _exportFile(context, data.buffer.asUint8List());
                     });
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 10.0),
+              padding: EdgeInsets.only(left: 10.0),
             )
           ],
         ),
@@ -134,5 +133,5 @@ _exportFile(BuildContext context, Uint8List data) async {
       data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
   if (value != null)
-    showExportedFileDialog(context, value['path'], fileType: FileType.PNG, contentWidget: Image.memory(data));
+    showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
 }

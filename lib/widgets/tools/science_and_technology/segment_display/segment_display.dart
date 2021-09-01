@@ -208,7 +208,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    GCWDisplayOutput(
+    return GCWDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         switch (widget.type) {
           case SegmentDisplayType.SEVEN:
