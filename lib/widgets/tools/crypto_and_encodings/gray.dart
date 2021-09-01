@@ -75,6 +75,7 @@ class GrayState extends State<Gray> {
           title: i18n(context, 'gray_mode'),
           leftValue: i18n(context, 'gray_mode_decimal'),
           rightValue: i18n(context, 'gray_mode_binary'),
+          value: _currentInputMode,
           onChanged: (value) {
             setState(() {
               _currentInputMode = value;

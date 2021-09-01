@@ -73,7 +73,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     if (image.height > widget.maxHeightInPreview) {
       img.Image resized = img.copyResize(image, height: widget.maxHeightInPreview);
 
-      return MemoryImage(img.encodePng(resized));
+      return MemoryImage(encodeTrimmedPng(resized));
     } else {
       return MemoryImage(widget.imageData.bytes);
     }
@@ -247,6 +247,6 @@ class _GCWImageViewState extends State<GCWImageView> {
 
     var value = await saveByteDataToFile(data, outputFilename);
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: FileType.PNG);
+    if (value != null) showExportedFileDialog(context, fileType: FileType.PNG);
   }
 }

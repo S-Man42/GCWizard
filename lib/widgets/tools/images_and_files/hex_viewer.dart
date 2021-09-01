@@ -30,7 +30,7 @@ class HexViewerState extends State<HexViewer> {
   ScrollController _scrollControllerASCII;
 
   String _hexData;
-  int _hexDataLines;
+  double _hexDataLines;
   Uint8List _bytes;
 
   final _MAX_LINES = 100;
@@ -60,7 +60,7 @@ class HexViewerState extends State<HexViewer> {
   _setData(Uint8List bytes) {
     _bytes = bytes;
     _hexData = file2hexstring(bytes);
-    _hexDataLines = (_hexData.length / _CHARS_PER_LINE).ceil();
+    _hexDataLines = _hexData.length / _CHARS_PER_LINE;
   }
 
   @override
@@ -140,7 +140,7 @@ class HexViewerState extends State<HexViewer> {
                     setState(() {
                       _currentLines -= _MAX_LINES;
                       if (_currentLines < 0) {
-                        _currentLines = (_hexDataLines ~/ _MAX_LINES) * _MAX_LINES;
+                        _currentLines = (_hexDataLines.floor() ~/ _MAX_LINES) * _MAX_LINES;
                       }
 
                       _resetScrollViews();
@@ -149,7 +149,7 @@ class HexViewerState extends State<HexViewer> {
                 ),
                 Expanded(
                   child: GCWText(
-                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines)} / $_hexDataLines',
+                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines.ceil())} / ${_hexDataLines.ceil()}',
                     align: Alignment.center,
                   ),
                 ),

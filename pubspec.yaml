@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.0.0+107
+version: 2.0.0+108
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -17,7 +17,6 @@ dependencies:
   exif: ^3.0.0
   flutter:
     sdk: flutter
-  flutter_absolute_path: ^1.0.6
   flutter_localizations:
     sdk: flutter
   flutter_map: ^0.13.1
@@ -30,7 +29,6 @@ dependencies:
   location: ^4.3.0
   mask_text_input_formatter: ^2.0.0
   math_expressions: ^2.2.0
-  open_file: ^3.2.1
   package_info: ^2.0.0
   path: ^1.8.0
   path_provider: ^2.0.2
@@ -42,7 +40,6 @@ dependencies:
   qrscan: ^0.3.2
   qr_flutter: ^4.0.0
   scrollable_positioned_list: ^0.1.10
-  share_extend: ^2.0.0
   touchable: ^1.0.0
   universal_html: ^2.0.4
   uuid: ^3.0.4

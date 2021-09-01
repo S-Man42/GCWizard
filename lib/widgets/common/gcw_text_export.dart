@@ -117,25 +117,23 @@ class GCWTextExportState extends State<GCWTextExport> {
 exportFile(String text, String exportLabel, TextExportMode mode, BuildContext context) {
   _exportEncryption(text, mode, exportLabel).then((value) {
     if (value == null) {
-      showToast(i18n(context, 'common_exportfile_nowritepermission'));
       return;
     }
 
     showExportedFileDialog(
       context,
-      value['path'],
       contentWidget: mode == TextExportMode.QR
           ? Container(
-              child: value['bytes'] == null ? null : Image.memory(value['bytes']),
+              child: value == null ? null : Image.memory(value),
               margin: EdgeInsets.only(top: 25),
               decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
             )
-          : Container(),
+          : null,
     );
   });
 }
 
-Future<Map<String, dynamic>> _exportEncryption(String text, TextExportMode mode, String exportLabel) async {
+Future<dynamic> _exportEncryption(String text, TextExportMode mode, String exportLabel) async {
   if (mode == TextExportMode.TEXT) {
     return saveStringToFile(text, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
   } else {
