@@ -279,7 +279,7 @@ class _ExifReaderState extends State<ExifReader> {
     if (file == null) return;
     var _hiddenData = hiddenData(file);
 
-    if (_hiddenData == null || _hiddenData.isEmpty)
+    if (_hiddenData == null || _hiddenData.length <= 1)
       return;
 
     widgets.add(
