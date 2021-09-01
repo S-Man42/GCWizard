@@ -39,6 +39,9 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
       case FileType.MP3:
         imageLength = mp3FileSize(bytes);
         break;
+      case FileType.TAR:
+        imageLength = tarFileSize(bytes);
+        break;
       default:
         imageLength = bytes.length;
         break;
