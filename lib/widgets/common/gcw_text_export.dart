@@ -115,7 +115,7 @@ class GCWTextExportState extends State<GCWTextExport> {
 }
 
 exportFile(String text, String exportLabel, TextExportMode mode, BuildContext context) {
-  _exportEncryption(text, mode, exportLabel).then((value) {
+  _exportEncryption(context, text, mode, exportLabel).then((value) {
     if (value == null) {
       return;
     }
@@ -133,13 +133,13 @@ exportFile(String text, String exportLabel, TextExportMode mode, BuildContext co
   });
 }
 
-Future<dynamic> _exportEncryption(String text, TextExportMode mode, String exportLabel) async {
+Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportMode mode, String exportLabel) async {
   if (mode == TextExportMode.TEXT) {
     return saveStringToFile(text, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
   } else {
     final data = await toQrImageData(text);
 
-    return await saveByteDataToFile(
+    return await saveByteDataToFile(context,
         data, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

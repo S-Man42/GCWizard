@@ -146,7 +146,7 @@ class QrCodeState extends State<QrCode> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(
+    var value = await saveByteDataToFile(context,
         data, "img_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);

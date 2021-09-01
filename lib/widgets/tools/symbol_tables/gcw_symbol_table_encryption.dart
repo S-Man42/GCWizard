@@ -278,7 +278,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return await saveByteDataToFile(
+    return await saveByteDataToFile(context,
         trimNullBytes(data.buffer.asUint8List()), 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

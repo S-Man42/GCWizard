@@ -187,7 +187,7 @@ class _SteganoState extends State<Stegano> {
 
     setState(() {
       _encoding = false;
-      _encodedPictureData = (bytes != null) ? GCWImageViewData(bytes) : null;
+      _encodedPictureData = (bytes != null) ? GCWImageViewData(local.PlatformFile(bytes: bytes)) : null;
       _encodingErrorText = _error;
       _error2Text = _error2;
       _filenameTarget = (_file != null) ? changeExtension(_file.name, _extensionTarget) : null;

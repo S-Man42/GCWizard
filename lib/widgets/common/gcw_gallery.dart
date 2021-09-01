@@ -34,10 +34,10 @@ class _GCWGalleryState extends State<GCWGallery> {
     widget.imageData.asMap().forEach((index, element) {
       MemoryImage _img;
       try {
-        if (widget.imageData[index] != null) _img = MemoryImage(widget.imageData[index].bytes);
+        if (widget.imageData[index] != null) _img = MemoryImage(widget.imageData[index].file.bytes);
 
         if (_img != null) {
-          _validImages.add(Image.memory(widget.imageData[index].bytes));
+          _validImages.add(Image.memory(widget.imageData[index].file.bytes));
         }
       } catch (e) {}
     });

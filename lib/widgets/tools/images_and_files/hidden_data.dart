@@ -207,7 +207,7 @@ class HiddenDataState extends State<HiddenData> {
             showToast(i18n(context, 'hiddendata_datanotreadable'));
             return;
           }
-          openInHexViewer(context, file.bytes);
+          openInHexViewer(context, file);
         }),
       ),
       if (file.fileClass == FileClass.TEXT)
@@ -302,7 +302,7 @@ class HiddenDataState extends State<HiddenData> {
           ),
           if (file.fileClass == FileClass.IMAGE)
             Container(
-              child: GCWImageView(imageData: GCWImageViewData(file.bytes)),
+              child: GCWImageView(imageData: GCWImageViewData(file)),
               margin: EdgeInsets.only(left: 42)
             ),
           if (file.fileClass == FileClass.TEXT)
@@ -340,24 +340,22 @@ class HiddenDataState extends State<HiddenData> {
       return;
     }
 
-    var _fileExtension;
+    var fileName = file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = file.name.split('.');
-    if (ext.length > 1 && ext[1].length < 5)
-      _fileExtension = ext[1];
-    else
-      _fileExtension = fileExtension(file.fileType);
+    if (ext.length <= 1 || ext.last.length >= 5)
+      fileName = fileName + '.' + fileExtension(file.fileType);
 
-    var value = await saveByteDataToFile(file.bytes, file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file') + '.' + _fileExtension);
+    var value = await saveByteDataToFile(context, file.bytes, fileName);
     if (value != null) showExportedFileDialog(context, fileType: file.fileType);
   }
 }
 
-openInHiddenData(BuildContext context, {Uint8List data, PlatformFile file}) {
+openInHiddenData(BuildContext context, PlatformFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HiddenData(platformFile: file ?? PlatformFile(bytes: data)),
+              tool: HiddenData(platformFile: file),
               toolName: i18n(context, 'hiddendata_title'),
               i18nPrefix: '',
               helpLocales: ['de', 'en', 'fr'])));

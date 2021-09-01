@@ -130,7 +130,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
     return Column(children: <Widget>[
       GCWImageView(
-        imageData: GCWImageViewData(_outData),
+        imageData: GCWImageViewData(PlatformFile(bytes: _outData)),
         toolBarRight: false,
         fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
@@ -165,7 +165,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
       
       _encodeImage != null
           ? Container(
-              child: GCWImageView(imageData: GCWImageViewData(_encodeImage.bytes), suppressedButtons: {GCWImageViewButtons.ALL}),
+              child: GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: {GCWImageViewButtons.ALL}),
               padding: EdgeInsets.symmetric(vertical: 25),
             )
           : Container(),
@@ -260,13 +260,13 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
     return Column(children: <Widget>[
       GCWImageView(
-        imageData: GCWImageViewData(_encodeOutputImages.item1),
+        imageData: GCWImageViewData(PlatformFile(bytes: _encodeOutputImages.item1)),
         toolBarRight: true,
         fileName: 'img1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
       Container(height: 5),
       GCWImageView(
-        imageData: GCWImageViewData(_encodeOutputImages.item2),
+        imageData: GCWImageViewData(PlatformFile(bytes: _encodeOutputImages.item2)),
         toolBarRight: true,
         fileName: 'img2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),

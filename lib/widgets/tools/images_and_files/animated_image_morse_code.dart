@@ -327,7 +327,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         String description = imagesFiltered[i].length.toString() + '/$imageCount';
 
         var image = images[imagesFiltered[i].first];
-        list.add(GCWImageViewData(image, description: description, marked: _marked[imagesFiltered[i].first]));
+        list.add(GCWImageViewData(local.PlatformFile(bytes: image), description: description, marked: _marked[imagesFiltered[i].first]));
       }
       _outText = decodeMorseCode(durations, _marked);
     }
@@ -347,7 +347,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         if ((durations != null) && (i < durations.length)) {
           description += ': ' + durations[i].toString() + ' ms';
         }
-        list.add(GCWImageViewData(images[i], description: description, marked: _marked[i]));
+        list.add(GCWImageViewData(local.PlatformFile(bytes: images[i]), description: description, marked: _marked[i]));
       }
       _outText = decodeMorseCode(durations, _marked);
     }
@@ -416,7 +416,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = FileType.ZIP;
-      var value = await saveByteDataToFile(bytes,
+      var value = await saveByteDataToFile(context, bytes,
           'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
       if (value != null) showExportedFileDialog(context, fileType: fileType);
@@ -425,7 +425,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(data,
+    var value = await saveByteDataToFile(context, data,
         'anim_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);

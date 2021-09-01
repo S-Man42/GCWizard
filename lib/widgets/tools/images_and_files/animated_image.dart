@@ -5,7 +5,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -14,8 +13,10 @@ import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:intl/intl.dart';
 
@@ -141,7 +142,7 @@ class AnimatedImageState extends State<AnimatedImage> {
         if ((durations != null) && (i < durations.length)) {
           description += ': ' + durations[i].toString() + ' ms';
         }
-        list.add(GCWImageViewData(images[i], description: description));
+        list.add(GCWImageViewData(local.PlatformFile(bytes: images[i]), description: description));
       }
       ;
     }
@@ -197,10 +198,21 @@ class AnimatedImageState extends State<AnimatedImage> {
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = FileType.ZIP;
-      var value = await saveByteDataToFile(bytes,
+      var value = await saveByteDataToFile(context, bytes,
           'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
       if (value != null) showExportedFileDialog(context, fileType: fileType);
     });
   }
+}
+
+openInAnimatedImage(BuildContext context, local.PlatformFile file) {
+  Navigator.push(
+      context,
+      NoAnimationMaterialPageRoute(
+          builder: (context) => GCWTool(
+              tool: AnimatedImage(platformFile: file),
+              toolName: i18n(context, 'animated_image_title'),
+              i18nPrefix: '',
+              helpLocales: ['de', 'en', 'fr'])));
 }

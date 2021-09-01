@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
@@ -19,11 +20,11 @@ import 'package:photo_view/photo_view.dart';
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
 
 class GCWImageViewData {
-  final Uint8List bytes;
+  final PlatformFile file;
   final String description;
   final bool marked;
 
-  const GCWImageViewData(this.bytes, {this.description, this.marked});
+  const GCWImageViewData(this.file, {this.description, this.marked});
 }
 
 class GCWImageView extends StatefulWidget {
@@ -69,23 +70,23 @@ class _GCWImageViewState extends State<GCWImageView> {
   }
 
   _resizeImage() {
-    img.Image image = img.decodeImage(widget.imageData.bytes);
+    img.Image image = img.decodeImage(widget.imageData.file.bytes);
     if (image.height > widget.maxHeightInPreview) {
       img.Image resized = img.copyResize(image, height: widget.maxHeightInPreview);
 
       return MemoryImage(encodeTrimmedPng(resized));
     } else {
-      return MemoryImage(widget.imageData.bytes);
+      return MemoryImage(widget.imageData.file.bytes);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     try {
-      if (widget.imageData != null) _image = MemoryImage(widget.imageData.bytes);
+      if (widget.imageData != null) _image = MemoryImage(widget.imageData.file.bytes);
 
       if (widget.maxHeightInPreview == null)
-        _previewImage = MemoryImage(widget.imageData.bytes);
+        _previewImage = MemoryImage(widget.imageData.file.bytes);
       else {
         _previewImage = _resizeImage();
       }
@@ -167,7 +168,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                 openInFullScreen(context, imgData);
               });
             } else {
-              openInFullScreen(context, widget.imageData.bytes);
+              openInFullScreen(context, widget.imageData.file.bytes);
             }
           }),
       GCWIconButton(
@@ -193,7 +194,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                   _exportFile(context, imgData);
                 });
               } else {
-                imgData = widget.imageData.bytes;
+                imgData = widget.imageData.file.bytes;
                 _exportFile(context, imgData);
               }
             }),
@@ -210,7 +211,7 @@ class _GCWImageViewState extends State<GCWImageView> {
                           openInMetadataViewer(context, imgData);
                         });
                       } else {
-                        openInMetadataViewer(context, widget.imageData.bytes);
+                        openInMetadataViewer(context, widget.imageData.file);
                       }
                     }),
                   ),
@@ -222,21 +223,21 @@ class _GCWImageViewState extends State<GCWImageView> {
                                 openInColorCorrections(context, imgData);
                               });
                             } else {
-                              openInColorCorrections(context, widget.imageData.bytes);
+                              openInColorCorrections(context, widget.imageData.file);
                             }
                           })),
                   GCWPopupMenuItem(
                     child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
                     action: (index) => setState(() {
-                      openInHexViewer(context, widget.imageData.bytes);
+                      openInHexViewer(context, widget.imageData.file);
                     }),
                   ),
                   GCWPopupMenuItem(
                     child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
                     action: (index) => setState(() {
-                      openInHiddenData(context, data: widget.imageData.bytes);
+                      openInHiddenData(context, widget.imageData.file);
                     }),
-                  ),
+                  )
                 ])
     ];
   }
@@ -245,7 +246,7 @@ class _GCWImageViewState extends State<GCWImageView> {
     String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     String outputFilename = 'img_${timestamp}.png';
 
-    var value = await saveByteDataToFile(data, outputFilename);
+    var value = await saveByteDataToFile(context, data, outputFilename);
 
     if (value != null) showExportedFileDialog(context, fileType: FileType.PNG);
   }

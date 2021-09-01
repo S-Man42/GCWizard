@@ -8,6 +8,8 @@ import 'package:collection/collection.dart';
 // import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -216,7 +218,7 @@ Future<bool> checkStoragePermission() async {
   return true;
 }
 
-Future<Uint8List> saveByteDataToFile(Uint8List data, String fileName, {String subDirectory}) async {
+Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, String fileName, {String subDirectory}) async {
   var storagePermission = await checkStoragePermission();
   if (!storagePermission) {
     showToast('common_exportfile_nowritepermission');
@@ -240,7 +242,7 @@ Future<Uint8List> saveByteDataToFile(Uint8List data, String fileName, {String su
       },
     );
     if (fileInfo == null) {
-      showToast('common_exportfile_couldntwrite');
+      showToast(i18n(context, 'common_exportfile_couldntwrite'));
       return null;
     }
   }
