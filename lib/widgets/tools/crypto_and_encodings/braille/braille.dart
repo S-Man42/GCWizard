@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
@@ -8,12 +6,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
-import 'package:prefs/prefs.dart';
 
 import 'braille_euro_segment_display.dart';
 import 'braille_segment_display.dart';
@@ -47,11 +43,6 @@ class BrailleState extends State<Braille> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
-
     return Column(children: <Widget>[
       GCWDropDownButton(
         value: _currentLanguage,
@@ -92,39 +83,7 @@ class BrailleState extends State<Braille> {
                 _buildVisualDecryption()
               ],
             ),
-      GCWTextDivider(
-        text: i18n(context, 'segmentdisplay_displayoutput'),
-        trailing: Row(
-          children: <Widget>[
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            )
-          ],
-        ),
-      ),
-      _buildOutput(countColumns)
+      _buildOutput()
     ]);
   }
 
@@ -208,27 +167,26 @@ class BrailleState extends State<Braille> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
-    var displays = segments.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      if (_currentLanguage == BrailleLanguage.EUR)
-        return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: true);
-      else
-        return BrailleSegmentDisplay(segments: displayedSegments, readOnly: true);
-    }).toList();
-    return buildSegmentDisplayOutput(countColumns, displays);
+  Widget _buildDigitalOutput(List<List<String>> segments) {
+    return GCWDisplayOutput(
+      segmentFunction:(displayedSegments, readOnly) {
+        if (_currentLanguage == BrailleLanguage.EUR)
+          return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        else
+          return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+      },
+      segments: segments,
+      readOnly: true
+    );
   }
 
-  _buildOutput(countColumns) {
-    var segments;
-    var segmentsBasicDigits;
-    var segmentsBasicLetters;
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
       List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments),
+          _buildDigitalOutput(segments),
           GCWOutput(
             title: i18n(context, 'braille_output_numbers'),
             child: segments.map((segment) => segment.join()).join(' ')
@@ -240,12 +198,12 @@ class BrailleState extends State<Braille> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeBraille(output, _currentLanguage, false);
-      segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
-      segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
+      var segments = decodeBraille(output, _currentLanguage, false);
+      var segmentsBasicDigits = decodeBraille(output, BrailleLanguage.BASIC, false);
+      var segmentsBasicLetters = decodeBraille(output, BrailleLanguage.BASIC, true);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
+          _buildDigitalOutput(segments['displays']),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
