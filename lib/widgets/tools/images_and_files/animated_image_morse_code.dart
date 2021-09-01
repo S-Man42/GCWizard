@@ -106,9 +106,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           }
         },
       ),
-      GCWText(
-        text: _outData == null ? "" : _platformFile.name,
-      ),
       GCWDefaultOutput(
           child: _buildOutputDecode(),
           trailing: Row(children: <Widget>[

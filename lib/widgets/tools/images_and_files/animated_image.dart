@@ -59,9 +59,6 @@ class AnimatedImageState extends State<AnimatedImage> {
           }
         },
       ),
-      GCWText(
-        text: _outData == null ? "" : _platformFile.name,
-      ),
       GCWDefaultOutput(
           child: _buildOutput(),
           trailing: Row(children: <Widget>[
