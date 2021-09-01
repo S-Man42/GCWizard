@@ -125,6 +125,14 @@ class _ExifReaderState extends State<ExifReader> {
     }
 
     List<Widget> widgets = [];
+    widgets.add(
+      Container(
+        child: GCWImageView(
+          imageData: GCWImageViewData(file.bytes),
+        ),
+        padding: EdgeInsets.only(top: 10),
+      )
+    );
     _decorateThumbnail(widgets);
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);

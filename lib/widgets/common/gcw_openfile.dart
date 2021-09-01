@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -22,10 +21,9 @@ class GCWOpenFile extends StatefulWidget {
   final List<FileType> supportedFileTypes;
   final bool isDialog;
   final String title;
-  final bool trimNullBytes;
   final PlatformFile file;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.trimNullBytes: false, this.file}) : super(key: key);
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.file}) : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -59,7 +57,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        openFileExplorer(allowedFileTypes: widget.supportedFileTypes, trimNullBytes: widget.trimNullBytes).then((PlatformFile file) {
+        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((PlatformFile file) {
           if (file != null) {
             setState(() {
               _loadedFile = file;
@@ -108,12 +106,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           return;
         }
 
-        var bytes;
-        if (widget.trimNullBytes) {
-          bytes = trimNullBytes(response.bodyBytes);
-        } else {
-          bytes = response.bodyBytes;
-        }
+        var bytes = response.bodyBytes;
 
         _loadedFile = PlatformFile(
             name: Uri.decodeFull(_currentUrl).split('/').last,
@@ -215,12 +208,12 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           ),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + _loadedFile.name,
+            text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile.name ?? ''),
             style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 4),
           ),
         if (!_currentExpanded && _loadedFile != null)
           GCWText(
-            text: i18n(context, 'common_loadfile_loaded') + ': ' + _loadedFile.name,
+            text: i18n(context, 'common_loadfile_loaded') + ': ' + (_loadedFile.name ?? ''),
           )
       ],
     );

@@ -77,11 +77,12 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
   }
 
   if (!calledFromSearchMagicBytes) {
-    if (resultList.length > 0) resultList.removeAt(0);
-
     var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
 
-    resultList.forEach((result) {
+    resultList.asMap().forEach((index, result) {
+      if (index == 0 && result.fileClass != FileClass.ARCHIVE)
+        return;
+
       if ((result.children == null) || (result.children.length == 0))
         _searchMagicBytes(result, fileTypeList);
       else

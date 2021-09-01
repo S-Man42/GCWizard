@@ -94,7 +94,6 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         GCWOpenFile(
           title: i18n(context, 'hiddendata_openpublicfile'),
-          trimNullBytes: true,
           file: _publicFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
@@ -130,7 +129,6 @@ class HiddenDataState extends State<HiddenData> {
           ),
         if (_currentHideMode == GCWSwitchPosition.right)
           GCWOpenFile(
-            trimNullBytes: true,
             file: _secretFile,
             onLoaded: (_openedFile) {
               if (_openedFile == null) {
@@ -172,7 +170,7 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         Container(), // fixes strange behaviour: First GCWOpenFile widget from hide/unhide affect each other
         GCWOpenFile(
-          trimNullBytes: true,
+          // trimNullBytes: true,
           file: _unHideFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
@@ -247,7 +245,15 @@ class HiddenDataState extends State<HiddenData> {
 
       var fileName = file.name;
       if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
-        fileName = i18n(context, 'hiddendata_hidden') + ' ' + fileName.split('_').last + ': ' + file.fileType.toString().split('.').last;
+        var index = fileName.split('_').last;
+        var prefix;
+        if (index == '0') {
+          prefix = i18n(context, 'hiddendata_source');
+        } else {
+          prefix = i18n(context, 'hiddendata_hidden') + ' $index';
+        }
+
+        fileName = '$prefix: ' + file.fileType.toString().split('.').last;
       }
 
       var parentsString = parents.join(' → ');

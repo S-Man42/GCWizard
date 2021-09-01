@@ -91,7 +91,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
     return Column(children: <Widget>[
       GCWOpenFile(
         supportedFileTypes: AnimatedImageState.allowedExtensions,
-        trimNullBytes: true,
         onLoaded: (_file) {
           if (_file == null) {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -207,7 +206,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: Column(children: [
             GCWOpenFile(
               supportedFileTypes: AnimatedImageState.allowedExtensions,
-              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file != null)
                   setState(() {
@@ -221,7 +219,6 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: Column(children: [
             GCWOpenFile(
               supportedFileTypes: AnimatedImageState.allowedExtensions,
-              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file != null)
                   setState(() {

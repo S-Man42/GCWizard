@@ -102,7 +102,6 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          trimNullBytes: true,
           onLoaded: (value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));

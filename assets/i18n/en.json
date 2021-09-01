@@ -1971,6 +1971,7 @@
   "hiddendata_hide_file": "File",
   "hiddendata_hide_text": "Text",
   "hiddendata_hidden": "Hidden",
+  "hiddendata_source": "Source",
   "hiddendata_datanotreadable": "Data not readable",
   "homophone_title": "Homophone",
   "homophone_description": "Mono-alphabetical encryption method based on letter frequencies",

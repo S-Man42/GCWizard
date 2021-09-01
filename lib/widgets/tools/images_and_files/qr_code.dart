@@ -56,7 +56,6 @@ class QrCodeState extends State<QrCode> {
         _currentMode == GCWSwitchPosition.right
           ? GCWOpenFile(
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file == null) {
                   showToast(i18n(context, 'common_loadfile_exception_notloaded'));
