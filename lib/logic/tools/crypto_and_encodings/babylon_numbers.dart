@@ -75,7 +75,7 @@ List<List<String>> encodeBabylonNumbers(int input) {
 Map<String, dynamic> decodeBabylonNumbers(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'numbers': [0],
       'sexagesimal': BigInt.zero
     };

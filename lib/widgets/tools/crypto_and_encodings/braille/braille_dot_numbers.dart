@@ -148,7 +148,6 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWDisplayOutput(
-      upsideDownButton: true,
       segmentFunction:(displayedSegments, readOnly) {
         if (_currentLanguage == BrailleLanguage.EUR)
           return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);

@@ -34,7 +34,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
-  List<NSegmentDisplay> _displayOutputWidget;
 
   @override
   void initState() {

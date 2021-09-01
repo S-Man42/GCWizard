@@ -36,7 +36,7 @@ List<List<String>> encodeMayaNumbers(int input) {
 Map<String, dynamic> decodeMayaNumbers(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'numbers': [0],
       'vigesimal': BigInt.zero
     };

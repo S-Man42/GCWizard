@@ -38,10 +38,12 @@ class SegmentDisplayPainter extends CustomPainter {
   final BuildContext context;
   final SegmentDisplayType type;
   final Function customPaint;
+  final Color segment_color_on;
+  final Color segment_color_off;
 
   GCWTouchCanvas _touchCanvas;
 
-  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState, {this.customPaint});
+  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState, {this.customPaint, this.segment_color_on: SEGMENTS_COLOR_ON, this.segment_color_off: SEGMENTS_COLOR_OFF});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -58,13 +60,15 @@ class SegmentDisplayPainter extends CustomPainter {
         _paintSixteenSegmentDisplay(size);
         break;
       case SegmentDisplayType.CUSTOM:
-        customPaint(_touchCanvas, size, segments, setSegmentState);
+        customPaint(_touchCanvas, size, segments, setSegmentState, segment_color_on, segment_color_off);
         break;
     }
   }
 
   void _paintSixteenSegmentDisplay(Size size) {
     var paint = defaultSegmentPaint();
+    var SEGMENTS_COLOR_ON = segment_color_on;
+    var SEGMENTS_COLOR_OFF = segment_color_off;
 
     paint.color = segments['a1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
@@ -291,6 +295,8 @@ class SegmentDisplayPainter extends CustomPainter {
 
   void _paintFourteenSegmentDisplay(Size size) {
     var paint = defaultSegmentPaint();
+    var SEGMENTS_COLOR_ON = segment_color_on;
+    var SEGMENTS_COLOR_OFF = segment_color_off;
 
     paint.color = segments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
@@ -487,6 +493,8 @@ class SegmentDisplayPainter extends CustomPainter {
 
   void _paintSevenSegmentDisplay(Size size) {
     var paint = defaultSegmentPaint();
+    var SEGMENTS_COLOR_ON = segment_color_on;
+    var SEGMENTS_COLOR_OFF = segment_color_off;
 
     paint.color = segments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();

@@ -124,7 +124,6 @@ class BabylonNumbersState extends State<BabylonNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWDisplayOutput(
-      upsideDownButton: true,
       segmentFunction:(displayedSegments, readOnly) {
         return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
       },
