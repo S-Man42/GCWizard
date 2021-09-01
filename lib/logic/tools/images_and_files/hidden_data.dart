@@ -79,48 +79,51 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
   if (!calledFromSearchMagicBytes) {
     if (resultList.length > 0) resultList.removeAt(0);
 
-    var magicBytesList = List<List<int>>.from(magicBytes(FileType.JPEG));
-    magicBytesList.addAll(magicBytes(FileType.PNG));
-    magicBytesList.addAll(magicBytes(FileType.GIF));
-    magicBytesList.addAll(magicBytes(FileType.ZIP));
-    magicBytesList.addAll(magicBytes(FileType.RAR));
+    var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
 
     resultList.forEach((result) {
       if ((result.children == null) || (result.children.length == 0))
-        _searchMagicBytes(result, magicBytesList);
+        _searchMagicBytes(result, fileTypeList);
       else
-        result.children.forEach((element) {_searchMagicBytes(element, magicBytesList);});
+        result.children.forEach((element) {_searchMagicBytes(element, fileTypeList);});
     });
   }
   return resultList;
 }
 
-_searchMagicBytes(PlatformFile data, List<List<int>> magicBytesList) {
+_searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
+  fileTypeList.forEach((fileType) {
+    var magicBytesList = magicBytes(fileType);
+    magicBytesList.forEach((magicBytes) {
+      var bytes = data.bytes;
+      if (bytes == null)
+        return;
 
-  magicBytesList.forEach((magicBytes) {
-    var bytes = data.bytes;
-    if (bytes == null)
-      return;
-
-    for (int i = 1; i < bytes.length; i++) {
-      if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
-        var validMagicBytes = true;
-        for (int offset = 1; offset < magicBytes.length; offset++) {
-          if (bytes[i + offset] != magicBytes[offset]) {
-            validMagicBytes = false;
-            break;
+      for (int i = 1; i < bytes.length; i++) {
+        if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
+          var validMagicBytes = true;
+          for (int offset = 1; offset < magicBytes.length; offset++) {
+            if (bytes[i + offset] != magicBytes[offset]) {
+              validMagicBytes = false;
+              break;
+            }
           }
-        }
 
-        if (validMagicBytes) {
-          var children = hiddenData(PlatformFile(bytes: bytes.sublist(i)), calledFromSearchMagicBytes: true, fileIndex: data.children.length + 1);
-          if ((children != null) && (children.length > 0)) {
-            if (data.children != null)
-              data.children.addAll(children);
+          if (validMagicBytes) {
+            var bytesOffset = magicBytesOffset(fileType) ?? 0;
+            if (i - bytesOffset >= 0) {
+              var children = hiddenData(PlatformFile(bytes: bytes.sublist(i - bytesOffset)),
+                  calledFromSearchMagicBytes: true,
+                  fileIndex: data.children.length + 1);
+              if ((children != null) && (children.length > 0)) {
+                if (data.children != null)
+                  data.children.addAll(children);
+              }
+            }
           }
         }
       }
-    }
+    });
   });
 }
 
