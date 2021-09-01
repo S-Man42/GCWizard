@@ -43,10 +43,10 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays) {
 }
 
 Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays, bool upsideDown) async {
+  const double bounds = 3.0;
+  const double padding = 2.0;
   var width = 0.0;
   var height = 0.0;
-  var bounds = 3.0;
-  var padding = 2.0;
   var columnCounter = 0;
   var rowWidth = 0.0;
   var rowHeight = 0.0;
