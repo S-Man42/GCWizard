@@ -32,7 +32,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
 
   RelativeRect _menuPosition;
 
-  _afterLayout(_) {
+  _afterLayout() {
     //copied from the native PopupMenu code
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
@@ -43,12 +43,6 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
       ),
       Offset.zero & overlay.size,
     );
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-    super.initState();
   }
 
   @override
@@ -64,6 +58,8 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
           return MapEntry<PopupMenuEntry<dynamic>, Function>(
               item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
         });
+
+        _afterLayout();
 
         _menuItems = items.keys.toList();
         _menuAction = items.values.toList();

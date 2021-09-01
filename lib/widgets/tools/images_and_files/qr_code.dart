@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -55,6 +56,7 @@ class QrCodeState extends State<QrCode> {
         _currentMode == GCWSwitchPosition.right
           ? GCWOpenFile(
               supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+              trimNullBytes: true,
               onLoaded: (_file) {
                 if (_file == null) {
                   showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -62,8 +64,10 @@ class QrCodeState extends State<QrCode> {
                 }
 
                 if (_file != null) {
-                  _outData = _file.bytes;
-                  _updateOutput();
+                  setState(() {
+                    _outData = _file.bytes;
+                    _updateOutput();
+                  });
                 }
               },
             )
@@ -77,7 +81,12 @@ class QrCodeState extends State<QrCode> {
                 });
               },
             ),
-        ((_currentMode == GCWSwitchPosition.right) && (_outData != null)) ? Image.memory(_outData) : Container(),
+        ((_currentMode == GCWSwitchPosition.right) && (_outData != null))
+            ? Container(
+                child: Image.memory(_outData),
+                padding: EdgeInsets.symmetric(vertical: 20),
+              )
+            : Container(),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -119,7 +128,12 @@ class QrCodeState extends State<QrCode> {
           });
         });
       } else {
-        if (_outData == null) return null;
+        setState(() {     // If not found, internal QR scanning lib throws Exception which cannot be catched here for some reason. So, set null if Exceptions will be raised to get clear output nonetheless
+          _outDataDecrypt = i18n(context, 'qr_code_nothingfound');
+        });
+
+        if (_outData == null) return;
+
         scanBytes(_outData).then((text) {
           setState(() {
             _outDataDecrypt = text;
@@ -134,8 +148,8 @@ class QrCodeState extends State<QrCode> {
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(
-        data, "qrcode_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+        data, "img_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
 }

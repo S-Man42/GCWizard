@@ -323,6 +323,9 @@ Uint8List trimNullBytes(Uint8List bytes) {
   if (bytes == null)
     return null;
 
+  if (bytes.last != 0 && bytes.first != 0)
+    return bytes;
+
   var tempList = List<int>.from(bytes);
 
   while (tempList.length > 0 && tempList.last == 0)

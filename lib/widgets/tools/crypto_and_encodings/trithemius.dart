@@ -50,6 +50,7 @@ class TrithemiusState extends State<Trithemius> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

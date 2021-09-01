@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:encrypt/encrypt.dart' as crypto;
 import 'package:flutter/foundation.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/encode_request.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart';
 
 import 'pad_key.dart';
@@ -55,8 +56,7 @@ Uint8List encodeMessageIntoImage(EncodeRequest req) {
     }
   }
   Image editableImage = Image.fromBytes(origin.width, origin.height, encodedImg.toList());
-  Uint8List data = Uint8List.fromList(encodePng(editableImage));
-  // Uint8List data = Uint8List.fromList(encodeNamedImage(editableImage, filename));
+  Uint8List data = Uint8List.fromList(encodeTrimmedPng(editableImage));
   return data;
 }
 

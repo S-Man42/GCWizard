@@ -76,6 +76,7 @@ class ASCIIValuesState extends State<ASCIIValues> {
           title: i18n(context, 'asciivalues_numeralbase'),
           leftValue: i18n(context, 'common_numeralbase_denary'),
           rightValue: i18n(context, 'common_numeralbase_binary'),
+          value: _currentRadix,
           onChanged: (value) {
             setState(() {
               _currentRadix = value;

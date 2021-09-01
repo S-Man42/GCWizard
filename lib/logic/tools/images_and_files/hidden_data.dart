@@ -131,5 +131,6 @@ Uint8List mergeFiles(List<dynamic> data) {
     else if (element is String)
       result.addAll(Uint8List.fromList(element.toString().codeUnits));
   });
-  return Uint8List.fromList(result);
+
+  return trimNullBytes(Uint8List.fromList(result));
 }

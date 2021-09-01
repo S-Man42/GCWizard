@@ -4,8 +4,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -101,15 +103,13 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                 onPressed: () {
                   _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
                     if (value == null) {
-                      showToast(i18n(context, 'common_exportfile_nowritepermission'));
                       return;
                     }
 
                     showExportedFileDialog(
                       context,
-                      value['path'],
                       contentWidget: Container(
-                        child: value['bytes'] == null ? null : Image.memory(value['bytes']),
+                        child: Image.memory(value),
                         margin: EdgeInsets.only(top: 25),
                         decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
                       ),
@@ -219,10 +219,21 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     ui.Codec codec = await ui.instantiateImageCodec(bytes);
     ui.FrameInfo fi = await codec.getNextFrame();
 
+    // ui.Image img = fi.image;
+    // if (img.width > _EXPORT_SYMBOL_SIZE || img.height > _EXPORT_SYMBOL_SIZE) {
+    //   ImageProvider imgProvider;
+    //   if (img.width > img.height)
+    //     imgProvider = ResizeImage(MemoryImage(bytes), width: _EXPORT_SYMBOL_SIZE.toInt());
+    //   else
+    //     imgProvider = ResizeImage(MemoryImage(bytes), height: _EXPORT_SYMBOL_SIZE.toInt());
+    //
+    //   img = imgProvider.;
+    // }
+
     return fi.image;
   }
 
-  Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
     var images = _getImages(isCaseSensitive);
 
     var countRows = (images.length / countColumns).floor();
@@ -253,7 +264,13 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
             image = await _buildImage(_data.images[images[imageIndex]].values.first.bytes);
           }
 
-          canvas.drawImage(image, Offset(j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE), paint);
+          paintImage(
+            canvas: canvas,
+            fit: BoxFit.contain,
+            rect: Rect.fromLTWH(j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE),
+            image: image
+          );
+
         }
       }
     }
@@ -262,6 +279,6 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return await saveByteDataToFile(
-        data.buffer.asUint8List(), widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        trimNullBytes(data.buffer.asUint8List()), 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

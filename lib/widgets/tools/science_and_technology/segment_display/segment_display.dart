@@ -34,7 +34,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
-  List<NSegmentDisplay> _displayOutputWidget;
 
   @override
   void initState() {
@@ -208,15 +207,24 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    GCWDisplayOutput(
+    return GCWDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         switch (widget.type) {
           case SegmentDisplayType.SEVEN:
-            return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+            return SevenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            );
           case SegmentDisplayType.FOURTEEN:
-            return FourteenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+            return FourteenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            );
           case SegmentDisplayType.SIXTEEN:
-            return SixteenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+            return SixteenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            );
           default:
             return null;
         }

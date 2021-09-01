@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:intl/intl.dart';
 
 class HiddenData extends StatefulWidget {
   final PlatformFile platformFile;
@@ -93,6 +94,8 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         GCWOpenFile(
           title: i18n(context, 'hiddendata_openpublicfile'),
+          trimNullBytes: true,
+          file: _publicFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -127,6 +130,8 @@ class HiddenDataState extends State<HiddenData> {
           ),
         if (_currentHideMode == GCWSwitchPosition.right)
           GCWOpenFile(
+            trimNullBytes: true,
+            file: _secretFile,
             onLoaded: (_openedFile) {
               if (_openedFile == null) {
                 showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -153,7 +158,7 @@ class HiddenDataState extends State<HiddenData> {
             }
 
             _exportFile(context, PlatformFile(
-              name: _publicFile.name,
+              name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
               bytes: data
             ));
           },
@@ -165,7 +170,10 @@ class HiddenDataState extends State<HiddenData> {
   _buildUnhideWidget() {
     return Column(
       children: [
+        Container(), // fixes strange behaviour: First GCWOpenFile widget from hide/unhide affect each other
         GCWOpenFile(
+          trimNullBytes: true,
+          file: _unHideFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -334,7 +342,7 @@ class HiddenDataState extends State<HiddenData> {
       _fileExtension = fileExtension(file.fileType);
 
     var value = await saveByteDataToFile(file.bytes, file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file') + '.' + _fileExtension);
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: file.fileType);
+    if (value != null) showExportedFileDialog(context, fileType: file.fileType);
   }
 }
 
