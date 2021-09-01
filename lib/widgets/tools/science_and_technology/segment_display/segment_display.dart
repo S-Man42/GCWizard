@@ -6,7 +6,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -207,7 +207,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWDisplayOutput(
+    return GCWSegmentDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         switch (widget.type) {
           case SegmentDisplayType.SEVEN:

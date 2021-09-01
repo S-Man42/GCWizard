@@ -13,7 +13,7 @@ import 'base/gcw_iconbutton.dart';
 import 'gcw_exported_file_dialog.dart';
 import 'gcw_text_divider.dart';
 
-class GCWDisplayOutput extends StatefulWidget {
+class GCWSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
   final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
   final List<List<String>> segments;
@@ -21,14 +21,14 @@ class GCWDisplayOutput extends StatefulWidget {
   final Widget trailing;
 
 
-  const GCWDisplayOutput({Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
+  const GCWSegmentDisplayOutput({Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
       : super(key: key);
 
   @override
-  _GCWDisplayOutputState createState() => _GCWDisplayOutputState();
+  _GCWSegmentDisplayOutputState createState() => _GCWSegmentDisplayOutputState();
 }
 
-class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
+class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
   var _currentUpsideDown = false;
   List<NSegmentDisplay> _displays;
 
@@ -61,9 +61,23 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 10.0),
             )
             : Container(),
+            Container(
+              child: GCWIconButton(
+                size: IconButtonSize.SMALL,
+                iconData: Icons.save,
+                iconColor:  (widget.segments == null) || (widget.segments.length == 0) ? Colors.grey : null,
+                onPressed: ()  async {
+                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
+                    if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                      _exportFile(context, data.buffer.asUint8List());
+                    });
+                  });
+                },
+              ),
+              padding: EdgeInsets.only(right: 10.0),
+            ),
             GCWIconButton(
               size: IconButtonSize.SMALL,
               iconData: Icons.zoom_in,
@@ -88,21 +102,6 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
                 });
               },
             ),
-            Container(
-              child: GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.save,
-                iconColor:  (widget.segments == null) || (widget.segments.length == 0) ? Colors.grey : null,
-                onPressed: ()  async {
-                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
-                    if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                      _exportFile(context, data.buffer.asUint8List());
-                    });
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(left: 10.0),
-            )
           ],
         ),
       ),
@@ -129,8 +128,8 @@ class _GCWDisplayOutputState extends State<GCWDisplayOutput> {
 }
 
 _exportFile(BuildContext context, Uint8List data) async {
-  var value = await saveByteDataToFile(
-      data, 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+  var value = await saveByteDataToFile(context,
+      data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
   if (value != null)
     showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));

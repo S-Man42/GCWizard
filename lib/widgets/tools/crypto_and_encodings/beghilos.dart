@@ -7,7 +7,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dar
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/7_segment_display.dart';
@@ -88,7 +88,7 @@ class BeghilosState extends State<Beghilos> {
     _currentDisplays = encodeSegment(
         _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode['text'], SegmentDisplayType.SEVEN);
 
-    rows.add(GCWDisplayOutput(
+    rows.add(GCWSegmentDisplayOutput(
       upsideDownButton: true,
       segmentFunction:(displayedSegments, readOnly) {
         return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);

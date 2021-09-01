@@ -9,7 +9,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers_segment_display.dart';
@@ -143,7 +143,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWDisplayOutput(
+    return GCWSegmentDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
       },

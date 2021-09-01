@@ -221,7 +221,7 @@ Future<bool> checkStoragePermission() async {
 Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, String fileName, {String subDirectory}) async {
   var storagePermission = await checkStoragePermission();
   if (!storagePermission) {
-    showToast('common_exportfile_nowritepermission');
+    showToast(i18n(context, 'common_exportfile_nowritepermission'));
     return null;
   }
 
