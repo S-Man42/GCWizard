@@ -18,6 +18,9 @@ import 'package:gc_wizard/utils/common_utils.dart';
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 //
 // https://de.wikipedia.org/wiki/Zahlen_in_unterschiedlichen_Sprachen
+//
+// https://learnnavi.org/navi-vocabulary/
+// https://james-camerons-avatar.fandom.com/de/wiki/Oktale_Arithmetik
 
 class NumeralWordsDecodeOutput {
   final String number;
@@ -78,6 +81,7 @@ enum NumeralWordsLanguage {
   HANGULSINOKOR,
   MIN,
   SHA,
+  NAVI,
   ALL,
   NUM
 }
@@ -1361,6 +1365,38 @@ final Map<String, String> SINOKORWordToNum = {
   'cheon': '1000',
   'man': '10000',
 };
+final Map<String, String> NAVIWordToNum = {
+  'kew':'0',
+  "'aw": '1',
+  'mune': '2',
+  'pxey': '3',
+  'tsing': '4',
+  'mrr': '5',
+  'pukap': '6',
+  'kinä': '7',
+  'vol': '8',
+  'volaw': '9',
+  'vomun ': '10',
+  'vopey': '11',
+  'vosìng': '12',
+  'vomrr': '13',
+  'vofu': '14',
+  'vohin': '15',
+  'mevol': '16',
+  'mevohin': '23',
+  'pxevol': '24',
+  'tsivol': '32',
+  'mrrvol': '40',
+  'puvol': '48',
+  'kivol': '56',
+  'mrrvomun': '42',
+  'mezam': '128',
+  'vozam': '512',
+  'nefä': 'numeralwords_n',
+  'skien': 'numeralwords_e',
+  'ftär': 'numeralwords_w',
+  'nekll': 'numeralwords_s',
+};
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DEU: 'common_language_german',
@@ -1407,6 +1443,7 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DOT: 'numeralwords_language_dot',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
   NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
+  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -1456,6 +1493,7 @@ Map NumWords = {
   NumeralWordsLanguage.QUE: QUEWordToNum,
   NumeralWordsLanguage.MIN: MINWordToNum,
   NumeralWordsLanguage.SHA: SHAWordToNum,
+  NumeralWordsLanguage.NAVI: NAVIWordToNum,
 };
 
 bool _isNumeral(String input) {
