@@ -122,6 +122,51 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     });
   }
 
+
+
+  Future<void> _downloadFile(Uri uri) async {
+    http.StreamedResponse _response;
+    int _total = 0;
+    int _received = 0;
+    List<int> _bytes = [];
+
+    http.get(uri).timeout(
+        Duration(seconds: 10),
+        onTimeout: () {
+          return http.Response('Error', 500);
+        }
+    ).then((http.Response response) {
+      if (response.statusCode != 200) {
+        showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
+        return;
+      }
+      _total = _response.contentLength ?? 0;
+
+      _response.stream.listen((value) {
+        setState(() {
+          _bytes.addAll(value);
+          _received += value.length;
+        });
+    }).t
+
+    _response = await http.Client()
+        .send(http.Request('GET', Uri.parse('https://upload.wikimedia.org/wikipedia/commons/f/ff/Pizigani_1367_Chart_10MB.jpg')));
+    _total = _response.contentLength ?? 0;
+
+    _response.stream.listen((value) {
+      setState(() {
+        _bytes.addAll(value);
+        _received += value.length;
+      });
+    }).onDone(() async {
+      final file = File('${(await getApplicationDocumentsDirectory()).path}/image.png');
+      await file.writeAsBytes(_bytes);
+      setState(() {
+        _image = file;
+      });
+    });
+  }
+
   _buildOpenFromURL() {
     var urlTextField = GCWTextField(
       controller: _urlController,
@@ -219,7 +264,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     );
   }
 
-  _getUri(String url) async {
+  Future<Uri> _getUri(String url) async {
     const _HTTP = 'http://';
     const _HTTPS = 'https://';
 
