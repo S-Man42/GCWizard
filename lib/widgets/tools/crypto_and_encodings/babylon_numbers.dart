@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
@@ -123,7 +123,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWDisplayOutput(
+    return GCWSegmentDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
       },

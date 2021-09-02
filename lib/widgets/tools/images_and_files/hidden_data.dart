@@ -230,7 +230,8 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  Widget _buildFileTree(List<PlatformFile> files, List<String> parents) {
+  Widget _buildFileTree(List<PlatformFile> files, List<String> parents, {level: 0}) {
+    var isFirst = true;
     var children = files.map((PlatformFile file) {
       var hasChildren = file.children != null && file.children.isNotEmpty;
 
@@ -260,7 +261,7 @@ class HiddenDataState extends State<HiddenData> {
       var newParents = List<String>.from(parents);
       newParents.add(fileName);
 
-      return Column(
+      var out = Column(
         children: [
           Row (
             children: [
@@ -312,10 +313,18 @@ class HiddenDataState extends State<HiddenData> {
             ),
           if (hasChildren)
             Container(
-              child: _buildFileTree(file.children, newParents),
-            )
+              child: _buildFileTree(file.children, newParents, level: level + 1),
+            ),
+          if (level == 0 && isFirst)
+            GCWDivider(),
+          if (files.length <= 1 && level == 0 && !hasChildren)
+            GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
         ],
       );
+
+      isFirst = false;
+
+      return out;
     }).toList();
 
     return Column(
@@ -335,6 +344,8 @@ class HiddenDataState extends State<HiddenData> {
   }
 
   _exportFile(BuildContext context, PlatformFile file) async {
+    print('BLA');
+
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -342,6 +353,7 @@ class HiddenDataState extends State<HiddenData> {
 
     var fileName = file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = file.name.split('.');
+    print(ext);
     if (ext.length <= 1 || ext.last.length >= 5)
       fileName = fileName + '.' + fileExtension(file.fileType);
 

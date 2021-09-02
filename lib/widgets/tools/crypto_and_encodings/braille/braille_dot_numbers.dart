@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_euro_segment_display.dart';
@@ -147,7 +147,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWDisplayOutput(
+    return GCWSegmentDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         if (_currentLanguage == BrailleLanguage.EUR)
           return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);

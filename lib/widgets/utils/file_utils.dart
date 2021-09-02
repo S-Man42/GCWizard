@@ -221,7 +221,7 @@ Future<bool> checkStoragePermission() async {
 Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, String fileName, {String subDirectory}) async {
   var storagePermission = await checkStoragePermission();
   if (!storagePermission) {
-    showToast('common_exportfile_nowritepermission');
+    showToast(i18n(context, 'common_exportfile_nowritepermission'));
     return null;
   }
 
@@ -753,7 +753,7 @@ int tarFileSize(Uint8List data) {
 }
 
 
-Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
+Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList) async {
   try {
     String tmpDir = (await getTemporaryDirectory()).path;
     var counter = 0;
@@ -777,8 +777,7 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
 
       encoder.addFile(imageFileTmp, fileNameZip);
       imageFileTmp.delete();
-    }
-    ;
+    };
 
     encoder.close();
 

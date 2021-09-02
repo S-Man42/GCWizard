@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_display_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
@@ -137,7 +137,7 @@ class MayaCalendarState extends State<MayaCalendar> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWDisplayOutput(
+    return GCWSegmentDisplayOutput(
       segmentFunction:(displayedSegments, readOnly) {
         return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
       },

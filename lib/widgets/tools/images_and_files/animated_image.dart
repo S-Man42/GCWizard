@@ -196,7 +196,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   }
 
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
-    createZipFile(fileName, data).then((bytes) async {
+    createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
       var fileType = FileType.ZIP;
       var value = await saveByteDataToFile(context, bytes,
           'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
