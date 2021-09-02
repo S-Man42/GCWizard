@@ -1,4 +1,8 @@
 
+import 'dart:isolate';
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -16,6 +20,9 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:http/http.dart' as http;
 
+import 'gcw_async_executer.dart';
+
+
 class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
   final List<FileType> supportedFileTypes;
@@ -32,6 +39,7 @@ class GCWOpenFile extends StatefulWidget {
 class _GCWOpenFileState extends State<GCWOpenFile> {
   var _urlController;
   String _currentUrl;
+  Uri _currentUri;
 
   var _currentMode = GCWSwitchPosition.left;
   var _currentExpanded = true;
@@ -74,6 +82,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _onPressedOpenFromURL() {
     _currentExpanded = true;
+    _currentUri = null;
 
     if (_currentUrl == null) {
       showToast(i18n(context, 'common_loadfile_exception_url'));
@@ -94,6 +103,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         showToast(i18n(context, 'common_loadfile_exception_url'));
         return;
       }
+      _currentUri = uri;
 
       http.get(uri).timeout(
           Duration(seconds: 10),
@@ -122,47 +132,115 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     });
   }
 
+  Widget _buildDownloadButton() {
+    return GCWButton(
+        text: i18n(context, 'common_loadfile_open'),
+    //     onPressed: () async {
+    //       await showDialog(
+    //         context: context,
+    //         barrierDismissible: false,
+    //         builder: (context) {
+    //           return Center(
+    //             child: Container(
+    //               child: GCWAsyncExecuter(
+    //                 isolatedFunction: _downloadFileAsync,
+    //                 parameter: _buildJobDataDownload(),
+    //                 onReady: (data) => _saveDownload(data),
+    //                 isOverlay: true,
+    //               ),
+    //               height: 220,
+    //               width: 150,
+    //             ),
+    //           );
+    //         },
+    //       );
+    // });
+        onPressed: () async {
 
+          _downloadFileAsync(await _buildJobDataDownload());
+        }
 
-  Future<void> _downloadFile(Uri uri) async {
-    http.StreamedResponse _response;
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobDataDownload() async {
+    _currentExpanded = true;
+    _currentUri = null;
+
+    if (_currentUrl == null) {
+      showToast(i18n(context, 'common_loadfile_exception_url'));
+      return null;
+    }
+
+    if (widget.supportedFileTypes != null) {
+      var _urlFileType = fileTypeByFilename(_currentUrl);
+
+      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
+        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+        return null;
+      }
+    }
+
+    return GCWAsyncExecuterParameters(_currentUri);
+  }
+  http.StreamedResponse _response;
+  PlatformFile _downloadFileAsync(dynamic jobData) {
+
     int _total = 0;
     int _received = 0;
     List<int> _bytes = [];
+    SendPort sendAsyncPort = jobData.sendAsyncPort;
+    Uri uri = jobData.parameters;
+
+    _currentExpanded = true;
+    _currentUri = null;
+
+    if (_currentUrl == null) {
+      showToast(i18n(context, 'common_loadfile_exception_url'));
+      return null;
+    }
+
+    if (widget.supportedFileTypes != null) {
+      var _urlFileType = fileTypeByFilename(_currentUrl);
+
+      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
+        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+        return null;
+      }
+    }
 
     http.get(uri).timeout(
         Duration(seconds: 10),
         onTimeout: () {
-          return http.Response('Error', 500);
+          return null; //http.Response('Error', 500);
         }
     ).then((http.Response response) {
       if (response.statusCode != 200) {
         showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
-        return;
+        return null;
       }
       _total = _response.contentLength ?? 0;
+      int progressStep = max((_total / 100).toInt(), 1);
 
       _response.stream.listen((value) {
         setState(() {
           _bytes.addAll(value);
+
+          if (_total != 0 && sendAsyncPort != null && (_received % progressStep > (_received + value.length) % progressStep)) {
+            sendAsyncPort.send({'progress': (_received + value.length) / _total});
+          }
           _received += value.length;
         });
-    }).t
+      }).onDone(() {
+        var _loadedFile = PlatformFile(
+            name: Uri.decodeFull(_currentUrl).split('/').last,
+            path: _currentUrl,
+            bytes: Uint8List.fromList(_bytes));
 
-    _response = await http.Client()
-        .send(http.Request('GET', Uri.parse('https://upload.wikimedia.org/wikipedia/commons/f/ff/Pizigani_1367_Chart_10MB.jpg')));
-    _total = _response.contentLength ?? 0;
+        if (sendAsyncPort != null)
+          sendAsyncPort.send(_loadedFile);
 
-    _response.stream.listen((value) {
-      setState(() {
-        _bytes.addAll(value);
-        _received += value.length;
-      });
-    }).onDone(() async {
-      final file = File('${(await getApplicationDocumentsDirectory()).path}/image.png');
-      await file.writeAsBytes(_bytes);
-      setState(() {
-        _image = file;
+        return _loadedFile;
       });
     });
   }
@@ -190,10 +268,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             width: 220,
             height: 50,
           ),
-          GCWButton(
-            text: i18n(context, 'common_loadfile_open'),
-            onPressed: _onPressedOpenFromURL,
-          )
+          _buildDownloadButton()
         ],
       );
     } else {
@@ -202,14 +277,17 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           Expanded(child: urlTextField),
           Container(
             padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-            child: GCWButton(
-              text: i18n(context, 'common_loadfile_open'),
-              onPressed: _onPressedOpenFromURL,
-            )
+            child: _buildDownloadButton(),
           )
         ],
       );
     }
+  }
+
+  _saveDownload(PlatformFile file) {
+    _loadedFile = file;
+
+    widget.onLoaded(file);
   }
 
   @override
@@ -308,6 +386,66 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
       ),
       []
   );
+}
+
+Future<PlatformFile> _downloadFileAsyncX(dynamic jobData) async {
+  http.StreamedResponse _response;
+  int _total = 0;
+  int _received = 0;
+  List<int> _bytes = [];
+  SendPort sendAsyncPort = jobData.sendAsyncPort;
+  Uri uri = jobData.parameters;
+
+  // http.get(uri).timeout(
+  //     Duration(seconds: 10),
+  //     onTimeout: () {
+  //       return null; //http.Response('Error', 500);
+  //     }
+  // ).then((http.Response response) {
+  //   // if (response.statusCode != 200) {
+  //   //   showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
+  //   //   return null;
+  //   // }
+  //   _total = _response.contentLength ?? 0;
+  //   int progressStep = max((_total / 100).toInt(), 1);
+  //
+  //   _response.stream.listen((value) {
+  //     _bytes.addAll(value);
+  //
+  //     if (_total != 0 && sendAsyncPort != null && (_received % progressStep > (_received + value.length) % progressStep)) {
+  //       sendAsyncPort.send({'progress': (_received + value.length) / _total});
+  //     }
+  //     _received += value.length;
+  //   }).onDone(() {
+  //     var _currentUrl = 'http://s-man42.de/gcw.zip';
+  //     var _loadedFile = PlatformFile(
+  //         name: Uri.decodeFull(_currentUrl).split('/').last,
+  //         path: _currentUrl,
+  //         bytes: Uint8List.fromList(_bytes));
+  //
+  //     if (sendAsyncPort != null)
+  //       sendAsyncPort.send(_loadedFile);
+  //
+  //     return _loadedFile;
+  //   });
+  // });
+
+  await http.get(uri).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        return null; //http.Response('Error', 500);
+      }
+  ).then((http.Response response) {
+    _response.stream.listen((value) async {
+      _bytes.addAll(value);
+    }).onDone(() {
+      sendAsyncPort.send(_bytes);
+      return _bytes;
+    });
+  });
+
+  sendAsyncPort.send(null);
+  return null;
 }
 
 
