@@ -1962,42 +1962,64 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       searchLanguages[language] = sValue;
     }
 
+    // check degree ° and dot .
+    inputToDecode = inputToDecode.replaceAll('°', ' ° ').replaceAll('.', ' . ').replaceAll('  ', ' ');
     // start decoding
-    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€' + "'" + ']'));
+    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
     decodeText.forEach((element) {
       _alreadyFound = false;
-      if (_isShadoks(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.SHA)) {
-        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList[NumeralWordsLanguage.SHA]));
-      } else if (_isMinion(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.MIN)) {
-        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList[NumeralWordsLanguage.MIN]));
-      } else if (_isKlingon(element) &&
-          (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.KLI)) {
-        output.add(NumeralWordsDecodeOutput(
-            _decodeKlingon(element), element.replaceAll('€', ' ').trim(),
-            _languageList[NumeralWordsLanguage.KLI]));
-      } else if (_isNavi(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.NAVI)) {
-        output.add(NumeralWordsDecodeOutput(_decodeNavi(element), element, _languageList[NumeralWordsLanguage.NAVI]));
-      } else if (_isNumeral(element)) {
-        // checks - if is a number/digit
-        output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
-      } else {
-        _alreadyFound = false;
-        searchLanguages.forEach((key, value) {
-          var result = _isNumeralWordTable(element, key, value); // checks - if element is part of a map
-          if (result.state) {
-            if (!_alreadyFound) {
-              output.add(NumeralWordsDecodeOutput(result.output, element, _languageList[key]));
-              _alreadyFound = true;
-            } else {
-              output.add(NumeralWordsDecodeOutput('', '', _languageList[key]));
-            }
-          } else {
-            result = _isNumeralWord(element, key, value); // checks - if is a numeral word
+      if (element != '') {
+        if (element == '°')
+          output.add(NumeralWordsDecodeOutput(element, element, ''));
+        else if (element == '.')
+          output.add(NumeralWordsDecodeOutput(element, element, ''));
+        else if (_isShadoks(element) && (language == NumeralWordsLanguage.ALL ||
+            language == NumeralWordsLanguage.SHA)) {
+          output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element,
+              _languageList[NumeralWordsLanguage.SHA]));
+        } else if (_isMinion(element) &&
+            (language == NumeralWordsLanguage.ALL ||
+                language == NumeralWordsLanguage.MIN)) {
+          output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element,
+              _languageList[NumeralWordsLanguage.MIN]));
+        } else if (_isKlingon(element) &&
+            (language == NumeralWordsLanguage.ALL ||
+                language == NumeralWordsLanguage.KLI)) {
+          output.add(NumeralWordsDecodeOutput(
+              _decodeKlingon(element), element.replaceAll('€', ' ').trim(),
+              _languageList[NumeralWordsLanguage.KLI]));
+        } else if (_isNavi(element) && (language == NumeralWordsLanguage.ALL ||
+            language == NumeralWordsLanguage.NAVI)) {
+          output.add(NumeralWordsDecodeOutput(_decodeNavi(element), element,
+              _languageList[NumeralWordsLanguage.NAVI]));
+        } else if (_isNumeral(element)) {
+          // checks - if is a number/digit
+          output.add(NumeralWordsDecodeOutput(
+              element, element, _languageList[NumeralWordsLanguage.NUM]));
+        } else {
+          _alreadyFound = false;
+          searchLanguages.forEach((key, value) {
+            var result = _isNumeralWordTable(
+                element, key, value); // checks - if element is part of a map
             if (result.state) {
-              output.add(NumeralWordsDecodeOutput(result.output, element, _languageList[key]));
+              if (!_alreadyFound) {
+                output.add(NumeralWordsDecodeOutput(
+                    result.output, element, _languageList[key]));
+                _alreadyFound = true;
+              } else {
+                output.add(
+                    NumeralWordsDecodeOutput('', '', _languageList[key]));
+              }
+            } else {
+              result = _isNumeralWord(
+                  element, key, value); // checks - if is a numeral word
+              if (result.state) {
+                output.add(NumeralWordsDecodeOutput(
+                    result.output, element, _languageList[key]));
+              }
             }
-          }
-        }); //forEach searchLanguage
+          }); //forEach searchLanguage
+        }
       }
     }); //for each element to decode
     return output;
@@ -2116,6 +2138,7 @@ String _decodeNavi(String element) {
   if (NAVIWordToNum[element] != null)
     return NAVIWordToNum[element];
   else {
+    // check 4096
     if (element.contains('kizazam') || element.contains('puzazam') || element.contains('mrrzazam') || element.contains('tsizazam') || element.contains('pxezazam') || element.contains('mezazam') || element.contains('zazam')) {
       if (element.contains('kizazam'))
         octal = '7';
@@ -2131,7 +2154,8 @@ String _decodeNavi(String element) {
         octal = '2';
       else if (element.contains('zazam'))
         octal = '1';
-    }
+    } else octal = '0';
+    // check 512
     if (element.contains('kivozam') || element.contains('puvozam') || element.contains('mrrvozam') || element.contains('tsivozam') || element.contains('pxevozam') || element.contains('mevozam') || element.contains('vozam')) {
       if (element.contains('kivozam'))
         octal = octal + '7';
@@ -2149,6 +2173,7 @@ String _decodeNavi(String element) {
         octal = octal + '1';
     } else
       octal = octal + '0';
+    // check 64
     if (element.contains('kizam') || element.contains('puzam') || element.contains('mrrzam') || element.contains('tsizam') || element.contains('pxezam') || element.contains('mezam') || element.contains('zam')) {
       if (element.contains('kizam'))
         octal = octal + '7';
@@ -2166,6 +2191,7 @@ String _decodeNavi(String element) {
         octal = octal + '1';
     } else
       octal = octal + '0';
+    // check 8
     if (element.contains('kivol') || element.contains('puvol') || element.contains('mrrvol') || element.contains('tsivol') || element.contains('pxevol') || element.contains('mevol') || element.contains('vol')) {
       if (element.contains('kivol'))
         octal = octal + '70';
@@ -2181,43 +2207,48 @@ String _decodeNavi(String element) {
         octal = octal + '20';
       else if (element.contains('vol'))
         octal = octal + '10';
-    } else
-      octal = octal + '00';
-    if (element.contains('kivo') || element.contains('puvo') || element.contains('mrrvo') || element.contains('tsivo') || element.contains('pxevo') || element.contains('mevo') || element.contains('vo')) {
-      if (element.contains('kivo'))
-        octal = octal + '7';
-      else if (element.contains('puvo'))
-        octal = octal + '6';
-      else if (element.contains('mrrvo'))
-        octal = octal + '5';
-      else if (element.contains('tsivo'))
-        octal = octal + '4';
-      else if (element.contains('pxevo'))
-        octal = octal + '3';
-      else if (element.contains('mevo'))
-        octal = octal + '2';
-      else if (element.contains('vo'))
-        octal = octal + '1';
-    } else
-      octal = octal + '0';
-    if (element.contains('hin') || element.contains('fu') || element.contains('mrr') || element.contains('sing') || element.contains('pey') || element.contains('mun') || element.contains('aw')) {
-      if (element.contains('hin'))
-        octal = octal + '7';
-      else if (element.contains('fu'))
-        octal = octal + '6';
-      else if (element.contains('mrr'))
-        octal = octal + '5';
-      else if (element.contains('sing'))
-        octal = octal + '4';
-      else if (element.contains('pey'))
-        octal = octal + '3';
-      else if (element.contains('mun'))
-        octal = octal + '2';
-      else if (element.contains('aw'))
-        octal = octal + '1';
-    } else
-      octal = octal + '0';
-    print(element+' => '+octal);
+    } else {
+      if (element.contains('kivo') || element.contains('puvo') ||
+          element.contains('mrrvo') || element.contains('tsivo') ||
+          element.contains('pxevo') || element.contains('mevo') ||
+          element.contains('vo')) {
+        if (element.contains('kivo'))
+          octal = octal + '7';
+        else if (element.contains('puvo'))
+          octal = octal + '6';
+        else if (element.contains('mrrvo'))
+          octal = octal + '5';
+        else if (element.contains('tsivo'))
+          octal = octal + '4';
+        else if (element.contains('pxevo'))
+          octal = octal + '3';
+        else if (element.contains('mevo'))
+          octal = octal + '2';
+        else if (element.contains('vo'))
+          octal = octal + '1';
+      } else
+        octal = octal + '0';
+      if (element.contains('hin') || element.contains('fu') ||
+          element.contains('mrr') || element.contains('sing') ||
+          element.contains('pey') || element.contains('mun') ||
+          element.contains('aw')) {
+        if (element.contains('hin'))
+          octal = octal + '7';
+        else if (element.contains('fu'))
+          octal = octal + '6';
+        else if (element.contains('mrr'))
+          octal = octal + '5';
+        else if (element.contains('sing'))
+          octal = octal + '4';
+        else if (element.contains('pey'))
+          octal = octal + '3';
+        else if (element.contains('mun'))
+          octal = octal + '2';
+        else if (element.contains('aw'))
+          octal = octal + '1';
+      } else
+        octal = octal + '0';
+    }
     return convertBase(octal, 8, 10);
   }
 }
