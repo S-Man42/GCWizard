@@ -78,6 +78,7 @@ Based on **Flutter/Dart**.
 ## Links
 
 * [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪 🇫🇷
+* [Web View](http://gcwizard.net)
 
 ### Development
 * [Github](https://github.com/S-Man42/GCWizard): Code and assets
