@@ -43,7 +43,7 @@ Based on **Flutter/Dart**.
 * ...
 
 ### Coordinates
-* **High precision coordinate algorithms** which supports even with very long distances by always considering the earth's shape (ellipsoid)
+* **High precision coordinate algorithms** which support even with very long distances by always considering the earth's shape (ellipsoid)
 * Support of **many different rotation ellipsoids**, even other planets
 * **Coordinate Formats**: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
 * **Waypoint Projection**: Includes precise reverse projection
