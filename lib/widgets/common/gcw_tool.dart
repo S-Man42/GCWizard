@@ -230,9 +230,6 @@ class _GCWToolState extends State<GCWTool> {
   List<Widget> _buildButtons() {
     List<Widget> buttonList = <Widget>[];
 
-    Widget helpButton = _buildHelpButton();
-    if (helpButton != null) buttonList.add(helpButton);
-
     // add further buttons as defined in registry
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
@@ -256,7 +253,7 @@ class _GCWToolState extends State<GCWTool> {
                   i18n(context, button.title),
                   i18n(context, button.text),
                   () {
-                    launch(i18n(context, url));
+                    launch(i18n(context, url) ?? url);
                   },
                 );
               } else
@@ -265,6 +262,9 @@ class _GCWToolState extends State<GCWTool> {
           ));
       });
     }
+
+    Widget helpButton = _buildHelpButton();
+    if (helpButton != null) buttonList.add(helpButton);
 
     return buttonList;
   }

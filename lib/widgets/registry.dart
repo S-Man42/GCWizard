@@ -1603,7 +1603,7 @@ class Registry {
         buttonList: [
           GCWToolActionButtonsEntry(
               showDialog: true,
-              url: 'symboltables_selection_download_link',
+              url: symboltablesDownloadLink(context),
               title: 'symboltables_selection_download_dialog_title',
               text: 'symboltables_selection_download_dialog_text',
               icon: Icons.file_download),
