@@ -58,7 +58,7 @@ Based on **Flutter/Dart**.
 * **Date and Time functions**: Weekday, time differences, ...
 * **Irrational Numbers**: *π*, *φ* and *e*: Show and search up to > 1,000,000 digits
 * **Number sequences**: Factorial, Fibonacci, Fermat, Mersenne and Co.
-* **Numeral Systems**: Converts decimal to binary, hexadecimal, ...; support negative bases
+* **Numeral Systems**: Converts decimal to binary, hexadecimal, ...; supports negative bases
 * **Periodic Table of the Elements**: Interactive view and lists which order the elements by any criterion
 * **Phone Keys** (Vanity): Converts classic phone keys to letters. Supports phone model specific behaviours
 * **Prime Numbers**: Search prime numbers up to 1,000,000
