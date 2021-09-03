@@ -1373,7 +1373,7 @@ final Map<String, String> NAVIWordToNum = {
   'tsing': '4',
   'mrr': '5',
   'pukap': '6',
-  'kinä': '7',
+  'kinae': '7',
   'vol': '8',
   'volaw': '9',
   'vomun ': '10',
@@ -1383,18 +1383,12 @@ final Map<String, String> NAVIWordToNum = {
   'vofu': '14',
   'vohin': '15',
   'mevol': '16',
-  'mevohin': '23',
-  'pxevol': '24',
-  'tsivol': '32',
-  'mrrvol': '40',
-  'puvol': '48',
-  'kivol': '56',
-  'mrrvomun': '42',
-  'mezam': '128',
+  'zam': '64',
   'vozam': '512',
-  'nefä': 'numeralwords_n',
+  'zazam': '4096',
+  'nefae': 'numeralwords_n',
   'skien': 'numeralwords_e',
-  'ftär': 'numeralwords_w',
+  'ftaer': 'numeralwords_w',
   'nekll': 'numeralwords_s',
 };
 
@@ -1979,7 +1973,10 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       } else if (_isKlingon(element) &&
           (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.KLI)) {
         output.add(NumeralWordsDecodeOutput(
-            _decodeKlingon(element), element.replaceAll('€', ' ').trim(), _languageList[NumeralWordsLanguage.KLI]));
+            _decodeKlingon(element), element.replaceAll('€', ' ').trim(),
+            _languageList[NumeralWordsLanguage.KLI]));
+      } else if (_isNavi(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.NAVI)) {
+        output.add(NumeralWordsDecodeOutput(_decodeNavi(element), element, _languageList[NumeralWordsLanguage.NAVI]));
       } else if (_isNumeral(element)) {
         // checks - if is a number/digit
         output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
@@ -2106,6 +2103,27 @@ bool _isKlingon(String element) {
         '');
   else
     return false;
+}
+
+bool _isNavi(String element) {
+  var expr = RegExp(
+      r'(zazam|mezazam|pxezazam|tsizazam|mrrzazam|puzazam|kizazam)?(vozam|mevozam|pxevozam|tsovozam|mrrvozam|puvozam|kivozam)?(zam|mezam|pxezam|tsizam|mrrzam|puzam|kizam)?(vol|mevol|pxevol|tsivol|mrrvol|puvol|kivol)?(vo|mevo|pxevo|tsivo|mrrvo|puvo|kivo)?(kew|aw|mun|peysing|mrr|fu|hin)?(aw|mune|pxey|tsing|mrr|pukap|kinae)?');
+  return (expr.hasMatch(element));
+}
+
+String _decodeNavi(String element) {
+  String octal = '';
+  if (NAVIWordToNum[element] != null)
+    return NAVIWordToNum[element];
+  else {
+    octal = element.replaceAll('kizazam', '7').replaceAll('puzazam', '6').replaceAll('mrrzazam', '5').replaceAll('tsizazam', '4').replaceAll('pxezazam', '3').replaceAll('mezazam', '2').replaceAll('zazam', '1')
+        .replaceAll('kivozam', '7').replaceAll('puvozam', '6').replaceAll('mrrvozam', '5').replaceAll('tsivozam', '4').replaceAll('pxevozam', '3').replaceAll('mevozam', '2').replaceAll('vozam', '1')
+        .replaceAll('kizam', '7').replaceAll('puzam', '6').replaceAll('mrrzam', '5').replaceAll('tsizam', '4').replaceAll('pxezam', '3').replaceAll('mezam', '2').replaceAll('zam', '1')
+        .replaceAll('kivol', '7').replaceAll('puvol', '6').replaceAll('mrrvol', '5').replaceAll('tsivol', '4').replaceAll('pxevol', '3').replaceAll('mevol', '2').replaceAll('vol', '1')
+        .replaceAll('kivo', '7').replaceAll('puvo', '6').replaceAll('mrrvo', '5').replaceAll('tsivo', '4').replaceAll('pxevo', '3').replaceAll('mevo', '2').replaceAll('vo', '1')
+        .replaceAll('hin', '7').replaceAll('fu', '6').replaceAll('mrr', '5').replaceAll('sing', '4').replaceAll('pey', '3').replaceAll('mun', '2').replaceAll('aw', '1');
+    return convertBase(octal, 8, 10);
+  }
 }
 
 String _decodeKlingon(String element) {
