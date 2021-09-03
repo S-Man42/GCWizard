@@ -24,7 +24,6 @@ Based on **Flutter/Dart**.
 ### General
 * **Formula Solver**: For handling multi stage variables
 * **Multi Decoder**: Enter an unknown code and let several decoders and calculators interpret it in a row
-* **Substitution** and **Vigenère Code Breakers**: Try to find the solution without knowing the keys
 * More than **200 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
 * **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
 
@@ -36,6 +35,7 @@ Based on **Flutter/Dart**.
 * **Esoteric Languages**: Generators and interpretors for several esoteric programming languages like Brainfuck, Ook, Malbolge and Chef
 * **Morse**
 * **Numeral Words**: Lists of important numbers in different languages. For English and German there are parsers to identify even complex numeral words like "onethousandthreehundredfourty-two"
+* **Substitution** and **Vigenère Code Breakers**: Try to find the solution without knowing the keys
 * **Classic Codes**: Playfair, Polybios, Railfence, ...
 * **Historic codes**: Caesar, Vigenènere, old telegraph codes, ...
 * **Military codes**: ADFGX, Cipher Wheel, Tapir, ...
