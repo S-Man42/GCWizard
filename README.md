@@ -62,7 +62,7 @@ Based on **Flutter/Dart**.
 * **Periodic Table of the Elements**: Interactive view and lists which order the elements by any criterion
 * **Phone Keys** (Vanity): Converts classic phone keys to letters. Supports phone model specific behaviours
 * **Prime Numbers**: Search prime numbers up to 1,000,000
-* **Segment Display**: Graphical interface for decoding and encoding 7, 14 oder 16 segment displays
+* **Segment Display**: Graphical interface for decoding and encoding 7, 14 or 16 segment displays
 * **Unit Converter**: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like *micro* and *kilo*
 * Apparent Temperature, Combinatorics, Cross Sums, DTMF, Keyboard layouts, Projectiles, Resistor codes, ...
 
