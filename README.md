@@ -4,7 +4,7 @@
   <img src="https://github.com/S-Man42/GCWizard/blob/master/assets/logo/circle_border_128.png?raw=true" alt="GC Wizard logo"/>
 </p>
 
-The GC Wizard is an open-source tool collection for Android and iOS. There is also a beta version of a web view.
+The GC Wizard is an open-source tool collection for **Android** and **iOS**. There is also an alpha version of a **[Web View](http://gcwizard.net)**.
 
 It was originally created to offer Geocachers an offline tool to support them with in-field mysteries and riddles. So, the GC Wizard contains numerous tools for simple cryptography, geographic and scientific calculations as well as hundreds of sets of various symbols.
 
