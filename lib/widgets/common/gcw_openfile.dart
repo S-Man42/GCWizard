@@ -80,92 +80,29 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     );
   }
 
-  _onPressedOpenFromURL() {
-    _currentExpanded = true;
-    _currentUri = null;
-
-    if (_currentUrl == null) {
-      showToast(i18n(context, 'common_loadfile_exception_url'));
-      return;
-    }
-
-    if (widget.supportedFileTypes != null) {
-      var _urlFileType = fileTypeByFilename(_currentUrl);
-
-      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
-        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
-        return;
-      }
-    }
-
-    _getUri(_currentUrl.trim()).then((uri) {
-      if (uri == null) {
-        showToast(i18n(context, 'common_loadfile_exception_url'));
-        return;
-      }
-      _currentUri = uri;
-
-      http.get(uri).timeout(
-          Duration(seconds: 10),
-          onTimeout: () {
-            return http.Response('Error', 500);
-          }
-      ).then((http.Response response) {
-        if (response.statusCode != 200) {
-          showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
-          return;
-        }
-        //   _total = _response.contentLength ?? 0;
-        //   int progressStep = max((_total / 100).toInt(), 1);
-        //
-        //   response.stream.listen((value) {
-        //     bytes.addAll(value);
-        //
-         var bytes = response.bodyBytes;
-
-        _loadedFile = PlatformFile(
-            name: Uri.decodeFull(_currentUrl).split('/').last,
-            path: _currentUrl,
-            bytes: bytes);
-
-        setState(() {
-          _currentExpanded = false;
-        });
-
-        widget.onLoaded(_loadedFile);
-      });
-    });
-  }
-
   Widget _buildDownloadButton() {
     return GCWButton(
         text: i18n(context, 'common_loadfile_open'),
-    //     onPressed: () async {
-    //       await showDialog(
-    //         context: context,
-    //         barrierDismissible: false,
-    //         builder: (context) {
-    //           return Center(
-    //             child: Container(
-    //               child: GCWAsyncExecuter(
-    //                 isolatedFunction: _downloadFileAsync,
-    //                 parameter: _buildJobDataDownload(),
-    //                 onReady: (data) => _saveDownload(data),
-    //                 isOverlay: true,
-    //               ),
-    //               height: 220,
-    //               width: 150,
-    //             ),
-    //           );
-    //         },
-    //       );
-    // });
         onPressed: () async {
-
-          _downloadFileAsync(await _buildJobDataDownload());
-        }
-
-    );
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center(
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: _downloadFileAsync,
+                    parameter: _buildJobDataDownload(),
+                    onReady: (data) => _saveDownload(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+    });
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataDownload() async {
@@ -185,71 +122,16 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         return null;
       }
     }
-
-    return GCWAsyncExecuterParameters(_currentUri);
-  }
-
-  Future<dynamic> _downloadFileAsync(dynamic jobData) async {
-    int _total = 0;
-    int _received = 0;
-    List<int> _bytes = [];
-    SendPort sendAsyncPort = jobData.sendAsyncPort;
-    Uri uri = jobData.parameters;
-
-    _currentExpanded = true;
-    _currentUri = null;
-
-    if (_currentUrl == null) {
-      showToast(i18n(context, 'common_loadfile_exception_url'));
-      return null;
-    }
-
-    if (widget.supportedFileTypes != null) {
-      var _urlFileType = fileTypeByFilename(_currentUrl);
-
-      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
-        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+    await _getUri(_currentUrl.trim()).then((uri) {
+      if (uri == null) {
+        showToast(i18n(context, 'common_loadfile_exception_url'));
         return null;
       }
-    }
-    //https://github.com/dart-lang/http/issues/210
-    var request = http.Request("GET", uri);
-    var client = http.Client();
-    var response = await client.send(request)
-        .timeout(
-        Duration(seconds: 10),
-        onTimeout: () {
-          if (sendAsyncPort != null) sendAsyncPort.send(null);
-          return null; //http.Response('Error', 500);
-        }
-    ).then((http.StreamedResponse response) {
-      if (response.statusCode != 200) {
-        //showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
-        if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
-        return 'common_loadfile_exception_responsestatus';
-      }
-      _total = response.contentLength ?? 0;
-      int progressStep = max((_total / 100).toInt(), 1);
-
-      response.stream.listen((value) {
-        setState(() {
-          _bytes.addAll(value);
-
-          if (_total != 0 && sendAsyncPort != null &&
-              (_received % progressStep >
-                  (_received + value.length) % progressStep)) {
-            sendAsyncPort.send(
-                {'progress': (_received + value.length) / _total});
-          }
-          _received += value.length;
-        });
-      }).onDone(() {
-        var uint8List = Uint8List.fromList(_bytes);
-        if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
-
-        return uint8List;
-      });
+      _currentUri = uri;
     });
+    if (_currentUri == null) return null;
+
+    return GCWAsyncExecuterParameters(_currentUri);
   }
 
   _buildOpenFromURL() {
@@ -292,18 +174,17 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   _saveDownload(dynamic data) {
-    if (data is Uint8List)
-      {
+    if (data is Uint8List) {
         _loadedFile = PlatformFile(
                    name: Uri.decodeFull(_currentUrl).split('/').last,
                    path: _currentUrl,
                    bytes: data);
-      }
-    else if (data is String) {
+    } else if (data is String)
       showToast(i18n(context, data));
-    }
 
-    widget.onLoaded(_loadedFile);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onLoaded(_loadedFile);
+    });
   }
 
   @override
@@ -404,64 +285,45 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
   );
 }
 
-Future<PlatformFile> _downloadFileAsyncX(dynamic jobData) async {
-  http.StreamedResponse _response;
+Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
-  SendPort sendAsyncPort = jobData.sendAsyncPort;
-  Uri uri = jobData.parameters;
+  SendPort sendAsyncPort = jobData?.sendAsyncPort;
+  Uri uri = jobData?.parameters;
 
-  // http.get(uri).timeout(
-  //     Duration(seconds: 10),
-  //     onTimeout: () {
-  //       return null; //http.Response('Error', 500);
-  //     }
-  // ).then((http.Response response) {
-  //   // if (response.statusCode != 200) {
-  //   //   showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
-  //   //   return null;
-  //   // }
-  //   _total = _response.contentLength ?? 0;
-  //   int progressStep = max((_total / 100).toInt(), 1);
-  //
-  //   _response.stream.listen((value) {
-  //     _bytes.addAll(value);
-  //
-  //     if (_total != 0 && sendAsyncPort != null && (_received % progressStep > (_received + value.length) % progressStep)) {
-  //       sendAsyncPort.send({'progress': (_received + value.length) / _total});
-  //     }
-  //     _received += value.length;
-  //   }).onDone(() {
-  //     var _currentUrl = 'http://s-man42.de/gcw.zip';
-  //     var _loadedFile = PlatformFile(
-  //         name: Uri.decodeFull(_currentUrl).split('/').last,
-  //         path: _currentUrl,
-  //         bytes: Uint8List.fromList(_bytes));
-  //
-  //     if (sendAsyncPort != null)
-  //       sendAsyncPort.send(_loadedFile);
-  //
-  //     return _loadedFile;
-  //   });
-  // });
-
-  await http.get(uri).timeout(
+  var request = http.Request("GET", uri);
+  var client = http.Client();
+  await client.send(request)
+      .timeout(
       Duration(seconds: 10),
       onTimeout: () {
+        if (sendAsyncPort != null) sendAsyncPort.send(null);
         return null; //http.Response('Error', 500);
       }
-  ).then((http.Response response) {
-    _response.stream.listen((value) async {
+  ).then((http.StreamedResponse response) {
+    if (response.statusCode != 200) {
+      if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
+      return 'common_loadfile_exception_responsestatus';
+    }
+    _total = response.contentLength ?? 0;
+    int progressStep = max((_total / 100).toInt(), 1);
+
+    response.stream.listen((value) {
       _bytes.addAll(value);
+
+      if (_total != 0 && sendAsyncPort != null &&
+          (_received % progressStep > (_received + value.length) % progressStep)) {
+        sendAsyncPort.send({'progress': (_received + value.length) / _total});
+      }
+      _received += value.length;
     }).onDone(() {
-      sendAsyncPort.send(_bytes);
-      return _bytes;
+      var uint8List = Uint8List.fromList(_bytes);
+      if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
+
+      return uint8List;
     });
   });
-
-  sendAsyncPort.send(null);
-  return null;
 }
 
 
