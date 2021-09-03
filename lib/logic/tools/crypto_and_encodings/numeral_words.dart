@@ -2116,12 +2116,108 @@ String _decodeNavi(String element) {
   if (NAVIWordToNum[element] != null)
     return NAVIWordToNum[element];
   else {
-    octal = element.replaceAll('kizazam', '7').replaceAll('puzazam', '6').replaceAll('mrrzazam', '5').replaceAll('tsizazam', '4').replaceAll('pxezazam', '3').replaceAll('mezazam', '2').replaceAll('zazam', '1')
-        .replaceAll('kivozam', '7').replaceAll('puvozam', '6').replaceAll('mrrvozam', '5').replaceAll('tsivozam', '4').replaceAll('pxevozam', '3').replaceAll('mevozam', '2').replaceAll('vozam', '1')
-        .replaceAll('kizam', '7').replaceAll('puzam', '6').replaceAll('mrrzam', '5').replaceAll('tsizam', '4').replaceAll('pxezam', '3').replaceAll('mezam', '2').replaceAll('zam', '1')
-        .replaceAll('kivol', '7').replaceAll('puvol', '6').replaceAll('mrrvol', '5').replaceAll('tsivol', '4').replaceAll('pxevol', '3').replaceAll('mevol', '2').replaceAll('vol', '1')
-        .replaceAll('kivo', '7').replaceAll('puvo', '6').replaceAll('mrrvo', '5').replaceAll('tsivo', '4').replaceAll('pxevo', '3').replaceAll('mevo', '2').replaceAll('vo', '1')
-        .replaceAll('hin', '7').replaceAll('fu', '6').replaceAll('mrr', '5').replaceAll('sing', '4').replaceAll('pey', '3').replaceAll('mun', '2').replaceAll('aw', '1');
+    if (element.contains('kizazam') || element.contains('puzazam') || element.contains('mrrzazam') || element.contains('tsizazam') || element.contains('pxezazam') || element.contains('mezazam') || element.contains('zazam')) {
+      if (element.contains('kizazam'))
+        octal = '7';
+      else if (element.contains('puzazam'))
+        octal = '6';
+      else if (element.contains('mrrzazam'))
+        octal = '5';
+      else if (element.contains('tsizazam'))
+        octal = '4';
+      else if (element.contains('pxezazam'))
+        octal = '3';
+      else if (element.contains('mezazam'))
+        octal = '2';
+      else if (element.contains('zazam'))
+        octal = '1';
+    }
+    if (element.contains('kivozam') || element.contains('puvozam') || element.contains('mrrvozam') || element.contains('tsivozam') || element.contains('pxevozam') || element.contains('mevozam') || element.contains('vozam')) {
+      if (element.contains('kivozam'))
+        octal = octal + '7';
+      else if (element.contains('puvozam'))
+        octal = octal + '6';
+      else if (element.contains('mrrvozam'))
+        octal = octal + '5';
+      else if (element.contains('tsivozam'))
+        octal = octal + '4';
+      else if (element.contains('pxevozam'))
+        octal = octal + '3';
+      else if (element.contains('mevozam'))
+        octal = octal + '2';
+      else if (element.contains('vozam'))
+        octal = octal + '1';
+    } else
+      octal = octal + '0';
+    if (element.contains('kizam') || element.contains('puzam') || element.contains('mrrzam') || element.contains('tsizam') || element.contains('pxezam') || element.contains('mezam') || element.contains('zam')) {
+      if (element.contains('kizam'))
+        octal = octal + '7';
+      else if (element.contains('puzam'))
+        octal = octal + '6';
+      else if (element.contains('mrrzam'))
+        octal = octal + '5';
+      else if (element.contains('tsizam'))
+        octal = octal + '4';
+      else if (element.contains('pxezam'))
+        octal = octal + '3';
+      else if (element.contains('mezam'))
+        octal = octal + '2';
+      else if (element.contains('zam'))
+        octal = octal + '1';
+    } else
+      octal = octal + '0';
+    if (element.contains('kivol') || element.contains('puvol') || element.contains('mrrvol') || element.contains('tsivol') || element.contains('pxevol') || element.contains('mevol') || element.contains('vol')) {
+      if (element.contains('kivol'))
+        octal = octal + '70';
+      else if (element.contains('puvol'))
+        octal = octal + '60';
+      else if (element.contains('mrrvol'))
+        octal = octal + '50';
+      else if (element.contains('tsivol'))
+        octal = octal + '40';
+      else if (element.contains('pxevol'))
+        octal = octal + '30';
+      else if (element.contains('mevol'))
+        octal = octal + '20';
+      else if (element.contains('vol'))
+        octal = octal + '10';
+    } else
+      octal = octal + '00';
+    if (element.contains('kivo') || element.contains('puvo') || element.contains('mrrvo') || element.contains('tsivo') || element.contains('pxevo') || element.contains('mevo') || element.contains('vo')) {
+      if (element.contains('kivo'))
+        octal = octal + '7';
+      else if (element.contains('puvo'))
+        octal = octal + '6';
+      else if (element.contains('mrrvo'))
+        octal = octal + '5';
+      else if (element.contains('tsivo'))
+        octal = octal + '4';
+      else if (element.contains('pxevo'))
+        octal = octal + '3';
+      else if (element.contains('mevo'))
+        octal = octal + '2';
+      else if (element.contains('vo'))
+        octal = octal + '1';
+    } else
+      octal = octal + '0';
+    if (element.contains('hin') || element.contains('fu') || element.contains('mrr') || element.contains('sing') || element.contains('pey') || element.contains('mun') || element.contains('aw')) {
+      if (element.contains('hin'))
+        octal = octal + '7';
+      else if (element.contains('fu'))
+        octal = octal + '6';
+      else if (element.contains('mrr'))
+        octal = octal + '5';
+      else if (element.contains('sing'))
+        octal = octal + '4';
+      else if (element.contains('pey'))
+        octal = octal + '3';
+      else if (element.contains('mun'))
+        octal = octal + '2';
+      else if (element.contains('aw'))
+        octal = octal + '1';
+    } else
+      octal = octal + '0';
+    print(element+' => '+octal);
     return convertBase(octal, 8, 10);
   }
 }
