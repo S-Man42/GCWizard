@@ -15,9 +15,9 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 (Crowdin: [Translate into yo
 Based on **Flutter/Dart**.
 
 ## Philosophy
-1. There are so many great Geocaches out there. We had so much fun with them. With GC Wizard, **we want to give something back to the community**. We may not make such great Geocaches, but hopefully a great supporting tool.
+1. There are so many great Geocaches out there. We had so much fun with them. With the GC Wizard, **we want to give something back to the community**. We may not make such great Geocaches, but hopefully a great supporting tool.
 1. The **GC Wizard will always be free** for everybody
-1. With making this project open-source we want to invite all the great GC tool providers to share their knowledge and algorithms. Nobody should need to build a ROT-13 tool or whatever from skretch anymore. **Somebody already did it**.
+1. With making this project open-source we want to invite all the great GC tool providers to share their knowledge and algorithms. Nobody should need to build a ROT-13 tool or whatever from scratch anymore. **Somebody already did it**.
 
 ## Highlights
 
