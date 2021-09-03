@@ -115,8 +115,13 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
           showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
           return;
         }
-
-        var bytes = response.bodyBytes;
+        //   _total = _response.contentLength ?? 0;
+        //   int progressStep = max((_total / 100).toInt(), 1);
+        //
+        //   response.stream.listen((value) {
+        //     bytes.addAll(value);
+        //
+         var bytes = response.bodyBytes;
 
         _loadedFile = PlatformFile(
             name: Uri.decodeFull(_currentUrl).split('/').last,
@@ -183,9 +188,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
     return GCWAsyncExecuterParameters(_currentUri);
   }
-  http.StreamedResponse _response;
-  PlatformFile _downloadFileAsync(dynamic jobData) {
 
+  Future<dynamic> _downloadFileAsync(dynamic jobData) async {
     int _total = 0;
     int _received = 0;
     List<int> _bytes = [];
@@ -208,39 +212,42 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         return null;
       }
     }
-
-    http.get(uri).timeout(
+    //https://github.com/dart-lang/http/issues/210
+    var request = http.Request("GET", uri);
+    var client = http.Client();
+    var response = await client.send(request)
+        .timeout(
         Duration(seconds: 10),
         onTimeout: () {
+          if (sendAsyncPort != null) sendAsyncPort.send(null);
           return null; //http.Response('Error', 500);
         }
-    ).then((http.Response response) {
+    ).then((http.StreamedResponse response) {
       if (response.statusCode != 200) {
-        showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
-        return null;
+        //showToast(i18n(context, 'common_loadfile_exception_responsestatus'));
+        if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
+        return 'common_loadfile_exception_responsestatus';
       }
-      _total = _response.contentLength ?? 0;
+      _total = response.contentLength ?? 0;
       int progressStep = max((_total / 100).toInt(), 1);
 
-      _response.stream.listen((value) {
+      response.stream.listen((value) {
         setState(() {
           _bytes.addAll(value);
 
-          if (_total != 0 && sendAsyncPort != null && (_received % progressStep > (_received + value.length) % progressStep)) {
-            sendAsyncPort.send({'progress': (_received + value.length) / _total});
+          if (_total != 0 && sendAsyncPort != null &&
+              (_received % progressStep >
+                  (_received + value.length) % progressStep)) {
+            sendAsyncPort.send(
+                {'progress': (_received + value.length) / _total});
           }
           _received += value.length;
         });
       }).onDone(() {
-        var _loadedFile = PlatformFile(
-            name: Uri.decodeFull(_currentUrl).split('/').last,
-            path: _currentUrl,
-            bytes: Uint8List.fromList(_bytes));
+        var uint8List = Uint8List.fromList(_bytes);
+        if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
 
-        if (sendAsyncPort != null)
-          sendAsyncPort.send(_loadedFile);
-
-        return _loadedFile;
+        return uint8List;
       });
     });
   }
@@ -284,10 +291,19 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     }
   }
 
-  _saveDownload(PlatformFile file) {
-    _loadedFile = file;
+  _saveDownload(dynamic data) {
+    if (data is Uint8List)
+      {
+        _loadedFile = PlatformFile(
+                   name: Uri.decodeFull(_currentUrl).split('/').last,
+                   path: _currentUrl,
+                   bytes: data);
+      }
+    else if (data is String) {
+      showToast(i18n(context, data));
+    }
 
-    widget.onLoaded(file);
+    widget.onLoaded(_loadedFile);
   }
 
   @override
