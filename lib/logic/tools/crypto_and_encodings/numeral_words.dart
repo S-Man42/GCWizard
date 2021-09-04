@@ -2128,9 +2128,23 @@ bool _isKlingon(String element) {
 }
 
 bool _isNavi(String element) {
+  element = element.replaceAll('zame', 'zamme').replaceAll('zamrr', 'zammrr');
+  element = element.replaceAll('mezazam', '').replaceAll('pxezazam', '').replaceAll('tsizazam', '').replaceAll('mrrzazam', '').replaceAll('puzazam', '').replaceAll('kizazam', '').replaceAll('zazam', '')
+      .replaceAll('mevozam', '').replaceAll('pxevozam', '').replaceAll('tsivozam', '').replaceAll('mrrvozam', '').replaceAll('puvozam', '').replaceAll('kivozam', '').replaceAll('vozam', '')
+      .replaceAll('mezam', '').replaceAll('pxezam', '').replaceAll('tsizam', '').replaceAll('mrrzam', '').replaceAll('puzam', '').replaceAll('kizam', '').replaceAll('zam', '')
+      .replaceAll('mevol', '').replaceAll('pxevol', '').replaceAll('tsivol', '').replaceAll('mrrvol', '').replaceAll('puvol', '').replaceAll('kivol', '').replaceAll('vol', '')
+      .replaceAll('mevo', '').replaceAll('pxevo', '').replaceAll('tsivo', '').replaceAll('mrrvo', '').replaceAll('puvo', '').replaceAll('kivo', '').replaceAll('vo', '')
+      .replaceAll('kew', '').replaceAll('aw', '').replaceAll('mune', '').replaceAll('mun', '').replaceAll('mrr', '').replaceAll('peysing', '').replaceAll('pxey', '')
+      .replaceAll('fu', '').replaceAll('hin', '').replaceAll('tsing', '').replaceAll('pukap', '').replaceAll('kinae', '').replaceAll('sing', '');
+
+  return (element == '');
   var expr = RegExp(
-      r'(zazam|mezazam|pxezazam|tsizazam|mrrzazam|puzazam|kizazam)?(vozam|mevozam|pxevozam|tsovozam|mrrvozam|puvozam|kivozam)?(zam|mezam|pxezam|tsizam|mrrzam|puzam|kizam)?(vol|mevol|pxevol|tsivol|mrrvol|puvol|kivol)?(vo|mevo|pxevo|tsivo|mrrvo|puvo|kivo)?(kew|aw|mun|peysing|mrr|fu|hin)?(aw|mune|pxey|tsing|mrr|pukap|kinae)?');
-  return (expr.hasMatch(element));
+      r'(mezazam|pxezazam|tsizazam|mrrzazam|puzazam|kizazam|zazam)?(mevozam|pxevozam|tsivozam|mrrvozam|puvozam|kivozam|vozam)?(mezam|pxezam|tsizam|mrrzam|puzam|kizam|zam)?(mevol|pxevol|tsivol|mrrvol|puvol|kivol|vol)?(mevo|pxevo|tsivo|mrrvo|puvo|kivo|vo)?(kew|aw|mun|peysing|mrr|fu|hin)?(aw|mune|pxey|tsing|mrr|pukap|kinae)?');
+  if (expr.firstMatch(element).group(0) != '' && expr.firstMatch(element).group(0) == element) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 String _decodeNavi(String element) {
@@ -2138,114 +2152,156 @@ String _decodeNavi(String element) {
   if (NAVIWordToNum[element] != null)
     return NAVIWordToNum[element];
   else {
+    element = element.replaceAll('zame', 'zamme').replaceAll('zamrr', 'zammrr');
     // check 4096
     if (element.contains('kizazam') || element.contains('puzazam') || element.contains('mrrzazam') || element.contains('tsizazam') || element.contains('pxezazam') || element.contains('mezazam') || element.contains('zazam')) {
-      if (element.contains('kizazam'))
+      if (element.contains('kizazam')) {
         octal = '7';
-      else if (element.contains('puzazam'))
+        element = element.replaceAll('kizazam', '');
+      } else if (element.contains('puzazam')) {
         octal = '6';
-      else if (element.contains('mrrzazam'))
+        element = element.replaceAll('puzazam', '');
+      } else if (element.contains('mrrzazam')) {
         octal = '5';
-      else if (element.contains('tsizazam'))
+        element = element.replaceAll('mrrzazam', '');
+      } else if (element.contains('tsizazam')) {
         octal = '4';
-      else if (element.contains('pxezazam'))
+        element = element.replaceAll('tsizazam', '');
+      } else if (element.contains('pxezazam')) {
         octal = '3';
-      else if (element.contains('mezazam'))
+        element = element.replaceAll('pxezazam', '');
+      } else if (element.contains('mezazam')) {
         octal = '2';
-      else if (element.contains('zazam'))
+        element = element.replaceAll('mezazam', '');
+      } else if (element.contains('zazam')) {
         octal = '1';
+        element = element.replaceAll('zazam', '');
+      }
     } else octal = '0';
     // check 512
     if (element.contains('kivozam') || element.contains('puvozam') || element.contains('mrrvozam') || element.contains('tsivozam') || element.contains('pxevozam') || element.contains('mevozam') || element.contains('vozam')) {
-      if (element.contains('kivozam'))
+      if (element.contains('kivozam')) {
         octal = octal + '7';
-      else if (element.contains('puvozam'))
+        element = element.replaceAll('kivozam', '');
+      } else if (element.contains('puvozam')) {
         octal = octal + '6';
-      else if (element.contains('mrrvozam'))
+        element = element.replaceAll('puvozam', '');
+      } else if (element.contains('mrrvozam')) {
         octal = octal + '5';
-      else if (element.contains('tsivozam'))
+        element = element.replaceAll('mrrvozam', '');
+      } else if (element.contains('tsivozam')) {
         octal = octal + '4';
-      else if (element.contains('pxevozam'))
+        element = element.replaceAll('tsivozam', '');
+      } else if (element.contains('pxevozam')) {
         octal = octal + '3';
-      else if (element.contains('mevozam'))
+        element = element.replaceAll('pxevozam', '');
+      } else if (element.contains('mevozam')) {
         octal = octal + '2';
-      else if (element.contains('vozam'))
+        element = element.replaceAll('mevozam', '');
+      } else if (element.contains('vozam')) {
         octal = octal + '1';
+        element = element.replaceAll('vozam', '');
+      }
     } else
       octal = octal + '0';
     // check 64
     if (element.contains('kizam') || element.contains('puzam') || element.contains('mrrzam') || element.contains('tsizam') || element.contains('pxezam') || element.contains('mezam') || element.contains('zam')) {
-      if (element.contains('kizam'))
+      if (element.contains('kizam')) {
         octal = octal + '7';
-      else if (element.contains('puzam'))
+        element = element.replaceAll('kizam', '');
+      } else if (element.contains('puzam')) {
         octal = octal + '6';
-      else if (element.contains('mrrzam'))
+        element = element.replaceAll('puzam', '');
+      } else if (element.contains('mrrzam')) {
         octal = octal + '5';
-      else if (element.contains('tsizam'))
+        element = element.replaceAll('mrrzam', '');
+      } else if (element.contains('tsizam')) {
         octal = octal + '4';
-      else if (element.contains('pxezam'))
+        element = element.replaceAll('tsizam', '');
+      } else if (element.contains('pxezam')) {
         octal = octal + '3';
-      else if (element.contains('mezam'))
+        element = element.replaceAll('pxezam', '');
+      } else if (element.contains('mezam')) {
         octal = octal + '2';
-      else if (element.contains('zam'))
+        element = element.replaceAll('mezam', '');
+      } else if (element.contains('zam')) {
         octal = octal + '1';
+        element = element.replaceAll('zam', '');
+      }
     } else
       octal = octal + '0';
     // check 8
     if (element.contains('kivol') || element.contains('puvol') || element.contains('mrrvol') || element.contains('tsivol') || element.contains('pxevol') || element.contains('mevol') || element.contains('vol')) {
-      if (element.contains('kivol'))
+      if (element.contains('kivol')) {
         octal = octal + '70';
-      else if (element.contains('puvol'))
+        element = element.replaceAll('kivol', '');
+      } else if (element.contains('puvol')) {
         octal = octal + '60';
-      else if (element.contains('mrrvol'))
+        element = element.replaceAll('puvol', '');
+      } else if (element.contains('mrrvol')) {
         octal = octal + '50';
-      else if (element.contains('tsivol'))
+        element = element.replaceAll('mrrvol', '');
+      } else if (element.contains('tsivol')) {
         octal = octal + '40';
-      else if (element.contains('pxevol'))
+        element = element.replaceAll('tsivol', '');
+      } else if (element.contains('pxevol')) {
         octal = octal + '30';
-      else if (element.contains('mevol'))
+        element = element.replaceAll('pxevol', '');
+      } else if (element.contains('mevol')) {
         octal = octal + '20';
-      else if (element.contains('vol'))
+        element = element.replaceAll('mevol', '');
+      } else if (element.contains('vol')) {
         octal = octal + '10';
+        element = element.replaceAll('vol', '');
+      }
     } else {
       if (element.contains('kivo') || element.contains('puvo') ||
           element.contains('mrrvo') || element.contains('tsivo') ||
           element.contains('pxevo') || element.contains('mevo') ||
           element.contains('vo')) {
-        if (element.contains('kivo'))
+        if (element.contains('kivo')) {
           octal = octal + '7';
-        else if (element.contains('puvo'))
+          element = element.replaceAll('kivo', '');
+        } else if (element.contains('puvo')) {
           octal = octal + '6';
-        else if (element.contains('mrrvo'))
+          element = element.replaceAll('puvo', '');
+        } else if (element.contains('mrrvo')) {
           octal = octal + '5';
-        else if (element.contains('tsivo'))
+          element = element.replaceAll('mrrvo', '');
+        } else if (element.contains('tsivo')) {
           octal = octal + '4';
-        else if (element.contains('pxevo'))
+          element = element.replaceAll('tsivo', '');
+        } else if (element.contains('pxevo')) {
           octal = octal + '3';
-        else if (element.contains('mevo'))
+          element = element.replaceAll('pxevo', '');
+        } else if (element.contains('mevo')) {
           octal = octal + '2';
-        else if (element.contains('vo'))
+          element = element.replaceAll('mevo', '');
+        } else if (element.contains('vo')) {
           octal = octal + '1';
+          element = element.replaceAll('vo', '');
+        }
       } else
         octal = octal + '0';
       if (element.contains('hin') || element.contains('fu') ||
           element.contains('mrr') || element.contains('sing') ||
           element.contains('pey') || element.contains('mun') ||
           element.contains('aw')) {
-        if (element.contains('hin'))
+        if (element.contains('hin')) {
           octal = octal + '7';
-        else if (element.contains('fu'))
+        } else if (element.contains('fu')) {
           octal = octal + '6';
-        else if (element.contains('mrr'))
+        } else if (element.contains('mrr')) {
           octal = octal + '5';
-        else if (element.contains('sing'))
+        } else if (element.contains('sing')) {
           octal = octal + '4';
-        else if (element.contains('pey'))
+        } else if (element.contains('pey')) {
           octal = octal + '3';
-        else if (element.contains('mun'))
+        } else if (element.contains('mun')) {
           octal = octal + '2';
-        else if (element.contains('aw'))
+        } else if (element.contains('aw')) {
           octal = octal + '1';
+        }
       } else
         octal = octal + '0';
     }
