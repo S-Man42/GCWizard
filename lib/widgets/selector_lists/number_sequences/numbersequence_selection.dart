@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lychrel_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
@@ -52,6 +53,7 @@ class NumberSequenceSelection extends GCWSelection {
         className(NumberSequencePellSelection()),
         className(NumberSequencePellLucasSelection()),
         className(NumberSequenceRecamanSelection()),
+        className(NumberSequenceLychrelSelection()),
       ].contains(className(element.tool));
     }).toList();
 

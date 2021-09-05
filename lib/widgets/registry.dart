@@ -51,6 +51,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lychrel_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
@@ -138,6 +139,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
 import 'tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -4505,6 +4507,18 @@ class Registry {
         SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
         SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
       ]),
+      GCWTool(tool: NumberSequenceLychrelSelection(), i18nPrefix: 'numbersequence_lychrel', helpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+        SEARCHSTRING_DE_NUMBERSEQUENCE,
+        SEARCHSTRING_EN_NUMBERSEQUENCE,
+        SEARCHSTRING_FR_NUMBERSEQUENCE,
+        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
+        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
+        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
+        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
+      ]),
 
       //NumberSequenceSelection Factorial ****************************************************************************************
       GCWTool(tool: NumberSequenceFactorialNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
@@ -5442,6 +5456,64 @@ class Registry {
             SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
             SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
             SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
+          ]),
+
+      //NumberSequenceSelection Lychrel numbers ****************************************************************************************
+      GCWTool(
+          tool: NumberSequenceLychrelNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          helpLocales: [
+            'ko'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
+          ]),
+      GCWTool(tool: NumberSequenceLychrelRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
+        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
+        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
+        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
+      ]),
+      GCWTool(
+          tool: NumberSequenceLychrelCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          helpLocales: [
+            'ko'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequenceLychrelDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          helpLocales: [
+            'ko'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequenceLychrelContainsDigits(),
+          i18nPrefix: 'numbersequence_containsdigits',
+          helpLocales: [
+            'ko'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
           ]),
 
       //NumeralWordsSelection ****************************************************************************************
