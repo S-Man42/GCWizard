@@ -2400,7 +2400,6 @@ String encodeNumberToNumeralWord(NumeralWordsLanguage _currentLanguage, int curr
       octal = convertBase(currentNumber.toString(), 10, 8);
       while (octal.length < 5)
         octal = '0' + octal;
-      print(octal);
       switch (octal[0]) { //  4096
         case '0': numeralWord = ''; break;
         case '1': numeralWord = 'zazam'; break;
