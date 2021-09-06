@@ -267,9 +267,9 @@ const SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'superperfec
 const SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'weird numbers';
 const SEARCHSTRING_EN_NUMERALBASES = 'hexadecimal octal octenary numeral systems';
 const SEARCHSTRING_EN_NUMERALWORDS =
-    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin';
+    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latincorean sino-corean hangul';
 const SEARCHSTRING_EN_NUMERALWORDSLISTS = '';
-const SEARCHSTRING_EN_NUMERALWORDSCONVERTER = '';
+const SEARCHSTRING_EN_NUMERALWORDSCONVERTER = 'convert numerals numeralwords';
 const SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_ONETIMEPAD = '';
 const SEARCHSTRING_EN_OPTICAL_FIBER_SWISSCOM = '';
