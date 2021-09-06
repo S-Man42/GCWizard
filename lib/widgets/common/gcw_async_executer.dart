@@ -55,7 +55,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
     if (widget.parameter == null) return Container();
     Stream<double> progress() async* {
       var parameter = await widget.parameter;
-      if (!_cancel) {
+      if (!_cancel ?? parameter != null) {
         if (kIsWeb) {
           _result = await widget.isolatedFunction(parameter);
           return;

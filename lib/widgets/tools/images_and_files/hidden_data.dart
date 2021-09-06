@@ -170,7 +170,6 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         Container(), // fixes strange behaviour: First GCWOpenFile widget from hide/unhide affect each other
         GCWOpenFile(
-          // trimNullBytes: true,
           file: _unHideFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
