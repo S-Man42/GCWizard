@@ -571,6 +571,7 @@ const SEARCHSTRING_DE_VANITYTEXTSEARCH = 'textanalyse textsuche';
 const SEARCHSTRING_DE_VANITYWORDSLIST = '';
 const SEARCHSTRING_DE_VIGENERE = '';
 const SEARCHSTRING_DE_VIGENEREBREAKER = '';
+const SEARCHSTRING_DE_WASD = '';
 const SEARCHSTRING_DE_VISUALCRYPTOGRAPHY = 'visuellekryptografie schwarz weiss grau';
 const SEARCHSTRING_DE_WINDOW = 'fenster';
 const SEARCHSTRING_DE_Z22 = '';

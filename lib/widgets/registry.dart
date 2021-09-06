@@ -215,6 +215,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
@@ -1666,6 +1667,18 @@ class Registry {
         SEARCHSTRING_DE_UNITCONVERTER,
         SEARCHSTRING_EN_UNITCONVERTER,
         SEARCHSTRING_FR_UNITCONVERTER
+      ]),
+      GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_WASD,
+        SEARCHSTRING_DE_WASD,
+        SEARCHSTRING_EN_WASD,
+        SEARCHSTRING_FR_WASD
       ]),
       GCWTool(
           tool: VanitySelection(),

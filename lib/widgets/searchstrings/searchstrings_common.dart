@@ -555,6 +555,7 @@ const SEARCHSTRING_COMMON_VANITYTEXTSEARCH = '';
 const SEARCHSTRING_COMMON_VANITYWORDSLIST = '';
 const SEARCHSTRING_COMMON_VIGENERE = 'vigenere';
 const SEARCHSTRING_COMMON_VIGENEREBREAKER = '';
+const SEARCHSTRING_COMMON_WASD = 'wasd ijkm esdf qwes udlr quake';
 const SEARCHSTRING_COMMON_VISUALCRYPTOGRAPHY = 'pixels';
 const SEARCHSTRING_COMMON_WINDOW = 'johannes balthasar friderici cryptographia';
 const SEARCHSTRING_COMMON_Z22 = 'konrad zuse z-22 z22';
