@@ -9,6 +9,7 @@
 
 import 'dart:math';
 
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -20,19 +21,20 @@ class Offset{
 }
 
 
-enum WASD_TYPE  {WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, CUSTOM}
-enum _WASD_DIRECTION {UP, DOWN, LEFT, RIGHT, START}
-enum _CURSOR_POSITION {LEFT, RIGHT}
+enum WASD_TYPE  {CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, CUSTOM}
+enum WASD_DIRECTION {UP, DOWN, LEFT, RIGHT, START}
+
 final _SEGMENT_LENGTH = 5;
 
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
-  WASD_TYPE.WASD: 'wasd_keyboard_wasd',
-  WASD_TYPE.ESDF: 'wasd_keyboard_esdf',
-  WASD_TYPE.WQSE: 'wasd_keyboard_wqse',
-  WASD_TYPE.IJMK: 'wasd_keyboard_ijkm',
-  WASD_TYPE.ULDR: 'wasd_keyboard_uldr' ,
-  WASD_TYPE.OLUR: 'wasd_keyboard_olur' ,
-  WASD_TYPE.VLZR: 'wasd_keyboard_vlzr',
+  WASD_TYPE.CURSORS: '↑←↓→',
+  WASD_TYPE.WASD: 'WASD',
+  WASD_TYPE.ESDF: 'ESDF',
+  WASD_TYPE.WQSE: 'WQSE',
+  WASD_TYPE.IJMK: 'IJMK',
+  WASD_TYPE.ULDR: 'ULDR' ,
+  WASD_TYPE.OLUR: 'OLUR' ,
+  WASD_TYPE.VLZR: 'VLZR',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
@@ -76,9 +78,12 @@ final Map<String, List<String>> WASD_ENCODE = {
 final Map<List<String>, String> WASD_DECODE = switchMapKeyValue(WASD_ENCODE);
 
 
-String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
+String encodeWASD(String input, List<String> controlSet){
   if (input == '' || input == null)
     return '';
+
+  controlSet = _normalizeControlSet(controlSet);
+
   input = input.toUpperCase();
   Random rnd = new Random();
   List<String> result = [];
@@ -88,56 +93,39 @@ String encodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
     else
       result.add(WASD_ENCODE[element][rnd.nextInt(WASD_ENCODE[element].length)].toString());
   });
-  switch (controls) {
-    case WASD_TYPE.IJMK : return result.join(' ').replaceAll('W', 'I').replaceAll('A', 'J').replaceAll('S', 'M').replaceAll('D', 'K');
-      break;
-    case WASD_TYPE.ESDF : return result.join(' ').replaceAll('W', 'E').replaceAll('D', 'F').replaceAll('S', 'D').replaceAll('A', 'S');
-      break;
-    case WASD_TYPE.ULDR : return result.join(' ').replaceAll('W', 'U').replaceAll('A', 'L').replaceAll('D', 'R').replaceAll('S', 'D');
-      break;
-    case WASD_TYPE.OLUR : return result.join(' ').replaceAll('W', 'O').replaceAll('A', 'L').replaceAll('D', 'U').replaceAll('S', 'D');
-      break;
-    case WASD_TYPE.VLZR : return result.join(' ').replaceAll('W', 'V').replaceAll('A', 'L').replaceAll('S', 'Z').replaceAll('D', 'R');
-      break;
-    case WASD_TYPE.WQSE : return result.join(' ').replaceAll('A', 'Q').replaceAll('D', 'E');
-      break;
-    case WASD_TYPE.CUSTOM : return result.join(' ').replaceAll('W', controlSet[0]).replaceAll('A', controlSet[1]).replaceAll('S', controlSet[2]).replaceAll('D', controlSet[3]);
-      break;
-    default: return result.join(' ');
-  }
+
+  return substitution(result.join(' '), {
+    'W': controlSet[0],
+    'A': controlSet[1],
+    'S': controlSet[2],
+    'D': controlSet[3],
+  });
 }
 
-String _normalizeDecodingInput(String input, WASD_TYPE controls, List<String> controlSet){
-  input = input.toUpperCase().replaceAll('.', ' ');
-  switch (controls) {
-    case WASD_TYPE.WASD : return input;
-    break;
-    case WASD_TYPE.IJMK : return input.replaceAll('I', 'W').replaceAll('J', 'A').replaceAll('M', 'S').replaceAll('K', 'D');
-    break;
-    case WASD_TYPE.ESDF : return input.replaceAll('E', 'W').replaceAll('S', 'A').replaceAll('D', 'S').replaceAll('F', 'D');
-    break;
-    case WASD_TYPE.ULDR : return input.replaceAll('U', 'W').replaceAll('L', 'A').replaceAll('D', 'S').replaceAll('R', 'D');
-    break;
-    case WASD_TYPE.OLUR : return input.replaceAll('O', 'W').replaceAll('L', 'A').replaceAll('U', 'S').replaceAll('R', 'D');
-    break;
-    case WASD_TYPE.VLZR : return input.replaceAll('V', 'W').replaceAll('L', 'A').replaceAll('Z', 'S').replaceAll('R', 'D');
-    break;
-    case WASD_TYPE.WQSE : return input.replaceAll('Q', 'A').replaceAll('E', 'D');
-    break;
-    case WASD_TYPE.CUSTOM : return input.replaceAll( controlSet[0].toUpperCase(), 'W').replaceAll(controlSet[1].toUpperCase(), 'A').replaceAll(controlSet[2].toUpperCase(), 'S').replaceAll(controlSet[3].toUpperCase(), 'D');
-    break;
-  }
+String _normalizeDecodingInput(String input, List<String> controlSet){
+  var pattern = '[^' + controlSet.join().toUpperCase() + ']';
+
+  input = input.toUpperCase().replaceAll(RegExp(pattern), ' ');
+
+  return substitution(input, {
+    controlSet[0]: 'W',
+    controlSet[1]: 'A',
+    controlSet[2]: 'S',
+    controlSet[3]: 'D',
+  });
 }
 
-String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
+String decodeWASD(String input, List<String> controlSet){
   if (input == '' || input == null)
     return '';
+
+  controlSet = _normalizeControlSet(controlSet);
 
   List<String> resultDecode = [];
   bool found = false;
   String result;
 
-  _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((element) {
+  _normalizeDecodingInput(input, controlSet).split(' ').forEach((element) {
     if (element != '') {
       WASD_DECODE.forEach((key, value) {
         if (key.contains(element)) {
@@ -156,9 +144,29 @@ String decodeWASD(String input, WASD_TYPE controls, List<String> controlSet){
   return resultDecode.join('');
 }
 
-String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlSet){
+_normalizeControlSet(List<String> controlSet) {
+  var normalized = List<String>.from(controlSet);
+  while (normalized.length < 4) {
+    normalized.add(null);
+  }
+
+  if (normalized[0] == null || normalized[0].isEmpty)
+    normalized[0] = '↑';
+  if (normalized[1] == null || normalized[1].isEmpty)
+    normalized[1] = '←';
+  if (normalized[2] == null || normalized[2].isEmpty)
+    normalized[2] = '↓';
+  if (normalized[3] == null || normalized[3].isEmpty)
+    normalized[3] = '→';
+
+  return normalized.map((e) => e.toUpperCase()).toList();
+}
+
+String decodeWASDGraphic(String input, List<String> controlSet){
   if (input == '' || input == null)
     return '';
+
+  controlSet = _normalizeControlSet(controlSet);
 
   int x = 0;
   int y = 0;
@@ -168,8 +176,6 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
   int minLetterY = 0;
   int xOffset = 0;
   int yOffset = 0;
-  int xSentence = 0;
-  int ySentence = 0;
   int maxSentenceX = 0;
   int maxSentenceY = 0;
   int minSentenceX = 0;
@@ -177,9 +183,9 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
   Map<String, String> sentence = new Map();
 
-  var direction = _WASD_DIRECTION.START;
+  var direction = WASD_DIRECTION.START;
   
-  _normalizeDecodingInput(input, controls, controlSet).split(' ').forEach((word) {
+  _normalizeDecodingInput(input,controlSet).split(' ').forEach((word) {
     // draw picture per letter
     // transform/normalize picture
     // align picture in world
@@ -190,7 +196,7 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
     maxLetterY = 0;
     minLetterX = 0;
     minLetterY = 0;
-    direction = _WASD_DIRECTION.START;
+    direction = WASD_DIRECTION.START;
 
     Map<String, String> letter = new Map();
 
@@ -198,23 +204,23 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
       switch (element){
         case 'S':  // back, down
           switch (direction) {
-            case _WASD_DIRECTION.UP:
+            case WASD_DIRECTION.UP:
               y++;
               break;
-            case _WASD_DIRECTION.DOWN:
+            case WASD_DIRECTION.DOWN:
               y--;
               break;
-            case _WASD_DIRECTION.LEFT:
+            case WASD_DIRECTION.LEFT:
               x--;
               break;
-            case _WASD_DIRECTION.RIGHT:
+            case WASD_DIRECTION.RIGHT:
               x++;
               break;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y++; letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = _WASD_DIRECTION.UP;
+          direction = WASD_DIRECTION.UP;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
@@ -223,23 +229,23 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
         case 'W':  // forward, up
           switch (direction) {
-            case _WASD_DIRECTION.UP:
+            case WASD_DIRECTION.UP:
               y++;
               break;
-            case _WASD_DIRECTION.DOWN:
+            case WASD_DIRECTION.DOWN:
               y--;
               break;
-            case _WASD_DIRECTION.LEFT:
+            case WASD_DIRECTION.LEFT:
               x--;
               break;
-            case _WASD_DIRECTION.RIGHT:
+            case WASD_DIRECTION.RIGHT:
               x++;
               break;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             y--; letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = _WASD_DIRECTION.DOWN;
+          direction = WASD_DIRECTION.DOWN;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
@@ -248,23 +254,23 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
         case 'A':  // left
           switch (direction) {
-            case _WASD_DIRECTION.UP:
+            case WASD_DIRECTION.UP:
               y++;
               break;
-            case _WASD_DIRECTION.DOWN:
+            case WASD_DIRECTION.DOWN:
               y--;
               break;
-            case _WASD_DIRECTION.LEFT:
+            case WASD_DIRECTION.LEFT:
               x--;
               break;
-            case _WASD_DIRECTION.RIGHT:
+            case WASD_DIRECTION.RIGHT:
               x++;
               break;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x--; letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = _WASD_DIRECTION.LEFT;
+          direction = WASD_DIRECTION.LEFT;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
@@ -273,23 +279,23 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
 
         case 'D':  // right
           switch (direction) {
-            case _WASD_DIRECTION.UP:
+            case WASD_DIRECTION.UP:
               y++;
               break;
-            case _WASD_DIRECTION.DOWN:
+            case WASD_DIRECTION.DOWN:
               y--;
               break;
-            case _WASD_DIRECTION.LEFT:
+            case WASD_DIRECTION.LEFT:
               x--;
               break;
-            case _WASD_DIRECTION.RIGHT:
+            case WASD_DIRECTION.RIGHT:
               x++;
               break;
           }
           for (int i = 0; i < _SEGMENT_LENGTH; i++) {
             x++; letter[x.toString() + '|' + (y).toString()] = '1';
           }
-          direction = _WASD_DIRECTION.RIGHT;
+          direction = WASD_DIRECTION.RIGHT;
           if (y < minLetterY) minLetterY = y;
           if (x < minLetterX) minLetterX = x;
           if (y > maxLetterY) maxLetterY = y;
@@ -350,7 +356,6 @@ String decodeWASDGraphic(String input, WASD_TYPE controls, List<String> controlS
     }
     output.add(outputLine);
   }
-
 
   return output.join('\n');
 }
