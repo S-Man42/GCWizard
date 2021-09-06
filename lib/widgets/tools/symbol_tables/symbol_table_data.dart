@@ -178,15 +178,15 @@ class SymbolData {
   final String path;
   final List<int> bytes;
 
-  SymbolData({this.path = null, this.bytes = null});
+  SymbolData({this.path, this.bytes});
 }
 
 class SymbolTableData {
   final BuildContext _context;
-  final String _symbolKey;
+  final String symbolKey;
   final _SymbolTableConstants _constants = _SymbolTableConstants();
 
-  SymbolTableData(this._context, this._symbolKey);
+  SymbolTableData(this._context, this.symbolKey);
 
   Map<String, dynamic> config;
   List<Map<String, SymbolData>> images;
@@ -205,7 +205,7 @@ class SymbolTableData {
   }
 
   String _pathKey() {
-    return SYMBOLTABLES_ASSETPATH + _symbolKey + '/';
+    return SYMBOLTABLES_ASSETPATH + symbolKey + '/';
   }
 
   _loadConfig() async {
@@ -230,7 +230,7 @@ class SymbolTableData {
     if (config[_constants.CONFIG_SPECIALSORT] == null || config[_constants.CONFIG_SPECIALSORT] == false) {
       _sort = defaultSymbolSort;
     } else {
-      switch (_symbolKey) {
+      switch (symbolKey) {
         case "notes_names_altoclef":
           _sort = specialSortNoteNames;
           break;
@@ -271,7 +271,7 @@ class SymbolTableData {
       if (translationPrefix != null && translationPrefix.length > 0) {
         key = i18n(_context, translationPrefix + imageKey);
       } else {
-        key = i18n(_context, 'symboltables_' + _symbolKey + '_' + imageKey);
+        key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
       }
       setTranslateable = true;
     } else {

@@ -1,19 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
 
 class MayaCalendar extends StatefulWidget {
   @override
@@ -42,11 +38,6 @@ class MayaCalendarState extends State<MayaCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
-
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
         value: _currentMode,
@@ -70,39 +61,7 @@ class MayaCalendarState extends State<MayaCalendar> {
               // decrpyt: input segment => output number
               children: <Widget>[_buildVisualDecryption()],
             ),
-      GCWTextDivider(
-        text: i18n(context, 'segmentdisplay_displayoutput'),
-        trailing: Row(
-          children: <Widget>[
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            )
-          ],
-        ),
-      ),
-      _buildOutput(countColumns)
+      _buildOutput()
     ]);
   }
 
@@ -177,21 +136,22 @@ class MayaCalendarState extends State<MayaCalendar> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
-    var displays = segments.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
-    }).toList();
-    return buildSegmentDisplayOutput(countColumns, displays);
+  Widget _buildDigitalOutput(List<List<String>> segments) {
+    return GCWSegmentDisplayOutput(
+      segmentFunction:(displayedSegments, readOnly) {
+        return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+      },
+      segments: segments,
+      readOnly: true
+    );
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput() {
     Map outputDates = new Map();
 
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaCalendar(_currentEncodeInput);
+      var segments = encodeMayaCalendar(_currentEncodeInput);
       var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
       var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
 
@@ -209,7 +169,7 @@ class MayaCalendarState extends State<MayaCalendar> {
 
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
+          _buildDigitalOutput(segments['displays']),
           Column(
             children: columnedMultiLineOutput(
                 context,
@@ -225,7 +185,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeMayaCalendar(output);
+      var segments = decodeMayaCalendar(output);
       var gregorian = MayaDayCountToGregorianCalendar(segments['vigesimal']);
       var julian = MayaDayCountToJulianCalendar(segments['vigesimal']);
 
@@ -240,7 +200,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       outputDates[i18n(context, 'mayacalendar_juliancalendar')] = _DateOutputToString(context, julian);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
+          _buildDigitalOutput(segments['displays']),
           Column(
             children: columnedMultiLineOutput(
                 context,
@@ -254,7 +214,7 @@ class MayaCalendarState extends State<MayaCalendar> {
     }
   }
 
-  String _DateOutputToString(context, DateOutput date) {
+  String _DateOutputToString(BuildContext context, DateOutput date) {
     final Locale appLocale = Localizations.localeOf(context);
     switch (appLocale.languageCode) {
       case 'de':

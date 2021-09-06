@@ -245,12 +245,12 @@ class HexViewerState extends State<HexViewer> {
   }
 }
 
-openInHexViewer(BuildContext context, Uint8List data) {
+openInHexViewer(BuildContext context, PlatformFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HexViewer(platformFile: PlatformFile(bytes: data)),
+              tool: HexViewer(platformFile: file),
               toolName: i18n(context, 'hexviewer_title'),
               i18nPrefix: '',
               helpLocales: ['de', 'en', 'fr'])));

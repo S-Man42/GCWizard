@@ -25,6 +25,9 @@ namespace GC_Wizard_SymbolTables_Pdf
         const string CONFIG_TRANSLATIONPREFIX = "translation_prefix";
         const string CONFIG_SPECIALSORT = "special_sort";
         const string CONFIG_IGNORE = "ignore";
+        const string CONFIG_DefaultFont = "Verdana";
+        string CONFIG_Font = CONFIG_DefaultFont;
+        const bool testPage = false;
 
         struct SymbolInfo
         {
@@ -199,6 +202,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             XGraphics gfx = null;
             Progress = 0;
 
+            CONFIG_Font = CONFIG_DefaultFont;
             offset = createPage(document, ref page, ref gfx);
             // Create the root bookmark. You can set the style and the color.
             var contentTableName = "";
@@ -209,6 +213,28 @@ namespace GC_Wizard_SymbolTables_Pdf
                     break;
                 case "fr":
                     contentTableName = "Table des matières";
+                    break;
+                case "ko":
+                    contentTableName = "목차";
+                    CONFIG_Font = "Malgun Gothic";
+                    break;
+                case "it":
+                    contentTableName = "Sommario";
+                    break;
+                case "es":
+                    contentTableName = "Tabla de contenido";
+                    break;
+                case "nl":
+                    contentTableName = "Inhoudsopgave";
+                    break;
+                case "pl":
+                    contentTableName = "Spis treści";
+                    break;
+                case "ru":
+                    contentTableName = "Оглавление";
+                    break;
+                case "tr":
+                    contentTableName = "İçindekiler";
                     break;
                 default:
                     contentTableName = "Table of Contents";
@@ -245,6 +271,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
 
             var query = list.OrderBy(entry => entry.Value);
+            if (testPage) return query.Take(1);
+
             return query;
         }
 
@@ -542,7 +570,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF drawName(String name, string description, string license, int count, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
-            XFont font = new XFont("Verdana", FontSizeName, XFontStyle.BoldItalic);
+            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
 
             var name_offset = font.Height;
             if (!string.IsNullOrEmpty(description))
@@ -575,7 +603,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             // description
             if (!string.IsNullOrEmpty(description))
             {
-                font = new XFont("Verdana", FontSizeName / 2, XFontStyle.Regular);
+                font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
 
                 // Draw the description
                 gfx.DrawString(description, font, XBrushes.Black,
@@ -588,7 +616,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             // license
             if (!string.IsNullOrEmpty(license))
             {
-                font = new XFont("Verdana", FontSizeName / 4, XFontStyle.Regular);
+                font = new XFont(CONFIG_Font, FontSizeName / 4, XFontStyle.Regular);
 
                 // Draw the license
                 gfx.DrawString(license, font, XBrushes.Black,
@@ -613,7 +641,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF drawOverlay(String name, int maxLength, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
-            XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
+            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
             if (name == " ")
             {
                 drawSpaceSymbol(offset, XColors.Blue, font, gfx);
@@ -769,7 +797,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
         {
             // Create a font
-            XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
+            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
             XSize textSize;
             String text;
 
@@ -797,7 +825,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             // Draw GC Wizard Text
             // Create a font
-            font = new XFont("Verdana", FontSizeName / 2, XFontStyle.Regular);
+            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
             text = "GC Wizard";
             textSize = gfx.MeasureString(text, font);
 

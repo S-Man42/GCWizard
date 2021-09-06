@@ -100,7 +100,7 @@ List<List<String>> encodeCistercian(String input) {
 }
 
 Map<String, dynamic> decodeCistercian(String input) {
-  if (input == null || input == '') return {'displays': [], 'text': ''};
+  if (input == null || input == '') return {'displays': <List<String>>[], 'text': ''};
 
   var baseSegments = _baseSegmentsCistercianSegment;
 

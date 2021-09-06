@@ -94,7 +94,6 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         GCWOpenFile(
           title: i18n(context, 'hiddendata_openpublicfile'),
-          trimNullBytes: true,
           file: _publicFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
@@ -130,7 +129,6 @@ class HiddenDataState extends State<HiddenData> {
           ),
         if (_currentHideMode == GCWSwitchPosition.right)
           GCWOpenFile(
-            trimNullBytes: true,
             file: _secretFile,
             onLoaded: (_openedFile) {
               if (_openedFile == null) {
@@ -172,7 +170,6 @@ class HiddenDataState extends State<HiddenData> {
       children: [
         Container(), // fixes strange behaviour: First GCWOpenFile widget from hide/unhide affect each other
         GCWOpenFile(
-          trimNullBytes: true,
           file: _unHideFile,
           onLoaded: (_openedFile) {
             if (_openedFile == null) {
@@ -209,7 +206,7 @@ class HiddenDataState extends State<HiddenData> {
             showToast(i18n(context, 'hiddendata_datanotreadable'));
             return;
           }
-          openInHexViewer(context, file.bytes);
+          openInHexViewer(context, file);
         }),
       ),
       if (file.fileClass == FileClass.TEXT)
@@ -232,7 +229,8 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  Widget _buildFileTree(List<PlatformFile> files, List<String> parents) {
+  Widget _buildFileTree(List<PlatformFile> files, List<String> parents, {level: 0}) {
+    var isFirst = true;
     var children = files.map((PlatformFile file) {
       var hasChildren = file.children != null && file.children.isNotEmpty;
 
@@ -247,14 +245,22 @@ class HiddenDataState extends State<HiddenData> {
 
       var fileName = file.name;
       if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
-        fileName = i18n(context, 'hiddendata_hidden') + ' ' + fileName.split('_').last + ': ' + file.fileType.toString().split('.').last;
+        var index = fileName.split('_').last;
+        var prefix;
+        if (index == '0') {
+          prefix = i18n(context, 'hiddendata_source');
+        } else {
+          prefix = i18n(context, 'hiddendata_hidden') + ' $index';
+        }
+
+        fileName = '$prefix: ' + file.fileType.toString().split('.').last;
       }
 
       var parentsString = parents.join(' → ');
       var newParents = List<String>.from(parents);
       newParents.add(fileName);
 
-      return Column(
+      var out = Column(
         children: [
           Row (
             children: [
@@ -296,7 +302,7 @@ class HiddenDataState extends State<HiddenData> {
           ),
           if (file.fileClass == FileClass.IMAGE)
             Container(
-              child: GCWImageView(imageData: GCWImageViewData(file.bytes)),
+              child: GCWImageView(imageData: GCWImageViewData(file)),
               margin: EdgeInsets.only(left: 42)
             ),
           if (file.fileClass == FileClass.TEXT)
@@ -306,10 +312,18 @@ class HiddenDataState extends State<HiddenData> {
             ),
           if (hasChildren)
             Container(
-              child: _buildFileTree(file.children, newParents),
-            )
+              child: _buildFileTree(file.children, newParents, level: level + 1),
+            ),
+          if (level == 0 && isFirst)
+            GCWDivider(),
+          if (files.length <= 1 && level == 0 && !hasChildren)
+            GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
         ],
       );
+
+      isFirst = false;
+
+      return out;
     }).toList();
 
     return Column(
@@ -329,29 +343,30 @@ class HiddenDataState extends State<HiddenData> {
   }
 
   _exportFile(BuildContext context, PlatformFile file) async {
+    print('BLA');
+
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
     }
 
-    var _fileExtension;
+    var fileName = file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = file.name.split('.');
-    if (ext.length > 1 && ext[1].length < 5)
-      _fileExtension = ext[1];
-    else
-      _fileExtension = fileExtension(file.fileType);
+    print(ext);
+    if (ext.length <= 1 || ext.last.length >= 5)
+      fileName = fileName + '.' + fileExtension(file.fileType);
 
-    var value = await saveByteDataToFile(file.bytes, file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file') + '.' + _fileExtension);
+    var value = await saveByteDataToFile(context, file.bytes, fileName);
     if (value != null) showExportedFileDialog(context, fileType: file.fileType);
   }
 }
 
-openInHiddenData(BuildContext context, {Uint8List data, PlatformFile file}) {
+openInHiddenData(BuildContext context, PlatformFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HiddenData(platformFile: file ?? PlatformFile(bytes: data)),
+              tool: HiddenData(platformFile: file),
               toolName: i18n(context, 'hiddendata_title'),
               i18nPrefix: '',
               helpLocales: ['de', 'en', 'fr'])));

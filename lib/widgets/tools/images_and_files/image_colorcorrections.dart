@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -16,13 +15,14 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
 
 class ImageColorCorrections extends StatefulWidget {
-  final Uint8List imageData;
+  final PlatformFile file;
 
-  const ImageColorCorrections({this.imageData});
+  const ImageColorCorrections({this.file});
 
   @override
   ImageColorCorrectionsState createState() => ImageColorCorrectionsState();
@@ -66,8 +66,8 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   void initState() {
     super.initState();
 
-    if (widget.imageData != null) {
-      _originalData = widget.imageData;
+    if (widget.file != null && widget.file.bytes != null) {
+      _originalData = widget.file.bytes;
 
       _originalPreview = _currentDataInit();
       _currentPreview = img.Image.from(_originalPreview);
@@ -102,7 +102,6 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          trimNullBytes: true,
           onLoaded: (value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -122,7 +121,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         Container(), // Fixes a display issue
         if (_currentPreview != null)
           GCWImageView(
-            imageData: _originalData == null ? null : GCWImageViewData(_imageBytes()),
+            imageData: _originalData == null ? null : GCWImageViewData(PlatformFile(bytes: _imageBytes())),
             onBeforeLoadBigImage: _adjustToFullPicture,
           ),
         if (_currentPreview != null)
@@ -325,7 +324,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         brightness: _currentBrightness));
   }
 
-  _imageBytes() {
+  Uint8List _imageBytes() {
     _currentPreview = _adjustColor(_originalPreview);
     return encodeTrimmedPng(_currentPreview);
   }
@@ -407,12 +406,12 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   return image;
 }
 
-openInColorCorrections(BuildContext context, Uint8List imgData) {
+openInColorCorrections(BuildContext context, PlatformFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: ImageColorCorrections(imageData: imgData),
+              tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
               i18nPrefix: '',
               autoScroll: false,

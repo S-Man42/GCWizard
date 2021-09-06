@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
@@ -8,6 +6,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -15,8 +14,8 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/14_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/16_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/7_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
-import 'package:prefs/prefs.dart';
+
+import 'base/n_segment_display.dart';
 
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
@@ -54,11 +53,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
-
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
         value: _currentMode,
@@ -103,45 +97,13 @@ class SegmentDisplayState extends State<SegmentDisplay> {
                 });
               },
             ),
-      GCWTextDivider(
-        text: i18n(context, 'segmentdisplay_displayoutput'),
-        trailing: Row(
-          children: <Widget>[
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            )
-          ],
-        ),
-      ),
-      _buildOutput(countColumns)
+      _buildOutput(),
     ]);
   }
 
-  _buildVisualEncryption() {
+  Widget _buildVisualEncryption() {
     Map<String, bool> currentDisplay;
+    NSegmentDisplay displayWidget;
 
     var displays = _currentDisplays;
     if (displays != null && displays.length > 0)
@@ -149,7 +111,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     else
       currentDisplay = {};
 
-    var displayWidget;
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -245,37 +206,37 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
-    var displays = segments.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-
-      switch (widget.type) {
-        case SegmentDisplayType.SEVEN:
-          return SevenSegmentDisplay(
-            segments: displayedSegments,
-            readOnly: true,
-          );
-        case SegmentDisplayType.FOURTEEN:
-          return FourteenSegmentDisplay(
-            segments: displayedSegments,
-            readOnly: true,
-          );
-        case SegmentDisplayType.SIXTEEN:
-          return SixteenSegmentDisplay(
-            segments: displayedSegments,
-            readOnly: true,
-          );
-        default:
-          return null;
-      }
-    }).toList();
-
-    return buildSegmentDisplayOutput(countColumns, displays);
+  Widget _buildDigitalOutput(List<List<String>> segments) {
+    return GCWSegmentDisplayOutput(
+      segmentFunction:(displayedSegments, readOnly) {
+        switch (widget.type) {
+          case SegmentDisplayType.SEVEN:
+            return SevenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            );
+          case SegmentDisplayType.FOURTEEN:
+            return FourteenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            );
+          case SegmentDisplayType.SIXTEEN:
+            return SixteenSegmentDisplay(
+              segments: displayedSegments,
+              readOnly: true,
+            );
+          default:
+            return null;
+        }
+      },
+      segments: segments,
+      readOnly: true
+    );
   }
 
-  _buildOutput(countColumns) {
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      var segments;
+      List<List<String>> segments;
       if (_currentEncryptMode == GCWSwitchPosition.left)
         segments = encodeSegment(_currentEncodeInput, widget.type);
       else
@@ -288,14 +249,14 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       }).join(' ');
 
       return Column(
-        children: <Widget>[_buildDigitalOutput(countColumns, segments), GCWDefaultOutput(child: output)],
+        children: <Widget>[_buildDigitalOutput(segments), GCWDefaultOutput(child: output)],
       );
     } else {
       var segments = decodeSegment(_currentDecodeInput, widget.type);
 
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
+          _buildDigitalOutput(segments['displays']),
           GCWDefaultOutput(child: segments['text'])
         ],
       );

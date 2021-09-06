@@ -3,7 +3,51 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 void main(){
-  group("NumeralWords.decodeNumeralwordsEntireWords:", () {
+  group("NumeralWords.decodeNumeralwordsEntireWordsALL:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+
+      {'input' : 'huit dwa seize six one two eins', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
+                            NumeralWordsDecodeOutput('2', 'dwa', 'common_language_polish'),
+                            NumeralWordsDecodeOutput('', '', 'common_language_russian'),
+                            NumeralWordsDecodeOutput('16', 'seize', 'common_language_french'),
+                            NumeralWordsDecodeOutput('6', 'six', 'common_language_english'),
+                            NumeralWordsDecodeOutput('', '', 'common_language_french'),
+                            NumeralWordsDecodeOutput('1', 'one', 'common_language_english'),
+                            NumeralWordsDecodeOutput('2', 'two', 'common_language_english'),
+                            NumeralWordsDecodeOutput('1', 'eins', 'common_language_german')]},
+      {'input' : 'fuenf fünf kvin cinq пять lul five zéro', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
+                            NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
+                            NumeralWordsDecodeOutput('5', 'kvin', 'common_language_esperanto'),
+                            NumeralWordsDecodeOutput('5', 'cinq', 'common_language_french'),
+//                            NumeralWordsDecodeOutput('5', 'пять', '  common_language_kyr'),
+                            NumeralWordsDecodeOutput('5', 'lul', 'common_language_volapuek'),
+                            NumeralWordsDecodeOutput('5', 'five', 'common_language_english'),
+                            NumeralWordsDecodeOutput('', '', 'numeralwords_language_sco'),
+                            NumeralWordsDecodeOutput('0', 'zero', 'common_language_english'),
+                            NumeralWordsDecodeOutput('', '', 'common_language_french'),
+                            NumeralWordsDecodeOutput('', '', 'common_language_italian'),
+                            NumeralWordsDecodeOutput('', '', 'common_language_portuguese'),
+                            NumeralWordsDecodeOutput('', '', 'common_language_polish'),
+                            NumeralWordsDecodeOutput('', '', 'numeralwords_language_meg'),
+        ]},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
+
+  group("NumeralWords.decodeNumeralwordsEntireWordsDEU:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
@@ -62,23 +106,66 @@ void main(){
       {'input' : 'dreihundertdreiunddreißigtausenddreihundertunddreiunddreißig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('333333', 'dreihundertdreiunddreissigtausenddreihundertdreiunddreissig', 'common_language_german')]},
 
+      {'input' : 'huit dwa seize six one two eins', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
+          NumeralWordsDecodeOutput('2', 'dwa', 'common_language_polish'),
+          NumeralWordsDecodeOutput('', '', 'common_language_russian'),
+          NumeralWordsDecodeOutput('16', 'seize', 'common_language_french'),
+          NumeralWordsDecodeOutput('6', 'six', 'common_language_english'),
+          NumeralWordsDecodeOutput('', '', 'common_language_french'),
+          NumeralWordsDecodeOutput('1', 'one', 'common_language_english'),
+          NumeralWordsDecodeOutput('2', 'two', 'common_language_english'),
+          NumeralWordsDecodeOutput('1', 'eins', 'common_language_german')]},
+      {'input' : 'fuenf fünf kvin cinq пять lul five zéro', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
+          NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
+          NumeralWordsDecodeOutput('5', 'kvin', 'common_language_esperanto'),
+          NumeralWordsDecodeOutput('5', 'cinq', 'common_language_french'),
+//                            NumeralWordsDecodeOutput('5', 'пять', '  common_language_kyr'),
+          NumeralWordsDecodeOutput('5', 'lul', 'common_language_volapuek'),
+          NumeralWordsDecodeOutput('5', 'five', 'common_language_english'),
+          NumeralWordsDecodeOutput('', '', 'numeralwords_language_sco'),
+          NumeralWordsDecodeOutput('0', 'zero', 'common_language_english'),
+          NumeralWordsDecodeOutput('', '', 'common_language_french'),
+          NumeralWordsDecodeOutput('', '', 'common_language_italian'),
+          NumeralWordsDecodeOutput('', '', 'common_language_portuguese'),
+          NumeralWordsDecodeOutput('', '', 'common_language_polish'),
+          NumeralWordsDecodeOutput('', '', 'numeralwords_language_meg'),
+        ]},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
+
+  group("NumeralWords.decodeNumeralwordsEntireWordsENG:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : 'one', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
       {'input' : 'ten', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('10', 'ten', 'common_language_english')]},
       {'input' : 'abc ten def one abc', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('10', 'ten', 'common_language_english'),
-                            NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
+          NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
 
       {'input' : 'fifty', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('50', 'fifty', 'common_language_english')]},
       {'input' : 'fiftyone', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
-        'expectedOutput' : []},
+        'expectedOutput' : [NumeralWordsDecodeOutput('51', 'fiftyone', 'common_language_english')]},
       {'input' : 'fifty-one', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('51', 'fifty-one', 'common_language_english')]},
       {'input' : 'fifty one', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('50', 'fifty', 'common_language_english'),
-                            NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
+          NumeralWordsDecodeOutput('1', 'one', 'common_language_english')]},
 
       {'input' : 'hundred', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('100', 'hundred', 'common_language_english')]},
@@ -90,11 +177,16 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('150', 'onehundredfifty', 'common_language_english')]},
       {'input' : 'one hundred fifty', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('100', 'onehundred', 'common_language_english'),
-                            NumeralWordsDecodeOutput('50', 'fifty', 'common_language_english')]},
+          NumeralWordsDecodeOutput('50', 'fifty', 'common_language_english')]},
+
       {'input' : 'a hundred and fifty-five', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('155', 'onehundredfifty-five', 'common_language_english')]},
       {'input' : 'two hundred and fifty-five', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('255', 'twohundredfifty-five', 'common_language_english')]},
+      {'input' : 'a hundred and fiftyfive', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('155', 'onehundredfiftyfive', 'common_language_english')]},
+      {'input' : 'two hundred and fiftyfive', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('255', 'twohundredfiftyfive', 'common_language_english')]},
 
       {'input' : 'thousand', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1000', 'thousand', 'common_language_english')]},
@@ -108,17 +200,22 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('1050', 'onethousandfifty', 'common_language_english')]},
       {'input' : 'one thousand fifty', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1000', 'onethousand', 'common_language_english'),
-                            NumeralWordsDecodeOutput('50', 'fifty', 'common_language_english')]},
+          NumeralWordsDecodeOutput('50', 'fifty', 'common_language_english')]},
+
       {'input' : 'a thousand and fifty-five', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1055', 'onethousandfifty-five', 'common_language_english')]},
       {'input' : 'two thousand and fifty-five', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('2055', 'twothousandfifty-five', 'common_language_english')]},
+      {'input' : 'a thousand and fiftyfive', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('1055', 'onethousandfiftyfive', 'common_language_english')]},
+      {'input' : 'two thousand and fiftyfive', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('2055', 'twothousandfiftyfive', 'common_language_english')]},
 
       {'input' : 'thousandhundred', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1100', 'thousandhundred', 'common_language_english')]},
       {'input' : 'thousand hundred', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1000', 'thousand', 'common_language_english'),
-                            NumeralWordsDecodeOutput('100', 'hundred', 'common_language_english')]},
+          NumeralWordsDecodeOutput('100', 'hundred', 'common_language_english')]},
       {'input' : 'a thousand and hundred', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('1100', 'onethousandhundred', 'common_language_english')]},
       {'input' : 'a thousand and onehundred', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
@@ -131,33 +228,8 @@ void main(){
         'expectedOutput' : [NumeralWordsDecodeOutput('100101', 'onehundredthousandhundredone', 'common_language_english')]},
       {'input' : 'twohundredseventy-fivethousandhundred and one', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
         'expectedOutput' : [NumeralWordsDecodeOutput('275101', 'twohundredseventy-fivethousandhundredone', 'common_language_english')]},
-      
-      {'input' : 'huit dwa seize six one two eins', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
-        'expectedOutput' : [NumeralWordsDecodeOutput('8', 'huit', 'common_language_french'),
-                            NumeralWordsDecodeOutput('2', 'dwa', 'common_language_polish'),
-                            NumeralWordsDecodeOutput('', '', 'common_language_russian'),
-                            NumeralWordsDecodeOutput('16', 'seize', 'common_language_french'),
-                            NumeralWordsDecodeOutput('6', 'six', 'common_language_english'),
-                            NumeralWordsDecodeOutput('', '', 'common_language_french'),
-                            NumeralWordsDecodeOutput('1', 'one', 'common_language_english'),
-                            NumeralWordsDecodeOutput('2', 'two', 'common_language_english'),
-                            NumeralWordsDecodeOutput('1', 'eins', 'common_language_german')]},
-      {'input' : 'fuenf fünf kvin cinq пять lul five zéro', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
-        'expectedOutput' : [NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
-                            NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
-                            NumeralWordsDecodeOutput('5', 'kvin', 'common_language_esperanto'),
-                            NumeralWordsDecodeOutput('5', 'cinq', 'common_language_french'),
-//                            NumeralWordsDecodeOutput('5', 'пять', '  common_language_kyr'),
-                            NumeralWordsDecodeOutput('5', 'lul', 'common_language_volapuek'),
-                            NumeralWordsDecodeOutput('5', 'five', 'common_language_english'),
-                            NumeralWordsDecodeOutput('', '', 'numeralwords_language_sco'),
-                            NumeralWordsDecodeOutput('0', 'zero', 'common_language_english'),
-                            NumeralWordsDecodeOutput('', '', 'common_language_french'),
-                            NumeralWordsDecodeOutput('', '', 'common_language_italian'),
-                            NumeralWordsDecodeOutput('', '', 'common_language_portuguese'),
-                            NumeralWordsDecodeOutput('', '', 'common_language_polish'),
-                            NumeralWordsDecodeOutput('', '', 'numeralwords_language_meg'),
-        ]},
+      {'input' : 'twohundredseventyfivethousandhundred and one', 'language' : NumeralWordsLanguage.ENG, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('275101', 'twohundredseventyfivethousandhundredone', 'common_language_english')]},
     ];
 
     _inputsToExpected.forEach((elem) {

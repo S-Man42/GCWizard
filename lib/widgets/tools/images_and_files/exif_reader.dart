@@ -125,6 +125,14 @@ class _ExifReaderState extends State<ExifReader> {
     }
 
     List<Widget> widgets = [];
+    widgets.add(
+      Container(
+        child: GCWImageView(
+          imageData: GCWImageViewData(file),
+        ),
+        padding: EdgeInsets.only(top: 10),
+      )
+    );
     _decorateThumbnail(widgets);
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);
@@ -138,7 +146,7 @@ class _ExifReaderState extends State<ExifReader> {
   /// Add Thumbnail section
   ///
   void _decorateThumbnail(List<Widget> widgets) {
-    if (thumbnail != null && thumbnail.bytes.length > 0) {
+    if (thumbnail != null && thumbnail.file != null && thumbnail.file.bytes.length > 0) {
       widgets.add(GCWOutput(
         title: i18n(context, 'exif_section_thumbnail'),
         child: GCWImageView(imageData: thumbnail),
@@ -271,7 +279,7 @@ class _ExifReaderState extends State<ExifReader> {
     if (file == null) return;
     var _hiddenData = hiddenData(file);
 
-    if (_hiddenData == null || _hiddenData.isEmpty)
+    if (_hiddenData == null || _hiddenData.length <= 1)
       return;
 
     widgets.add(
@@ -280,7 +288,7 @@ class _ExifReaderState extends State<ExifReader> {
         child: GCWButton(
           text: i18n(context, 'exif_showhiddendata'),
           onPressed: () {
-            openInHiddenData(context, file: file);
+            openInHiddenData(context, file);
           },
         )
       )
@@ -288,8 +296,7 @@ class _ExifReaderState extends State<ExifReader> {
   }
 }
 
-openInMetadataViewer(BuildContext context, Uint8List imgData) {
-  local.PlatformFile file = local.PlatformFile(bytes: imgData);
+openInMetadataViewer(BuildContext context, local.PlatformFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

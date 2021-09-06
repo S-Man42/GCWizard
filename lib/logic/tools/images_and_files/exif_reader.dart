@@ -31,12 +31,12 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
     // print('File has JPEG thumbnail');
     var _jpgBytes = data['JPEGThumbnail'].values;
     data.remove('JPEGThumbnail');
-    return GCWImageViewData(_jpgBytes.toList());
+    return GCWImageViewData(local.PlatformFile(bytes: _jpgBytes.toList()));
   } else if (data.containsKey('TIFFThumbnail')) {
     // print('File has TIFF thumbnail');
     var _tiffBytes = data['TIFFThumbnail'].values;
     data.remove('TIFFThumbnail');
-    return GCWImageViewData(_tiffBytes.toList());
+    return GCWImageViewData(local.PlatformFile(bytes: _tiffBytes.toList()));
   }
   return null;
 }

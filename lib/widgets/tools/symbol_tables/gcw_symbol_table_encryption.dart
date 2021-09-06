@@ -26,9 +26,11 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final SymbolTableData data;
   final String symbolKey;
   final Function onChanged;
+  final Function onBeforeEncrypt;
+  final bool alwaysIgnoreUnknown;
 
   const GCWSymbolTableEncryption(
-      {Key key, this.data, this.countColumns, this.mediaQueryData, this.symbolKey, this.onChanged})
+      {Key key, this.data, this.countColumns, this.mediaQueryData, this.symbolKey, this.onChanged, this.onBeforeEncrypt, this.alwaysIgnoreUnknown})
       : super(key: key);
 
   @override
@@ -77,18 +79,23 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           onChanged: (text) {
             setState(() {
               _currentEncryptionInput = text;
+
+              if (widget.onBeforeEncrypt != null) {
+                _currentEncryptionInput = widget.onBeforeEncrypt(_currentEncryptionInput);
+              }
             });
           },
         ),
-        GCWOnOffSwitch(
-          value: _currentIgnoreUnknown,
-          title: i18n(context, 'symboltables_ignoreunknown'),
-          onChanged: (value) {
-            setState(() {
-              _currentIgnoreUnknown = value;
-            });
-          },
-        ),
+        if (widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false)
+          GCWOnOffSwitch(
+            value: _currentIgnoreUnknown,
+            title: i18n(context, 'symboltables_ignoreunknown'),
+            onChanged: (value) {
+              setState(() {
+                _currentIgnoreUnknown = value;
+              });
+            },
+          ),
         GCWTextDivider(
             text: i18n(context, 'common_output'),
             trailing: GCWSymbolTableZoomButtons(
@@ -278,7 +285,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return await saveByteDataToFile(
+    return await saveByteDataToFile(context,
         trimNullBytes(data.buffer.asUint8List()), 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

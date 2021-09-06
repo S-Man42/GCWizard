@@ -26,18 +26,13 @@ class SymbolTableSelection extends GCWSelection {
   }
 }
 
-Widget symboltablesDownloadButton(BuildContext context) {
-  return IconButton(
-    icon: Icon(Icons.file_download),
-    onPressed: () {
-      showGCWAlertDialog(
-        context,
-        i18n(context, 'symboltables_selection_download_dialog_title'),
-        i18n(context, 'symboltables_selection_download_dialog_text'),
-        () {
-          launch(i18n(context, 'symboltables_selection_download_link'));
-        },
-      );
-    },
-  );
+String symboltablesDownloadLink(BuildContext context) {
+  final _SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'ko'];
+  var locale = Localizations.localeOf(context).languageCode;
+
+  var usedLocale = 'en';
+  if (_SUPPORTED_LANGUAGES.contains(locale))
+    usedLocale = locale;
+
+  return 'https://misc.gcwizard.net/symboltables_$usedLocale.pdf';
 }

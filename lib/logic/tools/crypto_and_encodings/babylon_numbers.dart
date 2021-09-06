@@ -64,7 +64,7 @@ final Map<int, List<String>> _numbersToSegments = {
 };
 
 List<List<String>> encodeBabylonNumbers(int input) {
-  if (input == null) return [];
+  if (input == null) return <List<String>>[];
 
   var sexagesimal = convertBase(input.toString(), 10, 60);
   return sexagesimal.split('').map((digit) {
@@ -75,7 +75,7 @@ List<List<String>> encodeBabylonNumbers(int input) {
 Map<String, dynamic> decodeBabylonNumbers(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
-      'displays': [[]],
+      'displays': <List<String>>[],
       'numbers': [0],
       'sexagesimal': BigInt.zero
     };
