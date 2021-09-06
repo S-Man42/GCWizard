@@ -335,7 +335,7 @@ String decodeWASDGraphic(String input, List<String> controlSet){
   }); // forEach word
 
   // build bitmap
-  var binaryWorld = List.generate(maxSentenceX + 3, (y) => List(maxSentenceY - minSentenceY + 1), growable: false);
+  var binaryWorld = List.generate(maxSentenceX + 3, (y) => List(maxSentenceY - minSentenceY + 3), growable: false);
   sentence.forEach((key, value) {
     x = int.parse(key.split('|')[0]);
     y = int.parse(key.split('|')[1]);
