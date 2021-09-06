@@ -2448,7 +2448,7 @@
   "numbersequence_recaman_description": "OEIS A005132, until n = 11111",
   "numbersequence_recaman_example": "0, 1, 3, 6, 2, 7, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, ...",
   "numbersequence_lychrel_title": "Lychrel Sequence",
-  "numbersequence_lychrel_description": "OEIS A023108, until n = 10000",
+  "numbersequence_lychrel_description": "OEIS A023108, until n = 246",
   "numbersequence_lychrel_example": "196, 295, 394, 493, 592, 689, 691, 788, 790, 879, 978, 986, ...",
   "numbersequence_nth_title": "Get nᵗʰ Number",
   "numbersequence_nth_description": "Attention: First number is n = 0, whereas some sources start at n = 1",
