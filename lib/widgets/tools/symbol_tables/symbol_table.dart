@@ -7,8 +7,11 @@ import 'package:prefs/prefs.dart';
 
 class SymbolTable extends StatefulWidget {
   final String symbolKey;
+  final Function onDecrypt;
+  final Function onEncrypt;
+  final bool alwaysIgnoreUnknown;
 
-  const SymbolTable({Key key, this.symbolKey}) : super(key: key);
+  const SymbolTable({Key key, this.symbolKey, this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown}) : super(key: key);
 
   @override
   SymbolTableState createState() => SymbolTableState();
@@ -64,6 +67,8 @@ class SymbolTableState extends State<SymbolTable> {
                 countColumns: countColumns,
                 mediaQueryData: mediaQueryData,
                 symbolKey: widget.symbolKey,
+                onBeforeEncrypt: widget.onEncrypt,
+                alwaysIgnoreUnknown: widget.alwaysIgnoreUnknown,
                 onChanged: () {
                   setState(() {});
                 },
@@ -72,6 +77,7 @@ class SymbolTableState extends State<SymbolTable> {
                 data: _data,
                 countColumns: countColumns,
                 mediaQueryData: mediaQueryData,
+                onAfterDecrypt: widget.onDecrypt,
                 onChanged: () {
                   setState(() {});
                 },

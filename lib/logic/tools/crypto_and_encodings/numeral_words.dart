@@ -1541,7 +1541,7 @@ NumeralWordsOutput _isNumeralWord10(String input, NumeralWordsLanguage language,
     }
   } else if (language == NumeralWordsLanguage.ENG) {
     expr = RegExp(
-        r'(twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety)[-](one|two|three|four|five|six|seven|eight|nine)');
+        r'(twenty|thirty|fourty|fifty|sixty|seventy|eighty|ninety)[-]?(one|two|three|four|five|six|seven|eight|nine)');
     if (expr.hasMatch(input)) {
       state = true;
       var matches = expr.firstMatch(input);
