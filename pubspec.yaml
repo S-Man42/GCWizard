@@ -38,7 +38,6 @@ dependencies:
   prefs: ^3.3.0
   provider: ^6.0.0
   qrscan: ^0.3.2
-  qr_flutter: ^4.0.0
   scrollable_positioned_list: ^0.1.10
   touchable: ^1.0.0
   universal_html: ^2.0.4

@@ -3,16 +3,15 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:intl/intl.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
+import 'package:intl/intl.dart';
+
 import 'gcw_exported_file_dialog.dart';
 
 enum TextExportMode { TEXT, QR }
@@ -42,6 +41,8 @@ class GCWTextExportState extends State<GCWTextExport> {
   TextEditingController _textExportController;
   var _currentExportText;
 
+  Uint8List _qrImageData;
+
   @override
   void initState() {
     super.initState();
@@ -58,8 +59,19 @@ class GCWTextExportState extends State<GCWTextExport> {
     super.dispose();
   }
 
+  _buildQRCode() {
+    generateBarCode(_currentExportText).then((qr_code) {
+      setState(() {
+        _qrImageData = qr_code;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_currentMode == TextExportMode.QR && _qrImageData == null)
+      _buildQRCode();
+
     return Container(
         width: 300,
         height: 360,
@@ -75,18 +87,15 @@ class GCWTextExportState extends State<GCWTextExport> {
                       setState(() {
                         _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
                         if (widget.onModeChanged != null) widget.onModeChanged(_currentMode);
+
+                        if (_currentMode == TextExportMode.QR)
+                          _buildQRCode();
                       });
                     },
                   )
                 : Container(),
             _currentMode == TextExportMode.QR
-                ? QrImage(
-                    data: _currentExportText,
-                    version: QrVersions.auto,
-                    size: 280,
-                    errorCorrectionLevel: QrErrorCorrectLevel.L,
-                    backgroundColor: COLOR_QR_BACKGROUND,
-                  )
+                ? (_qrImageData == null ? Container() : Image.memory(_qrImageData))
                 : Column(
                     children: <Widget>[
                       GCWTextField(
@@ -114,8 +123,8 @@ class GCWTextExportState extends State<GCWTextExport> {
   }
 }
 
-exportFile(String text, String exportLabel, TextExportMode mode, BuildContext context) {
-  _exportEncryption(context, text, mode, exportLabel).then((value) {
+exportFile(String text, TextExportMode mode, BuildContext context) {
+  _exportEncryption(context, text, mode).then((value) {
     if (value == null) {
       return;
     }
@@ -133,29 +142,13 @@ exportFile(String text, String exportLabel, TextExportMode mode, BuildContext co
   });
 }
 
-Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportMode mode, String exportLabel) async {
+Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportMode mode) async {
   if (mode == TextExportMode.TEXT) {
-    return saveStringToFile(text, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
+    return saveStringToFile(text, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
   } else {
-    final data = await toQrImageData(text);
+    final data = await generateBarCode(text);
 
     return await saveByteDataToFile(context,
-        data, exportLabel + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
-  }
-}
-
-Future<Uint8List> toQrImageData(String text) async {
-  try {
-    var image = await QrPainter(
-            data: text,
-            version: QrVersions.auto,
-            errorCorrectionLevel: QrErrorCorrectLevel.L,
-            emptyColor: COLOR_QR_BACKGROUND,
-            gapless: true)
-        .toImage(300);
-
-    return addImageBorder(image);
-  } catch (e) {
-    throw e;
+        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }
