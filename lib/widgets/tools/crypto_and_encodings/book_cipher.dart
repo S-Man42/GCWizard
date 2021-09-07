@@ -138,7 +138,6 @@ class BookCipherState extends State<BookCipher> {
             }),
         GCWTwoOptionsSwitch(
           value: _currentSimpleMode,
-          title: i18n(context, 'common_switch_title'),
           leftValue: i18n(context, 'common_mode_simple'),
           rightValue: i18n(context, 'common_mode_advanced'),
           onChanged: (value) {
@@ -165,7 +164,6 @@ class BookCipherState extends State<BookCipher> {
 
   Widget _buildDecodeModusControl(BuildContext context) {
     return GCWTwoOptionsSwitch(
-      title: i18n(context, 'book_cipher_modus'),
       leftValue: i18n(context, 'book_cipher_searchposition'),
       rightValue: i18n(context, 'book_cipher_searchword'),
       value: _currentMode,
