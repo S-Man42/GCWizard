@@ -21,7 +21,7 @@ class Offset{
 }
 
 
-enum WASD_TYPE  {CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, CUSTOM}
+enum WASD_TYPE  {CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, CUSTOM}
 enum WASD_DIRECTION {UP, DOWN, LEFT, RIGHT, START}
 
 final _SEGMENT_LENGTH = 5;
@@ -35,6 +35,7 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.ULDR: 'ULDR' ,
   WASD_TYPE.OLUR: 'OLUR' ,
   WASD_TYPE.VLZR: 'VLZR',
+  WASD_TYPE.ARROWS: '^<v>',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
@@ -196,6 +197,7 @@ String decodeWASDGraphic(String input, List<String> controlSet){
     maxLetterY = 0;
     minLetterX = 0;
     minLetterY = 0;
+
     direction = WASD_DIRECTION.START;
 
     Map<String, String> letter = new Map();
@@ -246,9 +248,9 @@ String decodeWASDGraphic(String input, List<String> controlSet){
             y--; letter[x.toString() + '|' + (y).toString()] = '1';
           }
           direction = WASD_DIRECTION.DOWN;
-          if (y < minLetterY) minLetterY = y;
+          if (y < minLetterY) minLetterY = y - 1;
           if (x < minLetterX) minLetterX = x;
-          if (y > maxLetterY) maxLetterY = y;
+          if (y > maxLetterY) maxLetterY = y + 1;
           if (x > maxLetterX) maxLetterX = x;
           break;
 
