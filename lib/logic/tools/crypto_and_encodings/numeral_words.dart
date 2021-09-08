@@ -2698,7 +2698,7 @@ OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _curre
         case 1 : numeralWord = numeralWord + "wa'"; break;
         case 2 : numeralWord = numeralWord + "cha'"; break;
         case 3 : numeralWord = numeralWord + "wej"; break;
-        case 4 : numeralWord = numeralWord + "IoS"; break;
+        case 4 : numeralWord = numeralWord + "loS"; break;
         case 5 : numeralWord = numeralWord + "vagh"; break;
         case 6 : numeralWord = numeralWord + "jav"; break;
         case 7 : numeralWord = numeralWord + "Soch"; break;
