@@ -1457,8 +1457,9 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
 };
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
-  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
+  NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
+  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
   NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
 };
 
@@ -2404,9 +2405,14 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_shadoks');
   } else if (_currentLanguage == NumeralWordsLanguage.MIN) {
     if (_isMinion(currentDecodeInput))
-      return OutputConvertToNumber(int.parse(_decodeMinion(currentDecodeInput)), '', '',  '');
+      return OutputConvertToNumber(int.parse(_decodeMinion(currentDecodeInput)), '', '', '');
     else
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_minion');
+  } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
+    if (_isKlingon(currentDecodeInput))
+      return OutputConvertToNumber(int.parse(_decodeKlingon(currentDecodeInput)), '', '', '');
+    else
+      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_klingon');
   }
 }
 
@@ -2636,6 +2642,10 @@ OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _curre
       digits.add('1');
     }
     numeralWord = digits.join('').replaceAll('3', 'SAE').replaceAll('2', 'DUL').replaceAll('1', 'HANA');
+    return OutputConvertToNumeralWord(numeralWord, '', '', '');
+  } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
+    
+    numeralWord = 'klingon';
     return OutputConvertToNumeralWord(numeralWord, '', '', '');
   }
 }
