@@ -2437,9 +2437,19 @@ OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLan
     else
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_minion');
   } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
-    if (_isKlingon(currentDecodeInput))
-      return OutputConvertToNumber(int.parse(_decodeKlingon(currentDecodeInput)), '', '', '');
-    else
+    if (_isKlingon(currentDecodeInput)) {
+      RegExp expr = RegExp(
+          r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)( |-)?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
+      if (expr.hasMatch(currentDecodeInput)) {
+        String helpText = currentDecodeInput.replaceAllMapped(expr, (Match m) {
+          return _complexMultipleKlingon(m.group(0));
+        });
+        currentDecodeInput = helpText;
+      }
+      return OutputConvertToNumber(
+          int.parse(_decodeMultipleKlingon(currentDecodeInput.replaceAll(' ', ''))), '',
+          '', '');
+    } else
       return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_klingon');
   }
 }
