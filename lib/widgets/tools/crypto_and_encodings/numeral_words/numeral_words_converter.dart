@@ -91,7 +91,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           )
         else // encode
           GCWIntegerSpinner(
-            title: i18n(context, 'numeralwords_converter_number'),
+            title: i18n(context, 'common_numeralbase_denary'),
             min: 0,
             max: 32767,
             value: _currentNumber,
@@ -108,31 +108,29 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String output = '';
+    var output;
     if (_currentMode == GCWSwitchPosition.right) { // decode
-      output = decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput));
-      if (output.startsWith('numeralwords_converter_error_navi'))
-        output = i18n(context, 'numeralwords_converter_error_navi');
-    } else
+      output = decodeNumeralWordToNumber(_currentLanguage, removeAccents(_currentDecodeInput).toLowerCase());
+      if (output.error != '')
+        return GCWDefaultOutput(
+          child: i18n(context, output.error),
+        );
+    } else { // encode
       output = encodeNumberToNumeralWord(_currentLanguage, _currentNumber);
+    }
 
     return GCWDefaultOutput(
         child: Column(
           children: <Widget>[
-            if (_currentLanguage == NumeralWordsLanguage.NAVI)
+            if (output.title != '')
               Column(
                 children: <Widget>[
                   GCWTextDivider(
-                      text: i18n(context, 'common_numeralbase_octenary')
+                      text: i18n(context, output.title)
                   ),
-                  if (_currentMode == GCWSwitchPosition.left)  // encode
-                    GCWOutputText(
-                      text: convertBase(_currentNumber.toString(), 10, 8),
-                    )
-                  else
-                    GCWOutputText(
-                      text: convertBase(output, 10, 8),
-                    )
+                  GCWOutputText(
+                    text: output.numbersystem,
+                  )
                 ],
               ),
             if (_currentMode == GCWSwitchPosition.right)  // decode
@@ -143,9 +141,15 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
               GCWTextDivider(
                 text: i18n(context, 'numeralwords_converter_numeralword')
               ),
-            GCWOutputText(
-              text: output,
-            ),
+            if (_currentMode == GCWSwitchPosition.right)  // decode
+              GCWOutputText(
+                text: output.number.toString(),
+              )
+            else
+              GCWOutputText(
+                text: output.numeralWord,
+              ),
+
           ]
         ));
   }
