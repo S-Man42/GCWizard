@@ -161,7 +161,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           GCWDialogButton(
             text: i18n(context, 'common_exportfile_saveoutput'),
             onPressed: () {
-              exportFile(text, group.name, mode, context);
+              exportFile(text, mode, context);
             },
           ),
           GCWDialogButton(

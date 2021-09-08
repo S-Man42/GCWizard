@@ -3,6 +3,10 @@ import 'dart:collection';
 String substitution(String input, Map<String, String> substitutions, {bool caseSensitive: true}) {
   if (input == null || input.length == 0) return '';
 
+  if (!caseSensitive) {
+    input = input.toUpperCase();
+  }
+
   if (substitutions == null) return input;
 
   if (substitutions.keys.where((key) => key.length != 0).isEmpty) return input;
@@ -28,10 +32,6 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
     keys.add(key);
   });
   keys.sort((a, b) => b.length.compareTo(a.length));
-
-  if (!caseSensitive) {
-    input = input.toUpperCase();
-  }
 
   //SplayTreeMap is ordered by key
   var replacements = SplayTreeMap<int, String>();

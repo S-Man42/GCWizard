@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
@@ -812,6 +814,7 @@ final Map<String, String> BASWordToNum = {
   'hamar': '10',
 };
 final Map<String, String> DOTWordToNum = {
+  'som': '0',
   'at': '1',
   'akat': '2',
   'sen': '3',
@@ -822,6 +825,25 @@ final Map<String, String> DOTWordToNum = {
   'ori': '8',
   'qazat': '9',
   'thi': '10',
+  'atthi': '11',
+  'akatthi': '12',
+  'senthi': '13',
+  'torthi': '14',
+  'mekthi': '15',
+  'zhindatthi': '16',
+  'fekhthi': '17',
+  'oritthi': '18',
+  'qazatthi': '19',
+  'chakat': '20',
+  'chisen': '30',
+  'chitor': '40',
+  'chimek': '50',
+  'chizhinda': '60',
+  'chifekh': '70',
+  'chori': '80',
+  'chiqazat': '90',
+  'ken': '100',
+  'dalen': '1000',
 };
 final Map<String, String> UNGWordToNum = {
   'nulla': '0',
@@ -1459,8 +1481,14 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
   NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
-  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
   NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
+  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
+};
+Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
+  NumeralWordsLanguage.KLI: [pow(-2, 53), pow(2, 53) - 1],
+  NumeralWordsLanguage.MIN: [1, 100],
+  NumeralWordsLanguage.NAVI: [0, 32767],
+  NumeralWordsLanguage.SHA: [0, pow(2, 53) - 1],
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -2644,8 +2672,44 @@ OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _curre
     numeralWord = digits.join('').replaceAll('3', 'SAE').replaceAll('2', 'DUL').replaceAll('1', 'HANA');
     return OutputConvertToNumeralWord(numeralWord, '', '', '');
   } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
-    
-    numeralWord = 'klingon';
+    numeralWord = '';
+    if (currentNumber == 0)
+      return OutputConvertToNumeralWord('pagh', '', '', '');
+
+    bool negative = false;
+    if (currentNumber < 0) {
+      negative = true;
+      currentNumber = -1 * currentNumber;
+    }
+    int tenth = pow(10, (currentNumber.toString().length - 1));
+    while (currentNumber > 0) {
+      switch (currentNumber ~/ tenth) {
+        case 0 : numeralWord = numeralWord + "pagh"; break;
+        case 1 : numeralWord = numeralWord + "wa'"; break;
+        case 2 : numeralWord = numeralWord + "cha'"; break;
+        case 3 : numeralWord = numeralWord + "wej"; break;
+        case 4 : numeralWord = numeralWord + "IoS"; break;
+        case 5 : numeralWord = numeralWord + "vagh"; break;
+        case 6 : numeralWord = numeralWord + "jav"; break;
+        case 7 : numeralWord = numeralWord + "Soch"; break;
+        case 8 : numeralWord = numeralWord + "chorgh"; break;
+        case 9 : numeralWord = numeralWord + "Hut"; break;
+      }
+      switch (tenth) {
+        case 10 : numeralWord = numeralWord + "maH "; break;
+        case 100 : numeralWord = numeralWord + "vatlh "; break;
+        case 1000 : numeralWord = numeralWord + "SaD "; break;
+        case 10000 : numeralWord = numeralWord + "SanID "; break;
+        case 100000 : numeralWord = numeralWord + "netlh "; break;
+        case 1000000 : numeralWord = numeralWord + "bIp "; break;
+        case 10000000 : numeralWord = numeralWord + "'uy' "; break;
+        case 100000000 : numeralWord = numeralWord + "Saghan "; break;
+      }
+      currentNumber = currentNumber % tenth;
+      tenth = tenth ~/ 10;
+    }
+    if (negative)
+      numeralWord = numeralWord + ' Dop';
     return OutputConvertToNumeralWord(numeralWord, '', '', '');
   }
 }

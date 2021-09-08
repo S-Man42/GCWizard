@@ -92,8 +92,8 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
         else // encode
           GCWIntegerSpinner(
             title: i18n(context, 'common_numeralbase_denary'),
-            min: 0,
-            max: 32767,
+            min: MIN_MAX_NUMBER[_currentLanguage][0],
+            max: MIN_MAX_NUMBER[_currentLanguage][1],
             value: _currentNumber,
             onChanged: (value) {
               setState(() {

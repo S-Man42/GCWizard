@@ -66,7 +66,6 @@ class VanityMultitapState extends State<VanityMultitap> {
               ),
         GCWTwoOptionsSwitch(
           value: _currentSimpleMode,
-          title: i18n(context, 'common_switch_title'),
           leftValue: i18n(context, 'common_mode_simple'),
           rightValue: i18n(context, 'common_mode_advanced'),
           onChanged: (value) {
