@@ -138,10 +138,11 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
-import 'tools/crypto_and_encodings/braille/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
@@ -5563,6 +5564,18 @@ class Registry {
         SEARCHSTRING_DE_NUMERALWORDSLISTS,
         SEARCHSTRING_EN_NUMERALWORDSLISTS,
         SEARCHSTRING_FR_NUMERALWORDSLISTS
+      ]),
+      GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', helpLocales: [
+        'ko'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_NUMERALWORDS,
+        SEARCHSTRING_DE_NUMERALWORDS,
+        SEARCHSTRING_EN_NUMERALWORDS,
+        SEARCHSTRING_FR_NUMERALWORDS,
+        SEARCHSTRING_COMMON_NUMERALWORDSCONVERTER,
+        SEARCHSTRING_DE_NUMERALWORDSCONVERTER,
+        SEARCHSTRING_EN_NUMERALWORDSCONVERTER,
+        SEARCHSTRING_FR_NUMERALWORDSCONVERTER
       ]),
 
       //PeriodicTableSelection ***************************************************************************************

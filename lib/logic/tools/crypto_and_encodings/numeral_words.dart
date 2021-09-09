@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
@@ -18,6 +20,25 @@ import 'package:gc_wizard/utils/common_utils.dart';
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 //
 // https://de.wikipedia.org/wiki/Zahlen_in_unterschiedlichen_Sprachen
+//
+// https://learnnavi.org/navi-vocabulary/
+// https://james-camerons-avatar.fandom.com/de/wiki/Oktale_Arithmetik
+
+class OutputConvertToNumeralWord {
+  final String numeralWord;
+  final String numbersystem;
+  final String title;
+  final String error;
+  OutputConvertToNumeralWord(this.numeralWord, this.numbersystem, this.title, this.error);
+}
+
+class OutputConvertToNumber {
+  final int number;
+  final String numbersystem;
+  final String title;
+  final String error;
+  OutputConvertToNumber(this.number, this.numbersystem, this.title, this.error);
+}
 
 class NumeralWordsDecodeOutput {
   final String number;
@@ -78,6 +99,7 @@ enum NumeralWordsLanguage {
   HANGULSINOKOR,
   MIN,
   SHA,
+  NAVI,
   ALL,
   NUM
 }
@@ -792,6 +814,7 @@ final Map<String, String> BASWordToNum = {
   'hamar': '10',
 };
 final Map<String, String> DOTWordToNum = {
+  'som': '0',
   'at': '1',
   'akat': '2',
   'sen': '3',
@@ -802,6 +825,25 @@ final Map<String, String> DOTWordToNum = {
   'ori': '8',
   'qazat': '9',
   'thi': '10',
+  'atthi': '11',
+  'akatthi': '12',
+  'senthi': '13',
+  'torthi': '14',
+  'mekthi': '15',
+  'zhindatthi': '16',
+  'fekhthi': '17',
+  'oritthi': '18',
+  'qazatthi': '19',
+  'chakat': '20',
+  'chisen': '30',
+  'chitor': '40',
+  'chimek': '50',
+  'chizhinda': '60',
+  'chifekh': '70',
+  'chori': '80',
+  'chiqazat': '90',
+  'ken': '100',
+  'dalen': '1000',
 };
 final Map<String, String> UNGWordToNum = {
   'nulla': '0',
@@ -1361,6 +1403,32 @@ final Map<String, String> SINOKORWordToNum = {
   'cheon': '1000',
   'man': '10000',
 };
+final Map<String, String> NAVIWordToNum = {
+  'kew':'0',
+  "'aw": '1',
+  'mune': '2',
+  'pxey': '3',
+  'tsing': '4',
+  'mrr': '5',
+  'pukap': '6',
+  'kinae': '7',
+  'vol': '8',
+  'volaw': '9',
+  'vomun ': '10',
+  'vopey': '11',
+  'vosìng': '12',
+  'vomrr': '13',
+  'vofu': '14',
+  'vohin': '15',
+  'mevol': '16',
+  'zam': '64',
+  'vozam': '512',
+  'zazam': '4096',
+  'nefae': 'numeralwords_n',
+  'skien': 'numeralwords_e',
+  'ftaer': 'numeralwords_w',
+  'nekll': 'numeralwords_s',
+};
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DEU: 'common_language_german',
@@ -1407,6 +1475,20 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DOT: 'numeralwords_language_dot',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
   NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
+  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
+};
+
+Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
+  NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
+  NumeralWordsLanguage.MIN: 'numeralwords_language_min',
+  NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
+  NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
+};
+Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {
+  NumeralWordsLanguage.KLI: [pow(-2, 53), pow(2, 53) - 1],
+  NumeralWordsLanguage.MIN: [1, 100],
+  NumeralWordsLanguage.NAVI: [0, 32767],
+  NumeralWordsLanguage.SHA: [0, pow(2, 53) - 1],
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -1456,6 +1538,7 @@ Map NumWords = {
   NumeralWordsLanguage.QUE: QUEWordToNum,
   NumeralWordsLanguage.MIN: MINWordToNum,
   NumeralWordsLanguage.SHA: SHAWordToNum,
+  NumeralWordsLanguage.NAVI: NAVIWordToNum,
 };
 
 bool _isNumeral(String input) {
@@ -1930,39 +2013,64 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       searchLanguages[language] = sValue;
     }
 
+    // check degree ° and dot .
+    inputToDecode = inputToDecode.replaceAll('°', ' ° ').replaceAll('.', ' . ').replaceAll('  ', ' ');
     // start decoding
-    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€' + "'" + ']'));
+    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
     decodeText.forEach((element) {
       _alreadyFound = false;
-      if (_isShadoks(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.SHA)) {
-        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList[NumeralWordsLanguage.SHA]));
-      } else if (_isMinion(element) && (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.MIN)) {
-        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList[NumeralWordsLanguage.MIN]));
-      } else if (_isKlingon(element) &&
-          (language == NumeralWordsLanguage.ALL || language == NumeralWordsLanguage.KLI)) {
-        output.add(NumeralWordsDecodeOutput(
-            _decodeKlingon(element), element.replaceAll('€', ' ').trim(), _languageList[NumeralWordsLanguage.KLI]));
-      } else if (_isNumeral(element)) {
-        // checks - if is a number/digit
-        output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
-      } else {
-        _alreadyFound = false;
-        searchLanguages.forEach((key, value) {
-          var result = _isNumeralWordTable(element, key, value); // checks - if element is part of a map
-          if (result.state) {
-            if (!_alreadyFound) {
-              output.add(NumeralWordsDecodeOutput(result.output, element, _languageList[key]));
-              _alreadyFound = true;
-            } else {
-              output.add(NumeralWordsDecodeOutput('', '', _languageList[key]));
-            }
-          } else {
-            result = _isNumeralWord(element, key, value); // checks - if is a numeral word
+      if (element != '') {
+        if (element == '°')
+          output.add(NumeralWordsDecodeOutput(element, element, ''));
+        else if (element == '.')
+          output.add(NumeralWordsDecodeOutput(element, element, ''));
+        else if (_isShadoks(element) && (language == NumeralWordsLanguage.ALL ||
+            language == NumeralWordsLanguage.SHA)) {
+          output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element,
+              _languageList[NumeralWordsLanguage.SHA]));
+        } else if (_isMinion(element) &&
+            (language == NumeralWordsLanguage.ALL ||
+                language == NumeralWordsLanguage.MIN)) {
+          output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element,
+              _languageList[NumeralWordsLanguage.MIN]));
+        } else if (_isKlingon(element) &&
+            (language == NumeralWordsLanguage.ALL ||
+                language == NumeralWordsLanguage.KLI)) {
+          output.add(NumeralWordsDecodeOutput(
+              _decodeKlingon(element), element.replaceAll('€', ' ').trim(),
+              _languageList[NumeralWordsLanguage.KLI]));
+        } else if (_isNavi(element) && (language == NumeralWordsLanguage.ALL ||
+            language == NumeralWordsLanguage.NAVI)) {
+          output.add(NumeralWordsDecodeOutput(_decodeNavi(element), element,
+              _languageList[NumeralWordsLanguage.NAVI]));
+        } else if (_isNumeral(element)) {
+          // checks - if is a number/digit
+          output.add(NumeralWordsDecodeOutput(
+              element, element, _languageList[NumeralWordsLanguage.NUM]));
+        } else {
+          _alreadyFound = false;
+          searchLanguages.forEach((key, value) {
+            var result = _isNumeralWordTable(
+                element, key, value); // checks - if element is part of a map
             if (result.state) {
-              output.add(NumeralWordsDecodeOutput(result.output, element, _languageList[key]));
+              if (!_alreadyFound) {
+                output.add(NumeralWordsDecodeOutput(
+                    result.output, element, _languageList[key]));
+                _alreadyFound = true;
+              } else {
+                output.add(
+                    NumeralWordsDecodeOutput('', '', _languageList[key]));
+              }
+            } else {
+              result = _isNumeralWord(
+                  element, key, value); // checks - if is a numeral word
+              if (result.state) {
+                output.add(NumeralWordsDecodeOutput(
+                    result.output, element, _languageList[key]));
+              }
             }
-          }
-        }); //forEach searchLanguage
+          }); //forEach searchLanguage
+        }
       }
     }); //for each element to decode
     return output;
@@ -2070,6 +2178,188 @@ bool _isKlingon(String element) {
     return false;
 }
 
+bool _isNavi(String element) {
+  element = element.replaceAll('zame', 'zamme').replaceAll('zamrr', 'zammrr');
+  element = element.replaceAll('mezazam', '').replaceAll('pxezazam', '').replaceAll('tsizazam', '').replaceAll('mrrzazam', '').replaceAll('puzazam', '').replaceAll('kizazam', '').replaceAll('zazam', '')
+      .replaceAll('mevozam', '').replaceAll('pxevozam', '').replaceAll('tsivozam', '').replaceAll('mrrvozam', '').replaceAll('puvozam', '').replaceAll('kivozam', '').replaceAll('vozam', '')
+      .replaceAll('mezam', '').replaceAll('pxezam', '').replaceAll('tsizam', '').replaceAll('mrrzam', '').replaceAll('puzam', '').replaceAll('kizam', '').replaceAll('zam', '')
+      .replaceAll('mevol', '').replaceAll('pxevol', '').replaceAll('tsivol', '').replaceAll('mrrvol', '').replaceAll('puvol', '').replaceAll('kivol', '').replaceAll('vol', '')
+      .replaceAll('mevo', '').replaceAll('pxevo', '').replaceAll('tsivo', '').replaceAll('mrrvo', '').replaceAll('puvo', '').replaceAll('kivo', '').replaceAll('vo', '')
+      .replaceAll('kew', '').replaceAll('aw', '').replaceAll('mune', '').replaceAll('mun', '').replaceAll('mrr', '').replaceAll('peysing', '').replaceAll('pxey', '')
+      .replaceAll('fu', '').replaceAll('hin', '').replaceAll('tsing', '').replaceAll('pukap', '').replaceAll('kinae', '').replaceAll('sing', '');
+
+  return (element == '');
+  var expr = RegExp(
+      r'(mezazam|pxezazam|tsizazam|mrrzazam|puzazam|kizazam|zazam)?(mevozam|pxevozam|tsivozam|mrrvozam|puvozam|kivozam|vozam)?(mezam|pxezam|tsizam|mrrzam|puzam|kizam|zam)?(mevol|pxevol|tsivol|mrrvol|puvol|kivol|vol)?(mevo|pxevo|tsivo|mrrvo|puvo|kivo|vo)?(kew|aw|mun|peysing|mrr|fu|hin)?(aw|mune|pxey|tsing|mrr|pukap|kinae)?');
+  if (expr.firstMatch(element).group(0) != '' && expr.firstMatch(element).group(0) == element) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+String _decodeNavi(String element) {
+  String octal = '';
+  if (NAVIWordToNum[element] != null)
+    return NAVIWordToNum[element];
+  else {
+    element = element.replaceAll('zame', 'zamme').replaceAll('zamrr', 'zammrr');
+    // check 4096
+    if (element.contains('kizazam') || element.contains('puzazam') || element.contains('mrrzazam') || element.contains('tsizazam') || element.contains('pxezazam') || element.contains('mezazam') || element.contains('zazam')) {
+      if (element.contains('kizazam')) {
+        octal = '7';
+        element = element.replaceAll('kizazam', '');
+      } else if (element.contains('puzazam')) {
+        octal = '6';
+        element = element.replaceAll('puzazam', '');
+      } else if (element.contains('mrrzazam')) {
+        octal = '5';
+        element = element.replaceAll('mrrzazam', '');
+      } else if (element.contains('tsizazam')) {
+        octal = '4';
+        element = element.replaceAll('tsizazam', '');
+      } else if (element.contains('pxezazam')) {
+        octal = '3';
+        element = element.replaceAll('pxezazam', '');
+      } else if (element.contains('mezazam')) {
+        octal = '2';
+        element = element.replaceAll('mezazam', '');
+      } else if (element.contains('zazam')) {
+        octal = '1';
+        element = element.replaceAll('zazam', '');
+      }
+    } else octal = '0';
+    // check 512
+    if (element.contains('kivozam') || element.contains('puvozam') || element.contains('mrrvozam') || element.contains('tsivozam') || element.contains('pxevozam') || element.contains('mevozam') || element.contains('vozam')) {
+      if (element.contains('kivozam')) {
+        octal = octal + '7';
+        element = element.replaceAll('kivozam', '');
+      } else if (element.contains('puvozam')) {
+        octal = octal + '6';
+        element = element.replaceAll('puvozam', '');
+      } else if (element.contains('mrrvozam')) {
+        octal = octal + '5';
+        element = element.replaceAll('mrrvozam', '');
+      } else if (element.contains('tsivozam')) {
+        octal = octal + '4';
+        element = element.replaceAll('tsivozam', '');
+      } else if (element.contains('pxevozam')) {
+        octal = octal + '3';
+        element = element.replaceAll('pxevozam', '');
+      } else if (element.contains('mevozam')) {
+        octal = octal + '2';
+        element = element.replaceAll('mevozam', '');
+      } else if (element.contains('vozam')) {
+        octal = octal + '1';
+        element = element.replaceAll('vozam', '');
+      }
+    } else
+      octal = octal + '0';
+    // check 64
+    if (element.contains('kizam') || element.contains('puzam') || element.contains('mrrzam') || element.contains('tsizam') || element.contains('pxezam') || element.contains('mezam') || element.contains('zam')) {
+      if (element.contains('kizam')) {
+        octal = octal + '7';
+        element = element.replaceAll('kizam', '');
+      } else if (element.contains('puzam')) {
+        octal = octal + '6';
+        element = element.replaceAll('puzam', '');
+      } else if (element.contains('mrrzam')) {
+        octal = octal + '5';
+        element = element.replaceAll('mrrzam', '');
+      } else if (element.contains('tsizam')) {
+        octal = octal + '4';
+        element = element.replaceAll('tsizam', '');
+      } else if (element.contains('pxezam')) {
+        octal = octal + '3';
+        element = element.replaceAll('pxezam', '');
+      } else if (element.contains('mezam')) {
+        octal = octal + '2';
+        element = element.replaceAll('mezam', '');
+      } else if (element.contains('zam')) {
+        octal = octal + '1';
+        element = element.replaceAll('zam', '');
+      }
+    } else
+      octal = octal + '0';
+    // check 8
+    if (element.contains('kivol') || element.contains('puvol') || element.contains('mrrvol') || element.contains('tsivol') || element.contains('pxevol') || element.contains('mevol') || element.contains('vol')) {
+      if (element.contains('kivol')) {
+        octal = octal + '70';
+        element = element.replaceAll('kivol', '');
+      } else if (element.contains('puvol')) {
+        octal = octal + '60';
+        element = element.replaceAll('puvol', '');
+      } else if (element.contains('mrrvol')) {
+        octal = octal + '50';
+        element = element.replaceAll('mrrvol', '');
+      } else if (element.contains('tsivol')) {
+        octal = octal + '40';
+        element = element.replaceAll('tsivol', '');
+      } else if (element.contains('pxevol')) {
+        octal = octal + '30';
+        element = element.replaceAll('pxevol', '');
+      } else if (element.contains('mevol')) {
+        octal = octal + '20';
+        element = element.replaceAll('mevol', '');
+      } else if (element.contains('vol')) {
+        octal = octal + '10';
+        element = element.replaceAll('vol', '');
+      }
+    } else {
+      if (element.contains('kivo') || element.contains('puvo') ||
+          element.contains('mrrvo') || element.contains('tsivo') ||
+          element.contains('pxevo') || element.contains('mevo') ||
+          element.contains('vo')) {
+        if (element.contains('kivo')) {
+          octal = octal + '7';
+          element = element.replaceAll('kivo', '');
+        } else if (element.contains('puvo')) {
+          octal = octal + '6';
+          element = element.replaceAll('puvo', '');
+        } else if (element.contains('mrrvo')) {
+          octal = octal + '5';
+          element = element.replaceAll('mrrvo', '');
+        } else if (element.contains('tsivo')) {
+          octal = octal + '4';
+          element = element.replaceAll('tsivo', '');
+        } else if (element.contains('pxevo')) {
+          octal = octal + '3';
+          element = element.replaceAll('pxevo', '');
+        } else if (element.contains('mevo')) {
+          octal = octal + '2';
+          element = element.replaceAll('mevo', '');
+        } else if (element.contains('vo')) {
+          octal = octal + '1';
+          element = element.replaceAll('vo', '');
+        }
+      } else
+        octal = octal + '0';
+      if (element.contains('hin') || element.contains('fu') ||
+          element.contains('mrr') || element.contains('sing') ||
+          element.contains('pey') || element.contains('mun') ||
+          element.contains('aw')) {
+        if (element.contains('hin')) {
+          octal = octal + '7';
+        } else if (element.contains('fu')) {
+          octal = octal + '6';
+        } else if (element.contains('mrr')) {
+          octal = octal + '5';
+        } else if (element.contains('sing')) {
+          octal = octal + '4';
+        } else if (element.contains('pey')) {
+          octal = octal + '3';
+        } else if (element.contains('mun')) {
+          octal = octal + '2';
+        } else if (element.contains('aw')) {
+          octal = octal + '1';
+        }
+      } else
+        octal = octal + '0';
+    }
+    return convertBase(octal, 8, 10);
+  }
+}
+
 String _decodeKlingon(String element) {
   if (element == '') return '';
   if (element[0] == '€' && element[element.length - 1] == '€')
@@ -2125,4 +2415,311 @@ String _decodeMultipleKlingon(String kliNumber) {
 
 String _complexMultipleKlingon(String kliNumber) {
   return '€' + kliNumber.trim().replaceAll('-', '€').replaceAll(' ', '€') + '€ ';
+}
+
+OutputConvertToNumber decodeNumeralWordToNumber(NumeralWordsLanguage _currentLanguage, String currentDecodeInput){
+  if (currentDecodeInput == '' || currentDecodeInput == null)
+    return OutputConvertToNumber(0, '', '', '');
+
+  if (_currentLanguage == NumeralWordsLanguage.NAVI) {
+    if (_isNavi(currentDecodeInput))
+      return OutputConvertToNumber(int.parse(_decodeNavi(currentDecodeInput)), convertBase(_decodeNavi(currentDecodeInput), 10, 8), 'common_numeralbase_octenary',  '');
+    else
+      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_navi');
+  } if (_currentLanguage == NumeralWordsLanguage.SHA) {
+    if (_isShadoks(currentDecodeInput))
+      return OutputConvertToNumber(int.parse(_decodeShadoks(currentDecodeInput)), convertBase(_decodeShadoks(currentDecodeInput), 10, 4), 'common_numeralbase_quaternary',  '');
+    else
+      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_shadoks');
+  } else if (_currentLanguage == NumeralWordsLanguage.MIN) {
+    if (_isMinion(currentDecodeInput))
+      return OutputConvertToNumber(int.parse(_decodeMinion(currentDecodeInput)), '', '', '');
+    else
+      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_minion');
+  } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
+    if (_isKlingon(currentDecodeInput)) {
+      RegExp expr = RegExp(
+          r"((wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(bip|netlh|sad|sanid|vatlh|mah)( |-)?)+(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)?(\s|$)");
+      if (expr.hasMatch(currentDecodeInput)) {
+        String helpText = currentDecodeInput.replaceAllMapped(expr, (Match m) {
+          return _complexMultipleKlingon(m.group(0));
+        });
+        currentDecodeInput = helpText;
+      }
+      return OutputConvertToNumber(
+          int.parse(_decodeMultipleKlingon(currentDecodeInput.replaceAll(' ', ''))), '',
+          '', '');
+    } else
+      return OutputConvertToNumber(0, '', '', 'numeralwords_converter_error_klingon');
+  }
+}
+
+OutputConvertToNumeralWord encodeNumberToNumeralWord(NumeralWordsLanguage _currentLanguage, int currentNumber) {
+  String numeralWord = '';
+  String octal = '';
+  if (currentNumber == '' || currentNumber == null)
+    return OutputConvertToNumeralWord('', '', '', '');
+
+  if (_currentLanguage == NumeralWordsLanguage.NAVI) {
+    if (0 <= currentNumber && currentNumber <= 7) {
+      switch (currentNumber) {
+        case 0 :
+          numeralWord = 'kew';
+          break;
+        case 1 :
+          numeralWord = "'aw";
+          break;
+        case 2 :
+          numeralWord = 'mune';
+          break;
+        case 3 :
+          numeralWord = 'pxey';
+          break;
+        case 4 :
+          numeralWord = 'tsìng';
+          break;
+        case 5 :
+          numeralWord = 'mrr';
+          break;
+        case 6 :
+          numeralWord = 'pukap';
+          break;
+        case 7 :
+          numeralWord = 'kinä';
+          break;
+      }
+    } else {
+      octal = convertBase(currentNumber.toString(), 10, 8);
+      while (octal.length < 5)
+        octal = '0' + octal;
+      switch (octal[0]) { //  4096
+        case '0':
+          numeralWord = '';
+          break;
+        case '1':
+          numeralWord = 'zazam';
+          break;
+        case '2':
+          numeralWord = 'mezazam';
+          break;
+        case '3':
+          numeralWord = 'pxezazam';
+          break;
+        case '4':
+          numeralWord = 'tsìzazam';
+          break;
+        case '5':
+          numeralWord = 'mrrzazam';
+          break;
+        case '6':
+          numeralWord = 'puzazam';
+          break;
+        case '7':
+          numeralWord = 'kizazam';
+          break;
+      }
+      switch (octal[1]) { // 512
+        case '0':
+          numeralWord = numeralWord + '';
+          break;
+        case '1':
+          numeralWord = numeralWord + 'vozam';
+          break;
+        case '2':
+          numeralWord = numeralWord + 'mevozam';
+          break;
+        case '3':
+          numeralWord = numeralWord + 'pxevozam';
+          break;
+        case '4':
+          numeralWord = numeralWord + 'tsìvozam';
+          break;
+        case '5':
+          numeralWord = numeralWord + 'mrrvozam';
+          break;
+        case '6':
+          numeralWord = numeralWord + 'puvozam';
+          break;
+        case '7':
+          numeralWord = numeralWord + 'kivozam';
+          break;
+      }
+      switch (octal[2]) { // 64
+        case '0':
+          numeralWord = numeralWord + '';
+          break;
+        case '1':
+          numeralWord = numeralWord + 'zam';
+          break;
+        case '2':
+          numeralWord = numeralWord + 'mezam';
+          break;
+        case '3':
+          numeralWord = numeralWord + 'pxezam';
+          break;
+        case '4':
+          numeralWord = numeralWord + 'tsìzam';
+          break;
+        case '5':
+          numeralWord = numeralWord + 'mrrzam';
+          break;
+        case '6':
+          numeralWord = numeralWord + 'puzam';
+          break;
+        case '7':
+          numeralWord = numeralWord + 'kizam';
+          break;
+      }
+      if (octal[4] == '0')
+        switch (octal[3]) { // 8
+          case '0':
+            numeralWord = numeralWord + '';
+            break;
+          case '1':
+            numeralWord = numeralWord + 'vol';
+            break;
+          case '2':
+            numeralWord = numeralWord + 'mevol';
+            break;
+          case '3':
+            numeralWord = numeralWord + 'pxevol';
+            break;
+          case '4':
+            numeralWord = numeralWord + 'tsìvol';
+            break;
+          case '5':
+            numeralWord = numeralWord + 'mrrvol';
+            break;
+          case '6':
+            numeralWord = numeralWord + 'puvol';
+            break;
+          case '7':
+            numeralWord = numeralWord + 'kivol';
+            break;
+        }
+      else
+        switch (octal[3]) { // 8
+          case '0':
+            numeralWord = numeralWord + '';
+            break;
+          case '1':
+            numeralWord = numeralWord + 'vo';
+            break;
+          case '2':
+            numeralWord = numeralWord + 'mevo';
+            break;
+          case '3':
+            numeralWord = numeralWord + 'pxevo';
+            break;
+          case '4':
+            numeralWord = numeralWord + 'tsìvo';
+            break;
+          case '5':
+            numeralWord = numeralWord + 'mrrvo';
+            break;
+          case '6':
+            numeralWord = numeralWord + 'puvo';
+            break;
+          case '7':
+            numeralWord = numeralWord + 'kivo';
+            break;
+        }
+      switch (octal[4]) { // 1
+        case '0':
+          numeralWord = numeralWord + '';
+          break;
+        case '1':
+          numeralWord = numeralWord + 'aw';
+          break;
+        case '2':
+          numeralWord = numeralWord + 'mun';
+          break;
+        case '3':
+          numeralWord = numeralWord + 'pey';
+          break;
+        case '4':
+          numeralWord = numeralWord + 'sìng';
+          break;
+        case '5':
+          numeralWord = numeralWord + 'mrr';
+          break;
+        case '6':
+          numeralWord = numeralWord + 'fu';
+          break;
+        case '7':
+          numeralWord = numeralWord + 'hin';
+          break;
+      }
+    }
+    return OutputConvertToNumeralWord(numeralWord.replaceAll('mm', 'm'),
+        convertBase(currentNumber.toString(), 10, 8),
+        'common_numeralbase_octenary', '');
+  } else if (_currentLanguage == NumeralWordsLanguage.SHA) {
+       numeralWord = convertBase(currentNumber.toString(), 10, 4).toString().replaceAll('0', 'GA')
+       .replaceAll('1', 'BU')
+           .replaceAll('2', 'ZO')
+           .replaceAll('3', 'MEU');
+       return OutputConvertToNumeralWord(numeralWord,
+           convertBase(currentNumber.toString(), 10, 4),
+           'common_numeralbase_quaternary', '');
+  } else if (_currentLanguage == NumeralWordsLanguage.MIN) {
+    if (currentNumber < 1)
+      return OutputConvertToNumeralWord('', '', '', '');
+    List<String> digits = [];
+    numeralWord = '';
+    while (currentNumber >= 3) {
+      currentNumber = currentNumber - 3;
+      digits.add('3');
+    }
+    while (currentNumber >= 2) {
+      currentNumber = currentNumber - 2;
+      digits.add('2');
+    }
+    while (currentNumber >= 1) {
+      currentNumber = currentNumber - 1;
+      digits.add('1');
+    }
+    numeralWord = digits.join('').replaceAll('3', 'SAE').replaceAll('2', 'DUL').replaceAll('1', 'HANA');
+    return OutputConvertToNumeralWord(numeralWord, '', '', '');
+  } else if (_currentLanguage == NumeralWordsLanguage.KLI) {
+    numeralWord = '';
+    if (currentNumber == 0)
+      return OutputConvertToNumeralWord('pagh', '', '', '');
+
+    bool negative = false;
+    if (currentNumber < 0) {
+      negative = true;
+      currentNumber = -1 * currentNumber;
+    }
+    int tenth = pow(10, (currentNumber.toString().length - 1));
+    while (currentNumber > 0) {
+      switch (currentNumber ~/ tenth) {
+        case 0 : numeralWord = numeralWord + "pagh"; break;
+        case 1 : numeralWord = numeralWord + "wa'"; break;
+        case 2 : numeralWord = numeralWord + "cha'"; break;
+        case 3 : numeralWord = numeralWord + "wej"; break;
+        case 4 : numeralWord = numeralWord + "loS"; break;
+        case 5 : numeralWord = numeralWord + "vagh"; break;
+        case 6 : numeralWord = numeralWord + "jav"; break;
+        case 7 : numeralWord = numeralWord + "Soch"; break;
+        case 8 : numeralWord = numeralWord + "chorgh"; break;
+        case 9 : numeralWord = numeralWord + "Hut"; break;
+      }
+      switch (tenth) {
+        case 10 : numeralWord = numeralWord + "maH "; break;
+        case 100 : numeralWord = numeralWord + "vatlh "; break;
+        case 1000 : numeralWord = numeralWord + "SaD "; break;
+        case 10000 : numeralWord = numeralWord + "SanID "; break;
+        case 100000 : numeralWord = numeralWord + "netlh "; break;
+        case 1000000 : numeralWord = numeralWord + "bIp "; break;
+        case 10000000 : numeralWord = numeralWord + "'uy' "; break;
+        case 100000000 : numeralWord = numeralWord + "Saghan "; break;
+      }
+      currentNumber = currentNumber % tenth;
+      tenth = tenth ~/ 10;
+    }
+    if (negative)
+      numeralWord = numeralWord + ' Dop';
+    return OutputConvertToNumeralWord(numeralWord, '', '', '');
+  }
 }

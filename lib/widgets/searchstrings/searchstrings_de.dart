@@ -273,7 +273,8 @@ const SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'superperfek
 const SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'merkwuerdige zahlen';
 const SEARCHSTRING_DE_NUMERALBASES = 'zahlenbasis zahlenbasen zahlensysteme hexadezimal oktal dual';
 const SEARCHSTRING_DE_NUMERALWORDS =
-    'zahlwoerter zaehlwort  zahlwort zaehlwoerter kyrillisches deutsches englisches franzoesisches italienisches daenisches spanisches niederlaendisches norwegisches polnisches portugiesisches schwedisches russisches volapuek esperanto solresol lateinisches mapudungun baskisches dothrakisches ungarisches persisches amharisches vietnamesisches türkisches meglenorumaenisches bretonisches schottisches indonesisches tamilisches finnisches quechua ceqli klingonisch lojban japanisches chinesisches';
+    'zahlwoerter zaehlwort  zahlwort zaehlwoerter kyrillisches deutsches englisches franzoesisches italienisches daenisches spanisches niederlaendisches norwegisches polnisches portugiesisches schwedisches russisches volapuek esperanto solresol lateinisches mapudungun baskisches dothrakisches ungarisches persisches amharisches vietnamesisches türkisches meglenorumaenisches bretonisches schottisches indonesisches tamilisches finnisches quechua ceqli klingonisch lojban japanisches chinesisches koreanisches sino-koreanisches hangeul';
+const SEARCHSTRING_DE_NUMERALWORDSCONVERTER = 'konvertieren umwandeln zahlwoerter';
 const SEARCHSTRING_DE_NUMERALWORDSLISTS = '';
 const SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH = 'textanalyse textsuche';
 const SEARCHSTRING_DE_ONETIMEPAD = 'einmalschluessel';

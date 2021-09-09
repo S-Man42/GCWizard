@@ -260,7 +260,8 @@ const SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'super parfa
 const SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'nombres etranges';
 const SEARCHSTRING_FR_NUMERALBASES = 'base numeros systeme numeration';
 const SEARCHSTRING_FR_NUMERALWORDS =
-    'mots nombres cyrillique allemand anglais francais italien danois espagnol neerlandais norvegien polonais portugais suedois russe volapuk esperanto solresol latin mapudungun basque dothraki hongrois persan amharique vietnamien turc meglenoruman breton ecossais indonesien tamil finnois quechua ceqli klingon lojban japonais chinois';
+    'mots nombres cyrillique allemand anglais francais italien danois espagnol neerlandais norvegien polonais portugais suedois russe volapuk esperanto solresol latin mapudungun basque dothraki hongrois persan amharique vietnamien turc meglenoruman breton ecossais indonesien tamil finnois quechua ceqli klingon lojban japonais chinois coreen hangul';
+const SEARCHSTRING_FR_NUMERALWORDSCONVERTER = 'mots nombres convertir';
 const SEARCHSTRING_FR_NUMERALWORDSLISTS = '';
 const SEARCHSTRING_FR_NUMERALWORDSTEXTSEARCH = 'recherche texte';
 const SEARCHSTRING_FR_ONETIMEPAD = 'cle unique';
