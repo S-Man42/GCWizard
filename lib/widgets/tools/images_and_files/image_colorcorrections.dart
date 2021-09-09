@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -10,6 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
@@ -49,8 +52,16 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   var _currentGrayscale = false;
   var _currentEdgeDetection = 0.0;
 
-  _currentDataInit() {
-    var previewHeight = Prefs.getInt('imagecolorcorrections_maxpreviewheight');
+  final PREVIEW_VALUES = {
+    100: {'title': 'image_colorcorrections_previewsize_tiny_title', 'description': 'image_colorcorrections_previewsize_tiny_description'},
+    250: {'title': 'image_colorcorrections_previewsize_small_title', 'description': 'image_colorcorrections_previewsize_small_description'},
+    500: {'title': 'image_colorcorrections_previewsize_medium_title', 'description': 'image_colorcorrections_previewsize_medium_description'},
+    1000: {'title': 'image_colorcorrections_previewsize_big_title', 'description': 'image_colorcorrections_previewsize_big_description'},
+    50000: {'title': 'image_colorcorrections_previewsize_original_title', 'description': 'image_colorcorrections_previewsize_original_description'},
+  };
+
+  _currentDataInit({int previewSize}) {
+    var previewHeight = previewSize ?? Prefs.getInt('imagecolorcorrections_maxpreviewheight');
 
     img.Image image = img.decodeImage(_originalData);
 
@@ -120,12 +131,49 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         ),
         Container(), // Fixes a display issue
         if (_currentPreview != null)
+          GCWTextDivider(
+            suppressTopSpace: true,
+            text: i18n(context, 'image_colorcorrections_previewsize_title', parameters: [i18n(context, PREVIEW_VALUES[Prefs.get('imagecolorcorrections_maxpreviewheight')]['title'])]),
+            trailing: GCWPopupMenu(
+              iconData: Icons.settings,
+              size: IconButtonSize.SMALL,
+                menuItemBuilder: (context) => PREVIEW_VALUES.map((key, value) {
+                  return MapEntry(key,
+                    GCWPopupMenuItem(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(i18n(context, value['title']), style: gcwDialogTextStyle()),
+                            Container(
+                                child: Text(
+                                  i18n(context, value['description']),
+                                  style: gcwDescriptionTextStyle().copyWith(color: themeColors().dialogText()),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN)),
+                          ],
+                        ),
+                        action: (index) {
+                          setState(() {
+                            Prefs.setInt('imagecolorcorrections_maxpreviewheight', key);
+
+                            _originalPreview = _currentDataInit(previewSize: key);
+                            _currentPreview = img.Image.from(_originalPreview);
+                          });
+                        })
+                  );
+                }).values.toList()
+              )
+          ),
+        if (_currentPreview != null)
           GCWImageView(
             imageData: _originalData == null ? null : GCWImageViewData(PlatformFile(bytes: _imageBytes())),
             onBeforeLoadBigImage: _adjustToFullPicture,
           ),
         if (_currentPreview != null)
           GCWTextDivider(
+            suppressTopSpace: true,
             text: i18n(context, 'image_colorcorrections_options'),
             trailing: GCWIconButton(
               iconData: Icons.refresh,

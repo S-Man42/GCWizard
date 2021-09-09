@@ -31,30 +31,7 @@ class ToolSettingsState extends State<ToolSettings> {
               child: mode.value,
             );
           }).toList(),
-        ),
-        GCWTextDivider(
-          text: i18n(context, 'settings_imagecolorcorrections_title'),
-        ),
-        GCWDropDownButton(
-          value: Prefs.get('imagecolorcorrections_maxpreviewheight'),
-          onChanged: (value) {
-            setState(() {
-              Prefs.setInt('imagecolorcorrections_maxpreviewheight', value);
-            });
-          },
-          items: {
-            100: i18n(context, 'settings_imagecolorcorrections_previewsize_tiny'),
-            250: i18n(context, 'settings_imagecolorcorrections_previewsize_small'),
-            500: i18n(context, 'settings_imagecolorcorrections_previewsize_medium'),
-            1000: i18n(context, 'settings_imagecolorcorrections_previewsize_big'),
-            50000: i18n(context, 'settings_imagecolorcorrections_previewsize_original'),
-          }.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
-        ),
+        )
       ],
     );
   }

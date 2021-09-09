@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/iata_icao.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
@@ -92,7 +93,8 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
               ),
           ],
         ),
-        GCWSubmitButton(
+        GCWButton(
+          text: i18n(context, 'common_search'),
           onPressed: () {
             setState(() {
               _output = _buildOutput();

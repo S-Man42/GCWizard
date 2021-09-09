@@ -27,8 +27,8 @@ var _LANGUAGES = {
   'fr': {'name_native': '🇫🇷 Français', 'percent_translated': 100},
   'it': {'name_native': '🇮🇹 Italiano', 'percent_translated': 11},
   'ko': {'name_native': '🇰🇷 한국어', 'percent_translated': 100},
-  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 30},
-  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 17},
+  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 35},
+  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 20},
   'ru': {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 9},
   'tr': {'name_native': '🇹🇷 Türkçe', 'percent_translated': 15},
 };
@@ -68,7 +68,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                               String languageName = language['name_native'];
 
                               var subtitle;
-                              if (language['percent_translated'] < 100) {
+                              if (language['percent_translated'] < 90) {
                                 subtitle = i18n(context, 'settings_general_i18n_language_partlytranslated',
                                     parameters: [language['percent_translated']]);
                               }

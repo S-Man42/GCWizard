@@ -360,7 +360,7 @@ class _MainViewState extends State<MainView> {
             autofocus: true,
             controller: _searchController,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
-            hintText: i18n(context, 'common_search_hint'))
+            hintText: i18n(context, 'common_search') + '...')
         : Text(i18n(context, 'common_app_title'));
   }
 
