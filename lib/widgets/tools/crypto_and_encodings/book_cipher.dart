@@ -19,7 +19,7 @@ class BookCipherState extends State<BookCipher> {
   var _currentSearchMode = GCWSwitchPosition.right;
   var _currentMode = GCWSwitchPosition.left;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  var _spacesOn = false;
+  var _spacesOn = true;
   var _emptyLinesOn = false;
   var _ignoreSymbolsOn = true;
   var _ignoreSymbols = '.;+-:!?\'‘"&(){}[]/\\_';
