@@ -1,0 +1,78 @@
+import 'package:gc_wizard/utils/common_utils.dart';
+
+final CODEBOOK = {
+  '000' : '',
+  '001' : '1',
+  '002' : '2',
+  '003' : 'A',
+  '004' : '3',
+  '005' : 'ab',
+  '006' : 'ad',
+  '007' : 'ordflut',
+  '010' : '4',
+  '011' : 'af',
+  '012' : 'ak',
+  '013' : 'al',
+  '014' : 'alt',
+  '015' : 'am',
+  '016' : 'an',
+  '017' : 'and',
+  '020' : '5',
+  '021' : 'ap',
+  '022' : 'ar',
+  '023' : 'arm',
+  '024' : 'as',
+  '025' : 'at',
+  '026' : 'B',
+  '027' : 'ba',
+  '030' : 'bak',
+  '031' : 'bar',
+  '032' : 'be',
+  '033' : 'beg',
+  '034' : 'berg',
+  '035' : 'bi',
+  '036' : 'bl',
+  '037' : 'bland',
+  '040' : '6',
+  '041' : 'bo',
+  '042' : 'bon',
+  '043' : 'bor',
+  '044' : 'br',
+  '045' : 'bref',
+  '046' : 'bu',
+  '047' : 'by',
+  '050' : 'bå',
+  '051' : 'bart',
+  '052' : 'bä',
+  '053' : 'bö',
+  '054' : 'bör',
+  '055' : 'D',
+  '056' : 'da',
+  '057' : 'dag',
+  '060' : 'dan',
+  '061' : 'danfk',
+  '062' : 'de',
+  '063' : 'del',
+  '064' : 'dem',
+  '065' : 'den',
+  '066' : 'der',
+  '067' : 'det',
+  '070' : '.',
+  '071' : 'di',
+  '072' : 'dig',
+  '073' : 'din',
+  '074' : 'dit',
+  '075' : 'do',
+  '076' : 'dom',
+  '077' : 'fort',
+
+};
+
+
+List<List<String>> encodeEdelcrantz(String input) {
+  if (input == null || input == '') return <List<String>>[];
+
+  return input.split('').map((letter) {
+    return switchMapKeyValue(CODEBOOK)[letter].split('');
+  }).toList();
+}

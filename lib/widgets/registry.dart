@@ -138,6 +138,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
@@ -826,6 +827,18 @@ class Registry {
         SEARCHSTRING_DE_IRRATIONALNUMBERS,
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
         SEARCHSTRING_FR_IRRATIONALNUMBERS
+      ]),
+      GCWTool(tool: Edelcrantz(), i18nPrefix: 'edelcrantz', categories: [
+        ToolCategory.CRYPTOGRAPHY
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_EDELCRANTZ,
+        SEARCHSTRING_DE_EDELCRANTZ,
+        SEARCHSTRING_EN_EDELCRANTZ,
+        SEARCHSTRING_FR_EDELCRANTZ
       ]),
       GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
         ToolCategory.CRYPTOGRAPHY

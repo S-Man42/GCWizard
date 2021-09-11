@@ -139,6 +139,7 @@ const SEARCHSTRING_EN_E = 'euler\'s number';
 const SEARCHSTRING_EN_EASTER_DATE = 'eastersunday';
 const SEARCHSTRING_EN_EASTER_YEARS = 'year';
 const SEARCHSTRING_EN_EDECIMALRANGE = 'ranges';
+const SEARCHSTRING_EN_EDELCRANTZ = 'telegraph optic';
 const SEARCHSTRING_EN_ELIA = 'blinde eyeless tactiles dots';
 const SEARCHSTRING_EN_ENCLOSEDAREAS = 'enclosedareas countholes countingholes  numberholes';
 const SEARCHSTRING_EN_ENIGMA = 'rotors';

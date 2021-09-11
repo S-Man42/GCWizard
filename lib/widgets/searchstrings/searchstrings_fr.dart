@@ -132,6 +132,7 @@ const SEARCHSTRING_FR_E = '';
 const SEARCHSTRING_FR_EASTER_DATE = 'paques dimanche';
 const SEARCHSTRING_FR_EASTER_YEARS = 'annee';
 const SEARCHSTRING_FR_EDECIMALRANGE = 'sections';
+const SEARCHSTRING_FR_EDELCRANTZ = '';
 const SEARCHSTRING_FR_ELIA = 'braille points';
 const SEARCHSTRING_FR_ENCLOSEDAREAS = 'trous surfaces enferme';
 const SEARCHSTRING_FR_ENIGMA = 'cylindre';

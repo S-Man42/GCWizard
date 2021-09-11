@@ -77,6 +77,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -458,6 +459,7 @@ class _MainViewState extends State<MainView> {
         className(SilverRatioSelection()),
         className(DuckSpeak()),
         className(EasterSelection()),
+        className(Edelcrantz()),
         className(EllipsoidTransform()),
         className(EnclosedAreas()),
         className(Enigma()),

@@ -144,6 +144,7 @@ const SEARCHSTRING_DE_E = 'eulersche zahl';
 const SEARCHSTRING_DE_EASTER_DATE = 'ostern ostersonntag';
 const SEARCHSTRING_DE_EASTER_YEARS = 'jahr';
 const SEARCHSTRING_DE_EDECIMALRANGE = 'bereiche';
+const SEARCHSTRING_DE_EDELCRANTZ = 'telegraf optisch';
 const SEARCHSTRING_DE_ELIA = 'blindenschrift punkte taktile';
 const SEARCHSTRING_DE_ENCLOSEDAREAS = 'eingeschlosseneflaechen zaehleloecherzaehlen zaehleloch anzahlloecher';
 const SEARCHSTRING_DE_ENIGMA = 'rotoren walzen';
