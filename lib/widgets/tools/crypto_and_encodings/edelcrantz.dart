@@ -4,9 +4,11 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/edelcrantz.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/edelcrantz_segment_display.dart';
@@ -156,10 +158,35 @@ class EdelcrantzState extends State<Edelcrantz> {
         case '6' : resultElement = ['a3', 'a2']; break;
         case '7' : resultElement = ['a3', 'a2', 'a1']; break;
       }
+      switch (element[1]) {
+        case '1' : resultElement.addAll(['b1']); break;
+        case '2' : resultElement.addAll(['b2']); break;
+        case '3' : resultElement.addAll(['b1', 'b2']); break;
+        case '4' : resultElement.addAll(['b3']); break;
+        case '5' : resultElement.addAll(['b3', 'b1']); break;
+        case '6' : resultElement.addAll(['b3', 'b2']); break;
+        case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
+      }
+      switch (element[2]) {
+        case '1' : resultElement.addAll(['c1']); break;
+        case '2' : resultElement.addAll(['c2']); break;
+        case '3' : resultElement.addAll(['c1', 'c2']); break;
+        case '4' : resultElement.addAll(['c3']); break;
+        case '5' : resultElement.addAll(['c3', 'c1']); break;
+        case '6' : resultElement.addAll(['c3', 'c2']); break;
+        case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
+      }
       result.add(resultElement);
     });
-    print(result);
     return result;
+  }
+
+  String _buildCodelets(List<List<String>> segments){
+    List<String> result = [];
+    segments.forEach((codelet) {
+        result.add(codelet.join(''));
+    });
+    return result.join(' ');
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
@@ -167,6 +194,7 @@ class EdelcrantzState extends State<Edelcrantz> {
     return GCWSegmentDisplayOutput(
         segmentFunction:(displayedSegments, readOnly) {
           return EdelcrantzSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return EdelcrantzSegmentDisplay(segments: null, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true
@@ -180,6 +208,12 @@ class EdelcrantzState extends State<Edelcrantz> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
+          GCWTextDivider(
+            text: i18n(context, 'edelcrantz_codelets'),
+          ),
+          GCWOutputText(
+            text: _buildCodelets(segments),
+          )
         ],
       );
     } else {
