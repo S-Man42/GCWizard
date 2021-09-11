@@ -439,7 +439,7 @@ int gifImageSize(Uint8List data) {
 
         //Image Data
         offset += 1;
-        while ((offset < data.length) & (data[offset] != 0))
+        while ((offset < data.length) && (data[offset] != 0))
         {
           offset += 1;
           offset += data[offset - 1];
@@ -448,7 +448,7 @@ int gifImageSize(Uint8List data) {
         offset += 1; //Terminator 0x00
       }
     }
-  } while ((offset >= data.length) | (data[offset] != 0x3B));
+  } while ((offset >= data.length) || (data[offset] != 0x3B));
   offset += 1; //0x3B
 
   return min(offset, data.length);
