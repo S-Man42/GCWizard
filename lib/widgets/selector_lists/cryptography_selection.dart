@@ -11,7 +11,7 @@ class CryptographySelection extends GCWSelection {
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.CRYPTOGRAPHY))
         .toList();
     _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
     });
 
     return Container(child: GCWToolList(toolList: _toolList));

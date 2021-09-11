@@ -19,7 +19,7 @@ class SymbolTableSelection extends GCWSelection {
     }).toList();
 
     _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
     });
 
     return Container(child: GCWToolList(toolList: _toolList));

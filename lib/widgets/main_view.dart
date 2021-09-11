@@ -583,7 +583,7 @@ class _MainViewState extends State<MainView> {
     }).toList();
 
     _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
     });
 
     _categoryList = Registry.toolList.where((element) {
@@ -600,7 +600,7 @@ class _MainViewState extends State<MainView> {
     }).toList();
 
     _categoryList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
     });
   }
 }

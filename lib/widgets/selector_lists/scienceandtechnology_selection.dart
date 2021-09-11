@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
@@ -12,7 +13,7 @@ class ScienceAndTechnologySelection extends GCWSelection {
             (element) => element.categories != null && element.categories.contains(ToolCategory.SCIENCE_AND_TECHNOLOGY))
         .toList();
     _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
     });
 
     return Container(child: GCWToolList(toolList: _toolList));

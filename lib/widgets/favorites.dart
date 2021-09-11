@@ -21,7 +21,7 @@ class Favorites {
 
   static void _sortList() {
     toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
     });
   }
 
