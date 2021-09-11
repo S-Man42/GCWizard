@@ -260,8 +260,6 @@ class EdelcrantzState extends State<Edelcrantz> {
         }).toList();
         segments = decodeVisualEdelcrantz(output);
       }
-      print('outpput displays');
-      print(segments['displays']);
       return Column(
         children: <Widget>[
           GCWOutput(title: i18n(context, 'edelcrantz_text'), child: segments['text']),
