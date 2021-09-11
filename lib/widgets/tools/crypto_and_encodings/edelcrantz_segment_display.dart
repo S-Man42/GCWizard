@@ -4,7 +4,7 @@ import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{'0': false, 'a1': false, 'a2': false, 'a3': false, 'b1': false, 'b2': false, 'b3': false, 'c1': false, 'c2': false, 'c3': false};
+const _INITIAL_SEGMENTS = <String, bool>{'t0': false, 'a1': false, 'a2': false, 'a3': false, 'b1': false, 'b2': false, 'b3': false, 'c1': false, 'c2': false, 'c3': false};
 
 const _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH = 150;
 const _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT = 150;
@@ -27,7 +27,7 @@ class EdelcrantzSegmentDisplay extends NSegmentDisplay {
         var SEGMENTS_COLOR_ON = segment_color_on;
         var SEGMENTS_COLOR_OFF = segment_color_off;
 
-        paint.color = currentSegments['0'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['t0'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path0 = Path();
         path0.moveTo(size.width / _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH * 30, size.width / _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT * 10);
         path0.lineTo(size.width / _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH * 70, size.width / _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT * 10);
@@ -35,7 +35,7 @@ class EdelcrantzSegmentDisplay extends NSegmentDisplay {
         path0.lineTo(size.width / _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH * 30, size.width / _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT * 50);
         path0.close();
 
-        canvas.touchCanvas.drawPath(path0, paint, onTapDown: (tapDetail) {setSegmentState('0', !currentSegments['0']);});
+        canvas.touchCanvas.drawPath(path0, paint, onTapDown: (tapDetail) {setSegmentState('t0', !currentSegments['t0']);});
 
         paint.color = currentSegments['a1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA1 = Path();
@@ -126,6 +126,5 @@ class EdelcrantzSegmentDisplay extends NSegmentDisplay {
         pathC3.close();
 
         canvas.touchCanvas.drawPath(pathC3, paint, onTapDown: (tapDetail) {setSegmentState('c3', !currentSegments['c3']);});
-
       });
 }

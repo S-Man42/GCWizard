@@ -27,6 +27,7 @@ class EdelcrantzState extends State<Edelcrantz> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
+  var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
   @override
   void initState() {
@@ -55,25 +56,47 @@ class EdelcrantzState extends State<Edelcrantz> {
           });
         },
       ),
-      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
-          ? GCWTextField(
-              controller: _EncodeInputController,
-              onChanged: (text) {
+      if (_currentMode == GCWSwitchPosition.left) // encrypt
+       GCWTextField(
+          controller: _EncodeInputController,
+          onChanged: (text) {
+            setState(() {
+               _currentEncodeInput = text;
+            });
+          },
+        )
+      else
+        Column(// decryt
+          children: <Widget>[
+            GCWTwoOptionsSwitch(
+              value: _currentDecodeMode,
+              leftValue: i18n(context, 'edelcrantz_decode_textmode'),
+              rightValue: i18n(context, 'edelcrantz_decode_visualmode'),
+              onChanged: (value) {
                 setState(() {
-                  _currentEncodeInput = text;
+                  _currentDecodeMode = value;
                 });
               },
-            )
+            ),
+            if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+              _buildVisualDecryption()
+            else // decode text
+              GCWTextField(
+                controller: _DecodeInputController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              )
 
-        : Column(
-        // decrpyt: input segment => output number
-        children: <Widget>[_buildVisualDecryption()],
-      ),
+          ]
+        ),
       _buildOutput()
     ]);
   }
 
-  _buildVisualDecryption() {
+  Widget _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
@@ -147,36 +170,40 @@ class EdelcrantzState extends State<Edelcrantz> {
   List<List<String>> _buildShutters(List<List<String>> segments){
     List<List<String>> result = [];
     segments.forEach((element) {
-      List<String> resultElement = [];
-      switch (element[0]) {
-        case '0' : resultElement = []; break;
-        case '1' : resultElement = ['a1']; break;
-        case '2' : resultElement = ['a2']; break;
-        case '3' : resultElement = ['a1', 'a2']; break;
-        case '4' : resultElement = ['a3']; break;
-        case '5' : resultElement = ['a3', 'a1']; break;
-        case '6' : resultElement = ['a3', 'a2']; break;
-        case '7' : resultElement = ['a3', 'a2', 'a1']; break;
-      }
-      switch (element[1]) {
-        case '1' : resultElement.addAll(['b1']); break;
-        case '2' : resultElement.addAll(['b2']); break;
-        case '3' : resultElement.addAll(['b1', 'b2']); break;
-        case '4' : resultElement.addAll(['b3']); break;
-        case '5' : resultElement.addAll(['b3', 'b1']); break;
-        case '6' : resultElement.addAll(['b3', 'b2']); break;
-        case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
-      }
-      switch (element[2]) {
-        case '1' : resultElement.addAll(['c1']); break;
-        case '2' : resultElement.addAll(['c2']); break;
-        case '3' : resultElement.addAll(['c1', 'c2']); break;
-        case '4' : resultElement.addAll(['c3']); break;
-        case '5' : resultElement.addAll(['c3', 'c1']); break;
-        case '6' : resultElement.addAll(['c3', 'c2']); break;
-        case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
-      }
-      result.add(resultElement);
+      if (element != null)
+      if (int.tryParse(element.join('')) != null) {
+        List<String> resultElement = [];
+        switch (element[0]) {
+          case '0' : resultElement = []; break;
+          case '1' : resultElement = ['a1']; break;
+          case '2' : resultElement = ['a2']; break;
+          case '3' : resultElement = ['a1', 'a2']; break;
+          case '4' : resultElement = ['a3']; break;
+          case '5' : resultElement = ['a3', 'a1']; break;
+          case '6' : resultElement = ['a3', 'a2']; break;
+          case '7' : resultElement = ['a3', 'a2', 'a1']; break;
+        }
+        switch (element[1]) {
+          case '1' : resultElement.addAll(['b1']); break;
+          case '2' : resultElement.addAll(['b2']); break;
+          case '3' : resultElement.addAll(['b1', 'b2']); break;
+          case '4' : resultElement.addAll(['b3']); break;
+          case '5' : resultElement.addAll(['b3', 'b1']); break;
+          case '6' : resultElement.addAll(['b3', 'b2']); break;
+          case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
+        }
+        switch (element[2]) {
+          case '1' : resultElement.addAll(['c1']); break;
+          case '2' : resultElement.addAll(['c2']); break;
+          case '3' : resultElement.addAll(['c1', 'c2']); break;
+          case '4' : resultElement.addAll(['c3']); break;
+          case '5' : resultElement.addAll(['c3', 'c1']); break;
+          case '6' : resultElement.addAll(['c3', 'c2']); break;
+          case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
+        }
+        result.add(resultElement);
+      } else
+        result.add(element);
     });
     return result;
   }
@@ -184,7 +211,16 @@ class EdelcrantzState extends State<Edelcrantz> {
   String _buildCodelets(List<List<String>> segments){
     List<String> result = [];
     segments.forEach((codelet) {
+      if (codelet != null)
         result.add(codelet.join(''));
+    });
+    return result.join(' ');
+  }
+
+  String _segmentsToCode(List<List<String>> segments){
+    List<String> result = [];
+    segments.forEach((element) {
+      result.add(segmentToCode(element));
     });
     return result.join(' ');
   }
@@ -194,7 +230,6 @@ class EdelcrantzState extends State<Edelcrantz> {
     return GCWSegmentDisplayOutput(
         segmentFunction:(displayedSegments, readOnly) {
           return EdelcrantzSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-          return EdelcrantzSegmentDisplay(segments: null, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true
@@ -202,9 +237,8 @@ class EdelcrantzState extends State<Edelcrantz> {
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      //encode
-      var segments = encodeEdelcrantz(_currentEncodeInput);
+    if (_currentMode == GCWSwitchPosition.left) {//encode
+      var segments = encodeEdelcrantz(_currentEncodeInput.toUpperCase());
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -216,17 +250,23 @@ class EdelcrantzState extends State<Edelcrantz> {
           )
         ],
       );
-    } else {
-      //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
-      }).toList();
-      var segments = decodeMayaNumbers(output);
+    } else { //decode
+      var segments;
+      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
+        segments = decodeTextEdelcrantz(_currentDecodeInput);
+      } else { // visual
+        var output = _currentDisplays.map((character) {
+          if (character != null) return character.join();
+        }).toList();
+        segments = decodeVisualEdelcrantz(output);
+      }
+      print('outpput displays');
+      print(segments['displays']);
       return Column(
         children: <Widget>[
+          GCWOutput(title: i18n(context, 'edelcrantz_text'), child: segments['text']),
+          GCWOutput(title: i18n(context, 'edelcrantz_codelets'), child: _segmentsToCode(segments['displays'])),
           _buildDigitalOutput(segments['displays']),
-          GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: segments['numbers'].join(' ')),
-          GCWOutput(title: i18n(context, 'mayanumbers_vigesimal'), child: segments['vigesimal'])
         ],
       );
     }
