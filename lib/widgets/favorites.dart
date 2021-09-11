@@ -1,5 +1,6 @@
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 enum FavoriteChangeStatus { add, remove }
 
@@ -20,9 +21,7 @@ class Favorites {
   }
 
   static void _sortList() {
-    toolList.sort((a, b) {
-      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
-    });
+    toolList.sort((a, b) => sortToolListAlphabetically(a, b));
   }
 
   static initialize() {

@@ -3,6 +3,7 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class CryptographySelection extends GCWSelection {
   @override
@@ -10,9 +11,7 @@ class CryptographySelection extends GCWSelection {
     final List<GCWTool> _toolList = Registry.toolList
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.CRYPTOGRAPHY))
         .toList();
-    _toolList.sort((a, b) {
-      return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
-    });
+    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
 
     return Container(child: GCWToolList(toolList: _toolList));
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -8,6 +9,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 
 String className(Widget widget) {
@@ -165,4 +167,8 @@ String textControllerDoBackSpace(String currentText, TextEditingController textC
 
 double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
+}
+
+int sortToolListAlphabetically(GCWTool a, GCWTool b) {
+  return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
 }
