@@ -2411,6 +2411,7 @@ class Registry {
       GCWTool(
           tool: MapView(),
           autoScroll: false,
+          suppressToolMargin: true,
           i18nPrefix: 'coords_openmap',
           iconPath: 'assets/icons/coords/icon_free_map.png',
           categories: [

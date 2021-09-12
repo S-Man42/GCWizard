@@ -87,6 +87,7 @@ class GCWTool extends StatefulWidget {
   final String i18nPrefix;
   final List<ToolCategory> categories;
   final autoScroll;
+  final suppressToolMargin;
   final iconPath;
   final List<String> searchStrings;
   String indexedStrings;
@@ -112,6 +113,7 @@ class GCWTool extends StatefulWidget {
       this.i18nPrefix,
       this.categories,
       this.autoScroll: true,
+      this.suppressToolMargin: false,
       this.iconPath,
       this.searchStrings,
       this.buttonList,
@@ -272,14 +274,21 @@ class _GCWToolState extends State<GCWTool> {
   Widget _buildBody() {
     if (widget.tool is GCWSelection) return widget.tool;
 
-    if (widget.autoScroll == false) return widget.tool;
+    var tool = widget.tool;
+    if (!widget.suppressToolMargin) {
+      tool = Padding(
+        child: tool,
+        padding: EdgeInsets.all(10),
+      );
+    }
+
+    if (widget.autoScroll == false) {
+      return tool;
+    }
 
     return Scrollbar(
       child: SingleChildScrollView(
-        child: Padding(
-          child: widget.tool,
-          padding: EdgeInsets.all(10),
-        ),
+        child: tool,
       ),
     );
   }
