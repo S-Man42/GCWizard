@@ -615,7 +615,6 @@ String segmentToCode(List<String> segment){
 
 
 List<String> _buildShutters(String segments){
-  print(segments);
   List<String> resultElement = [];
   bool A = false;
   if (segments.length == 4 && segments.startsWith('A')) {

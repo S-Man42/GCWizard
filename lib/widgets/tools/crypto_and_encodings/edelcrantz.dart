@@ -219,14 +219,6 @@ class EdelcrantzState extends State<Edelcrantz> {
     return result.join(' ');
   }
 
-  String _segmentsToCode(List<List<String>> segments){
-    List<String> result = [];
-    segments.forEach((element) {
-      result.add(segmentToCode(element));
-    });
-    return result.join(' ');
-  }
-
   String _segmentsToText(String text){
     return text
         .replaceAll('edelcrantz_a_messagereceived', i18n(context, 'edelcrantz_a_messagereceived'))
@@ -274,7 +266,6 @@ class EdelcrantzState extends State<Edelcrantz> {
       return Column(
         children: <Widget>[
           GCWOutput(title: i18n(context, 'edelcrantz_text'), child: _segmentsToText(segments['text'])),
-          GCWOutput(title: i18n(context, 'edelcrantz_codelets'), child: _segmentsToCode(segments['displays'])),
           _buildDigitalOutput(segments['displays']),
         ],
       );
