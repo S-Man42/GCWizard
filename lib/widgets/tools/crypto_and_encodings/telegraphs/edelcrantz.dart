@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/edelcrantz_telegraph.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -240,7 +240,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {//encode
-      var segments = encodeEdelcrantz(_currentEncodeInput.toUpperCase());
+      var segments = encodeEdelcrantzTelegraph(_currentEncodeInput.toUpperCase());
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -255,12 +255,12 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
     } else { //decode
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left){ // text
-        segments = decodeTextEdelcrantz(_currentDecodeInput.toUpperCase());
+        segments = decodeTextEdelcrantzTelegraph(_currentDecodeInput.toUpperCase());
       } else { // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualEdelcrantz(output);
+        segments = decodeVisualEdelcrantzTelegraph(output);
       }
       return Column(
         children: <Widget>[

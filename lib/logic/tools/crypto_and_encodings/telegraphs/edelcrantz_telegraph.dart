@@ -5,7 +5,7 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final CODEBOOK = {
+final CODEBOOK_EDELCRANTZ = {
   '000' : ' ',
   '001' : '1',
   '002' : '2',
@@ -525,17 +525,17 @@ final CODEBOOK = {
   'A007': 'edelcrantz_a_endcommunication',
 };
 
-List<List<String>> encodeEdelcrantz(String input) {
+List<List<String>> encodeEdelcrantzTelegraph(String input) {
   if (input == null || input == '') return <List<String>>[];
 
   return input.split('').map((letter) {
-    if (switchMapKeyValue(CODEBOOK)[letter] != null)
-      return switchMapKeyValue(CODEBOOK)[letter].split('');
+    if (switchMapKeyValue(CODEBOOK_EDELCRANTZ)[letter] != null)
+      return switchMapKeyValue(CODEBOOK_EDELCRANTZ)[letter].split('');
   }).toList();
 }
 
 
-Map<String, dynamic> decodeVisualEdelcrantz(List<String> inputs) {
+Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -549,8 +549,8 @@ Map<String, dynamic> decodeVisualEdelcrantz(List<String> inputs) {
   inputs.forEach((element) {
     segment = _stringToSegment(element);
     displays.add(segment);
-    if (CODEBOOK[segmentToCode(segment)] != null)
-      text = text + CODEBOOK[segmentToCode(segment)];
+    if (CODEBOOK_EDELCRANTZ[segmentToCode(segment)] != null)
+      text = text + CODEBOOK_EDELCRANTZ[segmentToCode(segment)];
     else
       text = text + UNKNOWN_ELEMENT;
   });
@@ -559,7 +559,7 @@ Map<String, dynamic> decodeVisualEdelcrantz(List<String> inputs) {
 }
 
 
-Map<String, dynamic> decodeTextEdelcrantz(String inputs) {
+Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -570,8 +570,8 @@ Map<String, dynamic> decodeTextEdelcrantz(String inputs) {
   String text = '';
 
   inputs.split(' ').forEach((element) {
-    if (CODEBOOK[element] != null) {
-      text = text + CODEBOOK[element];
+    if (CODEBOOK_EDELCRANTZ[element] != null) {
+      text = text + CODEBOOK_EDELCRANTZ[element];
     } else {
       text = text + UNKNOWN_ELEMENT;
     }

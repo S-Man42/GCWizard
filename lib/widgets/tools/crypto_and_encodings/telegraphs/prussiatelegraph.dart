@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/prussian_telegraph.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -70,8 +70,8 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             children: <Widget>[
               GCWTwoOptionsSwitch(
                 value: _currentDecodeMode,
-                leftValue: i18n(context, 'edelcrantz_decode_textmode'),
-                rightValue: i18n(context, 'edelcrantz_decode_visualmode'),
+                leftValue: i18n(context, 'telegraph_decode_textmode'),
+                rightValue: i18n(context, 'telegraph_decode_visualmode'),
                 onChanged: (value) {
                   setState(() {
                     _currentDecodeMode = value;
@@ -83,7 +83,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
               else // decode text
                 GCWTextField(
                   controller: _DecodeInputController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),],
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aAbBcC. 0-9]')),],
                   onChanged: (text) {
                     setState(() {
                       _currentDecodeInput = text;
@@ -178,29 +178,35 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             case '0' : resultElement = []; break;
             case '1' : resultElement = ['a1']; break;
             case '2' : resultElement = ['a2']; break;
-            case '3' : resultElement = ['a1', 'a2']; break;
-            case '4' : resultElement = ['a3']; break;
-            case '5' : resultElement = ['a3', 'a1']; break;
-            case '6' : resultElement = ['a3', 'a2']; break;
-            case '7' : resultElement = ['a3', 'a2', 'a1']; break;
+            case '3' : resultElement = ['a3']; break;
+            case '4' : resultElement = ['a4']; break;
+            case '5' : resultElement = ['a5']; break;
+            case '6' : resultElement = ['a6']; break;
+            case '7' : resultElement = ['a1', 'a6']; break;
+            case '8' : resultElement = ['a2', 'a6']; break;
+            case '9' : resultElement = ['a3', 'a6']; break;
           }
           switch (element[1]) {
             case '1' : resultElement.addAll(['b1']); break;
             case '2' : resultElement.addAll(['b2']); break;
-            case '3' : resultElement.addAll(['b1', 'b2']); break;
-            case '4' : resultElement.addAll(['b3']); break;
-            case '5' : resultElement.addAll(['b3', 'b1']); break;
-            case '6' : resultElement.addAll(['b3', 'b2']); break;
-            case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
+            case '3' : resultElement.addAll(['b3']); break;
+            case '4' : resultElement.addAll(['b4']); break;
+            case '5' : resultElement.addAll(['b5']); break;
+            case '6' : resultElement.addAll(['b6']); break;
+            case '7' : resultElement.addAll(['b1', 'b6']); break;
+            case '8' : resultElement.addAll(['b2', 'b6']); break;
+            case '9' : resultElement.addAll(['b3', 'b6']); break;
           }
           switch (element[2]) {
             case '1' : resultElement.addAll(['c1']); break;
             case '2' : resultElement.addAll(['c2']); break;
-            case '3' : resultElement.addAll(['c1', 'c2']); break;
-            case '4' : resultElement.addAll(['c3']); break;
-            case '5' : resultElement.addAll(['c3', 'c1']); break;
-            case '6' : resultElement.addAll(['c3', 'c2']); break;
-            case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
+            case '3' : resultElement.addAll(['c3']); break;
+            case '4' : resultElement.addAll(['c4']); break;
+            case '5' : resultElement.addAll(['c5']); break;
+            case '6' : resultElement.addAll(['c6']); break;
+            case '7' : resultElement.addAll(['c1', 'c6']); break;
+            case '8' : resultElement.addAll(['c2', 'c6']); break;
+            case '9' : resultElement.addAll(['c3', 'c6']); break;
           }
           result.add(resultElement);
         } else
@@ -240,12 +246,12 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {//encode
-      var segments = encodeEdelcrantz(_currentEncodeInput.toUpperCase());
+      var segments = encodePrussianTelegraph(_currentEncodeInput.toUpperCase());
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
           GCWTextDivider(
-            text: i18n(context, 'edelcrantz_codelets'),
+            text: i18n(context, 'telegraph_codepoints'),
           ),
           GCWOutputText(
             text: _buildCodelets(segments),
@@ -255,16 +261,16 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
     } else { //decode
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left){ // text
-        segments = decodeTextEdelcrantz(_currentDecodeInput.toUpperCase());
+        segments = decodeTextPrussianTelegraph(_currentDecodeInput.toUpperCase());
       } else { // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualEdelcrantz(output);
+        segments = decodeVisualPrussianTelegraph(output);
       }
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'edelcrantz_text'), child: _segmentsToText(segments['text'])),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: _segmentsToText(segments['text'])),
           _buildDigitalOutput(segments['displays']),
         ],
       );
