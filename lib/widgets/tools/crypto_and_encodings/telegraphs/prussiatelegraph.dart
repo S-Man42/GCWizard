@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/edelcrantz.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/maya_numbers.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -12,14 +11,14 @@ import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/edelcrantz_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph_segment_display.dart';
 
-class Edelcrantz extends StatefulWidget {
+class PrussiaTelegraph extends StatefulWidget {
   @override
-  EdelcrantzState createState() => EdelcrantzState();
+  PrussiaTelegraphState createState() => PrussiaTelegraphState();
 }
 
-class EdelcrantzState extends State<Edelcrantz> {
+class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   var _currentEncodeInput = '';
   var _EncodeInputController;
 
@@ -58,41 +57,41 @@ class EdelcrantzState extends State<Edelcrantz> {
         },
       ),
       if (_currentMode == GCWSwitchPosition.left) // encrypt
-       GCWTextField(
+        GCWTextField(
           controller: _EncodeInputController,
           onChanged: (text) {
             setState(() {
-               _currentEncodeInput = text;
+              _currentEncodeInput = text;
             });
           },
         )
       else
         Column(// decryt
-          children: <Widget>[
-            GCWTwoOptionsSwitch(
-              value: _currentDecodeMode,
-              leftValue: i18n(context, 'edelcrantz_decode_textmode'),
-              rightValue: i18n(context, 'edelcrantz_decode_visualmode'),
-              onChanged: (value) {
-                setState(() {
-                  _currentDecodeMode = value;
-                });
-              },
-            ),
-            if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
-              _buildVisualDecryption()
-            else // decode text
-              GCWTextField(
-                controller: _DecodeInputController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),],
-                onChanged: (text) {
+            children: <Widget>[
+              GCWTwoOptionsSwitch(
+                value: _currentDecodeMode,
+                leftValue: i18n(context, 'edelcrantz_decode_textmode'),
+                rightValue: i18n(context, 'edelcrantz_decode_visualmode'),
+                onChanged: (value) {
                   setState(() {
-                    _currentDecodeInput = text;
+                    _currentDecodeMode = value;
                   });
                 },
-              )
+              ),
+              if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+                _buildVisualDecryption()
+              else // decode text
+                GCWTextField(
+                  controller: _DecodeInputController,
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),],
+                  onChanged: (text) {
+                    setState(() {
+                      _currentDecodeInput = text;
+                    });
+                  },
+                )
 
-          ]
+            ]
         ),
       _buildOutput()
     ]);
@@ -131,7 +130,7 @@ class EdelcrantzState extends State<Edelcrantz> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: EdelcrantzSegmentDisplay(
+                child: PrussiaTelegraphSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -173,39 +172,39 @@ class EdelcrantzState extends State<Edelcrantz> {
     List<List<String>> result = [];
     segments.forEach((element) {
       if (element != null)
-      if (int.tryParse(element.join('')) != null) {
-        List<String> resultElement = [];
-        switch (element[0]) {
-          case '0' : resultElement = []; break;
-          case '1' : resultElement = ['a1']; break;
-          case '2' : resultElement = ['a2']; break;
-          case '3' : resultElement = ['a1', 'a2']; break;
-          case '4' : resultElement = ['a3']; break;
-          case '5' : resultElement = ['a3', 'a1']; break;
-          case '6' : resultElement = ['a3', 'a2']; break;
-          case '7' : resultElement = ['a3', 'a2', 'a1']; break;
-        }
-        switch (element[1]) {
-          case '1' : resultElement.addAll(['b1']); break;
-          case '2' : resultElement.addAll(['b2']); break;
-          case '3' : resultElement.addAll(['b1', 'b2']); break;
-          case '4' : resultElement.addAll(['b3']); break;
-          case '5' : resultElement.addAll(['b3', 'b1']); break;
-          case '6' : resultElement.addAll(['b3', 'b2']); break;
-          case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
-        }
-        switch (element[2]) {
-          case '1' : resultElement.addAll(['c1']); break;
-          case '2' : resultElement.addAll(['c2']); break;
-          case '3' : resultElement.addAll(['c1', 'c2']); break;
-          case '4' : resultElement.addAll(['c3']); break;
-          case '5' : resultElement.addAll(['c3', 'c1']); break;
-          case '6' : resultElement.addAll(['c3', 'c2']); break;
-          case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
-        }
-        result.add(resultElement);
-      } else
-        result.add(element);
+        if (int.tryParse(element.join('')) != null) {
+          List<String> resultElement = [];
+          switch (element[0]) {
+            case '0' : resultElement = []; break;
+            case '1' : resultElement = ['a1']; break;
+            case '2' : resultElement = ['a2']; break;
+            case '3' : resultElement = ['a1', 'a2']; break;
+            case '4' : resultElement = ['a3']; break;
+            case '5' : resultElement = ['a3', 'a1']; break;
+            case '6' : resultElement = ['a3', 'a2']; break;
+            case '7' : resultElement = ['a3', 'a2', 'a1']; break;
+          }
+          switch (element[1]) {
+            case '1' : resultElement.addAll(['b1']); break;
+            case '2' : resultElement.addAll(['b2']); break;
+            case '3' : resultElement.addAll(['b1', 'b2']); break;
+            case '4' : resultElement.addAll(['b3']); break;
+            case '5' : resultElement.addAll(['b3', 'b1']); break;
+            case '6' : resultElement.addAll(['b3', 'b2']); break;
+            case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
+          }
+          switch (element[2]) {
+            case '1' : resultElement.addAll(['c1']); break;
+            case '2' : resultElement.addAll(['c2']); break;
+            case '3' : resultElement.addAll(['c1', 'c2']); break;
+            case '4' : resultElement.addAll(['c3']); break;
+            case '5' : resultElement.addAll(['c3', 'c1']); break;
+            case '6' : resultElement.addAll(['c3', 'c2']); break;
+            case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
+          }
+          result.add(resultElement);
+        } else
+          result.add(element);
     });
     return result;
   }
@@ -232,7 +231,7 @@ class EdelcrantzState extends State<Edelcrantz> {
     segments = _buildShutters(segments);
     return GCWSegmentDisplayOutput(
         segmentFunction:(displayedSegments, readOnly) {
-          return EdelcrantzSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return PrussiaTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true

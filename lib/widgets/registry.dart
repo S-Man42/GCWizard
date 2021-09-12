@@ -79,6 +79,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
@@ -138,8 +139,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/edelcrantz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
@@ -828,18 +830,6 @@ class Registry {
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
         SEARCHSTRING_FR_IRRATIONALNUMBERS
       ]),
-      GCWTool(tool: Edelcrantz(), i18nPrefix: 'edelcrantz', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_EDELCRANTZ,
-        SEARCHSTRING_DE_EDELCRANTZ,
-        SEARCHSTRING_EN_EDELCRANTZ,
-        SEARCHSTRING_FR_EDELCRANTZ
-      ]),
       GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
@@ -1471,21 +1461,6 @@ class Registry {
         SEARCHSTRING_EN_PRIMES,
         SEARCHSTRING_FR_PRIMES
       ]),
-      GCWTool(
-          tool: SchillingCannstattTelegraph(),
-          i18nPrefix: 'schillingcannstatt',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_TELEGRAPH,
-            SEARCHSTRING_DE_TELEGRAPH,
-            SEARCHSTRING_EN_TELEGRAPH,
-            SEARCHSTRING_FR_TELEGRAPH,
-            SEARCHSTRING_COMMON_SCHILLINGCANNSTATT,
-            SEARCHSTRING_DE_SCHILLINGCANNSTATT,
-            SEARCHSTRING_EN_SCHILLINGCANNSTATT,
-            SEARCHSTRING_FR_SCHILLINGCANNSTATT,
-          ]),
       GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', helpLocales: [
         'de',
         'en',
@@ -1666,6 +1641,12 @@ class Registry {
         SEARCHSTRING_EN_TRIFID,
         SEARCHSTRING_FR_TRIFID
       ]),
+      GCWTool(
+          tool: TelegraphSelection(),
+          i18nPrefix: 'telegraph_selection',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: []),
       GCWTool(
           tool: TomTomSelection(),
           i18nPrefix: 'tomtom_selection',
@@ -7533,6 +7514,52 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_ZODIAC_Z408,
         SEARCHSTRING_FR_SYMBOL_ZODIAC_Z408
       ]),
+
+      // TelegraphSelection *********************************************************************************************
+      GCWTool(tool: EdelcrantzTelegraph(), i18nPrefix: 'telegraph_edelcrantz', categories: [
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_TELEGRAPH_EDELCRANTZ,
+        SEARCHSTRING_DE_TELEGRAPH_EDELCRANTZ,
+        SEARCHSTRING_EN_TELEGRAPH_EDELCRANTZ,
+        SEARCHSTRING_FR_TELEGRAPH_EDELCRANTZ
+      ]),
+      GCWTool(tool: PrussiaTelegraph(), i18nPrefix: 'telegraph_prussia', categories: [
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_TELEGRAPH_PRUSSIA,
+        SEARCHSTRING_DE_TELEGRAPH_PRUSSIA,
+        SEARCHSTRING_EN_TELEGRAPH_PRUSSIA,
+        SEARCHSTRING_FR_TELEGRAPH_PRUSSIA
+      ]),
+      GCWTool(
+          tool: SchillingCannstattTelegraph(),
+          i18nPrefix: 'telegraph_schillingcannstatt',
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_TELEGRAPH_SCHILLINGCANNSTATT,
+            SEARCHSTRING_DE_TELEGRAPH_SCHILLINGCANNSTATT,
+            SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANNSTATT,
+            SEARCHSTRING_FR_TELEGRAPH_SCHILLINGCANNSTATT,
+          ]),
 
       // TomTomSelection *********************************************************************************************
       GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', helpLocales: [

@@ -77,7 +77,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/edelcrantz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -131,6 +131,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
@@ -459,7 +460,7 @@ class _MainViewState extends State<MainView> {
         className(SilverRatioSelection()),
         className(DuckSpeak()),
         className(EasterSelection()),
-        className(Edelcrantz()),
+        className(EdelcrantzTelegraph()),
         className(EllipsoidTransform()),
         className(EnclosedAreas()),
         className(Enigma()),
@@ -525,6 +526,7 @@ class _MainViewState extends State<MainView> {
         className(Polybios()),
         className(PrimesSelection()),
         className(Projectiles()),
+        className(PrussiaTelegraph()),
         className(QrCode()),
         className(QuadraticEquation()),
         className(RailFence()),
