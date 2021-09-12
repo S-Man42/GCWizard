@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/edelcrantz.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/maya_numbers.dart';
@@ -83,6 +84,7 @@ class EdelcrantzState extends State<Edelcrantz> {
             else // decode text
               GCWTextField(
                 controller: _DecodeInputController,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),],
                 onChanged: (text) {
                   setState(() {
                     _currentDecodeInput = text;
@@ -225,6 +227,15 @@ class EdelcrantzState extends State<Edelcrantz> {
     return result.join(' ');
   }
 
+  String _segmentsToText(String text){
+    return text
+        .replaceAll('edelcrantz_a_messagereceived', i18n(context, 'edelcrantz_a_messagereceived'))
+        .replaceAll('edelcrantz_a_doyoucopy', i18n(context, 'edelcrantz_a_doyoucopy'))
+        .replaceAll('edelcrantz_a_understood', i18n(context, 'edelcrantz_a_understood'))
+        .replaceAll('edelcrantz_a_repeatmessage', i18n(context, 'edelcrantz_a_repeatmessage'))
+        .replaceAll('edelcrantz_a_endcommunication', i18n(context, 'edelcrantz_a_endcommunication'));
+  }
+
   Widget _buildDigitalOutput(List<List<String>> segments) {
     segments = _buildShutters(segments);
     return GCWSegmentDisplayOutput(
@@ -253,7 +264,7 @@ class EdelcrantzState extends State<Edelcrantz> {
     } else { //decode
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left){ // text
-        segments = decodeTextEdelcrantz(_currentDecodeInput);
+        segments = decodeTextEdelcrantz(_currentDecodeInput.toUpperCase());
       } else { // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
@@ -262,7 +273,7 @@ class EdelcrantzState extends State<Edelcrantz> {
       }
       return Column(
         children: <Widget>[
-          GCWOutput(title: i18n(context, 'edelcrantz_text'), child: segments['text']),
+          GCWOutput(title: i18n(context, 'edelcrantz_text'), child: _segmentsToText(segments['text'])),
           GCWOutput(title: i18n(context, 'edelcrantz_codelets'), child: _segmentsToCode(segments['displays'])),
           _buildDigitalOutput(segments['displays']),
         ],

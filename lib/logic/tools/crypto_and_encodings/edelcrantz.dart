@@ -1,3 +1,7 @@
+// https://archive.org/details/earlyhistoryofda0000holz/page/180/mode/2up
+// https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
+// https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
+
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -97,7 +101,7 @@ final CODEBOOK = {
   '134' : 'fe',
   '135' : 'fel',
   '136' : 'fi',
-  '137' : '<FIENDEN>',
+  '137' : 'fienden',
   '140' : 'fin',
   '141' : 'fi',
   '142' : 'flagg',
@@ -388,7 +392,7 @@ final CODEBOOK = {
   '577' : 'str',
   '600' : 'sv',
   '601' : 'svar',
-  '602' : '<FVENIK>',
+  '602' : 'svenik',
   '603' : 'sy',
   '604' : 'så',
   '605' : 'sä',
@@ -468,7 +472,7 @@ final CODEBOOK = {
   '717' : 'år',
   '720' : 'åt',
   '721' : 'åter',
-  '722' : '<TALMED>',
+  '722' : '<TAL.MED.>',
   '723' : 'Ä',
   '724' : 'äkt',
   '725' : 'äg',
@@ -514,8 +518,12 @@ final CODEBOOK = {
   '775' : '',
   '776' : '',
   '777' : '',
+  'A001': 'edelcrantz_a_messagereceived',
+  'A002': 'edelcrantz_a_doyoucopy',
+  'A004': 'edelcrantz_a_understood',
+  'A005': 'edelcrantz_a_repeatmessage',
+  'A007': 'edelcrantz_a_endcommunication',
 };
-
 
 List<List<String>> encodeEdelcrantz(String input) {
   if (input == null || input == '') return <List<String>>[];
@@ -607,41 +615,84 @@ String segmentToCode(List<String> segment){
 
 
 List<String> _buildShutters(String segments){
+  print(segments);
   List<String> resultElement = [];
   bool A = false;
-  if (segments.startsWith('A')) {
+  if (segments.length == 4 && segments.startsWith('A')) {
     A = true;
     segments = segments.substring(1);
     resultElement = ['t0'];
   }
-
-  switch (segments[0]) {
-    case '1' : resultElement.addAll(['a1']); break;
-    case '2' : resultElement.addAll(['a2']); break;
-    case '3' : resultElement.addAll(['a1', 'a2']); break;
-    case '4' : resultElement.addAll( ['a3']); break;
-    case '5' : resultElement.addAll(['a3', 'a1']); break;
-    case '6' : resultElement.addAll(['a3', 'a2']); break;
-    case '7' : resultElement.addAll(['a3', 'a2', 'a1']); break;
+  if (segments.length == 3) {
+    switch (segments[0]) {
+      case '1' :
+        resultElement.addAll(['a1']);
+        break;
+      case '2' :
+        resultElement.addAll(['a2']);
+        break;
+      case '3' :
+        resultElement.addAll(['a1', 'a2']);
+        break;
+      case '4' :
+        resultElement.addAll(['a3']);
+        break;
+      case '5' :
+        resultElement.addAll(['a3', 'a1']);
+        break;
+      case '6' :
+        resultElement.addAll(['a3', 'a2']);
+        break;
+      case '7' :
+        resultElement.addAll(['a3', 'a2', 'a1']);
+        break;
+    }
+    switch (segments[1]) {
+      case '1' :
+        resultElement.addAll(['b1']);
+        break;
+      case '2' :
+        resultElement.addAll(['b2']);
+        break;
+      case '3' :
+        resultElement.addAll(['b1', 'b2']);
+        break;
+      case '4' :
+        resultElement.addAll(['b3']);
+        break;
+      case '5' :
+        resultElement.addAll(['b3', 'b1']);
+        break;
+      case '6' :
+        resultElement.addAll(['b3', 'b2']);
+        break;
+      case '7' :
+        resultElement.addAll(['b3', 'b2', 'b1']);
+        break;
+    }
+    switch (segments[2]) {
+      case '1' :
+        resultElement.addAll(['c1']);
+        break;
+      case '2' :
+        resultElement.addAll(['c2']);
+        break;
+      case '3' :
+        resultElement.addAll(['c1', 'c2']);
+        break;
+      case '4' :
+        resultElement.addAll(['c3']);
+        break;
+      case '5' :
+        resultElement.addAll(['c3', 'c1']);
+        break;
+      case '6' :
+        resultElement.addAll(['c3', 'c2']);
+        break;
+      case '7' :
+        resultElement.addAll(['c3', 'c2', 'c1']);
+        break;
+    }
   }
-  switch (segments[1]) {
-    case '1' : resultElement.addAll(['b1']); break;
-    case '2' : resultElement.addAll(['b2']); break;
-    case '3' : resultElement.addAll(['b1', 'b2']); break;
-    case '4' : resultElement.addAll(['b3']); break;
-    case '5' : resultElement.addAll(['b3', 'b1']); break;
-    case '6' : resultElement.addAll(['b3', 'b2']); break;
-    case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
-  }
-  switch (segments[2]) {
-    case '1' : resultElement.addAll(['c1']); break;
-    case '2' : resultElement.addAll(['c2']); break;
-    case '3' : resultElement.addAll(['c1', 'c2']); break;
-    case '4' : resultElement.addAll(['c3']); break;
-    case '5' : resultElement.addAll(['c3', 'c1']); break;
-    case '6' : resultElement.addAll(['c3', 'c2']); break;
-    case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
-  }
-
   return resultElement;
 }
