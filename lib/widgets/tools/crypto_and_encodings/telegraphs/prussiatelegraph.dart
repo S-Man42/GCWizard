@@ -220,11 +220,11 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
 
   String _segmentsToText(String text){
     return text
-        .replaceAll('edelcrantz_a_messagereceived', i18n(context, 'edelcrantz_a_messagereceived'))
-        .replaceAll('edelcrantz_a_doyoucopy', i18n(context, 'edelcrantz_a_doyoucopy'))
-        .replaceAll('edelcrantz_a_understood', i18n(context, 'edelcrantz_a_understood'))
-        .replaceAll('edelcrantz_a_repeatmessage', i18n(context, 'edelcrantz_a_repeatmessage'))
-        .replaceAll('edelcrantz_a_endcommunication', i18n(context, 'edelcrantz_a_endcommunication'));
+        .replaceAll('telegraph_edelcrantz_a_messagereceived', i18n(context, 'telegraph_edelcrantz_a_messagereceived'))
+        .replaceAll('telegraph_edelcrantz_a_doyoucopy', i18n(context, 'telegraph_edelcrantz_a_doyoucopy'))
+        .replaceAll('telegraph_edelcrantz_a_understood', i18n(context, 'telegraph_edelcrantz_a_understood'))
+        .replaceAll('telegraph_edelcrantz_a_repeatmessage', i18n(context, 'telegraph_edelcrantz_a_repeatmessage'))
+        .replaceAll('telegraph_edelcrantz_a_endcommunication', i18n(context, 'telegraph_edelcrantz_a_endcommunication'));
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
