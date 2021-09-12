@@ -419,6 +419,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 ),
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
+                suppressToolMargin: true,
                 helpLocales: ['de', 'en', 'fr'])));
   }
 }

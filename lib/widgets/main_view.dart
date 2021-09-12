@@ -586,9 +586,7 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    });
+    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
 
     _categoryList = Registry.toolList.where((element) {
       return [
@@ -603,8 +601,6 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _categoryList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    });
+    _categoryList.sort((a, b) => sortToolListAlphabetically(a, b));
   }
 }
