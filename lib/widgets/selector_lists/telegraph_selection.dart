@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/schilling_cannstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -14,6 +15,7 @@ class TelegraphSelection extends GCWSelection {
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
       return [
         className(EdelcrantzTelegraph()),
+        className(MurrayTelegraph()),
         className(PrussiaTelegraph()),
         className(SchillingCannstattTelegraph()),
       ].contains(className(element.tool));

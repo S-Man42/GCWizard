@@ -131,6 +131,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
@@ -511,6 +512,7 @@ class _MainViewState extends State<MainView> {
         className(Navajo()),
         className(NumberSequenceSelection()),
         className(MultiDecoder()),
+        className(MurrayTelegraph()),
         className(NumeralBases()),
         className(NumeralWordsSelection()),
         className(OneTimePad()),

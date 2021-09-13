@@ -141,6 +141,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
@@ -7531,6 +7532,21 @@ class Registry {
         SEARCHSTRING_DE_TELEGRAPH_EDELCRANTZ,
         SEARCHSTRING_EN_TELEGRAPH_EDELCRANTZ,
         SEARCHSTRING_FR_TELEGRAPH_EDELCRANTZ
+      ]),
+      GCWTool(tool: MurrayTelegraph(), i18nPrefix: 'telegraph_murray', categories: [
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_MURRAY,
+        SEARCHSTRING_DE_SYMBOL_MURRAY,
+        SEARCHSTRING_EN_SYMBOL_MURRAY,
+        SEARCHSTRING_FR_SYMBOL_MURRAY
       ]),
       GCWTool(tool: PrussiaTelegraph(), i18nPrefix: 'telegraph_prussia', categories: [
       ], helpLocales: [
