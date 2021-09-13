@@ -32,7 +32,7 @@ class ImageColorCorrections extends StatefulWidget {
 }
 
 class ImageColorCorrectionsState extends State<ImageColorCorrections> {
-  Uint8List _originalData;
+  PlatformFile _originalData;
   Uint8List _convertedOutputImage;
 
   img.Image _currentPreview;
@@ -63,7 +63,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   _currentDataInit({int previewSize}) {
     var previewHeight = previewSize ?? Prefs.getInt('imagecolorcorrections_maxpreviewheight');
 
-    img.Image image = img.decodeImage(_originalData);
+    img.Image image = img.decodeImage(_originalData.bytes);
 
     if (image.height > previewHeight) {
       img.Image resized = img.copyResize(image, height: previewHeight);
@@ -78,7 +78,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
     super.initState();
 
     if (widget.file != null && widget.file.bytes != null) {
-      _originalData = widget.file.bytes;
+      _originalData = widget.file;
 
       _originalPreview = _currentDataInit();
       _currentPreview = img.Image.from(_originalPreview);
@@ -113,14 +113,14 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          onLoaded: (value) {
+          onLoaded: (PlatformFile value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
 
             setState(() {
-              _originalData = value.bytes;
+              _originalData = value;
 
               _originalPreview = _currentDataInit();
               _currentPreview = img.Image.from(_originalPreview);
@@ -170,6 +170,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           GCWImageView(
             imageData: _originalData == null ? null : GCWImageViewData(PlatformFile(bytes: _imageBytes())),
             onBeforeLoadBigImage: _adjustToFullPicture,
+            suppressOpenInTool: {GCWImageViewOpenInTools.COLORCORRECTIONS},
           ),
         if (_currentPreview != null)
           GCWTextDivider(
@@ -331,12 +332,12 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       },
     );
 
-    return _convertedOutputImage;
+    return PlatformFile(bytes: _convertedOutputImage);
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataAdjustColor() async {
     return GCWAsyncExecuterParameters(_AdjustColorInput(
-        image: img.decodeImage(_originalData),
+        image: img.decodeImage(_originalData.bytes),
         invert: _currentInvert,
         grayscale: _currentGrayscale,
         edgeDetection: _currentEdgeDetection,
