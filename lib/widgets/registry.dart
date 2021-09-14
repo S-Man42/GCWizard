@@ -143,6 +143,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcran
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
@@ -167,7 +168,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
@@ -210,7 +211,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/schilling_cannstatt_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_cannstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
@@ -907,21 +908,6 @@ class Registry {
           SEARCHSTRING_FR_GAMES,
         ],
       ),
-      GCWTool(
-          tool: GaussWeberTelegraph(),
-          i18nPrefix: 'gausswebertelegraph',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_TELEGRAPH,
-            SEARCHSTRING_DE_TELEGRAPH,
-            SEARCHSTRING_EN_TELEGRAPH,
-            SEARCHSTRING_FR_TELEGRAPH,
-            SEARCHSTRING_COMMON_GAUSSWEBERTELEGRAPH,
-            SEARCHSTRING_DE_GAUSSWEBERTELEGRAPH,
-            SEARCHSTRING_EN_GAUSSWEBERTELEGRAPH,
-            SEARCHSTRING_FR_GAUSSWEBERTELEGRAPH,
-          ]),
       GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
@@ -7564,6 +7550,20 @@ class Registry {
         SEARCHSTRING_FR_TELEGRAPH_PRUSSIA
       ]),
       GCWTool(
+          tool: GaussWeberTelegraph(),
+          i18nPrefix: 'telegraph_gausswebertelegraph',
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_TELEGRAPH_GAUSSWEBERTELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH_GAUSSWEBERTELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH_GAUSSWEBERTELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH_GAUSSWEBERTELEGRAPH,
+          ]),
+      GCWTool(
           tool: SchillingCannstattTelegraph(),
           i18nPrefix: 'telegraph_schillingcannstatt',
           helpLocales: ['de', 'en', 'fr'],
@@ -7576,6 +7576,20 @@ class Registry {
             SEARCHSTRING_DE_TELEGRAPH_SCHILLINGCANNSTATT,
             SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANNSTATT,
             SEARCHSTRING_FR_TELEGRAPH_SCHILLINGCANNSTATT,
+          ]),
+      GCWTool(
+          tool: WheatstoneCooke5NeedleTelegraph(),
+          i18nPrefix: 'telegraph_wheatstonecooke5needle',
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_TELEGRAPH_WHEATSTONECOOKE5,
+            SEARCHSTRING_DE_TELEGRAPH_WHEATSTONECOOKE5,
+            SEARCHSTRING_EN_TELEGRAPH_WHEATSTONECOOKE5,
+            SEARCHSTRING_FR_TELEGRAPH_WHEATSTONECOOKE5,
           ]),
 
       // TomTomSelection *********************************************************************************************

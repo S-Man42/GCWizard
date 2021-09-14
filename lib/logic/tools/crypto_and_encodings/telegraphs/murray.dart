@@ -12,7 +12,7 @@ Map<MurrayCodebook, Map<String, String>> MURRAY_CODEBOOK = {
 };
 
 
-final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
+final Map<String, List<String>> CODEBOOK_ROYALNAVY = {// https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
   'C': ['1', '2', '4', '5', '6'],
@@ -53,7 +53,7 @@ final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
   ';': ['2', '5'],
 };
 
-final Map<String, List<String>> CODEBOOK_GEOCACHING = {
+final Map<String, List<String>> CODEBOOK_GEOCACHING = {// https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
   'C': ['1', '2', '3', '4', '5', '6'],
@@ -98,7 +98,7 @@ final Map<String, List<String>> CODEBOOK_GEOCACHING = {
   '.': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_FISCHER = {
+final Map<String, List<String>> CODEBOOK_FISCHER = {// https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_b_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
   'C': ['1', '2', '3', '4', '5', '6'],
@@ -143,41 +143,31 @@ final Map<String, List<String>> CODEBOOK_FISCHER = {
   '.': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_ROUCOUX = {
-  'A': [],
-  'B': ['1', '3', '5'],
-  'C': ['1', '2', '3', '4', '5', '6'],
-  'D': ['2', '4', '6'],
-  'E': ['1', '2', '3', '4'],
-  'F': ['1', '2', '5', '6'],
-  'G': ['3', '4', '5', '6'],
-  'H': ['2', '3', '4', '5'],
-  'I': [],
-  'K': [],
-  'L': [],
-  'M': ['1', '2', '3'],
-  'N': ['4', '5', '6'],
-  'O': ['1', '2', '6'],
-  'P': [],
-  'Q': [],
-  'R': ['2', '5'],
-  'S': [],
-  'T': [],
-  'U': [],
-  'W': [],
-  'X': [],
-  'Y': [],
-  'Z': [],
-  '0': [],
-  '1': [],
-  '2': [],
-  '3': [],
-  '4': [],
-  '5': [],
-  '6': [],
-  '7': [],
-  '8': [],
-  '9': [],
+final Map<String, List<String>> CODEBOOK_ROUCOUX = { // http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm
+  'A': ['2', '3', '4', '5', '6'],
+  'B': ['2', '3', '4', '5', '6'],
+  'C': ['1', '2', '4', '5', '6'],
+  'D': ['1', '2', '3', '5', '6'],
+  'E': ['1', '2', '3', '4', '6'],
+  'F': ['1', '2', '3', '4', '5'],
+  'G': ['1'],
+  'H': ['2'],
+  'I': ['3'],
+  'K': ['4'],
+  'L': ['5'],
+  'M': ['6'],
+  'N': ['3', '5'],
+  'O': ['1', '2', '3', '5'],
+  'P': ['1', '5'],
+  'Q': ['1', '3', '4', '5'],
+  'R': ['1', '2'],
+  'S': ['1', '3', '5', '6'],
+  'T': ['1', '2',  '4', '6'],
+  'V': ['4', '6'],
+  'W': ['2', '3', '4', '6'],
+  'X': ['2', '6'],
+  'Y': ['2', '4', '5', '6'],
+  'Z': ['2', '4'],
 };
 
 
