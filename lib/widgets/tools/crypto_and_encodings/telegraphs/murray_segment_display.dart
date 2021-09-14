@@ -29,24 +29,24 @@ class MurraySegmentDisplay extends NSegmentDisplay {
         var SEGMENTS_COLOR_ON = segment_color_on;
         var SEGMENTS_COLOR_OFF = segment_color_off;
 
-        var circles = {
-          '1': [15, 20],
-          '2': [35, 20],
-          '3': [15, 50],
-          '4': [35, 50],
-          '5': [15, 80],
-          '6': [35, 80]
+        var shutters = {
+          '1': [ 5, 20],
+          '2': [25, 20],
+          '3': [ 5, 50],
+          '4': [25, 50],
+          '5': [ 5, 80],
+          '6': [25, 80]
         };
 
-        circles.forEach((key, value) {
+        shutters.forEach((key, value) {
           paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
           var pointSize = size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * _MURRAY_RADIUS;
 
-          canvas.touchCanvas.drawCircle(
+          canvas.touchCanvas.drawRect(
               Offset(size.width / _MURRAY_RELATIVE_DISPLAY_WIDTH * value[0],
-                  size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * value[1]),
-              pointSize,
+                  size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * value[1]) &
+              Size(pointSize * 3, pointSize * 2),
               paint, onTapDown: (tapDetail) {
             setSegmentState(key, !currentSegments[key]);
           });
