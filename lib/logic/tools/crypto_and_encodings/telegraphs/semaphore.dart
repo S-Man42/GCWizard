@@ -45,20 +45,34 @@ final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   'symboltables_semaphore_attention':['l2', 'r2'],
   'symboltables_semaphore_letters_following':['l1', 'r3'],
   'symboltables_semaphore_numerals_following':['l1', 'r2'],
-  'symboltables_semaphore_break':['l5', 'r5'],
+  'symboltables_semaphore_rest':['l5', 'r5'],
 };
 
+final NUMBER = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+
+final LETTER = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
 
 List<List<String>> encodeSemaphore(String input) {
   if (input == null) return [];
 
-  List<String> inputs = input.split('');
+  List<String> inputs = input.toUpperCase().split('');
   List<List<String>> result = [];
-
+  bool number_follows = false;
+  bool letter_follows = false;
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK_SEMAPHORE[inputs[i].toUpperCase()] != null)
-      result.add(CODEBOOK_SEMAPHORE[inputs[i].toUpperCase()]);
+    if (LETTER.contains(inputs[i]) && !letter_follows) {
+      letter_follows = true;
+      number_follows = false;
+      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_letters_following']);
+    }
+    if (NUMBER.contains(inputs[i]) && !number_follows) {
+      number_follows = true;
+      letter_follows = false;
+      result.add(CODEBOOK_SEMAPHORE['symboltables_semaphore_numerals_following']);
+    }
+    if (CODEBOOK_SEMAPHORE[inputs[i]] != null)
+      result.add(CODEBOOK_SEMAPHORE[inputs[i]]);
   }
   return result;
 }

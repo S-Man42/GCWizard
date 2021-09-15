@@ -167,9 +167,20 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join()),
+          GCWDefaultOutput(child: _normalize(segments['chars'].join())),
         ],
       );
     }
   }
+
+  String _normalize(String input){
+    return input.replaceAll('symboltables_semaphore_cancel', i18n(context, 'symboltables_semaphore_cancel'))
+        .replaceAll('symboltables_semaphore_correct', i18n(context, 'symboltables_semaphore_correct'))
+        .replaceAll('symboltables_semaphore_error', i18n(context, 'symboltables_semaphore_error'))
+        .replaceAll('symboltables_semaphore_attention', i18n(context, 'symboltables_semaphore_attention'))
+        .replaceAll('symboltables_semaphore_letters_following', i18n(context, 'symboltables_semaphore_letters_following'))
+        .replaceAll('symboltables_semaphore_numerals_following', i18n(context, 'symboltables_semaphore_numerals_following'))
+        .replaceAll('symboltables_semaphore_rest', i18n(context, 'symboltables_semaphore_rest'));
+  }
 }
+

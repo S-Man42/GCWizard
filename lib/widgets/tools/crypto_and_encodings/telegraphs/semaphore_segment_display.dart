@@ -6,8 +6,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{'l1': false, 'l2': false, 'l3': false, 'l4': false, 'l5': false, 'r1': false, 'r2': false, 'r3': false, 'r4': false, 'r5': false};
 
-const _SEMAPHORE_RELATIVE_DISPLAY_WIDTH = 110;
-const _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT = 100;
+const _SEMAPHORE_RELATIVE_DISPLAY_WIDTH = 320; //110;
+const _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT = 260; //100;
 
 class SemaphoreSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
