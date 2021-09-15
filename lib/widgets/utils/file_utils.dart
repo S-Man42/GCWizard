@@ -755,7 +755,7 @@ Future<File> createTmpFile(String extension, Uint8List bytes) async {
   try {
     String tmpDir = (await getTemporaryDirectory()).path;
     var r = Random();
-    String randomFileName ='aaaaa'; //String.fromCharCodes(List.generate(20, (index)=> r.nextInt(33) + 89));
+    String randomFileName = String.fromCharCodes(List.generate(20, (index)=> r.nextInt(33) + 89));
     var filePath = '$tmpDir/$randomFileName.$extension';
 
     return File(filePath).writeAsBytes(bytes);

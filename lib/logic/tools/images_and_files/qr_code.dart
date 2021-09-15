@@ -1,60 +1,28 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'dart:ui';
-import 'package:barcode_scanner/barcode_scanning_data.dart';
+import 'dart:ui' as ui;
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
-import 'dart:ui' as ui;
-//import 'package:google_ml_kit/google_ml_kit.dart' as google;
-import 'package:image/image.dart' as Image;
-import 'package:barcode_scanner/scanbot_barcode_sdk.dart' as sacnner1;
-import 'package:barcode_scanner/scanbot_sdk_models.dart'  as sacnner2;
-//import io.scanbot.sdk.ScanbotSDKInitializer
-
+import 'package:google_ml_kit/google_ml_kit.dart' as google;
 
 
 /// Parse to code string with uint8list
 Future<String> scanBytes(Uint8List bytes) async {
   if (bytes == null) return null;
   try {
-    //var ocr =google.BarcodeScanner();
+    var ocr =google.BarcodeScanner();
+    var file = await createTmpFile('',bytes);
+    var inputImage = google.InputImage.fromFilePath(file.path);
 
-    // // Below example uses metadata values based on an RGBA-encoded 1080x1080 image
-    // final planeMetadata = google.InputImagePlaneMetadata(
-    //   width: 420,
-    //   height: 420,
-    //   bytesPerRow: 420 * 4,
-    // );
-    //
-    // final imageMetadata = google.InputImageData(
-    //   size: Size(420, 420),
-    //   planeData: List.from([planeMetadata]),
-    //   inputImageFormat : google.InputImageFormat.BGRA8888,
-    // );
-    //
-    // var inputImage = google.InputImage.fromBytes(bytes: bytes,
-    //     inputImageData: imageMetadata);
-    var file = await createTmpFile('png',bytes);
-    // var inputImage = google.InputImage.fromFilePath(file.path);
-    //
-    // var codes = await ocr.processImage(inputImage);
-    // if (codes != null)
-    //   return codes.map((code ) {
-    //     return code.value.toString();
-    //     }).join("\n");
-    //scanner2.
-    //ScanbotSDKInitializer().initialize(this)
-    var config = sacnner2.ScanbotSdkConfig(          licenseKey: "",          loggingEnabled: true      );
-    await sacnner1.ScanbotBarcodeSdk.initScanbotSdk(config);
-    var codes = await sacnner1.ScanbotBarcodeSdk.detectFromImageFile(file.uri, BarcodeFormat.values.toList());
+    var codes = await ocr.processImage(inputImage);
     if (codes != null)
-      return codes.barcodeItems.map((code ) {
-        return code.text;
+      return codes.map((code ) {
+        return code.value.rawValue;
         }).join("\n");
-  } catch (e) {
-    ;
-  }
+
+    file.delete();
+  } catch (e) {}
   return null;
 }
 
