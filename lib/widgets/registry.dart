@@ -143,6 +143,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcran
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
@@ -7549,6 +7550,20 @@ class Registry {
         SEARCHSTRING_EN_TELEGRAPH_PRUSSIA,
         SEARCHSTRING_FR_TELEGRAPH_PRUSSIA
       ]),
+      GCWTool(
+          tool: SemaphoreTelegraph(),
+          i18nPrefix: 'symboltable_semaphore',
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_DE_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_FR_SYMBOL_SEMAPHORE
+          ]),
       GCWTool(
           tool: GaussWeberTelegraph(),
           i18nPrefix: 'telegraph_gausswebertelegraph',

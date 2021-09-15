@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/murray.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore_segment_display.dart';
 
-class MurrayTelegraph extends StatefulWidget {
+class SemaphoreTelegraph extends StatefulWidget {
   @override
-  MurrayTelegraphState createState() => MurrayTelegraphState();
+  SemaphoreTelegraphState createState() => SemaphoreTelegraphState();
 }
 
-class MurrayTelegraphState extends State<MurrayTelegraph> {
+class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
-
-  var _currentLanguage = MurrayCodebook.GEOCACHING;
 
   @override
   void initState() {
@@ -42,21 +39,6 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDownButton(
-        value: _currentLanguage,
-        onChanged: (value) {
-          setState(() {
-            _currentLanguage = value;
-          });
-        },
-        items: MURRAY_CODEBOOK.entries.map((mode) {
-          return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-          );
-        }).toList(),
-      ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -118,12 +100,12 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
-                Expanded(
-                  child: MurraySegmentDisplay(
-                    segments: currentDisplay,
-                    onChanged: onChanged,
-                  ),
-                )
+              Expanded(
+                child: SemaphoreSegmentDisplay(
+                  segments: currentDisplay,
+                  onChanged: onChanged,
+                ),
+              )
             ],
           ),
         ),
@@ -160,7 +142,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
         segmentFunction:(displayedSegments, readOnly) {
-            return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return SemaphoreSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true
@@ -170,7 +152,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeMurray(_currentEncodeInput, _currentLanguage);
+      List<List<String>> segments = encodeSemaphore(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -181,7 +163,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      var segments = decodeMurray(output, _currentLanguage);
+      var segments = decodeSemaphore(output);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
