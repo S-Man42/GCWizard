@@ -280,6 +280,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'alphabetvalues_mode_left'),
           rightValue: i18n(context, 'alphabetvalues_mode_right'),
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

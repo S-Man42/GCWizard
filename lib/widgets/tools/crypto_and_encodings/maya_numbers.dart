@@ -1,19 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
-import 'package:prefs/prefs.dart';
 
 class MayaNumbers extends StatefulWidget {
   @override
@@ -28,11 +23,6 @@ class MayaNumbersState extends State<MayaNumbers> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
-
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
         value: _currentMode,
@@ -56,39 +46,7 @@ class MayaNumbersState extends State<MayaNumbers> {
               // decrpyt: input segment => output number
               children: <Widget>[_buildVisualDecryption()],
             ),
-      GCWTextDivider(
-        text: i18n(context, 'segmentdisplay_displayoutput'),
-        trailing: Row(
-          children: <Widget>[
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            )
-          ],
-        ),
-      ),
-      _buildOutput(countColumns)
+      _buildOutput()
     ]);
   }
 
@@ -163,22 +121,23 @@ class MayaNumbersState extends State<MayaNumbers> {
     );
   }
 
-  _buildDigitalOutput(countColumns, segments) {
-    var displays = segments.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
-    }).toList();
-    return buildSegmentDisplayOutput(countColumns, displays);
+  Widget _buildDigitalOutput(List<List<String>> segments) {
+    return GCWSegmentDisplayOutput(
+      segmentFunction:(displayedSegments, readOnly) {
+        return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+      },
+      segments: segments,
+      readOnly: true
+    );
   }
 
-  _buildOutput(countColumns) {
-    var segments;
+  Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaNumbers(_currentEncodeInput);
+      var segments = encodeMayaNumbers(_currentEncodeInput);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments),
+          _buildDigitalOutput(segments),
         ],
       );
     } else {
@@ -186,10 +145,10 @@ class MayaNumbersState extends State<MayaNumbers> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeMayaNumbers(output);
+      var segments = decodeMayaNumbers(output);
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
+          _buildDigitalOutput(segments['displays']),
           GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: segments['numbers'].join(' ')),
           GCWOutput(title: i18n(context, 'mayanumbers_vigesimal'), child: segments['vigesimal'])
         ],

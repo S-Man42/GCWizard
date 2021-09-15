@@ -1,12 +1,11 @@
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:xml/xml.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
@@ -15,18 +14,20 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
 
-Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async {
-  switch (getFileExtension(fileName).toLowerCase()) {
-    case '.gpx':
-      var xml = String.fromCharCodes(bytes);
+Future<MapViewDAO> importCoordinatesFile(PlatformFile file) async {
+  var type = fileTypeByFilename(file.name);
+
+  switch (type) {
+    case FileType.GPX:
+      var xml = String.fromCharCodes(file.bytes);
       return parseCoordinatesFile(xml);
       break;
-    case '.kml':
-      var xml = String.fromCharCodes(bytes);
+    case FileType.KML:
+      var xml = String.fromCharCodes(file.bytes);
       return parseCoordinatesFile(xml, kmlFormat: true);
       break;
-    case '.kmz':
-      InputStream input = new InputStream(bytes.buffer.asByteData());
+    case FileType.KMZ:
+      InputStream input = new InputStream(file.bytes.buffer.asByteData());
       // Decode the Zip file
       final archive = ZipDecoder().decodeBuffer(input);
       if (archive.files.isNotEmpty) {
@@ -37,20 +38,52 @@ Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async
       }
       break;
   }
-  ;
+
   return null;
 }
 
 MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
+  MapViewDAO result = null;
   try {
     var xmlDoc = XmlDocument.parse(xml);
     if (kmlFormat)
-      return _KmlReader()._parse(xmlDoc);
+      result = _KmlReader()._parse(xmlDoc);
     else
-      return _GpxReader()._parse(xmlDoc);
+      result = _GpxReader()._parse(xmlDoc);
   } catch (e) {
     return null;
   }
+
+  // merge points
+  if ((result != null) && (result.points != null)) {
+    for (var x = 0; x < result.points.length; x++)
+      for (var y = x+1; y < result.points.length; y++)
+        if ((result.points[x].latitude == result.points[y].latitude) &&
+            (result.points[x].longitude == result.points[y].longitude))  {
+
+          if (result.polylines != null) {
+            result.polylines.forEach((polyline) {
+              for(var i = 0; i < polyline.pointUUIDs.length; i++)
+                if (polyline.pointUUIDs[i] == result.points[y].uuid)
+                  polyline.pointUUIDs[i] = result.points[x].uuid;
+                else if (polyline.pointUUIDs[i] == result.points[x].uuid)
+                  result.points[x].color = '#000000';
+            });
+          }
+          result.points[x].name = result.points[x].name ?? result.points[y].name;
+          result.points[x].color = (result.points[x].color == null) | (result.points[x].color == '#000000')
+                                    ? result.points[y].color : result.points[x].color;
+          result.points[x].radius = result.points[x].radius ?? result.points[y].radius;
+          result.points[x].circleColor = (result.points[x].circleColor == null) | (result.points[x].circleColor == '#000000')
+                                          ? result.points[y].circleColor : result.points[x].circleColor;
+          result.points[x].circleColorSameAsColor |= result.points[y].circleColorSameAsColor;
+
+          result.points.removeAt(y);
+          y--;
+        }
+  }
+
+  return result;
 }
 
 /// Convert GPX-XML into points
@@ -169,17 +202,14 @@ class _KmlReader {
     var coords = group.getElement('coordinates');
     if (coords == null) return null;
 
-
     var line = GCWMapPolyline(points: <GCWMapPoint>[]);
     var regExp = RegExp(r'([\.0-9]+),([\.0-9]+),?([\.0-9]+)?');
-
 
     regExp.allMatches(coords.innerText).forEach((coordinates) {
       var lat = coordinates.group(2);
       var lon = coordinates.group(1);
       if (lat != null && lon != null) {
-        var wpt = GCWMapPoint(
-            point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
+        var wpt = GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
         wpt.markerText = xmlElement.getElement('description')?.innerText;
 
         if (line.points.length == 0)
@@ -294,8 +324,8 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
     dist = distanceBearing(wpt.point, center.point, ells).distance;
     if ((dist - radius).abs() > distToller) return false;
   });
-  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius);
-  center.circleColorSameAsPointColor = (center.color == line.color);
+  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius, color: line.color);
+  center.circleColorSameAsPointColor = (center.color == center.circle.color);
   return true;
 }
 

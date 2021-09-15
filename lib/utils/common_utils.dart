@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/rendering.dart';
@@ -110,16 +111,25 @@ String insertCharacter(String text, int index, String character) {
 }
 
 String insertSpaceEveryNthCharacter(String input, int n) {
+  return insertEveryNthCharacter(input, n, ' ');
+}
+
+String insertEveryNthCharacter(String input, int n, String textToInsert) {
   if (n == null || n <= 0) return input; //TODO Exception
 
   String out = '';
   int i = 0;
   while (i < input.length) {
-    out += input.substring(i, min(i + n, input.length)) + ' ';
+    if (input.length - i <= n) {
+      out += input.substring(i);
+      break;
+    }
+
+    out += input.substring(i, min(i + n, input.length)) + textToInsert;
     i += n;
   }
 
-  return out.trim();
+  return out;
 }
 
 String formatDaysToNearestUnit(double days) {
@@ -307,4 +317,21 @@ bool isOnlyLetters(String input) {
   if (input == null || input.isEmpty) return false;
 
   return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').length == 0;
+}
+
+Uint8List trimNullBytes(Uint8List bytes) {
+  if (bytes == null)
+    return null;
+
+  if (bytes.last != 0 && bytes.first != 0)
+    return bytes;
+
+  var tempList = List<int>.from(bytes);
+
+  while (tempList.length > 0 && tempList.last == 0)
+    tempList.removeLast();
+  while (tempList.length > 0 && tempList.first == 0)
+    tempList.removeAt(0);
+
+  return Uint8List.fromList(tempList);
 }

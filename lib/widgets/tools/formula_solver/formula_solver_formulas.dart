@@ -75,7 +75,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
         defaultLanguageToolName:
             '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
-        missingHelpLocales: ['ko']);
+        helpLocales: ['de', 'en', 'fr']);
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
@@ -177,7 +177,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
                 i18nPrefix:
                     '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
-                missingHelpLocales: ['ko'])));
+                helpLocales: ['de', 'en', 'fr'])));
   }
 
   _buildGroupList(BuildContext context) {
@@ -273,7 +273,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                       )
                     : Container(),
                 GCWPopupMenu(
-                    iconData: Icons.settings,
+                    iconData: Icons.more_vert,
                     menuItemBuilder: (context) => [
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_editformula'),
@@ -286,8 +286,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                               child:
                                   iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                               action: (index) => setState(() {
-                                    showFormulaReplaceDialog(context, formula, onOkPressed: (value) {
-                                      formula.formula = value;
+                                    showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
+                                      formula.formula = value.first;
                                       setState(() {});
                                     });
                                   })),
@@ -359,21 +359,51 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           0,
           GCWTextDivider(
               text: i18n(context, 'formulasolver_formulas_currentformulas'),
-              trailing: _foundCoordinates.length > 0
-                  ? GCWIconButton(
-                      iconData: Icons.my_location,
-                      size: IconButtonSize.SMALL,
-                      onPressed: () {
-                        _showFormulaResultOnMap(_foundCoordinates.entries.map((coordinate) {
-                          return GCWMapPoint(
-                              point: coordinate.value['coordinate'],
-                              markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') +
-                                  ' ${coordinate.key}',
-                              coordinateFormat: {'format': coordinate.value['format']});
-                        }).toList());
-                      },
-                    )
-                  : Container()));
+              trailing: GCWPopupMenu(
+                  iconData: Icons.more_vert,
+                  size: IconButtonSize.SMALL,
+                  menuItemBuilder: (context) => [
+                        GCWPopupMenuItem(
+                            child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
+                            action: (index) => setState(() {
+                                  showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
+                                    for (int i = 0; i < widget.group.formulas.length; i++) {
+                                      if (value[i] == null) continue;
+
+                                      widget.group.formulas[i].formula = value[i];
+                                    }
+                                    setState(() {});
+                                  });
+                                })),
+                        GCWPopupMenuItem(
+                            child:
+                                iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformulas'),
+                            action: (index) => showDeleteAlertDialog(
+                                  context,
+                                  i18n(context, 'formulasolver_formulas_allformulas'),
+                                  () {
+                                    var formulasToRemove = List.from(widget.group.formulas);
+                                    formulasToRemove.forEach((formula) => _removeFormula(formula));
+                                    setState(() {});
+                                  },
+                                )),
+                        if (_foundCoordinates.length > 0)
+                          GCWPopupMenuItem(
+                              child: iconedGCWPopupMenuItem(
+                                context,
+                                Icons.my_location,
+                                'formulasolver_formulas_showonmap',
+                              ),
+                              action: (index) {
+                                _showFormulaResultOnMap(_foundCoordinates.entries.map((coordinate) {
+                                  return GCWMapPoint(
+                                      point: coordinate.value['coordinate'],
+                                      markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') +
+                                          ' ${coordinate.key}',
+                                      coordinateFormat: {'format': coordinate.value['format']});
+                                }).toList());
+                              })
+                      ])));
     }
 
     return Column(children: rows);
@@ -389,6 +419,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 ),
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
-                missingHelpLocales: ['ko'])));
+                suppressToolMargin: true,
+                helpLocales: ['de', 'en', 'fr'])));
   }
 }

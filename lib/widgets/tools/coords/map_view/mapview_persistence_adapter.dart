@@ -9,7 +9,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
 class MapViewPersistenceAdapter {

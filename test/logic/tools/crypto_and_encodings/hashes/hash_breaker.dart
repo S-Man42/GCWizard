@@ -1,4 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import "package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart";
 import "package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart";
 
@@ -25,7 +26,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = preCheck(elem['substitutions']);
+        var _actual = preCheckCombinations(elem['substitutions']);
         expect(_actual, elem['expectedOutput']);
       });
     });

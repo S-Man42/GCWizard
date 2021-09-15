@@ -15,8 +15,10 @@ class GCWCoordsOutput extends StatefulWidget {
   List<GCWMapPoint> points;
   List<GCWMapPolyline> polylines;
   final bool mapButtonTop;
+  final String title;
 
-  GCWCoordsOutput({Key key, this.outputs, this.points, this.polylines, this.mapButtonTop: false}) : super(key: key) {
+  GCWCoordsOutput({Key key, this.outputs, this.points, this.polylines, this.mapButtonTop: false, this.title})
+      : super(key: key) {
     if (points == null) this.points = [];
     if (polylines == null) this.polylines = [];
   }
@@ -61,7 +63,9 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         ));
 
     var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
+
     return GCWMultipleOutput(
+        title: widget.title,
         children: _children,
         trailing: GCWIconButton(
           iconData: Icons.save,
@@ -91,7 +95,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
                   ),
                   i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
                   autoScroll: false,
-                  missingHelpLocales: ['ko'],
+                  suppressToolMargin: true,
+                  helpLocales: ['de', 'en', 'fr'],
                 )));
   }
 

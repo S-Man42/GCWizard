@@ -2,7 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class ResectionJobData {
   final LatLng coord1;
@@ -99,10 +99,7 @@ class _ResectionCalculator extends IntervalCalculator {
 }
 
 Future<List<LatLng>> resectionAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = resection(jobData.parameters.coord1, jobData.parameters.angle12, jobData.parameters.coord2,
       jobData.parameters.angle23, jobData.parameters.coord3, jobData.parameters.ells);

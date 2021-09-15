@@ -1,8 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-enum MIMETYPE { IMAGE, ARCHIV, DATA, TEXT }
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 Uint8List hexstring2file(String input) {
   if (_isBinary(input))
@@ -11,34 +10,15 @@ Uint8List hexstring2file(String input) {
     return _hexString2bytes(input);
 }
 
-MIMETYPE getMimeType(String fileName) {
-  if (fileName.endsWith('.jpg') ||
-      fileName.endsWith('.gif') ||
-      fileName.endsWith('.png') ||
-      fileName.endsWith('.bmp') ||
-      fileName.endsWith('.tif') ||
-      fileName.endsWith('.tiff') ||
-      fileName.endsWith('.webp'))
-    return MIMETYPE.IMAGE;
-  else if (fileName.endsWith('.zip') ||
-      fileName.endsWith('.rar') ||
-      fileName.endsWith('.7z') ||
-      fileName.endsWith('.tar'))
-    return MIMETYPE.ARCHIV;
-  else if (fileName.endsWith('.txt'))
-    return MIMETYPE.TEXT;
-  else
-    return MIMETYPE.DATA;
-}
-
 String file2hexstring(Uint8List input) {
   if (input == null) return null;
+  var sb = StringBuffer();
 
-  var output = input.map((byte) {
-    return byte.toRadixString(16).padLeft(2, '0');
-  }).join(' ');
+  input.forEach((byte) {
+    sb.write(byte.toRadixString(16).padLeft(2, '0')) ;
+  });
 
-  return output.toUpperCase();
+  return sb.toString().toUpperCase();
 }
 
 Uint8List _hexString2bytes(String input) {

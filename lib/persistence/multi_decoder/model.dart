@@ -16,7 +16,7 @@ class MultiDecoderTool {
         'id': id,
         'name': name,
         'decoderFunctionName': internalToolName,
-        'options': options.map((formula) => formula.toMap()).toList()
+        'options': options.map((option) => option.toMap()).toList()
       };
 
   MultiDecoderTool.fromJson(Map<String, dynamic> json)

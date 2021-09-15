@@ -34,6 +34,7 @@ class SudokuBoardState extends State<SudokuBoard> {
                       setState(() {
                         if (value == null) {
                           widget.board[x][y] = null;
+                          widget.onChanged(widget.board);
                           return;
                         }
 

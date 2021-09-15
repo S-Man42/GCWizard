@@ -62,7 +62,7 @@ class ThemeColorsDark extends ThemeColors {
 
   @override
   Color textFieldHintText() {
-    return _gray;
+    return Color.fromRGBO(150, 150, 150, 1.0);
   }
 
   @override

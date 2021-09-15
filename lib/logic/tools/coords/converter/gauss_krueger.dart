@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
   int x = -1;

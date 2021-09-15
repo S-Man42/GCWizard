@@ -41,6 +41,22 @@ void main() {
     });
   });
 
+  group("CommonUtils.insertEveryNthCharacter:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '', 'expectedOutput' : 'ABCDEFGHIJ'},
+      {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '1', 'expectedOutput' : 'ABC1DEF1GHI1J'},
+      {'input' : 'ABCDEFGHIJ', 'n': 3, 'textToInsert': '123', 'expectedOutput' : 'ABC123DEF123GHI123J'},
+      {'input' : 'ABCDEFGHI', 'n': 3, 'textToInsert': '123', 'expectedOutput' : 'ABC123DEF123GHI'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, n: ${elem['n']}, textToInsert: ${elem['textToInsert']}', () {
+        var _actual = insertEveryNthCharacter(elem['input'], elem['n'], elem['textToInsert']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
   group("CommonUtils.switchMapKeyValue:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'map' : null, 'expectedOutput': null},

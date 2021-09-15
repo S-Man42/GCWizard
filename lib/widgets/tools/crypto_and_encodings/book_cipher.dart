@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class BookCipher extends StatefulWidget {
   @override
@@ -14,24 +16,36 @@ class BookCipher extends StatefulWidget {
 
 class BookCipherState extends State<BookCipher> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.right;
-  var _currentDecodeMode = GCWSwitchPosition.left;
+  var _currentSearchMode = GCWSwitchPosition.right;
+  var _currentMode = GCWSwitchPosition.left;
+  var _currentSimpleMode = GCWSwitchPosition.left;
+  var _spacesOn = true;
+  var _emptyLinesOn = false;
+  var _ignoreSymbolsOn = true;
+  var _ignoreSymbols = '.;+-:!?\'‘"&(){}[]/\\_';
+  var _diacriticsOn = true;
+  var _azOn = true;
+  var _numbersOn = true;
+  var _onlyFirstWordLetter = false;
+
   var _currentText = '';
   var _currentWord = '';
   var _currentPositions = '';
   var _currentSearchFormat = searchFormat.SectionRowWord;
   var _currentDecodeOutFormat = decodeOutFormat.SectionRowWord;
-  var _currentEncodeOutFormat = encodeOutFormat.RowWordLetter;
-  var _textController;
-  var _wordController;
-  var _positionsController;
+  var _currentEncodeOutFormat = encodeOutFormat.RowWordCharacter;
+  TextEditingController _textController;
+  TextEditingController _wordController;
+  TextEditingController _positionsController;
+  TextEditingController _ignoreSymbolsController;
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController(text: _textController);
-    _wordController = TextEditingController(text: _wordController);
-    _positionsController = TextEditingController(text: _positionsController);
+    _textController = TextEditingController(text: _currentText);
+    _wordController = TextEditingController(text: _currentWord);
+    _positionsController = TextEditingController(text: _currentPositions);
+    _ignoreSymbolsController = TextEditingController(text: _ignoreSymbols);
   }
 
   @override
@@ -39,6 +53,7 @@ class BookCipherState extends State<BookCipher> {
     _textController.dispose();
     _wordController.dispose();
     _positionsController.dispose();
+    _ignoreSymbolsController.dispose();
     super.dispose();
   }
 
@@ -50,24 +65,25 @@ class BookCipherState extends State<BookCipher> {
           i18n(context, 'book_cipher_row') +
           ", " +
           i18n(context, 'book_cipher_word'),
-      searchFormat.SectionLetter: i18n(context, 'book_cipher_section') + ", " + i18n(context, 'book_cipher_letter'),
+      searchFormat.SectionCharacter:
+          i18n(context, 'book_cipher_section') + ", " + i18n(context, 'book_cipher_character'),
       searchFormat.RowWord: i18n(context, 'book_cipher_row') + ", " + i18n(context, 'book_cipher_word'),
       searchFormat.Word: i18n(context, 'book_cipher_word'),
-      searchFormat.SectionRowWordLetter: i18n(context, 'book_cipher_section') +
+      searchFormat.SectionRowWordCharacter: i18n(context, 'book_cipher_section') +
           ", " +
           i18n(context, 'book_cipher_row') +
           ", " +
           i18n(context, 'book_cipher_word') +
           ", " +
-          i18n(context, 'book_cipher_letter'),
-      searchFormat.RowWordLetter: i18n(context, 'book_cipher_row') +
+          i18n(context, 'book_cipher_character'),
+      searchFormat.RowWordCharacter: i18n(context, 'book_cipher_row') +
           ", " +
           i18n(context, 'book_cipher_word') +
           ", " +
-          i18n(context, 'book_cipher_letter'),
-      searchFormat.RowLetter: i18n(context, 'book_cipher_row') + ", " + i18n(context, 'book_cipher_letter'),
-      searchFormat.WordLetter: i18n(context, 'book_cipher_word') + ", " + i18n(context, 'book_cipher_letter'),
-      searchFormat.Letter: i18n(context, 'book_cipher_letter'),
+          i18n(context, 'book_cipher_character'),
+      searchFormat.RowCharacter: i18n(context, 'book_cipher_row') + ", " + i18n(context, 'book_cipher_character'),
+      searchFormat.WordCharacter: i18n(context, 'book_cipher_word') + ", " + i18n(context, 'book_cipher_character'),
+      searchFormat.Character: i18n(context, 'book_cipher_character'),
     };
 
     var _Book_CipherdDecodeOutFormatItems = {
@@ -81,20 +97,20 @@ class BookCipherState extends State<BookCipher> {
     };
 
     var _Book_CipherdEncodeOutFormatItems = {
-      encodeOutFormat.SectionRowWordLetter: i18n(context, 'book_cipher_section') +
+      encodeOutFormat.SectionRowWordCharacter: i18n(context, 'book_cipher_section') +
           "." +
           i18n(context, 'book_cipher_row') +
           "." +
           i18n(context, 'book_cipher_word') +
           "." +
-          i18n(context, 'book_cipher_letter'),
-      encodeOutFormat.RowWordLetter: i18n(context, 'book_cipher_row') +
+          i18n(context, 'book_cipher_character'),
+      encodeOutFormat.RowWordCharacter: i18n(context, 'book_cipher_row') +
           "." +
           i18n(context, 'book_cipher_word') +
           "." +
-          i18n(context, 'book_cipher_letter'),
-      encodeOutFormat.WordLetter: i18n(context, 'book_cipher_word') + "." + i18n(context, 'book_cipher_letter'),
-      encodeOutFormat.Letter: i18n(context, 'book_cipher_letter'),
+          i18n(context, 'book_cipher_character'),
+      encodeOutFormat.WordCharacter: i18n(context, 'book_cipher_word') + "." + i18n(context, 'book_cipher_character'),
+      encodeOutFormat.Character: i18n(context, 'book_cipher_character'),
     };
 
     return Column(
@@ -105,19 +121,40 @@ class BookCipherState extends State<BookCipher> {
           });
         }),
         GCWTwoOptionsSwitch(
-          value: _currentMode,
+          value: _currentSearchMode,
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentSearchMode = value;
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left ? Container() : _buildDecodeModusControl(context),
-        _currentMode == GCWSwitchPosition.left ? _buildEncodeInputControl(context) : _buildDecodeInputControl(context),
-        _currentMode == GCWSwitchPosition.left
+        GCWOnOffSwitch(
+            title: i18n(context, 'book_cipher_only_first_word_letter'),
+            value: _onlyFirstWordLetter,
+            onChanged: (value) {
+              setState(() {
+                _onlyFirstWordLetter = value;
+              });
+            }),
+        GCWTwoOptionsSwitch(
+          value: _currentSimpleMode,
+          leftValue: i18n(context, 'common_mode_simple'),
+          rightValue: i18n(context, 'common_mode_advanced'),
+          onChanged: (value) {
+            setState(() {
+              _currentSimpleMode = value;
+            });
+          },
+        ),
+        _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
+        _currentSearchMode == GCWSwitchPosition.left ? Container() : _buildDecodeModusControl(context),
+        _currentSearchMode == GCWSwitchPosition.left
+            ? _buildEncodeInputControl(context)
+            : _buildDecodeInputControl(context),
+        _currentSearchMode == GCWSwitchPosition.left
             ? _buildEncodeFormatDividerControl(context)
             : _buildDecodeFormatDividerControl(context),
-        _currentMode == GCWSwitchPosition.left
+        _currentSearchMode == GCWSwitchPosition.left
             ? _buildEncodeFormatControl(context, _Book_CipherdEncodeOutFormatItems)
             : _buildDecodeFormatControl(context, _Book_CipherdDecodeOutFormatItems, _Book_CipherSearchFormatItems),
         GCWDefaultOutput(child: _buildOutput())
@@ -127,20 +164,19 @@ class BookCipherState extends State<BookCipher> {
 
   Widget _buildDecodeModusControl(BuildContext context) {
     return GCWTwoOptionsSwitch(
-      title: i18n(context, 'book_cipher_modus'),
       leftValue: i18n(context, 'book_cipher_searchposition'),
       rightValue: i18n(context, 'book_cipher_searchword'),
-      value: _currentDecodeMode,
+      value: _currentMode,
       onChanged: (value) {
         setState(() {
-          _currentDecodeMode = value;
+          _currentMode = value;
         });
       },
     );
   }
 
   Widget _buildDecodeInputControl(BuildContext context) {
-    return _currentDecodeMode == GCWSwitchPosition.left
+    return _currentMode == GCWSwitchPosition.left
         ? GCWTextField(
             controller: _positionsController,
             hintText: i18n(context, 'book_cipher_searchposition'),
@@ -160,14 +196,14 @@ class BookCipherState extends State<BookCipher> {
   }
 
   Widget _buildDecodeFormatDividerControl(BuildContext context) {
-    return _currentDecodeMode == GCWSwitchPosition.left
+    return _currentMode == GCWSwitchPosition.left
         ? GCWTextDivider(text: i18n(context, 'book_cipher_input_format'))
         : GCWTextDivider(text: i18n(context, 'book_cipher_output_format'));
   }
 
   Widget _buildDecodeFormatControl(BuildContext context, Map<decodeOutFormat, String> _bookChiffredDecodeOutFormatItems,
       Map<searchFormat, String> _bookChiffreSearchFormatItems) {
-    return _currentDecodeMode == GCWSwitchPosition.left
+    return _currentMode == GCWSwitchPosition.left
         ? GCWDropDownButton(
             value: _currentSearchFormat,
             onChanged: (value) {
@@ -213,6 +249,67 @@ class BookCipherState extends State<BookCipher> {
     return GCWTextDivider(text: i18n(context, 'book_cipher_output_format'));
   }
 
+  Widget _buildAdvancedModeControl(BuildContext context) {
+    return Column(children: <Widget>[
+      GCWOnOffSwitch(
+          title: 'A-Z',
+          value: _azOn,
+          onChanged: (value) {
+            setState(() {
+              _azOn = value;
+            });
+          }),
+      GCWOnOffSwitch(
+          title: '0-9',
+          value: _numbersOn,
+          onChanged: (value) {
+            setState(() {
+              _numbersOn = value;
+            });
+          }),
+      GCWOnOffSwitch(
+          title: 'ÄÂÃÇ...',
+          value: _diacriticsOn,
+          onChanged: (value) {
+            setState(() {
+              _diacriticsOn = value;
+            });
+          }),
+      GCWOnOffSwitch(
+          title: i18n(context, 'book_cipher_spaces'),
+          value: _spacesOn,
+          onChanged: (value) {
+            setState(() {
+              _spacesOn = value;
+            });
+          }),
+      GCWOnOffSwitch(
+          title: i18n(context, 'book_cipher_empty_lines'),
+          value: _emptyLinesOn,
+          onChanged: (value) {
+            setState(() {
+              _emptyLinesOn = value;
+            });
+          }),
+      GCWOnOffSwitch(
+          title: i18n(context, 'book_cipher_ignore_symbols'),
+          value: _ignoreSymbolsOn,
+          onChanged: (value) {
+            setState(() {
+              _ignoreSymbolsOn = value;
+            });
+          }),
+      GCWTextField(
+          controller: _ignoreSymbolsController,
+          hintText: '.;+-:!?' '‘"&(){}[]/\\_',
+          onChanged: (text) {
+            setState(() {
+              _ignoreSymbols = text;
+            });
+          }),
+    ]);
+  }
+
   Widget _buildEncodeFormatControl(
       BuildContext context, Map<encodeOutFormat, String> _bookChiffredEncodeOutFormatItems) {
     return GCWDropDownButton(
@@ -232,14 +329,35 @@ class BookCipherState extends State<BookCipher> {
   }
 
   _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      return encodeText(_currentInput, _currentText, _currentEncodeOutFormat);
+    if (_currentSearchMode == GCWSwitchPosition.left) {
+      return encodeText(_currentInput, _currentText, _currentEncodeOutFormat,
+          spacesOn: _spacesOn,
+          emptyLinesOn: _emptyLinesOn,
+          ignoreSymbols: _ignoreSymbols,
+          diacriticsOn: _diacriticsOn,
+          azOn: _azOn,
+          numbersOn: _numbersOn,
+          onlyFirstWordLetter: _onlyFirstWordLetter);
     } else {
-      if (_currentDecodeMode == GCWSwitchPosition.left) {
-        return decodeFindWord(_currentInput, _currentPositions, _currentSearchFormat);
+      if (_currentMode == GCWSwitchPosition.left) {
+        return decodeFindWord(_currentInput, _currentPositions, _currentSearchFormat,
+            spacesOn: _spacesOn,
+            emptyLinesOn: _emptyLinesOn,
+            ignoreSymbols: _ignoreSymbols,
+            diacriticsOn: _diacriticsOn,
+            azOn: _azOn,
+            numbersOn: _numbersOn,
+            onlyFirstWordLetter: _onlyFirstWordLetter);
       } else {
         return decodeSearchWord(_currentInput, _currentWord, _currentDecodeOutFormat,
-            i18n(context, 'book_cipher_section'), i18n(context, 'book_cipher_row'), i18n(context, 'book_cipher_word'));
+            i18n(context, 'book_cipher_section'), i18n(context, 'book_cipher_row'), i18n(context, 'book_cipher_word'),
+            spacesOn: _spacesOn,
+            emptyLinesOn: _emptyLinesOn,
+            ignoreSymbols: _ignoreSymbolsOn ? _ignoreSymbols : null,
+            diacriticsOn: _diacriticsOn,
+            azOn: _azOn,
+            numbersOn: _numbersOn,
+            onlyFirstWordLetter: _onlyFirstWordLetter);
       }
     }
   }

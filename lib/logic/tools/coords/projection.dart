@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
 import 'package:gc_wizard/logic/tools/coords/vincenty/projection_vincenty.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 LatLng projection(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
   bearing = utils.normalizeBearing(bearing);

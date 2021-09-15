@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/geoarc_intercept.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectGeodeticAndCircleJobData {
   final LatLng startGeodetic;
@@ -21,10 +21,7 @@ class IntersectGeodeticAndCircleJobData {
 }
 
 Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersectGeodeticAndCircle(jobData.parameters.startGeodetic, jobData.parameters.bearingGeodetic,
       jobData.parameters.centerPoint, jobData.parameters.radiusCircle, jobData.parameters.ells);

@@ -1,4 +1,4 @@
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class DistanceBearingData {
   double _distance = 0.0;

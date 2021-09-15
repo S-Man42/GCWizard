@@ -8,11 +8,13 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/main_menu.dart';
+import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
@@ -68,6 +70,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
@@ -81,10 +84,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
@@ -117,6 +123,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/schilling_cannstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
@@ -126,7 +133,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -135,9 +144,13 @@ import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -145,15 +158,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperat
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_vehicle_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/countries/country_flags.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -170,18 +189,23 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
+import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -214,17 +238,53 @@ class _MainViewState extends State<MainView> {
       });
     });
 
+    _showWhatsNewDialog() {
+      const _MAX_ENTRIES = 10;
+
+      var mostRecentChangelogVersion = CHANGELOG.keys.first;
+      var entries = i18n(context, 'changelog_' + mostRecentChangelogVersion)
+          .split('\n')
+          .map((entry) => entry.split('(')[0])
+          .toList();
+      if (entries.length > _MAX_ENTRIES) {
+        entries = entries.sublist(0, _MAX_ENTRIES);
+        entries.add('...');
+      }
+
+      showGCWDialog(
+          context,
+          i18n(context, 'common_newversion_title', parameters: [mostRecentChangelogVersion]),
+          Text(entries.join('\n')),
+          [
+            GCWDialogButton(
+                text: i18n(context, 'common_newversion_showchangelog'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      NoAnimationMaterialPageRoute(
+                          builder: (context) =>
+                              Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Changelog()))));
+                }),
+            GCWDialogButton(text: i18n(context, 'common_ok'))
+          ],
+          cancelButton: false);
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       var countAppOpened = Prefs.getInt('app_count_opened');
+
+      if (countAppOpened > 1 && Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
+        _showWhatsNewDialog();
+        Prefs.setString('changelog_displayed', CHANGELOG.keys.first);
+        return;
+      }
 
       if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
           i18n(context, 'common_support_text', parameters: [Prefs.getInt('app_count_opened')]),
-          () {
-            launch(i18n(context, 'common_support_link'));
-          },
+          () => launch(i18n(context, 'common_support_link')),
         );
       }
     });
@@ -300,7 +360,7 @@ class _MainViewState extends State<MainView> {
             autofocus: true,
             controller: _searchController,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
-            hintText: i18n(context, 'common_search_hint'))
+            hintText: i18n(context, 'common_search') + '...')
         : Text(i18n(context, 'common_app_title'));
   }
 
@@ -329,15 +389,12 @@ class _MainViewState extends State<MainView> {
   }
 
   void _initStaticToolList() {
-    // if (_toolList != null) {
-    //   return;
-    // }
-
     _toolList = Registry.toolList.where((element) {
       return [
         className(Abaddon()),
         className(ADFGVX()),
         className(Affine()),
+        className(AlcoholMass()),
         className(AlphabetValues()),
         className(Amsco()),
         className(AnimatedImage()),
@@ -352,10 +409,13 @@ class _MainViewState extends State<MainView> {
         className(BCDSelection()),
         className(Beatnik()),
         className(BeaufortSelection()),
+        className(Beghilos()),
         className(Bifid()),
         className(Binary()),
         className(Binary2Image()),
+        className(BloodAlcoholContent()),
         className(BookCipher()),
+        className(BrailleSelection()),
         className(Brainfk()),
         className(BurrowsWheeler()),
         className(Caesar()),
@@ -377,6 +437,10 @@ class _MainViewState extends State<MainView> {
         className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CountriesCallingCodes()),
+        className(CountriesFlags()),
+        className(CountriesIOCCodes()),
+        className(CountriesISOCodes()),
+        className(CountriesVehicleCodes()),
         className(Cow()),
         className(CrossBearing()),
         className(CrossSum()),
@@ -403,7 +467,9 @@ class _MainViewState extends State<MainView> {
         className(FormatConverter()),
         className(FormulaSolverFormulaGroups()),
         className(FourteenSegments()),
+        className(Fox()),
         className(Gade()),
+        className(GaussWeberTelegraph()),
         className(GCCode()),
         className(Gray()),
         className(Gronsfeld()),
@@ -412,9 +478,12 @@ class _MainViewState extends State<MainView> {
         className(HashSelection()),
         className(Hexadecimal()),
         className(HexString2File()),
+        className(HexViewer()),
+        className(HiddenData()),
         className(Homophone()),
         className(Houdini()),
         className(Humidex()),
+        className(IATAICAOSearch()),
         className(IceCodesSelection()),
         className(IntersectBearings()),
         className(IntersectFourPoints()),
@@ -425,6 +494,7 @@ class _MainViewState extends State<MainView> {
         className(IteratedCrossSumRange()),
         className(IteratedCrossSumRangeFrequency()),
         className(Kamasutra()),
+        className(KarolRobot()),
         className(Kenny()),
         className(KeyboardSelection()),
         className(Malbolge()),
@@ -446,6 +516,7 @@ class _MainViewState extends State<MainView> {
         className(PeriodicTableDataView()),
         className(Permutation()),
         className(PhiSelection()),
+        className(Piano()),
         className(PiSelection()),
         className(PigLatin()),
         className(Playfair()),
@@ -457,6 +528,7 @@ class _MainViewState extends State<MainView> {
         className(RailFence()),
         className(RALColorCodes()),
         className(RC4()),
+        className(Recycling()),
         className(Resection()),
         className(ResistorSelection()),
         className(Reverse()),
@@ -468,7 +540,9 @@ class _MainViewState extends State<MainView> {
         className(Rot47()),
         className(RotationGeneral()),
         className(RSASelection()),
+        className(SchillingCannstattTelegraph()),
         className(Scrabble()),
+        className(ShadowLength()),
         className(ShadoksSelection()),
         className(Seasons()),
         className(SevenSegments()),
@@ -496,13 +570,19 @@ class _MainViewState extends State<MainView> {
         className(VariableCoordinateFormulas()),
         className(Vigenere()),
         className(VigenereBreaker()),
+        className(VisualCryptography()),
+        className(WASD()),
         className(Weekday()),
         className(WhitespaceLanguage()),
         className(WaypointProjection()),
         className(Windchill()),
         className(Z22()),
+        className(ZamonianNumbers()),
+        className(Zodiac()),
       ].contains(className(element.tool));
     }).toList();
+
+    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
 
     _categoryList = Registry.toolList.where((element) {
       return [
@@ -517,8 +597,6 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _categoryList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    });
+    _categoryList.sort((a, b) => sortToolListAlphabetically(a, b));
   }
 }

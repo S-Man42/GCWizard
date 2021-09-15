@@ -381,6 +381,15 @@ class Chef {
         recipe[i - 1] = recipe[i].trim();
       }
     }
+
+    // trim lines
+    for (int i = 1; i < recipe.length; i++) {
+      recipe[i] = recipe[i].trim();
+      // add blank lines before aux recipes
+      if (recipe[i].endsWith('.')) {
+        //recipe[i] = '\n' + recipe[i];
+      }
+    }
     readRecipe = recipe.join('\n');
 
     // check and add missing title
@@ -393,6 +402,8 @@ class Chef {
     // remove blank lines inside sections ingredients, methods
     bool ingredientSection = false;
     bool methodSection = false;
+    bool auxRecipe = false;
+
     for (int i = 0; i < recipe.length - 1; i++) {
       if (recipe[i].startsWith("ingredients") || recipe[i].startsWith("zutaten")) ingredientSection = true;
 
@@ -408,6 +419,7 @@ class Chef {
 
       if (recipe[i].startsWith("serves") || recipe[i].startsWith("portionen")) {
         methodSection = false;
+        auxRecipe = true;
       }
 
       if ((recipe[i] == '' || recipe[i] == '\n') && ingredientSection) {
@@ -437,7 +449,7 @@ class Chef {
             recipe[i + 1].startsWith("portionen") ||
             isMethod(recipe[i + 1])) {
         } else {
-          recipe.removeAt(i);
+          if (!auxRecipe) recipe.removeAt(i);
         }
       }
     }
@@ -460,7 +472,6 @@ class Chef {
       s0 = recipe[i];
     }
     readRecipe = recipe.join('\n');
-
     readRecipe.split("\n\n").forEach((element) {
       line = element.trim();
       if (line.startsWith("ingredients") || line.startsWith("zutaten")) {

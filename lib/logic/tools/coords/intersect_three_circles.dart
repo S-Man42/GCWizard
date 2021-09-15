@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_two_circles.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 //TODO: REFACTORING
 
@@ -55,10 +55,7 @@ List<Intersect> _distIntersection(
 }
 
 Future<List<Intersect>> intersectThreeCirclesAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersectThreeCircles(
       jobData.parameters.coord1,

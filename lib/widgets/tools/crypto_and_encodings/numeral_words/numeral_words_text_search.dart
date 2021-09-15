@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
@@ -5,8 +7,8 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -22,15 +24,12 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
   var _currentLanguage = NumeralWordsLanguage.ALL;
 
-  Map<NumeralWordsLanguage, String> _languageList;
+  Map<String, NumeralWordsLanguage> _languageList;
 
   @override
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
-
-    _languageList = {NumeralWordsLanguage.ALL: 'numeralwords_language_all'};
-    _languageList.addAll(NUMERALWORDS_LANGUAGES);
   }
 
   @override
@@ -41,6 +40,18 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   @override
   Widget build(BuildContext context) {
+    if (_languageList == null) {
+      var sorted = SplayTreeMap<String, NumeralWordsLanguage>.from(
+          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(
+              i18n(context, key),
+              value
+          ))
+      );
+
+      _languageList = {i18n(context, 'numeralwords_language_all'): NumeralWordsLanguage.ALL};
+      _languageList.addAll(sorted);
+    }
+
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -52,35 +63,32 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
           },
           items: _languageList.entries.map((mode) {
             return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value),
+              value: mode.value,
+              child: mode.key,
             );
           }).toList(),
         ),
-        Column(
-          children: <Widget>[
-            GCWTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
-            GCWTwoOptionsSwitch(
-              value: _currentDecodeMode,
-              leftValue: i18n(context, 'numeralwords_decodemode_left'),
-              rightValue: i18n(context, 'numeralwords_decodemode_right'),
-              onChanged: (value) {
-                setState(() {
-                  _currentDecodeMode = value;
-                });
-              },
-            )
-          ],
+        GCWTextField(
+          controller: _decodeController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecodeInput = text;
+            });
+          },
         ),
-        GCWTextDivider(text: i18n(context, 'common_output')),
-        _buildOutput(context)
+        GCWTwoOptionsSwitch(
+          value: _currentDecodeMode,
+          leftValue: i18n(context, 'numeralwords_decodemode_left'),
+          rightValue: i18n(context, 'numeralwords_decodemode_right'),
+          onChanged: (value) {
+            setState(() {
+              _currentDecodeMode = value;
+            });
+          },
+        ),
+        GCWDefaultOutput(
+          child: _buildOutput(context),
+        )
       ],
     );
   }
@@ -95,7 +103,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
           output = output + ' ' + i18n(context, detailedOutput[i].number);
         else
-          output = output + '' + detailedOutput[i].number;
+          output = output + detailedOutput[i].number;
       }
     } else {
       output = i18n(context, 'numeralwords_language_not_implemented');

@@ -77,21 +77,24 @@ class GCWToolActionButtonsEntry {
   final String title; // - title-string to be shown in the dialog
   final String text; // - message-text to be shown in the dialog
   final IconData icon; // - icon tto be shown in the appbar
+  final Function onPressed;
 
-  GCWToolActionButtonsEntry(this.showDialog, this.url, this.title, this.text, this.icon);
+  GCWToolActionButtonsEntry({this.showDialog, this.url, this.title, this.text, this.icon, this.onPressed});
 }
 
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
-  final ToolCategory category;
+  final List<ToolCategory> categories;
   final autoScroll;
+  final suppressToolMargin;
   final iconPath;
   final List<String> searchStrings;
   String indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
-  final List<String> missingHelpLocales;
+  final List<String> helpLocales;
   final bool suppressHelpButton;
+  final isBeta;
 
   var icon;
   var _id = '';
@@ -108,12 +111,14 @@ class GCWTool extends StatefulWidget {
       this.toolName,
       this.defaultLanguageToolName,
       this.i18nPrefix,
-      this.category,
+      this.categories,
       this.autoScroll: true,
+      this.suppressToolMargin: false,
       this.iconPath,
       this.searchStrings,
       this.buttonList,
-      this.missingHelpLocales,
+      this.helpLocales,
+      this.isBeta: false,
       this.suppressHelpButton: false})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -160,6 +165,7 @@ class _GCWToolState extends State<GCWTool> {
           widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
 
     return Scaffold(
+        resizeToAvoidBottomInset: widget.autoScroll,
         appBar: AppBar(
           title: Text(_toolName),
           actions: _buildButtons(),
@@ -189,7 +195,7 @@ class _GCWToolState extends State<GCWTool> {
 
   bool _needsDefaultHelp(Locale appLocale) {
     return !isLocaleSupported(appLocale) ||
-        (widget.missingHelpLocales != null && widget.missingHelpLocales.contains(appLocale.languageCode));
+        (widget.helpLocales == null || !widget.helpLocales.contains(appLocale.languageCode));
   }
 
   Widget _buildHelpButton() {
@@ -226,9 +232,6 @@ class _GCWToolState extends State<GCWTool> {
   List<Widget> _buildButtons() {
     List<Widget> buttonList = <Widget>[];
 
-    Widget helpButton = _buildHelpButton();
-    if (helpButton != null) buttonList.add(helpButton);
-
     // add further buttons as defined in registry
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
@@ -241,13 +244,18 @@ class _GCWToolState extends State<GCWTool> {
           buttonList.add(IconButton(
             icon: Icon(button.icon),
             onPressed: () {
+              if (button.onPressed != null) {
+                button.onPressed();
+                return;
+              }
+
               if (button.showDialog) {
                 showGCWAlertDialog(
                   context,
                   i18n(context, button.title),
                   i18n(context, button.text),
                   () {
-                    launch(i18n(context, url));
+                    launch(i18n(context, url) ?? url);
                   },
                 );
               } else
@@ -257,20 +265,30 @@ class _GCWToolState extends State<GCWTool> {
       });
     }
 
+    Widget helpButton = _buildHelpButton();
+    if (helpButton != null) buttonList.add(helpButton);
+
     return buttonList;
   }
 
   Widget _buildBody() {
     if (widget.tool is GCWSelection) return widget.tool;
 
-    if (widget.autoScroll == false) return widget.tool;
+    var tool = widget.tool;
+    if (!widget.suppressToolMargin) {
+      tool = Padding(
+        child: tool,
+        padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
+      );
+    }
+
+    if (widget.autoScroll == false) {
+      return tool;
+    }
 
     return Scrollbar(
       child: SingleChildScrollView(
-        child: Padding(
-          child: widget.tool,
-          padding: EdgeInsets.all(10),
-        ),
+        child: tool,
       ),
     );
   }

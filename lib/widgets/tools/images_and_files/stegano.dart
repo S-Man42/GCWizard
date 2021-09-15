@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
@@ -91,9 +92,18 @@ class _SteganoState extends State<Stegano> {
             });
           },
         ),
-        GCWButton(
-          text: i18n(context, 'open_image'),
-          onPressed: _readFileFromPicker,
+        GCWOpenFile(
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+          onLoaded: (file) {
+            if (file == null) return;
+            setState(() {
+              _file = file;
+              _bytesSource = file.bytes;
+              // clear previous decoded text
+              _encodedPictureData = null;
+              _decodedText = null;
+            });
+          },
         ),
         ..._buildImageSource(),
         GCWButton(
@@ -110,28 +120,14 @@ class _SteganoState extends State<Stegano> {
     );
   }
 
-  Future<void> _readFileFromPicker() async {
-    local.PlatformFile file = await openFileExplorer(
-      allowedExtensions: supportedImageTypes,
-    );
-    if (file != null) {
-      if (file == null) return;
-      setState(() {
-        _file = file;
-        _bytesSource = file.bytes;
-        // clear previous decoded text
-        _decodedText = null;
-      });
-    }
-  }
-
   _calculateOutput() async {
     setState(() {
       // clear previous encoded picture
       _encodedPictureData = null;
       // clear previous decoded text
       _decodedText = null;
-      _encoding = true;
+      // disable Loader for now
+      // _encoding = true;
       _encodingErrorText = null;
       _decodingErrorText = null;
     });
@@ -191,7 +187,7 @@ class _SteganoState extends State<Stegano> {
 
     setState(() {
       _encoding = false;
-      _encodedPictureData = (bytes != null) ? GCWImageViewData(bytes) : null;
+      _encodedPictureData = (bytes != null) ? GCWImageViewData(local.PlatformFile(bytes: bytes)) : null;
       _encodingErrorText = _error;
       _error2Text = _error2;
       _filenameTarget = (_file != null) ? changeExtension(_file.name, _extensionTarget) : null;
@@ -270,7 +266,7 @@ class _SteganoState extends State<Stegano> {
         child: CircularProgressIndicator(
           backgroundColor: Colors.white,
           valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-          strokeWidth: 20,
+          strokeWidth: 8, //20,
         ),
       )
     ];

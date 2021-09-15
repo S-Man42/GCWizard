@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
@@ -13,6 +14,7 @@ class NSegmentDisplay extends StatefulWidget {
   final Function onChanged;
 
   final Function customPaint;
+  NSegmentDisplayState nSegmentDisplayState;
 
   NSegmentDisplay(
       {Key key,
@@ -27,6 +29,10 @@ class NSegmentDisplay extends StatefulWidget {
 
   @override
   NSegmentDisplayState createState() => NSegmentDisplayState();
+
+  Future<ui.Image> get renderedImage async {
+    return nSegmentDisplayState.renderedImage;
+  }
 }
 
 class NSegmentDisplayState extends State<NSegmentDisplay> {
@@ -34,6 +40,8 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    widget.nSegmentDisplayState = this;
+
     if (widget.segments != null) {
       _segments = Map.from(widget.segments);
 
@@ -64,5 +72,28 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
                 )))
       ],
     );
+  }
+
+  Future<ui.Image> get renderedImage async {
+    if (widget.segments != null) {
+      _segments = Map.from(widget.segments);
+
+      widget.initialSegments.keys.forEach((segmentID) {
+        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]);
+      });
+    } else {
+      _segments = Map.from(widget.initialSegments);
+    }
+
+    final recorder = ui.PictureRecorder();
+    Canvas canvas = Canvas(recorder);
+    final size = context.size;
+    final painter = SegmentDisplayPainter(context, widget.type, _segments, (key, value) {},
+        customPaint: widget.customPaint, segment_color_on: Colors.black, segment_color_off: Colors.white);
+
+    canvas.save();
+    painter.paint(canvas, size);
+    final data = recorder.endRecording().toImage(size.width.floor(), size.height.floor());
+    return data;
   }
 }

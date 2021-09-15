@@ -1,9 +1,10 @@
+
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
   Map<String, IfdTag> data;
@@ -13,13 +14,13 @@ Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
         details: true,
         // debug: true, //XMP (experimental)
         //strict: false,
-        truncate_tags: false);
+        truncateTags: false);
   } on Exception catch (e) {
     // silent error
   }
 
   if (data == null || data.isEmpty) {
-    print("No EXIF information found\n");
+    // print("No EXIF information found\n");
     return null;
   }
   return data;
@@ -27,15 +28,15 @@ Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
 
 GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
   if (data.containsKey('JPEGThumbnail')) {
-    print('File has JPEG thumbnail');
+    // print('File has JPEG thumbnail');
     var _jpgBytes = data['JPEGThumbnail'].values;
     data.remove('JPEGThumbnail');
-    return GCWImageViewData(_jpgBytes);
+    return GCWImageViewData(local.PlatformFile(bytes: _jpgBytes.toList()));
   } else if (data.containsKey('TIFFThumbnail')) {
-    print('File has TIFF thumbnail');
+    // print('File has TIFF thumbnail');
     var _tiffBytes = data['TIFFThumbnail'].values;
     data.remove('TIFFThumbnail');
-    return GCWImageViewData(_tiffBytes);
+    return GCWImageViewData(local.PlatformFile(bytes: _tiffBytes.toList()));
   }
   return null;
 }
@@ -74,7 +75,7 @@ LatLng completeGPSData(Map<String, IfdTag> data) {
 }
 
 double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
-  return getCoordDecFromText(tag.values, latlngRef, isLatitude);
+  return getCoordDecFromText(tag.values.toList(), latlngRef, isLatitude);
 }
 
 double getCoordDecFromText(List<dynamic> values, String latlngRef, bool isLatitude) {
@@ -96,18 +97,9 @@ Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> data) {
     List<String> groupedKey = _parseKey(key);
     String section = groupedKey[0];
     String code = groupedKey[1];
-
     // groupBy section
     (map[section] ??= []).add([code, _formatExifValue(tag)]);
   });
-  return map;
-}
-
-Map<T, List<S>> _groupBy<S, T>(Iterable<S> values, T Function(S) key) {
-  var map = <T, List<S>>{};
-  for (var element in values) {
-    (map[key(element)] ??= []).add(element);
-  }
   return map;
 }
 
@@ -134,7 +126,13 @@ String _formatExifValue(IfdTag tag) {
     case 'Long':
       return tag.printable;
     case 'Byte':
-      return tag.printable;
+      try {
+        List<int> byteList = tag.values.toList();
+        return String.fromCharCodes(byteList);
+      } catch (e) {
+        return tag.printable;
+      }
+      break;
     case 'Ratio':
       return tag.values.toString();
     case 'Signed Ratio':
@@ -148,6 +146,4 @@ String _formatExifValue(IfdTag tag) {
   }
 }
 
-_ascii2string(List<dynamic> values) {
-  return values.map((e) => String.fromCharCode(e)).join();
-}
+

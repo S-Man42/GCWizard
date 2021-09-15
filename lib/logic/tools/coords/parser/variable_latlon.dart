@@ -1,11 +1,10 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class ParseVariableLatLonJobData {
   final String coordinate;
@@ -42,10 +41,7 @@ _sanitizeForFormula(String formula) {
 }
 
 Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = parseVariableLatLon(jobData.parameters.coordinate, jobData.parameters.substitutions,
       projectionData: jobData.parameters.projectionData);

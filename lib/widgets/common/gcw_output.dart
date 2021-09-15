@@ -6,7 +6,7 @@ class GCWOutput extends StatefulWidget {
   final dynamic child; // could be Widget or String
   final String title;
   final bool suppressCopyButton;
-  final String copyText;
+  final copyText;
   final Widget trailing;
 
   const GCWOutput(
@@ -27,7 +27,7 @@ class _GCWOutputState extends State<GCWOutput> {
       widget.child is Widget
           ? widget.child
           : GCWOutputText(
-              text: widget.child.toString(),
+              text: widget.child == null ? '' :  widget.child.toString(),
               suppressCopyButton: widget.suppressCopyButton,
               copyText: widget.copyText,
             )

@@ -1,70 +1,62 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
+
+import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
-var unsupportedMobileTypes = ['gpx'];
-var supportedImageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'];
+const UNSUPPORTED_MOBILE_TYPES = [FileType.GPX];
+final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 
 /// Open File Picker dialog
+///
 /// Returns null if nothing was selected.
-/// * [allowedExtensions] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) async {
+///
+/// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
+Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) async {
   try {
-      return _openFileExplorer(allowedExtensions);
-  } catch (ex) {
-    print(ex);
-  }
-  return null;
-}
+    if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = null;
 
-Future<local.PlatformFile> _openFileExplorer(List<String> allowedExtensions) async {
-  try {
-    List<String> allowedExtensionsTmp = allowedExtensions;
-
-    if (allowedExtensions != null)
-      for (var i = 0; i < allowedExtensions.length; i++)
-        allowedExtensions[i] = allowedExtensions[i].replaceFirst('.', '');
-
-    if (_hasUnsupportedTypes(allowedExtensions)) allowedExtensions = null;
-
-    var files = (await FilePicker.platform.pickFiles(
-            type: allowedExtensions == null ? FileType.any : FileType.custom,
+    var files = (await filePicker.FilePicker.platform.pickFiles(
+            type: allowedFileTypes == null ? filePicker.FileType.any : filePicker.FileType.custom,
             allowMultiple: false,
-            allowedExtensions: allowedExtensions))
+            allowedExtensions: allowedFileTypes == null ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
         ?.files;
 
-    if (allowedExtensions == null) files = _filterFiles(files, allowedExtensionsTmp);
+    if (allowedFileTypes == null) files = _filterFiles(files, allowedFileTypes);
 
-    return (files == null || files.length == 0)
-        ? null
-        : new local.PlatformFile(path: files.first.path, name: files.first.name, bytes: await _getFileData(files.first));
+    if (files == null || files.length == 0)
+      return null;
+
+    var bytes = await _getFileData(files.first);
+
+    return local.PlatformFile(path: files.first.path, name: files.first.name, bytes: bytes);
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }
   return null;
 }
 
-Future<Uint8List> _getFileData(PlatformFile file) async {
+Future<Uint8List> _getFileData(filePicker.PlatformFile file) async {
   return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
 }
 
-List<PlatformFile> _filterFiles(List<PlatformFile> files, List<String> allowedExtensions) {
-  if (files == null || allowedExtensions == null) return files;
+List<filePicker.PlatformFile> _filterFiles(List<filePicker.PlatformFile> files, List<FileType> allowedFileTypes) {
+  if (files == null || allowedFileTypes == null) return files;
+
+  var allowedExtensions = fileExtensions(allowedFileTypes);
 
   return files.where((element) => allowedExtensions.contains(element.extension)).toList();
 }
 
-bool _hasUnsupportedTypes(List<String> allowedExtensions) {
+bool _hasUnsupportedTypes(List<FileType> allowedExtensions) {
   if (allowedExtensions == null) return false;
   if (kIsWeb) return false;
 
   for (int i = 0; i < allowedExtensions.length; i++) {
-    if (unsupportedMobileTypes.contains(allowedExtensions[i])) return true;
+    if (UNSUPPORTED_MOBILE_TYPES.contains(allowedExtensions[i])) return true;
   }
   return false;
 }

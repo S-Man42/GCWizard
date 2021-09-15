@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-Map<String, String> SolveEquation(String currentA, String currentB, String currentC) {
+Map<String, String> solveQuadraticEquation(String currentA, String currentB, String currentC) {
   if (currentA == null || currentA == '' || currentB == null || currentB == '' || currentC == null || currentC == '')
     return {'': ''};
 
@@ -39,7 +39,7 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
   if (a == 0) {
     result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_null';
     if (b == 0) {
-      result['quadratic_equation_hint_caution'] =  'quadratic_equation_hint_a_b_null';
+      result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_b_null';
       result['x'] = '0.0';
     } else {
       if (-c / b == 0.0)

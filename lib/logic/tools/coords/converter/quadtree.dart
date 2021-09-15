@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 var _TILESIZE = 256;
@@ -11,7 +11,7 @@ Quadtree latLonToQuadtree(LatLng coord, {int precision: _DEFAULT_PRECISION}) {
   var x = (_TILESIZE / 2.0) + coord.longitude * (_TILESIZE / 360.0);
 
   var siny = sin(degreesToRadian(coord.latitude));
-  var y = (_TILESIZE / 2.0) + 0.5 * log((1.0 + siny) / (1.0 - siny)) * -(_TILESIZE / (2.0 * PI));
+  var y = (_TILESIZE / 2.0) + 0.5 * log((1.0 + siny) / (1.0 - siny)) * -(_TILESIZE / (2.0 * pi));
 
   var countTiles = 1 << precision;
 
@@ -46,8 +46,8 @@ LatLng quadtreeToLatLon(Quadtree quadtree) {
 
   var lon = (x - _TILESIZE / 2.0) / (_TILESIZE / 360.0);
 
-  var latRadians = (y - _TILESIZE / 2.0) / -(_TILESIZE / (2.0 * PI));
-  var lat = radianToDegrees(2 * atan(exp(latRadians)) - PI / 2);
+  var latRadians = (y - _TILESIZE / 2.0) / -(_TILESIZE / (2.0 * pi));
+  var lat = radianToDegrees(2 * atan(exp(latRadians)) - pi / 2);
   return LatLng(lat, lon);
 }
 

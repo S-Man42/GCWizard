@@ -8,7 +8,8 @@ PROJECT_ID=445424
 BRANCH_NAME=master
 ZIP=./tmp-i18n.zip
 TMP=tmp-i18n-dir
-TARGET_I18N=../../assets/i18n
+TARGET_DIR=assets/i18n
+TARGET_I18N=../../$TARGET_DIR
 #
 # Target languages
 #
@@ -35,8 +36,8 @@ then
   exit
 fi
 
-echo "Wait end of build (10s)..."
-sleep 10
+echo "Wait end of build (30s)..."
+sleep 30
 
 echo "Query status again (should be finished):"
 BUILD_STATUS=$(curl -s \
@@ -78,10 +79,13 @@ unzip -o -q $ZIP -d $TMP
 echo "copy target files..."
 # can be in $BRANCH_NAME/ if manual build from UI...
 # cp -r $TMP/de/$BRANCH_NAME/en.json ../assets/i18n/de.json
-cp -r $TMP/de/en.json $TARGET_I18N/de.json
-cp -r $TMP/fr/en.json $TARGET_I18N/fr.json
-cp -r $TMP/ko/en.json $TARGET_I18N/ko.json
 
-rm -rf $ZIP
-rm -rf $TMP
+#cp -r $TMP/de/en.json $TARGET_I18N/de.json
+#cp -r $TMP/fr/en.json $TARGET_I18N/fr.json
+#cp -r $TMP/ko/en.json $TARGET_I18N/ko.json
+
+cp -r $TMP/$TARGET_DIR/*.json $TARGET_I18N/
+
+#rm -rf $ZIP
+#rm -rf $TMP
 echo "done !"

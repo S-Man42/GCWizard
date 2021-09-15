@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
-import 'package:touchable/touchable.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
   'a': true,
@@ -38,12 +38,14 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
             onChanged: onChanged,
             aspectRatio: _SHADOKS_RELATIVE_DISPLAY_WIDTH / _SHADOKS_RELATIVE_DISPLAY_HEIGHT,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (TouchyCanvas canvas, size, currentSegments, setSegmentState) {
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState, Color segment_color_on, Color segment_color_off) {
               var paint = defaultSegmentPaint();
+              var SEGMENTS_COLOR_ON = segment_color_on;
+              var SEGMENTS_COLOR_OFF = segment_color_off;
 
               paint.color = currentSegments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               paint.style = PaintingStyle.stroke;
-              paint.strokeWidth = 7.0;
+              paint.strokeWidth = size.height > 100 ? 7.0 : 3.5;
 
               [
                 [80.0, 20.0, 0.0, 60.0, 'b'],
@@ -56,18 +58,19 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
 
                 path.moveTo(_relativeX(size, element[0]), _relativeY(size, element[1]));
                 path.relativeLineTo(_relativeX(size, element[2]), _relativeY(size, element[3]));
-                canvas.drawPath(path, paint);
+                canvas.touchCanvas.drawPath(path, paint);
               });
 
               paint.color = currentSegments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               paint.style = PaintingStyle.stroke;
-              paint.strokeWidth = 6.0;
-              canvas.drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 43), paint);
+
+              paint.strokeWidth = size.height > 100 ? 6.0 : 3.0;
+              canvas.touchCanvas.drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 43), paint);
 
               paint.color = _TRANSPARENT_COLOR;
               paint.style = PaintingStyle.fill;
 
-              canvas.drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 55), paint,
+              canvas.touchCanvas.drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 55), paint,
                   onTapDown: (tapDetail) {
                 if (currentSegments['a']) return;
 
@@ -88,7 +91,7 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
                 path.relativeLineTo(_relativeX(size, element[4]), _relativeY(size, element[5]));
                 path.relativeLineTo(_relativeX(size, element[6]), _relativeY(size, element[7]));
                 path.close();
-                canvas.drawPath(path, paint, onTapDown: (tapDetail) {
+                canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
                   setSegmentState(element[8], !currentSegments[element[8]]);
                   setSegmentState('a', ['b', 'c', 'd'].where((elem) => currentSegments[elem]).toList().length == 0);
                 });

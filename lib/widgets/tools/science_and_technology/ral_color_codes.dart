@@ -23,7 +23,6 @@ class RALColorCodes extends StatefulWidget {
 }
 
 class RALColorCodesState extends State<RALColorCodes> {
-
   var _currentValue;
   List<Map<String, String>> _colors;
 
@@ -31,12 +30,15 @@ class RALColorCodesState extends State<RALColorCodes> {
   void initState() {
     super.initState();
 
-    _colors = RAL_COLOR_CODES.map((key, value) {
-      var val = Map<String, String>.from(value);
-      val.putIfAbsent('key', () => key);
+    _colors = RAL_COLOR_CODES
+        .map((key, value) {
+          var val = Map<String, String>.from(value);
+          val.putIfAbsent('key', () => key);
 
-      return MapEntry(key, val);
-    }).values.toList();
+          return MapEntry(key, val);
+        })
+        .values
+        .toList();
 
     _colors.sort((a, b) => a['key'].compareTo(b['key']));
     _currentValue = _colors[0];
@@ -54,10 +56,7 @@ class RALColorCodesState extends State<RALColorCodes> {
               });
             },
             items: _colors.map((color) {
-              return GCWDropDownMenuItem(
-                  value: color,
-                  child: color['key']
-              );
+              return GCWDropDownMenuItem(value: color, child: color['key']);
             }).toList()),
         GCWDefaultOutput(child: _buildOutput())
       ],
@@ -68,45 +67,36 @@ class RALColorCodesState extends State<RALColorCodes> {
     var rgbColor = HexCode(_currentValue['colorcode']).toRGB();
 
     var name = _currentValue['name'];
-    if (name == null || name.isEmpty)
-      name = 'common_unknown';
+    if (name == null || name.isEmpty) name = 'common_unknown';
 
     var children = columnedMultiLineOutput(context, [
       ['Name', i18n(context, name)],
       ['Hex Color Code', _currentValue['colorcode']],
     ]);
 
-    children.add(
-        Container(
-          margin: EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
-          height: 200,
-          width: 400,
-          // color: Color.fromRGBO(rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round(), 1.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: themeColors().mainFont(), width: 2),
-            shape: BoxShape.rectangle,
-            color:  Color.fromRGBO(rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round(), 1.0),
-          ),
-        )
-    );
-    
-    children.add(
-      GCWButton(
-        text: i18n(context, 'ralcolorcodes_showincolorpicker'),
-        onPressed: () => _showElement(rgbColor),
-      )
-    );
+    children.add(Container(
+      margin: EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
+      height: 200,
+      width: 400,
+      // color: Color.fromRGBO(rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round(), 1.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: themeColors().mainFont(), width: 2),
+        shape: BoxShape.rectangle,
+        color: Color.fromRGBO(rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round(), 1.0),
+      ),
+    ));
 
-    return Column(
-      children: children
-    );
+    children.add(GCWButton(
+      text: i18n(context, 'ralcolorcodes_showincolorpicker'),
+      onPressed: () => _showElement(rgbColor),
+    ));
+
+    return Column(children: children);
   }
 
   _showElement(RGB color) {
     Navigator.of(context).push(NoAnimationMaterialPageRoute(
-        builder: (context) => GCWTool(
-            tool: ColorPicker(color: color),
-            i18nPrefix: 'colors',
-            missingHelpLocales: ['ko'])));
+        builder: (context) =>
+            GCWTool(tool: ColorPicker(color: color), i18nPrefix: 'colors', helpLocales: ['de', 'en', 'fr'])));
   }
 }

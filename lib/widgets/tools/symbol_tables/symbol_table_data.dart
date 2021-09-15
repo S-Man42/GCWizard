@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specialsorts.dart';
-import 'package:archive/archive.dart';
-import 'package:archive/archive_io.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
@@ -16,71 +15,101 @@ class _SymbolTableConstants {
   final CONFIG_FILENAME = 'config.file';
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
   final CONFIG_TRANSLATE = 'translate';
+  final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
   final CONFIG_CASESENSITIVE = 'case_sensitive';
   final CONFIG_SPECIALSORT = 'special_sort';
   final CONFIG_IGNORE = 'ignore';
 
   final Map<String, String> CONFIG_SPECIAL_CHARS = {
-    "space": " ",
+    "ampersand": "&",
     "asterisk": "*",
-    "dash": "-",
-    "colon": ":",
-    "semicolon": ";",
-    "dot": ".",
-    "slash": "/",
     "apostrophe": "'",
     "apostrophe_in": "'",
     "apostrophe_out": "'",
-    "parentheses_open": "(",
-    "parentheses_close": ")",
+    "backslash": "\\",
+    "backtick": "`",
+    "brace_close": "}",
+    "brace_open": "{",
+    "bracket_close": "]",
+    "bracket_open": "[",
+    "bullet": "•",
+    "caret": "^",
+    "cedille": "¸",
+    "cent" : "¢",
+    "colon": ":",
+    "comma": ",",
+    "copyright": "©",
+    "cross": "†",
+    "dash": "-",
+    "degree": "°",
+    "division": "÷",
+    "dollar": "\$",
+    "dot": ".",
+    "doublecross": "‡",
+    "ellipse": "…",
+    "equals": "=",
+    "euro": "€",
+    "exclamation": "!",
+    "function": "ƒ",
+    "greaterthan": ">",
     "guillemet_in": "«",
     "guillemet_out": "»",
-    "quotation": "\"",
-    "quotation_in": "\"",
-    "quotation_out": "\"",
-    "dollar": "\$",
-    "percent": "%",
-    "plus": "+",
-    "question": "?",
-    "exclamation": "!",
-    "backslash": "\\",
-    "copyright": "©",
-    "comma": ",",
-    "pound": "£",
-    "equals": "=",
-    "brace_open": "{",
-    "brace_close": "}",
-    "bracket_open": "[",
-    "bracket_close": "]",
-    "ampersand": "&",
+    "hard_space": " ",
     "hashtag": "#",
-    "web_at": "@",
-    "paragraph": "§",
-    "caret": "^",
-    "underscore": "_",
-    "backtick": "`",
-    "pipe": "|",
-    "tilde": "~",
-    "lessthan": "<",
-    "greaterthan": ">",
-    "euro": "€",
-    "times": "×",
-    "division": "÷",
+    "high_1" : "¹",
+    "high_2" : "²",
+    "high_3" : "³",
+    "high_a" : "ª",
+    "hyphen" : "-",
+    "inverted_exclamation": "¡",
     "inverted_question": "¿",
-    "degree": "°",
-    "AE_umlaut": "Ä",
-    "OE_umlaut": "Ö",
-    "UE_umlaut": "Ü",
-    "SZ_umlaut": "ß",
+    "lessthan": "<",
+    "middle_dot" : "·",
+    "minus": "-",
+    "my": "µ",
+    "not": "¬",
+    "one_fourth" : "¼",
+    "one_half" : "½",
+    "open_pipe": "¦",
+    "paragraph": "§",
+    "parentheses_open": "(",
+    "parentheses_close": ")",
+    "percent": "%",
+    "pi": "¶",
+    "pipe": "|",
+    "plus": "+",
+    "plus_minus" : "±",
+    "pound": "£",
+    "promille": "‰",
+    "quotation": "\"",
+    "quotation_in": "“",
+    "quotation_out": "”",
+    "question": "?",
+    "register": "®",
+    "semicolon": ";",
+    "slash": "/",
+    "space": " ",
+    "tilde": "~",
+    "times": "×",
+    "three_fourth" : "¾",
+    "trademark": "™",
+    "trema": "¨",
+    "underscore": "_",
+    "web_at": "@",
+    "yen" : "¥",
     "A_acute": "Á",
     "A_grave": "À",
     "A_circumflex": "Â",
+    "A_ring": "Å",
+    "A_tilde": "Ã",
     "AE_together": "Æ",
-    "C_cedille": "Ç",
+    "AE_umlaut": "Ä",
     "C_acute": "Ć",
+    "C_cedille": "Ç",
     "E_acute": "É",
-    "E_grave": "È",
     "E_circumflex": "Ê",
+    "E_grave": "È",
+    "E_eth": "Ð",
     "E_trema": "Ë",
     "I_acute": "Í",
     "I_grave": "Ì",
@@ -91,19 +120,57 @@ class _SymbolTableConstants {
     "O_acute": "Ó",
     "O_grave": "Ò",
     "O_circumflex": "Ô",
+    "O_slash": "Ø",
+    "O_tilde": "Õ",
     "OE_together": "Œ",
+    "OE_umlaut": "Ö",
     "R_acute": "Ŕ",
     "S_acute": "Ś",
+    "S_caron": "Š",
+    "SZ_umlaut": "ß",
+    "T_thorn": "Þ",
     "U_acute": "Ú",
-    "U_grave": "Ù",
     "U_circumflex": "Û",
+    "U_grave": "Ù",
+    "UE_umlaut": "Ü",
+    "Y_acute": "Ý",
+    "Y_trema": "Ÿ",
     "Z_acute": "Ź",
+    "Z_caron": "Ž",
+    "a_acute" : "á",
+    "a_circumflex": "â",
+    "a_grave": "à",
+    "a_ring": "å",
+    "a_tilde": "ã",
     "ae_umlaut": "ä",
     "ae_together": "æ",
+    "c_cedille": "ç",
+    "e_acute" : "é",
+    "e_circumflex": "ê",
+    "e_grave": "è",
+    "e_eth": "ð",
+    "e_trema" : "ë",
+    "i_acute" : "í",
+    "i_circumflex": "î",
+    "i_grave": "ì",
+    "i_trema" : "ï",
+    "n_tilde": "ñ",
+    "o_acute" : "ó",
+    "o_circumflex": "o",
+    "o_grave": "ò",
+    "o_slash" :"ø",
+    "o_tilde": "õ",
     "oe_together": "œ",
     "oe_umlaut": "ö",
+    "t_thorn": "þ",
+    "s_caron": "š",
+    "u_acute" : "ú",
+    "u_circumflex": "û",
+    "u_grave": "ù",
     "ue_umlaut": "ü",
-    "n_tilde": "ñ",
+    "y_acute" : "ý",
+    "y_trema" : "ÿ",
+    "z_caron": "ž",
   };
 }
 
@@ -111,15 +178,15 @@ class SymbolData {
   final String path;
   final List<int> bytes;
 
-  SymbolData({this.path = null, this.bytes = null});
+  SymbolData({this.path, this.bytes});
 }
 
 class SymbolTableData {
   final BuildContext _context;
-  final String _symbolKey;
+  final String symbolKey;
   final _SymbolTableConstants _constants = _SymbolTableConstants();
 
-  SymbolTableData(this._context, this._symbolKey);
+  SymbolTableData(this._context, this.symbolKey);
 
   Map<String, dynamic> config;
   List<Map<String, SymbolData>> images;
@@ -138,7 +205,7 @@ class SymbolTableData {
   }
 
   String _pathKey() {
-    return SYMBOLTABLES_ASSETPATH + _symbolKey + '/';
+    return SYMBOLTABLES_ASSETPATH + symbolKey + '/';
   }
 
   _loadConfig() async {
@@ -161,9 +228,9 @@ class SymbolTableData {
     });
 
     if (config[_constants.CONFIG_SPECIALSORT] == null || config[_constants.CONFIG_SPECIALSORT] == false) {
-      _sort = _defaultSort;
+      _sort = defaultSymbolSort;
     } else {
-      switch (_symbolKey) {
+      switch (symbolKey) {
         case "notes_names_altoclef":
           _sort = specialSortNoteNames;
           break;
@@ -183,7 +250,7 @@ class SymbolTableData {
           _sort = specialSortTrafficSignsGermany;
           break;
         default:
-          _sort = _defaultSort;
+          _sort = defaultSymbolSort;
           break;
       }
     }
@@ -200,7 +267,12 @@ class SymbolTableData {
     if (config[_constants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
       key = config[_constants.CONFIG_SPECIALMAPPINGS][imageKey];
     } else if (config[_constants.CONFIG_TRANSLATE] != null && config[_constants.CONFIG_TRANSLATE].contains(imageKey)) {
-      key = i18n(_context, 'symboltables_' + _symbolKey + '_' + imageKey);
+      var translationPrefix = config[_constants.CONFIG_TRANSLATION_PREFIX];
+      if (translationPrefix != null && translationPrefix.length > 0) {
+        key = i18n(_context, translationPrefix + imageKey);
+      } else {
+        key = i18n(_context, 'symboltables_' + symbolKey + '_' + imageKey);
+      }
       setTranslateable = true;
     } else {
       key = imageKey;
@@ -249,7 +321,7 @@ class SymbolTableData {
     images.sort(_sort);
   }
 
-  int _defaultSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
+  int defaultSymbolSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
     var keyA = a.keys.first;
     var keyB = b.keys.first;
 

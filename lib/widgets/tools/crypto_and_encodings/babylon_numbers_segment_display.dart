@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
@@ -47,8 +48,10 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
             readOnly: readOnly,
             onChanged: onChanged,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (canvas, size, currentSegments, setSegmentState) {
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState, Color segment_color_on, Color segment_color_off) {
               var paint = sketchSegmentPaint();
+              var SEGMENTS_COLOR_ON = segment_color_on;
+              var SEGMENTS_COLOR_OFF = segment_color_off;
               paint.strokeWidth = 3;
 
               [
@@ -70,7 +73,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
 
                 path.moveTo(_relativeX(size, startX - 5), _relativeY(size, startY + 5));
                 path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 30));
-                canvas.drawPath(path, paint);
+                canvas.touchCanvas.drawPath(path, paint);
 
                 paint.color = _TRANSPARENT_COLOR;
                 path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
@@ -79,7 +82,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 0));
                 path.close();
 
-                canvas.drawPath(path, paint, onTapDown: (tapDetail) {
+                canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
                   setSegmentState(element['segment'], !currentSegments[element['segment']]);
                 });
               });
@@ -110,7 +113,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
 
                 path.moveTo(_relativeX(size, startX + 10), _relativeY(size, startY + 10));
                 path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 10));
-                canvas.drawPath(path, paint);
+                canvas.touchCanvas.drawPath(path, paint);
 
                 paint.color = _TRANSPARENT_COLOR;
                 path.moveTo(_relativeX(size, startX - 5), _relativeY(size, startY - 5));
@@ -119,7 +122,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                 path.relativeLineTo(_relativeX(size, -30), _relativeY(size, 0));
                 path.close();
 
-                canvas.drawPath(path, paint, onTapDown: (tapDetail) {
+                canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
                   setSegmentState(element['segment'], !currentSegments[element['segment']]);
                 });
               });

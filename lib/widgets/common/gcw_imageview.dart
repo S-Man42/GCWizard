@@ -1,27 +1,31 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview_fullscreen.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
+enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
+enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA }
+
 class GCWImageViewData {
-  final Uint8List bytes;
+  final PlatformFile file;
   final String description;
   final bool marked;
 
-  const GCWImageViewData(this.bytes, {this.description, this.marked});
+  const GCWImageViewData(this.file, {this.description, this.marked});
 }
 
 class GCWImageView extends StatefulWidget {
@@ -29,8 +33,21 @@ class GCWImageView extends StatefulWidget {
   final bool toolBarRight;
   final String extension;
   final String fileName;
+  final Set<GCWImageViewButtons> suppressedButtons;
+  final int maxHeightInPreview;
+  final Function onBeforeLoadBigImage;
+  final Set<GCWImageViewOpenInTools> suppressOpenInTool;
 
-  const GCWImageView({Key key, @required this.imageData, this.toolBarRight: true, this.extension, this.fileName})
+  const GCWImageView(
+      {Key key,
+      @required this.imageData,
+      this.toolBarRight: true,
+      this.extension,
+      this.fileName,
+      this.suppressedButtons,
+      this.maxHeightInPreview,
+      this.suppressOpenInTool,
+      this.onBeforeLoadBigImage})
       : super(key: key);
 
   @override
@@ -39,6 +56,7 @@ class GCWImageView extends StatefulWidget {
 
 class _GCWImageViewState extends State<GCWImageView> {
   MemoryImage _image;
+  MemoryImage _previewImage;
 
   PhotoViewScaleStateController _scaleStateController;
 
@@ -54,10 +72,27 @@ class _GCWImageViewState extends State<GCWImageView> {
     super.dispose();
   }
 
+  _resizeImage() {
+    img.Image image = img.decodeImage(widget.imageData.file.bytes);
+    if (image.height > widget.maxHeightInPreview) {
+      img.Image resized = img.copyResize(image, height: widget.maxHeightInPreview);
+
+      return MemoryImage(encodeTrimmedPng(resized));
+    } else {
+      return MemoryImage(widget.imageData.file.bytes);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     try {
-      if (widget.imageData != null) _image = MemoryImage(widget.imageData.bytes);
+      if (widget.imageData != null) _image = MemoryImage(widget.imageData.file.bytes);
+
+      if (widget.maxHeightInPreview == null)
+        _previewImage = MemoryImage(widget.imageData.file.bytes);
+      else {
+        _previewImage = _resizeImage();
+      }
     } catch (e) {
       _image = null;
     }
@@ -68,18 +103,20 @@ class _GCWImageViewState extends State<GCWImageView> {
             ? Row(
                 children: [
                   Expanded(child: _createPhotoView()),
-                  Column(
-                    children: _createToolbar(),
-                  )
+                  if (_hasToolButtons())
+                    Column(
+                      children: _createToolbar(),
+                    )
                 ],
               )
             : Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: _createToolbar(),
-                  ),
+                  if (_hasToolButtons())
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: _createToolbar(),
+                    ),
                   _createPhotoView(),
                 ],
               )
@@ -92,13 +129,15 @@ class _GCWImageViewState extends State<GCWImageView> {
         Container(
           margin: EdgeInsets.only(
             left: widget.toolBarRight ? DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN,
-            right: widget.toolBarRight ? 5 * DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN,
+            right: widget.toolBarRight
+                ? (_hasToolButtons() ? 5 * DEFAULT_MARGIN : DOUBLE_DEFAULT_MARGIN)
+                : DOUBLE_DEFAULT_MARGIN,
           ),
           height: 250.0,
           child: ClipRect(
             child: PhotoView(
               scaleStateController: _scaleStateController,
-              imageProvider: _image,
+              imageProvider: _previewImage,
               minScale: PhotoViewComputedScale.contained * 0.25,
               initialScale: PhotoViewComputedScale.contained,
             ),
@@ -115,6 +154,10 @@ class _GCWImageViewState extends State<GCWImageView> {
     );
   }
 
+  bool _hasToolButtons() {
+    return widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.ALL);
+  }
+
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
 
@@ -123,19 +166,13 @@ class _GCWImageViewState extends State<GCWImageView> {
           iconData: Icons.zoom_out_map,
           size: iconSize,
           onPressed: () {
-            Navigator.push(
-                context,
-                NoAnimationMaterialPageRoute(
-                    builder: (context) => GCWTool(
-                          tool: GCWImageViewFullScreen(
-                            imageProvider: _image,
-                          ),
-                          autoScroll: false,
-                          toolName: i18n(context, 'imageview_fullscreen_title'),
-                          defaultLanguageToolName:
-                              i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
-                          suppressHelpButton: true,
-                        )));
+            if (widget.onBeforeLoadBigImage != null) {
+              widget.onBeforeLoadBigImage().then((imgData) {
+                openInFullScreen(context, imgData.bytes);
+              });
+            } else {
+              openInFullScreen(context, widget.imageData.file.bytes);
+            }
           }),
       GCWIconButton(
           iconData: Icons.fit_screen,
@@ -143,73 +180,94 @@ class _GCWImageViewState extends State<GCWImageView> {
           onPressed: () {
             _scaleStateController.scaleState = PhotoViewScaleState.initial;
           }),
-      widget.toolBarRight
-          ? Container(height: 60)
-          : Expanded(
-              child: Container(),
-            ),
-      GCWIconButton(
-          iconData: Icons.save,
-          size: iconSize,
-          onPressed: () {
-            _exportFile(context, widget.imageData.bytes);
-          }),
-      GCWPopupMenu(
-          iconData: Icons.open_in_new,
-          size: iconSize,
-          menuItemBuilder: (context) => [
-                GCWPopupMenuItem(
-                  child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'imageview_openinmetadata'),
-                  action: (index) => setState(() {
-                    _openInMetadataViewer();
-                  }),
-                  //action: (index) => _openInMetadataViewer,
-                ),
-                GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.brush, 'imageview_openincolorcorrection'),
-                    action: (index) => setState(() {
-                          _openInColorCorrections();
-                        })),
-              ])
+      if (widget.suppressedButtons == null || widget.suppressedButtons.length == 1)
+        widget.toolBarRight
+            ? Container(height: widget.suppressedButtons != null && widget.suppressedButtons.length == 1 ? 108 : 60)
+            : Expanded(
+                child: Container(),
+              ),
+      if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.SAVE))
+        GCWIconButton(
+            iconData: Icons.save,
+            size: iconSize,
+            onPressed: () {
+              var imgData;
+              if (widget.onBeforeLoadBigImage != null) {
+                widget.onBeforeLoadBigImage().then((imgData) {
+                  _exportFile(context, imgData.bytes);
+                });
+              } else {
+                imgData = widget.imageData.file.bytes;
+                _exportFile(context, imgData);
+              }
+            }),
+      if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.VIEW_IN_TOOLS))
+        GCWPopupMenu(
+            iconData: Icons.open_in_new,
+            size: iconSize,
+            menuItemBuilder: (context) => [
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.METADATA))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInMetadataViewer(context, imgData);
+                          });
+                        } else {
+                          openInMetadataViewer(context, widget.imageData.file);
+                        }
+                      }),
+                    ),
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HEXVIEW))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInHexViewer(context, imgData);
+                          });
+                        } else {
+                          openInHexViewer(context, widget.imageData.file);
+                        }
+                      }),
+                    ),
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HIDDENDATA))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInHiddenData(context, imgData);
+                          });
+                        } else {
+                          openInHiddenData(context, widget.imageData.file);
+                        }
+                      }),
+                    ),
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInHiddenData(context, imgData);
+                          });
+                        } else {
+                          openInColorCorrections(
+                              context, widget.imageData.file);
+                        }
+                      })),
+                ])
     ];
   }
 
-  _openInMetadataViewer() {
-    local.PlatformFile file = local.PlatformFile(bytes: widget.imageData.bytes);
-    Navigator.push(
-        context,
-        NoAnimationMaterialPageRoute(
-            builder: (context) => GCWTool(
-                //tool: ImageMetadataViewer(),
-                tool: ExifReader(file: file),
-                toolName: i18n(context, 'exif_title'),
-                i18nPrefix: '',
-                missingHelpLocales: ['ko'])));
-  }
+  _exportFile(BuildContext context, Uint8List data) async {
+    String timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+    String outputFilename = 'img_${timestamp}.png';
 
-  _openInColorCorrections() {
-    // TODO
-    // Navigator.push(
-    //     context,
-    //     NoAnimationMaterialPageRoute(
-    //         builder: (context) => GCWTool(
-    //             tool: ImageColorCorrections(),
-    //             i18nPrefix: '',
-    //             missingHelpLocales: ['ko'])));
-  }
+    var value = await saveByteDataToFile(context, data, outputFilename);
 
-  _exportFile(BuildContext context, Uint8List data,
-      {String extension, String fileName, bool addTimestamp: true}) async {
-    var fileType = getFileType(data);
-    String fileExtension = getFileExtension(fileName);
-    String ext = extension ?? fileExtension ?? fileType;
-    String baseName = getFileBaseNameWithoutExtension(fileName);
-    baseName = baseName ?? 'imageview_export';
-    String timestamp = addTimestamp ? DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) : '';
-    String outputFilename = '${baseName}_${timestamp}${ext}';
-
-    var value = await saveByteDataToFile(data.buffer.asByteData(), outputFilename);
-
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    if (value != null) showExportedFileDialog(context, fileType: FileType.PNG);
   }
 }

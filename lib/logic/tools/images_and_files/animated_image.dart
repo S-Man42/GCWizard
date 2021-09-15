@@ -8,10 +8,7 @@ import 'package:archive/archive_io.dart';
 import 'package:image/image.dart' as Image;
 
 Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
@@ -34,7 +31,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
     var imageList = <Uint8List>[];
     var durations = <int>[];
     var linkList = <int>[];
-    var extension = getFileType(bytes);
+    FileType extension = getFileType(bytes);
 
     if (animation != null) {
       animation?.frames.forEach((image) {
@@ -48,8 +45,8 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
         var index = _checkSameHash(animation.frames, i);
         if (index < 0) {
           switch (extension) {
-            case '.png':
-              imageList.add(Image.encodePng(animation.frames[i]));
+            case FileType.PNG:
+              imageList.add(encodeTrimmedPng(animation.frames[i]));
               break;
             default:
               imageList.add(Image.encodeGif(animation.frames[i]));
@@ -67,7 +64,6 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImage
         }
       }
     }
-
 
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
@@ -113,11 +109,11 @@ int _checkSameHash(List<Image.Image> list, int maxSearchIndex) {
 
 List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List<Uint8List> imageList) {
   const toler = 2;
-  for (var i=0; i < filteredList.length; i++ ) {
+  for (var i = 0; i < filteredList.length; i++) {
     var compareImage = imageList[filteredList[i].first];
     var image = imageList[imageIndex];
 
-    if (compareImages(compareImage, image, toler:toler)) {
+    if (compareImages(compareImage, image, toler: toler)) {
       filteredList[i].add(imageIndex);
       return filteredList;
     }
@@ -129,42 +125,4 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   filteredList.add(newList);
 
   return filteredList;
-}
-
-Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
-  try {
-    String tmpDir = (await getTemporaryDirectory()).path;
-    var counter = 0;
-    var zipPath = '$tmpDir/gcwizardtmp.zip';
-    var pointIndex = fileName.lastIndexOf('.');
-    var extension = getFileType(imageList[0]);
-    if (pointIndex > 0) fileName = fileName.substring(0, pointIndex);
-
-    var encoder = ZipFileEncoder();
-    encoder.create(zipPath);
-
-    for (Uint8List imageBytes in imageList) {
-      counter++;
-      var fileNameZip = '$fileName' + '_$counter$extension';
-      var tmpPath = '$tmpDir/$fileNameZip';
-      if (File(tmpPath).existsSync()) File(tmpPath).delete();
-
-      File imageFileTmp = new File(tmpPath);
-      imageFileTmp = await imageFileTmp.create();
-      imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
-
-      encoder.addFile(imageFileTmp, fileNameZip);
-      imageFileTmp.delete();
-    }
-    ;
-
-    encoder.close();
-
-    var bytes = File(encoder.zip_path).readAsBytesSync();
-    await File(encoder.zip_path).delete();
-
-    return bytes;
-  } on Exception {
-    return null;
-  }
 }
