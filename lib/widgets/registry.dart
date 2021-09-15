@@ -7552,7 +7552,7 @@ class Registry {
       ]),
       GCWTool(
           tool: SemaphoreTelegraph(),
-          i18nPrefix: 'symboltable_semaphore',
+          i18nPrefix: 'symboltables_semaphore',
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: [
             SEARCHSTRING_COMMON_TELEGRAPH,

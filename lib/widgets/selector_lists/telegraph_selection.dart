@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schillin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -19,6 +20,7 @@ class TelegraphSelection extends GCWSelection {
         className(EdelcrantzTelegraph()),
         className(MurrayTelegraph()),
         className(PrussiaTelegraph()),
+        className(SemaphoreTelegraph()),
         className(GaussWeberTelegraph()),
         className(SchillingCannstattTelegraph()),
         className(WheatstoneCooke5NeedleTelegraph()),
