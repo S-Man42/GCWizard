@@ -26,7 +26,7 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         var paint = defaultSegmentPaint();
         var SEGMENTS_COLOR_ON = segment_color_on;
         var SEGMENTS_COLOR_OFF = segment_color_off;
-
+print(size.height);
         //paint.color = SEGMENTS_COLOR_ON;
         canvas.touchCanvas.drawCircle(
             Offset(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 185,
@@ -49,7 +49,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL1.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 60);
         pathL1.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 60);
         pathL1.close();
-        canvas.touchCanvas.drawPath(pathL1, paint, onTapDown: (tapDetail) {setSegmentState('l1', !currentSegments['l1']);});
+        if (size.height < 180)
+          if (currentSegments['l1'])
+            canvas.touchCanvas.drawPath(pathL1, paint, onTapDown: (tapDetail) {setSegmentState('l1', !currentSegments['l1']);});
+          else;
+        else
+            canvas.touchCanvas.drawPath(pathL1, paint, onTapDown: (tapDetail) {setSegmentState('l1', !currentSegments['l1']);});
 
         paint.color = currentSegments['r1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR1 = Path();
@@ -60,7 +65,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR1.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 240, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 60);
         pathR1.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 280, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 60);
         pathR1.close();
-        canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);});
+        if (size.height < 180)
+              if (currentSegments['r1'])
+                    canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);});
 
         paint.color = currentSegments['l2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL2 = Path();
@@ -71,7 +81,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL2.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 120);
         pathL2.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 10, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 80);
         pathL2.close();
-        canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);});
+        if (size.height < 180)
+              if (currentSegments['l2'])
+                    canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);});
 
         paint.color = currentSegments['r2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR2 = Path();
@@ -82,7 +97,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR2.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 290, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 90);
         pathR2.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 250, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 130);
         pathR2.close();
-        canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);});
+        if (size.height < 180)
+              if (currentSegments['r2'])
+                    canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);});
 
         paint.color = currentSegments['l3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL3 = Path();
@@ -93,7 +113,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL3.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 180);
         pathL3.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 10, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 180);
         pathL3.close();
-        canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);});
+        if (size.height < 180)
+              if (currentSegments['l3'])
+                    canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);});
 
         paint.color = currentSegments['r3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR3 = Path();
@@ -104,7 +129,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR3.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 310, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 140);
         pathR3.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 250, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 140);
         pathR3.close();
-        canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);});
+        if (size.height < 180)
+              if (currentSegments['r3'])
+                    canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);});
 
         paint.color = currentSegments['l4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL4 = Path();
@@ -115,7 +145,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL4.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 220);
         pathL4.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 260);
         pathL4.close();
-        canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);});
+        if (size.height < 180)
+              if (currentSegments['l4'])
+                    canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);});
 
         paint.color = currentSegments['r4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR4 = Path();
@@ -126,7 +161,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR4.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 250, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 220);
         pathR4.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 280, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 190);
         pathR4.close();
-        canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);});
+        if (size.height < 180)
+              if (currentSegments['r4'])
+                    canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);});
 
         paint.color = currentSegments['l5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL5 = Path();
@@ -137,7 +177,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL5.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 180, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 260);
         pathL5.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 260);
         pathL5.close();
-        canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);});
+        if (size.height < 180)
+              if (currentSegments['l5'])
+                    canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);});
 
         paint.color = currentSegments['r5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR5 = Path();
@@ -148,7 +193,12 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR5.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 190, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 210);
         pathR5.lineTo(size.width / _SEMAPHORE_RELATIVE_DISPLAY_WIDTH * 230, size.width / _SEMAPHORE_RELATIVE_DISPLAY_HEIGHT * 210);
         pathR5.close();
-        canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);});
+        if (size.height < 180)
+              if (currentSegments['r5'])
+                    canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);});
 
         });
 
