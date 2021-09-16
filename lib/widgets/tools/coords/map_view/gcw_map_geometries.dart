@@ -75,6 +75,7 @@ class GCWMapLine {
       return;
     }
 
+    shape.add(start.point);
     _calculateGeodetic();
   }
 

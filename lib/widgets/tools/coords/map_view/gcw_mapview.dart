@@ -213,6 +213,9 @@ class GCWMapViewState extends State<GCWMapView> {
                             var newPoint = _persistanceAdapter.addMapPoint(coordinate);
 
                             if (_isPolylineDrawing) {
+                              if (widget.polylines.isEmpty)
+                                _persistanceAdapter.createMapPolyline();
+
                               _persistanceAdapter.addMapPointIntoPolyline(newPoint, widget.polylines.last);
                             }
                           });
@@ -302,52 +305,49 @@ class GCWMapViewState extends State<GCWMapView> {
   _showPolylineDialog(_GCWTappablePolyline polyline) {
     if (polyline == null) return;
 
-    Widget output;
+    List<Widget> output;
 
-    var text;
-    var copyableText;
     var child = polyline.child;
     if (child is GCWMapLine) {
-      print(child.parent.lines);
 
-      if (child.parent.lines.length == 1) {
-        output = GCWOutputText(
-          text: i18n(context, 'unitconverter_category_length') +
+      var data = [
+        {
+          'text': i18n(context, 'unitconverter_category_length') +
               ': ${_formatLengthOutput(child.length)}',
-          style: gcwDialogTextStyle(),
-          copyText: child.length.toString(),
+          'value': child.length
+        },
+        {
+          'text': i18n(
+              context, 'coords_map_view_linedialog_section_bearing_ab') +
+              ': ${_formatBearingOutput(child.bearingAB)}',
+          'value': child.bearingAB
+        },
+        {
+          'text': i18n(
+              context, 'coords_map_view_linedialog_section_bearing_ba') +
+              ': ${_formatBearingOutput(child.bearingBA)}',
+          'value': child.bearingBA
+        }
+      ];
+
+      if (child.parent.lines.length > 1) {
+        data.add(
+            {
+              'text': i18n(context, 'unitconverter_category_length') +
+                  ': ${_formatLengthOutput(child.parent.length)}',
+              'value': child.parent.length
+            }
         );
-      } else {
-        var children = [
-          {
-            'text': i18n(context, 'unitconverter_category_length') +
-                ': ${_formatLengthOutput(child.length)}',
-            'value': child.length
-          },
-          {
-            'text': i18n(
-                context, 'coords_map_view_linedialog_section_bearing_ab') +
-                ': ${_formatBearingOutput(child.bearingAB)}',
-            'value': child.bearingAB
-          },
-          {
-            'text': i18n(
-                context, 'coords_map_view_linedialog_section_bearing_ba') +
-                ': ${_formatBearingOutput(child.bearingBA)}',
-            'value': child.bearingBA
-          },
-          {
-            'text': i18n(context, 'unitconverter_category_length') +
-                ': ${_formatLengthOutput(child.parent.length)}',
-            'value': child.parent.length
-          }
-        ].map((elem) =>
+      }
+
+      var children = data.map((elem) =>
         GCWOutputText(
           text: elem['text'],
           copyText: elem['value'].toString(),
           style: gcwDialogTextStyle(),
         ) as Widget).toList();
 
+      if (child.parent.lines.length > 1) {
         children.insert(0, GCWTextDivider(
           text: i18n(context, 'coords_map_view_linedialog_section'),
           style: gcwDialogTextStyle(),
@@ -357,20 +357,15 @@ class GCWMapViewState extends State<GCWMapView> {
           text: i18n(context, 'coords_map_view_linedialog_path'),
           style: gcwDialogTextStyle(),
         ));
-
-        output = Column(
-            children: children
-        );
       }
-    } else if (child is GCWMapCircle) {
-      copyableText = child.radius.toString();
-      text = i18n(context, 'common_radius') + ': ${_formatLengthOutput(child.radius)}';
 
-      output = GCWOutputText(
-        text: text,
+      output = children;
+    } else if (child is GCWMapCircle) {
+      output = [GCWOutputText(
+        text: i18n(context, 'common_radius') + ': ${_formatLengthOutput(child.radius)}',
         style: gcwDialogTextStyle(),
-        copyText: copyableText,
-      );
+        copyText: child.radius.toString(),
+      )];
     }
 
     var dialogButtons = <Widget>[];
@@ -415,7 +410,9 @@ class GCWMapViewState extends State<GCWMapView> {
             iconData: Icons.delete,
             iconColor: themeColors().dialogText(),
             onPressed: () {
-              if (child is GCWMapPolyline) {
+              Navigator.pop(context);
+
+              if (child is GCWMapLine) {
                 showGCWDialog(
                     context,
                     i18n(context, 'coords_openmap_lineremove_dialog_title'),
@@ -430,14 +427,14 @@ class GCWMapViewState extends State<GCWMapView> {
                           text: i18n(context, 'coords_openmap_lineremove_dialog_keeppoints'),
                           onPressed: () {
                             setState(() {
-                              _persistanceAdapter.removeMapPolyline(child);
+                              _persistanceAdapter.removeMapPolyline(child.parent);
                             });
                           }),
                       GCWDialogButton(
                           text: i18n(context, 'coords_openmap_lineremove_dialog_removepoints'),
                           onPressed: () {
                             setState(() {
-                              _persistanceAdapter.removeMapPolyline(child, removePoints: true);
+                              _persistanceAdapter.removeMapPolyline(child.parent, removePoints: true);
                             });
                           }),
                     ]);
@@ -457,8 +454,8 @@ class GCWMapViewState extends State<GCWMapView> {
         '',
         Container(
           width: 250,
-          height: output is GCWOutputText ? 50 : 350,
-          child: output,
+          height: output.length * 50.0,
+          child: Column(children: output,),
         ),
         dialogButtons,
         closeOnOutsideTouch: true);
@@ -719,7 +716,13 @@ class GCWMapViewState extends State<GCWMapView> {
   _buildPopupCoordinateDescription(GCWMapPoint point) {
     if (point.markerText == null || point.markerText.length == 0) return null;
 
-    return point.markerText;
+    var text;
+    if (point.markerText.length > 50)
+      text = point.markerText.substring(0, 47) + '...';
+    else
+      text = point.markerText;
+
+    return text;
   }
 
   _buildPopup(Marker marker) {
