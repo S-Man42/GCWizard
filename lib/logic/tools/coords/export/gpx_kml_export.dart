@@ -26,7 +26,7 @@ Future<File> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMa
   }
 
   try {
-    var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + extension;
+    var fileName = 'coords_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + extension;
     return saveStringToFile(data, fileName, subDirectory: 'coordinate_export');
   } on Exception {
     return null;

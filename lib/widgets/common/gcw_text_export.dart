@@ -144,7 +144,7 @@ exportFile(String text, TextExportMode mode, BuildContext context) {
 
 Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportMode mode) async {
   if (mode == TextExportMode.TEXT) {
-    return saveStringToFile(text, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
+    return saveStringToFile(text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
   } else {
     final data = await generateBarCode(text);
 
