@@ -18,6 +18,7 @@ import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
+enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA }
 
 class GCWImageViewData {
   final PlatformFile file;
@@ -35,6 +36,7 @@ class GCWImageView extends StatefulWidget {
   final Set<GCWImageViewButtons> suppressedButtons;
   final int maxHeightInPreview;
   final Function onBeforeLoadBigImage;
+  final Set<GCWImageViewOpenInTools> suppressOpenInTool;
 
   const GCWImageView(
       {Key key,
@@ -44,6 +46,7 @@ class GCWImageView extends StatefulWidget {
       this.fileName,
       this.suppressedButtons,
       this.maxHeightInPreview,
+      this.suppressOpenInTool,
       this.onBeforeLoadBigImage})
       : super(key: key);
 
@@ -165,7 +168,7 @@ class _GCWImageViewState extends State<GCWImageView> {
           onPressed: () {
             if (widget.onBeforeLoadBigImage != null) {
               widget.onBeforeLoadBigImage().then((imgData) {
-                openInFullScreen(context, imgData);
+                openInFullScreen(context, imgData.bytes);
               });
             } else {
               openInFullScreen(context, widget.imageData.file.bytes);
@@ -191,7 +194,7 @@ class _GCWImageViewState extends State<GCWImageView> {
               var imgData;
               if (widget.onBeforeLoadBigImage != null) {
                 widget.onBeforeLoadBigImage().then((imgData) {
-                  _exportFile(context, imgData);
+                  _exportFile(context, imgData.bytes);
                 });
               } else {
                 imgData = widget.imageData.file.bytes;
@@ -203,41 +206,58 @@ class _GCWImageViewState extends State<GCWImageView> {
             iconData: Icons.open_in_new,
             size: iconSize,
             menuItemBuilder: (context) => [
-                  GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
-                    action: (index) => setState(() {
-                      if (widget.onBeforeLoadBigImage != null) {
-                        widget.onBeforeLoadBigImage().then((imgData) {
-                          openInMetadataViewer(context, imgData);
-                        });
-                      } else {
-                        openInMetadataViewer(context, widget.imageData.file);
-                      }
-                    }),
-                  ),
-                  GCWPopupMenuItem(
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.METADATA))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInMetadataViewer(context, imgData);
+                          });
+                        } else {
+                          openInMetadataViewer(context, widget.imageData.file);
+                        }
+                      }),
+                    ),
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HEXVIEW))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInHexViewer(context, imgData);
+                          });
+                        } else {
+                          openInHexViewer(context, widget.imageData.file);
+                        }
+                      }),
+                    ),
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HIDDENDATA))
+                    GCWPopupMenuItem(
+                      child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
+                      action: (index) => setState(() {
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInHiddenData(context, imgData);
+                          });
+                        } else {
+                          openInHiddenData(context, widget.imageData.file);
+                        }
+                      }),
+                    ),
+                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
+                    GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
                       action: (index) => setState(() {
-                            if (widget.onBeforeLoadBigImage != null) {
-                              widget.onBeforeLoadBigImage().then((imgData) {
-                                openInColorCorrections(context, imgData);
-                              });
-                            } else {
-                              openInColorCorrections(context, widget.imageData.file);
-                            }
-                          })),
-                  GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
-                    action: (index) => setState(() {
-                      openInHexViewer(context, widget.imageData.file);
-                    }),
-                  ),
-                  GCWPopupMenuItem(
-                    child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
-                    action: (index) => setState(() {
-                      openInHiddenData(context, widget.imageData.file);
-                    }),
-                  )
+                        if (widget.onBeforeLoadBigImage != null) {
+                          widget.onBeforeLoadBigImage().then((imgData) {
+                            openInHiddenData(context, imgData);
+                          });
+                        } else {
+                          openInColorCorrections(
+                              context, widget.imageData.file);
+                        }
+                      })),
                 ])
     ];
   }

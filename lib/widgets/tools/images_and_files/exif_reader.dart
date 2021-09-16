@@ -129,6 +129,7 @@ class _ExifReaderState extends State<ExifReader> {
       Container(
         child: GCWImageView(
           imageData: GCWImageViewData(file),
+          suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
         ),
         padding: EdgeInsets.only(top: 10),
       )

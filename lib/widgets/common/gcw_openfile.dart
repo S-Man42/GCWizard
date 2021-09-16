@@ -66,7 +66,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       onPressed: () {
         _currentExpanded = true;
         openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((PlatformFile file) {
-          if (file != null) {
+          if (file != null && file.bytes != null) {
             setState(() {
               _loadedFile = file;
               _currentExpanded = false;
@@ -318,6 +318,9 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
       }
       _received += value.length;
     }).onDone(() {
+      if (_bytes == null || _bytes.isEmpty)
+        return 'common_loadfile_exception_nofile';
+
       var uint8List = Uint8List.fromList(_bytes);
       if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
 

@@ -50,26 +50,40 @@ class GCWMapPoint {
   }
 }
 
-class GCWMapPolyline {
-  String uuid;
-  List<GCWMapPoint> points = [];
-  Color color;
-  double length;
+class GCWMapLine {
+  final GCWMapPolyline parent;
+  final GCWMapPoint start;
+  final GCWMapPoint end;
 
-  List<LatLng> shape;
+  double length = 0.0;
+  double bearingAB;
+  double bearingBA;
 
-  GCWMapPolyline({
-    this.uuid,
-    @required this.points,
-    this.color: COLOR_MAP_POLYLINE,
-  }) {
-    if (uuid == null || uuid.length == 0) uuid = Uuid().v4();
-    update();
+  List<LatLng> shape = [];
+
+  GCWMapLine(this.parent, this.start, this.end) {
+    if (this.start == null && this.end == null)
+      return;
+
+    if (this.start == null) {
+      shape.add(end.point);
+      return;
+    }
+
+    if (this.end == null) {
+      shape.add(start.point);
+      return;
+    }
+
+    shape.add(start.point);
+    _calculateGeodetic();
   }
 
-  void _calculateGeodetics(GCWMapPoint start, GCWMapPoint end) {
+  void _calculateGeodetic() {
     DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
-    length += _distBear.distance;
+    length = _distBear.distance;
+    bearingAB = _distBear.bearingAToB;
+    bearingBA = _distBear.bearingBToA;
 
     const _stepLength = 5000.0;
 
@@ -82,21 +96,39 @@ class GCWMapPolyline {
 
     shape.add(end.point);
   }
+}
+
+class GCWMapPolyline {
+  String uuid;
+  List<GCWMapPoint> points = [];
+  Color color;
+  double get length => lines == null ? 0.0 : lines.fold(0.0, (previousValue, line) => previousValue + line.length);
+
+  List<GCWMapLine> lines;
+
+  GCWMapPolyline({
+    this.uuid,
+    @required this.points,
+    this.color: COLOR_MAP_POLYLINE,
+  }) {
+    if (uuid == null || uuid.length == 0) uuid = Uuid().v4();
+    update();
+  }
 
   void update() {
-    length = 0.0;
-    shape = [];
+    lines = [];
 
-    if (points == null) {
+    if (points == null || points.length == 0) {
       return;
     }
 
-    if (points.length > 0) shape.add(points[0].point);
-
-    if (points.length < 2) return;
+    if (points.length == 1) {
+      lines.add(GCWMapLine(this, points[0], null));
+      return;
+    }
 
     for (int i = 1; i < points.length; i++) {
-      _calculateGeodetics(points[i - 1], points[i]);
+      lines.add(GCWMapLine(this, points[i - 1], points[i]));
     }
   }
 }

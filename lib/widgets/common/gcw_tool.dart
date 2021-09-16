@@ -278,7 +278,7 @@ class _GCWToolState extends State<GCWTool> {
     if (!widget.suppressToolMargin) {
       tool = Padding(
         child: tool,
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 2),
       );
     }
 
