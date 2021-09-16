@@ -77,26 +77,28 @@ List<List<String>> encodeSemaphore(String input) {
   return result;
 }
 
-Map<String, dynamic> decodeSemaphore(
-    List<String> inputs) {
+Map<String, dynamic> decodeSemaphore(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
-      'chars': [0]
+      'chars': []
     };
 
   var displays = <List<String>>[];
+  var segment = <String>[];
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
+
+  var char = '';
+  var charH = '';
+  inputs.forEach((element) {
+    segment = _stringToSegment(element);
+    displays.add(segment);
+  });
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
     var charH = '';
-    var display = <String>[];
-
-    input.split('').forEach((element) {
-      display.add(element);
-    });
 
     if (CODEBOOK.map((key, value) =>
         MapEntry(key.join(), value.toString()))[input.split('').join()] ==
@@ -108,13 +110,18 @@ Map<String, dynamic> decodeSemaphore(
       char = char + charH;
     }
 
-    displays.add(display);
-
     return char;
   }).toList();
 
   return {'displays': displays, 'chars': text};
-
-
 }
 
+List<String> _stringToSegment(String input){
+  List<String> result = [];
+  int j = 0;
+  for (int i = 0; i < input.length /2; i++) {
+    result.add(input[j] + input[j + 1]);
+    j = j + 2;
+  }
+  return result;
+}
