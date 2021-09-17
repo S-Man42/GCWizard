@@ -139,6 +139,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
@@ -7505,6 +7506,21 @@ class Registry {
       ]),
 
       // TelegraphSelection *********************************************************************************************
+      GCWTool(tool: ChappeTelegraph(), i18nPrefix: 'telegraph_chappe', categories: [
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
+        SEARCHSTRING_DE_SYMBOL_CHAPPE,
+        SEARCHSTRING_EN_SYMBOL_CHAPPE,
+        SEARCHSTRING_FR_SYMBOL_CHAPPE
+      ]),
       GCWTool(tool: EdelcrantzTelegraph(), i18nPrefix: 'telegraph_edelcrantz', categories: [
       ], helpLocales: [
         'de',

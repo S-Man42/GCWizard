@@ -4202,6 +4202,8 @@
   "telegraph_decode_textmode": "Text mode",
   "telegraph_decode_visualmode": "Visual mode",
   "telegraph_text": "Text",
+  "telegraph_chappe_title" : "Chappe Telegraph",
+  "telegraph_chappe_description" : "Using the Chappe Telegraph Codebook",
   "telegraph_edelcrantz_title": "Edelcrantz Telegraph",
   "telegraph_edelcrantz_description": "Using the Edelcrantz Codebook",
   "telegraph_edelcrantz_a_messagereceived": " MESSAGE RECEIVED ",

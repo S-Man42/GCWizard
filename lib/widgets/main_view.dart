@@ -77,6 +77,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
@@ -431,6 +432,7 @@ class _MainViewState extends State<MainView> {
         className(CenterThreePoints()),
         className(CenterTwoPoints()),
         className(Chao()),
+        className(ChappeTelegraph()),
         className(Chef()),
         className(ChickenLanguage()),
         className(Chronogram()),
