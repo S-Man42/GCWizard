@@ -213,7 +213,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_cannstatt_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
@@ -1450,6 +1450,21 @@ class Registry {
         SEARCHSTRING_EN_PRIMES,
         SEARCHSTRING_FR_PRIMES
       ]),
+      GCWTool(
+          tool: SchillingCanstattTelegraph(),
+          i18nPrefix: 'schillingcanstatt',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_TELEGRAPH_SCHILLINGCANSTATT,
+            SEARCHSTRING_DE_TELEGRAPH_SCHILLINGCANSTATT,
+            SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANSTATT,
+            SEARCHSTRING_FR_TELEGRAPH_SCHILLINGCANSTATT,
+          ]),
       GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', helpLocales: [
         'de',
         'en',
@@ -7595,7 +7610,7 @@ class Registry {
             SEARCHSTRING_FR_TELEGRAPH_GAUSSWEBERTELEGRAPH,
           ]),
       GCWTool(
-          tool: SchillingCannstattTelegraph(),
+          tool: SchillingCanstattTelegraph(),
           i18nPrefix: 'telegraph_schillingcannstatt',
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: [
@@ -7603,10 +7618,10 @@ class Registry {
             SEARCHSTRING_DE_TELEGRAPH,
             SEARCHSTRING_EN_TELEGRAPH,
             SEARCHSTRING_FR_TELEGRAPH,
-            SEARCHSTRING_COMMON_TELEGRAPH_SCHILLINGCANNSTATT,
-            SEARCHSTRING_DE_TELEGRAPH_SCHILLINGCANNSTATT,
-            SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANNSTATT,
-            SEARCHSTRING_FR_TELEGRAPH_SCHILLINGCANNSTATT,
+            SEARCHSTRING_COMMON_TELEGRAPH_SCHILLINGCANSTATT,
+            SEARCHSTRING_DE_TELEGRAPH_SCHILLINGCANSTATT,
+            SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANSTATT,
+            SEARCHSTRING_FR_TELEGRAPH_SCHILLINGCANSTATT,
           ]),
       GCWTool(
           tool: WheatstoneCooke5NeedleTelegraph(),

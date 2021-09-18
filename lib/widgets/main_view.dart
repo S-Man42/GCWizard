@@ -125,7 +125,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_cannstatt_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
@@ -550,7 +550,7 @@ class _MainViewState extends State<MainView> {
         className(Rot47()),
         className(RotationGeneral()),
         className(RSASelection()),
-        className(SchillingCannstattTelegraph()),
+        className(SchillingCanstattTelegraph()),
         className(Scrabble()),
         className(ShadowLength()),
         className(ShadoksSelection()),

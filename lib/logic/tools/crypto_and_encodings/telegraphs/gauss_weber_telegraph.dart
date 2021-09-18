@@ -1,6 +1,6 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum GaussWeberTelegraphMode {GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANNSTATT, WHEATSTONE_COOKE_5}
+enum GaussWeberTelegraphMode {GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANSTATT, WHEATSTONE_COOKE_5}
 
 Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'A': '+', 'B': '-', 'C': '++','D': '+-','E': '-+','F': '--','G': '+++','H': '++-','I': '+-+','K': '+--','L': '-++',
@@ -13,10 +13,11 @@ Map<String, String> _GAUSS_WEBER_ALTERNATIVE = {
   '0': 'rlrl', '1': 'rllr', '2': 'lrrl', '3': 'lrlr', '4': 'llrr', '5': 'lllr', '6': 'llrl', '7': 'lrll', '8': 'rlll', '9': 'llll'
 };
 
-Map<String, String> _SCHILLING_CANNSTATT = {
-  'A': 'rl', 'B': 'rrr', 'C': 'rll','D': 'rrl','E': 'r','F': 'rrrr','G': 'llll','H': 'rll','I': 'rr', 'J': 'rrll', 'K': 'rrrl','L': 'lrrr',
+Map<String, String> _SCHILLING_CANSTATT = {
+  'A': 'rl', 'B': 'rrr', 'C': 'rll','D': 'rrl','E': 'r','F': 'rrrr','G': 'llll','H': 'rlll','I': 'rr', 'J': 'rrll', 'K': 'rrrl','L': 'lrrr',
   'M': 'lrl','N': 'lr','O': 'rlr','P': 'llrr','Q': 'lllr','R': 'lrr','S': 'll','T': 'l','U': 'llr','V': 'lll','W': 'rlrl','X': 'lrlr','Y': 'rllr','Z': 'rlrr',
-  '0': 'lrrl', '1': 'rlrlr', '2': 'rrlrr', '3': 'rlllr', '4': 'lrrrl', '5': 'lrrll', '6': 'lrlrl', '7': 'rrllr', '8': 'rllrr', '9': 'llrll','&': 'rrlr'
+  '0': 'lrrl', '1': 'rlrlr', '2': 'rrlrr', '3': 'rlllr', '4': 'lrrrl', '5': 'lrrll', '6': 'lrlrl', '7': 'rrllr', '8': 'rllrr', '9': 'llrll','&': 'rrlr',
+  'schillingcanstatt_stop' : 'lrll', 'schillingcanstatt_goon':'lrrl', 'schillingcanntatt_finish': 'llrl'
 };
 
 Map<String, String> _WHEATSTONE_COOKE_5 = {
@@ -32,7 +33,7 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
   switch (mode) {
     case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL: map = switchMapKeyValue(_GAUSS_WEBER_ORIGINAL); break;
     case GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE: map = switchMapKeyValue(_GAUSS_WEBER_ALTERNATIVE); break;
-    case GaussWeberTelegraphMode.SCHILLING_CANNSTATT: map = switchMapKeyValue(_SCHILLING_CANNSTATT); break;
+    case GaussWeberTelegraphMode.SCHILLING_CANSTATT: map = switchMapKeyValue(_SCHILLING_CANSTATT); break;
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5: map = switchMapKeyValue(_WHEATSTONE_COOKE_5); break;
     default: return '';
   }
@@ -57,7 +58,7 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
   switch (mode) {
     case GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL: map = _GAUSS_WEBER_ORIGINAL; break;
     case GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE: map = _GAUSS_WEBER_ALTERNATIVE; break;
-    case GaussWeberTelegraphMode.SCHILLING_CANNSTATT: map = _SCHILLING_CANNSTATT; break;
+    case GaussWeberTelegraphMode.SCHILLING_CANSTATT: map = _SCHILLING_CANSTATT; break;
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5: map = _WHEATSTONE_COOKE_5; break;
     default: return '';
   }
