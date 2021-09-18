@@ -14,9 +14,10 @@ Map<String, String> _GAUSS_WEBER_ALTERNATIVE = {
 };
 
 Map<String, String> _SCHILLING_CANNSTATT = {
-  'A': 'rl', 'B': 'rrr', 'C': 'rll','D': 'rrl','E': 'r','F': 'rrrr','G': 'llll','H': 'rll','I': 'rr', 'J': 'rrll', 'K': 'rrrl','L': 'lrrr',
+  'A': 'rl', 'B': 'rrr', 'C': 'rll','D': 'rrl','E': 'r','F': 'rrrr','G': 'llll','H': 'rlll','I': 'rr', 'J': 'rrll', 'K': 'rrrl','L': 'lrrr',
   'M': 'lrl','N': 'lr','O': 'rlr','P': 'llrr','Q': 'lllr','R': 'lrr','S': 'll','T': 'l','U': 'llr','V': 'lll','W': 'rlrl','X': 'lrlr','Y': 'rllr','Z': 'rlrr',
-  '0': 'lrrl', '1': 'rlrlr', '2': 'rrlrr', '3': 'rlllr', '4': 'lrrrl', '5': 'lrrll', '6': 'lrlrl', '7': 'rrllr', '8': 'rllrr', '9': 'llrll','&': 'rrlr'
+  '0': 'lrrl', '1': 'rlrlr', '2': 'rrlrr', '3': 'rlllr', '4': 'lrrrl', '5': 'lrrll', '6': 'lrlrl', '7': 'rrllr', '8': 'rllrr', '9': 'llrll','&': 'rrlr',
+  'schillingcanstatt_stop' : 'lrll', 'schillingcanstatt_goon':'lrrl', 'schillingcanntatt_finish': 'llrl'
 };
 
 String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {

@@ -322,7 +322,7 @@ const SEARCHSTRING_DE_RSA_DCHECKER = 'testen pruefen';
 const SEARCHSTRING_DE_RSA_ECHECKER = 'testen pruefen  ';
 const SEARCHSTRING_DE_RSA_NCALCULATOR = 'berechnen';
 const SEARCHSTRING_DE_RSA_PHICALCULATOR = 'berechnen';
-const SEARCHSTRING_DE_SCHILLINGCANNSTATT = 'rechts links';
+const SEARCHSTRING_DE_SCHILLINGCANSTATT = 'rechts links';
 const SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION =
     'naturwissenschaften technologien technik mathematik  physik  chemie  elektronik biologie geographie musik geografie';
 const SEARCHSTRING_DE_SEGMENTS = 'segmentanzeige segmente';
