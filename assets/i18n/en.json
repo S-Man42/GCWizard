@@ -3165,7 +3165,7 @@
   "rsa_error_could.not.calc.d": "Could not calculate d",
   "rsa_error_p.not.prime": "p is not a prime number",
   "rsa_error_q.not.prime": "q is not a prime number",
-  "schillingcanstatt_title": "Schilling Cannstatt Telegraph Code",
+  "schillingcanstatt_title": "Schilling Canstatt Telegraph Code",
   "schillingcanstatt_description": "Code based on the deflection of a telegraph needle (left/right)",
   "schillingcanstatt_example": "HELLO → rll r lrrr lrrr rlr",
   "schillingcanstatt_stop": "STOP",
