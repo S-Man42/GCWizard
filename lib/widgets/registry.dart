@@ -1460,7 +1460,7 @@ class Registry {
       ]),
       GCWTool(
           tool: SchillingCannstattTelegraph(),
-          i18nPrefix: 'schillingcannstatt',
+          i18nPrefix: 'schillingcanstatt',
           categories: [ToolCategory.CRYPTOGRAPHY],
           helpLocales: ['de', 'en', 'fr'],
           searchStrings: [
@@ -1468,10 +1468,10 @@ class Registry {
             SEARCHSTRING_DE_TELEGRAPH,
             SEARCHSTRING_EN_TELEGRAPH,
             SEARCHSTRING_FR_TELEGRAPH,
-            SEARCHSTRING_COMMON_SCHILLINGCANNSTATT,
-            SEARCHSTRING_DE_SCHILLINGCANNSTATT,
-            SEARCHSTRING_EN_SCHILLINGCANNSTATT,
-            SEARCHSTRING_FR_SCHILLINGCANNSTATT,
+            SEARCHSTRING_COMMON_SCHILLINGCANSTATT,
+            SEARCHSTRING_DE_SCHILLINGCANSTATT,
+            SEARCHSTRING_EN_SCHILLINGCANSTATT,
+            SEARCHSTRING_FR_SCHILLINGCANSTATT,
           ]),
       GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', helpLocales: [
         'de',

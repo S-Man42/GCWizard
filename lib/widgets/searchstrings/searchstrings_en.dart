@@ -317,7 +317,7 @@ const SEARCHSTRING_EN_RSA_DCHECKER = 'check private key';
 const SEARCHSTRING_EN_RSA_ECHECKER = 'check public key';
 const SEARCHSTRING_EN_RSA_NCALCULATOR = 'calculate';
 const SEARCHSTRING_EN_RSA_PHICALCULATOR = 'calculate';
-const SEARCHSTRING_EN_SCHILLINGCANNSTATT = 'left right';
+const SEARCHSTRING_EN_SCHILLINGCANSTATT = 'left right';
 const SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION =
     'sciences technology technologies maths mathematics physics chemistry electronics biology weather musics geography';
 const SEARCHSTRING_EN_SEGMENTS = 'display segments';
