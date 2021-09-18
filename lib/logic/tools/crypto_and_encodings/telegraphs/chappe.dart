@@ -5,42 +5,41 @@ import 'package:gc_wizard/utils/constants.dart';
 
 final Map<String, List<String>> CODEBOOK_CHAPPE = {
   'A': ['10', '1r', '50', '5l'],
-  'B': ['1', '3', '4', '5'],
+  'B': ['20', '2r', '60', '6l'],
   'C': ['30', '3r', '70', '7l'],
-  'D': ['1', '2', '3', '5'],
+  'D': ['40', '4r', '80', '8l'],
   'E': ['10', '1l', '50', '5r'],
-  'F': ['1', '2', '3', '4'],
+  'F': ['20', '2l', '60', '6r'],
   'G': ['30', '3l', '70', '7r'],
-  'H': ['2', '6', '6', '6'],
+  'H': ['40', '4l', '80', '8r'],
   'I': ['10', '1l', '50', '5l'],
-  'J': ['3', '6', '6', '6'],
-  'K': ['4', '6', '6', '6'],
+  'K': ['20', '2l', '60', '6l'],
   'L': ['30', '3l', '70', '7l'],
-  'M': ['6', '6', '6', '6'],
+  'M': ['40', '4l', '80', '8l'],
   'N': ['10', '1r', '50', '5r'],
-  'O': ['4', '6', '6', '6'],
+  'O': ['20', '2r', '60', '6r'],
   'P': ['30', '3r', '70', '7r'],
-  'Q': ['2', '6', '6', '6'],
+  'Q': ['40', '4r', '80', '8r'],
   'R': ['10', '1r', '50'],
-  'S': ['2', '4', '6', '6'],
+  'S': ['20', '2r', '60'],
   'T': ['30', '3r', '70'],
-  'U': ['3', '6', '6', '6'],
+  'U': ['40', '4r', '80'],
   'V': ['10', '50', '5r'],
-  'W': ['1', '3', '6', '6'],
+  'W': ['20', '60', '6r'],
   'X': ['30', '70', '7r'],
-  'Y': ['1', '3', '6', '6'],
+  'Y': ['40', '80', '8r'],
   'Z': ['10', '50', '5l'],
-  '0': ['40', '80'],
   '1': ['30', '70', '7l'],
-  '2': ['3', '4', '5', '6'],
+  '2': ['40', '80', '8l'],
   '3': ['10', '1l', '50'],
-  '4': ['1', '3', '4', '6'],
+  '4': ['20', '2l', '60'],
   '5': ['30', '3l', '70'],
-  '6': ['1', '2', '3', '6'],
+  '6': ['40', '4l', '80'],
   '7': ['10', '50'],
-  '8': ['10', '50'],
+  '8': ['20', '60'],
   '9': ['30', '70'],
-  '&': ['1', '2', '3', '4'],
+  '0': ['40', '80'],
+  '&': ['20', '60', '6l'],
 };
 
 
@@ -49,21 +48,16 @@ List<List<String>> encodeChappe(String input) {
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
-  List<String> segment = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    List<String> segment = [];
     if (CODEBOOK_CHAPPE[inputs[i].toUpperCase()] != null) {
-      List<String> segment = CODEBOOK_CHAPPE[inputs[i].toUpperCase()];
-      segment.add('70');
-      result.add(segment);
+      result.add(CODEBOOK_CHAPPE[inputs[i].toUpperCase()]);
     }
   }
   return result;
 }
 
-Map<String, dynamic> decodeChappe(
-    List<String> inputs) {
+Map<String, dynamic> decodeChappe(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -71,17 +65,18 @@ Map<String, dynamic> decodeChappe(
     };
 
   var displays = <List<String>>[];
+  var segment = <String>[];
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE);
+
+  inputs.forEach((element) {
+    segment = _stringToSegment(element);
+    displays.add(segment);
+  });
 
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
     var charH = '';
-    var display = <String>[];
-
-    input.split('').forEach((element) {
-      display.add(element);
-    });
 
     if (CODEBOOK.map((key, value) =>
         MapEntry(key.join(), value.toString()))[input.split('').join()] ==
@@ -93,13 +88,21 @@ Map<String, dynamic> decodeChappe(
       char = char + charH;
     }
 
-    displays.add(display);
-
     return char;
   }).toList();
 
   return {'displays': displays, 'chars': text};
-
-
 }
 
+List<String> _stringToSegment(String input) {
+  if (input.length % 2 == 0){
+    List<String> result = [];
+    int j = 0;
+    for (int i = 0; i < input.length / 2; i++) {
+      result.add(input[j] + input[j + 1]);
+      j = j + 2;
+    }
+    return result;
+  } else
+    return [];
+}

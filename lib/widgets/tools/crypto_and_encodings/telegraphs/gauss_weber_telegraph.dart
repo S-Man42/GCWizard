@@ -95,9 +95,9 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
         var mode = countOriginal >= countAlt ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
           child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
-              .replaceAll('schillingcanstatt_stop', i18n(context, 'schillingcanstatt_stop'))
-              .replaceAll('schillingcanstatt_goon', i18n(context, 'schillingcanstatt_goon'))
-              .replaceAll('schillingcanstatt_finish', i18n(context, 'schillingcanstatt_finish'))
+              .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
+              .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
+              .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'))
         );
       }
 
@@ -107,9 +107,9 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
         output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
       } else {
         output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode)
-            .replaceAll('schillingcanstatt_stop', i18n(context, 'schillingcanstatt_stop'))
-            .replaceAll('schillingcanstatt_goon', i18n(context, 'schillingcanstatt_goon'))
-            .replaceAll('schillingcanstatt_finish', i18n(context, 'schillingcanstatt_finish'));
+            .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
+            .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
+            .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'));
       }
 
       return GCWDefaultOutput(

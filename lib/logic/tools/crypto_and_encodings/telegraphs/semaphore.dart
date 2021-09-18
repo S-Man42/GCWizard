@@ -89,8 +89,6 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
 
-  var char = '';
-  var charH = '';
   inputs.forEach((element) {
     segment = _stringToSegment(element);
     displays.add(segment);
