@@ -2,11 +2,25 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum ChappeCodebook { ALPHABET, CODEPOINTS}
+enum ChappeCodebook {ALPHABET, CODEPOINTS, DIGITS}
 
 Map<ChappeCodebook, Map<String, String>> CHAPPE_CODEBOOK = {
-  ChappeCodebook.ALPHABET: {'title': 'telegraph_chappe_alphabet_title', 'subtitle': 'telegraph_chappe_alphabet_description'},
+  ChappeCodebook.DIGITS: {'title': 'telegraph_chappe_digits_title', 'subtitle': 'telegraph_chappe_digits_description'},
   ChappeCodebook.CODEPOINTS: {'title': 'telegraph_chappe_codepoints_title', 'subtitle': 'telegraph_chappe_codepoints_description'},
+  ChappeCodebook.ALPHABET: {'title': 'telegraph_chappe_alphabet_title', 'subtitle': 'telegraph_chappe_alphabet_description'},
+};
+
+final Map<String, List<String>> CODEBOOK_CHAPPE_DIGITS = {
+  '1': ['30', '70'],
+  '2': ['10', '50'],
+  '3': ['30', '3r', '70'],
+  '4': ['10', '50', '5r'],
+  '5': ['30', '70', '7l'],
+  '6': ['10', '1l', '50'],
+  '7': ['30', '70', '7r'],
+  '8': ['10', '1r', '50'],
+  '9': ['30', '3l', '70'],
+  '0': ['10', '50', '5l'],
 };
 
 final Map<String, List<String>> CODEBOOK_CHAPPE_ALPHABET = {
@@ -151,8 +165,9 @@ List<List<String>> encodeChappe(String input, ChappeCodebook language) {
 
   var CODEBOOK;
   switch (language) {
-    case ChappeCodebook.ALPHABET: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET); break;
-    case ChappeCodebook.CODEPOINTS: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET); break;
+    case ChappeCodebook.ALPHABET: CODEBOOK = CODEBOOK_CHAPPE_ALPHABET; break;
+    case ChappeCodebook.CODEPOINTS: CODEBOOK = CODEBOOK_CHAPPE_ALPHABET; break;
+    case ChappeCodebook.DIGITS: CODEBOOK = CODEBOOK_CHAPPE_DIGITS; break;
   }
 
   for (int i = 0; i < inputs.length; i++) {
@@ -178,6 +193,7 @@ Map<String, dynamic> decodeChappe(List<String> inputs, ChappeCodebook language) 
   switch (language) {
     case ChappeCodebook.ALPHABET: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET); break;
     case ChappeCodebook.CODEPOINTS: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET); break;
+    case ChappeCodebook.DIGITS: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_DIGITS); break;
   }
 
   inputs.forEach((element) {
