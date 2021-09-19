@@ -37,12 +37,22 @@ class MurraySegmentDisplay extends NSegmentDisplay {
           '5': [ 5, 80],
           '6': [25, 80]
         };
+        var pointSize = size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * _MURRAY_RADIUS;
+
+        shutters.forEach((key, value) {
+          canvas.touchCanvas.drawRect(
+              Offset(size.width / _MURRAY_RELATIVE_DISPLAY_WIDTH * (value[0] - 1),
+                  size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * (value[1]) - 1) &
+              Size(pointSize * 3 + 4, pointSize * 2 + 2),
+              paint);
+
+          if (size.height < 50)
+            return;
+
+        });
 
         shutters.forEach((key, value) {
           paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-
-          var pointSize = size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * _MURRAY_RADIUS;
-
           canvas.touchCanvas.drawRect(
               Offset(size.width / _MURRAY_RELATIVE_DISPLAY_WIDTH * value[0],
                   size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * value[1]) &
