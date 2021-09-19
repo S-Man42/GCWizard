@@ -7,6 +7,14 @@
 // ss dsasd dsadsa sdwawd asdsa ssdwwa ww sswaw dwawd asdsa sdwss wwa wasdsaw wwsaw ww awdwa awdwa ss sdsww asdsa dwadwass ss sawwds
 // wdddsaasasdsdwwdss wdwaaaaaaaaaaaaaaaasssa
 
+// https://www.geocaching.com/geocache/GC5QNK6_random-walk
+// N: ESSNESWSENSSSENSSNESWSENESSWNNWSENSS
+// E: ESSWNNSSWSESWESWESWESWSESSENWESSESSWNN
+// ESS NESWSEN SS SENSS NESWSEN ESSWNN WSENSS SS WSESW ESWESW ESWSE SSENW ESS ESSWNN
+// ESS NESWSEN SS SENSS NESWSEN ESSWNN WSENSS  => 7824809
+// SS WSESW ESWESW ESWSE SSENW ESS ESSWNN      => 01532670
+
+
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -21,7 +29,7 @@ class Offset{
 }
 
 
-enum WASD_TYPE  {CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, CUSTOM}
+enum WASD_TYPE  {CURSORS, WASD, IJMK, ESDF, ULDR, OLUR, VLZR, WQSE, ARROWS, NWSE, CUSTOM}
 enum WASD_DIRECTION {UP, DOWN, LEFT, RIGHT, START}
 
 final _SEGMENT_LENGTH = 5;
@@ -35,6 +43,7 @@ Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.ULDR: 'ULDR' ,
   WASD_TYPE.OLUR: 'OLUR' ,
   WASD_TYPE.VLZR: 'VLZR',
+  WASD_TYPE.NWSE: 'NWSE',
   WASD_TYPE.ARROWS: '^<v>',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
@@ -71,7 +80,7 @@ final Map<String, List<String>> WASD_ENCODE = {
     'SDSAWDWA', 'DSASDWAW', 'WDSASDW', 'SAWDWAS', 'WASDSAW', 'SDWAWDS', 'ASDSAWDW', 'SASDWAWD', 'WDWASDSA', 'DWAWDSAS',
     'AWDWASDS', 'WAWDSASD', 'WWDSADSA', 'DWADWASS', 'WWASDASD', 'AWDAWDSS', 'SSDWADWA', 'DSADSAWW', 'SSAWDAWD', 'ASDASDWW', 'DSAWSSDW'],
   '9' : [
-    'ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD'],
+    'ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD', 'ASDWSS'],
   ' ' : [' '],
   '.' : ['.']
 };
