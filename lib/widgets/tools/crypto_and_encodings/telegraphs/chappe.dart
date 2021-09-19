@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -22,6 +23,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
+  var _currentLanguage = ChappeCodebook.ALPHABET;
+
     @override
   void initState() {
     super.initState();
@@ -38,6 +41,21 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      GCWDropDownButton(
+        value: _currentLanguage,
+        onChanged: (value) {
+          setState(() {
+            _currentLanguage = value;
+          });
+        },
+        items: CHAPPE_CODEBOOK.entries.map((mode) {
+          return GCWDropDownMenuItem(
+              value: mode.key,
+              child: i18n(context, mode.value['title']),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
+          );
+        }).toList(),
+      ),
        GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -151,7 +169,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeChappe(_currentEncodeInput);
+      List<List<String>> segments = encodeChappe(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -162,7 +180,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      var segments = decodeChappe(output);
+      var segments = decodeChappe(output, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
