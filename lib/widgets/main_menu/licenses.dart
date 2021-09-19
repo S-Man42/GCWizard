@@ -74,6 +74,9 @@ class LicensesState extends State<Licenses> {
           ['www.steinerverlag.de', 'Eurythmy'],
           ['www.breitkopf.de', 'Solmisation'],
           ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
+          ['Edelcrantz Telegraph', 'Gerard Holzmann,\nhttps://archive.org/details/earlyhistoryofda0000holz'],
+          ['Schilling Canstatt Telegraph', 'Volker Aschoff,\nPaul Schilling con Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
+          ['Murray Telegraph', 'Helmar Fischer,\nhttps://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/'],
         ]),
       ),
     ]);
