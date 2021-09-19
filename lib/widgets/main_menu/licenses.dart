@@ -75,7 +75,7 @@ class LicensesState extends State<Licenses> {
           ['www.breitkopf.de', 'Solmisation'],
           ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
           ['Edelcrantz Telegraph', 'Gerard Holzmann,\nhttps://archive.org/details/earlyhistoryofda0000holz'],
-          ['Schilling Canstatt Telegraph', 'Volker Aschoff,\nPaul Schilling con Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
+          ['Schilling Canstatt Telegraph', 'Volker Aschoff,\nPaul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
           ['Murray Telegraph', 'Helmar Fischer,\nhttps://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/\nOmer Roucoux,\nhttp://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station.htm'],
           ['Preußischer optischer Telegraf', 'Wilfried Hahn,\nhttp://www.optischertelegraph23.de/']
         ]),

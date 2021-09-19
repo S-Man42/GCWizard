@@ -6897,6 +6897,24 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_MURRAY,
         SEARCHSTRING_FR_SYMBOL_MURRAY
       ]),
+      GCWSymbolTableTool(symbolKey: 'murray_v2_fischer_corrected', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MURRAY,
+        SEARCHSTRING_DE_SYMBOL_MURRAY,
+        SEARCHSTRING_EN_SYMBOL_MURRAY,
+        SEARCHSTRING_FR_SYMBOL_MURRAY
+      ]),
+      GCWSymbolTableTool(symbolKey: 'murray_v3_navy_1796', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MURRAY,
+        SEARCHSTRING_DE_SYMBOL_MURRAY,
+        SEARCHSTRING_EN_SYMBOL_MURRAY,
+        SEARCHSTRING_FR_SYMBOL_MURRAY
+      ]),
+      GCWSymbolTableTool(symbolKey: 'murray_v4_roucoux', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MURRAY,
+        SEARCHSTRING_DE_SYMBOL_MURRAY,
+        SEARCHSTRING_EN_SYMBOL_MURRAY,
+        SEARCHSTRING_FR_SYMBOL_MURRAY
+      ]),
       GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
         SEARCHSTRING_COMMON_CCITT,
         SEARCHSTRING_DE_CCITT,
