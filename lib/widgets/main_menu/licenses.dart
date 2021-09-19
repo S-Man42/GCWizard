@@ -74,6 +74,7 @@ class LicensesState extends State<Licenses> {
           ['www.steinerverlag.de', 'Eurythmy'],
           ['www.breitkopf.de', 'Solmisation'],
           ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
+          ['Schilling Canstatt Telegraph', 'Volker Aschoff,\nPaul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
         ]),
       ),
     ]);
