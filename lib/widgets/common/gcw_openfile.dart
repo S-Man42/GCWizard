@@ -1,4 +1,5 @@
 
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -114,15 +115,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       return null;
     }
 
-    if (widget.supportedFileTypes != null) {
-      var _urlFileType = fileTypeByFilename(_currentUrl);
-
-      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
-        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
-        return null;
-      }
-    }
-    await _getUri(_currentUrl.trim()).then((uri) {
+    await _getAndValidateUri(_currentUrl.trim()).then((uri) {
       if (uri == null) {
         showToast(i18n(context, 'common_loadfile_exception_url'));
         return null;
@@ -176,7 +169,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   _saveDownload(dynamic data) {
     if (data is Uint8List) {
         _loadedFile = PlatformFile(
-                   name: Uri.decodeFull(_currentUrl).split('/').last,
+                   name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first,
                    path: _currentUrl,
                    bytes: data);
     } else if (data is String)
@@ -239,7 +232,25 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     );
   }
 
-  Future<Uri> _getUri(String url) async {
+  bool _validateContentType(String contentType) {
+    if (widget.supportedFileTypes == null)
+      return true;
+
+    for (FileType fileType in widget.supportedFileTypes) {
+      if (mimeTypes(fileType).contains(contentType))
+        return true;
+    }
+
+    var _urlFileType = fileTypeByFilename(_currentUrl.split('?').first);
+
+    if (_urlFileType != null && widget.supportedFileTypes.contains(_urlFileType)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<Uri> _getAndValidateUri(String url) async {
     const _HTTP = 'http://';
     const _HTTPS = 'https://';
 
@@ -254,8 +265,14 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       try {
         Uri uri = Uri.parse(prefix + url);
         var response = await http.head(uri);
-        if (response.statusCode == 200)
-          return uri;
+
+        if (response.statusCode ~/ 100 == 2) {
+          if (_validateContentType(response.headers[HttpHeaders.contentTypeHeader])) {
+            return uri;
+          } else {
+            showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+          }
+        }
       } catch (e) {}
     }
 

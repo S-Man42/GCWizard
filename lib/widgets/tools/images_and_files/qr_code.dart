@@ -126,14 +126,13 @@ class QrCodeState extends State<QrCode> {
           });
         });
       } else {
-        setState(() {     // If not found, internal QR scanning lib throws Exception which cannot be catched here for some reason. So, set null if Exceptions will be raised to get clear output nonetheless
-          _outDataDecrypt = i18n(context, 'qr_code_nothingfound');
-        });
-
         if (_outData == null) return;
 
         scanBytes(_outData).then((text) {
           setState(() {
+            if (text == null || text.isEmpty)
+              text = i18n(context, 'qr_code_nothingfound');
+
             _outDataDecrypt = text;
           });
         });
