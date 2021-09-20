@@ -37,50 +37,40 @@ final _SEGMENT_LENGTH = 5;
 Map<WASD_TYPE, String> KEYBOARD_CONTROLS = {
   WASD_TYPE.CURSORS: '↑←↓→',
   WASD_TYPE.WASD: 'WASD',
+  WASD_TYPE.NWSE: 'NWSE',
+  WASD_TYPE.ARROWS: '^<v>',
   WASD_TYPE.ESDF: 'ESDF',
   WASD_TYPE.WQSE: 'WQSE',
   WASD_TYPE.IJMK: 'IJMK',
   WASD_TYPE.ULDR: 'ULDR' ,
   WASD_TYPE.OLUR: 'OLUR' ,
   WASD_TYPE.VLZR: 'VLZR',
-  WASD_TYPE.NWSE: 'NWSE',
-  WASD_TYPE.ARROWS: '^<v>',
   WASD_TYPE.CUSTOM: 'wasd_keyboard_custom',
 };
 
 final Map<String, List<String>> WASD_ENCODE = {
-  // 0 ASSDWW SSDWWA SDWWAS DWWASS WWASSD WASSDW WWDSSA WDSSAW DSSAWW SSAWWD SAWWDS AWWDSS
-  // 1 WW SS
-  // 2 DSASD AWDWA
-  // 3 DSADSA DWADWA
-  // 4 SDWSS SDSWW WWSAW SSWAW
-  // 5 DWAWD ASDSA
-  // 6 ASSDWA SSDWA DSAWWD DSAWW ASDSAW SDWAWD SDWAW SDSAW
-  // 7 WWA DSS
-  // 8 SDSAWDWA DSASDWAW WDSASDW SAWDWAS WASDSAW SDWAWDS ASDSAWDW SASDWAWD WDWASDSA DWAWDSAS AWDWASDS WAWDSASD WWDSADSA DWADWASS WWASDASD AWDAWDSS SSDWADWA DSADSAWW SSAWDAWD ASDASDWW DSAWSSDW
-  // 9 ASDSWW AWDSS WASDS AWDSSA WASDSA ASDSADWW WWASD WAWDS DWWASD DWAWDS SSADWAWD
   '0' : [
-    'ASSDWW', 'SSDWWA', 'SDWWAS', 'DWWASS', 'WWASSD', 'WASSDW',
-    'WWDSSA', 'WDSSAW', 'DSSAWW', 'SSAWWD', 'SAWWDS', 'AWWDSS'],
+    '←↓↓→↑↑', '↓↓→↑↑←', '↓→↑↑←↓', '→↑↑←↓↓', '↑↑←↓↓→', '↑←↓↓→↑',
+    '↑↑→↓↓←', '↑→↓↓←↑', '→↓↓←↑↑', '↓↓←↑↑→', '↓←↑↑→↓', '←↑↑→↓↓'],
   '1' : [
-    'WW', 'SS'],
+    '↑↑', '↓↓'],
   '2' : [
-    'DSASD', 'AWDWA'],
+    '→↓←↓→', '←↑→↑←'],
   '3' : [
-    'DSADSA', 'DWADWA'],
+    '→↓←→↓←', '→↑←→↑←'],
   '4' : [
-    'SDWSS', 'SDSWW', 'WWSAW', 'SSWAW'],
+    '↓→↑↓↓', '↓→↓↑↑', '↑↑↓←↑', '↓↓↑←↑'],
   '5' : [
-    'DWAWD', 'ASDSA'],
+    '→↑←↑→', '←↓→↓←'],
   '6' : [
-    'ASSDWA', 'SSDWA', 'DSAWWD', 'DSAWW', 'ASDSAW', 'SDWAWD', 'SDWAW', 'SDSAW'],
+    '←↓↓→↑←', '↓↓→↑←', '→↓←↑↑→', '→↓←↑↑', '←↓→↓←↑', '↓→↑←↑→', '↓→↑←↑', '↓→↓←↑'],
   '7' : [
-    'WWA', 'DSS'],
+    '↑↑←', '→↓↓'],
   '8' : [
-    'SDSAWDWA', 'DSASDWAW', 'WDSASDW', 'SAWDWAS', 'WASDSAW', 'SDWAWDS', 'ASDSAWDW', 'SASDWAWD', 'WDWASDSA', 'DWAWDSAS',
-    'AWDWASDS', 'WAWDSASD', 'WWDSADSA', 'DWADWASS', 'WWASDASD', 'AWDAWDSS', 'SSDWADWA', 'DSADSAWW', 'SSAWDAWD', 'ASDASDWW', 'DSAWSSDW'],
+    '↓→↓←↑→↑←', '→↓←↓→↑←↑', '↑→↓←↓→↑', '↓←↑→↑←↓', '↑←↓→↓←↑', '↓→↑←↑→↓', '←↓→↓←↑→↑', '↓←↓→↑←↑→', '↑→↑←↓→↓←', '→↑←↑→↓←↓',
+    '←↑→↑←↓→↓', '↑←↑→↓←↓→', '↑↑→↓←→↓←', '→↑←→↑←↓↓', '↑↑←↓→←↓→', '←↑→←↑→↓↓', '↓↓→↑←→↑←', '→↓←→↓←↑↑', '↓↓←↑→←↑→', '←↓→←↓→↑↑', '→↓←↑↓↓→↑'],
   '9' : [
-    'ASDSWW', 'AWDSS', 'WASDS', 'AWDSSA', 'WASDSA', 'ASDSADWW', 'WWASD', 'WAWDS', 'DWWASD', 'DWAWDS', 'SSADWAWD', 'ASDWSS'],
+    '←↓→↓↑↑', '←↑→↓↓', '↑←↓→↓', '←↑→↓↓←', '↑←↓→↓←', '←↓→↓←→↑↑', '↑↑←↓→', '↑←↑→↓', '→↑↑←↓→', '→↑←↑→↓', '↓↓←→↑←↑→', '←↓→↑↓↓', '←↓→↑↓↓←'],
   ' ' : [' '],
   '.' : ['.']
 };
@@ -105,10 +95,10 @@ String encodeWASD(String input, List<String> controlSet){
   });
 
   return substitution(result.join(' '), {
-    'W': controlSet[0],
-    'A': controlSet[1],
-    'S': controlSet[2],
-    'D': controlSet[3],
+    '↑': controlSet[0],
+    '←': controlSet[1],
+    '↓': controlSet[2],
+    '→': controlSet[3],
   });
 }
 
@@ -118,10 +108,10 @@ String _normalizeDecodingInput(String input, List<String> controlSet){
   input = input.toUpperCase().replaceAll(RegExp(pattern), ' ');
 
   return substitution(input, {
-    controlSet[0]: 'W',
-    controlSet[1]: 'A',
-    controlSet[2]: 'S',
-    controlSet[3]: 'D',
+    controlSet[0]: '↑',
+    controlSet[1]: '←',
+    controlSet[2]: '↓',
+    controlSet[3]: '→',
   });
 }
 
@@ -213,7 +203,7 @@ String decodeWASDGraphic(String input, List<String> controlSet){
 
     word.split('').forEach((element) {
       switch (element){
-        case 'S':  // back, down
+        case '↓':  // back, down
           switch (direction) {
             case WASD_DIRECTION.UP:
               y++;
@@ -238,7 +228,7 @@ String decodeWASDGraphic(String input, List<String> controlSet){
           if (x > maxLetterX) maxLetterX = x;
           break;
 
-        case 'W':  // forward, up
+        case '↑':  // forward, up
           switch (direction) {
             case WASD_DIRECTION.UP:
               y++;
@@ -263,7 +253,7 @@ String decodeWASDGraphic(String input, List<String> controlSet){
           if (x > maxLetterX) maxLetterX = x;
           break;
 
-        case 'A':  // left
+        case '←':  // left
           switch (direction) {
             case WASD_DIRECTION.UP:
               y++;
@@ -288,7 +278,7 @@ String decodeWASDGraphic(String input, List<String> controlSet){
           if (x > maxLetterX) maxLetterX = x;
           break;
 
-        case 'D':  // right
+        case '→':  // right
           switch (direction) {
             case WASD_DIRECTION.UP:
               y++;

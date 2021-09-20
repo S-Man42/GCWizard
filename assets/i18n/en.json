@@ -4294,7 +4294,7 @@
   "visual_cryptography_outputsize": "Output Size",
   "wasd_title": "Up-Down-Left-Right",
   "wasd_description": "Uses keyboard controls like in video games - e.g. WASD - to draw Digits",
-  "wasd_example": "WWDSSA → 0",
+  "wasd_example": "↑↑→↓↓← → 0",
   "wasd_encode_text" : "Text",
   "wasd_encode_graphic" : "Graphics",
   "wasd_keyboard_custom" : "Custom controls",
