@@ -17,7 +17,6 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
@@ -752,6 +751,18 @@ int tarFileSize(Uint8List data) {
   return offset;
 }
 
+Future<File> createTmpFile(String extension, Uint8List bytes) async {
+  try {
+    String tmpDir = (await getTemporaryDirectory()).path;
+    var r = Random();
+    String randomFileName = String.fromCharCodes(List.generate(20, (index)=> r.nextInt(33) + 89));
+    var filePath = '$tmpDir/$randomFileName.$extension';
+
+    return File(filePath).writeAsBytes(bytes);
+  } on Exception {
+    return null;
+  }
+}
 
 Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList) async {
   try {
