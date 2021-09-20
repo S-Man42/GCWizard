@@ -166,7 +166,7 @@ List<List<String>> encodeChappe(String input, ChappeCodebook language) {
   var CODEBOOK;
   switch (language) {
     case ChappeCodebook.ALPHABET: CODEBOOK = CODEBOOK_CHAPPE_ALPHABET; break;
-    case ChappeCodebook.CODEPOINTS: CODEBOOK = CODEBOOK_CHAPPE_ALPHABET; break;
+    case ChappeCodebook.CODEPOINTS: CODEBOOK = CODEBOOK_CHAPPE; break;
     case ChappeCodebook.DIGITS: CODEBOOK = CODEBOOK_CHAPPE_DIGITS; break;
   }
 
@@ -192,7 +192,7 @@ Map<String, dynamic> decodeChappe(List<String> inputs, ChappeCodebook language) 
 
   switch (language) {
     case ChappeCodebook.ALPHABET: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET); break;
-    case ChappeCodebook.CODEPOINTS: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_ALPHABET); break;
+    case ChappeCodebook.CODEPOINTS: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE); break;
     case ChappeCodebook.DIGITS: CODEBOOK = switchMapKeyValue(CODEBOOK_CHAPPE_DIGITS); break;
   }
 
@@ -232,4 +232,33 @@ List<String> _stringToSegment(String input) {
     return result;
   } else
     return [];
+}
+
+Map<String, dynamic> decodeTextChappeTelegraph(String inputs, ChappeCodebook language) {
+  if (inputs == null || inputs.length == 0)
+    return {
+      'displays': <List<String>>[],
+      'text': '',
+    };
+
+  var displays = <List<String>>[];
+  String text = '';
+
+  Map<String, List<String>> CODEBOOK = Map<String, List<String>>();
+
+  switch (language) {
+    case ChappeCodebook.ALPHABET: CODEBOOK = CODEBOOK_CHAPPE_ALPHABET; break;
+    case ChappeCodebook.CODEPOINTS: CODEBOOK = CODEBOOK_CHAPPE; break;
+    case ChappeCodebook.DIGITS: CODEBOOK = CODEBOOK_CHAPPE_DIGITS; break;
+  }
+
+  inputs.split(' ').forEach((element) {
+    if (CODEBOOK[element] != null) {
+      text = text + element;
+    } else {
+      text = text + UNKNOWN_ELEMENT;
+    }
+    displays.add(CODEBOOK[element]);
+  });
+  return {'displays': displays, 'text': text};
 }
