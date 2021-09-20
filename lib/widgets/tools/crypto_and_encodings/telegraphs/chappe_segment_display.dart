@@ -14,8 +14,8 @@ const _INITIAL_SEGMENTS = <String, bool>{
       '1b': false, '2b': false, '3b': false, '4b': false, '5b': false, '6b': false, '7b': false, '8b': false,
 };
 
-const _CHAPPE_RELATIVE_DISPLAY_WIDTH = 180;
-const _CHAPPE_RELATIVE_DISPLAY_HEIGHT = 170;
+const _CHAPPE_RELATIVE_DISPLAY_WIDTH = 190;
+const _CHAPPE_RELATIVE_DISPLAY_HEIGHT = 190;
 
 class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -37,30 +37,30 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         canvas.touchCanvas.drawCircle(
             Offset(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95,
-                size.height / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90 - 4),
+                size.height / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 91),
             size.height / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 13.0,
             paint);
 
         var path00 = Path();
-        path00.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 180);
-        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 180);
+        path00.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 200);
+        path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 200);
         path00.close();
         canvas.touchCanvas.drawPath(path00, paint);
 
 
         paint.color = currentSegments['10'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path10 = Path();
-        path10.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path10.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
         path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path10.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
         path10.close();
         if (size.height < 180)
               if (currentSegments['10'])
@@ -71,10 +71,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['1l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path1l = Path();
-        path1l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path1l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
-        path1l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path1l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path1l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  95);
+        path1l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path1l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path1l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
         path1l.close();
         if (size.height < 180)
               if (currentSegments['1l'])
@@ -85,10 +85,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['1r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path1r = Path();
-        path1r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path1r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path1r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
-        path1r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
+        path1r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
+        path1r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path1r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path1r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
         path1r.close();
         if (size.height < 180)
               if (currentSegments['1r'])
@@ -99,10 +99,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['1o'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path1o = Path();
-        path1o.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path1o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
-        path1o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path1o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path1o.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path1o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path1o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path1o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
         path1o.close();
         if (size.height < 180)
               if (currentSegments['1o'])
@@ -113,10 +113,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['1u'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path1u = Path();
-        path1u.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
-        path1u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path1u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path1u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path1u.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 30, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path1u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path1u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path1u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
         path1u.close();
         if (size.height < 180)
               if (currentSegments['1u'])
@@ -127,10 +127,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['1a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path1a = Path();
-        path1a.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path1a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  0, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path1a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 10, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
-        path1a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path1a.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
+        path1a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  0, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path1a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 10, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path1a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
         path1a.close();
         if (size.height < 180)
               if (currentSegments['1a'])
@@ -141,10 +141,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['1b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path1b = Path();
-        path1b.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path1b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  0, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path1b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 10, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path1b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path1b.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
+        path1b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  0, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path1b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 10, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path1b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
         path1b.close();
         if (size.height < 180)
               if (currentSegments['1b'])
@@ -155,11 +155,11 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['20'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path20 = Path();
-        path20.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
-        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
-        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path20.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path20.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
         path20.close();
         if (size.height < 180)
               if (currentSegments['20'])
@@ -171,10 +171,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['2l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path2l = Path();
-        path2l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
-        path2l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path2l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
         path2l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
-        path2l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 25, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 55);
+        path2l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
+        path2l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 25, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 65);
         path2l.close();
         if (size.height < 180)
               if (currentSegments['2l'])
@@ -186,10 +186,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['2r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path2r = Path();
-        path2r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
-        path2r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
-        path2r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 65, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 15);
-        path2r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path2r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path2r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path2r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 65, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 25);
+        path2r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
         path2r.close();
         if (size.height < 180)
               if (currentSegments['2r'])
@@ -201,11 +201,11 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['30'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path30 = Path();
-        path30.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
-        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
-        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path30.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path30.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
         path30.close();
         if (size.height < 180)
               if (currentSegments['30'])
@@ -217,10 +217,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['3l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path3l = Path();
-        path3l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
-        path3l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
-        path3l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
-        path3l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path3l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
         path3l.close();
         if (size.height < 180)
               if (currentSegments['3l'])
@@ -232,10 +232,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['3r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path3r = Path();
-        path3r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
-        path3r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
+        path3r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
         path3r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
-        path3r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path3r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
         path3r.close();
         if (size.height < 180)
               if (currentSegments['3r'])
@@ -244,14 +244,41 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
         else
               canvas.touchCanvas.drawPath(path3r, paint, onTapDown: (tapDetail) {setSegmentState('3r', !currentSegments['3r']);});
 
+        paint.color = currentSegments['3a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        var path3a = Path();
+        path3a.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 0);
+        path3a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
+        path3a.close();
+        if (size.height < 180)
+              if (currentSegments['3a'])
+                    canvas.touchCanvas.drawPath(path3a, paint, onTapDown: (tapDetail) {setSegmentState('3a', !currentSegments['3a']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(path3a, paint, onTapDown: (tapDetail) {setSegmentState('3a', !currentSegments['3a']);});
+
+        paint.color = currentSegments['3b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        var path3b = Path();
+        path3b.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 0);
+        path3b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path3b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
+        path3b.close();
+        if (size.height < 180)
+              if (currentSegments['3b'])
+                    canvas.touchCanvas.drawPath(path3b, paint, onTapDown: (tapDetail) {setSegmentState('3b', !currentSegments['3b']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(path3b, paint, onTapDown: (tapDetail) {setSegmentState('3b', !currentSegments['3b']);});
 
         paint.color = currentSegments['40'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path40 = Path();
-        path40.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
-        path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path40.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
         path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
-        path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
+        path40.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
         path40.close();
         if (size.height < 180)
               if (currentSegments['40'])
@@ -263,10 +290,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['4l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path4l = Path();
-        path4l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
-        path4l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 10);
-        path4l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 125, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 15);
-        path4l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
+        path4l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path4l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 20);
+        path4l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 125, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 25);
+        path4l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
         path4l.close();
         if (size.height < 180)
               if (currentSegments['4l'])
@@ -278,10 +305,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['4r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path4r = Path();
-        path4r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 30);
-        path4r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
-        path4r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 165, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 55);
-        path4r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path4r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 40);
+        path4r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
+        path4r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 165, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 65);
+        path4r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 50);
         path4r.close();
         if (size.height < 180)
               if (currentSegments['4r'])
@@ -293,11 +320,11 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['50'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path50 = Path();
-        path50.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
-        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path50.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  95);
+        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  90);
+        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  90);
+        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path50.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
         path50.close();
         if (size.height < 180)
               if (currentSegments['50'])
@@ -309,10 +336,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['5l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path5l = Path();
-        path5l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path5l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path5l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
-        path5l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
+        path5l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
+        path5l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path5l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path5l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
         path5l.close();
         if (size.height < 180)
               if (currentSegments['5l'])
@@ -324,10 +351,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['5r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path5r = Path();
-        path5r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
-        path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path5r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  95);
+        path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path5r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
         path5r.close();
         if (size.height < 180)
               if (currentSegments['5r'])
@@ -338,10 +365,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['5o'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path5o = Path();
-        path5o.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path5o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
-        path5o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
-        path5o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path5o.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path5o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path5o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path5o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
         path5o.close();
         if (size.height < 180)
               if (currentSegments['5o'])
@@ -352,10 +379,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['5u'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path5u = Path();
-        path5u.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
-        path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
+        path5u.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 160, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path5u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
         path5u.close();
         if (size.height < 180)
               if (currentSegments['5u'])
@@ -366,10 +393,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['5a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path5a = Path();
-        path5a.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 190, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path5a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 180, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 60);
-        path5a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
-        path5a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 85);
+        path5a.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 190, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path5a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 180, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 70);
+        path5a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 80);
+        path5a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 95);
         path5a.close();
         if (size.height < 180)
               if (currentSegments['5a'])
@@ -380,10 +407,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['5b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path5b = Path();
-        path5b.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 190, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path5b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 180, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
-        path5b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path5b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  85);
+        path5b.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 190, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path5b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 180, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+        path5b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path5b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  95);
         path5b.close();
         if (size.height < 180)
               if (currentSegments['5b'])
@@ -394,11 +421,11 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['60'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path60 = Path();
-        path60.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
-        path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 130);
+        path60.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
         path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
-        path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
+        path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path60.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
         path60.close();
         if (size.height < 180)
               if (currentSegments['60'])
@@ -410,10 +437,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['6l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path6l = Path();
-        path6l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
-        path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
-        path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 165, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 115);
-        path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 130);
+        path6l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 130);
+        path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 165, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 125);
+        path6l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
         path6l.close();
         if (size.height < 180)
               if (currentSegments['6l'])
@@ -425,10 +452,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['6r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path6r = Path();
-        path6r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
-        path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
-        path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 125, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 155);
-        path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
+        path6r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 150, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 130, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 125, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 165);
+        path6r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
         path6r.close();
         if (size.height < 180)
               if (currentSegments['6r'])
@@ -440,11 +467,11 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['70'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path70 = Path();
-        path70.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
-        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
-        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path70.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path70.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
         path70.close();
         if (size.height < 180)
               if (currentSegments['70'])
@@ -456,10 +483,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['7l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path7l = Path();
-        path7l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
-        path7l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path7l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
         path7l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
-        path7l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+        path7l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path7l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
         path7l.close();
         if (size.height < 180)
               if (currentSegments['7l'])
@@ -471,10 +498,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['7r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path7r = Path();
-        path7r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+        path7r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path7r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
         path7r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
-        path7r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
-        path7r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path7r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
         path7r.close();
         if (size.height < 180)
               if (currentSegments['7r'])
@@ -483,14 +510,41 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
         else
               canvas.touchCanvas.drawPath(path7r, paint, onTapDown: (tapDetail) {setSegmentState('7r', !currentSegments['7r']);});
 
+        paint.color = currentSegments['7a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        var path7a = Path();
+        path7a.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path7a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path7a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
+        path7a.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 70, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 180);
+        path7a.close();
+        if (size.height < 180)
+              if (currentSegments['7a'])
+                    canvas.touchCanvas.drawPath(path7a, paint, onTapDown: (tapDetail) {setSegmentState('7a', !currentSegments['7a']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(path7a, paint, onTapDown: (tapDetail) {setSegmentState('7a', !currentSegments['7a']);});
+
+        paint.color = currentSegments['7b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        var path7b = Path();
+        path7b.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path7b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path7b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
+        path7b.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 180);
+        path7b.close();
+        if (size.height < 180)
+              if (currentSegments['7b'])
+                    canvas.touchCanvas.drawPath(path7b, paint, onTapDown: (tapDetail) {setSegmentState('7b', !currentSegments['7b']);});
+              else;
+        else
+              canvas.touchCanvas.drawPath(path7b, paint, onTapDown: (tapDetail) {setSegmentState('7b', !currentSegments['7b']);});
 
         paint.color = currentSegments['80'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path80 = Path();
-        path80.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
-        path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
-        path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
+        path80.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 80, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 100);
+        path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 110);
+        path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
         path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
-        path80.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 130);
         path80.close();
         if (size.height < 180)
               if (currentSegments['80'])
@@ -502,10 +556,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['8l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path8l = Path();
-        path8l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
-        path8l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
-        path8l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 65, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 155);
-        path8l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
+        path8l.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path8l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 60, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 170);
+        path8l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 65, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 165);
+        path8l.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 50, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
         path8l.close();
         if (size.height < 180)
               if (currentSegments['8l'])
@@ -516,10 +570,10 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['8r'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path8r = Path();
-        path8r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
-        path8r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
-        path8r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 25, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 115);
-        path8r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 130);
+        path8r.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+        path8r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 130);
+        path8r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 25, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 125);
+        path8r.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 40, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
         path8r.close();
         if (size.height < 180)
               if (currentSegments['8r'])
@@ -527,8 +581,5 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               else;
         else
               canvas.touchCanvas.drawPath(path8r, paint, onTapDown: (tapDetail) {setSegmentState('8r', !currentSegments['8r']);});
-
-
-
       });
 }
