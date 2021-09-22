@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/edelcrantz_telegraph.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -24,6 +25,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
 
   var _DecodeInputController;
   var _currentDecodeInput = '';
+
+  var _currentLanguage = EdelcrantzCodebook.YEAR_1795;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -48,6 +51,21 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      GCWDropDownButton(
+        value: _currentLanguage,
+        onChanged: (value) {
+          setState(() {
+            _currentLanguage = value;
+          });
+        },
+        items: MURRAY_CODEBOOK.entries.map((mode) {
+          return GCWDropDownMenuItem(
+              value: mode.key,
+              child: i18n(context, mode.value['title']),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
+          );
+        }).toList(),
+      ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -240,7 +258,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {//encode
-      var segments = encodeEdelcrantzTelegraph(_currentEncodeInput.toUpperCase());
+      var segments = encodeEdelcrantzTelegraph(_currentEncodeInput.toUpperCase(), _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -255,12 +273,12 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
     } else { //decode
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left){ // text
-        segments = decodeTextEdelcrantzTelegraph(_currentDecodeInput.toUpperCase());
+        segments = decodeTextEdelcrantzTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
       } else { // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualEdelcrantzTelegraph(output);
+        segments = decodeVisualEdelcrantzTelegraph(output, _currentLanguage);
       }
       return Column(
         children: <Widget>[

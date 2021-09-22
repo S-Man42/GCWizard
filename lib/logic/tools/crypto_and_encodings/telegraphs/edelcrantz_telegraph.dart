@@ -5,7 +5,14 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final CODEBOOK_EDELCRANTZ = {
+enum EdelcrantzCodebook { YEAR_1795, YEAR_1808 }
+
+Map<EdelcrantzCodebook, Map<String, String>> MURRAY_CODEBOOK = {
+  EdelcrantzCodebook.YEAR_1795: {'title': 'telegraph_edelcrantz_1795_title', 'subtitle': 'telegraph_edelcrantz_1795_description'},
+  EdelcrantzCodebook.YEAR_1808: {'title': 'telegraph_edelcrantz_1808_title', 'subtitle': 'telegraph_edelcrantz_1808_description'},
+};
+
+final CODEBOOK_EDELCRANTZ_1795 = {
   '000' : ' ',
   '001' : '1',
   '002' : '2',
@@ -525,17 +532,27 @@ final CODEBOOK_EDELCRANTZ = {
   'A007': 'edelcrantz_a_endcommunication',
 };
 
-List<List<String>> encodeEdelcrantzTelegraph(String input) {
+final CODEBOOK_EDELCRANTZ_1808 = {
+
+};
+
+List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook language) {
   if (input == null || input == '') return <List<String>>[];
 
+  var CODEBOOK;
+  switch (language) {
+    case EdelcrantzCodebook.YEAR_1795 : CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_1795); break;
+    case EdelcrantzCodebook.YEAR_1808 : CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_1808); break;
+  }
+
   return input.split('').map((letter) {
-    if (switchMapKeyValue(CODEBOOK_EDELCRANTZ)[letter] != null)
-      return switchMapKeyValue(CODEBOOK_EDELCRANTZ)[letter].split('');
+    if (CODEBOOK[letter] != null)
+      return CODEBOOK[letter].split('');
   }).toList();
 }
 
 
-Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs) {
+Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, EdelcrantzCodebook language) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -546,11 +563,17 @@ Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs) {
   var segment = <String>[];
   String text = '';
 
+  var CODEBOOK;
+  switch (language) {
+    case EdelcrantzCodebook.YEAR_1795 : CODEBOOK = CODEBOOK_EDELCRANTZ_1795; break;
+    case EdelcrantzCodebook.YEAR_1808 : CODEBOOK = CODEBOOK_EDELCRANTZ_1808; break;
+  }
+
   inputs.forEach((element) {
     segment = _stringToSegment(element);
     displays.add(segment);
-    if (CODEBOOK_EDELCRANTZ[segmentToCode(segment)] != null)
-      text = text + CODEBOOK_EDELCRANTZ[segmentToCode(segment)];
+    if (CODEBOOK[segmentToCode(segment)] != null)
+      text = text + CODEBOOK[segmentToCode(segment)];
     else
       text = text + UNKNOWN_ELEMENT;
   });
@@ -559,7 +582,7 @@ Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs) {
 }
 
 
-Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs) {
+Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook language) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -569,9 +592,15 @@ Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs) {
   var displays = <List<String>>[];
   String text = '';
 
+  var CODEBOOK;
+  switch (language) {
+    case EdelcrantzCodebook.YEAR_1795 : CODEBOOK = CODEBOOK_EDELCRANTZ_1795; break;
+    case EdelcrantzCodebook.YEAR_1808 : CODEBOOK = CODEBOOK_EDELCRANTZ_1808; break;
+  }
+
   inputs.split(' ').forEach((element) {
-    if (CODEBOOK_EDELCRANTZ[element] != null) {
-      text = text + CODEBOOK_EDELCRANTZ[element];
+    if (CODEBOOK[element] != null) {
+      text = text + CODEBOOK[element];
     } else {
       text = text + UNKNOWN_ELEMENT;
     }
