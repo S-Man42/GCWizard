@@ -17,7 +17,6 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
@@ -32,6 +31,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0xFF, 0xD8, 0xFF, 0xE1],
       [0xFF, 0xD8, 0xFF, 0xFE]
     ],
+    'mime_types': ['image/jpeg'],
     'file_class' : FileClass.IMAGE
   },
   FileType.GIF : {
@@ -40,6 +40,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x47, 0x49, 0x46, 0x38, 0x39, 0x61],
       [0x47, 0x49, 0x46, 0x38, 0x37, 0x61]
     ],
+    'mime_types': ['image/gif'],
     'file_class' : FileClass.IMAGE
   },
   FileType.PNG : {
@@ -47,6 +48,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x89, 0x50, 0x4E, 0x47]
     ],
+    'mime_types': ['image/png'],
     'file_class' : FileClass.IMAGE
   },
   FileType.BMP : {
@@ -54,6 +56,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x42, 0x4D]
     ],
+    'mime_types': ['image/bmp', 'image/x-bmp', 'image/x-ms-bmp'],
     'file_class' : FileClass.IMAGE
   },
   FileType.TIFF : {
@@ -62,6 +65,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x49, 0x49, 0x2A, 0x00],
       [0x4D, 0x4D, 0x00, 0x2A]
     ],
+    'mime_types': ['image/tiff'],
     'file_class' : FileClass.IMAGE
   },
   FileType.WEBP : {
@@ -69,6 +73,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x52, 0x49, 0x46, 0x46]
     ],
+    'mime_types': ['image/webp'],
     'file_class' : FileClass.IMAGE
   },
   FileType.ZIP : {
@@ -76,6 +81,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x50, 0x4B, 0x03, 0x04]
     ],
+    'mime_types': ['application/zip', 'application/octet-stream', 'application/x-zip-compressed'],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.TAR : {
@@ -84,6 +90,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x75, 0x73, 0x74, 0x61, 0x72]
     ],
     'magic_bytes_offset': 257,
+    'mime_types': ['application/x-tar', 'application/octet-stream', 'application/tar'],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.RAR : {
@@ -93,6 +100,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00],
       [0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00]
     ],
+    'mime_types': ['application/x-rar-compressed', 'application/octet-stream'],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.SEVEN_ZIP : {
@@ -100,6 +108,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x30, 0x26, 0xB2, 0x75]
     ],
+    'mime_types': ['application/x-7z-compressed', 'application/octet-stream'],
     'file_class' : FileClass.ARCHIVE
   },
   FileType.WMV : {
@@ -107,6 +116,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x30, 0x26, 0xB2, 0x75]
     ],
+    'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
     'file_class' : FileClass.SOUND
   },
   FileType.MP3 : {
@@ -117,11 +127,13 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0xFF, 0xF3],
       [0xFF, 0xF2]
     ],
+    'mime_types': ['audio/mpeg', 'audio/mp3', 'audio/mpeg3', 'audio/x-mpeg-3'],
     'file_class' : FileClass.SOUND
   },
   FileType.TXT : {
     'extensions': ['txt'],
     'magic_bytes': <List<int>>[],
+    'mime_types': ['audio/mpeg', 'audio/mp3'],
     'file_class' : FileClass.TEXT
   },
   FileType.PDF : {
@@ -129,6 +141,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'magic_bytes': <List<int>>[
       [0x25, 0x50, 0x44, 0x46]
     ],
+    'mime_types': ['application/pdf', 'application/octet-stream'],
     'file_class' : FileClass.DATA
   },
   FileType.EXE : {
@@ -137,26 +150,28 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x4D, 0x5A, 0x50, 0x00],
       [0x4D, 0x5A, 0x90, 0x00]
     ],
+    'mime_types': ['application/octet-stream'],
     'mime_type' : FileClass.DATA
   },
   FileType.GPX : {
     'extensions': ['gpx'],
     'magic_bytes': <List<int>>[],
     'file_class' : FileClass.DATA,
-    'mime_type' : 'application/gpx+xml',
+    'mime_types': ['application/gpx', 'application/gpx+xml'],
     'uniform_type_identifier': 'com.topografix.gpx'
   },
   FileType.KML : {
     'extensions': ['kml'],
     'magic_bytes': <List<int>>[],
     'file_class' : FileClass.DATA,
-    'mime_type' : 'application/vnd.google-earth.kml+xml',
+    'mime_types': ['application/kml', 'application/kml+xml', 'application/xml', 'application/vnd.google-earth.kml+xml'],
     'uniform_type_identifier': 'com.google.earth.kml'
   },
   FileType.KMZ : {
     'extensions': ['kmz'],
     'magic_bytes': <List<int>>[],
     'file_class' : FileClass.DATA,
+    'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml'],
     'mime_type' : 'application/vnd.google-earth.kmz'
   },
 };
@@ -194,8 +209,8 @@ int magicBytesOffset(FileType type) {
   return _FILE_TYPES[type]['magic_bytes_offset'];
 }
 
-String mimeType(FileType type) {
-  return _FILE_TYPES[type]['mime_type'];
+List<String> mimeTypes(FileType type) {
+  return _FILE_TYPES[type]['mime_types'];
 }
 
 String uniformTypeIdentifier(FileType type) {
@@ -752,6 +767,18 @@ int tarFileSize(Uint8List data) {
   return offset;
 }
 
+Future<File> createTmpFile(String extension, Uint8List bytes) async {
+  try {
+    String tmpDir = (await getTemporaryDirectory()).path;
+    var r = Random();
+    String randomFileName = String.fromCharCodes(List.generate(20, (index)=> r.nextInt(33) + 89));
+    var filePath = '$tmpDir/$randomFileName.$extension';
+
+    return File(filePath).writeAsBytes(bytes);
+  } on Exception {
+    return null;
+  }
+}
 
 Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8List> imageList) async {
   try {

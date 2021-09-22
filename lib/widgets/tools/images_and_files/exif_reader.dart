@@ -9,6 +9,7 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
@@ -21,6 +22,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as Image;
@@ -134,12 +136,13 @@ class _ExifReaderState extends State<ExifReader> {
         padding: EdgeInsets.only(top: 10),
       )
     );
-    _decorateThumbnail(widgets);
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);
-    _decorateGps(widgets);
+    _decorateFileTypeSpecific(widgets, file);
+    _decorateThumbnail(widgets);
     _decorateExifSections(widgets, _tableTags);
-    _decorateExtraData(widgets);
+    _decorateGps(widgets);
+    _decorateHiddenData(widgets);
     return widgets;
   }
 
@@ -194,6 +197,48 @@ class _ExifReaderState extends State<ExifReader> {
               ),
             )));
       });
+    }
+  }
+
+  ///
+  /// Section file type specific
+  ///
+  void _decorateFileTypeSpecific(List<Widget> widgets, local.PlatformFile platformFile) {
+    if (platformFile == null)
+      return;
+
+    var data = <List<dynamic>>[];
+    var fileType = getFileType(platformFile.bytes);
+
+    switch (fileType) {
+      case FileType.JPEG:
+        var jpegData = Image.JpegData();
+        jpegData.read(platformFile.bytes);
+
+        if (jpegData.comment != null && jpegData.comment.isNotEmpty)
+          data.add([i18n(context, 'exif_comment'), jpegData.comment]);
+        if (jpegData.adobe != null) {
+          var adobe = jpegData.adobe;
+          if (adobe.version != null)
+            data.add(['Adobe Version', adobe.version]);
+          if (adobe.transformCode != null)
+            data.add(['Adobe TransformCode', adobe.transformCode]);
+          if (adobe.flags0 != null)
+            data.add(['Adobe Flags 0', adobe.flags0]);
+          if (adobe.flags1 != null)
+            data.add(['Adobe Flags 1', adobe.flags1]);
+        }
+        break;
+      default: return;
+    }
+
+    if (data.isNotEmpty) {
+      widgets.add(GCWOutput(
+          title: fileType.toString().split('.').last,
+          child: Column(
+            children: columnedMultiLineOutput(context, data),
+          )
+      ));
     }
   }
 
@@ -276,7 +321,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section extra data
   ///
-  void _decorateExtraData(List<Widget> widgets) {
+  void _decorateHiddenData(List<Widget> widgets) {
     if (file == null) return;
     var _hiddenData = hiddenData(file);
 

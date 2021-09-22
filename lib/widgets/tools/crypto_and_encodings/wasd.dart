@@ -31,6 +31,8 @@ class WASDState extends State<WASD> {
   TextEditingController _leftController;
   TextEditingController _rightController;
 
+  TextEditingController _currentCustomKeyController;
+
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
   var _currentUp = '↑';
@@ -64,18 +66,19 @@ class WASDState extends State<WASD> {
     _downController.dispose();
     _leftController.dispose();
     _rightController.dispose();
+
     super.dispose();
   }
 
   _buildCustomInput(WASD_DIRECTION key) {
-    TextEditingController controller;
+
     var title_key = 'wasd_custom_';
 
     switch (key) {
-      case WASD_DIRECTION.UP: controller = _upController; title_key += 'up'; break;
-      case WASD_DIRECTION.LEFT: controller = _leftController; title_key += 'left'; break;
-      case WASD_DIRECTION.DOWN: controller = _downController; title_key += 'down'; break;
-      case WASD_DIRECTION.RIGHT: controller = _rightController; title_key += 'right'; break;
+      case WASD_DIRECTION.UP: _currentCustomKeyController = _upController; title_key += 'up'; break;
+      case WASD_DIRECTION.LEFT: _currentCustomKeyController = _leftController; title_key += 'left'; break;
+      case WASD_DIRECTION.DOWN: _currentCustomKeyController = _downController; title_key += 'down'; break;
+      case WASD_DIRECTION.RIGHT: _currentCustomKeyController = _rightController; title_key += 'right'; break;
       default: return;
     }
 
@@ -90,7 +93,7 @@ class WASDState extends State<WASD> {
             GCWTextField(
                 inputFormatters: [_maskInputFormatter],
                 hintText: title,
-                controller: controller,
+                controller: _currentCustomKeyController,
                 onChanged: (text) {
                   setState(() {
                     switch (key) {
@@ -100,6 +103,7 @@ class WASDState extends State<WASD> {
                       case WASD_DIRECTION.RIGHT: _currentRight = text; break;
                       default: return;
                     }
+                    _updateDrawing();
                   });
                 }),
           ]

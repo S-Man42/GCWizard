@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -127,14 +126,13 @@ class QrCodeState extends State<QrCode> {
           });
         });
       } else {
-        setState(() {     // If not found, internal QR scanning lib throws Exception which cannot be catched here for some reason. So, set null if Exceptions will be raised to get clear output nonetheless
-          _outDataDecrypt = i18n(context, 'qr_code_nothingfound');
-        });
-
         if (_outData == null) return;
 
         scanBytes(_outData).then((text) {
           setState(() {
+            if (text == null || text.isEmpty)
+              text = i18n(context, 'qr_code_nothingfound');
+
             _outDataDecrypt = text;
           });
         });

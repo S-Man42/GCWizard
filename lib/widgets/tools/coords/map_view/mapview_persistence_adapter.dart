@@ -175,7 +175,7 @@ class MapViewPersistenceAdapter {
     mapWidget.polylines.forEach((polyline) {
       var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid);
 
-      if (polyline.points.indexOf(mapPoint) > -1) {
+      while (polyline.points.indexOf(mapPoint) > -1) {
         polyline.points.remove(mapPoint);
         polylineDAO.pointUUIDs.remove(mapPoint.uuid);
       }

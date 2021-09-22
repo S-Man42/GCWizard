@@ -4,7 +4,6 @@ import 'package:gc_wizard/plugins/flutter_steganography/decoder.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/encoder.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/decode_request.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/encode_request.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 const int MAX_LENGTH = 5000;
