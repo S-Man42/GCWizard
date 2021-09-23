@@ -222,6 +222,7 @@ flutter:
     - assets/symbol_tables/postcode_01247/
     - assets/symbol_tables/postcode_8421/
     - assets/symbol_tables/postnet/
+    - assets/symbol_tables/predator/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/
