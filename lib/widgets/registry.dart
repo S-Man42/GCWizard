@@ -69,6 +69,7 @@ import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/predator_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
@@ -139,6 +140,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
@@ -1329,6 +1331,12 @@ class Registry {
         SEARCHSTRING_EN_POLYBIOS,
         SEARCHSTRING_FR_POLYBIOS
       ]),
+      GCWTool(
+          tool: PredatorSelection(),
+          i18nPrefix: 'predator_selection',
+          categories: [ToolCategory.CRYPTOGRAPHY],
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: []),
       GCWTool(
           tool: PrimesSelection(),
           i18nPrefix: 'primes_selection',
@@ -5611,6 +5619,16 @@ class Registry {
         SEARCHSTRING_DE_PERIODICTABLE_ATOMICNUMBERS,
         SEARCHSTRING_EN_PERIODICTABLE_ATOMICNUMBERS,
         SEARCHSTRING_FR_PERIODICTABLE_ATOMICNUMBERS
+      ]),
+
+      //PredatorSelection **********************************************************************************************
+      GCWTool(tool: Predator(), i18nPrefix: 'predator', helpLocales: [
+        'de', 'en', 'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_PREDATOR,
+        SEARCHSTRING_DE_SYMBOL_PREDATOR,
+        SEARCHSTRING_EN_SYMBOL_PREDATOR,
+        SEARCHSTRING_FR_SYMBOL_PREDATOR
       ]),
 
       //PrimesSelection **********************************************************************************************
