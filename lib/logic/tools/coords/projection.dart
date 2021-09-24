@@ -28,7 +28,7 @@ LatLng projectionVincenty(LatLng coord, double bearing, double distance, Ellipso
 
   bearing = utils.normalizeBearing(bearing);
 
-  return vincentyDirect(coord, bearing, distance, ellipsoid);
+  return vincentyDirect(coord, degToRadian(bearing), distance, ellipsoid);
 }
 
 class _ReverseProjectionCalculator extends IntervalCalculator {
