@@ -3,77 +3,75 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 final Map<String, List<String>> CODEBOOK_PREDATOR = {
-  'a': ['l4', 'r5'],
-  'b': ['l3', 'r5'],
-  'c': ['l2', 'r5'],
-  'd': ['l1', 'r5'],
-  'e': ['l5', 'r2'],
-  'f': ['l5', 'r3'],
-  'g': ['l5', 'r4'],
-  'h': ['l3', 'l4'],
-  'i': ['l2', 'l4'],
-  'j': ['l1', 'r3'],
-  'k': ['l4', 'r1'],
-  'l': ['l4', 'r2'],
-  'm': ['l4', 'r3'],
-  'n': ['l4', 'r4'],
-  'o': ['l3', 'l2'],
-  'p': ['l3', 'r1'],
-  'q': ['l3', 'r2'],
-  'r': ['l3', 'r3'],
-  's': ['l3', 'r4'],
-  't': ['l2', 'r1'],
-  'u': ['l2', 'r2'],
-  'v': ['l1', 'r4'],
-  'w': ['r2', 'r3'],
-  'x': ['r2', 'r4'],
-  'y': ['l2', 'r3'],
-  'z': ['r3', 'r4'],
-  'A': ['l4', 'r5'],
-  'B': ['l3', 'r5'],
-  'C': ['l2', 'r5'],
-  'D': ['l1', 'r5'],
-  'E': ['l5', 'r2'],
-  'F': ['l5', 'r3'],
-  'G': ['l5', 'r4'],
-  'H': ['l3', 'l4'],
-  'I': ['l2', 'l4'],
-  'J': ['l1', 'r3'],
-  'K': ['l4', 'r1'],
-  'L': ['l4', 'r2'],
-  'M': ['l4', 'r3'],
-  'N': ['l4', 'r4'],
-  'O': ['l3', 'l2'],
-  'P': ['l3', 'r1'],
-  'Q': ['l3', 'r2'],
-  'R': ['l3', 'r3'],
-  'S': ['l3', 'r4'],
-  'T': ['l2', 'r1'],
-  'U': ['l2', 'r2'],
-  'V': ['l1', 'r4'],
-  'W': ['r2', 'r3'],
-  'X': ['r2', 'r4'],
-  'Y': ['l2', 'r3'],
-  'Z': ['r3', 'r4'],
-  '0': ['l4', 'r1'],
-  '1': ['l4', 'r5'],
-  '2': ['l3', 'r5'],
-  '3': ['l2', 'r5'],
-  '4': ['l1', 'r5'],
-  '5': ['l5', 'r2'],
-  '6': ['l5', 'r3'],
-  '7': ['l5', 'r4'],
-  '8': ['l3', 'l4'],
-  '9': ['l2', 'l4'],
+  'a': ['b', 'f', 'h'],
+  'b': ['b', 'd', 'f', 'h'],
+  'c': ['b'],
+  'd': ['b', 'd', 'f'],
+  'e': ['b', 'h', 'i', 'k'],
+  'f': ['b', 'd', 'f', 'h', 'i', 'k'],
+  'g': ['b', 'f', 'g', 'h', 'i', 'k'],
+  'h': ['b', 'f', 'g', 'h', 'k'],
+  'i': ['b', 'h', 'k'],
+  'j': ['b', 'f', 'h', 'k'],
+  'k': ['i', 'k'],
+  'l': ['g', 'h', 'i', 'k'],
+  'm': ['b', 'd', 'f', 'g', 'i', 'k'],
+  'n': ['b', 'd', 'i', 'k'],
+  'o': ['d', 'f', 'g', 'i'],
+  'p': ['b', 'd', 'f', 'g', 'h', 'k'],
+  'q': ['b', 'f', 'g', 'i', 'k'],
+  'r': ['f', 'h', 'k'],
+  's': ['d', 'f', 'g', 'h', 'i', 'k'],
+  't': ['b', 'd', 'f', 'g', 'h'],
+  'u': ['b', 'd', 'f', 'h', 'i'],
+  'v': ['d', 'f', 'g', 'h', 'i'],
+  'w': ['g', 'i'],
+  'x': ['g', 'h'],
+  'y': ['d', 'f', 'g', 'h', 'i', 'k'],
+  'z': ['b', 'd', 'f', 'g', 'h', 'i', 'k'],
+  'A': ['b', 'c', 'f', 'h', 'j'],
+  'B': ['b', 'd', 'f'],
+  'C': ['b', 'd', 'f', 'g', 'h'],
+  'D': ['b', 'd', 'g', 'h'],
+  'E': ['b', 'f', 'g', 'h', 'j'],
+  'F': ['b', 'd', 'f', 'g', 'h', 'j'],
+  'G': ['b', 'c'],
+  'H': ['b', 'f', 'h', 'j'],
+  'I': ['f', 'g', 'h', 'j'],
+  'J': ['b', 'c', 'g', 'h', 'j'],
+  'K': ['b', 'h'],
+  'L': ['b', 'c', 'f', 'g', 'h', 'j'],
+  'M': ['b', 'c', 'f'],
+  'N': ['b', 'c', 'd', 'f'],
+  'O': ['b', 'g', 'h', 'j'],
+  'P': ['b', 'c', 'f', 'g', 'j'],
+  'Q': ['b', 'c', 'd', 'f', 'g', 'h'],
+  'R': ['b', 'c', 'd', 'f', 'j'],
+  'S': ['c', 'd', 'f', 'g', 'h'],
+  'T': ['d', 'f', 'g', 'j'],
+  'U': ['b', 'd', 'j'],
+  'V': ['b', 'c', 'd', 'f', 'j'],
+  'W': ['b', 'c', 'f', 'g'],
+  'X': ['g', 'j'],
+  'Y': ['d', 'f', 'g', 'h'],
+  'Z': ['b', 'c', 'd', 'f', 'g', 'h', 'j'],
+  '0': ['a', 'b', 'd', 'e', 'f', 'g', 'h'],
+  '1': ['a', 'b', 'd', 'e'],
+  '2': ['a', 'b', 'd', 'e', 'f', 'g'],
+  '3': ['d', 'g'],
+  '4': ['d', 'e', 'f', 'g'],
+  '5': ['a', 'b', 'e', 'g', 'h'],
+  '6': ['e', 'f', 'g', 'h'],
+  '7': ['a', 'b', 'e', 'h'],
+  '8': ['a', 'b', 'd', 'g', 'h'],
+  '9': ['b', 'e', 'f', 'g', 'h'],
 };
 
 List<List<String>> encodePredator(String input) {
   if (input == null) return [];
 
-  List<String> inputs = input.toUpperCase().split('');
+  List<String> inputs = input.split('');
   List<List<String>> result = [];
-  bool number_follows = false;
-  bool letter_follows = false;
   for (int i = 0; i < inputs.length; i++) {
     if (CODEBOOK_PREDATOR[inputs[i]] != null)
       result.add(CODEBOOK_PREDATOR[inputs[i]]);
@@ -120,10 +118,8 @@ Map<String, dynamic> decodePredator(List<String> inputs) {
 
 List<String> _stringToSegment(String input){
   List<String> result = [];
-  int j = 0;
-  for (int i = 0; i < input.length /2; i++) {
-    result.add(input[j] + input[j + 1]);
-    j = j + 2;
+  for (int i = 0; i < input.length; i++) {
+    result.add(input[i]);
   }
   return result;
 }
