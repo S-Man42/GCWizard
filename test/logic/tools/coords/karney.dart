@@ -35,7 +35,7 @@ void main() {
               GeodesicData karney = Geodesic(ellipsoid.a, ellipsoid.f).inverse(coord1.latitude, coord1.longitude, coord2.latitude, coord2.longitude);
 
               // Vincenty
-              DistanceBearingData vincenty = distanceBearingVincenty(
+              DistanceBearingData vincenty = vincentyInverse(
                   coord1, coord2, ellipsoid);
 
               var karneyAzi1 = normalizeBearing(karney.azi1);
@@ -101,7 +101,7 @@ void main() {
         GeodesicData karney = Geodesic(ellipsoid.a, ellipsoid.f).inverse(coord1.latitude, coord1.longitude, coord2.latitude, coord2.longitude);
 
         // Vincenty
-        DistanceBearingData vincenty = distanceBearingVincenty(coord1, coord2, ellipsoid);
+        DistanceBearingData vincenty = vincentyInverse(coord1, coord2, ellipsoid);
 
         var karneyAzi1 = normalizeBearing(karney.azi1);
         var karneyAzi2 = normalizeBearing(karney.azi2 + 180.0);
