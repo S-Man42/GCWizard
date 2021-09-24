@@ -152,16 +152,20 @@ class GeneralSettingsState extends State<GeneralSettings> {
           value: Prefs.getBool('toollist_show_descriptions'),
           title: i18n(context, 'settings_general_toollist_showdescriptions'),
           onChanged: (value) {
-            Prefs.setBool('toollist_show_descriptions', value);
-            AppBuilder.of(context).rebuild();
+            setState(() {
+              Prefs.setBool('toollist_show_descriptions', value);
+              AppBuilder.of(context).rebuild();
+            });
           },
         ),
         GCWOnOffSwitch(
           value: Prefs.getBool('toollist_show_examples'),
           title: i18n(context, 'settings_general_toollist_showexamples'),
           onChanged: (value) {
-            Prefs.setBool('toollist_show_examples', value);
-            AppBuilder.of(context).rebuild();
+            setState(() {
+              Prefs.setBool('toollist_show_examples', value);
+              AppBuilder.of(context).rebuild();
+            });
           },
         ),
         GCWTextDivider(text: i18n(context, 'settings_general_defaulttab')),
