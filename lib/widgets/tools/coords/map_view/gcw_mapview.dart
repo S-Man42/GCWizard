@@ -351,6 +351,7 @@ class GCWMapViewState extends State<GCWMapView> {
         children.insert(0, GCWTextDivider(
           text: i18n(context, 'coords_map_view_linedialog_section'),
           style: gcwDialogTextStyle(),
+          suppressTopSpace: true,
         ));
 
         children.insert(4, GCWTextDivider(
