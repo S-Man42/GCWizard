@@ -89,6 +89,22 @@ class LicensesState extends State<Licenses> {
           ['Schilling Canstatt Telegraph', 'Volker Aschoff,\nPaul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
         ]),
       ),
+      GCWTextDivider(text: i18n(context, 'licenses_bibliography')),
+      Column(
+        children: columnedMultiLineOutput(null, [
+          ['Aschoff, Volker', 'Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
+          ['Holzmann, Gerard J.', 'The early history of data networks\nISBN 978-0-8186678-2-4'],
+          ['Long, Cully', 'How to puzzle caches\nISBN 978-0-9973488-9-7'],
+          ['Wrixon, Fred B.', 'Geheimsprachen\nISBN 978-3-8331-2562-1'],
+          ["Navajo Code Talkers' Dictionary", 'https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html'],
+          ['World Braille usage', 'https://www.perkins.org/wp-content/uploads/2021/07/world-braille-usage-third-edition.pdf'],
+          ['Das System der deutschen Blindenschrift', 'https://www.pharmabraille.com/wp-content/uploads/2015/01/system_d_blindenschrift_7620.pdf'],
+          ['Code Braille Français Uniformisé (CBFU) 2nd edition, September 2008', 'https://www.pharmabraille.com/wp-content/uploads/2015/01/CBFU_edition_internationale.pdf'],
+          ['Rules of Unified English Braille 2013', 'https://www.pharmabraille.com/wp-content/uploads/2015/11/Rules-of-Unified-English-Braille-2013.pdf'],
+          ['Königlich Preussische Telegraphendirection', 'Wörterbuch für die Telegraphisten-Coorespondenz\nhttp://www.optischertelegraph23.de/mobile/'],
+          ['', ''],
+        ]),
+      ),
     ]);
 
     return GCWMainMenuEntryStub(content: content);
