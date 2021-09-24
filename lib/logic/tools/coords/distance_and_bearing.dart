@@ -2,6 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic.dart';
 import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic_data.dart';
+import 'package:gc_wizard/logic/tools/coords/vincenty/distance_bearing_vincenty.dart';
 import 'package:latlong2/latlong.dart';
 
 DistanceBearingData distanceBearing(LatLng coords1, LatLng coords2, Ellipsoid ellipsoid) {
@@ -14,4 +15,9 @@ DistanceBearingData distanceBearing(LatLng coords1, LatLng coords2, Ellipsoid el
   result.bearingBToA = normalizeBearing(data.azi2 + 180.0);
 
   return result;
+}
+
+/** A bit less accurate... Used for Map Polylines **/
+DistanceBearingData distanceBearingVincenty(LatLng coords1, LatLng coords2, Ellipsoid ellipsoid) {
+  return vincentyInverse(coords1, coords2, ellipsoid);
 }

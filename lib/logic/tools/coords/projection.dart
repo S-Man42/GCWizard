@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart'
 import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic.dart';
 import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic_data.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
+import 'package:gc_wizard/logic/tools/coords/vincenty/projection_vincenty.dart';
 import 'package:latlong2/latlong.dart';
 
 LatLng projection(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
@@ -19,6 +20,15 @@ LatLng projection(LatLng coord, double bearing, double distance, Ellipsoid ellip
 
 LatLng projectionRadian(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
   return projection(coord, radianToDeg(bearing), distance, ellipsoid);
+}
+
+/** A bit less accurate... Used for Map Polylines **/
+LatLng projectionVincenty(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
+  if (distance == 0.0) return coord;
+
+  bearing = utils.normalizeBearing(bearing);
+
+  return vincentyDirect(coord, bearing, distance, ellipsoid);
 }
 
 class _ReverseProjectionCalculator extends IntervalCalculator {
