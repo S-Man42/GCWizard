@@ -23,11 +23,6 @@ class FormatConverterState extends State<FormatConverter> {
   List<String> _currentOutput = [];
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[

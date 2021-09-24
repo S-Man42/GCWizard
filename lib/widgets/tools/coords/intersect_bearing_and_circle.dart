@@ -37,14 +37,9 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
-  var _currentMapPoints;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _currentMapPoints = [GCWMapPoint(point: _currentCoordsStart), GCWMapPoint(point: _currentCoordsCircle)];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +89,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: [
-          GCWMapPolyline(points: [_currentMapPoints[0], _getEndPoint()])
-        ]),
+        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: _currentMapPolylines),
       ],
     );
   }
@@ -194,6 +187,10 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     _currentOutput = _currentIntersections
         .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
         .toList();
+
+    _currentMapPolylines = [
+      GCWMapPolyline(points: [_currentMapPoints[0], _getEndPoint()])
+    ];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

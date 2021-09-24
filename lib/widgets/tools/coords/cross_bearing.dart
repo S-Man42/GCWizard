@@ -34,14 +34,9 @@ class CrossBearingState extends State<CrossBearing> {
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
-  var _currentMapPoints;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
 
   @override
   Widget build(BuildContext context) {
@@ -90,14 +85,7 @@ class CrossBearingState extends State<CrossBearing> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: [
-          GCWMapPolyline(points: [_getStartLine1(), _getEndLine1()]),
-          GCWMapPolyline(
-              points: [_getStartLine2(), _getEndLine2()],
-              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()),
-        ]),
+        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: _currentMapPolylines),
       ],
     );
   }
@@ -214,6 +202,15 @@ class CrossBearingState extends State<CrossBearing> {
         coordinateFormat: _currentOutputFormat));
 
     _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(points: [_getStartLine1(), _getEndLine1()]),
+      GCWMapPolyline(
+          points: [_getStartLine2(), _getEndLine2()],
+          color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+              .toColor()),
+    ];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

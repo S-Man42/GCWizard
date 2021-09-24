@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.0.0+111
+version: 2.0.0+114
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -25,7 +25,7 @@ dependencies:
   fluttertoast: ^8.0.8
   google_ml_kit: ^0.7.2
   http: ^0.13.3
-  image: ^3.0.4
+  image: ^3.0.5
   intl: ^0.17.0
   location: ^4.3.0
   mask_text_input_formatter: ^2.0.0
@@ -43,7 +43,7 @@ dependencies:
   touchable: ^1.0.0
   universal_html: ^2.0.4
   uuid: ^3.0.4
-  url_launcher: ^6.0.11
+  url_launcher: ^6.0.12
 
 dev_dependencies:
   flutter_test:

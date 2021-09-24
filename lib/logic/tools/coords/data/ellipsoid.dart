@@ -47,7 +47,7 @@ class Ellipsoid {
 }
 
 final List<Ellipsoid> allEllipsoids = [
-  Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.25722356366546517369570015525),
+  Ellipsoid(ELLIPSOID_NAME_WGS84, 6378137.0, 298.257223563),
   Ellipsoid('coords_ellipsoid_earthsphere', 6371000.0, 1000000000.0),
   Ellipsoid('coords_ellipsoid_sun', 696342000.0, 111111.11111111111111111111),
   Ellipsoid('coords_ellipsoid_moon', 1737400.0, 833.333333333333333333333333),
