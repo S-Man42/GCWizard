@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.0.0+111
+version: 2.0.0+116
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -23,9 +23,8 @@ dependencies:
   flutter_map_marker_popup: ^1.0.1
   flutter_map_tappable_polyline: ^3.0.0
   fluttertoast: ^8.0.8
-  google_ml_kit: ^0.7.2
   http: ^0.13.3
-  image: ^3.0.4
+  image: ^3.0.5
   intl: ^0.17.0
   location: ^4.3.0
   mask_text_input_formatter: ^2.0.0
@@ -39,11 +38,12 @@ dependencies:
   prefs: ^3.3.0
   provider: ^6.0.0
   qr: ^2.1.0
+  r_scan: ^0.1.6+1
   scrollable_positioned_list: ^0.1.10
   touchable: ^1.0.0
   universal_html: ^2.0.4
   uuid: ^3.0.4
-  url_launcher: ^6.0.11
+  url_launcher: ^6.0.12
 
 dev_dependencies:
   flutter_test:

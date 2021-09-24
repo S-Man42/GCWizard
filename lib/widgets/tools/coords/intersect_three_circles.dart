@@ -40,17 +40,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   var _currentOutputFormat = defaultCoordFormat();
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
-  var _currentMapPoints;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentMapPoints = [
-      GCWMapPoint(point: _currentCoords1),
-      GCWMapPoint(point: _currentCoords2),
-      GCWMapPoint(point: _currentCoords3),
-    ];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
 
   @override
   Widget build(BuildContext context) {

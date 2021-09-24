@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
 class DistanceBearing extends StatefulWidget {
@@ -34,6 +35,9 @@ class DistanceBearingState extends State<DistanceBearing> {
   DistanceBearingData _currentValue = DistanceBearingData();
   List<GCWOutputText> _currentOutput = [];
 
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
+
   @override
   void initState() {
     super.initState();
@@ -43,15 +47,6 @@ class DistanceBearingState extends State<DistanceBearing> {
 
   @override
   Widget build(BuildContext context) {
-    var mapPoint1 = GCWMapPoint(
-        point: _currentCoords1,
-        markerText: i18n(context, 'coords_distancebearing_coorda'),
-        coordinateFormat: _currentCoordsFormat1);
-    var mapPoint2 = GCWMapPoint(
-        point: _currentCoords2,
-        markerText: i18n(context, 'coords_distancebearing_coordb'),
-        coordinateFormat: _currentCoordsFormat2);
-
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -95,33 +90,48 @@ class DistanceBearingState extends State<DistanceBearing> {
         ),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: [mapPoint1, mapPoint2],
-          polylines: [
-            GCWMapPolyline(points: [mapPoint1, mapPoint2])
-          ],
+          points: _currentMapPoints,
+          polylines: _currentMapPolylines,
         ),
       ],
     );
   }
 
   _calculateOutput(BuildContext context) {
+    final doubleFormatCopy = NumberFormat('0.0#######');
+
     _currentValue = distanceBearing(_currentCoords1, _currentCoords2, defaultEllipsoid());
 
     _currentOutput = [];
     _currentOutput.add(GCWOutputText(
       text:
           '${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance))} ${_currentOutputUnit.symbol}',
-      copyText: doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance)),
+      copyText: doubleFormatCopy.format(_currentOutputUnit.fromMeter(_currentValue.distance)),
     ));
     _currentOutput.add(GCWOutputText(
       text:
           '${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°',
-      copyText: doubleFormat.format(_currentValue.bearingAToB),
+      copyText: doubleFormatCopy.format(_currentValue.bearingAToB),
     ));
     _currentOutput.add(GCWOutputText(
       text:
           '${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°',
-      copyText: doubleFormat.format(_currentValue.bearingBToA),
+      copyText: doubleFormatCopy.format(_currentValue.bearingBToA),
     ));
+
+    var mapPoint1 = GCWMapPoint(
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_distancebearing_coorda'),
+        coordinateFormat: _currentCoordsFormat1);
+    var mapPoint2 = GCWMapPoint(
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_distancebearing_coordb'),
+        coordinateFormat: _currentCoordsFormat2);
+
+    _currentMapPoints = [mapPoint1, mapPoint2];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(points: [mapPoint1, mapPoint2])
+    ];
   }
 }

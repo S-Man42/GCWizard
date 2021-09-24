@@ -33,7 +33,7 @@ Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
 
 List<LatLng> intersectGeodeticAndCircle(
     LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {
-  bearingGeodetic = degToRadian(utils.normalizeBearing(bearingGeodetic));
+  bearingGeodetic = utils.normalizeBearing(bearingGeodetic);
 
   var help = distanceBearing(startGeodetic, centerPoint, ells);
 
@@ -41,13 +41,13 @@ List<LatLng> intersectGeodeticAndCircle(
   bool isInCircle = false;
   if (help.distance < radiusCircle) {
     isInCircle = true;
-    LatLng pointOut = projectionRadian(startGeodetic, bearingGeodetic, radiusCircle * 2.1, ells);
+    LatLng pointOut = projection(startGeodetic, bearingGeodetic, radiusCircle * 2.1, ells);
     help = distanceBearing(startGeodetic, pointOut, ells);
     startGeodetic = pointOut;
-    bearingGeodetic = help.bearingBToAInRadian;
+    bearingGeodetic = help.bearingBToA;
   }
 
-  List<LatLng> output = geodesicArcIntercept(startGeodetic, bearingGeodetic, centerPoint, radiusCircle, ells);
+  List<LatLng> output = geodesicArcIntercept(startGeodetic, degToRadian(bearingGeodetic), centerPoint, radiusCircle, ells);
 
   if (isInCircle) {
     help = distanceBearing(startGeodetic, output[0], ells);

@@ -3,27 +3,17 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:qr/qr.dart' as qr;
-import 'package:google_ml_kit/google_ml_kit.dart' as google;
+import 'package:r_scan/r_scan.dart' as scan;
 
 
 /// Parse to code string with Uint8list
 Future<String> scanBytes(Uint8List bytes) async {
   if (bytes == null) return null;
   try {
-    var ocr =google.BarcodeScanner();
-    var file = await createTmpFile('',bytes);
-    var inputImage = google.InputImage.fromFile(file);
-
-    var codes = await ocr.processImage(inputImage);
+    var codes = await scan.RScan.scanImageMemory(bytes);
     if (codes != null)
-      return codes.map((code ) {
-        return code.value.rawValue;
-        }).join("\n");
-
-    ocr.close();
-    file.delete();
+      return codes.message;
   } catch (e) {}
   return null;
 }
