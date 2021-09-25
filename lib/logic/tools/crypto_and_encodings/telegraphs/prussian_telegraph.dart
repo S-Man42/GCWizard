@@ -146,26 +146,74 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '710': '10',
   '946': 'HAT ZU ERKENNEN GEGEBEN',
 
-  '4.35.1' : 'AN DIE DIRECTION',  '3.41.5' : 'AN DIE DIRECTION',
-  '4.35.34.2' : 'HERZOG',         '3.43.52.4' : 'HERZOG',
-  '5.34.39' : 'GEHALTEN',         '3.53.49' : 'GEHALTEN',
-  '5.35.35' : 'HIER',             '3.53.55' : 'HIER',
-  '5.24.21' : 'FORST',            '2.52.41' : 'FORST',
-  '4.174.3' : 'JAGD',             '1.473.4' : 'JAGD',
-  '74.35.1' : 'STATION',          '73.41.5' : 'STATION',
-  '4.15.18' : 'DEN',              '1.41.58' : 'DEN',
-  '5.15.19' : 'GEFALLEN',         '1.51.59' : 'GEFALLEN',
-  '65.14.3' : 'TELEGRAPHEN',      '61.53.4' : 'TELEGRAPHEN',
-  '85.34.3' : 'WOHL',             '83.53.4' : 'WOHL',
-  '5.34.35' : 'GUTE',             '3.53.45' : 'GUTE',
-  '5.395.2' : 'RICHTUNG',         '3.592.5' : 'RICHTUNG',
-  '5.265.3' : 'PÜNKTLICHEN',      '2.563.5' : 'PÜNKTLICHEN',
-  '5.200' : 'SCHLUSSZEICHEN',     '2.500' : 'SCHLUSSZEICHEN',
+  // Telegraphenteile
+  '5.24.14.1' : 'Klappe',
+  '5.24.14.2' : 'Lagerplatte',
+  '5.24.14.3' : 'Lagerring',
+  '5.24.15.1' : 'geschmiedeter Ring dazu',
+  '5.24.15.2' : 'Lappen',
+  '5.24.15.3' : 'Leiter',
+  '5.24.24.1' : 'Leiterbügel',
+  '5.24.24.2' : 'Leiterhalter',
+  '5.24.24.3' : 'Leiterhalter-Zapfen',
+  '5.24.25.1' : 'Leitungsbügel',
+  '5.24.25.2' : 'Mast',
+  '5.24.25.3' : 'Mutter, messingene',
+  '5.24.34.1' : 'Nieth zum Drahtseil',
+  '5.25.24.1' : 'Schraubenmutter',
+  '5.25.24.2' : 'Spiralfeder',
+  '5.25.24.3' : 'Splint',
+  '5.25.25.1' : 'Spur',
+  '5.25.25.2' : 'Spurlager',
+  '5.25.25.3' : 'Spurzapfen',
+  '5.25.34.1' : 'Stange zum Gegengewicht',
+  '5.25.34.2' : 'Stellstange zum Fernrohrlager',
+  '5.25.34.3' : 'Steuerung',
+  '5.25.35.1' : 'Steuerungsbrett',
+  '5.25.35.2' : 'Steuerungsrolle',
+  '5.25.35.3' : 'Steuerungsscheibe',
+  '5.34.14.1' : 'Stift zum Halseisenzapfen',
+
+  // 15. Redesätze für das Telegraphieren Seite 1 - 3
+  // A. Ankündigungen und Benachrichtigungen
+  '5.205.2' : 'Nichts Neues!',
+  '005.2' : 'Meldung von Station ##',
+  '04.35.2' : 'Von der Direction',
+  '004.3' : 'Citissime von Station ##',
+  '04.34.3' : 'Citissime von der Direction',
+  '004.2' : 'Die Depesche von Station ##, welche hier aufggenommen worden, wird jetzt weiter gegeben.',
+  '004.1' : 'Citissime von Station ##, welche hier aufggenommen worden, wird jetzt weiter gegeben.',
+  '04.34.1' : 'Das hier aufgenommene Citissime von der Direction wird jetzt weiter gegeben.',
+  '4.35.10' : 'Der beschädigte Telegraph ist wieder hergestellt.',
+  '04.24.2' : 'Dein zeichen ist undeutlich.',
+  '4.300' : 'Du hast ein falsches Zeichen gemacht.',
+  '005.3' : 'Station ## hat ein falsches Zeichen gemacht.',
+  '4.14.30' : 'Es sind hier Fehler vorgefallen, die Depesche wird wieder angefangen.',
+  '4.15.10' : 'Wir wiederholen ## Zeichen.',
+  '04.20' : 'Die Depesche wird abgebrochen.',
+  '4.242.0' : 'Fortsetzung der abgebrochenen Depesche.',
+  '5.204.1' : 'Der jetzt beendeten Depesche kommt noch eine nach.',
+  '04.30' : 'Die Depesche ist nicht verstanden worden.',
+  '5.104.2' : 'Die Depesche Nr. ## ist an ihrem Bestimmungsort gelangt.',
+  '5.200' : 'Schlusszeichen',
+  '5.204.3' : 'Hier ist Nichts mehr zu berichten.',
+
+  '4.35.1' : 'AN DIE DIRECTION',
+  '4.35.34.2' : 'HERZOG',
+  '5.34.39' : 'GEHALTEN',
+  '5.35.35' : 'HIER',
+  '5.24.21' : 'FORST',
+  '4.174.3' : 'JAGD',
+  '74.35.1' : 'STATION',
+  '4.15.18' : 'DEN',
+  '5.15.19' : 'GEFALLEN',
+  '65.14.3' : 'TELEGRAPHEN',
+  '85.34.3' : 'WOHL',
+  '5.34.35' : 'GUTE',
+  '5.395.2' : 'RICHTUNG',
+  '5.265.3' : 'PÜNKTLICHEN',
   };
 
-final A = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6'];
-final B = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
-final C = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
 
 List<List<String>> encodePrussianTelegraph(String input) {
   if (input == null || input == '') return <List<String>>[];
@@ -211,11 +259,18 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
 
   var displays = <List<String>>[];
   String text = '';
-print(inputs);
-  inputs.split(' ').forEach((element) {
-print(element);
+  String decodedElement = '';
+  inputs.replaceAll('A', '').replaceAll('a', '')
+      .replaceAll('B', '').replaceAll('b', '')
+      .replaceAll('C', '').replaceAll('c', '')
+      .split(' ').forEach((element) {
+
     if (CODEBOOK_PRUSSIA[element] != null) {
-      text = text + CODEBOOK_PRUSSIA[element];
+      decodedElement = CODEBOOK_PRUSSIA[element];
+      if (decodedElement.contains('##')) {
+        decodedElement = _replaceNumber(decodedElement, element);
+      }
+      text = text + decodedElement;
     } else {
       text = text + UNKNOWN_ELEMENT;
     }
@@ -224,6 +279,9 @@ print(element);
   return {'displays': displays, 'text': text};
 }
 
+String _replaceNumber(String plainText, code){
+  return plainText;
+}
 
 List<String> _stringToSegment(String input){
   List<String> result = [];
@@ -295,75 +353,75 @@ String segmentToCode(List<String> input){
       case 'a1' : if (firstA) {
           a = '1';
           firstA = false;
-        } else a = a + '.1'; break;
+        } else a = '1.' + a; break;
       case 'a2' : if (firstA) {
           a = '2';
           firstA = false;
-        } else a = a + '.2'; break;
+        } else a = '2.' + a; break;
       case 'a3' : if (firstA) {
           a = '3';
           firstA = false;
-        } else a = a + '.3'; break;
+        } else a = '3.' + a; break;
       case 'a4' : if (firstA) {
           a = '4';
           firstA = false;
-        } else a = a + '.4'; break;
+        } else a = '4.' + a; break;
       case 'a5' : if (firstA) {
           a = '5';
           firstA = false;
-        } else a = a + '.5'; break;
+        } else a = '5.' + a; break;
       case 'a6' : if (firstA) {
           a = '6';
           firstA = false;
-        } else a = a + '.6'; break;
+        } else a = '6.' + a; break;
       case 'b1' : if (firstB) {
         b = '1';
         firstB = false;
-      } else b = b + '.1'; break;
+      } else b = '1.' + b; break;
       case 'b2' : if (firstB) {
         b = '2';
         firstB = false;
-      } else b = b + '.2'; break;
+      } else b = '2.' + b; break;
       case 'b3' : if (firstB) {
           b = '3';
           firstB = false;
-        } else b = b + '.3'; break;
+        } else b = '3.' + b; break;
       case 'b4' : if (firstB) {
           b = '4';
           firstB = false;
-        } else b = b + '.4'; break;
+        } else b = '4.' + b; break;
       case 'b5' : if (firstB) {
           b = '5';
           firstB = false;
-        } else b = b + '.5'; break;
+        } else b = '5.' + b; break;
       case 'b6' : if (firstB) {
           b = '6';
           firstB = false;
-        } else b = b + '.6'; break;
+        } else b = '6.' + b; break;
       case 'c1' : if (firstC) {
           c = '1';
           firstC = false;
-        } else c = c + '.1'; break;
+        } else c = '1.' + c; break;
       case 'c2' : if (firstC) {
           c = '2';
           firstC = false;
-        } else c = c + '.2'; break;
+        } else c = '2.' + c; break;
       case 'c3' : if (firstC) {
           c = '3';
           firstC = false;
-        } else c = c + '.3'; break;
+        } else c = '3.' + c; break;
       case 'c4' : if (firstC) {
           c = '4';
           firstC = false;
-        } else c = c + '.4'; break;
+        } else c = '4.' + c; break;
       case 'c5' : if (firstC) {
           c = '5';
           firstC = false;
-        } else c = c + '.5'; break;
+        } else c = '5.' + c; break;
       case 'c6' : if (firstC) {
           c = '6';
           firstC = false;
-        } else c = c + '.6'; break;
+        } else c = '6.' + c; break;
     }
   }
 
@@ -371,138 +429,139 @@ String segmentToCode(List<String> input){
 }
 
 
-List<String> _buildShutters(String segments){
+List<String> _buildShutters(String input){
   List<String> resultElement = [];
-  print('buildshutters '+segments);
 
+  String segments = input;
   String level = 'A1';
-  for (int i = 0; i < segments.length; i++){
 
-    if (level == 'A2' && segments[2] != '.')
+  while (segments.length > 0) {
+    if (level == 'A2' && segments[0] != '.')
       level = 'B1';
-
-    if (level == 'B1' && segments[i] != '.')
-      level = 'B2';
+    if (segments[0] == '.' && level == 'A2') {
+      if (segments.length > 1)
+        segments = segments.substring(1);
+    }
+    if (level == 'B2' && segments[0] != '.')
+      level = 'C1';
+    if (segments[0] == '.' && level == 'B2') {
+      if (segments.length > 1)
+        segments = segments.substring(1);
+    }
 
     switch (level) {
       case 'A1' :
-        switch (segments[i]) {
+        switch (segments[0]) {
           case '1' :
           case '2' :
           case '3' :
           case '4' :
           case '5' :
           case '6' :
-            resultElement.addAll(['a' + segments[i]]);
-            level = 'A2';
+            resultElement.addAll(['a' + segments[0]]);
             break;
           case '7' :
             resultElement.addAll(['a1', 'a6']);
-            level = 'A2';
             break;
           case '8' :
             resultElement.addAll(['a2', 'a6']);
-            level = 'A2';
             break;
           case '9' :
             resultElement.addAll(['a3', 'a6']);
-            level = 'A2';
             break;
+          case '0' :
           case '.' :
             break;
         }
+        segments = segments.substring(1);
+        level = 'A2';
         break;
+
       case 'A2' :
-        switch (segments[i]) {
+        switch (segments[0]) {
           case '1' :
           case '2' :
           case '3' :
           case '4' :
           case '5' :
           case '6' :
-            resultElement.addAll(['a' + segments[i]]);
-            level = 'B1';
+            resultElement.addAll(['a' + segments[0]]);
             break;
           case '7' :
             resultElement.addAll(['a1', 'a6']);
-            level = 'B1';
             break;
           case '8' :
             resultElement.addAll(['a2', 'a6']);
-            level = 'B1';
             break;
           case '9' :
             resultElement.addAll(['a3', 'a6']);
-            level = 'B1';
             break;
           case '.' :
             break;
         }
+        segments = segments.substring(1);
+        level = 'B1';
         break;
       case 'B1' :
-        switch (segments[i]) {
+        switch (segments[0]) {
           case '1' :
           case '2' :
           case '3' :
           case '4' :
           case '5' :
           case '6' :
-            resultElement.addAll(['b' + segments[i]]);
-            level = 'B2';
+            resultElement.addAll(['b' + segments[0]]);
             break;
           case '7' :
             resultElement.addAll(['b1', 'b6']);
-            level = 'B2';
             break;
           case '8' :
             resultElement.addAll(['b2', 'b6']);
-            level = 'B2';
             break;
           case '9' :
             resultElement.addAll(['b3', 'b6']);
-            level = 'B2';
             break;
           case '.' :
             break;
         }
+        segments = segments.substring(1);
+        level = 'B2';
         break;
       case 'B2' :
-        switch (segments[i]) {
+        switch (segments[0]) {
           case '1' :
           case '2' :
           case '3' :
           case '4' :
           case '5' :
           case '6' :
-            resultElement.addAll(['b' + segments[i]]);
-            level = 'C1';
+            resultElement.addAll(['b' + segments[0]]);
             break;
           case '7' :
             resultElement.addAll(['b1', 'b6']);
-            level = 'C1';
             break;
           case '8' :
             resultElement.addAll(['b2', 'b6']);
-            level = 'C1';
             break;
           case '9' :
             resultElement.addAll(['b3', 'b6']);
-            level = 'C1';
             break;
           case '.' :
             break;
         }
+        segments = segments.substring(1);
+        level = 'C1';
         break;
       case 'C1' :
       case 'C2' :
-        switch (segments[i]) {
+        switch (segments[0]) {
           case '1' :
           case '2' :
           case '3' :
           case '4' :
           case '5' :
           case '6' :
-            resultElement.addAll(['c' + segments[i]]);
+            resultElement.addAll(['c' + segments[0]]);
             level = 'C2';
             break;
           case '7' :
@@ -520,72 +579,9 @@ List<String> _buildShutters(String segments){
           case '.' :
             break;
         }
-        break;
-      case 'C2' :
-        switch (segments[i]) {
-          case '1' :
-          case '2' :
-          case '3' :
-          case '4' :
-          case '5' :
-          case '6' :
-            resultElement.addAll(['c' + segments[i]]);
-            break;
-          case '7' :
-            resultElement.addAll(['c1', 'c6']);
-            break;
-          case '8' :
-            resultElement.addAll(['c2', 'c6']);
-            ;
-            break;
-          case '9' :
-            resultElement.addAll(['c3', 'c6']);
-            break;
-          case '.' :
-            break;
-        }
+        segments = segments.substring(1);
         break;
     }
   }
-
-/*
-
-  if (segments.length == 3) {
-    switch (segments[0]) {
-      case '1' :
-      case '2' :
-      case '3' :
-      case '4' :
-      case '5' :
-      case '6' : resultElement.addAll(['a' + segments[0]]);  break;
-      case '7' : resultElement.addAll(['a1', 'a6']); break;
-      case '8' : resultElement.addAll(['a2', 'a6']); break;
-      case '9' : resultElement.addAll(['a3', 'a6']); break;
-    }
-    switch (segments[1]) {
-      case '1' :
-      case '2' :
-      case '3' :
-      case '4' :
-      case '5' :
-      case '6' : resultElement.addAll(['b' + segments[1]]); break;
-      case '7' : resultElement.addAll(['b1', 'b6']); break;
-      case '8' : resultElement.addAll(['b2', 'b6']); break;
-      case '9' : resultElement.addAll(['b3', 'b6']); break;
-    }
-    switch (segments[2]) {
-      case '1' :
-      case '2' :
-      case '3' :
-      case '4' :
-      case '5' :
-      case '6' : resultElement.addAll(['c' + segments[2]]); break;
-      case '7' : resultElement.addAll(['c1', 'c6']); break;
-      case '8' : resultElement.addAll(['c2', 'c6']); break;
-      case '9' : resultElement.addAll(['c3', 'c6']); break;
-    }
-  }
-*/
-
   return resultElement;
 }
