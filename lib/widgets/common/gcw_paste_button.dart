@@ -14,13 +14,26 @@ import 'package:prefs/prefs.dart';
 
 class GCWPasteButton extends StatefulWidget {
   final Function onSelected;
-  final Function onLongPress;
-  final IconButtonSize size;
+  final Function onBeforePressed;
+  final IconButtonSize iconSize;
   final Widget customIcon;
   final Color backgroundColor;
+  final bool isTextSelectionToolBarButton;
+  final EdgeInsets textSelectionToolBarButtonPadding;
+  final String textSelectionToolBarButtonLabel;
 
-  const GCWPasteButton({Key key, this.onSelected, this.onLongPress, this.size, this.customIcon, this.backgroundColor})
-      : super(key: key);
+  const GCWPasteButton({
+    Key key,
+    this.onSelected,
+    this.onBeforePressed,
+    this.iconSize,
+    this.customIcon,
+    this.backgroundColor,
+    this.isTextSelectionToolBarButton: false,
+    this.textSelectionToolBarButtonPadding,
+    this.textSelectionToolBarButtonLabel,
+  })
+  : super(key: key);
 
   @override
   GCWPasteButtonState createState() => GCWPasteButtonState();
@@ -31,13 +44,16 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: GCWPopupMenu(
-        size: widget.size,
+        size: widget.iconSize,
         customIcon: widget.customIcon,
         iconData: Icons.content_paste,
         backgroundColor: widget.backgroundColor,
         menuItemBuilder: (context) => _buildMenuItems(context),
-      ),
-      onLongPress: widget.onLongPress,
+        onBeforePressed: widget.onBeforePressed,
+        isTextSelectionToolBarButton: widget.isTextSelectionToolBarButton,
+        textSelectionToolBarButtonLabel: widget.textSelectionToolBarButtonLabel,
+        textSelectionToolBarButtonPadding: widget.textSelectionToolBarButtonPadding,
+      )
     );
   }
 
@@ -52,10 +68,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               return;
             }
 
-            setState(() {
-              widget.onSelected(data.text);
-              insertIntoGCWClipboard(data.text);
-            });
+            widget.onSelected(data.text);
+            insertIntoGCWClipboard(context, data.text, useGlobalClipboard: false);
           });
         },
       ),
@@ -93,10 +107,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
           ),
           action: (index) {
             var pasteData = jsonDecode(Prefs.getStringList('clipboard_items')[index - 2])['text'];
-            setState(() {
-              widget.onSelected(pasteData);
-            });
-            insertIntoGCWClipboard(pasteData);
+            widget.onSelected(pasteData);
+            insertIntoGCWClipboard(context, pasteData, useGlobalClipboard: false);
           });
     }).toList();
 

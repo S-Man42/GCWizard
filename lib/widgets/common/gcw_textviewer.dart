@@ -33,10 +33,7 @@ class GCWTextViewerState extends State<GCWTextViewer> {
             if (widget.text == null || widget.text.isEmpty)
               return;
 
-            Clipboard.setData(ClipboardData(text: widget.text));
-            insertIntoGCWClipboard(widget.text);
-
-            showToast(i18n(context, 'common_clipboard_copied') + ':\n' + widget.text);
+            insertIntoGCWClipboard(context, widget.text);
           },
         ),
         Container(

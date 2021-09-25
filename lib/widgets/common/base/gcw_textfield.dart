@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
@@ -124,6 +125,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                 color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
             maxLengthEnforced: true,
             maxLength: widget.maxLength,
+            selectionControls: GCWTextSelectionControls(),
           );
         }));
   }

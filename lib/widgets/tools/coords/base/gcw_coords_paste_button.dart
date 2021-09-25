@@ -28,7 +28,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GCWPasteButton(
-      size: widget.size,
+      iconSize: widget.size,
       customIcon: widget.customIcon,
       backgroundColor: widget.backgroundColor,
       onSelected: _parseClipboardAndSetCoords,
