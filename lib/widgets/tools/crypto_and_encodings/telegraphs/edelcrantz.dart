@@ -238,11 +238,27 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
 
   String _segmentsToText(String text){
     return text
-        .replaceAll('telegraph_edelcrantz_a_messagereceived', i18n(context, 'telegraph_edelcrantz_a_messagereceived'))
-        .replaceAll('telegraph_edelcrantz_a_doyoucopy', i18n(context, 'telegraph_edelcrantz_a_doyoucopy'))
-        .replaceAll('telegraph_edelcrantz_a_understood', i18n(context, 'telegraph_edelcrantz_a_understood'))
-        .replaceAll('telegraph_edelcrantz_a_repeatmessage', i18n(context, 'telegraph_edelcrantz_a_repeatmessage'))
-        .replaceAll('telegraph_edelcrantz_a_endcommunication', i18n(context, 'telegraph_edelcrantz_a_endcommunication'));
+        .replaceAll('telegraph_edelcrantz_a_museum_messagereceived', i18n(context, 'telegraph_edelcrantz_a_museum_messagereceived'))
+        .replaceAll('telegraph_edelcrantz_a_museum_doyoucopy', i18n(context, 'telegraph_edelcrantz_a_museum_doyoucopy'))
+        .replaceAll('telegraph_edelcrantz_a_museum_understood', i18n(context, 'telegraph_edelcrantz_a_museum_understood'))
+        .replaceAll('telegraph_edelcrantz_a_museum_repeatmessage', i18n(context, 'telegraph_edelcrantz_a_museum_repeatmessage'))
+        .replaceAll('telegraph_edelcrantz_a_museum_endcommunication', i18n(context, 'telegraph_edelcrantz_a_museum_endcommunication'))
+        .replaceAll('telegraph_edelcrantz_a_museum_whoamitalkingto', i18n(context, 'telegraph_edelcrantz_a_museum_whoamitalkingto'))
+        .replaceAll('telegraph_edelcrantz_a_museum_tellmemore', i18n(context, 'telegraph_edelcrantz_a_museum_tellmemore'))
+        .replaceAll('telegraph_edelcrantz_a_museum_yes', i18n(context, 'telegraph_edelcrantz_a_museum_yes'))
+        .replaceAll('telegraph_edelcrantz_a_museum_no', i18n(context, 'telegraph_edelcrantz_a_museum_no'))
+        .replaceAll('telegraph_edelcrantz_a_museum_maybe', i18n(context, 'telegraph_edelcrantz_a_museum_maybe'))
+        .replaceAll('telegraph_edelcrantz_a_museum_who', i18n(context, 'telegraph_edelcrantz_a_museum_who'))
+        .replaceAll('telegraph_edelcrantz_a_museum_when', i18n(context, 'telegraph_edelcrantz_a_museum_when'))
+        .replaceAll('telegraph_edelcrantz_a_museum_where', i18n(context, 'telegraph_edelcrantz_a_museum_where'))
+        .replaceAll('telegraph_edelcrantz_a_museum_why', i18n(context, 'telegraph_edelcrantz_a_museum_why'))
+        .replaceAll('telegraph_edelcrantz_a_museum_how', i18n(context, 'telegraph_edelcrantz_a_museum_how'))
+        .replaceAll('telegraph_edelcrantz_a_museum_what', i18n(context, 'telegraph_edelcrantz_a_museum_what'))
+        .replaceAll('telegraph_edelcrantz_a_museum_first', i18n(context, 'telegraph_edelcrantz_a_museum_first'))
+        .replaceAll('telegraph_edelcrantz_a_museum_second', i18n(context, 'telegraph_edelcrantz_a_museum_second'))
+        .replaceAll('telegraph_edelcrantz_a_museum_third', i18n(context, 'telegraph_edelcrantz_a_museum_third'))
+        .replaceAll('telegraph_edelcrantz_a_museum_former', i18n(context, 'telegraph_edelcrantz_a_museum_former'))
+        .replaceAll('telegraph_edelcrantz_a_museum_latter', i18n(context, 'telegraph_edelcrantz_a_museum_latter'));
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {

@@ -74,7 +74,7 @@ class LicensesState extends State<Licenses> {
           ['www.steinerverlag.de', 'Eurythmy'],
           ['www.breitkopf.de', 'Solmisation'],
           ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
-          ['Edelcrantz Telegraph', 'Gerard Holzmann,\nhttps://archive.org/details/earlyhistoryofda0000holz'],
+          ['Edelcrantz Telegraph', 'Gerard Holzmann,\nhttps://archive.org/details/earlyhistoryofda0000holz\nSilvia Rubio Hernández\nVapriikki Case: Design and Evaluation of an Interactive Mixed-Reality Museum Exhibit\nhttps://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y'],
           ['Murray Telegraph', 'Helmar Fischer,\nhttps://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/\nOmer Roucoux,\nhttp://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station.htm'],
           ['Preußischer optischer Telegraf', 'Wilfried Hahn,\nhttp://www.optischertelegraph23.de/'],
           ['Schilling Canstatt Telegraph', 'Volker Aschoff,\nPaul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'],
