@@ -11,6 +11,11 @@ class GCWPopupMenu extends StatefulWidget {
   final IconButtonSize size;
   final Color iconColor;
   final Color backgroundColor;
+  final bool isTextSelectionToolBarButton;
+  final EdgeInsets textSelectionToolBarButtonPadding;
+  final String textSelectionToolBarButtonLabel;
+
+  final Function onBeforePressed;
 
   const GCWPopupMenu(
       {Key key,
@@ -19,8 +24,13 @@ class GCWPopupMenu extends StatefulWidget {
       this.customIcon,
       this.size: IconButtonSize.NORMAL,
       this.iconColor,
-      this.backgroundColor})
-      : super(key: key);
+      this.backgroundColor,
+      this.onBeforePressed,
+      this.isTextSelectionToolBarButton: false,
+      this.textSelectionToolBarButtonPadding,
+      this.textSelectionToolBarButtonLabel,
+  })
+  : super(key: key);
 
   @override
   GCWPopupMenuState createState() => GCWPopupMenuState();
@@ -47,39 +57,52 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isTextSelectionToolBarButton) {
+      return TextSelectionToolbarTextButton(
+        padding: widget.textSelectionToolBarButtonPadding,
+        onPressed: _onPressed,
+        child: Text(widget.textSelectionToolBarButtonLabel),
+      );
+    }
+
     return GCWIconButton(
       iconData: widget.iconData,
       customIcon: widget.customIcon,
       size: widget.size,
       iconColor: widget.iconColor,
       backgroundColor: widget.backgroundColor,
-      onPressed: () {
-        var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
-          return MapEntry<PopupMenuEntry<dynamic>, Function>(
-              item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
-        });
-
-        _afterLayout();
-
-        _menuItems = items.keys.toList();
-        _menuAction = items.values.toList();
-
-        showMenu(
-          context: context,
-          position: _menuPosition,
-          items: _menuItems,
-          elevation: 8.0,
-          color: themeColors().accent(),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundedBorderRadius),
-          ),
-        ).then((itemSelected) {
-          if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
-
-          _menuAction[itemSelected](itemSelected);
-        });
-      },
+      onPressed: _onPressed
     );
+  }
+
+  _onPressed() {
+    if (widget.onBeforePressed != null)
+      widget.onBeforePressed();
+
+    var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
+      return MapEntry<PopupMenuEntry<dynamic>, Function>(
+          item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
+    });
+
+    _afterLayout();
+
+    _menuItems = items.keys.toList();
+    _menuAction = items.values.toList();
+
+    showMenu(
+      context: context,
+      position: _menuPosition,
+      items: _menuItems,
+      elevation: 8.0,
+      color: themeColors().accent(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(roundedBorderRadius),
+      ),
+    ).then((itemSelected) {
+      if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
+
+      _menuAction[itemSelected](itemSelected);
+    });
   }
 }
 

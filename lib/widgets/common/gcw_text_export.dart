@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -112,8 +113,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                       GCWButton(
                         text: i18n(context, 'common_copy'),
                         onPressed: () {
-                          Clipboard.setData(ClipboardData(text: _currentExportText));
-                          showToast(i18n(context, 'common_clipboard_copied'));
+                          insertIntoGCWClipboard(context, _currentExportText);
                         },
                       )
                     ],

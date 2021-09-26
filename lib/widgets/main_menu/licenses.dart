@@ -57,6 +57,7 @@ class LicensesState extends State<Licenses> {
           ['Astronomy Functions', 'astronomie.info, jgiesen.de', null],
           ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
           ['Calendar conversions', 'Johannes Thomann, University of Zurich Asia-Orient-Institute', null],
+          ['Centroid Code', 'Andy Eschbacher (carto.com)', null],
           [
             'Chef Interpreter',
             'Wesley Janssen, Joost Rijneveld, Mathijs Vos',

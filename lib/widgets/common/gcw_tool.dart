@@ -94,6 +94,7 @@ class GCWTool extends StatefulWidget {
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> helpLocales;
   final bool suppressHelpButton;
+  final String helpSearchString;
   final isBeta;
 
   var icon;
@@ -118,6 +119,7 @@ class GCWTool extends StatefulWidget {
       this.searchStrings,
       this.buttonList,
       this.helpLocales,
+      this.helpSearchString,
       this.isBeta: false,
       this.suppressHelpButton: false})
       : super(key: key) {
@@ -206,11 +208,15 @@ class _GCWToolState extends State<GCWTool> {
 
     String searchString = '';
 
-    if (_needsDefaultHelp(appLocale)) {
-      // fallback to en if unsupported locale
-      searchString = _defaultLanguageToolName;
+    if (widget.helpSearchString == null || widget.helpSearchString.isEmpty) {
+      if (_needsDefaultHelp(appLocale)) {
+        // fallback to en if unsupported locale
+        searchString = _defaultLanguageToolName;
+      } else {
+        searchString = _toolName;
+      }
     } else {
-      searchString = _toolName;
+      searchString = widget.helpSearchString;
     }
 
     searchString = _normalizeSearchString(searchString);

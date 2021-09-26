@@ -58,6 +58,11 @@ ThemeData buildTheme() {
       primaryColor: colors.primaryBackground(),
       accentColor: colors.accent(),
       textTheme: base.textTheme,
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: colors.accent(),
+        selectionColor: colors.accent().withOpacity(0.5),
+        selectionHandleColor: colors.accent(),
+      ),
       buttonTheme: base.buttonTheme.copyWith(
           buttonColor: colors.accent(),
           textTheme: ButtonTextTheme.primary,
