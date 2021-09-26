@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -22,6 +21,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 import 'gcw_formula_replace_dialog.dart';
@@ -73,6 +73,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     var formulaTool = GCWTool(
         tool: FormulaSolverFormulaValues(group: widget.group),
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+        helpSearchString: i18n(context, 'formulasolver_values'),
         defaultLanguageToolName:
             '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
         helpLocales: ['de', 'en', 'fr']);
@@ -175,6 +176,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+                helpSearchString: i18n(context, 'coords_variablecoordinate_title'),
                 i18nPrefix:
                     '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
                 helpLocales: ['de', 'en', 'fr'])));
@@ -305,11 +307,13 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
                                   context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
-                              action: (index) => Clipboard.setData(ClipboardData(text: formula.formula))),
+                              action: (index) => insertIntoGCWClipboard(context, formula.formula),
+                          ),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
                                   context, Icons.content_copy, 'formulasolver_formulas_copyresult'),
-                              action: (index) => Clipboard.setData(ClipboardData(text: calculated['result']))),
+                              action: (index) => insertIntoGCWClipboard(context, calculated['result'])
+                          ),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
                                 context,
