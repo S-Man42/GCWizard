@@ -62,15 +62,18 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
       GCWPopupMenuItem(
         child: Text(i18n(context, 'common_clipboard_fromdeviceclipboard'), style: gcwDialogTextStyle()),
         action: (index) {
-          Clipboard.getData('text/plain').then((data) {
-            if (data.text.length == 0) {
-              showToast(i18n(context, 'common_clipboard_notextdatafound'));
-              return;
-            }
+          try {
+            Clipboard.getData('text/plain').then((data) {
+              if (data.text.length == 0) {
+                showToast(i18n(context, 'common_clipboard_notextdatafound'));
+                return;
+              }
 
-            widget.onSelected(data.text);
-            insertIntoGCWClipboard(context, data.text, useGlobalClipboard: false);
-          });
+              widget.onSelected(data.text);
+              insertIntoGCWClipboard(
+                  context, data.text, useGlobalClipboard: false);
+            });
+          } catch(e) {}
         },
       ),
       GCWPopupMenuItem(isDivider: true)

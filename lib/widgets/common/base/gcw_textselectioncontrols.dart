@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:prefs/prefs.dart';
 
 typedef OffsetValue = void Function(int start, int end);
 
@@ -185,8 +185,7 @@ class GCWTextSelectionToolbarState extends State<GCWTextSelectionToolbar> {
           onPressed: widget.handleCopy,
           child: Text(localizations.copyButtonLabel),
         ),
-      if (widget.handleGCWPasteButton != null &&
-          widget.clipboardStatus.value == ClipboardStatus.pasteable)
+      if (widget.handleGCWPasteButton != null)
         GCWPasteButton(
           isTextSelectionToolBarButton: true,
           textSelectionToolBarButtonPadding: TextSelectionToolbarTextButton.getPadding(2, 4),
@@ -207,6 +206,9 @@ class GCWTextSelectionToolbarState extends State<GCWTextSelectionToolbar> {
         )
     ];
 
+    if (itemDatas.isEmpty)
+      return null;
+
     return TextSelectionToolbar(
       anchorAbove: widget.anchorAbove,
       anchorBelow: widget.anchorBelow,
@@ -216,14 +218,4 @@ class GCWTextSelectionToolbarState extends State<GCWTextSelectionToolbar> {
       children: itemDatas,
     );
   }
-}
-
-class _TextSelectionToolbarItemData {
-  const _TextSelectionToolbarItemData({
-    this.label,
-    this.onPressed,
-  });
-
-  final String label;
-  final VoidCallback onPressed;
 }

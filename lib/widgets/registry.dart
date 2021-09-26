@@ -7203,6 +7203,7 @@ class Registry {
         SEARCHSTRING_FR_SYMBOL_ROMULAN
       ]),
       GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_FUTHARK,
         SEARCHSTRING_COMMON_SYMBOL_RUNES,
         SEARCHSTRING_DE_SYMBOL_RUNES,
         SEARCHSTRING_EN_SYMBOL_RUNES,
