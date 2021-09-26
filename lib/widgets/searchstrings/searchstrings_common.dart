@@ -341,7 +341,7 @@ const SEARCHSTRING_COMMON_SYMBOL_ARCADIAN = '';
 const SEARCHSTRING_COMMON_SYMBOL_ATH = 'ath baronh';
 const SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN =
     'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis';
-const SEARCHSTRING_COMMON_SYMBOL_AUREBESH = 'aurebesh starwars wookies clonewars outerrim';
+const SEARCHSTRING_COMMON_SYMBOL_AUREBESH = 'aurekbesh aurek-besh aurabesh aurebesh starwars wookies clonewars outerrim';
 const SEARCHSTRING_COMMON_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE = '';
 const SEARCHSTRING_COMMON_SYMBOL_BALLET = 'ballett primaballerina';
 const SEARCHSTRING_COMMON_SYMBOL_BARBIER = 'charles barbier';
@@ -399,6 +399,7 @@ const SEARCHSTRING_COMMON_SYMBOL_FONIC = 'fonic talesoftheabyss';
 const SEARCHSTRING_COMMON_SYMBOL_FOUR_TRIANGLES = '4';
 const SEARCHSTRING_COMMON_SYMBOL_FREEMASON = ' ';
 const SEARCHSTRING_COMMON_SYMBOL_FREEMASON_V2 = '';
+const SEARCHSTRING_COMMON_SYMBOL_FUTHARK = 'futhark futark';
 const SEARCHSTRING_COMMON_SYMBOL_FUTURAMA = 'futurama mattgroening';
 const SEARCHSTRING_COMMON_SYMBOL_FUTURAMA_2 = 'futurama mattgroening';
 const SEARCHSTRING_COMMON_SYMBOL_GALLIFREYAN = 'gallifrey doctorwho timelords drwho';

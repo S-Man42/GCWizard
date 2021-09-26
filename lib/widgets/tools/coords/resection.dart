@@ -40,15 +40,9 @@ class ResectionState extends State<Resection> {
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
-  var _currentMapPoints;
+  var _currentMapPoints = <GCWMapPoint>[];
   List<GCWMapPolyline> _currentMapPolylines = [];
   dynamic _ells;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
-  }
 
   @override
   Widget build(BuildContext context) {

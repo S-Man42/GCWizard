@@ -101,10 +101,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
                           iconData: Icons.content_copy,
                           size: IconButtonSize.TINY,
                           onPressed: () {
-                            Clipboard.setData(ClipboardData(text: copyText));
-                            insertIntoGCWClipboard(copyText);
-
-                            showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+                            insertIntoGCWClipboard(context, copyText);
                           },
                         ),
                   width: 25,
@@ -135,7 +132,10 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
   }).toList();
 }
 
-insertIntoGCWClipboard(String text) {
+insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
+  if (useGlobalClipboard)
+    Clipboard.setData(ClipboardData(text:text));
+
   var gcwClipboard = Prefs.getStringList('clipboard_items');
 
   var existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null);
@@ -152,6 +152,9 @@ insertIntoGCWClipboard(String text) {
   }
 
   Prefs.setStringList('clipboard_items', gcwClipboard);
+
+  if (useGlobalClipboard)
+    showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
 }
 
 String textControllerInsertText(String input, String currentText, TextEditingController textController) {
