@@ -343,7 +343,7 @@ const SEARCHSTRING_COMMON_SYMBOL_ARCADIAN = '';
 const SEARCHSTRING_COMMON_SYMBOL_ATH = 'ath baronh';
 const SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN =
     'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis';
-const SEARCHSTRING_COMMON_SYMBOL_AUREBESH = 'aurebesh starwars wookies clonewars outerrim';
+const SEARCHSTRING_COMMON_SYMBOL_AUREBESH = 'aurekbesh aurek-besh aurabesh aurebesh starwars wookies clonewars outerrim';
 const SEARCHSTRING_COMMON_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE = '';
 const SEARCHSTRING_COMMON_SYMBOL_BALLET = 'ballett primaballerina';
 const SEARCHSTRING_COMMON_SYMBOL_BARBIER = 'charles barbier';
