@@ -181,11 +181,11 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '04.35.2' : 'Von der Direction',
   '004.3' : 'Citissime von Station ##',
   '04.34.3' : 'Citissime von der Direction',
-  '004.2' : 'Die Depesche von Station ##, welche hier aufggenommen worden, wird jetzt weiter gegeben.',
-  '004.1' : 'Citissime von Station ##, welche hier aufggenommen worden, wird jetzt weiter gegeben.',
+  '004.2' : 'Die Depesche von Station ##, welche hier aufgenommen worden, wird jetzt weiter gegeben.',
+  '004.1' : 'Citissime von Station ##, welche hier aufgenommen worden, wird jetzt weiter gegeben.',
   '04.34.1' : 'Das hier aufgenommene Citissime von der Direction wird jetzt weiter gegeben.',
   '4.35.10' : 'Der beschädigte Telegraph ist wieder hergestellt.',
-  '04.24.2' : 'Dein zeichen ist undeutlich.',
+  '04.24.2' : 'Dein Zeichen ist undeutlich.',
   '4.300' : 'Du hast ein falsches Zeichen gemacht.',
   '005.3' : 'Station ## hat ein falsches Zeichen gemacht.',
   '4.14.30' : 'Es sind hier Fehler vorgefallen, die Depesche wird wieder angefangen.',
@@ -264,8 +264,12 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
       .replaceAll('B', '').replaceAll('b', '')
       .replaceAll('C', '').replaceAll('c', '')
       .split(' ').forEach((element) {
-
-    if (CODEBOOK_PRUSSIA[element] != null) {
+    //check for messages with station number: xy(5.2|5.3|4.1|4.3)
+    if (element.length == 5) {
+      if (int.tryParse(element.substring(0,2)) != null && (element.endsWith('5.2') || element.endsWith('5.3') || element.endsWith('4.1')  || element.endsWith('4.2') || element.endsWith('4.3'))) {
+        text = text + CODEBOOK_PRUSSIA['00' + element.substring(2)].replaceAll('##', element.substring(0,2));
+      }
+    } else if (CODEBOOK_PRUSSIA[element] != null) {
       decodedElement = CODEBOOK_PRUSSIA[element];
       if (decodedElement.contains('##')) {
         decodedElement = _replaceNumber(decodedElement, element);
@@ -280,7 +284,9 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
 }
 
 String _replaceNumber(String plainText, code){
-  return plainText;
+  String number = '++';
+  print(code);
+  return plainText.replaceAll('##', number);
 }
 
 List<String> _stringToSegment(String input){
