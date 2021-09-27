@@ -2248,7 +2248,11 @@ class Registry {
       //Braille Selection ****************************************************************
       GCWTool(
           tool: Braille(),
-          i18nPrefix: 'braille',
+          i18nPrefix: 'braille', helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], 
           searchStrings: [
             SEARCHSTRING_COMMON_BRAILLE,
             SEARCHSTRING_DE_BRAILLE,
@@ -2257,7 +2261,11 @@ class Registry {
           ]),
       GCWTool(
           tool: BrailleDotNumbers(),
-          i18nPrefix: 'brailledotnumbers',
+          i18nPrefix: 'brailledotnumbers', helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], 
           searchStrings: [
             SEARCHSTRING_COMMON_BRAILLE,
             SEARCHSTRING_DE_BRAILLE,
@@ -3263,6 +3271,8 @@ class Registry {
         SEARCHSTRING_FR_ESOTERIC_BRAINFK
       ]),
       GCWTool(tool: Cow(), i18nPrefix: 'cow', helpLocales: [
+        'de',
+        'en',
         'fr'
       ], searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
