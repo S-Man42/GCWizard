@@ -26,6 +26,7 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '213': 'IN',
   '225': 'K',
   '249': 'L',
+  '258': 'LE',
   '290': 'M',
   '328': 'N',
   '356': 'O',
@@ -144,7 +145,10 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '708': '8',
   '709': '9',
   '710': '10',
+  '929' : 'MELDUNG AN ORTSBEHÖRDE',
   '946': 'HAT ZU ERKENNEN GEGEBEN',
+  '970': 'ES BRENNT IN',
+
 
   // Telegraphenteile
   '5.24.14.1' : 'Klappe',
