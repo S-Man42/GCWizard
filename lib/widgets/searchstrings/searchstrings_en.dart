@@ -218,7 +218,7 @@ const SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS =
     'colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green';
 const SEARCHSTRING_EN_IMAGES = 'pictures images paintings files ';
 const SEARCHSTRING_EN_IMAGESANDFILESSELECTION = 'analyze analyse analysis';
-const SEARCHSTRING_EN_STEGANO = 'lsb steganography';
+const SEARCHSTRING_EN_STEGANO = 'steganography';
 const SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrationalnumbers fractions decimaldigit';
 const SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE = 'range';
 const SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY = 'frequency  occurrences';

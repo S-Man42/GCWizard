@@ -197,6 +197,7 @@ class AboutState extends State<About> {
                     'Martin Sch.',
                     '\'mgo\'',
                     '\'MrDosinger\'',
+                    '\'Nebelsturm\'',
                     'Niki R.',
                     'Palk \'geogedoens.de\'',
                     '\'Pamakaru\'',

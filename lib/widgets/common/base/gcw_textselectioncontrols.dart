@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
 
 typedef OffsetValue = void Function(int start, int end);
 
@@ -205,9 +204,6 @@ class GCWTextSelectionToolbarState extends State<GCWTextSelectionToolbar> {
           child: Text(localizations.selectAllButtonLabel),
         )
     ];
-
-    if (itemDatas.isEmpty)
-      return null;
 
     return TextSelectionToolbar(
       anchorAbove: widget.anchorAbove,

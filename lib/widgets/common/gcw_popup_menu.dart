@@ -101,6 +101,8 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
     ).then((itemSelected) {
       if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
 
+      if (_menuAction[itemSelected] == null) return;
+
       _menuAction[itemSelected](itemSelected);
     });
   }
