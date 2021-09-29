@@ -913,22 +913,6 @@ class Registry {
           SEARCHSTRING_FR_GAMES,
         ],
       ),
-      GCWTool(tool: GaussWeberTelegraph(), i18nPrefix: 'gausswebertelegraph', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_TELEGRAPH_GAUSSWEBERTELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH_GAUSSWEBERTELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH_GAUSSWEBERTELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH_GAUSSWEBERTELEGRAPH,
-      ]),
       GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
         ToolCategory.CRYPTOGRAPHY
       ], helpLocales: [
@@ -1469,22 +1453,6 @@ class Registry {
         SEARCHSTRING_DE_PRIMES,
         SEARCHSTRING_EN_PRIMES,
         SEARCHSTRING_FR_PRIMES
-      ]),
-      GCWTool(tool: SchillingCanstattTelegraph(), i18nPrefix: 'schillingcanstatt', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_TELEGRAPH_SCHILLINGCANSTATT,
-        SEARCHSTRING_DE_TELEGRAPH_SCHILLINGCANSTATT,
-        SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANSTATT,
-        SEARCHSTRING_FR_TELEGRAPH_SCHILLINGCANSTATT,
       ]),
       GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', helpLocales: [
         'de',
