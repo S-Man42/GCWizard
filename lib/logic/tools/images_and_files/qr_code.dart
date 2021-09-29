@@ -6,14 +6,12 @@ import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:qr/qr.dart' as qr;
 import 'package:r_scan/r_scan.dart' as scan;
 
-
 /// Parse to code string with Uint8list
 Future<String> scanBytes(Uint8List bytes) async {
   if (bytes == null) return null;
   try {
     var codes = await scan.RScan.scanImageMemory(bytes);
-    if (codes != null)
-      return codes.message;
+    if (codes != null) return codes.message;
   } catch (e) {}
   return null;
 }
@@ -35,7 +33,8 @@ Future<Uint8List> _createQrCode(qr.QrCode qrCode, {double border = 10}) async {
     qrCode.make();
     const double moduleSize = 5;
     final canvasRecorder = ui.PictureRecorder();
-    final rect = ui.Rect.fromLTWH(0, 0, moduleSize * qrCode.moduleCount + 2 * border, moduleSize * qrCode.moduleCount + 2 * border);
+    final rect = ui.Rect.fromLTWH(
+        0, 0, moduleSize * qrCode.moduleCount + 2 * border, moduleSize * qrCode.moduleCount + 2 * border);
     final canvas = ui.Canvas(canvasRecorder, rect);
     final paint = ui.Paint()
       ..color = COLOR_QR_BACKGROUND
@@ -46,7 +45,8 @@ Future<Uint8List> _createQrCode(qr.QrCode qrCode, {double border = 10}) async {
     for (int x = 0; x < qrCode.moduleCount; x++) {
       for (int y = 0; y < qrCode.moduleCount; y++) {
         if (qrCode.isDark(y, x)) {
-          canvas.drawRect(ui.Rect.fromLTWH(x*moduleSize+border,y*moduleSize+border,moduleSize,moduleSize), paint);
+          canvas.drawRect(
+              ui.Rect.fromLTWH(x * moduleSize + border, y * moduleSize + border, moduleSize, moduleSize), paint);
         }
       }
     }
@@ -57,7 +57,6 @@ Future<Uint8List> _createQrCode(qr.QrCode qrCode, {double border = 10}) async {
   } catch (e) {
     return null;
   }
-
 }
 
 Future<Uint8List> addBorder(Uint8List imageBytes, {double border = 10}) async {

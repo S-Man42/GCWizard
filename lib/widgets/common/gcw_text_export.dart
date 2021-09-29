@@ -70,8 +70,7 @@ class GCWTextExportState extends State<GCWTextExport> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentMode == TextExportMode.QR && _qrImageData == null)
-      _buildQRCode();
+    if (_currentMode == TextExportMode.QR && _qrImageData == null) _buildQRCode();
 
     return Container(
         width: 300,
@@ -89,8 +88,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                         _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
                         if (widget.onModeChanged != null) widget.onModeChanged(_currentMode);
 
-                        if (_currentMode == TextExportMode.QR)
-                          _buildQRCode();
+                        if (_currentMode == TextExportMode.QR) _buildQRCode();
                       });
                     },
                   )
@@ -148,7 +146,7 @@ Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportM
   } else {
     final data = await generateBarCode(text);
 
-    return await saveByteDataToFile(context,
-        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    return await saveByteDataToFile(
+        context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

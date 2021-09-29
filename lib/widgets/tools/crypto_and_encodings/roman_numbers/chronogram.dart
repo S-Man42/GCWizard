@@ -55,7 +55,8 @@ class ChronogramState extends State<Chronogram> {
           },
         ),
         GCWOutput(
-          child: recognizableChronogramInput(_currentInput, JUToIV: _currentJUToIV, YToII: _currentYToII, WToVV: _currentWToVV),
+          child: recognizableChronogramInput(_currentInput,
+              JUToIV: _currentJUToIV, YToII: _currentYToII, WToVV: _currentWToVV),
           title: i18n(context, 'chronogram_recognizedchars'),
         ),
         GCWDefaultOutput(

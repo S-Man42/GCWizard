@@ -6,9 +6,8 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
-List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicBytes = false, int fileIndex = 0}) {
-  if (data == null)
-    return [];
+List<PlatformFile> hiddenData(PlatformFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) {
+  if (data == null) return [];
 
   var resultList = <PlatformFile>[];
   var bytes = data.bytes;
@@ -58,17 +57,12 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
     }
 
     List<PlatformFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
-      children = extractArchive(PlatformFile(bytes: resultBytes));
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE) children = extractArchive(PlatformFile(bytes: resultBytes));
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
-      var result = PlatformFile(
-          name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter',
-          bytes: resultBytes,
-          children: children
-      );
+      var result = PlatformFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
 
       resultList.add(result);
     }
@@ -80,13 +74,14 @@ List<PlatformFile> hiddenData(PlatformFile data, { bool calledFromSearchMagicByt
     var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
 
     resultList.asMap().forEach((index, result) {
-      if (index == 0 && result.fileClass != FileClass.ARCHIVE)
-        return;
+      if (index == 0 && result.fileClass != FileClass.ARCHIVE) return;
 
       if ((result.children == null) || (result.children.length == 0))
         _searchMagicBytes(result, fileTypeList);
       else
-        result.children.forEach((element) {_searchMagicBytes(element, fileTypeList);});
+        result.children.forEach((element) {
+          _searchMagicBytes(element, fileTypeList);
+        });
     });
   }
   return resultList;
@@ -97,8 +92,7 @@ _searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
     var magicBytesList = magicBytes(fileType);
     magicBytesList.forEach((magicBytes) {
       var bytes = data.bytes;
-      if (bytes == null)
-        return;
+      if (bytes == null) return;
 
       for (int i = 1; i < bytes.length; i++) {
         if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
@@ -114,11 +108,9 @@ _searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             if (i - bytesOffset >= 0) {
               var children = hiddenData(PlatformFile(bytes: bytes.sublist(i - bytesOffset)),
-                  calledFromSearchMagicBytes: true,
-                  fileIndex: data.children.length + 1);
+                  calledFromSearchMagicBytes: true, fileIndex: data.children.length + 1);
               if ((children != null) && (children.length > 0)) {
-                if (data.children != null)
-                  data.children.addAll(children);
+                if (data.children != null) data.children.addAll(children);
               }
             }
           }
@@ -135,8 +127,7 @@ Uint8List mergeFiles(List<dynamic> data) {
   data.forEach((element) {
     if (element is Uint8List)
       result.addAll(trimNullBytes(element));
-    else if (element is String)
-      result.addAll(Uint8List.fromList(element.toString().codeUnits));
+    else if (element is String) result.addAll(Uint8List.fromList(element.toString().codeUnits));
   });
 
   return trimNullBytes(Uint8List.fromList(result));

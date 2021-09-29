@@ -8,14 +8,23 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Piano extends StatefulWidget {
-    @override
+  @override
   PianoState createState() => PianoState();
 }
 
 class PianoState extends State<Piano> {
   var _currentSort = 0;
   var _currentIndex = 9; // Key number 1
-  List<String> _currentSortList = ['piano_number', 'piano_color', 'piano_frequency', 'piano_helmholtz', 'piano_scientific', 'piano_german', 'piano_midi', 'piano_latin'];
+  List<String> _currentSortList = [
+    'piano_number',
+    'piano_color',
+    'piano_frequency',
+    'piano_helmholtz',
+    'piano_scientific',
+    'piano_german',
+    'piano_midi',
+    'piano_latin'
+  ];
 
   List<String> fields = ['color', 'frequency', 'helmholtz', 'scientific', 'german', 'midi', 'latin'];
 
@@ -51,35 +60,32 @@ class PianoState extends State<Piano> {
               .toList(),
         ),
         _isColorSort
-         ? GCWTwoOptionsSwitch(
-          title: i18n(context, 'piano_color'),
-          leftValue: i18n(context, 'common_color_white'),
-          rightValue: i18n(context, 'common_color_black'),
-          value: _currentColor,
-          onChanged: (value) {
-            setState(() {
-              _currentColor = value;
-            });
-          },
-        )
-         : GCWDropDownSpinner(
-            index: _currentIndex,
-            items: PIANO_KEYS
-                .values
-                .where((e) => e[field] != null && e[field].length > 0)
-                .map((e) {
+            ? GCWTwoOptionsSwitch(
+                title: i18n(context, 'piano_color'),
+                leftValue: i18n(context, 'common_color_white'),
+                rightValue: i18n(context, 'common_color_black'),
+                value: _currentColor,
+                onChanged: (value) {
+                  setState(() {
+                    _currentColor = value;
+                  });
+                },
+              )
+            : GCWDropDownSpinner(
+                index: _currentIndex,
+                items: PIANO_KEYS.values.where((e) => e[field] != null && e[field].length > 0).map((e) {
                   if (_currentSort == 0) {
                     return e['number'];
                   } else {
                     return e[field];
                   }
                 }).toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentIndex = value;
-              });
-            },
-          ),
+                onChanged: (value) {
+                  setState(() {
+                    _currentIndex = value;
+                  });
+                },
+              ),
         GCWDefaultOutput(
           child: Column(
             children: _buildOutput(),
@@ -92,13 +98,8 @@ class PianoState extends State<Piano> {
   _buildOutput() {
     if (_isColorSort) {
       var chosenColor = _currentColor == GCWSwitchPosition.left ? 'white' : 'black';
-      var data = PIANO_KEYS.entries
-          .where((element) => element.value['color'].endsWith(chosenColor))
-          .map((element) {
-        return [
-          element.value['number'],
-          element.value['frequency']
-        ];
+      var data = PIANO_KEYS.entries.where((element) => element.value['color'].endsWith(chosenColor)).map((element) {
+        return [element.value['number'], element.value['frequency']];
       }).toList();
 
       data.insert(0, [i18n(context, 'piano_number'), i18n(context, 'piano_frequency')]);

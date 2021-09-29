@@ -42,11 +42,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   Widget build(BuildContext context) {
     if (_languageList == null) {
       var sorted = SplayTreeMap<String, NumeralWordsLanguage>.from(
-          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(
-              i18n(context, key),
-              value
-          ))
-      );
+          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
 
       _languageList = {i18n(context, 'numeralwords_language_all'): NumeralWordsLanguage.ALL};
       _languageList.addAll(sorted);

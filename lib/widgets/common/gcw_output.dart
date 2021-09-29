@@ -27,7 +27,7 @@ class _GCWOutputState extends State<GCWOutput> {
       widget.child is Widget
           ? widget.child
           : GCWOutputText(
-              text: widget.child == null ? '' :  widget.child.toString(),
+              text: widget.child == null ? '' : widget.child.toString(),
               suppressCopyButton: widget.suppressCopyButton,
               copyText: widget.copyText,
             )

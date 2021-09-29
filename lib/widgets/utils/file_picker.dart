@@ -22,13 +22,13 @@ Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) a
     var files = (await filePicker.FilePicker.platform.pickFiles(
             type: allowedFileTypes == null ? filePicker.FileType.any : filePicker.FileType.custom,
             allowMultiple: false,
-            allowedExtensions: allowedFileTypes == null ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
+            allowedExtensions:
+                allowedFileTypes == null ? null : allowedFileTypes.map((type) => fileExtension(type)).toList()))
         ?.files;
 
     if (allowedFileTypes == null) files = _filterFiles(files, allowedFileTypes);
 
-    if (files == null || files.length == 0)
-      return null;
+    if (files == null || files.length == 0) return null;
 
     var bytes = await _getFileData(files.first);
 

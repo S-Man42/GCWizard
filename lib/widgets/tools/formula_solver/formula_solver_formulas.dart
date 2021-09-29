@@ -305,15 +305,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                     },
                                   )),
                           GCWPopupMenuItem(
-                              child: iconedGCWPopupMenuItem(
-                                  context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
-                              action: (index) => insertIntoGCWClipboard(context, formula.formula),
+                            child: iconedGCWPopupMenuItem(
+                                context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
+                            action: (index) => insertIntoGCWClipboard(context, formula.formula),
                           ),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
                                   context, Icons.content_copy, 'formulasolver_formulas_copyresult'),
-                              action: (index) => insertIntoGCWClipboard(context, calculated['result'])
-                          ),
+                              action: (index) => insertIntoGCWClipboard(context, calculated['result'])),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
                                 context,

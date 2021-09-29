@@ -46,22 +46,22 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : GCWTextField(
-             controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -77,9 +77,9 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
 
   _buildOutput() {
     if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL) {
-
       if (_currentMode == GCWSwitchPosition.left) {
-        var outputOriginal = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
+        var outputOriginal =
+            encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
         return Column(
@@ -92,7 +92,9 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
         var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;
         var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
 
-        var mode = countOriginal >= countAlt ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
+        var mode = countOriginal >= countAlt
+            ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL
+            : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
           child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
               .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
@@ -100,7 +102,6 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
               .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'))
         );
       }
-
     } else {
       var output;
       if (_currentMode == GCWSwitchPosition.left) {
@@ -112,9 +113,7 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'));
       }
 
-      return GCWDefaultOutput(
-        child: output
-      );
+      return GCWDefaultOutput(child: output);
     }
   }
 }

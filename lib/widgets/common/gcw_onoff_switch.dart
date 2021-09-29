@@ -10,7 +10,8 @@ class GCWOnOffSwitch extends StatefulWidget {
   final value;
   final bool notitle;
 
-  const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false}) : super(key: key);
+  const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false})
+      : super(key: key);
 
   @override
   GCWOnOffSwitchState createState() => GCWOnOffSwitchState();
