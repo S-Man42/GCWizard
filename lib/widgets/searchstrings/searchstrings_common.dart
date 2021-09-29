@@ -209,7 +209,8 @@ const SEARCHSTRING_COMMON_HIDDENDATA = '';
 const SEARCHSTRING_COMMON_HOMOPHONE = 'homophone';
 const SEARCHSTRING_COMMON_HOUDINI =
     'harryhoudinicode harryhudinicode say pray bequick quickly speak now tell look answer please erikweisz';
-const SEARCHSTRING_COMMON_IATAICAO = 'iata icao internationalairtransportassociation internationalcivilaviationorganization internationalcivilaviationorganisation';
+const SEARCHSTRING_COMMON_IATAICAO =
+    'iata icao internationalairtransportassociation internationalcivilaviationorganization internationalcivilaviationorganisation';
 const SEARCHSTRING_COMMON_ICECODES = '1980 wmo sigrid';
 const SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS = '';
 const SEARCHSTRING_COMMON_IMAGES = '';
@@ -311,7 +312,8 @@ const SEARCHSTRING_COMMON_RSA_DCHECKER = 'd';
 const SEARCHSTRING_COMMON_RSA_ECHECKER = 'e';
 const SEARCHSTRING_COMMON_RSA_NCALCULATOR = 'n';
 const SEARCHSTRING_COMMON_RSA_PHICALCULATOR = 'phi';
-const SEARCHSTRING_COMMON_SCHILLINGCANSTATT = 'paulludwigschillingvoncanstatt paulludwigschillingvoncannstatt schillingcannstatt schillingcanstatt';
+const SEARCHSTRING_COMMON_SCHILLINGCANSTATT =
+    'paulludwigschillingvoncanstatt paulludwigschillingvoncannstatt schillingcannstatt schillingcanstatt';
 const SEARCHSTRING_COMMON_SCIENCEANDTECHNOLOGYSELECTION = '';
 const SEARCHSTRING_COMMON_SEGMENTS = 'led';
 const SEARCHSTRING_COMMON_SEGMENTS_FOURTEEN = '14segment 14-segment';
@@ -343,7 +345,8 @@ const SEARCHSTRING_COMMON_SYMBOL_ARCADIAN = '';
 const SEARCHSTRING_COMMON_SYMBOL_ATH = 'ath baronh';
 const SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN =
     'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis';
-const SEARCHSTRING_COMMON_SYMBOL_AUREBESH = 'aurekbesh aurek-besh aurabesh aurebesh starwars wookies clonewars outerrim';
+const SEARCHSTRING_COMMON_SYMBOL_AUREBESH =
+    'aurekbesh aurek-besh aurabesh aurebesh starwars wookies clonewars outerrim';
 const SEARCHSTRING_COMMON_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE = '';
 const SEARCHSTRING_COMMON_SYMBOL_BALLET = 'ballett primaballerina';
 const SEARCHSTRING_COMMON_SYMBOL_BARBIER = 'charles barbier';
@@ -368,7 +371,8 @@ const SEARCHSTRING_COMMON_SYMBOL_COLOR_ADD = 'coloradd colorblind identification
 const SEARCHSTRING_COMMON_SYMBOL_COLOR_CODE = 'rgb';
 const SEARCHSTRING_COMMON_SYMBOL_COLOR_HONEY = '6 colorhoney color-honey colourcode colourhoney colour-honey';
 const SEARCHSTRING_COMMON_SYMBOL_COLOR_TOKKI = '6 colortokki color-tokki colourtokki colour-tokko';
-const SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE = 'williamfothergillcooke charleswheatstone cookewheatstone cooke-wheatstone cooke-and-wheatstone';
+const SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE =
+    'williamfothergillcooke charleswheatstone cookewheatstone cooke-wheatstone cooke-and-wheatstone';
 const SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_1 = '1';
 const SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_2 = '2';
 const SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_5 = '5';

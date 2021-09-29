@@ -11,7 +11,8 @@ class SymbolTable extends StatefulWidget {
   final Function onEncrypt;
   final bool alwaysIgnoreUnknown;
 
-  const SymbolTable({Key key, this.symbolKey, this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown}) : super(key: key);
+  const SymbolTable({Key key, this.symbolKey, this.onDecrypt, this.onEncrypt, this.alwaysIgnoreUnknown})
+      : super(key: key);
 
   @override
   SymbolTableState createState() => SymbolTableState();

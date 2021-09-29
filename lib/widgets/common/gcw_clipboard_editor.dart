@@ -33,7 +33,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
   @override
   void initState() {
     super.initState();
-    _editController = TextEditingController(text:_currentEditText);
+    _editController = TextEditingController(text: _currentEditText);
   }
 
   @override
@@ -74,32 +74,27 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
         text: i18n(context, 'clipboardeditor_clear_title'),
         onPressed: () {
           showGCWAlertDialog(
-            context,
-            i18n(context, 'clipboardeditor_clear_title'),
-            i18n(context, 'clipboardeditor_clear_text'),
-            () {
-              setState(() {
-                Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, []);
-              });
-            }
-          );
+              context, i18n(context, 'clipboardeditor_clear_title'), i18n(context, 'clipboardeditor_clear_text'), () {
+            setState(() {
+              Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, []);
+            });
+          });
         },
       ),
-      GCWTextDivider(
-        text: i18n(context, 'clipboardeditor_entries')
-      )
+      GCWTextDivider(text: i18n(context, 'clipboardeditor_entries'))
     ];
 
-    children.addAll(entries.asMap().map((index, entry) {
-      var item = jsonDecode(entry);
+    children.addAll(entries
+        .asMap()
+        .map((index, entry) {
+          var item = jsonDecode(entry);
 
-      var child;
+          var child;
 
-      if (_currentEditId != null && _currentEditId == index) {
-        child = Row(
-          children: [
-            Expanded(
-              child: GCWTextField(
+          if (_currentEditId != null && _currentEditId == index) {
+            child = Row(children: [
+              Expanded(
+                  child: GCWTextField(
                 controller: _editController,
                 autofocus: true,
                 onChanged: (text) {
@@ -107,76 +102,68 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
                     _currentEditText = text;
                   });
                 },
-              )
-            ),
-            Container(width: 10),
-            GCWIconButton(
-              iconData: Icons.check,
-              onPressed: () {
-                setState(() {
-                  if (_currentEditText != null && _currentEditText.isNotEmpty) {
-                    item['text'] = _currentEditText;
-
-                    var newEntries = List<String>.from(entries);
-                    newEntries[index] = jsonEncode(item);
-                    Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, newEntries);
-                  }
-
-                  _currentEditId = null;
-                  _editController.clear();
-                });
-              },
-            ),
-          ]
-        );
-      } else {
-        child = Row(
-          children: [
-            Expanded(
-                child: GCWText(
-                  text: item['text']
-                )
-            ),
-            Container(width: 10),
-            GCWIconButton(
-              iconData: Icons.edit,
-              onPressed: () {
-                setState(() {
-                  _currentEditId = index;
-                  _editController.text = item['text'];
-                });
-              },
-            ),
-            GCWIconButton(
-              iconData: Icons.remove,
-              onPressed: () {
-                var text = item['text'];
-                if (text.length > 50) text = item['text'].substring(0, 47) + '...';
-
-                showDeleteAlertDialog(context, text, () {
+              )),
+              Container(width: 10),
+              GCWIconButton(
+                iconData: Icons.check,
+                onPressed: () {
                   setState(() {
-                    var newEntries = List<String>.from(entries);
-                    newEntries.removeAt(index);
-                    Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, newEntries);
+                    if (_currentEditText != null && _currentEditText.isNotEmpty) {
+                      item['text'] = _currentEditText;
+
+                      var newEntries = List<String>.from(entries);
+                      newEntries[index] = jsonEncode(item);
+                      Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, newEntries);
+                    }
+
+                    _currentEditId = null;
+                    _editController.clear();
                   });
-                });
-              },
-            ),
-          ]
-        );
-      }
+                },
+              ),
+            ]);
+          } else {
+            child = Row(children: [
+              Expanded(child: GCWText(text: item['text'])),
+              Container(width: 10),
+              GCWIconButton(
+                iconData: Icons.edit,
+                onPressed: () {
+                  setState(() {
+                    _currentEditId = index;
+                    _editController.text = item['text'];
+                  });
+                },
+              ),
+              GCWIconButton(
+                iconData: Icons.remove,
+                onPressed: () {
+                  var text = item['text'];
+                  if (text.length > 50) text = item['text'].substring(0, 47) + '...';
 
-      if (index % 2 == 0) {
-        child = Container(color: themeColors().outputListOddRows(), child: child);
-      } else {
-        child = Container(child: child);
-      }
+                  showDeleteAlertDialog(context, text, () {
+                    setState(() {
+                      var newEntries = List<String>.from(entries);
+                      newEntries.removeAt(index);
+                      Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, newEntries);
+                    });
+                  });
+                },
+              ),
+            ]);
+          }
 
-      return MapEntry(index, child as Widget);
-    }).values.toList());
+          if (index % 2 == 0) {
+            child = Container(color: themeColors().outputListOddRows(), child: child);
+          } else {
+            child = Container(child: child);
+          }
 
-    return Column(
-      children: children
-    );
+          return MapEntry(index, child as Widget);
+        })
+        .values
+        .toList());
+
+    return Column(children: children);
   }
 }

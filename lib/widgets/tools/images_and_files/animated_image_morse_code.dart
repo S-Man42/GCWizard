@@ -327,7 +327,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         String description = imagesFiltered[i].length.toString() + '/$imageCount';
 
         var image = images[imagesFiltered[i].first];
-        list.add(GCWImageViewData(local.PlatformFile(bytes: image), description: description, marked: _marked[imagesFiltered[i].first]));
+        list.add(GCWImageViewData(local.PlatformFile(bytes: image),
+            description: description, marked: _marked[imagesFiltered[i].first]));
       }
       _outText = decodeMorseCode(durations, _marked);
     }

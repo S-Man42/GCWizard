@@ -39,10 +39,7 @@ class AlcoholMassState extends State<AlcoholMass> {
         GCWDropDownButton(
           value: _currentMode,
           items: _MODES.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode,
-              child: i18n(context, mode)
-            );
+            return GCWDropDownMenuItem(value: mode, child: i18n(context, mode));
           }).toList(),
           onChanged: (value) {
             setState(() {
@@ -51,30 +48,32 @@ class AlcoholMassState extends State<AlcoholMass> {
           },
         ),
         _currentMode != _VOLUME
-          ? GCWUnitInput(
-            value: _currentVolume,
-            title: i18n(context, _VOLUME),
-            min: 0.0,
-            unitCategory: UNITCATEGORY_VOLUME,
-            initialUnit: VOLUME_MILLILITER,
-            onChanged: (value) {
-              setState(() {
-                _currentVolume = value;
-              });
-            },
-          ) : Container(), // Container Construct instead of simple "if" avoids some NULL Pointer issues, however... (when opening -> switching to VOLUME -> Crash because no Volume DropDown...)
+            ? GCWUnitInput(
+                value: _currentVolume,
+                title: i18n(context, _VOLUME),
+                min: 0.0,
+                unitCategory: UNITCATEGORY_VOLUME,
+                initialUnit: VOLUME_MILLILITER,
+                onChanged: (value) {
+                  setState(() {
+                    _currentVolume = value;
+                  });
+                },
+              )
+            : Container(), // Container Construct instead of simple "if" avoids some NULL Pointer issues, however... (when opening -> switching to VOLUME -> Crash because no Volume DropDown...)
         _currentMode != _ALCOHOL_MASS
-          ? GCWUnitInput(
-            value: _currentAlcoholMass,
-            title: i18n(context, _ALCOHOL_MASS),
-            min: 0.0,
-            unitList: allMasses(),
-            onChanged: (value) {
-              setState(() {
-                _currentAlcoholMass = value;
-              });
-            },
-          ) : Container(),
+            ? GCWUnitInput(
+                value: _currentAlcoholMass,
+                title: i18n(context, _ALCOHOL_MASS),
+                min: 0.0,
+                unitList: allMasses(),
+                onChanged: (value) {
+                  setState(() {
+                    _currentAlcoholMass = value;
+                  });
+                },
+              )
+            : Container(),
         if (_currentMode != _ALCOHOL_MASS_BY_VOLUME)
           Row(
             children: [
@@ -82,8 +81,7 @@ class AlcoholMassState extends State<AlcoholMass> {
                   child: GCWText(
                     text: i18n(context, _ALCOHOL_MASS_BY_VOLUME),
                   ),
-                  flex: 3
-              ),
+                  flex: 3),
               Expanded(
                   child: GCWDoubleSpinner(
                     value: _currentPercent,
@@ -93,38 +91,34 @@ class AlcoholMassState extends State<AlcoholMass> {
                       });
                     },
                   ),
-                flex: 13
-              )
+                  flex: 13)
             ],
           ),
-        if (_currentMode != _ALCOHOL_MASS_BY_VOLUME)
-          GCWTextDivider(
-            text: i18n(context, 'common_outputunit')
-          ),
+        if (_currentMode != _ALCOHOL_MASS_BY_VOLUME) GCWTextDivider(text: i18n(context, 'common_outputunit')),
         _currentMode == _ALCOHOL_MASS
-          ? GCWUnitDropDownButton(
-              value: _currentOutputMass,
-              unitList: allMasses(),
-              onlyShowSymbols: false,
-              onChanged: (value) {
-                setState(() {
-                  _currentOutputMass = value;
-                });
-              },
-            )
-          : Container(),
+            ? GCWUnitDropDownButton(
+                value: _currentOutputMass,
+                unitList: allMasses(),
+                onlyShowSymbols: false,
+                onChanged: (value) {
+                  setState(() {
+                    _currentOutputMass = value;
+                  });
+                },
+              )
+            : Container(),
         _currentMode == _VOLUME
-          ? GCWUnitDropDownButton(
-              value: _currentOutputVolume,
-              unitCategory: UNITCATEGORY_VOLUME,
-              onlyShowSymbols: false,
-              onChanged: (value) {
-                setState(() {
-                  _currentOutputVolume = value;
-                });
-              },
-            )
-          : Container(),
+            ? GCWUnitDropDownButton(
+                value: _currentOutputVolume,
+                unitCategory: UNITCATEGORY_VOLUME,
+                onlyShowSymbols: false,
+                onChanged: (value) {
+                  setState(() {
+                    _currentOutputVolume = value;
+                  });
+                },
+              )
+            : Container(),
         _buildOutput()
       ],
     );

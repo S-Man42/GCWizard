@@ -13,13 +13,10 @@ class BrailleSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey.startsWith('braille_'))
-        return true;
+      if (className(element.tool) == className(SymbolTable()) &&
+          (element.tool as SymbolTable).symbolKey.startsWith('braille_')) return true;
 
-      return [
-        className(Braille()),
-        className(BrailleDotNumbers())
-      ].contains(className(element.tool));
+      return [className(Braille()), className(BrailleDotNumbers())].contains(className(element.tool));
     }).toList();
 
     return Container(child: GCWToolList(toolList: _toolList));

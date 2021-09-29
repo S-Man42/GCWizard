@@ -53,32 +53,32 @@ class QrCodeState extends State<QrCode> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
-          ? GCWOpenFile(
-              supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-              onLoaded: (_file) {
-                if (_file == null) {
-                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                  return;
-                }
+            ? GCWOpenFile(
+                supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+                onLoaded: (_file) {
+                  if (_file == null) {
+                    showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                    return;
+                  }
 
-                if (_file != null) {
+                  if (_file != null) {
+                    setState(() {
+                      _outData = _file.bytes;
+                      _updateOutput();
+                    });
+                  }
+                },
+              )
+            : GCWTextField(
+                controller: _inputController,
+                maxLength: 999,
+                onChanged: (value) {
                   setState(() {
-                    _outData = _file.bytes;
+                    _currentInput = value;
                     _updateOutput();
                   });
-                }
-              },
-            )
-          : GCWTextField(
-              controller: _inputController,
-              maxLength: 999,
-              onChanged: (value) {
-                setState(() {
-                  _currentInput = value;
-                  _updateOutput();
-                });
-              },
-            ),
+                },
+              ),
         ((_currentMode == GCWSwitchPosition.right) && (_outData != null))
             ? Container(
                 child: Image.memory(_outData),
@@ -94,17 +94,17 @@ class QrCodeState extends State<QrCode> {
           },
         ),
         GCWDefaultOutput(
-          child: _buildOutput(),
-          trailing: (_currentMode == GCWSwitchPosition.right)
-            ? null
-            : GCWIconButton(
-                iconData: Icons.save,
-                size: IconButtonSize.SMALL,
-                iconColor: _outDataEncrypt == null ? Colors.grey : null,
-                onPressed: () {
-                  _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
-                },
-              ))
+            child: _buildOutput(),
+            trailing: (_currentMode == GCWSwitchPosition.right)
+                ? null
+                : GCWIconButton(
+                    iconData: Icons.save,
+                    size: IconButtonSize.SMALL,
+                    iconColor: _outDataEncrypt == null ? Colors.grey : null,
+                    onPressed: () {
+                      _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
+                    },
+                  ))
       ],
     );
   }
@@ -130,8 +130,7 @@ class QrCodeState extends State<QrCode> {
 
         scanBytes(_outData).then((text) {
           setState(() {
-            if (text == null || text.isEmpty)
-              text = i18n(context, 'qr_code_nothingfound');
+            if (text == null || text.isEmpty) text = i18n(context, 'qr_code_nothingfound');
 
             _outDataDecrypt = text;
           });
@@ -144,8 +143,8 @@ class QrCodeState extends State<QrCode> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(context,
-        data, "img_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+    var value = await saveByteDataToFile(
+        context, data, "img_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);
   }

@@ -23,9 +23,9 @@ class BloodAlcoholContent extends StatefulWidget {
 
 class BloodAlcoholContentState extends State<BloodAlcoholContent> {
   var _GENDERS = {
-    BloodAlcoholGender.MEN : 'bloodalcoholcontent_person_male',
-    BloodAlcoholGender.WOMEN : 'bloodalcoholcontent_person_female',
-    BloodAlcoholGender.CHILDREN : 'bloodalcoholcontent_person_child',
+    BloodAlcoholGender.MEN: 'bloodalcoholcontent_person_male',
+    BloodAlcoholGender.WOMEN: 'bloodalcoholcontent_person_female',
+    BloodAlcoholGender.CHILDREN: 'bloodalcoholcontent_person_child',
   };
 
   var _currentVolume = 0.0;
@@ -43,9 +43,7 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GCWTextDivider(
-          text: i18n(context, 'bloodalcoholcontent_liquid')
-        ),
+        GCWTextDivider(text: i18n(context, 'bloodalcoholcontent_liquid')),
         GCWUnitInput(
           value: _currentVolume,
           title: i18n(context, 'bloodalcoholcontent_volume'),
@@ -64,8 +62,7 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
                 child: GCWText(
                   text: i18n(context, 'bloodalcoholcontent_abv'),
                 ),
-                flex: 3
-            ),
+                flex: 3),
             Expanded(
                 child: GCWDoubleSpinner(
                   value: _currentPercent,
@@ -75,21 +72,15 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
                     });
                   },
                 ),
-              flex: 13
-            )
+                flex: 13)
           ],
         ),
-        GCWTextDivider(
-          text: i18n(context, 'bloodalcoholcontent_person')
-        ),
+        GCWTextDivider(text: i18n(context, 'bloodalcoholcontent_person')),
         GCWDropDownButton(
           title: i18n(context, 'bloodalcoholcontent_person_gender'),
           value: _currentGender,
           items: BloodAlcoholGender.values.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode,
-              child: i18n(context, _GENDERS[mode])
-            );
+            return GCWDropDownMenuItem(value: mode, child: i18n(context, _GENDERS[mode]));
           }).toList(),
           onChanged: (value) {
             setState(() {
@@ -147,37 +138,31 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
 
     if ([BloodAlcoholGender.MEN, BloodAlcoholGender.WOMEN, BloodAlcoholGender.CHILDREN].contains(_currentGender)) {
       var widmark = bloodAlcoholInPermilleWidmark(_currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass));
-      data.add(
-        ['Widmark', nf.format(widmark['max']) + ' - ' + nf.format(widmark['min']) + ' ‰']
-      );
+      data.add(['Widmark', nf.format(widmark['max']) + ' - ' + nf.format(widmark['min']) + ' ‰']);
     }
 
     if ([BloodAlcoholGender.MEN, BloodAlcoholGender.WOMEN].contains(_currentGender)) {
-      var result = bloodAlcoholInPermilleWidmarkSeidl(_currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight));
-      data.add(
-          ['Widmark/Seidl', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]
-      );
+      var result = bloodAlcoholInPermilleWidmarkSeidl(
+          _currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight));
+      data.add(['Widmark/Seidl', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]);
     }
 
     if ([BloodAlcoholGender.MEN].contains(_currentGender)) {
-      var result = bloodAlcoholInPermilleWidmarkUlrich(_currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight));
-      data.add(
-          ['Widmark/Ulrich', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]
-      );
+      var result = bloodAlcoholInPermilleWidmarkUlrich(
+          _currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight));
+      data.add(['Widmark/Ulrich', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]);
     }
 
     if ([BloodAlcoholGender.MEN, BloodAlcoholGender.WOMEN].contains(_currentGender)) {
-      var result = bloodAlcoholInPermilleWidmarkWatson(_currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight), _currentAge);
-      data.add(
-          ['Widmark/Watson', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]
-      );
+      var result = bloodAlcoholInPermilleWidmarkWatson(_currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass),
+          LENGTH_CM.fromMeter(_currentHeight), _currentAge);
+      data.add(['Widmark/Watson', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]);
     }
 
     if ([BloodAlcoholGender.WOMEN].contains(_currentGender)) {
-      var result = bloodAlcoholInPermilleWidmarkWatsonEicker(_currentGender, alcMass, MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight), _currentAge);
-      data.add(
-          ['Widmark/Watson/Eicker', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]
-      );
+      var result = bloodAlcoholInPermilleWidmarkWatsonEicker(_currentGender, alcMass,
+          MASS_KILOGRAM.fromGram(_currentMass), LENGTH_CM.fromMeter(_currentHeight), _currentAge);
+      data.add(['Widmark/Watson/Eicker', result == 0.0 ? '-' : (nf.format(result) + ' ‰')]);
     }
 
     return Column(

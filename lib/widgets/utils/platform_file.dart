@@ -4,8 +4,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart' as utils;
 
 class PlatformFile {
   PlatformFile({this.path, this.name, this.bytes, this.children}) {
-    if (this.children == null)
-      this.children = [];
+    if (this.children == null) this.children = [];
   }
 
   /// The absolute path for a cached copy of this file. It can be used to create a

@@ -123,12 +123,11 @@ class MayaNumbersState extends State<MayaNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-      segmentFunction:(displayedSegments, readOnly) {
-        return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-      },
-      segments: segments,
-      readOnly: true
-    );
+        segmentFunction: (displayedSegments, readOnly) {
+          return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        },
+        segments: segments,
+        readOnly: true);
   }
 
   Widget _buildOutput() {

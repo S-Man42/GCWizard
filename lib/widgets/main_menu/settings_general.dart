@@ -184,27 +184,30 @@ class GeneralSettingsState extends State<GeneralSettings> {
             ? GCWDropDownButton(
                 value: Prefs.get('tabs_default_tab'),
                 items: [
-                  {'index': 0, 'text': Row(
-                      children: [
-                        Icon(Icons.category, color: themeColors().mainFont()),
-                        Container(width: 10),
-                        Text(i18n(context, 'common_tabs_categories'))
-                      ]
-                  )},
-                  {'index': 1, 'text': Row(
-                      children: [
-                        Icon(Icons.list, color: themeColors().mainFont()),
-                        Container(width: 10),
-                        Text(i18n(context, 'common_tabs_all'))
-                      ]
-                  )},
-                  {'index': 2, 'text': Row(
-                      children: [
-                        Icon(Icons.star, color: themeColors().mainFont()),
-                        Container(width: 10),
-                        Text(i18n(context, 'common_tabs_favorites'))
-                      ]
-                  )}
+                  {
+                    'index': 0,
+                    'text': Row(children: [
+                      Icon(Icons.category, color: themeColors().mainFont()),
+                      Container(width: 10),
+                      Text(i18n(context, 'common_tabs_categories'))
+                    ])
+                  },
+                  {
+                    'index': 1,
+                    'text': Row(children: [
+                      Icon(Icons.list, color: themeColors().mainFont()),
+                      Container(width: 10),
+                      Text(i18n(context, 'common_tabs_all'))
+                    ])
+                  },
+                  {
+                    'index': 2,
+                    'text': Row(children: [
+                      Icon(Icons.star, color: themeColors().mainFont()),
+                      Container(width: 10),
+                      Text(i18n(context, 'common_tabs_favorites'))
+                    ])
+                  }
                 ].map((item) {
                   return GCWDropDownMenuItem(
                     value: item['index'],

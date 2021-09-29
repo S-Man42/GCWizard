@@ -17,20 +17,19 @@ class GCWPopupMenu extends StatefulWidget {
 
   final Function onBeforePressed;
 
-  const GCWPopupMenu(
-      {Key key,
-      this.menuItemBuilder,
-      this.iconData,
-      this.customIcon,
-      this.size: IconButtonSize.NORMAL,
-      this.iconColor,
-      this.backgroundColor,
-      this.onBeforePressed,
-      this.isTextSelectionToolBarButton: false,
-      this.textSelectionToolBarButtonPadding,
-      this.textSelectionToolBarButtonLabel,
-  })
-  : super(key: key);
+  const GCWPopupMenu({
+    Key key,
+    this.menuItemBuilder,
+    this.iconData,
+    this.customIcon,
+    this.size: IconButtonSize.NORMAL,
+    this.iconColor,
+    this.backgroundColor,
+    this.onBeforePressed,
+    this.isTextSelectionToolBarButton: false,
+    this.textSelectionToolBarButtonPadding,
+    this.textSelectionToolBarButtonLabel,
+  }) : super(key: key);
 
   @override
   GCWPopupMenuState createState() => GCWPopupMenuState();
@@ -66,18 +65,16 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
     }
 
     return GCWIconButton(
-      iconData: widget.iconData,
-      customIcon: widget.customIcon,
-      size: widget.size,
-      iconColor: widget.iconColor,
-      backgroundColor: widget.backgroundColor,
-      onPressed: _onPressed
-    );
+        iconData: widget.iconData,
+        customIcon: widget.customIcon,
+        size: widget.size,
+        iconColor: widget.iconColor,
+        backgroundColor: widget.backgroundColor,
+        onPressed: _onPressed);
   }
 
   _onPressed() {
-    if (widget.onBeforePressed != null)
-      widget.onBeforePressed();
+    if (widget.onBeforePressed != null) widget.onBeforePressed();
 
     var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
       return MapEntry<PopupMenuEntry<dynamic>, Function>(

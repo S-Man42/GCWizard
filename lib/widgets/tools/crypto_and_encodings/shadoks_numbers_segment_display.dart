@@ -38,7 +38,8 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
             onChanged: onChanged,
             aspectRatio: _SHADOKS_RELATIVE_DISPLAY_WIDTH / _SHADOKS_RELATIVE_DISPLAY_HEIGHT,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState, Color segment_color_on, Color segment_color_off) {
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
+                Color segment_color_on, Color segment_color_off) {
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
@@ -65,13 +66,15 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.style = PaintingStyle.stroke;
 
               paint.strokeWidth = size.height > 100 ? 6.0 : 3.0;
-              canvas.touchCanvas.drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 43), paint);
+              canvas.touchCanvas
+                  .drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 43), paint);
 
               paint.color = _TRANSPARENT_COLOR;
               paint.style = PaintingStyle.fill;
 
-              canvas.touchCanvas.drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 55), paint,
-                  onTapDown: (tapDetail) {
+              canvas.touchCanvas
+                  .drawCircle(Offset(_relativeX(size, 50), _relativeY(size, 50)), _relativeX(size, 55), paint,
+                      onTapDown: (tapDetail) {
                 if (currentSegments['a']) return;
 
                 setSegmentState('a', !currentSegments['a']);

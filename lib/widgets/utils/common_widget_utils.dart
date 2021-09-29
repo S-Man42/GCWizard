@@ -56,8 +56,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
         .asMap()
         .map((index, column) {
           var textStyle = gcwTextStyle();
-          if (isFirst && hasHeader)
-            textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
+          if (isFirst && hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
 
           var child;
 
@@ -67,11 +66,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
             child = Text(column != null ? column.toString() : '', style: textStyle);
           }
 
-          return MapEntry(
-              index,
-              Expanded(
-                  child: child,
-                  flex: index < flexValues.length ? flexValues[index] : 1));
+          return MapEntry(index, Expanded(child: child, flex: index < flexValues.length ? flexValues[index] : 1));
         })
         .values
         .toList();
@@ -133,8 +128,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
 }
 
 insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
-  if (useGlobalClipboard)
-    Clipboard.setData(ClipboardData(text:text));
+  if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
 
   var gcwClipboard = Prefs.getStringList('clipboard_items');
 
@@ -153,8 +147,7 @@ insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: t
 
   Prefs.setStringList('clipboard_items', gcwClipboard);
 
-  if (useGlobalClipboard)
-    showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
+  if (useGlobalClipboard) showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
 }
 
 String textControllerInsertText(String input, String currentText, TextEditingController textController) {

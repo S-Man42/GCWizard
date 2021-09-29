@@ -206,7 +206,8 @@ class _GCWImageViewState extends State<GCWImageView> {
             iconData: Icons.open_in_new,
             size: iconSize,
             menuItemBuilder: (context) => [
-                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.METADATA))
+                  if (widget.suppressOpenInTool == null ||
+                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.METADATA))
                     GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.info_outline, 'exif_openinmetadata'),
                       action: (index) => setState(() {
@@ -219,7 +220,8 @@ class _GCWImageViewState extends State<GCWImageView> {
                         }
                       }),
                     ),
-                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HEXVIEW))
+                  if (widget.suppressOpenInTool == null ||
+                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HEXVIEW))
                     GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.text_snippet_outlined, 'hexviewer_openinhexviewer'),
                       action: (index) => setState(() {
@@ -232,7 +234,8 @@ class _GCWImageViewState extends State<GCWImageView> {
                         }
                       }),
                     ),
-                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HIDDENDATA))
+                  if (widget.suppressOpenInTool == null ||
+                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.HIDDENDATA))
                     GCWPopupMenuItem(
                       child: iconedGCWPopupMenuItem(context, Icons.search, 'hiddendata_openinhiddendata'),
                       action: (index) => setState(() {
@@ -245,19 +248,20 @@ class _GCWImageViewState extends State<GCWImageView> {
                         }
                       }),
                     ),
-                  if (widget.suppressOpenInTool == null || !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
+                  if (widget.suppressOpenInTool == null ||
+                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.COLORCORRECTIONS))
                     GCWPopupMenuItem(
-                      child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
-                      action: (index) => setState(() {
-                        if (widget.onBeforeLoadBigImage != null) {
-                          widget.onBeforeLoadBigImage().then((imgData) {
-                            openInHiddenData(context, imgData);
-                          });
-                        } else {
-                          openInColorCorrections(
-                              context, widget.imageData.file);
-                        }
-                      })),
+                        child: iconedGCWPopupMenuItem(
+                            context, Icons.brush, 'image_colorcorrections_openincolorcorrection'),
+                        action: (index) => setState(() {
+                              if (widget.onBeforeLoadBigImage != null) {
+                                widget.onBeforeLoadBigImage().then((imgData) {
+                                  openInHiddenData(context, imgData);
+                                });
+                              } else {
+                                openInColorCorrections(context, widget.imageData.file);
+                              }
+                            })),
                 ])
     ];
   }

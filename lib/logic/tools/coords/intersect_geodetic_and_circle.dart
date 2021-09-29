@@ -47,7 +47,8 @@ List<LatLng> intersectGeodeticAndCircle(
     bearingGeodetic = help.bearingBToA;
   }
 
-  List<LatLng> output = geodesicArcIntercept(startGeodetic, degToRadian(bearingGeodetic), centerPoint, radiusCircle, ells);
+  List<LatLng> output =
+      geodesicArcIntercept(startGeodetic, degToRadian(bearingGeodetic), centerPoint, radiusCircle, ells);
 
   if (isInCircle) {
     help = distanceBearing(startGeodetic, output[0], ells);

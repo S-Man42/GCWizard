@@ -71,9 +71,9 @@ const SEARCHSTRING_FR_CHRONOGRAM = 'chronogramme';
 const SEARCHSTRING_FR_CIPHERWHEEL = 'platines disques decodeur chiffrer';
 const SEARCHSTRING_FR_CISTERCIAN = 'cisetrcien moines monastique';
 const SEARCHSTRING_FR_CODEBREAKER = 'universel solveur resolveur casseur';
-const SEARCHSTRING_FR_COLOR = 'couleurs rouge bleu noir jaune blanc magenta cyan violet vert marron orange clair fonce argent or';
-const SEARCHSTRING_FR_COLORPICKER =
-    'luminance lumiere luminosite saturation chrominance';
+const SEARCHSTRING_FR_COLOR =
+    'couleurs rouge bleu noir jaune blanc magenta cyan violet vert marron orange clair fonce argent or';
+const SEARCHSTRING_FR_COLORPICKER = 'luminance lumiere luminosite saturation chrominance';
 const SEARCHSTRING_FR_COMBINATORICS = 'mathematiques';
 const SEARCHSTRING_FR_COMBINATORICS_COMBINATION = 'combinaisons sous-groupes';
 const SEARCHSTRING_FR_COMBINATORICS_PERMUTATION = 'tableau sequences';
@@ -205,7 +205,8 @@ const SEARCHSTRING_FR_HEXVIEWER = '';
 const SEARCHSTRING_FR_HIDDENDATA = '';
 const SEARCHSTRING_FR_HOMOPHONE = '';
 const SEARCHSTRING_FR_HOUDINI = 'seance';
-const SEARCHSTRING_FR_IATAICAO = 'organisationdelaviationcivileinternationale associationdutransportaerieninternational codesdaerodrome codesdaeroport codesdaeronefs avions airesdatterrissage lieuxdatterrissage aviation aerospatiale';
+const SEARCHSTRING_FR_IATAICAO =
+    'organisationdelaviationcivileinternationale associationdutransportaerieninternational codesdaerodrome codesdaeroport codesdaeronefs avions airesdatterrissage lieuxdatterrissage aviation aerospatiale';
 const SEARCHSTRING_FR_ICECODES = 'mer baltique codes glace eau neige fonte';
 const SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS = 'couleurscorrections teinte saturation luminosite rgb';
 const SEARCHSTRING_FR_IMAGES = 'images peintures fichiers ';

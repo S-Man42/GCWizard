@@ -20,11 +20,10 @@ class _GCWTextState extends State<GCWText> {
     return Align(
         alignment: widget.align,
         child: SelectableText(
-            widget.text,
-            textAlign: widget.textAlign,
-            style: widget.style ?? gcwTextStyle(),
-            selectionControls: GCWTextSelectionControls(),
-        )
-    );
+          widget.text,
+          textAlign: widget.textAlign,
+          style: widget.style ?? gcwTextStyle(),
+          selectionControls: GCWTextSelectionControls(),
+        ));
   }
 }

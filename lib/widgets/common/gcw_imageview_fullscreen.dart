@@ -36,12 +36,12 @@ openInFullScreen(BuildContext context, Uint8List imgData) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-            tool: GCWImageViewFullScreen(
-              imageData: imgData,
-            ),
-            autoScroll: false,
-            toolName: i18n(context, 'imageview_fullscreen_title'),
-            defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
-            suppressHelpButton: true,
-          )));
+                tool: GCWImageViewFullScreen(
+                  imageData: imgData,
+                ),
+                autoScroll: false,
+                toolName: i18n(context, 'imageview_fullscreen_title'),
+                defaultLanguageToolName: i18n(context, 'imageview_fullscreen_title', useDefaultLanguage: true),
+                suppressHelpButton: true,
+              )));
 }

@@ -4,14 +4,12 @@ import 'package:permission_handler/permission_handler.dart';
 Future<bool> checkLocationPermission(Location location) async {
   var _permissionStatus = await Permission.location.status;
 
-  if (_permissionStatus.isPermanentlyDenied)
-    return false;
+  if (_permissionStatus.isPermanentlyDenied) return false;
 
   if (!_permissionStatus.isGranted) {
     await Permission.location.request();
 
-    if (!await Permission.location.isGranted)
-      return false;
+    if (!await Permission.location.isGranted) return false;
   }
 
   var _serviceEnabled = await location.serviceEnabled();

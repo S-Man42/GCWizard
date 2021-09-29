@@ -28,18 +28,17 @@ class GCWPasteButton extends StatefulWidget {
   final EdgeInsets textSelectionToolBarButtonPadding;
   final String textSelectionToolBarButtonLabel;
 
-  const GCWPasteButton({
-    Key key,
-    this.onSelected,
-    this.onBeforePressed,
-    this.iconSize,
-    this.customIcon,
-    this.backgroundColor,
-    this.isTextSelectionToolBarButton: false,
-    this.textSelectionToolBarButtonPadding,
-    this.textSelectionToolBarButtonLabel
-  })
-  : super(key: key);
+  const GCWPasteButton(
+      {Key key,
+      this.onSelected,
+      this.onBeforePressed,
+      this.iconSize,
+      this.customIcon,
+      this.backgroundColor,
+      this.isTextSelectionToolBarButton: false,
+      this.textSelectionToolBarButtonPadding,
+      this.textSelectionToolBarButtonLabel})
+      : super(key: key);
 
   @override
   GCWPasteButtonState createState() => GCWPasteButtonState();
@@ -49,18 +48,17 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: GCWPopupMenu(
-        size: widget.iconSize,
-        customIcon: widget.customIcon,
-        iconData: Icons.content_paste,
-        backgroundColor: widget.backgroundColor,
-        menuItemBuilder: (context) => _buildMenuItems(context),
-        onBeforePressed: widget.onBeforePressed,
-        isTextSelectionToolBarButton: widget.isTextSelectionToolBarButton,
-        textSelectionToolBarButtonLabel: widget.textSelectionToolBarButtonLabel,
-        textSelectionToolBarButtonPadding: widget.textSelectionToolBarButtonPadding,
-      )
-    );
+        child: GCWPopupMenu(
+      size: widget.iconSize,
+      customIcon: widget.customIcon,
+      iconData: Icons.content_paste,
+      backgroundColor: widget.backgroundColor,
+      menuItemBuilder: (context) => _buildMenuItems(context),
+      onBeforePressed: widget.onBeforePressed,
+      isTextSelectionToolBarButton: widget.isTextSelectionToolBarButton,
+      textSelectionToolBarButtonLabel: widget.textSelectionToolBarButtonLabel,
+      textSelectionToolBarButtonPadding: widget.textSelectionToolBarButtonPadding,
+    ));
   }
 
   _buildMenuItems(BuildContext context) {
@@ -76,26 +74,24 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               }
 
               widget.onSelected(data.text);
-              insertIntoGCWClipboard(
-                  context, data.text, useGlobalClipboard: false);
+              insertIntoGCWClipboard(context, data.text, useGlobalClipboard: false);
             });
-          } catch(e) {}
+          } catch (e) {}
         },
       ),
       GCWPopupMenuItem(
-        child: GCWTextDivider(
-          suppressTopSpace: true,
-          style: gcwDialogTextStyle(),
-          trailing: GCWIconButton(
-            iconData: Icons.settings,
-            size: IconButtonSize.SMALL,
-            iconColor: themeColors().dialogText(),
+          child: GCWTextDivider(
+            suppressTopSpace: true,
+            style: gcwDialogTextStyle(),
+            trailing: GCWIconButton(
+              iconData: Icons.settings,
+              size: IconButtonSize.SMALL,
+              iconColor: themeColors().dialogText(),
+            ),
           ),
-        ),
-        action:  (index) {
-          NavigationService.instance.navigateTo('clipboard_editor');
-        }
-      )
+          action: (index) {
+            NavigationService.instance.navigateTo('clipboard_editor');
+          })
     ];
 
     var gcwClipboard = Prefs.getStringList('clipboard_items').map((clipboardItem) {

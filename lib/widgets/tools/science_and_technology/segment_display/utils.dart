@@ -56,8 +56,7 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   if (displays == null) return null;
 
   // create images
-  for (var i= 0; i < displays.length; i++)
-     images.add(await displays[i].renderedImage);
+  for (var i = 0; i < displays.length; i++) images.add(await displays[i].renderedImage);
 
   // calc image size
   images.forEach((image) {
@@ -97,8 +96,7 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
 
       if (imageIndex < images.length) {
         var image = images[imageIndex];
-        var middlePoint = ui.Offset(offset.dx + padding + image.width/ 2,
-                                    offset.dy + padding + image.height/ 2);
+        var middlePoint = ui.Offset(offset.dx + padding + image.width / 2, offset.dy + padding + image.height / 2);
         if (upsideDown) {
           canvas.translate(middlePoint.dx, middlePoint.dy);
           canvas.rotate(pi);

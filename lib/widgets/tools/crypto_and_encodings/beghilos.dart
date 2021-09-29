@@ -47,24 +47,22 @@ class BeghilosState extends State<Beghilos> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left ?
-          GCWTextField(
-            controller: _inputControllerDecode,
-            onChanged: (text) {
-              setState(() {
-                _currentInputDecode = text;
-              });
-            }
-          )
-        : GCWIntegerListTextField(
-            controller: _inputControllerEncode,
-            hintText: i18n(context, 'beghilos_encode_hint'),
-            onChanged: (text) {
-              setState(() {
-                _currentInputEncode = text;
-              });
-            }
-          ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+                controller: _inputControllerDecode,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputDecode = text;
+                  });
+                })
+            : GCWIntegerListTextField(
+                controller: _inputControllerEncode,
+                hintText: i18n(context, 'beghilos_encode_hint'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputEncode = text;
+                  });
+                }),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -80,24 +78,24 @@ class BeghilosState extends State<Beghilos> {
 
   Widget _buildOutput() {
     var rows = <Widget>[];
-    var textOutput = _currentMode == GCWSwitchPosition.left ? decodeBeghilos(_currentInputDecode) : encodeBeghilos(_currentInputEncode['text']);
+    var textOutput = _currentMode == GCWSwitchPosition.left
+        ? decodeBeghilos(_currentInputDecode)
+        : encodeBeghilos(_currentInputEncode['text']);
 
-    if (textOutput == null || textOutput.isEmpty)
-      return GCWDefaultOutput();
+    if (textOutput == null || textOutput.isEmpty) return GCWDefaultOutput();
 
     _currentDisplays = encodeSegment(
         _currentMode == GCWSwitchPosition.left ? textOutput : _currentInputEncode['text'], SegmentDisplayType.SEVEN);
 
     rows.add(GCWSegmentDisplayOutput(
-      upsideDownButton: true,
-      segmentFunction:(displayedSegments, readOnly) {
-        return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-      },
-      segments: _currentDisplays,
-      readOnly: true
-    ));
+        upsideDownButton: true,
+        segmentFunction: (displayedSegments, readOnly) {
+          return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        },
+        segments: _currentDisplays,
+        readOnly: true));
 
-    rows.add(GCWDefaultOutput(child:  textOutput));
+    rows.add(GCWDefaultOutput(child: textOutput));
 
     return Column(
       children: rows,

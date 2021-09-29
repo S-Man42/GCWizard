@@ -1,4 +1,3 @@
-
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -145,5 +144,3 @@ String _formatExifValue(IfdTag tag) {
       return tag.printable;
   }
 }
-
-
