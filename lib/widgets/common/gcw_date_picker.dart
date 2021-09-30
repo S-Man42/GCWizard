@@ -66,7 +66,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
                     _currentYear = value;
                     _setCurrentValueAndEmitOnChange();
 
-                    if (_currentYear.toString().length == 4) {
+                    if (_currentYear.toString().length == 5) {
                       FocusScope.of(context).requestFocus(_monthFocusNode);
                     }
                   });
