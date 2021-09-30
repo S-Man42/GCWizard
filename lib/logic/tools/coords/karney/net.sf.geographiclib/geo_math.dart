@@ -34,7 +34,9 @@ class GeoMath {
    * @param x the argument.
    * @return <i>x</i><sup>2</sup>.
    **********************************************************************/
-  static double sq(double x) { return x * x; }
+  static double sq(double x) {
+    return x * x;
+  }
 
   static double _log1p(double x) {
     if (x.isInfinite && !x.isNegative) {
@@ -59,9 +61,9 @@ class GeoMath {
    * @param x the argument.
    * @return atanh(<i>x</i>).
    **********************************************************************/
-  static double atanh(double x)  {
-    double y = x.abs();     // Enforce odd parity
-    y = _log1p(2 * y/(1 - y))/2;
+  static double atanh(double x) {
+    double y = x.abs(); // Enforce odd parity
+    y = _log1p(2 * y / (1 - y)) / 2;
     return x > 0 ? y : (x < 0 ? -y : x);
   }
 
@@ -75,7 +77,8 @@ class GeoMath {
    **********************************************************************/
   static void norm(Pair p, double sinx, double cosx) {
     double r = hypot(sinx, cosx);
-    p.first = sinx/r; p.second = cosx/r;
+    p.first = sinx / r;
+    p.second = cosx / r;
   }
 
   /**
@@ -97,7 +100,8 @@ class GeoMath {
     double t = -(up + vpp);
     // u + v =       s      + t
     //       = round(u + v) + t
-    p.first = s; p.second = t;
+    p.first = s;
+    p.second = t;
   }
 
   /**
@@ -136,7 +140,7 @@ class GeoMath {
    * negative numbers get converted to &minus;0.
    **********************************************************************/
   static double AngRound(double x) {
-    final double z = 1/16.0;
+    final double z = 1 / 16.0;
     if (x == 0) return 0;
     double y = x.abs();
     // The compiler mustn't "simplify" z - (z - y) to y
@@ -155,7 +159,7 @@ class GeoMath {
    **********************************************************************/
   static double remainder(double x, double y) {
     x = x % y;
-    return x < -y/2 ? x + y : (x < y/2 ? x : x - y);
+    return x < -y / 2 ? x + y : (x < y / 2 ? x : x - y);
   }
 
   /**
@@ -215,7 +219,8 @@ class GeoMath {
   static void sincosd(Pair p, double x) {
     // In order to minimize round-off errors, this function exactly reduces
     // the argument to the range [-45, 45] before converting it to radians.
-    double r; int q;
+    double r;
+    int q;
     r = x % 360.0;
     q = (r / 90).round().toInt(); // If r is NaN this returns 0
     r -= 90 * q;
@@ -225,13 +230,29 @@ class GeoMath {
     double s = sin(r), c = cos(r);
     double sinx, cosx;
     switch (q & 3) {
-      case  0: sinx =  s; cosx =  c; break;
-      case  1: sinx =  c; cosx = -s; break;
-      case  2: sinx = -s; cosx = -c; break;
-      default: sinx = -c; cosx =  s; break; // case 3
+      case 0:
+        sinx = s;
+        cosx = c;
+        break;
+      case 1:
+        sinx = c;
+        cosx = -s;
+        break;
+      case 2:
+        sinx = -s;
+        cosx = -c;
+        break;
+      default:
+        sinx = -c;
+        cosx = s;
+        break; // case 3
     }
-    if (x != 0) { sinx += 0.0; cosx += 0.0; }
-    p.first = sinx; p.second = cosx;
+    if (x != 0) {
+      sinx += 0.0;
+      cosx += 0.0;
+    }
+    p.first = sinx;
+    p.second = cosx;
   }
 
   /**
@@ -252,21 +273,37 @@ class GeoMath {
     // converting it to degrees and mapping the result to the correct
     // quadrant.
     int q = 0;
-    if (y.abs() >x.abs()) { double t; t = x; x = y; y = t; q = 2; }
-    if (x < 0) { x = -x; ++q; }
+    if (y.abs() > x.abs()) {
+      double t;
+      t = x;
+      x = y;
+      y = t;
+      q = 2;
+    }
+    if (x < 0) {
+      x = -x;
+      ++q;
+    }
     // here x >= 0 and x >= abs(y), so angle is in [-pi/4, pi/4]
     double ang = toDegrees(atan2(y, x));
     switch (q) {
-    // Note that atan2d(-0.0, 1.0) will return -0.  However, we expect that
-    // atan2d will not be called with y = -0.  If need be, include
-    //
-    //   case 0: ang = 0 + ang; break;
-    //
-    // and handle mpfr as in AngRound.
-      case 1: ang = (y >= 0 ? 180 : -180) - ang; break;
-      case 2: ang =  90 - ang; break;
-      case 3: ang = -90 + ang; break;
-      default: break;
+      // Note that atan2d(-0.0, 1.0) will return -0.  However, we expect that
+      // atan2d will not be called with y = -0.  If need be, include
+      //
+      //   case 0: ang = 0 + ang; break;
+      //
+      // and handle mpfr as in AngRound.
+      case 1:
+        ang = (y >= 0 ? 180 : -180) - ang;
+        break;
+      case 2:
+        ang = 90 - ang;
+        break;
+      case 3:
+        ang = -90 + ang;
+        break;
+      default:
+        break;
     }
     return ang;
   }

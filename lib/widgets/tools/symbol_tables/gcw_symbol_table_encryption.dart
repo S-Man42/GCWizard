@@ -30,7 +30,14 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final bool alwaysIgnoreUnknown;
 
   const GCWSymbolTableEncryption(
-      {Key key, this.data, this.countColumns, this.mediaQueryData, this.symbolKey, this.onChanged, this.onBeforeEncrypt, this.alwaysIgnoreUnknown})
+      {Key key,
+      this.data,
+      this.countColumns,
+      this.mediaQueryData,
+      this.symbolKey,
+      this.onChanged,
+      this.onBeforeEncrypt,
+      this.alwaysIgnoreUnknown})
       : super(key: key);
 
   @override
@@ -272,12 +279,11 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           }
 
           paintImage(
-            canvas: canvas,
-            fit: BoxFit.contain,
-            rect: Rect.fromLTWH(j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE),
-            image: image
-          );
-
+              canvas: canvas,
+              fit: BoxFit.contain,
+              rect: Rect.fromLTWH(
+                  j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE),
+              image: image);
         }
       }
     }
@@ -285,7 +291,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return await saveByteDataToFile(context,
-        trimNullBytes(data.buffer.asUint8List()), 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    return await saveByteDataToFile(context, trimNullBytes(data.buffer.asUint8List()),
+        'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

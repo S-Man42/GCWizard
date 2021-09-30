@@ -62,7 +62,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
   Widget _decodeWidgets() {
     return Column(children: [
-      Container(),   // fixes strange behaviour: First GCWOpenFile widget from encode/decode affect each other
+      Container(), // fixes strange behaviour: First GCWOpenFile widget from encode/decode affect each other
       GCWOpenFile(
         title: i18n(context, 'visual_cryptography_image') + ' 1',
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
@@ -162,10 +162,11 @@ class VisualCryptographyState extends State<VisualCryptography> {
           });
         },
       ),
-      
+
       _encodeImage != null
           ? Container(
-              child: GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: {GCWImageViewButtons.ALL}),
+              child:
+                  GCWImageView(imageData: GCWImageViewData(_encodeImage), suppressedButtons: {GCWImageViewButtons.ALL}),
               padding: EdgeInsets.symmetric(vertical: 25),
             )
           : Container(),

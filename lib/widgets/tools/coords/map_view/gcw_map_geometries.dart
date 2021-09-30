@@ -62,8 +62,7 @@ class GCWMapLine {
   List<LatLng> shape = [];
 
   GCWMapLine(this.parent, this.start, this.end) {
-    if (this.start == null && this.end == null)
-      return;
+    if (this.start == null && this.end == null) return;
 
     if (this.start == null) {
       shape.add(end.point);

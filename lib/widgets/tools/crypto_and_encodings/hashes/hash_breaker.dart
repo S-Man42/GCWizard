@@ -134,23 +134,23 @@ class _HashBreakerState extends State<HashBreaker> {
 
   _onDoCalculation() async {
     await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: breakHashAsync,
-                parameter: _buildJobData(),
-                onReady: (data) => _showOutput(data),
-                isOverlay: true,
-              ),
-              height: 220,
-              width: 150,
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: Container(
+            child: GCWAsyncExecuter(
+              isolatedFunction: breakHashAsync,
+              parameter: _buildJobData(),
+              onReady: (data) => _showOutput(data),
+              isOverlay: true,
             ),
-          );
-        },
-      );
+            height: 220,
+            width: 150,
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildSubmitButton() {

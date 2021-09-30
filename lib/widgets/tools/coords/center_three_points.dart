@@ -42,7 +42,6 @@ class CenterThreePointsState extends State<CenterThreePoints> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -157,9 +156,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         circleColorSameAsPointColor: false,
         circle: GCWMapCircle(radius: _currentDistance));
 
-    _currentMapPoints = [
-      mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCurrentCoords3, mapPointCenter
-    ];
+    _currentMapPoints = [mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCurrentCoords3, mapPointCenter];
 
     _currentMapPolylines = [
       GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCenter]),
@@ -174,7 +171,6 @@ class CenterThreePointsState extends State<CenterThreePoints> {
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
               .toColor())
     ];
-
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

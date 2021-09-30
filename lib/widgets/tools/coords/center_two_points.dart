@@ -108,9 +108,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
         circleColorSameAsPointColor: false,
         circle: GCWMapCircle(radius: _currentDistance));
 
-    _currentMapPoints = [
-      mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCenter
-    ];
+    _currentMapPoints = [mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCenter];
 
     _currentMapPolylines = [
       GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCurrentCoords2])

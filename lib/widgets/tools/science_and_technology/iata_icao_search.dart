@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class IATAICAOSearch extends StatefulWidget {
-   @override
+  @override
   IATAICAOSearchState createState() => IATAICAOSearchState();
 }
 
@@ -58,41 +58,41 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
         ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _inputControllerName,
-          hintText: i18n(context, 'iataicao_search_contains'),
-          onChanged: (text) {
-            setState(() {
-              _currentInputName = text;
-              _output = null;
-            });
-          },
-        )
-            : Column(
-          children: <Widget>[
-              GCWTwoOptionsSwitch(
-                value: _currentCode,
-                title: i18n(context, 'iataicao_search'),
-                leftValue: i18n(context, 'iataicao_iata'),
-                rightValue: i18n(context, 'iataicao_icao'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentCode = value;
-                    _output = null;
-                  });
-                },
-              ),
-              GCWTextField(
-                controller: _inputControllerCode,
-                hintText: i18n(context, 'iataicao_search_startswith'),
+                controller: _inputControllerName,
+                hintText: i18n(context, 'iataicao_search_contains'),
                 onChanged: (text) {
                   setState(() {
-                    _currentInputCode = text;
+                    _currentInputName = text;
                     _output = null;
                   });
                 },
+              )
+            : Column(
+                children: <Widget>[
+                  GCWTwoOptionsSwitch(
+                    value: _currentCode,
+                    title: i18n(context, 'iataicao_search'),
+                    leftValue: i18n(context, 'iataicao_iata'),
+                    rightValue: i18n(context, 'iataicao_icao'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentCode = value;
+                        _output = null;
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    controller: _inputControllerCode,
+                    hintText: i18n(context, 'iataicao_search_startswith'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentInputCode = text;
+                        _output = null;
+                      });
+                    },
+                  ),
+                ],
               ),
-          ],
-        ),
         GCWButton(
           text: i18n(context, 'common_search'),
           onPressed: () {
@@ -107,52 +107,53 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
   }
 
   _buildOutput() {
-
-    if (_currentMode == GCWSwitchPosition.left) { // search for name
-      if (_currentInputName == null || _currentInputName == "")
-        return Container();
+    if (_currentMode == GCWSwitchPosition.left) {
+      // search for name
+      if (_currentInputName == null || _currentInputName == "") return Container();
 
       List<List<String>> data = [];
       List<int> flexValues = List<int>.generate(4, (index) => 1);
       var output;
 
-      data = IATA_ICAO_CODES
-          .values.where((e) => e['name'] != null && e['name'].toLowerCase().contains(_currentInputName.toLowerCase()))
+      data = IATA_ICAO_CODES.values
+          .where((e) => e['name'] != null && e['name'].toLowerCase().contains(_currentInputName.toLowerCase()))
           .map((e) {
-              var dataList = [e['name']];
-              dataList.addAll(['IATA', 'ICAO', 'Location_served'].map((field) => e[field]));
+        var dataList = [e['name']];
+        dataList.addAll(['IATA', 'ICAO', 'Location_served'].map((field) => e[field]));
 
-              return dataList;
-
-            })
-          .toList();
+        return dataList;
+      }).toList();
 
       flexValues = [2, 1, 1, 2];
       data.sort((a, b) => a[0].compareTo(b[0]));
-      data.insert(0, [i18n(context, 'common_name'), i18n(context, 'iataicao_iata'), i18n(context, 'iataicao_icao'), i18n(context, 'common_place')]);
+      data.insert(0, [
+        i18n(context, 'common_name'),
+        i18n(context, 'iataicao_iata'),
+        i18n(context, 'iataicao_icao'),
+        i18n(context, 'common_place')
+      ]);
 
       output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 1, hasHeader: true);
 
       return Column(
         children: output,
       );
-
-    } else { // search for code
-      if (_currentInputCode == null || _currentInputCode == "")
-        return Container();
+    } else {
+      // search for code
+      if (_currentInputCode == null || _currentInputCode == "") return Container();
 
       List<int> flexValues = List<int>.generate(4, (index) => 1);
       var output;
 
-      if (_currentCode == GCWSwitchPosition.left) { // search for IATA
-        var data = IATA_ICAO_CODES
-            .values.where((e) => (e['IATA'] != null && e['IATA'].startsWith(_currentInputCode.toUpperCase())))
+      if (_currentCode == GCWSwitchPosition.left) {
+        // search for IATA
+        var data = IATA_ICAO_CODES.values
+            .where((e) => (e['IATA'] != null && e['IATA'].startsWith(_currentInputCode.toUpperCase())))
             .map((e) {
-              var dataList = [e['IATA']];
-              dataList.addAll(['IATA', 'ICAO', 'name', 'Location_served'].where((f) => (f != 'IATA')).map((f) => e[f]));
-              return dataList;
-            })
-            .toList();
+          var dataList = [e['IATA']];
+          dataList.addAll(['IATA', 'ICAO', 'name', 'Location_served'].where((f) => (f != 'IATA')).map((f) => e[f]));
+          return dataList;
+        }).toList();
         flexValues = [1, 1, 2, 2];
 
         data.sort((a, b) {
@@ -162,21 +163,25 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
           return a[1].compareTo(b[1]);
         });
 
-        data.insert(0, [i18n(context, 'iataicao_iata'), i18n(context, 'iataicao_icao'), i18n(context, 'common_name'), i18n(context, 'common_place')]);
+        data.insert(0, [
+          i18n(context, 'iataicao_iata'),
+          i18n(context, 'iataicao_icao'),
+          i18n(context, 'common_name'),
+          i18n(context, 'common_place')
+        ]);
         output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 2, hasHeader: true);
 
         return Column(
           children: output,
         );
       } else {
-        var data = IATA_ICAO_CODES
-            .values.where((e) => (e['ICAO'] != null && e['ICAO'].startsWith(_currentInputCode.toUpperCase())))
+        var data = IATA_ICAO_CODES.values
+            .where((e) => (e['ICAO'] != null && e['ICAO'].startsWith(_currentInputCode.toUpperCase())))
             .map((e) {
-              var dataList = [e['ICAO']];
-              dataList.addAll(['ICAO', 'IATA', 'name', 'Location_served'].where((f) => (f != 'ICAO')).map((f) => e[f]));
-              return dataList;
-            })
-            .toList();
+          var dataList = [e['ICAO']];
+          dataList.addAll(['ICAO', 'IATA', 'name', 'Location_served'].where((f) => (f != 'ICAO')).map((f) => e[f]));
+          return dataList;
+        }).toList();
         flexValues = [1, 1, 2, 2];
 
         data.sort((a, b) {
@@ -186,7 +191,12 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
           return a[1].compareTo(b[1]);
         });
 
-        data.insert(0, [i18n(context, 'iataicao_icao'), i18n(context, 'iataicao_iata'), i18n(context, 'common_name'), i18n(context, 'common_place')]);
+        data.insert(0, [
+          i18n(context, 'iataicao_icao'),
+          i18n(context, 'iataicao_iata'),
+          i18n(context, 'common_name'),
+          i18n(context, 'common_place')
+        ]);
         output = columnedMultiLineOutput(context, data, flexValues: flexValues, copyColumn: 2, hasHeader: true);
 
         return Column(
@@ -194,6 +204,5 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
         );
       }
     }
-
   }
 }

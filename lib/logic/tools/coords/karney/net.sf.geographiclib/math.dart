@@ -47,14 +47,13 @@ double toDegrees(double angrad) {
  * @returns {number} value with the magnitude of x and with the sign of y.
  */
 double copySign(double x, double y) {
-  return x.abs() * (y < 0 || (y == 0 && 1/y < 0) ? -1 : 1);
+  return x.abs() * (y < 0 || (y == 0 && 1 / y < 0) ? -1 : 1);
 }
-
 
 double hypot(double x, double y) {
   return sqrt(pow(x, 2) + pow(y, 2));
 }
 
 double cbrt(double x) {
-  return pow(x.abs(), 1.0/3.0) * x.sign;
+  return pow(x.abs(), 1.0 / 3.0) * x.sign;
 }

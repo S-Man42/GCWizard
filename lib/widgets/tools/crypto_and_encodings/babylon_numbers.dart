@@ -124,12 +124,11 @@ class BabylonNumbersState extends State<BabylonNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-      segmentFunction:(displayedSegments, readOnly) {
-        return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-      },
-      segments: segments,
-      readOnly: true
-    );
+        segmentFunction: (displayedSegments, readOnly) {
+          return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        },
+        segments: segments,
+        readOnly: true);
   }
 
   Widget _buildOutput() {

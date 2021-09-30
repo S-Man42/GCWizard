@@ -57,7 +57,10 @@ class EnigmaState extends State<Enigma> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'enigma_input'), suppressTopSpace: true,),
+        GCWTextDivider(
+          text: i18n(context, 'enigma_input'),
+          suppressTopSpace: true,
+        ),
         GCWTextField(
           controller: _inputController,
           onChanged: (text) {

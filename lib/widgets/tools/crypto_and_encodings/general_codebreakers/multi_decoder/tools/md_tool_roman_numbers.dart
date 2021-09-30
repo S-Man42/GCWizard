@@ -19,7 +19,9 @@ class MultiDecoderToolRomanNumbers extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ROMANNUMBERS,
             onDecode: (input) {
-              var type = options[MDT_ROMANNUMBERS_OPTION_MODE] == MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION ? RomanNumberType.USE_SUBTRACTION_RULE : RomanNumberType.ONLY_ADDITION;
+              var type = options[MDT_ROMANNUMBERS_OPTION_MODE] == MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION
+                  ? RomanNumberType.USE_SUBTRACTION_RULE
+                  : RomanNumberType.ONLY_ADDITION;
 
               return decodeRomanNumbers(input, type: type);
             },
@@ -33,8 +35,12 @@ class MultiDecoderToolRomanNumbers extends GCWMultiDecoderTool {
                 items: RomanNumberType.values.map((type) {
                   var key;
                   switch (type) {
-                    case RomanNumberType.USE_SUBTRACTION_RULE: key = MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION; break;
-                    case RomanNumberType.ONLY_ADDITION: key = MDT_ROMANNUMBERS_OPTION_MODE_ADDITION; break;
+                    case RomanNumberType.USE_SUBTRACTION_RULE:
+                      key = MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION;
+                      break;
+                    case RomanNumberType.ONLY_ADDITION:
+                      key = MDT_ROMANNUMBERS_OPTION_MODE_ADDITION;
+                      break;
                   }
 
                   return GCWDropDownMenuItem(

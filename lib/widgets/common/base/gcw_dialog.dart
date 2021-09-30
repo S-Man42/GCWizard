@@ -8,9 +8,10 @@ final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold
 
 showGCWDialog(BuildContext context, String title, Widget child, List<Widget> buttons,
     {cancelButton: true, closeOnOutsideTouch: false}) {
-  if (cancelButton) buttons.add(GCWDialogButton(
-    text: i18n(context, 'common_cancel'),
-  ));
+  if (cancelButton)
+    buttons.add(GCWDialogButton(
+      text: i18n(context, 'common_cancel'),
+    ));
 
   AlertDialog dialog = AlertDialog(
       title: Text(title),
@@ -41,8 +42,7 @@ class GCWDialogButton extends StatefulWidget {
   final Function onPressed;
   final bool suppressClose;
 
-  const GCWDialogButton({Key key, this.text, this.onPressed, this.suppressClose: false})
-      : super(key: key);
+  const GCWDialogButton({Key key, this.text, this.onPressed, this.suppressClose: false}) : super(key: key);
 
   @override
   _GCWDialogButtonState createState() => _GCWDialogButtonState();
