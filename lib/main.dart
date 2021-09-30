@@ -56,7 +56,7 @@ class App extends StatelessWidget {
                 // crashes because of some NULL problems on TextSelectionControls menu
                 'clipboard_editor': (BuildContext context) => GCWTool(
                     tool: GCWClipboardEditor(),
-                    toolName: 'Clipboard Editor',
+                    toolName: i18n(context, 'clipboardeditor_title'),
                     i18nPrefix: '',
                     helpLocales: ['de', 'en', 'fr'])
               },
