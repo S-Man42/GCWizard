@@ -43,7 +43,8 @@ class SegmentDisplayPainter extends CustomPainter {
 
   GCWTouchCanvas _touchCanvas;
 
-  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState, {this.customPaint, this.segment_color_on: SEGMENTS_COLOR_ON, this.segment_color_off: SEGMENTS_COLOR_OFF});
+  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState,
+      {this.customPaint, this.segment_color_on: SEGMENTS_COLOR_ON, this.segment_color_off: SEGMENTS_COLOR_OFF});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -287,8 +288,8 @@ class SegmentDisplayPainter extends CustomPainter {
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
-        onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawCircle(
+        Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint, onTapDown: (tapDetail) {
       setSegmentState('dp', !segments['dp']);
     });
   }
@@ -485,8 +486,8 @@ class SegmentDisplayPainter extends CustomPainter {
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
-        onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawCircle(
+        Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint, onTapDown: (tapDetail) {
       setSegmentState('dp', !segments['dp']);
     });
   }
@@ -587,8 +588,8 @@ class SegmentDisplayPainter extends CustomPainter {
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
-        onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawCircle(
+        Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint, onTapDown: (tapDetail) {
       setSegmentState('dp', !segments['dp']);
     });
   }

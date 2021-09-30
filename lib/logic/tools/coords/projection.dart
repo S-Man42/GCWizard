@@ -12,8 +12,8 @@ LatLng projection(LatLng coord, double bearing, double distance, Ellipsoid ellip
 
   bearing = utils.normalizeBearing(bearing);
 
-  GeodesicData projected = Geodesic(ellipsoid.a, ellipsoid.f)
-      .direct(coord.latitude, coord.longitude, bearing, distance);
+  GeodesicData projected =
+      Geodesic(ellipsoid.a, ellipsoid.f).direct(coord.latitude, coord.longitude, bearing, distance);
 
   return LatLng(projected.lat2, projected.lon2);
 }

@@ -32,7 +32,6 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
         value: _currentMode,
@@ -164,19 +163,18 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       return Column(
         children: <Widget>[
           GCWSegmentDisplayOutput(
-            segmentFunction:(displayedSegments, readOnly) {
-              return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-            },
-            segments: segments,
-            readOnly: true
-          ),
+              segmentFunction: (displayedSegments, readOnly) {
+                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+              },
+              segments: segments,
+              readOnly: true),
           GCWOutput(
-            title: i18n(context, 'shadoksnumbers_single_numbers'),
-            child: _segmentsToShadoks(segments)
-              .replaceAll('GA', '0')
-              .replaceAll('BU', '1')
-              .replaceAll('ZO', '2')
-              .replaceAll('MEU', '3')),
+              title: i18n(context, 'shadoksnumbers_single_numbers'),
+              child: _segmentsToShadoks(segments)
+                  .replaceAll('GA', '0')
+                  .replaceAll('BU', '1')
+                  .replaceAll('ZO', '2')
+                  .replaceAll('MEU', '3')),
           GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: _segmentsToShadoks(segments))
         ],
       );
@@ -191,12 +189,11 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       return Column(
         children: <Widget>[
           GCWSegmentDisplayOutput(
-            segmentFunction:(displayedSegments, readOnly) {
-              return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-            },
-            segments: segments['displays'],
-            readOnly: true
-          ),
+              segmentFunction: (displayedSegments, readOnly) {
+                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+              },
+              segments: segments['displays'],
+              readOnly: true),
           GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments['numbers'].join(' ')),
           GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments['quaternary']),
           GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: segments['shadoks'])

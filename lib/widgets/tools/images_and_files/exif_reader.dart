@@ -83,8 +83,7 @@ class _ExifReaderState extends State<ExifReader> {
   Future<void> _readFile(local.PlatformFile _file) async {
     Image.Image _image;
 
-    if (_file != null)
-      _image = await _completeImageMetadata(_file);
+    if (_file != null) _image = await _completeImageMetadata(_file);
 
     if (_file == null || _image == null) {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
@@ -121,21 +120,17 @@ class _ExifReaderState extends State<ExifReader> {
 
   List _buildOutput(Map _tableTags) {
     if (!_fileLoaded) {
-      return [
-        GCWDefaultOutput()
-      ];
+      return [GCWDefaultOutput()];
     }
 
     List<Widget> widgets = [];
-    widgets.add(
-      Container(
-        child: GCWImageView(
-          imageData: GCWImageViewData(file),
-          suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
-        ),
-        padding: EdgeInsets.only(top: 10),
-      )
-    );
+    widgets.add(Container(
+      child: GCWImageView(
+        imageData: GCWImageViewData(file),
+        suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
+      ),
+      padding: EdgeInsets.only(top: 10),
+    ));
     _decorateFile(widgets, file);
     _decorateImage(widgets, image);
     _decorateFileTypeSpecific(widgets, file);
@@ -204,8 +199,7 @@ class _ExifReaderState extends State<ExifReader> {
   /// Section file type specific
   ///
   void _decorateFileTypeSpecific(List<Widget> widgets, local.PlatformFile platformFile) {
-    if (platformFile == null)
-      return;
+    if (platformFile == null) return;
 
     var data = <List<dynamic>>[];
     var fileType = getFileType(platformFile.bytes);
@@ -219,17 +213,14 @@ class _ExifReaderState extends State<ExifReader> {
           data.add([i18n(context, 'exif_comment'), jpegData.comment]);
         if (jpegData.adobe != null) {
           var adobe = jpegData.adobe;
-          if (adobe.version != null)
-            data.add(['Adobe Version', adobe.version]);
-          if (adobe.transformCode != null)
-            data.add(['Adobe TransformCode', adobe.transformCode]);
-          if (adobe.flags0 != null)
-            data.add(['Adobe Flags 0', adobe.flags0]);
-          if (adobe.flags1 != null)
-            data.add(['Adobe Flags 1', adobe.flags1]);
+          if (adobe.version != null) data.add(['Adobe Version', adobe.version]);
+          if (adobe.transformCode != null) data.add(['Adobe TransformCode', adobe.transformCode]);
+          if (adobe.flags0 != null) data.add(['Adobe Flags 0', adobe.flags0]);
+          if (adobe.flags1 != null) data.add(['Adobe Flags 1', adobe.flags1]);
         }
         break;
-      default: return;
+      default:
+        return;
     }
 
     if (data.isNotEmpty) {
@@ -237,8 +228,7 @@ class _ExifReaderState extends State<ExifReader> {
           title: fileType.toString().split('.').last,
           child: Column(
             children: columnedMultiLineOutput(context, data),
-          )
-      ));
+          )));
     }
   }
 
@@ -325,20 +315,16 @@ class _ExifReaderState extends State<ExifReader> {
     if (file == null) return;
     var _hiddenData = hiddenData(file);
 
-    if (_hiddenData == null || _hiddenData.length <= 1)
-      return;
+    if (_hiddenData == null || _hiddenData.length <= 1) return;
 
-    widgets.add(
-      GCWOutput(
+    widgets.add(GCWOutput(
         title: i18n(context, 'hiddendata_title'),
         child: GCWButton(
           text: i18n(context, 'exif_showhiddendata'),
           onPressed: () {
             openInHiddenData(context, file);
           },
-        )
-      )
-    );
+        )));
   }
 }
 

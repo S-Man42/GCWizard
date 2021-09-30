@@ -32,16 +32,18 @@ class CentroidState extends State<Centroid> {
 
   @override
   Widget build(BuildContext context) {
-    var coordWidgets = List.generate(_currentCountCoords, (index) => GCWCoords(
-      title: i18n(context, 'coords_common_coordinate') + ' ' + (index + 1).toString(),
-      coordsFormat: _currentCoordsFormats[index],
-      onChanged: (ret) {
-        setState(() {
-          _currentCoordsFormats[index] = ret['coordsFormat'];
-          _currentCoords[index] = ret['value'];
-        });
-      },
-    ));
+    var coordWidgets = List.generate(
+        _currentCountCoords,
+        (index) => GCWCoords(
+              title: i18n(context, 'coords_common_coordinate') + ' ' + (index + 1).toString(),
+              coordsFormat: _currentCoordsFormats[index],
+              onChanged: (ret) {
+                setState(() {
+                  _currentCoordsFormats[index] = ret['coordsFormat'];
+                  _currentCoords[index] = ret['value'];
+                });
+              },
+            ));
 
     return Column(
       children: <Widget>[
@@ -97,13 +99,18 @@ class CentroidState extends State<Centroid> {
   _calculateOutput() {
     _currentValues = [centroid(_currentCoords)];
 
-    _currentMapPoints = _currentCoords.asMap().map((index, coord) {
-      return MapEntry(index, GCWMapPoint(
-        point: _currentCoords[index],
-        markerText: i18n(context, 'coords_common_coordinate') + ' ' + (index + 1).toString(),
-        coordinateFormat: _currentCoordsFormats[index]
-      ));
-    }).values.toList();
+    _currentMapPoints = _currentCoords
+        .asMap()
+        .map((index, coord) {
+          return MapEntry(
+              index,
+              GCWMapPoint(
+                  point: _currentCoords[index],
+                  markerText: i18n(context, 'coords_common_coordinate') + ' ' + (index + 1).toString(),
+                  coordinateFormat: _currentCoordsFormats[index]));
+        })
+        .values
+        .toList();
 
     _currentMapPoints.add(
       GCWMapPoint(

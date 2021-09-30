@@ -60,8 +60,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
             return GCWDropDownMenuItem(
                 value: mode.key,
                 child: i18n(context, mode.value['title']),
-                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-            );
+                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
           }).toList(),
         ),
         if (_currentMode == GCWSwitchPosition.left)
@@ -98,34 +97,31 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentEncodeInput == null || _currentEncodeInput.isEmpty)
-        return GCWDefaultOutput();
+      if (_currentEncodeInput == null || _currentEncodeInput.isEmpty) return GCWDefaultOutput();
 
       List<List<String>> segments = encodeBraille(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
-          GCWDefaultOutput(
-            child: segments.map((segment) => segment.join()).join(' ')
-          )
+          GCWDefaultOutput(child: segments.map((segment) => segment.join()).join(' '))
         ],
       );
     } else {
-      if (_currentDecodeInput == null || _currentDecodeInput.isEmpty)
-        return GCWDefaultOutput();
+      if (_currentDecodeInput == null || _currentDecodeInput.isEmpty) return GCWDefaultOutput();
 
       var segments = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), _currentLanguage, true);
       var segmentsBasicDigits;
       var segmentsBasicLetters;
       if (_currentLanguage == BrailleLanguage.SIMPLE) {
-        segmentsBasicDigits = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), BrailleLanguage.BASIC, false);
-        segmentsBasicLetters = decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), BrailleLanguage.BASIC, true);
+        segmentsBasicDigits =
+            decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), BrailleLanguage.BASIC, false);
+        segmentsBasicLetters =
+            decodeBraille(_currentDecodeInput.split(RegExp(r'\s+')).toList(), BrailleLanguage.BASIC, true);
       }
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          if (_currentLanguage != BrailleLanguage.BASIC)
-            GCWDefaultOutput(child: segments['chars'].join()),
+          if (_currentLanguage != BrailleLanguage.BASIC) GCWDefaultOutput(child: segments['chars'].join()),
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
@@ -136,7 +132,7 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
                   ),
                 if (segmentsBasicDigits['chars'].join().toUpperCase() != segments['chars'].join())
                   GCWOutput(
-                    title: i18n(context,'brailledotnumbers_basic_digits'),
+                    title: i18n(context, 'brailledotnumbers_basic_digits'),
                     child: segmentsBasicDigits['chars'].join().toUpperCase(),
                   ),
               ],
@@ -148,14 +144,13 @@ class BrailleDotNumbersState extends State<BrailleDotNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-      segmentFunction:(displayedSegments, readOnly) {
-        if (_currentLanguage == BrailleLanguage.EUR)
-          return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-        else
-          return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-      },
-      segments: segments,
-      readOnly: true
-    );
+        segmentFunction: (displayedSegments, readOnly) {
+          if (_currentLanguage == BrailleLanguage.EUR)
+            return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          else
+            return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        },
+        segments: segments,
+        readOnly: true);
   }
 }

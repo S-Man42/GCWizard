@@ -18,55 +18,51 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
 
   BrailleSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
       : super(
-      key: key,
-      initialSegments: _INITIAL_SEGMENTS,
-      segments: segments,
-      readOnly: readOnly,
-      onChanged: onChanged,
-      type: SegmentDisplayType.CUSTOM,
-      customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState, Color segment_color_on, Color segment_color_off) {
-        var paint = defaultSegmentPaint();
-        var SEGMENTS_COLOR_ON = segment_color_on;
-        var SEGMENTS_COLOR_OFF = segment_color_off;
+            key: key,
+            initialSegments: _INITIAL_SEGMENTS,
+            segments: segments,
+            readOnly: readOnly,
+            onChanged: onChanged,
+            type: SegmentDisplayType.CUSTOM,
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
+                Color segment_color_on, Color segment_color_off) {
+              var paint = defaultSegmentPaint();
+              var SEGMENTS_COLOR_ON = segment_color_on;
+              var SEGMENTS_COLOR_OFF = segment_color_off;
 
-        var circles = {
-          '1': [15, 20],
-          '2': [15, 50],
-          '3': [15, 80],
-          '4': [35, 20],
-          '5': [35, 50],
-          '6': [35, 80]
-        };
+              var circles = {
+                '1': [15, 20],
+                '2': [15, 50],
+                '3': [15, 80],
+                '4': [35, 20],
+                '5': [35, 50],
+                '6': [35, 80]
+              };
 
-        circles.forEach((key, value) {
-          paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              circles.forEach((key, value) {
+                paint.color = currentSegments[key] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
-          var pointSize = size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS;
+                var pointSize = size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * _BRAILLE_RADIUS;
 
-          canvas.touchCanvas.drawCircle(
-              Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * value[0],
-                  size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1]),
-              pointSize,
-              paint, onTapDown: (tapDetail) {
-            setSegmentState(key, !currentSegments[key]);
-          });
+                canvas.touchCanvas.drawCircle(
+                    Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * value[0],
+                        size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1]),
+                    pointSize,
+                    paint, onTapDown: (tapDetail) {
+                  setSegmentState(key, !currentSegments[key]);
+                });
 
-          if (size.height < 50)
-            return;
+                if (size.height < 50) return;
 
-          TextSpan span = TextSpan(
-              style: gcwTextStyle().copyWith(color: Colors.white, fontSize: pointSize * 1.3),
-              text: key);
-          TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
-          textPainter.layout();
+                TextSpan span =
+                    TextSpan(style: gcwTextStyle().copyWith(color: Colors.white, fontSize: pointSize * 1.3), text: key);
+                TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
+                textPainter.layout();
 
-          textPainter.paint(
-              canvas.canvas,
-              Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * value[0] - textPainter.width * 0.5,
-              size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1] - textPainter.height * 0.5)
-          );
-
-        });
-
-      });
+                textPainter.paint(
+                    canvas.canvas,
+                    Offset(size.width / _BRAILLE_RELATIVE_DISPLAY_WIDTH * value[0] - textPainter.width * 0.5,
+                        size.height / _BRAILLE_RELATIVE_DISPLAY_HEIGHT * value[1] - textPainter.height * 0.5));
+              });
+            });
 }

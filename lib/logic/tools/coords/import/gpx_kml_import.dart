@@ -57,25 +57,26 @@ MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
   // merge points
   if ((result != null) && (result.points != null)) {
     for (var x = 0; x < result.points.length; x++)
-      for (var y = x+1; y < result.points.length; y++)
+      for (var y = x + 1; y < result.points.length; y++)
         if ((result.points[x].latitude == result.points[y].latitude) &&
-            (result.points[x].longitude == result.points[y].longitude))  {
-
+            (result.points[x].longitude == result.points[y].longitude)) {
           if (result.polylines != null) {
             result.polylines.forEach((polyline) {
-              for(var i = 0; i < polyline.pointUUIDs.length; i++)
+              for (var i = 0; i < polyline.pointUUIDs.length; i++)
                 if (polyline.pointUUIDs[i] == result.points[y].uuid)
                   polyline.pointUUIDs[i] = result.points[x].uuid;
-                else if (polyline.pointUUIDs[i] == result.points[x].uuid)
-                  result.points[x].color = '#000000';
+                else if (polyline.pointUUIDs[i] == result.points[x].uuid) result.points[x].color = '#000000';
             });
           }
           result.points[x].name = result.points[x].name ?? result.points[y].name;
           result.points[x].color = (result.points[x].color == null) | (result.points[x].color == '#000000')
-                                    ? result.points[y].color : result.points[x].color;
+              ? result.points[y].color
+              : result.points[x].color;
           result.points[x].radius = result.points[x].radius ?? result.points[y].radius;
-          result.points[x].circleColor = (result.points[x].circleColor == null) | (result.points[x].circleColor == '#000000')
-                                          ? result.points[y].circleColor : result.points[x].circleColor;
+          result.points[x].circleColor =
+              (result.points[x].circleColor == null) | (result.points[x].circleColor == '#000000')
+                  ? result.points[y].circleColor
+                  : result.points[x].circleColor;
           result.points[x].circleColorSameAsColor |= result.points[y].circleColorSameAsColor;
 
           result.points.removeAt(y);

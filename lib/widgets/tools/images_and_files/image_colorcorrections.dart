@@ -53,11 +53,26 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   var _currentEdgeDetection = 0.0;
 
   final PREVIEW_VALUES = {
-    100: {'title': 'image_colorcorrections_previewsize_tiny_title', 'description': 'image_colorcorrections_previewsize_tiny_description'},
-    250: {'title': 'image_colorcorrections_previewsize_small_title', 'description': 'image_colorcorrections_previewsize_small_description'},
-    500: {'title': 'image_colorcorrections_previewsize_medium_title', 'description': 'image_colorcorrections_previewsize_medium_description'},
-    1000: {'title': 'image_colorcorrections_previewsize_big_title', 'description': 'image_colorcorrections_previewsize_big_description'},
-    50000: {'title': 'image_colorcorrections_previewsize_original_title', 'description': 'image_colorcorrections_previewsize_original_description'},
+    100: {
+      'title': 'image_colorcorrections_previewsize_tiny_title',
+      'description': 'image_colorcorrections_previewsize_tiny_description'
+    },
+    250: {
+      'title': 'image_colorcorrections_previewsize_small_title',
+      'description': 'image_colorcorrections_previewsize_small_description'
+    },
+    500: {
+      'title': 'image_colorcorrections_previewsize_medium_title',
+      'description': 'image_colorcorrections_previewsize_medium_description'
+    },
+    1000: {
+      'title': 'image_colorcorrections_previewsize_big_title',
+      'description': 'image_colorcorrections_previewsize_big_description'
+    },
+    50000: {
+      'title': 'image_colorcorrections_previewsize_original_title',
+      'description': 'image_colorcorrections_previewsize_original_description'
+    },
   };
 
   _currentDataInit({int previewSize}) {
@@ -132,40 +147,43 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
         Container(), // Fixes a display issue
         if (_currentPreview != null)
           GCWTextDivider(
-            suppressTopSpace: true,
-            text: i18n(context, 'image_colorcorrections_previewsize_title', parameters: [i18n(context, PREVIEW_VALUES[Prefs.get('imagecolorcorrections_maxpreviewheight')]['title'])]),
-            trailing: GCWPopupMenu(
-              iconData: Icons.settings,
-              size: IconButtonSize.SMALL,
-                menuItemBuilder: (context) => PREVIEW_VALUES.map((key, value) {
-                  return MapEntry(key,
-                    GCWPopupMenuItem(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(i18n(context, value['title']), style: gcwDialogTextStyle()),
-                            Container(
-                                child: Text(
-                                  i18n(context, value['description']),
-                                  style: gcwDescriptionTextStyle().copyWith(color: themeColors().dialogText()),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+              suppressTopSpace: true,
+              text: i18n(context, 'image_colorcorrections_previewsize_title', parameters: [
+                i18n(context, PREVIEW_VALUES[Prefs.get('imagecolorcorrections_maxpreviewheight')]['title'])
+              ]),
+              trailing: GCWPopupMenu(
+                  iconData: Icons.settings,
+                  size: IconButtonSize.SMALL,
+                  menuItemBuilder: (context) => PREVIEW_VALUES
+                      .map((key, value) {
+                        return MapEntry(
+                            key,
+                            GCWPopupMenuItem(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(i18n(context, value['title']), style: gcwDialogTextStyle()),
+                                    Container(
+                                        child: Text(
+                                          i18n(context, value['description']),
+                                          style: gcwDescriptionTextStyle().copyWith(color: themeColors().dialogText()),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN)),
+                                  ],
                                 ),
-                                padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN)),
-                          ],
-                        ),
-                        action: (index) {
-                          setState(() {
-                            Prefs.setInt('imagecolorcorrections_maxpreviewheight', key);
+                                action: (index) {
+                                  setState(() {
+                                    Prefs.setInt('imagecolorcorrections_maxpreviewheight', key);
 
-                            _originalPreview = _currentDataInit(previewSize: key);
-                            _currentPreview = img.Image.from(_originalPreview);
-                          });
-                        })
-                  );
-                }).values.toList()
-              )
-          ),
+                                    _originalPreview = _currentDataInit(previewSize: key);
+                                    _currentPreview = img.Image.from(_originalPreview);
+                                  });
+                                }));
+                      })
+                      .values
+                      .toList())),
         if (_currentPreview != null)
           GCWImageView(
             imageData: _originalData == null ? null : GCWImageViewData(PlatformFile(bytes: _imageBytes())),

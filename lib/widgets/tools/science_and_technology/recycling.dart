@@ -14,7 +14,6 @@ class Recycling extends StatefulWidget {
 }
 
 class RecyclingState extends State<Recycling> {
-
   @override
   Widget build(BuildContext context) {
     List<List<dynamic>> data = RECYCLING_CODES.entries.map((entry) {
@@ -25,14 +24,10 @@ class RecyclingState extends State<Recycling> {
       ];
     }).toList();
 
-    data.insert(0, [
-      i18n(context, 'recycling_code'),
-      i18n(context, 'recycling_short'),
-      i18n(context, 'recycling_name')
-    ]);
+    data.insert(
+        0, [i18n(context, 'recycling_code'), i18n(context, 'recycling_short'), i18n(context, 'recycling_name')]);
 
     return Column(
-      children: columnedMultiLineOutput(context, data, flexValues: [1, 2, 4], hasHeader: true, copyColumn: 1)
-    );
+        children: columnedMultiLineOutput(context, data, flexValues: [1, 2, 4], hasHeader: true, copyColumn: 1));
   }
 }

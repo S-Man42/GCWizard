@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -20,7 +19,6 @@ class GCWTextViewer extends StatefulWidget {
 }
 
 class GCWTextViewerState extends State<GCWTextViewer> {
-
   @override
   Widget build(BuildContext context) {
     var text = widget.text ?? '';
@@ -30,8 +28,7 @@ class GCWTextViewerState extends State<GCWTextViewer> {
         GCWButton(
           text: i18n(context, 'common_copy'),
           onPressed: () {
-            if (widget.text == null || widget.text.isEmpty)
-              return;
+            if (widget.text == null || widget.text.isEmpty) return;
 
             insertIntoGCWClipboard(context, widget.text);
           },
@@ -53,9 +50,9 @@ openInTextViewer(BuildContext context, String text) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: GCWTextViewer(text: text ?? ''),
-              toolName: i18n(context, 'textviewer_title'),
-              i18nPrefix: '',
-              suppressHelpButton: true,)));
+                tool: GCWTextViewer(text: text ?? ''),
+                toolName: i18n(context, 'textviewer_title'),
+                i18nPrefix: '',
+                suppressHelpButton: true,
+              )));
 }
-

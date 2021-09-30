@@ -71,43 +71,62 @@ class WASDState extends State<WASD> {
   }
 
   _buildCustomInput(WASD_DIRECTION key) {
-
     var title_key = 'wasd_custom_';
 
     switch (key) {
-      case WASD_DIRECTION.UP: _currentCustomKeyController = _upController; title_key += 'up'; break;
-      case WASD_DIRECTION.LEFT: _currentCustomKeyController = _leftController; title_key += 'left'; break;
-      case WASD_DIRECTION.DOWN: _currentCustomKeyController = _downController; title_key += 'down'; break;
-      case WASD_DIRECTION.RIGHT: _currentCustomKeyController = _rightController; title_key += 'right'; break;
-      default: return;
+      case WASD_DIRECTION.UP:
+        _currentCustomKeyController = _upController;
+        title_key += 'up';
+        break;
+      case WASD_DIRECTION.LEFT:
+        _currentCustomKeyController = _leftController;
+        title_key += 'left';
+        break;
+      case WASD_DIRECTION.DOWN:
+        _currentCustomKeyController = _downController;
+        title_key += 'down';
+        break;
+      case WASD_DIRECTION.RIGHT:
+        _currentCustomKeyController = _rightController;
+        title_key += 'right';
+        break;
+      default:
+        return;
     }
 
     var title = i18n(context, title_key);
 
     return Expanded(
-      child: Column(
-          children: <Widget>[
-            GCWTextDivider(
-              text: title,
-            ),
-            GCWTextField(
-                inputFormatters: [_maskInputFormatter],
-                hintText: title,
-                controller: _currentCustomKeyController,
-                onChanged: (text) {
-                  setState(() {
-                    switch (key) {
-                      case WASD_DIRECTION.UP: _currentUp = text; break;
-                      case WASD_DIRECTION.LEFT: _currentLeft = text; break;
-                      case WASD_DIRECTION.DOWN: _currentDown = text; break;
-                      case WASD_DIRECTION.RIGHT: _currentRight = text; break;
-                      default: return;
-                    }
-                    _updateDrawing();
-                  });
-                }),
-          ]
-      ),
+      child: Column(children: <Widget>[
+        GCWTextDivider(
+          text: title,
+        ),
+        GCWTextField(
+            inputFormatters: [_maskInputFormatter],
+            hintText: title,
+            controller: _currentCustomKeyController,
+            onChanged: (text) {
+              setState(() {
+                switch (key) {
+                  case WASD_DIRECTION.UP:
+                    _currentUp = text;
+                    break;
+                  case WASD_DIRECTION.LEFT:
+                    _currentLeft = text;
+                    break;
+                  case WASD_DIRECTION.DOWN:
+                    _currentDown = text;
+                    break;
+                  case WASD_DIRECTION.RIGHT:
+                    _currentRight = text;
+                    break;
+                  default:
+                    return;
+                }
+                _updateDrawing();
+              });
+            }),
+      ]),
     );
   }
 
@@ -177,48 +196,47 @@ class WASDState extends State<WASD> {
               _buildCustomInput(WASD_DIRECTION.RIGHT)
             ],
           ),
-
         if (_currentMode == GCWSwitchPosition.right)
           Row(
-              children: [
-                Expanded(
-                  child: Column (
-                    children: [
-                      _buildButton(_currentUp),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildButton(_currentLeft),
-                          Container(width: 20),
-                          _buildButton(_currentDown),
-                          Container(width: 20),
-                          _buildButton(_currentRight),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
+            children: [
+              Expanded(
+                child: Column(
                   children: [
-                    GCWIconButton(
-                      iconData: Icons.space_bar,
-                      onPressed: () {
-                        setState(() {
-                          _addInput(' ');
-                        });
-                      },
-                    ),
-                    GCWIconButton(
-                      iconData: Icons.backspace,
-                      onPressed: () {
-                        setState(() {
-                          _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
-                          _updateDrawing();
-                        });
-                      },
+                    _buildButton(_currentUp),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildButton(_currentLeft),
+                        Container(width: 20),
+                        _buildButton(_currentDown),
+                        Container(width: 20),
+                        _buildButton(_currentRight),
+                      ],
                     ),
                   ],
-                )
+                ),
+              ),
+              Column(
+                children: [
+                  GCWIconButton(
+                    iconData: Icons.space_bar,
+                    onPressed: () {
+                      setState(() {
+                        _addInput(' ');
+                      });
+                    },
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.backspace,
+                    onPressed: () {
+                      setState(() {
+                        _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
+                        _updateDrawing();
+                      });
+                    },
+                  ),
+                ],
+              )
             ],
           )
       ],
@@ -255,7 +273,8 @@ class WASDState extends State<WASD> {
                 });
               }),
         _buildControlSet(),
-        GCWTwoOptionsSwitch( // switch between encrypt and decrypt
+        GCWTwoOptionsSwitch(
+          // switch between encrypt and decrypt
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -265,36 +284,33 @@ class WASDState extends State<WASD> {
         ),
         if (_currentMode == GCWSwitchPosition.right) //decode
           GCWDefaultOutput(
-            child: _buildGraphicDecodeOutput(),
-            trailing: GCWIconButton(
-              iconData: Icons.save,
-              size: IconButtonSize.SMALL,
-              iconColor: _outDecodeData == null ? Colors.grey : null,
-              onPressed: () {
-                _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
-              },
-            ))
+              child: _buildGraphicDecodeOutput(),
+              trailing: GCWIconButton(
+                iconData: Icons.save,
+                size: IconButtonSize.SMALL,
+                iconColor: _outDecodeData == null ? Colors.grey : null,
+                onPressed: () {
+                  _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
+                },
+              ))
         else
           GCWDefaultOutput(
-            child: _buildGraphicEncodeOutput(),
-            trailing: GCWIconButton(
-              iconData: Icons.save,
-              size: IconButtonSize.SMALL,
-              iconColor: _outEncodeData == null ? Colors.grey : null,
-              onPressed: () {
-                _outEncodeData == null ? null : _exportFile(context, _outEncodeData);
-              },
-            )),
+              child: _buildGraphicEncodeOutput(),
+              trailing: GCWIconButton(
+                iconData: Icons.save,
+                size: IconButtonSize.SMALL,
+                iconColor: _outEncodeData == null ? Colors.grey : null,
+                onPressed: () {
+                  _outEncodeData == null ? null : _exportFile(context, _outEncodeData);
+                },
+              )),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   _createGraphicOutputDecodeData() {
-    var out = decodeWASDGraphic(
-        _currentDecodeInput,
-        [_currentUp, _currentLeft, _currentDown, _currentRight]
-    );
+    var out = decodeWASDGraphic(_currentDecodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outDecodeData = null;
     binary2image(out, false, false).then((value) {
@@ -314,9 +330,8 @@ class WASDState extends State<WASD> {
 
   _createGraphicOutputEncodeData() {
     var out = decodeWASDGraphic(
-      encodeWASD(_currentEncodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]),
-      [_currentUp, _currentLeft, _currentDown, _currentRight]
-    );
+        encodeWASD(_currentEncodeInput, [_currentUp, _currentLeft, _currentDown, _currentRight]),
+        [_currentUp, _currentLeft, _currentDown, _currentRight]);
 
     _outEncodeData = null;
     binary2image(out, false, false).then((value) {
@@ -335,11 +350,10 @@ class WASDState extends State<WASD> {
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
-    var value = await saveByteDataToFile(context,
-        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    var value =
+        await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-    if (value != null)
-      showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
+    if (value != null) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
   }
 
   _buildOutput() {

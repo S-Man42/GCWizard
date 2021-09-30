@@ -55,7 +55,8 @@ const SEARCHSTRING_EN_BEAUFORT = 'scala windforce beaufortscale windspeed knots 
 final SEARCHSTRING_EN_BEGHILOS = 'calculator mirrored turned upside-down upsidedown';
 const SEARCHSTRING_EN_BIFID = '';
 const SEARCHSTRING_EN_BINARY = 'binary numbers decimal';
-const SEARCHSTRING_EN_BLOODALCOHOLCONTENT = 'bloodalcoholcontent ebac bloodalcoholconcentration bloodalcohollevel alcoholintoxination permilles';
+const SEARCHSTRING_EN_BLOODALCOHOLCONTENT =
+    'bloodalcoholcontent ebac bloodalcoholconcentration bloodalcohollevel alcoholintoxination permilles';
 const SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';
 const SEARCHSTRING_EN_BRAILLE = 'tactiles dots points blinded eyeless sightless';
 const SEARCHSTRING_EN_BRAILLE_EURO = '';
@@ -72,9 +73,9 @@ const SEARCHSTRING_EN_CHRONOGRAM = 'chronogram';
 const SEARCHSTRING_EN_CIPHERWHEEL = 'decipherwheels  stages decipherdisks decipherdiscs';
 const SEARCHSTRING_EN_CISTERCIAN = 'cistercian monastic order monk numbers';
 const SEARCHSTRING_EN_CODEBREAKER = 'solver cracker codebreaker';
-const SEARCHSTRING_EN_COLOR = 'colors colours red blue black yellow white magenta cyan violet purple pink green brown orange light dark silver gold';
-const SEARCHSTRING_EN_COLORPICKER =
-    'luminance chrominance saturation lightness hue picker';
+const SEARCHSTRING_EN_COLOR =
+    'colors colours red blue black yellow white magenta cyan violet purple pink green brown orange light dark silver gold';
+const SEARCHSTRING_EN_COLORPICKER = 'luminance chrominance saturation lightness hue picker';
 const SEARCHSTRING_EN_COMBINATORICS = 'mathematics combinatorics';
 const SEARCHSTRING_EN_COMBINATORICS_COMBINATION = 'combinations subgroups';
 const SEARCHSTRING_EN_COMBINATORICS_PERMUTATION = 'permutations arrangements orders';
@@ -212,13 +213,14 @@ const SEARCHSTRING_EN_HEXVIEWER = 'hexadecimalviewer hexviewer hexdecoder files'
 const SEARCHSTRING_EN_HIDDENDATA = 'hiddenarchive hiddendata hiddenzip appendedarchive appendeddata appendedzip';
 const SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
 const SEARCHSTRING_EN_HOUDINI = 'seance';
-const SEARCHSTRING_EN_IATAICAO = 'airfieldcodes airportcodes aerodromecodes aircrafts planes landingareas landingplaces aviation aerospace';
+const SEARCHSTRING_EN_IATAICAO =
+    'airfieldcodes airportcodes aerodromecodes aircrafts planes landingareas landingplaces aviation aerospace';
 const SEARCHSTRING_EN_ICECODES = 'balticsea ice floe melting snow iceberg icecodes';
 const SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS =
     'colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green';
 const SEARCHSTRING_EN_IMAGES = 'pictures images paintings files ';
 const SEARCHSTRING_EN_IMAGESANDFILESSELECTION = 'analyze analyse analysis';
-const SEARCHSTRING_EN_STEGANO = 'lsb steganography';
+const SEARCHSTRING_EN_STEGANO = 'steganography';
 const SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrationalnumbers fractions decimaldigit';
 const SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE = 'range';
 const SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY = 'frequency  occurrences';
@@ -522,8 +524,7 @@ const SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS = 'numbers numerals indian';
 const SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights templars templarcode';
 const SEARCHSTRING_EN_SYMBOL_TENCTONESE = '';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND = 'elves elvish thirdera elf';
-const SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC =
-    'elves elvish thirdera classices classic classical elf';
+const SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC = 'elves elvish thirdera classices classic classical elf';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL = 'elves elvish thirdera generale elf';
 const SEARCHSTRING_EN_SYMBOL_TERZI = 'square dots points eyeless relief tactiles';
 const SEARCHSTRING_EN_SYMBOL_THEBAN = 'witches witchalphabet angels magical magic wizard magician witchers';

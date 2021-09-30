@@ -26,8 +26,7 @@ String symboltablesDownloadLink(BuildContext context) {
   var locale = Localizations.localeOf(context).languageCode;
 
   var usedLocale = 'en';
-  if (_SUPPORTED_LANGUAGES.contains(locale))
-    usedLocale = locale;
+  if (_SUPPORTED_LANGUAGES.contains(locale)) usedLocale = locale;
 
   return 'https://misc.gcwizard.net/symboltables_$usedLocale.pdf';
 }

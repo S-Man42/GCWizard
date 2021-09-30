@@ -19,7 +19,8 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final Function onChanged;
   final Function onAfterDecrypt;
 
-  const GCWSymbolTableDecryption({Key key, this.data, this.countColumns, this.mediaQueryData, this.onChanged, this.onAfterDecrypt})
+  const GCWSymbolTableDecryption(
+      {Key key, this.data, this.countColumns, this.mediaQueryData, this.onChanged, this.onAfterDecrypt})
       : super(key: key);
 
   @override
@@ -57,13 +58,13 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
         ),
         _buildDecryptionButtonMatrix(widget.countColumns),
         widget.onAfterDecrypt != null
-          ? Column(
-              children: [
-                GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
-                GCWDefaultOutput(child: widget.onAfterDecrypt(_decryptionOutput))
-              ],
-            )
-          : GCWDefaultOutput(child: _decryptionOutput),
+            ? Column(
+                children: [
+                  GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
+                  GCWDefaultOutput(child: widget.onAfterDecrypt(_decryptionOutput))
+                ],
+              )
+            : GCWDefaultOutput(child: _decryptionOutput),
       ],
     );
   }

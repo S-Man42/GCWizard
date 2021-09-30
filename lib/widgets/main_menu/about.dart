@@ -162,15 +162,15 @@ class AboutState extends State<About> {
                   TextSpan(text: i18n(context, 'about_translators') + '\n', style: boldTextStyle),
                   TextSpan(
                       text: [
-                        '\'alantheandroid\' (IT)',
-                        'Cavit A. (TR)',
-                        '\'crazedllama\' (KO)',
-                        '\'j_janus (PL)',
-                        '\'Johan-V (NL)',
-                        'Paul Z. (NL)',
-                        'Paweł B. (PL)',
-                        '\'Xoyn\' (RU)',
-                      ].join('\n') +
+                            '\'alantheandroid\' (IT)',
+                            'Cavit A. (TR)',
+                            '\'crazedllama\' (KO)',
+                            '\'j_janus (PL)',
+                            '\'Johan-V (NL)',
+                            'Paul Z. (NL)',
+                            'Paweł B. (PL)',
+                            '\'Xoyn\' (RU)',
+                          ].join('\n') +
                           '\n')
                 ], style: gcwTextStyle()),
               ),
@@ -197,6 +197,7 @@ class AboutState extends State<About> {
                     'Martin Sch.',
                     '\'mgo\'',
                     '\'MrDosinger\'',
+                    '\'Nebelsturm\'',
                     'Niki R.',
                     'Palk \'geogedoens.de\'',
                     '\'Pamakaru\'',

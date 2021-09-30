@@ -5,10 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
@@ -22,18 +28,17 @@ class GCWPasteButton extends StatefulWidget {
   final EdgeInsets textSelectionToolBarButtonPadding;
   final String textSelectionToolBarButtonLabel;
 
-  const GCWPasteButton({
-    Key key,
-    this.onSelected,
-    this.onBeforePressed,
-    this.iconSize,
-    this.customIcon,
-    this.backgroundColor,
-    this.isTextSelectionToolBarButton: false,
-    this.textSelectionToolBarButtonPadding,
-    this.textSelectionToolBarButtonLabel,
-  })
-  : super(key: key);
+  const GCWPasteButton(
+      {Key key,
+      this.onSelected,
+      this.onBeforePressed,
+      this.iconSize,
+      this.customIcon,
+      this.backgroundColor,
+      this.isTextSelectionToolBarButton: false,
+      this.textSelectionToolBarButtonPadding,
+      this.textSelectionToolBarButtonLabel})
+      : super(key: key);
 
   @override
   GCWPasteButtonState createState() => GCWPasteButtonState();
@@ -43,18 +48,17 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: GCWPopupMenu(
-        size: widget.iconSize,
-        customIcon: widget.customIcon,
-        iconData: Icons.content_paste,
-        backgroundColor: widget.backgroundColor,
-        menuItemBuilder: (context) => _buildMenuItems(context),
-        onBeforePressed: widget.onBeforePressed,
-        isTextSelectionToolBarButton: widget.isTextSelectionToolBarButton,
-        textSelectionToolBarButtonLabel: widget.textSelectionToolBarButtonLabel,
-        textSelectionToolBarButtonPadding: widget.textSelectionToolBarButtonPadding,
-      )
-    );
+        child: GCWPopupMenu(
+      size: widget.iconSize,
+      customIcon: widget.customIcon,
+      iconData: Icons.content_paste,
+      backgroundColor: widget.backgroundColor,
+      menuItemBuilder: (context) => _buildMenuItems(context),
+      onBeforePressed: widget.onBeforePressed,
+      isTextSelectionToolBarButton: widget.isTextSelectionToolBarButton,
+      textSelectionToolBarButtonLabel: widget.textSelectionToolBarButtonLabel,
+      textSelectionToolBarButtonPadding: widget.textSelectionToolBarButtonPadding,
+    ));
   }
 
   _buildMenuItems(BuildContext context) {
@@ -70,13 +74,24 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               }
 
               widget.onSelected(data.text);
-              insertIntoGCWClipboard(
-                  context, data.text, useGlobalClipboard: false);
+              insertIntoGCWClipboard(context, data.text, useGlobalClipboard: false);
             });
-          } catch(e) {}
+          } catch (e) {}
         },
       ),
-      GCWPopupMenuItem(isDivider: true)
+      GCWPopupMenuItem(
+          child: GCWTextDivider(
+            suppressTopSpace: true,
+            style: gcwDialogTextStyle(),
+            trailing: GCWIconButton(
+              iconData: Icons.settings,
+              size: IconButtonSize.SMALL,
+              iconColor: themeColors().dialogText(),
+            ),
+          ),
+          action: (index) {
+            NavigationService.instance.navigateTo('clipboard_editor');
+          })
     ];
 
     var gcwClipboard = Prefs.getStringList('clipboard_items').map((clipboardItem) {
