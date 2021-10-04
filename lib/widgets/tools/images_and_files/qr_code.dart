@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -100,7 +101,7 @@ class QrCodeState extends State<QrCode> {
                 : GCWIconButton(
                     iconData: Icons.save,
                     size: IconButtonSize.SMALL,
-                    iconColor: _outDataEncrypt == null ? Colors.grey : null,
+                    iconColor: _outDataEncrypt == null ? themeColors().inActive() : null,
                     onPressed: () {
                       _outDataEncrypt == null ? null : _exportFile(context, _outDataEncrypt);
                     },

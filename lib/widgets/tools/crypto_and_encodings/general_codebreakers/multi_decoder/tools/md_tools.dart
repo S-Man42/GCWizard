@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/vanity/phone_models.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';

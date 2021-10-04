@@ -27,6 +27,11 @@ class ThemeColorsLight extends ThemeColors {
   }
 
   @override
+  Color inActive() {
+    return Colors.grey;
+  }
+
+  @override
   Color inputBackground() {
     return Colors.white; //TODO
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
@@ -70,7 +71,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         trailing: GCWIconButton(
           iconData: Icons.save,
           size: IconButtonSize.SMALL,
-          iconColor: _isNoOutput ? Colors.grey : null,
+          iconColor: _isNoOutput ? themeColors().inActive() : null,
           onPressed: () {
             _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
           },

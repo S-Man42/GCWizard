@@ -189,10 +189,14 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
           ),
           GCWIconButton(
             iconData: Icons.add,
-            onPressed: () {
-              _addNewTool();
-              setState(() {});
-            },
+            iconColor: _currentEditId == null ? null : themeColors().inActive(),
+            onPressed: _currentEditId == null
+                ? () {
+                    setState(() {
+                      _addNewTool();
+                    });
+                  }
+                : null,
           ),
         ]),
         GCWTextDivider(
