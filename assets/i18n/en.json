@@ -2366,6 +2366,7 @@
   "multidecoder_tool_base_option_basefunction": "Type",
   "multidecoder_tool_bcd_title": "BCD",
   "multidecoder_tool_bcd_option_bcdfunction": "Type",
+  "multidecoder_tool_beghilos_title": "Beghilos",
   "multidecoder_tool_coordinateformats_title": "Coordinate Formats",
   "multidecoder_tool_coordinateformats_option_format": "Format",
   "multidecoder_tool_enclosedareas_title": "Enclosed Areas",
