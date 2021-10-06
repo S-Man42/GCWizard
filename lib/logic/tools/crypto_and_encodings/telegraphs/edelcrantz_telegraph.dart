@@ -1281,7 +1281,7 @@ final CODEBOOK_EDELCRANTZ_1808 = {
   'A377': 'lycka',
 };
 
-final CODEBOOK_EDELCRANTZ_MUSEUM = {
+ final CODEBOOK_EDELCRANTZ_MUSEUM = {
   '000' : '0',
   '001' : '1',
   '002' : '2',
@@ -1421,34 +1421,33 @@ final CODEBOOK_EDELCRANTZ_MUSEUM = {
   '775' : ',',
   '776' : '?',
   '777' : '.',
-  'A001': 'telegraph_edelcrantz_a_museum_messagereceived',
-  'A002': 'telegraph_edelcrantz_a_museum_doyoucopy',
-  'A004': 'telegraph_edelcrantz_a_museum_understood',
-  'A005': 'telegraph_edelcrantz_a_museum_repeatmessage',
-  'A007': 'telegraph_edelcrantz_a_museum_endcommunication',
-  'A010': 'telegraph_edelcrantz_a_museum_whoamitalkingto',
-  'A020': 'telegraph_edelcrantz_a_museum_tellmemore',
-  'A077': 'telegraph_edelcrantz_a_museum_yes',
-  'A700': 'telegraph_edelcrantz_a_museum_no',
-  'A777': 'telegraph_edelcrantz_a_museum_maybe',
-  'A301': 'telegraph_edelcrantz_a_museum_who',
-  'A302': 'telegraph_edelcrantz_a_museum_when',
-  'A304': 'telegraph_edelcrantz_a_museum_where',
-  'A311': 'telegraph_edelcrantz_a_museum_why',
-  'A312': 'telegraph_edelcrantz_a_museum_how',
-  'A313': 'telegraph_edelcrantz_a_museum_what',
-  'A401': 'telegraph_edelcrantz_a_museum_first',
-  'A402': 'telegraph_edelcrantz_a_museum_second',
-  'A403': 'telegraph_edelcrantz_a_museum_third',
-  'A701': 'telegraph_edelcrantz_a_museum_former',
-  'A702': 'telegraph_edelcrantz_a_museum_latter',
+  'a001': 'telegraph_edelcrantz_a_museum_messagereceived',
+  'a002': 'telegraph_edelcrantz_a_museum_doyoucopy',
+  'a004': 'telegraph_edelcrantz_a_museum_understood',
+  'a005': 'telegraph_edelcrantz_a_museum_repeatmessage',
+  'a007': 'telegraph_edelcrantz_a_museum_endcommunication',
+  'a010': 'telegraph_edelcrantz_a_museum_whoamitalkingto',
+  'a020': 'telegraph_edelcrantz_a_museum_tellmemore',
+  'a077': 'telegraph_edelcrantz_a_museum_yes',
+  'a700': 'telegraph_edelcrantz_a_museum_no',
+  'a777': 'telegraph_edelcrantz_a_museum_maybe',
+  'a301': 'telegraph_edelcrantz_a_museum_who',
+  'a302': 'telegraph_edelcrantz_a_museum_when',
+  'a304': 'telegraph_edelcrantz_a_museum_where',
+  'a311': 'telegraph_edelcrantz_a_museum_why',
+  'a312': 'telegraph_edelcrantz_a_museum_how',
+  'a313': 'telegraph_edelcrantz_a_museum_what',
+  'a401': 'telegraph_edelcrantz_a_museum_first',
+  'a402': 'telegraph_edelcrantz_a_museum_second',
+  'a403': 'telegraph_edelcrantz_a_museum_third',
+  'a701': 'telegraph_edelcrantz_a_museum_former',
+  'a702': 'telegraph_edelcrantz_a_museum_latter',
 };
 
 
 String _nightTime(String code) {
-  print('nighttime '+code);
-  if (code.startsWith('A'))
-    return ('A' + (777 - int.parse(code.substring(1))).toString().padLeft(3, '0'));
+  if (code.startsWith('a'))
+    return ('a' + (777 - int.parse(code.substring(1))).toString().padLeft(3, '0'));
   else
     return (777 - int.parse(code)).toString().padLeft(3, '0');
 }
@@ -1569,7 +1568,7 @@ String segmentToCode(List<String> segment){
   if (segment.contains('c2')) c = c + 2;
   if (segment.contains('c3')) c = c + 4;
   if (segment.contains('t0'))
-    return 'A' + a.toString() + b.toString() + c.toString();
+    return 'a' + a.toString() + b.toString() + c.toString();
   else
     return a.toString() + b.toString() + c.toString();
 }
