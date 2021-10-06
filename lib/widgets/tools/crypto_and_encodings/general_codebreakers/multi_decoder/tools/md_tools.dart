@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_beghilos.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_binary2image.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gc_code.dart';
@@ -47,6 +48,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_SEGMENTDISPLAY,
   MDT_INTERNALNAMES_VANITYMULTITAP,
   MDT_INTERNALNAMES_ROMANNUMBERS,
+  MDT_INTERNALNAMES_BINARY2IMAGE,
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -141,6 +143,9 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_VANITYMULTITAP:
       gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
+    case MDT_INTERNALNAMES_BINARY2IMAGE:
+      gcwTool = MultiDecoderBinary2Image(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
   }
 
   return gcwTool;
@@ -218,6 +223,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_SEGMENTDISPLAY), MDT_INTERNALNAMES_SEGMENTDISPLAY,
         options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 16)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KENNY), MDT_INTERNALNAMES_KENNY),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BINARY2IMAGE), MDT_INTERNALNAMES_BINARY2IMAGE),
   ];
 
   for (int i = 25; i >= 1; i--) {
