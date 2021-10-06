@@ -29,7 +29,8 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   var _currentLanguage = EdelcrantzCodebook.YEAR_1795;
 
   List<List<String>> _currentDisplays = [];
-  var _currentMode = GCWSwitchPosition.right;
+  var _currentMode = GCWSwitchPosition.right; //decode
+  var _currentTime = GCWSwitchPosition.left; // daytime
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
   @override
@@ -71,6 +72,16 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
         onChanged: (value) {
           setState(() {
             _currentMode = value;
+          });
+        },
+      ),
+      GCWTwoOptionsSwitch(
+        value: _currentTime,
+        leftValue: i18n(context, 'telegraph_edelcrantz_day'),
+        rightValue: i18n(context, 'telegraph_edelcrantz_night'),
+        onChanged: (value) {
+          setState(() {
+            _currentTime = value;
           });
         },
       ),
@@ -274,7 +285,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {//encode
-      var segments = encodeEdelcrantzTelegraph(_currentEncodeInput.toUpperCase(), _currentLanguage);
+      List<List<String>> segments = encodeEdelcrantzTelegraph(_currentEncodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -289,12 +300,12 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
     } else { //decode
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left){ // text
-        segments = decodeTextEdelcrantzTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
+        segments = decodeTextEdelcrantzTelegraph(_currentDecodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       } else { // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualEdelcrantzTelegraph(output, _currentLanguage);
+        segments = decodeVisualEdelcrantzTelegraph(output, _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       }
       return Column(
         children: <Widget>[

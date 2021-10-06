@@ -4251,6 +4251,8 @@
   "telegraph_edelcrantz_a_museum_third": "THIRD",
   "telegraph_edelcrantz_a_museum_former": "FORMER",
   "telegraph_edelcrantz_a_museum_latter": "LATTER",
+  "telegraph_edelcrantz_day": "Daytime",
+  "telegraph_edelcrantz_night": "Nighttime",
   "telegraph_gausswebertelegraph_title": "Gauss Weber Telegraph",
   "telegraph_gausswebertelegraph_description": "Electrical Telegraph with 1 needle, code based on the deflection of the needle (left/right)",
   "telegraph_gausswebertelegraph_example": "ABC → + - ++ | r ll rrr",

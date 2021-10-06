@@ -480,7 +480,7 @@ final CODEBOOK_EDELCRANTZ_1795 = {
   '717' : 'år',
   '720' : 'åt',
   '721' : 'åter',
-  '722' : '<TAL NED.>',
+  '722' : 'tal.ned',
   '723' : 'ä',
   '724' : 'äkt',
   '725' : 'äg',
@@ -1444,9 +1444,20 @@ final CODEBOOK_EDELCRANTZ_MUSEUM = {
   'A702': 'telegraph_edelcrantz_a_museum_latter',
 };
 
-List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook language) {
+
+String _nightTime(String code) {
+  print('nighttime '+code);
+  if (code.startsWith('A'))
+    return ('A' + (777 - int.parse(code.substring(1))).toString().padLeft(3, '0'));
+  else
+    return (777 - int.parse(code)).toString().padLeft(3, '0');
+}
+
+
+List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook language,  bool daytime) {
   if (input == null || input == '') return <List<String>>[];
 
+  List<List<String>> encodedText = [];
   var CODEBOOK;
   switch (language) {
     case EdelcrantzCodebook.YEAR_1795 : CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_1795); break;
@@ -1454,14 +1465,18 @@ List<List<String>> encodeEdelcrantzTelegraph(String input, EdelcrantzCodebook la
     case EdelcrantzCodebook.MUSEUM : CODEBOOK = switchMapKeyValue(CODEBOOK_EDELCRANTZ_MUSEUM); break;
   }
 
-  return input.split('').map((letter) {
-    if (CODEBOOK[letter] != null)
-      return CODEBOOK[letter].split('');
-  }).toList();
+  input.split('').forEach((element) {
+    if (CODEBOOK[element] != null)
+      if (daytime)
+        encodedText.add(CODEBOOK[element].split(''));
+      else
+        encodedText.add(_nightTime(CODEBOOK[element]).split(''));
+  });
+  return encodedText;
 }
 
 
-Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, EdelcrantzCodebook language) {
+Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, EdelcrantzCodebook language, bool daytime) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -1483,7 +1498,10 @@ Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, Edelcr
     segment = _stringToSegment(element);
     displays.add(segment);
     if (CODEBOOK[segmentToCode(segment)] != null)
-      text = text + CODEBOOK[segmentToCode(segment)];
+      if (daytime)
+        text = text + CODEBOOK[segmentToCode(segment)];
+      else
+        text = text + CODEBOOK[_nightTime(segmentToCode(segment))];
     else
       text = text + UNKNOWN_ELEMENT;
   });
@@ -1492,7 +1510,7 @@ Map<String, dynamic> decodeVisualEdelcrantzTelegraph(List<String> inputs, Edelcr
 }
 
 
-Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook language) {
+Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCodebook language, bool daytime) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -1511,7 +1529,10 @@ Map<String, dynamic> decodeTextEdelcrantzTelegraph(String inputs, EdelcrantzCode
 
   inputs.split(' ').forEach((element) {
     if (CODEBOOK[element] != null) {
-      text = text + CODEBOOK[element];
+      if (daytime)
+        text = text + CODEBOOK[element];
+      else
+        text = text + CODEBOOK[_nightTime(element)];
     } else {
       text = text + UNKNOWN_ELEMENT;
     }
