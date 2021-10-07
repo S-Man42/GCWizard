@@ -14,7 +14,7 @@ import 'package:latlong2/latlong.dart';
  * Source: several geodetic websites.
  */
 
-DistanceBearingData distanceBearingVincenty(LatLng coord1, LatLng coord2, Ellipsoid ells) {
+DistanceBearingData vincentyInverse(LatLng coord1, LatLng coord2, Ellipsoid ells) {
   double _lat1 = coord1.latitudeInRad;
   double _lon1 = coord1.longitudeInRad;
   double _lat2 = coord2.latitudeInRad;

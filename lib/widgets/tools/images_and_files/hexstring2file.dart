@@ -5,6 +5,7 @@ import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -26,22 +27,21 @@ class HexString2FileState extends State<HexString2File> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWTextField(
-            onChanged: (value) {
-              setState(() {
-                _currentInput = value;
-              });
-            },
-          ),
+          onChanged: (value) {
+            setState(() {
+              _currentInput = value;
+            });
+          },
+        ),
         GCWDefaultOutput(
             child: _buildOutput(),
             trailing: GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: _outData == null ? Colors.grey : null,
+              iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
                 _outData == null ? null : _exportFile(context, _outData);
               },
@@ -60,8 +60,8 @@ class HexString2FileState extends State<HexString2File> {
 
   _exportFile(BuildContext context, Uint8List data) async {
     var fileType = getFileType(data);
-    var value = await saveByteDataToFile(context, data,
-        "hex_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+    var value = await saveByteDataToFile(
+        context, data, "hex_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
@@ -77,8 +77,7 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
       case FileClass.IMAGE:
         try {
           return Image.memory(_outData);
-        } catch (e) {
-        }
+        } catch (e) {}
         return _fileWidget(context, getFileType(_outData));
 
       case FileClass.TEXT:
@@ -89,14 +88,13 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
         if (fileType == FileType.ZIP) {
           try {
             InputStream input = new InputStream(_outData.buffer.asByteData());
-            return (_archiveWidget(context, ZipDecoder().decodeBuffer(input) , fileType));
+            return (_archiveWidget(context, ZipDecoder().decodeBuffer(input), fileType));
           } catch (e) {}
         } else if (fileType == FileType.TAR) {
           try {
             InputStream input = new InputStream(_outData.buffer.asByteData());
             return (_archiveWidget(context, TarDecoder().decodeBuffer(input), fileType));
           } catch (e) {}
-
         } else {
           return _fileWidget(context, fileType);
         }
@@ -113,8 +111,8 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
 Widget _archiveWidget(BuildContext context, Archive archive, FileType fileType) {
   var type = fileType.toString().split('.')[1];
 
-  var text  = type + '-' + i18n(context, 'hexstring2file_file') + ' -> ' +
-      i18n(context, 'hexstring2file_content') + '\n';
+  var text =
+      type + '-' + i18n(context, 'hexstring2file_file') + ' -> ' + i18n(context, 'hexstring2file_content') + '\n';
 
   text += archive.where((element) => element.isFile).map((file) {
     return ('-> ' + file.name);
@@ -128,4 +126,3 @@ Widget _fileWidget(BuildContext context, FileType fileType) {
 
   return GCWOutputText(text: extension + '-' + i18n(context, 'hexstring2file_file'));
 }
-

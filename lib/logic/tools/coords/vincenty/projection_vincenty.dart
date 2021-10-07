@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong2/latlong.dart';
 
-LatLng projectionVincenty(LatLng coord, double bearing, double dist, Ellipsoid ells) {
+LatLng vincentyDirect(LatLng coord, double bearing, double dist, Ellipsoid ells) {
   double lat = coord.latitudeInRad;
   double lon = coord.longitudeInRad;
 

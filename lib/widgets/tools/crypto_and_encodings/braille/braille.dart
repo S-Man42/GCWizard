@@ -53,10 +53,9 @@ class BrailleState extends State<Braille> {
         },
         items: BRAILLE_LANGUAGES.entries.map((mode) {
           return GCWDropDownMenuItem(
-            value: mode.key,
-            child: i18n(context, mode.value['title']),
-            subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-          );
+              value: mode.key,
+              child: i18n(context, mode.value['title']),
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -69,20 +68,18 @@ class BrailleState extends State<Braille> {
       ),
       if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-        else
-          Column(
-        // decrpyt: input segment => output number
-              children: <Widget>[
-                _buildVisualDecryption()
-              ],
-            ),
+          controller: _encodeController,
+          onChanged: (text) {
+            setState(() {
+              _currentEncodeInput = text;
+            });
+          },
+        )
+      else
+        Column(
+          // decrpyt: input segment => output number
+          children: <Widget>[_buildVisualDecryption()],
+        ),
       _buildOutput()
     ]);
   }
@@ -122,18 +119,18 @@ class BrailleState extends State<Braille> {
             children: <Widget>[
               if (_currentLanguage == BrailleLanguage.EUR)
                 Expanded(
-                child: BrailleEuroSegmentDisplay(
-                  segments: currentDisplay,
-                  onChanged: onChanged,
-                ),
-              )
+                  child: BrailleEuroSegmentDisplay(
+                    segments: currentDisplay,
+                    onChanged: onChanged,
+                  ),
+                )
               else
                 Expanded(
-                child: BrailleSegmentDisplay(
-                  segments: currentDisplay,
-                  onChanged: onChanged,
-                ),
-              )
+                  child: BrailleSegmentDisplay(
+                    segments: currentDisplay,
+                    onChanged: onChanged,
+                  ),
+                )
             ],
           ),
         ),
@@ -169,15 +166,14 @@ class BrailleState extends State<Braille> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-      segmentFunction:(displayedSegments, readOnly) {
-        if (_currentLanguage == BrailleLanguage.EUR)
-          return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-        else
-          return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-      },
-      segments: segments,
-      readOnly: true
-    );
+        segmentFunction: (displayedSegments, readOnly) {
+          if (_currentLanguage == BrailleLanguage.EUR)
+            return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          else
+            return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        },
+        segments: segments,
+        readOnly: true);
   }
 
   Widget _buildOutput() {
@@ -188,9 +184,8 @@ class BrailleState extends State<Braille> {
         children: <Widget>[
           _buildDigitalOutput(segments),
           GCWOutput(
-            title: i18n(context, 'braille_output_numbers'),
-            child: segments.map((segment) => segment.join()).join(' ')
-          )
+              title: i18n(context, 'braille_output_numbers'),
+              child: segments.map((segment) => segment.join()).join(' '))
         ],
       );
     } else {
@@ -215,14 +210,14 @@ class BrailleState extends State<Braille> {
                   ),
                 if (segmentsBasicDigits['chars'].join().toUpperCase() != segments['chars'].join())
                   GCWOutput(
-                    title: i18n(context,'brailledotnumbers_basic_digits'),
+                    title: i18n(context, 'brailledotnumbers_basic_digits'),
                     child: segmentsBasicDigits['chars'].join().toUpperCase(),
                   ),
               ],
             )
           else
             GCWDefaultOutput(child: segments['chars'].join()),
-          ],
+        ],
       );
     }
   }

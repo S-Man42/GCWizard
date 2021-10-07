@@ -213,8 +213,7 @@ class GCWMapViewState extends State<GCWMapView> {
                             var newPoint = _persistanceAdapter.addMapPoint(coordinate);
 
                             if (_isPolylineDrawing) {
-                              if (widget.polylines.isEmpty)
-                                _persistanceAdapter.createMapPolyline();
+                              if (widget.polylines.isEmpty) _persistanceAdapter.createMapPolyline();
 
                               _persistanceAdapter.addMapPointIntoPolyline(newPoint, widget.polylines.last);
                             }
@@ -309,63 +308,64 @@ class GCWMapViewState extends State<GCWMapView> {
 
     var child = polyline.child;
     if (child is GCWMapLine) {
-
       var data = [
         {
-          'text': i18n(context, 'unitconverter_category_length') +
-              ': ${_formatLengthOutput(child.length)}',
+          'text': i18n(context, 'unitconverter_category_length') + ': ${_formatLengthOutput(child.length)}',
           'value': child.length
         },
         {
-          'text': i18n(
-              context, 'coords_map_view_linedialog_section_bearing_ab') +
+          'text': i18n(context, 'coords_map_view_linedialog_section_bearing_ab') +
               ': ${_formatBearingOutput(child.bearingAB)}',
           'value': child.bearingAB
         },
         {
-          'text': i18n(
-              context, 'coords_map_view_linedialog_section_bearing_ba') +
+          'text': i18n(context, 'coords_map_view_linedialog_section_bearing_ba') +
               ': ${_formatBearingOutput(child.bearingBA)}',
           'value': child.bearingBA
         }
       ];
 
       if (child.parent.lines.length > 1) {
-        data.add(
-            {
-              'text': i18n(context, 'unitconverter_category_length') +
-                  ': ${_formatLengthOutput(child.parent.length)}',
-              'value': child.parent.length
-            }
-        );
+        data.add({
+          'text': i18n(context, 'unitconverter_category_length') + ': ${_formatLengthOutput(child.parent.length)}',
+          'value': child.parent.length
+        });
       }
 
-      var children = data.map((elem) =>
-        GCWOutputText(
-          text: elem['text'],
-          copyText: elem['value'].toString(),
-          style: gcwDialogTextStyle(),
-        ) as Widget).toList();
+      var children = data
+          .map((elem) => GCWOutputText(
+                text: elem['text'],
+                copyText: elem['value'].toString(),
+                style: gcwDialogTextStyle(),
+              ) as Widget)
+          .toList();
 
       if (child.parent.lines.length > 1) {
-        children.insert(0, GCWTextDivider(
-          text: i18n(context, 'coords_map_view_linedialog_section'),
-          style: gcwDialogTextStyle(),
-        ));
+        children.insert(
+            0,
+            GCWTextDivider(
+              text: i18n(context, 'coords_map_view_linedialog_section'),
+              style: gcwDialogTextStyle(),
+              suppressTopSpace: true,
+            ));
 
-        children.insert(4, GCWTextDivider(
-          text: i18n(context, 'coords_map_view_linedialog_path'),
-          style: gcwDialogTextStyle(),
-        ));
+        children.insert(
+            4,
+            GCWTextDivider(
+              text: i18n(context, 'coords_map_view_linedialog_path'),
+              style: gcwDialogTextStyle(),
+            ));
       }
 
       output = children;
     } else if (child is GCWMapCircle) {
-      output = [GCWOutputText(
-        text: i18n(context, 'common_radius') + ': ${_formatLengthOutput(child.radius)}',
-        style: gcwDialogTextStyle(),
-        copyText: child.radius.toString(),
-      )];
+      output = [
+        GCWOutputText(
+          text: i18n(context, 'common_radius') + ': ${_formatLengthOutput(child.radius)}',
+          style: gcwDialogTextStyle(),
+          copyText: child.radius.toString(),
+        )
+      ];
     }
 
     var dialogButtons = <Widget>[];
@@ -455,7 +455,9 @@ class GCWMapViewState extends State<GCWMapView> {
         Container(
           width: 250,
           height: output.length * 50.0,
-          child: Column(children: output,),
+          child: Column(
+            children: output,
+          ),
         ),
         dialogButtons,
         closeOnOutsideTouch: true);
@@ -836,10 +838,8 @@ class GCWMapViewState extends State<GCWMapView> {
 
     widget.polylines.forEach((polyline) {
       polyline.lines.forEach((line) {
-        _polylines.add(
-            _GCWTappablePolyline(
-                points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: polyline.color, child: line)
-        );
+        _polylines.add(_GCWTappablePolyline(
+            points: line.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: polyline.color, child: line));
       });
     });
 
@@ -883,13 +883,11 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   Future<bool> _loadCoordinatesFile(PlatformFile file) async {
-    if (file == null)
-      return false;
+    if (file == null) return false;
 
     try {
       await importCoordinatesFile(file).then((viewData) {
-        if (viewData == null)
-          return false;
+        if (viewData == null) return false;
 
         setState(() {
           _isPolylineDrawing = false;
@@ -900,8 +898,8 @@ class GCWMapViewState extends State<GCWMapView> {
         return true;
       });
     } catch (exception) {}
-      return false;
-    }
+    return false;
+  }
 }
 
 class _GCWMarker extends Marker {

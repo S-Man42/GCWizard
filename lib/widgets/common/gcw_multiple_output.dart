@@ -12,11 +12,11 @@ class GCWMultipleOutput extends StatefulWidget {
 
   const GCWMultipleOutput(
       {Key key,
-        @required this.children,
-        this.suppressDefaultTitle: false,
-        this.trailing,
-        this.onExportCoordinates,
-        this.title})
+      @required this.children,
+      this.suppressDefaultTitle: false,
+      this.trailing,
+      this.onExportCoordinates,
+      this.title})
       : super(key: key);
 
   @override

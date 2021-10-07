@@ -14,7 +14,7 @@ final VanityToDEU = {
   '3467': 'EINS',
   '9934': 'ZWEI',
   '996': 'ZWO',
-  '7334': 'DREI',
+  '3734': 'DREI',
   '8437': 'VIER',
   '38363': 'FUENF',
   '3863': 'FÜNF',

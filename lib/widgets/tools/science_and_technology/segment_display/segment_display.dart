@@ -111,7 +111,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     else
       currentDisplay = {};
 
-
     var onChanged = (Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
@@ -208,30 +207,29 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-      segmentFunction:(displayedSegments, readOnly) {
-        switch (widget.type) {
-          case SegmentDisplayType.SEVEN:
-            return SevenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
-            );
-          case SegmentDisplayType.FOURTEEN:
-            return FourteenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
-            );
-          case SegmentDisplayType.SIXTEEN:
-            return SixteenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
-            );
-          default:
-            return null;
-        }
-      },
-      segments: segments,
-      readOnly: true
-    );
+        segmentFunction: (displayedSegments, readOnly) {
+          switch (widget.type) {
+            case SegmentDisplayType.SEVEN:
+              return SevenSegmentDisplay(
+                segments: displayedSegments,
+                readOnly: true,
+              );
+            case SegmentDisplayType.FOURTEEN:
+              return FourteenSegmentDisplay(
+                segments: displayedSegments,
+                readOnly: true,
+              );
+            case SegmentDisplayType.SIXTEEN:
+              return SixteenSegmentDisplay(
+                segments: displayedSegments,
+                readOnly: true,
+              );
+            default:
+              return null;
+          }
+        },
+        segments: segments,
+        readOnly: true);
   }
 
   Widget _buildOutput() {
@@ -255,10 +253,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       var segments = decodeSegment(_currentDecodeInput, widget.type);
 
       return Column(
-        children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['text'])
-        ],
+        children: <Widget>[_buildDigitalOutput(segments['displays']), GCWDefaultOutput(child: segments['text'])],
       );
     }
   }

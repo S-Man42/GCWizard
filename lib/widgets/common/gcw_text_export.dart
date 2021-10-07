@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -69,8 +70,7 @@ class GCWTextExportState extends State<GCWTextExport> {
 
   @override
   Widget build(BuildContext context) {
-    if (_currentMode == TextExportMode.QR && _qrImageData == null)
-      _buildQRCode();
+    if (_currentMode == TextExportMode.QR && _qrImageData == null) _buildQRCode();
 
     return Container(
         width: 300,
@@ -88,8 +88,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                         _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
                         if (widget.onModeChanged != null) widget.onModeChanged(_currentMode);
 
-                        if (_currentMode == TextExportMode.QR)
-                          _buildQRCode();
+                        if (_currentMode == TextExportMode.QR) _buildQRCode();
                       });
                     },
                   )
@@ -112,8 +111,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                       GCWButton(
                         text: i18n(context, 'common_copy'),
                         onPressed: () {
-                          Clipboard.setData(ClipboardData(text: _currentExportText));
-                          showToast(i18n(context, 'common_clipboard_copied'));
+                          insertIntoGCWClipboard(context, _currentExportText);
                         },
                       )
                     ],
@@ -148,7 +146,7 @@ Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportM
   } else {
     final data = await generateBarCode(text);
 
-    return await saveByteDataToFile(context,
-        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    return await saveByteDataToFile(
+        context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

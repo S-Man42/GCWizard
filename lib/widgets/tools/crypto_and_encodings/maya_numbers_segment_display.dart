@@ -27,7 +27,8 @@ class MayaNumbersSegmentDisplay extends NSegmentDisplay {
             readOnly: readOnly,
             onChanged: onChanged,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState, Color segment_color_on, Color segment_color_off) {
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
+                Color segment_color_on, Color segment_color_off) {
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;

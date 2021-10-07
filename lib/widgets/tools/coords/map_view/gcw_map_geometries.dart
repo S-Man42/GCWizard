@@ -62,8 +62,7 @@ class GCWMapLine {
   List<LatLng> shape = [];
 
   GCWMapLine(this.parent, this.start, this.end) {
-    if (this.start == null && this.end == null)
-      return;
+    if (this.start == null && this.end == null) return;
 
     if (this.start == null) {
       shape.add(end.point);
@@ -90,7 +89,7 @@ class GCWMapLine {
     var _countSteps = (_distBear.distance / _stepLength).floor();
 
     for (int _i = 1; _i < _countSteps; _i++) {
-      var _nextPoint = projection(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid());
+      var _nextPoint = projectionVincenty(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid());
       shape.add(_nextPoint);
     }
 
@@ -158,7 +157,7 @@ class GCWMapCircle {
     bool shouldSort = false;
 
     shape = List.generate(((360.0 + _degrees) / _degrees).floor(), (index) => index * _degrees).map((e) {
-      LatLng coord = projection(this.centerPoint, e, this.radius, defaultEllipsoid());
+      LatLng coord = projectionVincenty(this.centerPoint, e, this.radius, defaultEllipsoid());
 
       // if there is a huge longitude step around the world (nearly 360°)
       // then one coordinate is place to the left side of the map, the next one to the right (or vice versa)

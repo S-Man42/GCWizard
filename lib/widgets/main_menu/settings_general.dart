@@ -27,8 +27,8 @@ var _LANGUAGES = {
   'fr': {'name_native': '🇫🇷 Français', 'percent_translated': 100},
   'it': {'name_native': '🇮🇹 Italiano', 'percent_translated': 11},
   'ko': {'name_native': '🇰🇷 한국어', 'percent_translated': 100},
-  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 35},
-  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 20},
+  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 39},
+  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 27},
   'ru': {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 9},
   'tr': {'name_native': '🇹🇷 Türkçe', 'percent_translated': 15},
 };
@@ -152,16 +152,20 @@ class GeneralSettingsState extends State<GeneralSettings> {
           value: Prefs.getBool('toollist_show_descriptions'),
           title: i18n(context, 'settings_general_toollist_showdescriptions'),
           onChanged: (value) {
-            Prefs.setBool('toollist_show_descriptions', value);
-            AppBuilder.of(context).rebuild();
+            setState(() {
+              Prefs.setBool('toollist_show_descriptions', value);
+              AppBuilder.of(context).rebuild();
+            });
           },
         ),
         GCWOnOffSwitch(
           value: Prefs.getBool('toollist_show_examples'),
           title: i18n(context, 'settings_general_toollist_showexamples'),
           onChanged: (value) {
-            Prefs.setBool('toollist_show_examples', value);
-            AppBuilder.of(context).rebuild();
+            setState(() {
+              Prefs.setBool('toollist_show_examples', value);
+              AppBuilder.of(context).rebuild();
+            });
           },
         ),
         GCWTextDivider(text: i18n(context, 'settings_general_defaulttab')),
@@ -180,9 +184,30 @@ class GeneralSettingsState extends State<GeneralSettings> {
             ? GCWDropDownButton(
                 value: Prefs.get('tabs_default_tab'),
                 items: [
-                  {'index': 0, 'text': i18n(context, 'common_tabs_categories')},
-                  {'index': 1, 'text': i18n(context, 'common_tabs_all')},
-                  {'index': 2, 'text': i18n(context, 'common_tabs_favorites')}
+                  {
+                    'index': 0,
+                    'text': Row(children: [
+                      Icon(Icons.category, color: themeColors().mainFont()),
+                      Container(width: 10),
+                      Text(i18n(context, 'common_tabs_categories'))
+                    ])
+                  },
+                  {
+                    'index': 1,
+                    'text': Row(children: [
+                      Icon(Icons.list, color: themeColors().mainFont()),
+                      Container(width: 10),
+                      Text(i18n(context, 'common_tabs_all'))
+                    ])
+                  },
+                  {
+                    'index': 2,
+                    'text': Row(children: [
+                      Icon(Icons.star, color: themeColors().mainFont()),
+                      Container(width: 10),
+                      Text(i18n(context, 'common_tabs_favorites'))
+                    ])
+                  }
                 ].map((item) {
                   return GCWDropDownMenuItem(
                     value: item['index'],

@@ -79,9 +79,7 @@ class HiddenDataState extends State<HiddenData> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.right
-          ? _buildUnhideWidget()
-          : _buildHideWidget()
+        _currentMode == GCWSwitchPosition.right ? _buildUnhideWidget() : _buildHideWidget()
       ],
     );
   }
@@ -103,9 +101,7 @@ class HiddenDataState extends State<HiddenData> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'hiddendata_opensecretfile')
-        ),
+        GCWTextDivider(text: i18n(context, 'hiddendata_opensecretfile')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'hiddendata_hide'),
           leftValue: i18n(context, 'hiddendata_hide_text'),
@@ -138,9 +134,7 @@ class HiddenDataState extends State<HiddenData> {
               });
             },
           ),
-        Container(
-          height: 15
-        ),
+        Container(height: 15),
         GCWDivider(),
         GCWButton(
           text: i18n(context, 'hiddendata_hideandsave'),
@@ -152,10 +146,8 @@ class HiddenDataState extends State<HiddenData> {
               data = mergeFiles([_publicFile.bytes, _secretFile.bytes]);
             }
 
-            _exportFile(context, PlatformFile(
-              name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
-              bytes: data
-            ));
+            _exportFile(context,
+                PlatformFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
           },
         )
       ],
@@ -220,9 +212,9 @@ class HiddenDataState extends State<HiddenData> {
     ];
 
     return GCWPopupMenu(
-        iconData: Icons.open_in_new,
-        size: IconButtonSize.SMALL,
-        menuItemBuilder: (context) => actions,
+      iconData: Icons.open_in_new,
+      size: IconButtonSize.SMALL,
+      menuItemBuilder: (context) => actions,
     );
   }
 
@@ -236,8 +228,7 @@ class HiddenDataState extends State<HiddenData> {
       var text;
       if (file.fileClass == FileClass.TEXT) {
         text = String.fromCharCodes(file.bytes ?? []);
-        if (text != null && text.length > 100)
-          text = text.substring(0, 100) + '...';
+        if (text != null && text.length > 100) text = text.substring(0, 100) + '...';
       }
 
       var fileName = file.name;
@@ -259,60 +250,51 @@ class HiddenDataState extends State<HiddenData> {
 
       var out = Column(
         children: [
-          Row (
+          Row(
             children: [
               Container(
-                child: actionButton == null ? Container() : actionButton,
-                width: 42,
-                padding: EdgeInsets.only(right: 10)
-              ),
-              Expanded (
+                  child: actionButton == null ? Container() : actionButton,
+                  width: 42,
+                  padding: EdgeInsets.only(right: 10)),
+              Expanded(
                 child: Container(
-                  child: Column(
-                    children: [
-                      if (parents.isNotEmpty)
-                        GCWText(
-                          text: parentsString,
-                          style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 4, color: themeColors().dialogText())
-                        ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GCWText(
-                              text: fileName,
-                              style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold, color: themeColors().dialogText())
-                            ),
-                          ),
+                    child: Column(
+                      children: [
+                        if (parents.isNotEmpty)
                           GCWText(
-                              text: file.bytes == null ? '??? Bytes' : '${file.bytes.length} Bytes',
-                              style: gcwTextStyle().copyWith(color: themeColors().dialogText(), fontSize: defaultFontSize() - 2)
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  color: themeColors().accent(),
-                  padding: EdgeInsets.all(DOUBLE_DEFAULT_MARGIN)
-                ),
+                              text: parentsString,
+                              style: gcwTextStyle()
+                                  .copyWith(fontSize: defaultFontSize() - 4, color: themeColors().dialogText())),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: GCWText(
+                                  text: fileName,
+                                  style: gcwTextStyle()
+                                      .copyWith(fontWeight: FontWeight.bold, color: themeColors().dialogText())),
+                            ),
+                            GCWText(
+                                text: file.bytes == null ? '??? Bytes' : '${file.bytes.length} Bytes',
+                                style: gcwTextStyle()
+                                    .copyWith(color: themeColors().dialogText(), fontSize: defaultFontSize() - 2))
+                          ],
+                        )
+                      ],
+                    ),
+                    color: themeColors().accent(),
+                    padding: EdgeInsets.all(DOUBLE_DEFAULT_MARGIN)),
               ),
             ],
           ),
           if (file.fileClass == FileClass.IMAGE)
-            Container(
-              child: GCWImageView(imageData: GCWImageViewData(file)),
-              margin: EdgeInsets.only(left: 42)
-            ),
+            Container(child: GCWImageView(imageData: GCWImageViewData(file)), margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.TEXT)
-            Container(
-              child: GCWText(style: gcwMonotypeTextStyle(), text: text),
-              margin: EdgeInsets.only(left: 42)
-            ),
+            Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
           if (hasChildren)
             Container(
               child: _buildFileTree(file.children, newParents, level: level + 1),
             ),
-          if (level == 0 && isFirst)
-            GCWDivider(),
+          if (level == 0 && isFirst) GCWDivider(),
           if (files.length <= 1 && level == 0 && !hasChildren)
             GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
         ],
@@ -329,12 +311,10 @@ class HiddenDataState extends State<HiddenData> {
   }
 
   _buildOutput() {
-    if (_unHideFile == null)
-      return null;
+    if (_unHideFile == null) return null;
 
     var _hiddenDataList = hiddenData(_unHideFile);
-    if (_hiddenDataList == null || _hiddenDataList.isEmpty)
-      return i18n(context, 'hiddendata_nohiddendatafound');
+    if (_hiddenDataList == null || _hiddenDataList.isEmpty) return i18n(context, 'hiddendata_nohiddendatafound');
 
     return _buildFileTree(_hiddenDataList, []);
   }
@@ -350,8 +330,7 @@ class HiddenDataState extends State<HiddenData> {
     var fileName = file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = file.name.split('.');
     print(ext);
-    if (ext.length <= 1 || ext.last.length >= 5)
-      fileName = fileName + '.' + fileExtension(file.fileType);
+    if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
     var value = await saveByteDataToFile(context, file.bytes, fileName);
     if (value != null) showExportedFileDialog(context, fileType: file.fileType);

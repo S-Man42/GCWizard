@@ -46,22 +46,22 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : GCWTextField(
-             controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -77,38 +77,40 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
 
   _buildOutput() {
     if (widget.mode == GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL) {
-
       if (_currentMode == GCWSwitchPosition.left) {
-        var outputOriginal = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
+        var outputOriginal =
+            encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
-        return Column(
-          children: [
-            GCWOutput(child: outputOriginal, title: i18n(context, 'gausswebertelegraph_original')),
-            GCWOutput(child: outputAlt, title: i18n(context, 'gausswebertelegraph_alternative')),
-          ]
-        );
+        return Column(children: [
+          GCWOutput(child: outputOriginal, title: i18n(context, 'gausswebertelegraph_original')),
+          GCWOutput(child: outputAlt, title: i18n(context, 'gausswebertelegraph_alternative')),
+        ]);
       } else {
         var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;
         var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
 
-        var mode = countOriginal >= countAlt ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
+        var mode = countOriginal >= countAlt
+            ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL
+            : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
-          child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
-        );
+            child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
+                .replaceAll('schillingcanstatt_stop', i18n(context, 'schillingcanstatt_stop'))
+                .replaceAll('schillingcanstatt_goon', i18n(context, 'schillingcanstatt_goon'))
+                .replaceAll('schillingcanstatt_finish', i18n(context, 'schillingcanstatt_finish')));
       }
-
     } else {
       var output;
       if (_currentMode == GCWSwitchPosition.left) {
         output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
       } else {
-        output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode);
+        output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode)
+            .replaceAll('schillingcanstatt_stop', i18n(context, 'schillingcanstatt_stop'))
+            .replaceAll('schillingcanstatt_goon', i18n(context, 'schillingcanstatt_goon'))
+            .replaceAll('schillingcanstatt_finish', i18n(context, 'schillingcanstatt_finish'));
       }
 
-      return GCWDefaultOutput(
-        child: output
-      );
+      return GCWDefaultOutput(child: output);
     }
   }
 }

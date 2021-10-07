@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -130,7 +131,7 @@ class KarolRobotState extends State<KarolRobot> {
               trailing: GCWIconButton(
                 iconData: Icons.save,
                 size: IconButtonSize.SMALL,
-                iconColor: _outDecodeData == null ? Colors.grey : null,
+                iconColor: _outDecodeData == null ? themeColors().inActive() : null,
                 onPressed: () {
                   _outDecodeData == null ? null : _exportFile(context, _outDecodeData);
                 },
@@ -190,10 +191,9 @@ class KarolRobotState extends State<KarolRobot> {
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
-    var value = await saveByteDataToFile(context,
-        data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    var value =
+        await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-    if (value != null)
-      showExportedFileDialog(context, fileType: FileType.PNG);
+    if (value != null) showExportedFileDialog(context, fileType: FileType.PNG);
   }
 }

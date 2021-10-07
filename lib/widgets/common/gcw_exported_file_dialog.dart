@@ -10,12 +10,11 @@ showExportedFileDialog(BuildContext context, {Widget contentWidget, int dialogHe
   showGCWDialog(
       context,
       i18n(context, 'common_exportfile_saved'),
-      contentWidget == null ? null :
-      Column(
-        children: [
-          contentWidget
-        ],
-      ),
+      contentWidget == null
+          ? null
+          : Column(
+              children: [contentWidget],
+            ),
       [
         GCWDialogButton(
           text: i18n(context, 'common_ok'),

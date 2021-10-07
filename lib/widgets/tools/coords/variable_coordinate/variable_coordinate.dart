@@ -195,13 +195,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           onPressed: () {
             var countCombinations = preCheckCombinations(_getSubstitutions());
             if (countCombinations > _TOOMANY_COUNT) {
-              showGCWAlertDialog(
-                context,
-                i18n(context, 'coords_variablecoordinate_toomanyresults_title'),
-                i18n(context, 'coords_variablecoordinate_toomanyresults_text', parameters: [countCombinations]),
-                null,
-                cancelButton: false
-              );
+              showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_toomanyresults_title'),
+                  i18n(context, 'coords_variablecoordinate_toomanyresults_text', parameters: [countCombinations]), null,
+                  cancelButton: false);
 
               return;
             }
@@ -210,7 +206,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               showGCWAlertDialog(
                 context,
                 i18n(context, 'coords_variablecoordinate_manyresults_title'),
-                i18n(context, 'coords_variablecoordinate_manyresults_text', parameters: [countCombinations]), () {
+                i18n(context, 'coords_variablecoordinate_manyresults_text', parameters: [countCombinations]),
+                () {
                   _calculateOutput(context);
                 },
               );

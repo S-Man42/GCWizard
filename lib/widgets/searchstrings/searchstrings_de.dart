@@ -58,7 +58,8 @@ const SEARCHSTRING_DE_BEAUFORT = 'skala windstaerke knoten windgeschwindigkeit o
 final SEARCHSTRING_DE_BEGHILOS = 'taschenrechner spiegelverkehrt umgedreht aufdenkopfgestellt';
 const SEARCHSTRING_DE_BIFID = '';
 const SEARCHSTRING_DE_BINARY = 'dezimal binaer dual zahlen';
-const SEARCHSTRING_DE_BLOODALCOHOLCONTENT = 'promillerechner blutalkoholgehalt blutalkohollevel blutalkohollevel blutalkoholkonzentration bak';
+const SEARCHSTRING_DE_BLOODALCOHOLCONTENT =
+    'promillerechner blutalkoholgehalt blutalkohollevel blutalkohollevel blutalkoholkonzentration bak';
 const SEARCHSTRING_DE_BOOKCIPHER = 'buchstabe buechercode buchchiffre buecherchiffre buchcode zeile absatz position';
 const SEARCHSTRING_DE_BRAILLE = 'blindenschrift punkte';
 const SEARCHSTRING_DE_BRAILLE_EURO = '';
@@ -75,9 +76,9 @@ const SEARCHSTRING_DE_CHRONOGRAM = 'chronogramm';
 const SEARCHSTRING_DE_CIPHERWHEEL = 'dechiffrierscheiben drehscheiben';
 const SEARCHSTRING_DE_CISTERCIAN = 'zisterzienser moenche zahlen moenchsorden';
 const SEARCHSTRING_DE_CODEBREAKER = 'loeser universal universeller codeknacker codebrecher';
-const SEARCHSTRING_DE_COLOR = 'farben rot blau schwarz gelb weiß magenta cyan lila purpur gruen braun orange hell dunkel silber gold';
-const SEARCHSTRING_DE_COLORPICKER =
-    'luminanz hellwert farbwert helligkeit saettigung chrominanz';
+const SEARCHSTRING_DE_COLOR =
+    'farben rot blau schwarz gelb weiß magenta cyan lila purpur gruen braun orange hell dunkel silber gold';
+const SEARCHSTRING_DE_COLORPICKER = 'luminanz hellwert farbwert helligkeit saettigung chrominanz';
 const SEARCHSTRING_DE_COMBINATORICS = 'mathematik kombinatorik';
 const SEARCHSTRING_DE_COMBINATORICS_COMBINATION = 'kombinationen untergruppen';
 const SEARCHSTRING_DE_COMBINATORICS_PERMUTATION = 'permutationen anordnungen reihenfolgen';
@@ -214,16 +215,18 @@ const SEARCHSTRING_DE_HASHES_WHIRLPOOL_512 = '';
 const SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
 const SEARCHSTRING_DE_HEXSTRING2FILE = 'hexadezimal datei';
 const SEARCHSTRING_DE_HEXVIEWER = 'hexansicht hexadezimalansicht dateien';
-const SEARCHSTRING_DE_HIDDENDATA = 'verstecktedaten verstecktedateien verstecktesarchive versteckteszip angehaengetesarchiv angehaengtedaten angehaengtedateien angehaengteszzip';
+const SEARCHSTRING_DE_HIDDENDATA =
+    'verstecktedaten verstecktedateien verstecktesarchive versteckteszip angehaengetesarchiv angehaengtedaten angehaengtedateien angehaengteszzip';
 const SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
 const SEARCHSTRING_DE_HOUDINI = 'seance';
-const SEARCHSTRING_DE_IATAICAO = 'flughafencodes flugplatzcodes landeplatz landeplaetze landeflaechen flugzeuge internationalezivilluftfahrtorganisation';
+const SEARCHSTRING_DE_IATAICAO =
+    'flughafencodes flugplatzcodes landeplatz landeplaetze landeflaechen flugzeuge internationalezivilluftfahrtorganisation';
 const SEARCHSTRING_DE_ICECODES = 'ostsee eiscodes gewaesser schnee schnelzen eisberg';
 const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS =
     'farbkorrekturen anpassen invertieren gammawert saettigung rgb helligkeit';
 const SEARCHSTRING_DE_IMAGES = 'bilder dateien bildbearbeitungen ';
 const SEARCHSTRING_DE_IMAGESANDFILESSELECTION = 'analysieren analysen';
-const SEARCHSTRING_DE_STEGANO = 'lsb steganography';
+const SEARCHSTRING_DE_STEGANO = 'lsb steganographie steganografie';
 const SEARCHSTRING_DE_IRRATIONALNUMBERS = 'irrationalezahlen nachkommastellen';
 const SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE = 'bereich';
 const SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
@@ -322,7 +325,7 @@ const SEARCHSTRING_DE_RSA_DCHECKER = 'testen pruefen';
 const SEARCHSTRING_DE_RSA_ECHECKER = 'testen pruefen  ';
 const SEARCHSTRING_DE_RSA_NCALCULATOR = 'berechnen';
 const SEARCHSTRING_DE_RSA_PHICALCULATOR = 'berechnen';
-const SEARCHSTRING_DE_SCHILLINGCANNSTATT = 'rechts links';
+const SEARCHSTRING_DE_SCHILLINGCANSTATT = 'rechts links';
 const SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION =
     'naturwissenschaften technologien technik mathematik  physik  chemie  elektronik biologie geographie musik geografie';
 const SEARCHSTRING_DE_SEGMENTS = 'segmentanzeige segmente';
@@ -484,7 +487,7 @@ const SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_TREBLECLEF =
     'musik notennamen violinschluessel tonleiter bassvorzeichen kreuzvorzeichen';
 const SEARCHSTRING_DE_SYMBOL_NOTES_NOTEVALUES = 'musik notenwerte ';
 const SEARCHSTRING_DE_SYMBOL_NOTES_RESTVALUES = 'musik  pausenwerte';
-const SEARCHSTRING_DE_SYMBOL_NYCTOGRAPHY = 'nyctographie';
+const SEARCHSTRING_DE_SYMBOL_NYCTOGRAPHY = 'nyctographie nyctografie';
 const SEARCHSTRING_DE_SYMBOL_OGHAM = 'irland irisch runen';
 const SEARCHSTRING_DE_SYMBOL_OPTICALFIBER = 'lichtwellenleiter lichtleitkabel glasfaserkabel';
 const SEARCHSTRING_DE_SYMBOL_OPTICAL_FIBER_FOTAG = '';
@@ -527,8 +530,7 @@ const SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS = 'zahlen ziffern indien indisch';
 const SEARCHSTRING_DE_SYMBOL_TEMPLERS = 'tempelritter';
 const SEARCHSTRING_DE_SYMBOL_TENCTONESE = '';
 const SEARCHSTRING_DE_SYMBOL_TENGWAR_BELERIAND = 'elben elbisches dritteszeitalter';
-const SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC =
-    'elben elbisches dritteszeitalter klassischer';
+const SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC = 'elben elbisches dritteszeitalter klassischer';
 const SEARCHSTRING_DE_SYMBOL_TENGWAR_GENERAL = 'elben elbisches dritteszeitalter general';
 const SEARCHSTRING_DE_SYMBOL_TERZI = 'alphabet punkte blindenschrift quadrat taktil';
 const SEARCHSTRING_DE_SYMBOL_THEBAN =
@@ -559,7 +561,7 @@ const SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS = 'astrologie tierkreiszeichen sternzei
 const SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS_LATIN = 'lateinisches';
 const SEARCHSTRING_DE_TAPCODE = 'klopfcode klopfen';
 const SEARCHSTRING_DE_TAPIR = 'stasi staatssicherheit nationalevolksarmee';
-const SEARCHSTRING_DE_TELEGRAPH = 'telegraphen telegrafen telekommunikation telegraphie';
+const SEARCHSTRING_DE_TELEGRAPH = 'telegraphen telegrafen telekommunikation telegraphie telegrafie';
 const SEARCHSTRING_DE_TOMTOM = '';
 const SEARCHSTRING_DE_TRIFID = '';
 const SEARCHSTRING_DE_TRITHEMIUS = '';
@@ -573,7 +575,8 @@ const SEARCHSTRING_DE_VANITYTEXTSEARCH = 'textanalyse textsuche';
 const SEARCHSTRING_DE_VANITYWORDSLIST = '';
 const SEARCHSTRING_DE_VIGENERE = '';
 const SEARCHSTRING_DE_VIGENEREBREAKER = '';
-const SEARCHSTRING_DE_WASD = 'videospiele cursortasten pfeiltasten tastatur hoch runter links rechts richtungen oben unten';
-const SEARCHSTRING_DE_VISUALCRYPTOGRAPHY = 'visuellekryptografie schwarz weiss grau';
+const SEARCHSTRING_DE_WASD =
+    'videospiele cursortasten pfeiltasten tastatur hoch runter links rechts richtungen oben unten';
+const SEARCHSTRING_DE_VISUALCRYPTOGRAPHY = 'visuellekryptografie schwarz weiss grau visuellekryptographie';
 const SEARCHSTRING_DE_WINDOW = 'fenster';
 const SEARCHSTRING_DE_Z22 = '';

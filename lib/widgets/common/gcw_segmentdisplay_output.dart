@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -20,8 +21,8 @@ class GCWSegmentDisplayOutput extends StatefulWidget {
   final bool readOnly;
   final Widget trailing;
 
-
-  const GCWSegmentDisplayOutput({Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
+  const GCWSegmentDisplayOutput(
+      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
       : super(key: key);
 
   @override
@@ -50,29 +51,30 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
         text: i18n(context, 'segmentdisplay_displayoutput'),
         trailing: Row(
           children: <Widget>[
-            widget.upsideDownButton ?
-            Container(
-              child: GCWIconButton(
-                iconData: Icons.rotate_left,
-                size: IconButtonSize.SMALL,
-                onPressed: () {
-                  setState(() {
-                    _currentUpsideDown = !_currentUpsideDown;
-                  });
-                },
-              ),
-            )
-            : Container(),
+            widget.upsideDownButton
+                ? Container(
+                    child: GCWIconButton(
+                      iconData: Icons.rotate_left,
+                      size: IconButtonSize.SMALL,
+                      onPressed: () {
+                        setState(() {
+                          _currentUpsideDown = !_currentUpsideDown;
+                        });
+                      },
+                    ),
+                  )
+                : Container(),
             Container(
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 iconData: Icons.save,
-                iconColor:  (widget.segments == null) || (widget.segments.length == 0) ? Colors.grey : null,
-                onPressed: ()  async {
+                iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
+                onPressed: () async {
                   await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
-                    if (image != null) image.toByteData(format: ui.ImageByteFormat.png).then((data) {
-                      _exportFile(context, data.buffer.asUint8List());
-                    });
+                    if (image != null)
+                      image.toByteData(format: ui.ImageByteFormat.png).then((data) {
+                        _exportFile(context, data.buffer.asUint8List());
+                      });
                   });
                 },
               ),
@@ -117,20 +119,18 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
       return widget.segmentFunction(displayedSegments, widget.readOnly);
     }).toList();
 
-    var viewList = !_currentUpsideDown ? _displays : _displays.map((display) {
-      return Transform.rotate(
-          angle: _currentUpsideDown ? pi : 0,
-          child: display
-      );
-    }).toList();
+    var viewList = !_currentUpsideDown
+        ? _displays
+        : _displays.map((display) {
+            return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
+          }).toList();
     return buildSegmentDisplayOutput(countColumns, viewList);
   }
 }
 
 _exportFile(BuildContext context, Uint8List data) async {
-  var value = await saveByteDataToFile(context,
-      data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+  var value =
+      await saveByteDataToFile(context, data, 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-  if (value != null)
-    showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
+  if (value != null) showExportedFileDialog(context, fileType: FileType.PNG, contentWidget: Image.memory(data));
 }

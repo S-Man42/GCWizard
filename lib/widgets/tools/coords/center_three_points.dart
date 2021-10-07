@@ -37,33 +37,11 @@ class CenterThreePointsState extends State<CenterThreePoints> {
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
 
   @override
   Widget build(BuildContext context) {
-    var mapPointCurrentCoords1 = GCWMapPoint(
-        point: _currentCoords1,
-        markerText: i18n(context, 'coords_centerthreepoints_coorda'),
-        coordinateFormat: _currentCoordsFormat1);
-    var mapPointCurrentCoords2 = GCWMapPoint(
-        point: _currentCoords2,
-        markerText: i18n(context, 'coords_centerthreepoints_coordb'),
-        coordinateFormat: _currentCoordsFormat2);
-    var mapPointCurrentCoords3 = GCWMapPoint(
-        point: _currentCoords3,
-        markerText: i18n(context, 'coords_centerthreepoints_coordc'),
-        coordinateFormat: _currentCoordsFormat3);
-    var mapPointCenter = GCWMapPoint(
-        point: _currentCenter,
-        color: COLOR_MAP_CALCULATEDPOINT,
-        markerText: i18n(context, 'coords_common_centerpoint'),
-        coordinateFormat: _currentOutputFormat,
-        circleColorSameAsPointColor: false,
-        circle: GCWMapCircle(radius: _currentDistance));
-
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -106,24 +84,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(outputs: _currentOutput, points: [
-          mapPointCurrentCoords1,
-          mapPointCurrentCoords2,
-          mapPointCurrentCoords3,
-          mapPointCenter
-        ], polylines: [
-          GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCenter]),
-          GCWMapPolyline(
-              points: [mapPointCurrentCoords2, mapPointCenter],
-              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()),
-          GCWMapPolyline(
-              points: [mapPointCurrentCoords3, mapPointCenter],
-              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-                  .toColor())
-        ]),
+        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: _currentMapPolylines),
       ],
     );
   }
@@ -174,6 +135,42 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     }).toList();
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
+
+    var mapPointCurrentCoords1 = GCWMapPoint(
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_centerthreepoints_coorda'),
+        coordinateFormat: _currentCoordsFormat1);
+    var mapPointCurrentCoords2 = GCWMapPoint(
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_centerthreepoints_coordb'),
+        coordinateFormat: _currentCoordsFormat2);
+    var mapPointCurrentCoords3 = GCWMapPoint(
+        point: _currentCoords3,
+        markerText: i18n(context, 'coords_centerthreepoints_coordc'),
+        coordinateFormat: _currentCoordsFormat3);
+    var mapPointCenter = GCWMapPoint(
+        point: _currentCenter,
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_common_centerpoint'),
+        coordinateFormat: _currentOutputFormat,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(radius: _currentDistance));
+
+    _currentMapPoints = [mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCurrentCoords3, mapPointCenter];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCenter]),
+      GCWMapPolyline(
+          points: [mapPointCurrentCoords2, mapPointCenter],
+          color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+              .toColor()),
+      GCWMapPolyline(
+          points: [mapPointCurrentCoords3, mapPointCenter],
+          color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+              .toColor())
+    ];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

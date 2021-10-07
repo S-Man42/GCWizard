@@ -142,6 +142,8 @@ class CalendarState extends State<Calendar> {
   }
 
   String _HebrewDateToString(DateOutput HebrewDate, double jd) {
+    if (int.parse(HebrewDate.year) < 0) return i18n(context, 'dates_calendar_error');
+
     if (typeOfJewYear(JewishYearLength(jd)).contains('embolistic'))
       return HebrewDate.day +
           '. ' +
@@ -161,6 +163,7 @@ class CalendarState extends State<Calendar> {
       case CalendarSystem.ISLAMICCALENDAR:
       case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
       case CalendarSystem.COPTICCALENDAR:
+        if (int.parse(date.year) < 0) return i18n(context, 'dates_calendar_error');
         return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
       case CalendarSystem.GREGORIANCALENDAR:
       case CalendarSystem.JULIANCALENDAR:

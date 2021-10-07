@@ -1,4 +1,4 @@
-
+import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -22,7 +22,6 @@ import 'package:http/http.dart' as http;
 
 import 'gcw_async_executer.dart';
 
-
 class GCWOpenFile extends StatefulWidget {
   final Function onLoaded;
   final List<FileType> supportedFileTypes;
@@ -30,7 +29,8 @@ class GCWOpenFile extends StatefulWidget {
   final String title;
   final PlatformFile file;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.file}) : super(key: key);
+  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.file})
+      : super(key: key);
 
   @override
   _GCWOpenFileState createState() => _GCWOpenFileState();
@@ -102,7 +102,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
               );
             },
           );
-    });
+        });
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataDownload() async {
@@ -114,15 +114,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       return null;
     }
 
-    if (widget.supportedFileTypes != null) {
-      var _urlFileType = fileTypeByFilename(_currentUrl);
-
-      if (_urlFileType == null || !widget.supportedFileTypes.contains(_urlFileType)) {
-        showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
-        return null;
-      }
-    }
-    await _getUri(_currentUrl.trim()).then((uri) {
+    await _getAndValidateUri(_currentUrl.trim()).then((uri) {
       if (uri == null) {
         showToast(i18n(context, 'common_loadfile_exception_url'));
         return null;
@@ -136,18 +128,17 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _buildOpenFromURL() {
     var urlTextField = GCWTextField(
-      controller: _urlController,
-      filled: widget.isDialog,
-      hintText: i18n(context, 'common_loadfile_openfrom_url_address'),
-      hintColor: widget.isDialog ? Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
-      onChanged: (String value) {
-        if (value == null || value.trim().isEmpty) {
-          _currentUrl = null;
-          return;
-        }
-        _currentUrl = value;
-      }
-    );
+        controller: _urlController,
+        filled: widget.isDialog,
+        hintText: i18n(context, 'common_loadfile_openfrom_url_address'),
+        hintColor: widget.isDialog ? Color.fromRGBO(150, 150, 150, 1.0) : themeColors().textFieldHintText(),
+        onChanged: (String value) {
+          if (value == null || value.trim().isEmpty) {
+            _currentUrl = null;
+            return;
+          }
+          _currentUrl = value;
+        });
 
     if (widget.isDialog) {
       return Column(
@@ -175,12 +166,9 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _saveDownload(dynamic data) {
     if (data is Uint8List) {
-        _loadedFile = PlatformFile(
-                   name: Uri.decodeFull(_currentUrl).split('/').last,
-                   path: _currentUrl,
-                   bytes: data);
-    } else if (data is String)
-      showToast(i18n(context, data));
+      _loadedFile = PlatformFile(
+          name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
+    } else if (data is String) showToast(i18n(context, data));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onLoaded(_loadedFile);
@@ -189,8 +177,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   @override
   Widget build(BuildContext context) {
-    if (_loadedFile == null && widget.file != null)
-      _loadedFile = widget.file;
+    if (_loadedFile == null && widget.file != null) _loadedFile = widget.file;
 
     var content = Column(
       children: [
@@ -206,26 +193,25 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
             });
           },
         ),
-        if (_currentMode == GCWSwitchPosition.left)
-          _buildOpenFromDevice(),
-        if (_currentMode == GCWSwitchPosition.right)
-          _buildOpenFromURL(),
+        if (_currentMode == GCWSwitchPosition.left) _buildOpenFromDevice(),
+        if (_currentMode == GCWSwitchPosition.right) _buildOpenFromURL(),
       ],
     );
 
     return Column(
       children: [
-        widget.isDialog ? content :
-          GCWExpandableTextDivider(
-            text: i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title + ')' : ''),
-            expanded: _currentExpanded,
-            onChanged: (value) {
-              setState(() {
-                _currentExpanded = value;
-              });
-            },
-            child: content
-          ),
+        widget.isDialog
+            ? content
+            : GCWExpandableTextDivider(
+                text:
+                    i18n(context, 'common_loadfile_showopen') + (widget.title != null ? ' (' + widget.title + ')' : ''),
+                expanded: _currentExpanded,
+                onChanged: (value) {
+                  setState(() {
+                    _currentExpanded = value;
+                  });
+                },
+                child: content),
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile.name ?? ''),
@@ -239,7 +225,23 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     );
   }
 
-  Future<Uri> _getUri(String url) async {
+  bool _validateContentType(String contentType) {
+    if (widget.supportedFileTypes == null) return true;
+
+    for (FileType fileType in widget.supportedFileTypes) {
+      if (mimeTypes(fileType).contains(contentType)) return true;
+    }
+
+    var _urlFileType = fileTypeByFilename(_currentUrl.split('?').first);
+
+    if (_urlFileType != null && widget.supportedFileTypes.contains(_urlFileType)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<Uri> _getAndValidateUri(String url) async {
     const _HTTP = 'http://';
     const _HTTPS = 'https://';
 
@@ -254,8 +256,14 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       try {
         Uri uri = Uri.parse(prefix + url);
         var response = await http.head(uri);
-        if (response.statusCode == 200)
-          return uri;
+
+        if (response.statusCode ~/ 100 == 2) {
+          if (_validateContentType(response.headers[HttpHeaders.contentTypeHeader])) {
+            return uri;
+          } else {
+            showToast(i18n(context, 'common_loadfile_exception_supportedfiletype'));
+          }
+        }
       } catch (e) {}
     }
 
@@ -273,16 +281,14 @@ showOpenFileDialog(BuildContext context, List<FileType> supportedFileTypes, Func
             supportedFileTypes: supportedFileTypes,
             isDialog: true,
             onLoaded: (_file) {
-              if (onLoaded != null)
-                onLoaded(_file);
+              if (onLoaded != null) onLoaded(_file);
 
               Navigator.of(context).pop();
             },
           ),
         ],
       ),
-      []
-  );
+      []);
 }
 
 Future<dynamic> _downloadFileAsync(dynamic jobData) async {
@@ -294,14 +300,10 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
 
   var request = http.Request("GET", uri);
   var client = http.Client();
-  await client.send(request)
-      .timeout(
-      Duration(seconds: 10),
-      onTimeout: () {
-        if (sendAsyncPort != null) sendAsyncPort.send(null);
-        return null; //http.Response('Error', 500);
-      }
-  ).then((http.StreamedResponse response) {
+  await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
+    if (sendAsyncPort != null) sendAsyncPort.send(null);
+    return null; //http.Response('Error', 500);
+  }).then((http.StreamedResponse response) {
     if (response.statusCode != 200) {
       if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
       return 'common_loadfile_exception_responsestatus';
@@ -312,14 +314,14 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
     response.stream.listen((value) {
       _bytes.addAll(value);
 
-      if (_total != 0 && sendAsyncPort != null &&
+      if (_total != 0 &&
+          sendAsyncPort != null &&
           (_received % progressStep > (_received + value.length) % progressStep)) {
         sendAsyncPort.send({'progress': (_received + value.length) / _total});
       }
       _received += value.length;
     }).onDone(() {
-      if (_bytes == null || _bytes.isEmpty)
-        return 'common_loadfile_exception_nofile';
+      if (_bytes == null || _bytes.isEmpty) return 'common_loadfile_exception_nofile';
 
       var uint8List = Uint8List.fromList(_bytes);
       if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
@@ -328,5 +330,3 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
     });
   });
 }
-
-

@@ -262,7 +262,8 @@ class _KmlWriter {
 
         if (polylines != null && polylines.length > 0) {
           for (i = 0; i < polylines.length; i++) {
-            _writeLines(builder, 'line', polylines[i].points.map((mapPoint) => mapPoint.point).toList(), '#polyline' + i.toString());
+            _writeLines(builder, 'line', polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
+                '#polyline' + i.toString());
           }
         }
       });

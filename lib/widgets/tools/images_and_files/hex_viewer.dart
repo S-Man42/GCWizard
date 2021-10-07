@@ -87,15 +87,14 @@ class HexViewerState extends State<HexViewer> {
           },
         ),
         GCWDefaultOutput(
-          child: _buildOutput(),
-          trailing: GCWIconButton(
-            iconData: Icons.text_snippet_outlined,
-            size: IconButtonSize.SMALL,
-            onPressed: () {
-              openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
-            },
-          )
-        )
+            child: _buildOutput(),
+            trailing: GCWIconButton(
+              iconData: Icons.text_snippet_outlined,
+              size: IconButtonSize.SMALL,
+              onPressed: () {
+                openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
+              },
+            ))
       ],
     );
   }
@@ -117,12 +116,10 @@ class HexViewerState extends State<HexViewer> {
 
     var asciiText = hexTextList.map((line) {
       return line.split(' ').map((hexValue) {
-        if (hexValue == null || hexValue.isEmpty)
-          return '';
+        if (hexValue == null || hexValue.isEmpty) return '';
 
         var charCode = int.tryParse(hexValue, radix: 16);
-        if (charCode < 32)
-          return '.';
+        if (charCode < 32) return '.';
 
         return String.fromCharCode(charCode);
       }).join();
@@ -149,7 +146,8 @@ class HexViewerState extends State<HexViewer> {
                 ),
                 Expanded(
                   child: GCWText(
-                    text: '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines.ceil())} / ${_hexDataLines.ceil()}',
+                    text:
+                        '${i18n(context, 'hexviewer_lines')}: ${_currentLines + 1} - ${min(_currentLines + _MAX_LINES, _hexDataLines.ceil())} / ${_hexDataLines.ceil()}',
                     align: Alignment.center,
                   ),
                 ),
@@ -173,7 +171,7 @@ class HexViewerState extends State<HexViewer> {
         Row(
           children: [
             Expanded(
-              child: Container (
+              child: Container(
                 child: NotificationListener<ScrollNotification>(
                   child: SingleChildScrollView(
                     controller: _scrollControllerHex,
@@ -184,17 +182,16 @@ class HexViewerState extends State<HexViewer> {
                     ),
                   ),
                   onNotification: (ScrollNotification scrollNotification) {
-                    if (_isASCIIScrolling)
-                      return false;
+                    if (_isASCIIScrolling) return false;
 
                     if (scrollNotification is ScrollStartNotification) {
                       _isHexScrolling = true;
                     } else if (scrollNotification is ScrollEndNotification) {
                       _isHexScrolling = false;
                     } else if (scrollNotification is ScrollUpdateNotification) {
-                      _scrollControllerASCII.position.jumpTo(
-                        _scrollControllerASCII.position.maxScrollExtent * _scrollControllerHex.position.pixels / _scrollControllerHex.position.maxScrollExtent
-                      );
+                      _scrollControllerASCII.position.jumpTo(_scrollControllerASCII.position.maxScrollExtent *
+                          _scrollControllerHex.position.pixels /
+                          _scrollControllerHex.position.maxScrollExtent);
                     }
 
                     return true;
@@ -203,41 +200,36 @@ class HexViewerState extends State<HexViewer> {
               ),
               flex: 15,
             ),
+            Expanded(child: Container(), flex: 1),
             Expanded(
-              child: Container(),
-              flex: 1
-            ),
-            Expanded(
-              child: Container(
-                child: NotificationListener<ScrollNotification>(
-                  child: SingleChildScrollView(
-                    controller: _scrollControllerASCII,
-                    scrollDirection: Axis.horizontal,
-                    child: GCWText(
-                      text: asciiText,
-                      style: gcwMonotypeTextStyle(),
+                child: Container(
+                  child: NotificationListener<ScrollNotification>(
+                    child: SingleChildScrollView(
+                      controller: _scrollControllerASCII,
+                      scrollDirection: Axis.horizontal,
+                      child: GCWText(
+                        text: asciiText,
+                        style: gcwMonotypeTextStyle(),
+                      ),
                     ),
+                    onNotification: (ScrollNotification scrollNotification) {
+                      if (_isHexScrolling) return false;
+
+                      if (scrollNotification is ScrollStartNotification) {
+                        _isASCIIScrolling = true;
+                      } else if (scrollNotification is ScrollEndNotification) {
+                        _isASCIIScrolling = false;
+                      } else if (scrollNotification is ScrollUpdateNotification) {
+                        _scrollControllerHex.position.jumpTo(_scrollControllerHex.position.maxScrollExtent *
+                            _scrollControllerASCII.position.pixels /
+                            _scrollControllerASCII.position.maxScrollExtent);
+                      }
+
+                      return true;
+                    },
                   ),
-                  onNotification: (ScrollNotification scrollNotification) {
-                    if (_isHexScrolling)
-                      return false;
-
-                    if (scrollNotification is ScrollStartNotification) {
-                      _isASCIIScrolling = true;
-                    } else if (scrollNotification is ScrollEndNotification) {
-                      _isASCIIScrolling = false;
-                    } else if (scrollNotification is ScrollUpdateNotification) {
-                      _scrollControllerHex.position.jumpTo(
-                          _scrollControllerHex.position.maxScrollExtent * _scrollControllerASCII.position.pixels / _scrollControllerASCII.position.maxScrollExtent
-                      );
-                    }
-
-                    return true;
-                  },
                 ),
-              ),
-              flex: 5
-            )
+                flex: 5)
           ],
         )
       ],

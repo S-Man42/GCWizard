@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -111,7 +112,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWIconButton(
               iconData: _filtered ? Icons.filter_alt : Icons.filter_alt_outlined,
               size: IconButtonSize.SMALL,
-              iconColor: _outData != null ? null : Colors.grey,
+              iconColor: _outData != null ? null : themeColors().inActive(),
               onPressed: () {
                 setState(() {
                   _filtered = !_filtered;
@@ -121,7 +122,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWIconButton(
               iconData: Icons.play_arrow,
               size: IconButtonSize.SMALL,
-              iconColor: _outData != null && !_play ? null : Colors.grey,
+              iconColor: _outData != null && !_play ? null : themeColors().inActive(),
               onPressed: () {
                 setState(() {
                   _play = (_outData != null);
@@ -131,7 +132,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWIconButton(
               iconData: Icons.stop,
               size: IconButtonSize.SMALL,
-              iconColor: _play ? null : Colors.grey,
+              iconColor: _play ? null : themeColors().inActive(),
               onPressed: () {
                 setState(() {
                   _play = false;
@@ -141,7 +142,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: _outData == null ? Colors.grey : null,
+              iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
                 _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
               },
@@ -260,7 +261,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: _encodeOutputImage == null ? Colors.grey : null,
+              iconColor: _encodeOutputImage == null ? themeColors().inActive() : null,
               onPressed: () {
                 _encodeOutputImage == null ? null : _exportFile(context, _encodeOutputImage);
               },
@@ -327,7 +328,8 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         String description = imagesFiltered[i].length.toString() + '/$imageCount';
 
         var image = images[imagesFiltered[i].first];
-        list.add(GCWImageViewData(local.PlatformFile(bytes: image), description: description, marked: _marked[imagesFiltered[i].first]));
+        list.add(GCWImageViewData(local.PlatformFile(bytes: image),
+            description: description, marked: _marked[imagesFiltered[i].first]));
       }
       _outText = decodeMorseCode(durations, _marked);
     }

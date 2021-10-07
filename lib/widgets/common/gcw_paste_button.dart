@@ -5,21 +5,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWPasteButton extends StatefulWidget {
   final Function onSelected;
-  final Function onLongPress;
-  final IconButtonSize size;
+  final Function onBeforePressed;
+  final IconButtonSize iconSize;
   final Widget customIcon;
   final Color backgroundColor;
+  final bool isTextSelectionToolBarButton;
+  final EdgeInsets textSelectionToolBarButtonPadding;
+  final String textSelectionToolBarButtonLabel;
 
-  const GCWPasteButton({Key key, this.onSelected, this.onLongPress, this.size, this.customIcon, this.backgroundColor})
+  const GCWPasteButton(
+      {Key key,
+      this.onSelected,
+      this.onBeforePressed,
+      this.iconSize,
+      this.customIcon,
+      this.backgroundColor,
+      this.isTextSelectionToolBarButton: false,
+      this.textSelectionToolBarButtonPadding,
+      this.textSelectionToolBarButtonLabel})
       : super(key: key);
 
   @override
@@ -30,15 +48,17 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: GCWPopupMenu(
-        size: widget.size,
-        customIcon: widget.customIcon,
-        iconData: Icons.content_paste,
-        backgroundColor: widget.backgroundColor,
-        menuItemBuilder: (context) => _buildMenuItems(context),
-      ),
-      onLongPress: widget.onLongPress,
-    );
+        child: GCWPopupMenu(
+      size: widget.iconSize,
+      customIcon: widget.customIcon,
+      iconData: Icons.content_paste,
+      backgroundColor: widget.backgroundColor,
+      menuItemBuilder: (context) => _buildMenuItems(context),
+      onBeforePressed: widget.onBeforePressed,
+      isTextSelectionToolBarButton: widget.isTextSelectionToolBarButton,
+      textSelectionToolBarButtonLabel: widget.textSelectionToolBarButtonLabel,
+      textSelectionToolBarButtonPadding: widget.textSelectionToolBarButtonPadding,
+    ));
   }
 
   _buildMenuItems(BuildContext context) {
@@ -46,20 +66,32 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
       GCWPopupMenuItem(
         child: Text(i18n(context, 'common_clipboard_fromdeviceclipboard'), style: gcwDialogTextStyle()),
         action: (index) {
-          Clipboard.getData('text/plain').then((data) {
-            if (data.text.length == 0) {
-              showToast(i18n(context, 'common_clipboard_notextdatafound'));
-              return;
-            }
+          try {
+            Clipboard.getData('text/plain').then((data) {
+              if (data.text.length == 0) {
+                showToast(i18n(context, 'common_clipboard_notextdatafound'));
+                return;
+              }
 
-            setState(() {
               widget.onSelected(data.text);
-              insertIntoGCWClipboard(data.text);
+              insertIntoGCWClipboard(context, data.text, useGlobalClipboard: false);
             });
-          });
+          } catch (e) {}
         },
       ),
-      GCWPopupMenuItem(isDivider: true)
+      GCWPopupMenuItem(
+          child: GCWTextDivider(
+            suppressTopSpace: true,
+            style: gcwDialogTextStyle(),
+            trailing: GCWIconButton(
+              iconData: Icons.settings,
+              size: IconButtonSize.SMALL,
+              iconColor: themeColors().dialogText(),
+            ),
+          ),
+          action: (index) {
+            NavigationService.instance.navigateTo('clipboard_editor');
+          })
     ];
 
     var gcwClipboard = Prefs.getStringList('clipboard_items').map((clipboardItem) {
@@ -93,10 +125,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
           ),
           action: (index) {
             var pasteData = jsonDecode(Prefs.getStringList('clipboard_items')[index - 2])['text'];
-            setState(() {
-              widget.onSelected(pasteData);
-            });
-            insertIntoGCWClipboard(pasteData);
+            widget.onSelected(pasteData);
+            insertIntoGCWClipboard(context, pasteData, useGlobalClipboard: false);
           });
     }).toList();
 

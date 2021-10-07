@@ -37,11 +37,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   Widget build(BuildContext context) {
     if (_LANGUAGES == null) {
       _LANGUAGES = SplayTreeMap.from(
-        switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(
-          i18n(context, key),
-          value
-        ))
-      );
+          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
     }
 
     return Column(

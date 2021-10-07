@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:qr/qr.dart' as qr;
+import 'package:r_scan/r_scan.dart' as scan;
 
-/// Parse to code string with uint8list
+/// Parse to code string with Uint8list
 Future<String> scanBytes(Uint8List bytes) async {
   if (bytes == null) return null;
   try {
-    return scanner.scanBytes(bytes);
+    var codes = await scan.RScan.scanImageMemory(bytes);
+    if (codes != null) return codes.message;
   } catch (e) {}
   return null;
 }
@@ -16,7 +19,44 @@ Future<String> scanBytes(Uint8List bytes) async {
 /// Generating Bar Code
 Future<Uint8List> generateBarCode(String code) async {
   if (code == null || code == "") return null;
-  return addBorder(await scanner.generateBarCode(code));
+
+  var qrCode = qr.QrCode.fromData(
+    data: code,
+    errorCorrectLevel: qr.QrErrorCorrectLevel.L,
+  );
+
+  return _createQrCode(qrCode);
+}
+
+Future<Uint8List> _createQrCode(qr.QrCode qrCode, {double border = 10}) async {
+  try {
+    qrCode.make();
+    const double moduleSize = 5;
+    final canvasRecorder = ui.PictureRecorder();
+    final rect = ui.Rect.fromLTWH(
+        0, 0, moduleSize * qrCode.moduleCount + 2 * border, moduleSize * qrCode.moduleCount + 2 * border);
+    final canvas = ui.Canvas(canvasRecorder, rect);
+    final paint = ui.Paint()
+      ..color = COLOR_QR_BACKGROUND
+      ..style = ui.PaintingStyle.fill;
+
+    canvas.drawRect(rect, paint);
+    paint.color = Colors.black;
+    for (int x = 0; x < qrCode.moduleCount; x++) {
+      for (int y = 0; y < qrCode.moduleCount; y++) {
+        if (qrCode.isDark(y, x)) {
+          canvas.drawRect(
+              ui.Rect.fromLTWH(x * moduleSize + border, y * moduleSize + border, moduleSize, moduleSize), paint);
+        }
+      }
+    }
+    var image = await canvasRecorder.endRecording().toImage(rect.width.floor(), rect.height.floor());
+
+    final data = await image.toByteData(format: ui.ImageByteFormat.png);
+    return data.buffer.asUint8List();
+  } catch (e) {
+    return null;
+  }
 }
 
 Future<Uint8List> addBorder(Uint8List imageBytes, {double border = 10}) async {

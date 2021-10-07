@@ -144,12 +144,11 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-      segmentFunction:(displayedSegments, readOnly) {
-        return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
-      },
-      segments: segments,
-      readOnly: true
-    );
+        segmentFunction: (displayedSegments, readOnly) {
+          return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        },
+        segments: segments,
+        readOnly: true);
   }
 
   Widget _buildOutput() {
@@ -168,10 +167,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       }).join(' ');
       var segments = decodeCistercian(output);
       return Column(
-        children: <Widget>[
-          _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['text'])
-        ],
+        children: <Widget>[_buildDigitalOutput(segments['displays']), GCWDefaultOutput(child: segments['text'])],
       );
     }
   }

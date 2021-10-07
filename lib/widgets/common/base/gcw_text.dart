@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textselectioncontrols.dart';
 
 class GCWText extends StatefulWidget {
   final String text;
@@ -18,6 +19,11 @@ class _GCWTextState extends State<GCWText> {
   Widget build(BuildContext context) {
     return Align(
         alignment: widget.align,
-        child: SelectableText(widget.text, textAlign: widget.textAlign, style: widget.style ?? gcwTextStyle()));
+        child: SelectableText(
+          widget.text,
+          textAlign: widget.textAlign,
+          style: widget.style ?? gcwTextStyle(),
+          selectionControls: GCWTextSelectionControls(),
+        ));
   }
 }

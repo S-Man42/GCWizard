@@ -34,29 +34,11 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
 
   @override
   Widget build(BuildContext context) {
-    var mapPointCurrentCoords1 = GCWMapPoint(
-        point: _currentCoords1,
-        markerText: i18n(context, 'coords_centertwopoints_coorda'),
-        coordinateFormat: _currentCoordsFormat1);
-    var mapPointCurrentCoords2 = GCWMapPoint(
-        point: _currentCoords2,
-        markerText: i18n(context, 'coords_centertwopoints_coordb'),
-        coordinateFormat: _currentCoordsFormat2);
-    var mapPointCenter = GCWMapPoint(
-        point: _currentCenter,
-        color: COLOR_MAP_CALCULATEDPOINT,
-        markerText: i18n(context, 'coords_common_centerpoint'),
-        coordinateFormat: _currentOutputFormat,
-        circleColorSameAsPointColor: false,
-        circle: GCWMapCircle(radius: _currentDistance));
-
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -95,13 +77,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
             });
           },
         ),
-        GCWCoordsOutput(outputs: _currentOutput, points: [
-          mapPointCurrentCoords1,
-          mapPointCurrentCoords2,
-          mapPointCenter
-        ], polylines: [
-          GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCurrentCoords2]),
-        ]),
+        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: _currentMapPolylines),
       ],
     );
   }
@@ -115,5 +91,27 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
     _currentOutput.add('${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid())}');
     _currentOutput.add(
         '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
+
+    var mapPointCurrentCoords1 = GCWMapPoint(
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_centertwopoints_coorda'),
+        coordinateFormat: _currentCoordsFormat1);
+    var mapPointCurrentCoords2 = GCWMapPoint(
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_centertwopoints_coordb'),
+        coordinateFormat: _currentCoordsFormat2);
+    var mapPointCenter = GCWMapPoint(
+        point: _currentCenter,
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_common_centerpoint'),
+        coordinateFormat: _currentOutputFormat,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(radius: _currentDistance));
+
+    _currentMapPoints = [mapPointCurrentCoords1, mapPointCurrentCoords2, mapPointCenter];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCurrentCoords2])
+    ];
   }
 }

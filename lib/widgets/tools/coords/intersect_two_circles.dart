@@ -32,13 +32,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
-  var _currentMapPoints;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
 
   @override
   Widget build(BuildContext context) {

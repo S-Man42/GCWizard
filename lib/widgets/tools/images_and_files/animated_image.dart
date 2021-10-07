@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -65,7 +66,7 @@ class AnimatedImageState extends State<AnimatedImage> {
             GCWIconButton(
               iconData: Icons.play_arrow,
               size: IconButtonSize.SMALL,
-              iconColor: _outData != null && !_play ? null : Colors.grey,
+              iconColor: _outData != null && !_play ? null : themeColors().inActive(),
               onPressed: () {
                 setState(() {
                   _play = (_outData != null);
@@ -75,7 +76,7 @@ class AnimatedImageState extends State<AnimatedImage> {
             GCWIconButton(
               iconData: Icons.stop,
               size: IconButtonSize.SMALL,
-              iconColor: _play ? null : Colors.grey,
+              iconColor: _play ? null : themeColors().inActive(),
               onPressed: () {
                 setState(() {
                   _play = false;
@@ -85,7 +86,7 @@ class AnimatedImageState extends State<AnimatedImage> {
             GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: _outData == null ? Colors.grey : null,
+              iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
                 _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
               },
