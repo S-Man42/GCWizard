@@ -73,7 +73,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     var formulaTool = GCWTool(
         tool: FormulaSolverFormulaValues(group: widget.group),
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-        helpSearchString: i18n(context, 'formulasolver_values'),
+        helpSearchString: 'formulasolver_values',
         defaultLanguageToolName:
             '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
         helpLocales: ['de', 'en', 'fr']);
@@ -176,7 +176,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
-                helpSearchString: i18n(context, 'coords_variablecoordinate_title'),
+                helpSearchString: 'coords_variablecoordinate_title',
                 i18nPrefix:
                     '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
                 helpLocales: ['de', 'en', 'fr'])));
