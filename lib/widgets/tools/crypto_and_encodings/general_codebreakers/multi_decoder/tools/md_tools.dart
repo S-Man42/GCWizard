@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/vanity/phone_models.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
@@ -17,6 +18,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_kenny.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_roman_numbers.dart';
@@ -49,6 +51,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_VANITYMULTITAP,
   MDT_INTERNALNAMES_ROMANNUMBERS,
   MDT_INTERNALNAMES_BINARY2IMAGE,
+  MDT_INTERNALNAMES_KEYBOARDLAYOUT,
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -63,6 +66,7 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_ROTATION: {MDT_ROTATION_OPTION_KEY: 13},
   MDT_INTERNALNAMES_SEGMENTDISPLAY: {MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: 7},
   MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
+  MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: enumKeyboardLayout.QWERTZ_T1, MDT_KEYBOARDLAYOUT_OPTION_TO: enumKeyboardLayout.QWERTY_US_INT},
 };
 
 _multiDecoderToolOptionToGCWMultiDecoderToolOptions(List<MultiDecoderToolOption> mdtOptions) {
@@ -146,6 +150,9 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_BINARY2IMAGE:
       gcwTool = MultiDecoderBinary2Image(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
+    case MDT_INTERNALNAMES_KEYBOARDLAYOUT:
+      gcwTool = MultiDecoderToolKeybordLayout(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
   }
 
   return gcwTool;
@@ -224,6 +231,9 @@ initializeMultiToolDecoder(BuildContext context) {
         options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 16)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KENNY), MDT_INTERNALNAMES_KENNY),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BINARY2IMAGE), MDT_INTERNALNAMES_BINARY2IMAGE),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT,
+        options: [MultiDecoderToolOption(MDT_KEYBOARDLAYOUT_OPTION_FROM, enumKeyboardLayout.QWERTZ_T1),
+                  MultiDecoderToolOption(MDT_KEYBOARDLAYOUT_OPTION_TO, enumKeyboardLayout.QWERTY_US_INT)]),
   ];
 
   for (int i = 25; i >= 1; i--) {

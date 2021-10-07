@@ -1777,7 +1777,7 @@ Map buildConvertingMap(enumKeyboardLayout type, convertDirection direction) {
     return switchMapKeyValue(keyboardMap);
 }
 
-String encodeKeyboard(String input, enumKeyboardLayout keyboardFrom, keyboardTo) {
+String encodeKeyboard(String input, enumKeyboardLayout keyboardFrom, enumKeyboardLayout keyboardTo) {
   Map mapSourceToNormal;
   Map mapNormalToTarget;
 
