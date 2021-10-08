@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
 class RotationGeneral extends StatefulWidget {
   @override
@@ -14,7 +17,6 @@ class RotationGeneralState extends State<RotationGeneral> {
 
   String _currentInput = '';
   int _currentKey = 0;
-  String _output = '';
 
   @override
   void initState() {
@@ -37,24 +39,40 @@ class RotationGeneralState extends State<RotationGeneral> {
           onChanged: (text) {
             setState(() {
               _currentInput = text;
-              _calculateOutput();
             });
           },
         ),
         GCWIntegerSpinner(
+          title: i18n(context, 'common_key'),
           onChanged: (value) {
             setState(() {
               _currentKey = value;
-              _calculateOutput();
             });
           },
         ),
-        GCWDefaultOutput(child: _output)
+        _buildOutput()
       ],
     );
   }
 
-  _calculateOutput() {
-    _output = Rotator().rotate(_currentInput, _currentKey);
+  _buildOutput() {
+    if (_currentInput == null || _currentInput.isEmpty)
+      return GCWDefaultOutput();
+
+    var reverseKey = modulo(26 - _currentKey, 26);
+
+    return Column(
+      children: [
+        GCWDefaultOutput(
+          child: Rotator().rotate(_currentInput, _currentKey),
+        ),
+        GCWOutput(
+          title: i18n(context, 'rotation_general_reverse') + ' (' + i18n(context, 'common_key') + ': ' + reverseKey.toString() + ')',
+          child: Rotator().rotate(_currentInput, reverseKey),
+        ),
+      ],
+    );
+
+
   }
 }
