@@ -2400,6 +2400,7 @@
   "multidecoder_tool_segmentdisplay_option_numbersegments": "Anzahl",
   "multidecoder_tool_vanitymultitap_title": "Telefontasten (Vanity)",
   "multidecoder_tool_vanitymultitap_option_phonemodel": "Modell",
+  "multidecoder_tool_wasd_title": "Hoch-Runter-Links-Rechts",
   "navajo_title": "Navajo Code",
   "navajo_description": "Codieren von Text unter Nutzung des Navajo Code Sprecher-Wörterbuch",
   "navajo_example": "CODE → YIL-TAS",

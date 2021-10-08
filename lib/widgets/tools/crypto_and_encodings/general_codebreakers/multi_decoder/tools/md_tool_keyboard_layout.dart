@@ -19,14 +19,15 @@ class MultiDecoderToolKeybordLayout extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_KEYBOARDLAYOUT,
             onDecode: (String input) {
               if (input == null) return null;
-              return encodeKeyboard(input, options[MDT_KEYBOARDLAYOUT_OPTION_FROM], options[MDT_KEYBOARDLAYOUT_OPTION_TO]);
+              return encodeKeyboard(input, _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
+                  _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_TO]));
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWStatefulDropDownButton(
-                value: options[MDT_KEYBOARDLAYOUT_OPTION_FROM],
+                value: _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
                 onChanged: (newValue) {
-                  options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = newValue;
+                  options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = shortKeyboardName(newValue);
                 },
                 items: allKeyboards.map((keyboard) {
                   return GCWDropDownMenuItem(
@@ -37,9 +38,9 @@ class MultiDecoderToolKeybordLayout extends GCWMultiDecoderTool {
                 }).toList(),
               ),
               MDT_KEYBOARDLAYOUT_OPTION_TO: GCWStatefulDropDownButton(
-                value: options[MDT_KEYBOARDLAYOUT_OPTION_FROM],
+                value: _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_TO]),
                 onChanged: (newValue) {
-                  options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = newValue;
+                  options[MDT_KEYBOARDLAYOUT_OPTION_TO] = shortKeyboardName(newValue);
                 },
                 items: allKeyboards.map((keyboard) {
                   return GCWDropDownMenuItem(
@@ -50,4 +51,13 @@ class MultiDecoderToolKeybordLayout extends GCWMultiDecoderTool {
                 }).toList(),
               ),
             }));
+}
+
+enumKeyboardLayout _parseStringToEnum(String item) {
+  return enumKeyboardLayout.values.firstWhere((e) => shortKeyboardName(e) == item);
+}
+
+String shortKeyboardName(enumKeyboardLayout item) {
+  if (item == null) return null;
+  return item.toString().replaceAll('enumKeyboardLayout.', '');
 }
