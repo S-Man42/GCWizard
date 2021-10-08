@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
@@ -43,6 +44,7 @@ class CaesarState extends State<Caesar> {
           },
         ),
         GCWABCSpinner(
+          title: i18n(context, 'common_key'),
           onChanged: (value) {
             setState(() {
               _currentKey = value;

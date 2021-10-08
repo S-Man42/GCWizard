@@ -9,9 +9,10 @@ class GCWABCSpinner extends StatefulWidget {
   final SpinnerLayout layout;
   final value;
   final suppressLetterValues;
+  final String title;
 
   const GCWABCSpinner(
-      {Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.HORIZONTAL, this.suppressLetterValues: false})
+      {Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.HORIZONTAL, this.suppressLetterValues: false, this.title})
       : super(key: key);
 
   @override
@@ -24,6 +25,7 @@ class GCWABCSpinnerState extends State<GCWABCSpinner> {
   @override
   Widget build(BuildContext context) {
     return GCWDropDownSpinner(
+      title: widget.title,
       index: _currentValue ?? (widget.value != null ? widget.value - 1 : null) ?? 0,
       layout: widget.layout,
       items: alphabet_AZ.entries.map((entry) {
