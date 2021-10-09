@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
@@ -19,7 +20,7 @@ class MultiDecoderToolWasd extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_WASD,
             onDecode: (String input) {
               if (input == null) return null;
-              return decodeWASDGraphic(input, options[MDT_WASD_OPTION_SET].characters.toList());
+              return binary2image(decodeWASDGraphic(input, (options[MDT_WASD_OPTION_SET] as String).characters.toList()), false, false);
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
@@ -38,11 +39,3 @@ class MultiDecoderToolWasd extends GCWMultiDecoderTool {
             }));
 }
 
-// enumKeyboardLayout _parseStringToEnum(String item) {
-//   return enumKeyboardLayout.values.firstWhere((e) => shortKeyboardName(e) == item);
-// }
-//
-// String shortKeyboardName(enumKeyboardLayout item) {
-//   if (item == null) return null;
-//   return item.toString().replaceAll('enumKeyboardLayout.', '');
-// }
