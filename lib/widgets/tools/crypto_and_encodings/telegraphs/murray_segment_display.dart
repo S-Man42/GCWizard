@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
@@ -30,12 +29,9 @@ class MurraySegmentDisplay extends NSegmentDisplay {
         var SEGMENTS_COLOR_OFF = segment_color_off;
 
         var shutters = {
-          '1': [ 5, 20],
-          '2': [25, 20],
-          '3': [ 5, 50],
-          '4': [25, 50],
-          '5': [ 5, 80],
-          '6': [25, 80]
+          '1': [ 5, 20],  '2': [25, 20],
+          '3': [ 5, 50],  '4': [25, 50],
+          '5': [ 5, 80],  '6': [25, 80]
         };
         var pointSize = size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * _MURRAY_RADIUS;
 

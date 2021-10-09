@@ -2,17 +2,22 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum MurrayCodebook { GEOCACHING, ROYALNAVY, FISCHER, ROUCOUX }
+enum MurrayCodebook { GEOCACHING, ROYALNAVY, FISCHER, ROUCOUX, GEOCACHINGTOOLBOX_1, GEOCACHINGTOOLBOX_2, GEOCACHINGTOOLBOX_3, MYGEOTOOLS }
 
 Map<MurrayCodebook, Map<String, String>> MURRAY_CODEBOOK = {
   MurrayCodebook.GEOCACHING: {'title': 'telegraph_murray_geocaching_title', 'subtitle': 'telegraph_murray_geocaching_description'},
   MurrayCodebook.ROYALNAVY: {'title': 'telegraph_murray_royalnavy_title', 'subtitle': 'telegraph_murray_royalnavy_description'},
   MurrayCodebook.FISCHER: {'title': 'telegraph_murray_fischer_title', 'subtitle': 'telegraph_murray_fischer_description'},
   MurrayCodebook.ROUCOUX : {'title': 'telegraph_murray_roucoux_title', 'subtitle': 'telegraph_murray_roucoux_description'},
+  MurrayCodebook.GEOCACHINGTOOLBOX_1: {'title': 'telegraph_murray_geocachingtoolbox_1_title', 'subtitle': 'telegraph_murray_geocachingtoolbox_1_description'},
+  MurrayCodebook.GEOCACHINGTOOLBOX_2: {'title': 'telegraph_murray_geocachingtoolbox_2_title', 'subtitle': 'telegraph_murray_geocachingtoolbox_2_description'},
+  MurrayCodebook.GEOCACHINGTOOLBOX_3: {'title': 'telegraph_murray_geocachingtoolbox_3_title', 'subtitle': 'telegraph_murray_geocachingtoolbox_3_description'},
+  MurrayCodebook.MYGEOTOOLS: {'title': 'telegraph_murray_mygeotools_title', 'subtitle': 'telegraph_murray_mygeotools_description'},
 };
 
 
-final Map<String, List<String>> CODEBOOK_ROYALNAVY = {// https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf
+final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
+  // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
   'C': ['1', '2', '4', '5', '6'],
@@ -145,7 +150,7 @@ final Map<String, List<String>> CODEBOOK_FISCHER = {// https://cms.sachsen.schul
 
 final Map<String, List<String>> CODEBOOK_ROUCOUX = { // http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm
   'A': ['2', '3', '4', '5', '6'],
-  'B': ['2', '3', '4', '5', '6'],
+  'B': ['1', '3', '4', '5', '6'],
   'C': ['1', '2', '4', '5', '6'],
   'D': ['1', '2', '3', '5', '6'],
   'E': ['1', '2', '3', '4', '6'],
@@ -170,6 +175,72 @@ final Map<String, List<String>> CODEBOOK_ROUCOUX = { // http://virtual-library.c
   'Z': ['2', '4'],
 };
 
+final Map<String, List<String>> CODEBOOK_MYGEOTOOLS = CODEBOOK_GEOCACHING;
+
+final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_1 = CODEBOOK_GEOCACHING;
+
+final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_2 = {
+  'A': ['2', '3', '4', '5', '6'],
+  'B': ['1', '3', '4', '5', '6'],
+  'C': ['1', '2', '4', '5', '6'],
+  'D': ['1', '2', '3', '5', '6'],
+  'E': ['1', '2', '3', '4', '6'],
+  'F': ['1', '2', '3', '4', '5'],
+  'G': ['1', '2', '3', '5'],
+  'H': ['1', '3', '4', '5'],
+  'I': ['3', '3', '5', '6'],
+  'J': ['1', '2', '4', '6'],
+  'K': ['2', '3', '4', '6'],
+  'L': ['2', '4', '5', '6'],
+  'M': ['1', '3', '5'],
+  'N': ['1', '3', '6'],
+  'O': ['2', '4', '6'],
+  'P': ['2', '4', '5'],
+  'Q': ['1', '4', '6'],
+  'R': ['1', '3'],
+  'S': ['3', '5'],
+  'T': ['2', '4'],
+  'U': ['4', '6'],
+  'V': ['1', '2'],
+  'W': ['3', '4'],
+  'X': ['5', '6'],
+  'Y': ['1', '6'],
+  'Z': ['2', '5'],
+  ' ': [],
+  'END': ['6'],
+};
+
+final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
+  // https://lewiswalpole.files.wordpress.com/2011/12/lwlpr25106.jpg
+  'A': ['2', '3', '4', '5', '6'],
+  'B': ['1', '3', '4', '5', '6'],
+  'C': ['1', '2', '4', '5', '6'],
+  'D': ['1', '2', '3', '5', '6'],
+  'E': ['1', '2', '3', '4', '6'],
+  'F': ['1', '2', '3', '4', '5'],
+  'G': ['1'],
+  'H': ['2'],
+  'I': ['3'],
+  'K': ['4'],
+  'L': ['5'],
+  'M': ['6'],
+  'N': ['3', '5'],
+  'O': ['1', '2', '3', '5'],
+  'P': ['1', '5'],
+  'Q': ['1', '3', '4', '5'],
+  'R': ['1', '2'],
+  'S': ['1', '3', '5', '6'],
+  'T': ['1', '2',  '4', '6'],
+  'V': ['4', '6'],
+  'W': ['2', '3', '4', '6'],
+  'X': ['2', '6'],
+  'Y': ['2', '4', '5', '6'],
+  'Z': ['2', '4'],
+  'NORTH': ['1', '2', '3'],
+  'EAST': ['4', '5', '6'],
+  'SOUTH': ['1', '2', '3', '6'],
+  'WEST': ['1', '2', '4', '5'],
+};
 
 List<List<String>> encodeMurray(String input, MurrayCodebook language) {
   if (input == null) return [];
@@ -187,6 +258,18 @@ List<List<String>> encodeMurray(String input, MurrayCodebook language) {
       break;
     case MurrayCodebook.ROUCOUX:
       CODEBOOK = CODEBOOK_ROUCOUX;
+      break;
+    case MurrayCodebook.GEOCACHINGTOOLBOX_1:
+      CODEBOOK = CODEBOOK_GEOCACHINGTOOLBOX_1;
+      break;
+    case MurrayCodebook.GEOCACHINGTOOLBOX_2:
+      CODEBOOK = CODEBOOK_GEOCACHINGTOOLBOX_2;
+      break;
+    case MurrayCodebook.GEOCACHINGTOOLBOX_3:
+      CODEBOOK = CODEBOOK_GEOCACHINGTOOLBOX_3;
+      break;
+    case MurrayCodebook.MYGEOTOOLS:
+      CODEBOOK = CODEBOOK_MYGEOTOOLS;
       break;
     }
 
@@ -223,6 +306,18 @@ Map<String, dynamic> decodeMurray(
       break;
     case MurrayCodebook.ROUCOUX:
       CODEBOOK = switchMapKeyValue(CODEBOOK_ROUCOUX);
+      break;
+    case MurrayCodebook.GEOCACHINGTOOLBOX_1:
+      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHINGTOOLBOX_1);
+      break;
+    case MurrayCodebook.GEOCACHINGTOOLBOX_2:
+      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHINGTOOLBOX_2);
+      break;
+    case MurrayCodebook.GEOCACHINGTOOLBOX_3:
+      CODEBOOK = switchMapKeyValue(CODEBOOK_GEOCACHINGTOOLBOX_3);
+      break;
+    case MurrayCodebook.MYGEOTOOLS:
+      CODEBOOK = switchMapKeyValue(CODEBOOK_MYGEOTOOLS);
       break;
   }
 
