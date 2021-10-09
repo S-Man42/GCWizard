@@ -15,6 +15,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_binary2image.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt1.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_chronogram.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_enclosed_areas.dart';
@@ -57,6 +59,8 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_KEYBOARDLAYOUT,
   MDT_INTERNALNAMES_WASD,
   MDT_INTERNALNAMES_CHRONOGRAM,
+  MDT_INTERNALNAMES_CCITT1,
+  MDT_INTERNALNAMES_CCITT2,
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -74,6 +78,8 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: shortKeyboardName(enumKeyboardLayout.QWERTZ_T1),
                                       MDT_KEYBOARDLAYOUT_OPTION_TO: shortKeyboardName(enumKeyboardLayout.QWERTY_US_INT)},
   MDT_INTERNALNAMES_WASD: {MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]},
+  MDT_INTERNALNAMES_CCITT1: {MDT_CCITT1_OPTION_MODE: 'binary'},
+  MDT_INTERNALNAMES_CCITT2: {MDT_CCITT2_OPTION_MODE: 'binary'},
 };
 
 _multiDecoderToolOptionToGCWMultiDecoderToolOptions(List<MultiDecoderToolOption> mdtOptions) {
@@ -166,6 +172,12 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_CHRONOGRAM:
       gcwTool = MultiDecoderToolChronogram(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
+    case MDT_INTERNALNAMES_CCITT1:
+      gcwTool = MultiDecoderToolCcitt1(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
+    case MDT_INTERNALNAMES_CCITT2:
+      gcwTool = MultiDecoderToolCcitt2(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
   }
 
   return gcwTool;
@@ -247,6 +259,8 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_WASD), MDT_INTERNALNAMES_WASD),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CHRONOGRAM), MDT_INTERNALNAMES_CHRONOGRAM),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT1), MDT_INTERNALNAMES_CCITT1),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
   ];
 
   for (int i = 25; i >= 1; i--) {

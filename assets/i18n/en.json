@@ -2374,6 +2374,8 @@
   "multidecoder_tool_bcd_option_bcdfunction": "Type",
   "multidecoder_tool_beghilos_title": "Beghilos",
   "multidecoder_tool_binary2image_title": "B/W Image",
+  "multidecoder_tool_Ccitt1_title": "CCITT-1",
+  "multidecoder_tool_Ccitt2_title": "CCITT-2/Z22",
   "multidecoder_tool_chronogram_title": "Chronogram",
   "multidecoder_tool_coordinateformats_title": "Coordinate Formats",
   "multidecoder_tool_coordinateformats_option_format": "Format",
