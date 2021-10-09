@@ -4222,6 +4222,8 @@
   "telegraph_chappe_codepoints_description" : "1809, 92 Codepoints total",
   "telegraph_chappe_digits_title" : "Chappe Telegraph, Digits",
   "telegraph_chappe_digits_description" : "1794, 10 Codepoints",
+  "telegraph_chappe_kulibin_title" : "Kulibin Telegraph, Letters and Digits",
+  "telegraph_chappe_kulibin_description" : "1795, 36 Codepoints",
   "telegraph_edelcrantz_title": "Edelcrantz Telegraph",
   "telegraph_edelcrantz_description": "Optical Telegraph with 10 shutters invented by Niclas Edelcrantz, 1795",
   "telegraph_edelcrantz_1795_title": "Edelcrantz Codebook, 1795",
