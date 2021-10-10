@@ -12,7 +12,12 @@ class GCWABCSpinner extends StatefulWidget {
   final String title;
 
   const GCWABCSpinner(
-      {Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.HORIZONTAL, this.suppressLetterValues: false, this.title})
+      {Key key,
+      this.value: 1,
+      this.onChanged,
+      this.layout: SpinnerLayout.HORIZONTAL,
+      this.suppressLetterValues: false,
+      this.title})
       : super(key: key);
 
   @override

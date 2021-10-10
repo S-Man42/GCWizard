@@ -286,8 +286,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                   setState(() {
                     showDeleteAlertDialog(context, tool.name, () {
                       setState(() {
-                        if (_currentEditId == tool.id)
-                          _currentEditId = null;
+                        if (_currentEditId == tool.id) _currentEditId = null;
                         _deleteTool(tool.id);
                       });
                     });
