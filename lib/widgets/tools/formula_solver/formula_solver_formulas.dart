@@ -290,6 +290,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                               action: (index) => setState(() {
                                     showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
                                       formula.formula = value.first;
+                                      _updateFormula(formula);
                                       setState(() {});
                                     });
                                   })),
@@ -373,7 +374,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                     for (int i = 0; i < widget.group.formulas.length; i++) {
                                       if (value[i] == null) continue;
 
-                                      widget.group.formulas[i].formula = value[i];
+                                      var formula = widget.group.formulas[i];
+                                      formula.formula = value[i];
+                                      _updateFormula(formula);
                                     }
                                     setState(() {});
                                   });
