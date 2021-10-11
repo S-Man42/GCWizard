@@ -32,7 +32,7 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
     GCWDialogButton(
       text: 'GPX',
       onPressed: () async {
-        coordinatesExport.exportCoordinates(fileName, points, polylines).then((value) {
+        coordinatesExport.exportCoordinates(context, fileName, points, polylines).then((value) {
           if (value != null) _showExportedFileDialog(context, FileType.GPX);
         });
       },
@@ -40,7 +40,7 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
     GCWDialogButton(
       text: 'KML',
       onPressed: () async {
-        coordinatesExport.exportCoordinates(fileName, points, polylines, kmlFormat: true).then((value) {
+        coordinatesExport.exportCoordinates(context, fileName, points, polylines, kmlFormat: true).then((value) {
           if (value != null) _showExportedFileDialog(context, FileType.KML);
         });
       },

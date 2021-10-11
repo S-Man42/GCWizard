@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:xml/xml.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-Future<File> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+Future<File> exportCoordinates(BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
@@ -27,7 +28,7 @@ Future<File> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMa
 
   try {
     var fileName = 'coords_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + extension;
-    return saveStringToFile(data, fileName, subDirectory: 'coordinate_export');
+    return saveStringToFile(context, data, fileName, subDirectory: 'coordinate_export');
   } on Exception {
     return null;
   }

@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-
+import 'package:universal_html/html.dart' as html;
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
-// import 'package:ext_storage/ext_storage.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -233,21 +232,21 @@ Future<bool> checkStoragePermission() async {
 
 Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, String fileName,
     {String subDirectory}) async {
-  var storagePermission = await checkStoragePermission();
-  if (!storagePermission) {
-    showToast(i18n(context, 'common_exportfile_nowritepermission'));
-    return null;
-  }
 
   if (kIsWeb) {
-    // var blob = new html.Blob([data], 'image/png');
-    //
-    // var anchorElement = html.AnchorElement(
-    //   href: html.Url.createObjectUrl(blob),
-    //   )..setAttribute("download", fileName)..click();
-    //
-    // filePath = '/$web_directory/$fileName';
+    var blob = new html.Blob([data], 'image/png');
+    var anchorElement = html.AnchorElement(
+      href: html.Url.createObjectUrl(blob),
+      )..setAttribute("download", fileName)..click();
+
+    return Future.value(data);
   } else {
+    var storagePermission = await checkStoragePermission();
+    if (!storagePermission) {
+      showToast(i18n(context, 'common_exportfile_nowritepermission'));
+      return null;
+    }
+
     fileName = _limitFileNameLength(fileName);
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
@@ -264,18 +263,23 @@ Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, Strin
   return data;
 }
 
-Future<File> saveStringToFile(String data, String fileName, {String subDirectory}) async {
+Future<File> saveStringToFile(BuildContext context, String data, String fileName, {String subDirectory}) async {
   File fileX;
 
   if (kIsWeb) {
-    // var blob = html.Blob([data], 'text/plain', 'native');
-    //
-    // var anchorElement = html.AnchorElement(
-    //   href: html.Url.createObjectUrl(blob),
-    // )..setAttribute("download", fileName)..click();
-    //
-    // filePath = '/$web_directory/$fileName';
+    var blob = html.Blob([data], 'text/plain', 'native');
+    var anchorElement = html.AnchorElement(
+      href: html.Url.createObjectUrl(blob),
+      )..setAttribute("download", fileName)..click();
+
+    fileX = File(data);
   } else {
+    var storagePermission = await checkStoragePermission();
+    if (!storagePermission) {
+      showToast(i18n(context, 'common_exportfile_nowritepermission'));
+      return null;
+    }
+
     fileName = _limitFileNameLength(fileName);
     final fileInfo = await FilePickerWritable().openFileForCreate(
       fileName: fileName,
