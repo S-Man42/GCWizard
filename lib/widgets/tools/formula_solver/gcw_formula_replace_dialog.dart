@@ -40,6 +40,7 @@ class GCWFormulaReplace extends StatefulWidget {
 
 class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
   bool _currentValueBracket = false;
+  bool _currentValueBraces = false;
   bool _currentValueMultiply = false;
 
   var textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
@@ -104,6 +105,21 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
         ),
         GCWCheckBox(
+          value: _currentValueBraces,
+          title: i18n(context, 'formulasolver_formulas_outerbrackets') + ' { } ➔ [ ]',
+          textStyle: textStyle,
+          onChanged: (value) {
+            setState(() {
+              _currentValueBraces = value;
+              _buildNewFormula(widget.formulas);
+            });
+          },
+          fillColor: MaterialStateColor.resolveWith(getFillColor),
+          checkColor: themeColors().dialog(),
+          hoverColor: themeColors().dialog(),
+          overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
+        ),
+        GCWCheckBox(
           value: _currentValueMultiply,
           title: 'x ➔ *',
           textStyle: textStyle,
@@ -137,36 +153,37 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
 
     _output = List.from(formulas);
 
-    if (_currentValueBracket) {
-      int ignoreBracket = 0;
+    if (_currentValueBracket) _output = _replaceBrackets (_output, '(' , ')');
 
-      _output = _output.map((formula) {
-        if (formula == null || formula.isEmpty) {
-          return null;
-        }
-
-        return formula.split('').map((e) {
-          switch (e) {
-            case '[':
-            case '(':
-              e = (ignoreBracket == 0) ? '[' : e;
-              ignoreBracket += 1;
-              break;
-            case ']':
-            case ')':
-              ignoreBracket -= 1;
-              e = (ignoreBracket == 0) ? ']' : e;
-              break;
-          }
-          return e;
-        }).join();
-      }).toList();
-    }
+    if (_currentValueBraces) _output = _replaceBrackets (_output, '{' , '}');
 
     if (_currentValueMultiply) {
       _output = _output.map((formula) => formula.replaceAll(RegExp(r'[xX]'), '*')).toList();
     }
 
     return _output;
+  }
+
+  List<String> _replaceBrackets(List<String> formulas, String openBracket, String closeBracket) {
+    int ignoreBracket = 0;
+
+    formulas = formulas.map((formula) {
+      if (formula == null || formula.isEmpty) {
+        return null;
+      }
+
+      return formula.split('').map((e) {
+        if ((e == openBracket) || (e == '[')) {
+          e = (ignoreBracket == 0) ? '[' : e;
+          ignoreBracket += 1;
+        } else if ((e == closeBracket) || (e == ']')) {
+          ignoreBracket -= 1;
+          e = (ignoreBracket == 0) ? ']' : e;
+        }
+        return e;
+      }).join();
+    }).toList();
+
+    return formulas;
   }
 }
