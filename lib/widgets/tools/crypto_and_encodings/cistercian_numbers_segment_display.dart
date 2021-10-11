@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
@@ -40,8 +41,11 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
             readOnly: readOnly,
             onChanged: onChanged,
             type: SegmentDisplayType.CUSTOM,
-            customPaint: (canvas, size, currentSegments, setSegmentState) {
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
+                Color segment_color_on, Color segment_color_off) {
               var paint = defaultSegmentPaint();
+              var SEGMENTS_COLOR_ON = segment_color_on;
+              var SEGMENTS_COLOR_OFF = segment_color_off;
 
               paint.color = currentSegments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathA = Path();
@@ -53,7 +57,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 5, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 5);
               pathA.close();
 
-              canvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
                 setSegmentState('a', !currentSegments['a']);
               });
 
@@ -67,7 +71,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 5);
               pathB.close();
 
-              canvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
                 setSegmentState('b', !currentSegments['b']);
               });
 
@@ -83,7 +87,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 30);
               pathC.close();
 
-              canvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
                 setSegmentState('c', !currentSegments['c']);
               });
 
@@ -99,7 +103,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 25);
               pathD.close();
 
-              canvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
                 setSegmentState('d', !currentSegments['d']);
               });
 
@@ -131,7 +135,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 25);
               pathE.close();
 
-              canvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
                 setSegmentState('e', !currentSegments['e']);
               });
 
@@ -163,7 +167,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 5, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
               pathF.close();
 
-              canvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
                 setSegmentState('f', !currentSegments['f']);
               });
 
@@ -195,7 +199,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 25);
               pathG.close();
 
-              canvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
                 setSegmentState('g', !currentSegments['g']);
               });
 
@@ -227,7 +231,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
               pathH.close();
 
-              canvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
                 setSegmentState('h', !currentSegments['h']);
               });
 
@@ -243,7 +247,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 30);
               pathI.close();
 
-              canvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
                 setSegmentState('i', !currentSegments['i']);
               });
 
@@ -259,7 +263,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 30);
               pathJ.close();
 
-              canvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
                 setSegmentState('j', !currentSegments['j']);
               });
 
@@ -275,7 +279,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80);
               pathK.close();
 
-              canvas.drawPath(pathK, paint);
+              canvas.touchCanvas.drawPath(pathK, paint);
 
               paint.color = currentSegments['l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathL = Path();
@@ -289,7 +293,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
               pathL.close();
 
-              canvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
                 setSegmentState('l', !currentSegments['l']);
               });
 
@@ -305,7 +309,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
               pathM.close();
 
-              canvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
                 setSegmentState('m', !currentSegments['m']);
               });
 
@@ -321,7 +325,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80);
               pathN.close();
 
-              canvas.drawPath(pathN, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathN, paint, onTapDown: (tapDetail) {
                 setSegmentState('n', !currentSegments['n']);
               });
 
@@ -337,7 +341,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
               pathO.close();
 
-              canvas.drawPath(pathO, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathO, paint, onTapDown: (tapDetail) {
                 setSegmentState('o', !currentSegments['o']);
               });
 
@@ -369,7 +373,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
               pathP.close();
 
-              canvas.drawPath(pathP, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathP, paint, onTapDown: (tapDetail) {
                 setSegmentState('p', !currentSegments['p']);
               });
 
@@ -401,7 +405,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 58);
               pathQ.close();
 
-              canvas.drawPath(pathQ, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathQ, paint, onTapDown: (tapDetail) {
                 setSegmentState('q', !currentSegments['q']);
               });
 
@@ -433,7 +437,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
               pathR.close();
 
-              canvas.drawPath(pathR, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathR, paint, onTapDown: (tapDetail) {
                 setSegmentState('r', !currentSegments['r']);
               });
 
@@ -465,7 +469,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 58);
               pathS.close();
 
-              canvas.drawPath(pathS, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathS, paint, onTapDown: (tapDetail) {
                 setSegmentState('s', !currentSegments['s']);
               });
 
@@ -481,7 +485,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80);
               pathT.close();
 
-              canvas.drawPath(pathT, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathT, paint, onTapDown: (tapDetail) {
                 setSegmentState('t', !currentSegments['t']);
               });
 
@@ -497,7 +501,7 @@ class CistercianNumbersSegmentDisplay extends NSegmentDisplay {
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80);
               pathU.close();
 
-              canvas.drawPath(pathU, paint, onTapDown: (tapDetail) {
+              canvas.touchCanvas.drawPath(pathU, paint, onTapDown: (tapDetail) {
                 setSegmentState('u', !currentSegments['u']);
               });
             });

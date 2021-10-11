@@ -1,8 +1,8 @@
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:latlong/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:latlong2/latlong.dart';
 
 LatLng dmsToLatLon(DMS dms) {
   return decToLatLon(_DMSToDEC(dms));
@@ -20,7 +20,7 @@ double _DMSPartToDouble(DMSPart dmsPart) {
 }
 
 DMS latLonToDMS(LatLng coord) {
-  return _DECToDMS(latLonToDEC(coord));
+  return _DECToDMS(DEC.fromLatLon(coord));
 }
 
 DMS _DECToDMS(DEC coord) {
@@ -44,26 +44,20 @@ DMSPart _doubleToDMSPart(double value) {
   return DMSPart(_sign, _degrees, _minutes, _seconds);
 }
 
-String latLonToDMSString(LatLng coord, [int precision]) {
-  var dms = latLonToDMS(coord);
-
-  return '${dms.latitude.format(precision)}\n${dms.longitude.format(precision)}';
-}
-
 DMS normalize(DMS coord) {
   return _DECToDMS(_DMSToDEC(coord));
 }
 
-LatLng parseDMS(String text, {wholeString = false}) {
-  text = prepareInput(text, wholeString: wholeString);
-  if (text == null) return null;
+DMS parseDMS(String input, {wholeString = false}) {
+  input = prepareInput(input, wholeString: wholeString);
+  if (input == null) return null;
 
-  var parsedTrailingSigns = _parseDMSTrailingSigns(text);
+  var parsedTrailingSigns = _parseDMSTrailingSigns(input);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DMS + regexEnd, caseSensitive: false);
-  if (regex.hasMatch(text)) {
-    var matches = regex.firstMatch(text);
+  if (regex.hasMatch(input)) {
+    var matches = regex.firstMatch(input);
 
     var latSign = sign(matches.group(1));
     var latDegrees = int.tryParse(matches.group(2));
@@ -87,13 +81,13 @@ LatLng parseDMS(String text, {wholeString = false}) {
     }
     var lon = DMSLongitude(lonSign, lonDegrees, lonMinutes, lonSeconds);
 
-    return dmsToLatLon(DMS(lat, lon));
+    return DMS(lat, lon);
   }
 
   return null;
 }
 
-LatLng _parseDMSTrailingSigns(String text) {
+DMS _parseDMSTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DMS_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -120,7 +114,7 @@ LatLng _parseDMSTrailingSigns(String text) {
     }
     var lon = DMSLongitude(lonSign, lonDegrees, lonMinutes, lonSeconds);
 
-    return dmsToLatLon(DMS(lat, lon));
+    return DMS(lat, lon);
   }
 
   return null;

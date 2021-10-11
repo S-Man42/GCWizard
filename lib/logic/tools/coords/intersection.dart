@@ -2,7 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectionJobData {
   final LatLng coord1;
@@ -15,10 +15,7 @@ class IntersectionJobData {
 }
 
 Future<List<LatLng>> intersectionAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersection(jobData.parameters.coord1, jobData.parameters.alpha, jobData.parameters.coord2,
       jobData.parameters.beta, jobData.parameters.ells);

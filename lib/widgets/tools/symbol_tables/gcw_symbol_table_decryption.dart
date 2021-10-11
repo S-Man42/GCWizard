@@ -3,10 +3,11 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_zoom_buttons.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -16,8 +17,10 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final MediaQueryData mediaQueryData;
   final SymbolTableData data;
   final Function onChanged;
+  final Function onAfterDecrypt;
 
-  const GCWSymbolTableDecryption({Key key, this.data, this.countColumns, this.mediaQueryData, this.onChanged})
+  const GCWSymbolTableDecryption(
+      {Key key, this.data, this.countColumns, this.mediaQueryData, this.onChanged, this.onAfterDecrypt})
       : super(key: key);
 
   @override
@@ -54,7 +57,14 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
           ],
         ),
         _buildDecryptionButtonMatrix(widget.countColumns),
-        GCWDefaultOutput(child: _decryptionOutput)
+        widget.onAfterDecrypt != null
+            ? Column(
+                children: [
+                  GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
+                  GCWDefaultOutput(child: widget.onAfterDecrypt(_decryptionOutput))
+                ],
+              )
+            : GCWDefaultOutput(child: _decryptionOutput),
       ],
     );
   }

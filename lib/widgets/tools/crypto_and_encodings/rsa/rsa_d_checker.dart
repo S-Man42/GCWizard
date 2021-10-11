@@ -17,6 +17,7 @@ class RSADCheckerState extends State<RSADChecker> {
   String _currentQ = '';
 
   var _integerInputFormatter = IntegerTextInputFormatter(min: 0);
+  Widget _output;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +46,12 @@ class RSADCheckerState extends State<RSADChecker> {
         ),
         GCWSubmitButton(
           onPressed: () {
-            setState(() {});
+            setState(() {
+              _calculateOutput();
+            });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        _output ?? GCWDefaultOutput(),
       ],
     );
   }
@@ -60,7 +63,7 @@ class RSADCheckerState extends State<RSADChecker> {
         _currentP.length == 0 ||
         _currentQ == null ||
         _currentQ.length == 0) {
-      return '';
+      _output = null;
     }
 
     try {
@@ -69,9 +72,10 @@ class RSADCheckerState extends State<RSADChecker> {
       var q = BigInt.tryParse(_currentQ);
 
       var validD = validateD(e, p, q);
-      return validD ? i18n(context, 'rsa_d.checker_valid') : i18n(context, 'rsa_d.checker_notvalid');
+      _output = GCWDefaultOutput(
+          child: validD ? i18n(context, 'rsa_d.checker_valid') : i18n(context, 'rsa_d.checker_notvalid'));
     } catch (exception) {
-      return i18n(context, exception.message);
+      _output = GCWDefaultOutput(child: i18n(context, exception.message));
     }
   }
 }

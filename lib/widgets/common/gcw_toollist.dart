@@ -40,9 +40,25 @@ class _GCWToolListState extends State<GCWToolList> {
     }
 
     return ListTile(
-      title: Text(
-        tool.toolName,
-        style: gcwTextStyle(),
+      title: Row(
+        children: [
+          if (tool.isBeta)
+            Container(
+              child: Text(
+                'BETA',
+                style: gcwBetaStyle(),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
+              margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+              color: themeColors().accent(),
+            ),
+          Expanded(
+            child: Text(
+              tool.toolName,
+              style: gcwTextStyle(),
+            ),
+          )
+        ],
       ),
       subtitle: _buildSubtitle(context, tool),
       onTap: () {

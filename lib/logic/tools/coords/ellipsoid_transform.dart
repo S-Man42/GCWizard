@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class _Vector {
   double x = 0;
@@ -58,9 +58,9 @@ class EllipsoidTransformation {
   }
 
   _Matrix RotationMatrix() {
-    double ex = mRParam.x * PI / 180.0 / 3600.0;
-    double ey = mRParam.y * PI / 180.0 / 3600.0;
-    double ez = mRParam.z * PI / 180.0 / 3600.0;
+    double ex = mRParam.x * pi / 180.0 / 3600.0;
+    double ey = mRParam.y * pi / 180.0 / 3600.0;
+    double ez = mRParam.z * pi / 180.0 / 3600.0;
 
     return _Matrix(1, ez, -ey, -ez, 1, ex, ey, -ex, 1);
   }

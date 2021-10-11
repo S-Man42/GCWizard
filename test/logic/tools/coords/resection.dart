@@ -1,7 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/resection.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 import 'utils.dart';
 
@@ -16,14 +16,10 @@ void main() {
         ]},
       {'coord1': LatLng(49.6647, 10.7999), 'angle12': 28.5, 'coord2': LatLng(49.6713, 10.8051), 'angle23': 22.5, 'coord3': LatLng(49.6739, 10.8132),
         'expectedOutput': [
-          LatLng(49.660435, 10.821665),
-          LatLng(49.678865, 10.792505),
-          LatLng(-49.445364, -169.194801),
-          LatLng(-49.657084, -168.78753),
-          LatLng(-49.678912, -168.817342),
-          LatLng(-49.889824, -169.195246),
-          LatLng(-49.660435, -169.568451),
-          LatLng(-49.680072, -169.599516)
+          LatLng(49.66043527105709, 10.821665008672595),
+          LatLng(49.67886463173016, 10.79250548737008),
+          LatLng(-49.67130000000082, -168.8255611035552),
+          LatLng(-49.67130000000082, -169.55985516849327),
         ]
       },
       {'coord1': LatLng(53.963431, 16.264892), 'angle12': 141.0, 'coord2': LatLng(49.838948, 16.539551), 'angle23': 126.4, 'coord3': LatLng(52.242173, 19.989258),

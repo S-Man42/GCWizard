@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rsa.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
 
 class RSAEChecker extends StatefulWidget {
@@ -22,6 +17,7 @@ class RSAECheckerState extends State<RSAEChecker> {
   String _currentQ = '';
 
   var _integerInputFormatter = IntegerTextInputFormatter(min: 0);
+  Widget _output;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +46,12 @@ class RSAECheckerState extends State<RSAEChecker> {
         ),
         GCWSubmitButton(
           onPressed: () {
-            setState(() {});
+            setState(() {
+              _calculateOutput();
+            });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        _output ?? GCWDefaultOutput(),
       ],
     );
   }
@@ -65,7 +63,7 @@ class RSAECheckerState extends State<RSAEChecker> {
         _currentP.length == 0 ||
         _currentQ == null ||
         _currentQ.length == 0) {
-      return '';
+      _output = null;
     }
 
     try {
@@ -74,9 +72,10 @@ class RSAECheckerState extends State<RSAEChecker> {
       var q = BigInt.tryParse(_currentQ);
 
       var validE = validateE(e, p, q);
-      return validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid');
+      _output = GCWDefaultOutput(
+          child: validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid'));
     } catch (exception) {
-      return i18n(context, exception.message);
+      _output = GCWDefaultOutput(child: i18n(context, exception.message));
     }
   }
 }

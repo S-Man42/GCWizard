@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
@@ -12,6 +13,8 @@ class GCWTextField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final TextInputType keyboardType;
   final hintText;
+  final hintColor;
+  final labelText;
   final FocusNode focusNode;
   final autofocus;
   final icon;
@@ -28,6 +31,8 @@ class GCWTextField extends StatefulWidget {
       this.inputFormatters,
       this.keyboardType,
       this.hintText,
+      this.hintColor,
+      this.labelText,
       this.focusNode,
       this.autofocus,
       this.icon,
@@ -70,6 +75,8 @@ class _GCWTextFieldState extends State<GCWTextField> {
             autocorrect: false,
             decoration: InputDecoration(
                 hintText: widget.hintText,
+                hintStyle: gcwTextStyle().copyWith(color: widget.hintColor ?? themeColors().textFieldHintText()),
+                labelText: widget.labelText,
                 fillColor: widget.filled ? colors.textFieldFill() : null,
                 filled: widget.filled,
                 prefixIcon: widget.icon,
@@ -118,6 +125,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                 color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
             maxLengthEnforced: true,
             maxLength: widget.maxLength,
+            selectionControls: GCWTextSelectionControls(),
           );
         }));
   }

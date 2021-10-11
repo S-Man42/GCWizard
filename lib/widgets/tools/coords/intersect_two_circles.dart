@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectTwoCircles extends StatefulWidget {
   @override
@@ -32,13 +32,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
-  var _currentMapPoints;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
 
   @override
   Widget build(BuildContext context) {

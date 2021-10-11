@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/chronogram.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
 class Chronogram extends StatefulWidget {
   @override
@@ -51,6 +53,11 @@ class ChronogramState extends State<Chronogram> {
               _currentWToVV = value;
             });
           },
+        ),
+        GCWOutput(
+          child: recognizableChronogramInput(_currentInput,
+              JUToIV: _currentJUToIV, YToII: _currentYToII, WToVV: _currentWToVV),
+          title: i18n(context, 'chronogram_recognizedchars'),
         ),
         GCWDefaultOutput(
             child:

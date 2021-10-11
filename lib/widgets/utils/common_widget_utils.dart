@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
 
 String className(Widget widget) {
@@ -37,7 +40,11 @@ defaultFontSize() {
 }
 
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
-    {List<int> flexValues = const [], int copyColumn, hasHeader: false, List<Function> tappables}) {
+    {List<int> flexValues = const [],
+    int copyColumn,
+    bool hasHeader: false,
+    bool copyAll: false,
+    List<Function> tappables}) {
   var odd = true;
   var isFirst = true;
 
@@ -49,19 +56,30 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
         .asMap()
         .map((index, column) {
           var textStyle = gcwTextStyle();
+          if (isFirst && hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
 
-          return MapEntry(
-              index,
-              Expanded(
-                  child: Text(column != null ? column.toString() : '',
-                      style: isFirst && hasHeader ? textStyle.copyWith(fontWeight: FontWeight.bold) : textStyle),
-                  flex: index < flexValues.length ? flexValues[index] : 1));
+          var child;
+
+          if (tappables == null || tappables.isEmpty) {
+            child = GCWText(text: column != null ? column.toString() : '', style: textStyle);
+          } else {
+            child = Text(column != null ? column.toString() : '', style: textStyle);
+          }
+
+          return MapEntry(index, Expanded(child: child, flex: index < flexValues.length ? flexValues[index] : 1));
         })
         .values
         .toList();
 
     if (copyColumn == null) copyColumn = rowData.length - 1;
     var copyText = rowData[copyColumn].toString();
+    if (isFirst && hasHeader && copyAll) {
+      copyText = '';
+      data.where((row) => row != null).forEach((dataRow) {
+        copyText += dataRow[copyColumn].toString() + '\n';
+      });
+    }
+    ;
 
     var row = Container(
       child: Row(
@@ -72,16 +90,13 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           context == null
               ? Container()
               : Container(
-                  child: (isFirst && hasHeader)
+                  child: ((isFirst && hasHeader) & !copyAll)
                       ? Container()
                       : GCWIconButton(
                           iconData: Icons.content_copy,
                           size: IconButtonSize.TINY,
                           onPressed: () {
-                            Clipboard.setData(ClipboardData(text: copyText));
-                            insertIntoGCWClipboard(copyText);
-
-                            showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+                            insertIntoGCWClipboard(context, copyText);
                           },
                         ),
                   width: 25,
@@ -112,7 +127,9 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
   }).toList();
 }
 
-insertIntoGCWClipboard(String text) {
+insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
+  if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
+
   var gcwClipboard = Prefs.getStringList('clipboard_items');
 
   var existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null);
@@ -129,6 +146,8 @@ insertIntoGCWClipboard(String text) {
   }
 
   Prefs.setStringList('clipboard_items', gcwClipboard);
+
+  if (useGlobalClipboard) showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
 }
 
 String textControllerInsertText(String input, String currentText, TextEditingController textController) {
@@ -150,4 +169,12 @@ String textControllerDoBackSpace(String currentText, TextEditingController textC
   textController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
 
   return currentText;
+}
+
+double maxScreenHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height - 100;
+}
+
+int sortToolListAlphabetically(GCWTool a, GCWTool b) {
+  return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
 }

@@ -10,7 +10,8 @@ class GCWOnOffSwitch extends StatefulWidget {
   final value;
   final bool notitle;
 
-  const GCWOnOffSwitch({Key key, this.value, this.onChanged, this.title, this.notitle: false}) : super(key: key);
+  const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false})
+      : super(key: key);
 
   @override
   GCWOnOffSwitchState createState() => GCWOnOffSwitchState();
@@ -24,7 +25,7 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
     return Row(
       children: <Widget>[
         if (!widget.notitle)
-          Expanded(child: GCWText(text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'), flex: 1),
+          Expanded(child: GCWText(text: (widget.title ?? i18n(context, 'common_mode')) + ':'), flex: 1),
         Expanded(
             child: Container(
               child: Row(

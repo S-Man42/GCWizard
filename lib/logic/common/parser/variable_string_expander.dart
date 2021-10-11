@@ -214,11 +214,13 @@ class VariableStringExpander {
     _substitutions.entries.forEach((substitution) {
       _substitutionKeys.add(substitution.key.toUpperCase());
       var group = _expandVariableGroup(substitution.value);
-      _expandedVariableGroups.add(group);
+      if (group.length > 0) {
+        _expandedVariableGroups.add(group);
 
-      _countVariableValues.add(group.length);
-      _variableValueIndexes.add(0);
-      _currentVariableIndex++;
+        _countVariableValues.add(group.length);
+        _variableValueIndexes.add(0);
+        _currentVariableIndex++;
+      }
     });
 
     // check number of combinations
@@ -239,4 +241,11 @@ class VariableStringExpander {
 
     return _results;
   }
+}
+
+int preCheckCombinations(Map<String, String> substitutions) {
+  var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
+  var count = expander.run(onlyPrecheck: true);
+
+  return count[0]['count'];
 }

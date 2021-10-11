@@ -101,6 +101,7 @@ class BifidState extends State<Bifid> {
           title: i18n(context, 'bifid_matrix'),
           leftValue: i18n(context, 'bifid_mode_5x5'),
           rightValue: i18n(context, 'bifid_mode_6x6'),
+          value: _currentMatrixMode,
           onChanged: (value) {
             setState(() {
               _currentMatrixMode = value;

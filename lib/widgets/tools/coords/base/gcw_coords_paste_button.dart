@@ -28,7 +28,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   @override
   Widget build(BuildContext context) {
     return GCWPasteButton(
-      size: widget.size,
+      iconSize: widget.size,
       customIcon: widget.customIcon,
       backgroundColor: widget.backgroundColor,
       onSelected: _parseClipboardAndSetCoords,
@@ -36,15 +36,15 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
   }
 
   _parseClipboardAndSetCoords(text) {
-    var parsed = parseLatLon(text);
+    var parsed = parseCoordinates(text);
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       widget.onPasted(null);
       return;
     } else if (parsed.length > 1) {
-      var recognizedformates = parsed.keys.map((key) {
+      var recognizedformates = parsed.map((coords) {
         var text = '\r\n';
-        var coordFormat = allCoordFormats.firstWhere((format) => format.key == key);
+        var coordFormat = allCoordFormats.firstWhere((format) => format.key == coords.key);
         if (coordFormat.subtypes == null)
           text += coordFormat.name;
         else

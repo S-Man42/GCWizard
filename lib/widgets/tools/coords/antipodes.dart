@@ -75,11 +75,11 @@ class AntipodesState extends State<Antipodes> {
           point: _currentValues[0],
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_antipodes_coordb'),
-          coordinateFormat: _currentCoordsFormat),
+          coordinateFormat: _currentOutputFormat),
     ];
 
-    _currentOutput = _currentValues.map((projection) {
-      return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid());
+    _currentOutput = _currentValues.map((coord) {
+      return formatCoordOutput(coord, _currentOutputFormat, defaultEllipsoid());
     }).toList();
   }
 }

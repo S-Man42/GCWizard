@@ -15,7 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectThreeCircles extends StatefulWidget {
   @override
@@ -40,17 +40,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   var _currentOutputFormat = defaultCoordFormat();
   Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
-  var _currentMapPoints;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentMapPoints = [
-      GCWMapPoint(point: _currentCoords1),
-      GCWMapPoint(point: _currentCoords2),
-      GCWMapPoint(point: _currentCoords3),
-    ];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
 
   @override
   Widget build(BuildContext context) {

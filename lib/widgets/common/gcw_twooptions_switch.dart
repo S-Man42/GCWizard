@@ -22,7 +22,7 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
       this.title,
       this.leftValue,
       this.rightValue,
-      this.value,
+      @required this.value,
       this.alternativeColor: false,
       this.notitle: false})
       : super(key: key);
@@ -46,7 +46,7 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
             ? Container()
             : Expanded(
                 child: GCWText(
-                  text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
+                  text: (widget.title ?? i18n(context, 'common_mode')) + ':',
                   style: textStyle,
                 ),
                 flex: 1),

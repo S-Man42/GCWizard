@@ -3,6 +3,7 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 
 class GCWUnitInput extends StatefulWidget {
@@ -12,6 +13,7 @@ class GCWUnitInput extends StatefulWidget {
   final List<Unit> unitList;
   final UnitCategory unitCategory;
   final title;
+  final Unit initialUnit;
 
   final Function onChanged;
 
@@ -23,6 +25,7 @@ class GCWUnitInput extends StatefulWidget {
       this.value: 0.0,
       this.unitCategory,
       this.unitList,
+      this.initialUnit,
       this.onChanged})
       : super(key: key);
 
@@ -39,7 +42,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
     super.initState();
 
     _currentValue = widget.value;
-    _currentUnit = getReferenceUnit(widget.unitList ?? widget.unitCategory.units);
+    _currentUnit = widget.initialUnit ?? getReferenceUnit(widget.unitList ?? widget.unitCategory.units);
   }
 
   @override
@@ -52,6 +55,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
               min: widget.min,
               numberDecimalDigits: widget.numberDecimalDigits,
               value: _currentValue,
+              suppressOverflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
               onChanged: (value) {
                 setState(() {
                   _currentValue = value;

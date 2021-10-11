@@ -189,10 +189,14 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
           ),
           GCWIconButton(
             iconData: Icons.add,
-            onPressed: () {
-              _addNewTool();
-              setState(() {});
-            },
+            iconColor: _currentEditId == null ? null : themeColors().inActive(),
+            onPressed: _currentEditId == null
+                ? () {
+                    setState(() {
+                      _addNewTool();
+                    });
+                  }
+                : null,
           ),
         ]),
         GCWTextDivider(
@@ -281,8 +285,10 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                 onPressed: () {
                   setState(() {
                     showDeleteAlertDialog(context, tool.name, () {
-                      _deleteTool(tool.id);
-                      setState(() {});
+                      setState(() {
+                        if (_currentEditId == tool.id) _currentEditId = null;
+                        _deleteTool(tool.id);
+                      });
                     });
                   });
                 },

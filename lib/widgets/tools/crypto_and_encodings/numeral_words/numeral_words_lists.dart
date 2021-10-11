@@ -1,6 +1,9 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -16,6 +19,8 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
 
+  SplayTreeMap<String, NumeralWordsLanguage> _LANGUAGES;
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +35,11 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
 
   @override
   Widget build(BuildContext context) {
+    if (_LANGUAGES == null) {
+      _LANGUAGES = SplayTreeMap.from(
+          switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
+    }
+
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -39,10 +49,10 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
               _currentLanguage = value;
             });
           },
-          items: NUMERALWORDS_LANGUAGES.entries.map((mode) {
+          items: _LANGUAGES.entries.map((mode) {
             return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value),
+              value: mode.value,
+              child: mode.key,
             );
           }).toList(),
         ),

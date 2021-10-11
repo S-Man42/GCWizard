@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -15,11 +16,11 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
@@ -28,8 +29,11 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+
+final _WARNING_COUNT = 500;
+final _TOOMANY_COUNT = 5000;
 
 class VariableCoordinate extends StatefulWidget {
   final Formula formula;
@@ -41,10 +45,8 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output = GCWCoordsOutput(outputs: List<dynamic>());
+  Widget _output = GCWCoordsOutput(outputs: []);
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
-
-  final MAX_COUNT_COORDINATES = 100;
 
   Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
   bool _currentProjectionMode = false;
@@ -191,7 +193,27 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         ),
         GCWSubmitButton(
           onPressed: () {
-            _calculateOutput(context);
+            var countCombinations = preCheckCombinations(_getSubstitutions());
+            if (countCombinations > _TOOMANY_COUNT) {
+              showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_toomanyresults_title'),
+                  i18n(context, 'coords_variablecoordinate_toomanyresults_text', parameters: [countCombinations]), null,
+                  cancelButton: false);
+
+              return;
+            }
+
+            if (countCombinations >= _WARNING_COUNT) {
+              showGCWAlertDialog(
+                context,
+                i18n(context, 'coords_variablecoordinate_manyresults_title'),
+                i18n(context, 'coords_variablecoordinate_manyresults_text', parameters: [countCombinations]),
+                () {
+                  _calculateOutput(context);
+                },
+              );
+            } else {
+              _calculateOutput(context);
+            }
           },
         ),
         _output ?? Container(),
@@ -295,7 +317,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         : Container();
   }
 
-  _calculateOutput(BuildContext context) {
+  Map<String, String> _getSubstitutions() {
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
@@ -307,6 +329,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         _currentToInput.length > 0) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
+
+    return _substitutions;
+  }
+
+  _calculateOutput(BuildContext context) {
+    Map<String, String> _substitutions = _getSubstitutions();
 
     Map<String, dynamic> projectionData;
     if (_currentProjectionMode) {
@@ -320,20 +348,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
 
     var coords = parseVariableLatLon(_currentInput, _substitutions, projectionData: projectionData);
-
-    if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
-      showGCWAlertDialog(
-        context,
-        i18n(context, 'coords_variablecoordinate_alert_title'),
-        i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords['coordinates'].length]),
-        () {
-          setState(() {
-            _buildOutput(coords);
-          });
-        },
-      );
-      return;
-    }
 
     setState(() {
       _buildOutput(coords);

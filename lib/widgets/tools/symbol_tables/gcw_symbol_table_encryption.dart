@@ -1,11 +1,13 @@
 import 'dart:math';
-import 'dart:ui' as ui;
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -24,9 +26,18 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final SymbolTableData data;
   final String symbolKey;
   final Function onChanged;
+  final Function onBeforeEncrypt;
+  final bool alwaysIgnoreUnknown;
 
   const GCWSymbolTableEncryption(
-      {Key key, this.data, this.countColumns, this.mediaQueryData, this.symbolKey, this.onChanged})
+      {Key key,
+      this.data,
+      this.countColumns,
+      this.mediaQueryData,
+      this.symbolKey,
+      this.onChanged,
+      this.onBeforeEncrypt,
+      this.alwaysIgnoreUnknown})
       : super(key: key);
 
   @override
@@ -75,18 +86,23 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           onChanged: (text) {
             setState(() {
               _currentEncryptionInput = text;
+
+              if (widget.onBeforeEncrypt != null) {
+                _currentEncryptionInput = widget.onBeforeEncrypt(_currentEncryptionInput);
+              }
             });
           },
         ),
-        GCWOnOffSwitch(
-          value: _currentIgnoreUnknown,
-          title: i18n(context, 'symboltables_ignoreunknown'),
-          onChanged: (value) {
-            setState(() {
-              _currentIgnoreUnknown = value;
-            });
-          },
-        ),
+        if (widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false)
+          GCWOnOffSwitch(
+            value: _currentIgnoreUnknown,
+            title: i18n(context, 'symboltables_ignoreunknown'),
+            onChanged: (value) {
+              setState(() {
+                _currentIgnoreUnknown = value;
+              });
+            },
+          ),
         GCWTextDivider(
             text: i18n(context, 'common_output'),
             trailing: GCWSymbolTableZoomButtons(
@@ -101,15 +117,13 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                 onPressed: () {
                   _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
                     if (value == null) {
-                      showToast(i18n(context, 'common_exportfile_nowritepermission'));
                       return;
                     }
 
                     showExportedFileDialog(
                       context,
-                      value['path'],
                       contentWidget: Container(
-                        child: value['file'] == null ? null : Image.file(value['file']),
+                        child: Image.memory(value),
                         margin: EdgeInsets.only(top: 25),
                         decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
                       ),
@@ -219,10 +233,21 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     ui.Codec codec = await ui.instantiateImageCodec(bytes);
     ui.FrameInfo fi = await codec.getNextFrame();
 
+    // ui.Image img = fi.image;
+    // if (img.width > _EXPORT_SYMBOL_SIZE || img.height > _EXPORT_SYMBOL_SIZE) {
+    //   ImageProvider imgProvider;
+    //   if (img.width > img.height)
+    //     imgProvider = ResizeImage(MemoryImage(bytes), width: _EXPORT_SYMBOL_SIZE.toInt());
+    //   else
+    //     imgProvider = ResizeImage(MemoryImage(bytes), height: _EXPORT_SYMBOL_SIZE.toInt());
+    //
+    //   img = imgProvider.;
+    // }
+
     return fi.image;
   }
 
-  Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
+  Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
     var images = _getImages(isCaseSensitive);
 
     var countRows = (images.length / countColumns).floor();
@@ -253,7 +278,12 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
             image = await _buildImage(_data.images[images[imageIndex]].values.first.bytes);
           }
 
-          canvas.drawImage(image, Offset(j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE), paint);
+          paintImage(
+              canvas: canvas,
+              fit: BoxFit.contain,
+              rect: Rect.fromLTWH(
+                  j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE),
+              image: image);
         }
       }
     }
@@ -261,7 +291,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return await saveByteDataToFile(
-        data, widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    return await saveByteDataToFile(context, trimNullBytes(data.buffer.asUint8List()),
+        'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

@@ -2,7 +2,8 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/geoarc_intercept.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
-import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart' as utils;
+import 'package:latlong2/latlong.dart';
 
 class IntersectGeodeticAndCircleJobData {
   final LatLng startGeodetic;
@@ -20,10 +21,7 @@ class IntersectGeodeticAndCircleJobData {
 }
 
 Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
-  if (jobData == null) {
-    jobData.sendAsyncPort.send(null);
-    return null;
-  }
+  if (jobData == null) return null;
 
   var output = intersectGeodeticAndCircle(jobData.parameters.startGeodetic, jobData.parameters.bearingGeodetic,
       jobData.parameters.centerPoint, jobData.parameters.radiusCircle, jobData.parameters.ells);
@@ -35,7 +33,7 @@ Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
 
 List<LatLng> intersectGeodeticAndCircle(
     LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {
-  bearingGeodetic = degToRadian(bearingGeodetic);
+  bearingGeodetic = utils.normalizeBearing(bearingGeodetic);
 
   var help = distanceBearing(startGeodetic, centerPoint, ells);
 
@@ -43,13 +41,14 @@ List<LatLng> intersectGeodeticAndCircle(
   bool isInCircle = false;
   if (help.distance < radiusCircle) {
     isInCircle = true;
-    LatLng pointOut = projectionRadian(startGeodetic, bearingGeodetic, radiusCircle * 2.1, ells);
+    LatLng pointOut = projection(startGeodetic, bearingGeodetic, radiusCircle * 2.1, ells);
     help = distanceBearing(startGeodetic, pointOut, ells);
     startGeodetic = pointOut;
-    bearingGeodetic = help.bearingBToAInRadian;
+    bearingGeodetic = help.bearingBToA;
   }
 
-  List<LatLng> output = geodesicArcIntercept(startGeodetic, bearingGeodetic, centerPoint, radiusCircle, ells);
+  List<LatLng> output =
+      geodesicArcIntercept(startGeodetic, degToRadian(bearingGeodetic), centerPoint, radiusCircle, ells);
 
   if (isInCircle) {
     help = distanceBearing(startGeodetic, output[0], ells);

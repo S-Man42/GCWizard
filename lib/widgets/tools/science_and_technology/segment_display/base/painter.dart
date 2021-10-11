@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
+import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:touchable/touchable.dart';
 
 defaultSegmentPaint() {
@@ -37,14 +38,17 @@ class SegmentDisplayPainter extends CustomPainter {
   final BuildContext context;
   final SegmentDisplayType type;
   final Function customPaint;
+  final Color segment_color_on;
+  final Color segment_color_off;
 
-  var _touchCanvas;
+  GCWTouchCanvas _touchCanvas;
 
-  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState, {this.customPaint});
+  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState,
+      {this.customPaint, this.segment_color_on: SEGMENTS_COLOR_ON, this.segment_color_off: SEGMENTS_COLOR_OFF});
 
   @override
   void paint(Canvas canvas, Size size) {
-    _touchCanvas = TouchyCanvas(context, canvas);
+    _touchCanvas = GCWTouchCanvas(context, canvas);
 
     switch (type) {
       case SegmentDisplayType.SEVEN:
@@ -57,13 +61,15 @@ class SegmentDisplayPainter extends CustomPainter {
         _paintSixteenSegmentDisplay(size);
         break;
       case SegmentDisplayType.CUSTOM:
-        customPaint(_touchCanvas, size, segments, setSegmentState);
+        customPaint(_touchCanvas, size, segments, setSegmentState, segment_color_on, segment_color_off);
         break;
     }
   }
 
   void _paintSixteenSegmentDisplay(Size size) {
     var paint = defaultSegmentPaint();
+    var SEGMENTS_COLOR_ON = segment_color_on;
+    var SEGMENTS_COLOR_OFF = segment_color_off;
 
     paint.color = segments['a1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
@@ -74,7 +80,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathA1.lineTo(_relativeX(size, 9), _relativeY(size, 8));
     pathA1.close();
 
-    _touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
       setSegmentState('a1', !segments['a1']);
     });
 
@@ -87,7 +93,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathA2.lineTo(_relativeX(size, 32), _relativeY(size, 4));
     pathA2.close();
 
-    _touchCanvas.drawPath(pathA2, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathA2, paint, onTapDown: (tapDetail) {
       setSegmentState('a2', !segments['a2']);
     });
 
@@ -100,7 +106,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathB.lineTo(_relativeX(size, 54), _relativeY(size, 10));
     pathB.close();
 
-    _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
       setSegmentState('b', !segments['b']);
     });
 
@@ -113,7 +119,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathC.lineTo(_relativeX(size, 54), _relativeY(size, 55));
     pathC.close();
 
-    _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
       setSegmentState('c', !segments['c']);
     });
 
@@ -126,7 +132,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathD1.lineTo(_relativeX(size, 1), _relativeY(size, 98));
     pathD1.close();
 
-    _touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
       setSegmentState('d1', !segments['d1']);
     });
 
@@ -139,7 +145,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathD2.lineTo(_relativeX(size, 32), _relativeY(size, 94));
     pathD2.close();
 
-    _touchCanvas.drawPath(pathD2, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathD2, paint, onTapDown: (tapDetail) {
       setSegmentState('d2', !segments['d2']);
     });
 
@@ -152,7 +158,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathE.lineTo(0, _relativeY(size, 55));
     pathE.close();
 
-    _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
       setSegmentState('e', !segments['e']);
     });
 
@@ -165,7 +171,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathF.lineTo(0, _relativeY(size, 43));
     pathF.close();
 
-    _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
       setSegmentState('f', !segments['f']);
     });
 
@@ -179,7 +185,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathG1.lineTo(_relativeX(size, 5), _relativeY(size, 49));
     pathG1.close();
 
-    _touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
       setSegmentState('g1', !segments['g1']);
     });
 
@@ -193,7 +199,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathG2.lineTo(_relativeX(size, 32), _relativeY(size, 49));
     pathG2.close();
 
-    _touchCanvas.drawPath(pathG2, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathG2, paint, onTapDown: (tapDetail) {
       setSegmentState('g2', !segments['g2']);
     });
 
@@ -207,7 +213,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathH.lineTo(_relativeX(size, 10), _relativeY(size, 15));
     pathH.close();
 
-    _touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
       setSegmentState('h', !segments['h']);
     });
 
@@ -221,7 +227,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathI.lineTo(_relativeX(size, 27), _relativeY(size, 10));
     pathI.close();
 
-    _touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
       setSegmentState('i', !segments['i']);
     });
 
@@ -235,7 +241,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathJ.lineTo(_relativeX(size, 37), _relativeY(size, 38));
     pathJ.close();
 
-    _touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
       setSegmentState('j', !segments['j']);
     });
 
@@ -249,7 +255,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathK.lineTo(_relativeX(size, 10), _relativeY(size, 83));
     pathK.close();
 
-    _touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
       setSegmentState('k', !segments['k']);
     });
 
@@ -263,7 +269,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathL.lineTo(_relativeX(size, 27), _relativeY(size, 55));
     pathL.close();
 
-    _touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
       setSegmentState('l', !segments['l']);
     });
 
@@ -277,19 +283,21 @@ class SegmentDisplayPainter extends CustomPainter {
     pathM.lineTo(_relativeX(size, 37), _relativeY(size, 60));
     pathM.close();
 
-    _touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
       setSegmentState('m', !segments['m']);
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
-        onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawCircle(
+        Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint, onTapDown: (tapDetail) {
       setSegmentState('dp', !segments['dp']);
     });
   }
 
   void _paintFourteenSegmentDisplay(Size size) {
     var paint = defaultSegmentPaint();
+    var SEGMENTS_COLOR_ON = segment_color_on;
+    var SEGMENTS_COLOR_OFF = segment_color_off;
 
     paint.color = segments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
@@ -299,7 +307,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathA1.lineTo(_relativeX(size, 9), _relativeY(size, 8));
     pathA1.close();
 
-    _touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
       setSegmentState('a', !segments['a']);
     });
 
@@ -312,7 +320,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathB.lineTo(_relativeX(size, 54), _relativeY(size, 10));
     pathB.close();
 
-    _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
       setSegmentState('b', !segments['b']);
     });
 
@@ -325,7 +333,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathC.lineTo(_relativeX(size, 54), _relativeY(size, 55));
     pathC.close();
 
-    _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
       setSegmentState('c', !segments['c']);
     });
 
@@ -337,7 +345,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathD1.lineTo(_relativeX(size, 1), _relativeY(size, 98));
     pathD1.close();
 
-    _touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
       setSegmentState('d', !segments['d']);
     });
 
@@ -350,7 +358,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathE.lineTo(0, _relativeY(size, 55));
     pathE.close();
 
-    _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
       setSegmentState('e', !segments['e']);
     });
 
@@ -363,7 +371,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathF.lineTo(0, _relativeY(size, 43));
     pathF.close();
 
-    _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
       setSegmentState('f', !segments['f']);
     });
 
@@ -377,7 +385,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathG1.lineTo(_relativeX(size, 5), _relativeY(size, 49));
     pathG1.close();
 
-    _touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
       setSegmentState('g1', !segments['g1']);
     });
 
@@ -391,7 +399,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathG2.lineTo(_relativeX(size, 32), _relativeY(size, 49));
     pathG2.close();
 
-    _touchCanvas.drawPath(pathG2, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathG2, paint, onTapDown: (tapDetail) {
       setSegmentState('g2', !segments['g2']);
     });
 
@@ -405,7 +413,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathH.lineTo(_relativeX(size, 10), _relativeY(size, 15));
     pathH.close();
 
-    _touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
       setSegmentState('h', !segments['h']);
     });
 
@@ -418,7 +426,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathI.lineTo(_relativeX(size, 27), _relativeY(size, 10));
     pathI.close();
 
-    _touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
       setSegmentState('i', !segments['i']);
     });
 
@@ -432,7 +440,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathJ.lineTo(_relativeX(size, 37), _relativeY(size, 38));
     pathJ.close();
 
-    _touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
       setSegmentState('j', !segments['j']);
     });
 
@@ -446,7 +454,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathK.lineTo(_relativeX(size, 10), _relativeY(size, 83));
     pathK.close();
 
-    _touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
       setSegmentState('k', !segments['k']);
     });
 
@@ -459,7 +467,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathL.lineTo(_relativeX(size, 27), _relativeY(size, 55));
     pathL.close();
 
-    _touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
       setSegmentState('l', !segments['l']);
     });
 
@@ -473,19 +481,21 @@ class SegmentDisplayPainter extends CustomPainter {
     pathM.lineTo(_relativeX(size, 37), _relativeY(size, 60));
     pathM.close();
 
-    _touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
       setSegmentState('m', !segments['m']);
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
-        onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawCircle(
+        Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint, onTapDown: (tapDetail) {
       setSegmentState('dp', !segments['dp']);
     });
   }
 
   void _paintSevenSegmentDisplay(Size size) {
     var paint = defaultSegmentPaint();
+    var SEGMENTS_COLOR_ON = segment_color_on;
+    var SEGMENTS_COLOR_OFF = segment_color_off;
 
     paint.color = segments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
@@ -495,7 +505,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathA1.lineTo(_relativeX(size, 9), _relativeY(size, 8));
     pathA1.close();
 
-    _touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
       setSegmentState('a', !segments['a']);
     });
 
@@ -508,7 +518,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathB.lineTo(_relativeX(size, 54), _relativeY(size, 10));
     pathB.close();
 
-    _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
       setSegmentState('b', !segments['b']);
     });
 
@@ -521,7 +531,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathC.lineTo(_relativeX(size, 54), _relativeY(size, 55));
     pathC.close();
 
-    _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
       setSegmentState('c', !segments['c']);
     });
 
@@ -533,7 +543,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathD1.lineTo(_relativeX(size, 1), _relativeY(size, 98));
     pathD1.close();
 
-    _touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
       setSegmentState('d', !segments['d']);
     });
 
@@ -546,7 +556,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathE.lineTo(0, _relativeY(size, 55));
     pathE.close();
 
-    _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
       setSegmentState('e', !segments['e']);
     });
 
@@ -559,7 +569,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathF.lineTo(0, _relativeY(size, 43));
     pathF.close();
 
-    _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
       setSegmentState('f', !segments['f']);
     });
 
@@ -573,13 +583,13 @@ class SegmentDisplayPainter extends CustomPainter {
     pathG1.lineTo(_relativeX(size, 5), _relativeY(size, 49));
     pathG1.close();
 
-    _touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
       setSegmentState('g', !segments['g']);
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
-        onTapDown: (tapDetail) {
+    _touchCanvas.touchCanvas.drawCircle(
+        Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint, onTapDown: (tapDetail) {
       setSegmentState('dp', !segments['dp']);
     });
   }

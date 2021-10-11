@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/astronomie_info/astronomy.dart';
+import 'package:gc_wizard/logic/common/date_utils.dart';
 
 class JulianDate {
   double julianDateUTCNoon;
@@ -9,7 +9,7 @@ class JulianDate {
   double terrestrialDynamicalTime;
 
   JulianDate(DateTime datetime, Duration timezone) {
-    julianDateUTCNoon = calcJD(datetime.day, datetime.month, datetime.year);
+    julianDateUTCNoon = GregorianCalendarToJulianDate(datetime);
 
     julianDate = julianDateUTCNoon +
         (datetime.hour - timezone.inMinutes / 60.0 + datetime.minute / 60.0 + datetime.second / 3600.0) / 24.0;

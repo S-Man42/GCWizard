@@ -68,6 +68,7 @@ class ADFGVXState extends State<ADFGVX> {
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'adfgvx_mode_adfgx'),
           rightValue: i18n(context, 'adfgvx_mode_adfgvx'),
+          value: _currentADFGVXMode,
           onChanged: (text) {
             setState(() {
               _currentADFGVXMode = text;

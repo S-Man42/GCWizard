@@ -1,8 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   group("Converter.gauss_krueger.parseLatLon:", () {
@@ -23,7 +22,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseGaussKrueger(elem['text'], ells);
+        var _actual = GaussKrueger.parse(elem['text'])?.toLatLng(ells: ells);;
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

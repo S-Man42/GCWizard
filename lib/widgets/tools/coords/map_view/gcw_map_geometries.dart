@@ -6,7 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
 class GCWMapPoint {
@@ -50,13 +50,60 @@ class GCWMapPoint {
   }
 }
 
+class GCWMapLine {
+  final GCWMapPolyline parent;
+  final GCWMapPoint start;
+  final GCWMapPoint end;
+
+  double length = 0.0;
+  double bearingAB;
+  double bearingBA;
+
+  List<LatLng> shape = [];
+
+  GCWMapLine(this.parent, this.start, this.end) {
+    if (this.start == null && this.end == null) return;
+
+    if (this.start == null) {
+      shape.add(end.point);
+      return;
+    }
+
+    if (this.end == null) {
+      shape.add(start.point);
+      return;
+    }
+
+    shape.add(start.point);
+    _calculateGeodetic();
+  }
+
+  void _calculateGeodetic() {
+    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
+    length = _distBear.distance;
+    bearingAB = _distBear.bearingAToB;
+    bearingBA = _distBear.bearingBToA;
+
+    const _stepLength = 5000.0;
+
+    var _countSteps = (_distBear.distance / _stepLength).floor();
+
+    for (int _i = 1; _i < _countSteps; _i++) {
+      var _nextPoint = projectionVincenty(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid());
+      shape.add(_nextPoint);
+    }
+
+    shape.add(end.point);
+  }
+}
+
 class GCWMapPolyline {
   String uuid;
   List<GCWMapPoint> points = [];
   Color color;
-  double length;
+  double get length => lines == null ? 0.0 : lines.fold(0.0, (previousValue, line) => previousValue + line.length);
 
-  List<LatLng> shape;
+  List<GCWMapLine> lines;
 
   GCWMapPolyline({
     this.uuid,
@@ -67,36 +114,20 @@ class GCWMapPolyline {
     update();
   }
 
-  void _calculateGeodetics(GCWMapPoint start, GCWMapPoint end) {
-    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
-    length += _distBear.distance;
-
-    const _stepLength = 5000.0;
-
-    var _countSteps = (_distBear.distance / _stepLength).floor();
-
-    for (int _i = 1; _i < _countSteps; _i++) {
-      var _nextPoint = projection(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid());
-      shape.add(_nextPoint);
-    }
-
-    shape.add(end.point);
-  }
-
   void update() {
-    length = 0.0;
-    shape = [];
+    lines = [];
 
-    if (points == null) {
+    if (points == null || points.length == 0) {
       return;
     }
 
-    if (points.length > 0) shape.add(points[0].point);
-
-    if (points.length < 2) return;
+    if (points.length == 1) {
+      lines.add(GCWMapLine(this, points[0], null));
+      return;
+    }
 
     for (int i = 1; i < points.length; i++) {
-      _calculateGeodetics(points[i - 1], points[i]);
+      lines.add(GCWMapLine(this, points[i - 1], points[i]));
     }
   }
 }
@@ -126,7 +157,7 @@ class GCWMapCircle {
     bool shouldSort = false;
 
     shape = List.generate(((360.0 + _degrees) / _degrees).floor(), (index) => index * _degrees).map((e) {
-      LatLng coord = projection(this.centerPoint, e, this.radius, defaultEllipsoid());
+      LatLng coord = projectionVincenty(this.centerPoint, e, this.radius, defaultEllipsoid());
 
       // if there is a huge longitude step around the world (nearly 360°)
       // then one coordinate is place to the left side of the map, the next one to the right (or vice versa)

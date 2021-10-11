@@ -1,7 +1,6 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 Map<String, dynamic> segmentBearings(
     LatLng coord, double angle1, double angle2, double distance, int countSegments, Ellipsoid ells) {

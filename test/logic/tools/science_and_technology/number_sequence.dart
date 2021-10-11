@@ -16,6 +16,7 @@ void main() {
       {'sequence' : NumberSequencesMode.PELL_LUCAS,       'position' : 30, 'expectedOutput' : 304278004998},
       {'sequence' : NumberSequencesMode.FERMAT,           'position' :  5, 'expectedOutput' : 4294967297},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'position' : 20, 'expectedOutput' : 2432902008176640000},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'position' : 20, 'expectedOutput' : 1767},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -40,6 +41,7 @@ void main() {
       {'sequence' : NumberSequencesMode.PELL_LUCAS,       'maxIndex' : 100, 'expectedOutput' : 30, 'number' : BigInt.from(304278004998)},
       {'sequence' : NumberSequencesMode.FERMAT,           'maxIndex' : 100, 'expectedOutput' :  5, 'number' : BigInt.from(4294967297)},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(2432902008176640000)},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'maxIndex' : 100, 'expectedOutput' : 20, 'number' : BigInt.from(1767)},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -64,6 +66,7 @@ void main() {
       {'sequence' : NumberSequencesMode.PELL_LUCAS,       'start' : 10, 'stop' : 15, 'expectedOutput' : [6726, 16238, 39202, 94642, 228486, 551614]},
       {'sequence' : NumberSequencesMode.FERMAT,           'start' :  3, 'stop' :  5, 'expectedOutput' : [257, 65537, 4294967297]},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'start' : 10, 'stop' : 15, 'expectedOutput' : [3628800, 39916800, 479001600, 6227020800, 87178291200, 1307674368000]},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'start' : 10, 'stop' : 15, 'expectedOutput' : [887, 978, 986, 1495, 1497]},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -91,6 +94,7 @@ void main() {
       {'sequence' : NumberSequencesMode.PELL,             'digits' : 4, 'expectedOutput' : [2378,5741]},
       {'sequence' : NumberSequencesMode.PELL_LUCAS,       'digits' : 4, 'expectedOutput' : [1154,2786,6726]},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'digits' : 3, 'expectedOutput' : [120,720]},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'digits' : 3, 'expectedOutput' : [196, 295, 394, 493, 592, 689, 691, 788, 790, 879, 887, 978, 986]},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -130,6 +134,8 @@ void main() {
           8, 10)},
       {'sequence' : NumberSequencesMode.FACTORIAL,        'maxIndex' : 1000,  'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('23253512673402975649030219517802388212008068837208869508318464355013920279143899108672994147315919703030880622767679396866340190791013489376711460575586621328808078030221607416835754080915509200193567689830381661447084331787366822584467958045707956215554076622321971107403773482677717770719835479561276613084367632005431955656279435291455206551540853209029847006303117120940193077621247832444065125486279435774814422901201765327214272114274216760930417792134750312836895272433618482621109490451324448449864059857201278688531263992450359151349011478401428811903933154714395422786107367084702200161958717726513651427362699388705379318219964600238769420372143927905797647339003145382760152194331251723435182249367538832250671077443541255757685857545473824310812120959584596053559251742941120812453454520929229292999042732707443975099682870572564608273195076736602858239049990379586682574344643100262157360191426239851065045323629593980291244200960315535850206717970892248287218349093197402045548057599056802262219585058251212685414973657747800129308945588637703832589017356695817144461662048084676024098030325113360716882736185580558745600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
           549, 1118)},
+      {'sequence' : NumberSequencesMode.LYCHREL,          'maxIndex' : 1000,  'number' : '996', 'expectedOutput' : PositionOfSequenceOutput('2996',
+          38, 2)},
     ];
 
     _inputsToExpected.forEach((elem) {

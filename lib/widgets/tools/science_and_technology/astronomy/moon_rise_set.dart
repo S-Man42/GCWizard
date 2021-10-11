@@ -62,7 +62,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
 
     var outputs = [
       [
-        i18n(context, 'astronomy_riseset_rise'),
+        i18n(context, 'astronomy_riseset_moonrise'),
         moonRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.rise)
       ],
       [
@@ -70,7 +70,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
         moonRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.transit)
       ],
       [
-        i18n(context, 'astronomy_riseset_set'),
+        i18n(context, 'astronomy_riseset_moonset'),
         moonRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.set)
       ],
     ];

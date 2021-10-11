@@ -1,5 +1,20 @@
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 bool equalsLatLng(LatLng a, LatLng b) {
-  return  (a.latitude - b.latitude).abs() <= 1e-5 && (a.longitude - b.longitude).abs() <= 1e-5;
+  final TOLERANCE = 1e-5;
+  //
+  // print('...');
+  // print(a);
+  // print(b);
+
+  if ((a.latitude.abs() - 90.0) <= TOLERANCE && (b.latitude.abs() - 90.0) <= TOLERANCE && a.latitude.sign == b.latitude.sign)
+    return true;
+
+  if ((a.latitude - b.latitude).abs() <= TOLERANCE) {
+    if ((a.longitude - b.longitude).abs() <= TOLERANCE) return true;
+
+    if ((a.longitude.abs() - 180.0) <= TOLERANCE && (b.longitude.abs() - 180.0) <= TOLERANCE) return true;
+  }
+
+  return false;
 }

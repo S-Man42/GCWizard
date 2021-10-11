@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 // All these functions are completely... Really? I don't even know what they do...
 // Refactoring could be a lot of fun...
@@ -15,7 +15,7 @@ bool _isApprox(double a, double b) {
 }
 
 double _signAzimuthDifference(double az1, double az2) {
-  return mod(az1 - az2 + PI, 2 * PI) - PI;
+  return mod(az1 - az2 + pi, 2 * pi) - pi;
 }
 
 double _findLinearRoot(List<double> x, List<double> errArray) {
@@ -30,7 +30,7 @@ double _findLinearRoot(List<double> x, List<double> errArray) {
   return root;
 }
 
-Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellipsoid ells) {
+Map<String, dynamic> _perpintercept(LatLng pt1, double dCrs13, LatLng pt2, Ellipsoid ells) {
   var distBear = distanceBearing(pt1, pt2, ells);
 
   double dist12 = distBear.distance;
@@ -49,15 +49,15 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
   double dist13 = ells.sphereRad * atan(tan(dA) * (cos(dAngle))).abs();
 
   var _threshold = 275000.0; //This mysterious number has been found in the original source... whatever it does...
-  if (dAngle > PI * 2) {
-    LatLng newPoint = projectionRadian(pt1, crs13 + PI, dist13 + _threshold, ells);
+  if (dAngle > pi * 2) {
+    LatLng newPoint = projectionRadian(pt1, crs13 + pi, dist13 + _threshold, ells);
     dist13 = _threshold;
     distBear = distanceBearing(newPoint, pt1, ells);
 
     crs13 = distBear.bearingAToBInRadian;
     pt1 = newPoint;
   } else if ((dist13).abs() < _threshold) {
-    LatLng newPoint = projectionRadian(pt1, crs13 + PI, _threshold, ells);
+    LatLng newPoint = projectionRadian(pt1, crs13 + pi, _threshold, ells);
     dist13 = dist13 + _threshold;
     distBear = distanceBearing(newPoint, pt1, ells);
 
@@ -75,7 +75,7 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
 
   dAngle = _signAzimuthDifference(crs31, crs32).abs();
 
-  List<double> errarray = [dAngle - PI];
+  List<double> errarray = [dAngle - pi];
   List<double> distarray = [dist13, (dist13 + errarray[0] * dist23).abs()];
 
   pt3 = projectionRadian(pt1, crs13, distarray[1], ells);
@@ -85,7 +85,7 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
   distBear = distanceBearing(pt3, pt2, ells);
   crs32 = distBear.bearingAToBInRadian;
 
-  errarray.add(_signAzimuthDifference(crs31, crs32).abs() - PI / 2);
+  errarray.add(_signAzimuthDifference(crs31, crs32).abs() - pi / 2);
 
   int k = 0;
   double dError = 0;
@@ -108,7 +108,7 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
     distarray[0] = distarray[1];
     distarray[1] = dist13;
     errarray[0] = errarray[1];
-    errarray[1] = _signAzimuthDifference(crs31, crs32).abs() - PI / 2;
+    errarray[1] = _signAzimuthDifference(crs31, crs32).abs() - pi / 2;
     dError = (distarray[1] - distarray[0]).abs();
     k++;
   }
@@ -123,7 +123,7 @@ List<LatLng> geodesicArcIntercept(
   LatLng ptC = centerPoint;
   var crs1 = bearingGeodetic;
 
-  Map<String, dynamic> perp = _perpIntercept(pt1, crs1, ptC, ells);
+  Map<String, dynamic> perp = _perpintercept(pt1, crs1, ptC, ells);
 
   LatLng perpPt = perp['coordinate'];
   var distBear = distanceBearing(perpPt, ptC, ells);
@@ -166,7 +166,7 @@ List<LatLng> geodesicArcIntercept(
 
     distBear = distanceBearing(ptC, pt, ells);
     double dAngle = _signAzimuthDifference(distBear.bearingAToBInRadian, distBear.bearingBToAInRadian).abs();
-    double B = (_signAzimuthDifference(bcrs, rcrs) + PI - dAngle).abs();
+    double B = (_signAzimuthDifference(bcrs, rcrs) + pi - dAngle).abs();
     double A = acos(sin(B) * cos(dErr.abs() / ells.sphereRad));
     double c;
 
@@ -203,7 +203,7 @@ List<LatLng> geodesicArcIntercept(
 
     output.add(pt);
 
-    crs = crs + PI;
+    crs = crs + pi;
     pt = projectionRadian(perpPt, crs, dist, ells);
     distBear = distanceBearing(ptC, pt, ells);
     radDist = distBear.distance;

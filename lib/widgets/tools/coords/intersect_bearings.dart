@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 class IntersectBearings extends StatefulWidget {
   @override
@@ -34,14 +34,9 @@ class IntersectBearingsState extends State<IntersectBearings> {
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
-  var _currentMapPoints;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
-  }
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
 
   @override
   Widget build(BuildContext context) {
@@ -93,14 +88,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          polylines: [
-            GCWMapPolyline(points: [_currentMapPoints[0], _getEndLine1()]),
-            GCWMapPolyline(
-                points: [_currentMapPoints[1], _getEndLine2()],
-                color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-                    .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                    .toColor())
-          ],
+          polylines: _currentMapPolylines,
         ),
       ],
     );
@@ -206,6 +194,15 @@ class IntersectBearingsState extends State<IntersectBearings> {
         coordinateFormat: _currentOutputFormat));
 
     _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(points: [_currentMapPoints[0], _getEndLine1()]),
+      GCWMapPolyline(
+          points: [_currentMapPoints[1], _getEndLine2()],
+          color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+              .toColor())
+    ];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

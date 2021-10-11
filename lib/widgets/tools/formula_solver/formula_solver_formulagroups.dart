@@ -161,7 +161,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           GCWDialogButton(
             text: i18n(context, 'common_exportfile_saveoutput'),
             onPressed: () {
-              exportFile(text, group.name, mode, context);
+              exportFile(text, mode, context);
             },
           ),
           GCWDialogButton(
@@ -177,8 +177,9 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       var formulaTool = GCWTool(
         tool: FormulaSolverFormulas(group: group),
         toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
+        helpSearchString: 'formulasolver_formulas',
         defaultLanguageToolName: '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
-        missingHelpLocales: ['fr'],
+        helpLocales: ['de', 'en', 'fr'],
       );
 
       Future _navigateToSubPage(context) async {

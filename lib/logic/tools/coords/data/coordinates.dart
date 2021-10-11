@@ -1,5 +1,29 @@
+import 'dart:math';
+
+import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+
+import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 
 const keyCoordsDEC = 'coords_dec';
 const keyCoordsDMM = 'coords_dmm';
@@ -75,6 +99,12 @@ CoordinateFormat getCoordinateFormatByKey(String key) {
 
 final defaultCoordinate = LatLng(0.0, 0.0);
 
+abstract class BaseCoordinates {
+  String get key;
+
+  LatLng toLatLng();
+}
+
 String _dmmAndDMSNumberFormat([int precision = 6]) {
   var formatString = '00.';
   if (precision == null) precision = 6;
@@ -86,31 +116,63 @@ String _dmmAndDMSNumberFormat([int precision = 6]) {
   return formatString;
 }
 
-String _getSignString(int sign, bool isLatitude) {
+String _getCoordinateSignString(int sign, bool isLatitude) {
   var _sign = '';
 
-  if (sign < 0) {
-    _sign = isLatitude ? 'S' : 'W';
+  if (isLatitude) {
+    _sign = (sign >= 0) ? 'N' : 'S';
   } else {
-    _sign = isLatitude ? 'N' : 'E';
+    _sign = (sign >= 0) ? 'E' : 'W';
   }
 
   return _sign;
 }
 
-class DEC {
+int getCoordinateSignFromString(String text, bool isLatitude) {
+  int _sign = 0;
+
+  if (isLatitude) {
+    _sign = (text == 'N') ? 1 : -1;
+  } else {
+    _sign = (text == 'E') ? 1 : -1;
+  }
+
+  return _sign;
+}
+
+class DEC extends BaseCoordinates {
+  String get key => keyCoordsDEC;
   double latitude;
   double longitude;
 
   DEC(this.latitude, this.longitude);
 
+  LatLng toLatLng() {
+    return decToLatLon(this);
+  }
+
+  static DEC fromLatLon(LatLng coord) {
+    return latLonToDEC(coord);
+  }
+
+  static DEC parse(String input, {wholeString = false}) {
+    return parseDEC(input, wholeString: wholeString);
+  }
+
   @override
-  String toString() {
-    return 'latitude: $latitude, longitude: $longitude';
+  String toString([int precision]) {
+    if (precision == null) precision = 10;
+    if (precision < 1) precision = 1;
+
+    String fixedDigits = '0' * min(precision, 3);
+    String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
+
+    return '${NumberFormat('00.' + fixedDigits + variableDigits).format(latitude)}\n${NumberFormat('000.' + fixedDigits + variableDigits).format(longitude)}';
   }
 }
 
 class DMMPart {
+  String get key => keyCoordsDMM;
   int sign;
   int degrees;
   double minutes;
@@ -120,7 +182,7 @@ class DMMPart {
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
     var _minutesStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(minutes);
     var _degrees = degrees;
-    var _sign = _getSignString(sign, isLatitude);
+    var _sign = _getCoordinateSignString(sign, isLatitude);
 
     //Values like 59.999999999' may be rounded to 60.0. So in that case,
     //the degree has to be increased while minutes should be set to 0.0
@@ -187,15 +249,28 @@ class DMMLongitude extends DMMPart {
   }
 }
 
-class DMM {
+class DMM extends BaseCoordinates {
+  String get key => keyCoordsDMM;
   DMMLatitude latitude;
   DMMLongitude longitude;
 
   DMM(this.latitude, this.longitude);
 
+  LatLng toLatLng() {
+    return dmmToLatLon(this);
+  }
+
+  static DMM fromLatLon(LatLng coord) {
+    return latLonToDMM(coord);
+  }
+
+  static DMM parse(String text, {leftPadMilliMinutes: false, wholeString: false}) {
+    return parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
+  }
+
   @override
-  String toString() {
-    return 'latitude: $latitude, longitude: $longitude';
+  String toString([int precision]) {
+    return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }
 
@@ -208,7 +283,7 @@ class DMSPart {
   DMSPart(this.sign, this.degrees, this.minutes, this.seconds);
 
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
-    var _sign = _getSignString(sign, isLatitude);
+    var _sign = _getCoordinateSignString(sign, isLatitude);
     var _secondsStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(seconds);
     var _minutes = minutes;
 
@@ -288,15 +363,28 @@ class DMSLongitude extends DMSPart {
   }
 }
 
-class DMS {
+class DMS extends BaseCoordinates {
+  String get key => keyCoordsDMS;
   DMSLatitude latitude;
   DMSLongitude longitude;
 
   DMS(this.latitude, this.longitude);
 
+  LatLng toLatLng() {
+    return dmsToLatLon(this);
+  }
+
+  static DMS fromLatLon(LatLng coord) {
+    return latLonToDMS(coord);
+  }
+
+  static DMS parse(String input, {wholeString = false}) {
+    return parseDMS(input, wholeString: wholeString);
+  }
+
   @override
-  String toString() {
-    return 'latitude: $latitude, longitude: $longitude';
+  String toString([int precision]) {
+    return '${latitude.format(precision)}\n${longitude.format(precision)}';
   }
 }
 
@@ -304,7 +392,8 @@ enum HemisphereLatitude { North, South }
 enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
-class UTMREF {
+class UTMREF extends BaseCoordinates {
+  String get key => keyCoordsUTM;
   UTMZone zone;
   double easting;
   double northing;
@@ -313,6 +402,24 @@ class UTMREF {
 
   get hemisphere {
     return 'NPQRSTUVWXYZ'.contains(zone.latZone) ? HemisphereLatitude.North : HemisphereLatitude.South;
+  }
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return UTMREFtoLatLon(this, ells);
+  }
+
+  static UTMREF fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToUTM(coord, ells);
+  }
+
+  static UTMREF parse(String input) {
+    return parseUTM(input);
+  }
+
+  @override
+  String toString() {
+    return '${zone.lonZone} ${zone.latZone} ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
   }
 }
 
@@ -324,35 +431,127 @@ class UTMZone {
   UTMZone(this.lonZoneRegular, this.lonZone, this.latZone);
 }
 
-class MGRS {
+class MGRS extends BaseCoordinates {
+  String get key => keyCoordsMGRS;
   UTMZone utmZone;
   String digraph;
   double easting;
   double northing;
 
   MGRS(this.utmZone, this.digraph, this.easting, this.northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return mgrsToLatLon(this, ells);
+  }
+
+  static MGRS fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToMGRS(coord, ells);
+  }
+
+  static MGRS parse(String text) {
+    return parseMGRS(text);
+  }
+
+  @override
+  String toString() {
+    return '${utmZone.lonZone}${utmZone.latZone} ${digraph} ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
+  }
 }
 
-class SwissGrid {
+class SwissGrid extends BaseCoordinates {
+  String get key => keyCoordsSwissGrid;
   double easting;
   double northing;
 
   SwissGrid(this.easting, this.northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return swissGridToLatLon(this, ells);
+  }
+
+  static SwissGrid fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToSwissGrid(coord, ells);
+  }
+
+  static SwissGrid parse(String input) {
+    return parseSwissGrid(input);
+  }
+
+  @override
+  String toString() {
+    return 'Y: ${easting}\nX: ${northing}';
+  }
 }
 
-class GaussKrueger {
+class SwissGridPlus extends SwissGrid {
+  String get key => keyCoordsSwissGridPlus;
+
+  SwissGridPlus(easting, northing) : super(easting, northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return swissGridPlusToLatLon(this, ells);
+  }
+
+  @override
+  static SwissGridPlus fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToSwissGridPlus(coord, ells);
+  }
+
+  @override
+  static SwissGridPlus parse(String input) {
+    return parseSwissGridPlus(input);
+  }
+}
+
+class GaussKrueger extends BaseCoordinates {
+  String get key => keyCoordsGaussKrueger;
   int code;
   double easting;
   double northing;
 
   GaussKrueger(this.code, this.easting, this.northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return gaussKruegerToLatLon(this, ells);
+  }
+
+  static GaussKrueger fromLatLon(LatLng coord, int gkno, Ellipsoid ells) {
+    return latLonToGaussKrueger(coord, gkno, ells);
+  }
+
+  static GaussKrueger parse(String input, {gaussKruegerCode: 1}) {
+    return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
+  }
+
+  @override
+  String toString() {
+    return 'R: ${easting}\nH: ${northing}';
+  }
 }
 
-class Mercator {
+class Mercator extends BaseCoordinates {
+  String get key => keyCoordsMercator;
   double easting;
   double northing;
 
   Mercator(this.easting, this.northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return mercatorToLatLon(this, ells);
+  }
+
+  static Mercator fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToMercator(coord, ells);
+  }
+
+  static Mercator parse(String input) {
+    return parseMercator(input);
+  }
 
   @override
   String toString() {
@@ -360,11 +559,24 @@ class Mercator {
   }
 }
 
-class NaturalAreaCode {
+class NaturalAreaCode extends BaseCoordinates {
+  String get key => keyCoordsNaturalAreaCode;
   String x; //east
   String y; //north
 
   NaturalAreaCode(this.x, this.y);
+
+  LatLng toLatLng() {
+    return naturalAreaCodeToLatLon(this);
+  }
+
+  static NaturalAreaCode fromLatLon(LatLng coord, {int precision}) {
+    return latLonToNaturalAreaCode(coord, precision: precision);
+  }
+
+  static NaturalAreaCode parse(String input) {
+    return parseNaturalAreaCode(input);
+  }
 
   @override
   String toString() {
@@ -372,12 +584,25 @@ class NaturalAreaCode {
   }
 }
 
-class SlippyMap {
+class SlippyMap extends BaseCoordinates {
+  String get key => keyCoordsSlippyMap;
   double x;
   double y;
   double zoom;
 
   SlippyMap(this.x, this.y, this.zoom);
+
+  LatLng toLatLng() {
+    return slippyMapToLatLon(this);
+  }
+
+  static SlippyMap fromLatLon(LatLng coord, double zoom) {
+    return latLonToSlippyMap(coord, zoom);
+  }
+
+  static SlippyMap parse(String input, {zoom: 10.0}) {
+    return parseSlippyMap(input, zoom: zoom);
+  }
 
   @override
   String toString() {
@@ -385,13 +610,196 @@ class SlippyMap {
   }
 }
 
-class XYZ {
+class Waldmeister extends BaseCoordinates {
+  String get key => keyCoordsReverseWhereIGoWaldmeister;
+  String a, b, c;
+
+  Waldmeister(this.a, this.b, this.c);
+
+  LatLng toLatLng() {
+    return waldmeisterToLatLon(this);
+  }
+
+  static Waldmeister fromLatLon(LatLng coord) {
+    return latLonToWaldmeister(coord);
+  }
+
+  static Waldmeister parse(String input) {
+    return parseWaldmeister(input);
+  }
+
+  @override
+  String toString() {
+    return '$a\n$b\n$c';
+  }
+}
+
+class XYZ extends BaseCoordinates {
+  String get key => keyCoordsXYZ;
   double x, y, z;
 
   XYZ(this.x, this.y, this.z);
 
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return xyzToLatLon(this, ells);
+  }
+
+  static XYZ fromLatLon(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
+    return latLonToXYZ(coord, ells, h: h);
+  }
+
+  static XYZ parse(String input) {
+    return parseXYZ(input);
+  }
+
   @override
   String toString() {
-    return 'X: $x\nY: $y\Z: $z';
+    var numberFormat = NumberFormat('0.######');
+    return 'X: ${numberFormat.format(x)}\nY: ${numberFormat.format(y)}\nZ: ${numberFormat.format(z)}';
+  }
+}
+
+class Maidenhead extends BaseCoordinates {
+  String get key => keyCoordsMaidenhead;
+  String text;
+
+  Maidenhead(this.text);
+
+  LatLng toLatLng() {
+    return maidenheadToLatLon(this);
+  }
+
+  static Maidenhead fromLatLon(LatLng coord) {
+    return latLonToMaidenhead(coord);
+  }
+
+  static Maidenhead parse(String input) {
+    return parseMaidenhead(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
+class Geohash extends BaseCoordinates {
+  String get key => keyCoordsGeohash;
+  String text;
+
+  Geohash(this.text);
+
+  LatLng toLatLng() {
+    return geohashToLatLon(this);
+  }
+
+  static Geohash fromLatLon(LatLng coord, int geohashLength) {
+    return latLonToGeohash(coord, geohashLength);
+  }
+
+  static Geohash parse(String input) {
+    return parseGeohash(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
+class GeoHex extends BaseCoordinates {
+  String get key => keyCoordsGeoHex;
+  String text;
+
+  GeoHex(this.text);
+
+  LatLng toLatLng() {
+    return geoHexToLatLon(this);
+  }
+
+  static GeoHex fromLatLon(LatLng coord, int precision) {
+    return latLonToGeoHex(coord, precision);
+  }
+
+  static GeoHex parse(String input) {
+    return parseGeoHex(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
+class Geo3x3 extends BaseCoordinates {
+  String get key => keyCoordsGeo3x3;
+  String text;
+
+  Geo3x3(this.text);
+
+  LatLng toLatLng() {
+    return geo3x3ToLatLon(this);
+  }
+
+  static Geo3x3 fromLatLon(LatLng coord, int level) {
+    return latLonToGeo3x3(coord, level);
+  }
+
+  static Geo3x3 parse(String input) {
+    return parseGeo3x3(input);
+  }
+
+  @override
+  String toString() {
+    return text.toUpperCase();
+  }
+}
+
+class OpenLocationCode extends BaseCoordinates {
+  String get key => keyCoordsOpenLocationCode;
+  String text;
+
+  OpenLocationCode(this.text);
+
+  LatLng toLatLng() {
+    return openLocationCodeToLatLon(this);
+  }
+
+  static OpenLocationCode fromLatLon(LatLng coord, {int codeLength}) {
+    return latLonToOpenLocationCode(coord, codeLength: codeLength);
+  }
+
+  static OpenLocationCode parse(String input) {
+    return parseOpenLocationCode(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
+class Quadtree extends BaseCoordinates {
+  String get key => keyCoordsQuadtree;
+  List<int> coords;
+
+  Quadtree(this.coords);
+
+  LatLng toLatLng() {
+    return quadtreeToLatLon(this);
+  }
+
+  static Quadtree parse(String input) {
+    return parseQuadtree(input);
+  }
+
+  static Quadtree fromLatLon(LatLng coord, {int precision}) {
+    return latLonToQuadtree(coord, precision: precision);
+  }
+
+  @override
+  String toString() {
+    return coords.join();
   }
 }

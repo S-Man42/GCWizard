@@ -11,16 +11,25 @@ class GCWPopupMenu extends StatefulWidget {
   final IconButtonSize size;
   final Color iconColor;
   final Color backgroundColor;
+  final bool isTextSelectionToolBarButton;
+  final EdgeInsets textSelectionToolBarButtonPadding;
+  final String textSelectionToolBarButtonLabel;
 
-  const GCWPopupMenu(
-      {Key key,
-      this.menuItemBuilder,
-      this.iconData,
-      this.customIcon,
-      this.size: IconButtonSize.NORMAL,
-      this.iconColor,
-      this.backgroundColor})
-      : super(key: key);
+  final Function onBeforePressed;
+
+  const GCWPopupMenu({
+    Key key,
+    this.menuItemBuilder,
+    this.iconData,
+    this.customIcon,
+    this.size: IconButtonSize.NORMAL,
+    this.iconColor,
+    this.backgroundColor,
+    this.onBeforePressed,
+    this.isTextSelectionToolBarButton: false,
+    this.textSelectionToolBarButtonPadding,
+    this.textSelectionToolBarButtonLabel,
+  }) : super(key: key);
 
   @override
   GCWPopupMenuState createState() => GCWPopupMenuState();
@@ -32,7 +41,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
 
   RelativeRect _menuPosition;
 
-  _afterLayout(_) {
+  _afterLayout() {
     //copied from the native PopupMenu code
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
@@ -46,63 +55,76 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
   }
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-    super.initState();
+  Widget build(BuildContext context) {
+    if (widget.isTextSelectionToolBarButton) {
+      return TextSelectionToolbarTextButton(
+        padding: widget.textSelectionToolBarButtonPadding,
+        onPressed: _onPressed,
+        child: Text(widget.textSelectionToolBarButtonLabel),
+      );
+    }
+
+    return GCWIconButton(
+        iconData: widget.iconData,
+        customIcon: widget.customIcon,
+        size: widget.size,
+        iconColor: widget.iconColor,
+        backgroundColor: widget.backgroundColor,
+        onPressed: _onPressed);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GCWIconButton(
-      iconData: widget.iconData,
-      customIcon: widget.customIcon,
-      size: widget.size,
-      iconColor: widget.iconColor,
-      backgroundColor: widget.backgroundColor,
-      onPressed: () {
-        var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
-          return MapEntry<PopupMenuEntry<dynamic>, Function>(
-              item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
-        });
+  _onPressed() {
+    if (widget.onBeforePressed != null) widget.onBeforePressed();
 
-        _menuItems = items.keys.toList();
-        _menuAction = items.values.toList();
+    var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
+      return MapEntry<PopupMenuEntry<dynamic>, Function>(
+          item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
+    });
 
-        showMenu(
-          context: context,
-          position: _menuPosition,
-          items: _menuItems,
-          elevation: 8.0,
-          color: themeColors().accent(),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundedBorderRadius),
-          ),
-        ).then((itemSelected) {
-          if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
+    _afterLayout();
 
-          _menuAction[itemSelected](itemSelected);
-        });
-      },
-    );
+    _menuItems = items.keys.toList();
+    _menuAction = items.values.toList();
+
+    showMenu(
+      context: context,
+      position: _menuPosition,
+      items: _menuItems,
+      elevation: 8.0,
+      color: themeColors().accent(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(roundedBorderRadius),
+      ),
+    ).then((itemSelected) {
+      if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
+
+      if (_menuAction[itemSelected] == null) return;
+
+      _menuAction[itemSelected](itemSelected);
+    });
   }
 }
 
 class GCWPopupMenuItem {
   final Widget child;
   final Function action;
+  final Function onLongPress;
   final bool isDivider;
 
-  GCWPopupMenuItem({this.child, this.action, this.isDivider: false});
+  GCWPopupMenuItem({this.child, this.action, this.onLongPress, this.isDivider: false});
 }
 
-iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey) {
+iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey, {Function onLongPress}) {
   var color = themeColors().dialogText();
 
   return Row(
     children: [
-      Container(
-        child: Icon(icon, color: color),
-        padding: EdgeInsets.only(right: 10),
+      GestureDetector(
+        child: Container(
+          child: Icon(icon, color: color),
+          padding: EdgeInsets.only(right: 10),
+        ),
+        onLongPress: onLongPress,
       ),
       Text(i18n(context, i18nKey), style: TextStyle(color: color))
     ],

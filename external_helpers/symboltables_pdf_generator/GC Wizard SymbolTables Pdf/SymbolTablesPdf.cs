@@ -22,8 +22,12 @@ namespace GC_Wizard_SymbolTables_Pdf
         const string CONFIG_SPECIALMAPPINGS = "special_mappings";
         const string CONFIG_TRANSLATE = "translate";
         const string CONFIG_CASESENSITIVE = "case_sensitive";
+        const string CONFIG_TRANSLATIONPREFIX = "translation_prefix";
         const string CONFIG_SPECIALSORT = "special_sort";
         const string CONFIG_IGNORE = "ignore";
+        const string CONFIG_DefaultFont = "Verdana";
+        string CONFIG_Font = CONFIG_DefaultFont;
+        const bool testPage = false;
 
         struct SymbolInfo
         {
@@ -198,6 +202,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             XGraphics gfx = null;
             Progress = 0;
 
+            CONFIG_Font = CONFIG_DefaultFont;
             offset = createPage(document, ref page, ref gfx);
             // Create the root bookmark. You can set the style and the color.
             var contentTableName = "";
@@ -208,6 +213,28 @@ namespace GC_Wizard_SymbolTables_Pdf
                     break;
                 case "fr":
                     contentTableName = "Table des matières";
+                    break;
+                case "ko":
+                    contentTableName = "목차";
+                    CONFIG_Font = "Malgun Gothic";
+                    break;
+                case "it":
+                    contentTableName = "Sommario";
+                    break;
+                case "es":
+                    contentTableName = "Tabla de contenido";
+                    break;
+                case "nl":
+                    contentTableName = "Inhoudsopgave";
+                    break;
+                case "pl":
+                    contentTableName = "Spis treści";
+                    break;
+                case "ru":
+                    contentTableName = "Оглавление";
+                    break;
+                case "tr":
+                    contentTableName = "İçindekiler";
                     break;
                 default:
                     contentTableName = "Table of Contents";
@@ -244,6 +271,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
 
             var query = list.OrderBy(entry => entry.Value);
+            if (testPage) return query.Take(1);
+
             return query;
         }
 
@@ -299,6 +328,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             Dictionary<String, String> mappingList = null;
             bool caseSensitive = false;
             bool specialSort = false;
+            String translationPrefixConfig = null;
 
             if (File.Exists(Path.Combine(configFilePath)))
             {
@@ -307,9 +337,9 @@ namespace GC_Wizard_SymbolTables_Pdf
                 translateables = new List<String>();
                 ignoreList = parseIgnoreConfig(fileContent);
                 mappingList = parseMappingConfig(fileContent);
-                caseSensitive = parseCaseSesitiveConfig(fileContent);
+                caseSensitive = parseCaseSensitiveConfig(fileContent);
                 specialSort = parseSpecialSortConfig(fileContent);
-
+                translationPrefixConfig = parseTranslationPrefixConfig(fileContent);
             }
             else
                 mappingList = parseMappingConfig(null);
@@ -324,7 +354,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                         var symbol = entry.FullName;
                         if (ignoreList == null || ignoreList.Count == 0 || !ignoreList.Contains(Path.GetFileNameWithoutExtension(symbol)))
                         {
-                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables);
+                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables, translationPrefixConfig);
                             var stream = new MemoryStream();
                             entry.Open().CopyTo(stream);
 
@@ -480,7 +510,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             return new Dictionary<String, String>(CONFIG_SPECIAL_CHARS);
         }
 
-        private bool parseCaseSesitiveConfig(String fileContent)
+        private bool parseCaseSensitiveConfig(String fileContent)
         {
             var regex = new Regex(@"(\""" + CONFIG_CASESENSITIVE + @"\""\s *:)\s(true)");
             bool value = false;
@@ -506,8 +536,13 @@ namespace GC_Wizard_SymbolTables_Pdf
             return value;
         }
 
+        private String parseTranslationPrefixConfig(String fileContent)
+        {
+            return getEntryValue(fileContent, CONFIG_TRANSLATIONPREFIX);
+        }
 
-        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables)
+
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
         {
             var fileName = Path.GetFileNameWithoutExtension(symbolPath);
             var overlay = fileName;
@@ -519,7 +554,10 @@ namespace GC_Wizard_SymbolTables_Pdf
                 overlay = mappingList[overlay];
             else if (translateList != null && translateList.Contains(overlay))
             {
-                overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                if (String.IsNullOrEmpty(translationPrefix))
+                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                else
+                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
                 translateables.Add(overlay);
             }
 
@@ -532,7 +570,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF drawName(String name, string description, string license, int count, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
-            XFont font = new XFont("Verdana", FontSizeName, XFontStyle.BoldItalic);
+            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
 
             var name_offset = font.Height;
             if (!string.IsNullOrEmpty(description))
@@ -565,7 +603,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             // description
             if (!string.IsNullOrEmpty(description))
             {
-                font = new XFont("Verdana", FontSizeName / 2, XFontStyle.Regular);
+                font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
 
                 // Draw the description
                 gfx.DrawString(description, font, XBrushes.Black,
@@ -578,7 +616,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             // license
             if (!string.IsNullOrEmpty(license))
             {
-                font = new XFont("Verdana", FontSizeName / 4, XFontStyle.Regular);
+                font = new XFont(CONFIG_Font, FontSizeName / 4, XFontStyle.Regular);
 
                 // Draw the license
                 gfx.DrawString(license, font, XBrushes.Black,
@@ -603,7 +641,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF drawOverlay(String name, int maxLength, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
-            XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
+            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
             if (name == " ")
             {
                 drawSpaceSymbol(offset, XColors.Blue, font, gfx);
@@ -759,7 +797,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
         {
             // Create a font
-            XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
+            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
             XSize textSize;
             String text;
 
@@ -787,7 +825,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             // Draw GC Wizard Text
             // Create a font
-            font = new XFont("Verdana", FontSizeName / 2, XFontStyle.Regular);
+            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
             text = "GC Wizard";
             textSize = gfx.MeasureString(text, font);
 
@@ -957,28 +995,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 {
                     if (!int.TryParse(keyB, out intB))
                     {
-                        if (translateables != null && translateables.Contains(keyA))
-                        {
-                            if (translateables.Contains(keyB))
-                            {
-                                return keyA.CompareTo(keyB);
-                            }
-                            else
-                            {
-                                return 1;
-                            }
-                        }
-                        else
-                        {
-                            if (translateables != null && translateables.Contains(keyB))
-                            {
-                                return -1;
-                            }
-                            else
-                            {
-                                return lowerCase(keyA, keyB);
-                            }
-                        }
+                        return lowerCase(keyA, keyB);
                     }
                     else
                         return 1;

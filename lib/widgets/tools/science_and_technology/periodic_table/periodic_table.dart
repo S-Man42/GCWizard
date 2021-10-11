@@ -34,7 +34,7 @@ class PeriodicTableState extends State<PeriodicTable> {
   @override
   Widget build(BuildContext context) {
     _cellWidth = (MediaQuery.of(context).size.width - 20) / 19;
-    _maxCellHeight = (MediaQuery.of(context).size.height - 100) / 11;
+    _maxCellHeight = maxScreenHeight(context) / 11;
 
     return Column(children: _buildOutput());
   }
@@ -93,7 +93,7 @@ class PeriodicTableState extends State<PeriodicTable> {
                   builder: (context) => GCWTool(
                       tool: PeriodicTableDataView(atomicNumber: element.atomicNumber),
                       i18nPrefix: 'periodictable_dataview',
-                      missingHelpLocales: ['fr'])));
+                      helpLocales: ['de', 'en', 'fr'])));
             },
           );
   }

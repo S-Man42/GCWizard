@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong2/latlong.dart';
 
 const int _DEFAULT_PRECISION = 8;
 
@@ -85,7 +85,7 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
   );
 }
 
-LatLng parseNaturalAreaCode(String input) {
+NaturalAreaCode parseNaturalAreaCode(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9A-Z]+)(\s*,\s*|\s+)([0-9A-Z]+)\s*$');
   var matches = regExp.allMatches(input);
 
@@ -109,5 +109,5 @@ LatLng parseNaturalAreaCode(String input) {
 
   if (matches.length == 0) return null;
 
-  return naturalAreaCodeToLatLon(NaturalAreaCode(xString, yString));
+  return NaturalAreaCode(xString, yString);
 }

@@ -8,7 +8,10 @@ final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold
 
 showGCWDialog(BuildContext context, String title, Widget child, List<Widget> buttons,
     {cancelButton: true, closeOnOutsideTouch: false}) {
-  if (cancelButton) buttons.add(_cancelButton);
+  if (cancelButton)
+    buttons.add(GCWDialogButton(
+      text: i18n(context, 'common_cancel'),
+    ));
 
   AlertDialog dialog = AlertDialog(
       title: Text(title),
@@ -27,20 +30,19 @@ showGCWDialog(BuildContext context, String title, Widget child, List<Widget> but
   );
 }
 
-showGCWAlertDialog(BuildContext context, String title, String text, Function onOKPressed) {
+showGCWAlertDialog(BuildContext context, String title, String text, Function onOKPressed, {cancelButton: true}) {
   GCWDialogButton _okButton = GCWDialogButton(text: i18n(context, 'common_ok'), onPressed: onOKPressed);
 
-  showGCWDialog(context, title, Text(text), [_okButton]);
+  showGCWDialog(context, title, Text(text), [_okButton], cancelButton: cancelButton);
 }
 
 class GCWDialogButton extends StatefulWidget {
   final String text;
-  final isCancelButton;
+  // final isCancelButton;
   final Function onPressed;
   final bool suppressClose;
 
-  const GCWDialogButton({Key key, this.text, this.onPressed, this.isCancelButton: false, this.suppressClose: false})
-      : super(key: key);
+  const GCWDialogButton({Key key, this.text, this.onPressed, this.suppressClose: false}) : super(key: key);
 
   @override
   _GCWDialogButtonState createState() => _GCWDialogButtonState();
@@ -52,18 +54,14 @@ class _GCWDialogButtonState extends State<GCWDialogButton> {
     return FlatButton(
       //TODO: GCWText instead Text; currently with GCWText onPressed() is not called
       child: Text(
-        widget.isCancelButton ? i18n(context, 'common_cancel') : widget.text,
+        widget.text,
         style: _boldTextStyle,
       ),
       onPressed: () {
         if (!widget.suppressClose) Navigator.of(context).pop();
 
-        if (!widget.isCancelButton && widget.onPressed != null) widget.onPressed();
+        if (widget.onPressed != null) widget.onPressed();
       },
     );
   }
 }
-
-final _cancelButton = GCWDialogButton(
-  isCancelButton: true,
-);
