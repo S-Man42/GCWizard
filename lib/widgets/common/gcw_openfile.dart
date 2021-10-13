@@ -171,7 +171,6 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
     } else if (data is String) showToast(i18n(context, data));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      print("_loadedFile " + ((_loadedFile != null)).toString());
       widget.onLoaded(_loadedFile);
     });
   }
