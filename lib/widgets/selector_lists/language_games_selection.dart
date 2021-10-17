@@ -23,6 +23,8 @@ class LanguageGamesSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
+    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+
     return Container(child: GCWToolList(toolList: _toolList));
   }
 }

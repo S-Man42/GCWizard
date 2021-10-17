@@ -28,7 +28,7 @@ class MultiDecoderToolBCD extends GCWMultiDecoderTool {
                 },
                 items: BCD_TYPES.entries.map((baseFunction) {
                   return GCWDropDownMenuItem(
-                    value: baseFunction.key + '_title',
+                    value: baseFunction.key,
                     child: i18n(context, baseFunction.key + '_title'),
                   );
                 }).toList(),

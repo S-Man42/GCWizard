@@ -3,8 +3,12 @@ import 'dart:convert';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
+import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
+import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:prefs/prefs.dart';
 
 void initDefaultSettings() {
@@ -106,6 +110,19 @@ void initDefaultSettings() {
 
   if (Prefs.get('multidecoder_tools') == null) {
     Prefs.setStringList('multidecoder_tools', []);
+  } else {
+    // ensure backward compatibility; breaking change in 2.0.1 due to a bug fix
+    refreshMultiDecoderTools();
+    for (var tool in multiDecoderTools) {
+      if ([MDT_INTERNALNAMES_BCD, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
+        var options = <MultiDecoderToolOption>[];
+        tool.options.forEach((option) {
+          options.add(MultiDecoderToolOption(option.name, option.value.split('_title')[0]));
+        });
+        tool.options = options;
+        updateMultiDecoderTool(tool);
+      }
+    }
   }
 
   if (Prefs.get('symboltables_countcolumns_portrait') == null) {
