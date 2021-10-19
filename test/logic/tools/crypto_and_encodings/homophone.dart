@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -27,7 +26,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyType: ${elem['keyType']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}, ownKeys: ${elem['ownKeys']}', () {
         var _actual;
-        _actual = encryptHomophon(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
+        _actual = encryptHomophone(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
         Map<String, String> map ;
         if (elem['keyType'] == KeyType.OWN)
           map = replaceOwnMap(elem['ownKeys'], elem['alphabet']);
@@ -69,7 +68,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, keyType: ${elem['keyType']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}, ownKeys: ${elem['ownKeys']}', () {
         var _actual;
-        _actual = decryptHomophon(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
+        _actual = decryptHomophone(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
         expect(_actual.output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
       });

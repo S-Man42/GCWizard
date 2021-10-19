@@ -168,12 +168,12 @@ class HomophoneState extends State<Homophone> {
     if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
     int _currentMultiplier = getMultipliers()[_currentMultiplierIndex];
 
-    HomophonOutput _currentOutput;
+    HomophoneOutput _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptHomophon(
+      _currentOutput = encryptHomophone(
           _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys);
     } else {
-      _currentOutput = decryptHomophon(
+      _currentOutput = decryptHomophone(
           _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys);
     }
 
@@ -181,8 +181,11 @@ class HomophoneState extends State<Homophone> {
       switch (_currentOutput.errorCode) {
         case ErrorCode.OWNKEYCOUNT:
           showToast(i18n(context, "homophone_error_own_keys"));
+          return GCWDefaultOutput(child: '');
+          break;
+        case ErrorCode.OWNDOUBLEKEY:
+          showToast(i18n(context, "homophone_error_own_double_keys"));
       }
-      return GCWDefaultOutput(child: '');
     }
 
     return GCWMultipleOutput(
