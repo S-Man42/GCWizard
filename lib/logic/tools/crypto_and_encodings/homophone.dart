@@ -8,7 +8,7 @@ class HomophoneOutput {
   HomophoneOutput(this.output, this.grid, this.errorCode);
 }
 
-enum KeyType { OWN, GENERATED }
+enum KeyType { OWN1, OWN2, GENERATED }
 enum Alphabet {
   alphabetGerman1,
   alphabetEnglish1,
@@ -235,7 +235,7 @@ final letterFrequencyAlphabetGreek2 = {
 };
 
 HomophoneOutput encryptHomophone(
-    String input, KeyType keyType, Alphabet alphabet, int rotation, int multiplier, String ownKeys) {
+    String input, KeyType keyType, Alphabet alphabet, int rotation, int multiplier, String own1Keys, Map<String, String> own2Map) {
   if (input == null || input == '') return HomophoneOutput('', '', ErrorCode.OK);
 
   var output = "";
@@ -243,14 +243,14 @@ HomophoneOutput encryptHomophone(
   List<int> ownKeyList;
   var errorCode = ErrorCode.OK;
 
-  if (keyType == KeyType.OWN) {
-    ownKeyList = _ownKeyList(ownKeys);
+  if (keyType == KeyType.OWN1) {
+    ownKeyList = _ownKeyList(own1Keys, checkKeyLength: 100);
     if (ownKeyList == null) return HomophoneOutput('', '', ErrorCode.OWNKEYCOUNT);
 
     if (ownKeyList.length != ownKeyList.toSet().length ) errorCode = ErrorCode.OWNDOUBLEKEY;
   }
 
-  table = _getTable(alphabet, keyType, rotation, multiplier, ownKeyList);
+  table = _getTable(alphabet, keyType, rotation, multiplier, ownKeyList, own2Map);
 
   if (table == null) return HomophoneOutput('', '', ErrorCode.TABLE);
 
@@ -267,19 +267,19 @@ HomophoneOutput encryptHomophone(
 }
 
 HomophoneOutput decryptHomophone(
-    String input, KeyType keyType, Alphabet alphabet, int rotation, int multiplier, String ownKeys) {
+    String input, KeyType keyType, Alphabet alphabet, int rotation, int multiplier, String ownKeys, Map<String, String> own2Map) {
   if (input == null || input == '') return HomophoneOutput('', '', ErrorCode.OK);
 
   var output = "";
   Map<String, List<int>> table;
   List<int> ownKeyList;
 
-  if (keyType == KeyType.OWN) {
-    ownKeyList = _ownKeyList(ownKeys);
+  if (keyType == KeyType.OWN1) {
+    ownKeyList = _ownKeyList(ownKeys, checkKeyLength: 100);
     if (ownKeyList == null) return HomophoneOutput('', '', ErrorCode.OWNKEYCOUNT);
   }
 
-  table = _getTable(alphabet, keyType, rotation, multiplier, ownKeyList);
+  table = _getTable(alphabet, keyType, rotation, multiplier, ownKeyList, own2Map);
 
   if (table == null) return HomophoneOutput('', '', ErrorCode.TABLE);
 
@@ -300,54 +300,59 @@ List<int> getMultipliers() {
   return multipliers;
 }
 
-List<int> _ownKeyList(String ownKeys) {
+List<int> _ownKeyList(String ownKeys, {int checkKeyLength }) {
   List<int> ownKeysList = <int>[];
 
   RegExp regExp = new RegExp("[0-9]{1,}");
   regExp.allMatches(ownKeys).forEach((elem) {
     ownKeysList.add(int.tryParse(ownKeys.substring(elem.start, elem.end)));
   });
-  if (ownKeysList.length != 100) return null;
+  if ((checkKeyLength != null) && (ownKeysList.length != checkKeyLength)) return null;
 
   return ownKeysList;
 }
-
-Map<String, List<int>> _getTable(
-    Alphabet alphabet, KeyType keyType, int rotation, int multiplier, List<int> ownKeyList) {
-  Map<String, int> languageTable;
+Map<String, int> getAlphabetTable(Alphabet alphabet)  {
 
   switch (alphabet) {
     case Alphabet.alphabetGerman1:
-      languageTable = letterFrequencyAlphabetGerman1;
+      return letterFrequencyAlphabetGerman1;
       break;
     case Alphabet.alphabetEnglish1:
-      languageTable = letterFrequencyAlphabetEnglish1;
+      return letterFrequencyAlphabetEnglish1;
       break;
     case Alphabet.alphabetSpanish2:
-      languageTable = letterFrequencyAlphabetSpanish2;
+      return letterFrequencyAlphabetSpanish2;
       break;
     case Alphabet.alphabetPolish1:
-      languageTable = letterFrequencyAlphabetPolish1;
+      return letterFrequencyAlphabetPolish1;
       break;
     case Alphabet.alphabetGreek1:
-      languageTable = letterFrequencyAlphabetGreek1;
+      return letterFrequencyAlphabetGreek1;
       break;
     case Alphabet.alphabetGreek2:
-      languageTable = letterFrequencyAlphabetGreek2;
+      return letterFrequencyAlphabetGreek2;
       break;
     case Alphabet.alphabetRussian1:
-      languageTable = letterFrequencyAlphabetRussian1;
+      return letterFrequencyAlphabetRussian1;
       break;
   }
 
-  if (languageTable == null) return null;
+  return null;
+}
 
-  return _createTable(languageTable, keyType, rotation, multiplier, ownKeyList);
+Map<String, List<int>> _getTable(
+    Alphabet alphabet, KeyType keyType, int rotation, int multiplier, List<int> ownKeyList, Map<String, String> own2Map) {
+  Map<String, int> languageTable = getAlphabetTable(alphabet);
+
+  if (languageTable == null && keyType != KeyType.OWN2) return null;
+
+  return _createTable(languageTable, keyType, rotation, multiplier, ownKeyList, own2Map);
 }
 
 int _charToNumber(String character, Map<String, List<int>> table) {
   if (table.containsKey(character)) {
     var list = table[character];
+    if (list.length == 0) return -1;
     var rnd = new Random();
     var index = rnd.nextInt(list.length);
 
@@ -372,7 +377,7 @@ String _numberToChar(String numberString, Map<String, List<int>> table) {
 }
 
 Map<String, List<int>> _createTable(
-    Map<String, int> letterFrequency, KeyType keyType, int rotation, int multiplier, List<int> ownKeyList) {
+    Map<String, int> letterFrequency, KeyType keyType, int rotation, int multiplier, List<int> ownKeyList, Map<String, String> own2Map) {
   var table = Map<String, List<int>>();
   var counter = 0;
 
@@ -386,7 +391,7 @@ Map<String, List<int>> _createTable(
         counter += multiplier;
       }
     });
-  } else {
+  } else if (keyType == KeyType.OWN1) {
     letterFrequency.forEach((key, value) {
       table.addAll({key: <int>[]});
       for (int f = 0; f < value; f++) {
@@ -394,6 +399,12 @@ Map<String, List<int>> _createTable(
         counter += 1;
       }
     });
+  } else if (keyType == KeyType.OWN2) {
+    if (own2Map != null) {
+      own2Map.forEach((key, value) {
+        table.addAll({key: _ownKeyList(value)});
+      });
+    }
   }
   return table;
 }

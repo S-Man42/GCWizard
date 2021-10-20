@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophone.dart';
@@ -9,8 +11,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -23,12 +27,19 @@ class HomophoneState extends State<Homophone> {
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentRotationController;
+  TextEditingController _newKeyController;
   String _currentInput = '';
   Alphabet _currentAlphabet = Alphabet.alphabetGerman1;
   KeyType _currentKeyType = KeyType.GENERATED;
   int _currentRotation = 1;
   int _currentMultiplierIndex = 0;
   String _currentOwnKeys = '';
+
+  var _currentIdCount = 0;
+  var _currentSubstitutions = Map<String, String>();
+  var _currentFromInput = '';
+  var _currentToInput = '';
+
 
   final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
 
@@ -37,20 +48,66 @@ class HomophoneState extends State<Homophone> {
     super.initState();
 
     _currentRotationController = TextEditingController(text: _currentRotation.toString());
+    _newKeyController = TextEditingController(text: _maxLetter());
   }
 
   @override
   void dispose() {
     _currentRotationController.dispose();
+    _newKeyController.dispose();
 
     super.dispose();
   }
+
+  String _maxLetter() {
+    int maxLetterIndex = 0;
+    var alphabetTable = getAlphabetTable(_currentAlphabet);
+    _currentSubstitutions.forEach((key, value) {
+      if (key.length != 1) return;
+
+      if (alphabetTable.containsKey(key.toUpperCase()))
+        maxLetterIndex = max(maxLetterIndex, alphabetTable.keys.toList().indexOf(key.toUpperCase()) + 1);
+    });
+
+    if (maxLetterIndex < alphabetTable.length) {
+      return alphabetTable.keys.elementAt(maxLetterIndex);
+    }
+
+    return '';
+  }
+
+  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+    if (currentFromInput.length > 0)
+      _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () =>  currentToInput);
+
+    _newKeyController.text = _maxLetter();
+
+    setState(() {});
+  }
+
+  // _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  //   _currentFromInput = currentFromInput;
+  //   _currentToInput = currentToInput;
+  //   //_calculateOutput();
+  // }
+
+  _updateEntry(dynamic id, String key, String value) {
+    _currentSubstitutions[id] = value;
+    setState(() {});
+  }
+
+  _removeEntry(dynamic id, BuildContext context) {
+    _currentSubstitutions.remove(id);
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
     var HomophoneKeyTypeItems = {
       KeyType.GENERATED: i18n(context, 'homophone_keytype_generated'),
-      KeyType.OWN: i18n(context, 'homophone_keytype_own'),
+      KeyType.OWN1: i18n(context, 'homophone_keytype_own'),
+      KeyType.OWN2: i18n(context, 'homophone_keytype_own') + " 1",
     };
 
     var HomophoneAlphabetItems = {
@@ -123,14 +180,20 @@ class HomophoneState extends State<Homophone> {
                     ),
                     flex: 2),
               ])
-            : GCWTextField(
+            : Container(),
+        _currentKeyType == KeyType.OWN1
+            ? GCWTextField(
                 hintText: "Keys",
                 onChanged: (text) {
                   setState(() {
                     _currentOwnKeys = text;
                   });
                 },
-              ),
+              )
+            : Container(),
+        _currentKeyType == KeyType.OWN2
+            ? _buildVariablesEditor()
+            : Container(),
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'common_alphabet') + ':'), flex: 1),
           Expanded(
@@ -139,6 +202,7 @@ class HomophoneState extends State<Homophone> {
                 onChanged: (value) {
                   setState(() {
                     _currentAlphabet = value;
+                    _newKeyController.text = _maxLetter();
                   });
                 },
                 items: HomophoneAlphabetItems.entries.map((alphabet) {
@@ -171,10 +235,10 @@ class HomophoneState extends State<Homophone> {
     HomophoneOutput _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput = encryptHomophone(
-          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys);
+          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys, _currentSubstitutions);
     } else {
       _currentOutput = decryptHomophone(
-          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys);
+          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys, _currentSubstitutions);
     }
 
     if (_currentOutput.errorCode != ErrorCode.OK) {
@@ -212,5 +276,19 @@ class HomophoneState extends State<Homophone> {
     }
 
     return null;
+  }
+
+  Widget _buildVariablesEditor() {
+    return GCWKeyValueEditor(
+        keyHintText: i18n(context, 'substitution_from'),
+        keyController: _newKeyController,
+        valueHintText: i18n(context, 'substitution_to'),
+        valueFlex: 2,
+        keyValueMap: _currentSubstitutions,
+        //onNewEntryChanged: _updateNewEntry,
+        onAddEntry: _addEntry,
+        listHeaderWidget: GCWTextDivider(text: i18n(context, 'formulasolver_values_currentvalues')),
+        onUpdateEntry: _updateEntry,
+        onRemoveEntry: _removeEntry);
   }
 }

@@ -15,10 +15,10 @@ void main() {
       {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetSpanish2, 'rotation': 6, 'multiplier': 99, 'ownKeys': '', 'expectedOutput': '07 72 15 07'},
       {'input' : 'КОНТРОЛЬНАЯ РАБОТА', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetRussian1, 'rotation': 1, 'multiplier': 9, 'ownKeys': '', 'expectedOutput': '42 04 41 02 21 04 69 55 41 09 91 21 09 72 04 02 09'},
 
-      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
+      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
         'expectedOutput': '85 15 78 85'},
-      {'input' : 'Test', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+      {'input' : 'Test', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99 99',
         'expectedOutput': ''},
     ];
@@ -28,7 +28,7 @@ void main() {
         var _actual;
         _actual = encryptHomophone(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
         Map<String, String> map ;
-        if (elem['keyType'] == KeyType.OWN)
+        if (elem['keyType'] == KeyType.OWN1)
           map = replaceOwnMap(elem['ownKeys'], elem['alphabet']);
         else
           map = replaceMap(elem['rotation'], elem['multiplier'], elem['alphabet']);
@@ -51,16 +51,16 @@ void main() {
       {'expectedOutput' : 'КОНТРОЛЬНАЯРАБОТА', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetRussian1, 'rotation': 3, 'multiplier': 3, 'ownKeys': '', 'input': '20 95 65 55 19 77 32 91 65 24 06 13 21 30 95 52 18'},
       {'expectedOutput' : 'ΔΟΚΙΜ', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGreek1, 'rotation': 500, 'multiplier': 31, 'ownKeys': '', 'input': '27 60 64 54 19'},
 
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 40 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
         'input': '70 27 81 89'},
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
         'input': '70 27 81 89'},
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36.56 2,3 4 5 6 7 8 9_10 11B12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
         'input': '70 27 81 89'},
-      {'expectedOutput' : '', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+      {'expectedOutput' : '', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99 99',
         'input': '70 27 81 89'},
     ];
