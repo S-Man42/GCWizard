@@ -246,13 +246,14 @@ HomophoneOutput encryptHomophone(
   if (keyType == KeyType.OWN1) {
     ownKeyList = _ownKeyList(own1Keys, checkKeyLength: 100);
     if (ownKeyList == null) return HomophoneOutput('', '', ErrorCode.OWNKEYCOUNT);
-
-    if (ownKeyList.length != ownKeyList.toSet().length ) errorCode = ErrorCode.OWNDOUBLEKEY;
   }
 
   table = _getTable(alphabet, keyType, rotation, multiplier, ownKeyList, own2Map);
 
   if (table == null) return HomophoneOutput('', '', ErrorCode.TABLE);
+  if ((keyType == KeyType.OWN1) || (keyType == KeyType.OWN2))
+    if (_checkDoubleKey(table))  errorCode = ErrorCode.OWNDOUBLEKEY;
+
 
   input = input.toUpperCase();
   input = input.split("").map((character) => table.containsKey(character) ? character : '').join();
@@ -273,6 +274,7 @@ HomophoneOutput decryptHomophone(
   var output = "";
   Map<String, List<int>> table;
   List<int> ownKeyList;
+  var errorCode = ErrorCode.OK;
 
   if (keyType == KeyType.OWN1) {
     ownKeyList = _ownKeyList(ownKeys, checkKeyLength: 100);
@@ -282,12 +284,14 @@ HomophoneOutput decryptHomophone(
   table = _getTable(alphabet, keyType, rotation, multiplier, ownKeyList, own2Map);
 
   if (table == null) return HomophoneOutput('', '', ErrorCode.TABLE);
+  if ((keyType == KeyType.OWN1) || (keyType == KeyType.OWN2))
+    if (_checkDoubleKey(table))  errorCode = ErrorCode.OWNDOUBLEKEY;
 
   output = input.split(" ").map((number) {
     return _numberToChar(number, table);
   }).join();
 
-  return HomophoneOutput(output, _tableToString(table), ErrorCode.OK);
+  return HomophoneOutput(output, _tableToString(table), errorCode);
 }
 
 List<int> getMultipliers() {
@@ -311,6 +315,16 @@ List<int> _ownKeyList(String ownKeys, {int checkKeyLength }) {
 
   return ownKeysList;
 }
+
+
+bool _checkDoubleKey(Map<String, List<int>> table) {
+  var keyList = <int>[];
+  table.values.forEach((element) {
+    keyList.addAll(element);
+  });
+  return (keyList.length != keyList.toSet().length );
+}
+
 Map<String, int> getAlphabetTable(Alphabet alphabet)  {
 
   switch (alphabet) {

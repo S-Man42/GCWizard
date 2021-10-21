@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -14,6 +16,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -34,11 +37,7 @@ class HomophoneState extends State<Homophone> {
   int _currentRotation = 1;
   int _currentMultiplierIndex = 0;
   String _currentOwnKeys = '';
-
-  var _currentIdCount = 0;
   var _currentSubstitutions = Map<String, String>();
-  var _currentFromInput = '';
-  var _currentToInput = '';
 
 
   final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
@@ -106,8 +105,8 @@ class HomophoneState extends State<Homophone> {
   Widget build(BuildContext context) {
     var HomophoneKeyTypeItems = {
       KeyType.GENERATED: i18n(context, 'homophone_keytype_generated'),
-      KeyType.OWN1: i18n(context, 'homophone_keytype_own'),
-      KeyType.OWN2: i18n(context, 'homophone_keytype_own') + " 1",
+      KeyType.OWN1: i18n(context, 'homophone_keytype_own') + " 1",
+      KeyType.OWN2: i18n(context, 'homophone_keytype_own') + " 2",
     };
 
     var HomophoneAlphabetItems = {
@@ -280,15 +279,34 @@ class HomophoneState extends State<Homophone> {
 
   Widget _buildVariablesEditor() {
     return GCWKeyValueEditor(
-        keyHintText: i18n(context, 'substitution_from'),
         keyController: _newKeyController,
-        valueHintText: i18n(context, 'substitution_to'),
+        valueHintText: i18n(context, 'homophone_own_keys_hint'),
         valueFlex: 2,
         keyValueMap: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
-        listHeaderWidget: GCWTextDivider(text: i18n(context, 'formulasolver_values_currentvalues')),
+        middleWidget: GCWTextDivider(
+          trailing: GCWPasteButton(
+              iconSize: IconButtonSize.SMALL,
+            onSelected: _addPasteAndAddInput,
+          ),
+        ),
         onUpdateEntry: _updateEntry,
         onRemoveEntry: _removeEntry);
+  }
+
+  _addPasteAndAddInput(String text) {
+    if (text == null) return;
+
+    List<String> lines = new LineSplitter().convert(text);
+    if (lines == null) return;
+
+    lines.forEach((line) {
+      var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
+      var match = regExp.firstMatch(line);
+      if (match != null) {
+        _addEntry(match.group(2), match.group(6), context);
+      }
+    });
   }
 }
