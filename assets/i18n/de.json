@@ -1997,7 +1997,7 @@
   "homophone_multiplier": "Multiplikator",
   "homophone_used_key": "Verwendeter Schlüssel",
   "homophone_error_own_keys": "Es werden 100 Schlüsselwerte benötigt!",
-  "homophone_error_own_double_keys": "Schlüsselwerte mehfach verwendet!",
+  "homophone_error_own_double_keys": "Schlüsselwerte mehrfach verwendet!",
   "houdini_title": "Houdini Code",
   "houdini_description": "Code, den Harry Houdini während seinen Shows nutzte",
   "houdini_example": "Pray Quickly Please → 186 → AHF",
