@@ -71,6 +71,16 @@ RGBPixel saturation(RGBPixel pxl, double saturation, double hue) {
 
   var newSaturation = hsl.saturation;
   if (saturation != 0.0) {
+    if (saturation > 0.0) {
+      if (saturation <= 0.5) {
+        saturation *= 2.0;
+      } else if (saturation <= 0.75) {
+        saturation = (saturation - 0.5) * 200 + 1;
+      } else {
+        saturation = (saturation - 0.75) * 2000 + 100;
+      }
+    }
+
     if (saturation >= 0.0) {
       var gray_factor = hsl.saturation;
       var var_interval = 1.0 - hsl.saturation;

@@ -164,7 +164,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
     }
 
     if (_currentValueMultiply) {
-      _output = _output.map((formula) => formula..replaceAll(RegExp(r'[xX]'), '*')).toList();
+      _output = _output.map((formula) => formula.replaceAll(RegExp(r'[xX]'), '*')).toList();
     }
 
     return _output;

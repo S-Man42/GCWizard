@@ -5,6 +5,7 @@ import 'package:archive/archive_io.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -40,7 +41,7 @@ class HexString2FileState extends State<HexString2File> {
             trailing: GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: _outData == null ? Colors.grey : null,
+              iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
                 _outData == null ? null : _exportFile(context, _outData);
               },

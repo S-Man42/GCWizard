@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -56,7 +57,7 @@ class Binary2ImageState extends State<Binary2Image> {
             trailing: GCWIconButton(
               iconData: Icons.save,
               size: IconButtonSize.SMALL,
-              iconColor: _outData == null ? Colors.grey : null,
+              iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
                 _outData == null ? null : _exportFile(context, _outData);
               },
