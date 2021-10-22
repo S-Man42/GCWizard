@@ -15,8 +15,8 @@ class MultiDecoderToolBrailleDotNumbers extends GCWMultiDecoderTool {
               var segments = decodeBraille(input.split(RegExp(r'\s+')).toList(), BrailleLanguage.SIMPLE, true);
               var out =  segments['chars'].join();
               if (out is String) {
-                var out1 = (out as String) .replaceAll('<?>', '');
-                out1 = (out as String) .replaceAll(' ', '');
+                var out1 = (out as String).replaceAll('<?>', '');
+                out1 = (out as String).replaceAll(' ', '');
                 if (out1 == null || (out1 as String).length == 0) return null;
               }
               return out;
