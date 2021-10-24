@@ -132,6 +132,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
@@ -519,6 +520,7 @@ class _MainViewState extends State<MainView> {
         className(MurrayTelegraph()),
         className(NumeralBases()),
         className(NumeralWordsSelection()),
+        className(OhlsenTelegraph()),
         className(OneTimePad()),
         className(Ook()),
         className(PeriodicTable()),

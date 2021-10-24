@@ -553,6 +553,7 @@ const SEARCHSTRING_EN_TAPIR = 'security army';
 const SEARCHSTRING_EN_TELEGRAPH = 'telegraphs telecommunications telegraphy';
 const SEARCHSTRING_EN_TELEGRAPH_EDELCRANTZ = 'telegraph optic';
 const SEARCHSTRING_EN_TELEGRAPH_GAUSSWEBERTELEGRAPH = 'plus minus left right';
+const SEARCHSTRING_EN_TELEGRAPH_OHLSEN = 'telegraph optic norway';
 const SEARCHSTRING_EN_TELEGRAPH_PRUSSIA = 'telegraph optic prussia';
 const SEARCHSTRING_EN_TELEGRAPH_SCHILLINGCANSTATT = 'left right';
 const SEARCHSTRING_EN_TELEGRAPH_WHEATSTONECOOKE5 = '5 five needles';

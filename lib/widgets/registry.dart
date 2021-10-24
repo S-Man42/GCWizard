@@ -143,6 +143,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
@@ -7801,6 +7802,21 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_MURRAY,
         SEARCHSTRING_EN_SYMBOL_MURRAY,
         SEARCHSTRING_FR_SYMBOL_MURRAY
+      ]),
+      GCWTool(tool: OhlsenTelegraph(), i18nPrefix: 'telegraph_ohlsen', categories: [
+      ], helpLocales: [
+        'de',
+        'en',
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_TELEGRAPH,
+        SEARCHSTRING_DE_TELEGRAPH,
+        SEARCHSTRING_EN_TELEGRAPH,
+        SEARCHSTRING_FR_TELEGRAPH,
+        SEARCHSTRING_COMMON_TELEGRAPH_OHLSEN,
+        SEARCHSTRING_DE_TELEGRAPH_OHLSEN,
+        SEARCHSTRING_EN_TELEGRAPH_OHLSEN,
+        SEARCHSTRING_FR_TELEGRAPH_OHLSEN
       ]),
       GCWTool(tool: PrussiaTelegraph(), i18nPrefix: 'telegraph_prussia', categories: [
       ], helpLocales: [
