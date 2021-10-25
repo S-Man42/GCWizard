@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/gc_code.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
 
@@ -25,18 +26,17 @@ class MultiDecoderToolGCCode extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_GCCODE_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_GCCODE_OPTION_MODE] == MDT_GCCODE_OPTION_MODE_IDTOGCCODE
-                    ? GCWSwitchPosition.left
-                    : GCWSwitchPosition.right,
-                notitle: true,
-                leftValue: i18n(context, MDT_GCCODE_OPTION_MODE_IDTOGCCODE),
-                rightValue: i18n(context, MDT_GCCODE_OPTION_MODE_GCCODETOID),
-                onChanged: (value) {
-                  options[MDT_GCCODE_OPTION_MODE] = value == GCWSwitchPosition.left
-                      ? MDT_GCCODE_OPTION_MODE_IDTOGCCODE
-                      : MDT_GCCODE_OPTION_MODE_GCCODETOID;
+              MDT_GCCODE_OPTION_MODE: GCWStatefulDropDownButton(
+                value: options[MDT_GCCODE_OPTION_MODE],
+                onChanged: (newValue) {
+                  options[MDT_GCCODE_OPTION_MODE] = newValue;
                 },
+                items: [MDT_GCCODE_OPTION_MODE_IDTOGCCODE, MDT_GCCODE_OPTION_MODE_GCCODETOID].map((type) {
+                  return GCWDropDownMenuItem(
+                    value: type,
+                    child: i18n(context, type),
+                  );
+                }).toList(),
               )
             }));
 }
