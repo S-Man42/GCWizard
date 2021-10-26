@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 class Substitution extends StatefulWidget {
   final String input;
@@ -99,16 +104,25 @@ class SubstitutionState extends State<Substitution> {
         valueHintText: i18n(context, 'substitution_to'),
         onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
-        middleWidget: GCWOnOffSwitch(
-          title: i18n(context, 'substitution_case_sensitive'),
-          value: _currentCaseSensitive,
-          onChanged: (value) {
-            _currentCaseSensitive = value;
-            _calculateOutput();
-          },
-        ),
+        middleWidget: Column(
+            children: <Widget>[
+                GCWOnOffSwitch(
+                  title: i18n(context, 'substitution_case_sensitive'),
+                  value: _currentCaseSensitive,
+                  onChanged: (value) {
+                    _currentCaseSensitive = value;
+                    _calculateOutput();
+                  },
+                ),
+                GCWTextDivider(
+                  text: i18n(context, 'substitution_current_substitutions'),
+                  trailing: GCWPasteButton(
+                    iconSize: IconButtonSize.SMALL,
+                    onSelected: _addPasteAndAddInput,
+                  ),
+                ),
+              ]),
         keyKeyValueMap: _currentSubstitutions,
-        dividerText: i18n(context, 'substitution_current_substitutions'),
         onUpdateEntry: _updateEntry,
         onRemoveEntry: _removeEntry);
   }
@@ -125,5 +139,20 @@ class SubstitutionState extends State<Substitution> {
 
     _output = substitution(_currentInput, _substitutions, caseSensitive: _currentCaseSensitive);
     setState(() {});
+  }
+
+  _addPasteAndAddInput(String text) {
+    if (text == null) return;
+
+    List<String> lines = new LineSplitter().convert(text);
+    if (lines == null) return;
+
+    lines.forEach((line) {
+      var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
+      var match = regExp.firstMatch(line);
+      if (match != null) {
+        _addEntry(match.group(2), match.group(6), context);
+      }
+    });
   }
 }
