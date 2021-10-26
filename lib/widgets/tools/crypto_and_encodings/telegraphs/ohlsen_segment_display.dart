@@ -44,17 +44,17 @@ class OhlsenSegmentDisplay extends NSegmentDisplay {
         };
         var shutters = {
            '1': [ 10,  40],
-           '2': [ 10,  70],
-           '3': [ 10, 120],
-           '4': [ 10, 150],
+           '2': [ 10,  63],
+           '3': [ 10, 100],
+           '4': [ 10, 123],
            '5': [ 50,  40],
-           '6': [ 50,  70],
-           '7': [ 50, 120],
-           '8': [ 50, 150],
+           '6': [ 50,  63],
+           '7': [ 50, 100],
+           '8': [ 50, 123],
            '9': [ 90,  40],
-          '10': [ 90,  70],
-          '11': [ 90, 120],
-          '12': [ 90, 150],
+          '10': [ 90,  63],
+          '11': [ 90, 100],
+          '12': [ 90, 123],
         };
         var pointSize = size.height / _OHLSEN_RELATIVE_DISPLAY_HEIGHT * _OHLSEN_RADIUS;
 
@@ -76,8 +76,9 @@ class OhlsenSegmentDisplay extends NSegmentDisplay {
                   size.height / _OHLSEN_RELATIVE_DISPLAY_HEIGHT * value[1]) &
               Size(pointSize * 3, pointSize * 2),
               paint, onTapDown: (tapDetail) {
-            setSegmentState(shutterSegments[key], !currentSegments[shutterSegments[key]]);
-          });
+                setSegmentState(shutterSegments[key], !currentSegments[shutterSegments[key]]);
+              }
+          );
 
           if (size.height < 50)
             return;

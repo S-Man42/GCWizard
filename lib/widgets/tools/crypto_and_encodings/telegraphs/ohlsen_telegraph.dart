@@ -27,7 +27,6 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right; //decode
-  var _currentTime = GCWSwitchPosition.left; // daytime
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
   @override
@@ -54,16 +53,6 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
         onChanged: (value) {
           setState(() {
             _currentMode = value;
-          });
-        },
-      ),
-      GCWTwoOptionsSwitch(
-        value: _currentTime,
-        leftValue: i18n(context, 'telegraph_edelcrantz_day'),
-        rightValue: i18n(context, 'telegraph_edelcrantz_night'),
-        onChanged: (value) {
-          setState(() {
-            _currentTime = value;
           });
         },
       ),
