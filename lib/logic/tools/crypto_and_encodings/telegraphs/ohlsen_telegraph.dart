@@ -1,6 +1,3 @@
-// https://archive.org/details/earlyhistoryofda0000holz/page/180/mode/2up
-// https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
-// https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -583,115 +580,36 @@ Map<String, dynamic> decodeTextOhlsenTelegraph(String inputs) {
 
 List<String> _stringToSegment(String input){
   List<String> result = [];
-  int j = 0;
-  for (int i = 0; i < input.length /2; i++) {
-    result.add(input[j] + input[j + 1]);
-    j = j + 2;
+  for (int i = 0; i < input.length / 3; i++) {
+    result.add(input.substring(i * 3, i * 3 + 3));
   }
   return result;
 }
 
 String segmentToCode(List<String> segment){
   int a = 0;
-  int b = 0;
-  int c = 0;
 
-  String A = '';
+  if (segment.contains('a1o')) a = a + 0;
+  if (segment.contains('a1u')) a = a + 3;
+  if (segment.contains('a2o')) a = a + 10;
+  if (segment.contains('a2u')) a = a + 40;
+  if (segment.contains('b1o')) a = a + 1;
+  if (segment.contains('b1u')) a = a + 4;
+  if (segment.contains('b2o')) a = a + 20;
+  if (segment.contains('b2u')) a = a + 50;
+  if (segment.contains('c1o')) a = a + 2;
+  if (segment.contains('c1u')) a = a + 5;
+  if (segment.contains('c2o')) a = a + 30;
+  if (segment.contains('c2u')) a = a + 60;
 
-  if (segment.contains('a1')) a = a + 1;
-  if (segment.contains('a2')) a = a + 2;
-  if (segment.contains('a3')) a = a + 4;
-  if (segment.contains('b1')) b = b + 1;
-  if (segment.contains('b2')) b = b + 2;
-  if (segment.contains('b3')) b = b + 4;
-  if (segment.contains('c1')) c = c + 1;
-  if (segment.contains('c2')) c = c + 2;
-  if (segment.contains('c3')) c = c + 4;
-  if (segment.contains('t0'))
-    return 'a' + a.toString() + b.toString() + c.toString();
-  else
-    return a.toString() + b.toString() + c.toString();
+  if (a < 10)  return '00' + a.toString();
+  if (a < 100)  return '0' + a.toString();
+  return a.toString();
 }
 
 
 List<String> _buildShutters(String segments){
   List<String> resultElement = [];
-  bool A = false;
-  if (segments.length == 4 && segments.startsWith('a')) {
-    A = true;
-    segments = segments.substring(1);
-    resultElement = ['t0'];
-  }
-  if (segments.length == 3) {
-    switch (segments[0]) {
-      case '1' :
-        resultElement.addAll(['a1']);
-        break;
-      case '2' :
-        resultElement.addAll(['a2']);
-        break;
-      case '3' :
-        resultElement.addAll(['a1', 'a2']);
-        break;
-      case '4' :
-        resultElement.addAll(['a3']);
-        break;
-      case '5' :
-        resultElement.addAll(['a3', 'a1']);
-        break;
-      case '6' :
-        resultElement.addAll(['a3', 'a2']);
-        break;
-      case '7' :
-        resultElement.addAll(['a3', 'a2', 'a1']);
-        break;
-    }
-    switch (segments[1]) {
-      case '1' :
-        resultElement.addAll(['b1']);
-        break;
-      case '2' :
-        resultElement.addAll(['b2']);
-        break;
-      case '3' :
-        resultElement.addAll(['b1', 'b2']);
-        break;
-      case '4' :
-        resultElement.addAll(['b3']);
-        break;
-      case '5' :
-        resultElement.addAll(['b3', 'b1']);
-        break;
-      case '6' :
-        resultElement.addAll(['b3', 'b2']);
-        break;
-      case '7' :
-        resultElement.addAll(['b3', 'b2', 'b1']);
-        break;
-    }
-    switch (segments[2]) {
-      case '1' :
-        resultElement.addAll(['c1']);
-        break;
-      case '2' :
-        resultElement.addAll(['c2']);
-        break;
-      case '3' :
-        resultElement.addAll(['c1', 'c2']);
-        break;
-      case '4' :
-        resultElement.addAll(['c3']);
-        break;
-      case '5' :
-        resultElement.addAll(['c3', 'c1']);
-        break;
-      case '6' :
-        resultElement.addAll(['c3', 'c2']);
-        break;
-      case '7' :
-        resultElement.addAll(['c3', 'c2', 'c1']);
-        break;
-    }
-  }
+
   return resultElement;
 }

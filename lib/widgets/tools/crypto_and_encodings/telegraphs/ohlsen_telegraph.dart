@@ -168,47 +168,6 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
     );
   }
 
-  List<List<String>> _buildShutters(List<List<String>> segments){
-    List<List<String>> result = [];
-    segments.forEach((element) {
-      if (element != null)
-        if (int.tryParse(element.join('')) != null) {
-          List<String> resultElement = [];
-          switch (element[0]) {
-            case '0' : resultElement = []; break;
-            case '1' : resultElement = ['a1']; break;
-            case '2' : resultElement = ['a2']; break;
-            case '3' : resultElement = ['a1', 'a2']; break;
-            case '4' : resultElement = ['a3']; break;
-            case '5' : resultElement = ['a3', 'a1']; break;
-            case '6' : resultElement = ['a3', 'a2']; break;
-            case '7' : resultElement = ['a3', 'a2', 'a1']; break;
-          }
-          switch (element[1]) {
-            case '1' : resultElement.addAll(['b1']); break;
-            case '2' : resultElement.addAll(['b2']); break;
-            case '3' : resultElement.addAll(['b1', 'b2']); break;
-            case '4' : resultElement.addAll(['b3']); break;
-            case '5' : resultElement.addAll(['b3', 'b1']); break;
-            case '6' : resultElement.addAll(['b3', 'b2']); break;
-            case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
-          }
-          switch (element[2]) {
-            case '1' : resultElement.addAll(['c1']); break;
-            case '2' : resultElement.addAll(['c2']); break;
-            case '3' : resultElement.addAll(['c1', 'c2']); break;
-            case '4' : resultElement.addAll(['c3']); break;
-            case '5' : resultElement.addAll(['c3', 'c1']); break;
-            case '6' : resultElement.addAll(['c3', 'c2']); break;
-            case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
-          }
-          result.add(resultElement);
-        } else
-          result.add(element);
-    });
-    return result;
-  }
-
   String _buildCodelets(List<List<String>> segments){
     List<String> result = [];
     segments.forEach((codelet) {
@@ -219,7 +178,6 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    segments = _buildShutters(segments);
     return GCWSegmentDisplayOutput(
         segmentFunction:(displayedSegments, readOnly) {
           return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
