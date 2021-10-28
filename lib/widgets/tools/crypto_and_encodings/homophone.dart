@@ -285,28 +285,7 @@ class HomophoneState extends State<Homophone> {
         keyValueMap: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
-        middleWidget: GCWTextDivider(
-          trailing: GCWPasteButton(
-              iconSize: IconButtonSize.SMALL,
-            onSelected: _addPasteAndAddInput,
-          ),
-        ),
         onUpdateEntry: _updateEntry,
         onRemoveEntry: _removeEntry);
-  }
-
-  _addPasteAndAddInput(String text) {
-    if (text == null) return;
-
-    List<String> lines = new LineSplitter().convert(text);
-    if (lines == null) return;
-
-    lines.forEach((line) {
-      var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
-      var match = regExp.firstMatch(line);
-      if (match != null) {
-        _addEntry(match.group(2), match.group(6), context);
-      }
-    });
   }
 }
