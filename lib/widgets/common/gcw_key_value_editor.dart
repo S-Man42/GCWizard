@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -5,6 +7,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 
@@ -22,7 +26,6 @@ class GCWKeyValueEditor extends StatefulWidget {
   final String alphabetAddAndAdjustLetterButtonLabel;
 
   final Widget middleWidget;
-  final Widget listHeaderWidget;
 
   final Map<int, Map<String, String>> keyKeyValueMap;
   final Map<String, String> keyValueMap;
@@ -46,7 +49,6 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.alphabetInstertButtonLabel,
     this.alphabetAddAndAdjustLetterButtonLabel,
     this.middleWidget,
-    this.listHeaderWidget,
     this.keyKeyValueMap,
     this.keyValueMap,
     this.formulaValueList,
@@ -153,9 +155,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                     iconData: Icons.add,
                     onPressed: () {
                       setState(() {
-                        if (widget.onAddEntry != null) widget.onAddEntry(_currentKeyInput, _currentValueInput, context);
-
-                        _onNewEntryChanged(true);
+                        _addEntry(_currentKeyInput, _currentValueInput);
                       });
                     }),
             widget.alphabetAddAndAdjustLetterButtonLabel != null ? _alphabetAddAndAdjustLetterButton() : Container()
@@ -165,15 +165,14 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     );
   }
 
+
   Widget _alphabetAddLetterButton() {
     return Container(
         child: GCWButton(
           text: widget.alphabetInstertButtonLabel,
           onPressed: () {
             setState(() {
-              if (widget.onAddEntry != null) widget.onAddEntry(_currentKeyInput, _currentValueInput, context);
-
-              _onNewEntryChanged(true);
+              _addEntry(_currentKeyInput, _currentValueInput);
             });
           },
         ),
@@ -195,6 +194,12 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               : null,
         ),
         padding: EdgeInsets.only(left: 4, right: 2));
+  }
+
+  void _addEntry(String key, String value, {bool clearInput : true}) {
+    if (widget.onAddEntry != null) widget.onAddEntry(key, value, context);
+
+    if (clearInput) _onNewEntryChanged(true);
   }
 
   _onNewEntryChanged(bool resetInput) {
@@ -230,78 +235,93 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     if (widget.formulaValueList != null) {
       rows = widget.formulaValueList.map((entry) {
         odd = !odd;
-        return _buidRow(entry, odd);
+        return _buildRow(entry, odd);
       }).toList();
     } else {
       rows = (widget.keyKeyValueMap?.entries ?? widget.keyValueMap?.entries).map((entry) {
         odd = !odd;
-        return _buidRow(entry, odd);
+        return _buildRow(entry, odd);
       }).toList();
     }
-    if (rows.length > 0 && widget.dividerText != null) {
-      rows.insert(0, GCWTextDivider(text: widget.dividerText));
-    }
 
-    if (rows.length > 0 && widget.listHeaderWidget != null) {
-      rows.insert(0, widget.listHeaderWidget);
-    }
+    rows.insert(0, GCWTextDivider(
+        text: widget.dividerText == null ? "" : widget.dividerText,
+        trailing: Row(
+          children: <Widget>[
+            GCWPasteButton(
+              iconSize: IconButtonSize.SMALL,
+              onSelected: _pasteClipboard,
+            ),
+            SizedBox(width: 10),
+            GCWIconButton(
+              size: IconButtonSize.SMALL,
+              iconData: Icons.content_copy,
+              onPressed: () {
+                var copyText = _toJson();
+                insertIntoGCWClipboard(context, copyText);
+              },
+            )
+          ]
+        )
+      ),
+    );
 
     return Column(children: rows);
   }
 
-  Widget _buidRow(dynamic entry, bool odd) {
+  Widget _buildRow(dynamic entry, bool odd) {
     Widget output;
 
     var row = Container(
         child: Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            child: _currentEditId == getEntryId(entry)
-                ? GCWTextField(
-                    controller: _editKeyController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentEditedKey = text;
-                      });
-                    },
-                  )
-                : GCWText(text: getEntryKey(entry)),
-            margin: EdgeInsets.only(left: 10),
-          ),
-          flex: 1,
-        ),
-        Icon(
-          Icons.arrow_forward,
-          color: themeColors().mainFont(),
-        ),
-        Expanded(
-            child: Container(
-              child: _currentEditId == getEntryId(entry)
-                  ? GCWTextField(
-                      controller: _editValueController,
-                      inputFormatters: widget.valueInputFormatters,
-                      autofocus: true,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentEditedValue = text;
-                        });
-                      },
-                    )
-                  : GCWText(text: getEntryValue(entry)),
-              margin: EdgeInsets.only(left: 10),
-            ),
-            flex: 3),
-        _editButton(entry),
-        GCWIconButton(
-          iconData: Icons.remove,
-          onPressed: () {
-            setState(() {
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
-            });
-          },
-        )
-      ],
+          children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: _currentEditId == getEntryId(entry)
+                      ? GCWTextField(
+                          controller: _editKeyController,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentEditedKey = text;
+                            });
+                          },
+                        )
+                      : GCWText(text: getEntryKey(entry)),
+                  margin: EdgeInsets.only(left: 10),
+                ),
+                flex: 1,
+              ),
+              Icon(
+                Icons.arrow_forward,
+                color: themeColors().mainFont(),
+              ),
+              Expanded(
+                child: Container(
+                  child: _currentEditId == getEntryId(entry)
+                      ? GCWTextField(
+                          controller: _editValueController,
+                          inputFormatters: widget.valueInputFormatters,
+                          autofocus: true,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentEditedValue = text;
+                            });
+                          },
+                        )
+                      : GCWText(text: getEntryValue(entry)),
+                  margin: EdgeInsets.only(left: 10),
+                ),
+                flex: 3),
+              _editButton(entry),
+              GCWIconButton(
+                iconData: Icons.remove,
+                onPressed: () {
+                  setState(() {
+                    if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
+                  });
+                },
+              )
+          ],
     ));
 
     if (odd) {
@@ -363,5 +383,77 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       return entry.value.values.first;
     else
       return entry.value;
+  }
+
+
+  String _toJson() {
+    List<MapEntry> json;
+    if (widget.formulaValueList != null) {
+      json = widget.formulaValueList.map((entry) {
+        return MapEntry(entry.key, entry.value);
+      }).toList();
+    } else if (widget.keyKeyValueMap != null) {
+      json = <MapEntry>[];
+      widget.keyKeyValueMap.entries.forEach((entry) {
+        json.addAll(entry.value.entries);
+      });
+    } else if (widget.keyValueMap != null)
+      json = widget.keyValueMap.entries.toList();
+
+    var list = json.map((e) {
+      return jsonEncode({'key': e.key, 'value': e.value});
+    }).toList() ;
+
+    return jsonEncode(list);
+  }
+
+  void _pasteClipboard(String text) {
+    var json = jsonDecode(text);
+    List<MapEntry> list;
+    if (json is List<dynamic>)
+      list = _fromJson(json);
+    else
+      list = _parseClipboardText(text);
+
+    if (list != null) {
+      list.forEach((mapEntry) {
+        _addEntry(mapEntry.key, mapEntry.value, clearInput : false);
+      });
+    }
+
+  }
+
+  List<MapEntry> _fromJson(List<dynamic> json) {
+    var list = <MapEntry>[];
+    if (json == null) return null;
+    String key;
+    String value;
+
+    json.forEach((jsonEntry) {
+      var json = jsonDecode(jsonEntry);
+      key = json['key'];
+      value = json['value'];
+      if (key != null && value != null)
+        list.add (MapEntry(key, value));
+    });
+
+    return list.length == 0 ? null : list;
+  }
+
+  List<MapEntry> _parseClipboardText(String text) {
+    var list = <MapEntry>[];
+    if (text == null) return null;
+
+    List<String> lines = new LineSplitter().convert(text);
+    if (lines == null) return null;
+
+    lines.forEach((line) {
+      var regExp = RegExp(r"^([\s]*)([\S])([\s]*)([=]?)([\s]*)([\s*\S+]+)([\s]*)");
+      var match = regExp.firstMatch(line);
+      if (match != null)
+        list.add(MapEntry(match.group(2), match.group(6)));
+    });
+
+    return list.length == 0 ? null : list;
   }
 }
