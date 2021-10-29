@@ -20,6 +20,7 @@ import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Homophone extends StatefulWidget {
   @override
@@ -31,6 +32,7 @@ class HomophoneState extends State<Homophone> {
 
   var _currentRotationController;
   TextEditingController _newKeyController;
+  WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
   String _currentInput = '';
   Alphabet _currentAlphabet = Alphabet.alphabetGerman1;
   KeyType _currentKeyType = KeyType.GENERATED;
@@ -39,7 +41,8 @@ class HomophoneState extends State<Homophone> {
   String _currentOwnKeys = '';
   var _currentSubstitutions = Map<String, String>();
 
-
+  var _mask = '#';
+  var _filter = {"#": RegExp(r'[^0-9]')};
   final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
 
   @override
@@ -48,6 +51,7 @@ class HomophoneState extends State<Homophone> {
 
     _currentRotationController = TextEditingController(text: _currentRotation.toString());
     _newKeyController = TextEditingController(text: _maxLetter());
+    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
   }
 
   @override
@@ -280,6 +284,7 @@ class HomophoneState extends State<Homophone> {
   Widget _buildVariablesEditor() {
     return GCWKeyValueEditor(
         keyController: _newKeyController,
+        keyInputFormatters: [_keyMaskInputFormatter],
         valueHintText: i18n(context, 'homophone_own_keys_hint'),
         valueFlex: 2,
         keyValueMap: _currentSubstitutions,
