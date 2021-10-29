@@ -42,6 +42,12 @@ class Formula {
       : id = json['id'],
         formula = json['formula'];
 
+  static Formula fromFormula(Formula formula) {
+    var newFormula = Formula(formula.formula);
+    newFormula.id = formula.id;
+    return newFormula;
+  }
+
   @override
   String toString() {
     return toMap().toString();
