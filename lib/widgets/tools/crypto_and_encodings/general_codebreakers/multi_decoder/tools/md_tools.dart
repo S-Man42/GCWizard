@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_binary2image.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_chronogram.dart';
@@ -58,9 +59,10 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_BINARY2IMAGE,
   MDT_INTERNALNAMES_KEYBOARDLAYOUT,
   MDT_INTERNALNAMES_WASD,
-  MDT_INTERNALNAMES_CHRONOGRAM,
   MDT_INTERNALNAMES_CCITT1,
   MDT_INTERNALNAMES_CCITT2,
+  MDT_INTERNALNAMES_CHRONOGRAM,
+  MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS,
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -70,13 +72,14 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_BCD: {MDT_BCD_OPTION_BCDFUNCTION: 'bcd_original_title'},
   MDT_INTERNALNAMES_COORDINATEFORMATS: {MDT_COORDINATEFORMATS_OPTION_FORMAT: keyCoordsUTM},
   MDT_INTERNALNAMES_GCCODE: {MDT_GCCODE_OPTION_MODE: MDT_GCCODE_OPTION_MODE_IDTOGCCODE},
+  MDT_INTERNALNAMES_ENCLOSEDAREAS: {MDT_ENCLOSEDAREAS_OPTION_MODE: 'true'},
+  MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: shortKeyboardName(enumKeyboardLayout.QWERTZ_T1),
+                                      MDT_KEYBOARDLAYOUT_OPTION_TO: shortKeyboardName(enumKeyboardLayout.QWERTY_US_INT)},
   MDT_INTERNALNAMES_NUMERALBASES: {MDT_NUMERALBASES_OPTION_FROM: 16},
   MDT_INTERNALNAMES_ROMANNUMBERS: {MDT_ROMANNUMBERS_OPTION_MODE: MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION},
   MDT_INTERNALNAMES_ROTATION: {MDT_ROTATION_OPTION_KEY: 13},
   MDT_INTERNALNAMES_SEGMENTDISPLAY: {MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: 7},
   MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
-  MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: shortKeyboardName(enumKeyboardLayout.QWERTZ_T1),
-                                      MDT_KEYBOARDLAYOUT_OPTION_TO: shortKeyboardName(enumKeyboardLayout.QWERTY_US_INT)},
   MDT_INTERNALNAMES_WASD: {MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]},
   MDT_INTERNALNAMES_CCITT1: {MDT_CCITT1_OPTION_MODE: 'binary'},
   MDT_INTERNALNAMES_CCITT2: {MDT_CCITT2_OPTION_MODE: 'binary'},
@@ -118,20 +121,29 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_BCD:
       gcwTool = MultiDecoderToolBCD(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
+    case MDT_INTERNALNAMES_BEGHILOS:
+      gcwTool = MultiDecoderToolBeghilos(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
+    case MDT_INTERNALNAMES_BINARY2IMAGE:
+      gcwTool = MultiDecoderBinary2Image(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
+    case MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS:
+      gcwTool = MultiDecoderToolBrailleDotNumbers(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
     case MDT_INTERNALNAMES_COORDINATEFORMATS:
       gcwTool =MultiDecoderToolCoordinateFormats(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ENCLOSEDAREAS:
-      gcwTool = MultiDecoderToolEnclosedAreas(id: mdtTool.id, name: mdtTool.name, options: options);
-      break;
-    case MDT_INTERNALNAMES_BEGHILOS:
-      gcwTool = MultiDecoderToolBeghilos(id: mdtTool.id, name: mdtTool.name, options: options);
+      gcwTool = MultiDecoderToolEnclosedAreas(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_GCCODE:
       gcwTool = MultiDecoderToolGCCode(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_KENNY:
       gcwTool = MultiDecoderToolKenny(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
+    case MDT_INTERNALNAMES_KEYBOARDLAYOUT:
+      gcwTool = MultiDecoderToolKeybordLayout(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_NUMERALBASES:
       gcwTool = MultiDecoderToolNumeralBases(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -159,12 +171,6 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
       break;
     case MDT_INTERNALNAMES_VANITYMULTITAP:
       gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
-      break;
-    case MDT_INTERNALNAMES_BINARY2IMAGE:
-      gcwTool = MultiDecoderBinary2Image(id: mdtTool.id, name: mdtTool.name, options: options);
-      break;
-    case MDT_INTERNALNAMES_KEYBOARDLAYOUT:
-      gcwTool = MultiDecoderToolKeybordLayout(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_WASD:
       gcwTool = MultiDecoderToolWasd(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
@@ -261,6 +267,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CHRONOGRAM), MDT_INTERNALNAMES_CHRONOGRAM),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT1), MDT_INTERNALNAMES_CCITT1),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
   ];
 
   for (int i = 25; i >= 1; i--) {
