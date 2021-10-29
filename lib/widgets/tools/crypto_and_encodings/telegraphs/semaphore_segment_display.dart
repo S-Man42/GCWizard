@@ -50,10 +50,26 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL1.close();
         if (size.height < 180)
           if (currentSegments['l1'])
-            canvas.touchCanvas.drawPath(pathL1, paint, onTapDown: (tapDetail) {setSegmentState('l1', !currentSegments['l1']);});
+            canvas.touchCanvas.drawPath(pathL1,
+                paint,
+                onTapDown: (tapDetail) {
+                  setSegmentState('l1', !currentSegments['l1']);
+                  if (currentSegments['l1']) {
+                  setSegmentState('l2', false);
+                  setSegmentState('l3', false);
+                  setSegmentState('l4', false);
+                  setSegmentState('l5', false);}
+                  });
           else;
         else
-            canvas.touchCanvas.drawPath(pathL1, paint, onTapDown: (tapDetail) {setSegmentState('l1', !currentSegments['l1']);});
+            canvas.touchCanvas.drawPath(pathL1, paint, onTapDown: (tapDetail) {
+                  setSegmentState('l1', !currentSegments['l1']);
+                  if (currentSegments['l1']) {
+                        setSegmentState('l2', false);
+                        setSegmentState('l3', false);
+                        setSegmentState('l4', false);
+                        setSegmentState('l5', false);}
+            });
 
         paint.color = currentSegments['r1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR1 = Path();
@@ -66,10 +82,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR1.close();
         if (size.height < 180)
               if (currentSegments['r1'])
-                    canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);});
+                    canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);
+                    if (currentSegments['r1']) {
+                          setSegmentState('r2', false);
+                          setSegmentState('r3', false);
+                          setSegmentState('r4', false);
+                          setSegmentState('r5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);});
+              canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {setSegmentState('r1', !currentSegments['r1']);
+              if (currentSegments['r1']) {
+                    setSegmentState('r2', false);
+                    setSegmentState('r3', false);
+                    setSegmentState('r4', false);
+                    setSegmentState('r5', false);}
+              });
 
         paint.color = currentSegments['l2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL2 = Path();
@@ -82,10 +110,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL2.close();
         if (size.height < 180)
               if (currentSegments['l2'])
-                    canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);});
+                    canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);
+                    if (currentSegments['l2']) {
+                          setSegmentState('l1', false);
+                          setSegmentState('l3', false);
+                          setSegmentState('l4', false);
+                          setSegmentState('l5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);});
+              canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {setSegmentState('l2', !currentSegments['l2']);
+              if (currentSegments['l2']) {
+                    setSegmentState('l1', false);
+                    setSegmentState('l3', false);
+                    setSegmentState('l4', false);
+                    setSegmentState('l5', false);}
+              });
 
         paint.color = currentSegments['r2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR2 = Path();
@@ -98,10 +138,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR2.close();
         if (size.height < 180)
               if (currentSegments['r2'])
-                    canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);});
+                    canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);
+                    if (currentSegments['r2']) {
+                          setSegmentState('r1', false);
+                          setSegmentState('r3', false);
+                          setSegmentState('r4', false);
+                          setSegmentState('r5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);});
+              canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {setSegmentState('r2', !currentSegments['r2']);
+              if (currentSegments['r2']) {
+                    setSegmentState('r1', false);
+                    setSegmentState('r3', false);
+                    setSegmentState('r4', false);
+                    setSegmentState('r5', false);}
+              });
 
         paint.color = currentSegments['l3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL3 = Path();
@@ -114,10 +166,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL3.close();
         if (size.height < 180)
               if (currentSegments['l3'])
-                    canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);});
+                    canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);
+                    if (currentSegments['l3']) {
+                          setSegmentState('l2', false);
+                          setSegmentState('l1', false);
+                          setSegmentState('l4', false);
+                          setSegmentState('l5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);});
+              canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {setSegmentState('l3', !currentSegments['l3']);
+              if (currentSegments['l3']) {
+                    setSegmentState('l2', false);
+                    setSegmentState('l1', false);
+                    setSegmentState('l4', false);
+                    setSegmentState('l5', false);}
+              });
 
         paint.color = currentSegments['r3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR3 = Path();
@@ -130,10 +194,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR3.close();
         if (size.height < 180)
               if (currentSegments['r3'])
-                    canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);});
+                    canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);
+                    if (currentSegments['r3']) {
+                          setSegmentState('r2', false);
+                          setSegmentState('r1', false);
+                          setSegmentState('r4', false);
+                          setSegmentState('r5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);});
+              canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {setSegmentState('r3', !currentSegments['r3']);
+              if (currentSegments['r3']) {
+                    setSegmentState('r2', false);
+                    setSegmentState('r1', false);
+                    setSegmentState('r4', false);
+                    setSegmentState('r5', false);}
+              });
 
         paint.color = currentSegments['l4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL4 = Path();
@@ -146,10 +222,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL4.close();
         if (size.height < 180)
               if (currentSegments['l4'])
-                    canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);});
+                    canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);
+                    if (currentSegments['l4']) {
+                          setSegmentState('l2', false);
+                          setSegmentState('l3', false);
+                          setSegmentState('l1', false);
+                          setSegmentState('l5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);});
+              canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {setSegmentState('l4', !currentSegments['l4']);
+              if (currentSegments['l4']) {
+                    setSegmentState('l2', false);
+                    setSegmentState('l3', false);
+                    setSegmentState('l1', false);
+                    setSegmentState('l5', false);}
+              });
 
         paint.color = currentSegments['r4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR4 = Path();
@@ -162,10 +250,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR4.close();
         if (size.height < 180)
               if (currentSegments['r4'])
-                    canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);});
+                    canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);
+                    if (currentSegments['r4']) {
+                          setSegmentState('r2', false);
+                          setSegmentState('r3', false);
+                          setSegmentState('r1', false);
+                          setSegmentState('r5', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);});
+              canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {setSegmentState('r4', !currentSegments['r4']);
+              if (currentSegments['r4']) {
+                    setSegmentState('r2', false);
+                    setSegmentState('r3', false);
+                    setSegmentState('r1', false);
+                    setSegmentState('r5', false);}
+              });
 
         paint.color = currentSegments['l5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathL5 = Path();
@@ -178,10 +278,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathL5.close();
         if (size.height < 180)
               if (currentSegments['l5'])
-                    canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);});
+                    canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);
+                    if (currentSegments['l5']) {
+                          setSegmentState('l2', false);
+                          setSegmentState('l3', false);
+                          setSegmentState('l4', false);
+                          setSegmentState('l1', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);});
+              canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {setSegmentState('l5', !currentSegments['l5']);
+              if (currentSegments['l5']) {
+                    setSegmentState('l2', false);
+                    setSegmentState('l3', false);
+                    setSegmentState('l4', false);
+                    setSegmentState('l1', false);}
+              });
 
         paint.color = currentSegments['r5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathR5 = Path();
@@ -194,10 +306,22 @@ class SemaphoreSegmentDisplay extends NSegmentDisplay {
         pathR5.close();
         if (size.height < 180)
               if (currentSegments['r5'])
-                    canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);});
+                    canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);
+                    if (currentSegments['r5']) {
+                          setSegmentState('r2', false);
+                          setSegmentState('r3', false);
+                          setSegmentState('r4', false);
+                          setSegmentState('r1', false);}
+                    });
               else;
         else
-              canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);});
+              canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {setSegmentState('r5', !currentSegments['r5']);
+              if (currentSegments['r5']) {
+                    setSegmentState('r2', false);
+                    setSegmentState('r3', false);
+                    setSegmentState('r4', false);
+                    setSegmentState('r1', false);}
+              });
 
         });
 
