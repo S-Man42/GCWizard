@@ -17,7 +17,7 @@ class MultiDecoderToolEnclosedAreas extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ENCLOSEDAREAS,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               return decodeEnclosedAreas(input, options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'Closed 4');
             },
             options: options,

@@ -17,7 +17,7 @@ class MultiDecoderToolKeybordLayout extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_KEYBOARDLAYOUT,
-            onDecode: (String input) {
+            onDecode: (String input, String key) {
               if (input == null) return null;
               return encodeKeyboard(input, _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
                   _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_TO]));

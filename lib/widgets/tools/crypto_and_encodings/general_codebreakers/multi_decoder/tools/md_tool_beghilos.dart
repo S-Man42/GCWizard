@@ -11,7 +11,7 @@ class MultiDecoderToolBeghilos extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BEGHILOS,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               return decodeBeghilos(input);
             },
             options: options);

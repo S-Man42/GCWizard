@@ -136,8 +136,6 @@ class MultiDecoderState extends State<MultiDecoder> {
                 Expanded(child: GCWText(text: i18n(context, 'multidecoder_key')), flex: 1),
                 Expanded(
                     child: GCWTextField(
-                      //maxLength: _currentKey,
-                      //inputFormatters: [_maskInputFormatter],
                       onChanged: (text) {
                         setState(() {
                           _currentKey = text;
@@ -181,7 +179,7 @@ class MultiDecoderState extends State<MultiDecoder> {
       var result;
 
       try {
-        result = tool.onDecode(_currentInput);
+        result = tool.onDecode(_currentInput, _currentKey);
       } catch (e) {}
 
       if ((result is String) && (result.toString().length != 0))

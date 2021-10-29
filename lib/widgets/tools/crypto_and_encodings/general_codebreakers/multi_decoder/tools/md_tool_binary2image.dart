@@ -11,7 +11,7 @@ class MultiDecoderBinary2Image extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BINARY2IMAGE,
-            onDecode: (input) async {
+            onDecode: (String input, String key) async {
               return await binary2image(input, false, false);
             },
             options: options);

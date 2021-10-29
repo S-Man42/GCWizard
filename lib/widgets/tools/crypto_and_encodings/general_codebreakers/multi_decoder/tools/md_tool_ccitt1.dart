@@ -17,7 +17,7 @@ class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_CCITT1,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               if (options[MDT_CCITT1_OPTION_MODE] == 'binary') {
                 return decodeCCITT1(textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10));

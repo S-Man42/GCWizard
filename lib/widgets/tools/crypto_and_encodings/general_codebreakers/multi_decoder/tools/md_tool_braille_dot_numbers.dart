@@ -11,7 +11,7 @@ class MultiDecoderToolBrailleDotNumbers extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               var segments = decodeBraille(input.split(RegExp(r'\s+')).toList(), BrailleLanguage.SIMPLE, true);
               var out =  segments['chars'].join();
               if (out is String) {
