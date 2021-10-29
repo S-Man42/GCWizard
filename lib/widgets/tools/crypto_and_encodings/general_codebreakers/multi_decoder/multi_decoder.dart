@@ -9,7 +9,9 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -33,6 +35,8 @@ class MultiDecoderState extends State<MultiDecoder> {
   Widget _currentOutput;
 
   var _firstBuild = true;
+  var _currentExpanded = false;
+  String _currentKey = '';
 
   @override
   void initState() {
@@ -103,6 +107,7 @@ class MultiDecoderState extends State<MultiDecoder> {
             )
           ],
         ),
+        _buildKeyWidget(),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
@@ -111,6 +116,38 @@ class MultiDecoderState extends State<MultiDecoder> {
           },
         ),
         _currentOutput
+      ],
+    );
+  }
+
+  Widget _buildKeyWidget() {
+    return Column(
+      children: [
+        GCWExpandableTextDivider(
+            text: i18n(context, 'common_mode_advanced'),
+            expanded: _currentExpanded,
+            onChanged: (value) {
+              setState(() {
+                _currentExpanded = value;
+              });
+            },
+            child: Row(
+              children: [
+                Expanded(child: GCWText(text: i18n(context, 'multidecoder_key')), flex: 1),
+                Expanded(
+                    child: GCWTextField(
+                      //maxLength: _currentKey,
+                      //inputFormatters: [_maskInputFormatter],
+                      onChanged: (text) {
+                        setState(() {
+                          _currentKey = text;
+                        });
+                      },
+                    ),
+                    flex: 3)
+              ],
+            ),
+        ),
       ],
     );
   }

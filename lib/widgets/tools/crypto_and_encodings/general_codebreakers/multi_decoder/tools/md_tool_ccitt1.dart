@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
 
-const MDT_INTERNALNAMES_CCITT1 = 'multidecoder_tool_Ccitt1_title';
+const MDT_INTERNALNAMES_CCITT1 = 'multidecoder_tool_ccitt1_title';
 const MDT_CCITT1_OPTION_MODE = 'ccitt1_numeralbase';
 
 class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
