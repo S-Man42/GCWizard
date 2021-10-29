@@ -40,5 +40,8 @@ AlphabetModificationMode _parseStringToEnum(String item) {
 
 String alphabetModeName(AlphabetModificationMode item) {
   if (item == null) return null;
-  return item.toString().replaceAll('AlphabetModificationMode.', '').replaceAll('_TO_', ' → ');
+  return item.toString()
+      .replaceAll('AlphabetModificationMode.', '')
+      .replaceAll('_TO_', ' → ')
+      .replaceAll('REMOVE_', 'Ignore ');
 }
