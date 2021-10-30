@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_reverse.dart';
@@ -70,6 +71,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_PLAYFAIR,
   MDT_INTERNALNAMES_POLYBIOS,
   MDT_INTERNALNAMES_TAPIR,
+  MDT_INTERNALNAMES_ONETIMEPAD,
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -85,6 +87,7 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: shortKeyboardName(enumKeyboardLayout.QWERTZ_T1),
                                       MDT_KEYBOARDLAYOUT_OPTION_TO: shortKeyboardName(enumKeyboardLayout.QWERTY_US_INT)},
   MDT_INTERNALNAMES_NUMERALBASES: {MDT_NUMERALBASES_OPTION_FROM: 16},
+  MDT_INTERNALNAMES_ONETIMEPAD: {MDT_ONETIMEPAD_OPTION_KEY: 1},
   MDT_INTERNALNAMES_PLAYFAIR: {MDT_PLAYFAIR_OPTION_MODE: alphabetModeName(AlphabetModificationMode.J_TO_I)},
   MDT_INTERNALNAMES_POLYBIOS: {MDT_POLYBIOS_OPTION_MODE: alphabetModeName(AlphabetModificationMode.J_TO_I)},
   MDT_INTERNALNAMES_ROMANNUMBERS: {MDT_ROMANNUMBERS_OPTION_MODE: MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION},
@@ -165,6 +168,9 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
       break;
     case MDT_INTERNALNAMES_NUMERALBASES:
       gcwTool = MultiDecoderToolNumeralBases(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
+    case MDT_INTERNALNAMES_ONETIMEPAD:
+      gcwTool = MultiDecoderToolOneTimePad(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_PLAYFAIR:
       gcwTool = MultiDecoderToolPlayfair(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -286,6 +292,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT1), MDT_INTERNALNAMES_CCITT1),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ONETIMEPAD), MDT_INTERNALNAMES_ONETIMEPAD),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),
   ];
