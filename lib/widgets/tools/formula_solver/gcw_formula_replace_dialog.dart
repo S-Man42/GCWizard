@@ -11,26 +11,36 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-List<String> _output;
+List<String> _newFormulas;
 
 showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
     {Widget contentWidget, int dialogHeight, Function onOkPressed}) {
+
+  var _output = formulas.map((formula) => Formula.fromFormula(formula)).toList();
+  // var _output = formulas.map((formula) => Formula.fromJson(formula.toMap())).toList();
+
   showGCWDialog(
       context,
       i18n(context, 'formulasolver_formulas_modifyformula'),
-      GCWFormulaReplace(formulas: formulas.map((formula) => formula.formula).toList()),
+      GCWFormulaReplace(formulas: List<Formula>.from(formulas)),
       [
         GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-              if (onOkPressed != null) onOkPressed(_output);
+              if (onOkPressed != null) {
+                for (int i = 0; i < formulas.length; i++) {
+                  _output[i].formula = _newFormulas[i];
+                }
+
+                onOkPressed(_output);
+              }
             })
       ],
       cancelButton: true);
 }
 
 class GCWFormulaReplace extends StatefulWidget {
-  final List<String> formulas;
+  final List<Formula> formulas;
 
   const GCWFormulaReplace({Key key, this.formulas}) : super(key: key);
 
@@ -47,11 +57,17 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
   var _currentFormulaIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _newFormulas = List.from(widget.formulas.map((formula) => formula.formula).toList());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_formulas_modifiedformula'),
+            text: i18n(context, 'formulasolver_formulas_modifiedformula') + ' ' + i18n(context, 'formulasolver_formula') + ' ${widget.formulas[_currentFormulaIndex].id}',
             style: textStyle,
             suppressTopSpace: true,
             trailing: widget.formulas == null || widget.formulas.length <= 1
@@ -81,7 +97,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
                     ],
                   )),
         GCWText(
-          text: _buildNewFormula(widget.formulas)[_currentFormulaIndex],
+          text: _newFormulas[_currentFormulaIndex],
           style: textStyle,
         ),
         Container(
@@ -95,7 +111,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           onChanged: (value) {
             setState(() {
               _currentValueBracket = value;
-              _buildNewFormula(widget.formulas);
+              _buildNewFormulas();
             });
           },
           fillColor: MaterialStateColor.resolveWith(getFillColor),
@@ -110,7 +126,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           onChanged: (value) {
             setState(() {
               _currentValueMultiply = value;
-              _buildNewFormula(widget.formulas);
+              _buildNewFormulas();
             });
           },
           fillColor: MaterialStateColor.resolveWith(getFillColor),
@@ -130,43 +146,44 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
     return Colors.black;
   }
 
-  List<String> _buildNewFormula(List<String> formulas) {
-    if (formulas == null || formulas.isEmpty) {
+  List<String> _buildNewFormulas() {
+    if (widget.formulas == null || widget.formulas.isEmpty) {
       return <String>[];
     }
 
-    _output = List.from(formulas);
+    _newFormulas = List.from(widget.formulas.map((formula) => formula.formula).toList());
 
     if (_currentValueBracket) {
-      int ignoreBracket = 0;
-
-      _output = _output.map((formula) {
+      _newFormulas = _newFormulas.map((formula) {
         if (formula == null || formula.isEmpty) {
           return null;
         }
+
+        int ignoreBracket = 0;
 
         return formula.split('').map((e) {
           switch (e) {
             case '[':
             case '(':
               e = (ignoreBracket == 0) ? '[' : e;
-              ignoreBracket += 1;
+              ignoreBracket++;
               break;
             case ']':
             case ')':
-              ignoreBracket -= 1;
+              ignoreBracket--;
               e = (ignoreBracket == 0) ? ']' : e;
               break;
           }
+
           return e;
         }).join();
       }).toList();
     }
 
     if (_currentValueMultiply) {
-      _output = _output.map((formula) => formula..replaceAll(RegExp(r'[xX]'), '*')).toList();
+      _newFormulas = _newFormulas.map((formula) => formula.replaceAll(RegExp(r'[xX]'), '*')).toList();
     }
 
-    return _output;
+    return _newFormulas;
   }
 }

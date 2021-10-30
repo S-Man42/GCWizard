@@ -216,7 +216,8 @@ class _GCWToolState extends State<GCWTool> {
         searchString = _toolName;
       }
     } else {
-      searchString = i18n(context, widget.helpSearchString, useDefaultLanguage: _needsDefaultHelp(appLocale)) ?? widget.helpSearchString;
+      searchString = i18n(context, widget.helpSearchString, useDefaultLanguage: _needsDefaultHelp(appLocale)) ??
+          widget.helpSearchString;
     }
 
     searchString = _normalizeSearchString(searchString);
