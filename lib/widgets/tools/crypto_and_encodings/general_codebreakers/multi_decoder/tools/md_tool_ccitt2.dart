@@ -10,6 +10,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 const MDT_INTERNALNAMES_CCITT2 = 'multidecoder_tool_ccitt2_title';
 const MDT_CCITT2_OPTION_MODE = 'ccitt2_numeralbase';
 
+const MDT_CCITT2_OPTION_MODE_DENARY = 'denary';
+const MDT_CCITT2_OPTION_MODE_BINARY = 'binary';
+
 class MultiDecoderToolCcitt2 extends GCWMultiDecoderTool {
   MultiDecoderToolCcitt2({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
@@ -18,7 +21,7 @@ class MultiDecoderToolCcitt2 extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_CCITT2,
             onDecode: (String input, String key) {
-              if (options[MDT_CCITT2_OPTION_MODE] == 'binary') {
+              if (options[MDT_CCITT2_OPTION_MODE] == MDT_CCITT2_OPTION_MODE_BINARY) {
                 return decodeCCITT2(textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10));
                 }).toList());
@@ -28,12 +31,12 @@ class MultiDecoderToolCcitt2 extends GCWMultiDecoderTool {
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_CCITT2_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_CCITT2_OPTION_MODE] == 'binary' ? GCWSwitchPosition.right : GCWSwitchPosition.left,
+                value: options[MDT_CCITT2_OPTION_MODE] == MDT_CCITT2_OPTION_MODE_BINARY ? GCWSwitchPosition.right : GCWSwitchPosition.left,
                 notitle: true,
                 leftValue: i18n(context, 'common_numeralbase_denary'),
                 rightValue: i18n(context, 'common_numeralbase_binary'),
                 onChanged: (value) {
-                  options[MDT_CCITT2_OPTION_MODE] = value == GCWSwitchPosition.left ? 'denary' : 'binary';
+                  options[MDT_CCITT2_OPTION_MODE] = value == GCWSwitchPosition.left ? MDT_CCITT2_OPTION_MODE_DENARY : MDT_CCITT2_OPTION_MODE_BINARY;
                 },
               )
             }));
