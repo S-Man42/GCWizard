@@ -139,6 +139,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
@@ -7888,6 +7889,24 @@ class Registry {
             SEARCHSTRING_DE_TELEGRAPH_WHEATSTONECOOKE5,
             SEARCHSTRING_EN_TELEGRAPH_WHEATSTONECOOKE5,
             SEARCHSTRING_FR_TELEGRAPH_WHEATSTONECOOKE5,
+          ]),
+      GCWTool(
+          tool: CCITTTelegraph(),
+          i18nPrefix: 'telegraph_ccitt',
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_CCITT1,
+            SEARCHSTRING_DE_CCITT1,
+            SEARCHSTRING_EN_CCITT1,
+            SEARCHSTRING_FR_CCITT1,
+            SEARCHSTRING_COMMON_CCITT2,
+            SEARCHSTRING_DE_CCITT2,
+            SEARCHSTRING_EN_CCITT2,
+            SEARCHSTRING_FR_CCITT2,
           ]),
 
       // TomTomSelection *********************************************************************************************
