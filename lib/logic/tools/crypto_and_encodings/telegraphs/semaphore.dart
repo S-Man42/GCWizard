@@ -48,6 +48,21 @@ final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   'symboltables_semaphore_rest':['l5', 'r5'],
 };
 
+final Map<String, String> LETTER2DIGIT = {
+  '1' : 'A',
+  '2' : 'B',
+  '3' : 'C',
+  '4' : 'D',
+  '5' : 'E',
+  '6' : 'F',
+  '7' : 'G',
+  '8' : 'H',
+  '9' : 'I',
+  '0' : 'K',
+};
+
+final Map<String, String> DIGIT2LETTER = switchMapKeyValue(LETTER2DIGIT);
+
 final NUMBER = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
 final LETTER = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -86,6 +101,8 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
 
   var displays = <List<String>>[];
   var segment = <String>[];
+  bool number_follows = false;
+  bool letter_follows = false;
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
 
@@ -97,15 +114,43 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
     var charH = '';
+    var symbol = '';
 
     if (CODEBOOK.map((key, value) =>
         MapEntry(key.join(), value.toString()))[input.split('').join()] ==
         null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) =>
+      symbol = CODEBOOK.map((key, value) =>
           MapEntry(key.join(), value.toString()))[input.split('').join()];
-      char = char + charH;
+print(symbol);
+      if (symbol == 'symboltables_semaphore_letters_following'  || symbol == 'symboltables_semaphore_numerals_following'  || symbol == 'symboltables_semaphore_rest') {
+        switch (symbol) {
+          case 'symboltables_semaphore_letters_following' :
+          case 'symboltables_semaphore_rest' :
+            number_follows = false;
+            letter_follows = true;
+            break;
+          case 'symboltables_semaphore_numerals_following' :
+            number_follows = true;
+            letter_follows = false;
+            break;
+        }
+      } else {
+        if (letter_follows)
+          if (LETTER.contains(symbol))
+            charH = symbol;
+          else
+            charH = LETTER2DIGIT[symbol];
+        else
+          if (NUMBER.contains(symbol))
+            charH = symbol;
+          else
+            charH = DIGIT2LETTER[symbol];
+        print(charH);
+        if (charH != null)
+          char = char + charH;
+      }
     }
 
     return char;
