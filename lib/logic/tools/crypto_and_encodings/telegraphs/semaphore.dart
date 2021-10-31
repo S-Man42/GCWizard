@@ -123,7 +123,7 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
     } else {
       symbol = CODEBOOK.map((key, value) =>
           MapEntry(key.join(), value.toString()))[input.split('').join()];
-print(symbol);
+
       if (symbol == 'symboltables_semaphore_letters_following'  || symbol == 'symboltables_semaphore_numerals_following'  || symbol == 'symboltables_semaphore_rest') {
         switch (symbol) {
           case 'symboltables_semaphore_letters_following' :
@@ -147,7 +147,6 @@ print(symbol);
             charH = symbol;
           else
             charH = DIGIT2LETTER[symbol];
-        print(charH);
         if (charH != null)
           char = char + charH;
       }
