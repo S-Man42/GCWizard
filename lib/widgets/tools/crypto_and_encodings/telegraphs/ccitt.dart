@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/ccitt.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -21,8 +22,12 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
+  var _DecodeInputController;
+  var _currentDecodeInput = '';
+
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
+  var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
   var _currentLanguage = CCITTCodebook.CCITT1;
 
@@ -30,6 +35,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
+    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
@@ -78,7 +84,28 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
         Column(
           // decrpyt: input segment => output number
           children: <Widget>[
-            _buildVisualDecryption()
+            GCWTwoOptionsSwitch(
+              value: _currentDecodeMode,
+              leftValue: i18n(context, 'telegraph_decode_textmode'),
+              rightValue: i18n(context, 'telegraph_decode_visualmode'),
+              onChanged: (value) {
+                setState(() {
+                  _currentDecodeMode = value;
+                });
+              },
+            ),
+            if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+              _buildVisualDecryption()
+            else // decode text
+              GCWTextField(
+                controller: _DecodeInputController,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              )
           ],
         ),
       _buildOutput()
@@ -113,8 +140,8 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
     return Column(
       children: <Widget>[
         Container(
-          width: 180,
-          height: 200,
+          width: 200,
+          height: 60,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
@@ -159,6 +186,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
+        tapeStyle: true,
         segmentFunction:(displayedSegments, readOnly) {
           return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
@@ -168,24 +196,27 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      //encode
+    if (_currentMode == GCWSwitchPosition.left) { //encode
       List<List<String>> segments = encodeCCITT(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
         ],
       );
-    } else {
-      //decode
-      var output = _currentDisplays.map((character) {
-        if (character != null) return character.join();
-      }).toList();
-      var segments = decodeCCITT(output, _currentLanguage);
+    } else { //decode
+      var segments;
+      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
+        segments = decodeTextCCITTTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
+      } else { // visual
+        var output = _currentDisplays.map((character) {
+          if (character != null) return character.join();
+        }).toList();
+        segments = decodeVisualCCITT(output, _currentLanguage);
+      }
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['chars'].join()),
+          GCWDefaultOutput(child: segments['text']),
         ],
       );
     }

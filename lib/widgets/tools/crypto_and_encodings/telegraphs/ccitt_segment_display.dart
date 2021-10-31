@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false};
 
-const _CCITT_RELATIVE_DISPLAY_WIDTH = 80;
-const _CCITT_RELATIVE_DISPLAY_HEIGHT = 110;
-const _CCITT_RADIUS = 10.0;
+const _CCITT_RELATIVE_DISPLAY_WIDTH = 180;
+const _CCITT_RELATIVE_DISPLAY_HEIGHT = 60;
+const _CCITT_RADIUS = 20.0;
 
 class CCITTSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -29,16 +29,20 @@ class CCITTSegmentDisplay extends NSegmentDisplay {
         var SEGMENTS_COLOR_OFF = segment_color_off;
 
         var circles = {
-          '1': [ 5, 20],  '2': [20, 20], '3': [50, 20],  '4': [65, 20], '5': [80, 20]
+          '1': [ 10, 20],
+          '2': [ 40, 20],
+          '3': [100, 20],
+          '4': [130, 20],
+          '5': [160, 20]
         };
         var pointSize = size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * _CCITT_RADIUS;
 
         circles.forEach((key, value) {
 
           canvas.touchCanvas.drawCircle(
-              Offset(size.width / _CCITT_RELATIVE_DISPLAY_WIDTH * (value[0] - 1),
-                  size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * (value[1]) - 1),
-              pointSize,
+              Offset(size.width / _CCITT_RELATIVE_DISPLAY_WIDTH * (value[0] ),
+                  size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * (value[1]) ),
+              pointSize + 1,
               paint);
 
           if (size.height < 50)
@@ -62,7 +66,7 @@ class CCITTSegmentDisplay extends NSegmentDisplay {
         });
 
         canvas.touchCanvas.drawCircle(
-            Offset(size.width / _CCITT_RELATIVE_DISPLAY_WIDTH * 35.0,
+            Offset(size.width / _CCITT_RELATIVE_DISPLAY_WIDTH * 70.0,
                 size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * 20.0),
             pointSize / 2.0,
             defaultSegmentPaint());

@@ -554,6 +554,7 @@ const SEARCHSTRING_COMMON_TELEGRAPH_PRUSSIA = '';
 const SEARCHSTRING_COMMON_TELEGRAPH_GAUSSWEBERTELEGRAPH = 'carlgauss johanncarlfriedrichgauss wilhelmeduardweber +-';
 const SEARCHSTRING_COMMON_TELEGRAPH_SCHILLINGCANSTATT = 'paulludwigschillingvoncanstatt schillingcanstatt paulludwigschillingvoncannstatt schillingcannstatt';
 const SEARCHSTRING_COMMON_TELEGRAPH_WHEATSTONECOOKE5 = 'williamfothergillcooke charleswheatstone';
+const SEARCHSTRING_COMMON_TELEGRAPH_WIGWAG = 'albertjmyer';
 const SEARCHSTRING_COMMON_TRIFID = 'trifid felix delastelle polybios polybius transposition';
 const SEARCHSTRING_COMMON_TOMTOM = 'a-tom-tom atomtom';
 const SEARCHSTRING_COMMON_TRITHEMIUS = 'trithemius tabularecta';

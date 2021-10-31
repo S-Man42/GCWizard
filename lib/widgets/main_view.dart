@@ -138,6 +138,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiat
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
@@ -591,6 +592,7 @@ class _MainViewState extends State<MainView> {
         className(WheatstoneCooke5NeedleTelegraph()),
         className(WhitespaceLanguage()),
         className(WaypointProjection()),
+        className(WigWagSemaphoreTelegraph()),
         className(Windchill()),
         className(Z22()),
         className(ZamonianNumbers()),

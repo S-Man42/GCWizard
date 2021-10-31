@@ -148,6 +148,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_t
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
@@ -7847,6 +7848,24 @@ class Registry {
             SEARCHSTRING_DE_SYMBOL_SEMAPHORE,
             SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
             SEARCHSTRING_FR_SYMBOL_SEMAPHORE
+          ]),
+      GCWTool(
+          tool: WigWagSemaphoreTelegraph(),
+          i18nPrefix: 'telegraph_wigwag',
+          helpLocales: ['de', 'en', 'fr'],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TELEGRAPH,
+            SEARCHSTRING_DE_TELEGRAPH,
+            SEARCHSTRING_EN_TELEGRAPH,
+            SEARCHSTRING_FR_TELEGRAPH,
+            SEARCHSTRING_COMMON_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_DE_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_FR_SYMBOL_SEMAPHORE,
+            SEARCHSTRING_COMMON_TELEGRAPH_WIGWAG,
+            SEARCHSTRING_DE_TELEGRAPH_WIGWAG,
+            SEARCHSTRING_EN_TELEGRAPH_WIGWAG,
+            SEARCHSTRING_FR_TELEGRAPH_WIGWAG
           ]),
       GCWTool(
           tool: GaussWeberTelegraph(),

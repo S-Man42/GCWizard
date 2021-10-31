@@ -20,9 +20,10 @@ class GCWSegmentDisplayOutput extends StatefulWidget {
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
+  final bool tapeStyle;
 
   const GCWSegmentDisplayOutput(
-      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
+      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.tapeStyle: false})
       : super(key: key);
 
   @override
@@ -45,6 +46,9 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
     var countColumns = mediaQueryData.orientation == Orientation.portrait
         ? Prefs.get('symboltables_countcolumns_portrait')
         : Prefs.get('symboltables_countcolumns_landscape');
+
+    if (widget.tapeStyle)
+      countColumns = 1;
 
     return Column(children: <Widget>[
       GCWTextDivider(

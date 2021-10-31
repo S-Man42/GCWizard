@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_t
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class TelegraphSelection extends GCWSelection {
@@ -28,11 +29,10 @@ class TelegraphSelection extends GCWSelection {
         className(OhlsenTelegraph()),
         className(PrussiaTelegraph()),
         className(SemaphoreTelegraph()),
+        className(WigWagSemaphoreTelegraph()),
         className(GaussWeberTelegraph()),
         className(SchillingCanstattTelegraph()),
         className(WheatstoneCooke5NeedleTelegraph()),
-        className(CCITT1Selection()),
-        className(CCITT2Selection()),
         className(CCITTTelegraph()),
       ].contains(className(element.tool));
     }).toList();

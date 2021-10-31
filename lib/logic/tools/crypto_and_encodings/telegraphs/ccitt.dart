@@ -2,8 +2,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
 
 enum CCITTCodebook { CCITT1, CCITT2 }
 
@@ -20,7 +18,16 @@ List<String> decenary2segments(String decenary) {
   for (int i = 0; i < binary.length; i++)
     if (binary[i] == '1')
       result.add((i + 1).toString());
-    print('dec2seg '+decenary+' '+binary+' '+result.toString());
+  return result;
+}
+
+List<String> binary2segments(String binary) {
+  for (int i = 0; i < 5 - binary.length; i++)
+    binary = '0' + binary;
+  List<String> result = [];
+  for (int i = 0; i < binary.length; i++)
+    if (binary[i] == '1')
+      result.add((i + 1).toString());
   return result;
 }
 
@@ -32,6 +39,16 @@ String segments2binary(List<String> segments){
   if (segments.contains('4')) result = result + '1'; else result = result + '0';
   if (segments.contains('5')) result = result + '1'; else result = result + '0';
   return result;
+}
+
+String segments2decenary(List<String> segments){
+  String result = '';
+  if (segments.contains('1')) result = result + '1'; else result = result + '0';
+  if (segments.contains('2')) result = result + '1'; else result = result + '0';
+  if (segments.contains('3')) result = result + '1'; else result = result + '0';
+  if (segments.contains('4')) result = result + '1'; else result = result + '0';
+  if (segments.contains('5')) result = result + '1'; else result = result + '0';
+  return convertBase(result, 2, 10);
 }
 
 List<List<String>> encodeCCITT(String input, CCITTCodebook language) {
@@ -48,61 +65,69 @@ List<List<String>> encodeCCITT(String input, CCITTCodebook language) {
       code = encodeCCITT2(input).split(' ');
       break;
   }
-print(input);
-  print(code);
+
   code.forEach((element) {
-    print(decenary2segments(element));
     result.add(decenary2segments(element));
   });
 
   return result;
 }
 
-Map<String, dynamic> decodeCCITT(List<String> inputs, CCITTCodebook language) {
+Map<String, dynamic> decodeTextCCITTTelegraph(String inputs, CCITTCodebook language) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
-      'chars': [0]
+      'text': '',
+    };
+  var displays = <List<String>>[];
+  List<String> text = [];
+  List<int> intList = List<int>(1);
+
+  inputs.split(' ').forEach((element) {
+    displays.add(binary2segments(element));
+    if (int.tryParse(convertBase(element, 2, 10)) != null) {
+      intList[0] = int.parse(convertBase(element, 2, 10));
+      switch (language) {
+        case CCITTCodebook.CCITT1:
+          text.add(decodeCCITT1(intList));
+          break;
+        case CCITTCodebook.CCITT2:
+          text.add(decodeCCITT2(intList));
+          break;
+      }
+    }
+  });
+  return {'displays': displays, 'text': text.join(' ')};
+}
+
+Map<String, dynamic> decodeVisualCCITT(List<String> inputs, CCITTCodebook language) {
+  if (inputs == null || inputs.length == 0)
+    return {
+      'displays': <List<String>>[],
+      'text': [0]
     };
 
   var displays = <List<String>>[];
 
-  Map<List<String>, String> CODEBOOK = new Map<List<String>, String>();
-  switch (language) {
-    case CCITTCodebook.CCITT1:
-
-      break;
-    case CCITTCodebook.CCITT2:
-
-      break;
-  }
-
   List<String> text = inputs.where((input) => input != null).map((input) {
-    var char = '';
-    var charH = '';
     var display = <String>[];
 
     input.split('').forEach((element) {
       display.add(element);
     });
-
-    if (CODEBOOK.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null) {
-      char = char + UNKNOWN_ELEMENT;
-    } else {
-      charH = CODEBOOK.map((key, value) =>
-          MapEntry(key.join(), value.toString()))[input.split('').join()];
-      char = char + charH;
-    }
-
     displays.add(display);
 
-    return char;
+    switch (language) {
+      case CCITTCodebook.CCITT1:
+        return decodeCCITT1([int.parse(segments2decenary(input.split('')))]);
+        break;
+      case CCITTCodebook.CCITT2:
+        return decodeCCITT2([int.parse(segments2decenary(input.split('')))]);
+        break;
+    }
+
   }).toList();
 
-  return {'displays': displays, 'chars': text};
-
-
+  return {'displays': displays, 'text': text.join(' ')};
 }
 
