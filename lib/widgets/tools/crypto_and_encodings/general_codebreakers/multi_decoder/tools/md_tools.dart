@@ -38,6 +38,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_vanity_multitap.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_wasd.dart';
 
 final List<String> mdtToolsRegistry = [
@@ -72,6 +73,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_POLYBIOS,
   MDT_INTERNALNAMES_TAPIR,
   MDT_INTERNALNAMES_ONETIMEPAD,
+  MDT_INTERNALNAMES_VIGENERE,
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -94,6 +96,7 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_ROTATION: {MDT_ROTATION_OPTION_KEY: 13},
   MDT_INTERNALNAMES_SEGMENTDISPLAY: {MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: 7},
   MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
+  MDT_INTERNALNAMES_VIGENERE: {MDT_VIGENERE_OPTION_KEY: 1},
   MDT_INTERNALNAMES_WASD: {MDT_WASD_OPTION_SET: KEYBOARD_CONTROLS[WASD_TYPE.NWSE]},
 };
 
@@ -205,6 +208,9 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_VANITYMULTITAP:
       gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
+    case MDT_INTERNALNAMES_VIGENERE:
+      gcwTool = MultiDecoderToolVigenere(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
     case MDT_INTERNALNAMES_WASD:
       gcwTool = MultiDecoderToolWasd(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
@@ -293,6 +299,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ONETIMEPAD), MDT_INTERNALNAMES_ONETIMEPAD),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),
   ];
