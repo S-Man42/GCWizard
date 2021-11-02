@@ -15,13 +15,13 @@ enum SpinnerOverflowType {
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
   final title;
-  final value;
-  final min;
-  final max;
-  final leftPadZeros;
+  final int value;
+  final int min;
+  final int max;
+  final int leftPadZeros;
   final controller;
   final SpinnerLayout layout;
-  final focusNode;
+  final FocusNode focusNode ;
   final SpinnerOverflowType overflow;
 
   const GCWIntegerSpinner(
@@ -69,7 +69,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) _currentValue = widget.value;
+    if ((widget.value != null) & (_currentValue == null)) _currentValue = widget.value;
 
     return _buildSpinner();
   }
