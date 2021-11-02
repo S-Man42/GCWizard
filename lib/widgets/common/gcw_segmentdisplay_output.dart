@@ -16,7 +16,7 @@ import 'gcw_text_divider.dart';
 
 class GCWSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
-  final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
+  final NSegmentDisplay Function(Map<String, bool>, bool, bool) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
@@ -46,9 +46,6 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
     var countColumns = mediaQueryData.orientation == Orientation.portrait
         ? Prefs.get('symboltables_countcolumns_portrait')
         : Prefs.get('symboltables_countcolumns_landscape');
-
-    if (widget.tapeStyle)
-      countColumns = 1;
 
     return Column(children: <Widget>[
       GCWTextDivider(
@@ -111,16 +108,16 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
           ],
         ),
       ),
-      _buildDigitalOutput(countColumns, widget.segments)
+      _buildDigitalOutput(countColumns, widget.segments, widget.tapeStyle)
     ]);
   }
 
-  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
+  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments, bool tapeStyle) {
     var list = _currentUpsideDown ? segments.reversed : segments;
 
     _displays = list.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return widget.segmentFunction(displayedSegments, widget.readOnly);
+      return widget.segmentFunction(displayedSegments, widget.readOnly, widget.tapeStyle);
     }).toList();
 
     var viewList = !_currentUpsideDown
@@ -128,7 +125,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
         : _displays.map((display) {
             return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
           }).toList();
-    return buildSegmentDisplayOutput(countColumns, viewList);
+    return buildSegmentDisplayOutput(countColumns, viewList, tapeStyle);
   }
 }
 

@@ -17,8 +17,9 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
+  final bool tapeStyle;
 
-  PrussiaTelegraphSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
+  PrussiaTelegraphSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
       key: key,
       initialSegments: _INITIAL_SEGMENTS,
@@ -47,7 +48,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathC1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 20);
         pathC1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 30);
         pathC1.close();
-        canvas.touchCanvas.drawPath(pathC1, paint, onTapDown: (tapDetail) {setSegmentState('c1', !currentSegments['c1']);});
+        canvas.touchCanvas.drawPath(pathC1, paint, onTapDown: (tapDetail) {
+              setSegmentState('c1', !currentSegments['c1']);
+              if (currentSegments['c1']) {
+                    setSegmentState('c2', false);
+                    setSegmentState('c3', false);
+              }
+        });
 
         paint.color = currentSegments['c2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathC2 = Path();
@@ -56,7 +63,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathC2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 60);
         pathC2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 60);
         pathC2.close();
-        canvas.touchCanvas.drawPath(pathC2, paint, onTapDown: (tapDetail) {setSegmentState('c2', !currentSegments['c2']);});
+        canvas.touchCanvas.drawPath(pathC2, paint, onTapDown: (tapDetail) {
+              setSegmentState('c2', !currentSegments['c2']);
+              if (currentSegments['c2']) {
+                    setSegmentState('c1', false);
+                    setSegmentState('c3', false);
+              }
+        });
 
         paint.color = currentSegments['c3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathC3 = Path();
@@ -65,7 +78,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathC3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 90);
         pathC3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 70);
         pathC3.close();
-        canvas.touchCanvas.drawPath(pathC3, paint, onTapDown: (tapDetail) {setSegmentState('c3', !currentSegments['c3']);});
+        canvas.touchCanvas.drawPath(pathC3, paint, onTapDown: (tapDetail) {
+              setSegmentState('c3', !currentSegments['c3']);
+              if (currentSegments['c3']) {
+                    setSegmentState('c1', false);
+                    setSegmentState('c2', false);
+              }
+        });
 
         paint.color = currentSegments['c4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathC4 = Path();
@@ -74,7 +93,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathC4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 90);
         pathC4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 20, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 80);
         pathC4.close();
-        canvas.touchCanvas.drawPath(pathC4, paint, onTapDown: (tapDetail) {setSegmentState('c4', !currentSegments['c4']);});
+        canvas.touchCanvas.drawPath(pathC4, paint, onTapDown: (tapDetail) {
+              setSegmentState('c4', !currentSegments['c4']);
+              if (currentSegments['c4']) {
+                    setSegmentState('c5', false);
+                    setSegmentState('c6', false);
+              }
+        });
 
         paint.color = currentSegments['c5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathC5 = Path();
@@ -83,7 +108,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathC5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 60);
         pathC5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 10, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 60);
         pathC5.close();
-        canvas.touchCanvas.drawPath(pathC5, paint, onTapDown: (tapDetail) {setSegmentState('c5', !currentSegments['c5']);});
+        canvas.touchCanvas.drawPath(pathC5, paint, onTapDown: (tapDetail) {
+              setSegmentState('c5', !currentSegments['c5']);
+              if (currentSegments['c5']) {
+                    setSegmentState('c4', false);
+                    setSegmentState('c6', false);
+              }
+        });
 
         paint.color = currentSegments['c6'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathC6 = Path();
@@ -93,7 +124,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathC6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 40);
         pathC6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 50);
         pathC6.close();
-        canvas.touchCanvas.drawPath(pathC6, paint, onTapDown: (tapDetail) {setSegmentState('c6', !currentSegments['c6']);});
+        canvas.touchCanvas.drawPath(pathC6, paint, onTapDown: (tapDetail) {
+              setSegmentState('c6', !currentSegments['c6']);
+              if (currentSegments['c6']) {
+                    setSegmentState('c4', false);
+                    setSegmentState('c5', false);
+              }
+        });
 
         paint.color = currentSegments['b1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathB1 = Path();
@@ -102,7 +139,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathB1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 100);
         pathB1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 110);
         pathB1.close();
-        canvas.touchCanvas.drawPath(pathB1, paint, onTapDown: (tapDetail) {setSegmentState('b1', !currentSegments['b1']);});
+        canvas.touchCanvas.drawPath(pathB1, paint, onTapDown: (tapDetail) {
+              setSegmentState('b1', !currentSegments['b1']);
+              if (currentSegments['b1']) {
+                    setSegmentState('b2', false);
+                    setSegmentState('b3', false);
+              }
+        });
 
         paint.color = currentSegments['b2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathB2 = Path();
@@ -111,7 +154,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathB2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 140);
         pathB2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 140);
         pathB2.close();
-        canvas.touchCanvas.drawPath(pathB2, paint, onTapDown: (tapDetail) {setSegmentState('b2', !currentSegments['b2']);});
+        canvas.touchCanvas.drawPath(pathB2, paint, onTapDown: (tapDetail) {
+              setSegmentState('b2', !currentSegments['b2']);
+              if (currentSegments['b2']) {
+                    setSegmentState('b1', false);
+                    setSegmentState('b3', false);
+              }
+        });
 
         paint.color = currentSegments['b3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathB3 = Path();
@@ -120,7 +169,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathB3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 170);
         pathB3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 150);
         pathB3.close();
-        canvas.touchCanvas.drawPath(pathB3, paint, onTapDown: (tapDetail) {setSegmentState('b3', !currentSegments['b3']);});
+        canvas.touchCanvas.drawPath(pathB3, paint, onTapDown: (tapDetail) {
+              setSegmentState('b3', !currentSegments['b3']);
+              if (currentSegments['b3']) {
+                    setSegmentState('b1', false);
+                    setSegmentState('b2', false);
+              }
+        });
 
         paint.color = currentSegments['b4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathB4 = Path();
@@ -129,7 +184,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathB4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 170);
         pathB4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 20, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 160);
         pathB4.close();
-        canvas.touchCanvas.drawPath(pathB4, paint, onTapDown: (tapDetail) {setSegmentState('b4', !currentSegments['b4']);});
+        canvas.touchCanvas.drawPath(pathB4, paint, onTapDown: (tapDetail) {
+              setSegmentState('b4', !currentSegments['b4']);
+              if (currentSegments['b4']) {
+                    setSegmentState('b4', false);
+                    setSegmentState('b6', false);
+              }
+        });
 
         paint.color = currentSegments['b5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathB5 = Path();
@@ -138,7 +199,13 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathB5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 140);
         pathB5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 10, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 140);
         pathB5.close();
-        canvas.touchCanvas.drawPath(pathB5, paint, onTapDown: (tapDetail) {setSegmentState('b5', !currentSegments['b5']);});
+        canvas.touchCanvas.drawPath(pathB5, paint, onTapDown: (tapDetail) {
+              setSegmentState('b5', !currentSegments['b5']);
+              if (currentSegments['b5']) {
+                    setSegmentState('b4', false);
+                    setSegmentState('b6', false);
+              }
+        });
 
         paint.color = currentSegments['b6'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathB6 = Path();
@@ -148,7 +215,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathB6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 120);
         pathB6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 130);
         pathB6.close();
-        canvas.touchCanvas.drawPath(pathB6, paint, onTapDown: (tapDetail) {setSegmentState('b6', !currentSegments['b6']);});
+        canvas.touchCanvas.drawPath(pathB6, paint, onTapDown: (tapDetail) {setSegmentState('b6', !currentSegments['b6']);
+        if (currentSegments['b6']) {
+              setSegmentState('b4', false);
+              setSegmentState('b5', false);
+        }
+        });
 
         paint.color = currentSegments['a1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA1 = Path();
@@ -157,7 +229,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathA1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 180);
         pathA1.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 190);
         pathA1.close();
-        canvas.touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {setSegmentState('a1', !currentSegments['a1']);});
+        canvas.touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {setSegmentState('a1', !currentSegments['a1']);
+        if (currentSegments['a1']) {
+              setSegmentState('a2', false);
+              setSegmentState('a3', false);
+        }
+        });
 
         paint.color = currentSegments['a2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA2 = Path();
@@ -166,7 +243,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathA2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 220);
         pathA2.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 220);
         pathA2.close();
-        canvas.touchCanvas.drawPath(pathA2, paint, onTapDown: (tapDetail) {setSegmentState('a2', !currentSegments['a2']);});
+        canvas.touchCanvas.drawPath(pathA2, paint, onTapDown: (tapDetail) {setSegmentState('a2', !currentSegments['a2']);
+        if (currentSegments['a2']) {
+              setSegmentState('a1', false);
+              setSegmentState('a3', false);
+        }
+        });
 
         paint.color = currentSegments['a3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA3 = Path();
@@ -175,7 +257,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathA3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 250);
         pathA3.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 60, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 230);
         pathA3.close();
-        canvas.touchCanvas.drawPath(pathA3, paint, onTapDown: (tapDetail) {setSegmentState('a3', !currentSegments['a3']);});
+        canvas.touchCanvas.drawPath(pathA3, paint, onTapDown: (tapDetail) {setSegmentState('a3', !currentSegments['a3']);
+        if (currentSegments['a3']) {
+              setSegmentState('a1', false);
+              setSegmentState('a2', false);
+        }
+        });
 
         paint.color = currentSegments['a4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA4 = Path();
@@ -184,7 +271,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathA4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 250);
         pathA4.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 20, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 240);
         pathA4.close();
-        canvas.touchCanvas.drawPath(pathA4, paint, onTapDown: (tapDetail) {setSegmentState('a4', !currentSegments['a4']);});
+        canvas.touchCanvas.drawPath(pathA4, paint, onTapDown: (tapDetail) {setSegmentState('a4', !currentSegments['a4']);
+        if (currentSegments['a4']) {
+              setSegmentState('a6', false);
+              setSegmentState('a6', false);
+        }
+        });
 
         paint.color = currentSegments['a5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA5 = Path();
@@ -193,7 +285,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathA5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 220);
         pathA5.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 10, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 220);
         pathA5.close();
-        canvas.touchCanvas.drawPath(pathA5, paint, onTapDown: (tapDetail) {setSegmentState('a5', !currentSegments['a5']);});
+        canvas.touchCanvas.drawPath(pathA5, paint, onTapDown: (tapDetail) {setSegmentState('a5', !currentSegments['a5']);
+        if (currentSegments['a5']) {
+              setSegmentState('a4', false);
+              setSegmentState('a6', false);
+        }
+        });
 
         paint.color = currentSegments['a6'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA6 = Path();
@@ -203,6 +300,12 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         pathA6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 200);
         pathA6.lineTo(size.width / _PRUSSIA_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PRUSSIA_RELATIVE_DISPLAY_HEIGHT * 210);
         pathA6.close();
-        canvas.touchCanvas.drawPath(pathA6, paint, onTapDown: (tapDetail) {setSegmentState('a6', !currentSegments['a6']);});
+        canvas.touchCanvas.drawPath(pathA6, paint, onTapDown: (tapDetail) {
+              setSegmentState('a6', !currentSegments['a6']);
+              if (currentSegments['a6']) {
+                setSegmentState('a4', false);
+                setSegmentState('a5', false);
+              }
+        });
       });
 }

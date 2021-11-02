@@ -89,8 +89,8 @@ class BeghilosState extends State<Beghilos> {
 
     rows.add(GCWSegmentDisplayOutput(
         upsideDownButton: true,
-        segmentFunction: (displayedSegments, readOnly) {
-          return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction: (displayedSegments, readOnly, tapeStyle) {
+          return SevenSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: _currentDisplays,
         readOnly: true));

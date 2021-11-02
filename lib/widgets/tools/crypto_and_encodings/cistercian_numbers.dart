@@ -144,8 +144,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction: (displayedSegments, readOnly) {
-          return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction: (displayedSegments, readOnly, tapeStyle) {
+          return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true);

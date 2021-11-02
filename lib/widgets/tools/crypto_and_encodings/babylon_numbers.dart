@@ -124,8 +124,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction: (displayedSegments, readOnly) {
-          return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction: (displayedSegments, readOnly, tapeStyle) {
+          return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true);

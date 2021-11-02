@@ -138,8 +138,8 @@ class MayaCalendarState extends State<MayaCalendar> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction: (displayedSegments, readOnly) {
-          return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction: (displayedSegments, readOnly, tapeStyle) {
+          return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true);

@@ -159,8 +159,8 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
-            return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
+            return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true

@@ -22,7 +22,7 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _currentLanguage = WigWagCodebook.GENERALSERVICECODE;
+  var _currentLanguage = WigWagCodebook.GENERALSERVICECODE1872;
 
   @override
   void initState() {

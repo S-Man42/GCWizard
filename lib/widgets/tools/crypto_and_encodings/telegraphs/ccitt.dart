@@ -187,8 +187,8 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
         tapeStyle: true,
-        segmentFunction:(displayedSegments, readOnly) {
-          return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
+          return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true

@@ -179,8 +179,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
-          return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
+          return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true

@@ -231,8 +231,8 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     segments = _buildShutters(segments);
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
-          return PrussiaTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
+          return PrussiaTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
         segments: segments,
         readOnly: true

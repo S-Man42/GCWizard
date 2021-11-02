@@ -104,7 +104,7 @@ Map<String, dynamic> decodeVisualCCITT(List<String> inputs, CCITTCodebook langua
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
-      'text': [0]
+      'text': ''
     };
 
   var displays = <List<String>>[];

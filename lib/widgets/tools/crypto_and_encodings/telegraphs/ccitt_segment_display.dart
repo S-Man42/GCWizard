@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false};
 
-const _CCITT_RELATIVE_DISPLAY_WIDTH = 180;
+const _CCITT_RELATIVE_DISPLAY_WIDTH = 160;
 const _CCITT_RELATIVE_DISPLAY_HEIGHT = 60;
 const _CCITT_RADIUS = 20.0;
 
@@ -14,8 +14,9 @@ class CCITTSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
+  final bool tapeStyle;
 
-  CCITTSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
+  CCITTSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
       key: key,
       initialSegments: _INITIAL_SEGMENTS,
