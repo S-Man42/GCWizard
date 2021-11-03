@@ -5,43 +5,61 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays, bool tapeStyle) {
   var rows = <Widget>[];
-  var countRows = 1;
+  var countRows = (displays.length / countColumns).floor();
 
-  // if (tapeStyle)
-  //   countRows = (displays.length).floor();
-  // else
-  //   countRows = (displays.length / countColumns).floor();
-
-  for (var i = 0; i <= countRows; i++) {
+  if (tapeStyle) {
     var columns = <Widget>[];
-
-    for (var j = 0; j < countColumns; j++) {
+    for (int displayIndex = 0; displayIndex < displays.length; displayIndex++){
       var widget;
-      var displayIndex = i * countColumns + j;
+      var display = displays[displayIndex];
 
-      if (displayIndex < displays.length) {
-        var display = displays[displayIndex];
-
-        widget = Container(
-          child: display,
-          padding: EdgeInsets.all(2),
-        );
-      } else {
-        widget = Container();
-      }
-
+      widget = Container(
+        child: display,
+        padding: EdgeInsets.all(2),
+      );
       columns.add(Expanded(
           child: Container(
-        child: widget,
-        padding: EdgeInsets.all(3),
-      )));
+            child: widget,
+            padding: EdgeInsets.all(3),
+          )
+      ));
     }
-
     rows.add(Row(
       children: columns,
     ));
-  }
 
+  } else {
+    for (var i = 0; i <= countRows; i++) {
+      var columns = <Widget>[];
+
+      for (var j = 0; j < countColumns; j++) {
+        var widget;
+        var displayIndex = i * countColumns + j;
+
+        if (displayIndex < displays.length) {
+          var display = displays[displayIndex];
+
+          widget = Container(
+            child: display,
+            padding: EdgeInsets.all(2),
+          );
+        } else {
+          widget = Container();
+        }
+
+        columns.add(Expanded(
+            child: Container(
+              child: widget,
+              padding: EdgeInsets.all(3),
+            )
+        ));
+      }
+
+      rows.add(Row(
+        children: columns,
+      ));
+    }
+  }
   return Column(
     children: rows,
   );

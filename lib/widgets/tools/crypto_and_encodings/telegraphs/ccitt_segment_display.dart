@@ -6,10 +6,23 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false};
 
-const _CCITT_RELATIVE_DISPLAY_WIDTH = 160;
-const _CCITT_RELATIVE_DISPLAY_HEIGHT = 60;
+const _CCITT_RELATIVE_DISPLAY_WIDTH = 175;
+const _CCITT_RELATIVE_DISPLAY_HEIGHT = 50;
 const _CCITT_RADIUS = 20.0;
+/*
+container width 200
+const _BABYLON_RELATIVE_DISPLAY_WIDTH = 200;
+const _BABYLON_RELATIVE_DISPLAY_HEIGHT = 100;
 
+container width 180
+const SEGMENTS_RELATIVE_DISPLAY_WIDTH = 76.5;
+const SEGMENTS_RELATIVE_DISPLAY_HEIGHT = 99;
+
+container width 180
+const _SHADOKS_RELATIVE_DISPLAY_WIDTH = 100;
+const _SHADOKS_RELATIVE_DISPLAY_HEIGHT = 100;
+
+* */
 class CCITTSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;

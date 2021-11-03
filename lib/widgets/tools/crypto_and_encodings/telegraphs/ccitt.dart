@@ -140,7 +140,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
     return Column(
       children: <Widget>[
         Container(
-          width: 200,
+          //width: 200,
           height: 60,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
@@ -186,7 +186,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        tapeStyle: true,
+        //tapeStyle: true,
         segmentFunction:(displayedSegments, readOnly, tapeStyle) {
           return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
         },
