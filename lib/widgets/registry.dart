@@ -7366,6 +7366,18 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_POSTNET,
         SEARCHSTRING_FR_SYMBOL_POSTNET
       ]),
+      GCWSymbolTableTool(symbolKey: 'prussian_colors_artillery', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_PRUSSIAN_COLORS,
+        SEARCHSTRING_DE_SYMBOL_PRUSSIAN_COLORS,
+        SEARCHSTRING_EN_SYMBOL_PRUSSIAN_COLORS,
+        SEARCHSTRING_FR_SYMBOL_PRUSSIAN_COLORS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_PRUSSIAN_COLORS,
+        SEARCHSTRING_DE_SYMBOL_PRUSSIAN_COLORS,
+        SEARCHSTRING_EN_SYMBOL_PRUSSIAN_COLORS,
+        SEARCHSTRING_FR_SYMBOL_PRUSSIAN_COLORS
+      ]),
       GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PUZZLE,
         SEARCHSTRING_DE_SYMBOL_PUZZLE,

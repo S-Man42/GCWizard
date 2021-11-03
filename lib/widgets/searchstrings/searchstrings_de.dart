@@ -503,6 +503,7 @@ const SEARCHSTRING_DE_SYMBOL_POKEMON_UNOWN = '';
 const SEARCHSTRING_DE_SYMBOL_POSTCODE01247 = 'deutsche zielcode anschriftencode postcode, adresscode strichcode';
 const SEARCHSTRING_DE_SYMBOL_POSTCODE8421 = 'deutsche zielcode anschriftencode postcode, adresscode strichcode';
 const SEARCHSTRING_DE_SYMBOL_POSTNET = '';
+const SEARCHSTRING_DE_SYMBOL_PRUSSIAN_COLORS = 'preußen preuische farben folge lehre';
 const SEARCHSTRING_DE_SYMBOL_PUZZLE = 'puzzles puzzleteile';
 const SEARCHSTRING_DE_SYMBOL_QUADOO = 'blindenschrift punkte taktile reliefschrift';
 const SEARCHSTRING_DE_SYMBOL_REALITY = 'realitaet';
