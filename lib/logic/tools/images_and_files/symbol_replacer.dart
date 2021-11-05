@@ -10,8 +10,7 @@ import 'package:universal_html/html.dart';
 ///
 /// Credit for the AverageHash implementation to David Oftedal of the University of Oslo.
 /// </summary>
-class _ImageHashing
-{
+class ImageHashing {
   /// Private constants and utility methods
   /// <summary>
   /// Bitcounts array used for BitCount method (used in Similarity comparisons).
@@ -26,8 +25,7 @@ class _ImageHashing
   4,5,5,6,5,6,6,7,1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,
   2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,3,4,4,5,4,5,5,6,4,5,5,6,5,6,6,7,2,3,3,4,3,4,4,5,
   3,4,4,5,4,5,5,6,3,4,4,5,4,5,5,6,4,5,5,6,5,6,6,7,3,4,4,5,4,5,5,6,4,5,5,6,5,6,6,7,
-  4,5,5,6,5,6,6,7,5,6,6,7,6,7,7,8
-  ]);
+  4,5,5,6,5,6,6,7,5,6,6,7,6,7,7,8]);
 
   /// <summary>
   /// Counts bits (duh). Utility function for similarity.
@@ -73,12 +71,12 @@ class _ImageHashing
         int gray = (pixel & 0x00ff0000) >> 16;
         gray += (pixel & 0x0000ff00) >> 8;
         gray += (pixel & 0x000000ff);
-        gray = (gray / 12 as int);
+        gray = (gray / 12).toInt();
 
         grayscale[x + (y * 8)] = gray;
         averageValue += gray;
       }
-    averageValue = (averageValue / 64 as int);
+    averageValue = (averageValue / 64).toInt();
 
     // Compute the hash: each bit is a pixel
     // 1 = higher than average, 0 = lower than average
