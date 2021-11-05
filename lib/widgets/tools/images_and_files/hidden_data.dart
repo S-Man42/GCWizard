@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
@@ -344,8 +342,5 @@ openInHiddenData(BuildContext context, PlatformFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HiddenData(platformFile: file),
-              toolName: i18n(context, 'hiddendata_title'),
-              i18nPrefix: '',
-              helpLocales: ['de', 'en', 'fr'])));
+              tool: HiddenData(platformFile: file), toolName: i18n(context, 'hiddendata_title'), i18nPrefix: '')));
 }

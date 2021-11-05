@@ -92,7 +92,6 @@ class GCWTool extends StatefulWidget {
   final List<String> searchStrings;
   String indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
-  final List<String> helpLocales;
   final bool suppressHelpButton;
   final String helpSearchString;
   final isBeta;
@@ -118,7 +117,6 @@ class GCWTool extends StatefulWidget {
       this.iconPath,
       this.searchStrings,
       this.buttonList,
-      this.helpLocales,
       this.helpSearchString,
       this.isBeta: false,
       this.suppressHelpButton: false})

@@ -295,7 +295,8 @@ String typeOfJewYear(int yearlength) {
     return "embolistic, regular";
   } else if (yearlength == 385) {
     return "embolistic, complete";
-  } else return("common");
+  } else
+    return ("common");
 }
 
 List<int> jewDayAndMonthInYear(int days, yearlength) {

@@ -55,10 +55,7 @@ class App extends StatelessWidget {
                 // Required extra way because normal Navigator.of(context) way
                 // crashes because of some NULL problems on TextSelectionControls menu
                 'clipboard_editor': (BuildContext context) => GCWTool(
-                    tool: GCWClipboardEditor(),
-                    toolName: i18n(context, 'clipboardeditor_title'),
-                    i18nPrefix: '',
-                    helpLocales: ['de', 'en', 'fr'])
+                    tool: GCWClipboardEditor(), toolName: i18n(context, 'clipboardeditor_title'), i18nPrefix: '')
               },
             );
           });
