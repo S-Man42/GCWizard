@@ -135,6 +135,7 @@ flutter:
     - assets/symbol_tables/flags/
     - assets/symbol_tables/flags_german_kriegsmarine/
     - assets/symbol_tables/flags_nato/
+    - assets/symbol_tables/flags_uk_howe/
     - assets/symbol_tables/fonic/
     - assets/symbol_tables/four_triangles/
     - assets/symbol_tables/freemason/
