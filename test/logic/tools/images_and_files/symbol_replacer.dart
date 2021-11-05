@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'dart:ui' as ui;
+import 'package:image/image.dart' as Image;
 
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:path/path.dart' as path;
@@ -30,10 +31,8 @@ main() async {
 //1: 1737396032347322400
 //similarity: 50
 
-Future<ui.Image> readImage(String _path) async {
+Future<Image.Image> readImage(String _path) async {
   var bytes = await readByteDataFromFile(_path);
-  ui.Codec codec = await ui.instantiateImageCodec(bytes);
-  ui.FrameInfo fi = await codec.getNextFrame();
 
-  return fi.image;
+  return Image.decodeImage(bytes);
 }
