@@ -17,7 +17,7 @@ class _Symbol {
   Image.Image bmp; // bitmap;
   int hash;
   _SymbolRow row;
-  _SymbolGroup symbolGroup;
+  SymbolGroup symbolGroup;
 
   _Symbol(ui.Offset refPoint, Image.Image bitmap, _SymbolRow row) {
     this.refPoint = refPoint;
@@ -26,12 +26,21 @@ class _Symbol {
   }
 }
 
-class _SymbolGroup {
+class SymbolGroup {
   String text;
   var symbolList = <_Symbol>[];
 }
 
-List<_SymbolGroup> splitAndGroupSymbols(Image.Image bmp, int blackLevel, int similarityLevel, {int gap = 1}) {
+List<SymbolGroup> splitAndGroupSymbols(Uint8List image, int blackLevel, int similarityLevel, {int gap = 1}) {
+  if (image == null) return null;
+
+  var bmp = Image.decodeImage(image);
+  if (bmp == null) return null;
+  return _splitAndGroupSymbols(bmp, blackLevel, similarityLevel, gap: gap);
+}
+
+
+List<SymbolGroup> _splitAndGroupSymbols(Image.Image bmp, int blackLevel, int similarityLevel, {int gap = 1}) {
   var symbols = <_Symbol>[];
   blackLevel = (blackLevel * 255/100).toInt();
 
@@ -45,7 +54,7 @@ List<_SymbolGroup> splitAndGroupSymbols(Image.Image bmp, int blackLevel, int sim
 }
 
 //region Merge Data
-Image.Image mergeSymbolData(Image.Image image, List<_SymbolGroup> symbolGroups) {
+Image.Image mergeSymbolData(Image.Image image, List<SymbolGroup> symbolGroups) {
   var bmp = Image.Image(image.width, image.height);
 
   Image.drawRect(bmp, 0, 0, bmp.width, bmp.height, Colors.white.value);
@@ -69,9 +78,9 @@ Image.Image mergeSymbolData(Image.Image image, List<_SymbolGroup> symbolGroups) 
 //endregion
 
 //region group symbols
-List<_SymbolGroup> _groupSymbols(List<_Symbol> symbols, double similarityLevel) {
-  var groups = <_SymbolGroup>[];
-  var imageHashing = new _ImageHashing();
+List<SymbolGroup> _groupSymbols(List<_Symbol> symbols, double similarityLevel) {
+  var groups = <SymbolGroup>[];
+  var imageHashing = new ImageHashing();
 
   for (int i = 0; i < symbols.length - 1; i++)
     symbols[i].hash = imageHashing.AverageHash(symbols[i].bmp);
@@ -92,13 +101,13 @@ List<_SymbolGroup> _groupSymbols(List<_Symbol> symbols, double similarityLevel) 
     }
 
     if ((maxPercent < similarityLevel) | ((maxPercentIndex > i))) {
-      var group = new _SymbolGroup();
+      var group = new SymbolGroup();
       groups.add(group);
       groups[groups.length - 1].symbolList.add(symbol1);
       symbol1.symbolGroup = group;
     } else {
       var image2 = symbols[maxPercentIndex];
-      for (_SymbolGroup group in groups) {
+      for (SymbolGroup group in groups) {
         if (group.symbolList.contains(image2)) {
           group.symbolList.add(symbol1);
           symbol1.symbolGroup = group;
@@ -110,7 +119,7 @@ List<_SymbolGroup> _groupSymbols(List<_Symbol> symbols, double similarityLevel) 
   return groups;
 }
 
-Image.Image buildSymbolGroupView(_SymbolGroup symbolGroup, {int height = 0}) {
+Image.Image buildSymbolGroupView(SymbolGroup symbolGroup, {int height = 0}) {
   var targetRatio = 3;
   bool cancel = false;
   var cancelCounter = 0;
@@ -176,7 +185,7 @@ List<_Symbol> _splitLineToSymbols(_Symbol line, int gap, int blackLevel) {
   var symbols = <_Symbol>[];
   var emptyColumnIndex = <int>[];
 
-  for (int x = 0; x < line.bmp.width - 1; x++) {
+  for (int x = 0; x < line.bmp.width; x++) {
     var emptyColumn = true;
     for (int y = 0; y < line.bmp.height; y++) {
       var pixel = line.bmp.getPixel(x, y);
@@ -192,17 +201,16 @@ List<_Symbol> _splitLineToSymbols(_Symbol line, int gap, int blackLevel) {
   if (emptyColumnIndex.length > 0) {
     emptyColumnIndex = _removeGapColumns(emptyColumnIndex, gap);
 
-    if (emptyColumnIndex[0] != 0)
-      _cutSymbol(line, 0, emptyColumnIndex[0] - 1, symbols, blackLevel);
+    if (emptyColumnIndex.first != 0)
+      _cutSymbol(line, 0, emptyColumnIndex.first - 1, symbols, blackLevel);
 
-    for (int i = 1; i < emptyColumnIndex.length - 1; i++) {
+    for (int i = 1; i < emptyColumnIndex.length; i++) {
       if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1)
-        _cutSymbol(line, emptyColumnIndex[i - 1], emptyColumnIndex[i], symbols, blackLevel);
+        _cutSymbol(line, emptyColumnIndex[i - 1] + 1, emptyColumnIndex[i] - 1, symbols, blackLevel);
     }
 
-    if ((emptyColumnIndex[emptyColumnIndex.length - 1] != line.bmp.width - 1) &
-      (emptyColumnIndex[emptyColumnIndex.length - 1] != 0))
-      _cutSymbol(line, emptyColumnIndex[emptyColumnIndex.length - 1] + 1, line.bmp.width - 1, symbols, blackLevel);
+    if ((emptyColumnIndex.last != line.bmp.width - 1) & (emptyColumnIndex.last != 0))
+      _cutSymbol(line, emptyColumnIndex.last + 1, line.bmp.width - 1, symbols, blackLevel);
   }
 
   return symbols;
@@ -288,8 +296,8 @@ List<_Symbol> _splitToLines(Image.Image bmp, int blackLevel) {
   // split lines
   if (emptyLineIndex.length > 0)
   {
-    if (emptyLineIndex[0] != 0)
-      _cutLine(bmp, 0, emptyLineIndex[0] - 1, lines);
+    if (emptyLineIndex.first != 0)
+      _cutLine(bmp, 0, emptyLineIndex.first - 1, lines);
 
     for (int i = 1; i < emptyLineIndex.length; i++)
     {
@@ -297,8 +305,8 @@ List<_Symbol> _splitToLines(Image.Image bmp, int blackLevel) {
         _cutLine(bmp, emptyLineIndex[i - 1] + 1, emptyLineIndex[i] - 1, lines);
     }
 
-    if ((emptyLineIndex[emptyLineIndex.length - 1] != bmp.height - 1) & (emptyLineIndex[emptyLineIndex.length - 1] != 0))
-      _cutLine(bmp, emptyLineIndex[emptyLineIndex.length - 1] + 1, bmp.height - 1, lines);
+    if ((emptyLineIndex.last != bmp.height - 1) & (emptyLineIndex.last != 0))
+      _cutLine(bmp, emptyLineIndex.last + 1, bmp.height - 1, lines);
   }
 
   return lines;
@@ -318,11 +326,12 @@ ui.Rect _cutLine(Image.Image bmp, int startIndex, int endIndex, List<_Symbol> li
   if (rect.height > 0)
     lines.add(new _Symbol(rect.topLeft,
         Image.copyCrop(bmp,
-            rect.top.toInt(),
             rect.left.toInt(),
+            rect.top.toInt(),
             rect.width.toInt(),
             rect.height.toInt()),
-        new _SymbolRow(rect)));
+        new _SymbolRow(rect)
+    ));
 
   return rect;
 }
@@ -339,7 +348,7 @@ bool _blackPixel(int color, int blackLevel) {
 ///
 /// Credit for the AverageHash implementation to David Oftedal of the University of Oslo.
 /// </summary>
-class _ImageHashing {
+class ImageHashing {
   /// Private constants and utility methods
   /// <summary>
   /// Bitcounts array used for BitCount method (used in Similarity comparisons).

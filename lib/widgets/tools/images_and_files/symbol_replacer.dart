@@ -1,0 +1,276 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
+import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:intl/intl.dart';
+
+class SymbolReplacer extends StatefulWidget {
+  final local.PlatformFile platformFile;
+
+  const SymbolReplacer({Key key, this.platformFile}) : super(key: key);
+
+  @override
+  SymbolReplacerState createState() => SymbolReplacerState();
+}
+
+class SymbolReplacerState extends State<SymbolReplacer> {
+  List<SymbolGroup> _symbolGroups;
+  local.PlatformFile _platformFile;
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.platformFile != null) {
+      _platformFile = widget.platformFile;
+      //_analysePlatformFileAsync();
+    }
+
+    return Column(children: <Widget>[
+      GCWOpenFile(
+        supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+        onLoaded: (_file) {
+          if (_file == null) {
+            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+            return;
+          }
+
+          if (_file != null) {
+            setState(() {
+              _platformFile = _file;
+              _analysePlatformFileAsync();
+            });
+          }
+        },
+      ),
+      GCWDefaultOutput(
+          child: _buildList(),
+          // trailing: Row(children: <Widget>[
+          //   GCWIconButton(
+          //     iconData: Icons.play_arrow,
+          //     size: IconButtonSize.SMALL,
+          //     iconColor: _outData != null && !_play ? null : themeColors().inActive(),
+          //     onPressed: () {
+          //       setState(() {
+          //         _play = (_outData != null);
+          //       });
+          //     },
+          //   ),
+          //   GCWIconButton(
+          //     iconData: Icons.stop,
+          //     size: IconButtonSize.SMALL,
+          //     iconColor: _play ? null : themeColors().inActive(),
+          //     onPressed: () {
+          //       setState(() {
+          //         _play = false;
+          //       });
+          //     },
+          //   ),
+          //   GCWIconButton(
+          //     iconData: Icons.save,
+          //     size: IconButtonSize.SMALL,
+          //     iconColor: _outData == null ? themeColors().inActive() : null,
+          //     onPressed: () {
+          //       _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
+          //     },
+          //   )
+          // ])
+      )
+    ]);
+  }
+
+  // _buildOutput() {
+  //   if (_outData == null) return null;
+  //
+  //   var durations = <List<dynamic>>[];
+  //   if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
+  //     var counter = 0;
+  //     durations.addAll([
+  //       [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
+  //     ]);
+  //     _outData["durations"].forEach((value) {
+  //       counter++;
+  //       durations.addAll([
+  //         [counter, value]
+  //       ]);
+  //     });
+  //   }
+  //   ;
+  //
+  //   return Column(children: <Widget>[
+  //     _play
+  //         ? Image.memory(_platformFile.bytes)
+  //         : GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
+  //     _buildDurationOutput(durations)
+  //   ]);
+  // }
+
+
+  // List<GCWImageViewData> _convertImageData(List<Uint8List> images, List<int> durations) {
+  //   var list = <GCWImageViewData>[];
+  //
+  //   if (images != null) {
+  //     var imageCount = images.length;
+  //     for (var i = 0; i < images.length; i++) {
+  //       String description = (i + 1).toString() + '/$imageCount';
+  //       if ((durations != null) && (i < durations.length)) {
+  //         description += ': ' + durations[i].toString() + ' ms';
+  //       }
+  //       list.add(GCWImageViewData(local.PlatformFile(bytes: images[i]), description: description));
+  //     }
+  //     ;
+  //   }
+  //   ;
+  //   return list;
+  // }
+
+  _analysePlatformFileAsync() {
+    _symbolGroups = splitAndGroupSymbols(_platformFile.bytes, 50, 90);
+
+  }
+
+  // _analysePlatformFileAsync() async {
+  //   await showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (context) {
+  //       return Center(
+  //         child: Container(
+  //           child: GCWAsyncExecuter(
+  //             isolatedFunction: analyseImageAsync,
+  //             parameter: _buildJobData(),
+  //             onReady: (data) => _showOutput(data),
+  //             isOverlay: true,
+  //           ),
+  //           height: 220,
+  //           width: 150,
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    return GCWAsyncExecuterParameters(_platformFile.bytes);
+  }
+
+  // _showOutput(Map<String, dynamic> output) {
+  //   _outData = output;
+  //
+  //   // restore image references (problem with sendPort, lose references)
+  //   if (_outData != null) {
+  //     List<Uint8List> images = _outData["images"];
+  //     List<int> linkList = _outData["linkList"];
+  //     for (int i = 0; i < images.length; i++) {
+  //       images[i] = images[linkList[i]];
+  //     }
+  //   } else {
+  //     showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+  //     return;
+  //   }
+  //
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     setState(() {});
+  //   });
+  // }
+
+  Widget _buildList() {
+    if (_symbolGroups == null)
+      return Container();
+
+    var odd = false;
+    List<Widget> rows;
+    rows = _symbolGroups.map((entry) {
+      odd = !odd;
+      return _buildRow(entry, odd);
+    }).toList();
+
+    // if (rows.length > 0 && widget.dividerText != null) {
+    //   rows.insert(0, GCWTextDivider(text: widget.dividerText));
+    // }
+
+    // if (rows.length > 0 && widget.listHeaderWidget != null) {
+    //   rows.insert(0, widget.listHeaderWidget);
+    // }
+
+    return Column(children: rows);
+  }
+
+  Widget _buildRow(SymbolGroup entry, bool odd) {
+    Widget output;
+
+    var row = Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Image.memory(encodeTrimmedPng(entry.symbolList.first.bmp)) //encodeTrimmedPng( buildSymbolGroupView(entry))) //encodeTrimmedPng(entry.symbolList[0].bmp)
+                ),
+              flex: 2,
+            ),
+            Icon(
+              Icons.arrow_forward,
+              color: themeColors().mainFont(),
+            ),
+            Expanded(
+                child: Container(
+                  child:  GCWTextField(
+                    // controller: _editValueController,
+                    // inputFormatters: widget.valueInputFormatters,
+                    autofocus: true,
+                    onChanged: (text) {
+                      setState(() {
+                        entry.text = text;
+                      });
+                    },
+                  )
+                ),
+                flex: 3),
+            //_editButton(entry),
+            GCWIconButton(
+              iconData: Icons.remove,
+              onPressed: () {
+                setState(() {
+                  //if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
+                });
+              },
+            )
+          ],
+        ));
+
+    if (odd) {
+      output = Container(color: themeColors().outputListOddRows(), child: row);
+    } else {
+      output = Container(child: row);
+    }
+
+    return output;
+  }
+
+  _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
+    createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
+      var fileType = FileType.ZIP;
+      var value = await saveByteDataToFile(context, bytes,
+          'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+
+      if (value != null) showExportedFileDialog(context, fileType: fileType);
+    });
+  }
+}
+

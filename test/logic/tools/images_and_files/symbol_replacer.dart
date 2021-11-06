@@ -7,7 +7,7 @@ import 'package:path/path.dart' as path;
 import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
 
 main() async {
-  var imageHashing =ImageHashing();
+  var imageHashing = ImageHashing();
   print(path.join('D:', 'bmp0.bmp'));
   var image1 = await readImage(path.join('D:', 'bmp0.bmp'));
   var image2 = await readImage(path.join('D:', 'bmp1.bmp'));

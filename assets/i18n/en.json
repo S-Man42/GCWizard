@@ -4206,6 +4206,8 @@
   "symboltables_zodiac_z340_description": "Without the letters JKQXZ, because they were not used in the message",
   "symboltables_zodiac_z408_title": "Zodiac Killer Z408",
   "symboltables_zodiac_z408_description": "Without the letters JQZ, because they were not used in the message",
+  "symbol_replacer_title": "Symbol Replacer",
+  "symbol_replacer_description": "Replace symbols with characters in pictures",
   "tapcode_title": "Tap Code",
   "tapcode_description": "A special case of the Polybios cipher",
   "tapcode_example": "ABCXYZ → 11 12 13 53 54 55",

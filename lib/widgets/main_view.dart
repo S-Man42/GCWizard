@@ -149,6 +149,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -558,6 +559,7 @@ class _MainViewState extends State<MainView> {
         className(SummerSimmerIndex()),
         className(SunPosition()),
         className(SunRiseSet()),
+        className(SymbolReplacer()),
         className(SymbolTableSelection()),
         className(TapCode()),
         className(Tapir()),

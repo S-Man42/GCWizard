@@ -233,6 +233,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -1096,6 +1097,14 @@ class Registry {
         SEARCHSTRING_DE_STEGANO,
         SEARCHSTRING_EN_STEGANO,
         SEARCHSTRING_FR_STEGANO
+      ]),
+      GCWTool(tool: SymbolReplacer(), i18nPrefix: 'symbol_replacer', isBeta: true, categories: [
+        ToolCategory.IMAGES_AND_FILES
+      ], helpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_REPLACER,
+        SEARCHSTRING_DE_SYMBOL_REPLACER,
+        SEARCHSTRING_EN_SYMBOL_REPLACER,
+        SEARCHSTRING_FR_SYMBOL_REPLACER
       ]),
       GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
         ToolCategory.CRYPTOGRAPHY

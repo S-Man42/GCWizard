@@ -427,7 +427,6 @@ const SEARCHSTRING_DE_SYMBOL_GNOMMISH = 'gnomisch';
 const SEARCHSTRING_DE_SYMBOL_GREEK_NUMERALS = 'zahlen ziffern griechisches zahlschrift';
 const SEARCHSTRING_DE_SYMBOL_HANJA = '';
 const SEARCHSTRING_DE_SYMBOL_HANGUL = 'hangeul';
-const SEARCHSTRING_DE_SYMBOL_SINO_KOREAN = 'sinokoreanisch';
 const SEARCHSTRING_DE_SYMBOL_HAZARD =
     'gefahren gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen';
 const SEARCHSTRING_DE_SYMBOL_HEBREW = 'hebraeisches juden juedisches';
@@ -507,6 +506,7 @@ const SEARCHSTRING_DE_SYMBOL_PUZZLE = 'puzzles puzzleteile';
 const SEARCHSTRING_DE_SYMBOL_QUADOO = 'blindenschrift punkte taktile reliefschrift';
 const SEARCHSTRING_DE_SYMBOL_REALITY = 'realitaet';
 const SEARCHSTRING_DE_SYMBOL_RED_HERRING = 'roter hering  fische';
+const SEARCHSTRING_DE_SYMBOL_REPLACER = 'symbole ersetzen bild';
 const SEARCHSTRING_DE_SYMBOL_RHESUS =
     'tintenkleckse farbkleckse farbspritzer blutspritzer blutgruppen  bluttropfen blutstropfen farbtropfen farbflecken blutflecken tintenflecken';
 const SEARCHSTRING_DE_SYMBOL_RM4SCC = 'australien daenemark oesterreich schweiz holland niederlande singapur england';
@@ -516,6 +516,7 @@ const SEARCHSTRING_DE_SYMBOL_SANLUCA = 'kalabrien kalabrische';
 const SEARCHSTRING_DE_SYMBOL_SARATI = 'lautschrift schriftsystem elbisches elben derherrderringe';
 const SEARCHSTRING_DE_SYMBOL_SEMAPHORE = 'winkeralphabet flaggenalphabet';
 const SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE = 'gebaerdensprache gehoerloses taubstummes haende fingers daumen';
+const SEARCHSTRING_DE_SYMBOL_SINO_KOREAN = 'sinokoreanisch';
 const SEARCHSTRING_DE_SYMBOL_SKULLZ = 'totenkopf totenkoepfe schaedel piraten';
 const SEARCHSTRING_DE_SYMBOL_SLASH_AND_PIPE = '';
 const SEARCHSTRING_DE_SYMBOL_SOLMISATION = 'notensystem tonstufen musiktheorie';
