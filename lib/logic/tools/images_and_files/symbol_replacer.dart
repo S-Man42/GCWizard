@@ -2,13 +2,345 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
+
+
+SymbolImage replaceSymbols(Uint8List image, int blackLevel, int similarityLevel, {SymbolImage symbolImage, int gap = 1}) {
+  if (symbolImage == null)
+    symbolImage = SymbolImage(image);
+  symbolImage.splitAndGroupSymbols( blackLevel, similarityLevel, gap: gap);
+
+  return symbolImage;
+}
+
+class SymbolImage {
+  Uint8List _image;
+  Image.Image _bmp;
+  Image.Image _outputImage;
+  Uint8List _outputImageBytes;
+
+  List<_SymbolRow> lines = [];
+  List<_Symbol> symbols = [];
+  List<SymbolGroup> symbolGroups = [];
+
+  int _blackLevel;
+  double _similarityLevel;
+  int _gap;
+
+  SymbolImage(Uint8List image) {
+    _image = image;
+    _outputImageBytes = image;
+  }
+
+  Uint8List getImage() {
+    if (_outputImageBytes != null)
+      return _outputImageBytes;
+
+    _outputImageBytes = encodeTrimmedPng(_outputImage);
+    return _outputImageBytes;
+  }
+
+  String getTextOutput() {
+    var output = "";
+    lines.forEach((line) {
+      line.symbols.forEach((symbol) {
+        output += symbol.symbolGroup?.text != null ? symbol.symbolGroup.text : '';
+      });
+      output += '\r\n';
+    });
+    return output;
+  }
+
+  splitAndGroupSymbols(int blackLevel, int similarityLevel, {int gap = 1}) {
+    if (_image == null) return;
+    if (_bmp == null)
+      _bmp = Image.decodeImage(_image);
+    if (_bmp == null) return;
+    if (blackLevel == null) return;
+    if (similarityLevel == null) return;
+
+    blackLevel = (blackLevel * 255/100).toInt();
+    if (_blackLevel != blackLevel) {
+      lines = <_SymbolRow>[];
+      symbols = <_Symbol>[];
+      symbolGroups == <SymbolGroup>[];
+    }
+    _blackLevel = blackLevel;
+
+    if (_gap != gap) {
+      symbols = <_Symbol>[];
+      symbolGroups == <SymbolGroup>[];
+    }
+    _gap = gap;
+
+    if (_similarityLevel != similarityLevel.toDouble())
+      symbolGroups == <SymbolGroup>[];
+    _similarityLevel = similarityLevel.toDouble();
+
+    if (lines.isEmpty)
+      _splitToLines();
+
+    if (symbols.isEmpty)
+      lines.forEach((line) {
+        line._splitLineToSymbols( gap, _blackLevel);
+        symbols.addAll(line.symbols);
+      });
+
+    if (symbolGroups.isEmpty)
+      _groupSymbols();
+
+    var mergeText = false;
+    for (SymbolGroup group in symbolGroups) {
+      if (group.text != null || group.text != '') {
+        mergeText = true;
+        break;
+      }
+    }
+
+    if (mergeText) {
+      _outputImage = _mergeSymbolData();
+      _outputImageBytes = null;
+    } else {
+      _outputImage = _bmp;
+      _outputImageBytes = _image;
+    }
+  }
+
+  Image.Image _mergeSymbolData() {
+    var bmp = Image.Image(_bmp.width, _bmp.height);
+
+    Image.fillRect(bmp, 0, 0, bmp.width, bmp.height, Colors.white.value);
+
+    symbolGroups.forEach((symbolGroup) {
+      if ((symbolGroup.text == null) || (symbolGroup.text == '') ) {
+        symbolGroup.symbolList.forEach((symbol) {
+          Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt() );
+        });
+      } else {
+        var font = Image.arial_14;
+        var color = Colors.red.value;
+        symbolGroup.symbolList.forEach((symbol) {
+          if (symbol.row.size.height <= 24)
+            font = Image.arial_14;
+          else if (symbol.row.size.height <= 48)
+            font = Image.arial_24;
+          else
+            font = Image.arial_48;
+          Image.drawString(bmp, font, symbol.refPoint.dx.toInt(), symbol.row.size.bottom.toInt(), symbolGroup.text, color: color);
+        });
+      }
+    });
+
+    return bmp;
+  }
+
+  _splitToLines() {
+    var emptyLineIndex = <int>[];
+
+    // search empty lines
+    for (int y = 0; y < _bmp.height; y++)
+      if (_emptyRow(_bmp, 0, _bmp.width - 1, y, _blackLevel)) emptyLineIndex.add(y);
+
+    // split lines
+    if (emptyLineIndex.length > 0) {
+      if (emptyLineIndex.first != 0)
+        _cutLine(0, emptyLineIndex.first - 1);
+
+      for (int i = 1; i < emptyLineIndex.length; i++) {
+        if (emptyLineIndex[i - 1] != emptyLineIndex[i] - 1)
+          _cutLine( emptyLineIndex[i - 1] + 1, emptyLineIndex[i] - 1);
+      }
+
+      if ((emptyLineIndex.last != _bmp.height - 1) & (emptyLineIndex.last != 0))
+        _cutLine(emptyLineIndex.last + 1, _bmp.height - 1);
+    }
+  }
+
+  _cutLine(int startIndex, int endIndex) {
+    var rect = new ui.Rect.fromLTWH(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
+
+    if (rect.height > 0)
+      lines.add(_SymbolRow(rect,
+          Image.copyCrop(_bmp,
+              rect.left.toInt(),
+              rect.top.toInt(),
+              rect.width.toInt(),
+              rect.height.toInt())
+      ));
+  }
+
+  _groupSymbols() {
+    var imageHashing = new ImageHashing();
+
+    for (int i = 0; i < symbols.length; i++)
+      symbols[i].hash = imageHashing.AverageHash(symbols[i].bmp);
+
+    for (int i = 0; i < symbols.length; i++) {
+      double maxPercent = 0;
+      int maxPercentIndex = 0;
+
+      _Symbol symbol1 = symbols[i];
+
+      for (int x = 0; x < i; x++) {
+        var similarity = imageHashing.Similarity(
+            symbols[i].hash, symbols[x].hash);
+        if (similarity > maxPercent) {
+          maxPercent = similarity;
+          maxPercentIndex = x;
+        }
+      }
+
+      if ((maxPercent < _similarityLevel) | ((maxPercentIndex > i))) {
+        var group = new SymbolGroup();
+        symbolGroups.add(group);
+        symbolGroups[symbolGroups.length - 1].symbolList.add(symbol1);
+        symbol1.symbolGroup = group;
+      } else {
+        var image2 = symbols[maxPercentIndex];
+        for (SymbolGroup group in symbolGroups) {
+          if (group.symbolList.contains(image2)) {
+            group.symbolList.add(symbol1);
+            symbol1.symbolGroup = group;
+            break;
+          }
+        };
+      }
+    }
+  }
+
+  static bool _emptyRow(Image.Image bmp, int startColumn, int endColumn, int row, int blackLevel) {
+    for (int x = startColumn; x <= endColumn; x++) {
+      var pixel = bmp.getPixel(x, row);
+      if (_blackPixel(pixel, blackLevel)) return false;
+    }
+    return true;
+  }
+
+  static bool _blackPixel(int color, int blackLevel) {
+    return (Image.getLuminance(color) <= blackLevel);
+  }
+}
 
 class _SymbolRow {
   ui.Rect size;
+  Image.Image bmp;
+  var symbols = <_Symbol>[];
+  Uint8List _outputImageBytes;
 
-  _SymbolRow(ui.Rect size) {
+  _SymbolRow(ui.Rect size, Image.Image bmp) {
     this.size = size;
+    this.bmp = bmp;
+  }
+
+  Uint8List getImage() {
+    if (_outputImageBytes != null)
+      return _outputImageBytes;
+
+    _outputImageBytes = encodeTrimmedPng(bmp);
+    return _outputImageBytes;
+  }
+
+  _splitLineToSymbols(int gap, int blackLevel) {
+    var emptyColumnIndex = <int>[];
+
+    for (int x = 0; x < bmp.width; x++) {
+      var emptyColumn = true;
+      for (int y = 0; y < bmp.height; y++) {
+        var pixel = bmp.getPixel(x, y);
+
+        if (SymbolImage._blackPixel(pixel, blackLevel)) {
+          emptyColumn = false;
+          break;
+        }
+      }
+      if (emptyColumn) emptyColumnIndex.add(x);
+    }
+
+    if (emptyColumnIndex.length > 0) {
+      emptyColumnIndex = _removeGapColumns(emptyColumnIndex, gap);
+
+      if (emptyColumnIndex.first != 0)
+        _cutSymbol(0, emptyColumnIndex.first - 1, blackLevel);
+
+      for (int i = 1; i < emptyColumnIndex.length; i++) {
+        if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1)
+          _cutSymbol(emptyColumnIndex[i - 1] + 1, emptyColumnIndex[i] - 1, blackLevel);
+      }
+
+      if ((emptyColumnIndex.last != bmp.width - 1) & (emptyColumnIndex.last != 0))
+        _cutSymbol(emptyColumnIndex.last + 1, bmp.width - 1, blackLevel);
+    }
+  }
+
+  List<int> _removeGapColumns(List<int> emptyColumnIndex, int gap) {
+    if (gap > 1) {
+      for (int i = emptyColumnIndex.length - 1 - gap; i > 0; i--) {
+        // previus column not empty ?
+        if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1) {
+          var emtyColumnsCount = _countEmptyColumns(emptyColumnIndex, i);
+
+          if (emtyColumnsCount <= gap)
+            for (int x = emtyColumnsCount - 1; x >= 0; x--)
+              emptyColumnIndex.removeAt(i + x);
+        }
+      }
+    }
+    return emptyColumnIndex;
+  }
+
+  int _countEmptyColumns(List<int> emptyColumnIndex, int startIndex) {
+    var counter = 1;
+    for (int i = startIndex; i < emptyColumnIndex.length - 1; i++) {
+      if (emptyColumnIndex[i] == emptyColumnIndex[i + 1] - 1)
+        counter++;
+      else
+        break;
+    }
+    return counter;
+  }
+
+  ui.Rect _cutSymbol(int startIndex, int endIndex, int blackLevel) {
+    var rect = new ui.Rect.fromLTWH(
+        startIndex.toDouble(),
+        0,
+        (endIndex - startIndex).toDouble(),
+        bmp.height.toDouble());
+
+    if (rect.width > 0) {
+      var box = _boundingBox(bmp, rect, blackLevel);
+      var refPoint = ui.Offset(box.left, box.top);
+      refPoint = refPoint.translate(size.left, size.top);
+      symbols.add(new _Symbol(refPoint,
+          Image.copyCrop(bmp,
+              box.left.toInt(),
+              box.top.toInt(),
+              box.width.toInt(),
+              box.height.toInt()),
+              this
+      ));
+    }
+    return rect;
+  }
+
+  ui.Rect _boundingBox(Image.Image bmp, ui.Rect rect, int blackLevel) {
+    var startRow = rect.top.toInt();
+    var endRow = rect.bottom.toInt() - 1;
+
+    for (int y = rect.top.toInt(); y <= rect.bottom - 1; y++) {
+      if (!SymbolImage._emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
+        startRow = y;
+        break;
+      }
+    }
+
+    for (int y = rect.bottom.toInt() - 1; y >= rect.top; y--) {
+      if (!SymbolImage._emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
+        endRow = y + 1;
+        break;
+      }
+    }
+    return ui.Rect.fromLTWH(rect.left, startRow.toDouble(), rect.width, (endRow - startRow).toDouble());
   }
 }
 
@@ -18,329 +350,99 @@ class _Symbol {
   int hash;
   _SymbolRow row;
   SymbolGroup symbolGroup;
+  Uint8List _outputImageBytes;
 
-  _Symbol(ui.Offset refPoint, Image.Image bitmap, _SymbolRow row) {
+
+  _Symbol(ui.Offset refPoint, Image.Image bmp, _SymbolRow row) {
     this.refPoint = refPoint;
-    this.bmp = bitmap;
+    this.bmp = bmp;
     this.row = row;
+  }
+
+  Uint8List getImage() {
+    if (_outputImageBytes != null)
+      return _outputImageBytes;
+
+    _outputImageBytes = encodeTrimmedPng(bmp);
+    return _outputImageBytes;
   }
 }
 
 class SymbolGroup {
   String text;
+  bool viewGroupImage = false;
   var symbolList = <_Symbol>[];
-}
+  Uint8List _outputImageGroupBytes;
 
-List<SymbolGroup> splitAndGroupSymbols(Uint8List image, int blackLevel, int similarityLevel, {int gap = 1}) {
-  if (image == null) return null;
+  Uint8List getImage() {
+    if (symbolList.isNotEmpty)
+      return symbolList.first.getImage();
+    return null;
+  }
 
-  var bmp = Image.decodeImage(image);
-  if (bmp == null) return null;
-  return _splitAndGroupSymbols(bmp, blackLevel, similarityLevel, gap: gap);
-}
+  Uint8List getGroupImage() {
+    if (_outputImageGroupBytes != null)
+      return _outputImageGroupBytes;
 
-
-List<SymbolGroup> _splitAndGroupSymbols(Image.Image bmp, int blackLevel, int similarityLevel, {int gap = 1}) {
-  var symbols = <_Symbol>[];
-  blackLevel = (blackLevel * 255/100).toInt();
-
-  var lines = _splitToLines(bmp, blackLevel);
-  lines.forEach((line) {
-    var lineSymbols = _splitLineToSymbols(line, gap, blackLevel);
-    symbols.addAll(lineSymbols);
-  });
-
-  return _groupSymbols(symbols, similarityLevel.toDouble());
-}
-
-//region Merge Data
-Image.Image mergeSymbolData(Image.Image image, List<SymbolGroup> symbolGroups) {
-  var bmp = Image.Image(image.width, image.height);
-
-  Image.drawRect(bmp, 0, 0, bmp.width, bmp.height, Colors.white.value);
-
-  symbolGroups.forEach((symbolGroup) {
-    if ((symbolGroup.text == null) || (symbolGroup.text == '') ) {
-      symbolGroup.symbolList.forEach((symbol) {
-        Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt() );
-      });
-    } else {
-      var font = Image.arial_14;
-      var color = Colors.red.value;
-      symbolGroup.symbolList.forEach((symbol) {
-        Image.drawString(bmp, font, symbol.refPoint.dx.toInt(), symbol.row.size.bottom.toInt(), symbolGroup.text, color: color);
-      });
+    var bmp = _buildSymbolGroupView();
+    if (bmp != null) {
+      _outputImageGroupBytes = encodeTrimmedPng(bmp);
+      return _outputImageGroupBytes;
     }
-  });
+  }
 
-  return bmp;
-}
-//endregion
+  Image.Image _buildSymbolGroupView( {int height = 0}) {
+    const gap = 2;
+    var targetRatio = 3;
+    bool cancel = false;
+    var cancelCounter = 0;
+    ui.Offset size;
+    ui.Offset rowSize;
+    var maxWidth = 999999999.0;
 
-//region group symbols
-List<SymbolGroup> _groupSymbols(List<_Symbol> symbols, double similarityLevel) {
-  var groups = <SymbolGroup>[];
-  var imageHashing = new ImageHashing();
-
-  for (int i = 0; i < symbols.length - 1; i++)
-    symbols[i].hash = imageHashing.AverageHash(symbols[i].bmp);
-
-  for (int i = 0; i < symbols.length - 1; i++) {
-    double maxPercent = 0;
-    int maxPercentIndex = 0;
-
-    _Symbol symbol1 = symbols[i];
-
-    for (int x = 0; x < i; x++) {
-      var similarity = imageHashing.Similarity(
-          symbols[i].hash, symbols[x].hash);
-      if (similarity > maxPercent) {
-        maxPercent = similarity;
-        maxPercentIndex = x;
-      }
-    }
-
-    if ((maxPercent < similarityLevel) | ((maxPercentIndex > i))) {
-      var group = new SymbolGroup();
-      groups.add(group);
-      groups[groups.length - 1].symbolList.add(symbol1);
-      symbol1.symbolGroup = group;
-    } else {
-      var image2 = symbols[maxPercentIndex];
-      for (SymbolGroup group in groups) {
-        if (group.symbolList.contains(image2)) {
-          group.symbolList.add(symbol1);
-          symbol1.symbolGroup = group;
-          break;
+    do {
+      size = new ui.Offset(0, 0);
+      rowSize = new ui.Offset(0, 0);
+      symbolList.forEach((symbol) {
+        if (rowSize.dx + symbol.bmp.width + gap > maxWidth) {
+          size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy);
+          rowSize = ui.Offset(0, 0);
         }
-      };
-    }
-  }
-  return groups;
-}
 
-Image.Image buildSymbolGroupView(SymbolGroup symbolGroup, {int height = 0}) {
-  var targetRatio = 3;
-  bool cancel = false;
-  var cancelCounter = 0;
-  ui.Offset size;
-  ui.Offset rowSize;
-  var maxWidth = 999999999.0;
+        rowSize = rowSize.translate(
+            symbol.bmp.width.toDouble() + gap,
+            max(rowSize.dy, symbol.bmp.height.toDouble() + gap) - rowSize.dy
+        );
+      });
+      size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy + gap);
 
-  do {
-    size = new ui.Offset(0, 0);
-    rowSize = new ui.Offset(0, 0);
-    symbolGroup.symbolList.forEach((symbol) {
-      if (rowSize.dx + symbol.bmp.width > maxWidth) {
-        size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy);
-        rowSize = new ui.Offset(0 ,0);
+      var ratio = size.dx / size.dy;
+      if (ratio > targetRatio && symbolList.length > 4)
+        maxWidth = (size.dx * (cancelCounter == 0 ? 1.0 / 2.0 : 2.0 / 3.0));
+      else
+        cancel = true;
+
+      cancelCounter++;
+    } while (!cancel && (cancelCounter < 6));
+
+    size = size.translate(-gap.toDouble(), -gap.toDouble());
+    var image = Image.Image(size.dx.toInt(), size.dy.toInt());
+    var offset = ui.Offset(0, 0);
+
+    var rowHeight = 0;
+    symbolList.forEach((symbol) {
+      if (offset.dx + symbol.bmp.width + gap > size.dx) {
+        offset.translate(-offset.dx, rowHeight.toDouble());
+        rowHeight = 0;
       }
-
-      rowSize = rowSize.translate(
-          symbol.bmp.width.toDouble(),
-          max(rowSize.dy, symbol.bmp.height.toDouble()) - rowSize.dy
-      );
+      Image.drawImage(image, symbol.bmp, dstX: offset.dx.toInt(), dstY: offset.dy.toInt());
+      offset = offset.translate(symbol.bmp.width.toDouble() + gap, 0);
+      rowHeight = max(rowHeight, symbol.bmp.height + gap);
     });
-    size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy);
-
-    var ratio = size.dx / size.dy;
-    if (ratio > targetRatio && symbolGroup.symbolList.length > 4)
-      maxWidth = (size.dx * (cancelCounter == 0 ? 1.0 / 2.0 : 2.0 / 3.0));
-    else
-      cancel = true;
-
-    cancelCounter++;
-  } while (!cancel && (cancelCounter < 6));
-
-
-
-  var image = Image.Image(size.dx.toInt(), size.dy.toInt());
-  var offset = ui.Offset(0, 0);
-
-  var rowHeight = 0;
-  symbolGroup.symbolList.forEach((symbol) {
-    if (offset.dx + symbol.bmp.width > size.dx) {
-      offset.translate(-offset.dx, rowHeight.toDouble());
-      rowHeight = 0;
-    }
-    Image.drawImage(image, symbol.bmp, dstX: offset.dx.toInt(), dstY: offset.dy.toInt());
-    offset = offset.translate(symbol.bmp.width.toDouble(), 0);
-    rowHeight = max(rowHeight, symbol.bmp.height);
-  });
-
-  // if (height > 0) {
-  //   height *= rowCount;
-  //   Image.GetThumbnailImageAbort myCallback = new Image.GetThumbnailImageAbort(ThumbnailCallback);
-  //   image = image.GetThumbnailImage((int)(image.Width * (double)height / image.Height), height, myCallback, IntPtr.Zero);
-  // }
-  return image;
-}
-
-
-//endregion
-
-//region clip symbols
-
-List<_Symbol> _splitLineToSymbols(_Symbol line, int gap, int blackLevel) {
-  var symbols = <_Symbol>[];
-  var emptyColumnIndex = <int>[];
-
-  for (int x = 0; x < line.bmp.width; x++) {
-    var emptyColumn = true;
-    for (int y = 0; y < line.bmp.height; y++) {
-      var pixel = line.bmp.getPixel(x, y);
-
-      if (_blackPixel(pixel, blackLevel)) {
-        emptyColumn = false;
-        break;
-      }
-    }
-    if (emptyColumn) emptyColumnIndex.add(x);
+    return image;
   }
-
-  if (emptyColumnIndex.length > 0) {
-    emptyColumnIndex = _removeGapColumns(emptyColumnIndex, gap);
-
-    if (emptyColumnIndex.first != 0)
-      _cutSymbol(line, 0, emptyColumnIndex.first - 1, symbols, blackLevel);
-
-    for (int i = 1; i < emptyColumnIndex.length; i++) {
-      if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1)
-        _cutSymbol(line, emptyColumnIndex[i - 1] + 1, emptyColumnIndex[i] - 1, symbols, blackLevel);
-    }
-
-    if ((emptyColumnIndex.last != line.bmp.width - 1) & (emptyColumnIndex.last != 0))
-      _cutSymbol(line, emptyColumnIndex.last + 1, line.bmp.width - 1, symbols, blackLevel);
-  }
-
-  return symbols;
 }
 
-List<int> _removeGapColumns(List<int> emptyColumnIndex, int gap) {
-  if (gap > 1) {
-    for (int i = emptyColumnIndex.length - 1 - gap; i > 0; i--) {
-      // previus column not empty ?
-      if (emptyColumnIndex[i - 1] != emptyColumnIndex[i] - 1) {
-        var emtyColumnsCount = _countEmptyColumns(emptyColumnIndex, i);
-
-        if (emtyColumnsCount <= gap)
-          for (int x = emtyColumnsCount - 1; x >= 0; x--)
-            emptyColumnIndex.removeAt(i + x);
-      }
-    }
-  }
-  return emptyColumnIndex;
-}
-
-int _countEmptyColumns(List<int> emptyColumnIndex, int startIndex) {
-  var counter = 1;
-  for (int i = startIndex; i < emptyColumnIndex.length - 1; i++) {
-    if (emptyColumnIndex[i] == emptyColumnIndex[i + 1] - 1)
-      counter++;
-    else
-      break;
-  }
-  return counter;
-}
-
-ui.Rect _cutSymbol(_Symbol line, int startIndex, int endIndex, List<_Symbol> symbols, int blackLevel) {
-  var rect = new ui.Rect.fromLTWH(
-      startIndex.toDouble(),
-      0,
-      (endIndex - startIndex).toDouble(),
-      line.bmp.height.toDouble());
-
-  if (rect.width > 0) {
-    var box = _boundingBox(line.bmp, rect, blackLevel);
-    var refPoint = ui.Offset(box.left, box.top);
-    refPoint = refPoint.translate(line.refPoint.dx, line.refPoint.dy);
-    symbols.add(new _Symbol(refPoint,
-        Image.copyCrop(line.bmp,
-            box.left.toInt(),
-            box.top.toInt(),
-            box.width.toInt(),
-            box.height.toInt()),
-        line.row));
-  }
-  return rect;
-}
-
-ui.Rect _boundingBox(Image.Image bmp, ui.Rect rect, int blackLevel) {
-  var startRow = rect.top.toInt();
-  var endRow = rect.bottom.toInt() - 1;
-
-  for (int y = rect.top.toInt(); y <= rect.bottom - 1; y++) {
-    if (!_emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
-      startRow = y;
-      break;
-    }
-  }
-
-  for (int y = rect.bottom.toInt() - 1; y >= rect.top; y--) {
-    if (!_emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
-      endRow = y + 1;
-      break;
-    }
-  }
-  return ui.Rect.fromLTWH(rect.left, startRow.toDouble(), rect.width, (endRow - startRow).toDouble());
-}
-
-List<_Symbol> _splitToLines(Image.Image bmp, int blackLevel) {
-  var lines = <_Symbol>[];
-  var emptyLineIndex = <int>[];
-
-  // search empty lines
-  for (int y = 0; y < bmp.height; y++)
-    if (_emptyRow(bmp, 0, bmp.width - 1, y, blackLevel)) emptyLineIndex.add(y);
-
-  // split lines
-  if (emptyLineIndex.length > 0)
-  {
-    if (emptyLineIndex.first != 0)
-      _cutLine(bmp, 0, emptyLineIndex.first - 1, lines);
-
-    for (int i = 1; i < emptyLineIndex.length; i++)
-    {
-      if (emptyLineIndex[i - 1] != emptyLineIndex[i] - 1)
-        _cutLine(bmp, emptyLineIndex[i - 1] + 1, emptyLineIndex[i] - 1, lines);
-    }
-
-    if ((emptyLineIndex.last != bmp.height - 1) & (emptyLineIndex.last != 0))
-      _cutLine(bmp, emptyLineIndex.last + 1, bmp.height - 1, lines);
-  }
-
-  return lines;
-}
-
-bool _emptyRow(Image.Image bmp, int startColumn, int endColumn, int row, int blackLevel) {
-  for (int x = startColumn; x <= endColumn; x++) {
-    var pixel = bmp.getPixel(x, row);
-    if (_blackPixel(pixel, blackLevel)) return false;
-  }
-  return true;
-}
-
-ui.Rect _cutLine(Image.Image bmp, int startIndex, int endIndex, List<_Symbol> lines) {
-  var rect = new ui.Rect.fromLTWH(0, startIndex.toDouble(), bmp.width.toDouble(), (endIndex - startIndex).toDouble());
-
-  if (rect.height > 0)
-    lines.add(new _Symbol(rect.topLeft,
-        Image.copyCrop(bmp,
-            rect.left.toInt(),
-            rect.top.toInt(),
-            rect.width.toInt(),
-            rect.height.toInt()),
-        new _SymbolRow(rect)
-    ));
-
-  return rect;
-}
-
-bool _blackPixel(int color, int blackLevel) {
-  return (Image.getLuminance(color) <= blackLevel);
-}
-
-//endregion
 
 /// <summary>
 /// Contains a variety of methods useful in generating image hashes for image comparison

@@ -21,6 +21,7 @@ import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:intl/intl.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SymbolReplacer extends StatefulWidget {
   final local.PlatformFile platformFile;
@@ -32,8 +33,15 @@ class SymbolReplacer extends StatefulWidget {
 }
 
 class SymbolReplacerState extends State<SymbolReplacer> {
-  List<SymbolGroup> _symbolGroups;
+  SymbolImage _symbolImage;
   local.PlatformFile _platformFile;
+  ItemScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ItemScrollController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +62,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           if (_file != null) {
             setState(() {
               _platformFile = _file;
+              _symbolImage = null;
               _analysePlatformFileAsync();
             });
           }
@@ -61,153 +70,53 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       ),
       GCWDefaultOutput(
           child: _buildList(),
-          // trailing: Row(children: <Widget>[
-          //   GCWIconButton(
-          //     iconData: Icons.play_arrow,
-          //     size: IconButtonSize.SMALL,
-          //     iconColor: _outData != null && !_play ? null : themeColors().inActive(),
-          //     onPressed: () {
-          //       setState(() {
-          //         _play = (_outData != null);
-          //       });
-          //     },
-          //   ),
-          //   GCWIconButton(
-          //     iconData: Icons.stop,
-          //     size: IconButtonSize.SMALL,
-          //     iconColor: _play ? null : themeColors().inActive(),
-          //     onPressed: () {
-          //       setState(() {
-          //         _play = false;
-          //       });
-          //     },
-          //   ),
-          //   GCWIconButton(
-          //     iconData: Icons.save,
-          //     size: IconButtonSize.SMALL,
-          //     iconColor: _outData == null ? themeColors().inActive() : null,
-          //     onPressed: () {
-          //       _outData == null ? null : _exportFiles(context, _platformFile.name, _outData["images"]);
-          //     },
-          //   )
-          // ])
-      )
+           trailing: Row(children: <Widget>[
+             GCWIconButton(
+               size: IconButtonSize.SMALL,
+               iconData: Icons.zoom_in,
+               onPressed: () {
+                 setState(() {
+                   // int newCountColumn = max(countColumns - 1, 1);
+                   // mediaQueryData.orientation == Orientation.portrait
+                   //     ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                   //     : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                 });
+               },
+             ),
+             GCWIconButton(
+               size: IconButtonSize.SMALL,
+               iconData: Icons.zoom_out,
+               onPressed: () {
+                 setState(() {
+                   // int newCountColumn = countColumns + 1;
+                   // mediaQueryData.orientation == Orientation.portrait
+                   //     ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                   //     : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                 });
+               },
+             ),
+           ])
+      ),
+      _buildOutput()
     ]);
   }
 
-  // _buildOutput() {
-  //   if (_outData == null) return null;
-  //
-  //   var durations = <List<dynamic>>[];
-  //   if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
-  //     var counter = 0;
-  //     durations.addAll([
-  //       [i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]
-  //     ]);
-  //     _outData["durations"].forEach((value) {
-  //       counter++;
-  //       durations.addAll([
-  //         [counter, value]
-  //       ]);
-  //     });
-  //   }
-  //   ;
-  //
-  //   return Column(children: <Widget>[
-  //     _play
-  //         ? Image.memory(_platformFile.bytes)
-  //         : GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
-  //     _buildDurationOutput(durations)
-  //   ]);
-  // }
-
-
-  // List<GCWImageViewData> _convertImageData(List<Uint8List> images, List<int> durations) {
-  //   var list = <GCWImageViewData>[];
-  //
-  //   if (images != null) {
-  //     var imageCount = images.length;
-  //     for (var i = 0; i < images.length; i++) {
-  //       String description = (i + 1).toString() + '/$imageCount';
-  //       if ((durations != null) && (i < durations.length)) {
-  //         description += ': ' + durations[i].toString() + ' ms';
-  //       }
-  //       list.add(GCWImageViewData(local.PlatformFile(bytes: images[i]), description: description));
-  //     }
-  //     ;
-  //   }
-  //   ;
-  //   return list;
-  // }
 
   _analysePlatformFileAsync() {
-    _symbolGroups = splitAndGroupSymbols(_platformFile.bytes, 50, 90);
+    _symbolImage = replaceSymbols(_platformFile.bytes, 50, 100, symbolImage: _symbolImage);
 
   }
-
-  // _analysePlatformFileAsync() async {
-  //   await showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (context) {
-  //       return Center(
-  //         child: Container(
-  //           child: GCWAsyncExecuter(
-  //             isolatedFunction: analyseImageAsync,
-  //             parameter: _buildJobData(),
-  //             onReady: (data) => _showOutput(data),
-  //             isOverlay: true,
-  //           ),
-  //           height: 220,
-  //           width: 150,
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(_platformFile.bytes);
-  }
-
-  // _showOutput(Map<String, dynamic> output) {
-  //   _outData = output;
-  //
-  //   // restore image references (problem with sendPort, lose references)
-  //   if (_outData != null) {
-  //     List<Uint8List> images = _outData["images"];
-  //     List<int> linkList = _outData["linkList"];
-  //     for (int i = 0; i < images.length; i++) {
-  //       images[i] = images[linkList[i]];
-  //     }
-  //   } else {
-  //     showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-  //     return;
-  //   }
-  //
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     setState(() {});
-  //   });
-  // }
 
   Widget _buildList() {
-    if (_symbolGroups == null)
+    if (_symbolImage == null)
       return Container();
 
     var odd = false;
-    List<Widget> rows;
-    rows = _symbolGroups.map((entry) {
+
+    var rows = _symbolImage.symbolGroups.map((entry) {
       odd = !odd;
       return _buildRow(entry, odd);
     }).toList();
-
-    // if (rows.length > 0 && widget.dividerText != null) {
-    //   rows.insert(0, GCWTextDivider(text: widget.dividerText));
-    // }
-
-    // if (rows.length > 0 && widget.listHeaderWidget != null) {
-    //   rows.insert(0, widget.listHeaderWidget);
-    // }
 
     return Column(children: rows);
   }
@@ -216,11 +125,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     Widget output;
 
     var row = Container(
-        child: Row(
+        child: Column(children: <Widget>[
+          Row(
           children: <Widget>[
             Expanded(
               child: Container(
-                child: Image.memory(encodeTrimmedPng(entry.symbolList.first.bmp)) //encodeTrimmedPng( buildSymbolGroupView(entry))) //encodeTrimmedPng(entry.symbolList[0].bmp)
+                child: Image.memory(entry.getImage())
                 ),
               flex: 2,
             ),
@@ -229,30 +139,52 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               color: themeColors().mainFont(),
             ),
             Expanded(
-                child: Container(
-                  child:  GCWTextField(
+                child: Column(children: <Widget>[
+                    GCWTextField(
                     // controller: _editValueController,
                     // inputFormatters: widget.valueInputFormatters,
-                    autofocus: true,
-                    onChanged: (text) {
-                      setState(() {
-                        entry.text = text;
-                      });
-                    },
-                  )
-                ),
+                      autofocus: true,
+                      onChanged: (text) {
+                        setState(() {
+                          entry.text = text;
+                        });
+                      },
+                    ),
+
+                    Row(children: <Widget>[
+                        Expanded(child:
+                          Text(entry.symbolList.length.toString() +' Symbol(s)')
+                        ),
+                      GCWIconButton(
+                        iconData: Icons.remove,
+                        onPressed: () {
+                          setState(() {
+                            entry.viewGroupImage = !entry.viewGroupImage;
+                            //if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
+                          });
+                        },
+                      )
+                    ],
+                    ),
+                ]),
                 flex: 3),
-            //_editButton(entry),
-            GCWIconButton(
-              iconData: Icons.remove,
-              onPressed: () {
-                setState(() {
-                  //if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
-                });
-              },
-            )
-          ],
-        ));
+            ],
+          ),
+          (entry.viewGroupImage != true)
+            ? Container()
+            : Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 50,
+                child: ScrollablePositionedList.builder(
+                  itemScrollController: _scrollController,
+                  itemCount: entry.symbolList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => InkWell(
+                    child: Image.memory(entry.symbolList[index].getImage()),
+                  )),
+              )
+          ]),
+        );
 
     if (odd) {
       output = Container(color: themeColors().outputListOddRows(), child: row);
@@ -261,6 +193,18 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
 
     return output;
+  }
+
+  Widget _buildOutput() {
+    if (_symbolImage == null)
+      return Container();
+
+    replaceSymbols(_platformFile.bytes, 50, 90, symbolImage: _symbolImage);
+    var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
+    return Column(children: <Widget>[
+      GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
+      GCWDefaultOutput(child: _symbolImage.getTextOutput())
+    ]);
   }
 
   _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
