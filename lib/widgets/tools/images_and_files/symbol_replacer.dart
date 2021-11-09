@@ -174,7 +174,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         _blackLevel.toInt(),
         _similarityLevel,
         symbolImage: _symbolImage,
-        compareSymbols: _currentSymbolTableData.images
+        compareSymbols: _currentSymbolTableData?.images,
+        similarityCompareLevel: _similarityCompareLevel
     );
   }
 
@@ -188,6 +189,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         onChanged: (value) {
           setState(() {
             _similarityLevel = value;
+            _replaceSymbols();
           });
         }
       ),
@@ -199,6 +201,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         onChanged: (value) {
           setState(() {
             _blackLevel = value;
+            _replaceSymbols();
           });
         }
       ),
@@ -211,16 +214,19 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       GCWTextDivider(text: 'Symbol Table'),
       GCWDropDownButton(
         value: _currentCompareSymbolTableTool,
-        onChanged: (value) {
-          setState(() async {
+        onChanged: (value) async {
             _currentCompareSymbolTableTool = value;
             _currentSymbolTableData = null;
             if (_currentCompareSymbolTableTool is GCWSymbolTableTool) {
               _currentSymbolTableData = SymbolTableData(context, (_currentCompareSymbolTableTool as GCWSymbolTableTool).symbolKey);
               await _currentSymbolTableData.initialize();
             }
-            _replaceSymbols();
-          });
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              setState(() {
+                _replaceSymbols();
+              });
+            });
         },
         items: compareSymbolItems,
       ),
@@ -232,6 +238,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         onChanged: (value) {
           setState(() {
             _similarityCompareLevel = value;
+            _replaceSymbols();
           });
         }
       ),
@@ -249,7 +256,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     var rows = _symbolImage.symbolGroups.map((entry) {
       odd = !odd;
       TextEditingController controller;
-      if (index <= _editValueController.length) {
+      if (index >= _editValueController.length) {
         controller = TextEditingController();
         _editValueController.add(controller);
       } else
@@ -345,7 +352,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null)
       return Container();
 
-    replaceSymbols(_platformFile.bytes, 50, 90, symbolImage: _symbolImage);
+    replaceSymbols(_platformFile.bytes, 50, 90,
+        symbolImage: _symbolImage,
+        compareSymbols: _currentSymbolTableData?.images,
+        similarityCompareLevel: _similarityCompareLevel);
     var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
     return Column(children: <Widget>[
       GCWDefaultOutput(child: GCWImageView(imageData: imageData)),

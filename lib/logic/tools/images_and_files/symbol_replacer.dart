@@ -36,6 +36,7 @@ class SymbolImage {
   Uint8List _outputImageBytes;
   List<Map<String, SymbolData>> _compareSymbols;
   SymbolImage _compareImage;
+  double _similarityCompareLevel;
 
   List<_SymbolRow> lines = [];
   List<_Symbol> symbols = [];
@@ -73,7 +74,7 @@ class SymbolImage {
       double similarityLevel,
       {int gap = 1,
       List<Map<String, SymbolData>> compareImages,
-      double similarityCompareLevel,
+      double similarityCompareLevel = 80,
       bool groupSymbols = true
       }) {
     if (_image == null) return;
@@ -84,21 +85,22 @@ class SymbolImage {
     if (similarityLevel == null) return;
 
     if (_blackLevel != blackLevel) {
-      lines = <_SymbolRow>[];
-      symbols = <_Symbol>[];
-      symbolGroups == <SymbolGroup>[];
+      lines.clear();
+      symbols.clear();
+      symbolGroups.clear();
     }
     _blackLevel = blackLevel;
 
     if (_gap != gap) {
-      symbols = <_Symbol>[];
-      symbolGroups == <SymbolGroup>[];
+      symbols.clear();
+      symbolGroups.clear();
     }
     _gap = gap;
 
     if (_similarityLevel != similarityLevel)
-      symbolGroups == <SymbolGroup>[];
+      symbolGroups.clear();
     _similarityLevel = similarityLevel;
+    _similarityCompareLevel = similarityCompareLevel;
 
     if (lines.isEmpty)
       _splitToLines();
@@ -112,7 +114,7 @@ class SymbolImage {
     if (symbolGroups.isEmpty && groupSymbols)
       _groupSymbols();
 
-    if (groupSymbols & (compareImages != null)) {
+    if (groupSymbols & (compareImages != null) & (_similarityCompareLevel != null)) {
       if (_compareSymbols != compareImages || _compareImage == null) {
         _compareImage = _buildCompareSymbols(compareImages);
       }
@@ -169,7 +171,7 @@ class SymbolImage {
       compareSymbolImage.symbols[i].hash = imageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
 
     for (int i = 0; i < symbolGroups.length; i++) {
-      double maxPercent = 0;
+      double maxPercent = 0.0;
       _Symbol maxPercentSymbol;
 
       _Symbol symbol1 = symbolGroups[i].symbols.first;
@@ -181,10 +183,10 @@ class SymbolImage {
           maxPercentSymbol = compareSymbolImage.symbols[x];
         }
       }
-      if (maxPercent >= _similarityLevel) {
+      if (maxPercent >= _similarityCompareLevel) {
         symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
         //ToDo wieder raus nur für Test
-        symbolGroups[i].symbols.add(maxPercentSymbol);
+        //symbolGroups[i].symbols.add(maxPercentSymbol);
       }
     }
   }
@@ -214,7 +216,7 @@ class SymbolImage {
             font = Image.arial_48;
             offset = ui.Offset(-14, -24);
           }
-           Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt() );
+          // Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt() );
           Image.drawString(bmp, font,
               (symbol.refPoint.dx + symbol.bmp.width/2 + offset.dx).toInt(),
               (symbol.row.size.center.dy + offset.dy).toInt(),
@@ -270,7 +272,7 @@ class SymbolImage {
 
     for (int i = 0; i < symbols.length; i++) {
       double maxPercent = 0;
-      _Symbol maxPercentSymbol;
+      int maxPercentSymbolIndex = 0;
 
       _Symbol symbol1 = symbols[i];
 
@@ -278,17 +280,17 @@ class SymbolImage {
         var similarity = imageHashing.Similarity(symbol1.hash, symbols[x].hash);
         if (similarity > maxPercent) {
           maxPercent = similarity;
-          maxPercentSymbol =  symbols[x];
+          maxPercentSymbolIndex = x;
         }
       }
 
-      if ((maxPercent < _similarityLevel) | ((maxPercentSymbol != null))) {
+      if ((maxPercent < _similarityLevel) | (maxPercentSymbolIndex > i)) {
         var group = new SymbolGroup();
         symbolGroups.add(group);
         symbolGroups[symbolGroups.length - 1].symbols.add(symbol1);
         symbol1.symbolGroup = group;
       } else {
-        var image2 = maxPercentSymbol;
+        var image2 = symbols[maxPercentSymbolIndex];
         for (SymbolGroup group in symbolGroups) {
           if (group.symbols.contains(image2)) {
             group.symbols.add(symbol1);
