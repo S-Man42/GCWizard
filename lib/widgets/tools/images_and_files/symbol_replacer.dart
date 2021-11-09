@@ -50,13 +50,11 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   GCWTool _currentCompareSymbolTableTool;
   SymbolTableData _currentSymbolTableData;
 
-  ItemScrollController _scrollController;
   var _editValueController = <TextEditingController>[];
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ItemScrollController();
 
     List<GCWTool> _toolList = Registry.toolList.where((element) {
       return [
@@ -82,7 +80,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                     Text( tool.toolName,
                       style: textStyle),
                     Text(tool.description == null ? '': tool.description,
-                        style: descriptionTextStyle),
+                      style: descriptionTextStyle),
               ])
             )
           ])
@@ -275,8 +273,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
     var row = Container(
         child: Column(children: <Widget>[
-          Row(
-          children: <Widget>[
+          Row(children: <Widget>[
             Expanded(
               child: DecoratedBox(
                 decoration: BoxDecoration( border: Border.all(color: themeColors().mainFont()), borderRadius: BorderRadius.circular(4)),
@@ -291,35 +288,35 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               color: themeColors().mainFont(),
             ),
             Expanded(
-                child: Column(children: <Widget>[
-                    GCWTextField(
-                      controller: TextEditingController(text: entry.text),
-                      autofocus: true,
-                      onChanged: (text) {
+              child: Column(children: <Widget>[
+                  GCWTextField(
+                    controller: TextEditingController(text: entry.text),
+                    autofocus: true,
+                    onChanged: (text) {
+                      setState(() {
+                        entry.text = text;
+                        _replaceSymbols();
+                      });
+                    },
+                  ),
+
+                  Row(children: <Widget>[
+                      Expanded(child:
+                        Text(entry.symbols.length.toString() +' Symbol(s)')
+                      ),
+                    GCWIconButton(
+                      iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      onPressed: () {
                         setState(() {
-                          entry.text = text;
-                          _replaceSymbols();
+                          entry.viewGroupImage = !entry.viewGroupImage;
+                          //if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
                         });
                       },
-                    ),
-
-                    Row(children: <Widget>[
-                        Expanded(child:
-                          Text(entry.symbols.length.toString() +' Symbol(s)')
-                        ),
-                      GCWIconButton(
-                        iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                        onPressed: () {
-                          setState(() {
-                            entry.viewGroupImage = !entry.viewGroupImage;
-                            //if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
-                          });
-                        },
-                      )
-                    ],
-                    ),
-                ]),
-                flex: 3),
+                    )
+                  ],
+                  ),
+              ]),
+              flex: 3),
             ],
           ),
           (entry.viewGroupImage != true)
@@ -328,7 +325,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 margin: EdgeInsets.only(top: 10),
                 height: 50,
                 child: ScrollablePositionedList.builder(
-                  itemScrollController: _scrollController,
+                  itemScrollController: ItemScrollController(),
                   itemCount: entry.symbols.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => InkWell(
@@ -358,8 +355,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         similarityCompareLevel: _similarityCompareLevel);
     var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
     return Column(children: <Widget>[
-      GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
-      GCWDefaultOutput(child: _symbolImage.getTextOutput())
+        GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
+        GCWDefaultOutput(child: _symbolImage.getTextOutput())
     ]);
   }
 
