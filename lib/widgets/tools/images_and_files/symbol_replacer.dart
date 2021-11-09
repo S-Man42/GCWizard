@@ -1,17 +1,20 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
@@ -20,14 +23,11 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
-import 'package:intl/intl.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 
 
 class SymbolReplacer extends StatefulWidget {
@@ -44,11 +44,14 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   local.PlatformFile _platformFile;
   double _blackLevel = 50.0;
   double _similarityLevel = 100.0;
+  double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  List<GCWDropDownMenuItem> symbolItems;
-  GCWTool _currentCompareSymbolTable;
+  List<GCWDropDownMenuItem> compareSymbolItems;
+  GCWTool _currentCompareSymbolTableTool;
+  SymbolTableData _currentSymbolTableData;
 
   ItemScrollController _scrollController;
+  var _editValueController = <TextEditingController>[];
 
   @override
   void initState() {
@@ -64,7 +67,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     var textStyle = gcwTextStyle();
     var descriptionTextStyle = gcwDescriptionTextStyle();
 
-    symbolItems =_toolList.map((tool) {
+    compareSymbolItems =_toolList.map((tool) {
       return GCWDropDownMenuItem(
           value: tool,
           child: Row( children: [
@@ -85,14 +88,21 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           ])
       );
     }).toList();
-    symbolItems.insert(0, GCWDropDownMenuItem(value:null, child: GCWText(text: 'no Symbol Table')));
+    compareSymbolItems.insert(0, GCWDropDownMenuItem(value:null, child: GCWText(text: 'no Symbol Table')));
+  }
+
+  @override
+  void dispose() {
+    _editValueController.forEach((element) {element.dispose();});
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     if (widget.platformFile != null) {
       _platformFile = widget.platformFile;
-      //_analysePlatformFileAsync();
+      _replaceSymbols();
     }
 
     return Column(children: <Widget>[
@@ -108,7 +118,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             setState(() {
               _platformFile = _file;
               _symbolImage = null;
-              _analysePlatformFileAsync();
+              _replaceSymbols();
             });
           }
         },
@@ -158,55 +168,74 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
 
-  _analysePlatformFileAsync() async {
-    SymbolTableData symbolTableData;
-    if (_currentCompareSymbolTable is GCWSymbolTableTool) {
-      symbolTableData = SymbolTableData(context, (_currentCompareSymbolTable as GCWSymbolTableTool).symbolKey);
-      await symbolTableData.initialize();
-    }
-
-    _symbolImage = replaceSymbols(_platformFile.bytes, _blackLevel.toInt(), _similarityLevel.toInt(), symbolImage: _symbolImage, compareImages: symbolTableData.images);
+  _replaceSymbols()  {
+    _symbolImage = replaceSymbols(
+        _platformFile.bytes,
+        _blackLevel.toInt(),
+        _similarityLevel,
+        symbolImage: _symbolImage,
+        compareSymbols: _currentSymbolTableData.images
+    );
   }
 
   Widget _buildAdvancedModeControl(BuildContext context) {
     return Column(children: <Widget>[
       GCWSlider(
-          title: 'Similarity Level',
-          value: _similarityLevel,
-          min: 0,
-          max: 100,
-          onChanged: (value) {
-            setState(() {
-              _similarityLevel = value;
-            });
-          }),
+        title: 'Similarity Level',
+        value: _similarityLevel,
+        min: 0,
+        max: 100,
+        onChanged: (value) {
+          setState(() {
+            _similarityLevel = value;
+          });
+        }
+      ),
       GCWSlider(
-          title: 'Black Level',
-          value: _blackLevel,
-          min: 0,
-          max: 100,
-          onChanged: (value) {
-            setState(() {
-              _blackLevel = value;
-            });
-          }),
+        title: 'Black Level',
+        value: _blackLevel,
+        min: 0,
+        max: 100,
+        onChanged: (value) {
+          setState(() {
+            _blackLevel = value;
+          });
+        }
+      ),
       _buildSymbolTableDropDown(),
-
     ]);
   }
 
   Widget _buildSymbolTableDropDown() {
-
-
-    return GCWDropDownButton(
-      value: _currentCompareSymbolTable,
-      onChanged: (value) {
-        setState(() {
-          _currentCompareSymbolTable = value;
-        });
-      },
-      items: symbolItems,
-    );
+    return Column(children: <Widget>[
+      GCWTextDivider(text: 'Symbol Table'),
+      GCWDropDownButton(
+        value: _currentCompareSymbolTableTool,
+        onChanged: (value) {
+          setState(() async {
+            _currentCompareSymbolTableTool = value;
+            _currentSymbolTableData = null;
+            if (_currentCompareSymbolTableTool is GCWSymbolTableTool) {
+              _currentSymbolTableData = SymbolTableData(context, (_currentCompareSymbolTableTool as GCWSymbolTableTool).symbolKey);
+              await _currentSymbolTableData.initialize();
+            }
+            _replaceSymbols();
+          });
+        },
+        items: compareSymbolItems,
+      ),
+      GCWSlider(
+        title: 'Similarity Level',
+        value: _similarityCompareLevel,
+        min: 0,
+        max: 100,
+        onChanged: (value) {
+          setState(() {
+            _similarityCompareLevel = value;
+          });
+        }
+      ),
+    ]);
   }
 
 
@@ -215,16 +244,26 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       return Container();
 
     var odd = false;
+    var index = 0;
 
     var rows = _symbolImage.symbolGroups.map((entry) {
       odd = !odd;
-      return _buildRow(entry, odd);
+      TextEditingController controller;
+      if (index <= _editValueController.length) {
+        controller = TextEditingController();
+        _editValueController.add(controller);
+      } else
+        controller = _editValueController[index];
+      controller.text = entry.text;
+
+      index ++;
+      return _buildRow(entry, controller, odd);
     }).toList();
 
     return Column(children: rows);
   }
 
-  Widget _buildRow(SymbolGroup entry, bool odd) {
+  Widget _buildRow(SymbolGroup entry, TextEditingController textEditingController, bool odd) {
     Widget output;
 
     var row = Container(
@@ -247,19 +286,19 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             Expanded(
                 child: Column(children: <Widget>[
                     GCWTextField(
-                    // controller: _editValueController,
-                    // inputFormatters: widget.valueInputFormatters,
+                      controller: TextEditingController(text: entry.text),
                       autofocus: true,
                       onChanged: (text) {
                         setState(() {
                           entry.text = text;
+                          _replaceSymbols();
                         });
                       },
                     ),
 
                     Row(children: <Widget>[
                         Expanded(child:
-                          Text(entry.symbolList.length.toString() +' Symbol(s)')
+                          Text(entry.symbols.length.toString() +' Symbol(s)')
                         ),
                       GCWIconButton(
                         iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
@@ -283,10 +322,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 height: 50,
                 child: ScrollablePositionedList.builder(
                   itemScrollController: _scrollController,
-                  itemCount: entry.symbolList.length,
+                  itemCount: entry.symbols.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => InkWell(
-                    child: Image.memory(entry.symbolList[index].getImage()),
+                    child: Image.memory(entry.symbols[index].getImage()),
                   )
                 ),
               )

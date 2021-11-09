@@ -7,10 +7,24 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
 
-SymbolImage replaceSymbols(Uint8List image, int blackLevel, int similarityLevel, {int gap = 1, SymbolImage symbolImage, List<Map<String, SymbolData>> compareImages}) {
+SymbolImage replaceSymbols(Uint8List image,
+    int blackLevel,
+    double similarityLevel,
+    {int gap = 1,
+      SymbolImage symbolImage,
+      List<Map<String, SymbolData>> compareSymbols,
+      double similarityCompareLevel
+    }) {
   if (symbolImage == null)
     symbolImage = SymbolImage(image);
-  symbolImage.splitAndGroupSymbols((blackLevel * 255/100).toInt(), similarityLevel.toDouble(), gap: gap, compareImages: compareImages);
+
+  symbolImage.splitAndGroupSymbols(
+      (blackLevel * 255/100).toInt(),
+      similarityLevel,
+      gap: gap,
+      compareImages: compareSymbols,
+      similarityCompareLevel: similarityCompareLevel
+  );
 
   return symbolImage;
 }
@@ -20,6 +34,8 @@ class SymbolImage {
   Image.Image _bmp;
   Image.Image _outputImage;
   Uint8List _outputImageBytes;
+  List<Map<String, SymbolData>> _compareSymbols;
+  SymbolImage _compareImage;
 
   List<_SymbolRow> lines = [];
   List<_Symbol> symbols = [];
@@ -53,7 +69,13 @@ class SymbolImage {
     return output;
   }
 
-  splitAndGroupSymbols(int blackLevel, double similarityLevel, {int gap = 1, List<Map<String, SymbolData>> compareImages, bool groupSymbols = true}) {
+  splitAndGroupSymbols(int blackLevel,
+      double similarityLevel,
+      {int gap = 1,
+      List<Map<String, SymbolData>> compareImages,
+      double similarityCompareLevel,
+      bool groupSymbols = true
+      }) {
     if (_image == null) return;
     if (_bmp == null)
       _bmp = Image.decodeImage(_image);
@@ -91,7 +113,11 @@ class SymbolImage {
       _groupSymbols();
 
     if (groupSymbols & (compareImages != null)) {
-      _useCompareSymbols(_buildCompareSymbols(compareImages));
+      if (_compareSymbols != compareImages || _compareImage == null) {
+        _compareImage = _buildCompareSymbols(compareImages);
+      }
+      _useCompareSymbols(_compareImage);
+      _compareSymbols = compareImages;
     }
 
     var mergeText = false;
@@ -122,9 +148,9 @@ class SymbolImage {
 
           symbolImage.symbols.forEach((element) {
             var symbolGroup = SymbolGroup();
-            symbolGroup.symbolList = symbolImage.symbols;
+            symbolGroup.symbols = symbolImage.symbols;
             symbolGroup.text = text;
-            symbolGroup.symbolList.forEach((symbol) {symbol.symbolGroup = symbolGroup; });
+            symbolGroup.symbols.forEach((symbol) {symbol.symbolGroup = symbolGroup; });
 
             compareSymbolImage.symbols.addAll(symbolImage.symbols);
             compareSymbolImage.symbolGroups.add(symbolGroup);
@@ -144,19 +170,21 @@ class SymbolImage {
 
     for (int i = 0; i < symbolGroups.length; i++) {
       double maxPercent = 0;
-      int maxPercentIndex = 0;
+      _Symbol maxPercentSymbol;
 
-      _Symbol symbol1 = symbolGroups[i].symbolList.first;
+      _Symbol symbol1 = symbolGroups[i].symbols.first;
 
       for (int x = 0; x < compareSymbolImage.symbols.length; x++) {
         var similarity = imageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
         if (similarity > maxPercent) {
           maxPercent = similarity;
-          maxPercentIndex = x;
+          maxPercentSymbol = compareSymbolImage.symbols[x];
         }
       }
       if (maxPercent >= _similarityLevel) {
-        symbolGroups[i].text = compareSymbolImage.symbols[maxPercentIndex].symbolGroup.text;
+        symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
+        //ToDo wieder raus nur für Test
+        symbolGroups[i].symbols.add(maxPercentSymbol);
       }
     }
   }
@@ -168,14 +196,14 @@ class SymbolImage {
 
     symbolGroups.forEach((symbolGroup) {
       if ((symbolGroup.text == null) || (symbolGroup.text == '') ) {
-        symbolGroup.symbolList.forEach((symbol) {
+        symbolGroup.symbols.forEach((symbol) {
           Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt() );
         });
       } else {
         var font = Image.arial_14;
         var color = Colors.red.value;
         ui.Offset offset;
-        symbolGroup.symbolList.forEach((symbol) {
+        symbolGroup.symbols.forEach((symbol) {
           if (symbol.row.size.height < 24) {
             font = Image.arial_14;
             offset = ui.Offset(-3, -7);
@@ -242,7 +270,7 @@ class SymbolImage {
 
     for (int i = 0; i < symbols.length; i++) {
       double maxPercent = 0;
-      int maxPercentIndex = 0;
+      _Symbol maxPercentSymbol;
 
       _Symbol symbol1 = symbols[i];
 
@@ -250,20 +278,20 @@ class SymbolImage {
         var similarity = imageHashing.Similarity(symbol1.hash, symbols[x].hash);
         if (similarity > maxPercent) {
           maxPercent = similarity;
-          maxPercentIndex = x;
+          maxPercentSymbol =  symbols[x];
         }
       }
 
-      if ((maxPercent < _similarityLevel) | ((maxPercentIndex > i))) {
+      if ((maxPercent < _similarityLevel) | ((maxPercentSymbol != null))) {
         var group = new SymbolGroup();
         symbolGroups.add(group);
-        symbolGroups[symbolGroups.length - 1].symbolList.add(symbol1);
+        symbolGroups[symbolGroups.length - 1].symbols.add(symbol1);
         symbol1.symbolGroup = group;
       } else {
-        var image2 = symbols[maxPercentIndex];
+        var image2 = maxPercentSymbol;
         for (SymbolGroup group in symbolGroups) {
-          if (group.symbolList.contains(image2)) {
-            group.symbolList.add(symbol1);
+          if (group.symbols.contains(image2)) {
+            group.symbols.add(symbol1);
             symbol1.symbolGroup = group;
             break;
           }
@@ -434,12 +462,12 @@ class _Symbol {
 class SymbolGroup {
   String text;
   bool viewGroupImage = false;
-  var symbolList = <_Symbol>[];
+  var symbols = <_Symbol>[];
   Uint8List _outputImageGroupBytes;
 
   Uint8List getImage() {
-    if (symbolList.isNotEmpty)
-      return symbolList.first.getImage();
+    if (symbols.isNotEmpty)
+      return symbols.first.getImage();
     return null;
   }
 
@@ -466,7 +494,7 @@ class SymbolGroup {
     do {
       size = new ui.Offset(0, 0);
       rowSize = new ui.Offset(0, 0);
-      symbolList.forEach((symbol) {
+      symbols.forEach((symbol) {
         if (rowSize.dx + symbol.bmp.width + gap > maxWidth) {
           size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy);
           rowSize = ui.Offset(0, 0);
@@ -480,7 +508,7 @@ class SymbolGroup {
       size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy + gap);
 
       var ratio = size.dx / size.dy;
-      if (ratio > targetRatio && symbolList.length > 4)
+      if (ratio > targetRatio && symbols.length > 4)
         maxWidth = (size.dx * (cancelCounter == 0 ? 1.0 / 2.0 : 2.0 / 3.0));
       else
         cancel = true;
@@ -493,7 +521,7 @@ class SymbolGroup {
     var offset = ui.Offset(0, 0);
 
     var rowHeight = 0;
-    symbolList.forEach((symbol) {
+    symbols.forEach((symbol) {
       if (offset.dx + symbol.bmp.width + gap > size.dx) {
         offset.translate(-offset.dx, rowHeight.toDouble());
         rowHeight = 0;
