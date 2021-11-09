@@ -3,25 +3,32 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:intl/intl.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+
 
 class SymbolReplacer extends StatefulWidget {
   final local.PlatformFile platformFile;
@@ -35,12 +42,50 @@ class SymbolReplacer extends StatefulWidget {
 class SymbolReplacerState extends State<SymbolReplacer> {
   SymbolImage _symbolImage;
   local.PlatformFile _platformFile;
+  double _blackLevel = 50.0;
+  double _similarityLevel = 100.0;
+  var _currentSimpleMode = GCWSwitchPosition.left;
+  List<GCWDropDownMenuItem> symbolItems;
+  GCWTool _currentCompareSymbolTable;
+
   ItemScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ItemScrollController();
+
+    List<GCWTool> _toolList = Registry.toolList.where((element) {
+      return [
+        className(SymbolTable()),
+      ].contains(className(element.tool));
+    }).toList();
+
+    var textStyle = gcwTextStyle();
+    var descriptionTextStyle = gcwDescriptionTextStyle();
+
+    symbolItems =_toolList.map((tool) {
+      return GCWDropDownMenuItem(
+          value: tool,
+          child: Row( children: [
+            Container(
+              child: tool.icon,
+              margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
+            ),
+            Expanded(child:
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text( tool.toolName,
+                      style: textStyle),
+                    Text(tool.description == null ? '': tool.description,
+                        style: descriptionTextStyle),
+              ])
+            )
+          ])
+      );
+    }).toList();
+    symbolItems.insert(0, GCWDropDownMenuItem(value:null, child: GCWText(text: 'no Symbol Table')));
   }
 
   @override
@@ -68,6 +113,17 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           }
         },
       ),
+      GCWTwoOptionsSwitch(
+        value: _currentSimpleMode,
+        leftValue: i18n(context, 'common_mode_simple'),
+        rightValue: i18n(context, 'common_mode_advanced'),
+        onChanged: (value) {
+          setState(() {
+            _currentSimpleMode = value;
+          });
+        },
+      ),
+      _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
       GCWDefaultOutput(
           child: _buildList(),
            trailing: Row(children: <Widget>[
@@ -102,10 +158,57 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
 
-  _analysePlatformFileAsync() {
-    _symbolImage = replaceSymbols(_platformFile.bytes, 50, 100, symbolImage: _symbolImage);
+  _analysePlatformFileAsync() async {
+    SymbolTableData symbolTableData;
+    if (_currentCompareSymbolTable is GCWSymbolTableTool) {
+      symbolTableData = SymbolTableData(context, (_currentCompareSymbolTable as GCWSymbolTableTool).symbolKey);
+      await symbolTableData.initialize();
+    }
 
+    _symbolImage = replaceSymbols(_platformFile.bytes, _blackLevel.toInt(), _similarityLevel.toInt(), symbolImage: _symbolImage, compareImages: symbolTableData.images);
   }
+
+  Widget _buildAdvancedModeControl(BuildContext context) {
+    return Column(children: <Widget>[
+      GCWSlider(
+          title: 'Similarity Level',
+          value: _similarityLevel,
+          min: 0,
+          max: 100,
+          onChanged: (value) {
+            setState(() {
+              _similarityLevel = value;
+            });
+          }),
+      GCWSlider(
+          title: 'Black Level',
+          value: _blackLevel,
+          min: 0,
+          max: 100,
+          onChanged: (value) {
+            setState(() {
+              _blackLevel = value;
+            });
+          }),
+      _buildSymbolTableDropDown(),
+
+    ]);
+  }
+
+  Widget _buildSymbolTableDropDown() {
+
+
+    return GCWDropDownButton(
+      value: _currentCompareSymbolTable,
+      onChanged: (value) {
+        setState(() {
+          _currentCompareSymbolTable = value;
+        });
+      },
+      items: symbolItems,
+    );
+  }
+
 
   Widget _buildList() {
     if (_symbolImage == null)
@@ -129,8 +232,11 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           Row(
           children: <Widget>[
             Expanded(
-              child: Container(
-                child: Image.memory(entry.getImage())
+              child: DecoratedBox(
+                decoration: BoxDecoration( border: Border.all(color: themeColors().mainFont()), borderRadius: BorderRadius.circular(4)),
+                child: Image.memory(entry.getImage(),
+                    height: 80
+                  )
                 ),
               flex: 2,
             ),
@@ -156,7 +262,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                           Text(entry.symbolList.length.toString() +' Symbol(s)')
                         ),
                       GCWIconButton(
-                        iconData: Icons.remove,
+                        iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                         onPressed: () {
                           setState(() {
                             entry.viewGroupImage = !entry.viewGroupImage;
@@ -181,7 +287,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => InkWell(
                     child: Image.memory(entry.symbolList[index].getImage()),
-                  )),
+                  )
+                ),
               )
           ]),
         );
