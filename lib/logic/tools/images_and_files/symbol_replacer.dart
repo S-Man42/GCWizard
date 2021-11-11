@@ -60,14 +60,14 @@ class SymbolImage {
   }
 
   String getTextOutput() {
-    var output = "";
+    var output = '';
     lines.forEach((line) {
       line.symbols.forEach((symbol) {
         output += symbol.symbolGroup?.text != null ? symbol.symbolGroup.text : '';
       });
       output += '\r\n';
     });
-    return output;
+    return output.trim();
   }
 
   splitAndGroupSymbols(int blackLevel,
@@ -153,8 +153,9 @@ class SymbolImage {
             symbolGroup.symbols = symbolImage.symbols;
             symbolGroup.text = text;
             symbolGroup.symbols.forEach((symbol) {symbol.symbolGroup = symbolGroup; });
+            symbolImage.symbols = null;
 
-            compareSymbolImage.symbols.addAll(symbolImage.symbols);
+            compareSymbolImage.symbols.addAll(symbolGroup.symbols);
             compareSymbolImage.symbolGroups.add(symbolGroup);
           });
         }

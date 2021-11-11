@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
@@ -16,7 +20,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -26,7 +29,6 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 
@@ -49,6 +51,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   List<GCWDropDownMenuItem> compareSymbolItems;
   GCWTool _currentCompareSymbolTableTool;
   SymbolTableData _currentSymbolTableData;
+  var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
+  var _isLoading = <bool>[false];
 
   var _editValueController = <TextEditingController>[];
 
@@ -68,22 +72,25 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     compareSymbolItems =_toolList.map((tool) {
       return GCWDropDownMenuItem(
           value: tool,
-          child: Row( children: [
-            Container(
-              child: tool.icon,
-              margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
-            ),
-            Expanded(child:
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text( tool.toolName,
-                      style: textStyle),
-                    Text(tool.description == null ? '': tool.description,
-                      style: descriptionTextStyle),
-              ])
-            )
-          ])
+          child: Container(
+            height: 50,
+            child: Row( children: [
+              Container(
+                child: tool.icon,
+                margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
+              ),
+              Expanded(child:
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text( tool.toolName,
+                        style: textStyle),
+                      Text(tool.description == null ? '': tool.description,
+                        style: descriptionTextStyle),
+                ])
+              )
+            ])
+          )
       );
     }).toList();
     compareSymbolItems.insert(0, GCWDropDownMenuItem(value:null, child: GCWText(text: 'no Symbol Table')));
@@ -302,7 +309,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
                   Row(children: <Widget>[
                       Expanded(child:
-                        Text(entry.symbols.length.toString() +' Symbol(s)')
+                        Text(entry.symbols.length.toString() +' symbol(s) found')
                       ),
                     GCWIconButton(
                       iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
@@ -349,25 +356,58 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null)
       return Container();
 
-    replaceSymbols(_platformFile.bytes, 50, 90,
-        symbolImage: _symbolImage,
-        compareSymbols: _currentSymbolTableData?.images,
-        similarityCompareLevel: _similarityCompareLevel);
     var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
     return Column(children: <Widget>[
         GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
-        GCWDefaultOutput(child: _symbolImage.getTextOutput())
+        GCWDefaultOutput(child: _symbolImage.getTextOutput()),
+        GCWButton(
+          text: 'Automatic',//i18n(context, 'substitutionbreaker_exporttosubstition'),
+          onPressed: () {
+//            setState(() async {
+//            });
+            //WidgetsBinding.instance.addPostFrameCallback((_) {
+
+                _startSubstitutionBreaker().then((value) {
+                setState(() async {
+                  _replaceSymbols();
+
+              });
+            //});
+          });
+    }
+        )
     ]);
   }
 
-  _exportFiles(BuildContext context, String fileName, List<Uint8List> data) async {
-    createZipFile(fileName, '.' + fileExtension(FileType.PNG), data).then((bytes) async {
-      var fileType = FileType.ZIP;
-      var value = await saveByteDataToFile(context, bytes,
-          'anim_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+  Future<SymbolImage> _startSubstitutionBreaker() async {
+    if (_symbolImage == null)
+      return null;
+    if (_symbolImage.symbolGroups == null)
+      return null;
 
-      if (value != null) showExportedFileDialog(context, fileType: fileType);
+    var quadgrams = await SubstitutionBreakerState.loadQuadgramsAssets(SubstitutionBreakerAlphabet.GERMAN, context, _quadgrams, _isLoading);
+    if (_symbolImage.symbolGroups.length > quadgrams.alphabet.length) {
+      showToast('Too many groups');
+      return null;
+    }
+
+    var input = '';
+    _symbolImage.lines.forEach((line) {
+      line.symbols.forEach((symbol) {
+        var index =  _symbolImage.symbolGroups.indexOf(symbol.symbolGroup);
+        input += symbol.symbolGroup == null ? '' : quadgrams.alphabet[index];
+      });
+      input += '\r\n';
     });
+    input = input.trim();
+
+    var jobData = SubstitutionBreakerJobData(input: input, quadgrams: quadgrams);
+    var result = break_cipher(jobData.input, jobData.quadgrams);
+
+    if (result.errorCode == SubstitutionBreakerErrorCode.OK) {
+       for (int i = 0; i < _symbolImage.symbolGroups.length; i++)
+        _symbolImage.symbolGroups[i].text = result.key[i].toUpperCase();
+    }
   }
 }
 
