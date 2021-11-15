@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -221,8 +222,6 @@ class _MainViewState extends State<MainView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _searchText = '';
   final _showSupportHintEveryN = 50;
-  List<GCWTool> _categoryList;
-  List<GCWTool> _toolList;
 
   @override
   void initState() {
@@ -264,7 +263,7 @@ class _MainViewState extends State<MainView> {
                       context,
                       NoAnimationMaterialPageRoute(
                           builder: (context) =>
-                              Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Changelog()))));
+                              registeredTools.firstWhere((tool) => className(tool.tool) == className(Changelog()))));
                 }),
             GCWDialogButton(text: i18n(context, 'common_ok'))
           ],
@@ -301,9 +300,11 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    Registry.initialize(context);
+    if (registeredTools == null)
+      initializeRegistry(context);
+    if (_mainToolList == null)
+      _initStaticToolList();
     Favorites.initialize();
-    _initStaticToolList();
 
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
 
@@ -331,7 +332,7 @@ class _MainViewState extends State<MainView> {
         body: TabBarView(
           children: [
             GCWToolList(toolList: toolList ?? _categoryList),
-            GCWToolList(toolList: toolList ?? _toolList),
+            GCWToolList(toolList: toolList ?? _mainToolList),
             GCWToolList(toolList: toolList ?? Favorites.toolList),
           ],
         ),
@@ -376,229 +377,240 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    Set<String> _queryTexts = splitWordsOnSpace(removeAccents(_searchText.toLowerCase()));
+    Set<String> _queryTexts = removeAccents(_searchText.toLowerCase()).split(REGEXP_SPLIT_STRINGLIST).toSet();
 
-    return Registry.indexedTools.where((tool) {
+    return registeredTools.where((tool) {
+      if (tool.indexedSearchStrings == null)
+        return false;
+
       //Search result as AND result of separated words
       for (final q in _queryTexts) {
-        if (!tool.indexedStrings.contains(q)) {
+        if (!tool.indexedSearchStrings.contains(q)) {
           return false;
         }
       }
       return true;
     }).toList();
   }
+}
 
-  void _initStaticToolList() {
-    _toolList = Registry.toolList.where((element) {
-      return [
-        className(Abaddon()),
-        className(ADFGVX()),
-        className(Affine()),
-        className(AlcoholMass()),
-        className(AlphabetValues()),
-        className(Amsco()),
-        className(AnimatedImage()),
-        className(AnimatedImageMorseCode()),
-        className(Antipodes()),
-        className(ASCIIValues()),
-        className(Atbash()),
-        className(AtomicNumbersToText()),
-        className(BabylonNumbersSelection()),
-        className(Bacon()),
-        className(BaseSelection()),
-        className(BCDSelection()),
-        className(Beatnik()),
-        className(BeaufortSelection()),
-        className(Beghilos()),
-        className(Bifid()),
-        className(Binary()),
-        className(Binary2Image()),
-        className(BloodAlcoholContent()),
-        className(BookCipher()),
-        className(BrailleSelection()),
-        className(Brainfk()),
-        className(BurrowsWheeler()),
-        className(Caesar()),
-        className(Calendar()),
-        className(Catan()),
-        className(CCITT1Selection()),
-        className(CCITT2Selection()),
-        className(CenterThreePoints()),
-        className(CenterTwoPoints()),
-        className(Chao()),
-        className(Chef()),
-        className(ChickenLanguage()),
-        className(Chronogram()),
-        className(CipherWheel()),
-        className(CistercianNumbersSelection()),
-        className(ColorPicker()),
-        className(Combination()),
-        className(CombinationPermutation()),
-        className(ComplexNumbers()),
-        className(CoordinateAveraging()),
-        className(CountriesCallingCodes()),
-        className(CountriesFlags()),
-        className(CountriesIOCCodes()),
-        className(CountriesISOCodes()),
-        className(CountriesVehicleCodes()),
-        className(Cow()),
-        className(CrossBearing()),
-        className(CrossSum()),
-        className(CrossSumRange()),
-        className(CrossSumRangeFrequency()),
-        className(DayCalculator()),
-        className(Deadfish()),
-        className(Decabit()),
-        className(DistanceBearing()),
-        className(Divisor()),
-        className(DTMF()),
-        className(DNAAminoAcids()),
-        className(DNAAminoAcidsTable()),
-        className(DNANucleicAcidSequence()),
-        className(SilverRatioSelection()),
-        className(DuckSpeak()),
-        className(EasterSelection()),
-        className(EllipsoidTransform()),
-        className(EnclosedAreas()),
-        className(Enigma()),
-        className(ExifReader()),
-        className(EquilateralTriangle()),
-        className(ESelection()),
-        className(FormatConverter()),
-        className(FormulaSolverFormulaGroups()),
-        className(FourteenSegments()),
-        className(Fox()),
-        className(Gade()),
-        className(GaussWeberTelegraph()),
-        className(GCCode()),
-        className(Gray()),
-        className(Gronsfeld()),
-        className(HeatIndex()),
-        className(HashBreaker()),
-        className(HashSelection()),
-        className(Hexadecimal()),
-        className(HexString2File()),
-        className(HexViewer()),
-        className(HiddenData()),
-        className(Homophone()),
-        className(Houdini()),
-        className(Humidex()),
-        className(IATAICAOSearch()),
-        className(IceCodesSelection()),
-        className(IntersectBearings()),
-        className(IntersectFourPoints()),
-        className(IntersectGeodeticAndCircle()),
-        className(Intersection()),
-        className(IntersectThreeCircles()),
-        className(IntersectTwoCircles()),
-        className(IteratedCrossSumRange()),
-        className(IteratedCrossSumRangeFrequency()),
-        className(Kamasutra()),
-        className(KarolRobot()),
-        className(Kenny()),
-        className(KeyboardSelection()),
-        className(Malbolge()),
-        className(MapView()),
-        className(MayaCalendarSelection()),
-        className(MayaNumbersSelection()),
-        className(MexicanArmyCipherWheel()),
-        className(MoonPosition()),
-        className(MoonRiseSet()),
-        className(Morse()),
-        className(Navajo()),
-        className(NumberSequenceSelection()),
-        className(MultiDecoder()),
-        className(NumeralBases()),
-        className(NumeralWordsSelection()),
-        className(OneTimePad()),
-        className(Ook()),
-        className(PeriodicTable()),
-        className(PeriodicTableDataView()),
-        className(Permutation()),
-        className(PhiSelection()),
-        className(Piano()),
-        className(PiSelection()),
-        className(PigLatin()),
-        className(Playfair()),
-        className(Polybios()),
-        className(Predator()),
-        className(PrimesSelection()),
-        className(Projectiles()),
-        className(QrCode()),
-        className(QuadraticEquation()),
-        className(RailFence()),
-        className(RALColorCodes()),
-        className(RC4()),
-        className(Recycling()),
-        className(Resection()),
-        className(ResistorSelection()),
-        className(Reverse()),
-        className(RobberLanguage()),
-        className(RomanNumbers()),
-        className(Rot13()),
-        className(Rot18()),
-        className(Rot5()),
-        className(Rot47()),
-        className(RotationGeneral()),
-        className(RSASelection()),
-        className(SchillingCannstattTelegraph()),
-        className(Scrabble()),
-        className(ShadowLength()),
-        className(ShadoksSelection()),
-        className(Seasons()),
-        className(SevenSegments()),
-        className(SixteenSegments()),
-        className(Skytale()),
-        className(Solitaire()),
-        className(SpoonLanguage()),
-        className(Stegano()),
-        className(StraddlingCheckerboard()),
-        className(Substitution()),
-        className(SubstitutionBreaker()),
-        className(SudokuSolver()),
-        className(SummerSimmerIndex()),
-        className(SunPosition()),
-        className(SunRiseSet()),
-        className(SymbolTableSelection()),
-        className(TapCode()),
-        className(Tapir()),
-        className(TimeCalculator()),
-        className(TomTomSelection()),
-        className(Trifid()),
-        className(Trithemius()),
-        className(UnitConverter()),
-        className(VanitySelection()),
-        className(VariableCoordinateFormulas()),
-        className(Vigenere()),
-        className(VigenereBreaker()),
-        className(VisualCryptography()),
-        className(WASD()),
-        className(Weekday()),
-        className(WhitespaceLanguage()),
-        className(WaypointProjection()),
-        className(Windchill()),
-        className(Z22()),
-        className(ZamonianNumbers()),
-        className(Zodiac()),
-      ].contains(className(element.tool));
-    }).toList();
+List<GCWTool> _categoryList;
+List<GCWTool> _mainToolList;
 
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+refreshToolLists() {
+  refreshRegistry();
+  _categoryList = null;
+  _mainToolList = null;
+}
 
-    _categoryList = Registry.toolList.where((element) {
-      return [
-        className(CoordsSelection()),
-        className(CryptographySelection()),
-        className(FormulaSolverFormulaGroups()),
-        className(GamesSelection()),
-        className(GeneralCodebreakersSelection()),
-        className(ImagesAndFilesSelection()),
-        className(ScienceAndTechnologySelection()),
-        className(SymbolTableSelection()),
-      ].contains(className(element.tool));
-    }).toList();
+void _initStaticToolList() {
+  _mainToolList = registeredTools.where((element) {
+    return [
+      className(Abaddon()),
+      className(ADFGVX()),
+      className(Affine()),
+      className(AlcoholMass()),
+      className(AlphabetValues()),
+      className(Amsco()),
+      className(AnimatedImage()),
+      className(AnimatedImageMorseCode()),
+      className(Antipodes()),
+      className(ASCIIValues()),
+      className(Atbash()),
+      className(AtomicNumbersToText()),
+      className(BabylonNumbersSelection()),
+      className(Bacon()),
+      className(BaseSelection()),
+      className(BCDSelection()),
+      className(Beatnik()),
+      className(BeaufortSelection()),
+      className(Beghilos()),
+      className(Bifid()),
+      className(Binary()),
+      className(Binary2Image()),
+      className(BloodAlcoholContent()),
+      className(BookCipher()),
+      className(BrailleSelection()),
+      className(Brainfk()),
+      className(BurrowsWheeler()),
+      className(Caesar()),
+      className(Calendar()),
+      className(Catan()),
+      className(CCITT1Selection()),
+      className(CCITT2Selection()),
+      className(CenterThreePoints()),
+      className(CenterTwoPoints()),
+      className(Chao()),
+      className(Chef()),
+      className(ChickenLanguage()),
+      className(Chronogram()),
+      className(CipherWheel()),
+      className(CistercianNumbersSelection()),
+      className(ColorPicker()),
+      className(Combination()),
+      className(CombinationPermutation()),
+      className(ComplexNumbers()),
+      className(CoordinateAveraging()),
+      className(CountriesCallingCodes()),
+      className(CountriesFlags()),
+      className(CountriesIOCCodes()),
+      className(CountriesISOCodes()),
+      className(CountriesVehicleCodes()),
+      className(Cow()),
+      className(CrossBearing()),
+      className(CrossSum()),
+      className(CrossSumRange()),
+      className(CrossSumRangeFrequency()),
+      className(DayCalculator()),
+      className(Deadfish()),
+      className(Decabit()),
+      className(DistanceBearing()),
+      className(Divisor()),
+      className(DTMF()),
+      className(DNAAminoAcids()),
+      className(DNAAminoAcidsTable()),
+      className(DNANucleicAcidSequence()),
+      className(SilverRatioSelection()),
+      className(DuckSpeak()),
+      className(EasterSelection()),
+      className(EllipsoidTransform()),
+      className(EnclosedAreas()),
+      className(Enigma()),
+      className(ExifReader()),
+      className(EquilateralTriangle()),
+      className(ESelection()),
+      className(FormatConverter()),
+      className(FormulaSolverFormulaGroups()),
+      className(FourteenSegments()),
+      className(Fox()),
+      className(Gade()),
+      className(GaussWeberTelegraph()),
+      className(GCCode()),
+      className(Gray()),
+      className(Gronsfeld()),
+      className(HeatIndex()),
+      className(HashBreaker()),
+      className(HashSelection()),
+      className(Hexadecimal()),
+      className(HexString2File()),
+      className(HexViewer()),
+      className(HiddenData()),
+      className(Homophone()),
+      className(Houdini()),
+      className(Humidex()),
+      className(IATAICAOSearch()),
+      className(IceCodesSelection()),
+      className(IntersectBearings()),
+      className(IntersectFourPoints()),
+      className(IntersectGeodeticAndCircle()),
+      className(Intersection()),
+      className(IntersectThreeCircles()),
+      className(IntersectTwoCircles()),
+      className(IteratedCrossSumRange()),
+      className(IteratedCrossSumRangeFrequency()),
+      className(Kamasutra()),
+      className(KarolRobot()),
+      className(Kenny()),
+      className(KeyboardSelection()),
+      className(Malbolge()),
+      className(MapView()),
+      className(MayaCalendarSelection()),
+      className(MayaNumbersSelection()),
+      className(MexicanArmyCipherWheel()),
+      className(MoonPosition()),
+      className(MoonRiseSet()),
+      className(Morse()),
+      className(Navajo()),
+      className(NumberSequenceSelection()),
+      className(MultiDecoder()),
+      className(NumeralBases()),
+      className(NumeralWordsSelection()),
+      className(OneTimePad()),
+      className(Ook()),
+      className(PeriodicTable()),
+      className(PeriodicTableDataView()),
+      className(Permutation()),
+      className(PhiSelection()),
+      className(Piano()),
+      className(PiSelection()),
+      className(PigLatin()),
+      className(Playfair()),
+      className(Polybios()),
+      className(PrimesSelection()),
+      className(Projectiles()),
+      className(QrCode()),
+      className(QuadraticEquation()),
+      className(RailFence()),
+      className(RALColorCodes()),
+      className(RC4()),
+      className(Recycling()),
+      className(Resection()),
+      className(ResistorSelection()),
+      className(Reverse()),
+      className(RobberLanguage()),
+      className(RomanNumbers()),
+      className(Rot13()),
+      className(Rot18()),
+      className(Rot5()),
+      className(Rot47()),
+      className(RotationGeneral()),
+      className(RSASelection()),
+      className(SchillingCannstattTelegraph()),
+      className(Scrabble()),
+      className(ShadowLength()),
+      className(ShadoksSelection()),
+      className(Seasons()),
+      className(SevenSegments()),
+      className(SixteenSegments()),
+      className(Skytale()),
+      className(Solitaire()),
+      className(SpoonLanguage()),
+      className(Stegano()),
+      className(StraddlingCheckerboard()),
+      className(Substitution()),
+      className(SubstitutionBreaker()),
+      className(SudokuSolver()),
+      className(SummerSimmerIndex()),
+      className(SunPosition()),
+      className(SunRiseSet()),
+      className(SymbolTableSelection()),
+      className(TapCode()),
+      className(Tapir()),
+      className(TimeCalculator()),
+      className(TomTomSelection()),
+      className(Trifid()),
+      className(Trithemius()),
+      className(UnitConverter()),
+      className(VanitySelection()),
+      className(VariableCoordinateFormulas()),
+      className(Vigenere()),
+      className(VigenereBreaker()),
+      className(VisualCryptography()),
+      className(WASD()),
+      className(Weekday()),
+      className(WhitespaceLanguage()),
+      className(WaypointProjection()),
+      className(Windchill()),
+      className(Z22()),
+      className(ZamonianNumbers()),
+      className(Zodiac()),
+    ].contains(className(element.tool));
+  }).toList();
 
-    _categoryList.sort((a, b) => sortToolListAlphabetically(a, b));
-  }
+  _mainToolList.sort((a, b) => sortToolListAlphabetically(a, b));
+
+  _categoryList = registeredTools.where((element) {
+    return [
+      className(CoordsSelection()),
+      className(CryptographySelection()),
+      className(FormulaSolverFormulaGroups()),
+      className(GamesSelection()),
+      className(GeneralCodebreakersSelection()),
+      className(ImagesAndFilesSelection()),
+      className(ScienceAndTechnologySelection()),
+      className(SymbolTableSelection()),
+    ].contains(className(element.tool));
+  }).toList();
+
+  _categoryList.sort((a, b) => sortToolListAlphabetically(a, b));
 }

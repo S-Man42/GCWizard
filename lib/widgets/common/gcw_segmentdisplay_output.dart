@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -67,7 +68,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
                 iconData: Icons.save,
-                iconColor: (widget.segments == null) || (widget.segments.length == 0) ? Colors.grey : null,
+                iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
                     if (image != null)

@@ -175,12 +175,11 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     var odd = true;
     var rows = formulaGroups.map((group) {
       var formulaTool = GCWTool(
-        tool: FormulaSolverFormulas(group: group),
-        toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
-        helpSearchString: i18n(context, 'formulasolver_formulas'),
-        defaultLanguageToolName: '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}',
-        helpLocales: ['de', 'en', 'fr'],
-      );
+          tool: FormulaSolverFormulas(group: group),
+          toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
+          helpSearchString: 'formulasolver_formulas',
+          defaultLanguageToolName:
+              '${group.name} - ${i18n(context, 'formulasolver_formulas', useDefaultLanguage: true)}');
 
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {

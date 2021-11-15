@@ -102,10 +102,9 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
       var formulaTool = GCWTool(
           tool: VariableCoordinate(formula: formula),
           toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
-          helpSearchString: i18n(context, 'coords_variablecoordinate_title'),
+          helpSearchString: 'coords_variablecoordinate_title',
           defaultLanguageToolName:
-              '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
-          helpLocales: ['de', 'en', 'fr']);
+              '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}');
 
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {

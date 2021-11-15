@@ -73,10 +73,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     var formulaTool = GCWTool(
         tool: FormulaSolverFormulaValues(group: widget.group),
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-        helpSearchString: i18n(context, 'formulasolver_values'),
+        helpSearchString: 'formulasolver_values',
         defaultLanguageToolName:
-            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
-        helpLocales: ['de', 'en', 'fr']);
+            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}');
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
@@ -176,10 +175,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
-                helpSearchString: i18n(context, 'coords_variablecoordinate_title'),
+                helpSearchString: 'coords_variablecoordinate_title',
                 i18nPrefix:
-                    '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
-                helpLocales: ['de', 'en', 'fr'])));
+                    '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}')));
   }
 
   _buildGroupList(BuildContext context) {
@@ -289,7 +287,12 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                   iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                               action: (index) => setState(() {
                                     showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
-                                      formula.formula = value.first;
+                                      if (value.first == null ||
+                                          value.first.formula == null ||
+                                          formula.formula == value.first.formula) return;
+
+                                      formula.formula = value.first.formula;
+                                      _updateFormula(formula);
                                       setState(() {});
                                     });
                                   })),
@@ -370,10 +373,17 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                             child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
                             action: (index) => setState(() {
                                   showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
+                                    if (value == null) return;
+
                                     for (int i = 0; i < widget.group.formulas.length; i++) {
                                       if (value[i] == null) continue;
+                                      if (value[i].formula == null) continue;
 
-                                      widget.group.formulas[i].formula = value[i];
+                                      if (widget.group.formulas[i].formula != value[i].formula) {
+                                        var formula = widget.group.formulas[i];
+                                        formula.formula = value[i].formula;
+                                        _updateFormula(formula);
+                                      }
                                     }
                                     setState(() {});
                                   });
@@ -422,7 +432,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 ),
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
-                suppressToolMargin: true,
-                helpLocales: ['de', 'en', 'fr'])));
+                suppressToolMargin: true)));
   }
 }

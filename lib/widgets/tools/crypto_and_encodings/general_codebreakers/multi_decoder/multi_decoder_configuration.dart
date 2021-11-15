@@ -14,6 +14,8 @@ import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_rotation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
@@ -189,10 +191,14 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
           ),
           GCWIconButton(
             iconData: Icons.add,
-            onPressed: () {
-              _addNewTool();
-              setState(() {});
-            },
+            iconColor: _currentEditId == null ? null : themeColors().inActive(),
+            onPressed: _currentEditId == null
+                ? () {
+                    setState(() {
+                      _addNewTool();
+                    });
+                  }
+                : null,
           ),
         ]),
         GCWTextDivider(
@@ -238,6 +244,9 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
                                 value = getCoordinateFormatByKey(entry.value).name;
+                              } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
+                                  .contains(tool.internalToolName)) {
+                                value += '_title';
                               }
 
                               return '${i18n(context, entry.key)}: ${i18n(context, value.toString()) ?? value}';
@@ -281,8 +290,10 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                 onPressed: () {
                   setState(() {
                     showDeleteAlertDialog(context, tool.name, () {
-                      _deleteTool(tool.id);
-                      setState(() {});
+                      setState(() {
+                        if (_currentEditId == tool.id) _currentEditId = null;
+                        _deleteTool(tool.id);
+                      });
                     });
                   });
                 },

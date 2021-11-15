@@ -103,7 +103,7 @@ class AboutState extends State<About> {
           onTap: () {
             Navigator.of(context).push(NoAnimationMaterialPageRoute(
                 builder: (context) =>
-                    Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
+                    registeredTools.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
           },
         ),
         GCWDivider(),
@@ -140,7 +140,6 @@ class AboutState extends State<About> {
                       text: [
                             '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
                             '\'capoaira\' (Code)',
-                            'Cavit A. (Translation TR)',
                             'Dennis \'dennistreysa\' (Code)',
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
                             '\'Geo-Link\' (Hardware & Symbol Tables)',

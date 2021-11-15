@@ -13,7 +13,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class LanguageGamesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
         className(ChickenLanguage()),
         className(DuckSpeak()),
@@ -22,6 +22,8 @@ class LanguageGamesSelection extends GCWSelection {
         className(SpoonLanguage()),
       ].contains(className(element.tool));
     }).toList();
+
+    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
 
     return Container(child: GCWToolList(toolList: _toolList));
   }

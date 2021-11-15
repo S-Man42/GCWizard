@@ -77,7 +77,7 @@ class CallForContributionState extends State<CallForContribution> {
               ..onTap = () {
                 Navigator.of(context).push(NoAnimationMaterialPageRoute(
                     builder: (context) =>
-                        Registry.toolList.firstWhere((tool) => className(tool.tool) == className(About()))));
+                        registeredTools.firstWhere((tool) => className(tool.tool) == className(About()))));
               },
             style: gcwHyperlinkTextStyle()),
         TextSpan(text: i18n(context, 'callforcontribution_25'), style: boldTextStyle),
