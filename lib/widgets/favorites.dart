@@ -25,7 +25,7 @@ class Favorites {
   }
 
   static initialize() {
-    toolList = Registry.toolList.where((widget) => widget.isFavorite).toList();
+    toolList = registeredTools.where((widget) => widget.isFavorite).toList();
     _sortList();
   }
 }

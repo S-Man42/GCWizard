@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
-import 'package:gc_wizard/widgets/main_menu/settings_general.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_general.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_tools.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -137,12 +132,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
@@ -185,6 +176,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
@@ -220,6 +212,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -230,6 +223,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
@@ -244,9 +238,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
@@ -294,6 +288,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_primes.dart';
@@ -332,7642 +327,3048 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
+import 'package:gc_wizard/widgets/utils/search_strings.dart';
 
-class Registry {
-  // List of all available tools
-  static List<GCWTool> toolList;
-  // Tools with search strings
-  static List<GCWTool> indexedTools;
+List<GCWTool> registeredTools;
 
-  static initialize(BuildContext context) {
-    toolList = [
-      //MainSelection
-      GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ABADDON,
-        SEARCHSTRING_DE_ABADDON,
-        SEARCHSTRING_EN_ABADDON,
-        SEARCHSTRING_FR_ABADDON
-      ]),
-      GCWTool(tool: ADFGVX(), i18nPrefix: 'adfgvx', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ADFGVX,
-        SEARCHSTRING_DE_ADFGVX,
-        SEARCHSTRING_EN_ADFGVX,
-        SEARCHSTRING_FR_ADFGVX
-      ]),
-      GCWTool(tool: Affine(), i18nPrefix: 'affine', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_AFFINE,
-        SEARCHSTRING_DE_AFFINE,
-        SEARCHSTRING_EN_AFFINE,
-        SEARCHSTRING_FR_AFFINE
-      ]),
-      GCWTool(tool: AlcoholMass(), i18nPrefix: 'alcoholmass', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ALCOHOLMASS,
-        SEARCHSTRING_DE_ALCOHOLMASS,
-        SEARCHSTRING_EN_ALCOHOLMASS,
-        SEARCHSTRING_FR_ALCOHOLMASS
-      ]),
-      GCWTool(tool: AlphabetValues(), i18nPrefix: 'alphabetvalues', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ALPHABETVALUES,
-        SEARCHSTRING_DE_ALPHABETVALUES,
-        SEARCHSTRING_EN_ALPHABETVALUES,
-        SEARCHSTRING_FR_ALPHABETVALUES
-      ]),
-      GCWTool(tool: Amsco(), i18nPrefix: 'amsco', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_AMSCO,
-        SEARCHSTRING_DE_AMSCO,
-        SEARCHSTRING_EN_AMSCO,
-        SEARCHSTRING_FR_AMSCO
-      ]),
-      GCWTool(tool: AnimatedImage(), i18nPrefix: 'animated_image', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ANIMATED_IMAGES,
-        SEARCHSTRING_DE_ANIMATED_IMAGES,
-        SEARCHSTRING_EN_ANIMATED_IMAGES,
-        SEARCHSTRING_FR_ANIMATED_IMAGES
-      ]),
-      GCWTool(tool: AnimatedImageMorseCode(), i18nPrefix: 'animated_image_morse_code', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], helpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_ANIMATED_IMAGES_MORSE_CODE,
-        SEARCHSTRING_DE_ANIMATED_IMAGES_MORSE_CODE,
-        SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE,
-        SEARCHSTRING_FR_ANIMATED_IMAGES_MORSE_CODE,
-        SEARCHSTRING_COMMON_ANIMATED_IMAGES,
-        SEARCHSTRING_DE_ANIMATED_IMAGES,
-        SEARCHSTRING_EN_ANIMATED_IMAGES,
-        SEARCHSTRING_FR_ANIMATED_IMAGES
-      ]),
-      GCWTool(
-          tool: ApparentTemperatureSelection(),
-          i18nPrefix: 'apparenttemperature_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: ASCIIValues(), i18nPrefix: 'asciivalues', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASCIIVALUES,
-        SEARCHSTRING_DE_ASCIIVALUES,
-        SEARCHSTRING_EN_ASCIIVALUES,
-        SEARCHSTRING_FR_ASCIIVALUES,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
-      GCWTool(tool: AstronomySelection(), i18nPrefix: 'astronomy_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY
-      ]),
-      GCWTool(tool: Atbash(), i18nPrefix: 'atbash', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ATBASH,
-        SEARCHSTRING_DE_ATBASH,
-        SEARCHSTRING_EN_ATBASH,
-        SEARCHSTRING_FR_ATBASH
-      ]),
-      GCWTool(
-          tool: BabylonNumbersSelection(),
-          i18nPrefix: 'babylonnumbers_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: Bacon(), i18nPrefix: 'bacon', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BACON,
-        SEARCHSTRING_DE_BACON,
-        SEARCHSTRING_EN_BACON,
-        SEARCHSTRING_FR_BACON,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
-      GCWTool(
-          tool: BaseSelection(),
-          i18nPrefix: 'base_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: BCDSelection(), i18nPrefix: 'bcd_selection', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
-      GCWTool(tool: BloodAlcoholContent(), i18nPrefix: 'bloodalcoholcontent', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ALCOHOLMASS,
-        SEARCHSTRING_DE_ALCOHOLMASS,
-        SEARCHSTRING_EN_ALCOHOLMASS,
-        SEARCHSTRING_FR_ALCOHOLMASS,
-        SEARCHSTRING_COMMON_BLOODALCOHOLCONTENT,
-        SEARCHSTRING_DE_BLOODALCOHOLCONTENT,
-        SEARCHSTRING_EN_BLOODALCOHOLCONTENT,
-        SEARCHSTRING_FR_BLOODALCOHOLCONTENT
-      ]),
-      GCWTool(
-          tool: BrailleSelection(),
-          i18nPrefix: 'braille_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-
-      GCWTool(
-          tool: BeaufortSelection(),
-          i18nPrefix: 'beaufort_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: Beghilos(), i18nPrefix: 'beghilos', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BEGHILOS,
-        SEARCHSTRING_DE_BEGHILOS,
-        SEARCHSTRING_EN_BEGHILOS,
-        SEARCHSTRING_FR_BEGHILOS,
-        SEARCHSTRING_DE_SEGMENTS,
-        SEARCHSTRING_EN_SEGMENTS,
-        SEARCHSTRING_FR_SEGMENTS,
-        SEARCHSTRING_DE_SEGMENTS_SEVEN,
-        SEARCHSTRING_EN_SEGMENTS_SEVEN,
-        SEARCHSTRING_FR_SEGMENTS_SEVEN
-      ]),
-      GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID
-      ]),
-      GCWTool(tool: Binary(), i18nPrefix: 'binary', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
-      GCWTool(tool: Binary2Image(), i18nPrefix: 'binary2image', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_QRCODE,
-        SEARCHSTRING_EN_QRCODE,
-        SEARCHSTRING_FR_QRCODE,
-        SEARCHSTRING_COMMON_IMAGES,
-        SEARCHSTRING_DE_IMAGES,
-        SEARCHSTRING_EN_IMAGES,
-        SEARCHSTRING_FR_IMAGES
-      ]),
-      GCWTool(tool: BookCipher(), i18nPrefix: 'book_cipher', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BOOKCIPHER,
-        SEARCHSTRING_DE_BOOKCIPHER,
-        SEARCHSTRING_EN_BOOKCIPHER,
-        SEARCHSTRING_FR_BOOKCIPHER
-      ]),
-      GCWTool(tool: BurrowsWheeler(), i18nPrefix: 'burrowswheeler', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BURROESWHEELER,
-        SEARCHSTRING_DE_BURROESWHEELER,
-        SEARCHSTRING_EN_BURROESWHEELER,
-        SEARCHSTRING_FR_BURROESWHEELER
-      ]),
-      GCWTool(tool: Caesar(), i18nPrefix: 'caesar', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_CAESAR,
-        SEARCHSTRING_DE_CAESAR,
-        SEARCHSTRING_EN_CAESAR,
-        SEARCHSTRING_FR_CAESAR
-      ]),
-      GCWTool(tool: Catan(), i18nPrefix: 'catan', categories: [
-        ToolCategory.GAMES
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CATAN,
-        SEARCHSTRING_DE_CATAN,
-        SEARCHSTRING_EN_CATAN,
-        SEARCHSTRING_FR_CATAN
-      ]),
-
-      GCWTool(
-          tool: CCITT1Selection(),
-          i18nPrefix: 'ccitt1_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: CCITT2Selection(),
-          i18nPrefix: 'ccitt2_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: Chao(),
-          i18nPrefix: 'chao',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_CHAO, SEARCHSTRING_DE_CHAO, SEARCHSTRING_EN_CHAO, SEARCHSTRING_FR_CHAO]),
-      GCWTool(tool: CipherWheel(), i18nPrefix: 'cipherwheel', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CIPHERWHEEL,
-        SEARCHSTRING_DE_CIPHERWHEEL,
-        SEARCHSTRING_EN_CIPHERWHEEL,
-        SEARCHSTRING_FR_CIPHERWHEEL
-      ]),
-      GCWTool(
-          tool: CistercianNumbersSelection(),
-          i18nPrefix: 'cistercian_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: ColorPicker(), i18nPrefix: 'colors', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COLORPICKER,
-        SEARCHSTRING_DE_COLORPICKER,
-        SEARCHSTRING_EN_COLORPICKER,
-        SEARCHSTRING_FR_COLORPICKER
-      ]),
-      GCWTool(
-          tool: CombinatoricsSelection(),
-          i18nPrefix: 'combinatorics_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: ComplexNumbers(), i18nPrefix: 'complex_numbers', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COMPLEXNUMBERS,
-        SEARCHSTRING_DE_COMPLEXNUMBERS,
-        SEARCHSTRING_EN_COMPLEXNUMBERS,
-        SEARCHSTRING_FR_COMPLEXNUMBERS
-      ]),
-      GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COORDINATES,
-        SEARCHSTRING_DE_COORDINATES,
-        SEARCHSTRING_EN_COORDINATES,
-        SEARCHSTRING_FR_COORDINATES
-      ]),
-      GCWTool(
-          tool: CountriesSelection(),
-          i18nPrefix: 'countries_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: CrossSumSelection(),
-          i18nPrefix: 'crosssum_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: CryptographySelection(), i18nPrefix: 'cryptography_selection', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CRYPTOGRAPHYSELECTION,
-        SEARCHSTRING_DE_CRYPTOGRAPHYSELECTION,
-        SEARCHSTRING_EN_CRYPTOGRAPHYSELECTION,
-        SEARCHSTRING_FR_CRYPTOGRAPHYSELECTION
-      ]),
-      GCWTool(tool: DatesSelection(), i18nPrefix: 'dates_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DATES,
-        SEARCHSTRING_DE_DATES,
-        SEARCHSTRING_EN_DATES,
-        SEARCHSTRING_FR_DATES
-      ]),
-      GCWTool(tool: Decabit(), i18nPrefix: 'decabit', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DECABIT,
-        SEARCHSTRING_DE_DECABIT,
-        SEARCHSTRING_EN_DECABIT,
-        SEARCHSTRING_FR_DECABIT
-      ]),
-      GCWTool(tool: Divisor(), i18nPrefix: 'divisor', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DIVISOR,
-        SEARCHSTRING_DE_DIVISOR,
-        SEARCHSTRING_EN_DIVISOR,
-        SEARCHSTRING_FR_DIVISOR
-      ]),
-      GCWTool(
-          tool: DNASelection(),
-          i18nPrefix: 'dna_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: DTMF(),
-          i18nPrefix: 'dtmf',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_DTMF, SEARCHSTRING_DE_DTMF, SEARCHSTRING_EN_DTMF, SEARCHSTRING_FR_DTMF]),
-      GCWTool(tool: EnclosedAreas(), i18nPrefix: 'enclosedareas', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ENCLOSEDAREAS,
-        SEARCHSTRING_DE_ENCLOSEDAREAS,
-        SEARCHSTRING_EN_ENCLOSEDAREAS,
-        SEARCHSTRING_FR_ENCLOSEDAREAS
-      ]),
-      GCWTool(tool: ESelection(), i18nPrefix: 'e_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS
-      ]),
-      GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ENIGMA,
-        SEARCHSTRING_DE_ENIGMA,
-        SEARCHSTRING_EN_ENIGMA,
-        SEARCHSTRING_FR_ENIGMA
-      ]),
-      GCWTool(
-          tool: EsotericProgrammingLanguageSelection(),
-          i18nPrefix: 'esotericprogramminglanguages_selection',
-          categories: [
-            ToolCategory.CRYPTOGRAPHY
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-          ]),
-      GCWTool(tool: ExifReader(), i18nPrefix: 'exif', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_EXIF,
-        SEARCHSTRING_DE_EXIF,
-        SEARCHSTRING_EN_EXIF,
-        SEARCHSTRING_FR_EXIF,
-      ]),
-      GCWTool(
-        tool: FormulaSolverFormulaGroups(),
-        i18nPrefix: 'formulasolver',
-        helpLocales: ['de', 'en', 'fr'],
-        searchStrings: [
-          SEARCHSTRING_COMMON_FORMULASOLVER,
-          SEARCHSTRING_DE_FORMULASOLVER,
-          SEARCHSTRING_EN_FORMULASOLVER,
-          SEARCHSTRING_FR_FORMULASOLVER,
-        ],
-      ),
-      GCWTool(
-          tool: Fox(),
-          i18nPrefix: 'fox',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_FOX, SEARCHSTRING_DE_FOX, SEARCHSTRING_EN_FOX, SEARCHSTRING_FR_FOX]),
-      GCWTool(
-          tool: Gade(),
-          i18nPrefix: 'gade',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_GADE, SEARCHSTRING_DE_GADE, SEARCHSTRING_EN_GADE, SEARCHSTRING_FR_GADE]),
-      GCWTool(
-        tool: GamesSelection(),
-        i18nPrefix: 'games_selection',
-        helpLocales: ['de', 'en', 'fr'],
-        searchStrings: [
-          SEARCHSTRING_COMMON_GAMES,
-          SEARCHSTRING_DE_GAMES,
-          SEARCHSTRING_EN_GAMES,
-          SEARCHSTRING_FR_GAMES,
-        ],
-      ),
-      GCWTool(tool: GaussWeberTelegraph(), i18nPrefix: 'gausswebertelegraph', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_GAUSSWEBERTELEGRAPH,
-        SEARCHSTRING_DE_GAUSSWEBERTELEGRAPH,
-        SEARCHSTRING_EN_GAUSSWEBERTELEGRAPH,
-        SEARCHSTRING_FR_GAUSSWEBERTELEGRAPH,
-      ]),
-      GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_GCCODE,
-        SEARCHSTRING_DE_GCCODE,
-        SEARCHSTRING_EN_GCCODE,
-        SEARCHSTRING_FR_GCCODE,
-      ]),
-      GCWTool(tool: GeneralCodebreakersSelection(), i18nPrefix: 'generalcodebreakers_selection', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CODEBREAKER,
-        SEARCHSTRING_DE_CODEBREAKER,
-        SEARCHSTRING_EN_CODEBREAKER,
-        SEARCHSTRING_FR_CODEBREAKER,
-      ]),
-      GCWTool(tool: Gray(), i18nPrefix: 'gray', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
-        SEARCHSTRING_COMMON_GRAY,
-        SEARCHSTRING_DE_GRAY,
-        SEARCHSTRING_EN_GRAY,
-        SEARCHSTRING_FR_GRAY
-      ]),
-      GCWTool(
-          tool: HashSelection(),
-          i18nPrefix: 'hashes_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: Hexadecimal(), i18nPrefix: 'hexadecimal', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HEXADECIMAL,
-        SEARCHSTRING_DE_HEXADECIMAL,
-        SEARCHSTRING_EN_HEXADECIMAL,
-        SEARCHSTRING_FR_HEXADECIMAL
-      ]),
-      GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HEXADECIMAL,
-        SEARCHSTRING_DE_HEXADECIMAL,
-        SEARCHSTRING_EN_HEXADECIMAL,
-        SEARCHSTRING_FR_HEXADECIMAL,
-        SEARCHSTRING_COMMON_HEXSTRING2FILE,
-        SEARCHSTRING_DE_HEXSTRING2FILE,
-        SEARCHSTRING_EN_HEXSTRING2FILE,
-        SEARCHSTRING_FR_HEXSTRING2FILE
-      ]),
-      GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HEXADECIMAL,
-        SEARCHSTRING_DE_HEXADECIMAL,
-        SEARCHSTRING_EN_HEXADECIMAL,
-        SEARCHSTRING_FR_HEXADECIMAL,
-        SEARCHSTRING_COMMON_HEXVIEWER,
-        SEARCHSTRING_DE_HEXVIEWER,
-        SEARCHSTRING_EN_HEXVIEWER,
-        SEARCHSTRING_FR_HEXVIEWER
-      ]),
-      GCWTool(tool: HiddenData(), i18nPrefix: 'hiddendata', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HIDDENDATA,
-        SEARCHSTRING_DE_HIDDENDATA,
-        SEARCHSTRING_EN_HIDDENDATA,
-        SEARCHSTRING_FR_HIDDENDATA
-      ]),
-      GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HOMOPHONE,
-        SEARCHSTRING_DE_HOMOPHONE,
-        SEARCHSTRING_EN_HOMOPHONE,
-        SEARCHSTRING_FR_HOMOPHONE
-      ]),
-      GCWTool(tool: Houdini(), i18nPrefix: 'houdini', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HOUDINI,
-        SEARCHSTRING_DE_HOUDINI,
-        SEARCHSTRING_EN_HOUDINI,
-        SEARCHSTRING_FR_HOUDINI
-      ]),
-      GCWTool(
-        tool: IATAICAOSearch(),
-        i18nPrefix: 'iataicao',
+initializeRegistry(BuildContext context) {
+  registeredTools = [
+    //MainSelection
+    GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'abaddon',
+    ]),
+    GCWTool(tool: ADFGVX(), i18nPrefix: 'adfgvx', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'adfgvx',
+    ]),
+    GCWTool(tool: Affine(), i18nPrefix: 'affine', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'affine',
+    ]),
+    GCWTool(tool: AlcoholMass(), i18nPrefix: 'alcoholmass', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'alcoholmass',
+    ]),
+    GCWTool(tool: AlphabetValues(), i18nPrefix: 'alphabetvalues', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'alphabetvalues',
+    ]),
+    GCWTool(tool: Amsco(), i18nPrefix: 'amsco', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'amsco',
+    ]),
+    GCWTool(tool: AnimatedImage(), i18nPrefix: 'animated_image', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'animated_images',
+    ]),
+    GCWTool(tool: AnimatedImageMorseCode(), i18nPrefix: 'animated_image_morse_code', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'animated_images_morse_code',
+      'animated_images',
+    ]),
+    GCWTool(
+        tool: ApparentTemperatureSelection(),
+        i18nPrefix: 'apparenttemperature_selection',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-        helpLocales: ['de', 'en', 'fr'],
-        searchStrings: [
-          SEARCHSTRING_COMMON_IATAICAO,
-          SEARCHSTRING_DE_IATAICAO,
-          SEARCHSTRING_EN_IATAICAO,
-          SEARCHSTRING_FR_IATAICAO
-        ],
-      ),
+        searchKeys: []),
+    GCWTool(tool: ASCIIValues(), i18nPrefix: 'asciivalues', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'asciivalues',
+      'binary',
+    ]),
+    GCWTool(tool: AstronomySelection(), i18nPrefix: 'astronomy_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'astronomy',
+    ]),
+    GCWTool(tool: Atbash(), i18nPrefix: 'atbash', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'atbash',
+    ]),
+    GCWTool(
+        tool: BabylonNumbersSelection(),
+        i18nPrefix: 'babylonnumbers_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: Bacon(), i18nPrefix: 'bacon', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'bacon',
+      'binary',
+    ]),
+    GCWTool(
+        tool: BaseSelection(),
+        i18nPrefix: 'base_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: BCDSelection(), i18nPrefix: 'bcd_selection', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'binary',
+    ]),
+    GCWTool(tool: BloodAlcoholContent(), i18nPrefix: 'bloodalcoholcontent', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'alcoholmass',
+      'bloodalcoholcontent',
+    ]),
+    GCWTool(
+        tool: BrailleSelection(),
+        i18nPrefix: 'braille_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
 
-      GCWTool(
-        tool: IceCodesSelection(),
-        i18nPrefix: 'icecodes_selection',
+    GCWTool(
+        tool: BeaufortSelection(),
+        i18nPrefix: 'beaufort_selection',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-        helpLocales: ['de', 'en', 'fr'],
-        searchStrings: [],
-      ),
-      GCWTool(tool: ImagesAndFilesSelection(), i18nPrefix: 'imagesandfiles_selection', isBeta: true, helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IMAGES,
-        SEARCHSTRING_DE_IMAGES,
-        SEARCHSTRING_EN_IMAGES,
-        SEARCHSTRING_FR_IMAGES,
-        SEARCHSTRING_COMMON_IMAGESANDFILESSELECTION,
-        SEARCHSTRING_DE_IMAGESANDFILESSELECTION,
-        SEARCHSTRING_EN_IMAGESANDFILESSELECTION,
-        SEARCHSTRING_FR_IMAGESANDFILESSELECTION
-      ]),
-      GCWTool(
-          tool: ImageColorCorrections(),
-          autoScroll: false,
-          categories: [ToolCategory.IMAGES_AND_FILES],
-          i18nPrefix: 'image_colorcorrections',
-          helpLocales: ['de', 'en', 'fr'],
-          isBeta: true,
-          searchStrings: [
-            SEARCHSTRING_COMMON_IMAGES,
-            SEARCHSTRING_DE_IMAGES,
-            SEARCHSTRING_EN_IMAGES,
-            SEARCHSTRING_FR_IMAGES,
-            SEARCHSTRING_COMMON_COLOR,
-            SEARCHSTRING_DE_COLOR,
-            SEARCHSTRING_EN_COLOR,
-            SEARCHSTRING_FR_COLOR,
-            SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS,
-            SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS,
-            SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS,
-            SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS
-          ]),
-      GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES
-      ], helpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_STEGANO,
-        SEARCHSTRING_DE_STEGANO,
-        SEARCHSTRING_EN_STEGANO,
-        SEARCHSTRING_FR_STEGANO
-      ]),
-      GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_KAMASUTRA,
-        SEARCHSTRING_DE_KAMASUTRA,
-        SEARCHSTRING_EN_KAMASUTRA,
-        SEARCHSTRING_FR_KAMASUTRA
-      ]),
-      GCWTool(tool: Kenny(), i18nPrefix: 'kenny', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_KENNY,
-        SEARCHSTRING_DE_KENNY,
-        SEARCHSTRING_EN_KENNY,
-        SEARCHSTRING_FR_KENNY
-      ]),
-      GCWTool(tool: KeyboardLayout(), i18nPrefix: 'keyboard_layout', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_KEYBOARD,
-        SEARCHSTRING_DE_KEYBOARD,
-        SEARCHSTRING_EN_KEYBOARD,
-        SEARCHSTRING_FR_KEYBOARD
-      ]),
-      GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_KEYBOARD,
-        SEARCHSTRING_DE_KEYBOARD,
-        SEARCHSTRING_EN_KEYBOARD,
-        SEARCHSTRING_FR_KEYBOARD
-      ]),
-      GCWTool(
-          tool: KeyboardSelection(),
-          i18nPrefix: 'keyboard_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: LanguageGamesSelection(),
-          i18nPrefix: 'languagegames_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: MayaCalendarSelection(),
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          i18nPrefix: 'mayacalendar_selection',
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: MayaNumbersSelection(),
-          i18nPrefix: 'mayanumbers_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: MexicanArmyCipherWheel(), i18nPrefix: 'mexicanarmycipherwheel', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CIPHERWHEEL,
-        SEARCHSTRING_DE_CIPHERWHEEL,
-        SEARCHSTRING_EN_CIPHERWHEEL,
-        SEARCHSTRING_FR_CIPHERWHEEL,
-        SEARCHSTRING_COMMON_MEXICANARMYCIPHERWHEEL,
-        SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL,
-        SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL,
-        SEARCHSTRING_FR_MEXICANARMYCIPHERWHEEL
-      ]),
-      GCWTool(tool: Morse(), i18nPrefix: 'morse', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_MORSE,
-        SEARCHSTRING_DE_MORSE,
-        SEARCHSTRING_EN_MORSE,
-        SEARCHSTRING_FR_MORSE
-      ]),
-      GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', categories: [
-        ToolCategory.GENERAL_CODEBREAKERS
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_MULTIDECODER,
-        SEARCHSTRING_DE_MULTIDECODER,
-        SEARCHSTRING_EN_MULTIDECODER,
-        SEARCHSTRING_FR_MULTIDECODER
-      ]),
-      GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NAVAJO,
-        SEARCHSTRING_DE_NAVAJO,
-        SEARCHSTRING_EN_NAVAJO,
-        SEARCHSTRING_FR_NAVAJO
-      ]),
-      GCWTool(
-          tool: NumberSequenceSelection(),
-          i18nPrefix: 'numbersequence',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: NumeralBases(), i18nPrefix: 'numeralbases', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
-        SEARCHSTRING_COMMON_NUMERALBASES,
-        SEARCHSTRING_DE_NUMERALBASES,
-        SEARCHSTRING_EN_NUMERALBASES,
-        SEARCHSTRING_FR_NUMERALBASES
-      ]),
-      GCWTool(
-          tool: NumeralWordsSelection(),
-          i18nPrefix: 'numeralwords_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: OneTimePad(), i18nPrefix: 'onetimepad', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ONETIMEPAD,
-        SEARCHSTRING_DE_ONETIMEPAD,
-        SEARCHSTRING_EN_ONETIMEPAD,
-        SEARCHSTRING_FR_ONETIMEPAD
-      ]),
-      GCWTool(tool: PeriodicTableSelection(), i18nPrefix: 'periodictable_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PERIODICTABLE,
-        SEARCHSTRING_DE_PERIODICTABLE,
-        SEARCHSTRING_EN_PERIODICTABLE,
-        SEARCHSTRING_FR_PERIODICTABLE
-      ]),
-      GCWTool(tool: PhiSelection(), i18nPrefix: 'phi_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS
-      ]),
-      GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PIANO,
-        SEARCHSTRING_DE_PIANO,
-        SEARCHSTRING_EN_PIANO,
-        SEARCHSTRING_FR_PIANO
-      ]),
-      GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS
-      ]),
-      GCWTool(tool: Playfair(), i18nPrefix: 'playfair', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PLAYFAIR,
-        SEARCHSTRING_DE_PLAYFAIR,
-        SEARCHSTRING_EN_PLAYFAIR,
-        SEARCHSTRING_FR_PLAYFAIR
-      ]),
-      GCWTool(tool: Polybios(), i18nPrefix: 'polybios', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_POLYBIOS,
-        SEARCHSTRING_DE_POLYBIOS,
-        SEARCHSTRING_EN_POLYBIOS,
-        SEARCHSTRING_FR_POLYBIOS
-      ]),
-      GCWTool(
-          tool: PrimesSelection(),
-          i18nPrefix: 'primes_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: Projectiles(), i18nPrefix: 'projectiles', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PROJECTILES,
-        SEARCHSTRING_DE_PROJECTILES,
-        SEARCHSTRING_EN_PROJECTILES,
-        SEARCHSTRING_FR_PROJECTILES
-      ]),
-      GCWTool(
-          tool: QrCode(),
-          i18nPrefix: 'qr_code',
-          isBeta: true,
-          categories: [ToolCategory.IMAGES_AND_FILES],
-          searchStrings: [SEARCHSTRING_DE_QRCODE, SEARCHSTRING_EN_QRCODE, SEARCHSTRING_FR_QRCODE]),
-      GCWTool(tool: QuadraticEquation(), i18nPrefix: 'quadratic_equation', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_QUADRATICEQUATION,
-        SEARCHSTRING_DE_QUADRATICEQUATION,
-        SEARCHSTRING_EN_QUADRATICEQUATION,
-        SEARCHSTRING_FR_QUADRATICEQUATION
-      ]),
-      GCWTool(tool: RailFence(), i18nPrefix: 'railfence', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RAILFENCE,
-        SEARCHSTRING_DE_RAILFENCE,
-        SEARCHSTRING_EN_RAILFENCE,
-        SEARCHSTRING_FR_RAILFENCE
-      ]),
-      GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_RALCOLORCODES,
-        SEARCHSTRING_DE_RALCOLORCODES,
-        SEARCHSTRING_EN_RALCOLORCODES,
-        SEARCHSTRING_FR_RALCOLORCODES
-      ]),
-      GCWTool(
-          tool: RC4(),
-          i18nPrefix: 'rc4',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_RC4, SEARCHSTRING_DE_RC4, SEARCHSTRING_EN_RC4, SEARCHSTRING_FR_RC4]),
-      GCWTool(tool: Recycling(), i18nPrefix: 'recycling', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RECYCLING,
-        SEARCHSTRING_DE_RECYCLING,
-        SEARCHSTRING_EN_RECYCLING,
-        SEARCHSTRING_FR_RECYCLING,
-      ]),
-      GCWTool(
-          tool: ResistorSelection(),
-          i18nPrefix: 'resistor_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: Reverse(), i18nPrefix: 'reverse', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_REVERSE,
-        SEARCHSTRING_DE_REVERSE,
-        SEARCHSTRING_EN_REVERSE,
-        SEARCHSTRING_FR_REVERSE
-      ]),
-      GCWTool(
-          tool: RomanNumbersSelection(),
-          i18nPrefix: 'romannumbers',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: RotationSelection(), i18nPrefix: 'rotation_selection', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION
-      ]),
-      GCWTool(tool: RSASelection(), i18nPrefix: 'rsa_selection', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES
-      ]),
-      GCWTool(tool: SchillingCannstattTelegraph(), i18nPrefix: 'schillingcanstatt', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SCHILLINGCANSTATT,
-        SEARCHSTRING_DE_SCHILLINGCANSTATT,
-        SEARCHSTRING_EN_SCHILLINGCANSTATT,
-        SEARCHSTRING_FR_SCHILLINGCANSTATT,
-      ]),
-      GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SCIENCEANDTECHNOLOGYSELECTION,
-        SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION,
-        SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION,
-        SEARCHSTRING_FR_SCIENCEANDTECHNOLOGYSELECTION
-      ]),
-      GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', categories: [
-        ToolCategory.GAMES
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES,
-        SEARCHSTRING_COMMON_GAMES_SCRABBLE,
-        SEARCHSTRING_DE_GAMES_SCRABBLE,
-        SEARCHSTRING_EN_GAMES_SCRABBLE,
-        SEARCHSTRING_FR_GAMES_SCRABBLE
-      ]),
-      GCWTool(
-          tool: SegmentDisplaySelection(),
-          i18nPrefix: 'segmentdisplay_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: ShadoksSelection(),
-          i18nPrefix: 'shadoks_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS
-      ]),
-      GCWTool(tool: Skytale(), i18nPrefix: 'skytale', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SKYTALE,
-        SEARCHSTRING_DE_SKYTALE,
-        SEARCHSTRING_EN_SKYTALE,
-        SEARCHSTRING_FR_SKYTALE
-      ]),
-      GCWTool(tool: Solitaire(), i18nPrefix: 'solitaire', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SOLITAIRE,
-        SEARCHSTRING_DE_SOLITAIRE,
-        SEARCHSTRING_EN_SOLITAIRE,
-        SEARCHSTRING_FR_SOLITAIRE
-      ]),
-      GCWTool(tool: StraddlingCheckerboard(), i18nPrefix: 'straddlingcheckerboard', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_STRADDLINGCHECKERBOARD,
-        SEARCHSTRING_DE_STRADDLINGCHECKERBOARD,
-        SEARCHSTRING_EN_STRADDLINGCHECKERBOARD,
-        SEARCHSTRING_FR_STRADDLINGCHECKERBOARD
-      ]),
-      GCWTool(tool: Substitution(), i18nPrefix: 'substitution', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SUBSTITUTION,
-        SEARCHSTRING_DE_SUBSTITUTION,
-        SEARCHSTRING_EN_SUBSTITUTION,
-        SEARCHSTRING_FR_SUBSTITUTION
-      ]),
-      GCWTool(tool: SubstitutionBreaker(), i18nPrefix: 'substitutionbreaker', categories: [
-        ToolCategory.GENERAL_CODEBREAKERS
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CODEBREAKER,
-        SEARCHSTRING_DE_CODEBREAKER,
-        SEARCHSTRING_EN_CODEBREAKER,
-        SEARCHSTRING_FR_CODEBREAKER,
-        SEARCHSTRING_COMMON_SUBSTITUTIONBREAKER,
-        SEARCHSTRING_DE_SUBSTITUTIONBREAKER,
-        SEARCHSTRING_EN_SUBSTITUTIONBREAKER,
-        SEARCHSTRING_FR_SUBSTITUTIONBREAKER
-      ]),
-      GCWTool(tool: SudokuSolver(), i18nPrefix: 'sudokusolver', categories: [
-        ToolCategory.GAMES
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES,
-        SEARCHSTRING_COMMON_GAMES_SUDOKUSOLVER,
-        SEARCHSTRING_DE_GAMES_SUDOKUSOLVER,
-        SEARCHSTRING_EN_GAMES_SUDOKUSOLVER,
-        SEARCHSTRING_FR_GAMES_SUDOKUSOLVER
-      ]),
-      GCWTool(
-        tool: SymbolTableSelection(),
-        buttonList: [
-          GCWToolActionButtonsEntry(
-              showDialog: true,
-              url: symboltablesDownloadLink(context),
-              title: 'symboltables_selection_download_dialog_title',
-              text: 'symboltables_selection_download_dialog_text',
-              icon: Icons.file_download),
+        searchKeys: []),
+    GCWTool(tool: Beghilos(), i18nPrefix: 'beghilos', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'beghilos',
+      'segments',
+      'segements_seven',
+    ]),
+    GCWTool(tool: Bifid(), i18nPrefix: 'bifid', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'bifid',
+    ]),
+    GCWTool(tool: Binary(), i18nPrefix: 'binary', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'binary',
+    ]),
+    GCWTool(tool: Binary2Image(), i18nPrefix: 'binary2image', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'binary',
+      'barcodes',
+      'images',
+    ]),
+    GCWTool(tool: BookCipher(), i18nPrefix: 'book_cipher', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'bookcipher',
+    ]),
+    GCWTool(tool: BurrowsWheeler(), i18nPrefix: 'burrowswheeler', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'burroeswheeler',
+    ]),
+    GCWTool(tool: Caesar(), i18nPrefix: 'caesar', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'rotation',
+      'caesar',
+    ]),
+    GCWTool(tool: Catan(), i18nPrefix: 'catan', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'catan',
+    ]),
+
+    GCWTool(
+        tool: CCITT1Selection(),
+        i18nPrefix: 'ccitt1_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(
+        tool: CCITT2Selection(),
+        i18nPrefix: 'ccitt2_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: Chao(), i18nPrefix: 'chao', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'chao',
+    ]),
+    GCWTool(tool: CipherWheel(), i18nPrefix: 'cipherwheel', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'cipherwheel',
+    ]),
+    GCWTool(
+        tool: CistercianNumbersSelection(),
+        i18nPrefix: 'cistercian_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: ColorPicker(), i18nPrefix: 'colors', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'colorpicker',
+    ]),
+    GCWTool(
+        tool: CombinatoricsSelection(),
+        i18nPrefix: 'combinatorics_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(tool: ComplexNumbers(), i18nPrefix: 'complex_numbers', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'complexnumbers',
+    ]),
+    GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', searchKeys: [
+      'coordinates',
+    ]),
+    GCWTool(
+        tool: CountriesSelection(),
+        i18nPrefix: 'countries_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(
+        tool: CrossSumSelection(),
+        i18nPrefix: 'crosssum_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(tool: CryptographySelection(), i18nPrefix: 'cryptography_selection', searchKeys: [
+      'cryptographyselection',
+    ]),
+    GCWTool(tool: DatesSelection(), i18nPrefix: 'dates_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'dates',
+    ]),
+    GCWTool(tool: Decabit(), i18nPrefix: 'decabit', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'decabit',
+    ]),
+    GCWTool(tool: Divisor(), i18nPrefix: 'divisor', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'divisor',
+    ]),
+    GCWTool(
+        tool: DNASelection(),
+        i18nPrefix: 'dna_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(tool: DTMF(), i18nPrefix: 'dtmf', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'dtmf',
+    ]),
+    GCWTool(tool: EnclosedAreas(), i18nPrefix: 'enclosedareas', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'enclosedareas',
+    ]),
+    GCWTool(tool: ESelection(), i18nPrefix: 'e_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'enigma',
+    ]),
+    GCWTool(
+        tool: EsotericProgrammingLanguageSelection(),
+        i18nPrefix: 'esotericprogramminglanguages_selection',
+        categories: [
+          ToolCategory.CRYPTOGRAPHY
         ],
-        i18nPrefix: 'symboltables_selection',
-        helpLocales: ['de', 'en', 'fr'],
-        searchStrings: [],
-      ),
-      GCWTool(tool: TapCode(), i18nPrefix: 'tapcode', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TAPCODE,
-        SEARCHSTRING_DE_TAPCODE,
-        SEARCHSTRING_EN_TAPCODE,
-        SEARCHSTRING_FR_TAPCODE
-      ]),
-      GCWTool(tool: Tapir(), i18nPrefix: 'tapir', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TAPIR,
-        SEARCHSTRING_DE_TAPIR,
-        SEARCHSTRING_EN_TAPIR,
-        SEARCHSTRING_FR_TAPIR
-      ]),
-      GCWTool(tool: Trifid(), i18nPrefix: 'trifid', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TRIFID,
-        SEARCHSTRING_DE_TRIFID,
-        SEARCHSTRING_EN_TRIFID,
-        SEARCHSTRING_FR_TRIFID
-      ]),
-      GCWTool(
-          tool: TomTomSelection(),
-          i18nPrefix: 'tomtom_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: UnitConverter(), i18nPrefix: 'unitconverter', categories: [
-        ToolCategory.SCIENCE_AND_TECHNOLOGY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_UNITCONVERTER,
-        SEARCHSTRING_DE_UNITCONVERTER,
-        SEARCHSTRING_EN_UNITCONVERTER,
-        SEARCHSTRING_FR_UNITCONVERTER
-      ]),
-      GCWTool(
-          tool: WASD(),
-          i18nPrefix: 'wasd',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_WASD, SEARCHSTRING_DE_WASD, SEARCHSTRING_EN_WASD, SEARCHSTRING_FR_WASD]),
-      GCWTool(
-          tool: VanitySelection(),
-          i18nPrefix: 'vanity_selection',
-          categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(
-          tool: VigenereSelection(),
-          i18nPrefix: 'vigenere_selection',
-          categories: [ToolCategory.CRYPTOGRAPHY],
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: VisualCryptography(), i18nPrefix: 'visual_cryptography', isBeta: true, categories: [
-        ToolCategory.IMAGES_AND_FILES,
-        ToolCategory.CRYPTOGRAPHY
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VISUALCRYPTOGRAPHY,
-        SEARCHSTRING_DE_VISUALCRYPTOGRAPHY,
-        SEARCHSTRING_EN_VISUALCRYPTOGRAPHY,
-        SEARCHSTRING_FR_VISUALCRYPTOGRAPHY
-      ]),
-      GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CCITT2,
-        SEARCHSTRING_DE_CCITT2,
-        SEARCHSTRING_EN_CCITT2,
-        SEARCHSTRING_FR_CCITT2,
-        SEARCHSTRING_COMMON_Z22,
-        SEARCHSTRING_DE_Z22,
-        SEARCHSTRING_EN_Z22,
-        SEARCHSTRING_FR_Z22
-      ]),
-      GCWTool(tool: ZamonianNumbers(), i18nPrefix: 'zamoniannumbers', categories: [
-        ToolCategory.CRYPTOGRAPHY
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZAMONIAN,
-        SEARCHSTRING_DE_SYMBOL_ZAMONIAN,
-        SEARCHSTRING_EN_SYMBOL_ZAMONIAN,
-        SEARCHSTRING_FR_SYMBOL_ZAMONIAN
-      ]),
-
-      //ApparentTemperatureSelection  ********************************************************************************************
-      GCWTool(tool: HeatIndex(), i18nPrefix: 'heatindex', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE,
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE_HEATINDEX,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE_HEATINDEX,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE_HEATINDEX,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE_HEATINDEX
-      ]),
-      GCWTool(tool: Humidex(), i18nPrefix: 'humidex', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE,
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE_HUMIDEX,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE_HUMIDEX,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE_HUMIDEX,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE_HUMIDEX
-      ]),
-      GCWTool(tool: SummerSimmerIndex(), i18nPrefix: 'summersimmerindex', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE,
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE_SUMMERSIMMERINDEX,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE_SUMMERSIMMERINDEX,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE_SUMMERSIMMERINDEX,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE_SUMMERSIMMERINDEX
-      ]),
-      GCWTool(tool: Windchill(), i18nPrefix: 'windchill', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE,
-        SEARCHSTRING_COMMON_APPARENTTEMPERATURE_WINDCHILL,
-        SEARCHSTRING_DE_APPARENTTEMPERATURE_WINDCHILL,
-        SEARCHSTRING_EN_APPARENTTEMPERATURE_WINDCHILL,
-        SEARCHSTRING_FR_APPARENTTEMPERATURE_WINDCHILL
-      ]),
-      GCWTool(tool: Zodiac(), i18nPrefix: 'zodiac', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALCHEMY,
-        SEARCHSTRING_DE_SYMBOL_ALCHEMY,
-        SEARCHSTRING_EN_SYMBOL_ALCHEMY,
-        SEARCHSTRING_FR_SYMBOL_ALCHEMY,
-        SEARCHSTRING_COMMON_SYMBOL_PLANETS,
-        SEARCHSTRING_DE_SYMBOL_PLANETS,
-        SEARCHSTRING_EN_SYMBOL_PLANETS,
-        SEARCHSTRING_FR_SYMBOL_PLANETS,
-        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS_LATIN,
-        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS_LATIN,
-        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS_LATIN,
-        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS_LATIN
-      ]),
-
-      //AstronomySelection  ********************************************************************************************
-      GCWTool(tool: SunRiseSet(), i18nPrefix: 'astronomy_sunriseset', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY,
-        SEARCHSTRING_COMMON_ASTRONOMY_RISESET,
-        SEARCHSTRING_DE_ASTRONOMY_RISESET,
-        SEARCHSTRING_EN_ASTRONOMY_RISESET,
-        SEARCHSTRING_FR_ASTRONOMY_RISESET,
-        SEARCHSTRING_COMMON_ASTRONOMY_SUN,
-        SEARCHSTRING_DE_ASTRONOMY_SUN,
-        SEARCHSTRING_EN_ASTRONOMY_SUN,
-        SEARCHSTRING_FR_ASTRONOMY_SUN,
-        SEARCHSTRING_COMMON_ASTRONOMY_SUNRISESET,
-        SEARCHSTRING_DE_ASTRONOMY_SUNRISESET,
-        SEARCHSTRING_EN_ASTRONOMY_SUNRISESET,
-        SEARCHSTRING_FR_ASTRONOMY_SUNRISESET
-      ]),
-      GCWTool(tool: SunPosition(), i18nPrefix: 'astronomy_sunposition', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY,
-        SEARCHSTRING_COMMON_ASTRONOMY_POSITION,
-        SEARCHSTRING_DE_ASTRONOMY_POSITION,
-        SEARCHSTRING_EN_ASTRONOMY_POSITION,
-        SEARCHSTRING_FR_ASTRONOMY_POSITION,
-        SEARCHSTRING_COMMON_ASTRONOMY_SUN,
-        SEARCHSTRING_DE_ASTRONOMY_SUN,
-        SEARCHSTRING_EN_ASTRONOMY_SUN,
-        SEARCHSTRING_FR_ASTRONOMY_SUN
-      ]),
-      GCWTool(tool: MoonRiseSet(), i18nPrefix: 'astronomy_moonriseset', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY,
-        SEARCHSTRING_COMMON_ASTRONOMY_RISESET,
-        SEARCHSTRING_DE_ASTRONOMY_RISESET,
-        SEARCHSTRING_EN_ASTRONOMY_RISESET,
-        SEARCHSTRING_FR_ASTRONOMY_RISESET,
-        SEARCHSTRING_COMMON_ASTRONOMY_MOON,
-        SEARCHSTRING_DE_ASTRONOMY_MOON,
-        SEARCHSTRING_EN_ASTRONOMY_MOON,
-        SEARCHSTRING_FR_ASTRONOMY_MOON
-      ]),
-      GCWTool(tool: MoonPosition(), i18nPrefix: 'astronomy_moonposition', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY,
-        SEARCHSTRING_COMMON_ASTRONOMY_POSITION,
-        SEARCHSTRING_DE_ASTRONOMY_POSITION,
-        SEARCHSTRING_EN_ASTRONOMY_POSITION,
-        SEARCHSTRING_FR_ASTRONOMY_POSITION,
-        SEARCHSTRING_COMMON_ASTRONOMY_MOON,
-        SEARCHSTRING_DE_ASTRONOMY_MOON,
-        SEARCHSTRING_EN_ASTRONOMY_MOON,
-        SEARCHSTRING_FR_ASTRONOMY_MOON,
-        SEARCHSTRING_COMMON_ASTRONOMY_MOONPOSITION,
-        SEARCHSTRING_DE_ASTRONOMY_MOONPOSITION,
-        SEARCHSTRING_EN_ASTRONOMY_MOONPOSITION,
-        SEARCHSTRING_FR_ASTRONOMY_MOONPOSITION
-      ]),
-      GCWTool(tool: EasterSelection(), i18nPrefix: 'astronomy_easter_selection', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_EASTER_DATE,
-        SEARCHSTRING_DE_EASTER_DATE,
-        SEARCHSTRING_EN_EASTER_DATE,
-        SEARCHSTRING_FR_EASTER_DATE
-      ]),
-      GCWTool(tool: Seasons(), i18nPrefix: 'astronomy_seasons', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY,
-        SEARCHSTRING_COMMON_ASTRONOMY_SEASONS,
-        SEARCHSTRING_DE_ASTRONOMY_SEASONS,
-        SEARCHSTRING_EN_ASTRONOMY_SEASONS,
-        SEARCHSTRING_FR_ASTRONOMY_SEASONS
-      ]),
-      GCWTool(tool: ShadowLength(), i18nPrefix: 'shadowlength', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASTRONOMY,
-        SEARCHSTRING_DE_ASTRONOMY,
-        SEARCHSTRING_EN_ASTRONOMY,
-        SEARCHSTRING_FR_ASTRONOMY,
-        SEARCHSTRING_COMMON_ASTRONOMY_SHADOW_LENGTH,
-        SEARCHSTRING_DE_ASTRONOMY_SHADOW_LENGTH,
-        SEARCHSTRING_EN_ASTRONOMY_SHADOW_LENGTH,
-        SEARCHSTRING_FR_ASTRONOMY_SHADOW_LENGTH
-      ]),
-
-      //Babylon Numbers Selection **************************************************************************************
-      GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchStrings: [
-        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
-      ]),
-
-      //BaseSelection **************************************************************************************************
-      GCWTool(tool: Base16(), i18nPrefix: 'base_base16', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BASE,
-        SEARCHSTRING_DE_BASE,
-        SEARCHSTRING_EN_BASE,
-        SEARCHSTRING_FR_BASE,
-        SEARCHSTRING_COMMON_BASE16,
-        SEARCHSTRING_DE_BASE16,
-        SEARCHSTRING_EN_BASE16,
-        SEARCHSTRING_FR_BASE16
-      ]),
-      GCWTool(tool: Base32(), i18nPrefix: 'base_base32', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BASE,
-        SEARCHSTRING_DE_BASE,
-        SEARCHSTRING_EN_BASE,
-        SEARCHSTRING_FR_BASE,
-        SEARCHSTRING_COMMON_BASE32,
-        SEARCHSTRING_DE_BASE32,
-        SEARCHSTRING_EN_BASE32,
-        SEARCHSTRING_FR_BASE32
-      ]),
-      GCWTool(tool: Base64(), i18nPrefix: 'base_base64', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BASE,
-        SEARCHSTRING_DE_BASE,
-        SEARCHSTRING_EN_BASE,
-        SEARCHSTRING_FR_BASE,
-        SEARCHSTRING_COMMON_BASE64,
-        SEARCHSTRING_DE_BASE64,
-        SEARCHSTRING_EN_BASE64,
-        SEARCHSTRING_FR_BASE64
-      ]),
-      GCWTool(tool: Base85(), i18nPrefix: 'base_base85', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BASE,
-        SEARCHSTRING_DE_BASE,
-        SEARCHSTRING_EN_BASE,
-        SEARCHSTRING_FR_BASE,
-        SEARCHSTRING_COMMON_BASE85,
-        SEARCHSTRING_DE_BASE85,
-        SEARCHSTRING_EN_BASE85,
-        SEARCHSTRING_FR_BASE85
-      ]),
-
-      //BCD selection **************************************************************************************************
-      GCWTool(tool: BCDOriginal(), i18nPrefix: 'bcd_original', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDORIGINAL,
-        SEARCHSTRING_DE_BCDORIGINAL,
-        SEARCHSTRING_EN_BCDORIGINAL,
-        SEARCHSTRING_FR_BCDORIGINAL
-      ]),
-      GCWTool(tool: BCDAiken(), i18nPrefix: 'bcd_aiken', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDAIKEN,
-        SEARCHSTRING_DE_BCDAIKEN,
-        SEARCHSTRING_EN_BCDAIKEN,
-        SEARCHSTRING_FR_BCDAIKEN
-      ]),
-      GCWTool(tool: BCDGlixon(), i18nPrefix: 'bcd_glixon', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDGLIXON,
-        SEARCHSTRING_DE_BCDGLIXON,
-        SEARCHSTRING_EN_BCDGLIXON,
-        SEARCHSTRING_FR_BCDGLIXON
-      ]),
-      GCWTool(tool: BCDGray(), i18nPrefix: 'bcd_gray', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDGRAY,
-        SEARCHSTRING_DE_BCDGRAY,
-        SEARCHSTRING_EN_BCDGRAY,
-        SEARCHSTRING_FR_BCDGRAY
-      ]),
-      GCWTool(tool: BCDLibawCraig(), i18nPrefix: 'bcd_libawcraig', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDLIBAWCRAIG,
-        SEARCHSTRING_DE_BCDLIBAWCRAIG,
-        SEARCHSTRING_EN_BCDLIBAWCRAIG,
-        SEARCHSTRING_FR_BCDLIBAWCRAIG
-      ]),
-      GCWTool(tool: BCDOBrien(), i18nPrefix: 'bcd_obrien', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDOBRIEN,
-        SEARCHSTRING_DE_BCDOBRIEN,
-        SEARCHSTRING_EN_BCDOBRIEN,
-        SEARCHSTRING_FR_BCDOBRIEN
-      ]),
-      GCWTool(tool: BCDPetherick(), i18nPrefix: 'bcd_petherick', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDPETHERICK,
-        SEARCHSTRING_DE_BCDPETHERICK,
-        SEARCHSTRING_EN_BCDPETHERICK,
-        SEARCHSTRING_FR_BCDPETHERICK
-      ]),
-      GCWTool(tool: BCDStibitz(), i18nPrefix: 'bcd_stibitz', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDSTIBITZ,
-        SEARCHSTRING_DE_BCDSTIBITZ,
-        SEARCHSTRING_EN_BCDSTIBITZ,
-        SEARCHSTRING_FR_BCDSTIBITZ
-      ]),
-      GCWTool(tool: BCDTompkins(), i18nPrefix: 'bcd_tompkins', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDTOMPKINS,
-        SEARCHSTRING_DE_BCDTOMPKINS,
-        SEARCHSTRING_EN_BCDTOMPKINS,
-        SEARCHSTRING_FR_BCDTOMPKINS
-      ]),
-      GCWTool(tool: BCDHamming(), i18nPrefix: 'bcd_hamming', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDHAMMING,
-        SEARCHSTRING_DE_BCDHAMMING,
-        SEARCHSTRING_EN_BCDHAMMING,
-        SEARCHSTRING_FR_BCDHAMMING
-      ]),
-      GCWTool(tool: BCDBiquinary(), i18nPrefix: 'bcd_biquinary', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCD2OF5,
-        SEARCHSTRING_DE_BCD2OF5,
-        SEARCHSTRING_EN_BCD2OF5,
-        SEARCHSTRING_FR_BCD2OF5,
-        SEARCHSTRING_COMMON_BCDBIQUINARY,
-        SEARCHSTRING_DE_BCDBIQUINARY,
-        SEARCHSTRING_EN_BCDBIQUINARY,
-        SEARCHSTRING_FR_BCDBIQUINARY
-      ]),
-      GCWTool(tool: BCD2of5Planet(), i18nPrefix: 'bcd_2of5planet', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCD2OF5,
-        SEARCHSTRING_DE_BCD2OF5,
-        SEARCHSTRING_EN_BCD2OF5,
-        SEARCHSTRING_FR_BCD2OF5,
-        SEARCHSTRING_COMMON_BCD2OF5PLANET,
-        SEARCHSTRING_DE_BCD2OF5PLANET,
-        SEARCHSTRING_EN_BCD2OF5PLANET,
-        SEARCHSTRING_FR_BCD2OF5PLANET
-      ]),
-      GCWTool(tool: BCD2of5Postnet(), i18nPrefix: 'bcd_2of5postnet', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCD2OF5,
-        SEARCHSTRING_DE_BCD2OF5,
-        SEARCHSTRING_EN_BCD2OF5,
-        SEARCHSTRING_FR_BCD2OF5,
-        SEARCHSTRING_COMMON_BCD2OF5POSTNET,
-        SEARCHSTRING_DE_BCD2OF5POSTNET,
-        SEARCHSTRING_EN_BCD2OF5POSTNET,
-        SEARCHSTRING_FR_BCD2OF5POSTNET
-      ]),
-      GCWTool(tool: BCD2of5(), i18nPrefix: 'bcd_2of5', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCD2OF5,
-        SEARCHSTRING_DE_BCD2OF5,
-        SEARCHSTRING_EN_BCD2OF5,
-        SEARCHSTRING_FR_BCD2OF5
-      ]),
-      GCWTool(tool: BCD1of10(), i18nPrefix: 'bcd_1of10', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCD1OF10,
-        SEARCHSTRING_DE_BCD1OF10,
-        SEARCHSTRING_EN_BCD1OF10,
-        SEARCHSTRING_FR_BCD1OF10
-      ]),
-      GCWTool(tool: BCDGrayExcess(), i18nPrefix: 'bcd_grayexcess', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BCD,
-        SEARCHSTRING_DE_BCD,
-        SEARCHSTRING_EN_BCD,
-        SEARCHSTRING_FR_BCD,
-        SEARCHSTRING_COMMON_BCDGRAYEXCESS,
-        SEARCHSTRING_DE_BCDGRAYEXCESS,
-        SEARCHSTRING_EN_BCDGRAYEXCESS,
-        SEARCHSTRING_FR_BCDGRAYEXCESS
-      ]),
-
-      // Beaufort Selection *******************************************************************************************
-      GCWTool(tool: Beaufort(), i18nPrefix: 'beaufort', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BEAUFORT,
-        SEARCHSTRING_DE_BEAUFORT,
-        SEARCHSTRING_EN_BEAUFORT,
-        SEARCHSTRING_FR_BEAUFORT,
-      ]),
-
-      //Braille Selection ****************************************************************
-      GCWTool(tool: Braille(), i18nPrefix: 'braille', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BRAILLE,
-        SEARCHSTRING_DE_BRAILLE,
-        SEARCHSTRING_EN_BRAILLE,
-        SEARCHSTRING_FR_BRAILLE
-      ]),
-      GCWTool(tool: BrailleDotNumbers(), i18nPrefix: 'brailledotnumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BRAILLE,
-        SEARCHSTRING_DE_BRAILLE,
-        SEARCHSTRING_EN_BRAILLE,
-        SEARCHSTRING_FR_BRAILLE
-      ]),
-
-      //CCITT*Selection **********************************************************************************************
-      GCWTool(
-          tool: CCITT1(),
-          i18nPrefix: 'ccitt1',
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_CCITT1]),
-      GCWTool(
-          tool: CCITT2(),
-          i18nPrefix: 'ccitt2',
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_CCITT2]),
-
-      //Cistercian Selection *****************************************************************************************
-      GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CISTERCIAN,
-        SEARCHSTRING_DE_CISTERCIAN,
-        SEARCHSTRING_EN_CISTERCIAN,
-        SEARCHSTRING_FR_CISTERCIAN
-      ]),
-
-      //CombinatoricsSelection ***************************************************************************************
-      GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COMBINATORICS,
-        SEARCHSTRING_DE_COMBINATORICS,
-        SEARCHSTRING_EN_COMBINATORICS,
-        SEARCHSTRING_FR_COMBINATORICS,
-        SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_DE_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_EN_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_FR_COMBINATORICS_COMBINATION
-      ]),
-      GCWTool(tool: Permutation(), i18nPrefix: 'combinatorics_permutation', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COMBINATORICS,
-        SEARCHSTRING_DE_COMBINATORICS,
-        SEARCHSTRING_EN_COMBINATORICS,
-        SEARCHSTRING_FR_COMBINATORICS,
-        SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_DE_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_EN_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_FR_COMBINATORICS_PERMUTATION
-      ]),
-      GCWTool(tool: CombinationPermutation(), i18nPrefix: 'combinatorics_combinationpermutation', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COMBINATORICS,
-        SEARCHSTRING_DE_COMBINATORICS,
-        SEARCHSTRING_EN_COMBINATORICS,
-        SEARCHSTRING_FR_COMBINATORICS,
-        SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_DE_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_EN_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_FR_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_DE_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_EN_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_FR_COMBINATORICS_PERMUTATION
-      ]),
-
-      //CoordsSelection **********************************************************************************************
-      GCWTool(
-          tool: WaypointProjection(),
-          i18nPrefix: 'coords_waypointprojection',
-          iconPath: 'assets/icons/coords/icon_waypoint_projection.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_DE_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_EN_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_FR_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_COMMON_COORDINATES_WAYPOINTPROJECTION,
-            SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION,
-            SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION,
-            SEARCHSTRING_FR_COORDINATES_WAYPOINTPROJECTION
-          ]),
-      GCWTool(
-          tool: DistanceBearing(),
-          i18nPrefix: 'coords_distancebearing',
-          iconPath: 'assets/icons/coords/icon_distance_and_bearing.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_DISTANCEBEARING,
-            SEARCHSTRING_DE_COORDINATES_DISTANCEBEARING,
-            SEARCHSTRING_EN_COORDINATES_DISTANCEBEARING,
-            SEARCHSTRING_FR_COORDINATES_DISTANCEBEARING
-          ]),
-      GCWTool(
-          tool: FormatConverter(),
-          i18nPrefix: 'coords_formatconverter',
-          iconPath: 'assets/icons/coords/icon_format_converter.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_FORMATCONVERTER,
-            SEARCHSTRING_DE_COORDINATES_FORMATCONVERTER,
-            SEARCHSTRING_EN_COORDINATES_FORMATCONVERTER,
-            SEARCHSTRING_FR_COORDINATES_FORMATCONVERTER
-          ]),
-      GCWTool(
-          tool: MapView(),
-          autoScroll: false,
-          suppressToolMargin: true,
-          i18nPrefix: 'coords_openmap',
-          iconPath: 'assets/icons/coords/icon_free_map.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_MAPVIEW,
-            SEARCHSTRING_DE_COORDINATES_MAPVIEW,
-            SEARCHSTRING_EN_COORDINATES_MAPVIEW,
-            SEARCHSTRING_FR_COORDINATES_MAPVIEW
-          ]),
-      GCWTool(
-          tool: VariableCoordinateFormulas(),
-          i18nPrefix: 'coords_variablecoordinate',
-          iconPath: 'assets/icons/coords/icon_variable_coordinate.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_FORMULASOLVER,
-            SEARCHSTRING_DE_FORMULASOLVER,
-            SEARCHSTRING_EN_FORMULASOLVER,
-            SEARCHSTRING_FR_FORMULASOLVER,
-            SEARCHSTRING_COMMON_COORDINATES_VARIABLECOORDINATEFORMULAS,
-            SEARCHSTRING_DE_COORDINATES_VARIABLECOORDINATEFORMULAS,
-            SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS,
-            SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS
-          ]),
-      GCWTool(
-          tool: DMMOffset(),
-          i18nPrefix: 'coords_dmmoffset',
-          iconPath: 'assets/icons/coords/icon_dmm_offset.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_MAPVIEW,
-            SEARCHSTRING_DE_COORDINATES_MAPVIEW,
-            SEARCHSTRING_EN_COORDINATES_MAPVIEW,
-            SEARCHSTRING_FR_COORDINATES_MAPVIEW
-          ]),
-      GCWTool(
-          tool: CoordinateAveraging(),
-          i18nPrefix: 'coords_averaging',
-          iconPath: 'assets/icons/coords/icon_coordinate_measurement.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVERAGING,
-            SEARCHSTRING_DE_COORDINATES_COORDINATEAVERAGING,
-            SEARCHSTRING_EN_COORDINATES_COORDINATEAVERAGING,
-            SEARCHSTRING_FR_COORDINATES_COORDINATEAVERAGING
-          ]),
-      GCWTool(
-          tool: CenterTwoPoints(),
-          i18nPrefix: 'coords_centertwopoints',
-          iconPath: 'assets/icons/coords/icon_center_two_points.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_CENTERTWOPOINTS,
-            SEARCHSTRING_DE_COORDINATES_CENTERTWOPOINTS,
-            SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS,
-            SEARCHSTRING_FR_COORDINATES_CENTERTWOPOINTS
-          ]),
-      GCWTool(
-          tool: Centroid(),
-          i18nPrefix: 'coords_centroid',
-          iconPath: 'assets/icons/coords/icon_centroid.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_CENTROID,
-            SEARCHSTRING_DE_COORDINATES_CENTROID,
-            SEARCHSTRING_EN_COORDINATES_CENTROID,
-            SEARCHSTRING_FR_COORDINATES_CENTROID
-          ]),
-      GCWTool(
-          tool: CenterThreePoints(),
-          i18nPrefix: 'coords_centerthreepoints',
-          iconPath: 'assets/icons/coords/icon_center_three_points.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_CENTERTHREEPOINTS,
-            SEARCHSTRING_DE_COORDINATES_CENTERTHREEPOINTS,
-            SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS,
-            SEARCHSTRING_FR_COORDINATES_CENTERTHREEPOINTS
-          ]),
-      GCWTool(
-          tool: SegmentLine(),
-          i18nPrefix: 'coords_segmentline',
-          iconPath: 'assets/icons/coords/icon_segment_line.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_SEGMENTLINE,
-            SEARCHSTRING_DE_COORDINATES_SEGMENTLINE,
-            SEARCHSTRING_EN_COORDINATES_SEGMENTLINE,
-            SEARCHSTRING_FR_COORDINATES_SEGMENTLINE
-          ]),
-      GCWTool(
-          tool: SegmentBearings(),
-          i18nPrefix: 'coords_segmentbearings',
-          iconPath: 'assets/icons/coords/icon_segment_bearings.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_SEGMENTBEARING,
-            SEARCHSTRING_DE_COORDINATES_SEGMENTBEARING,
-            SEARCHSTRING_EN_COORDINATES_SEGMENTBEARING,
-            SEARCHSTRING_FR_COORDINATES_SEGMENTBEARING
-          ]),
-      GCWTool(
-          tool: CrossBearing(),
-          i18nPrefix: 'coords_crossbearing',
-          iconPath: 'assets/icons/coords/icon_cross_bearing.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_CROSSBEARING,
-            SEARCHSTRING_DE_COORDINATES_CROSSBEARING,
-            SEARCHSTRING_EN_COORDINATES_CROSSBEARING,
-            SEARCHSTRING_FR_COORDINATES_CROSSBEARING
-          ]),
-      GCWTool(
-          tool: IntersectBearings(),
-          i18nPrefix: 'coords_intersectbearings',
-          iconPath: 'assets/icons/coords/icon_intersect_bearings.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_DE_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_EN_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_FR_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_COMMON_COORDINATES_INTERSECTBEARING,
-            SEARCHSTRING_DE_COORDINATES_INTERSECTBEARING,
-            SEARCHSTRING_EN_COORDINATES_INTERSECTBEARING,
-            SEARCHSTRING_FR_COORDINATES_INTERSECTBEARING
-          ]),
-      GCWTool(
-          tool: IntersectFourPoints(),
-          i18nPrefix: 'coords_intersectfourpoints',
-          iconPath: 'assets/icons/coords/icon_intersect_four_points.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_INTERSECTFOURPOINTS,
-            SEARCHSTRING_DE_COORDINATES_INTERSECTFOURPOINTS,
-            SEARCHSTRING_EN_COORDINATES_INTERSECTFOURPOINTS,
-            SEARCHSTRING_FR_COORDINATES_INTERSECTFOURPOINTS
-          ]),
-      GCWTool(
-          tool: IntersectGeodeticAndCircle(),
-          i18nPrefix: 'coords_intersectbearingcircle',
-          iconPath: 'assets/icons/coords/icon_intersect_bearing_and_circle.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_DE_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_EN_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_FR_COORDINATES_COMPASSROSE,
-            SEARCHSTRING_COMMON_COORDINATES_INTERSECTGEODETICANDCIRCLE,
-            SEARCHSTRING_DE_COORDINATES_INTERSECTGEODETICANDCIRCLE,
-            SEARCHSTRING_EN_COORDINATES_INTERSECTGEODETICANDCIRCLE,
-            SEARCHSTRING_FR_COORDINATES_INTERSECTGEODETICANDCIRCLE
-          ]),
-      GCWTool(
-          tool: IntersectTwoCircles(),
-          i18nPrefix: 'coords_intersecttwocircles',
-          iconPath: 'assets/icons/coords/icon_intersect_two_circles.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_INTERSECTTWOCIRCLES,
-            SEARCHSTRING_DE_COORDINATES_INTERSECTTWOCIRCLES,
-            SEARCHSTRING_EN_COORDINATES_INTERSECTTWOCIRCLES,
-            SEARCHSTRING_FR_COORDINATES_INTERSECTTWOCIRCLES
-          ]),
-      GCWTool(
-          tool: IntersectThreeCircles(),
-          i18nPrefix: 'coords_intersectthreecircles',
-          iconPath: 'assets/icons/coords/icon_intersect_three_circles.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_INTERSECTTHREECIRCLES,
-            SEARCHSTRING_DE_COORDINATES_INTERSECTTHREECIRCLES,
-            SEARCHSTRING_EN_COORDINATES_INTERSECTTHREECIRCLES,
-            SEARCHSTRING_FR_COORDINATES_INTERSECTTHREECIRCLES
-          ]),
-      GCWTool(
-          tool: Antipodes(),
-          i18nPrefix: 'coords_antipodes',
-          iconPath: 'assets/icons/coords/icon_antipodes.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_ANTIPODES,
-            SEARCHSTRING_DE_COORDINATES_ANTIPODES,
-            SEARCHSTRING_EN_COORDINATES_ANTIPODES,
-            SEARCHSTRING_FR_COORDINATES_ANTIPODES
-          ]),
-      GCWTool(
-          tool: Intersection(),
-          i18nPrefix: 'coords_intersection',
-          iconPath: 'assets/icons/coords/icon_intersection.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_INTERSECTION,
-            SEARCHSTRING_DE_COORDINATES_INTERSECTION,
-            SEARCHSTRING_EN_COORDINATES_INTERSECTION,
-            SEARCHSTRING_FR_COORDINATES_INTERSECTION
-          ]),
-      GCWTool(
-          tool: Resection(),
-          i18nPrefix: 'coords_resection',
-          iconPath: 'assets/icons/coords/icon_resection.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_RESECTION,
-            SEARCHSTRING_DE_COORDINATES_RESECTION,
-            SEARCHSTRING_EN_COORDINATES_RESECTION,
-            SEARCHSTRING_FR_COORDINATES_RESECTION
-          ]),
-      GCWTool(
-          tool: EquilateralTriangle(),
-          i18nPrefix: 'coords_equilateraltriangle',
-          iconPath: 'assets/icons/coords/icon_equilateral_triangle.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_EQUILATERALTRIANGLE,
-            SEARCHSTRING_DE_COORDINATES_EQUILATERALTRIANGLE,
-            SEARCHSTRING_EN_COORDINATES_EQUILATERALTRIANGLE,
-            SEARCHSTRING_FR_COORDINATES_EQUILATERALTRIANGLE
-          ]),
-      GCWTool(
-          tool: EllipsoidTransform(),
-          i18nPrefix: 'coords_ellipsoidtransform',
-          iconPath: 'assets/icons/coords/icon_ellipsoid_transform.png',
-          categories: [
-            ToolCategory.COORDINATES
-          ],
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_COORDINATES,
-            SEARCHSTRING_DE_COORDINATES,
-            SEARCHSTRING_EN_COORDINATES,
-            SEARCHSTRING_FR_COORDINATES,
-            SEARCHSTRING_COMMON_COORDINATES_ELLIPSOIDTRANSFORM,
-            SEARCHSTRING_DE_COORDINATES_ELLIPSOIDTRANSFORM,
-            SEARCHSTRING_EN_COORDINATES_ELLIPSOIDTRANSFORM,
-            SEARCHSTRING_FR_COORDINATES_ELLIPSOIDTRANSFORM
-          ]),
-
-      //Countries Selection ******************************************************************************************
-
-      GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcode', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-        SEARCHSTRING_COMMON_COUNTRIES_CALLINGCODES,
-        SEARCHSTRING_DE_COUNTRIES_CALLINGCODES,
-        SEARCHSTRING_EN_COUNTRIES_CALLINGCODES,
-        SEARCHSTRING_FR_COUNTRIES_CALLINGCODES
-      ]),
-      GCWTool(tool: CountriesIOCCodes(), i18nPrefix: 'countries_ioccode', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-        SEARCHSTRING_COMMON_COUNTRIES_IOCCODES,
-        SEARCHSTRING_DE_COUNTRIES_IOCCODES,
-        SEARCHSTRING_EN_COUNTRIES_IOCCODES,
-        SEARCHSTRING_FR_COUNTRIES_IOCCODES
-      ]),
-      GCWTool(tool: CountriesISOCodes(), i18nPrefix: 'countries_isocode', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-        SEARCHSTRING_COMMON_COUNTRIES_ISOCODES,
-        SEARCHSTRING_DE_COUNTRIES_ISOCODES,
-        SEARCHSTRING_EN_COUNTRIES_ISOCODES,
-        SEARCHSTRING_FR_COUNTRIES_ISOCODES
-      ]),
-      GCWTool(tool: CountriesVehicleCodes(), i18nPrefix: 'countries_vehiclecode', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-        SEARCHSTRING_COMMON_COUNTRIES_VEHICLECODES,
-        SEARCHSTRING_DE_COUNTRIES_VEHICLECODES,
-        SEARCHSTRING_EN_COUNTRIES_VEHICLECODES,
-        SEARCHSTRING_FR_COUNTRIES_VEHICLECODES
-      ]),
-      GCWTool(tool: CountriesFlags(), i18nPrefix: 'countries_flags', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_COUNTRIES_FLAGS,
-        SEARCHSTRING_DE_COUNTRIES_FLAGS,
-        SEARCHSTRING_EN_COUNTRIES_FLAGS,
-        SEARCHSTRING_FR_COUNTRIES_FLAGS
-      ]),
-
-      //CrossSumSelection *******************************************************************************************
-
-      GCWTool(tool: CrossSum(), i18nPrefix: 'crosssum_crosssum', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS
-      ]),
-      GCWTool(tool: CrossSumRange(), i18nPrefix: 'crosssum_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS,
-        SEARCHSTRING_COMMON_CROSSUMRANGE,
-        SEARCHSTRING_DE_CROSSUMRANGE,
-        SEARCHSTRING_EN_CROSSUMRANGE,
-        SEARCHSTRING_FR_CROSSUMRANGE
-      ]),
-      GCWTool(tool: IteratedCrossSumRange(), i18nPrefix: 'crosssum_range_iterated', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS,
-        SEARCHSTRING_COMMON_ITERATEDCROSSSUMRANGE,
-        SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE,
-        SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE,
-        SEARCHSTRING_FR_ITERATEDCROSSSUMRANGE
-      ]),
-      GCWTool(tool: CrossSumRangeFrequency(), i18nPrefix: 'crosssum_range_frequency', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS,
-        SEARCHSTRING_COMMON_CROSSUMRANGE,
-        SEARCHSTRING_DE_CROSSUMRANGE,
-        SEARCHSTRING_EN_CROSSUMRANGE,
-        SEARCHSTRING_FR_CROSSUMRANGE,
-        SEARCHSTRING_COMMON_ITERATEDCROSSUMRANGEFREQUENCY,
-        SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY,
-        SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY,
-        SEARCHSTRING_FR_ITERATEDCROSSUMRANGEFREQUENCY
-      ]),
-      GCWTool(tool: IteratedCrossSumRangeFrequency(), i18nPrefix: 'crosssum_range_iterated_frequency', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS,
-        SEARCHSTRING_COMMON_CROSSUMRANGE,
-        SEARCHSTRING_DE_CROSSUMRANGE,
-        SEARCHSTRING_EN_CROSSUMRANGE,
-        SEARCHSTRING_FR_CROSSUMRANGE,
-        SEARCHSTRING_COMMON_CROSSSUMRANGEFREQUENCY,
-        SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY,
-        SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY,
-        SEARCHSTRING_FR_CROSSSUMRANGEFREQUENCY
-      ]),
-
-      //DatesSelection **********************************************************************************************
-      GCWTool(tool: DayCalculator(), i18nPrefix: 'dates_daycalculator', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DATES,
-        SEARCHSTRING_DE_DATES,
-        SEARCHSTRING_EN_DATES,
-        SEARCHSTRING_FR_DATES,
-        SEARCHSTRING_COMMON_DATES_DAYCALCULATOR,
-        SEARCHSTRING_DE_DATES_DAYCALCULATOR,
-        SEARCHSTRING_EN_DATES_DAYCALCULATOR,
-        SEARCHSTRING_FR_DATES_DAYCALCULATOR
-      ]),
-      GCWTool(tool: TimeCalculator(), i18nPrefix: 'dates_timecalculator', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DATES,
-        SEARCHSTRING_DE_DATES,
-        SEARCHSTRING_EN_DATES,
-        SEARCHSTRING_FR_DATES,
-        SEARCHSTRING_COMMON_DATES_TIMECALCULATOR,
-        SEARCHSTRING_DE_DATES_TIMECALCULATOR,
-        SEARCHSTRING_EN_DATES_TIMECALCULATOR,
-        SEARCHSTRING_FR_DATES_TIMECALCULATOR
-      ]),
-      GCWTool(tool: Weekday(), i18nPrefix: 'dates_weekday', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DATES,
-        SEARCHSTRING_DE_DATES,
-        SEARCHSTRING_EN_DATES,
-        SEARCHSTRING_FR_DATES,
-        SEARCHSTRING_COMMON_DATES_WEEKDAY,
-        SEARCHSTRING_DE_DATES_WEEKDAY,
-        SEARCHSTRING_EN_DATES_WEEKDAY,
-        SEARCHSTRING_FR_DATES_WEEKDAY
-      ]),
-      GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DATES,
-        SEARCHSTRING_DE_DATES,
-        SEARCHSTRING_EN_DATES,
-        SEARCHSTRING_FR_DATES,
-        SEARCHSTRING_COMMON_DATES_CALENDAR,
-        SEARCHSTRING_DE_DATES_CALENDAR,
-        SEARCHSTRING_EN_DATES_CALENDAR,
-        SEARCHSTRING_FR_DATES_CALENDAR
-      ]),
-
-      //DNASelection ************************************************************************************************
-      GCWTool(tool: DNANucleicAcidSequence(), i18nPrefix: 'dna_nucleicacidsequence', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DNA,
-        SEARCHSTRING_DE_DNA,
-        SEARCHSTRING_EN_DNA,
-        SEARCHSTRING_FR_DNA,
-        SEARCHSTRING_COMMON_DNANUCLEICACIDSEQUENCE,
-        SEARCHSTRING_DE_DNANUCLEICACIDSEQUENCE,
-        SEARCHSTRING_EN_DNANUCLEICACIDSEQUENCE,
-        SEARCHSTRING_FR_DNANUCLEICACIDSEQUENCE
-      ]),
-      GCWTool(tool: DNAAminoAcids(), i18nPrefix: 'dna_aminoacids', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DNA,
-        SEARCHSTRING_DE_DNA,
-        SEARCHSTRING_EN_DNA,
-        SEARCHSTRING_FR_DNA,
-        SEARCHSTRING_COMMON_DNAAMINOACIDS,
-        SEARCHSTRING_DE_DNAAMINOACIDS,
-        SEARCHSTRING_EN_DNAAMINOACIDS,
-        SEARCHSTRING_FR_DNAAMINOACIDS
-      ]),
-      GCWTool(tool: DNAAminoAcidsTable(), i18nPrefix: 'dna_aminoacids_table', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DNA,
-        SEARCHSTRING_DE_DNA,
-        SEARCHSTRING_EN_DNA,
-        SEARCHSTRING_FR_DNA,
-        SEARCHSTRING_COMMON_DNAAMONOACIDSTABLE,
-        SEARCHSTRING_DE_DNAAMONOACIDSTABLE,
-        SEARCHSTRING_EN_DNAAMONOACIDSTABLE,
-        SEARCHSTRING_FR_DNAAMONOACIDSTABLE
-      ]),
-
-      //Silver Ratio Selection **********************************************************************************************
-      GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
-        SEARCHSTRING_DE_SILVERRATIOSEARCH,
-        SEARCHSTRING_EN_SILVERRATIOSEARCH,
-        SEARCHSTRING_FR_SILVERRATIOSEARCH
-      ]),
-
-      //E Selection *************************************************************************************************
-      GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_E,
-        SEARCHSTRING_DE_E,
-        SEARCHSTRING_EN_E,
-        SEARCHSTRING_FR_E,
-        SEARCHSTRING_COMMON_ENTHDECIMAL,
-        SEARCHSTRING_DE_ENTHDECIMAL,
-        SEARCHSTRING_EN_ENTHDECIMAL,
-        SEARCHSTRING_FR_ENTHDECIMAL
-      ]),
-      GCWTool(tool: EDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_E,
-        SEARCHSTRING_DE_E,
-        SEARCHSTRING_EN_E,
-        SEARCHSTRING_FR_E,
-        SEARCHSTRING_COMMON_EDECIMALRANGE,
-        SEARCHSTRING_DE_EDECIMALRANGE,
-        SEARCHSTRING_EN_EDECIMALRANGE,
-        SEARCHSTRING_FR_EDECIMALRANGE
-      ]),
-      GCWTool(tool: ESearch(), i18nPrefix: 'irrationalnumbers_search', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_E,
-        SEARCHSTRING_DE_E,
-        SEARCHSTRING_EN_E,
-        SEARCHSTRING_FR_E,
-        SEARCHSTRING_COMMON_ESEARCH,
-        SEARCHSTRING_DE_ESEARCH,
-        SEARCHSTRING_EN_ESEARCH,
-        SEARCHSTRING_FR_ESEARCH
-      ]),
-
-      //Easter Selection ***************************************************************************************
-      GCWTool(tool: EasterDate(), i18nPrefix: 'astronomy_easter_easterdate', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_EASTER_DATE,
-        SEARCHSTRING_DE_EASTER_DATE,
-        SEARCHSTRING_EN_EASTER_DATE,
-        SEARCHSTRING_FR_EASTER_DATE
-      ]),
-      GCWTool(tool: EasterYears(), i18nPrefix: 'astronomy_easter_easteryears', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_EASTER_DATE,
-        SEARCHSTRING_DE_EASTER_DATE,
-        SEARCHSTRING_EN_EASTER_DATE,
-        SEARCHSTRING_FR_EASTER_DATE,
-        SEARCHSTRING_COMMON_EASTER_YEARS,
-        SEARCHSTRING_DE_EASTER_YEARS,
-        SEARCHSTRING_EN_EASTER_YEARS,
-        SEARCHSTRING_FR_EASTER_YEARS
-      ]),
-
-      //Esoteric Programming Language Selection ****************************************************************
-      GCWTool(tool: Beatnik(), i18nPrefix: 'beatnik', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_BEATNIK,
-        SEARCHSTRING_DE_ESOTERIC_BEATNIK,
-        SEARCHSTRING_EN_ESOTERIC_BEATNIK,
-        SEARCHSTRING_FR_ESOTERIC_BEATNIK
-      ]),
-      GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_BRAINFK,
-        SEARCHSTRING_DE_ESOTERIC_BRAINFK,
-        SEARCHSTRING_EN_ESOTERIC_BRAINFK,
-        SEARCHSTRING_FR_ESOTERIC_BRAINFK
-      ]),
-      GCWTool(tool: Cow(), i18nPrefix: 'cow', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_COW,
-        SEARCHSTRING_DE_ESOTERIC_COW,
-        SEARCHSTRING_EN_ESOTERIC_COW,
-        SEARCHSTRING_FR_ESOTERIC_COW
-      ]),
-      GCWTool(tool: Chef(), i18nPrefix: 'chef', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_CHEF,
-        SEARCHSTRING_DE_ESOTERIC_CHEF,
-        SEARCHSTRING_EN_ESOTERIC_CHEF,
-        SEARCHSTRING_FR_ESOTERIC_CHEF
-      ]),
-      GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_DEADFISH,
-        SEARCHSTRING_DE_ESOTERIC_DEADFISH,
-        SEARCHSTRING_EN_ESOTERIC_DEADFISH,
-        SEARCHSTRING_FR_ESOTERIC_DEADFISH
-      ]),
-      GCWTool(tool: KarolRobot(), i18nPrefix: 'karol_robot', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERIC_KAROL_ROBOT,
-        SEARCHSTRING_DE_ESOTERIC_KAROL_ROBOT,
-        SEARCHSTRING_EN_ESOTERIC_KAROL_ROBOT,
-        SEARCHSTRING_FR_ESOTERIC_KAROL_ROBOT
-      ]),
-      GCWTool(tool: Malbolge(), i18nPrefix: 'malbolge', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_MALBOLGE,
-        SEARCHSTRING_DE_ESOTERIC_MALBOLGE,
-        SEARCHSTRING_EN_ESOTERIC_MALBOLGE,
-        SEARCHSTRING_FR_ESOTERIC_MALBOLGE
-      ]),
-      GCWTool(tool: Ook(), i18nPrefix: 'ook', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_BRAINFK,
-        SEARCHSTRING_DE_ESOTERIC_BRAINFK,
-        SEARCHSTRING_EN_ESOTERIC_BRAINFK,
-        SEARCHSTRING_FR_ESOTERIC_BRAINFK,
-        SEARCHSTRING_COMMON_ESOTERIC_OOK,
-        SEARCHSTRING_DE_ESOTERIC_OOK,
-        SEARCHSTRING_EN_ESOTERIC_OOK,
-        SEARCHSTRING_FR_ESOTERIC_OOK
-      ]),
-      GCWTool(tool: WhitespaceLanguage(), i18nPrefix: 'whitespace_language', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_WHITESPACELANGUAGE,
-        SEARCHSTRING_DE_ESOTERIC_WHITESPACELANGUAGE,
-        SEARCHSTRING_EN_ESOTERIC_WHITESPACELANGUAGE,
-        SEARCHSTRING_FR_ESOTERIC_WHITESPACELANGUAGE
-      ]),
-
-      //Hash Selection *****************************************************************************************
-      GCWTool(tool: HashBreaker(), i18nPrefix: 'hashes_hashbreaker', categories: [
-        ToolCategory.GENERAL_CODEBREAKERS
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CODEBREAKER,
-        SEARCHSTRING_DE_CODEBREAKER,
-        SEARCHSTRING_EN_CODEBREAKER,
-        SEARCHSTRING_FR_CODEBREAKER,
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHBREAKER,
-        SEARCHSTRING_DE_HASHBREAKER,
-        SEARCHSTRING_EN_HASHBREAKER,
-        SEARCHSTRING_FR_HASHBREAKER
-      ]),
-      GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_MD5,
-        SEARCHSTRING_DE_HASHES_MD5,
-        SEARCHSTRING_EN_HASHES_MD5,
-        SEARCHSTRING_FR_HASHES_MD5
-      ]),
-      GCWTool(tool: SHA1(), i18nPrefix: 'hashes_sha1', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA1,
-        SEARCHSTRING_DE_HASHES_SHA1,
-        SEARCHSTRING_EN_HASHES_SHA1,
-        SEARCHSTRING_FR_HASHES_SHA1,
-      ]),
-      GCWTool(tool: SHA224(), i18nPrefix: 'hashes_sha224', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA2,
-        SEARCHSTRING_DE_HASHES_SHA2,
-        SEARCHSTRING_EN_HASHES_SHA2,
-        SEARCHSTRING_FR_HASHES_SHA2,
-        SEARCHSTRING_COMMON_HASHES_SHA224,
-        SEARCHSTRING_DE_HASHES_SHA224,
-        SEARCHSTRING_EN_HASHES_SHA224,
-        SEARCHSTRING_FR_HASHES_SHA224,
-      ]),
-      GCWTool(tool: SHA256(), i18nPrefix: 'hashes_sha256', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA2,
-        SEARCHSTRING_DE_HASHES_SHA2,
-        SEARCHSTRING_EN_HASHES_SHA2,
-        SEARCHSTRING_FR_HASHES_SHA2,
-        SEARCHSTRING_COMMON_HASHES_SHA256,
-        SEARCHSTRING_DE_HASHES_SHA256,
-        SEARCHSTRING_EN_HASHES_SHA256,
-        SEARCHSTRING_FR_HASHES_SHA256,
-      ]),
-      GCWTool(tool: SHA384(), i18nPrefix: 'hashes_sha384', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA2,
-        SEARCHSTRING_DE_HASHES_SHA2,
-        SEARCHSTRING_EN_HASHES_SHA2,
-        SEARCHSTRING_FR_HASHES_SHA2,
-        SEARCHSTRING_COMMON_HASHES_SHA384,
-        SEARCHSTRING_DE_HASHES_SHA384,
-        SEARCHSTRING_EN_HASHES_SHA384,
-        SEARCHSTRING_FR_HASHES_SHA384,
-      ]),
-      GCWTool(tool: SHA512(), i18nPrefix: 'hashes_sha512', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA2,
-        SEARCHSTRING_DE_HASHES_SHA2,
-        SEARCHSTRING_EN_HASHES_SHA2,
-        SEARCHSTRING_FR_HASHES_SHA2,
-        SEARCHSTRING_COMMON_HASHES_SHA512,
-        SEARCHSTRING_DE_HASHES_SHA512,
-        SEARCHSTRING_EN_HASHES_SHA512,
-        SEARCHSTRING_FR_HASHES_SHA512
-      ]),
-      GCWTool(tool: SHA512_224(), i18nPrefix: 'hashes_sha512.224', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA2,
-        SEARCHSTRING_DE_HASHES_SHA2,
-        SEARCHSTRING_EN_HASHES_SHA2,
-        SEARCHSTRING_FR_HASHES_SHA2,
-        SEARCHSTRING_COMMON_HASHES_SHA512_224,
-        SEARCHSTRING_DE_HASHES_SHA512_224,
-        SEARCHSTRING_EN_HASHES_SHA512_224,
-        SEARCHSTRING_FR_HASHES_SHA512_224
-      ]),
-      GCWTool(tool: SHA512_256(), i18nPrefix: 'hashes_sha512.256', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA2,
-        SEARCHSTRING_DE_HASHES_SHA2,
-        SEARCHSTRING_EN_HASHES_SHA2,
-        SEARCHSTRING_FR_HASHES_SHA2,
-        SEARCHSTRING_COMMON_HASHES_SHA512_256,
-        SEARCHSTRING_DE_HASHES_SHA512_256,
-        SEARCHSTRING_EN_HASHES_SHA512_256,
-        SEARCHSTRING_FR_HASHES_SHA512_256
-      ]),
-      GCWTool(tool: SHA3_224(), i18nPrefix: 'hashes_sha3.224', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_SHA3_224,
-        SEARCHSTRING_DE_HASHES_SHA3_224,
-        SEARCHSTRING_EN_HASHES_SHA3_224,
-        SEARCHSTRING_FR_HASHES_SHA3_224
-      ]),
-      GCWTool(tool: SHA3_256(), i18nPrefix: 'hashes_sha3.256', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_SHA3_256,
-        SEARCHSTRING_DE_HASHES_SHA3_256,
-        SEARCHSTRING_EN_HASHES_SHA3_256,
-        SEARCHSTRING_FR_HASHES_SHA3_256
-      ]),
-      GCWTool(tool: SHA3_384(), i18nPrefix: 'hashes_sha3.384', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_SHA3_384,
-        SEARCHSTRING_DE_HASHES_SHA3_384,
-        SEARCHSTRING_EN_HASHES_SHA3_384,
-        SEARCHSTRING_FR_HASHES_SHA3_384
-      ]),
-      GCWTool(tool: SHA3_512(), i18nPrefix: 'hashes_sha3.512', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_SHA3_512,
-        SEARCHSTRING_DE_HASHES_SHA3_512,
-        SEARCHSTRING_EN_HASHES_SHA3_512,
-        SEARCHSTRING_FR_HASHES_SHA3_512
-      ]),
-      GCWTool(tool: Keccak_128(), i18nPrefix: 'hashes_keccak128', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_KECCAK,
-        SEARCHSTRING_DE_HASHES_KECCAK,
-        SEARCHSTRING_EN_HASHES_KECCAK,
-        SEARCHSTRING_FR_HASHES_KECCAK,
-        SEARCHSTRING_COMMON_HASHES_KECCAK_128,
-        SEARCHSTRING_DE_HASHES_KECCAK_128,
-        SEARCHSTRING_EN_HASHES_KECCAK_128,
-        SEARCHSTRING_FR_HASHES_KECCAK_128,
-      ]),
-      GCWTool(tool: Keccak_224(), i18nPrefix: 'hashes_keccak224', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_KECCAK,
-        SEARCHSTRING_DE_HASHES_KECCAK,
-        SEARCHSTRING_EN_HASHES_KECCAK,
-        SEARCHSTRING_FR_HASHES_KECCAK,
-        SEARCHSTRING_COMMON_HASHES_KECCAK_224,
-        SEARCHSTRING_DE_HASHES_KECCAK_224,
-        SEARCHSTRING_EN_HASHES_KECCAK_224,
-        SEARCHSTRING_FR_HASHES_KECCAK_224,
-      ]),
-      GCWTool(tool: Keccak_256(), i18nPrefix: 'hashes_keccak256', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_KECCAK,
-        SEARCHSTRING_DE_HASHES_KECCAK,
-        SEARCHSTRING_EN_HASHES_KECCAK,
-        SEARCHSTRING_FR_HASHES_KECCAK,
-        SEARCHSTRING_COMMON_HASHES_KECCAK_256,
-        SEARCHSTRING_DE_HASHES_KECCAK_256,
-        SEARCHSTRING_EN_HASHES_KECCAK_256,
-        SEARCHSTRING_FR_HASHES_KECCAK_256,
-      ]),
-      GCWTool(tool: Keccak_288(), i18nPrefix: 'hashes_keccak288', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_KECCAK,
-        SEARCHSTRING_DE_HASHES_KECCAK,
-        SEARCHSTRING_EN_HASHES_KECCAK,
-        SEARCHSTRING_FR_HASHES_KECCAK,
-        SEARCHSTRING_COMMON_HASHES_KECCAK_288,
-        SEARCHSTRING_DE_HASHES_KECCAK_288,
-        SEARCHSTRING_EN_HASHES_KECCAK_288,
-        SEARCHSTRING_FR_HASHES_KECCAK_288,
-      ]),
-      GCWTool(tool: Keccak_384(), i18nPrefix: 'hashes_keccak384', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_KECCAK,
-        SEARCHSTRING_DE_HASHES_KECCAK,
-        SEARCHSTRING_EN_HASHES_KECCAK,
-        SEARCHSTRING_FR_HASHES_KECCAK,
-        SEARCHSTRING_COMMON_HASHES_KECCAK_384,
-        SEARCHSTRING_DE_HASHES_KECCAK_384,
-        SEARCHSTRING_EN_HASHES_KECCAK_384,
-        SEARCHSTRING_FR_HASHES_KECCAK_384,
-      ]),
-      GCWTool(tool: Keccak_512(), i18nPrefix: 'hashes_keccak512', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_SHA3,
-        SEARCHSTRING_DE_HASHES_SHA3,
-        SEARCHSTRING_EN_HASHES_SHA3,
-        SEARCHSTRING_FR_HASHES_SHA3,
-        SEARCHSTRING_COMMON_HASHES_KECCAK,
-        SEARCHSTRING_DE_HASHES_KECCAK,
-        SEARCHSTRING_EN_HASHES_KECCAK,
-        SEARCHSTRING_FR_HASHES_KECCAK,
-        SEARCHSTRING_COMMON_HASHES_KECCAK_512,
-        SEARCHSTRING_DE_HASHES_KECCAK_512,
-        SEARCHSTRING_EN_HASHES_KECCAK_512,
-        SEARCHSTRING_FR_HASHES_KECCAK_512,
-      ]),
-      GCWTool(tool: RIPEMD_128(), i18nPrefix: 'hashes_ripemd128', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD,
-        SEARCHSTRING_DE_HASHES_RIPEMD,
-        SEARCHSTRING_EN_HASHES_RIPEMD,
-        SEARCHSTRING_FR_HASHES_RIPEMD,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD_128,
-        SEARCHSTRING_DE_HASHES_RIPEMD_128,
-        SEARCHSTRING_EN_HASHES_RIPEMD_128,
-        SEARCHSTRING_FR_HASHES_RIPEMD_128
-      ]),
-      GCWTool(tool: RIPEMD_160(), i18nPrefix: 'hashes_ripemd160', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD,
-        SEARCHSTRING_DE_HASHES_RIPEMD,
-        SEARCHSTRING_EN_HASHES_RIPEMD,
-        SEARCHSTRING_FR_HASHES_RIPEMD,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD_160,
-        SEARCHSTRING_DE_HASHES_RIPEMD_160,
-        SEARCHSTRING_EN_HASHES_RIPEMD_160,
-        SEARCHSTRING_FR_HASHES_RIPEMD_160
-      ]),
-      GCWTool(tool: RIPEMD_256(), i18nPrefix: 'hashes_ripemd256', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD,
-        SEARCHSTRING_DE_HASHES_RIPEMD,
-        SEARCHSTRING_EN_HASHES_RIPEMD,
-        SEARCHSTRING_FR_HASHES_RIPEMD,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD_256,
-        SEARCHSTRING_DE_HASHES_RIPEMD_256,
-        SEARCHSTRING_EN_HASHES_RIPEMD_256,
-        SEARCHSTRING_FR_HASHES_RIPEMD_256
-      ]),
-      GCWTool(tool: RIPEMD_320(), i18nPrefix: 'hashes_ripemd320', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD,
-        SEARCHSTRING_DE_HASHES_RIPEMD,
-        SEARCHSTRING_EN_HASHES_RIPEMD,
-        SEARCHSTRING_FR_HASHES_RIPEMD,
-        SEARCHSTRING_COMMON_HASHES_RIPEMD_320,
-        SEARCHSTRING_DE_HASHES_RIPEMD_320,
-        SEARCHSTRING_EN_HASHES_RIPEMD_320,
-        SEARCHSTRING_FR_HASHES_RIPEMD_320
-      ]),
-      GCWTool(tool: MD2(), i18nPrefix: 'hashes_md2', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_MD2,
-        SEARCHSTRING_DE_HASHES_MD2,
-        SEARCHSTRING_EN_HASHES_MD2,
-        SEARCHSTRING_FR_HASHES_MD2
-      ]),
-      GCWTool(tool: MD4(), i18nPrefix: 'hashes_md4', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_MD4,
-        SEARCHSTRING_DE_HASHES_MD4,
-        SEARCHSTRING_EN_HASHES_MD4,
-        SEARCHSTRING_FR_HASHES_MD4
-      ]),
-      GCWTool(tool: Tiger_192(), i18nPrefix: 'hashes_tiger192', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_TIGER_192,
-        SEARCHSTRING_DE_HASHES_TIGER_192,
-        SEARCHSTRING_EN_HASHES_TIGER_192,
-        SEARCHSTRING_FR_HASHES_TIGER_192
-      ]),
-      GCWTool(tool: Whirlpool_512(), i18nPrefix: 'hashes_whirlpool512', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_WHIRLPOOL_512,
-        SEARCHSTRING_DE_HASHES_WHIRLPOOL_512,
-        SEARCHSTRING_EN_HASHES_WHIRLPOOL_512,
-        SEARCHSTRING_FR_HASHES_WHIRLPOOL_512
-      ]),
-      GCWTool(tool: BLAKE2b_160(), i18nPrefix: 'hashes_blake2b160', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B,
-        SEARCHSTRING_DE_HASHES_BLAKE2B,
-        SEARCHSTRING_EN_HASHES_BLAKE2B,
-        SEARCHSTRING_FR_HASHES_BLAKE2B,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B_160,
-        SEARCHSTRING_DE_HASHES_BLAKE2B_160,
-        SEARCHSTRING_EN_HASHES_BLAKE2B_160,
-        SEARCHSTRING_FR_HASHES_BLAKE2B_160,
-      ]),
-      GCWTool(tool: BLAKE2b_224(), i18nPrefix: 'hashes_blake2b224', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B,
-        SEARCHSTRING_DE_HASHES_BLAKE2B,
-        SEARCHSTRING_EN_HASHES_BLAKE2B,
-        SEARCHSTRING_FR_HASHES_BLAKE2B,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B_224,
-        SEARCHSTRING_DE_HASHES_BLAKE2B_224,
-        SEARCHSTRING_EN_HASHES_BLAKE2B_224,
-        SEARCHSTRING_FR_HASHES_BLAKE2B_224,
-      ]),
-      GCWTool(tool: BLAKE2b_256(), i18nPrefix: 'hashes_blake2b256', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B,
-        SEARCHSTRING_DE_HASHES_BLAKE2B,
-        SEARCHSTRING_EN_HASHES_BLAKE2B,
-        SEARCHSTRING_FR_HASHES_BLAKE2B,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B_256,
-        SEARCHSTRING_DE_HASHES_BLAKE2B_256,
-        SEARCHSTRING_EN_HASHES_BLAKE2B_256,
-        SEARCHSTRING_FR_HASHES_BLAKE2B_256,
-      ]),
-      GCWTool(tool: BLAKE2b_384(), i18nPrefix: 'hashes_blake2b384', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B,
-        SEARCHSTRING_DE_HASHES_BLAKE2B,
-        SEARCHSTRING_EN_HASHES_BLAKE2B,
-        SEARCHSTRING_FR_HASHES_BLAKE2B,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B_384,
-        SEARCHSTRING_DE_HASHES_BLAKE2B_384,
-        SEARCHSTRING_EN_HASHES_BLAKE2B_384,
-        SEARCHSTRING_FR_HASHES_BLAKE2B_384,
-      ]),
-      GCWTool(tool: BLAKE2b_512(), i18nPrefix: 'hashes_blake2b512', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HASHES,
-        SEARCHSTRING_DE_HASHES,
-        SEARCHSTRING_EN_HASHES,
-        SEARCHSTRING_FR_HASHES,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B,
-        SEARCHSTRING_DE_HASHES_BLAKE2B,
-        SEARCHSTRING_EN_HASHES_BLAKE2B,
-        SEARCHSTRING_FR_HASHES_BLAKE2B,
-        SEARCHSTRING_COMMON_HASHES_BLAKE2B_512,
-        SEARCHSTRING_DE_HASHES_BLAKE2B_512,
-        SEARCHSTRING_EN_HASHES_BLAKE2B_512,
-        SEARCHSTRING_FR_HASHES_BLAKE2B_512,
-      ]),
-
-      // IceCodeSelection *********************************************************************************************
-      GCWTool(
-          tool: IceCodes(),
-          helpLocales: ['de', 'en', 'fr'],
-          i18nPrefix: 'icecodes',
-          searchStrings: [
-            SEARCHSTRING_COMMON_ICECODES,
-            SEARCHSTRING_DE_ICECODES,
-            SEARCHSTRING_EN_ICECODES,
-            SEARCHSTRING_FR_ICECODES
-          ]),
-
-      //Language Games Selection *******************************************************************************
-      GCWTool(tool: ChickenLanguage(), i18nPrefix: 'chickenlanguage', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_LANGUAGEGAMES,
-        SEARCHSTRING_DE_LANGUAGEGAMES,
-        SEARCHSTRING_EN_LANGUAGEGAMES,
-        SEARCHSTRING_FR_LANGUAGEGAMES,
-        SEARCHSTRING_COMMON_LANGUAGEGAMES_CHICKENLANGUAGE,
-        SEARCHSTRING_DE_LANGUAGEGAMES_CHICKENLANGUAGE,
-        SEARCHSTRING_EN_LANGUAGEGAMES_CHICKENLANGUAGE,
-        SEARCHSTRING_FR_LANGUAGEGAMES_CHICKENLANGUAGE
-      ]),
-      GCWTool(tool: DuckSpeak(), i18nPrefix: 'duckspeak', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_LANGUAGEGAMES,
-        SEARCHSTRING_DE_LANGUAGEGAMES,
-        SEARCHSTRING_EN_LANGUAGEGAMES,
-        SEARCHSTRING_FR_LANGUAGEGAMES,
-        SEARCHSTRING_COMMON_DUCKSPEAK,
-        SEARCHSTRING_DE_DUCKSPEAK,
-        SEARCHSTRING_EN_DUCKSPEAK,
-        SEARCHSTRING_FR_DUCKSPEAK
-      ]),
-      GCWTool(tool: PigLatin(), i18nPrefix: 'piglatin', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_LANGUAGEGAMES,
-        SEARCHSTRING_DE_LANGUAGEGAMES,
-        SEARCHSTRING_EN_LANGUAGEGAMES,
-        SEARCHSTRING_FR_LANGUAGEGAMES,
-        SEARCHSTRING_COMMON_LANGUAGEGAMES_PIGLATIN,
-        SEARCHSTRING_DE_LANGUAGEGAMES_PIGLATIN,
-        SEARCHSTRING_EN_LANGUAGEGAMES_PIGLATIN,
-        SEARCHSTRING_FR_LANGUAGEGAMES_PIGLATIN
-      ]),
-      GCWTool(tool: RobberLanguage(), i18nPrefix: 'robberlanguage', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_LANGUAGEGAMES,
-        SEARCHSTRING_DE_LANGUAGEGAMES,
-        SEARCHSTRING_EN_LANGUAGEGAMES,
-        SEARCHSTRING_FR_LANGUAGEGAMES,
-        SEARCHSTRING_COMMON_LANGUAGEGAMES_ROBBERLANGUAGE,
-        SEARCHSTRING_DE_LANGUAGEGAMES_ROBBERLANGUAGE,
-        SEARCHSTRING_EN_LANGUAGEGAMES_ROBBERLANGUAGE,
-        SEARCHSTRING_FR_LANGUAGEGAMES_ROBBERLANGUAGE
-      ]),
-      GCWTool(tool: SpoonLanguage(), i18nPrefix: 'spoonlanguage', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_LANGUAGEGAMES,
-        SEARCHSTRING_DE_LANGUAGEGAMES,
-        SEARCHSTRING_EN_LANGUAGEGAMES,
-        SEARCHSTRING_FR_LANGUAGEGAMES,
-        SEARCHSTRING_COMMON_LANGUAGEGAMES_SPOONLANGUAGE,
-        SEARCHSTRING_DE_LANGUAGEGAMES_SPOONLANGUAGE,
-        SEARCHSTRING_EN_LANGUAGEGAMES_SPOONLANGUAGE,
-        SEARCHSTRING_FR_LANGUAGEGAMES_SPOONLANGUAGE
-      ]),
-
-      //Main Menu **********************************************************************************************
-      GCWTool(
-          tool: GeneralSettings(), i18nPrefix: 'settings_general', helpLocales: ['de', 'en', 'fr'], searchStrings: []),
-      GCWTool(
-          tool: CoordinatesSettings(),
-          i18nPrefix: 'settings_coordinates',
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: []),
-      GCWTool(tool: ToolSettings(), i18nPrefix: 'settings_tools', helpLocales: ['de', 'en', 'fr'], searchStrings: []),
-      GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [
-        SEARCHSTRING_COMMON_CHANGELOG,
-        SEARCHSTRING_DE_CHANGELOG,
-        SEARCHSTRING_EN_CHANGELOG,
-        SEARCHSTRING_FR_CHANGELOG
-      ]),
-      GCWTool(tool: About(), i18nPrefix: 'mainmenu_about', suppressHelpButton: true, searchStrings: [
-        SEARCHSTRING_COMMON_ABOUT,
-        SEARCHSTRING_DE_ABOUT,
-        SEARCHSTRING_EN_ABOUT,
-        SEARCHSTRING_FR_ABOUT
-      ]),
-      GCWTool(
-          tool: CallForContribution(),
-          i18nPrefix: 'mainmenu_callforcontribution',
-          suppressHelpButton: true,
-          searchStrings: [
-            SEARCHSTRING_COMMON_CALLFORCONTRIBUTION,
-            SEARCHSTRING_DE_CALLFORCONTRIBUTION,
-            SEARCHSTRING_EN_CALLFORCONTRIBUTION,
-            SEARCHSTRING_FR_CALLFORCONTRIBUTION
-          ]),
-      GCWTool(tool: Licenses(), i18nPrefix: 'licenses', suppressHelpButton: true, searchStrings: [
-        SEARCHSTRING_COMMON_LICENSES,
-        SEARCHSTRING_DE_LICENSES,
-        SEARCHSTRING_EN_LICENSES,
-        SEARCHSTRING_FR_LICENSES
-      ]),
-
-      //MayaCalendar Selection **************************************************************************************
-      GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_MAYA_CALENDAR,
-        SEARCHSTRING_DE_MAYA_CALENDAR,
-        SEARCHSTRING_EN_MAYA_CALENDAR,
-        SEARCHSTRING_FR_MAYA_CALENDAR
-      ]),
-
-      //MayaNumbers Selection **************************************************************************************
-      GCWTool(tool: MayaNumbers(), i18nPrefix: 'mayanumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_MAYANUMBERS,
-        SEARCHSTRING_DE_MAYANUMBERS,
-        SEARCHSTRING_EN_MAYANUMBERS,
-        SEARCHSTRING_FR_MAYANUMBERS
-      ]),
-
-      //Phi Selection **********************************************************************************************
-      GCWTool(tool: PhiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PHI,
-        SEARCHSTRING_DE_PHI,
-        SEARCHSTRING_EN_PHI,
-        SEARCHSTRING_FR_PHI,
-        SEARCHSTRING_COMMON_PHIDECIMALRANGE,
-        SEARCHSTRING_DE_PHIDECIMALRANGE,
-        SEARCHSTRING_EN_PHIDECIMALRANGE,
-        SEARCHSTRING_FR_PHIDECIMALRANGE
-      ]),
-      GCWTool(tool: PhiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PHI,
-        SEARCHSTRING_DE_PHI,
-        SEARCHSTRING_EN_PHI,
-        SEARCHSTRING_FR_PHI,
-        SEARCHSTRING_COMMON_PHIDECIMALRANGE,
-        SEARCHSTRING_DE_PHIDECIMALRANGE,
-        SEARCHSTRING_EN_PHIDECIMALRANGE,
-        SEARCHSTRING_FR_PHIDECIMALRANGE
-      ]),
-      GCWTool(tool: PhiSearch(), i18nPrefix: 'irrationalnumbers_search', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PHI,
-        SEARCHSTRING_DE_PHI,
-        SEARCHSTRING_EN_PHI,
-        SEARCHSTRING_FR_PHI,
-        SEARCHSTRING_COMMON_PHISEARCH,
-        SEARCHSTRING_DE_PHISEARCH,
-        SEARCHSTRING_EN_PHISEARCH,
-        SEARCHSTRING_FR_PHISEARCH
-      ]),
-
-      //Pi Selection **********************************************************************************************
-      GCWTool(tool: PiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PI,
-        SEARCHSTRING_DE_PI,
-        SEARCHSTRING_EN_PI,
-        SEARCHSTRING_FR_PI,
-        SEARCHSTRING_COMMON_PINTHDECIMAL,
-        SEARCHSTRING_DE_PINTHDECIMAL,
-        SEARCHSTRING_EN_PINTHDECIMAL,
-        SEARCHSTRING_FR_PINTHDECIMAL
-      ]),
-      GCWTool(tool: PiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PI,
-        SEARCHSTRING_DE_PI,
-        SEARCHSTRING_EN_PI,
-        SEARCHSTRING_FR_PI,
-        SEARCHSTRING_COMMON_PIDECIMALRANGE,
-        SEARCHSTRING_DE_PIDECIMALRANGE,
-        SEARCHSTRING_EN_PIDECIMALRANGE,
-        SEARCHSTRING_FR_PIDECIMALRANGE
-      ]),
-      GCWTool(tool: PiSearch(), i18nPrefix: 'irrationalnumbers_search', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PI,
-        SEARCHSTRING_DE_PI,
-        SEARCHSTRING_EN_PI,
-        SEARCHSTRING_FR_PI,
-        SEARCHSTRING_COMMON_PISEARCH,
-        SEARCHSTRING_DE_PISEARCH,
-        SEARCHSTRING_EN_PISEARCH,
-        SEARCHSTRING_FR_PISEARCH
-      ]),
-
-      //NumberSequenceSelection ****************************************************************************************
-      GCWTool(tool: NumberSequenceFactorialSelection(), i18nPrefix: 'numbersequence_factorial', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciSelection(), i18nPrefix: 'numbersequence_fibonacci', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION
-      ]),
-      GCWTool(tool: NumberSequenceMersenneSelection(), i18nPrefix: 'numbersequence_mersenne', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesSelection(), i18nPrefix: 'numbersequence_mersenneprimes', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION
-      ]),
-      GCWTool(
-          tool: NumberSequenceMersenneExponentsSelection(),
-          i18nPrefix: 'numbersequence_mersenneexponents',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-            SEARCHSTRING_DE_NUMBERSEQUENCE,
-            SEARCHSTRING_EN_NUMBERSEQUENCE,
-            SEARCHSTRING_FR_NUMBERSEQUENCE,
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-          ]),
-      GCWTool(tool: NumberSequenceMersenneFermatSelection(), i18nPrefix: 'numbersequence_mersennefermat', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFermatSelection(), i18nPrefix: 'numbersequence_fermat', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersSelection(), i18nPrefix: 'numbersequence_perfectnumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceSuperPerfectNumbersSelection(),
-          i18nPrefix: 'numbersequence_superperfectnumbers',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-            SEARCHSTRING_DE_NUMBERSEQUENCE,
-            SEARCHSTRING_EN_NUMBERSEQUENCE,
-            SEARCHSTRING_FR_NUMBERSEQUENCE,
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-          ]),
-      GCWTool(
-          tool: NumberSequencePrimaryPseudoPerfectNumbersSelection(),
-          i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-            SEARCHSTRING_DE_NUMBERSEQUENCE,
-            SEARCHSTRING_EN_NUMBERSEQUENCE,
-            SEARCHSTRING_FR_NUMBERSEQUENCE,
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-          ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersSelection(), i18nPrefix: 'numbersequence_weirdnumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersSelection(), i18nPrefix: 'numbersequence_sublimenumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellSelection(), i18nPrefix: 'numbersequence_pell', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLucasSelection(), i18nPrefix: 'numbersequence_lucas', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellLucasSelection(), i18nPrefix: 'numbersequence_pelllucas', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalSelection(), i18nPrefix: 'numbersequence_jacobsthal', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceJacobsthalLucasSelection(),
-          i18nPrefix: 'numbersequence_jacobsthallucas',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-            SEARCHSTRING_DE_NUMBERSEQUENCE,
-            SEARCHSTRING_EN_NUMBERSEQUENCE,
-            SEARCHSTRING_FR_NUMBERSEQUENCE,
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-          ]),
-      GCWTool(
-          tool: NumberSequenceJacobsthalOblongSelection(),
-          i18nPrefix: 'numbersequence_jacobsthaloblong',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-            SEARCHSTRING_DE_NUMBERSEQUENCE,
-            SEARCHSTRING_EN_NUMBERSEQUENCE,
-            SEARCHSTRING_FR_NUMBERSEQUENCE,
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-          ]),
-      GCWTool(tool: NumberSequenceCatalanSelection(), i18nPrefix: 'numbersequence_catalan', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceRecamanSelection(), i18nPrefix: 'numbersequence_recaman', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLychrelSelection(), i18nPrefix: 'numbersequence_lychrel', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
-      ]),
-
-      //NumberSequenceSelection Factorial ****************************************************************************************
-      GCWTool(tool: NumberSequenceFactorialNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFactorialRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFactorialCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFactorialDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFactorialContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-      ]),
-
-      //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersenneFermatNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneFermatRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneFermatCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneFermatDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceMersenneFermatContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-          ]),
-
-      //NumberSequenceSelection Fermat ****************************************************************************************
-      GCWTool(tool: NumberSequenceFermatNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFermatRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFermatCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFermatDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFermatContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
-
-      //NumberSequenceSelection Lucas ****************************************************************************************
-      GCWTool(tool: NumberSequenceLucasNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLucasRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLucasCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLucasDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLucasContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-
-      //NumberSequenceSelection Fibonacci ****************************************************************************************
-      GCWTool(tool: NumberSequenceFibonacciNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-      ]),
-
-      //NumberSequenceSelection Mersenne ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersenneNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-      ]),
-
-      //NumberSequenceSelection Bell ****************************************************************************************
-      GCWTool(tool: NumberSequenceBellNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceBellRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceBellCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceBellDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceBellContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-
-      //NumberSequenceSelection Pell ****************************************************************************************
-      GCWTool(tool: NumberSequencePellNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-
-      //NumberSequenceSelection Pell-Lucas ****************************************************************************************
-      GCWTool(tool: NumberSequencePellLucasNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellLucasRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellLucasCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellLucasDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellLucasContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-
-      //NumberSequenceSelection Jacobsthal ****************************************************************************************
-      GCWTool(tool: NumberSequenceJacobsthalNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceJacobsthalContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-          ]),
-
-      //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
-      GCWTool(tool: NumberSequenceJacobsthalLucasNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalLucasRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalLucasCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalLucasDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceJacobsthalLucasContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-          ]),
-
-      //NumberSequenceSelection Jacobsthal Oblong ****************************************************************************************
-      GCWTool(tool: NumberSequenceJacobsthalOblongNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalOblongRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalOblongCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalOblongDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceJacobsthalOblongContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-          ]),
-
-      //NumberSequenceSelection Catalan ****************************************************************************************
-      GCWTool(tool: NumberSequenceCatalanNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceCatalanRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceCatalanCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceCatalanDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceCatalanContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-
-      //NumberSequenceSelection Recaman ****************************************************************************************
-      GCWTool(tool: NumberSequenceRecamanNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceRecamanRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceRecamanCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceRecamanDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceRecamanContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
-
-      //NumberSequenceSelection Mersenne Primes ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersennePrimesNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceMersennePrimesContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-          ]),
-
-      //NumberSequenceSelection Mersenne Exponents ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersenneExponentsNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneExponentsRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneExponentsCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceMersenneExponentsDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceMersenneExponentsContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-          ]),
-
-      //NumberSequenceSelection Perfect numbers ****************************************************************************************
-      GCWTool(tool: NumberSequencePerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequencePerfectNumbersContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-          ]),
-
-      //NumberSequenceSelection SuperPerfect numbers ****************************************************************************************
-      GCWTool(tool: NumberSequenceSuperPerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSuperPerfectNumbersRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSuperPerfectNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSuperPerfectNumbersDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceSuperPerfectNumbersContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-          ]),
-
-      //NumberSequenceSelection Weird numbers ****************************************************************************************
-      GCWTool(tool: NumberSequenceWeirdNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceWeirdNumbersContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-          ]),
-
-      //NumberSequenceSelection Sublime numbers ****************************************************************************************
-      GCWTool(tool: NumberSequenceSublimeNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequenceSublimeNumbersContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-          ]),
-
-      //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
-      GCWTool(
-          tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(),
-          i18nPrefix: 'numbersequence_nth',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-          ]),
-      GCWTool(tool: NumberSequencePrimaryPseudoPerfectNumbersRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-      ]),
-      GCWTool(
-          tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
-          i18nPrefix: 'numbersequence_check',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-          ]),
-      GCWTool(
-          tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
-          i18nPrefix: 'numbersequence_digits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-          ]),
-      GCWTool(
-          tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
-          i18nPrefix: 'numbersequence_containsdigits',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-            SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
-          ]),
-
-      //NumberSequenceSelection Lychrel numbers ****************************************************************************************
-      GCWTool(tool: NumberSequenceLychrelNthNumber(), i18nPrefix: 'numbersequence_nth', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLychrelRange(), i18nPrefix: 'numbersequence_range', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLychrelCheckNumber(), i18nPrefix: 'numbersequence_check', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLychrelDigits(), i18nPrefix: 'numbersequence_digits', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLychrelContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LYCHRELSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LYCHRELSELECTION,
-      ]),
-
-      //NumeralWordsSelection ****************************************************************************************
-      GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMERALWORDS,
-        SEARCHSTRING_DE_NUMERALWORDS,
-        SEARCHSTRING_EN_NUMERALWORDS,
-        SEARCHSTRING_FR_NUMERALWORDS,
-        SEARCHSTRING_COMMON_NUMERALWORDSTEXTSEARCH,
-        SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH,
-        SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH,
-        SEARCHSTRING_FR_NUMERALWORDSTEXTSEARCH
-      ]),
-      GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMERALWORDS,
-        SEARCHSTRING_DE_NUMERALWORDS,
-        SEARCHSTRING_EN_NUMERALWORDS,
-        SEARCHSTRING_FR_NUMERALWORDS,
-        SEARCHSTRING_COMMON_NUMERALWORDSLISTS,
-        SEARCHSTRING_DE_NUMERALWORDSLISTS,
-        SEARCHSTRING_EN_NUMERALWORDSLISTS,
-        SEARCHSTRING_FR_NUMERALWORDSLISTS
-      ]),
-      GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', helpLocales: [
-        'ko'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMERALWORDS,
-        SEARCHSTRING_DE_NUMERALWORDS,
-        SEARCHSTRING_EN_NUMERALWORDS,
-        SEARCHSTRING_FR_NUMERALWORDS,
-        SEARCHSTRING_COMMON_NUMERALWORDSCONVERTER,
-        SEARCHSTRING_DE_NUMERALWORDSCONVERTER,
-        SEARCHSTRING_EN_NUMERALWORDSCONVERTER,
-        SEARCHSTRING_FR_NUMERALWORDSCONVERTER
-      ]),
-
-      //PeriodicTableSelection ***************************************************************************************
-      GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PERIODICTABLE,
-        SEARCHSTRING_DE_PERIODICTABLE,
-        SEARCHSTRING_EN_PERIODICTABLE,
-        SEARCHSTRING_FR_PERIODICTABLE,
-      ]),
-      GCWTool(tool: PeriodicTableDataView(), i18nPrefix: 'periodictable_dataview', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PERIODICTABLE,
-        SEARCHSTRING_DE_PERIODICTABLE,
-        SEARCHSTRING_EN_PERIODICTABLE,
-        SEARCHSTRING_FR_PERIODICTABLE,
-        SEARCHSTRING_COMMON_PERIODICTABLEDATAVIEW,
-        SEARCHSTRING_DE_PERIODICTABLEDATAVIEW,
-        SEARCHSTRING_EN_PERIODICTABLEDATAVIEW,
-        SEARCHSTRING_FR_PERIODICTABLEDATAVIEW
-      ]),
-      GCWTool(tool: AtomicNumbersToText(), i18nPrefix: 'atomicnumberstotext', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PERIODICTABLE,
-        SEARCHSTRING_DE_PERIODICTABLE,
-        SEARCHSTRING_EN_PERIODICTABLE,
-        SEARCHSTRING_FR_PERIODICTABLE,
-        SEARCHSTRING_COMMON_PERIODICTABLE_ATOMICNUMBERS,
-        SEARCHSTRING_DE_PERIODICTABLE_ATOMICNUMBERS,
-        SEARCHSTRING_EN_PERIODICTABLE_ATOMICNUMBERS,
-        SEARCHSTRING_FR_PERIODICTABLE_ATOMICNUMBERS
-      ]),
-
-      //PrimesSelection **********************************************************************************************
-      GCWTool(tool: NthPrime(), i18nPrefix: 'primes_nthprime', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES,
-        SEARCHSTRING_COMMON_PRIMES_NTHPRIME,
-        SEARCHSTRING_DE_PRIMES_NTHPRIME,
-        SEARCHSTRING_EN_PRIMES_NTHPRIME,
-        SEARCHSTRING_FR_PRIMES_NTHPRIME
-      ]),
-      GCWTool(tool: IsPrime(), i18nPrefix: 'primes_isprime', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES,
-        SEARCHSTRING_COMMON_PRIMES_ISPRIME,
-        SEARCHSTRING_DE_PRIMES_ISPRIME,
-        SEARCHSTRING_EN_PRIMES_ISPRIME,
-        SEARCHSTRING_FR_PRIMES_ISPRIME
-      ]),
-      GCWTool(tool: NearestPrime(), i18nPrefix: 'primes_nearestprime', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES,
-        SEARCHSTRING_COMMON_PRIMES_NEARESTPRIME,
-        SEARCHSTRING_DE_PRIMES_NEARESTPRIME,
-        SEARCHSTRING_EN_PRIMES_NEARESTPRIME,
-        SEARCHSTRING_FR_PRIMES_NEARESTPRIME
-      ]),
-      GCWTool(tool: PrimeIndex(), i18nPrefix: 'primes_primeindex', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES,
-        SEARCHSTRING_COMMON_PRIMES_PRIMEINDEX,
-        SEARCHSTRING_DE_PRIMES_PRIMEINDEX,
-        SEARCHSTRING_EN_PRIMES_PRIMEINDEX,
-        SEARCHSTRING_FR_PRIMES_PRIMEINDEX
-      ]),
-      GCWTool(tool: IntegerFactorization(), i18nPrefix: 'primes_integerfactorization', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES,
-        SEARCHSTRING_COMMON_PRIMES_INTEGERFACTORIZATION,
-        SEARCHSTRING_DE_PRIMES_INTEGERFACTORIZATION,
-        SEARCHSTRING_EN_PRIMES_INTEGERFACTORIZATION,
-        SEARCHSTRING_FR_PRIMES_INTEGERFACTORIZATION
-      ]),
-
-      //ResistorSelection **********************************************************************************************
-      GCWTool(tool: ResistorColorCodeCalculator(), i18nPrefix: 'resistor_colorcodecalculator', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RESISTOR,
-        SEARCHSTRING_DE_RESISTOR,
-        SEARCHSTRING_EN_RESISTOR,
-        SEARCHSTRING_FR_RESISTOR,
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_RESISTOR_COLORCODE,
-        SEARCHSTRING_DE_RESISTOR_COLORCODE,
-        SEARCHSTRING_EN_RESISTOR_COLORCODE,
-        SEARCHSTRING_FR_RESISTOR_COLORCODE
-      ]),
-      GCWTool(tool: ResistorEIA96(), i18nPrefix: 'resistor_eia96', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RESISTOR,
-        SEARCHSTRING_DE_RESISTOR,
-        SEARCHSTRING_EN_RESISTOR,
-        SEARCHSTRING_FR_RESISTOR,
-        SEARCHSTRING_COMMON_RESISTOREIA96,
-        SEARCHSTRING_DE_RESISTOREIA96,
-        SEARCHSTRING_EN_RESISTOREIA96,
-        SEARCHSTRING_FR_RESISTOREIA96
-      ]),
-
-      //RomanNumbersSelection **********************************************************************************************
-      GCWTool(tool: RomanNumbers(), i18nPrefix: 'romannumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROMAN_NUMBERS,
-        SEARCHSTRING_DE_ROMAN_NUMBERS,
-        SEARCHSTRING_EN_ROMAN_NUMBERS,
-        SEARCHSTRING_FR_ROMAN_NUMBERS,
-      ]),
-      GCWTool(tool: Chronogram(), i18nPrefix: 'chronogram', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROMAN_NUMBERS,
-        SEARCHSTRING_DE_ROMAN_NUMBERS,
-        SEARCHSTRING_EN_ROMAN_NUMBERS,
-        SEARCHSTRING_FR_ROMAN_NUMBERS,
-        SEARCHSTRING_COMMON_CHRONOGRAM,
-        SEARCHSTRING_DE_CHRONOGRAM,
-        SEARCHSTRING_EN_CHRONOGRAM,
-        SEARCHSTRING_FR_CHRONOGRAM
-      ]),
-
-      //RotationSelection **********************************************************************************************
-      GCWTool(tool: Rot13(), i18nPrefix: 'rotation_rot13', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_ROTATION_ROT13,
-        SEARCHSTRING_DE_ROTATION_ROT13,
-        SEARCHSTRING_EN_ROTATION_ROT13,
-        SEARCHSTRING_FR_ROTATION_ROT13
-      ]),
-      GCWTool(tool: Rot5(), i18nPrefix: 'rotation_rot5', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_ROTATION_ROT5,
-        SEARCHSTRING_DE_ROTATION_ROT5,
-        SEARCHSTRING_EN_ROTATION_ROT5,
-        SEARCHSTRING_FR_ROTATION_ROT5
-      ]),
-      GCWTool(tool: Rot18(), i18nPrefix: 'rotation_rot18', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_ROTATION_ROT18,
-        SEARCHSTRING_DE_ROTATION_ROT18,
-        SEARCHSTRING_EN_ROTATION_ROT18,
-        SEARCHSTRING_FR_ROTATION_ROT18
-      ]),
-      GCWTool(tool: Rot47(), i18nPrefix: 'rotation_rot47', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_ROTATION_ROT47,
-        SEARCHSTRING_DE_ROTATION_ROT47,
-        SEARCHSTRING_EN_ROTATION_ROT47,
-        SEARCHSTRING_FR_ROTATION_ROT47
-      ]),
-      GCWTool(tool: RotationGeneral(), i18nPrefix: 'rotation_general', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION
-      ]),
-
-      // RSA *******************************************************************************************************
-      GCWTool(tool: RSA(), i18nPrefix: 'rsa_rsa', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RSA,
-        SEARCHSTRING_DE_RSA,
-        SEARCHSTRING_EN_RSA,
-        SEARCHSTRING_FR_RSA,
-      ]),
-      GCWTool(tool: RSAEChecker(), i18nPrefix: 'rsa_e.checker', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RSA,
-        SEARCHSTRING_DE_RSA,
-        SEARCHSTRING_EN_RSA,
-        SEARCHSTRING_FR_RSA,
-        SEARCHSTRING_COMMON_RSA_ECHECKER,
-        SEARCHSTRING_DE_RSA_ECHECKER,
-        SEARCHSTRING_EN_RSA_ECHECKER,
-        SEARCHSTRING_FR_RSA_ECHECKER
-      ]),
-      GCWTool(tool: RSADChecker(), i18nPrefix: 'rsa_d.checker', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RSA,
-        SEARCHSTRING_DE_RSA,
-        SEARCHSTRING_EN_RSA,
-        SEARCHSTRING_FR_RSA,
-        SEARCHSTRING_COMMON_RSA_DCHECKER,
-        SEARCHSTRING_DE_RSA_DCHECKER,
-        SEARCHSTRING_EN_RSA_DCHECKER,
-        SEARCHSTRING_FR_RSA_DCHECKER
-      ]),
-      GCWTool(tool: RSADCalculator(), i18nPrefix: 'rsa_d.calculator', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RSA,
-        SEARCHSTRING_DE_RSA,
-        SEARCHSTRING_EN_RSA,
-        SEARCHSTRING_FR_RSA,
-        SEARCHSTRING_COMMON_RSA_DCALCULATOR,
-        SEARCHSTRING_DE_RSA_DCALCULATOR,
-        SEARCHSTRING_EN_RSA_DCALCULATOR,
-        SEARCHSTRING_FR_RSA_DCALCULATOR
-      ]),
-      GCWTool(tool: RSANCalculator(), i18nPrefix: 'rsa_n.calculator', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RSA,
-        SEARCHSTRING_DE_RSA,
-        SEARCHSTRING_EN_RSA,
-        SEARCHSTRING_FR_RSA,
-        SEARCHSTRING_COMMON_RSA_NCALCULATOR,
-        SEARCHSTRING_DE_RSA_NCALCULATOR,
-        SEARCHSTRING_EN_RSA_NCALCULATOR,
-        SEARCHSTRING_FR_RSA_NCALCULATOR
-      ]),
-      GCWTool(
-          tool: RSAPhiCalculator(),
-          i18nPrefix: 'rsa_phi.calculator',
-          helpLocales: ['de', 'en', 'fr'],
-          searchStrings: [SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA]),
-
-      //Segments Display *******************************************************************************************
-      GCWTool(
-          tool: SevenSegments(),
-          i18nPrefix: 'segmentdisplay_7segments',
-          iconPath: 'assets/icons/science_and_technology/icon_7segment_display.png',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_SEGMENTS,
-            SEARCHSTRING_DE_SEGMENTS,
-            SEARCHSTRING_EN_SEGMENTS,
-            SEARCHSTRING_FR_SEGMENTS,
-            SEARCHSTRING_COMMON_SEGMENTS_SEVEN,
-            SEARCHSTRING_DE_SEGMENTS_SEVEN,
-            SEARCHSTRING_EN_SEGMENTS_SEVEN,
-            SEARCHSTRING_FR_SEGMENTS_SEVEN
-          ]),
-      GCWTool(
-          tool: FourteenSegments(),
-          i18nPrefix: 'segmentdisplay_14segments',
-          iconPath: 'assets/icons/science_and_technology/icon_14segment_display.png',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_SEGMENTS,
-            SEARCHSTRING_DE_SEGMENTS,
-            SEARCHSTRING_EN_SEGMENTS,
-            SEARCHSTRING_FR_SEGMENTS,
-            SEARCHSTRING_COMMON_SEGMENTS_FOURTEEN,
-            SEARCHSTRING_DE_SEGMENTS_FOURTEEN,
-            SEARCHSTRING_EN_SEGMENTS_FOURTEEN,
-            SEARCHSTRING_FR_SEGMENTS_FOURTEEN
-          ]),
-      GCWTool(
-          tool: SixteenSegments(),
-          i18nPrefix: 'segmentdisplay_16segments',
-          iconPath: 'assets/icons/science_and_technology/icon_16segment_display.png',
-          helpLocales: [
-            'de',
-            'en',
-            'fr'
-          ],
-          searchStrings: [
-            SEARCHSTRING_COMMON_SEGMENTS,
-            SEARCHSTRING_DE_SEGMENTS,
-            SEARCHSTRING_EN_SEGMENTS,
-            SEARCHSTRING_FR_SEGMENTS,
-            SEARCHSTRING_COMMON_SEGMENTS_SIXTEEN,
-            SEARCHSTRING_DE_SEGMENTS_SIXTEEN,
-            SEARCHSTRING_EN_SEGMENTS_SIXTEEN,
-            SEARCHSTRING_FR_SEGMENTS_SIXTEEN
-          ]),
-
-      //Shadoks Selection ******************************************************************************************
-      GCWTool(tool: ShadoksNumbers(), i18nPrefix: 'shadoksnumbers', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SHADOKSNUMBERS,
-        SEARCHSTRING_DE_SHADOKSNUMBERS,
-        SEARCHSTRING_EN_SHADOKSNUMBERS,
-        SEARCHSTRING_FR_SHADOKSNUMBERS
-      ]),
-
-      //Symbol Tables **********************************************************************************************
-      GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ADLAM,
-        SEARCHSTRING_DE_SYMBOL_ADLAM,
-        SEARCHSTRING_EN_SYMBOL_ADLAM,
-        SEARCHSTRING_FR_SYMBOL_ADLAM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'albhed', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALBHED,
-        SEARCHSTRING_DE_SYMBOL_ALBHED,
-        SEARCHSTRING_EN_SYMBOL_ALBHED,
-        SEARCHSTRING_FR_SYMBOL_ALBHED
-      ]),
-      GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALCHEMY,
-        SEARCHSTRING_DE_SYMBOL_ALCHEMY,
-        SEARCHSTRING_EN_SYMBOL_ALCHEMY,
-        SEARCHSTRING_FR_SYMBOL_ALCHEMY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALCHEMY_ALPHABET,
-        SEARCHSTRING_DE_SYMBOL_ALCHEMY_ALPHABET,
-        SEARCHSTRING_EN_SYMBOL_ALCHEMY_ALPHABET,
-        SEARCHSTRING_FR_SYMBOL_ALCHEMY_ALPHABET
-      ]),
-      GCWSymbolTableTool(symbolKey: 'angerthas_cirth', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_COMMON_SYMBOL_RUNES,
-        SEARCHSTRING_DE_SYMBOL_RUNES,
-        SEARCHSTRING_EN_SYMBOL_RUNES,
-        SEARCHSTRING_FR_SYMBOL_RUNES,
-        SEARCHSTRING_COMMON_SYMBOL_ANGERTHAS_CIRTH,
-        SEARCHSTRING_DE_SYMBOL_ANGERTHAS_CIRTH,
-        SEARCHSTRING_EN_SYMBOL_ANGERTHAS_CIRTH,
-        SEARCHSTRING_FR_SYMBOL_ANGERTHAS_CIRTH
-      ]),
-      GCWSymbolTableTool(symbolKey: 'alphabetum_arabum', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALPHABETUM_ARABUM,
-        SEARCHSTRING_DE_SYMBOL_ALPHABETUM_ARABUM,
-        SEARCHSTRING_EN_SYMBOL_ALPHABETUM_ARABUM,
-        SEARCHSTRING_FR_SYMBOL_ALPHABETUM_ARABUM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'alphabetum_egiptiorum', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALPHABETUM_EGIPTIORUM,
-        SEARCHSTRING_DE_SYMBOL_ALPHABETUM_EGIPTIORUM,
-        SEARCHSTRING_EN_SYMBOL_ALPHABETUM_EGIPTIORUM,
-        SEARCHSTRING_FR_SYMBOL_ALPHABETUM_EGIPTIORUM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'alphabetum_gothicum', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ALPHABETUM_GOTHICUM,
-        SEARCHSTRING_DE_SYMBOL_ALPHABETUM_GOTHICUM,
-        SEARCHSTRING_EN_SYMBOL_ALPHABETUM_GOTHICUM,
-        SEARCHSTRING_FR_SYMBOL_ALPHABETUM_GOTHICUM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'antiker', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ANTIKER,
-        SEARCHSTRING_DE_SYMBOL_ANTIKER,
-        SEARCHSTRING_EN_SYMBOL_ANTIKER,
-        SEARCHSTRING_FR_SYMBOL_ANTIKER
-      ]),
-      GCWSymbolTableTool(symbolKey: 'arabic_indian_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ARABIC_INDIAN_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_ARABIC_INDIAN_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_ARABIC_INDIAN_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_ARABIC_INDIAN_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ARCADIAN,
-        SEARCHSTRING_DE_SYMBOL_ARCADIAN,
-        SEARCHSTRING_EN_SYMBOL_ARCADIAN,
-        SEARCHSTRING_FR_SYMBOL_ARCADIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'ath', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ATH,
-        SEARCHSTRING_DE_SYMBOL_ATH,
-        SEARCHSTRING_EN_SYMBOL_ATH,
-        SEARCHSTRING_FR_SYMBOL_ATH
-      ]),
-      GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN,
-        SEARCHSTRING_DE_SYMBOL_ATLANTEAN,
-        SEARCHSTRING_EN_SYMBOL_ATLANTEAN,
-        SEARCHSTRING_FR_SYMBOL_ATLANTEAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_AUREBESH,
-        SEARCHSTRING_DE_SYMBOL_AUREBESH,
-        SEARCHSTRING_EN_SYMBOL_AUREBESH,
-        SEARCHSTRING_FR_SYMBOL_AUREBESH
-      ]),
-      GCWSymbolTableTool(symbolKey: 'australian_sign_language', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'babylonian_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
-        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BALLET,
-        SEARCHSTRING_DE_SYMBOL_BALLET,
-        SEARCHSTRING_EN_SYMBOL_BALLET,
-        SEARCHSTRING_FR_SYMBOL_BALLET
-      ]),
-      GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BARBIER,
-        SEARCHSTRING_DE_SYMBOL_BARBIER,
-        SEARCHSTRING_EN_SYMBOL_BARBIER,
-        SEARCHSTRING_FR_SYMBOL_BARBIER
-      ]),
-      GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_BARCODE39,
-        SEARCHSTRING_DE_BARCODE39,
-        SEARCHSTRING_EN_BARCODE39,
-        SEARCHSTRING_FR_BARCODE39
-      ]),
-      GCWSymbolTableTool(symbolKey: 'baudot', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_CCITT,
-        SEARCHSTRING_DE_CCITT,
-        SEARCHSTRING_EN_CCITT,
-        SEARCHSTRING_FR_CCITT,
-        SEARCHSTRING_COMMON_CCITT1,
-        SEARCHSTRING_DE_CCITT1,
-        SEARCHSTRING_EN_CCITT1,
-        SEARCHSTRING_FR_CCITT1,
-        SEARCHSTRING_COMMON_SYMBOL_BAUDOT,
-        SEARCHSTRING_DE_SYMBOL_BAUDOT,
-        SEARCHSTRING_EN_SYMBOL_BAUDOT,
-        SEARCHSTRING_FR_SYMBOL_BAUDOT
-      ]),
-      GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BIRDS_ON_A_WIRE,
-        SEARCHSTRING_DE_SYMBOL_BIRDS_ON_A_WIRE,
-        SEARCHSTRING_EN_SYMBOL_BIRDS_ON_A_WIRE,
-        SEARCHSTRING_FR_SYMBOL_BIRDS_ON_A_WIRE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'birkenbihl', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BIRKENBIHL,
-        SEARCHSTRING_DE_SYMBOL_BIRKENBIHL,
-        SEARCHSTRING_EN_SYMBOL_BIRKENBIHL,
-        SEARCHSTRING_FR_SYMBOL_BIRKENBIHL
-      ]),
-      GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BLOX,
-        SEARCHSTRING_DE_SYMBOL_BLOX,
-        SEARCHSTRING_EN_SYMBOL_BLOX,
-        SEARCHSTRING_FR_SYMBOL_BLOX
-      ]),
-      GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_BRAHMI_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_BRAHMI_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_BRAHMI_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_BRAHMI_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BRAILLE,
-        SEARCHSTRING_DE_BRAILLE,
-        SEARCHSTRING_EN_BRAILLE,
-        SEARCHSTRING_FR_BRAILLE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BRAILLE,
-        SEARCHSTRING_DE_BRAILLE,
-        SEARCHSTRING_EN_BRAILLE,
-        SEARCHSTRING_FR_BRAILLE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BRAILLE,
-        SEARCHSTRING_DE_BRAILLE,
-        SEARCHSTRING_EN_BRAILLE,
-        SEARCHSTRING_FR_BRAILLE,
-        SEARCHSTRING_COMMON_BRAILLE_EURO,
-        SEARCHSTRING_DE_BRAILLE_EURO,
-        SEARCHSTRING_EN_BRAILLE_EURO,
-        SEARCHSTRING_FR_BRAILLE_EURO
-      ]),
-      GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BRAILLE,
-        SEARCHSTRING_DE_BRAILLE,
-        SEARCHSTRING_EN_BRAILLE,
-        SEARCHSTRING_FR_BRAILLE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'british_sign_language', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_BRITISH_SIGN_LANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_BRITISH_SIGN_LANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_BRITISH_SIGN_LANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_BRITISH_SIGN_LANGUAGE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chain_of_death_direction', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
-        SEARCHSTRING_DE_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
-        SEARCHSTRING_EN_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
-        SEARCHSTRING_FR_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chain_of_death_pairs', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_CHAIN_OF_DEATH_PAIRS,
-        SEARCHSTRING_DE_SYMBOL_CHAIN_OF_DEATH_PAIRS,
-        SEARCHSTRING_EN_SYMBOL_CHAIN_OF_DEATH_PAIRS,
-        SEARCHSTRING_FR_SYMBOL_CHAIN_OF_DEATH_PAIRS,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_1794', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_1794,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE_1794,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE_1794,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE_1794
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_1809,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE_1809,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE_1809,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE_1809
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_V1,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE_V1,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE_V1,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE_V1
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_v2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_V2,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE_V2,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE_V2,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE_V2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_v3', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE,
-        SEARCHSTRING_COMMON_SYMBOL_CHAPPE_V3,
-        SEARCHSTRING_DE_SYMBOL_CHAPPE_V3,
-        SEARCHSTRING_EN_SYMBOL_CHAPPE_V3,
-        SEARCHSTRING_FR_SYMBOL_CHAPPE_V3
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_CHEROKEE,
-        SEARCHSTRING_DE_SYMBOL_CHEROKEE,
-        SEARCHSTRING_EN_SYMBOL_CHEROKEE,
-        SEARCHSTRING_FR_SYMBOL_CHEROKEE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_CHINESE_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_CHINESE_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_CHINESE_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_CHINESE_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RUNES,
-        SEARCHSTRING_DE_SYMBOL_RUNES,
-        SEARCHSTRING_EN_SYMBOL_RUNES,
-        SEARCHSTRING_FR_SYMBOL_RUNES,
-        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_COMMON_SYMBOL_CIRTHEREBOR,
-        SEARCHSTRING_DE_SYMBOL_CIRTHEREBOR,
-        SEARCHSTRING_EN_SYMBOL_CIRTHEREBOR,
-        SEARCHSTRING_FR_SYMBOL_CIRTHEREBOR
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_CISTERCIAN,
-        SEARCHSTRING_DE_CISTERCIAN,
-        SEARCHSTRING_EN_CISTERCIAN,
-        SEARCHSTRING_FR_CISTERCIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_COLOR_ADD,
-        SEARCHSTRING_DE_SYMBOL_COLOR_ADD,
-        SEARCHSTRING_EN_SYMBOL_COLOR_ADD,
-        SEARCHSTRING_FR_SYMBOL_COLOR_ADD
-      ]),
-      GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_COLOR_CODE,
-        SEARCHSTRING_DE_SYMBOL_COLOR_CODE,
-        SEARCHSTRING_EN_SYMBOL_COLOR_CODE,
-        SEARCHSTRING_FR_SYMBOL_COLOR_CODE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_COLOR_HONEY,
-        SEARCHSTRING_DE_SYMBOL_COLOR_HONEY,
-        SEARCHSTRING_EN_SYMBOL_COLOR_HONEY,
-        SEARCHSTRING_FR_SYMBOL_COLOR_HONEY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'color_tokki', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_COLOR_TOKKI,
-        SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI,
-        SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
-        SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cookewheatstone_1', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_1,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_1,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_1,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_1
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cookewheatstone_2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_2,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_2,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_2,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cookewheatstone_5', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TELEGRAPH,
-        SEARCHSTRING_DE_TELEGRAPH,
-        SEARCHSTRING_EN_TELEGRAPH,
-        SEARCHSTRING_FR_TELEGRAPH,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE,
-        SEARCHSTRING_COMMON_SYMBOL_COOKEWHEATSTONE_5,
-        SEARCHSTRING_DE_SYMBOL_COOKEWHEATSTONE_5,
-        SEARCHSTRING_EN_SYMBOL_COOKEWHEATSTONE_5,
-        SEARCHSTRING_FR_SYMBOL_COOKEWHEATSTONE_5
-      ]),
-      GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COUNTRIES,
-        SEARCHSTRING_DE_COUNTRIES,
-        SEARCHSTRING_EN_COUNTRIES,
-        SEARCHSTRING_FR_COUNTRIES,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_COUNTRIES_FLAGS,
-        SEARCHSTRING_DE_COUNTRIES_FLAGS,
-        SEARCHSTRING_EN_COUNTRIES_FLAGS,
-        SEARCHSTRING_FR_COUNTRIES_FLAGS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_COVENANT,
-        SEARCHSTRING_DE_SYMBOL_COVENANT,
-        SEARCHSTRING_EN_SYMBOL_COVENANT,
-        SEARCHSTRING_FR_SYMBOL_COVENANT,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_CYRILLIC,
-        SEARCHSTRING_DE_SYMBOL_CYRILLIC,
-        SEARCHSTRING_EN_SYMBOL_CYRILLIC,
-        SEARCHSTRING_FR_SYMBOL_CYRILLIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'cyrillic_numbers', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_CYRILLIC_NUMBERS,
-        SEARCHSTRING_DE_SYMBOL_CYRILLIC_NUMBERS,
-        SEARCHSTRING_EN_SYMBOL_CYRILLIC_NUMBERS,
-        SEARCHSTRING_FR_SYMBOL_CYRILLIC_NUMBERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DAEDRIC,
-        SEARCHSTRING_DE_SYMBOL_DAEDRIC,
-        SEARCHSTRING_EN_SYMBOL_DAEDRIC,
-        SEARCHSTRING_FR_SYMBOL_DAEDRIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dagger', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DAGGER,
-        SEARCHSTRING_DE_SYMBOL_DAGGER,
-        SEARCHSTRING_EN_SYMBOL_DAGGER,
-        SEARCHSTRING_FR_SYMBOL_DAGGER
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DANCING_MEN,
-        SEARCHSTRING_DE_SYMBOL_DANCING_MEN,
-        SEARCHSTRING_EN_SYMBOL_DANCING_MEN,
-        SEARCHSTRING_FR_SYMBOL_DANCING_MEN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'deafblind', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_DEAFBLIND,
-        SEARCHSTRING_DE_SYMBOL_DEAFBLIND,
-        SEARCHSTRING_EN_SYMBOL_DEAFBLIND,
-        SEARCHSTRING_FR_SYMBOL_DEAFBLIND
-      ]),
-      GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DEVANAGARI_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_DEVANAGARI_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_DEVANAGARI_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_DEVANAGARI_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DNI,
-        SEARCHSTRING_DE_SYMBOL_DNI,
-        SEARCHSTRING_EN_SYMBOL_DNI,
-        SEARCHSTRING_FR_SYMBOL_DNI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_DNI_COLORS,
-        SEARCHSTRING_DE_SYMBOL_DNI_COLORS,
-        SEARCHSTRING_EN_SYMBOL_DNI_COLORS,
-        SEARCHSTRING_FR_SYMBOL_DNI_COLORS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DNI_NUMBERS,
-        SEARCHSTRING_DE_SYMBOL_DNI_NUMBERS,
-        SEARCHSTRING_EN_SYMBOL_DNI_NUMBERS,
-        SEARCHSTRING_FR_SYMBOL_DNI_NUMBERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DOOP,
-        SEARCHSTRING_DE_SYMBOL_DOOP,
-        SEARCHSTRING_EN_SYMBOL_DOOP,
-        SEARCHSTRING_FR_SYMBOL_DOOP
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DORABELLA,
-        SEARCHSTRING_DE_SYMBOL_DORABELLA,
-        SEARCHSTRING_EN_SYMBOL_DORABELLA,
-        SEARCHSTRING_FR_SYMBOL_DORABELLA
-      ]),
-      GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DOREMI,
-        SEARCHSTRING_DE_SYMBOL_DOREMI,
-        SEARCHSTRING_EN_SYMBOL_DOREMI,
-        SEARCHSTRING_FR_SYMBOL_DOREMI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dragon_language', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DRAGON_LANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_DRAGON_LANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_DRAGON_LANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_DRAGON_LANGUAGE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_DRAGON_RUNES,
-        SEARCHSTRING_DE_SYMBOL_DRAGON_RUNES,
-        SEARCHSTRING_EN_SYMBOL_DRAGON_RUNES,
-        SEARCHSTRING_FR_SYMBOL_DRAGON_RUNES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'eastern_arabic_indian_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'egyptian_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_EGYPTIAN_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_EGYPTIAN_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_EGYPTIAN_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_EGYPTIAN_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_ELIA,
-        SEARCHSTRING_DE_ELIA,
-        SEARCHSTRING_EN_ELIA,
-        SEARCHSTRING_FR_ELIA
-      ]),
-      GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ENOCHIAN,
-        SEARCHSTRING_DE_SYMBOL_ENOCHIAN,
-        SEARCHSTRING_EN_SYMBOL_ENOCHIAN,
-        SEARCHSTRING_FR_SYMBOL_ENOCHIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_EURYTHMY,
-        SEARCHSTRING_DE_SYMBOL_EURYTHMY,
-        SEARCHSTRING_EN_SYMBOL_EURYTHMY,
-        SEARCHSTRING_FR_SYMBOL_EURYTHMY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FAKOO,
-        SEARCHSTRING_DE_SYMBOL_FAKOO,
-        SEARCHSTRING_EN_SYMBOL_FAKOO,
-        SEARCHSTRING_FR_SYMBOL_FAKOO
-      ]),
-      GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_FINGER,
-        SEARCHSTRING_DE_SYMBOL_FINGER,
-        SEARCHSTRING_EN_SYMBOL_FINGER,
-        SEARCHSTRING_FR_SYMBOL_FINGER
-      ]),
-      GCWSymbolTableTool(symbolKey: 'finger_numbers', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_FINGER_NUMBERS,
-        SEARCHSTRING_DE_SYMBOL_FINGER_NUMBERS,
-        SEARCHSTRING_EN_SYMBOL_FINGER_NUMBERS,
-        SEARCHSTRING_FR_SYMBOL_FINGER_NUMBERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'flags_german_kriegsmarine', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS_GERMAN_KRIEGSMARINE,
-        SEARCHSTRING_DE_SYMBOL_FLAGS_GERMAN_KRIEGSMARINE,
-        SEARCHSTRING_EN_SYMBOL_FLAGS_GERMAN_KRIEGSMARINE,
-        SEARCHSTRING_FR_SYMBOL_FLAGS_GERMAN_KRIEGSMARINE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS_NATO,
-        SEARCHSTRING_DE_SYMBOL_FLAGS_NATO,
-        SEARCHSTRING_EN_SYMBOL_FLAGS_NATO,
-        SEARCHSTRING_FR_SYMBOL_FLAGS_NATO
-      ]),
-      GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS_RN_HOWE,
-        SEARCHSTRING_DE_SYMBOL_FLAGS_RN_HOWE,
-        SEARCHSTRING_EN_SYMBOL_FLAGS_RN_HOWE,
-        SEARCHSTRING_FR_SYMBOL_FLAGS_RN_HOWE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'flags_rn_popham', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS_RN_POPHAM,
-        SEARCHSTRING_DE_SYMBOL_FLAGS_RN_POPHAM,
-        SEARCHSTRING_EN_SYMBOL_FLAGS_RN_POPHAM,
-        SEARCHSTRING_FR_SYMBOL_FLAGS_RN_POPHAM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'flags_rn_marryat', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS,
-        SEARCHSTRING_DE_SYMBOL_FLAGS,
-        SEARCHSTRING_EN_SYMBOL_FLAGS,
-        SEARCHSTRING_FR_SYMBOL_FLAGS,
-        SEARCHSTRING_COMMON_SYMBOL_FLAGS_RN_MARRYAT,
-        SEARCHSTRING_DE_SYMBOL_FLAGS_RN_MARRYAT,
-        SEARCHSTRING_EN_SYMBOL_FLAGS_RN_MARRYAT,
-        SEARCHSTRING_FR_SYMBOL_FLAGS_RN_MARRYAT
-      ]),
-      GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FONIC,
-        SEARCHSTRING_DE_SYMBOL_FONIC,
-        SEARCHSTRING_EN_SYMBOL_FONIC,
-        SEARCHSTRING_FR_SYMBOL_FONIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FOUR_TRIANGLES,
-        SEARCHSTRING_DE_SYMBOL_FOUR_TRIANGLES,
-        SEARCHSTRING_EN_SYMBOL_FOUR_TRIANGLES,
-        SEARCHSTRING_FR_SYMBOL_FOUR_TRIANGLES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'freemason', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FREEMASON,
-        SEARCHSTRING_DE_SYMBOL_FREEMASON,
-        SEARCHSTRING_EN_SYMBOL_FREEMASON,
-        SEARCHSTRING_FR_SYMBOL_FREEMASON
-      ]),
-      GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FREEMASON_V2,
-        SEARCHSTRING_DE_SYMBOL_FREEMASON_V2,
-        SEARCHSTRING_EN_SYMBOL_FREEMASON_V2,
-        SEARCHSTRING_FR_SYMBOL_FREEMASON_V2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FUTURAMA,
-        SEARCHSTRING_DE_SYMBOL_FUTURAMA,
-        SEARCHSTRING_EN_SYMBOL_FUTURAMA,
-        SEARCHSTRING_FR_SYMBOL_FUTURAMA
-      ]),
-      GCWSymbolTableTool(symbolKey: 'futurama_2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FUTURAMA_2,
-        SEARCHSTRING_DE_SYMBOL_FUTURAMA_2,
-        SEARCHSTRING_EN_SYMBOL_FUTURAMA_2,
-        SEARCHSTRING_FR_SYMBOL_FUTURAMA_2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_GALLIFREYAN,
-        SEARCHSTRING_DE_SYMBOL_GALLIFREYAN,
-        SEARCHSTRING_EN_SYMBOL_GALLIFREYAN,
-        SEARCHSTRING_FR_SYMBOL_GALLIFREYAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'gargish', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_GARGISH,
-        SEARCHSTRING_DE_SYMBOL_GARGISH,
-        SEARCHSTRING_EN_SYMBOL_GARGISH,
-        SEARCHSTRING_FR_SYMBOL_GARGISH
-      ]),
-      GCWSymbolTableTool(symbolKey: 'gc_attributes_ids', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
-        SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
-        SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
-        SEARCHSTRING_FR_SYMBOL_GC_ATTRIBUTES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
-        SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
-        SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
-        SEARCHSTRING_FR_SYMBOL_GC_ATTRIBUTES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_GLAGOLITIC,
-        SEARCHSTRING_DE_GLAGOLITIC,
-        SEARCHSTRING_EN_GLAGOLITIC,
-        SEARCHSTRING_FR_GLAGOLITIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_GNOMMISH,
-        SEARCHSTRING_DE_SYMBOL_GNOMMISH,
-        SEARCHSTRING_EN_SYMBOL_GNOMMISH,
-        SEARCHSTRING_FR_SYMBOL_GNOMMISH
-      ]),
-      GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: []),
-      GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_GREEK_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_GREEK_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_GREEK_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_GREEK_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HANJA,
-        SEARCHSTRING_DE_SYMBOL_HANJA,
-        SEARCHSTRING_EN_SYMBOL_HANJA,
-        SEARCHSTRING_FR_SYMBOL_HANJA,
-        SEARCHSTRING_COMMON_SYMBOL_SINO_KOREAN,
-        SEARCHSTRING_DE_SYMBOL_SINO_KOREAN,
-        SEARCHSTRING_EN_SYMBOL_SINO_KOREAN,
-        SEARCHSTRING_FR_SYMBOL_SINO_KOREAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hangul_korean', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HANGUL,
-        SEARCHSTRING_DE_SYMBOL_HANGUL,
-        SEARCHSTRING_EN_SYMBOL_HANGUL,
-        SEARCHSTRING_FR_SYMBOL_HANGUL
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hangul_sino_korean', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HANGUL,
-        SEARCHSTRING_DE_SYMBOL_HANGUL,
-        SEARCHSTRING_EN_SYMBOL_HANGUL,
-        SEARCHSTRING_FR_SYMBOL_HANGUL,
-        SEARCHSTRING_COMMON_SYMBOL_SINO_KOREAN,
-        SEARCHSTRING_DE_SYMBOL_SINO_KOREAN,
-        SEARCHSTRING_EN_SYMBOL_SINO_KOREAN,
-        SEARCHSTRING_FR_SYMBOL_SINO_KOREAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HAZARD,
-        SEARCHSTRING_DE_SYMBOL_HAZARD,
-        SEARCHSTRING_EN_SYMBOL_HAZARD,
-        SEARCHSTRING_FR_SYMBOL_HAZARD
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hebrew', symbolSearchStrings: [
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_COMMON_SYMBOL_HEBREW,
-        SEARCHSTRING_DE_SYMBOL_HEBREW,
-        SEARCHSTRING_EN_SYMBOL_HEBREW,
-        SEARCHSTRING_FR_SYMBOL_HEBREW
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hebrew_v2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HEBREW_V2,
-        SEARCHSTRING_DE_SYMBOL_HEBREW_V2,
-        SEARCHSTRING_EN_SYMBOL_HEBREW_V2,
-        SEARCHSTRING_FR_SYMBOL_HEBREW_V2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hexahue', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_HEXAHUE,
-        SEARCHSTRING_DE_SYMBOL_HEXAHUE,
-        SEARCHSTRING_EN_SYMBOL_HEXAHUE,
-        SEARCHSTRING_FR_SYMBOL_HEXAHUE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hieratic_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HIERATIC_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_HIERATIC_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_HIERATIC_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_HIERATIC_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hieroglyphs', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HIEROGLYPHS,
-        SEARCHSTRING_DE_SYMBOL_HIEROGLYPHS,
-        SEARCHSTRING_EN_SYMBOL_HIEROGLYPHS,
-        SEARCHSTRING_FR_SYMBOL_HIEROGLYPHS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_COMMON_SYMBOL_RUNES,
-        SEARCHSTRING_DE_SYMBOL_RUNES,
-        SEARCHSTRING_EN_SYMBOL_RUNES,
-        SEARCHSTRING_FR_SYMBOL_RUNES,
-        SEARCHSTRING_COMMON_SYMBOL_HOBBIT_RUNES,
-        SEARCHSTRING_DE_SYMBOL_HOBBIT_RUNES,
-        SEARCHSTRING_EN_SYMBOL_HOBBIT_RUNES,
-        SEARCHSTRING_FR_SYMBOL_HOBBIT_RUNES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HVD,
-        SEARCHSTRING_DE_SYMBOL_HVD,
-        SEARCHSTRING_EN_SYMBOL_HVD,
-        SEARCHSTRING_FR_SYMBOL_HVD
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_skyward_sword', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN,
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN_SKYWARDSWORD,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN_SKYWARDSWORD,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN_SKYWARDSWORD,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN_SKYWARDSWORD
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN,
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN_TWILIGHTPRINCESS_GCN,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN_TWILIGHTPRINCESS_GCN,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN_TWILIGHTPRINCESS_GCN,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN_TWILIGHTPRINCESS_GCN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_wii', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN,
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN_TWILIGHTPRINCESS_WII,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN_TWILIGHTPRINCESS_WII,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN_TWILIGHTPRINCESS_WII,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN_TWILIGHTPRINCESS_WII
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_wind_waker', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN,
-        SEARCHSTRING_COMMON_SYMBOL_HYLIAN_WINDWAKER,
-        SEARCHSTRING_DE_SYMBOL_HYLIAN_WINDWAKER,
-        SEARCHSTRING_EN_SYMBOL_HYLIAN_WINDWAKER,
-        SEARCHSTRING_FR_SYMBOL_HYLIAN_WINDWAKER
-      ]),
-      GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_HYMMNOS,
-        SEARCHSTRING_DE_SYMBOL_HYMMNOS,
-        SEARCHSTRING_EN_SYMBOL_HYMMNOS,
-        SEARCHSTRING_FR_SYMBOL_HYMMNOS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_ICECODES,
-        SEARCHSTRING_DE_ICECODES,
-        SEARCHSTRING_EN_ICECODES,
-        SEARCHSTRING_FR_ICECODES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'iching', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ICHING,
-        SEARCHSTRING_DE_SYMBOL_ICHING,
-        SEARCHSTRING_EN_SYMBOL_ICHING,
-        SEARCHSTRING_FR_SYMBOL_ICHING
-      ]),
-      GCWSymbolTableTool(symbolKey: 'illuminati_v1', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_DE_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_EN_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_FR_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_COMMON_SYMBOL_ILLUMINATI_V1,
-        SEARCHSTRING_DE_SYMBOL_ILLUMINATI_V1,
-        SEARCHSTRING_EN_SYMBOL_ILLUMINATI_V1,
-        SEARCHSTRING_FR_SYMBOL_ILLUMINATI_V1,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'illuminati_v2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_DE_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_EN_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_FR_SYMBOL_ILLUMINATI,
-        SEARCHSTRING_COMMON_SYMBOL_ILLUMINATI_V2,
-        SEARCHSTRING_DE_SYMBOL_ILLUMINATI_V2,
-        SEARCHSTRING_EN_SYMBOL_ILLUMINATI_V2,
-        SEARCHSTRING_FR_SYMBOL_ILLUMINATI_V2,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_INTERGALACTIC,
-        SEARCHSTRING_DE_SYMBOL_INTERGALACTIC,
-        SEARCHSTRING_EN_SYMBOL_INTERGALACTIC,
-        SEARCHSTRING_FR_SYMBOL_INTERGALACTIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_IOKHARIC,
-        SEARCHSTRING_DE_SYMBOL_IOKHARIC,
-        SEARCHSTRING_EN_SYMBOL_IOKHARIC,
-        SEARCHSTRING_FR_SYMBOL_IOKHARIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_JAPANESE_NUMERALS,
-        SEARCHSTRING_DE_JAPANESE_NUMERALS,
-        SEARCHSTRING_EN_JAPANESE_NUMERALS,
-        SEARCHSTRING_FR_JAPANESE_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'kabouter_abc', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_KABOUTER_ABC,
-        SEARCHSTRING_DE_SYMBOL_KABOUTER_ABC,
-        SEARCHSTRING_EN_SYMBOL_KABOUTER_ABC,
-        SEARCHSTRING_FR_SYMBOL_KABOUTER_ABC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'kabouter_abc_1947', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_KABOUTER_ABC_1947,
-        SEARCHSTRING_DE_SYMBOL_KABOUTER_ABC_1947,
-        SEARCHSTRING_EN_SYMBOL_KABOUTER_ABC_1947,
-        SEARCHSTRING_FR_SYMBOL_KABOUTER_ABC_1947
-      ]),
-      GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_SYMBOL_KARTRAK,
-        SEARCHSTRING_DE_SYMBOL_KARTRAK,
-        SEARCHSTRING_EN_SYMBOL_KARTRAK,
-        SEARCHSTRING_FR_SYMBOL_KARTRAK
-      ]),
-      GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_KHAROSHTHI,
-        SEARCHSTRING_DE_SYMBOL_KHAROSHTHI,
-        SEARCHSTRING_EN_SYMBOL_KHAROSHTHI,
-        SEARCHSTRING_FR_SYMBOL_KHAROSHTHI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'klingon', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_KLINGON,
-        SEARCHSTRING_DE_SYMBOL_KLINGON,
-        SEARCHSTRING_EN_SYMBOL_KLINGON,
-        SEARCHSTRING_FR_SYMBOL_KLINGON
-      ]),
-      GCWSymbolTableTool(symbolKey: 'klingon_klinzhai', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_KLINGON_KLINZHAI,
-        SEARCHSTRING_DE_SYMBOL_KLINGON_KLINZHAI,
-        SEARCHSTRING_EN_SYMBOL_KLINGON_KLINZHAI,
-        SEARCHSTRING_FR_SYMBOL_KLINGON_KLINZHAI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_KREMPEL,
-        SEARCHSTRING_DE_SYMBOL_KREMPEL,
-        SEARCHSTRING_EN_SYMBOL_KREMPEL,
-        SEARCHSTRING_FR_SYMBOL_KREMPEL
-      ]),
-      GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_KRYPTON,
-        SEARCHSTRING_DE_SYMBOL_KRYPTON,
-        SEARCHSTRING_EN_SYMBOL_KRYPTON,
-        SEARCHSTRING_FR_SYMBOL_KRYPTON
-      ]),
-      GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_LORM,
-        SEARCHSTRING_DE_SYMBOL_LORM,
-        SEARCHSTRING_EN_SYMBOL_LORM,
-        SEARCHSTRING_FR_SYMBOL_LORM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAGICODE,
-        SEARCHSTRING_DE_SYMBOL_MAGICODE,
-        SEARCHSTRING_EN_SYMBOL_MAGICODE,
-        SEARCHSTRING_FR_SYMBOL_MAGICODE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MANDALORIAN,
-        SEARCHSTRING_DE_SYMBOL_MANDALORIAN,
-        SEARCHSTRING_EN_SYMBOL_MANDALORIAN,
-        SEARCHSTRING_FR_SYMBOL_MANDALORIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'marain', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MARAIN,
-        SEARCHSTRING_DE_SYMBOL_MARAIN,
-        SEARCHSTRING_EN_SYMBOL_MARAIN,
-        SEARCHSTRING_FR_SYMBOL_MARAIN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'marain_v2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MARAIN_V2,
-        SEARCHSTRING_DE_SYMBOL_MARAIN_V2,
-        SEARCHSTRING_EN_SYMBOL_MARAIN_V2,
-        SEARCHSTRING_FR_SYMBOL_MARAIN_V2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MATORAN,
-        SEARCHSTRING_DE_SYMBOL_MATORAN,
-        SEARCHSTRING_EN_SYMBOL_MATORAN,
-        SEARCHSTRING_FR_SYMBOL_MATORAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maya_calendar_longcount', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
-        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
-        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
-        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_LONGCOUNT
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_codices', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_HAAB,
-        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_HAAB,
-        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_HAAB,
-        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_HAAB
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_inscripts', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_HAAB,
-        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_HAAB,
-        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_HAAB,
-        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_HAAB
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_codices', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_TZOLKIN,
-        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_TZOLKIN,
-        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_TZOLKIN,
-        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_TZOLKIN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_inscripts', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_TZOLKIN,
-        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_TZOLKIN,
-        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_TZOLKIN,
-        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_TZOLKIN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_MAYANUMBERS,
-        SEARCHSTRING_DE_MAYANUMBERS,
-        SEARCHSTRING_EN_MAYANUMBERS,
-        SEARCHSTRING_FR_MAYANUMBERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MAZE,
-        SEARCHSTRING_DE_SYMBOL_MAZE,
-        SEARCHSTRING_EN_SYMBOL_MAZE,
-        SEARCHSTRING_FR_SYMBOL_MAZE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MINIMOYS,
-        SEARCHSTRING_DE_SYMBOL_MINIMOYS,
-        SEARCHSTRING_EN_SYMBOL_MINIMOYS,
-        SEARCHSTRING_FR_SYMBOL_MINIMOYS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MOON,
-        SEARCHSTRING_DE_SYMBOL_MOON,
-        SEARCHSTRING_EN_SYMBOL_MOON,
-        SEARCHSTRING_FR_SYMBOL_MOON
-      ]),
-      GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MURRAY,
-        SEARCHSTRING_DE_SYMBOL_MURRAY,
-        SEARCHSTRING_EN_SYMBOL_MURRAY,
-        SEARCHSTRING_FR_SYMBOL_MURRAY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_CCITT,
-        SEARCHSTRING_DE_CCITT,
-        SEARCHSTRING_COMMON_CCITT,
-        SEARCHSTRING_FR_CCITT,
-        SEARCHSTRING_COMMON_CCITT2,
-        SEARCHSTRING_DE_CCITT2,
-        SEARCHSTRING_COMMON_CCITT2,
-        SEARCHSTRING_FR_CCITT2,
-        SEARCHSTRING_COMMON_SYMBOL_MURRAYBAUDOT,
-        SEARCHSTRING_DE_SYMBOL_MURRAYBAUDOT,
-        SEARCHSTRING_EN_SYMBOL_MURRAYBAUDOT,
-        SEARCHSTRING_FR_SYMBOL_MURRAYBAUDOT
-      ]),
-      GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_MUSICA,
-        SEARCHSTRING_DE_SYMBOL_MUSICA,
-        SEARCHSTRING_EN_SYMBOL_MUSICA,
-        SEARCHSTRING_FR_SYMBOL_MUSICA
-      ]),
-      GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NAZCAAN,
-        SEARCHSTRING_DE_SYMBOL_NAZCAAN,
-        SEARCHSTRING_EN_SYMBOL_NAZCAAN,
-        SEARCHSTRING_FR_SYMBOL_NAZCAAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'new_zealand_sign_language', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'niessen', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_FR_SYMBOL_SIGNLANGUAGE,
-        SEARCHSTRING_COMMON_SYMBOL_NIESSEN,
-        SEARCHSTRING_DE_SYMBOL_NIESSEN,
-        SEARCHSTRING_EN_SYMBOL_NIESSEN,
-        SEARCHSTRING_FR_SYMBOL_NIESSEN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NOTES_DOREMI,
-        SEARCHSTRING_DE_SYMBOL_NOTES_DOREMI,
-        SEARCHSTRING_EN_SYMBOL_NOTES_DOREMI,
-        SEARCHSTRING_FR_SYMBOL_NOTES_DOREMI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_ALTOCLEF,
-        SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_ALTOCLEF,
-        SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_ALTOCLEF,
-        SEARCHSTRING_FR_SYMBOL_NOTES_NAMES_ALTOCLEF
-      ]),
-      GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_BASSCLEF,
-        SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_BASSCLEF,
-        SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_BASSCLEF,
-        SEARCHSTRING_FR_SYMBOL_NOTES_NAMES_BASSCLEF
-      ]),
-      GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_TREBLECLEF,
-        SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_TREBLECLEF,
-        SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_TREBLECLEF,
-        SEARCHSTRING_FR_SYMBOL_NOTES_NAMES_TREBLECLEF
-      ]),
-      GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NOTES_NOTEVALUES,
-        SEARCHSTRING_DE_SYMBOL_NOTES_NOTEVALUES,
-        SEARCHSTRING_EN_SYMBOL_NOTES_NOTEVALUES,
-        SEARCHSTRING_FR_SYMBOL_NOTES_NOTEVALUES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NOTES_RESTVALUES,
-        SEARCHSTRING_DE_SYMBOL_NOTES_RESTVALUES,
-        SEARCHSTRING_EN_SYMBOL_NOTES_RESTVALUES,
-        SEARCHSTRING_FR_SYMBOL_NOTES_RESTVALUES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_NYCTOGRAPHY,
-        SEARCHSTRING_DE_SYMBOL_NYCTOGRAPHY,
-        SEARCHSTRING_EN_SYMBOL_NYCTOGRAPHY,
-        SEARCHSTRING_FR_SYMBOL_NYCTOGRAPHY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_OGHAM,
-        SEARCHSTRING_DE_SYMBOL_OGHAM,
-        SEARCHSTRING_EN_SYMBOL_OGHAM,
-        SEARCHSTRING_FR_SYMBOL_OGHAM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_DE_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_EN_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_FR_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_COMMON_SYMBOL_OPTICAL_FIBER_FOTAG,
-        SEARCHSTRING_DE_SYMBOL_OPTICAL_FIBER_FOTAG,
-        SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_FOTAG,
-        SEARCHSTRING_FR_SYMBOL_OPTICAL_FIBER_FOTAG
-      ]),
-      GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_DE_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_EN_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_FR_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_COMMON_SYMBOL_OPTICAL_FIBER_IEC60304,
-        SEARCHSTRING_DE_SYMBOL_OPTICAL_FIBER_IEC60304,
-        SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_IEC60304,
-        SEARCHSTRING_FR_SYMBOL_OPTICAL_FIBER_IEC60304
-      ]),
-      GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_DE_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_EN_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_FR_SYMBOL_OPTICALFIBER,
-        SEARCHSTRING_COMMON_OPTICAL_FIBER_SWISSCOM,
-        SEARCHSTRING_DE_OPTICAL_FIBER_SWISSCOM,
-        SEARCHSTRING_EN_OPTICAL_FIBER_SWISSCOM,
-        SEARCHSTRING_FR_OPTICAL_FIBER_SWISSCOM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_PHOENICIAN,
-        SEARCHSTRING_DE_SYMBOL_PHOENICIAN,
-        SEARCHSTRING_EN_SYMBOL_PHOENICIAN,
-        SEARCHSTRING_FR_SYMBOL_PHOENICIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_PIPELINE,
-        SEARCHSTRING_DE_SYMBOL_PIPELINE,
-        SEARCHSTRING_EN_SYMBOL_PIPELINE,
-        SEARCHSTRING_FR_SYMBOL_PIPELINE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'pipeline_din2403', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_COLOR,
-        SEARCHSTRING_DE_COLOR,
-        SEARCHSTRING_EN_COLOR,
-        SEARCHSTRING_FR_COLOR,
-        SEARCHSTRING_COMMON_SYMBOL_PIPELINE_DIN2403,
-        SEARCHSTRING_DE_SYMBOL_PIPELINE_DIN2403,
-        SEARCHSTRING_EN_SYMBOL_PIPELINE_DIN2403,
-        SEARCHSTRING_FR_SYMBOL_PIPELINE_DIN2403
-      ]),
-      GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_PIXEL,
-        SEARCHSTRING_DE_SYMBOL_PIXEL,
-        SEARCHSTRING_EN_SYMBOL_PIXEL,
-        SEARCHSTRING_FR_SYMBOL_PIXEL
-      ]),
-      GCWSymbolTableTool(symbolKey: 'planet', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_SYMBOL_PLANET,
-        SEARCHSTRING_DE_SYMBOL_PLANET,
-        SEARCHSTRING_EN_SYMBOL_PLANET,
-        SEARCHSTRING_FR_SYMBOL_PLANET
-      ]),
-      GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_PLANETS,
-        SEARCHSTRING_DE_SYMBOL_PLANETS,
-        SEARCHSTRING_EN_SYMBOL_PLANETS,
-        SEARCHSTRING_FR_SYMBOL_PLANETS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_POKEMON_UNOWN,
-        SEARCHSTRING_DE_SYMBOL_POKEMON_UNOWN,
-        SEARCHSTRING_EN_SYMBOL_POKEMON_UNOWN,
-        SEARCHSTRING_FR_SYMBOL_POKEMON_UNOWN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_SYMBOL_POSTCODE01247,
-        SEARCHSTRING_DE_SYMBOL_POSTCODE01247,
-        SEARCHSTRING_EN_SYMBOL_POSTCODE01247,
-        SEARCHSTRING_FR_SYMBOL_POSTCODE01247
-      ]),
-      GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_SYMBOL_POSTCODE8421,
-        SEARCHSTRING_DE_SYMBOL_POSTCODE8421,
-        SEARCHSTRING_EN_SYMBOL_POSTCODE8421,
-        SEARCHSTRING_FR_SYMBOL_POSTCODE8421
-      ]),
-      GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_SYMBOL_POSTNET,
-        SEARCHSTRING_DE_SYMBOL_POSTNET,
-        SEARCHSTRING_EN_SYMBOL_POSTNET,
-        SEARCHSTRING_FR_SYMBOL_POSTNET
-      ]),
-      GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_PUZZLE,
-        SEARCHSTRING_DE_SYMBOL_PUZZLE,
-        SEARCHSTRING_EN_SYMBOL_PUZZLE,
-        SEARCHSTRING_FR_SYMBOL_PUZZLE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_QUADOO,
-        SEARCHSTRING_DE_SYMBOL_QUADOO,
-        SEARCHSTRING_EN_SYMBOL_QUADOO,
-        SEARCHSTRING_FR_SYMBOL_QUADOO
-      ]),
-      GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_REALITY,
-        SEARCHSTRING_DE_SYMBOL_REALITY,
-        SEARCHSTRING_EN_SYMBOL_REALITY,
-        SEARCHSTRING_FR_SYMBOL_REALITY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'red_herring', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RED_HERRING,
-        SEARCHSTRING_DE_SYMBOL_RED_HERRING,
-        SEARCHSTRING_EN_SYMBOL_RED_HERRING,
-        SEARCHSTRING_FR_SYMBOL_RED_HERRING
-      ]),
-      GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_RESISTOR_COLORCODE,
-        SEARCHSTRING_DE_RESISTOR_COLORCODE,
-        SEARCHSTRING_EN_RESISTOR_COLORCODE,
-        SEARCHSTRING_FR_RESISTOR_COLORCODE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
-        SEARCHSTRING_DE_SYMBOL_RHESUS,
-        SEARCHSTRING_EN_SYMBOL_RHESUS,
-        SEARCHSTRING_FR_SYMBOL_RHESUS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
-        SEARCHSTRING_DE_SYMBOL_RHESUS,
-        SEARCHSTRING_EN_SYMBOL_RHESUS,
-        SEARCHSTRING_FR_SYMBOL_RHESUS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
-        SEARCHSTRING_DE_SYMBOL_RHESUS,
-        SEARCHSTRING_EN_SYMBOL_RHESUS,
-        SEARCHSTRING_FR_SYMBOL_RHESUS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
-        SEARCHSTRING_DE_SYMBOL_RHESUS,
-        SEARCHSTRING_EN_SYMBOL_RHESUS,
-        SEARCHSTRING_FR_SYMBOL_RHESUS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BARCODES,
-        SEARCHSTRING_DE_BARCODES,
-        SEARCHSTRING_EN_BARCODES,
-        SEARCHSTRING_FR_BARCODES,
-        SEARCHSTRING_COMMON_SYMBOL_RM4SCC,
-        SEARCHSTRING_DE_SYMBOL_RM4SCC,
-        SEARCHSTRING_EN_SYMBOL_RM4SCC,
-        SEARCHSTRING_FR_SYMBOL_RM4SCC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ROMULAN,
-        SEARCHSTRING_DE_SYMBOL_ROMULAN,
-        SEARCHSTRING_EN_SYMBOL_ROMULAN,
-        SEARCHSTRING_FR_SYMBOL_ROMULAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_FUTHARK,
-        SEARCHSTRING_COMMON_SYMBOL_RUNES,
-        SEARCHSTRING_DE_SYMBOL_RUNES,
-        SEARCHSTRING_EN_SYMBOL_RUNES,
-        SEARCHSTRING_FR_SYMBOL_RUNES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SANLUCA,
-        SEARCHSTRING_DE_SYMBOL_SANLUCA,
-        SEARCHSTRING_EN_SYMBOL_SANLUCA,
-        SEARCHSTRING_FR_SYMBOL_SANLUCA
-      ]),
-      GCWSymbolTableTool(symbolKey: 'sarati', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SARATI,
-        SEARCHSTRING_DE_SYMBOL_SARATI,
-        SEARCHSTRING_EN_SYMBOL_SARATI,
-        SEARCHSTRING_FR_SYMBOL_SARATI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'semaphore', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SEMAPHORE,
-        SEARCHSTRING_DE_SYMBOL_SEMAPHORE,
-        SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
-        SEARCHSTRING_FR_SYMBOL_SEMAPHORE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SHADOKSNUMBERS,
-        SEARCHSTRING_COMMON_SHADOKSNUMBERS,
-        SEARCHSTRING_COMMON_SHADOKSNUMBERS,
-        SEARCHSTRING_COMMON_SHADOKSNUMBERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: []),
-      GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SKULLZ,
-        SEARCHSTRING_DE_SYMBOL_SKULLZ,
-        SEARCHSTRING_EN_SYMBOL_SKULLZ,
-        SEARCHSTRING_FR_SYMBOL_SKULLZ
-      ]),
-      GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SLASH_AND_PIPE,
-        SEARCHSTRING_DE_SYMBOL_SLASH_AND_PIPE,
-        SEARCHSTRING_EN_SYMBOL_SLASH_AND_PIPE,
-        SEARCHSTRING_FR_SYMBOL_SLASH_AND_PIPE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SOLMISATION,
-        SEARCHSTRING_DE_SYMBOL_SOLMISATION,
-        SEARCHSTRING_EN_SYMBOL_SOLMISATION,
-        SEARCHSTRING_FR_SYMBOL_SOLMISATION
-      ]),
-      GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SPACE_INVADERS,
-        SEARCHSTRING_DE_SYMBOL_SPACE_INVADERS,
-        SEARCHSTRING_EN_SYMBOL_SPACE_INVADERS,
-        SEARCHSTRING_FR_SYMBOL_SPACE_INVADERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SPINTYPE,
-        SEARCHSTRING_DE_SYMBOL_SPINTYPE,
-        SEARCHSTRING_EN_SYMBOL_SPINTYPE,
-        SEARCHSTRING_FR_SYMBOL_SPINTYPE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_STIPPELCODE,
-        SEARCHSTRING_DE_SYMBOL_STIPPELCODE,
-        SEARCHSTRING_EN_SYMBOL_STIPPELCODE,
-        SEARCHSTRING_FR_SYMBOL_STIPPELCODE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'suetterlin', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SUETTERLIN,
-        SEARCHSTRING_DE_SYMBOL_SUETTERLIN,
-        SEARCHSTRING_EN_SYMBOL_SUETTERLIN,
-        SEARCHSTRING_FR_SYMBOL_SUETTERLIN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SUNUZ,
-        SEARCHSTRING_DE_SYMBOL_SUNUZ,
-        SEARCHSTRING_EN_SYMBOL_SUNUZ,
-        SEARCHSTRING_FR_SYMBOL_SUNUZ
-      ]),
-      GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_SURF,
-        SEARCHSTRING_DE_SYMBOL_SURF,
-        SEARCHSTRING_EN_SYMBOL_SURF,
-        SEARCHSTRING_FR_SYMBOL_SURF
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tae', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TAE,
-        SEARCHSTRING_DE_SYMBOL_TAE,
-        SEARCHSTRING_EN_SYMBOL_TAE,
-        SEARCHSTRING_FR_SYMBOL_TAE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TAMIL_NUMERALS,
-        SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS,
-        SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS,
-        SEARCHSTRING_FR_SYMBOL_TAMIL_NUMERALS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TEMPLERS,
-        SEARCHSTRING_DE_SYMBOL_TEMPLERS,
-        SEARCHSTRING_EN_SYMBOL_TEMPLERS,
-        SEARCHSTRING_FR_SYMBOL_TEMPLERS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tenctonese', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TENCTONESE,
-        SEARCHSTRING_DE_SYMBOL_TENCTONESE,
-        SEARCHSTRING_EN_SYMBOL_TENCTONESE,
-        SEARCHSTRING_FR_SYMBOL_TENCTONESE
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tengwar_beleriand', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_COMMON_SYMBOL_TENGWAR_BELERIAND,
-        SEARCHSTRING_DE_SYMBOL_TENGWAR_BELERIAND,
-        SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND,
-        SEARCHSTRING_FR_SYMBOL_TENGWAR_BELERIAND
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tengwar_classic', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_COMMON_SYMBOL_TENGWAR_CLASSIC,
-        SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC,
-        SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC,
-        SEARCHSTRING_FR_SYMBOL_TENGWAR_CLASSIC
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tengwar_general', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_DE_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_EN_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_FR_SYMBOL_LORDOFTHERINGS,
-        SEARCHSTRING_COMMON_SYMBOL_TENGWAR_GENERAL,
-        SEARCHSTRING_DE_SYMBOL_TENGWAR_GENERAL,
-        SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL,
-        SEARCHSTRING_FR_SYMBOL_TENGWAR_GENERAL
-      ]),
-      GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TERZI,
-        SEARCHSTRING_DE_SYMBOL_TERZI,
-        SEARCHSTRING_EN_SYMBOL_TERZI,
-        SEARCHSTRING_FR_SYMBOL_TERZI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_THEBAN,
-        SEARCHSTRING_DE_SYMBOL_THEBAN,
-        SEARCHSTRING_EN_SYMBOL_THEBAN,
-        SEARCHSTRING_FR_SYMBOL_THEBAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_THREE_SQUARES,
-        SEARCHSTRING_DE_SYMBOL_THREE_SQUARES,
-        SEARCHSTRING_EN_SYMBOL_THREE_SQUARES,
-        SEARCHSTRING_FR_SYMBOL_THREE_SQUARES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TINES,
-        SEARCHSTRING_DE_SYMBOL_TINES,
-        SEARCHSTRING_EN_SYMBOL_TINES,
-        SEARCHSTRING_FR_SYMBOL_TINES
-      ]),
-      GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_TOMTOM,
-        SEARCHSTRING_DE_TOMTOM,
-        SEARCHSTRING_EN_TOMTOM,
-        SEARCHSTRING_FR_TOMTOM
-      ]),
-      GCWSymbolTableTool(symbolKey: 'trafficsigns_germany', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_TRAFFICSIGNS_GERMANY,
-        SEARCHSTRING_DE_SYMBOL_TRAFFICSIGNS_GERMANY,
-        SEARCHSTRING_EN_SYMBOL_TRAFFICSIGNS_GERMANY,
-        SEARCHSTRING_FR_SYMBOL_TRAFFICSIGNS_GERMANY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'ulog', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ULOG,
-        SEARCHSTRING_DE_SYMBOL_ULOG,
-        SEARCHSTRING_EN_SYMBOL_ULOG,
-        SEARCHSTRING_FR_SYMBOL_ULOG
-      ]),
-      GCWSymbolTableTool(symbolKey: 'unitology', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_UNITOLOGY,
-        SEARCHSTRING_DE_SYMBOL_UNITOLOGY,
-        SEARCHSTRING_EN_SYMBOL_UNITOLOGY,
-        SEARCHSTRING_FR_SYMBOL_UNITOLOGY
-      ]),
-      GCWSymbolTableTool(symbolKey: 'utopian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_UTOPIAN,
-        SEARCHSTRING_DE_SYMBOL_UTOPIAN,
-        SEARCHSTRING_EN_SYMBOL_UTOPIAN,
-        SEARCHSTRING_FR_SYMBOL_UTOPIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'visitor_1984', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_VISITOR_1984,
-        SEARCHSTRING_DE_SYMBOL_VISITOR_1984,
-        SEARCHSTRING_EN_SYMBOL_VISITOR_1984,
-        SEARCHSTRING_FR_SYMBOL_VISITOR_1984
-      ]),
-      GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_VISITOR_2009,
-        SEARCHSTRING_DE_SYMBOL_VISITOR_2009,
-        SEARCHSTRING_EN_SYMBOL_VISITOR_2009,
-        SEARCHSTRING_FR_SYMBOL_VISITOR_2009
-      ]),
-      GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_VULCANIAN,
-        SEARCHSTRING_DE_SYMBOL_VULCANIAN,
-        SEARCHSTRING_EN_SYMBOL_VULCANIAN,
-        SEARCHSTRING_FR_SYMBOL_VULCANIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_WAKANDAN,
-        SEARCHSTRING_DE_SYMBOL_WAKANDAN,
-        SEARCHSTRING_EN_SYMBOL_WAKANDAN,
-        SEARCHSTRING_FR_SYMBOL_WAKANDAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_WEBDINGS,
-        SEARCHSTRING_DE_SYMBOL_WEBDINGS,
-        SEARCHSTRING_EN_SYMBOL_WEBDINGS,
-        SEARCHSTRING_FR_SYMBOL_WEBDINGS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BEAUFORT,
-        SEARCHSTRING_DE_BEAUFORT,
-        SEARCHSTRING_EN_BEAUFORT,
-        SEARCHSTRING_FR_BEAUFORT,
-        SEARCHSTRING_COMMON_SYMBOL_WINDFORCE_BEAUFORT,
-        SEARCHSTRING_DE_SYMBOL_WINDFORCE_BEAUFORT,
-        SEARCHSTRING_EN_SYMBOL_WINDFORCE_BEAUFORT,
-        SEARCHSTRING_FR_SYMBOL_WINDFORCE_BEAUFORT
-      ]),
-      GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_BEAUFORT,
-        SEARCHSTRING_DE_BEAUFORT,
-        SEARCHSTRING_EN_BEAUFORT,
-        SEARCHSTRING_FR_BEAUFORT,
-        SEARCHSTRING_COMMON_SYMBOL_WINDFORCE_KNOTS,
-        SEARCHSTRING_DE_SYMBOL_WINDFORCE_KNOTS,
-        SEARCHSTRING_EN_SYMBOL_WINDFORCE_KNOTS,
-        SEARCHSTRING_FR_SYMBOL_WINDFORCE_KNOTS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_WINDOW,
-        SEARCHSTRING_DE_WINDOW,
-        SEARCHSTRING_EN_WINDOW,
-        SEARCHSTRING_FR_WINDOW
-      ]),
-      GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_WINGDINGS,
-        SEARCHSTRING_DE_SYMBOL_WINGDINGS,
-        SEARCHSTRING_EN_SYMBOL_WINGDINGS,
-        SEARCHSTRING_FR_SYMBOL_WINGDINGS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_WINGDINGS2,
-        SEARCHSTRING_DE_SYMBOL_WINGDINGS2,
-        SEARCHSTRING_EN_SYMBOL_WINGDINGS2,
-        SEARCHSTRING_FR_SYMBOL_WINGDINGS2
-      ]),
-      GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_WINGDINGS3,
-        SEARCHSTRING_DE_SYMBOL_WINGDINGS3,
-        SEARCHSTRING_EN_SYMBOL_WINGDINGS3,
-        SEARCHSTRING_FR_SYMBOL_WINGDINGS3
-      ]),
-      GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_YAN_KORYANI,
-        SEARCHSTRING_DE_SYMBOL_YAN_KORYANI,
-        SEARCHSTRING_EN_SYMBOL_YAN_KORYANI,
-        SEARCHSTRING_FR_SYMBOL_YAN_KORYANI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_YINYANG,
-        SEARCHSTRING_DE_SYMBOL_YINYANG,
-        SEARCHSTRING_EN_SYMBOL_YINYANG,
-        SEARCHSTRING_FR_SYMBOL_YINYANG
-      ]),
-      GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZAMONIAN,
-        SEARCHSTRING_DE_SYMBOL_ZAMONIAN,
-        SEARCHSTRING_EN_SYMBOL_ZAMONIAN,
-        SEARCHSTRING_FR_SYMBOL_ZAMONIAN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZENTRADI,
-        SEARCHSTRING_DE_SYMBOL_ZENTRADI,
-        SEARCHSTRING_EN_SYMBOL_ZENTRADI,
-        SEARCHSTRING_FR_SYMBOL_ZENTRADI
-      ]),
-      GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS
-      ]),
-      GCWSymbolTableTool(symbolKey: 'zodiac_signs_latin', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS,
-        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS_LATIN,
-        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS_LATIN,
-        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS_LATIN,
-        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS_LATIN
-      ]),
-      GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z340,
-        SEARCHSTRING_DE_SYMBOL_ZODIAC_Z340,
-        SEARCHSTRING_EN_SYMBOL_ZODIAC_Z340,
-        SEARCHSTRING_FR_SYMBOL_ZODIAC_Z340
-      ]),
-      GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z408,
-        SEARCHSTRING_DE_SYMBOL_ZODIAC_Z408,
-        SEARCHSTRING_EN_SYMBOL_ZODIAC_Z408,
-        SEARCHSTRING_FR_SYMBOL_ZODIAC_Z408
-      ]),
-
-      // TomTomSelection *********************************************************************************************
-      GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TOMTOM,
-        SEARCHSTRING_DE_TOMTOM,
-        SEARCHSTRING_EN_TOMTOM,
-        SEARCHSTRING_FR_TOMTOM
-      ]),
-
-      //VanitySelection **********************************************************************************************
-      GCWTool(tool: VanitySingletap(), i18nPrefix: 'vanity_singletap', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VANITY,
-        SEARCHSTRING_DE_VANITY,
-        SEARCHSTRING_EN_VANITY,
-        SEARCHSTRING_FR_VANITY,
-        SEARCHSTRING_COMMON_VANITYSINGLETAP,
-        SEARCHSTRING_DE_VANITYSINGLETAP,
-        SEARCHSTRING_EN_VANITYSINGLETAP,
-        SEARCHSTRING_FR_VANITYSINGLETAP
-      ]),
-      GCWTool(tool: VanityMultitap(), i18nPrefix: 'vanity_multitap', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VANITY,
-        SEARCHSTRING_DE_VANITY,
-        SEARCHSTRING_EN_VANITY,
-        SEARCHSTRING_FR_VANITY,
-        SEARCHSTRING_COMMON_VANITYMULTITAP,
-        SEARCHSTRING_DE_VANITYMULTITAP,
-        SEARCHSTRING_EN_VANITYMULTITAP,
-        SEARCHSTRING_FR_VANITYMULTITAP
-      ]),
-      GCWTool(tool: VanityWordsList(), i18nPrefix: 'vanity_words_list', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VANITY,
-        SEARCHSTRING_DE_VANITY,
-        SEARCHSTRING_EN_VANITY,
-        SEARCHSTRING_FR_VANITY,
-        SEARCHSTRING_COMMON_VANITYWORDSLIST,
-        SEARCHSTRING_DE_VANITYWORDSLIST,
-        SEARCHSTRING_EN_VANITYWORDSLIST,
-        SEARCHSTRING_FR_VANITYWORDSLIST
-      ]),
-      GCWTool(tool: VanityWordsTextSearch(), i18nPrefix: 'vanity_words_search', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VANITY,
-        SEARCHSTRING_DE_VANITY,
-        SEARCHSTRING_EN_VANITY,
-        SEARCHSTRING_FR_VANITY,
-        SEARCHSTRING_COMMON_VANITYTEXTSEARCH,
-        SEARCHSTRING_DE_VANITYTEXTSEARCH,
-        SEARCHSTRING_EN_VANITYTEXTSEARCH,
-        SEARCHSTRING_FR_VANITYTEXTSEARCH
-      ]),
-
-      //VigenereSelection *******************************************************************************************
-      GCWTool(tool: VigenereBreaker(), i18nPrefix: 'vigenerebreaker', categories: [
-        ToolCategory.GENERAL_CODEBREAKERS
-      ], helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CODEBREAKER,
-        SEARCHSTRING_DE_CODEBREAKER,
-        SEARCHSTRING_EN_CODEBREAKER,
-        SEARCHSTRING_FR_CODEBREAKER,
-        SEARCHSTRING_COMMON_VIGENEREBREAKER,
-        SEARCHSTRING_DE_VIGENEREBREAKER,
-        SEARCHSTRING_EN_VIGENEREBREAKER,
-        SEARCHSTRING_FR_VIGENEREBREAKER,
-        SEARCHSTRING_COMMON_VIGENERE,
-        SEARCHSTRING_DE_VIGENERE,
-        SEARCHSTRING_EN_VIGENERE,
-        SEARCHSTRING_FR_VIGENERE,
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-      ]),
-      GCWTool(tool: Vigenere(), i18nPrefix: 'vigenere', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VIGENERE,
-        SEARCHSTRING_DE_VIGENERE,
-        SEARCHSTRING_EN_VIGENERE,
-        SEARCHSTRING_FR_VIGENERE,
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-      ]),
-      GCWTool(tool: Gronsfeld(), i18nPrefix: 'gronsfeld', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VIGENERE,
-        SEARCHSTRING_DE_VIGENERE,
-        SEARCHSTRING_EN_VIGENERE,
-        SEARCHSTRING_FR_VIGENERE,
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_GRONSFELD,
-        SEARCHSTRING_DE_GRONSFELD,
-        SEARCHSTRING_EN_GRONSFELD,
-        SEARCHSTRING_FR_GRONSFELD
-      ]),
-      GCWTool(tool: Trithemius(), i18nPrefix: 'trithemius', helpLocales: [
-        'de',
-        'en',
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_VIGENERE,
-        SEARCHSTRING_DE_VIGENERE,
-        SEARCHSTRING_EN_VIGENERE,
-        SEARCHSTRING_FR_VIGENERE,
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_TRITHEMIUS,
-        SEARCHSTRING_DE_TRITHEMIUS,
-        SEARCHSTRING_EN_TRITHEMIUS,
-        SEARCHSTRING_FR_TRITHEMIUS
-      ]),
-    ].map((toolWidget) {
-      toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
-      toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);
-
-      try {
-        toolWidget.description = i18n(context, toolWidget.i18nPrefix + '_description');
-      } catch (e) {}
-
-      try {
-        toolWidget.example = i18n(context, toolWidget.i18nPrefix + '_example');
-      } catch (e) {}
-
-      return toolWidget;
-    }).toList();
-
-    buildIndexedStrings();
-  }
-
-  // Build indexed strings for each tool : concatenated lower case no accent
-  static void buildIndexedStrings() {
-    indexedTools = toolList.where((tool) {
-      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
-      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
-      tool.indexedStrings = _removeDuplicates(_indexedStrings);
-      return true;
-    }).toList();
-  }
+        searchKeys: [
+          'esotericprogramminglanguage',
+        ]),
+    GCWTool(tool: ExifReader(), i18nPrefix: 'exif', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'exif',
+    ]),
+    GCWTool(
+      tool: FormulaSolverFormulaGroups(),
+      i18nPrefix: 'formulasolver',
+      searchKeys: [
+        'formulasolver',
+      ],
+    ),
+    GCWTool(tool: Fox(), i18nPrefix: 'fox', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'fox',
+    ]),
+    GCWTool(tool: Gade(), i18nPrefix: 'gade', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'gade',
+    ]),
+    GCWTool(
+      tool: GamesSelection(),
+      i18nPrefix: 'games_selection',
+      searchKeys: [
+        'games',
+      ],
+    ),
+    GCWTool(tool: GaussWeberTelegraph(), i18nPrefix: 'gausswebertelegraph', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'telegraph',
+      'gausswebertelegraph',
+    ]),
+    GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'gccode',
+    ]),
+    GCWTool(tool: GeneralCodebreakersSelection(), i18nPrefix: 'generalcodebreakers_selection', searchKeys: [
+      'codebreaker',
+    ]),
+    GCWTool(tool: Gray(), i18nPrefix: 'gray', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'binary',
+      'gray',
+    ]),
+    GCWTool(
+        tool: HashSelection(),
+        i18nPrefix: 'hashes_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: Hexadecimal(), i18nPrefix: 'hexadecimal', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'hexadecimal',
+    ]),
+    GCWTool(tool: HexString2File(), i18nPrefix: 'hexstring2file', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'hexadecimal',
+      'hexstring2file',
+    ]),
+    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'hexadecimal',
+      'hexviewer',
+    ]),
+    GCWTool(tool: HiddenData(), i18nPrefix: 'hiddendata', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'hiddendata',
+    ]),
+    GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'homophone',
+    ]),
+    GCWTool(tool: Houdini(), i18nPrefix: 'houdini', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'houdini',
+    ]),
+    GCWTool(
+      tool: IATAICAOSearch(),
+      i18nPrefix: 'iataicao',
+      categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      searchKeys: [
+        'iataicao',
+      ],
+    ),
+
+    GCWTool(
+      tool: IceCodesSelection(),
+      i18nPrefix: 'icecodes_selection',
+      categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+      searchKeys: [],
+    ),
+    GCWTool(tool: ImagesAndFilesSelection(), i18nPrefix: 'imagesandfiles_selection', isBeta: true, searchKeys: [
+      'images',
+      'imagesandfilesselection',
+    ]),
+    GCWTool(
+        tool: ImageColorCorrections(),
+        autoScroll: false,
+        categories: [ToolCategory.IMAGES_AND_FILES],
+        i18nPrefix: 'image_colorcorrections',
+        isBeta: true,
+        searchKeys: [
+          'images',
+          'color',
+          'image_colorcorrections',
+        ]),
+    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'stegano',
+    ]),
+    GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'rotation',
+      'kamasutra',
+    ]),
+    GCWTool(tool: Kenny(), i18nPrefix: 'kenny', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'kenny',
+    ]),
+    GCWTool(tool: KeyboardLayout(), i18nPrefix: 'keyboard_layout', searchKeys: [
+      'keyboard',
+    ]),
+    GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: [
+      'keyboard',
+    ]),
+    GCWTool(
+        tool: KeyboardSelection(),
+        i18nPrefix: 'keyboard_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(
+        tool: LanguageGamesSelection(),
+        i18nPrefix: 'languagegames_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(
+        tool: MayaCalendarSelection(),
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        i18nPrefix: 'mayacalendar_selection',
+        searchKeys: []),
+    GCWTool(
+        tool: MayaNumbersSelection(),
+        i18nPrefix: 'mayanumbers_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: MexicanArmyCipherWheel(), i18nPrefix: 'mexicanarmycipherwheel', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'cipherwheel',
+      'mexicanarmycipherwheel',
+    ]),
+    GCWTool(tool: Morse(), i18nPrefix: 'morse', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'morse',
+    ]),
+    GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', categories: [
+      ToolCategory.GENERAL_CODEBREAKERS
+    ], searchKeys: [
+      'multidecoder',
+    ]),
+    GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'navajo',
+    ]),
+    GCWTool(
+        tool: NumberSequenceSelection(),
+        i18nPrefix: 'numbersequence',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(tool: NumeralBases(), i18nPrefix: 'numeralbases', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'binary',
+      'numeralbases',
+    ]),
+    GCWTool(
+        tool: NumeralWordsSelection(),
+        i18nPrefix: 'numeralwords_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: OneTimePad(), i18nPrefix: 'onetimepad', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'onetimepad',
+    ]),
+    GCWTool(tool: PeriodicTableSelection(), i18nPrefix: 'periodictable_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'periodictable',
+    ]),
+    GCWTool(tool: PhiSelection(), i18nPrefix: 'phi_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'piano',
+    ]),
+    GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: Playfair(), i18nPrefix: 'playfair', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'playfair',
+    ]),
+    GCWTool(tool: Polybios(), i18nPrefix: 'polybios', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'polybios',
+    ]),
+    GCWTool(
+        tool: PrimesSelection(),
+        i18nPrefix: 'primes_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(tool: Projectiles(), i18nPrefix: 'projectiles', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'projectiles',
+    ]),
+    GCWTool(tool: QrCode(), i18nPrefix: 'qr_code', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'qrcode',
+    ]),
+    GCWTool(tool: QuadraticEquation(), i18nPrefix: 'quadratic_equation', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'quadraticequation',
+    ]),
+    GCWTool(tool: RailFence(), i18nPrefix: 'railfence', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'railfence',
+    ]),
+    GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'color',
+      'ralcolorcodes',
+    ]),
+    GCWTool(tool: RC4(), i18nPrefix: 'rc4', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'rc4',
+    ]),
+    GCWTool(tool: Recycling(), i18nPrefix: 'recycling', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'recycling',
+    ]),
+    GCWTool(
+        tool: ResistorSelection(),
+        i18nPrefix: 'resistor_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(tool: Reverse(), i18nPrefix: 'reverse', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'reverse',
+    ]),
+    GCWTool(
+        tool: RomanNumbersSelection(),
+        i18nPrefix: 'romannumbers',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: RotationSelection(), i18nPrefix: 'rotation_selection', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'rotation',
+    ]),
+    GCWTool(tool: RSASelection(), i18nPrefix: 'rsa_selection', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'primes',
+    ]),
+    GCWTool(tool: SchillingCannstattTelegraph(), i18nPrefix: 'schillingcanstatt', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'telegraph',
+      'schillingcanstatt',
+    ]),
+    GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', searchKeys: [
+      'scienceandtechnologyselection',
+    ]),
+    GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'games',
+      'games_scrabble',
+    ]),
+    GCWTool(
+        tool: SegmentDisplaySelection(),
+        i18nPrefix: 'segmentdisplay_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(
+        tool: ShadoksSelection(),
+        i18nPrefix: 'shadoks_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: Skytale(), i18nPrefix: 'skytale', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'skytale',
+    ]),
+    GCWTool(tool: Solitaire(), i18nPrefix: 'solitaire', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'solitaire',
+    ]),
+    GCWTool(tool: StraddlingCheckerboard(), i18nPrefix: 'straddlingcheckerboard', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'straddlingcheckerboard',
+    ]),
+    GCWTool(tool: Substitution(), i18nPrefix: 'substitution', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'substitution',
+    ]),
+    GCWTool(tool: SubstitutionBreaker(), i18nPrefix: 'substitutionbreaker', categories: [
+      ToolCategory.GENERAL_CODEBREAKERS
+    ], searchKeys: [
+      'codebreaker',
+      'substitutionbreaker',
+    ]),
+    GCWTool(tool: SudokuSolver(), i18nPrefix: 'sudokusolver', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'games',
+      'games_sudokusolver',
+    ]),
+    GCWTool(
+      tool: SymbolTableSelection(),
+      buttonList: [
+        GCWToolActionButtonsEntry(
+            showDialog: true,
+            url: symboltablesDownloadLink(context),
+            title: 'symboltables_selection_download_dialog_title',
+            text: 'symboltables_selection_download_dialog_text',
+            icon: Icons.file_download),
+      ],
+      i18nPrefix: 'symboltables_selection',
+      searchKeys: [],
+    ),
+    GCWTool(tool: TapCode(), i18nPrefix: 'tapcode', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'tapcode',
+    ]),
+    GCWTool(tool: Tapir(), i18nPrefix: 'tapir', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'tapir',
+    ]),
+    GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'trifid',
+    ]),
+    GCWTool(
+        tool: TomTomSelection(),
+        i18nPrefix: 'tomtom_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: UnitConverter(), i18nPrefix: 'unitconverter', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'unitconverter',
+    ]),
+    GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'wasd',
+    ]),
+    GCWTool(
+        tool: VanitySelection(),
+        i18nPrefix: 'vanity_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
+    GCWTool(
+        tool: VigenereSelection(),
+        i18nPrefix: 'vigenere_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: VisualCryptography(), i18nPrefix: 'visual_cryptography', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES,
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'visualcryptography',
+    ]),
+    GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'ccitt2',
+      'z22',
+    ]),
+    GCWTool(tool: ZamonianNumbers(), i18nPrefix: 'zamoniannumbers', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'symbol_zamonian',
+    ]),
+
+    //ApparentTemperatureSelection  ********************************************************************************************
+    GCWTool(tool: HeatIndex(), i18nPrefix: 'heatindex', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_heatindex',
+    ]),
+    GCWTool(tool: Humidex(), i18nPrefix: 'humidex', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_humidex',
+    ]),
+    GCWTool(tool: SummerSimmerIndex(), i18nPrefix: 'summersimmerindex', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_summersimmerindex',
+    ]),
+    GCWTool(tool: Windchill(), i18nPrefix: 'windchill', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_windchill',
+    ]),
+    GCWTool(tool: Zodiac(), i18nPrefix: 'zodiac', searchKeys: [
+      'symbol_alchemy',
+      'symbol_planets',
+      'symbol_zodiacsigns',
+      'symbol_zodiacsigns_latin',
+    ]),
+
+    //AstronomySelection  ********************************************************************************************
+    GCWTool(tool: SunRiseSet(), i18nPrefix: 'astronomy_sunriseset', searchKeys: [
+      'astronomy',
+      'astronomy_riseset',
+      'astronomy_sun',
+      'astronomy_sunriseset',
+    ]),
+    GCWTool(tool: SunPosition(), i18nPrefix: 'astronomy_sunposition', searchKeys: [
+      'astronomy',
+      'astronomy_position',
+      'astronomy_sun',
+    ]),
+    GCWTool(tool: MoonRiseSet(), i18nPrefix: 'astronomy_moonriseset', searchKeys: [
+      'astronomy',
+      'astronomy_riseset',
+      'astronomy_moon',
+    ]),
+    GCWTool(tool: MoonPosition(), i18nPrefix: 'astronomy_moonposition', searchKeys: [
+      'astronomy',
+      'astronomy_position',
+      'astronomy_moon',
+      'astronomy_moonposition',
+    ]),
+    GCWTool(tool: EasterSelection(), i18nPrefix: 'astronomy_easter_selection', searchKeys: [
+      'easter_date',
+    ]),
+    GCWTool(tool: Seasons(), i18nPrefix: 'astronomy_seasons', searchKeys: [
+      'astronomy',
+      'astronomy_seasons',
+    ]),
+    GCWTool(tool: ShadowLength(), i18nPrefix: 'shadowlength', searchKeys: [
+      'astronomy',
+      'astronomy_shadow_length',
+    ]),
+
+    //Babylon Numbers Selection **************************************************************************************
+    GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchKeys: [
+      'babylonian_numerals',
+    ]),
+
+    //BaseSelection **************************************************************************************************
+    GCWTool(tool: Base16(), i18nPrefix: 'base_base16', searchKeys: [
+      'base',
+      'base16',
+    ]),
+    GCWTool(tool: Base32(), i18nPrefix: 'base_base32', searchKeys: [
+      'base',
+      'base32',
+    ]),
+    GCWTool(tool: Base64(), i18nPrefix: 'base_base64', searchKeys: [
+      'base',
+      'base64',
+    ]),
+    GCWTool(tool: Base85(), i18nPrefix: 'base_base85', searchKeys: [
+      'base',
+      'base85',
+    ]),
+
+    //BCD selection **************************************************************************************************
+    GCWTool(tool: BCDOriginal(), i18nPrefix: 'bcd_original', searchKeys: [
+      'bcd',
+      'bcdoriginal',
+    ]),
+    GCWTool(tool: BCDAiken(), i18nPrefix: 'bcd_aiken', searchKeys: [
+      'bcd',
+      'bcdaiken',
+    ]),
+    GCWTool(tool: BCDGlixon(), i18nPrefix: 'bcd_glixon', searchKeys: [
+      'bcd',
+      'bcdglixon',
+    ]),
+    GCWTool(tool: BCDGray(), i18nPrefix: 'bcd_gray', searchKeys: [
+      'bcd',
+      'bcdgray',
+    ]),
+    GCWTool(tool: BCDLibawCraig(), i18nPrefix: 'bcd_libawcraig', searchKeys: [
+      'bcd',
+      'bcdlibawcraig',
+    ]),
+    GCWTool(tool: BCDOBrien(), i18nPrefix: 'bcd_obrien', searchKeys: [
+      'bcd',
+      'bcdobrien',
+    ]),
+    GCWTool(tool: BCDPetherick(), i18nPrefix: 'bcd_petherick', searchKeys: [
+      'bcd',
+      'bcdpetherick',
+    ]),
+    GCWTool(tool: BCDStibitz(), i18nPrefix: 'bcd_stibitz', searchKeys: [
+      'bcd',
+      'bcdstibitz',
+    ]),
+    GCWTool(tool: BCDTompkins(), i18nPrefix: 'bcd_tompkins', searchKeys: [
+      'bcd',
+      'bcdtompkins',
+    ]),
+    GCWTool(tool: BCDHamming(), i18nPrefix: 'bcd_hamming', searchKeys: [
+      'bcd',
+      'bcdhamming',
+    ]),
+    GCWTool(tool: BCDBiquinary(), i18nPrefix: 'bcd_biquinary', searchKeys: [
+      'bcd',
+      'bcd2of5',
+      'bcdbiquinary',
+    ]),
+    GCWTool(tool: BCD2of5Planet(), i18nPrefix: 'bcd_2of5planet', searchKeys: [
+      'bcd',
+      'bcd2of5',
+      'bcd2of5planet',
+    ]),
+    GCWTool(tool: BCD2of5Postnet(), i18nPrefix: 'bcd_2of5postnet', searchKeys: [
+      'bcd',
+      'bcd2of5',
+      'bcd2of5postnet',
+    ]),
+    GCWTool(tool: BCD2of5(), i18nPrefix: 'bcd_2of5', searchKeys: [
+      'bcd',
+      'bcd2of5',
+    ]),
+    GCWTool(tool: BCD1of10(), i18nPrefix: 'bcd_1of10', searchKeys: [
+      'bcd',
+      'bcd1of10',
+    ]),
+    GCWTool(tool: BCDGrayExcess(), i18nPrefix: 'bcd_grayexcess', searchKeys: [
+      'bcd',
+      'bcdgrayexcess',
+    ]),
+
+    // Beaufort Selection *******************************************************************************************
+    GCWTool(tool: Beaufort(), i18nPrefix: 'beaufort', searchKeys: [
+      'beaufort',
+    ]),
+
+    //Braille Selection ****************************************************************
+    GCWTool(tool: Braille(), i18nPrefix: 'braille', searchKeys: [
+      'braille',
+    ]),
+    GCWTool(tool: BrailleDotNumbers(), i18nPrefix: 'brailledotnumbers', searchKeys: [
+      'braille',
+    ]),
+
+    //CCITT*Selection **********************************************************************************************
+    GCWTool(tool: CCITT1(), i18nPrefix: 'ccitt1', searchKeys: ['ccitt1']),
+    GCWTool(tool: CCITT2(), i18nPrefix: 'ccitt2', searchKeys: ['ccitt2']),
+
+    //Cistercian Selection *****************************************************************************************
+    GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', searchKeys: [
+      'cistercian',
+    ]),
+
+    //CombinatoricsSelection ***************************************************************************************
+    GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', searchKeys: [
+      'combinatorics',
+      'combinatorics_combination',
+    ]),
+    GCWTool(tool: Permutation(), i18nPrefix: 'combinatorics_permutation', searchKeys: [
+      'combinatorics',
+      'combinatorics_permutation',
+    ]),
+    GCWTool(tool: CombinationPermutation(), i18nPrefix: 'combinatorics_combinationpermutation', searchKeys: [
+      'combinatorics',
+      'combinatorics_combination',
+      'combinatorics_permutation',
+    ]),
+
+    //CoordsSelection **********************************************************************************************
+    GCWTool(
+        tool: WaypointProjection(),
+        i18nPrefix: 'coords_waypointprojection',
+        iconPath: 'assets/icons/coords/icon_waypoint_projection.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_compassrose',
+          'coordinates_waypointprojection',
+        ]),
+    GCWTool(
+        tool: DistanceBearing(),
+        i18nPrefix: 'coords_distancebearing',
+        iconPath: 'assets/icons/coords/icon_distance_and_bearing.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_distancebearing',
+        ]),
+    GCWTool(
+        tool: FormatConverter(),
+        i18nPrefix: 'coords_formatconverter',
+        iconPath: 'assets/icons/coords/icon_format_converter.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_formatconverter',
+        ]),
+    GCWTool(
+        tool: MapView(),
+        autoScroll: false,
+        suppressToolMargin: true,
+        i18nPrefix: 'coords_openmap',
+        iconPath: 'assets/icons/coords/icon_free_map.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_mapview',
+        ]),
+    GCWTool(
+        tool: VariableCoordinateFormulas(),
+        i18nPrefix: 'coords_variablecoordinate',
+        iconPath: 'assets/icons/coords/icon_variable_coordinate.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'formulasolver',
+          'coordinates_variablecoordinateformulas',
+        ]),
+    GCWTool(
+        tool: DMMOffset(),
+        i18nPrefix: 'coords_dmmoffset',
+        iconPath: 'assets/icons/coords/icon_dmm_offset.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_mapview',
+        ]),
+    GCWTool(
+        tool: CoordinateAveraging(),
+        i18nPrefix: 'coords_averaging',
+        iconPath: 'assets/icons/coords/icon_coordinate_measurement.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_coordinateaveraging',
+        ]),
+    GCWTool(
+        tool: CenterTwoPoints(),
+        i18nPrefix: 'coords_centertwopoints',
+        iconPath: 'assets/icons/coords/icon_center_two_points.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_centertwopoints',
+        ]),
+    GCWTool(
+        tool: Centroid(),
+        i18nPrefix: 'coords_centroid',
+        iconPath: 'assets/icons/coords/icon_centroid.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_centroid',
+        ]),
+    GCWTool(
+        tool: CenterThreePoints(),
+        i18nPrefix: 'coords_centerthreepoints',
+        iconPath: 'assets/icons/coords/icon_center_three_points.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_centerthreepoints',
+        ]),
+    GCWTool(
+        tool: SegmentLine(),
+        i18nPrefix: 'coords_segmentline',
+        iconPath: 'assets/icons/coords/icon_segment_line.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_segmentline',
+        ]),
+    GCWTool(
+        tool: SegmentBearings(),
+        i18nPrefix: 'coords_segmentbearings',
+        iconPath: 'assets/icons/coords/icon_segment_bearings.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_segmentbearing',
+        ]),
+    GCWTool(
+        tool: CrossBearing(),
+        i18nPrefix: 'coords_crossbearing',
+        iconPath: 'assets/icons/coords/icon_cross_bearing.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_crossbearing',
+        ]),
+    GCWTool(
+        tool: IntersectBearings(),
+        i18nPrefix: 'coords_intersectbearings',
+        iconPath: 'assets/icons/coords/icon_intersect_bearings.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_compassrose',
+          'coordinates_intersectbearing',
+        ]),
+    GCWTool(
+        tool: IntersectFourPoints(),
+        i18nPrefix: 'coords_intersectfourpoints',
+        iconPath: 'assets/icons/coords/icon_intersect_four_points.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_intersectfourpoints',
+        ]),
+    GCWTool(
+        tool: IntersectGeodeticAndCircle(),
+        i18nPrefix: 'coords_intersectbearingcircle',
+        iconPath: 'assets/icons/coords/icon_intersect_bearing_and_circle.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_compassrose',
+          'coordinates_intersectgeodeticandcircle',
+        ]),
+    GCWTool(
+        tool: IntersectTwoCircles(),
+        i18nPrefix: 'coords_intersecttwocircles',
+        iconPath: 'assets/icons/coords/icon_intersect_two_circles.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_intersecttwocircles',
+        ]),
+    GCWTool(
+        tool: IntersectThreeCircles(),
+        i18nPrefix: 'coords_intersectthreecircles',
+        iconPath: 'assets/icons/coords/icon_intersect_three_circles.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_intersectthreecircles',
+        ]),
+    GCWTool(
+        tool: Antipodes(),
+        i18nPrefix: 'coords_antipodes',
+        iconPath: 'assets/icons/coords/icon_antipodes.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_antipodes',
+        ]),
+    GCWTool(
+        tool: Intersection(),
+        i18nPrefix: 'coords_intersection',
+        iconPath: 'assets/icons/coords/icon_intersection.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_intersection',
+        ]),
+    GCWTool(
+        tool: Resection(),
+        i18nPrefix: 'coords_resection',
+        iconPath: 'assets/icons/coords/icon_resection.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_resection',
+        ]),
+    GCWTool(
+        tool: EquilateralTriangle(),
+        i18nPrefix: 'coords_equilateraltriangle',
+        iconPath: 'assets/icons/coords/icon_equilateral_triangle.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_equilateraltriangle',
+        ]),
+    GCWTool(
+        tool: EllipsoidTransform(),
+        i18nPrefix: 'coords_ellipsoidtransform',
+        iconPath: 'assets/icons/coords/icon_ellipsoid_transform.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_ellipsoidtransform',
+        ]),
+
+    //Countries Selection ******************************************************************************************
+
+    GCWTool(tool: CountriesCallingCodes(), i18nPrefix: 'countries_callingcode', searchKeys: [
+      'countries',
+      'countries_callingcodes',
+    ]),
+    GCWTool(tool: CountriesIOCCodes(), i18nPrefix: 'countries_ioccode', searchKeys: [
+      'countries',
+      'countries_ioccodes',
+    ]),
+    GCWTool(tool: CountriesISOCodes(), i18nPrefix: 'countries_isocode', searchKeys: [
+      'countries',
+      'countries_isocodes',
+    ]),
+    GCWTool(tool: CountriesVehicleCodes(), i18nPrefix: 'countries_vehiclecode', searchKeys: [
+      'countries',
+      'countries_vehiclecodes',
+    ]),
+    GCWTool(tool: CountriesFlags(), i18nPrefix: 'countries_flags', searchKeys: [
+      'countries',
+      'symbol_flags',
+      'countries_flags',
+    ]),
+
+    //CrossSumSelection *******************************************************************************************
+
+    GCWTool(tool: CrossSum(), i18nPrefix: 'crosssum_crosssum', searchKeys: [
+      'crosssums',
+    ]),
+    GCWTool(tool: CrossSumRange(), i18nPrefix: 'crosssum_range', searchKeys: [
+      'crosssums',
+      'crossumrange',
+    ]),
+    GCWTool(tool: IteratedCrossSumRange(), i18nPrefix: 'crosssum_range_iterated', searchKeys: [
+      'crosssums',
+      'iteratedcrosssumrange',
+    ]),
+    GCWTool(tool: CrossSumRangeFrequency(), i18nPrefix: 'crosssum_range_frequency', searchKeys: [
+      'crosssums',
+      'crossumrange',
+      'iteratedcrossumrangefrequency',
+    ]),
+    GCWTool(tool: IteratedCrossSumRangeFrequency(), i18nPrefix: 'crosssum_range_iterated_frequency', searchKeys: [
+      'crosssums',
+      'crossumrange',
+      'crosssumrangefrequency',
+    ]),
+
+    //DatesSelection **********************************************************************************************
+    GCWTool(tool: DayCalculator(), i18nPrefix: 'dates_daycalculator', searchKeys: [
+      'dates',
+      'dates_daycalculator',
+    ]),
+    GCWTool(tool: TimeCalculator(), i18nPrefix: 'dates_timecalculator', searchKeys: [
+      'dates',
+      'dates_timecalculator',
+    ]),
+    GCWTool(tool: Weekday(), i18nPrefix: 'dates_weekday', searchKeys: [
+      'dates',
+      'dates_weekday',
+    ]),
+    GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
+      'dates',
+      'dates_calendar',
+    ]),
+
+    //DNASelection ************************************************************************************************
+    GCWTool(tool: DNANucleicAcidSequence(), i18nPrefix: 'dna_nucleicacidsequence', searchKeys: [
+      'dna',
+      'dnanucleicacidsequence',
+    ]),
+    GCWTool(tool: DNAAminoAcids(), i18nPrefix: 'dna_aminoacids', searchKeys: [
+      'dna',
+      'dnaaminoacids',
+    ]),
+    GCWTool(tool: DNAAminoAcidsTable(), i18nPrefix: 'dna_aminoacids_table', searchKeys: [
+      'dna',
+      'dnaamonoacidstable',
+    ]),
+
+    //Silver Ratio Selection **********************************************************************************************
+    GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'silverratio',
+      'silverratiodecimalrange',
+    ]),
+    GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'silverratio',
+      'silverratiodecimalrange',
+    ]),
+    GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'silverratio',
+      'silverratiosearch',
+    ]),
+
+    //E Selection *************************************************************************************************
+    GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'e',
+      'enthdecimal',
+    ]),
+    GCWTool(tool: EDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'e',
+      'edecimalrange',
+    ]),
+    GCWTool(tool: ESearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'e',
+      'esearch',
+    ]),
+
+    //Easter Selection ***************************************************************************************
+    GCWTool(tool: EasterDate(), i18nPrefix: 'astronomy_easter_easterdate', searchKeys: [
+      'easter_date',
+    ]),
+    GCWTool(tool: EasterYears(), i18nPrefix: 'astronomy_easter_easteryears', searchKeys: [
+      'easter_date',
+      'easter_years',
+    ]),
+
+    //Esoteric Programming Language Selection ****************************************************************
+    GCWTool(tool: Beatnik(), i18nPrefix: 'beatnik', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_beatnik',
+    ]),
+    GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_brainfk',
+    ]),
+    GCWTool(tool: Cow(), i18nPrefix: 'cow', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_cow',
+    ]),
+    GCWTool(tool: Chef(), i18nPrefix: 'chef', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_chef',
+    ]),
+    GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_deadfish',
+    ]),
+    GCWTool(tool: KarolRobot(), i18nPrefix: 'karol_robot', searchKeys: [
+      'esoteric_karol_robot',
+    ]),
+    GCWTool(tool: Malbolge(), i18nPrefix: 'malbolge', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_malbolge',
+    ]),
+    GCWTool(tool: Ook(), i18nPrefix: 'ook', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_brainfk',
+      'esoteric_ook',
+    ]),
+    GCWTool(tool: WhitespaceLanguage(), i18nPrefix: 'whitespace_language', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_whitespacelanguage',
+    ]),
+
+    //Hash Selection *****************************************************************************************
+    GCWTool(tool: HashBreaker(), i18nPrefix: 'hashes_hashbreaker', categories: [
+      ToolCategory.GENERAL_CODEBREAKERS
+    ], searchKeys: [
+      'codebreaker',
+      'hashes',
+      'hashbreaker',
+    ]),
+    GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', searchKeys: [
+      'hashes',
+      'hashes_md5',
+    ]),
+    GCWTool(tool: SHA1(), i18nPrefix: 'hashes_sha1', searchKeys: [
+      'hashes',
+      'hashes_sha1',
+    ]),
+    GCWTool(tool: SHA224(), i18nPrefix: 'hashes_sha224', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha224',
+    ]),
+    GCWTool(tool: SHA256(), i18nPrefix: 'hashes_sha256', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha256',
+    ]),
+    GCWTool(tool: SHA384(), i18nPrefix: 'hashes_sha384', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha384',
+    ]),
+    GCWTool(tool: SHA512(), i18nPrefix: 'hashes_sha512', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512',
+    ]),
+    GCWTool(tool: SHA512_224(), i18nPrefix: 'hashes_sha512.224', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_224',
+    ]),
+    GCWTool(tool: SHA512_256(), i18nPrefix: 'hashes_sha512.256', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_256',
+    ]),
+    GCWTool(tool: SHA3_224(), i18nPrefix: 'hashes_sha3.224', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_224',
+    ]),
+    GCWTool(tool: SHA3_256(), i18nPrefix: 'hashes_sha3.256', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_256',
+    ]),
+    GCWTool(tool: SHA3_384(), i18nPrefix: 'hashes_sha3.384', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_384',
+    ]),
+    GCWTool(tool: SHA3_512(), i18nPrefix: 'hashes_sha3.512', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_512',
+    ]),
+    GCWTool(tool: Keccak_128(), i18nPrefix: 'hashes_keccak128', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_keccak',
+      'hashes_keccak_128',
+    ]),
+    GCWTool(tool: Keccak_224(), i18nPrefix: 'hashes_keccak224', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_keccak',
+      'hashes_keccak_224',
+    ]),
+    GCWTool(tool: Keccak_256(), i18nPrefix: 'hashes_keccak256', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_keccak',
+      'hashes_keccak_256',
+    ]),
+    GCWTool(tool: Keccak_288(), i18nPrefix: 'hashes_keccak288', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_keccak',
+      'hashes_keccak_288',
+    ]),
+    GCWTool(tool: Keccak_384(), i18nPrefix: 'hashes_keccak384', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_keccak',
+      'hashes_keccak_384',
+    ]),
+    GCWTool(tool: Keccak_512(), i18nPrefix: 'hashes_keccak512', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_keccak',
+      'hashes_keccak_512',
+    ]),
+    GCWTool(tool: RIPEMD_128(), i18nPrefix: 'hashes_ripemd128', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_128',
+    ]),
+    GCWTool(tool: RIPEMD_160(), i18nPrefix: 'hashes_ripemd160', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_160',
+    ]),
+    GCWTool(tool: RIPEMD_256(), i18nPrefix: 'hashes_ripemd256', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_256',
+    ]),
+    GCWTool(tool: RIPEMD_320(), i18nPrefix: 'hashes_ripemd320', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_320',
+    ]),
+    GCWTool(tool: MD2(), i18nPrefix: 'hashes_md2', searchKeys: [
+      'hashes',
+      'hashes_md2',
+    ]),
+    GCWTool(tool: MD4(), i18nPrefix: 'hashes_md4', searchKeys: [
+      'hashes',
+      'hashes_md4',
+    ]),
+    GCWTool(tool: Tiger_192(), i18nPrefix: 'hashes_tiger192', searchKeys: [
+      'hashes',
+      'hashes_tiger_192',
+    ]),
+    GCWTool(tool: Whirlpool_512(), i18nPrefix: 'hashes_whirlpool512', searchKeys: [
+      'hashes',
+      'hashes_whirlpool_512',
+    ]),
+    GCWTool(tool: BLAKE2b_160(), i18nPrefix: 'hashes_blake2b160', searchKeys: [
+      'hashes',
+      'hashes_blake2b',
+      'hashes_blake2b_160',
+    ]),
+    GCWTool(tool: BLAKE2b_224(), i18nPrefix: 'hashes_blake2b224', searchKeys: [
+      'hashes',
+      'hashes_blake2b',
+      'hashes_blake2b_224',
+    ]),
+    GCWTool(tool: BLAKE2b_256(), i18nPrefix: 'hashes_blake2b256', searchKeys: [
+      'hashes',
+      'hashes_blake2b',
+      'hashes_blake2b_256',
+    ]),
+    GCWTool(tool: BLAKE2b_384(), i18nPrefix: 'hashes_blake2b384', searchKeys: [
+      'hashes',
+      'hashes_blake2b',
+      'hashes_blake2b_384',
+    ]),
+    GCWTool(tool: BLAKE2b_512(), i18nPrefix: 'hashes_blake2b512', searchKeys: [
+      'hashes',
+      'hashes_blake2b',
+      'hashes_blake2b_512',
+    ]),
+
+    // IceCodeSelection *********************************************************************************************
+    GCWTool(tool: IceCodes(), i18nPrefix: 'icecodes', searchKeys: [
+      'icecodes',
+    ]),
+
+    //Language Games Selection *******************************************************************************
+    GCWTool(tool: ChickenLanguage(), i18nPrefix: 'chickenlanguage', searchKeys: [
+      'languagegames',
+      'languagegames_chickenlanguage',
+    ]),
+    GCWTool(tool: DuckSpeak(), i18nPrefix: 'duckspeak', searchKeys: [
+      'languagegames',
+      'duckspeak',
+    ]),
+    GCWTool(tool: PigLatin(), i18nPrefix: 'piglatin', searchKeys: [
+      'languagegames',
+      'languagegames_piglatin',
+    ]),
+    GCWTool(tool: RobberLanguage(), i18nPrefix: 'robberlanguage', searchKeys: [
+      'languagegames',
+      'languagegames_robberlanguage',
+    ]),
+    GCWTool(tool: SpoonLanguage(), i18nPrefix: 'spoonlanguage', searchKeys: [
+      'languagegames',
+      'languagegames_spoonlanguage',
+    ]),
+
+    //Main Menu **********************************************************************************************
+    GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', searchKeys: []),
+    GCWTool(tool: CoordinatesSettings(), i18nPrefix: 'settings_coordinates', searchKeys: []),
+    GCWTool(tool: ToolSettings(), i18nPrefix: 'settings_tools', searchKeys: []),
+    GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchKeys: [
+      'changelog',
+    ]),
+    GCWTool(tool: About(), i18nPrefix: 'mainmenu_about', suppressHelpButton: true, searchKeys: [
+      'about',
+    ]),
+    GCWTool(
+        tool: CallForContribution(),
+        i18nPrefix: 'mainmenu_callforcontribution',
+        suppressHelpButton: true,
+        searchKeys: [
+          'callforcontribution',
+        ]),
+    GCWTool(tool: Licenses(), i18nPrefix: 'licenses', suppressHelpButton: true, searchKeys: [
+      'licenses',
+    ]),
+
+    //MayaCalendar Selection **************************************************************************************
+    GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', searchKeys: [
+      'maya_calendar',
+    ]),
+
+    //MayaNumbers Selection **************************************************************************************
+    GCWTool(tool: MayaNumbers(), i18nPrefix: 'mayanumbers', searchKeys: [
+      'mayanumbers',
+    ]),
+
+    //Phi Selection **********************************************************************************************
+    GCWTool(tool: PhiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'irrationalnumbers',
+      'phi',
+      'phidecimalrange',
+    ]),
+    GCWTool(tool: PhiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'irrationalnumbers',
+      'phi',
+      'phidecimalrange',
+    ]),
+    GCWTool(tool: PhiSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'irrationalnumbers',
+      'phi',
+      'phisearch',
+    ]),
+
+    //Pi Selection **********************************************************************************************
+    GCWTool(tool: PiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'irrationalnumbers',
+      'pi',
+      'pinthdecimal',
+    ]),
+    GCWTool(tool: PiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'irrationalnumbers',
+      'pi',
+      'pidecimalrange',
+    ]),
+    GCWTool(tool: PiSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'irrationalnumbers',
+      'pi',
+      'pisearch',
+    ]),
+
+    //NumberSequenceSelection ****************************************************************************************
+    GCWTool(tool: NumberSequenceFactorialSelection(), i18nPrefix: 'numbersequence_factorial', searchKeys: [
+      'numbersequence',
+      'numbersequence_factorialselection',
+    ]),
+    GCWTool(tool: NumberSequenceFibonacciSelection(), i18nPrefix: 'numbersequence_fibonacci', searchKeys: [
+      'numbersequence',
+      'numbersequence_fibonacciselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneSelection(), i18nPrefix: 'numbersequence_mersenne', searchKeys: [
+      'numbersequence',
+      'numbersequence_mersenneselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceMersennePrimesSelection(),
+        i18nPrefix: 'numbersequence_mersenneprimes',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_mersenneprimesselection',
+        ]),
+    GCWTool(
+        tool: NumberSequenceMersenneExponentsSelection(),
+        i18nPrefix: 'numbersequence_mersenneexponents',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_mersenneexponentsselection',
+        ]),
+    GCWTool(
+        tool: NumberSequenceMersenneFermatSelection(),
+        i18nPrefix: 'numbersequence_mersennefermat',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_mersennefermatselection',
+        ]),
+    GCWTool(tool: NumberSequenceFermatSelection(), i18nPrefix: 'numbersequence_fermat', searchKeys: [
+      'numbersequence',
+      'numbersequence_fermatselection',
+    ]),
+    GCWTool(
+        tool: NumberSequencePerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_perfectnumbers',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_perfectnumbersselection',
+        ]),
+    GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_superperfectnumbers',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_superperfectnumbersselection',
+        ]),
+    GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_primarypseudoperfectnumbersselection',
+        ]),
+    GCWTool(tool: NumberSequenceWeirdNumbersSelection(), i18nPrefix: 'numbersequence_weirdnumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_weirdnumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceSublimeNumbersSelection(),
+        i18nPrefix: 'numbersequence_sublimenumbers',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_sublimenumbersselection',
+        ]),
+    GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', searchKeys: [
+      'numbersequence',
+      'numbersequence_bellselection',
+    ]),
+    GCWTool(tool: NumberSequencePellSelection(), i18nPrefix: 'numbersequence_pell', searchKeys: [
+      'numbersequence',
+      'numbersequence_pellselection',
+    ]),
+    GCWTool(tool: NumberSequenceLucasSelection(), i18nPrefix: 'numbersequence_lucas', searchKeys: [
+      'numbersequence',
+      'numbersequence_lucasselection',
+    ]),
+    GCWTool(tool: NumberSequencePellLucasSelection(), i18nPrefix: 'numbersequence_pelllucas', searchKeys: [
+      'numbersequence',
+      'numbersequence_pelllucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalSelection(), i18nPrefix: 'numbersequence_jacobsthal', searchKeys: [
+      'numbersequence',
+      'numbersequence_jacobsthalselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceJacobsthalLucasSelection(),
+        i18nPrefix: 'numbersequence_jacobsthallucas',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_jacobsthallucasselection',
+        ]),
+    GCWTool(
+        tool: NumberSequenceJacobsthalOblongSelection(),
+        i18nPrefix: 'numbersequence_jacobsthaloblong',
+        searchKeys: [
+          'numbersequence',
+          'numbersequence_jacobsthaloblongselection',
+        ]),
+    GCWTool(tool: NumberSequenceCatalanSelection(), i18nPrefix: 'numbersequence_catalan', searchKeys: [
+      'numbersequence',
+      'numbersequence_catalanselection',
+    ]),
+    GCWTool(tool: NumberSequenceRecamanSelection(), i18nPrefix: 'numbersequence_recaman', searchKeys: [
+      'numbersequence',
+      'numbersequence_recamanselection',
+    ]),
+    GCWTool(tool: NumberSequenceLychrelSelection(), i18nPrefix: 'numbersequence_lychrel', searchKeys: [
+      'numbersequence',
+      'numbersequence_lychrelselection',
+    ]),
+
+    //NumberSequenceSelection Factorial ****************************************************************************************
+    GCWTool(tool: NumberSequenceFactorialNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_factorialselection',
+    ]),
+    GCWTool(tool: NumberSequenceFactorialRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_factorialselection',
+    ]),
+    GCWTool(tool: NumberSequenceFactorialCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_factorialselection',
+    ]),
+    GCWTool(tool: NumberSequenceFactorialDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_factorialselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceFactorialContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_factorialselection',
+        ]),
+
+    //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
+    GCWTool(tool: NumberSequenceMersenneFermatNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_mersennefermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneFermatRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_mersennefermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneFermatCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_mersennefermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneFermatDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_mersennefermatselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceMersenneFermatContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_mersennefermatselection',
+        ]),
+
+    //NumberSequenceSelection Fermat ****************************************************************************************
+    GCWTool(tool: NumberSequenceFermatNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_fermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceFermatRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_fermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceFermatCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_fermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceFermatDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_fermatselection',
+    ]),
+    GCWTool(tool: NumberSequenceFermatContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_fermatselection',
+    ]),
+
+    //NumberSequenceSelection Lucas ****************************************************************************************
+    GCWTool(tool: NumberSequenceLucasNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_lucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceLucasRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_lucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceLucasCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_lucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceLucasDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_lucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceLucasContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_lucasselection',
+    ]),
+
+    //NumberSequenceSelection Fibonacci ****************************************************************************************
+    GCWTool(tool: NumberSequenceFibonacciNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_fibonacciselection',
+    ]),
+    GCWTool(tool: NumberSequenceFibonacciRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_fibonacciselection',
+    ]),
+    GCWTool(tool: NumberSequenceFibonacciCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_fibonacciselection',
+    ]),
+    GCWTool(tool: NumberSequenceFibonacciDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_fibonacciselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceFibonacciContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_fibonacciselection',
+        ]),
+
+    //NumberSequenceSelection Mersenne ****************************************************************************************
+    GCWTool(tool: NumberSequenceMersenneNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_mersenneselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_mersenneselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_mersenneselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_mersenneselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceMersenneContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_mersenneselection',
+        ]),
+
+    //NumberSequenceSelection Bell ****************************************************************************************
+    GCWTool(tool: NumberSequenceBellNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_bellselection',
+    ]),
+    GCWTool(tool: NumberSequenceBellRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_bellselection',
+    ]),
+    GCWTool(tool: NumberSequenceBellCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_bellselection',
+    ]),
+    GCWTool(tool: NumberSequenceBellDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_bellselection',
+    ]),
+    GCWTool(tool: NumberSequenceBellContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_bellselection',
+    ]),
+
+    //NumberSequenceSelection Pell ****************************************************************************************
+    GCWTool(tool: NumberSequencePellNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_pellselection',
+    ]),
+    GCWTool(tool: NumberSequencePellRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_pellselection',
+    ]),
+    GCWTool(tool: NumberSequencePellCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_pellselection',
+    ]),
+    GCWTool(tool: NumberSequencePellDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_pellselection',
+    ]),
+    GCWTool(tool: NumberSequencePellContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_pellselection',
+    ]),
+
+    //NumberSequenceSelection Pell-Lucas ****************************************************************************************
+    GCWTool(tool: NumberSequencePellLucasNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_pelllucasselection',
+    ]),
+    GCWTool(tool: NumberSequencePellLucasRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_pelllucasselection',
+    ]),
+    GCWTool(tool: NumberSequencePellLucasCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_pelllucasselection',
+    ]),
+    GCWTool(tool: NumberSequencePellLucasDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_pelllucasselection',
+    ]),
+    GCWTool(
+        tool: NumberSequencePellLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_pelllucasselection',
+        ]),
+
+    //NumberSequenceSelection Jacobsthal ****************************************************************************************
+    GCWTool(tool: NumberSequenceJacobsthalNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_jacobsthalselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_jacobsthalselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_jacobsthalselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_jacobsthalselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceJacobsthalContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_jacobsthalselection',
+        ]),
+
+    //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
+    GCWTool(tool: NumberSequenceJacobsthalLucasNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_jacobsthallucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalLucasRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_jacobsthallucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalLucasCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_jacobsthallucasselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalLucasDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_jacobsthallucasselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceJacobsthalLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_jacobsthallucasselection',
+        ]),
+
+    //NumberSequenceSelection Jacobsthal Oblong ****************************************************************************************
+    GCWTool(tool: NumberSequenceJacobsthalOblongNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_jacobsthaloblongselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalOblongRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_jacobsthaloblongselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalOblongCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_jacobsthaloblongselection',
+    ]),
+    GCWTool(tool: NumberSequenceJacobsthalOblongDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_jacobsthaloblongselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceJacobsthalOblongContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_jacobsthaloblongselection',
+        ]),
+
+    //NumberSequenceSelection Catalan ****************************************************************************************
+    GCWTool(tool: NumberSequenceCatalanNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_catalanselection',
+    ]),
+    GCWTool(tool: NumberSequenceCatalanRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_catalanselection',
+    ]),
+    GCWTool(tool: NumberSequenceCatalanCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_catalanselection',
+    ]),
+    GCWTool(tool: NumberSequenceCatalanDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_catalanselection',
+    ]),
+    GCWTool(tool: NumberSequenceCatalanContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_catalanselection',
+    ]),
+
+    //NumberSequenceSelection Recaman ****************************************************************************************
+    GCWTool(tool: NumberSequenceRecamanNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_recamanselection',
+    ]),
+    GCWTool(tool: NumberSequenceRecamanRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_recamanselection',
+    ]),
+    GCWTool(tool: NumberSequenceRecamanCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_recamanselection',
+    ]),
+    GCWTool(tool: NumberSequenceRecamanDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_recamanselection',
+    ]),
+    GCWTool(tool: NumberSequenceRecamanContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_recamanselection',
+    ]),
+
+    //NumberSequenceSelection Mersenne Primes ****************************************************************************************
+    GCWTool(tool: NumberSequenceMersennePrimesNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_mersenneprimesselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersennePrimesRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_mersenneprimesselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersennePrimesCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_mersenneprimesselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersennePrimesDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_mersenneprimesselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceMersennePrimesContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_mersenneprimesselection',
+        ]),
+
+    //NumberSequenceSelection Mersenne Exponents ****************************************************************************************
+    GCWTool(tool: NumberSequenceMersenneExponentsNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_mersenneexponentsselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneExponentsRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_mersenneexponentsselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneExponentsCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_mersenneexponentsselection',
+    ]),
+    GCWTool(tool: NumberSequenceMersenneExponentsDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_mersenneexponentsselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceMersenneExponentsContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_mersenneexponentsselection',
+        ]),
+
+    //NumberSequenceSelection Perfect numbers ****************************************************************************************
+    GCWTool(tool: NumberSequencePerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_perfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequencePerfectNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_perfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequencePerfectNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_perfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequencePerfectNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_perfectnumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequencePerfectNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_perfectnumbersselection',
+        ]),
+
+    //NumberSequenceSelection SuperPerfect numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceSuperPerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_superperfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceSuperPerfectNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_superperfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceSuperPerfectNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_superperfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceSuperPerfectNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_superperfectnumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceSuperPerfectNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_superperfectnumbersselection',
+        ]),
+
+    //NumberSequenceSelection Weird numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceWeirdNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_weirdnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceWeirdNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_weirdnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceWeirdNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_weirdnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceWeirdNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_weirdnumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceWeirdNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_weirdnumbersselection',
+        ]),
+
+    //NumberSequenceSelection Sublime numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceSublimeNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_sublimenumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceSublimeNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_sublimenumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceSublimeNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_sublimenumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceSublimeNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_sublimenumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceSublimeNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_sublimenumbersselection',
+        ]),
+
+    //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
+    GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchKeys: [
+          'numbersequence_primarypseudoperfectnumbersselection',
+        ]),
+    GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchKeys: [
+          'numbersequence_primarypseudoperfectnumbersselection',
+        ]),
+    GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchKeys: [
+          'numbersequence_primarypseudoperfectnumbersselection',
+        ]),
+    GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchKeys: [
+          'numbersequence_primarypseudoperfectnumbersselection',
+        ]),
+    GCWTool(
+        tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_primarypseudoperfectnumbersselection',
+        ]),
+
+    //NumberSequenceSelection Lychrel numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceLychrelNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_lychrelselection',
+    ]),
+    GCWTool(tool: NumberSequenceLychrelRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_lychrelselection',
+    ]),
+    GCWTool(tool: NumberSequenceLychrelCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_lychrelselection',
+    ]),
+    GCWTool(tool: NumberSequenceLychrelDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_lychrelselection',
+    ]),
+    GCWTool(tool: NumberSequenceLychrelContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_lychrelselection',
+    ]),
+
+    //NumeralWordsSelection ****************************************************************************************
+    GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', searchKeys: [
+      'numeralwords',
+      'numeralwordstextsearch',
+    ]),
+    GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', searchKeys: [
+      'numeralwords',
+      'numeralwordslists',
+    ]),
+    GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', searchKeys: [
+      'numeralwords',
+      'numeralwordsconverter',
+    ]),
+
+    //PeriodicTableSelection ***************************************************************************************
+    GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', searchKeys: [
+      'periodictable',
+    ]),
+    GCWTool(tool: PeriodicTableDataView(), i18nPrefix: 'periodictable_dataview', searchKeys: [
+      'periodictable',
+      'periodictabledataview',
+    ]),
+    GCWTool(tool: AtomicNumbersToText(), i18nPrefix: 'atomicnumberstotext', searchKeys: [
+      'periodictable',
+      'periodictable_atomicnumbers',
+    ]),
+
+    //PrimesSelection **********************************************************************************************
+    GCWTool(tool: NthPrime(), i18nPrefix: 'primes_nthprime', searchKeys: [
+      'primes',
+      'primes_nthprime',
+    ]),
+    GCWTool(tool: IsPrime(), i18nPrefix: 'primes_isprime', searchKeys: [
+      'primes',
+      'primes_isprime',
+    ]),
+    GCWTool(tool: NearestPrime(), i18nPrefix: 'primes_nearestprime', searchKeys: [
+      'primes',
+      'primes_nearestprime',
+    ]),
+    GCWTool(tool: PrimeIndex(), i18nPrefix: 'primes_primeindex', searchKeys: [
+      'primes',
+      'primes_primeindex',
+    ]),
+    GCWTool(tool: IntegerFactorization(), i18nPrefix: 'primes_integerfactorization', searchKeys: [
+      'primes',
+      'primes_integerfactorization',
+    ]),
+
+    //ResistorSelection **********************************************************************************************
+    GCWTool(tool: ResistorColorCodeCalculator(), i18nPrefix: 'resistor_colorcodecalculator', searchKeys: [
+      'resistor',
+      'color',
+      'resistor_colorcode',
+    ]),
+    GCWTool(tool: ResistorEIA96(), i18nPrefix: 'resistor_eia96', searchKeys: [
+      'resistor',
+      'resistoreia96',
+    ]),
+
+    //RomanNumbersSelection **********************************************************************************************
+    GCWTool(tool: RomanNumbers(), i18nPrefix: 'romannumbers', searchKeys: [
+      'roman_numbers',
+    ]),
+    GCWTool(tool: Chronogram(), i18nPrefix: 'chronogram', searchKeys: [
+      'roman_numbers',
+      'chronogram',
+    ]),
+
+    //RotationSelection **********************************************************************************************
+    GCWTool(tool: Rot13(), i18nPrefix: 'rotation_rot13', searchKeys: [
+      'rotation',
+      'rotation_rot13',
+    ]),
+    GCWTool(tool: Rot5(), i18nPrefix: 'rotation_rot5', searchKeys: [
+      'rotation',
+      'rotation_rot5',
+    ]),
+    GCWTool(tool: Rot18(), i18nPrefix: 'rotation_rot18', searchKeys: [
+      'rotation',
+      'rotation_rot18',
+    ]),
+    GCWTool(tool: Rot47(), i18nPrefix: 'rotation_rot47', searchKeys: [
+      'rotation',
+      'rotation_rot47',
+    ]),
+    GCWTool(tool: RotationGeneral(), i18nPrefix: 'rotation_general', searchKeys: [
+      'rotation',
+    ]),
+
+    // RSA *******************************************************************************************************
+    GCWTool(tool: RSA(), i18nPrefix: 'rsa_rsa', searchKeys: [
+      'rsa',
+    ]),
+    GCWTool(tool: RSAEChecker(), i18nPrefix: 'rsa_e.checker', searchKeys: [
+      'rsa',
+      'rsa_echecker',
+    ]),
+    GCWTool(tool: RSADChecker(), i18nPrefix: 'rsa_d.checker', searchKeys: [
+      'rsa',
+      'rsa_dchecker',
+    ]),
+    GCWTool(tool: RSADCalculator(), i18nPrefix: 'rsa_d.calculator', searchKeys: [
+      'rsa',
+      'rsa_dcalculator',
+    ]),
+    GCWTool(tool: RSANCalculator(), i18nPrefix: 'rsa_n.calculator', searchKeys: [
+      'rsa',
+      'rsa_ncalculator',
+    ]),
+    GCWTool(tool: RSAPhiCalculator(), i18nPrefix: 'rsa_phi.calculator', searchKeys: ['rsa']),
+
+    //Segments Display *******************************************************************************************
+    GCWTool(
+        tool: SevenSegments(),
+        i18nPrefix: 'segmentdisplay_7segments',
+        iconPath: 'assets/icons/science_and_technology/icon_7segment_display.png',
+        searchKeys: [
+          'segments',
+          'segments_seven',
+        ]),
+    GCWTool(
+        tool: FourteenSegments(),
+        i18nPrefix: 'segmentdisplay_14segments',
+        iconPath: 'assets/icons/science_and_technology/icon_14segment_display.png',
+        searchKeys: [
+          'segments',
+          'segments_fourteen',
+        ]),
+    GCWTool(
+        tool: SixteenSegments(),
+        i18nPrefix: 'segmentdisplay_16segments',
+        iconPath: 'assets/icons/science_and_technology/icon_16segment_display.png',
+        searchKeys: [
+          'segments',
+          'segments_sixteen',
+        ]),
+
+    //Shadoks Selection ******************************************************************************************
+    GCWTool(tool: ShadoksNumbers(), i18nPrefix: 'shadoksnumbers', searchKeys: [
+      'shadoksnumbers',
+    ]),
+
+    //Symbol Tables **********************************************************************************************
+    GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
+      'symbol_adlam',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'albhed', symbolSearchStrings: [
+      'symbol_albhed',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: [
+      'symbol_alchemy',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', symbolSearchStrings: [
+      'symbol_alchemy_alphabet',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'angerthas_cirth', symbolSearchStrings: [
+      'symbol_lordoftherings',
+      'symbol_runes',
+      'symbol_angerthas_cirth',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'alphabetum_arabum', symbolSearchStrings: [
+      'symbol_alphabetum_arabum',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'alphabetum_egiptiorum', symbolSearchStrings: [
+      'symbol_alphabetum_egiptiorum',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'alphabetum_gothicum', symbolSearchStrings: [
+      'symbol_alphabetum_gothicum',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'antiker', symbolSearchStrings: [
+      'symbol_antiker',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'arabic_indian_numerals', symbolSearchStrings: [
+      'symbol_arabic_indian_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: [
+      'symbol_arcadian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ath', symbolSearchStrings: [
+      'symbol_ath',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: [
+      'symbol_atlantean',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: [
+      'symbol_aurebesh',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'australian_sign_language', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_australian_sign_language',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'babylonian_numerals', symbolSearchStrings: [
+      'babylonian_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: [
+      'symbol_ballet',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: [
+      'symbol_barbier',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: [
+      'barcodes',
+      'barcode39',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot', symbolSearchStrings: [
+      'ccitt',
+      'ccitt1',
+      'symbol_baudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
+      'symbol_birds_on_a_wire',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'birkenbihl', symbolSearchStrings: [
+      'symbol_birkenbihl',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: [
+      'symbol_blox',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: [
+      'symbol_brahmi_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: [
+      'braille',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: [
+      'braille',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'braille_eu', symbolSearchStrings: [
+      'braille',
+      'braille_euro',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: [
+      'braille',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'british_sign_language', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_british_sign_language',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chain_of_death_direction', symbolSearchStrings: [
+      'symbol_chain_of_death_direction',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chain_of_death_pairs', symbolSearchStrings: [
+      'symbol_chain_of_death_pairs',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chappe_1794', symbolSearchStrings: [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_chappe_1794',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chappe_1809', symbolSearchStrings: [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_chappe_1809',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_chappe_v1',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chappe_v2', symbolSearchStrings: [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_chappe_v2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chappe_v3', symbolSearchStrings: [
+      'telegraph',
+      'symbol_chappe',
+      'symbol_chappe_v3',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: [
+      'symbol_cherokee',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: [
+      'symbol_chinese_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: [
+      'symbol_runes',
+      'symbol_lordoftherings',
+      'symbol_cirtherebor',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: [
+      'cistercian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: [
+      'symbol_color_add',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
+      'color',
+      'symbol_color_code',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: [
+      'color',
+      'symbol_color_honey',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'color_tokki', symbolSearchStrings: [
+      'color',
+      'symbol_color_tokki',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cookewheatstone_1', symbolSearchStrings: [
+      'telegraph',
+      'symbol_cookewheatstone',
+      'symbol_cookewheatstone_1',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cookewheatstone_2', symbolSearchStrings: [
+      'telegraph',
+      'symbol_cookewheatstone',
+      'symbol_cookewheatstone_2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cookewheatstone_5', symbolSearchStrings: [
+      'telegraph',
+      'symbol_cookewheatstone',
+      'symbol_cookewheatstone_5',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'country_flags', symbolSearchStrings: [
+      'countries',
+      'symbol_flags',
+      'countries_flags',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
+      'symbol_covenant',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: [
+      'symbol_cyrillic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'cyrillic_numbers', symbolSearchStrings: [
+      'symbol_cyrillic_numbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: [
+      'symbol_daedric',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dagger', symbolSearchStrings: [
+      'symbol_dagger',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: [
+      'symbol_dancing_men',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'deafblind', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_deafblind',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: [
+      'symbol_devanagari_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: [
+      'symbol_dni',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: [
+      'color',
+      'symbol_dni_colors',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: [
+      'symbol_dni_numbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: [
+      'symbol_doop',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: [
+      'symbol_dorabella',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: [
+      'symbol_doremi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dragon_language', symbolSearchStrings: [
+      'symbol_dragon_language',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: [
+      'symbol_dragon_runes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'eastern_arabic_indian_numerals', symbolSearchStrings: [
+      'symbol_eastern_arabic_indian_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'egyptian_numerals', symbolSearchStrings: [
+      'symbol_egyptian_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: [
+      'elia',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: [
+      'symbol_enochian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: [
+      'symbol_eurythmy',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: [
+      'symbol_fakoo',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_finger',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'finger_numbers', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_finger_numbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: [
+      'symbol_flags',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_german_kriegsmarine', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_german_kriegsmarine',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_nato',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: [
+      'symbol_fonic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: [
+      'symbol_four_triangles',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'freemason', symbolSearchStrings: [
+      'symbol_freemason',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: [
+      'symbol_freemason_v2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: [
+      'symbol_futurama',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'futurama_2', symbolSearchStrings: [
+      'symbol_futurama_2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: [
+      'symbol_gallifreyan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'gargish', symbolSearchStrings: [
+      'symbol_gargish',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'gc_attributes_ids', symbolSearchStrings: [
+      'symbol_gc_attributes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: [
+      'symbol_gc_attributes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
+      'glagolitic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
+      'symbol_gnommish',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: []),
+    GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: [
+      'symbol_greek_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hanja', symbolSearchStrings: [
+      'symbol_hanja',
+      'symbol_sino_korean',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hangul_korean', symbolSearchStrings: [
+      'symbol_hangul',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hangul_sino_korean', symbolSearchStrings: [
+      'symbol_hangul',
+      'symbol_sino_korean',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: [
+      'symbol_hazard',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hebrew', symbolSearchStrings: [
+      'symbol_hebrew',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hebrew_v2', symbolSearchStrings: [
+      'symbol_hebrew_v2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hexahue', symbolSearchStrings: [
+      'color',
+      'symbol_hexahue',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hieratic_numerals', symbolSearchStrings: [
+      'symbol_hieratic_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hieroglyphs', symbolSearchStrings: [
+      'symbol_hieroglyphs',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: [
+      'symbol_lordoftherings',
+      'symbol_runes',
+      'symbol_hobbit_runes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: [
+      'symbol_hvd',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_skyward_sword', symbolSearchStrings: [
+      'symbol_hylian',
+      'symbol_hylian_skywardsword',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
+      'symbol_hylian',
+      'symbol_hylian_twilightprincess_gcn',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_wii', symbolSearchStrings: [
+      'symbol_hylian',
+      'symbol_hylian_twilightprincess_wii',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_wind_waker', symbolSearchStrings: [
+      'symbol_hylian',
+      'symbol_hylian_windwaker',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: [
+      'symbol_hymmnos',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: [
+      'icecodes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iching', symbolSearchStrings: [
+      'symbol_iching',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'illuminati_v1', symbolSearchStrings: [
+      'symbol_illuminati',
+      'symbol_illuminati_v1',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'illuminati_v2', symbolSearchStrings: [
+      'symbol_illuminati',
+      'symbol_illuminati_v2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: [
+      'symbol_intergalactic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
+      'symbol_iokharic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
+      'japanese_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'kabouter_abc', symbolSearchStrings: [
+      'symbol_kabouter_abc',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'kabouter_abc_1947', symbolSearchStrings: [
+      'symbol_kabouter_abc_1947',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: [
+      'barcodes',
+      'symbol_kartrak',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: [
+      'symbol_kharoshthi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'klingon', symbolSearchStrings: [
+      'symbol_klingon',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'klingon_klinzhai', symbolSearchStrings: [
+      'symbol_klingon_klinzhai',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: [
+      'color',
+      'symbol_krempel',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: [
+      'symbol_krypton',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_lorm',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: [
+      'symbol_magicode',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: [
+      'symbol_mandalorian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'marain', symbolSearchStrings: [
+      'symbol_marain',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'marain_v2', symbolSearchStrings: [
+      'symbol_marain_v2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: [
+      'symbol_matoran',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maya_calendar_longcount', symbolSearchStrings: [
+      'symbol_maya_calendar_longcount',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_codices', symbolSearchStrings: [
+      'symbol_maya_calendar_haab',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_inscripts', symbolSearchStrings: [
+      'symbol_maya_calendar_haab',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_codices', symbolSearchStrings: [
+      'symbol_maya_calendar_tzolkin',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_inscripts', symbolSearchStrings: [
+      'symbol_maya_calendar_tzolkin',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: [
+      'mayanumbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: [
+      'symbol_maze',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: [
+      'symbol_minimoys',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
+      'symbol_moon',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
+      'symbol_murray',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
+      'ccitt',
+      'ccitt',
+      'ccitt2',
+      'ccitt2',
+      'symbol_murraybaudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
+      'symbol_musica',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
+      'symbol_nazcaan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'new_zealand_sign_language', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_new_zealand_sign_language',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'niessen', symbolSearchStrings: [
+      'symbol_signlanguage',
+      'symbol_niessen',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
+      'symbol_notes_doremi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: [
+      'symbol_notes_names_altoclef',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: [
+      'symbol_notes_names_bassclef',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: [
+      'symbol_notes_names_trebleclef',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: [
+      'symbol_notes_notevalues',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: [
+      'symbol_notes_restvalues',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: [
+      'symbol_nyctography',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: [
+      'symbol_ogham',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: [
+      'symbol_opticalfiber',
+      'symbol_optical_fiber_fotag',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: [
+      'symbol_opticalfiber',
+      'symbol_optical_fiber_iec60304',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: [
+      'symbol_opticalfiber',
+      'optical_fiber_swisscom',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: [
+      'symbol_phoenician',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: [
+      'symbol_pipeline',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'pipeline_din2403', symbolSearchStrings: [
+      'color',
+      'symbol_pipeline_din2403',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: [
+      'symbol_pixel',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'planet', symbolSearchStrings: [
+      'barcodes',
+      'symbol_planet',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: [
+      'symbol_planets',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
+      'symbol_pokemon_unown',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [
+      'barcodes',
+      'symbol_postcode01247',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: [
+      'barcodes',
+      'symbol_postcode8421',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: [
+      'barcodes',
+      'symbol_postnet',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
+      'symbol_puzzle',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
+      'symbol_quadoo',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: [
+      'symbol_reality',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'red_herring', symbolSearchStrings: [
+      'symbol_red_herring',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: [
+      'resistor_colorcode',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
+      'symbol_rhesus',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: [
+      'symbol_rhesus',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: [
+      'symbol_rhesus',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: [
+      'symbol_rhesus',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
+      'barcodes',
+      'symbol_rm4scc',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: [
+      'symbol_romulan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: [
+      'symbol_futhark',
+      'symbol_runes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: [
+      'symbol_sanluca',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sarati', symbolSearchStrings: [
+      'symbol_sarati',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'semaphore', symbolSearchStrings: [
+      'symbol_semaphore',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
+      'shadoksnumbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: []),
+    GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
+      'symbol_skullz',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: [
+      'symbol_slash_and_pipe',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: [
+      'symbol_solmisation',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: [
+      'symbol_space_invaders',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: [
+      'symbol_spintype',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: [
+      'symbol_stippelcode',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'suetterlin', symbolSearchStrings: [
+      'symbol_suetterlin',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: [
+      'symbol_sunuz',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: [
+      'symbol_surf',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tae', symbolSearchStrings: [
+      'symbol_tae',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
+      'symbol_tamil_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
+      'symbol_templers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tenctonese', symbolSearchStrings: [
+      'symbol_tenctonese',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tengwar_beleriand', symbolSearchStrings: [
+      'symbol_lordoftherings',
+      'symbol_tengwar_beleriand',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tengwar_classic', symbolSearchStrings: [
+      'symbol_lordoftherings',
+      'symbol_tengwar_classic',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tengwar_general', symbolSearchStrings: [
+      'symbol_lordoftherings',
+      'symbol_tengwar_general',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: [
+      'symbol_terzi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: [
+      'symbol_theban',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: [
+      'symbol_three_squares',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: [
+      'symbol_tines',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: [
+      'tomtom',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'trafficsigns_germany', symbolSearchStrings: [
+      'symbol_trafficsigns_germany',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ulog', symbolSearchStrings: [
+      'symbol_ulog',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'unitology', symbolSearchStrings: [
+      'symbol_unitology',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'utopian', symbolSearchStrings: [
+      'symbol_utopian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'visitor_1984', symbolSearchStrings: [
+      'symbol_visitor_1984',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: [
+      'symbol_visitor_2009',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: [
+      'symbol_vulcanian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: [
+      'symbol_wakandan',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
+      'symbol_webdings',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
+      'beaufort',
+      'symbol_windforce_beaufort',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: [
+      'beaufort',
+      'symbol_windforce_knots',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: [
+      'window',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: [
+      'symbol_wingdings',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: [
+      'symbol_wingdings2',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: [
+      'symbol_wingdings3',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: [
+      'symbol_yan_koryani',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: [
+      'symbol_yinyang',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: [
+      'symbol_zamonian',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: [
+      'symbol_zentradi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: [
+      'symbol_zodiacsigns',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'zodiac_signs_latin', symbolSearchStrings: [
+      'symbol_zodiacsigns',
+      'symbol_zodiacsigns_latin',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: [
+      'symbol_zodiac_z340',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: [
+      'symbol_zodiac_z408',
+    ]),
+
+    // TomTomSelection *********************************************************************************************
+    GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', searchKeys: [
+      'tomtom',
+    ]),
+
+    //VanitySelection **********************************************************************************************
+    GCWTool(tool: VanitySingletap(), i18nPrefix: 'vanity_singletap', searchKeys: [
+      'vanity',
+      'vanitysingletap',
+    ]),
+    GCWTool(tool: VanityMultitap(), i18nPrefix: 'vanity_multitap', searchKeys: [
+      'vanity',
+      'vanitymultitap',
+    ]),
+    GCWTool(tool: VanityWordsList(), i18nPrefix: 'vanity_words_list', searchKeys: [
+      'vanity',
+      'vanitywordslist',
+    ]),
+    GCWTool(tool: VanityWordsTextSearch(), i18nPrefix: 'vanity_words_search', searchKeys: [
+      'vanity',
+      'vanitytextsearch',
+    ]),
+
+    //VigenereSelection *******************************************************************************************
+    GCWTool(tool: VigenereBreaker(), i18nPrefix: 'vigenerebreaker', categories: [
+      ToolCategory.GENERAL_CODEBREAKERS
+    ], searchKeys: [
+      'codebreaker',
+      'vigenerebreaker',
+      'vigenere',
+      'rotation',
+    ]),
+    GCWTool(tool: Vigenere(), i18nPrefix: 'vigenere', searchKeys: [
+      'vigenere',
+      'rotation',
+    ]),
+    GCWTool(tool: Gronsfeld(), i18nPrefix: 'gronsfeld', searchKeys: [
+      'vigenere',
+      'rotation',
+      'gronsfeld',
+    ]),
+    GCWTool(tool: Trithemius(), i18nPrefix: 'trithemius', searchKeys: [
+      'vigenere',
+      'rotation',
+      'trithemius',
+    ]),
+  ].map((toolWidget) {
+    toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
+    toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);
+
+    try {
+      toolWidget.description = i18n(context, toolWidget.i18nPrefix + '_description');
+    } catch (e) {}
+
+    try {
+      toolWidget.example = i18n(context, toolWidget.i18nPrefix + '_example');
+    } catch (e) {}
+
+    return toolWidget;
+  }).toList();
+
+  createIndexedSearchStrings();
 }
 
-String _removeDuplicates(String strings) {
-  return splitWordsOnSpace(strings).join(' ');
-}
-
-// final regex, compiled once
-final RegExp reSplit = RegExp(r'[\s,]');
-
-Set<String> splitWordsOnSpace(String text) {
-  return text.split(reSplit).toSet();
+refreshRegistry() {
+  registeredTools = null;
 }

@@ -59,6 +59,7 @@ flutter:
     - assets/icons/science_and_technology/
     - assets/quadgrams/
     - assets/tokens/
+    - assets/searchstrings/
     - assets/symbol_tables/
     - assets/symbol_tables/adlam/
     - assets/symbol_tables/albhed/
