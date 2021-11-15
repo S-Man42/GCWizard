@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:diacritic/diacritic.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:tuple/tuple.dart';
 
 class _wordClass {

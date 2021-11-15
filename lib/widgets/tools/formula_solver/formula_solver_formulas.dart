@@ -9,6 +9,7 @@ import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -28,8 +29,9 @@ import 'gcw_formula_replace_dialog.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
+  final bool noFormulaColors;
 
-  const FormulaSolverFormulas({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulas({Key key, this.group, bool this.noFormulaColors = false}) : super(key: key);
 
   @override
   FormulaSolverFormulasState createState() => FormulaSolverFormulasState();
@@ -237,7 +239,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                 padding: EdgeInsets.only(right: 4 * DEFAULT_MARGIN),
                               ),
                               Flexible(
-                                child: GCWText(text: formula.formula),
+                                child: _buildFormulaText(formula.formula, values),
                               )
                             ],
                           ),
@@ -436,5 +438,143 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 autoScroll: false,
                 suppressToolMargin: true,
                 helpLocales: ['de', 'en', 'fr'])));
+  }
+
+  Widget _buildFormulaText(String formula, Map<String, String> values) {
+    if (widget.noFormulaColors)
+      return GCWText(text: formula);
+
+    return RichText(text: TextSpan(
+      children:
+          _buildTextSpans(formula,
+              formulaColors(formula,values )
+          )
+    ));
+  }
+
+  static String formulaColors(String formula, Map<String, String> values) {
+    if (formula == null) return null;
+
+    final opposideBracket =  { '[': ']', '(': ')', '{': '}' };
+    final opposideBracket2 = switchMapKeyValue(opposideBracket);
+    var result = "";
+    var brackets = <String>[];
+    var operators = { '+', '-', '*', '/', '^' };
+    var containsBrackets = formula.contains('[') || formula.contains(']');
+    var validValuelength = 0;
+    var keys = <String>[];
+    var _allCharacters = allCharacters();
+
+    FormulaParser.alternateOperators.values.forEach((value) {
+      operators.addAll(value.characters);
+    });
+
+    if (values != null) {
+      keys = values.keys.map((key) {
+        return ((key == null) || (key.length == 0)) ? null : key;
+      }).toList();
+    }
+    keys.addAll(FormulaParser.constants.keys);
+    keys.addAll(FormulaParser.functions);
+    keys = keys.map((key) {return key.toUpperCase();}).toList();
+    keys.sort((a, b) => b.length.compareTo(a.length));
+
+    formula = formula.toUpperCase();
+    formula.split('').forEach((e) {
+      if (int.tryParse(e) != null)
+        result += _calculated(formula, result, brackets, containsBrackets) ? 'g' : 't';
+
+      else if (e == ' ')
+        result += ((result.length == 0) ? "s" : result[result.length - 1]);
+
+      else if (opposideBracket.containsKey(e)) {
+        brackets.add(e);
+        result += (formula.indexOf(opposideBracket[e], result.length) > 0) ? 'b' : 'B';
+
+      } else if (opposideBracket2.containsKey(e)) {
+        var validBracket = (brackets.length > 0) &&
+            (brackets[brackets.length - 1] == opposideBracket2[e]);
+        validBracket = validBracket && ((result.length == 0) ||
+            formula[result.length - 1] != opposideBracket2[e]);
+        result += validBracket ? "b" : "B";
+        if (validBracket) brackets.removeAt(brackets.length - 1);
+
+      } else if (operators.contains(e))
+        result += _calculated(formula, result, brackets, containsBrackets) ? 'b' : 't';
+
+      else if (_calculated(formula, result, brackets, containsBrackets)) {
+        var valid = false;
+        if (validValuelength > 0) {
+          validValuelength--;
+          valid = true;
+        } else {
+          for (String key in keys) {
+            if (formula.substring(result.length).startsWith(key)) {
+              valid = true;
+              validValuelength = key.length - 1;
+              break;
+            }
+          }
+        }
+        if (!valid && !_allCharacters.contains(e))
+          result += 't';
+        else
+          result += valid ? 'r' : 'R';
+
+      } else
+        result += 't';
+    });
+
+    for (int i = result.length - 2; i >= 0; i--)
+      if (result[i] == 's') result = result.substring(0, i) + result[i + 1] + result.substring(i + 1);
+
+    return result;
+  }
+
+  static bool _calculated(String formula, String result, List<String> brackets, bool containsBrackets) {
+    if (!containsBrackets) return true;
+
+    return (brackets.contains('[') && (formula.substring(result.length).contains(']')));
+  }
+
+  List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {
+    var list = <TextSpan>[];
+    var startIndex = 0;
+    var gcwStyle = gcwTextStyle();
+
+    for (int i = 0; i < formula.length; i++) {
+      if ((i == formula.length - 1) || (formulaColors[i + 1] != formulaColors[i])) {
+        TextStyle textStyle;
+        switch (formulaColors[i]) {
+          case 'g':
+            textStyle =  TextStyle(color: Colors.green);
+            break;
+          case 'r':
+            textStyle = TextStyle(color: Colors.orange);
+            break;
+         case 'b':
+            textStyle = TextStyle(color: Colors.blue);
+            break;
+          case 'R':
+          case 'B':
+            textStyle = TextStyle(color: Colors.red, fontWeight: FontWeight.bold);
+            break;
+          default:
+            textStyle = TextStyle();
+        }
+        var text = formula.substring(startIndex, i+1);
+        var textSpan = TextSpan(text: text, style: TextStyle(
+            fontSize: gcwStyle.fontSize,
+            fontFamily: gcwStyle.fontFamily,
+            color: (textStyle.color == null) ? gcwStyle.color : textStyle.color,
+            fontWeight: (textStyle.fontWeight == null) ? gcwStyle.fontWeight : textStyle.fontWeight,
+          )
+        );
+        list.add(textSpan);
+
+        startIndex = i + 1;
+      }
+    }
+    return list;
   }
 }
