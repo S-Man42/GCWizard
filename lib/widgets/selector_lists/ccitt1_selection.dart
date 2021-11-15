@@ -10,7 +10,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class CCITT1Selection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = registeredTools.where((element) {
       if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey == 'baudot')
         return true;
 

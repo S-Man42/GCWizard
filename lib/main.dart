@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/utils/search_strings.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class App extends StatelessWidget {
           return AppBuilder(builder: (context) {
             return MaterialApp(
               title: 'GC Wizard',
-              supportedLocales: supportedLocales,
+              supportedLocales: SUPPORTED_LOCALES,
               locale: model.appLocal,
               localizationsDelegates: [
                 AppLocalizations.delegate,

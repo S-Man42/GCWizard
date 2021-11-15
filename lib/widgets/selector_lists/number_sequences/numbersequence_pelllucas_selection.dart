@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class NumberSequencePellLucasSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
         className(NumberSequencePellLucasNthNumber()),
         className(NumberSequencePellLucasRange()),
