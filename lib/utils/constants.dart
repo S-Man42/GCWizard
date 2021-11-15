@@ -13,3 +13,5 @@ enum CryptMode { encrypt, decrypt }
 const UNKNOWN_ELEMENT = '<?>';
 
 enum AlphabetModificationMode { J_TO_I, C_TO_K, W_TO_VV, REMOVE_Q }
+
+final RegExp REGEXP_SPLIT_STRINGLIST = RegExp(r'[\s,]+');

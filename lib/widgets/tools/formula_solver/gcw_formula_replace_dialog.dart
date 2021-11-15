@@ -15,7 +15,6 @@ List<String> _newFormulas;
 
 showFormulaReplaceDialog(BuildContext context, List<Formula> formulas,
     {Widget contentWidget, int dialogHeight, Function onOkPressed}) {
-
   var _output = formulas.map((formula) => Formula.fromFormula(formula)).toList();
   // var _output = formulas.map((formula) => Formula.fromJson(formula.toMap())).toList();
 
@@ -67,7 +66,10 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
     return Column(
       children: [
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_formulas_modifiedformula') + ' ' + i18n(context, 'formulasolver_formula') + ' ${widget.formulas[_currentFormulaIndex].id}',
+            text: i18n(context, 'formulasolver_formulas_modifiedformula') +
+                ' ' +
+                i18n(context, 'formulasolver_formula') +
+                ' ${widget.formulas[_currentFormulaIndex].id}',
             style: textStyle,
             suppressTopSpace: true,
             trailing: widget.formulas == null || widget.formulas.length <= 1
