@@ -96,7 +96,6 @@ class RALColorCodesState extends State<RALColorCodes> {
 
   _showElement(RGB color) {
     Navigator.of(context).push(NoAnimationMaterialPageRoute(
-        builder: (context) =>
-            GCWTool(tool: ColorPicker(color: color), i18nPrefix: 'colors', helpLocales: ['de', 'en', 'fr'])));
+        builder: (context) => GCWTool(tool: ColorPicker(color: color), i18nPrefix: 'colors')));
   }
 }

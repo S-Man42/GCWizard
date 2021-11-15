@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class SymbolTableSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    List<GCWTool> _toolList = Registry.toolList.where((element) {
+    List<GCWTool> _toolList = registeredTools.where((element) {
       return [
         className(SymbolTable()),
       ].contains(className(element.tool));

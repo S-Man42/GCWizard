@@ -214,6 +214,5 @@ openInAnimatedImage(BuildContext context, local.PlatformFile file) {
           builder: (context) => GCWTool(
               tool: AnimatedImage(platformFile: file),
               toolName: i18n(context, 'animated_image_title'),
-              i18nPrefix: '',
-              helpLocales: ['de', 'en', 'fr'])));
+              i18nPrefix: '')));
 }

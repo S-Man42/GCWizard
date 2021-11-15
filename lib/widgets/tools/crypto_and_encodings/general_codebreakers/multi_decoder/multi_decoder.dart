@@ -4,10 +4,10 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
@@ -86,13 +86,11 @@ class MultiDecoderState extends State<MultiDecoder> {
               iconData: Icons.settings,
               onPressed: () {
                 Navigator.push(
-                    context,
-                    NoAnimationMaterialPageRoute(
-                        builder: (context) => GCWTool(
-                              tool: MultiDecoderConfiguration(),
-                              i18nPrefix: 'multidecoder_configuration',
-                              helpLocales: ['de', 'en', 'fr'],
-                            ))).whenComplete(() {
+                        context,
+                        NoAnimationMaterialPageRoute(
+                            builder: (context) =>
+                                GCWTool(tool: MultiDecoderConfiguration(), i18nPrefix: 'multidecoder_configuration')))
+                    .whenComplete(() {
                   setState(() {
                     _currentOutput = null;
                   });
@@ -119,7 +117,8 @@ class MultiDecoderState extends State<MultiDecoder> {
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
         result = getCoordinateFormatByKey(value).name;
-      } if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
+      }
+      if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
       }
 
