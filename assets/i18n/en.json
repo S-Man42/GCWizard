@@ -4311,6 +4311,8 @@
   "wasd_custom_down" : "Down",
   "wasd_custom_right" : "Right",
   "wasd_custom_left" : "Left",
+  "wherigo_title" : "Wherigo Analyzer",
+  "wherigo_description" : "Lists Zones, Media Files, etc. of a Wherigo Cartridge",
   "whitespace_language_title": "Whitespace",
   "whitespace_language_description": "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
   "whitespace_language_example": "      → DFH",
