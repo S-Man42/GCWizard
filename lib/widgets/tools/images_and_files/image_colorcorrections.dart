@@ -481,6 +481,5 @@ openInColorCorrections(BuildContext context, PlatformFile file) {
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
               i18nPrefix: '',
-              autoScroll: false,
-              helpLocales: ['de', 'en', 'fr'])));
+              autoScroll: false)));
 }

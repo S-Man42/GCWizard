@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class ResistorSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = registeredTools.where((element) {
       if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey == 'resistor')
         return true;
 

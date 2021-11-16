@@ -4,9 +4,9 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
@@ -89,16 +89,14 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         context,
         MaterialPageRoute(
             builder: (context) => GCWTool(
-                  tool: GCWMapView(
-                    points: List<GCWMapPoint>.from(widget.points),
-                    polylines: List<GCWMapPolyline>.from(widget.polylines),
-                    isEditable: freeMap,
-                  ),
-                  i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
-                  autoScroll: false,
-                  suppressToolMargin: true,
-                  helpLocales: ['de', 'en', 'fr'],
-                )));
+                tool: GCWMapView(
+                  points: List<GCWMapPoint>.from(widget.points),
+                  polylines: List<GCWMapPolyline>.from(widget.polylines),
+                  isEditable: freeMap,
+                ),
+                i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
+                autoScroll: false,
+                suppressToolMargin: true)));
   }
 
   Future<bool> _exportCoordinates(
