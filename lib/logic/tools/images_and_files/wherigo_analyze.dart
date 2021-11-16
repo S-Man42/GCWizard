@@ -88,6 +88,7 @@
 // ASCIIZ = zero-terminated string ("hello world!", 0x00)
 
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
@@ -104,16 +105,17 @@ String readString(var HEXlist, int offset){ // zero-terminated string - 0x00
 }
 
 double readDouble(var HEXlist, int offset){ // 8 Byte
-  String binaryFormat = convertBase(HEXlist[offset + 7], 16, 2) +
-      convertBase(HEXlist[offset + 6], 16, 2) +
-      convertBase(HEXlist[offset + 5], 16, 2) +
-      convertBase(HEXlist[offset + 4], 16, 2) +
-      convertBase(HEXlist[offset + 3], 16, 2) +
-      convertBase(HEXlist[offset + 2], 16, 2) +
-      convertBase(HEXlist[offset + 1], 16, 2) +
-      convertBase(HEXlist[offset], 16, 2);
-  String exponent = binaryFormat.substring(1, 12);
-  String fraction = binaryFormat.substring(12);
+  Uint8List bytes = Uint8List(8);
+  bytes[0] = int.parse(convertBase(HEXlist[offset], 16, 10));
+  bytes[1] = int.parse(convertBase(HEXlist[offset + 1], 16, 10));
+  bytes[2] = int.parse(convertBase(HEXlist[offset + 2], 16, 10));
+  bytes[3] = int.parse(convertBase(HEXlist[offset + 3], 16, 10));
+  bytes[4] = int.parse(convertBase(HEXlist[offset + 4], 16, 10));
+  bytes[5] = int.parse(convertBase(HEXlist[offset + 5], 16, 10));
+  bytes[6] = int.parse(convertBase(HEXlist[offset + 6], 16, 10));
+  bytes[7] = int.parse(convertBase(HEXlist[offset + 7], 16, 10));
+  var blob = ByteData.sublistView(bytes);
+  return blob.getFloat64(0);
 }
 
 int readLong(var HEXlist, int offset){ // 8 Byte
