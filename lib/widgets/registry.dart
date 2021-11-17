@@ -105,7 +105,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
@@ -139,6 +138,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
@@ -2834,6 +2834,18 @@ initializeRegistry(BuildContext context) {
       'symbol_flags',
       'symbol_flags_nato',
     ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_howe',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_marryat', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_marryat',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_popham', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_popham',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: [
       'symbol_fonic',
     ]),
@@ -3123,6 +3135,12 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'prussian_colors_artillery', symbolSearchStrings: [
+      'symbol_prussian_colors_artillery',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
+      'symbol_prussian_colors_infantery',
     ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
