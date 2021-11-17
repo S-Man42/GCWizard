@@ -28,6 +28,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
 //  String _hexData;
   Uint8List _bytes;
+  WherigoCartridge _cartridge;
 
 //  final _CHARS_PER_LINE = 10 * 2;
 
@@ -94,6 +95,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 //    var hexText = insertEveryNthCharacter(_hexData, _CHARS_PER_LINE, '\n');
 //    var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2) + ' ').toList();
 //    hexText = hexTextList.join('\n');
+
+    _cartridge = getCartridge(_bytes);
 
     return GCWText(
 //                      text: hexText,
