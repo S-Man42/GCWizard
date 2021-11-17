@@ -144,3 +144,17 @@ int readByte(Uint8List byteList, int offset){ // 1 Byte
   return byteList[offset];
 }
 
+class WherigoCartridge{
+  final int NumberOfObjects;
+  final double Latitude;
+  final double Longitude;
+  final double Altitude;
+
+  WherigoCartridge(this.NumberOfObjects, this.Latitude, this.Longitude, this.Altitude);
+}
+
+
+
+String getHeader(Uint8List byteList){
+
+}
