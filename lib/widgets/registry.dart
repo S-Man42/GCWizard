@@ -105,7 +105,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
@@ -328,6 +327,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_sear
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/search_strings.dart';
+
+import 'tools/crypto_and_encodings/charsets/ascii_values.dart';
 
 List<GCWTool> registeredTools;
 

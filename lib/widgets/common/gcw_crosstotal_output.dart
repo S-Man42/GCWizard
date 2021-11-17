@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 enum CROSSTOTAL_INPUT_TYPE { LETTERS, NUMBERS }
 
 class GCWCrosstotalOutput extends StatefulWidget {
-  final values;
+  final List<int> values;
   final String text;
   final suppressSums;
   final CROSSTOTAL_INPUT_TYPE inputType;

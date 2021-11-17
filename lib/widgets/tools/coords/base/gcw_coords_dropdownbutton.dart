@@ -28,7 +28,7 @@ class _GCWCoordsDropDownButtonState extends State<GCWCoordsDropDownButton> {
       items: widget.itemList.map((entry) {
         return GCWDropDownMenuItem(
           value: entry.key,
-          child: entry.name,
+          child: entry.charsetName,
         );
       }).toList(),
     );
