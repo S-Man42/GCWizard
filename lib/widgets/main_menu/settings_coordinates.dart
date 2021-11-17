@@ -92,7 +92,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
             switch (_currentDefaultEllipsoid.type) {
               case EllipsoidType.STANDARD:
                 Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.STANDARD.toString());
-                Prefs.setString('coord_default_ellipsoid_name', ells.charsetName);
+                Prefs.setString('coord_default_ellipsoid_name', ells.name);
                 break;
               case EllipsoidType.USER_DEFINED:
                 Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.USER_DEFINED.toString());
