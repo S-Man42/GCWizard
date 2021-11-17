@@ -92,56 +92,55 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-String HEX2Char(String HEX){
-  return String.fromCharCode(int.parse(convertBase(HEX, 16, 10)));
-}
 
-String readString(var HEXlist, int offset){ // zero-terminated string - 0x00
+
+String readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
   String result = '';
-  while (HEXlist[offset] != 00) {
-    result = result + HEX2Char(HEXlist[offset]);
+  while (byteList[offset] != 00) {
+    result = result + String.fromCharCode(byteList[offset]);
     offset++;
   }
 }
 
-double readDouble(var HEXlist, int offset){ // 8 Byte
+double readDouble(Uint8List byteList, int offset){ // 8 Byte
   Uint8List bytes = Uint8List(8);
-  bytes[0] = int.parse(convertBase(HEXlist[offset], 16, 10));
-  bytes[1] = int.parse(convertBase(HEXlist[offset + 1], 16, 10));
-  bytes[2] = int.parse(convertBase(HEXlist[offset + 2], 16, 10));
-  bytes[3] = int.parse(convertBase(HEXlist[offset + 3], 16, 10));
-  bytes[4] = int.parse(convertBase(HEXlist[offset + 4], 16, 10));
-  bytes[5] = int.parse(convertBase(HEXlist[offset + 5], 16, 10));
-  bytes[6] = int.parse(convertBase(HEXlist[offset + 6], 16, 10));
-  bytes[7] = int.parse(convertBase(HEXlist[offset + 7], 16, 10));
+  bytes[0] = byteList[offset];
+  bytes[1] = byteList[offset + 1];
+  bytes[2] = byteList[offset + 2];
+  bytes[3] = byteList[offset + 3];
+  bytes[4] = byteList[offset + 4];
+  bytes[5] = byteList[offset + 5];
+  bytes[6] = byteList[offset + 6];
+  bytes[7] = byteList[offset + 7];
   var blob = ByteData.sublistView(bytes);
   return blob.getFloat64(0);
 }
 
-int readLong(var HEXlist, int offset){ // 8 Byte
-  return int.parse(convertBase(HEXlist[offset], 16, 10))
-      + int.parse(convertBase(HEXlist[offset + 1], 16, 10)) * 256
-      + int.parse(convertBase(HEXlist[offset + 2], 16, 10)) * 256 * 256
-      + int.parse(convertBase(HEXlist[offset + 3], 16, 10)) * 256 * 256 * 256
-      + int.parse(convertBase(HEXlist[offset + 4], 16, 10)) * 256 * 256 * 256 * 256
-      + int.parse(convertBase(HEXlist[offset + 5], 16, 10)) * 256 * 256 * 256 * 256 * 256
-      + int.parse(convertBase(HEXlist[offset + 6], 16, 10)) * 256 * 256 * 256 * 256 * 256 * 256
-      + int.parse(convertBase(HEXlist[offset + 6], 16, 10)) * 256 * 256 * 256 * 256 * 256 * 256 * 256
+int readLong(Uint8List byteList, int offset){ // 8 Byte
+  return (byteList[offset])
+      + byteList[offset + 1] * 256
+      + byteList[offset + 2] * 256 * 256
+      + byteList[offset + 3] * 256 * 256 * 256
+      + byteList[offset + 4] * 256 * 256 * 256 * 256
+      + byteList[offset + 5] * 256 * 256 * 256 * 256 * 256
+      + byteList[offset + 6] * 256 * 256 * 256 * 256 * 256 * 256
+      + byteList[offset + 7] * 256 * 256 * 256 * 256 * 256 * 256 * 256
       - (pow(2, 63) - 1);
 }
 
-int readInt(var HEXlist, int offset){ // 4 Byte
-  return int.parse(convertBase(HEXlist[offset], 16, 10))
-      + int.parse(convertBase(HEXlist[offset + 1], 16, 10)) * 256
-      + int.parse(convertBase(HEXlist[offset + 2], 16, 10)) * 256 * 256
-      + int.parse(convertBase(HEXlist[offset + 3], 16, 10)) * 256 * 256 * 256
+int readInt(Uint8List byteList, int offset){ // 4 Byte
+  return (byteList[offset])
+      + byteList[offset + 1] * 256
+      + byteList[offset + 2] * 256 * 256
+      + byteList[offset + 3] * 256 * 256 * 256
       - (pow(2, 31) - 1);
 }
 
-int readShort(var HEXlist, int offset){ // 2 Byte
-  return int.parse(convertBase(HEXlist[offset], 16, 10)) + 256 * int.parse(convertBase(HEXlist[offset + 1], 16, 10)) - (pow(2, 15) - 1);
+int readShort(Uint8List byteList, int offset){ // 2 Byte
+  return byteList[offset] + 256 * byteList[offset + 1] - (pow(2, 15) - 1);
 }
 
-int readByte(var HEXlist, int offset){ // 1 Byte
-  return int.parse(convertBase(HEXlist[offset], 16, 10));
+int readByte(Uint8List byteList, int offset){ // 1 Byte
+  return byteList[offset];
 }
+

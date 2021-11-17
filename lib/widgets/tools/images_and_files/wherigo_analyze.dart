@@ -26,10 +26,10 @@ class WherigoAnalyze extends StatefulWidget {
 class WherigoAnalyzeState extends State<WherigoAnalyze> {
   ScrollController _scrollControllerHex;
 
-  String _hexData;
+//  String _hexData;
   Uint8List _bytes;
 
-  final _CHARS_PER_LINE = 10 * 2;
+//  final _CHARS_PER_LINE = 10 * 2;
 
 
   @override
@@ -48,7 +48,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _setData(Uint8List bytes) {
     _bytes = bytes;
-    _hexData = file2hexstring(bytes);
+//    _hexData = file2hexstring(bytes);
   }
 
   @override
@@ -83,17 +83,21 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
-  _buildOutput() {
-    if (_hexData == null) return null;
+  _resetScrollViews() {
+    _scrollControllerHex.jumpTo(0.0);
+  }
 
-    //var hexText = insertEveryNthCharacter(_hexData, _CHARS_PER_LINE, '\n');
-    //var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2) + ' ').toList();
-    //hexText = hexTextList.join('\n');
-    List<String> hexTextList = insertEveryNthCharacter(_hexData, 2, ' ').split(' ');
-print(hexTextList);
+  _buildOutput() {
+//  if (_hexData == null) return null;
+    if (_bytes == null) return null;
+
+//    var hexText = insertEveryNthCharacter(_hexData, _CHARS_PER_LINE, '\n');
+//    var hexTextList = hexText.split('\n').map((line) => insertSpaceEveryNthCharacter(line, 2) + ' ').toList();
+//    hexText = hexTextList.join('\n');
+
     return GCWText(
-//      text: hexText,
-      text: _hexData,
+//                      text: hexText,
+      text: _bytes.join(' '),
       style: gcwMonotypeTextStyle(),
     );
   }
