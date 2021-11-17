@@ -3118,6 +3118,12 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
     ]),
+    GCWSymbolTableTool(symbolKey: 'prussian_colors_artillery', symbolSearchStrings: [
+      'symbol_prussian_colors_artillery',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
+      'symbol_prussian_colors_infantery',
+    ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
     ]),
