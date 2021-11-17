@@ -2828,6 +2828,18 @@ initializeRegistry(BuildContext context) {
       'symbol_flags',
       'symbol_flags_nato',
     ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_howe',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_marryat', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_marryat',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_popham', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_popham',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: [
       'symbol_fonic',
     ]),
