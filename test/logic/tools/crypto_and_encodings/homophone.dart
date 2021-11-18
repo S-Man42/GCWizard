@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -8,70 +7,86 @@ void main() {
   group("Homophone.encrypt:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
 
-      {'input' : null, 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
-      {'input' : '', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
+      {'input' : null, 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput' : ''},
+      {'input' : '', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput' : ''},
 
-      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 3, 'ownKeys': '', 'expectedOutput': '58 48 37 58'},
-      {'input' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetEnglish1, 'rotation': 3, 'multiplier': 7, 'ownKeys': '', 'expectedOutput': '88 40 46 88'},
-      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetSpanish2, 'rotation': 6, 'multiplier': 99, 'ownKeys': '', 'expectedOutput': '07 72 15 07'},
-      {'input' : 'КОНТРОЛЬНАЯ РАБОТА', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetRussian1, 'rotation': 1, 'multiplier': 9, 'ownKeys': '', 'expectedOutput': '42 04 41 02 21 04 69 55 41 09 91 21 09 72 04 02 09'},
+      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 3, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput': '58 48 37 58'},
+      {'input' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetEnglish1, 'rotation': 3, 'multiplier': 7, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput': '88 40 46 88'},
+      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetSpanish2, 'rotation': 6, 'multiplier': 99, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput': '07 72 15 07'},
+      {'input' : 'КОНТРОЛЬНАЯ РАБОТА', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetRussian1, 'rotation': 1, 'multiplier': 9, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput': '42 04 41 02 21 04 69 55 41 09 91 21 09 72 04 02 09'},
 
-      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
+      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
-        'expectedOutput': '85 15 78 85'},
-      {'input' : 'Test', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+       'ownKeys2': null, 'expectedOutput': '85 15 78 85'},
+      {'input' : 'Test', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99 99',
-        'expectedOutput': ''},
+       'ownKeys2': null, 'expectedOutput': ''},
+
+      {'input' : 'Test', 'errorcode': ErrorCode.OWNDOUBLEKEY, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
+        'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 40 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
+        'ownKeys2': null, 'expectedOutput': '85 15 78 85'},
+
+      {'input' : 'Test', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN2, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
+        'ownKeys': null,
+        'ownKeys2': {'E': '09', 'S': '80', 'T': '90'}, 'expectedOutput': '90 09 80 90'},
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, keyType: ${elem['keyType']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}, ownKeys: ${elem['ownKeys']}', () {
+      test('input: ${elem['input']}, keyType: ${elem['keyType']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}, ownKeys: ${elem['ownKeys']}, ownKeys2: ${elem['ownKeys2']}', () {
         var _actual;
-        _actual = encryptHomophon(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
+        _actual = encryptHomophone(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys'], elem['ownKeys2']);
         Map<String, String> map ;
-        if (elem['keyType'] == KeyType.OWN)
+        if (elem['keyType'] == KeyType.OWN1)
           map = replaceOwnMap(elem['ownKeys'], elem['alphabet']);
         else
           map = replaceMap(elem['rotation'], elem['multiplier'], elem['alphabet']);
         var output = changeOutput(_actual.output, map);
-        expect(output, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorcode']);
+        expect(output, elem['expectedOutput']);
       });
     });
   });
 
   group("Homophone.decrypt:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
-      {'input' : '', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
-      {'input' : 'T', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'expectedOutput' : ''},
+      {'input' : null, 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 1, 'multiplier': 1, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput' : ''},
+      {'input' : '', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput' : ''},
+      {'input' : 'T', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'ownKeys2': null, 'expectedOutput' : ''},
 
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'input': '93 24 86 88'},
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetEnglish1, 'rotation': 3, 'multiplier': 7, 'ownKeys': '', 'input': '30 03 74 09'},
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetSpanish2, 'rotation': 6, 'multiplier': 99, 'ownKeys': '', 'input': '05 67 15 06'},
-      {'expectedOutput' : 'КОНТРОЛЬНАЯРАБОТА', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetRussian1, 'rotation': 3, 'multiplier': 3, 'ownKeys': '', 'input': '20 95 65 55 19 77 32 91 65 24 06 13 21 30 95 52 18'},
-      {'expectedOutput' : 'ΔΟΚΙΜ', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGreek1, 'rotation': 500, 'multiplier': 31, 'ownKeys': '', 'input': '27 60 64 54 19'},
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1, 'ownKeys': '', 'ownKeys2': null, 'input': '93 24 86 88'},
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetEnglish1, 'rotation': 3, 'multiplier': 7, 'ownKeys': '', 'ownKeys2': null, 'input': '30 03 74 09'},
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetSpanish2, 'rotation': 6, 'multiplier': 99, 'ownKeys': '', 'ownKeys2': null, 'input': '05 67 15 06'},
+      {'expectedOutput' : 'КОНТРОЛЬНАЯРАБОТА', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetRussian1, 'rotation': 3, 'multiplier': 3, 'ownKeys': '', 'ownKeys2': null, 'input': '20 95 65 55 19 77 32 91 65 24 06 13 21 30 95 52 18'},
+      {'expectedOutput' : 'ΔΟΚΙΜ', 'errorcode': ErrorCode.OK, 'keyType': KeyType.GENERATED, 'alphabet': Alphabet.alphabetGreek1, 'rotation': 500, 'multiplier': 31, 'ownKeys': '', 'ownKeys2': null, 'input': '27 60 64 54 19'},
 
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
-        'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 40 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
-        'input': '70 27 81 89'},
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
-        'input': '70 27 81 89'},
-      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+        'ownKeys2': null, 'input': '70 27 81 89'},
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+        'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
+        'ownKeys2': null, 'input': '70 27 81 89'},
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36.56 2,3 4 5 6 7 8 9_10 11B12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
-        'input': '70 27 81 89'},
-      {'expectedOutput' : '', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+        'ownKeys2': null, 'input': '70 27 81 89'},
+      {'expectedOutput' : '', 'errorcode': ErrorCode.OWNKEYCOUNT, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
         'ownKeys': '36 56 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 30 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99 99',
-        'input': '70 27 81 89'},
+        'ownKeys2': null, 'input': '70 27 81 89'},
+
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OWNDOUBLEKEY, 'keyType': KeyType.OWN1, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 7,
+        'ownKeys': '36.56 2,3 4 5 6 7 8 9_10 11B12 13 14 15 16 17 18 19 40 21 22 23 24 25 26 27 28 29 40 31 32 33 34 35 0 37 38 39 20 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 1 57 58 59 60 61 62 63 64 65 66 67 68 69 80 71 72 73 74 75 76 77 78 79 90 81 82 83 84 85 86 87 88 89 70 91 92 93 94 95 96 97 98 99',
+        'ownKeys2': null, 'input': '70 27 81 89'},
+
+      {'expectedOutput' : 'TEST', 'errorcode': ErrorCode.OK, 'keyType': KeyType.OWN2, 'alphabet': Alphabet.alphabetGerman1, 'rotation': 3, 'multiplier': 1,
+        'ownKeys': null,
+        'ownKeys2': {'E': '09', 'S': '80', 'T': '90'}, 'input': '90 09 80 90'},
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, keyType: ${elem['keyType']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}, ownKeys: ${elem['ownKeys']}', () {
+      test('input: ${elem['input']}, keyType: ${elem['keyType']}, alphabet: ${elem['alphabet']}, rotation: ${elem['rotation']}, multiplier: ${elem['multiplier']}, ownKeys: ${elem['ownKeys']}, ownKeys2: ${elem['ownKeys2']}', () {
         var _actual;
-        _actual = decryptHomophon(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys']);
-        expect(_actual.output, elem['expectedOutput']);
+        _actual = decryptHomophone(elem['input'], elem['keyType'], elem['alphabet'], elem['rotation'], elem['multiplier'], elem['ownKeys'], elem['ownKeys2']);
         expect(_actual.errorCode, elem['errorcode']);
+        expect(_actual.output, elem['expectedOutput']);
       });
     });
   });
