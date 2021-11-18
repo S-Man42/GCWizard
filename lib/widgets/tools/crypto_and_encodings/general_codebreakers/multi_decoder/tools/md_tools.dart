@@ -277,7 +277,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
         options: [MultiDecoderToolOption(MDT_BACON_OPTION_MODE, MDT_BACON_OPTION_MODE_01)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BCD), MDT_INTERNALNAMES_BCD,
-        options: [MultiDecoderToolOption(MDT_BCD_OPTION_BCDFUNCTION, 'bcd_original_title')]),
+        options: [MultiDecoderToolOption(MDT_BCD_OPTION_BCDFUNCTION, 'bcd_original')]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ENCLOSEDAREAS), MDT_INTERNALNAMES_ENCLOSEDAREAS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BEGHILOS), MDT_INTERNALNAMES_BEGHILOS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_GCCODE), MDT_INTERNALNAMES_GCCODE,

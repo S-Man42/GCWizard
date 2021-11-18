@@ -20,6 +20,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
@@ -160,6 +161,8 @@ class MultiDecoderState extends State<MultiDecoder> {
         result = getCoordinateFormatByKey(value).name;
       } if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
+      } else if (tool.internalToolName == MDT_INTERNALNAMES_KEYBOARDLAYOUT) {
+        result = keyboardOptionToNameLabel(value);
       }
 
       return i18n(context, result.toString()) ?? result;

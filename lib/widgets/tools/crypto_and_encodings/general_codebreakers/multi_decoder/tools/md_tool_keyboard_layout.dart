@@ -61,3 +61,8 @@ String shortKeyboardName(enumKeyboardLayout item) {
   if (item == null) return null;
   return item.toString().replaceAll('enumKeyboardLayout.', '');
 }
+
+String keyboardOptionToNameLabel(String item) {
+  var enumValue = _parseStringToEnum(item);
+  return allKeyboards.where((keyboard) => keyboard.key == enumValue)?.first?.name;
+}
