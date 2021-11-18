@@ -461,7 +461,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     var brackets = <String>[];
     var operators = { '+', '-', '*', '/', '^', '%' };
     var containsBrackets = formula.contains('[') || formula.contains(']');
-    var checkedFormulaLength = 0;
     var checkedFormulaResult = "";
     var keys = <String>[];
     var functions = <String>[];
@@ -486,14 +485,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     formula = formula.toUpperCase();
     formula.split('').forEach((e) {
       // checked
-      if (checkedFormulaLength > 0) {
-        checkedFormulaLength--;
-        if (checkedFormulaResult.length > 0) {
-          result += checkedFormulaResult[0];
-          checkedFormulaResult = checkedFormulaResult.substring(1);
-        } else
-          result += result[result.length - 1];
-
+      if (checkedFormulaResult.length > 0) {
+        result += checkedFormulaResult[0];
+        checkedFormulaResult = checkedFormulaResult.substring(1);
 
         if (opposideBracket.containsKey(e)) brackets.add(e);
         if (opposideBracket2.containsKey(e)) {
@@ -509,20 +503,15 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           // spaces
         else if (e == ' ')
-          result += ((result.length == 0) ? "s" : result[result.length - 1]);
+          result += ((result.isEmpty) ? "s" : result[result.length - 1]);
 
           // formula reference
         else if (e == '{') {
           brackets.add(e);
-          var tuple = _validFormulaReference(formula.substring(result.length), result, formulaIndex);
-          if ((tuple.item1) | (tuple.item2.length > 0)) {
-            result += tuple.item2[0];
-            checkedFormulaResult = tuple.item2.substring(1);
-            checkedFormulaLength = checkedFormulaResult.length;
-          } else{
-            result += "B";
-            checkedFormulaLength = max(formula.indexOf(opposideBracket[e], result.length) - 1, 0);
-          }
+          var _result = _validFormulaReference(formula.substring(result.length), result, formulaIndex);
+
+            result += _result[0];
+            checkedFormulaResult = _result.substring(1);
 
           //open brackets
         } else if (opposideBracket.containsKey(e)) {
@@ -531,19 +520,21 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           // close brackets
         } else if (opposideBracket2.containsKey(e)) {
-          var validBracket = (brackets.length > 0) && (brackets[brackets.length - 1] == opposideBracket2[e]);
+          var validBracket = (brackets.isNotEmpty) && (brackets[brackets.length - 1] == opposideBracket2[e]);
           //validBracket = validBracket && ((result.length == 0) || formula[result.length - 1] != opposideBracket2[e]);
           result += validBracket ? "b" : "B";
           if (validBracket) brackets.removeAt(brackets.length - 1);
 
           // operators
         } else if (operators.contains(e)) {
-          var tuple = _validOperator(formula.substring(result.length), operatorsRegEx);
-          if (tuple.item1 && _validFirstOperator(formula.substring(0, result.length+1), result))
+          var _result = _validOperator(formula.substring(result.length), operatorsRegEx);
+          var firstOperatorValid = _validFirstOperator(formula.substring(0, result.length+1), result);
+          if (_result.startsWith('b') && firstOperatorValid)
             result += _calculated(formula, result, brackets, containsBrackets) ? 'b' : 't';
           else {
-            result += "B";
-            if (!tuple.item1) checkedFormulaLength = tuple.item2 - 1;
+            _result = _buildResultString('B', firstOperatorValid ? _result.length : 1);
+            result += _result[0];
+            checkedFormulaResult = _result.substring(1);
           }
 
         //formulas, constans variables
@@ -553,17 +544,17 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           // check functions
           for (String function in functions) {
             if (formula.substring(result.length).startsWith(function)) {
-              var tuple = _validFunction(formula.substring(result.length));
-              if (tuple.item1) {
-                result += "b";
-                checkedFormulaLength = function.length - 1;
+              var _result = _validFunction(formula.substring(result.length), function);
+              if (_result.isNotEmpty) {
+                result += _result[0];
+                checkedFormulaResult = _result.substring(1);
                 handled = true;
                 break;
               } else {
-                var tuple = _invalidFunction(formula.substring(result.length));
-                if (tuple.item1) {
-                  result += "B";
-                  checkedFormulaLength = tuple.item2 - 1;
+                var _result = _invalidFunction(formula.substring(result.length));
+                if (_result.isNotEmpty) {
+                  result += _result[0];
+                  checkedFormulaResult = _result.substring(1);
                   handled = true;
                   break;
                 }
@@ -572,11 +563,13 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             }
           }
 
+          // non function
           if (!handled) {
+            // constant or variable
             for (String key in keys) {
               if (formula.substring(result.length).startsWith(key)) {
                 valid = true;
-                checkedFormulaLength = key.length - 1;
+                checkedFormulaResult = _buildResultString('r', key.length - 1);
                 break;
               }
             }
@@ -607,30 +600,31 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return (brackets.contains('[') && (formula.substring(result.length).contains(']')));
   }
 
-  static Tuple2<bool, int> _validFunction(String formula) {
+  static String _validFunction(String formula, String function) {
     var regex = RegExp(r'^(.+)[\s]*[(][\s]*[\S]+[\s]*[)]');
     var matches = regex.allMatches(formula);
-    if (matches.length > 0) return Tuple2<bool, int>(true, matches.first.end);
+    if (matches.length > 0) return _buildResultString('b', function.length);
 
-    return Tuple2<bool, int>(false, 0);
+    return '';
   }
 
-  static Tuple2<bool, int> _invalidFunction(String formula) {
+  static String _invalidFunction(String formula) {
     var regex = RegExp(r'^(.+)[\s]*[(][\s]*[)]');
     var match = regex.firstMatch(formula);
-    if (match != null) return Tuple2<bool, int>(true, match.end);
+    if (match != null) return _buildResultString('B', match.end);
 
-    return Tuple2<bool, int>(false, 0);
+    return '';
   }
 
-  static Tuple2<bool, int> _validOperator(String formula, String operators) {
-    var regex = RegExp('^[$operators][\s]*[\-]*[\s]*[^$operators]');
+  static String _validOperator(String formula, String operators) {
+    var ignoreBrackets = r'((\(\s*\))|(\[\s*\]))';
+    var regex = RegExp('^[$operators][\s]*$ignoreBrackets[\s]*[\-]*[\s]*[^$operators]');
     var match = regex.firstMatch(formula);
-    if (match != null) return Tuple2<bool, int>(true, match.end);
+    if (match != null) return _buildResultString('b', match.end - 1);
 
     regex = RegExp('^[$operators][\s]*[\-]*[\s]*');
     match = regex.firstMatch(formula);
-    return Tuple2<bool, int>(false, (match != null) ? match.end +1 : 1);
+    return _buildResultString('B', (match != null) ? match.end + 1 : 1);
   }
 
   static bool _validFirstOperator(String formula, String result) {
@@ -640,17 +634,18 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return formula.length > 1;
   }
 
-  static Tuple2<bool, String> _validFormulaReference(String formula, String result, int formulaId) {
+  static String _validFormulaReference(String formula, String result, int formulaId) {
     RegExp regex = new RegExp(r'[{](\d)[}]');
     var match = regex.firstMatch(formula);
     if (match != null) {
       if (int.tryParse(match.group(1)) < formulaId)
-        return Tuple2<bool, String>(true, _buildResultString('b' , match.end));
+        return _buildResultString('b' , match.end);
       else
-        return Tuple2<bool, String>(false, 'b' + _buildResultString('B' , match.end - 2) + 'b');
+        return 'b' + _buildResultString('B' , match.end - 2) + 'b';
     }
 
-    return Tuple2<bool, String>(false, '');
+    var bracketIndex = formula.indexOf('}');
+    return _buildResultString('B', (bracketIndex >= 0) ? bracketIndex +1 : 1);
   }
 
   static String _checkBrackets(String formula, String result, String startBracket, endBracket) {

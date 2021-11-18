@@ -11,6 +11,7 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
+      {'formula' : '1+()+2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbBg'},
 
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
@@ -66,7 +67,7 @@ void main() {
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttbb'},
       {'formula' : 'N [F', 'values': values, 'expectedOutput' : 'ttBt'},
       {'formula' : 'N [F]', 'values': values, 'expectedOutput' : 'ttbRb'},
-      {'formula' : 'N [A].[{(B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbBBBBBB'},
+      {'formula' : 'N [A].[{(B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbBBBBBb'},
       {'formula' : 'N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbbBBBBB'},
       {'formula' : '  N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttttbrbtbbBBBBB'},
       {'formula' : '  N [AB].[({B)}]', 'values': values, 'expectedOutput' : 'ttttbrrbtbbBBBBB'},
