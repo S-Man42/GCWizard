@@ -29,7 +29,9 @@ class MultiDecoderToolPolybios extends GCWMultiDecoderTool {
                   options[MDT_POLYBIOS_OPTION_MODE] = alphabetModeName(newValue);
                 },
               )
-            }));
+            },
+              withoutLabel: true,
+            ));
 }
 
 AlphabetModificationMode _parseStringToEnum(String item) {
