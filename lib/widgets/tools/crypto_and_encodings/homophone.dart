@@ -109,8 +109,8 @@ class HomophoneState extends State<Homophone> {
   Widget build(BuildContext context) {
     var HomophoneKeyTypeItems = {
       KeyType.GENERATED: i18n(context, 'homophone_keytype_generated'),
-      KeyType.OWN1: i18n(context, 'homophone_keytype_own') + " 1",
-      KeyType.OWN2: i18n(context, 'homophone_keytype_own') + " 2",
+      KeyType.OWN1: i18n(context, 'homophone_keytype_own1'),
+      KeyType.OWN2: i18n(context, 'homophone_keytype_own2'),
     };
 
     var HomophoneAlphabetItems = {
@@ -247,7 +247,7 @@ class HomophoneState extends State<Homophone> {
     if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.OWNKEYCOUNT:
-          showToast(i18n(context, "homophone_error_own_keys"));
+          showToast(i18n(context, "homophone_error_own_key"));
           return GCWDefaultOutput(child: '');
           break;
         case ErrorCode.OWNDOUBLEKEY:
@@ -285,7 +285,7 @@ class HomophoneState extends State<Homophone> {
     return GCWKeyValueEditor(
         keyController: _newKeyController,
         keyInputFormatters: [_keyMaskInputFormatter],
-        valueHintText: i18n(context, 'homophone_own_keys_hint'),
+        valueHintText: i18n(context, 'homophone_own_key_hint'),
         valueFlex: 2,
         keyValueMap: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
