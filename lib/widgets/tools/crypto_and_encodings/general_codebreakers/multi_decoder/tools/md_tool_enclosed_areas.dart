@@ -18,17 +18,17 @@ class MultiDecoderToolEnclosedAreas extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ENCLOSEDAREAS,
             onDecode: (String input, String key) {
-              return decodeEnclosedAreas(input, options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'Closed 4');
+              return decodeEnclosedAreas(input, options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'enclosedareas_with4');
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_ENCLOSEDAREAS_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'Closed 4' ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                value: options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'enclosedareas_with4' ? GCWSwitchPosition.left : GCWSwitchPosition.right,
                 notitle: true,
                 leftValue: i18n(context, 'enclosedareas_with4'),
                 rightValue: i18n(context, 'enclosedareas_without4'),
                 onChanged: (value) {
-                  options[MDT_ENCLOSEDAREAS_OPTION_MODE] = value == GCWSwitchPosition.left ? 'Closed 4' : 'Open 4';
+                  options[MDT_ENCLOSEDAREAS_OPTION_MODE] = value == GCWSwitchPosition.left ? 'enclosedareas_with4' : 'enclosedareas_without4';
                 },
               )
             }));
