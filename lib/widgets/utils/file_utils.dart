@@ -235,7 +235,7 @@ Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, Strin
 
   if (kIsWeb) {
     var blob = new html.Blob([data], 'image/png');
-    var anchorElement = html.AnchorElement(
+    html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
       )..setAttribute("download", fileName)..click();
 
@@ -268,7 +268,7 @@ Future<File> saveStringToFile(BuildContext context, String data, String fileName
 
   if (kIsWeb) {
     var blob = html.Blob([data], 'text/plain', 'native');
-    var anchorElement = html.AnchorElement(
+    html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
       )..setAttribute("download", fileName)..click();
 
