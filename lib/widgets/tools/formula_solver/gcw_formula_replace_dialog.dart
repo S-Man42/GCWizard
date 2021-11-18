@@ -170,10 +170,10 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
     }
 
     _newFormulas = List.from(widget.formulas.map((formula) => formula.formula).toList());
-    
-    if (_currentValueBracket) _newFormulas = _replaceBrackets (_newFormulas, '(' , ')');
 
-    if (_currentValueBraces) _newFormulas = _replaceBrackets (_newFormulas, '{' , '}');
+    if (_currentValueBracket) _newFormulas = _replaceBrackets(_newFormulas, '(', ')');
+
+    if (_currentValueBraces) _newFormulas = _replaceBrackets(_newFormulas, '{', '}');
 
     if (_currentValueMultiply) {
       _newFormulas = _newFormulas.map((formula) => formula.replaceAll(RegExp(r'[xX]'), '*')).toList();
@@ -183,7 +183,6 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
   }
 
   List<String> _replaceBrackets(List<String> formulas, String openBracket, String closeBracket) {
-
     formulas = formulas.map((formula) {
       int ignoreBracket = 0;
       if (formula == null || formula.isEmpty) {
