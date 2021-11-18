@@ -63,7 +63,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         final currentLocale = snapshot.data;
 
                         return GCWStatefulDropDownButton(
-                            items: supportedLocales.map((locale) {
+                            items: SUPPORTED_LOCALES.map((locale) {
                               Map<String, dynamic> language = _LANGUAGES[locale.languageCode ?? defaultLanguage];
                               String languageName = language['name_native'];
 

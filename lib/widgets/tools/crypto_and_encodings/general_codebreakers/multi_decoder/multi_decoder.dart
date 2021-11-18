@@ -95,13 +95,11 @@ class MultiDecoderState extends State<MultiDecoder> {
               iconData: Icons.settings,
               onPressed: () {
                 Navigator.push(
-                    context,
-                    NoAnimationMaterialPageRoute(
-                        builder: (context) => GCWTool(
-                              tool: MultiDecoderConfiguration(),
-                              i18nPrefix: 'multidecoder_configuration',
-                              helpLocales: ['de', 'en', 'fr'],
-                            ))).whenComplete(() {
+                        context,
+                        NoAnimationMaterialPageRoute(
+                            builder: (context) =>
+                                GCWTool(tool: MultiDecoderConfiguration(), i18nPrefix: 'multidecoder_configuration')))
+                    .whenComplete(() {
                   setState(() {
                     _currentOutput = null;
                   });
@@ -159,7 +157,8 @@ class MultiDecoderState extends State<MultiDecoder> {
 
       if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
         result = getCoordinateFormatByKey(value).name;
-      } if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
+      }
+      if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
       } else if (tool.internalToolName == MDT_INTERNALNAMES_KEYBOARDLAYOUT) {
         result = keyboardOptionToNameLabel(value);

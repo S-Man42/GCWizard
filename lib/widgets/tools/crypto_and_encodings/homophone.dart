@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -9,10 +13,14 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Homophone extends StatefulWidget {
   @override
@@ -23,13 +31,18 @@ class HomophoneState extends State<Homophone> {
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentRotationController;
+  TextEditingController _newKeyController;
+  WrapperForMaskTextInputFormatter _keyMaskInputFormatter;
   String _currentInput = '';
   Alphabet _currentAlphabet = Alphabet.alphabetGerman1;
   KeyType _currentKeyType = KeyType.GENERATED;
   int _currentRotation = 1;
   int _currentMultiplierIndex = 0;
   String _currentOwnKeys = '';
+  var _currentSubstitutions = Map<String, String>();
 
+  var _mask = '#';
+  var _filter = {"#": RegExp(r'[^0-9]')};
   final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
 
   @override
@@ -37,20 +50,67 @@ class HomophoneState extends State<Homophone> {
     super.initState();
 
     _currentRotationController = TextEditingController(text: _currentRotation.toString());
+    _newKeyController = TextEditingController(text: _maxLetter());
+    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
   }
 
   @override
   void dispose() {
     _currentRotationController.dispose();
+    _newKeyController.dispose();
 
     super.dispose();
   }
+
+  String _maxLetter() {
+    int maxLetterIndex = 0;
+    var alphabetTable = getAlphabetTable(_currentAlphabet);
+    _currentSubstitutions.forEach((key, value) {
+      if (key.length != 1) return;
+
+      if (alphabetTable.containsKey(key.toUpperCase()))
+        maxLetterIndex = max(maxLetterIndex, alphabetTable.keys.toList().indexOf(key.toUpperCase()) + 1);
+    });
+
+    if (maxLetterIndex < alphabetTable.length) {
+      return alphabetTable.keys.elementAt(maxLetterIndex);
+    }
+
+    return '';
+  }
+
+  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+    if (currentFromInput.length > 0)
+      _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () =>  currentToInput);
+
+    _newKeyController.text = _maxLetter();
+
+    setState(() {});
+  }
+
+  // _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  //   _currentFromInput = currentFromInput;
+  //   _currentToInput = currentToInput;
+  //   //_calculateOutput();
+  // }
+
+  _updateEntry(dynamic id, String key, String value) {
+    _currentSubstitutions[id] = value;
+    setState(() {});
+  }
+
+  _removeEntry(dynamic id, BuildContext context) {
+    _currentSubstitutions.remove(id);
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
     var HomophoneKeyTypeItems = {
       KeyType.GENERATED: i18n(context, 'homophone_keytype_generated'),
-      KeyType.OWN: i18n(context, 'homophone_keytype_own'),
+      KeyType.OWN1: i18n(context, 'homophone_keytype_own1'),
+      KeyType.OWN2: i18n(context, 'homophone_keytype_own2'),
     };
 
     var HomophoneAlphabetItems = {
@@ -123,14 +183,20 @@ class HomophoneState extends State<Homophone> {
                     ),
                     flex: 2),
               ])
-            : GCWTextField(
+            : Container(),
+        _currentKeyType == KeyType.OWN1
+            ? GCWTextField(
                 hintText: "Keys",
                 onChanged: (text) {
                   setState(() {
                     _currentOwnKeys = text;
                   });
                 },
-              ),
+              )
+            : Container(),
+        _currentKeyType == KeyType.OWN2
+            ? _buildVariablesEditor()
+            : Container(),
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'common_alphabet') + ':'), flex: 1),
           Expanded(
@@ -139,6 +205,7 @@ class HomophoneState extends State<Homophone> {
                 onChanged: (value) {
                   setState(() {
                     _currentAlphabet = value;
+                    _newKeyController.text = _maxLetter();
                   });
                 },
                 items: HomophoneAlphabetItems.entries.map((alphabet) {
@@ -168,21 +235,24 @@ class HomophoneState extends State<Homophone> {
     if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
     int _currentMultiplier = getMultipliers()[_currentMultiplierIndex];
 
-    HomophonOutput _currentOutput;
+    HomophoneOutput _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptHomophon(
-          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys);
+      _currentOutput = encryptHomophone(
+          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys, _currentSubstitutions);
     } else {
-      _currentOutput = decryptHomophon(
-          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys);
+      _currentOutput = decryptHomophone(
+          _currentInput, _currentKeyType, _currentAlphabet, _currentRotation, _currentMultiplier, _currentOwnKeys, _currentSubstitutions);
     }
 
     if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.OWNKEYCOUNT:
-          showToast(i18n(context, "homophone_error_own_keys"));
+          showToast(i18n(context, "homophone_error_own_key"));
+          return GCWDefaultOutput(child: '');
+          break;
+        case ErrorCode.OWNDOUBLEKEY:
+          showToast(i18n(context, "homophone_error_own_double_keys"));
       }
-      return GCWDefaultOutput(child: '');
     }
 
     return GCWMultipleOutput(
@@ -209,5 +279,18 @@ class HomophoneState extends State<Homophone> {
     }
 
     return null;
+  }
+
+  Widget _buildVariablesEditor() {
+    return GCWKeyValueEditor(
+        keyController: _newKeyController,
+        keyInputFormatters: [_keyMaskInputFormatter],
+        valueHintText: i18n(context, 'homophone_own_key_hint'),
+        valueFlex: 2,
+        keyValueMap: _currentSubstitutions,
+        //onNewEntryChanged: _updateNewEntry,
+        onAddEntry: _addEntry,
+        onUpdateEntry: _updateEntry,
+        onRemoveEntry: _removeEntry);
   }
 }
