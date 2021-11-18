@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -237,7 +240,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                 padding: EdgeInsets.only(right: 4 * DEFAULT_MARGIN),
                               ),
                               Flexible(
-                                child: _buildFormulaText(formula.formula, values),
+                                child: _buildFormulaText(formula.formula, values, formula.id),
                               )
                             ],
                           ),
@@ -437,34 +440,34 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 suppressToolMargin: true)));
   }
 
-  Widget _buildFormulaText(String formula, Map<String, String> values) {
+  Widget _buildFormulaText(String formula, Map<String, String> values, int formulaIndex) {
     if (widget.noFormulaColors)
       return GCWText(text: formula);
 
-    return RichText(text: TextSpan(
+    return SelectableText.rich(TextSpan(
       children:
           _buildTextSpans(formula,
-              formulaColors(formula,values )
+              formulaColors(formula, values, formulaIndex )
           )
     ));
   }
 
-  static String formulaColors(String formula, Map<String, String> values) {
+  static String formulaColors(String formula, Map<String, String> values, int formulaIndex) {
     if (formula == null) return null;
 
     final opposideBracket =  { '[': ']', '(': ')', '{': '}' };
     final opposideBracket2 = switchMapKeyValue(opposideBracket);
     var result = "";
     var brackets = <String>[];
-    var operators = { '+', '-', '*', '/', '^' };
+    var operators = { '+', '-', '*', '/', '^', '%' };
     var containsBrackets = formula.contains('[') || formula.contains(']');
-    var validValuelength = 0;
+    var checkedFormulaLength = 0;
+    var checkedFormulaResult = "";
     var keys = <String>[];
+    var functions = <String>[];
     var _allCharacters = allCharacters();
 
-    FormulaParser.alternateOperators.values.forEach((value) {
-      operators.addAll(value.characters);
-    });
+    var operatorsRegEx = operators.map((op) => r'\' + op).join();
 
     if (values != null) {
       keys = values.keys.map((key) {
@@ -472,55 +475,125 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       }).toList();
     }
     keys.addAll(FormulaParser.constants.keys);
-    keys.addAll(FormulaParser.functions);
     keys = keys.map((key) {return key.toUpperCase();}).toList();
     keys.sort((a, b) => b.length.compareTo(a.length));
 
+    functions.addAll(FormulaParser.functions);
+    functions = functions.map((function) {return function.toUpperCase();}).toList();
+    functions.sort((a, b) => b.length.compareTo(a.length));
+
+    formula = FormulaParser.normalizeMathematicalSymbols(formula);
     formula = formula.toUpperCase();
     formula.split('').forEach((e) {
-      if (int.tryParse(e) != null)
-        result += _calculated(formula, result, brackets, containsBrackets) ? 'g' : 't';
+      // checked
+      if (checkedFormulaLength > 0) {
+        checkedFormulaLength--;
+        if (checkedFormulaResult.length > 0) {
+          result += checkedFormulaResult[0];
+          checkedFormulaResult = checkedFormulaResult.substring(1);
+        } else
+          result += result[result.length - 1];
 
-      else if (e == ' ')
-        result += ((result.length == 0) ? "s" : result[result.length - 1]);
 
-      else if (opposideBracket.containsKey(e)) {
-        brackets.add(e);
-        result += (formula.indexOf(opposideBracket[e], result.length) > 0) ? 'b' : 'B';
+        if (opposideBracket.containsKey(e)) brackets.add(e);
+        if (opposideBracket2.containsKey(e)) {
+          var validBracket = (brackets.length > 0) && (brackets[brackets.length - 1] == opposideBracket2[e]);
+          if (validBracket) brackets.removeAt(brackets.length - 1);
+        }
 
-      } else if (opposideBracket2.containsKey(e)) {
-        var validBracket = (brackets.length > 0) &&
-            (brackets[brackets.length - 1] == opposideBracket2[e]);
-        validBracket = validBracket && ((result.length == 0) ||
-            formula[result.length - 1] != opposideBracket2[e]);
-        result += validBracket ? "b" : "B";
-        if (validBracket) brackets.removeAt(brackets.length - 1);
+      } else {
+          // numbers
+        if (int.tryParse(e) != null)
+          result +=
+          _calculated(formula, result, brackets, containsBrackets) ? 'g' : 't';
 
-      } else if (operators.contains(e))
-        result += _calculated(formula, result, brackets, containsBrackets) ? 'b' : 't';
+          // spaces
+        else if (e == ' ')
+          result += ((result.length == 0) ? "s" : result[result.length - 1]);
 
-      else if (_calculated(formula, result, brackets, containsBrackets)) {
-        var valid = false;
-        if (validValuelength > 0) {
-          validValuelength--;
-          valid = true;
-        } else {
-          for (String key in keys) {
-            if (formula.substring(result.length).startsWith(key)) {
-              valid = true;
-              validValuelength = key.length - 1;
-              break;
+          // formula reference
+        else if (e == '{') {
+          brackets.add(e);
+          var tuple = _validFormulaReference(formula.substring(result.length), result, formulaIndex);
+          if ((tuple.item1) | (tuple.item2.length > 0)) {
+            result += tuple.item2[0];
+            checkedFormulaResult = tuple.item2.substring(1);
+            checkedFormulaLength = checkedFormulaResult.length;
+          } else{
+            result += "B";
+            checkedFormulaLength = max(formula.indexOf(opposideBracket[e], result.length) - 1, 0);
+          }
+
+          //open brackets
+        } else if (opposideBracket.containsKey(e)) {
+          brackets.add(e);
+          result += (formula.indexOf(opposideBracket[e], result.length) > 0) ? 'b' : 'B';
+
+          // close brackets
+        } else if (opposideBracket2.containsKey(e)) {
+          var validBracket = (brackets.length > 0) && (brackets[brackets.length - 1] == opposideBracket2[e]);
+          //validBracket = validBracket && ((result.length == 0) || formula[result.length - 1] != opposideBracket2[e]);
+          result += validBracket ? "b" : "B";
+          if (validBracket) brackets.removeAt(brackets.length - 1);
+
+          // operators
+        } else if (operators.contains(e)) {
+          var tuple = _validOperator(formula.substring(result.length), operatorsRegEx);
+          if (tuple.item1 && _validFirstOperator(formula.substring(0, result.length+1), result))
+            result += _calculated(formula, result, brackets, containsBrackets) ? 'b' : 't';
+          else {
+            result += "B";
+            if (!tuple.item1) checkedFormulaLength = tuple.item2 - 1;
+          }
+
+        //formulas, constans variables
+        } else if (_calculated(formula, result, brackets, containsBrackets)) {
+          var valid = false;
+          var handled = false;
+          // check functions
+          for (String function in functions) {
+            if (formula.substring(result.length).startsWith(function)) {
+              var tuple = _validFunction(formula.substring(result.length));
+              if (tuple.item1) {
+                result += "b";
+                checkedFormulaLength = function.length - 1;
+                handled = true;
+                break;
+              } else {
+                var tuple = _invalidFunction(formula.substring(result.length));
+                if (tuple.item1) {
+                  result += "B";
+                  checkedFormulaLength = tuple.item2 - 1;
+                  handled = true;
+                  break;
+                }
+              }
+
             }
           }
-        }
-        if (!valid && !_allCharacters.contains(e))
-          result += 't';
-        else
-          result += valid ? 'r' : 'R';
 
-      } else
-        result += 't';
+          if (!handled) {
+            for (String key in keys) {
+              if (formula.substring(result.length).startsWith(key)) {
+                valid = true;
+                checkedFormulaLength = key.length - 1;
+                break;
+              }
+            }
+
+            if (!valid && !_allCharacters.contains(e))
+              result += 't';
+            else
+              result += valid ? 'r' : 'R';
+          }
+        } else
+          result += 't';
+      }
     });
+
+    // opposideBracket.forEach((openBracket, closeBracket) {
+    //   _checkBrackets(formula, result, openBracket, closeBracket);
+    // });
 
     for (int i = result.length - 2; i >= 0; i--)
       if (result[i] == 's') result = result.substring(0, i) + result[i + 1] + result.substring(i + 1);
@@ -532,6 +605,83 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     if (!containsBrackets) return true;
 
     return (brackets.contains('[') && (formula.substring(result.length).contains(']')));
+  }
+
+  static Tuple2<bool, int> _validFunction(String formula) {
+    var regex = RegExp(r'^(.+)[\s]*[(][\s]*[\S]+[\s]*[)]');
+    var matches = regex.allMatches(formula);
+    if (matches.length > 0) return Tuple2<bool, int>(true, matches.first.end);
+
+    return Tuple2<bool, int>(false, 0);
+  }
+
+  static Tuple2<bool, int> _invalidFunction(String formula) {
+    var regex = RegExp(r'^(.+)[\s]*[(][\s]*[)]');
+    var match = regex.firstMatch(formula);
+    if (match != null) return Tuple2<bool, int>(true, match.end);
+
+    return Tuple2<bool, int>(false, 0);
+  }
+
+  static Tuple2<bool, int> _validOperator(String formula, String operators) {
+    var regex = RegExp('^[$operators][\s]*[\-]*[\s]*[^$operators]');
+    var match = regex.firstMatch(formula);
+    if (match != null) return Tuple2<bool, int>(true, match.end);
+
+    regex = RegExp('^[$operators][\s]*[\-]*[\s]*');
+    match = regex.firstMatch(formula);
+    return Tuple2<bool, int>(false, (match != null) ? match.end +1 : 1);
+  }
+
+  static bool _validFirstOperator(String formula, String result) {
+    if (formula[formula.length -1] == '-') return true;
+    formula = formula.trim();
+
+    return formula.length > 1;
+  }
+
+  static Tuple2<bool, String> _validFormulaReference(String formula, String result, int formulaId) {
+    RegExp regex = new RegExp(r'[{](\d)[}]');
+    var match = regex.firstMatch(formula);
+    if (match != null) {
+      if (int.tryParse(match.group(1)) < formulaId)
+        return Tuple2<bool, String>(true, _buildResultString('b' , match.end));
+      else
+        return Tuple2<bool, String>(false, 'b' + _buildResultString('B' , match.end - 2) + 'b');
+    }
+
+    return Tuple2<bool, String>(false, '');
+  }
+
+  static String _checkBrackets(String formula, String result, String startBracket, endBracket) {
+    RegExp regex = new RegExp(r'\$startBracket.+?\$endBracket');
+    regex.allMatches(formula).forEach((match) {
+      if (!_validBracket(result.substring(match.start, match.end)))
+        result = _replaceRange(result, match.start, match.end, "B");
+    });
+    return result;
+  }
+
+  static String _replaceRange(String result, int start, int end, String value) {
+    var replacement = '';
+    for( var i = start; i<= end; i++)
+      replacement += value;
+    result.replaceRange(start, end, replacement);
+
+    return result;
+  }
+
+  static bool _validBracket(String result) {
+    var regex = RegExp(r'[RGB]');
+    var matches = regex.allMatches(result);
+    return (matches.length == 0) ;
+  }
+
+  static String _buildResultString(String s, int count) {
+    var result = '';
+    for (var i = 0; i < count; i++)
+      result += s;
+    return result;
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {

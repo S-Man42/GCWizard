@@ -80,7 +80,7 @@ class FormulaParser {
     return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
   }
 
-  String _normalizeMathematicalSymbols(formula) {
+  static String normalizeMathematicalSymbols(formula) {
     alternateOperators.forEach((key, value) {
       formula = formula.replaceAll(RegExp('[$value]'), key);
     });
@@ -96,7 +96,7 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
-    formula = _normalizeMathematicalSymbols(formula);
+    formula = normalizeMathematicalSymbols(formula);
 
     Map<String, String> preparedValues = _prepareValues(values);
 
