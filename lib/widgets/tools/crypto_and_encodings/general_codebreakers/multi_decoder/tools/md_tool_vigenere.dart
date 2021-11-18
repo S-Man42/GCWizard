@@ -15,6 +15,7 @@ class MultiDecoderToolVigenere extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_VIGENERE,
             onDecode: (String input, String key) {
+              if (!withKey(key)) return null;
               return decryptVigenere(input, key, false, aValue: options[MDT_VIGENERE_OPTION_KEY] - 1);
             },
             options: options,

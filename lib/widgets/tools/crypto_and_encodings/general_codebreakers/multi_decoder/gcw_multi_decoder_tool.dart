@@ -12,3 +12,7 @@ abstract class GCWMultiDecoderTool {
   GCWMultiDecoderTool(
       {Key key, this.id, this.name, this.internalToolName, this.onDecode, this.configurationWidget, this.options});
 }
+
+bool withKey(String key) {
+  return (key != null) && (key.length > 0);
+}

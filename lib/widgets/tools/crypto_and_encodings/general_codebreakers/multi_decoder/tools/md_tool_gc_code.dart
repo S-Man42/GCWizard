@@ -19,6 +19,7 @@ class MultiDecoderToolGCCode extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_GCCODE,
             onDecode: (String input, String key) {
+              if (withKey(key)) return null;
               if (options[MDT_GCCODE_OPTION_MODE] == MDT_GCCODE_OPTION_MODE_IDTOGCCODE)
                 return idToGCCode(int.tryParse(input));
               else

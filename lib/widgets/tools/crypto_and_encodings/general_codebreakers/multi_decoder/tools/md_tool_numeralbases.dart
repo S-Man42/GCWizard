@@ -15,6 +15,7 @@ class MultiDecoderToolNumeralBases extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_NUMERALBASES,
             onDecode: (String input, String key) {
+              if (withKey(key)) return null;
               return input
                   .split(RegExp(r'\s+'))
                   .where((element) => element.length > 0)

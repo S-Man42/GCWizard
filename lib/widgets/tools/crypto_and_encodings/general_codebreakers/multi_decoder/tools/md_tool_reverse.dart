@@ -12,6 +12,7 @@ class MultiDecoderToolReverse extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_REVERSE,
             onDecode: (String input, String key) {
+              if (withKey(key)) return null;
               return reverse(input);
             },
             options: options);

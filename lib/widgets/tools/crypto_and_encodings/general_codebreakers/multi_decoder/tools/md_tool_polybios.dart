@@ -17,6 +17,7 @@ class MultiDecoderToolPolybios extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_POLYBIOS,
             onDecode: (String input, String key) {
+              if (!withKey(key)) return null;
               var polybiosOutput = decryptPolybios(input, key, mode: PolybiosMode.AZ09, modificationMode: _parseStringToEnum(options[MDT_POLYBIOS_OPTION_MODE]));
               return polybiosOutput == null ? null : polybiosOutput.output;
             },

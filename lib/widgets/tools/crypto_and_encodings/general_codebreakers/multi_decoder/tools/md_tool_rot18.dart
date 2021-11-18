@@ -12,6 +12,7 @@ class MultiDecoderToolROT18 extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ROT18,
             onDecode: (String input, String key) {
+              if (withKey(key)) return null;
               return Rotator().rot18(input);
             },
             options: options);

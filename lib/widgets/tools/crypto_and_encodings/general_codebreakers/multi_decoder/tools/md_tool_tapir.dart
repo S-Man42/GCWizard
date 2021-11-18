@@ -12,6 +12,7 @@ class MultiDecoderToolTapir extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_TAPIR,
             onDecode: (String input, String key) {
+              if (!withKey(key)) return null;
               return decryptTapir(input, key);
             },
             options: options);

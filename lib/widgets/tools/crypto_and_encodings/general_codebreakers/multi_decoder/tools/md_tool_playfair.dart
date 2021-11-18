@@ -16,6 +16,7 @@ class MultiDecoderToolPlayfair extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_PLAYFAIR,
             onDecode: (String input, String key) {
+              if (!withKey(key)) return null;
               return decryptPlayfair(input, key, mode: _parseStringToEnum(options[MDT_PLAYFAIR_OPTION_MODE]));
             },
             options: options,

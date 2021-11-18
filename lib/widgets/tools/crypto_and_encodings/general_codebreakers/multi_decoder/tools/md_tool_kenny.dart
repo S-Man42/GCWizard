@@ -12,6 +12,7 @@ class MultiDecoderToolKenny extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_KENNY,
             onDecode: (String input, String key) {
+              if (withKey(key)) return null;
               return decryptKenny(input, ['m', 'p', 'f'], true);
             },
             options: options);

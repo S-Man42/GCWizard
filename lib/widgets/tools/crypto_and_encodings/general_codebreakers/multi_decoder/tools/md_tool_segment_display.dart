@@ -17,6 +17,7 @@ class MultiDecoderToolSegmentDisplay extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_SEGMENTDISPLAY,
             onDecode: (String input, String key) {
+              if (withKey(key)) return null;
               var segmentType;
               switch (options[MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS]) {
                 case 7:
