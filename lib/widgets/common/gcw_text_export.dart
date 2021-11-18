@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -142,7 +140,7 @@ exportFile(String text, TextExportMode mode, BuildContext context) {
 
 Future<dynamic> _exportEncryption(BuildContext context, String text, TextExportMode mode) async {
   if (mode == TextExportMode.TEXT) {
-    return saveStringToFile(text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
+    return saveStringToFile(context, text, 'txt_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.txt');
   } else {
     final data = await generateBarCode(text);
 
