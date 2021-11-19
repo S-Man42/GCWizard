@@ -35,6 +35,9 @@ void main() {
       {'input' : 1000004, 'expectedOutput' : -1},
       {'input' : 1000033, 'expectedOutput' : -1},
 
+      {'expectedOutput' : 1, 'input' : 2},
+      {'expectedOutput' : 2, 'input' : 3},
+      {'expectedOutput' : 3, 'input' : 5},
       {'expectedOutput' : 78499, 'input' : 1000003},
       {'expectedOutput' : 12345, 'input' : 132241},
       {'expectedOutput' : 42000, 'input' : 506131},
@@ -77,6 +80,66 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var _actual = getNearestPrime(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Primes.getNextPrime:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : 1000001, 'expectedOutput' : null},
+
+
+      {'input' : -1, 'expectedOutput' : 2},
+      {'input' : 0, 'expectedOutput' : 2},
+      {'input' : 1, 'expectedOutput' : 2},
+      {'input' : 2, 'expectedOutput' : 3},
+      {'input' : 3, 'expectedOutput' : 5},
+      {'input' : 5, 'expectedOutput' : 7},
+      {'input' : 691, 'expectedOutput' : 701},
+      {'input' : 1000000, 'expectedOutput' : 1000003},
+
+      {'input' : 42, 'expectedOutput' : 43},
+      {'input' : 682, 'expectedOutput' : 683},
+      {'input' : 683, 'expectedOutput' : 691},
+      {'input' : 684, 'expectedOutput' : 691},
+      {'input' : 690, 'expectedOutput' : 691},
+      {'input' : 691, 'expectedOutput' : 701},
+      {'input' : 692, 'expectedOutput' : 701},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = getNextPrime(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Primes.getPreviousPrime:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : -1, 'expectedOutput' : null},
+      {'input' : 0, 'expectedOutput' : null},
+      {'input' : 1, 'expectedOutput' : null},
+      {'input' : 2, 'expectedOutput' : null},
+
+      {'input' : 3, 'expectedOutput' : 2},
+      {'input' : 5, 'expectedOutput' : 3},
+      {'input' : 7, 'expectedOutput' : 5},
+      {'input' : 701, 'expectedOutput' : 691},
+
+      {'input' : 42, 'expectedOutput' : 41},
+      {'input' : 700, 'expectedOutput' : 691},
+      {'input' : 692, 'expectedOutput' : 691},
+      {'input' : 691, 'expectedOutput' : 683},
+      {'input' : 690, 'expectedOutput' : 683},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = getPreviousPrime(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
