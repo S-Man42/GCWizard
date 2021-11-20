@@ -155,4 +155,24 @@ class ThemeColorsDark extends ThemeColors {
   Color textFieldFillText() {
     return Colors.white;
   }
+
+  @override
+  Color formulaNumber() {
+    return Colors.lightGreen;
+  }
+
+  @override
+  Color formulaVariable() {
+    return Colors.orange;
+  }
+
+  @override
+  Color formulaMath() {
+    return Colors.lightBlue;
+  }
+
+  @override
+  Color formulaError() {
+    return Colors.redAccent;
+  }
 }

@@ -508,6 +508,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: ColorPicker(), i18nPrefix: 'colors', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'color',
       'colorpicker',
     ]),
     GCWTool(

@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_painter.dart';
+import 'package:prefs/prefs.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
@@ -32,9 +34,8 @@ import 'gcw_formula_replace_dialog.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
-  final bool noFormulaColors;
 
-  const FormulaSolverFormulas({Key key, this.group, bool this.noFormulaColors = false}) : super(key: key);
+  const FormulaSolverFormulas({Key key, this.group}) : super(key: key);
 
   @override
   FormulaSolverFormulasState createState() => FormulaSolverFormulasState();
@@ -237,7 +238,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                             children: [
                               Container(
                                 child: GCWText(text: (index + 1).toString() + '.'),
-                                padding: EdgeInsets.only(right: 4 * DEFAULT_MARGIN),
+                                width: 35
                               ),
                               Flexible(
                                 child: _buildFormulaText(formula.formula, values, formula.id),
@@ -246,15 +247,20 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           ),
                           Row(
                             children: <Widget>[
-                              calculated['state'] == STATE_OK
-                                  ? Icon(
-                                      Icons.check,
-                                      color: _themeColors.mainFont(),
-                                    )
-                                  : Icon(
-                                      Icons.priority_high,
-                                      color: _themeColors.accent(),
-                                    ),
+                              Container(
+                                child: calculated['state'] == STATE_OK
+                                    ? Icon(
+                                  Icons.check,
+                                  color: _themeColors.mainFont(),
+                                )
+                                    : Icon(
+                                  Icons.priority_high,
+                                  color: themeColors().formulaError(),
+                                ),
+                                width: 35,
+                                alignment: Alignment.centerLeft,
+                              ),
+
                               Flexible(
                                 child: GCWText(text: calculated['result']),
                               )
@@ -370,58 +376,74 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           0,
           GCWTextDivider(
               text: i18n(context, 'formulasolver_formulas_currentformulas'),
-              trailing: GCWPopupMenu(
-                  iconData: Icons.more_vert,
-                  size: IconButtonSize.SMALL,
-                  menuItemBuilder: (context) => [
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
-                            action: (index) => setState(() {
-                                  showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
-                                    if (value == null) return;
+              trailing: Row(
+                children: [
+                  GCWIconButton(
+                    iconData: Icons.color_lens,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      setState(() {
+                        Prefs.setBool('formulasolver_coloredformulas', !Prefs.getBool('formulasolver_coloredformulas'));
+                      });
+                    },
+                  ),
+                  GCWPopupMenu(
+                    iconData: Icons.more_vert,
+                    size: IconButtonSize.SMALL,
+                    menuItemBuilder: (context) => [
+                      GCWPopupMenuItem(
+                          child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
+                          action: (index) => setState(() {
+                            showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
+                              if (value == null) return;
 
-                                    for (int i = 0; i < widget.group.formulas.length; i++) {
-                                      if (value[i] == null) continue;
-                                      if (value[i].formula == null) continue;
+                              for (int i = 0; i < widget.group.formulas.length; i++) {
+                                if (value[i] == null) continue;
+                                if (value[i].formula == null) continue;
 
-                                      if (widget.group.formulas[i].formula != value[i].formula) {
-                                        var formula = widget.group.formulas[i];
-                                        formula.formula = value[i].formula;
-                                        _updateFormula(formula);
-                                      }
-                                    }
-                                    setState(() {});
-                                  });
-                                })),
+                                if (widget.group.formulas[i].formula != value[i].formula) {
+                                  var formula = widget.group.formulas[i];
+                                  formula.formula = value[i].formula;
+                                  _updateFormula(formula);
+                                }
+                              }
+                              setState(() {});
+                            });
+                          })),
+                      GCWPopupMenuItem(
+                          child:
+                          iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformulas'),
+                          action: (index) => showDeleteAlertDialog(
+                            context,
+                            i18n(context, 'formulasolver_formulas_allformulas'),
+                                () {
+                              var formulasToRemove = List.from(widget.group.formulas);
+                              formulasToRemove.forEach((formula) => _removeFormula(formula));
+                              setState(() {});
+                            },
+                          )),
+                      if (_foundCoordinates.length > 0)
                         GCWPopupMenuItem(
-                            child:
-                                iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformulas'),
-                            action: (index) => showDeleteAlertDialog(
-                                  context,
-                                  i18n(context, 'formulasolver_formulas_allformulas'),
-                                  () {
-                                    var formulasToRemove = List.from(widget.group.formulas);
-                                    formulasToRemove.forEach((formula) => _removeFormula(formula));
-                                    setState(() {});
-                                  },
-                                )),
-                        if (_foundCoordinates.length > 0)
-                          GCWPopupMenuItem(
-                              child: iconedGCWPopupMenuItem(
-                                context,
-                                Icons.my_location,
-                                'formulasolver_formulas_showonmap',
-                              ),
-                              action: (index) {
-                                _showFormulaResultOnMap(_foundCoordinates.entries.map((coordinate) {
-                                  return GCWMapPoint(
-                                      point: coordinate.value['coordinate'],
-                                      markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') +
-                                          ' ${coordinate.key}',
-                                      coordinateFormat: {'format': coordinate.value['format']});
-                                }).toList());
-                              })
-                      ])));
+                            child: iconedGCWPopupMenuItem(
+                              context,
+                              Icons.my_location,
+                              'formulasolver_formulas_showonmap',
+                            ),
+                            action: (index) {
+                              _showFormulaResultOnMap(_foundCoordinates.entries.map((coordinate) {
+                                return GCWMapPoint(
+                                    point: coordinate.value['coordinate'],
+                                    markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') +
+                                        ' ${coordinate.key}',
+                                    coordinateFormat: {'format': coordinate.value['format']});
+                              }).toList());
+                            })
+                    ])
+                ]
+              )
+
+
+        ));
     }
 
     return Column(children: rows);
@@ -444,250 +466,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return SelectableText.rich(TextSpan(
       children:
           _buildTextSpans(formula,
-              formulaColors(formula, values, formulaIndex, widget.noFormulaColors )
+              paintFormula(formula, values, formulaIndex, Prefs.getBool('formulasolver_coloredformulas'))
           )
     ));
-  }
-
-  static String formulaColors(String formula, Map<String, String> values, int formulaIndex, bool noFormulaColors) {
-    if (formula == null) return null;
-    if (noFormulaColors)
-      return _buildResultString('t', formula.length);
-
-    final opposideBracket =  { '[': ']', '(': ')', '{': '}' };
-    final opposideBracket2 = switchMapKeyValue(opposideBracket);
-    var result = '';
-    var brackets = <String>[];
-    var operators = { '+', '-', '*', '/', '^', '%' };
-    var containsBrackets = formula.contains('[') || formula.contains(']');
-    var checkedFormulaResult = '';
-    var keys = <String>[];
-    var functions = <String>[];
-    var _allCharacters = allCharacters();
-
-    var operatorsRegEx = operators.map((op) => r'\' + op).join();
-
-    if (values != null) {
-      keys = values.keys.map((key) {
-        return ((key == null) || (key.length == 0)) ? null : key;
-      }).toList();
-    }
-    keys.addAll(FormulaParser.constants.keys);
-    keys = keys.map((key) {return key.toUpperCase();}).toList();
-    keys.sort((a, b) => b.length.compareTo(a.length));
-
-    functions.addAll(FormulaParser.functions);
-    functions = functions.map((function) {return function.toUpperCase();}).toList();
-    functions.sort((a, b) => b.length.compareTo(a.length));
-
-    formula = FormulaParser.normalizeMathematicalSymbols(formula);
-    formula = formula.toUpperCase();
-    formula.split('').forEach((e) {
-      // checked
-      if (checkedFormulaResult.length > 0) {
-        result += checkedFormulaResult[0];
-        checkedFormulaResult = checkedFormulaResult.substring(1);
-
-        if (opposideBracket.containsKey(e)) brackets.add(e);
-        if (opposideBracket2.containsKey(e)) {
-          var validBracket = (brackets.length > 0) && (brackets[brackets.length - 1] == opposideBracket2[e]);
-          if (validBracket) brackets.removeAt(brackets.length - 1);
-        }
-
-      } else {
-          // numbers
-        if (int.tryParse(e) != null)
-          result +=
-          _calculated(formula, result, brackets, containsBrackets) ? 'g' : 't';
-
-          // spaces
-        else if (e == ' ')
-          result += ((result.isEmpty) ? "s" : result[result.length - 1]);
-
-          // formula reference
-        else if (e == '{') {
-          brackets.add(e);
-          var _result = _validFormulaReference(formula.substring(result.length), result, formulaIndex);
-
-            result += _result[0];
-            checkedFormulaResult = _result.substring(1);
-
-          //open brackets
-        } else if (opposideBracket.containsKey(e)) {
-          brackets.add(e);
-          var _result = _checkBracket(formula.substring(result.length), result, e , opposideBracket[e]);
-          result += _result[0];
-          checkedFormulaResult = _result.substring(1);
-
-          // close brackets
-        } else if (opposideBracket2.containsKey(e)) {
-          var validBracket = (brackets.isNotEmpty) && (brackets[brackets.length - 1] == opposideBracket2[e]);
-          //validBracket = validBracket && ((result.length == 0) || formula[result.length - 1] != opposideBracket2[e]);
-          result += validBracket ? "b" : "B";
-          if (validBracket) brackets.removeAt(brackets.length - 1);
-
-          // operators
-        } else if (operators.contains(e)) {
-          var _result = _validOperator(formula.substring(result.length), operatorsRegEx);
-          var firstOperatorValid = _validFirstOperator(formula.substring(0, result.length+1), result);
-          if (_result.startsWith('b') && firstOperatorValid)
-            result += _calculated(formula, result, brackets, containsBrackets) ? 'b' : 't';
-          else {
-            _result = _buildResultString('B', firstOperatorValid ? _result.length : 1);
-            result += _result[0];
-            checkedFormulaResult = _result.substring(1);
-          }
-
-        //formulas, constans variables
-        } else if (_calculated(formula, result, brackets, containsBrackets)) {
-          var valid = false;
-          var handled = false;
-          // check functions
-          for (String function in functions) {
-            if (formula.substring(result.length).startsWith(function)) {
-              var _result = _validFunction(formula.substring(result.length), function, formula.substring(0, result.length));
-              if (_result.isNotEmpty) {
-                result += _result[0];
-                checkedFormulaResult = _result.substring(1);
-                handled = true;
-                break;
-              } else {
-                var _result = _invalidFunction(formula.substring(result.length));
-                if (_result.isNotEmpty) {
-                  result += _result[0];
-                  checkedFormulaResult = _result.substring(1);
-                  handled = true;
-                  break;
-                }
-              }
-
-            }
-          }
-
-          // non function
-          if (!handled) {
-            // constant or variable
-            for (String key in keys) {
-              if (formula.substring(result.length).startsWith(key)) {
-                valid = true;
-                checkedFormulaResult = _buildResultString('r', key.length - 1);
-                break;
-              }
-            }
-
-            if (!valid && !_allCharacters.contains(e))
-              result += 't';
-            else
-              result += valid ? 'r' : 'R';
-          }
-        } else
-          result += 't';
-      }
-    });
-
-    for (int i = result.length - 2; i >= 0; i--)
-      if (result[i] == 's') result = result.substring(0, i) + result[i + 1] + result.substring(i + 1);
-
-    return result;
-  }
-
-  static bool _calculated(String formula, String result, List<String> brackets, bool containsBrackets) {
-    if (!containsBrackets) return true;
-
-    return (brackets.contains('[') && (formula.substring(result.length).contains(']')));
-  }
-
-  static String _validFunction(String formula, String function, String formulaBefore) {
-    var valid = true;
-    if (RegExp(r'[0-9](\s)*$').firstMatch(formulaBefore) != null) valid = false;
-    if (RegExp(r'[\[\]\(\)](\s)*$').firstMatch(formulaBefore) != null) valid = false;
-
-    var regex = RegExp(r'^(.+)[\s]*[(][\s]*[\S]+[\s]*[)]');
-    var matches = regex.allMatches(formula);
-    if (matches.length > 0) return _buildResultString(valid ? 'b' : 'B', function.length);
-
-    return '';
-  }
-
-  static String _invalidFunction(String formula) {
-    var regex = RegExp(r'^(.+)[\s]*[(][\s]*[)]');
-    var match = regex.firstMatch(formula);
-    if (match != null) return _buildResultString('B', match.end);
-
-    return '';
-  }
-
-  static String _validOperator(String formula, String operators) {
-    var emptyBrackets = r'((\(\s*\))|(\[\s*\]))';
-    var bracketMatches = RegExp(emptyBrackets).allMatches(formula);
-    bracketMatches.forEach((match) {
-      formula = _replaceRange(formula, match.start, match.end, ' ');
-    });
-    var regex = RegExp('^[$operators]' + r'[\s]*[\-]*[\s]*' + '[^$operators' + r'\s]');
-    var match = regex.firstMatch(formula);
-    if (match != null) {
-      if (bracketMatches.isEmpty || bracketMatches.first.end >= match.end - 1)
-        return _buildResultString('b', match.end - 1);
-    }
-
-    regex = RegExp('^[$operators]' + r'[\s]*[\-]*[\s]*' + '[$operators]*');
-    match = regex.firstMatch(formula);
-    return _buildResultString('B', (match != null) ? match.end : 1);
-  }
-
-  static bool _validFirstOperator(String formulaBefore, String result) {
-    if (formulaBefore[formulaBefore.length -1] == '-') return true;
-    formulaBefore = formulaBefore.trim();
-
-    return formulaBefore.length > 1;
-  }
-
-  static String _validFormulaReference(String formula, String result, int formulaId) {
-    RegExp regex = RegExp(r'[{](\d)[}]');
-    var match = regex.firstMatch(formula);
-    if (match != null) {
-      if (int.tryParse(match.group(1)) < formulaId)
-        return _buildResultString('b' , match.end);
-      else
-        return 'b' + _buildResultString('B' , match.end - 2) + 'b';
-    }
-
-    var bracketIndex = formula.indexOf('}');
-    return _buildResultString('B', (bracketIndex >= 0) ? bracketIndex +1 : 1);
-  }
-
-  static String _checkBracket(String formula, String result, String startBracket, endBracket) {
-    var validBracket = true;
-    var match = RegExp('[\\$endBracket]').firstMatch(formula);
-    if (match == null) validBracket = false;
-    // if (startBracket == '(') {
-    //   if (result.isNotEmpty ) {
-    //     if (RegExp(r'[rR](\s)*$').firstMatch(result) != 0)
-    //       return (match != null) ? _buildResultString('B', match.end) : 'B';
-    //   }
-    // }
-    return validBracket ? 'b' : 'B';
-  }
-
-  static String _replaceRange(String result, int start, int end, String value) {
-    var replacement = '';
-    for( var i = start; i < end; i++)
-      replacement += value;
-
-    return result.replaceRange(start, end, replacement);
-  }
-
-  static bool _validBracket(String result) {
-    var regex = RegExp(r'[RGB]');
-    var matches = regex.allMatches(result);
-    return (matches.length == 0) ;
-  }
-
-  static String _buildResultString(String s, int count) {
-    var result = '';
-    for (var i = 0; i < count; i++)
-      result += s;
-    return result;
   }
 
   List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {
@@ -700,18 +481,18 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         TextStyle textStyle;
         switch (formulaColors[i]) {
           case 'g':
-            textStyle = TextStyle(color: Colors.green);
+            textStyle = TextStyle(color: themeColors().formulaNumber());
             break;
           case 'r':
-            textStyle = TextStyle(color: Colors.orange);
+            textStyle = TextStyle(color: themeColors().formulaVariable());
             break;
          case 'b':
-            textStyle = TextStyle(color: Colors.blue);
+            textStyle = TextStyle(color:themeColors().formulaMath());
             break;
           case 'R':
           case 'G':
           case 'B':
-            textStyle = TextStyle(color: Colors.red, fontWeight: FontWeight.bold);
+            textStyle = TextStyle(color: themeColors().formulaError(), fontWeight: FontWeight.bold);
             break;
           default:
             textStyle = TextStyle();
