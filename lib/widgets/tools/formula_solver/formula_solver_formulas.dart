@@ -441,19 +441,18 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   Widget _buildFormulaText(String formula, Map<String, String> values, int formulaIndex) {
-    if (widget.noFormulaColors)
-      return GCWText(text: formula);
-
     return SelectableText.rich(TextSpan(
       children:
           _buildTextSpans(formula,
-              formulaColors(formula, values, formulaIndex )
+              formulaColors(formula, values, formulaIndex, widget.noFormulaColors )
           )
     ));
   }
 
-  static String formulaColors(String formula, Map<String, String> values, int formulaIndex) {
+  static String formulaColors(String formula, Map<String, String> values, int formulaIndex, bool noFormulaColors) {
     if (formula == null) return null;
+    if (noFormulaColors)
+      return _buildResultString('t', formula.length);
 
     final opposideBracket =  { '[': ']', '(': ')', '{': '}' };
     final opposideBracket2 = switchMapKeyValue(opposideBracket);
