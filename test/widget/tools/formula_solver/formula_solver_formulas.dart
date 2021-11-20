@@ -11,8 +11,6 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : '1+()+2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbBg'},
-
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},
@@ -102,8 +100,8 @@ void main() {
       {'formula' : '1+-2', 'values': <String, String>{}, 'expectedOutput' : 'gbbg'}, // oder gbbg
       {'formula' : '1-2', 'values': <String, String>{}, 'expectedOutput' : 'gbg'},
       {'formula' : '1+*2', 'values': <String, String>{}, 'expectedOutput' : 'gBBg'},
-      {'formula' : '1+++2', 'values': <String, String>{}, 'expectedOutput' : 'gBBbg'},
-      {'formula' : '1++-2', 'values': <String, String>{}, 'expectedOutput' : 'gBBbg'},  // oder gBBbg
+      {'formula' : '1+++2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBg'},
+      {'formula' : '1++-2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBg'},  // oder gBBbg
       {'formula' : '1+-+2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBg'},
       {'formula' : '1-----2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbbbg'},
       {'formula' : '1*-2', 'values': <String, String>{}, 'expectedOutput' : 'gbbg'},
@@ -111,15 +109,15 @@ void main() {
       {'formula' : '1()+2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbg'},
       {'formula' : '1+()2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbg'},
       {'formula' : '()1+()2', 'values': <String, String>{}, 'expectedOutput' : 'bbgbbbg'},
-      {'formula' : '1+()+2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbBg'},
+      {'formula' : '1+()+2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBBg'},
       {'formula' : '1+(3)+2', 'values': <String, String>{}, 'expectedOutput' : 'gbbgbbg'},
-      {'formula' : '1+(3)2', 'values': <String, String>{}, 'expectedOutput' : 'gbbgbG'},
+      {'formula' : '1+(3)2', 'values': <String, String>{}, 'expectedOutput' : 'gbbgbg'},
       {'formula' : '1+(3)-2', 'values': <String, String>{}, 'expectedOutput' : 'gbbgbbg'},
       {'formula' : '1sin()+2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBBBbg'},
-      {'formula' : '1sin(0)+2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBBGBbg'}, //oder Gbbbbgbbg
+      {'formula' : '1sin(0)+2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBbgbbg'}, //oder Gbbbbgbbg
       {'formula' : '1*sin (0)+2', 'values': <String, String>{}, 'expectedOutput' : 'gbbbbbbgbbg'},
       {'formula' : '1*sin (0)+2', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'gbbbbbbgbbg'},
-      {'formula' : '1*si (0)+2', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'gbrrrBGBbg'},
+      {'formula' : '1*si (0)+2', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'gbrrrBBBbg'},
       {'formula' : '1*si +2', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'gbrrrbg'},
 
       {'formula' : 'A{2}B', 'values': <String, String>{}, 'formulaId': 3, 'expectedOutput' : 'RbbbR'}, // WENN: formula id >= 2

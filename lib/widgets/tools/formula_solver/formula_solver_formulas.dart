@@ -457,11 +457,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
     final opposideBracket =  { '[': ']', '(': ')', '{': '}' };
     final opposideBracket2 = switchMapKeyValue(opposideBracket);
-    var result = "";
+    var result = '';
     var brackets = <String>[];
     var operators = { '+', '-', '*', '/', '^', '%' };
     var containsBrackets = formula.contains('[') || formula.contains(']');
-    var checkedFormulaResult = "";
+    var checkedFormulaResult = '';
     var keys = <String>[];
     var functions = <String>[];
     var _allCharacters = allCharacters();
@@ -516,7 +516,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           //open brackets
         } else if (opposideBracket.containsKey(e)) {
           brackets.add(e);
-          result += (formula.indexOf(opposideBracket[e], result.length) > 0) ? 'b' : 'B';
+          var _result = _checkBracket(formula.substring(result.length), result, e , opposideBracket[e]);
+          result += _result[0];
+          checkedFormulaResult = _result.substring(1);
 
           // close brackets
         } else if (opposideBracket2.containsKey(e)) {
@@ -544,7 +546,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           // check functions
           for (String function in functions) {
             if (formula.substring(result.length).startsWith(function)) {
-              var _result = _validFunction(formula.substring(result.length), function);
+              var _result = _validFunction(formula.substring(result.length), function, formula.substring(0, result.length));
               if (_result.isNotEmpty) {
                 result += _result[0];
                 checkedFormulaResult = _result.substring(1);
@@ -584,10 +586,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       }
     });
 
-    // opposideBracket.forEach((openBracket, closeBracket) {
-    //   _checkBrackets(formula, result, openBracket, closeBracket);
-    // });
-
     for (int i = result.length - 2; i >= 0; i--)
       if (result[i] == 's') result = result.substring(0, i) + result[i + 1] + result.substring(i + 1);
 
@@ -600,10 +598,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return (brackets.contains('[') && (formula.substring(result.length).contains(']')));
   }
 
-  static String _validFunction(String formula, String function) {
+  static String _validFunction(String formula, String function, String formulaBefore) {
+    var valid = true;
+    if (RegExp(r'[0-9](\s)*$').firstMatch(formulaBefore) != null) valid = false;
+    if (RegExp(r'[\[\]\(\)](\s)*$').firstMatch(formulaBefore) != null) valid = false;
+
     var regex = RegExp(r'^(.+)[\s]*[(][\s]*[\S]+[\s]*[)]');
     var matches = regex.allMatches(formula);
-    if (matches.length > 0) return _buildResultString('b', function.length);
+    if (matches.length > 0) return _buildResultString(valid ? 'b' : 'B', function.length);
 
     return '';
   }
@@ -617,25 +619,32 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   static String _validOperator(String formula, String operators) {
-    var ignoreBrackets = r'((\(\s*\))|(\[\s*\]))';
-    var regex = RegExp('^[$operators][\s]*$ignoreBrackets[\s]*[\-]*[\s]*[^$operators]');
+    var emptyBrackets = r'((\(\s*\))|(\[\s*\]))';
+    var bracketMatches = RegExp(emptyBrackets).allMatches(formula);
+    bracketMatches.forEach((match) {
+      formula = _replaceRange(formula, match.start, match.end, ' ');
+    });
+    var regex = RegExp('^[$operators]' + r'[\s]*[\-]*[\s]*' + '[^$operators' + r'\s]');
     var match = regex.firstMatch(formula);
-    if (match != null) return _buildResultString('b', match.end - 1);
+    if (match != null) {
+      if (bracketMatches.isEmpty || bracketMatches.first.end >= match.end - 1)
+        return _buildResultString('b', match.end - 1);
+    }
 
-    regex = RegExp('^[$operators][\s]*[\-]*[\s]*');
+    regex = RegExp('^[$operators]' + r'[\s]*[\-]*[\s]*' + '[$operators]*');
     match = regex.firstMatch(formula);
-    return _buildResultString('B', (match != null) ? match.end + 1 : 1);
+    return _buildResultString('B', (match != null) ? match.end : 1);
   }
 
-  static bool _validFirstOperator(String formula, String result) {
-    if (formula[formula.length -1] == '-') return true;
-    formula = formula.trim();
+  static bool _validFirstOperator(String formulaBefore, String result) {
+    if (formulaBefore[formulaBefore.length -1] == '-') return true;
+    formulaBefore = formulaBefore.trim();
 
-    return formula.length > 1;
+    return formulaBefore.length > 1;
   }
 
   static String _validFormulaReference(String formula, String result, int formulaId) {
-    RegExp regex = new RegExp(r'[{](\d)[}]');
+    RegExp regex = RegExp(r'[{](\d)[}]');
     var match = regex.firstMatch(formula);
     if (match != null) {
       if (int.tryParse(match.group(1)) < formulaId)
@@ -648,22 +657,25 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return _buildResultString('B', (bracketIndex >= 0) ? bracketIndex +1 : 1);
   }
 
-  static String _checkBrackets(String formula, String result, String startBracket, endBracket) {
-    RegExp regex = new RegExp(r'\$startBracket.+?\$endBracket');
-    regex.allMatches(formula).forEach((match) {
-      if (!_validBracket(result.substring(match.start, match.end)))
-        result = _replaceRange(result, match.start, match.end, "B");
-    });
-    return result;
+  static String _checkBracket(String formula, String result, String startBracket, endBracket) {
+    var validBracket = true;
+    var match = RegExp('[\\$endBracket]').firstMatch(formula);
+    if (match == null) validBracket = false;
+    // if (startBracket == '(') {
+    //   if (result.isNotEmpty ) {
+    //     if (RegExp(r'[rR](\s)*$').firstMatch(result) != 0)
+    //       return (match != null) ? _buildResultString('B', match.end) : 'B';
+    //   }
+    // }
+    return validBracket ? 'b' : 'B';
   }
 
   static String _replaceRange(String result, int start, int end, String value) {
     var replacement = '';
-    for( var i = start; i<= end; i++)
+    for( var i = start; i < end; i++)
       replacement += value;
-    result.replaceRange(start, end, replacement);
 
-    return result;
+    return result.replaceRange(start, end, replacement);
   }
 
   static bool _validBracket(String result) {
@@ -689,7 +701,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         TextStyle textStyle;
         switch (formulaColors[i]) {
           case 'g':
-            textStyle =  TextStyle(color: Colors.green);
+            textStyle = TextStyle(color: Colors.green);
             break;
           case 'r':
             textStyle = TextStyle(color: Colors.orange);
@@ -698,6 +710,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             textStyle = TextStyle(color: Colors.blue);
             break;
           case 'R':
+          case 'G':
           case 'B':
             textStyle = TextStyle(color: Colors.red, fontWeight: FontWeight.bold);
             break;
