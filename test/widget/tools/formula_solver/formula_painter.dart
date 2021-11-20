@@ -70,8 +70,8 @@ void main() {
       //math library testing
       {'formula' : '36^(1/2)', 'expectedOutput' : 'ggbbgbgb'},
       {'formula' : 'phi * 2', 'expectedOutput' : 'ggggbbg'},
-      {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggtggb'},
-      {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggtgggb'},
+      {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'},
+      {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
 
       {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'ttBt'},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttbb'},
