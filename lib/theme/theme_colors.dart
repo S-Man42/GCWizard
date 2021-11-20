@@ -48,6 +48,11 @@ abstract class ThemeColors {
   Color messageBackground();
 
   Color sudokuBackground();
+
+  Color formulaNumber();
+  Color formulaMath();
+  Color formulaVariable();
+  Color formulaError();
 }
 
 setThemeColors(ThemeType type) {

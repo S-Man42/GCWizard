@@ -331,3 +331,11 @@ Uint8List trimNullBytes(Uint8List bytes) {
 
   return Uint8List.fromList(tempList);
 }
+
+List<String> allCharacters() {
+  var characters = <String>[];
+  ALL_ALPHABETS.forEach((alphabet) {
+    characters.addAll(alphabet.alphabet.keys);
+  });
+  return characters.toSet().toList();
+}

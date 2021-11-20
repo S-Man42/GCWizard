@@ -11,7 +11,7 @@ const STATE_ERROR = 'error';
 class FormulaParser {
   ContextModel _context;
 
-  final Map<String, double> _constants = {
+  static final Map<String, double> constants = {
     'ln10': ln10,
     'ln2': ln2,
     'log2e': log2e,
@@ -22,7 +22,7 @@ class FormulaParser {
     'sqrt2': sqrt2,
   };
 
-  final List<String> _functions = [
+  static final List<String> functions = [
     'sqrt',
     'nrt',
     'arcsin',
@@ -40,10 +40,18 @@ class FormulaParser {
     'ceil'
   ];
 
+  // different minus/hyphens/dashes
+  static final Map<String, String> alternateOperators = {
+    '-': '—–˗−‒',
+    '/': ':÷',
+    '÷': '÷',
+    '*': '×',
+  };
+
   FormulaParser() {
     _context = ContextModel();
 
-    _constants.entries.forEach((constant) {
+    constants.entries.forEach((constant) {
       _context.bindVariableName(constant.key, Number(constant.value));
     });
   }
@@ -53,11 +61,11 @@ class FormulaParser {
   // If, for example, the sin() function is used, but there's a variable i, you have to avoid
   // replace the i from sin with the variable value
   Map<String, dynamic> _safeFunctionsAndConstants(String formula) {
-    var list = _constants.keys
+    var list = constants.keys
         .where((constant) => constant != 'e') //special case: If you remove e, you could never use this as variable name
         .toList();
 
-    list.addAll(_functions.map((functionName) => functionName + '\\s*\\(').toList());
+    list.addAll(functions.map((functionName) => functionName + '\\s*\\(').toList());
 
     Map<String, String> substitutions = {};
     int j = 0;
@@ -72,11 +80,10 @@ class FormulaParser {
     return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
   }
 
-  String _normalizeMathematicalSymbols(formula) {
-    formula = formula.replaceAll(RegExp(r'[—–˗−‒]'), '-'); // different minus/hyphens/dashes
-    formula = formula.replaceAll(':', '/');
-    formula = formula.replaceAll('÷', '/');
-    formula = formula.replaceAll('×', '*');
+  static String normalizeMathematicalSymbols(formula) {
+    alternateOperators.forEach((key, value) {
+      formula = formula.replaceAll(RegExp('[$value]'), key);
+    });
     /**** exponents *****/
     formula = formula.replaceAllMapped(RegExp('[\u2070\u00B9\u00B2\u00B3\u2074\u2075\u2076\u2077\u2078\u2079]+'),
         (Match match) {
@@ -89,7 +96,7 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
-    formula = _normalizeMathematicalSymbols(formula);
+    formula = normalizeMathematicalSymbols(formula);
 
     Map<String, String> preparedValues = _prepareValues(values);
 
