@@ -6,6 +6,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class PrimeAlphabet extends StatefulWidget {
@@ -72,8 +73,9 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
             });
           },
         ),
+        GCWTextDivider(text: i18n(context, 'primealphabet_recognizedprimes')),
         GCWDropDownSpinner(
-          title: 'First',
+          title: i18n(context, 'primealphabet_firstprime'),
           index: _currentStartIndex,
           onChanged: (value) {
             setState(() {
@@ -86,7 +88,7 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
         ),
         _currentMode == GCWSwitchPosition.right ? Container() :
           GCWDropDownSpinner(
-            title: 'Last',
+            title: i18n(context, 'primealphabet_lastprime'),
             index: _currentEndIndex,
             onChanged: (value) {
               setState(() {
