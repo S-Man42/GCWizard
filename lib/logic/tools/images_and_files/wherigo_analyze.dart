@@ -92,7 +92,17 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-
+enum WHERIGO {HEADER, LUA, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS}
+Map<WHERIGO, String> WHERIGO_DATA = {
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.LUA: 'wherigo_data_lua',
+  WHERIGO.MEDIA: 'wherigo_data_media',
+  WHERIGO.CHARACTER: 'wherigo_data_character',
+  WHERIGO.ITEMS: 'wherigo_data_items',
+  WHERIGO.ZONES: 'wherigo_data_zones',
+  WHERIGO.INPUTS: 'wherigo_data_inputs',
+  WHERIGO.TASKS: 'wherigo_data_tasks',
+};
 
 StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
   String result = '';
@@ -156,19 +166,25 @@ class StringOffset{
   StringOffset(this.ASCIIZ, this.Offset);
 }
 
-class Object{
+class ObjectHeader{
   final int ObjectID;
-  final int Address;
-  final int Type;
-  final Uint8List Bytes;
+  final int ObjectAddress;
 
-  Object(this.ObjectID, this.Address, this.Type, this.Bytes);
+  ObjectHeader(this.ObjectID, this.ObjectAddress);
+}
+
+class ObjectContent{
+  final int ObjectType;
+  final Uint8List ObjectBytes;
+
+  ObjectContent(this.ObjectType, this.ObjectBytes);
 }
 
 class WherigoCartridge{
   final String Signature;
   final int NumberOfObjects;
-  final List Objects;
+  final List<ObjectHeader> ObjectHeaders;
+  final List<ObjectContent> ObjectContents;
   final int HeaderLength;
   final int Splashscreen;
   final int SplashscreenIcon;
@@ -191,7 +207,7 @@ class WherigoCartridge{
   final String CompletionCode;
 
   WherigoCartridge(this.Signature,
-      this.NumberOfObjects, this.Objects,
+      this.NumberOfObjects, this.ObjectHeaders, this.ObjectContents,
       this.HeaderLength,
       this.Latitude, this.Longitude, this.Altitude,
       this.Splashscreen, this.SplashscreenIcon,
@@ -221,11 +237,12 @@ const LENGTH_DOUBLE = 8;
 
 WherigoCartridge getCartridge(Uint8List byteList){
   if (byteList == [] || byteList == null)
-    return WherigoCartridge('', 0, [], 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '');
+    return WherigoCartridge('', 0, [], [], 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '');
 
   String Signature = '';
   int NumberOfObjects = 0;
-  List Objects = [];
+  List<ObjectHeader> ObjectHeaders = [];
+  List<ObjectContent> ObjectContents = [];
   int ObjectID = 0;
   int Address = 0;
   int HeaderLength = 0;
@@ -287,7 +304,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   for (int i = 0; i < NumberOfObjects; i++){
     ObjectID = readUShort(byteList, offset); offset = offset + LENGTH_USHORT;
     Address = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-    Objects.add(Object(ObjectID, Address, 0, null));
+    ObjectHeaders.add(ObjectHeader(ObjectID, Address));
     print('=> '+i.toString()+' '+ObjectID.toString()+' '+Address.toString());
   }
 
@@ -420,28 +437,33 @@ WherigoCartridge getCartridge(Uint8List byteList){
   print('=> '+CompletionCode);
 
   // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
-  ObjectLength = readInt(byteList, offset);     offset = offset + 4;
-  //Objects[0].Bytes = ByteData.sublistView(byteList, offset, offset + ObjectLength);
-  for (int i = offset; i <= ObjectLength; i++){
-    Objects[0].Bytes.add(byteList[i]);
-  }
+  print('### READ LUA CODE');
+  ObjectLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+  print('=> '+ObjectLength.toString());
+  ObjectContents.add(ObjectContent(0, Uint8List.sublistView(byteList, offset, offset + ObjectLength)));
+  //for (int i = offset; i <= ObjectLength; i++){
+  //  Objects[0].Bytes.add(byteList[i]);
+  //}
   offset = offset + ObjectLength;
 
   // read Objects
+  print('### READ OBJECTS');
   for (int i = 1; i < NumberOfObjects; i++){
+    print('### READ OBJECT '+i.toString());
     ValidObject = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
     if (ValidObject != 0) {
       ObjectType = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+      print('=> '+ObjectType.toString());
       ObjectLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-      Objects[i].Type = ObjectType;
-      Objects[i].Bytes = ByteData.sublistView(byteList, offset, offset + ObjectLength);
+      print('=> '+ObjectLength.toString());
+      ObjectContents.add(ObjectContent(ObjectType, Uint8List.sublistView(byteList, offset, offset + ObjectLength)));
       offset = offset + ObjectLength;
     }
   }
 
 
   return WherigoCartridge(Signature,
-    NumberOfObjects, Objects,
+    NumberOfObjects, ObjectHeaders, ObjectContents,
     HeaderLength,
     Latitude, Longitude, Altitude,
     Splashscreen, SplashscreenIcon,
