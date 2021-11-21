@@ -72,6 +72,11 @@ void main() {
       {'formula' : 'phi * 2', 'expectedOutput' : 'ggggbbg'},
       {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'},
       {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
+      {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},
+      {'formula' : 'round(1.247)', 'expectedOutput' : 'bbbbbbgggggb'},
+      {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
+      {'formula' : 'ROUND(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
+      {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'},
 
       {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'ttBt'},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttbb'},

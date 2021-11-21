@@ -24,11 +24,11 @@ String paintFormula(String formula, Map<String, String> values, int formulaIndex
       return ((key == null) || (key.length == 0)) ? null : key;
     }).toList();
   }
-  keys.addAll(FormulaParser.constants.keys);
+  keys.addAll(FormulaParser.CONSTANTS.keys);
   keys = keys.map((key) {return key.toUpperCase();}).toList();
   keys.sort((a, b) => b.length.compareTo(a.length));
 
-  functions.addAll(FormulaParser.functions);
+  functions.addAll(FormulaParser.availableParserFunctions());
   functions = functions.map((function) {return function.toUpperCase();}).toList();
   functions.sort((a, b) => b.length.compareTo(a.length));
 

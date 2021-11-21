@@ -80,7 +80,7 @@ void main() {
       {'formula' : '2 + sin  (I) + S', 'values': <String, String>{'s': '2', 'i': '${pi/2}'}, 'expectedOutput' : {'state': 'ok', 'result': '5'}},
 
       {'formula' : 'sin(sqrt2)', 'values': <String, String>{'s': '3'}, 'expectedOutput' : {'state': 'ok', 'result': '${sin(sqrt(2))}'}},
-      {'formula' : 'sin(pi)', 'values': <String, String>{'s': '3'}, 'expectedOutput' : {'state': 'ok', 'result': '${sin(pi)}'}},
+      {'formula' : 'sin(pi)', 'values': <String, String>{'s': '3'}, 'expectedOutput' : {'state': 'ok', 'result': '0'}},
       {'formula' : 'e(e)', 'values': <String, String>{'e': '2'}, 'expectedOutput' : {'state': 'ok', 'result': '7.38905609893065'}},
 
       {'formula' : 'arcsin(0.2) + sin(2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1.1106553476160126'}},
@@ -89,6 +89,13 @@ void main() {
       {'formula' : 'sin(arcsin(0.2))', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '0.2'}},
       {'formula' : 'sin(arcsin(0.2))', 'values': <String, String>{'sin': '0.1'}, 'expectedOutput' : {'state': 'ok', 'result': '0.2'}},
       {'formula' : 'sin(arcsin(sin))', 'values': <String, String>{'sin': '0.1'}, 'expectedOutput' : {'state': 'ok', 'result': '0.1'}},
+
+      {'formula' : 'sindeg(90)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
+      {'formula' : 'sinDeg(90)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
+      {'formula' : 'SINDEG(90)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
+      {'formula' : 'round(1.247, 2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1.25'}},
+      {'formula' : 'csi(99,88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '7'}},
+      {'formula' : 'csi(99) + csi(88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '16'}},
     ];
 
     _inputsToExpected.forEach((elem) {
