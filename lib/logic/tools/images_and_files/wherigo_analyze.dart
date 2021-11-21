@@ -21,11 +21,11 @@
 //    ; There is exactly [number_of_objects] blocks like this:
 //    repeat <NumberOfObjects> times
 //    {
-//        USHORT   ObjectID       ; Distinct ID for each object, duplicates are forbidden
-//        INT      Address          ; Address of object in GWC file
+//        USHORT   ObjectID           ; Distinct ID for each object, duplicates are forbidden
+//        INT      Address            ; Address of object in GWC file
 //    }
 //
-// @xxxx:                          ; 0009 + <NumberOfObjects> * 0006 bytes from begining
+// @xxxx:                             ; 0009 + <NumberOfObjects> * 0006 bytes from begining
 //    ; Header with all important informations for this cartridge
 //        INT      HeaderLength       ; Length of information header (following block):
 //
@@ -96,11 +96,11 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 
 StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
   String result = '';
-  while (byteList[offset] != 00) {
+  while (byteList[offset] != 0) {
     result = result + String.fromCharCode(byteList[offset]);
     offset++;
   }
-  return StringOffset(result, offset);
+  return StringOffset(result, offset + 1);
 }
 
 double readDouble(Uint8List byteList, int offset){ // 8 Byte
@@ -121,27 +121,27 @@ int readLong(Uint8List byteList, int offset){ // 8 Byte
   return (byteList[offset])
       + byteList[offset + 1] * 256
       + byteList[offset + 2] * 256 * 256
-      + byteList[offset + 3] * 256 * 256 * 256
-      + byteList[offset + 4] * 256 * 256 * 256 * 256
-      + byteList[offset + 5] * 256 * 256 * 256 * 256 * 256
-      + byteList[offset + 6] * 256 * 256 * 256 * 256 * 256 * 256
-      + byteList[offset + 7] * 256 * 256 * 256 * 256 * 256 * 256 * 256
-      - (pow(2, 63) - 1);
+      + byteList[offset + 3] * 256 * 256 * 256;
+//      + byteList[offset + 4] * 256 * 256 * 256 * 256
+//      + byteList[offset + 5] * 256 * 256 * 256 * 256 * 256
+//      + byteList[offset + 6] * 256 * 256 * 256 * 256 * 256 * 256
+//      + byteList[offset + 7] * 256 * 256 * 256 * 256 * 256 * 256 * 256
+//      - (pow(2, 63) - 1);
 }
 
 int readInt(Uint8List byteList, int offset){ // 4 Byte
   return (byteList[offset])
       + byteList[offset + 1] * 256
       + byteList[offset + 2] * 256 * 256
-      + byteList[offset + 3] * 256 * 256 * 256
-      - (pow(2, 31) - 1);
+      + byteList[offset + 3] * 256 * 256 * 256;
+//      - 2147483647;
 }
 
 int readShort(Uint8List byteList, int offset){ // 2 Byte
   return byteList[offset] + 256 * byteList[offset + 1] - (pow(2, 15) - 1);
 }
 
-int readUShort(Uint8List byteList, int offset){ // 2 Byte
+int readUShort(Uint8List byteList, int offset){ // 2 Byte Little Endian
   return byteList[offset] + 256 * byteList[offset + 1];
 }
 
@@ -203,7 +203,21 @@ class WherigoCartridge{
       this.LengthOfCompletionCode, this.CompletionCode);
 }
 
+int START_NUMBEROFOBJECTS = 7;
+int START_OBJCETADRESS = 9;
+int START_HEADER = 0;
+int START_FILES = 0;
 
+Map OBJECTTYPE = {
+  1:'bmp', 2:'png', 3:'jpg', 4:'gif', 17:'wav', 18:'mp3', 19:'fdl', 20:'snd', 21:'ogg', 33:'swf', 49:'txt'
+};
+
+const LENGTH_BYTE = 1;
+const LENGTH_SHORT = 2;
+const LENGTH_USHORT = 2;
+const LENGTH_INT = 4;
+const LENGTH_LONG = 4;
+const LENGTH_DOUBLE = 8;
 
 WherigoCartridge getCartridge(Uint8List byteList){
   if (byteList == [] || byteList == null)
@@ -235,6 +249,16 @@ WherigoCartridge getCartridge(Uint8List byteList){
   int LengthOfCompletionCode = 0;
   String CompletionCode = '';
 
+  int Unknown0 = 0;
+  int Unknown1 = 0;
+  int Unknown2 = 0;
+  int Unknown3 = 0;
+  int Unknown4 = 0;
+  int Unknown5 = 0;
+  int Unknown6 = 0;
+  int Unknown7 = 0;
+  int Unknown8 = 0;
+
   int offset = 0;
   StringOffset ASCIIZ;
   int ObjectLength = 0;
@@ -247,80 +271,168 @@ WherigoCartridge getCartridge(Uint8List byteList){
   Signature = Signature + String.fromCharCode(byteList[3]);
   Signature = Signature + String.fromCharCode(byteList[4]);
   Signature = Signature + String.fromCharCode(byteList[5]);
-  Signature = Signature + byteList[6].toString();
 
-  NumberOfObjects = readUShort(byteList, 7);
+  print('### SIGNATURE');
+  print('=> '+byteList[0].toString()+' '+byteList[1].toString()+' '+byteList[2].toString()+' '+byteList[3].toString()+' '+byteList[4].toString()+' '+byteList[5].toString()+' '+byteList[6].toString());
+  print('=> '+Signature);
 
-  offset = 9;
+  NumberOfObjects = readUShort(byteList, START_NUMBEROFOBJECTS);
+
+  print('### NUMBER OF OBJCETS');
+  print('=> '+byteList[7].toString()+' '+byteList[8].toString());
+  print('=> '+NumberOfObjects.toString());
+
+  offset = START_OBJCETADRESS; // File Header LUA File
+  print('### OBJECTS');
   for (int i = 0; i < NumberOfObjects; i++){
-    ObjectID = readUShort(byteList, offset);
-    Address = readInt(byteList, offset + 2);
-    offset = offset + 6;
+    ObjectID = readUShort(byteList, offset); offset = offset + LENGTH_USHORT;
+    Address = readInt(byteList, offset);     offset = offset + LENGTH_INT;
     Objects.add(Object(ObjectID, Address, 0, null));
+    print('=> '+i.toString()+' '+ObjectID.toString()+' '+Address.toString());
   }
 
-  HeaderLength = readInt(byteList, offset);        offset = offset + 4;
+  START_HEADER = START_OBJCETADRESS + NumberOfObjects * 6;
+  offset = START_HEADER;
+  print('### HEADER START');
+  print('=> '+offset.toString());
 
-  Latitude = readDouble(byteList, offset);         offset = offset + 8;
+  HeaderLength = readLong(byteList, offset);        offset = offset + LENGTH_LONG;
+  START_FILES = START_HEADER + HeaderLength;
 
-  Longitude = readDouble(byteList, offset);        offset = offset + 8;
+  print('### LONG HEADER LENGTH');
+  print('=> '+HeaderLength.toString());
 
-  Altitude = readDouble(byteList, offset);         offset = offset + 8;
+  Latitude = readDouble(byteList, offset);         offset = offset + LENGTH_DOUBLE;
+  print('### DOUBLE Latitude');
+  print('=> '+Latitude.toString());
 
-  DateOfCreation = readLong(byteList, offset);     offset = offset + 8;
+  Longitude = readDouble(byteList, offset);        offset = offset + LENGTH_DOUBLE;
+  print('### DOUBLE Longitude');
+  print('=> '+Longitude.toString());
 
-  Splashscreen = readShort(byteList, offset);      offset = offset + 2;
+//  Altitude = readDouble(byteList, offset);         offset = offset + LENGTH_DOUBLE;
+//  print('### DOUBLE Altitude long unknown 0');
+//  print('=> '+Altitude.toString());
 
-  SplashscreenIcon = readShort(byteList, offset);  offset = offset + 2;
+  Unknown0 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+  print('### LONG DateOfCreation unknown0');
+  print('=> '+Unknown0.toString());
+
+  Unknown1 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+  print('### LONG DateOfCreation unknown1');
+  print('=> '+Unknown1.toString());
+
+  Unknown2 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+  print('### LONG DateOfCreation unknown2');
+  print('=> '+Unknown2.toString());
+
+  Unknown3 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+  print('### LONG DateOfCreation unknown3');
+  print('=> '+Unknown3.toString());
+
+//  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+//  print('### LONG DateOfCreation unknown1');
+//  print('=> '+DateOfCreation.toString());
+
+//  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+//  print('### LONG DateOfCreation unknown2');
+//  print('=> '+DateOfCreation.toString());
+
+//  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
+//  print('### LONG DateOfCreation unknown3');
+//  print('=> '+DateOfCreation.toString());
+
+  Splashscreen = readShort(byteList, offset);      offset = offset + LENGTH_SHORT;
+  print('### SHORT Splashscreen');
+  print('=> '+Splashscreen.toString());
+
+  SplashscreenIcon = readShort(byteList, offset);  offset = offset + LENGTH_SHORT;
+  print('### SHORT SplashscreenIcon');
+  print('=> '+SplashscreenIcon.toString());
+
+  print('### ASCIIZ TypeOfCartridge');
+  print('=> '+offset.toString());
+  ASCIIZ = readString(byteList, offset);
+  TypeOfCartridge = ASCIIZ.ASCIIZ;                 offset = ASCIIZ.Offset;
+  print('=> '+TypeOfCartridge);
+
+  print('### ASCIIZ Player');
+  print('=> '+offset.toString());
+  ASCIIZ = readString(byteList, offset);
+  Player = ASCIIZ.ASCIIZ;                          offset = ASCIIZ.Offset;
+  print('=> '+Player);
+
+  PlayerID = readLong(byteList, offset);           offset = offset + LENGTH_LONG;
+  print('### LONG PlayerID unknown6');
+  print('=> '+PlayerID.toString());
+
+  PlayerID = readLong(byteList, offset);           offset = offset + LENGTH_LONG;
+  print('### LONG unknown7');
+  print('=> '+PlayerID.toString());
 
   ASCIIZ = readString(byteList, offset);
-  TypeOfCartridge = ASCIIZ.ASCIIZ;                 offset = offset + ASCIIZ.Offset;
+  CartridgeName = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
+  print('### ASCIIZ CartridgeName');
+  print('=> '+CartridgeName);
 
   ASCIIZ = readString(byteList, offset);
-  Player = ASCIIZ.ASCIIZ;                          offset = offset + ASCIIZ.Offset;
-
-  PlayerID = readLong(byteList, offset);           offset = offset + 8;
-
-  ASCIIZ = readString(byteList, offset);
-  CartridgeName = ASCIIZ.ASCIIZ;                   offset = offset + ASCIIZ.Offset;
+  CartridgeGUID = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
+  print('### ASCIIZ CartridgeGUID');
+  print('=> '+CartridgeGUID);
 
   ASCIIZ = readString(byteList, offset);
-  CartridgeGUID = ASCIIZ.ASCIIZ;                   offset = offset + ASCIIZ.Offset;
+  CartridgeDescription = ASCIIZ.ASCIIZ;            offset = ASCIIZ.Offset;
+  print('### ASCIIZ CartridgeDescription');
+  print('=> '+CartridgeDescription);
 
   ASCIIZ = readString(byteList, offset);
-  CartridgeDescription = ASCIIZ.ASCIIZ;            offset = offset + ASCIIZ.Offset;
+  StartingLocationDescription = ASCIIZ.ASCIIZ;     offset = ASCIIZ.Offset;
+  print('### ASCIIZ StartingLocationDescription');
+  print('=> '+StartingLocationDescription);
 
   ASCIIZ = readString(byteList, offset);
-  StartingLocationDescription = ASCIIZ.ASCIIZ;     offset = offset + ASCIIZ.Offset;
+  Version = ASCIIZ.ASCIIZ;                         offset = ASCIIZ.Offset;
+  print('### ASCIIZ Version');
+  print('=> '+Version);
 
   ASCIIZ = readString(byteList, offset);
-  Version = ASCIIZ.ASCIIZ;                         offset = offset + ASCIIZ.Offset;
+  Author = ASCIIZ.ASCIIZ;                          offset = ASCIIZ.Offset;
+  print('### ASCIIZ Author');
+  print('=> '+Author);
 
   ASCIIZ = readString(byteList, offset);
-  Author = ASCIIZ.ASCIIZ;                          offset = offset + ASCIIZ.Offset;
+  Company = ASCIIZ.ASCIIZ;                         offset = ASCIIZ.Offset;
+  print('### ASCIIZ Company');
+  print('=> '+Company);
 
   ASCIIZ = readString(byteList, offset);
-  Company = ASCIIZ.ASCIIZ;                         offset = offset + ASCIIZ.Offset;
+  RecommendedDevice = ASCIIZ.ASCIIZ;               offset = ASCIIZ.Offset;
+  print('### ASCIIZ RecommendedDevice');
+  print('=> '+RecommendedDevice);
+
+  LengthOfCompletionCode = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+  print('### LONG LengthOfCompletionCode');
+  print('=> '+LengthOfCompletionCode.toString());
 
   ASCIIZ = readString(byteList, offset);
-  RecommendedDevice = ASCIIZ.ASCIIZ;               offset = offset + ASCIIZ.Offset;
-
-  LengthOfCompletionCode = readInt(byteList, offset);     offset = offset + 4;
-
-  ASCIIZ = readString(byteList, offset);
-  CompletionCode = ASCIIZ.ASCIIZ;                   offset = offset + ASCIIZ.Offset;
+  CompletionCode = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
+  print('### ASCIIZ CompletionCode');
+  print('=> '+CompletionCode);
 
   // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
   ObjectLength = readInt(byteList, offset);     offset = offset + 4;
-  Objects[0].Bytes = ByteData.sublistView(byteList, offset, offset + ObjectLength);
+  //Objects[0].Bytes = ByteData.sublistView(byteList, offset, offset + ObjectLength);
+  for (int i = offset; i <= ObjectLength; i++){
+    Objects[0].Bytes.add(byteList[i]);
+  }
   offset = offset + ObjectLength;
 
   // read Objects
   for (int i = 1; i < NumberOfObjects; i++){
-    ValidObject = readByte(byteList, offset);     offset = offset + 1;
+    ValidObject = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
     if (ValidObject != 0) {
-      ObjectType = readInt(byteList, offset);     offset = offset + 4;
-      ObjectLength = readInt(byteList, offset);     offset = offset + 4;
+      ObjectType = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+      ObjectLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
       Objects[i].Type = ObjectType;
       Objects[i].Bytes = ByteData.sublistView(byteList, offset, offset + ObjectLength);
       offset = offset + ObjectLength;
