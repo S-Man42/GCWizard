@@ -77,6 +77,7 @@ void main() {
       {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
       {'formula' : 'ROUND(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
       {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'},
+      {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'},
 
       {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'ttBt'},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttbb'},
