@@ -340,17 +340,6 @@ List<String> allCharacters() {
   return characters.toSet().toList();
 }
 
-dynamic returnIntOrDouble(num number) {
-  if (number == null)
-    return null;
-
-  if (number == number.floorToDouble()) {
-    return number.toInt();
-  }
-
-  return number;
-}
-
 dynamic round(double number, {int precision: 0}) {
   if (number == null)
     return null;

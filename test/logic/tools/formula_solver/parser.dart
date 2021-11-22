@@ -93,7 +93,7 @@ void main() {
       {'formula' : 'sindeg(90)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
       {'formula' : 'sinDeg(90)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
       {'formula' : 'SINDEG(90)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1'}},
-      {'formula' : 'round(1.247, 2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1.25'}},
+      {'formula' : 'round(1.257, 2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '1.26'}},
       {'formula' : 'csi(99,88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '7'}},
       {'formula' : 'csi(99) + csi(88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '16'}},
     ];

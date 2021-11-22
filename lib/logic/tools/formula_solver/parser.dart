@@ -1,12 +1,11 @@
 import 'dart:math';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/crosstotals.dart';
+import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:universal_html/html.dart';
 
 const STATE_OK = 'ok';
 const STATE_ERROR = 'error';
@@ -54,14 +53,14 @@ class FormulaParser {
       if (numbers.length > 1)
         precision = numbers[1].toInt();
 
-      return returnIntOrDouble(round(numbers.first, precision: precision));
+      return round(numbers.first, precision: precision);
     },
-    'sindeg': (List<double> numbers) => returnIntOrDouble(sin(degreesToRadian(numbers.first))),
-    'cosdeg': (List<double> numbers) => returnIntOrDouble(cos(degreesToRadian(numbers.first))),
-    'tandeg': (List<double> numbers) => returnIntOrDouble(tan(degreesToRadian(numbers.first))),
-    'arcsindeg': (List<double> numbers) => returnIntOrDouble(asin(degreesToRadian(numbers.first))),
-    'arccosdeg': (List<double> numbers) => returnIntOrDouble(acos(degreesToRadian(numbers.first))),
-    'arctandeg': (List<double> numbers) => returnIntOrDouble(atan(degreesToRadian(numbers.first))),
+    'sindeg': (List<double> numbers) => sin(degreesToRadian(numbers.first)),
+    'cosdeg': (List<double> numbers) => cos(degreesToRadian(numbers.first)),
+    'tandeg': (List<double> numbers) => tan(degreesToRadian(numbers.first)),
+    'arcsindeg': (List<double> numbers) => asin(degreesToRadian(numbers.first)),
+    'arccosdeg': (List<double> numbers) => acos(degreesToRadian(numbers.first)),
+    'arctandeg': (List<double> numbers) => atan(degreesToRadian(numbers.first)),
   };
 
   // different minus/hyphens/dashes
@@ -210,16 +209,25 @@ class FormulaParser {
           hasError = true;
           result = '[' + e.message + ']';
         }
-        substitutions.putIfAbsent(matchString, () => result.toString());
+
+        substitutions.putIfAbsent(matchString, () => _formatOutput(result));
       });
 
       return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': substitution(formula, substitutions)};
     } else {
       try {
-        return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': _evaluateFormula(formula, values).toString()};
+        return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': _formatOutput(_evaluateFormula(formula, values))};
       } catch (e) {
         return {'state': STATE_ERROR, 'result': e.message};
       }
+    }
+  }
+
+  String _formatOutput(dynamic value) {
+    if (value is double) {
+      return NumberFormat('0.############').format(value);
+    } else {
+      return value.toString();
     }
   }
 }
