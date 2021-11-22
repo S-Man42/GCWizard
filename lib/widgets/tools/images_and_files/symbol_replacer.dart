@@ -107,7 +107,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Widget build(BuildContext context) {
     if (widget.platformFile != null) {
       _platformFile = widget.platformFile;
-      _replaceSymbols();
+      _replaceSymbols(true);
     }
 
     return Column(children: <Widget>[
@@ -123,7 +123,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             setState(() {
               _platformFile = _file;
               _symbolImage = null;
-              _replaceSymbols();
+              _replaceSymbols(true);
             });
           }
         },
@@ -173,15 +173,27 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
 
-  _replaceSymbols()  {
-    _symbolImage = replaceSymbols(
-        _platformFile.bytes,
-        _blackLevel.toInt(),
-        _similarityLevel,
-        symbolImage: _symbolImage,
-        compareSymbols: _currentSymbolTableData?.images,
-        similarityCompareLevel: _similarityCompareLevel
+  _replaceSymbols(bool useAsyncExecuter) async {
+
+    useAsyncExecuter = useAsyncExecuter || (symbolImage?.groups?.isEmpty)
+    var _jobData = _ReplaceSymbolsInput(
+      image: _platformFile.bytes,
+      blackLevel: _blackLevel.toInt(),
+      similarityLevel: _similarityLevel,
+      symbolImage: _symbolImage,
+      compareSymbols: _currentSymbolTableData?.images,
+      similarityCompareLevel: _similarityCompareLevel
     );
+
+    _showOutput(await replaceSymbolsAsync(GCWAsyncExecuterParameters(_jobData)));
+  }
+
+  _showOutput(SymbolImage output) {
+    _symbolImage = output;
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() { });
+    });
   }
 
   Widget _buildAdvancedModeControl(BuildContext context) {
@@ -192,10 +204,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         min: 0,
         max: 100,
         onChanged: (value) {
-          setState(() {
-            _similarityLevel = value;
-            _replaceSymbols();
-          });
+          _similarityLevel = value;
+          _replaceSymbols(false);
         }
       ),
       GCWSlider(
@@ -204,10 +214,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         min: 0,
         max: 100,
         onChanged: (value) {
-          setState(() {
-            _blackLevel = value;
-            _replaceSymbols();
-          });
+          _blackLevel = value;
+          _replaceSymbols(false);
         }
       ),
       _buildSymbolTableDropDown(),
@@ -228,9 +236,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             }
 
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              setState(() {
-                _replaceSymbols();
-              });
+              _replaceSymbols(false);
             });
         },
         items: compareSymbolItems,
@@ -241,10 +247,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         min: 0,
         max: 100,
         onChanged: (value) {
-          setState(() {
-            _similarityCompareLevel = value;
-            _replaceSymbols();
-          });
+          _similarityCompareLevel = value;
+          _replaceSymbols(false);
         }
       ),
     ]);
@@ -300,10 +304,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                     controller: TextEditingController(text: entry.text),
                     autofocus: true,
                     onChanged: (text) {
-                      setState(() {
-                        entry.text = text;
-                        _replaceSymbols();
-                      });
+                      entry.text = text;
+                      _replaceSymbols(false);
                     },
                   ),
 
@@ -362,28 +364,34 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         GCWDefaultOutput(child: _symbolImage.getTextOutput()),
         GCWButton(
           text: 'Automatic',//i18n(context, 'substitutionbreaker_exporttosubstition'),
-          onPressed: () {
-//            setState(() async {
-//            });
-            //WidgetsBinding.instance.addPostFrameCallback((_) {
-
-                _startSubstitutionBreaker().then((value) {
-                setState(() async {
-                  _replaceSymbols();
-
-              });
-            //});
-          });
-    }
-        )
+          onPressed: () async {
+            await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+                return Center(
+                child: Container(
+                    child: GCWAsyncExecuter(
+                    isolatedFunction: break_cipherAsync,
+                    parameter: _buildSubstitutionBreakerJobData(),
+                    onReady: (data) => _showSubstitutionBreakerOutput(data),
+                    isOverlay: true,
+                    ),
+                    height: 220,
+                    width: 150,
+                ),
+                );
+            },
+            );
+        });
+      })
     ]);
   }
 
-  Future<SymbolImage> _startSubstitutionBreaker() async {
-    if (_symbolImage == null)
-      return null;
-    if (_symbolImage.symbolGroups == null)
-      return null;
+  Future<GCWAsyncExecuterParameters> _buildSubstitutionBreakerJobData() async {
+
+    if (_symbolImage == null) return null;
+    if (_symbolImage.symbolGroups == null) return null;
 
     var quadgrams = await SubstitutionBreakerState.loadQuadgramsAssets(SubstitutionBreakerAlphabet.GERMAN, context, _quadgrams, _isLoading);
     if (_symbolImage.symbolGroups.length > quadgrams.alphabet.length) {
@@ -401,13 +409,21 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     });
     input = input.trim();
 
-    var jobData = SubstitutionBreakerJobData(input: input, quadgrams: quadgrams);
-    var result = break_cipher(jobData.input, jobData.quadgrams);
+    return SubstitutionBreakerJobData(input: input, quadgrams: quadgrams);
+  }
+
+  _showSubstitutionBreakerOutput(SubstitutionBreakerResult output) {
+    if (output == null) return;
 
     if (result.errorCode == SubstitutionBreakerErrorCode.OK) {
-       for (int i = 0; i < _symbolImage.symbolGroups.length; i++)
+      for (int i = 0; i < _symbolImage.symbolGroups.length; i++)
         _symbolImage.symbolGroups[i].text = result.key[i].toUpperCase();
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _replaceSymbols(false);
+    });
   }
+
 }
 

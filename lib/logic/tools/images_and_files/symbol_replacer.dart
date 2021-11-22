@@ -7,14 +7,52 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
 
-SymbolImage replaceSymbols(Uint8List image,
+class _ReplaceSymbolsInput {
+  final Uint8List image;
+  final int blackLevel;
+  final double similarityLevel;
+  final int gap;
+  final SymbolImage symbolImage;
+  final List<Map<String, SymbolData>> compareSymbols;
+  final double similarityCompareLevel;
+
+  _ReplaceSymbolsInput(
+      {this.image,
+      this.blackLevel: 50,
+      this.similarityLevel: 100.0,
+      this.gap: 1,
+      this.symbolImage,
+      this.compareSymbols,
+      this.similarityCompareLevel: 80.0,
+}
+
+Future<SymbolImage> replaceSymbolsAsync(dynamic jobData) async {
+  if (jobData == null) return null;
+
+  var output = await decodeImages(
+      jobData.parameters.image, 
+      jobData.parameters.blackLevel, 
+      jobData.parameters.similarityLevel,
+      gap: jobData.parameters.gap
+      symbolImage: jobData.parameters.symbolImage
+      compareSymbols: jobData.parameters.compareSymbols
+      similarityCompareLevel: jobData.parameters.similarityCompareLevel
+      );
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+
+Future<SymbolImage> replaceSymbols(Uint8List image,
     int blackLevel,
     double similarityLevel,
     {int gap = 1,
       SymbolImage symbolImage,
       List<Map<String, SymbolData>> compareSymbols,
       double similarityCompareLevel
-    }) {
+    }) async {
   if (symbolImage == null)
     symbolImage = SymbolImage(image);
 
@@ -26,8 +64,9 @@ SymbolImage replaceSymbols(Uint8List image,
       similarityCompareLevel: similarityCompareLevel
   );
 
-  return symbolImage;
+  return Furure.value(symbolImage);
 }
+
 
 class SymbolImage {
   Uint8List _image;
