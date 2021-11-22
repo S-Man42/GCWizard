@@ -75,7 +75,7 @@ class _SymbolTableConstants {
     "parentheses_open": "(",
     "parentheses_close": ")",
     "percent": "%",
-    "pi": "¶",
+    "pi": "π",
     "pipe": "|",
     "plus": "+",
     "plus_minus": "±",

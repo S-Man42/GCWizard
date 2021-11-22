@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class ImagesAndFilesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList
+    final List<GCWTool> _toolList = registeredTools
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.IMAGES_AND_FILES))
         .toList();
 

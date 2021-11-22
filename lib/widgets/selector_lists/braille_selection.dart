@@ -12,7 +12,7 @@ import '../tools/crypto_and_encodings/braille/braille.dart';
 class BrailleSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = registeredTools.where((element) {
       if (className(element.tool) == className(SymbolTable()) &&
           (element.tool as SymbolTable).symbolKey.startsWith('braille_')) return true;
 

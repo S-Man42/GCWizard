@@ -373,7 +373,7 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, }', () {
+      test('input: ${elem['input']}', () {
         var _actual = allSameCharacters(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -397,8 +397,70 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, }', () {
+      test('input: ${elem['input']}', () {
         var _actual = isOnlyLetters(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.returnIntOrDouble:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : 0.0, 'expectedOutput' : 0, 'expectedType': 'int'},
+      {'input' : 0.1, 'expectedOutput' : 0.1, 'expectedType': 'double'},
+      {'input' : 1.0, 'expectedOutput' : 1, 'expectedType': 'int'},
+      {'input' : 1.1, 'expectedOutput' : 1.1, 'expectedType': 'double'},
+      {'input' : 1.9, 'expectedOutput' : 1.9, 'expectedType': 'double'},
+      {'input' : -1.0, 'expectedOutput' : -1, 'expectedType': 'int'},
+      {'input' : -1.1, 'expectedOutput' : -1.1, 'expectedType': 'double'},
+      {'input' : -0.9, 'expectedOutput' : -0.9, 'expectedType': 'double'},
+      {'input' : 42.0, 'expectedOutput' : 42, 'expectedType': 'int'}
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = returnIntOrDouble(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+
+        if (elem['expectedType'] == 'int') {
+          expect(true, _actual is int);
+        } else {
+          expect(true, _actual is double);
+        }
+      });
+    });
+  });
+
+  group("CommonUtils.round:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'precision': 0, 'expectedOutput' : null},
+      {'input' : 0.0, 'precision': 0, 'expectedOutput' : 0},
+
+      {'input' : 0.1, 'precision': 0, 'expectedOutput' : 0},
+      {'input' : 0.9, 'precision': 0, 'expectedOutput' : 1},
+      {'input' : -0.1, 'precision': 0, 'expectedOutput' : 0},
+      {'input' : -0.9, 'precision': 0, 'expectedOutput' : -1},
+
+      {'input' : 0.1, 'precision': 1, 'expectedOutput' : 0.1},
+      {'input' : 0.9, 'precision': 1, 'expectedOutput' : 0.9},
+      {'input' : -0.1, 'precision': 1, 'expectedOutput' : -0.1},
+      {'input' : -0.9, 'precision': 1, 'expectedOutput' : -0.9},
+
+      {'input' : 0.11, 'precision': 1, 'expectedOutput' : 0.1},
+      {'input' : 0.19, 'precision': 1, 'expectedOutput' : 0.2},
+      {'input' : 0.91, 'precision': 1, 'expectedOutput' : 0.9},
+      {'input' : 0.99, 'precision': 1, 'expectedOutput' : 1.0},
+      {'input' : -0.11, 'precision': 1, 'expectedOutput' : -0.1},
+      {'input' : -0.19, 'precision': 1, 'expectedOutput' : -0.2},
+      {'input' : -0.91, 'precision': 1, 'expectedOutput' : -0.9},
+      {'input' : -0.99, 'precision': 1, 'expectedOutput' : -1.0},
+
+      {'input' : 1.247, 'precision': 2, 'expectedOutput' : 1.25},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, precision: ${elem['precision']}', () {
+        var _actual = round(elem['input'], precision: elem['precision']);
         expect(_actual, elem['expectedOutput']);
       });
     });

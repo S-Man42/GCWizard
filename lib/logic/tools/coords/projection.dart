@@ -1,3 +1,4 @@
+import 'package:flutter/scheduler.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
@@ -33,7 +34,7 @@ LatLng projectionVincenty(LatLng coord, double bearing, double distance, Ellipso
 
 class _ReverseProjectionCalculator extends IntervalCalculator {
   _ReverseProjectionCalculator(Map<String, dynamic> parameters, Ellipsoid ells) : super(parameters, ells) {
-    eps = 1e-6;
+    eps = 1e-10;
   }
 
   @override
@@ -43,6 +44,11 @@ class _ReverseProjectionCalculator extends IntervalCalculator {
 
     var distance = parameters['distance'];
     var bearing = parameters['bearing'];
+
+    if ((distanceToCoord.a <= distance) &&
+        (distance <= distanceToCoord.b) &&
+        ((bearingToCoord.a <= bearing) && (bearing <= bearingToCoord.b) ||
+            (bearingToCoord.a <= bearing + 360.0) && (bearing + 360.0 <= bearingToCoord.b))) {}
 
     return (distanceToCoord.a <= distance) &&
         (distance <= distanceToCoord.b) &&
@@ -55,4 +61,12 @@ List<LatLng> reverseProjection(LatLng coord, double bearing, double distance, El
   bearing = utils.normalizeBearing(bearing);
 
   return _ReverseProjectionCalculator({'coord': coord, 'bearing': bearing, 'distance': distance}, ellipsoid).check();
+}
+
+main() {
+  var coord = LatLng(52.5918, 13.2080333333333333);
+  var bearing = 30.36;
+  var distance = 17468.5;
+
+  print(reverseProjection(coord, bearing, distance, getEllipsoidByName("WGS84")));
 }
