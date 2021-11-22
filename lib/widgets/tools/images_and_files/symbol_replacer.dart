@@ -74,7 +74,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     _compareSymbolItems.insert(0,
       GCWDropDownMenuItem(
         value: null,
-        child: _buildDropDownMenuItem(null, 'no symbol table', null)
+        child: _buildDropDownMenuItem(null, i18n(context, 'symbol_replacer_no_symbol_table'), null)
       )
     );
   }
@@ -173,7 +173,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Widget _buildAdvancedModeControl(BuildContext context) {
     return Column(children: <Widget>[
       GCWSlider(
-        title: 'Similarity Level',
+        title: i18n(context, 'symbol_replacer_similarity_level'),
         value: _similarityLevel,
         min: 0,
         max: 100,
@@ -183,7 +183,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         }
       ),
       GCWSlider(
-        title: 'Black Level',
+        title: i18n(context, 'symbol_replacer_black_level'),
         value: _blackLevel,
         min: 0,
         max: 100,
@@ -198,8 +198,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   Widget _buildSymbolTableDropDown() {
     return Column(children: <Widget>[
-      GCWTextDivider(text: 'Symbol Table'),
-      SizedBox(height: 90, child:
+      GCWTextDivider(text: i18n(context, 'symbol_replacer_symbol_table')),
       GCWDropDownButton(
         value: _currentCompareSymbolTableTool,
         onChanged: (value) async {
@@ -218,14 +217,14 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         selectedItemBuilder: (BuildContext context) {
           return _compareSymbolItems.map((widget) {
             return _buildDropDownMenuItem(
-                (widget.value is GCWTool) ? (widget.value as GCWTool).icon : null,
-                (widget.value is GCWTool) ? (widget.value as GCWTool).toolName : 'no symbol table',
-                null);
+              (widget.value is GCWTool) ? (widget.value as GCWTool).icon : null,
+              (widget.value is GCWTool) ? (widget.value as GCWTool).toolName : i18n(context, 'symbol_replacer_no_symbol_table'),
+              null);
           }).toList();
         },
-      )),
+      ),
       GCWSlider(
-        title: 'Similarity Level',
+        title: i18n(context, 'symbol_replacer_similarity_level'),
         value: _similarityCompareLevel,
         min: 0,
         max: 100,
