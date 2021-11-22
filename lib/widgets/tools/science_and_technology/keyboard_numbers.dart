@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/keyboard.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -75,7 +74,7 @@ class KeyboardNumbersState extends State<KeyboardNumbers> {
 
   Widget _buildOutput(BuildContext context) {
     var outputData;
-    List<List<String>> output = new List<List<String>>();
+    List<List<String>> output = <List<String>>[];
 
     if (_currentMode == GCWSwitchPosition.left) {
       outputData = encodeKeyboardNumbers(_currentEncodeInput);

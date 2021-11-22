@@ -4,7 +4,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWMultiDecoderToolConfiguration extends StatefulWidget {
   final Map<String, Widget> widgets;
-
   const GCWMultiDecoderToolConfiguration({Key key, this.widgets}) : super(key: key);
 
   @override
