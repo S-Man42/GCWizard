@@ -4214,6 +4214,7 @@
   "symbol_replacer_similarity_level": "Ähnlichkeitslevel",
   "symbol_replacer_symbol_table": "Symboltabelle",
   "symbol_replacer_no_symbol_table": "keine Symboltabelle",
+  "symbol_replacer_found_symbols": "Symbol(e) gefunden",
   "tapcode_title": "Klopfcode",
   "tapcode_description": "Spezialfall der Polybios-Verschlüsselung",
   "tapcode_example": "ABCXYZ → 11 12 13 53 54 55",

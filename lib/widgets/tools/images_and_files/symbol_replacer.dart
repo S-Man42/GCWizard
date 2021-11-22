@@ -56,47 +56,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   var _editValueController = <TextEditingController>[];
 
   @override
-  void initState() {
-    super.initState();
-
-    List<GCWTool> _toolList = registeredTools.where((element) {
-      return [
-        className(SymbolTable()),
-      ].contains(className(element.tool));
-    }).toList();
-
-
-    _compareSymbolItems = _toolList.map((tool) {
-      return GCWDropDownMenuItem(
-          value: tool,
-          child: _buildDropDownMenuItem(tool.icon, tool.toolName, tool.description));
-    }).toList();
-    _compareSymbolItems.insert(0,
-      GCWDropDownMenuItem(
-        value: null,
-        child: _buildDropDownMenuItem(null, i18n(context, 'symbol_replacer_no_symbol_table'), null)
-      )
-    );
-  }
-
-  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
-    return Row( children: [
-        Container(
-          child: (icon != null) ? icon : Container(width: 50),
-          margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
-        ),
-        Expanded(child:
-           Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(toolName, style: _gcwTextStyle),
-                (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
-              ])
-        )
-      ]);
-  }
-
-  @override
   void dispose() {
     _editValueController.forEach((element) {element.dispose();});
 
@@ -105,6 +64,26 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   @override
   Widget build(BuildContext context) {
+    if (_compareSymbolItems == null) {
+      List<GCWTool> _toolList = registeredTools.where((element) {
+        return [
+          className(SymbolTable()),
+        ].contains(className(element.tool));
+      }).toList();
+
+      _compareSymbolItems = _toolList.map((tool) {
+        return GCWDropDownMenuItem(
+            value: tool,
+            child: _buildDropDownMenuItem(tool.icon, tool.toolName, tool.description));
+      }).toList();
+      _compareSymbolItems.insert(0,
+          GCWDropDownMenuItem(
+              value: null,
+              child: _buildDropDownMenuItem(null, i18n(context, 'symbol_replacer_no_symbol_table'), null)
+          )
+      );
+    }
+
     if (widget.platformFile != null) {
       _platformFile = widget.platformFile;
       _replaceSymbols(true);
@@ -293,7 +272,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
                   Row(children: <Widget>[
                       Expanded(child:
-                        Text(entry.symbols.length.toString() +' symbol(s) found')
+                        Text(entry.symbols.length.toString() + ' ' + i18n(context, 'symbol_replacer_found_symbols')),
                       ),
                     GCWIconButton(
                       iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
@@ -404,6 +383,23 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _replaceSymbols(false);
     });
+  }
+
+  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
+    return Row( children: [
+      Container(
+        child: (icon != null) ? icon : Container(width: 50),
+        margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
+      ),
+      Expanded(child:
+      Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(toolName, style: _gcwTextStyle),
+            (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
+          ])
+      )
+    ]);
   }
 
 }
