@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -60,7 +61,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   void initState() {
     super.initState();
 
-    List<GCWTool> _toolList = Registry.toolList.where((element) {
+    List<GCWTool> _toolList = registeredTools.where((element) {
       return [
         className(SymbolTable()),
       ].contains(className(element.tool));
@@ -175,8 +176,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   _replaceSymbols(bool useAsyncExecuter) async {
 
-    useAsyncExecuter = useAsyncExecuter || (symbolImage?.groups?.isEmpty)
-    var _jobData = _ReplaceSymbolsInput(
+    useAsyncExecuter = useAsyncExecuter || (_symbolImage?.symbolGroups?.isEmpty);
+    var _jobData = ReplaceSymbolsInput(
       image: _platformFile.bytes,
       blackLevel: _blackLevel.toInt(),
       similarityLevel: _similarityLevel,
@@ -318,7 +319,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                       onPressed: () {
                         setState(() {
                           entry.viewGroupImage = !entry.viewGroupImage;
-                          //if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
                         });
                       },
                     )
@@ -370,21 +370,21 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             barrierDismissible: false,
             builder: (context) {
                 return Center(
-                child: Container(
+                  child: Container(
                     child: GCWAsyncExecuter(
-                    isolatedFunction: break_cipherAsync,
-                    parameter: _buildSubstitutionBreakerJobData(),
-                    onReady: (data) => _showSubstitutionBreakerOutput(data),
-                    isOverlay: true,
+                      isolatedFunction: break_cipherAsync,
+                      parameter: _buildSubstitutionBreakerJobData(),
+                      onReady: (data) => _showSubstitutionBreakerOutput(data),
+                      isOverlay: true,
                     ),
                     height: 220,
                     width: 150,
                 ),
-                );
+              );
             },
             );
-        });
-      })
+        }
+      )
     ]);
   }
 
@@ -402,22 +402,22 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     var input = '';
     _symbolImage.lines.forEach((line) {
       line.symbols.forEach((symbol) {
-        var index =  _symbolImage.symbolGroups.indexOf(symbol.symbolGroup);
+        var index = _symbolImage.symbolGroups.indexOf(symbol.symbolGroup);
         input += symbol.symbolGroup == null ? '' : quadgrams.alphabet[index];
       });
       input += '\r\n';
     });
     input = input.trim();
 
-    return SubstitutionBreakerJobData(input: input, quadgrams: quadgrams);
+    return GCWAsyncExecuterParameters(SubstitutionBreakerJobData(input: input, quadgrams: quadgrams));
   }
 
   _showSubstitutionBreakerOutput(SubstitutionBreakerResult output) {
     if (output == null) return;
 
-    if (result.errorCode == SubstitutionBreakerErrorCode.OK) {
+    if (output.errorCode == SubstitutionBreakerErrorCode.OK) {
       for (int i = 0; i < _symbolImage.symbolGroups.length; i++)
-        _symbolImage.symbolGroups[i].text = result.key[i].toUpperCase();
+        _symbolImage.symbolGroups[i].text = output.key[i].toUpperCase();
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
