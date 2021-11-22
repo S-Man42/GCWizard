@@ -716,6 +716,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: [
       'keyboard',
+      'keyboard_numbers'
     ]),
     GCWTool(
         tool: KeyboardSelection(),

@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_playfair.dart';
@@ -65,6 +66,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_ROMANNUMBERS,
   MDT_INTERNALNAMES_BINARY2IMAGE,
   MDT_INTERNALNAMES_KEYBOARDLAYOUT,
+  MDT_INTERNALNAMES_KEYBOARDNUMBERS,
   MDT_INTERNALNAMES_WASD,
   MDT_INTERNALNAMES_CCITT1,
   MDT_INTERNALNAMES_CCITT2,
@@ -86,8 +88,9 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_COORDINATEFORMATS: {MDT_COORDINATEFORMATS_OPTION_FORMAT: keyCoordsUTM},
   MDT_INTERNALNAMES_GCCODE: {MDT_GCCODE_OPTION_MODE: MDT_GCCODE_OPTION_MODE_IDTOGCCODE},
   MDT_INTERNALNAMES_ENCLOSEDAREAS: {MDT_ENCLOSEDAREAS_OPTION_MODE: 'enclosedareas_with4'},
-  MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: shortKeyboardName(enumKeyboardLayout.QWERTZ_T1),
-                                      MDT_KEYBOARDLAYOUT_OPTION_TO: shortKeyboardName(enumKeyboardLayout.QWERTY_US_INT)},
+  MDT_INTERNALNAMES_KEYBOARDLAYOUT: {MDT_KEYBOARDLAYOUT_OPTION_FROM: getKeyboardByType(KeyboardType.QWERTY_US_INT).name,
+                                      MDT_KEYBOARDLAYOUT_OPTION_TO: getKeyboardByType(KeyboardType.QWERTZ_T1).name},
+  MDT_INTERNALNAMES_KEYBOARDNUMBERS: {MDT_KEYBOARDNUMBERS_OPTION_TYPE: 'keyboard_mode_qwertz_ristome_dvorak'},
   MDT_INTERNALNAMES_NUMERALBASES: {MDT_NUMERALBASES_OPTION_FROM: 16},
   MDT_INTERNALNAMES_ONETIMEPAD: {MDT_ONETIMEPAD_OPTION_KEY: 1},
   MDT_INTERNALNAMES_PLAYFAIR: {MDT_PLAYFAIR_OPTION_MODE: alphabetModeName(AlphabetModificationMode.J_TO_I)},
@@ -167,7 +170,10 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
       gcwTool = MultiDecoderToolKenny(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_KEYBOARDLAYOUT:
-      gcwTool = MultiDecoderToolKeybordLayout(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolKeyboardLayout(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
+    case MDT_INTERNALNAMES_KEYBOARDNUMBERS:
+      gcwTool = MultiDecoderToolKeyboardNumbers(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_NUMERALBASES:
       gcwTool = MultiDecoderToolNumeralBases(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -227,11 +233,12 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_REVERSE), MDT_INTERNALNAMES_REVERSE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ATBASH), MDT_INTERNALNAMES_ATBASH),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ALPHABETVALUES), MDT_INTERNALNAMES_ALPHABETVALUES),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ASCII), MDT_INTERNALNAMES_ASCII),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ROMANNUMBERS), MDT_INTERNALNAMES_ROMANNUMBERS,
         options: [MultiDecoderToolOption(MDT_ROMANNUMBERS_OPTION_MODE, MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ROMANNUMBERS), MDT_INTERNALNAMES_ROMANNUMBERS,
         options: [MultiDecoderToolOption(MDT_ROMANNUMBERS_OPTION_MODE, MDT_ROMANNUMBERS_OPTION_MODE_ADDITION)]),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ASCII), MDT_INTERNALNAMES_ASCII),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CHRONOGRAM), MDT_INTERNALNAMES_CHRONOGRAM),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VANITYMULTITAP), MDT_INTERNALNAMES_VANITYMULTITAP,
         options: [MultiDecoderToolOption(MDT_VANITYMULTITAP_OPTION_PHONEMODEL, NAME_PHONEMODEL_SIMPLE_SPACE_0)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
@@ -272,14 +279,11 @@ initializeMultiToolDecoder(BuildContext context) {
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsQuadtree)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsReverseWhereIGoWaldmeister)]),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
-        options: [MultiDecoderToolOption(MDT_BACON_OPTION_MODE, MDT_BACON_OPTION_MODE_AB)]),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
-        options: [MultiDecoderToolOption(MDT_BACON_OPTION_MODE, MDT_BACON_OPTION_MODE_01)]),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BCD), MDT_INTERNALNAMES_BCD,
-        options: [MultiDecoderToolOption(MDT_BCD_OPTION_BCDFUNCTION, 'bcd_original')]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDNUMBERS), MDT_INTERNALNAMES_KEYBOARDNUMBERS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ENCLOSEDAREAS), MDT_INTERNALNAMES_ENCLOSEDAREAS),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BEGHILOS), MDT_INTERNALNAMES_BEGHILOS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_GCCODE), MDT_INTERNALNAMES_GCCODE,
         options: [MultiDecoderToolOption(MDT_GCCODE_OPTION_MODE, MDT_GCCODE_OPTION_MODE_IDTOGCCODE)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_GCCODE), MDT_INTERNALNAMES_GCCODE,
@@ -290,18 +294,21 @@ initializeMultiToolDecoder(BuildContext context) {
         options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 14)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_SEGMENTDISPLAY), MDT_INTERNALNAMES_SEGMENTDISPLAY,
         options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 16)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_WASD), MDT_INTERNALNAMES_WASD),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BEGHILOS), MDT_INTERNALNAMES_BEGHILOS),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ONETIMEPAD), MDT_INTERNALNAMES_ONETIMEPAD),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KENNY), MDT_INTERNALNAMES_KENNY),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BINARY2IMAGE), MDT_INTERNALNAMES_BINARY2IMAGE),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_WASD), MDT_INTERNALNAMES_WASD),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CHRONOGRAM), MDT_INTERNALNAMES_CHRONOGRAM),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
+        options: [MultiDecoderToolOption(MDT_BACON_OPTION_MODE, MDT_BACON_OPTION_MODE_AB)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BACON), MDT_INTERNALNAMES_BACON,
+        options: [MultiDecoderToolOption(MDT_BACON_OPTION_MODE, MDT_BACON_OPTION_MODE_01)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BCD), MDT_INTERNALNAMES_BCD,
+        options: [MultiDecoderToolOption(MDT_BCD_OPTION_BCDFUNCTION, 'bcd_original')]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT1), MDT_INTERNALNAMES_CCITT1),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS), MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ONETIMEPAD), MDT_INTERNALNAMES_ONETIMEPAD),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
   ];
 
   for (int i = 25; i >= 1; i--) {

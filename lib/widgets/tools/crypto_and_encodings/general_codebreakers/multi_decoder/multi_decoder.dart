@@ -160,8 +160,6 @@ class MultiDecoderState extends State<MultiDecoder> {
       }
       if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
         result += '_title';
-      } else if (tool.internalToolName == MDT_INTERNALNAMES_KEYBOARDLAYOUT) {
-        result = keyboardOptionToNameLabel(value);
       }
 
       return i18n(context, result.toString()) ?? result;
@@ -185,7 +183,14 @@ class MultiDecoderState extends State<MultiDecoder> {
       var result;
 
       try {
-        result = tool.onDecode(_currentInput, _currentKey);
+        if (
+          tool.requiresKey && (_currentKey ?? '').isEmpty
+          || !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty)
+        ) {
+          result = null;
+        } else {
+          result = tool.onDecode(_currentInput, _currentKey);
+        }
       } catch (e) {}
 
       if ((result is String) && (result.toString().length != 0))

@@ -15,9 +15,9 @@ class MultiDecoderToolOneTimePad extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ONETIMEPAD,
             onDecode: (String input, String key) {
-              if (!withKey(key)) return null;
               return decryptOneTimePad(input, key, keyOffset: options[MDT_ONETIMEPAD_OPTION_KEY] - 1);
             },
+            requiresKey: true,
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_ONETIMEPAD_OPTION_KEY: GCWIntegerSpinner(

@@ -31,7 +31,6 @@ class MultiDecoderToolVanityMultitap extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_VANITYMULTITAP,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               var model;
 
               var modelName = _ensureBackwardsCompatibility(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL]);

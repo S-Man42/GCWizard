@@ -17,21 +17,20 @@ class MultiDecoderToolPolybios extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_POLYBIOS,
             onDecode: (String input, String key) {
-              if (!withKey(key)) return null;
               var polybiosOutput = decryptPolybios(input, key, mode: PolybiosMode.AZ09, modificationMode: _parseStringToEnum(options[MDT_POLYBIOS_OPTION_MODE]));
               return polybiosOutput == null ? null : polybiosOutput.output;
             },
+            requiresKey: true,
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_POLYBIOS_OPTION_MODE: GCWAlphabetModificationDropDownButton(
+                suppressTitle: true,
                 value: _parseStringToEnum(options[MDT_POLYBIOS_OPTION_MODE]),
                 onChanged: (newValue) {
                   options[MDT_POLYBIOS_OPTION_MODE] = alphabetModeName(newValue);
                 },
               )
-            },
-              withoutLabel: true,
-            ));
+            }));
 }
 
 AlphabetModificationMode _parseStringToEnum(String item) {

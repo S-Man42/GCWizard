@@ -19,7 +19,6 @@ class MultiDecoderToolWasd extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_WASD,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               if (input == null) return null;
               return binary2image(decodeWASDGraphic(input, (options[MDT_WASD_OPTION_SET] as String).characters.toList()), false, false);
             },

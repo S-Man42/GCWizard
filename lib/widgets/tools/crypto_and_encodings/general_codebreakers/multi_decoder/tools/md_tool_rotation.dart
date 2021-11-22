@@ -15,7 +15,6 @@ class MultiDecoderToolRotation extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ROTATION,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               return Rotator().rotate(input, options[MDT_ROTATION_OPTION_KEY]);
             },
             options: options,

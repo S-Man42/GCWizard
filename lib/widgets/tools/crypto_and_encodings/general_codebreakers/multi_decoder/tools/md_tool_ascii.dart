@@ -11,7 +11,6 @@ class MultiDecoderToolASCII extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ASCII,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               return String.fromCharCodes(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value)).toList());
             },
             options: options);

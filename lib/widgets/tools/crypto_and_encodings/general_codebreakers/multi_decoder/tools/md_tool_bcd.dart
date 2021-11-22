@@ -17,7 +17,6 @@ class MultiDecoderToolBCD extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_BCD,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               return decodeBCD(input, BCD_TYPES[options[MDT_BCD_OPTION_BCDFUNCTION]]);
             },
             options: options,

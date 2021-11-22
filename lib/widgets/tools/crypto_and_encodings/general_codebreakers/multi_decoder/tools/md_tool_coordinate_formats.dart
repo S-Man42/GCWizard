@@ -20,7 +20,6 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_COORDINATEFORMATS,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
               LatLng coords;
               try {

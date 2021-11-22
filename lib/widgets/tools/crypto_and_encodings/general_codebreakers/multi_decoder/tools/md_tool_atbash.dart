@@ -12,7 +12,6 @@ class MultiDecoderToolAtbash extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_ATBASH,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               return atbash(input);
             },
             options: options);

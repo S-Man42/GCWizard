@@ -4,9 +4,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWMultiDecoderToolConfiguration extends StatefulWidget {
   final Map<String, Widget> widgets;
-  final bool withoutLabel;
-
-  const GCWMultiDecoderToolConfiguration({Key key, this.widgets, this.withoutLabel = false}) : super(key: key);
+  const GCWMultiDecoderToolConfiguration({Key key, this.widgets}) : super(key: key);
 
   @override
   GCWMultiDecoderToolConfigurationState createState() => GCWMultiDecoderToolConfigurationState();
@@ -29,7 +27,7 @@ class GCWMultiDecoderToolConfigurationState extends State<GCWMultiDecoderToolCon
         children: widget.widgets.entries.map((entry) {
       return Row(
         children: [
-          widget.withoutLabel ? Container() : Expanded(child: GCWText(text: i18n(context, entry.key)), flex: 1),
+          Expanded(child: GCWText(text: i18n(context, entry.key)), flex: 1),
           Expanded(child: entry.value, flex: 3),
         ],
       );

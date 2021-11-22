@@ -10,60 +10,45 @@ const MDT_INTERNALNAMES_KEYBOARDLAYOUT = 'multidecoder_tool_keyboardlayout_title
 const MDT_KEYBOARDLAYOUT_OPTION_FROM = 'keyboard_from';
 const MDT_KEYBOARDLAYOUT_OPTION_TO = 'keyboard_to';
 
-class MultiDecoderToolKeybordLayout extends GCWMultiDecoderTool {
-  MultiDecoderToolKeybordLayout({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+class MultiDecoderToolKeyboardLayout extends GCWMultiDecoderTool {
+  MultiDecoderToolKeyboardLayout({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_KEYBOARDLAYOUT,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               if (input == null) return null;
-              return encodeKeyboard(input, _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
-                  _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_TO]));
+              return encodeKeyboard(input, getKeyboardTypeByName(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
+                  getKeyboardTypeByName(options[MDT_KEYBOARDLAYOUT_OPTION_TO]));
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_KEYBOARDLAYOUT_OPTION_FROM: GCWStatefulDropDownButton(
-                value: _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_FROM]),
+                value: options[MDT_KEYBOARDLAYOUT_OPTION_FROM],
                 onChanged: (newValue) {
-                  options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = shortKeyboardName(newValue);
+                  options[MDT_KEYBOARDLAYOUT_OPTION_FROM] = newValue;
                 },
                 items: allKeyboards.map((keyboard) {
                   return GCWDropDownMenuItem(
-                      value: keyboard.key,
+                      value: keyboard.name,
                       child: i18n(context, keyboard.name),
                       subtitle: keyboard.example
                   );
                 }).toList(),
               ),
               MDT_KEYBOARDLAYOUT_OPTION_TO: GCWStatefulDropDownButton(
-                value: _parseStringToEnum(options[MDT_KEYBOARDLAYOUT_OPTION_TO]),
+                value: options[MDT_KEYBOARDLAYOUT_OPTION_TO],
                 onChanged: (newValue) {
-                  options[MDT_KEYBOARDLAYOUT_OPTION_TO] = shortKeyboardName(newValue);
+                  options[MDT_KEYBOARDLAYOUT_OPTION_TO] = newValue;
                 },
                 items: allKeyboards.map((keyboard) {
                   return GCWDropDownMenuItem(
-                      value: keyboard.key,
+                      value: keyboard.name,
                       child: i18n(context, keyboard.name),
                       subtitle: keyboard.example
                   );
                 }).toList(),
               ),
             }));
-}
-
-enumKeyboardLayout _parseStringToEnum(String item) {
-  return enumKeyboardLayout.values.firstWhere((e) => shortKeyboardName(e) == item);
-}
-
-String shortKeyboardName(enumKeyboardLayout item) {
-  if (item == null) return null;
-  return item.toString().replaceAll('enumKeyboardLayout.', '');
-}
-
-String keyboardOptionToNameLabel(String item) {
-  var enumValue = _parseStringToEnum(item);
-  return allKeyboards.where((keyboard) => keyboard.key == enumValue)?.first?.name;
 }

@@ -10,8 +10,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 const MDT_INTERNALNAMES_CCITT1 = 'multidecoder_tool_ccitt1_title';
 const MDT_CCITT1_OPTION_MODE = 'ccitt1_numeralbase';
 
-const MDT_CCITT1_OPTION_MODE_DENARY = 'denary';
-const MDT_CCITT1_OPTION_MODE_BINARY = 'binary';
+const MDT_CCITT1_OPTION_MODE_DENARY = 'common_numeralbase_denary';
+const MDT_CCITT1_OPTION_MODE_BINARY = 'common_numeralbase_binary';
 
 class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
   MultiDecoderToolCcitt1({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
@@ -21,7 +21,6 @@ class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_CCITT1,
             onDecode: (String input, String key) {
-              if (withKey(key)) return null;
               if (options[MDT_CCITT1_OPTION_MODE] == MDT_CCITT1_OPTION_MODE_BINARY) {
                 return decodeCCITT1(textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10));
