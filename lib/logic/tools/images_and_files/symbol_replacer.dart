@@ -53,6 +53,8 @@ Future<SymbolImage> replaceSymbols(Uint8List image,
       List<Map<String, SymbolData>> compareSymbols,
       double similarityCompareLevel
     }) async {
+
+  if ((image == null) && (symbolImage == null)) return null;
   if (symbolImage == null)
     symbolImage = SymbolImage(image);
 

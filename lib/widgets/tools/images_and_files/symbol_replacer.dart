@@ -1,22 +1,17 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
-import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -25,6 +20,7 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
@@ -49,7 +45,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   double _similarityLevel = 100.0;
   double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
-  List<GCWDropDownMenuItem> compareSymbolItems;
+  List<GCWDropDownMenuItem> _compareSymbolItems;
+  var _gcwTextStyle = gcwTextStyle();
+  var _descriptionTextStyle = gcwDescriptionTextStyle();
   GCWTool _currentCompareSymbolTableTool;
   SymbolTableData _currentSymbolTableData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
@@ -67,34 +65,35 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       ].contains(className(element.tool));
     }).toList();
 
-    var textStyle = gcwTextStyle();
-    var descriptionTextStyle = gcwDescriptionTextStyle();
 
-    compareSymbolItems =_toolList.map((tool) {
+    _compareSymbolItems = _toolList.map((tool) {
       return GCWDropDownMenuItem(
           value: tool,
-          child: Container(
-            height: 50,
-            child: Row( children: [
-              Container(
-                child: tool.icon,
-                margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
-              ),
-              Expanded(child:
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text( tool.toolName,
-                        style: textStyle),
-                      Text(tool.description == null ? '': tool.description,
-                        style: descriptionTextStyle),
-                ])
-              )
-            ])
-          )
-      );
+          child: _buildDropDownMenuItem(tool.icon, tool.toolName, tool.description));
     }).toList();
-    compareSymbolItems.insert(0, GCWDropDownMenuItem(value:null, child: GCWText(text: 'no Symbol Table')));
+    _compareSymbolItems.insert(0,
+      GCWDropDownMenuItem(
+        value: null,
+        child: _buildDropDownMenuItem(null, 'no symbol table', null)
+      )
+    );
+  }
+
+  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
+    return Row( children: [
+        Container(
+          child: (icon != null) ? icon : Container(width: 50),
+          margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
+        ),
+        Expanded(child:
+           Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(toolName, style: _gcwTextStyle),
+                (description != null) ? Text(description, style: _descriptionTextStyle) : Container(),
+              ])
+        )
+      ]);
   }
 
   @override
@@ -142,32 +141,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
       GCWDefaultOutput(
           child: _buildList(),
-           trailing: Row(children: <Widget>[
-             GCWIconButton(
-               size: IconButtonSize.SMALL,
-               iconData: Icons.zoom_in,
-               onPressed: () {
-                 setState(() {
-                   // int newCountColumn = max(countColumns - 1, 1);
-                   // mediaQueryData.orientation == Orientation.portrait
-                   //     ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                   //     : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                 });
-               },
-             ),
-             GCWIconButton(
-               size: IconButtonSize.SMALL,
-               iconData: Icons.zoom_out,
-               onPressed: () {
-                 setState(() {
-                   // int newCountColumn = countColumns + 1;
-                   // mediaQueryData.orientation == Orientation.portrait
-                   //     ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                   //     : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                 });
-               },
-             ),
-           ])
       ),
       _buildOutput()
     ]);
@@ -176,9 +149,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   _replaceSymbols(bool useAsyncExecuter) async {
 
-    useAsyncExecuter = useAsyncExecuter || (_symbolImage?.symbolGroups?.isEmpty);
+    useAsyncExecuter = useAsyncExecuter || (_symbolImage?.symbolGroups == null) || (_symbolImage.symbolGroups.isEmpty);
     var _jobData = ReplaceSymbolsInput(
-      image: _platformFile.bytes,
+      image: _platformFile?.bytes,
       blackLevel: _blackLevel.toInt(),
       similarityLevel: _similarityLevel,
       symbolImage: _symbolImage,
@@ -226,6 +199,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Widget _buildSymbolTableDropDown() {
     return Column(children: <Widget>[
       GCWTextDivider(text: 'Symbol Table'),
+      SizedBox(height: 90, child:
       GCWDropDownButton(
         value: _currentCompareSymbolTableTool,
         onChanged: (value) async {
@@ -240,8 +214,16 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               _replaceSymbols(false);
             });
         },
-        items: compareSymbolItems,
-      ),
+        items: _compareSymbolItems,
+        selectedItemBuilder: (BuildContext context) {
+          return _compareSymbolItems.map((widget) {
+            return _buildDropDownMenuItem(
+                (widget.value is GCWTool) ? (widget.value as GCWTool).icon : null,
+                (widget.value is GCWTool) ? (widget.value as GCWTool).toolName : 'no symbol table',
+                null);
+          }).toList();
+        },
+      )),
       GCWSlider(
         title: 'Similarity Level',
         value: _similarityCompareLevel,
