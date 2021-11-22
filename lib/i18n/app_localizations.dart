@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
+import 'package:gc_wizard/widgets/utils/search_strings.dart';
 
 class AppLocalizations {
   final Locale locale;
@@ -33,6 +35,11 @@ class AppLocalizations {
       ..._defaultLocalizedStrings,
       ..._localStrings,
     };
+
+    // refresh toolNames needs a refreshed registry
+    refreshToolLists();
+
+    await loadSearchStrings(locale.languageCode);
 
     return true;
   }

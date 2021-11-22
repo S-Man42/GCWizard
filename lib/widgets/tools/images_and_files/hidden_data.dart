@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
@@ -266,7 +264,7 @@ class HiddenDataState extends State<HiddenData> {
                           GCWText(
                               text: parentsString,
                               style: gcwTextStyle()
-                                  .copyWith(fontSize: defaultFontSize() - 4, color: themeColors().dialogText())),
+                                  .copyWith(fontSize: fontSizeSmall(), color: themeColors().dialogText())),
                         Row(
                           children: [
                             Expanded(
@@ -322,8 +320,6 @@ class HiddenDataState extends State<HiddenData> {
   }
 
   _exportFile(BuildContext context, PlatformFile file) async {
-    print('BLA');
-
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -331,7 +327,7 @@ class HiddenDataState extends State<HiddenData> {
 
     var fileName = file.name.replaceFirst(HIDDEN_FILE_IDENTIFIER, 'hidden_file');
     var ext = file.name.split('.');
-    print(ext);
+
     if (ext.length <= 1 || ext.last.length >= 5) fileName = fileName + '.' + fileExtension(file.fileType);
 
     var value = await saveByteDataToFile(context, file.bytes, fileName);
@@ -344,8 +340,5 @@ openInHiddenData(BuildContext context, PlatformFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: HiddenData(platformFile: file),
-              toolName: i18n(context, 'hiddendata_title'),
-              i18nPrefix: '',
-              helpLocales: ['de', 'en', 'fr'])));
+              tool: HiddenData(platformFile: file), toolName: i18n(context, 'hiddendata_title'), i18nPrefix: '')));
 }

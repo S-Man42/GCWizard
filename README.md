@@ -45,7 +45,7 @@ Based on **Flutter/Dart**.
 ### Coordinates
 * **High precision coordinate algorithms** which support even with very long distances by always considering the earth's shape (ellipsoid)
 * Support of **many different rotation ellipsoids**, even other planets
-* **Coordinate Formats**: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+* **Coordinate Formats**: Support of UTM, MGRS, XYZ, SwissGrid, QTH, NAC, PlusCode, Geohash, ...
 * **Waypoint Projection**: Includes precise reverse projection
 * **Open Map**: Set own points and lines between points, measure paths, export as and import from GPX/KML files; OpenStreetMap and satellite view
 * **Variable Coordinate**: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map

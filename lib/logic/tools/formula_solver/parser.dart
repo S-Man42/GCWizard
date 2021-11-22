@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/crosstotals.dart';
+import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 const STATE_OK = 'ok';
@@ -10,8 +12,9 @@ const STATE_ERROR = 'error';
 
 class FormulaParser {
   ContextModel _context;
+  Parser parser;
 
-  final Map<String, double> _constants = {
+  static final Map<String, double> CONSTANTS = {
     'ln10': ln10,
     'ln2': ln2,
     'log2e': log2e,
@@ -22,7 +25,7 @@ class FormulaParser {
     'sqrt2': sqrt2,
   };
 
-  final List<String> _functions = [
+  static final List<String> _BUILTIN_FUNCTIONS = [
     'sqrt',
     'nrt',
     'arcsin',
@@ -40,24 +43,63 @@ class FormulaParser {
     'ceil'
   ];
 
+  static final Map<String, Function> _CUSTOM_FUNCTIONS = {
+    'cs': (List<double> numbers) => sumCrossSum(numbers.map((number) => number.toInt()).toList()).toInt(),
+    'csi': (List<double> numbers) => sumCrossSumIterated(numbers.map((number) => number.toInt()).toList()).toInt(),
+    'min': (List<double> numbers) => numbers.reduce(min),
+    'max': (List<double> numbers) => numbers.reduce(max),
+    'round': (List<double> numbers) {
+      var precision = 0;
+      if (numbers.length > 1)
+        precision = numbers[1].toInt();
+
+      return round(numbers.first, precision: precision);
+    },
+    'sindeg': (List<double> numbers) => sin(degreesToRadian(numbers.first)),
+    'cosdeg': (List<double> numbers) => cos(degreesToRadian(numbers.first)),
+    'tandeg': (List<double> numbers) => tan(degreesToRadian(numbers.first)),
+    'arcsindeg': (List<double> numbers) => asin(degreesToRadian(numbers.first)),
+    'arccosdeg': (List<double> numbers) => acos(degreesToRadian(numbers.first)),
+    'arctandeg': (List<double> numbers) => atan(degreesToRadian(numbers.first)),
+  };
+
+  // different minus/hyphens/dashes
+  static final Map<String, String> alternateOperators = {
+    '-': '—–˗−‒',
+    '/': ':÷',
+    '*': '×',
+  };
+
   FormulaParser() {
     _context = ContextModel();
 
-    _constants.entries.forEach((constant) {
+    CONSTANTS.entries.forEach((constant) {
       _context.bindVariableName(constant.key, Number(constant.value));
+    });
+
+    parser = Parser();
+    _CUSTOM_FUNCTIONS.forEach((name, handler) {
+      parser.addFunction(name, handler);
     });
   }
 
-  final parser = Parser();
+  static List<String> availableParserFunctions() {
+    var result = List<String>.from(_BUILTIN_FUNCTIONS);
+    _CUSTOM_FUNCTIONS.forEach((name, handler) {
+      result.add(name);
+    });
+
+    return result;
+  }
 
   // If, for example, the sin() function is used, but there's a variable i, you have to avoid
   // replace the i from sin with the variable value
   Map<String, dynamic> _safeFunctionsAndConstants(String formula) {
-    var list = _constants.keys
+    var list = CONSTANTS.keys
         .where((constant) => constant != 'e') //special case: If you remove e, you could never use this as variable name
         .toList();
 
-    list.addAll(_functions.map((functionName) => functionName + '\\s*\\(').toList());
+    list.addAll(availableParserFunctions().map((functionName) => functionName + '\\s*\\(').toList());
 
     Map<String, String> substitutions = {};
     int j = 0;
@@ -72,11 +114,10 @@ class FormulaParser {
     return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
   }
 
-  String _normalizeMathematicalSymbols(formula) {
-    formula = formula.replaceAll(RegExp(r'[—–˗−‒]'), '-'); // different minus/hyphens/dashes
-    formula = formula.replaceAll(':', '/');
-    formula = formula.replaceAll('÷', '/');
-    formula = formula.replaceAll('×', '*');
+  static String normalizeMathematicalSymbols(formula) {
+    alternateOperators.forEach((key, value) {
+      formula = formula.replaceAll(RegExp('[$value]'), key);
+    });
     /**** exponents *****/
     formula = formula.replaceAllMapped(RegExp('[\u2070\u00B9\u00B2\u00B3\u2074\u2075\u2076\u2077\u2078\u2079]+'),
         (Match match) {
@@ -89,7 +130,7 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
-    formula = _normalizeMathematicalSymbols(formula);
+    formula = normalizeMathematicalSymbols(formula);
 
     Map<String, String> preparedValues = _prepareValues(values);
 
@@ -108,7 +149,6 @@ class FormulaParser {
     }
     //restore the formula names
     substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
-
     try {
       Expression expression = parser.parse(substitutedFormula.toLowerCase());
       var result = expression.evaluate(EvaluationType.REAL, _context);
@@ -116,6 +156,7 @@ class FormulaParser {
 
       return result.floor() == result ? result.floor() : result;
     } catch (e) {
+      print(e);
       throw FormatException(substitutedFormula);
     }
   }
@@ -168,16 +209,25 @@ class FormulaParser {
           hasError = true;
           result = '[' + e.message + ']';
         }
-        substitutions.putIfAbsent(matchString, () => result.toString());
+
+        substitutions.putIfAbsent(matchString, () => _formatOutput(result));
       });
 
       return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': substitution(formula, substitutions)};
     } else {
       try {
-        return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': _evaluateFormula(formula, values).toString()};
+        return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': _formatOutput(_evaluateFormula(formula, values))};
       } catch (e) {
         return {'state': STATE_ERROR, 'result': e.message};
       }
+    }
+  }
+
+  String _formatOutput(dynamic value) {
+    if (value is double) {
+      return NumberFormat('0.############').format(value);
+    } else {
+      return value.toString();
     }
   }
 }

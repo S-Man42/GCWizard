@@ -108,7 +108,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                 Align(
                     child: Text(
                       dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
-                      style: gcwDialogTextStyle().copyWith(fontSize: max(defaultFontSize() - 4, 10)),
+                      style: gcwDialogTextStyle().copyWith(fontSize: max(fontSizeSmall(), 10)),
                     ),
                     alignment: Alignment.centerLeft),
                 Align(

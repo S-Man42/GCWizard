@@ -6,8 +6,8 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
-import 'package:gc_wizard/widgets/main_menu/settings_general.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_general.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_tools.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -53,10 +53,10 @@ buildMainMenu(BuildContext context) {
 
   final otherMenuItems = [
     {
-      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Changelog())),
+      'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(Changelog())),
       'icon': Icons.show_chart
     },
-    {'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(About())), 'icon': Icons.info},
+    {'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(About())), 'icon': Icons.info},
   ];
 
   menuEntries.addAll(otherMenuItems.map((item) {
@@ -87,7 +87,7 @@ buildMainMenu(BuildContext context) {
             Navigator.pop(context); //close Drawer
             Navigator.of(context).push(NoAnimationMaterialPageRoute(
                 builder: (context) =>
-                    Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CallForContribution()))));
+                    registeredTools.firstWhere((tool) => className(tool.tool) == className(CallForContribution()))));
           })
     ],
   );
@@ -108,17 +108,17 @@ buildMainMenu(BuildContext context) {
 _buildSettingsItem(BuildContext context) {
   final settingsItems = [
     {
-      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
+      'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
       'toolName': i18n(context, 'mainmenu_settings_general_title'),
       'icon': Icons.settings
     },
     {
-      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())),
+      'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())),
       'toolName': i18n(context, 'mainmenu_settings_coordinates_title'),
       'icon': Icons.language
     },
     {
-      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(ToolSettings())),
+      'tool': registeredTools.firstWhere((tool) => className(tool.tool) == className(ToolSettings())),
       'toolName': i18n(context, 'mainmenu_settings_tools_title'),
       'icon': Icons.category
     },

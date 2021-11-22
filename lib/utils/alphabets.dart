@@ -314,7 +314,7 @@ final Alphabet alphabetPolish1 = Alphabet(key: 'common_language_polish', type: A
   String.fromCharCode(379): '32', // Ż
 });
 
-final Alphabet alphabetGreek1 = Alphabet(key: 'common_language_greek', type: AlphabetType.STANDARD, alphabet: {
+final Alphabet alphabetGreek1 = Alphabet(key: 'alphabet_name_greek1', type: AlphabetType.STANDARD, alphabet: {
   String.fromCharCode(913): '1', // Α
   String.fromCharCode(914): '2', // Β
   String.fromCharCode(915): '3', // Γ
@@ -339,6 +339,40 @@ final Alphabet alphabetGreek1 = Alphabet(key: 'common_language_greek', type: Alp
   String.fromCharCode(935): '22', // Χ
   String.fromCharCode(936): '23', // Ψ
   String.fromCharCode(937): '24', // Ω
+});
+
+final Alphabet alphabetGreek2 = Alphabet(key: 'alphabet_name_greek2', type: AlphabetType.STANDARD, alphabet: {
+  'Α': '1',
+  'Ά': '2',
+  'Β': '3',
+  'Γ': '4',
+  'Δ': '5',
+  'Ε': '6',
+  'Έ': '7',
+  'Ζ': '8',
+  'Η': '9',
+  'Ή': '10',
+  'Θ': '11',
+  'Ι': '12',
+  'Ί': '13',
+  'Κ': '14',
+  'Λ': '15',
+  'Μ': '16',
+  'Ν': '17',
+  'Ξ': '18',
+  'Ο': '19',
+  'Ό': '20',
+  'Π': '21',
+  'Ρ': '22',
+  'Σ': '23',
+  'Τ': '24',
+  'Υ': '25',
+  'Ύ': '26',
+  'Φ': '27',
+  'Χ': '29',
+  'Ψ': '30',
+  'Ω': '31',
+  'Ώ': '32'
 });
 
 final Alphabet alphabetRussian1 = Alphabet(key: 'common_language_russian', type: AlphabetType.STANDARD, alphabet: {
@@ -389,5 +423,232 @@ final List<Alphabet> ALL_ALPHABETS = [
   alphabetSpanish1,
   alphabetSpanish2,
   alphabetGreek1,
+  alphabetGreek2,
   alphabetRussian1,
 ];
+
+final letterFrequencyAlphabetGerman1 = {
+  'A': 6,
+  'B': 2,
+  'C': 2,
+  'D': 5,
+  'E': 17,
+  'F': 2,
+  'G': 3,
+  'H': 5,
+  'I': 8,
+  'J': 1,
+  'K': 1,
+  'L': 3,
+  'M': 2,
+  'N': 10,
+  'O': 2,
+  'P': 1,
+  'Q': 1,
+  'R': 7,
+  'S': 7,
+  'T': 6,
+  'U': 4,
+  'V': 1,
+  'W': 1,
+  'X': 1,
+  'Y': 1,
+  'Z': 1
+};
+final letterFrequencyAlphabetEnglish1 = {
+  'A': 8,
+  'B': 2,
+  'C': 3,
+  'D': 4,
+  'E': 12,
+  'F': 2,
+  'G': 2,
+  'H': 6,
+  'I': 6,
+  'J': 1,
+  'K': 1,
+  'L': 4,
+  'M': 2,
+  'N': 6,
+  'O': 7,
+  'P': 2,
+  'Q': 1,
+  'R': 6,
+  'S': 6,
+  'T': 9,
+  'U': 3,
+  'V': 1,
+  'W': 2,
+  'X': 1,
+  'Y': 2,
+  'Z': 1
+};
+final letterFrequencyAlphabetSpanish2 = {
+  'A': 12,
+  'B': 1,
+  'C': 4,
+  'D': 5,
+  'E': 13,
+  'F': 1,
+  'G': 1,
+  'H': 1,
+  'I': 6,
+  'J': 1,
+  'K': 1,
+  'L': 5,
+  'M': 3,
+  'N': 6,
+  'Ñ': 1,
+  'O': 8,
+  'P': 2,
+  'Q': 1,
+  'R': 7,
+  'S': 8,
+  'T': 4,
+  'U': 4,
+  'V': 1,
+  'W': 1,
+  'X': 1,
+  'Y': 1,
+  'Z': 1
+};
+final letterFrequencyAlphabetRussian1 = {
+  'А': 7,
+  'Б': 2,
+  'В': 4,
+  'Г': 1,
+  'Д': 3,
+  'Е': 9,
+  'Ё': 1,
+  'Ж': 1,
+  'З': 1,
+  'И': 7,
+  'Й': 1,
+  'К': 3,
+  'Л': 5,
+  'М': 3,
+  'Н': 7,
+  'О': 11,
+  'П': 2,
+  'Р': 4,
+  'С': 5,
+  'Т': 6,
+  'У': 2,
+  'Ф': 1,
+  'Х': 1,
+  'Ц': 1,
+  'Ч': 1,
+  'Ш': 1,
+  'Щ': 1,
+  'Ъ': 1,
+  'Ы': 2,
+  'Ь': 2,
+  'Э': 1,
+  'Ю': 1,
+  'Я': 2
+};
+final letterFrequencyAlphabetPolish1 = {
+  'A': 8,
+  'Ą': 1,
+  'B': 2,
+  'C': 4,
+  'Ć': 1,
+  'D': 3,
+  'E': 8,
+  'Ę': 1,
+  'F': 1,
+  'G': 1,
+  'H': 1,
+  'I': 9,
+  'J': 2,
+  'K': 3,
+  'L': 2,
+  'Ł': 2,
+  'M': 3,
+  'N': 6,
+  'Ń': 1,
+  'O': 7,
+  'Ó': 1,
+  'P': 3,
+  'R': 4,
+  'S': 4,
+  'Ś': 1,
+  'T': 4,
+  'U': 2,
+  'W': 4,
+  'Y': 4,
+  'Z': 5,
+  'Ź': 1,
+  'Ż': 1
+};
+final letterFrequencyAlphabetGreek1 = {
+  'Α': 13,
+  'Β': 1,
+  'Γ': 2,
+  'Δ': 2,
+  'Ε': 9,
+  'Ζ': 1,
+  'Η': 5,
+  'Θ': 1,
+  'Ι': 9,
+  'Κ': 4,
+  'Λ': 2,
+  'Μ': 3,
+  'Ν': 6,
+  'Ξ': 1,
+  'Ο': 9,
+  'Π': 4,
+  'Ρ': 4,
+  'Σ': 7,
+  'Τ': 8,
+  'Υ': 4,
+  'Φ': 1,
+  'Χ': 1,
+  'Ψ': 1,
+  'Ω': 2
+};
+final letterFrequencyAlphabetGreek2 = {
+  'Α': 11,
+  'Ά': 2,
+  'Β': 1,
+  'Γ': 2,
+  'Δ': 2,
+  'Ε': 7,
+  'Έ': 2,
+  'Ζ': 1,
+  'Η': 3,
+  'Ή': 2,
+  'Θ': 1,
+  'Ι': 7,
+  'Ί': 2,
+  'Κ': 4,
+  'Λ': 2,
+  'Μ': 3,
+  'Ν': 6,
+  'Ξ': 1,
+  'Ο': 7,
+  'Ό': 2,
+  'Π': 4,
+  'Ρ': 4,
+  'Σ': 7,
+  'Τ': 8,
+  'Υ': 3,
+  'Ύ': 1,
+  'Φ': 1,
+  'Χ': 1,
+  'Ψ': 1,
+  'Ω': 1,
+  'Ώ': 1
+};
+
+Map<String, int> getLetterFrequenciesFromAlphabet(Alphabet alphabet)  {
+  if (alphabet == alphabetGerman1) return letterFrequencyAlphabetGerman1;
+  if (alphabet == alphabetEnglish) return letterFrequencyAlphabetEnglish1;
+  if (alphabet == alphabetSpanish2) return letterFrequencyAlphabetSpanish2;
+  if (alphabet == alphabetPolish1) return letterFrequencyAlphabetPolish1;
+  if (alphabet == alphabetGreek1) return letterFrequencyAlphabetGreek1;
+  if (alphabet == alphabetGreek2) return letterFrequencyAlphabetGreek2;
+  if (alphabet == alphabetRussian1) return letterFrequencyAlphabetRussian1;
+
+  return null;
+}

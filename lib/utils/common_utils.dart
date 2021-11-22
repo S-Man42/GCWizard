@@ -331,3 +331,22 @@ Uint8List trimNullBytes(Uint8List bytes) {
 
   return Uint8List.fromList(tempList);
 }
+
+List<String> allCharacters() {
+  var characters = <String>[];
+  ALL_ALPHABETS.forEach((alphabet) {
+    characters.addAll(alphabet.alphabet.keys);
+  });
+  return characters.toSet().toList();
+}
+
+dynamic round(double number, {int precision: 0}) {
+  if (number == null)
+    return null;
+
+  if (precision == null || precision <= 0)
+    return number.round();
+
+  var exp = pow(10, precision);
+  return (number * exp).round() / exp;
+}

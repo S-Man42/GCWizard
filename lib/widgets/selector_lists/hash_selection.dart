@@ -10,7 +10,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker
 class HashSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
         className(HashBreaker()),
         className(MD5()),

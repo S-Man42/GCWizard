@@ -16,6 +16,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final Function onNewEntryChanged;
   final String keyHintText;
   final TextEditingController keyController;
+  final List<TextInputFormatter> keyInputFormatters;
   final List<TextInputFormatter> valueInputFormatters;
   final String valueHintText;
   final int valueFlex;
@@ -39,6 +40,7 @@ class GCWKeyValueEditor extends StatefulWidget {
     Key key,
     this.keyHintText,
     this.keyController,
+    this.keyInputFormatters,
     this.onNewEntryChanged,
     this.valueHintText,
     this.valueInputFormatters,
@@ -123,6 +125,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                 child: GCWTextField(
                   hintText: widget.keyHintText,
                   controller: _keyController,
+                  inputFormatters: widget.keyInputFormatters,
                   onChanged: (text) {
                     setState(() {
                       _currentKeyInput = text;
@@ -273,55 +276,56 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     Widget output;
 
     var row = Container(
-        child: Row(
-          children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: _currentEditId == getEntryId(entry)
-                      ? GCWTextField(
-                          controller: _editKeyController,
-                          onChanged: (text) {
-                            setState(() {
-                              _currentEditedKey = text;
-                            });
-                          },
-                        )
-                      : GCWText(text: getEntryKey(entry)),
-                  margin: EdgeInsets.only(left: 10),
-                ),
-                flex: 1,
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: themeColors().mainFont(),
-              ),
-              Expanded(
-                child: Container(
-                  child: _currentEditId == getEntryId(entry)
-                      ? GCWTextField(
-                          controller: _editValueController,
-                          inputFormatters: widget.valueInputFormatters,
-                          autofocus: true,
-                          onChanged: (text) {
-                            setState(() {
-                              _currentEditedValue = text;
-                            });
-                          },
-                        )
-                      : GCWText(text: getEntryValue(entry)),
-                  margin: EdgeInsets.only(left: 10),
-                ),
-                flex: 3),
-              _editButton(entry),
-              GCWIconButton(
-                iconData: Icons.remove,
-                onPressed: () {
-                  setState(() {
-                    if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
-                  });
-                },
-              )
-          ],
+      child: Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            child: _currentEditId == getEntryId(entry)
+                ? GCWTextField(
+                    controller: _editKeyController,
+                    inputFormatters: widget.keyInputFormatters,
+                    onChanged: (text) {
+                      setState(() {
+                        _currentEditedKey = text;
+                      });
+                    },
+                  )
+                : GCWText(text: getEntryKey(entry)),
+            margin: EdgeInsets.only(left: 10),
+          ),
+          flex: 1,
+        ),
+        Icon(
+          Icons.arrow_forward,
+          color: themeColors().mainFont(),
+        ),
+        Expanded(
+            child: Container(
+              child: _currentEditId == getEntryId(entry)
+                  ? GCWTextField(
+                      controller: _editValueController,
+                      inputFormatters: widget.valueInputFormatters,
+                      autofocus: true,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentEditedValue = text;
+                        });
+                      },
+                    )
+                  : GCWText(text: getEntryValue(entry)),
+              margin: EdgeInsets.only(left: 10),
+            ),
+            flex: 3),
+        _editButton(entry),
+        GCWIconButton(
+          iconData: Icons.remove,
+          onPressed: () {
+            setState(() {
+              if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
+            });
+          },
+        )
+      ],
     ));
 
     if (odd) {
