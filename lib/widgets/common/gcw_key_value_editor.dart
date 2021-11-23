@@ -423,6 +423,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       list.forEach((mapEntry) {
         _addEntry(mapEntry.key, mapEntry.value, clearInput : false);
       });
+      setState(() {});
     }
 
   }
