@@ -9,6 +9,8 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
+      {'formula' : 'sin( pi * 2.3  )', 'values': <String, String>{}, 'expectedOutput' : 'bbbbbgggbbgggggb'},
+
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},
@@ -22,9 +24,9 @@ void main() {
       {'formula' : '1', 'values': values, 'expectedOutput' : 'g'},
       {'formula' : '-1', 'values': values, 'expectedOutput' : 'bg'},
       {'formula' : '-1.23', 'values': values, 'expectedOutput' : 'bgggg'},
-      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'bgggg'},
-      {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbR'},
-      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgggggbbggg'},
+      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'gbgg'},
+      {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbr'},
+      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgbgggbbggg'},
 
       {'formula' : 'A', 'values': values, 'expectedOutput' : 'r'},
       {'formula' : 'AB', 'values': values, 'expectedOutput' : 'rr'},
