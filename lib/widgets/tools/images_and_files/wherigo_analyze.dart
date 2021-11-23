@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 import 'dart:typed_data';
 
@@ -7,6 +8,7 @@ import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/wherigo_analyze.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -14,6 +16,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
@@ -29,6 +32,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 //  String _hexData;
   Uint8List _bytes;
   WherigoCartridge _cartridge;
+  var _cartridgeData = WHERIGO.HEADER;
+  SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
 
 //  final _CHARS_PER_LINE = 10 * 2;
 
@@ -54,7 +59,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   Widget build(BuildContext context) {
-
+    _WHERIGO_DATA = SplayTreeMap.from(
+        switchMapKeyValue(WHERIGO_DATA).map((key, value) => MapEntry(i18n(context, key), value)));
     return Column(
       children: <Widget>[
         GCWOpenFile(
@@ -71,7 +77,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             }
           },
         ),
-        GCWDefaultOutput(
+        GCWDropDownButton(
+          value: _cartridgeData,
+          onChanged: (value) {
+            setState(() {
+              _cartridgeData = value;
+            });
+          },
+          items: _WHERIGO_DATA.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.value,
+              child: mode.key,
+            );
+          }).toList(),
+        ),GCWDefaultOutput(
             child: _buildOutput(),
             trailing: GCWIconButton(
               iconData: Icons.text_snippet_outlined,
@@ -97,12 +116,40 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 //    hexText = hexTextList.join('\n');
 
     _cartridge = getCartridge(_bytes);
+//    return GCWText(
+//      text: _bytes.join(' '),
+//      style: gcwMonotypeTextStyle(),
+//    );
+    var _output = [
+      [i18n(context, 'wherigo_header_numberofobjects'), _cartridge.NumberOfObjects.toString()],
+      [i18n(context, 'wherigo_header_latitude'), _cartridge.Latitude.toString()],
+      [i18n(context, 'wherigo_header_longitude'), _cartridge.Longitude.toString()],
+      [i18n(context, 'wherigo_header_typeofcartridge'), _cartridge.TypeOfCartridge],
+      [i18n(context, 'wherigo_header_player'), _cartridge.Player],
+      [i18n(context, 'wherigo_header_playerid'), _cartridge.PlayerID.toString()],
+      [i18n(context, 'wherigo_header_cartridgename'), _cartridge.CartridgeName],
+      [i18n(context, 'wherigo_header_cartridgeguid'), _cartridge.CartridgeGUID],
+      [i18n(context, 'wherigo_header_cartridgedescription'), _cartridge.CartridgeDescription],
+      [i18n(context, 'wherigo_header_startinglocation'), _cartridge.StartingLocationDescription],
+      [i18n(context, 'wherigo_header_version'), _cartridge.Version],
+      [i18n(context, 'wherigo_header_author'), _cartridge.Author],
+      [i18n(context, 'wherigo_header_company'), _cartridge.Company],
+      [i18n(context, 'wherigo_header_device'), _cartridge.RecommendedDevice],
+      [i18n(context, 'wherigo_header_completion'), _cartridge.CompletionCode],
+    ];
 
-    return GCWText(
-//                      text: hexText,
-      text: _bytes.join(' '),
-      style: gcwMonotypeTextStyle(),
-    );
+    switch (_cartridgeData){
+      case WHERIGO.HEADER:
+        return Column(children: columnedMultiLineOutput(context, _output));
+        break;
+      case WHERIGO.CHARACTER:
+      case WHERIGO.ITEMS:
+      case WHERIGO.TASKS:
+      case WHERIGO.ZONES:
+      case WHERIGO.LUA:
+      case WHERIGO.INPUTS:
+        return Container();
+    }
   }
 }
 

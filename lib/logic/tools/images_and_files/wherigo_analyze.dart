@@ -87,12 +87,14 @@
 // DOUBLE = double-precision floating point number (8 bytes)
 // ASCIIZ = zero-terminated string ("hello world!", 0x00)
 
+import 'dart:ffi';
 import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 enum WHERIGO {HEADER, LUA, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS}
+
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUA: 'wherigo_data_lua',
@@ -124,7 +126,7 @@ double readDouble(Uint8List byteList, int offset){ // 8 Byte
   bytes[6] = byteList[offset + 6];
   bytes[7] = byteList[offset + 7];
   var blob = ByteData.sublistView(bytes);
-  return blob.getFloat64(0);
+  return ByteData.sublistView(byteList, offset, offset + 8).getFloat64(0);
 }
 
 int readLong(Uint8List byteList, int offset){ // 8 Byte
@@ -166,25 +168,56 @@ class StringOffset{
   StringOffset(this.ASCIIZ, this.Offset);
 }
 
-class ObjectHeader{
-  final int ObjectID;
-  final int ObjectAddress;
+class MediaFileHeader{
+  final int MediaFileID;
+  final int MediaFileAddress;
 
-  ObjectHeader(this.ObjectID, this.ObjectAddress);
+  MediaFileHeader(this.MediaFileID, this.MediaFileAddress);
 }
 
-class ObjectContent{
-  final int ObjectType;
-  final Uint8List ObjectBytes;
+class MediaFileContent{
+  final int MediaFileType;
+  final Uint8List MediaFileBytes;
 
-  ObjectContent(this.ObjectType, this.ObjectBytes);
+  MediaFileContent(this.MediaFileType, this.MediaFileBytes);
+}
+
+class ZonePoint{
+  final Double Longitude;
+  final Double Latitude;
+  final Double Altitude;
+
+  ZonePoint(this.Longitude, this.Latitude, this.Altitude);
+}
+
+class ZoneData{
+  final String ZoneName;
+  final String ZoneDescription;
+  final List<ZonePoint> ZonePoints;
+
+  ZoneData(this.ZoneName, this.ZoneDescription, this.ZonePoints);
+}
+
+class ObjectData{
+  final String ObjectName;
+  final String ObjectDescription;
+
+  ObjectData(this.ObjectName, this.ObjectDescription);
+}
+
+class InputData{
+  final String InputName;
+  final String InputDescription;
+
+  InputData(this.InputName, this.InputDescription);
 }
 
 class WherigoCartridge{
   final String Signature;
   final int NumberOfObjects;
-  final List<ObjectHeader> ObjectHeaders;
-  final List<ObjectContent> ObjectContents;
+  final List<MediaFileHeader> MediaFilesHeaders;
+  final List<MediaFileContent> MediaFilesContents;
+  final String LUA;
   final int HeaderLength;
   final int Splashscreen;
   final int SplashscreenIcon;
@@ -205,9 +238,15 @@ class WherigoCartridge{
   final String RecommendedDevice;
   final int LengthOfCompletionCode;
   final String CompletionCode;
+  final List<ObjectData> Characters;
+  final List<ObjectData> Items;
+  final List<ObjectData> Tasks;
+  final List<InputData> Inputs;
+  final List<ZoneData> Zones;
+
 
   WherigoCartridge(this.Signature,
-      this.NumberOfObjects, this.ObjectHeaders, this.ObjectContents,
+      this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUA,
       this.HeaderLength,
       this.Latitude, this.Longitude, this.Altitude,
       this.Splashscreen, this.SplashscreenIcon,
@@ -216,7 +255,8 @@ class WherigoCartridge{
       this.CartridgeName, this.CartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
       this.Version, this.Author, this.Company,
       this.RecommendedDevice,
-      this.LengthOfCompletionCode, this.CompletionCode);
+      this.LengthOfCompletionCode, this.CompletionCode,
+      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -237,13 +277,14 @@ const LENGTH_DOUBLE = 8;
 
 WherigoCartridge getCartridge(Uint8List byteList){
   if (byteList == [] || byteList == null)
-    return WherigoCartridge('', 0, [], [], 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '');
+    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
-  List<ObjectHeader> ObjectHeaders = [];
-  List<ObjectContent> ObjectContents = [];
-  int ObjectID = 0;
+  List<MediaFileHeader> MediaFilesHeaders = [];
+  List<MediaFileContent> MediaFilesContents = [];
+  String LUA = '';
+  int MediaFileID = 0;
   int Address = 0;
   int HeaderLength = 0;
   double Latitude = 0.0;
@@ -265,6 +306,11 @@ WherigoCartridge getCartridge(Uint8List byteList){
   String RecommendedDevice = '';
   int LengthOfCompletionCode = 0;
   String CompletionCode = '';
+  List<ObjectData> Characters = [];
+  List<ObjectData> Items = [];
+  List<ObjectData> Tasks = [];
+  List<InputData> Inputs = [];
+  List<ZoneData> Zones = [];
 
   int Unknown0 = 0;
   int Unknown1 = 0;
@@ -278,9 +324,9 @@ WherigoCartridge getCartridge(Uint8List byteList){
 
   int offset = 0;
   StringOffset ASCIIZ;
-  int ObjectLength = 0;
-  int ValidObject = 0;
-  int ObjectType = 0;
+  int MediaFileLength = 0;
+  int ValidMediaFile = 0;
+  int MediaFileType = 0;
 
   Signature = Signature + byteList[0].toString();
   Signature = Signature + byteList[1].toString();
@@ -302,10 +348,10 @@ WherigoCartridge getCartridge(Uint8List byteList){
   offset = START_OBJCETADRESS; // File Header LUA File
   print('### OBJECTS');
   for (int i = 0; i < NumberOfObjects; i++){
-    ObjectID = readUShort(byteList, offset); offset = offset + LENGTH_USHORT;
+    MediaFileID = readUShort(byteList, offset); offset = offset + LENGTH_USHORT;
     Address = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-    ObjectHeaders.add(ObjectHeader(ObjectID, Address));
-    print('=> '+i.toString()+' '+ObjectID.toString()+' '+Address.toString());
+    MediaFilesHeaders.add(MediaFileHeader(MediaFileID, Address));
+    print('=> '+i.toString()+' '+MediaFileID.toString()+' '+Address.toString());
   }
 
   START_HEADER = START_OBJCETADRESS + NumberOfObjects * 6;
@@ -438,32 +484,40 @@ WherigoCartridge getCartridge(Uint8List byteList){
 
   // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
   print('### READ LUA CODE');
-  ObjectLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-  print('=> '+ObjectLength.toString());
-  ObjectContents.add(ObjectContent(0, Uint8List.sublistView(byteList, offset, offset + ObjectLength)));
+  MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+  print('=> '+MediaFileLength.toString());
+  MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength)));
   //for (int i = offset; i <= ObjectLength; i++){
   //  Objects[0].Bytes.add(byteList[i]);
   //}
-  offset = offset + ObjectLength;
+  offset = offset + MediaFileLength;
 
   // read Objects
   print('### READ OBJECTS');
   for (int i = 1; i < NumberOfObjects; i++){
     print('### READ OBJECT '+i.toString());
-    ValidObject = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
-    if (ValidObject != 0) {
-      ObjectType = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-      print('=> '+ObjectType.toString());
-      ObjectLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-      print('=> '+ObjectLength.toString());
-      ObjectContents.add(ObjectContent(ObjectType, Uint8List.sublistView(byteList, offset, offset + ObjectLength)));
-      offset = offset + ObjectLength;
+    ValidMediaFile = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
+    if (ValidMediaFile != 0) {
+      MediaFileType = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+      print('=> '+MediaFileType.toString());
+      MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
+      print('=> '+MediaFileLength.toString());
+      MediaFilesContents.add(MediaFileContent(MediaFileType, Uint8List.sublistView(byteList, offset, offset + MediaFileLength)));
+      offset = offset + MediaFileLength;
     }
   }
 
+  // decompile LUA
+  LUA = _decompileLUA(MediaFilesContents[0].MediaFileBytes);
+
+  Characters = _getCharactersFromCartridge(LUA);
+  Items = _getItemsFromCartridge(LUA);
+  Tasks = _getTasksFromCartridge(LUA);
+  Inputs = _getInputsFromCartridge(LUA);
+  Zones = _getZonesFromCartridge(LUA);
 
   return WherigoCartridge(Signature,
-    NumberOfObjects, ObjectHeaders, ObjectContents,
+    NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUA,
     HeaderLength,
     Latitude, Longitude, Altitude,
     Splashscreen, SplashscreenIcon,
@@ -472,5 +526,30 @@ WherigoCartridge getCartridge(Uint8List byteList){
     Player, PlayerID,
     CartridgeName, CartridgeGUID, CartridgeDescription, StartingLocationDescription,
     Version, Author, Company, RecommendedDevice,
-    LengthOfCompletionCode, CompletionCode);
+    LengthOfCompletionCode, CompletionCode,
+    Characters, Items, Tasks, Inputs, Zones);
+}
+
+String _decompileLUA(Uint8List LUA){
+  return '';
+}
+
+List<ObjectData>_getCharactersFromCartridge(String LUA){
+  return [];
+}
+
+List<ObjectData>_getItemsFromCartridge(String LUA){
+  return [];
+}
+
+List<ObjectData>_getTasksFromCartridge(String LUA){
+  return [];
+}
+
+List<InputData>_getInputsFromCartridge(String LUA){
+  return [];
+}
+
+List<ZoneData>_getZonesFromCartridge(String LUA){
+  return [];
 }
