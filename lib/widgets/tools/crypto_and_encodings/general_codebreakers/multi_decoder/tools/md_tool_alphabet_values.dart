@@ -18,7 +18,7 @@ class MultiDecoderToolAlphabetValues extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ALPHABETVALUES,
-            onDecode: (String input) {
+            onDecode: (String input, String key) {
               var alphabet = ALL_ALPHABETS
                   .firstWhere((alphabet) => alphabet.key == options[MDT_ALPHABETVALUES_OPTION_ALPHABET])
                   .alphabet;

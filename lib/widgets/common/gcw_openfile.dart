@@ -215,7 +215,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile.name ?? ''),
-            style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 4),
+            style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
           ),
         if (!_currentExpanded && _loadedFile != null)
           GCWText(
