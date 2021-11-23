@@ -31,8 +31,9 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 class SymbolReplacer extends StatefulWidget {
   final local.PlatformFile platformFile;
+  final GCWTool symbolTableTool;
 
-  const SymbolReplacer({Key key, this.platformFile}) : super(key: key);
+  const SymbolReplacer({Key key, this.platformFile, this.symbolTableTool}) : super(key: key);
 
   @override
   SymbolReplacerState createState() => SymbolReplacerState();
@@ -82,6 +83,13 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               child: _buildDropDownMenuItem(null, i18n(context, 'symbol_replacer_no_symbol_table'), null)
           )
       );
+    }
+    if ((widget.symbolTableTool != null) && (_compareSymbolItems != null)) {
+      for (GCWDropDownMenuItem item in _compareSymbolItems)
+        if (item.value ==  widget.symbolTableTool) {
+          _currentCompareSymbolTableTool = widget.symbolTableTool;
+          break;
+        }
     }
 
     if (widget.platformFile != null) {
