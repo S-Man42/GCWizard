@@ -15,6 +15,7 @@ String paintFormula(String formula, Map<String, String> values, int formulaIndex
   var checkedFormulaResult = '';
   var keys = <String>[];
   var functions = <String>[];
+  var constants = <String>[];
   var _allCharacters = allCharacters();
 
   var operatorsRegEx = operators.map((op) => r'\' + op).join();
@@ -25,12 +26,11 @@ String paintFormula(String formula, Map<String, String> values, int formulaIndex
     }).toList();
   }
   keys.addAll(FormulaParser.CONSTANTS.keys);
-  keys = keys.map((key) {return key.toUpperCase();}).toList();
-  keys.sort((a, b) => b.length.compareTo(a.length));
 
-  functions.addAll(FormulaParser.availableParserFunctions());
-  functions = functions.map((function) {return function.toUpperCase();}).toList();
-  functions.sort((a, b) => b.length.compareTo(a.length));
+  keys = _toUpperCaseAndSort(keys);
+  functions = _toUpperCaseAndSort(FormulaParser.availableParserFunctions());
+  constants = _toUpperCaseAndSort(FormulaParser.CONSTANTS.keys.toList());
+
 
   formula = FormulaParser.normalizeMathematicalSymbols(formula);
   formula = formula.toUpperCase();
@@ -48,7 +48,7 @@ String paintFormula(String formula, Map<String, String> values, int formulaIndex
 
     } else {
       // numbers
-      if (int.tryParse(e) != null)
+      if ((int.tryParse(e) != null) || (e == '.'))
         result +=
         _calculated(formula, result, brackets, containsBrackets) ? 'g' : 't';
 
@@ -119,18 +119,25 @@ String paintFormula(String formula, Map<String, String> values, int formulaIndex
         // non function
         if (!handled) {
           // constant or variable
+          var _result = 'R';
           for (String key in keys) {
             if (formula.substring(result.length).startsWith(key)) {
               valid = true;
-              checkedFormulaResult = _buildResultString('r', key.length - 1);
+              if (constants.contains(key))
+                _result = _buildResultString('g', key.length);
+              else
+                _result = _buildResultString('r', key.length);
               break;
             }
           }
-
-          if (!valid && !_allCharacters.contains(e))
+          if (!valid && (e == ','))
+            result += 'b';
+          else if (!valid && !_allCharacters.contains(e))
             result += 't';
-          else
-            result += valid ? 'r' : 'R';
+          else {
+            result += _result[0];
+            checkedFormulaResult = _result.substring(1);
+          }
         }
       } else
         result += 't';
@@ -141,6 +148,12 @@ String paintFormula(String formula, Map<String, String> values, int formulaIndex
     if (result[i] == 's') result = result.substring(0, i) + result[i + 1] + result.substring(i + 1);
 
   return result;
+}
+
+List<String> _toUpperCaseAndSort(List<String> list) {
+  list = list.map((entry) {return entry.toUpperCase();}).toList();
+  list.sort((a, b) => b.length.compareTo(a.length));
+  return list;
 }
 
 bool _calculated(String formula, String result, List<String> brackets, bool containsBrackets) {
