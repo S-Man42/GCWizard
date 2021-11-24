@@ -255,7 +255,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               iconSize: IconButtonSize.SMALL,
               onSelected: _pasteClipboard,
             ),
-            SizedBox(width: 10),
             GCWIconButton(
               size: IconButtonSize.SMALL,
               iconData: Icons.content_copy,
