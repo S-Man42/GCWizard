@@ -22,9 +22,9 @@ void main() {
       {'formula' : '1', 'values': values, 'expectedOutput' : 'g'},
       {'formula' : '-1', 'values': values, 'expectedOutput' : 'bg'},
       {'formula' : '-1.23', 'values': values, 'expectedOutput' : 'bgggg'},
-      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'bgggg'},
-      {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbR'},
-      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgggggbbggg'},
+      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'gbgg'},
+      {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbr'},
+      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgbgggbbggg'},
 
       {'formula' : 'A', 'values': values, 'expectedOutput' : 'r'},
       {'formula' : 'AB', 'values': values, 'expectedOutput' : 'rr'},
