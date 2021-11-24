@@ -280,7 +280,7 @@
   "polybios": "",
   "primealphabet": "primzahlalphabet primzahlenalphabet primzahl-alphabet primzahlen-alphabet",
   "primes": "primzahlen",
-  "primes_integerfactorization": "faktorisierung primfaktorzerlegungen faktoren",
+  "primes_integerfactorization": "faktorisierung primfaktorzerlegungen faktoren primzahlzerlegungen",
   "primes_isprime": "ist tests  ueberpruefungen",
   "primes_nearestprime": "naechsten nachfolger naehester vorgaenger",
   "primes_nthprime": "positionen",
