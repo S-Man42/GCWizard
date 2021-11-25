@@ -2,6 +2,8 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_painter.dart';
 
 void main() {
+  var formulaPainter = FormulaPainter();
+
   group("formula_painter.paintFormula:", () {
     Map<String, String> values = {
       'A':'3', 'B':'20', 'C': '100', 'D': '5', 'E': 'Pi',
@@ -172,7 +174,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('formula: ${elem['formula']}, values: ${elem['values']}', () {
-        var _actual = paintFormula(elem['formula'], elem['values'], elem['formulaId'], true);
+        var _actual = formulaPainter.paintFormula(elem['formula'], elem['values'], elem['formulaId'], true);
         expect(_actual, elem['expectedOutput']);
       });
     });

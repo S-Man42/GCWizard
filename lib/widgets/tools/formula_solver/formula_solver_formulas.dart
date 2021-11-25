@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_painter.dart';
 import 'package:prefs/prefs.dart';
-import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -14,7 +11,6 @@ import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -43,6 +39,7 @@ class FormulaSolverFormulas extends StatefulWidget {
 
 class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var formulaParser = FormulaParser();
+  var formulaPainter = FormulaPainter();
 
   var _newFormulaController;
   var _editFormulaController;
@@ -466,7 +463,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return SelectableText.rich(TextSpan(
       children:
           _buildTextSpans(formula,
-              paintFormula(formula, values, formulaIndex, Prefs.getBool('formulasolver_coloredformulas'))
+              formulaPainter.paintFormula(formula, values, formulaIndex, Prefs.getBool('formulasolver_coloredformulas'))
           )
     ));
   }
