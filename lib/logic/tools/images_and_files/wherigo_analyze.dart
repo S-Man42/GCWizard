@@ -88,10 +88,7 @@
 // ASCIIZ = zero-terminated string ("hello world!", 0x00)
 
 import 'dart:ffi';
-import 'dart:math';
 import 'dart:typed_data';
-
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 enum WHERIGO {HEADER, LUA, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS}
 
@@ -117,16 +114,15 @@ StringOffset readString(Uint8List byteList, int offset){ // zero-terminated stri
 
 double readDouble(Uint8List byteList, int offset){ // 8 Byte
   Uint8List bytes = Uint8List(8);
-  bytes[0] = byteList[offset];
-  bytes[1] = byteList[offset + 1];
-  bytes[2] = byteList[offset + 2];
-  bytes[3] = byteList[offset + 3];
-  bytes[4] = byteList[offset + 4];
-  bytes[5] = byteList[offset + 5];
-  bytes[6] = byteList[offset + 6];
-  bytes[7] = byteList[offset + 7];
-  var blob = ByteData.sublistView(bytes);
-  return ByteData.sublistView(byteList, offset, offset + 8).getFloat64(0);
+  bytes[7] = byteList[offset];
+  bytes[6] = byteList[offset + 1];
+  bytes[5] = byteList[offset + 2];
+  bytes[4] = byteList[offset + 3];
+  bytes[3] = byteList[offset + 4];
+  bytes[2] = byteList[offset + 5];
+  bytes[1] = byteList[offset + 6];
+  bytes[0] = byteList[offset + 7];
+  return ByteData.sublistView(bytes).getFloat64(0);
 }
 
 int readLong(Uint8List byteList, int offset){ // 8 Byte
@@ -150,7 +146,7 @@ int readInt(Uint8List byteList, int offset){ // 4 Byte
 }
 
 int readShort(Uint8List byteList, int offset){ // 2 Byte
-  return byteList[offset] + 256 * byteList[offset + 1] - (pow(2, 15) - 1);
+  return byteList[offset] + 256 * byteList[offset + 1];
 }
 
 int readUShort(Uint8List byteList, int offset){ // 2 Byte Little Endian
@@ -264,8 +260,20 @@ int START_OBJCETADRESS = 9;
 int START_HEADER = 0;
 int START_FILES = 0;
 
+const MEDIATYPE_BMP = 1;
+const MEDIATYPE_PNG = 2;
+const MEDIATYPE_JPG = 3;
+const MEDIATYPE_GIF = 4;
+const MEDIATYPE_WAV = 17;
+const MEDIATYPE_MP3 = 18;
+const MEDIATYPE_FDL = 19;
+const MEDIATYPE_SND = 20;
+const MEDIATYPE_OGG = 21;
+const MEDIATYPE_SWF = 33;
+const MEDIATYPE_TXT = 49;
+
 Map OBJECTTYPE = {
-  1:'bmp', 2:'png', 3:'jpg', 4:'gif', 17:'wav', 18:'mp3', 19:'fdl', 20:'snd', 21:'ogg', 33:'swf', 49:'txt'
+  MEDIATYPE_BMP:'bmp', MEDIATYPE_PNG:'png', MEDIATYPE_JPG:'jpg', MEDIATYPE_GIF:'gif', MEDIATYPE_WAV:'wav', MEDIATYPE_MP3:'mp3', MEDIATYPE_FDL:'fdl', MEDIATYPE_SND:'snd', MEDIATYPE_OGG:'ogg', MEDIATYPE_SWF:'swf', MEDIATYPE_TXT:'txt'
 };
 
 const LENGTH_BYTE = 1;
@@ -312,15 +320,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   List<InputData> Inputs = [];
   List<ZoneData> Zones = [];
 
-  int Unknown0 = 0;
-  int Unknown1 = 0;
-  int Unknown2 = 0;
   int Unknown3 = 0;
-  int Unknown4 = 0;
-  int Unknown5 = 0;
-  int Unknown6 = 0;
-  int Unknown7 = 0;
-  int Unknown8 = 0;
 
   int offset = 0;
   StringOffset ASCIIZ;
@@ -335,152 +335,73 @@ WherigoCartridge getCartridge(Uint8List byteList){
   Signature = Signature + String.fromCharCode(byteList[4]);
   Signature = Signature + String.fromCharCode(byteList[5]);
 
-  print('### SIGNATURE');
-  print('=> '+byteList[0].toString()+' '+byteList[1].toString()+' '+byteList[2].toString()+' '+byteList[3].toString()+' '+byteList[4].toString()+' '+byteList[5].toString()+' '+byteList[6].toString());
-  print('=> '+Signature);
-
   NumberOfObjects = readUShort(byteList, START_NUMBEROFOBJECTS);
 
-  print('### NUMBER OF OBJCETS');
-  print('=> '+byteList[7].toString()+' '+byteList[8].toString());
-  print('=> '+NumberOfObjects.toString());
-
   offset = START_OBJCETADRESS; // File Header LUA File
-  print('### OBJECTS');
   for (int i = 0; i < NumberOfObjects; i++){
     MediaFileID = readUShort(byteList, offset); offset = offset + LENGTH_USHORT;
     Address = readInt(byteList, offset);     offset = offset + LENGTH_INT;
     MediaFilesHeaders.add(MediaFileHeader(MediaFileID, Address));
-    print('=> '+i.toString()+' '+MediaFileID.toString()+' '+Address.toString());
   }
 
   START_HEADER = START_OBJCETADRESS + NumberOfObjects * 6;
   offset = START_HEADER;
-  print('### HEADER START');
-  print('=> '+offset.toString());
 
   HeaderLength = readLong(byteList, offset);        offset = offset + LENGTH_LONG;
   START_FILES = START_HEADER + HeaderLength;
 
-  print('### LONG HEADER LENGTH');
-  print('=> '+HeaderLength.toString());
-
   Latitude = readDouble(byteList, offset);         offset = offset + LENGTH_DOUBLE;
-  print('### DOUBLE Latitude');
-  print('=> '+Latitude.toString());
 
   Longitude = readDouble(byteList, offset);        offset = offset + LENGTH_DOUBLE;
-  print('### DOUBLE Longitude');
-  print('=> '+Longitude.toString());
 
-//  Altitude = readDouble(byteList, offset);         offset = offset + LENGTH_DOUBLE;
-//  print('### DOUBLE Altitude long unknown 0');
-//  print('=> '+Altitude.toString());
+  Altitude = readDouble(byteList, offset);         offset = offset + LENGTH_DOUBLE;
 
-  Unknown0 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-  print('### LONG DateOfCreation unknown0');
-  print('=> '+Unknown0.toString());
-
-  Unknown1 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-  print('### LONG DateOfCreation unknown1');
-  print('=> '+Unknown1.toString());
-
-  Unknown2 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-  print('### LONG DateOfCreation unknown2');
-  print('=> '+Unknown2.toString());
+  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
 
   Unknown3 = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-  print('### LONG DateOfCreation unknown3');
-  print('=> '+Unknown3.toString());
-
-//  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-//  print('### LONG DateOfCreation unknown1');
-//  print('=> '+DateOfCreation.toString());
-
-//  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-//  print('### LONG DateOfCreation unknown2');
-//  print('=> '+DateOfCreation.toString());
-
-//  DateOfCreation = readLong(byteList, offset);     offset = offset + LENGTH_LONG;
-//  print('### LONG DateOfCreation unknown3');
-//  print('=> '+DateOfCreation.toString());
 
   Splashscreen = readShort(byteList, offset);      offset = offset + LENGTH_SHORT;
-  print('### SHORT Splashscreen');
-  print('=> '+Splashscreen.toString());
 
   SplashscreenIcon = readShort(byteList, offset);  offset = offset + LENGTH_SHORT;
-  print('### SHORT SplashscreenIcon');
-  print('=> '+SplashscreenIcon.toString());
 
-  print('### ASCIIZ TypeOfCartridge');
-  print('=> '+offset.toString());
   ASCIIZ = readString(byteList, offset);
   TypeOfCartridge = ASCIIZ.ASCIIZ;                 offset = ASCIIZ.Offset;
-  print('=> '+TypeOfCartridge);
 
-  print('### ASCIIZ Player');
-  print('=> '+offset.toString());
   ASCIIZ = readString(byteList, offset);
   Player = ASCIIZ.ASCIIZ;                          offset = ASCIIZ.Offset;
-  print('=> '+Player);
 
   PlayerID = readLong(byteList, offset);           offset = offset + LENGTH_LONG;
-  print('### LONG PlayerID unknown6');
-  print('=> '+PlayerID.toString());
 
   PlayerID = readLong(byteList, offset);           offset = offset + LENGTH_LONG;
-  print('### LONG unknown7');
-  print('=> '+PlayerID.toString());
 
   ASCIIZ = readString(byteList, offset);
   CartridgeName = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
-  print('### ASCIIZ CartridgeName');
-  print('=> '+CartridgeName);
 
   ASCIIZ = readString(byteList, offset);
   CartridgeGUID = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
-  print('### ASCIIZ CartridgeGUID');
-  print('=> '+CartridgeGUID);
 
   ASCIIZ = readString(byteList, offset);
   CartridgeDescription = ASCIIZ.ASCIIZ;            offset = ASCIIZ.Offset;
-  print('### ASCIIZ CartridgeDescription');
-  print('=> '+CartridgeDescription);
 
   ASCIIZ = readString(byteList, offset);
   StartingLocationDescription = ASCIIZ.ASCIIZ;     offset = ASCIIZ.Offset;
-  print('### ASCIIZ StartingLocationDescription');
-  print('=> '+StartingLocationDescription);
 
   ASCIIZ = readString(byteList, offset);
   Version = ASCIIZ.ASCIIZ;                         offset = ASCIIZ.Offset;
-  print('### ASCIIZ Version');
-  print('=> '+Version);
 
   ASCIIZ = readString(byteList, offset);
   Author = ASCIIZ.ASCIIZ;                          offset = ASCIIZ.Offset;
-  print('### ASCIIZ Author');
-  print('=> '+Author);
 
   ASCIIZ = readString(byteList, offset);
   Company = ASCIIZ.ASCIIZ;                         offset = ASCIIZ.Offset;
-  print('### ASCIIZ Company');
-  print('=> '+Company);
 
   ASCIIZ = readString(byteList, offset);
   RecommendedDevice = ASCIIZ.ASCIIZ;               offset = ASCIIZ.Offset;
-  print('### ASCIIZ RecommendedDevice');
-  print('=> '+RecommendedDevice);
 
   LengthOfCompletionCode = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-  print('### LONG LengthOfCompletionCode');
-  print('=> '+LengthOfCompletionCode.toString());
 
   ASCIIZ = readString(byteList, offset);
   CompletionCode = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
-  print('### ASCIIZ CompletionCode');
-  print('=> '+CompletionCode);
 
   // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
   print('### READ LUA CODE');
