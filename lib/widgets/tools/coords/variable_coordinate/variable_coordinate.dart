@@ -230,7 +230,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       onAddEntry: _addEntry,
       onNewEntryChanged: _updateNewEntry,
       onDispose: _disposeEntry,
-      middleWidget: SizedBox(height: 10),
       formulaValueList: widget.formula.values,
       onUpdateEntry: _updateEntry,
       onRemoveEntry: _removeEntry,
