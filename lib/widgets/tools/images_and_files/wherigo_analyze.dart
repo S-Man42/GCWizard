@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class WherigoAnalyze extends StatefulWidget {
 
@@ -30,7 +31,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   var _cartridgeData = WHERIGO.HEADER;
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
   int _mediaFile = 1;
-
 
   @override
   void initState() {
@@ -144,22 +144,31 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   _mediaFile = value;
                 });
               },            ),
+            GCWText(
+              text: OBJECTTYPE[_cartridge.MediaFilesContents[1].MediaFileType],
+            ),
             if (_cartridge.MediaFilesContents[_mediaFile].MediaFileType == MEDIATYPE_TXT)
-              GCWText(
-                text: _getTextFromBytelist(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
+              Column(
+                children: <Widget>[
+                  GCWText(
+                    text: _getTextFromBytelist(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
+                  ),
+                ],
               ),
             if (_cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_BMP ||
                 _cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_PNG ||
                 _cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_JPG ||
                 _cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_GIF)
-              Image.memory(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
+              Column(
+                children: <Widget>[
+                  Image.memory(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
+                ],
+              ),
             if (_cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_WAV ||
                 _cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_OGG ||
                 _cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_MP3 ||
                 _cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_SND)
-              GCWText(
-                text: OBJECTTYPE[_cartridge.MediaFilesContents[1].MediaFileType],
-              ),
+              _playLocal(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
             if (_cartridge.MediaFilesContents[1].MediaFileType == MEDIATYPE_FDL)
               GCWText(
                 text: OBJECTTYPE[_cartridge.MediaFilesContents[1].MediaFileType],
@@ -191,4 +200,8 @@ String _getTextFromBytelist(Uint8List bytes){
   return result;
 }
 
+_playLocal(Uint8List byteData) async {
+  AudioPlayer audioPlayer = AudioPlayer();
+  int result = await audioPlayer.playBytes(byteData);
+}
 
