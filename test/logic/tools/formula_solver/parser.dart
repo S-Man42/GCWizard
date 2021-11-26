@@ -258,6 +258,20 @@ void main() {
         {'result': 'N 52 [Q3].62 3 2 5 5 6', 'variables': {'R': '3', 'S': '2'}, 'state': 'error'},
         {'result': 'N 52 [Q3].186 3 6 9 9 10', 'variables': {'R': '3', 'S': '6'}, 'state': 'error'}
       ]}},
+
+      // no duplicates
+      {'formula' : '[A + B]', 'values': [
+        FormulaValue('A', '1,3,5', type: FormulaValueType.RANGE),
+        FormulaValue('B', '2-8#2', type: FormulaValueType.RANGE),
+        FormulaValue('C', '10-12', type: FormulaValueType.RANGE),
+      ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
+        {'result': '3', 'state': 'ok', 'variables': {'A': '1', 'B': '2', 'C': '10'}},
+        {'result': '5', 'state': 'ok', 'variables': {'A': '1', 'B': '4', 'C': '10'}},
+        {'result': '7', 'state': 'ok', 'variables': {'A': '1', 'B': '6', 'C': '10'}},
+        {'result': '9', 'state': 'ok', 'variables': {'A': '1', 'B': '8', 'C': '10'}},
+        {'result': '11', 'state': 'ok', 'variables': {'A': '3', 'B': '8', 'C': '10'}},
+        {'result': '13', 'state': 'ok', 'variables': {'A': '5', 'B': '8', 'C': '10'}}
+      ]}},
     ];
 
     _inputsToExpected.forEach((elem) {

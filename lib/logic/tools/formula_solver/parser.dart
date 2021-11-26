@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
@@ -137,7 +136,7 @@ class FormulaParser {
     return formula;
   }
 
-  Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues, bool uniqueResults) {
+  Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
     formula = normalizeMathematicalSymbols(formula);
 
     List<FormulaValue> preparedValues = _prepareValues(values);
@@ -177,7 +176,7 @@ class FormulaParser {
         return {'state': STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
       }
 
-      expandedFormulas = VariableStringExpander(substitutedFormula, variableValues, uniqueResults: uniqueResults).run();
+      expandedFormulas = VariableStringExpander(substitutedFormula, variableValues).run();
 
       var results = <Map<String, dynamic>>[];
       var hasError = false;
@@ -240,7 +239,7 @@ class FormulaParser {
     return val;
   }
 
-  Map<String, dynamic> parse(String formula, List<FormulaValue> values, {expandValues: true, uniqueResults: false}) {
+  Map<String, dynamic> parse(String formula, List<FormulaValue> values, {expandValues: true}) {
     if (formula == null) return {'state': STATE_ERROR_GENERAL, 'output': [{'result': formula, 'state': STATE_ERROR_GENERAL}]};
 
     formula = formula.trim();
@@ -265,7 +264,7 @@ class FormulaParser {
       var matchString = match.group(0);
       var content = hasBrackets ? matchString.substring(1, matchString.length - 1) : matchString;
 
-      var result = _parseFormula(content, values, expandValues, uniqueResults);
+      var result = _parseFormula(content, values, expandValues);
       var state = result['state'];
       switch (state) {
         case STATE_OK:
@@ -328,10 +327,21 @@ class FormulaParser {
         substitutions.putIfAbsent(matchedString, () => result['result']);
       });
 
-      Map<String, dynamic> out = {'result': substitution(formula, substitutions), 'state': state};
-      if (variables != null)
-        out.putIfAbsent('variables', () => variables);
-      output.add(out);
+      var backSubstituted = substitution(formula, substitutions);
+      var exists = false;
+      for (int i = 0; i < output.length; i++) {
+        if (output[i]['result'] == backSubstituted) {
+          exists = true;
+          break;
+        }
+      }
+
+      if (!exists) {
+        Map<String, dynamic> out = {'result': substitution(formula, substitutions), 'state': state};
+        if (variables != null)
+          out.putIfAbsent('variables', () => variables);
+        output.add(out);
+      }
     });
 
     return {'state': overallState, 'output': output};
