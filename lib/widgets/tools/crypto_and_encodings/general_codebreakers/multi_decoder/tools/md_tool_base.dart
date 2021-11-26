@@ -16,7 +16,7 @@ class MultiDecoderToolBase extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BASE,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               return BASE_FUNCTIONS[options[MDT_BASE_OPTION_BASEFUNCTION]](input);
             },
             options: options,

@@ -10,7 +10,7 @@ class MultiDecoderToolASCII extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ASCII,
-            onDecode: (String input) {
+            onDecode: (String input, String key) {
               return String.fromCharCodes(input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value)).toList());
             },
             options: options);

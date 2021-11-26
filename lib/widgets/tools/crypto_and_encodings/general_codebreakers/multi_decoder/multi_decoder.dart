@@ -1,13 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
@@ -15,8 +20,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 class MultiDecoder extends StatefulWidget {
   @override
@@ -31,6 +38,8 @@ class MultiDecoderState extends State<MultiDecoder> {
   Widget _currentOutput;
 
   var _firstBuild = true;
+  var _currentExpanded = false;
+  String _currentKey = '';
 
   @override
   void initState() {
@@ -99,6 +108,7 @@ class MultiDecoderState extends State<MultiDecoder> {
             )
           ],
         ),
+        _buildKeyWidget(),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
@@ -107,6 +117,36 @@ class MultiDecoderState extends State<MultiDecoder> {
           },
         ),
         _currentOutput
+      ],
+    );
+  }
+
+  Widget _buildKeyWidget() {
+    return Column(
+      children: [
+        GCWExpandableTextDivider(
+            text: i18n(context, 'common_mode_advanced'),
+            expanded: _currentExpanded,
+            onChanged: (value) {
+              setState(() {
+                _currentExpanded = value;
+              });
+            },
+            child: Row(
+              children: [
+                Expanded(child: GCWText(text: i18n(context, 'multidecoder_key')), flex: 1),
+                Expanded(
+                    child: GCWTextField(
+                      onChanged: (text) {
+                        setState(() {
+                          _currentKey = text;
+                        });
+                      },
+                    ),
+                    flex: 3)
+              ],
+            ),
+        ),
       ],
     );
   }
@@ -143,17 +183,57 @@ class MultiDecoderState extends State<MultiDecoder> {
       var result;
 
       try {
-        result = tool.onDecode(_currentInput);
+        if (
+          tool.requiresKey && (_currentKey ?? '').isEmpty
+          || !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty)
+        ) {
+          result = null;
+        } else {
+          result = tool.onDecode(_currentInput, _currentKey);
+        }
       } catch (e) {}
 
-      if (result == null || result.toString().length == 0) return Container();
+      if ((result is String) && (result.toString().length != 0))
+        return GCWOutput(
+          title: _toolTitle(tool),
+          child: result,
+        );
+      else if ((result is Future<String>) )
+        return FutureBuilder(
+            future: result,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData && snapshot.data is String &&
+                  ((snapshot.data as String).length != 0)) {
+                return GCWOutput(
+                    title: _toolTitle(tool),
+                    child: snapshot.data
+                );
+              } else
+                return Container();
+            });
+      else if ((result is Future<Uint8List>) )
+        return FutureBuilder(
+          future: result,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData && snapshot.data is Uint8List &&
+                ((snapshot.data as Uint8List).length > 0)) {
+              return GCWOutput(
+                title: _toolTitle(tool),
+                child: GCWImageView(
+                    imageData: GCWImageViewData(PlatformFile(
+                        bytes: (snapshot.data as Uint8List),
+                        name: _toolTitle(tool))
+                    )
+                )
+              );
+            } else
+              return Container();
+          });
+      else
+        return Container();
 
-      return GCWOutput(
-        title: _toolTitle(tool),
-        child: result,
-      );
     }).toList();
 
-    _currentOutput = Column(children: results);
+     _currentOutput = Column(children: results);
   }
 }

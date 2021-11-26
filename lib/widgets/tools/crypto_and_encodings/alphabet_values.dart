@@ -517,7 +517,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           values: logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true));
     } else {
       var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
-      return GCWCrosstotalOutput(text: text, values: _currentDecodeInput['values']);
+      return GCWCrosstotalOutput(text: text, values: List<int>.from(_currentDecodeInput['values']));
     }
   }
 

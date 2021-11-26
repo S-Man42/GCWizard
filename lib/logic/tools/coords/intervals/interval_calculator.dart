@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart';
 
 abstract class IntervalCalculator {
   final _MAX_CELLCOUNT = 10000;
-  final _deltaResults = 1e-7;
+  final _deltaResults = 1e-5;
 
   List<LatLng> results = [];
   List<CoordinateCell> cells = [];
@@ -25,8 +25,9 @@ abstract class IntervalCalculator {
       double lon = result.longitudeInRad;
 
       if (((lat - point.latitudeInRad).abs() <= _deltaResults) &&
-          (min((lon - point.longitudeInRad).abs(), 360 - (lon - point.longitudeInRad).abs()) <= _deltaResults))
+          (min((lon - point.longitudeInRad).abs(), 360 - (lon - point.longitudeInRad).abs()) <= _deltaResults)) {
         return true;
+      }
     }
 
     return false;

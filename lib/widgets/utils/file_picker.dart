@@ -31,8 +31,9 @@ Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) a
     if (files == null || files.length == 0) return null;
 
     var bytes = await _getFileData(files.first);
+    var path = kIsWeb ? null : files.first.path;
 
-    return local.PlatformFile(path: files.first.path, name: files.first.name, bytes: bytes);
+    return local.PlatformFile(path: path, name: files.first.name, bytes: bytes);
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }

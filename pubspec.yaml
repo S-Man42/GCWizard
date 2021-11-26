@@ -135,6 +135,9 @@ flutter:
     - assets/symbol_tables/flags/
     - assets/symbol_tables/flags_german_kriegsmarine/
     - assets/symbol_tables/flags_nato/
+    - assets/symbol_tables/flags_rn_howe/
+    - assets/symbol_tables/flags_rn_marryat/
+    - assets/symbol_tables/flags_rn_popham/
     - assets/symbol_tables/fonic/
     - assets/symbol_tables/four_triangles/
     - assets/symbol_tables/freemason/
@@ -225,6 +228,8 @@ flutter:
     - assets/symbol_tables/postcode_01247/
     - assets/symbol_tables/postcode_8421/
     - assets/symbol_tables/postnet/
+    - assets/symbol_tables/prussian_colors_artillery/
+    - assets/symbol_tables/prussian_colors_infantery/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/

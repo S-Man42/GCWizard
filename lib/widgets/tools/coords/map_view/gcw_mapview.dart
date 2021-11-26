@@ -239,7 +239,7 @@ class GCWMapViewState extends State<GCWMapView> {
                               _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
                           style: TextStyle(
                               color: COLOR_MAP_LICENSETEXT,
-                              fontSize: defaultFontSize() - 4,
+                              fontSize: fontSizeSmall(),
                               decoration: TextDecoration.underline))),
                   opacity: 0.7,
                 ),

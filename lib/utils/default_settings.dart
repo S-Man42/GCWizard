@@ -92,6 +92,10 @@ void initDefaultSettings() {
     Prefs.setStringList('formulasolver_formulas', []);
   }
 
+  if (Prefs.get('formulasolver_coloredformulas') == null) {
+    Prefs.setBool('formulasolver_coloredformulas', true);
+  }
+
   if (Prefs.get('imagecolorcorrections_maxpreviewheight') == null) {
     Prefs.setInt('imagecolorcorrections_maxpreviewheight', 250);
   }
