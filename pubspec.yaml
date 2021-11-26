@@ -95,7 +95,6 @@ flutter:
     - assets/symbol_tables/chappe_1794/
     - assets/symbol_tables/chappe_1809/
     - assets/symbol_tables/chappe_v1/
-    - assets/symbol_tables/chappe_v3/
     - assets/symbol_tables/cherokee/
     - assets/symbol_tables/chinese_numerals/
     - assets/symbol_tables/cirth_erebor/
@@ -230,6 +229,7 @@ flutter:
     - assets/symbol_tables/postnet/
     - assets/symbol_tables/prussian_colors_artillery/
     - assets/symbol_tables/prussian_colors_infantery/
+    - assets/symbol_tables/prussian_optical_telegraph/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/
