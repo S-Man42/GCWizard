@@ -90,11 +90,12 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
-enum WHERIGO {HEADER, LUA, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS}
+enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS}
 
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUA: 'wherigo_data_lua',
+  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.CHARACTER: 'wherigo_data_character',
   WHERIGO.ITEMS: 'wherigo_data_items',
@@ -174,8 +175,9 @@ class MediaFileHeader{
 class MediaFileContent{
   final int MediaFileType;
   final Uint8List MediaFileBytes;
+  final int MediaFileLength;
 
-  MediaFileContent(this.MediaFileType, this.MediaFileBytes);
+  MediaFileContent(this.MediaFileType, this.MediaFileBytes, this.MediaFileLength);
 }
 
 class ZonePoint{
@@ -272,8 +274,32 @@ const MEDIATYPE_OGG = 21;
 const MEDIATYPE_SWF = 33;
 const MEDIATYPE_TXT = 49;
 
-Map OBJECTTYPE = {
-  MEDIATYPE_BMP:'bmp', MEDIATYPE_PNG:'png', MEDIATYPE_JPG:'jpg', MEDIATYPE_GIF:'gif', MEDIATYPE_WAV:'wav', MEDIATYPE_MP3:'mp3', MEDIATYPE_FDL:'fdl', MEDIATYPE_SND:'snd', MEDIATYPE_OGG:'ogg', MEDIATYPE_SWF:'swf', MEDIATYPE_TXT:'txt'
+Map MEDIATYPE = {
+  MEDIATYPE_BMP:'bmp',
+  MEDIATYPE_PNG:'png',
+  MEDIATYPE_JPG:'jpg',
+  MEDIATYPE_GIF:'gif',
+  MEDIATYPE_WAV:'wav',
+  MEDIATYPE_MP3:'mp3',
+  MEDIATYPE_FDL:'fdl',
+  MEDIATYPE_SND:'snd',
+  MEDIATYPE_OGG:'ogg',
+  MEDIATYPE_SWF:'swf',
+  MEDIATYPE_TXT:'txt'
+};
+
+Map MEDIACLASS = {
+  MEDIATYPE_BMP:'Image',
+  MEDIATYPE_PNG:'Image',
+  MEDIATYPE_JPG:'Image',
+  MEDIATYPE_GIF:'Image',
+  MEDIATYPE_WAV:'Sound',
+  MEDIATYPE_MP3:'Sound',
+  MEDIATYPE_FDL:'Sound',
+  MEDIATYPE_SND:'Sound',
+  MEDIATYPE_OGG:'Sound',
+  MEDIATYPE_SWF:'Video',
+  MEDIATYPE_TXT:'Text'
 };
 
 const LENGTH_BYTE = 1;
@@ -407,7 +433,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   print('### READ LUA CODE');
   MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
   print('=> '+MediaFileLength.toString());
-  MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength)));
+  MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
   //for (int i = offset; i <= ObjectLength; i++){
   //  Objects[0].Bytes.add(byteList[i]);
   //}
@@ -423,7 +449,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
       print('=> '+MediaFileType.toString());
       MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
       print('=> '+MediaFileLength.toString());
-      MediaFilesContents.add(MediaFileContent(MediaFileType, Uint8List.sublistView(byteList, offset, offset + MediaFileLength)));
+      MediaFilesContents.add(MediaFileContent(MediaFileType, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
       offset = offset + MediaFileLength;
     }
   }
