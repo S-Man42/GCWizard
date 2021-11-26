@@ -1,4 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_painter.dart';
+import 'package:prefs/prefs.dart';
+import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -9,6 +14,7 @@ import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -232,24 +238,29 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                             children: [
                               Container(
                                 child: GCWText(text: (index + 1).toString() + '.'),
-                                padding: EdgeInsets.only(right: 4 * DEFAULT_MARGIN),
+                                width: 35
                               ),
                               Flexible(
-                                child: GCWText(text: formula.formula),
+                                child: _buildFormulaText(formula.formula, values, formula.id),
                               )
                             ],
                           ),
                           Row(
                             children: <Widget>[
-                              calculated['state'] == STATE_OK
-                                  ? Icon(
-                                      Icons.check,
-                                      color: _themeColors.mainFont(),
-                                    )
-                                  : Icon(
-                                      Icons.priority_high,
-                                      color: _themeColors.accent(),
-                                    ),
+                              Container(
+                                child: calculated['state'] == STATE_OK
+                                    ? Icon(
+                                  Icons.check,
+                                  color: _themeColors.mainFont(),
+                                )
+                                    : Icon(
+                                  Icons.priority_high,
+                                  color: themeColors().formulaError(),
+                                ),
+                                width: 35,
+                                alignment: Alignment.centerLeft,
+                              ),
+
                               Flexible(
                                 child: GCWText(text: calculated['result']),
                               )
@@ -365,58 +376,74 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           0,
           GCWTextDivider(
               text: i18n(context, 'formulasolver_formulas_currentformulas'),
-              trailing: GCWPopupMenu(
-                  iconData: Icons.more_vert,
-                  size: IconButtonSize.SMALL,
-                  menuItemBuilder: (context) => [
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
-                            action: (index) => setState(() {
-                                  showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
-                                    if (value == null) return;
+              trailing: Row(
+                children: [
+                  GCWIconButton(
+                    iconData: Icons.color_lens,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      setState(() {
+                        Prefs.setBool('formulasolver_coloredformulas', !Prefs.getBool('formulasolver_coloredformulas'));
+                      });
+                    },
+                  ),
+                  GCWPopupMenu(
+                    iconData: Icons.more_vert,
+                    size: IconButtonSize.SMALL,
+                    menuItemBuilder: (context) => [
+                      GCWPopupMenuItem(
+                          child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformulas'),
+                          action: (index) => setState(() {
+                            showFormulaReplaceDialog(context, widget.group.formulas, onOkPressed: (value) {
+                              if (value == null) return;
 
-                                    for (int i = 0; i < widget.group.formulas.length; i++) {
-                                      if (value[i] == null) continue;
-                                      if (value[i].formula == null) continue;
+                              for (int i = 0; i < widget.group.formulas.length; i++) {
+                                if (value[i] == null) continue;
+                                if (value[i].formula == null) continue;
 
-                                      if (widget.group.formulas[i].formula != value[i].formula) {
-                                        var formula = widget.group.formulas[i];
-                                        formula.formula = value[i].formula;
-                                        _updateFormula(formula);
-                                      }
-                                    }
-                                    setState(() {});
-                                  });
-                                })),
+                                if (widget.group.formulas[i].formula != value[i].formula) {
+                                  var formula = widget.group.formulas[i];
+                                  formula.formula = value[i].formula;
+                                  _updateFormula(formula);
+                                }
+                              }
+                              setState(() {});
+                            });
+                          })),
+                      GCWPopupMenuItem(
+                          child:
+                          iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformulas'),
+                          action: (index) => showDeleteAlertDialog(
+                            context,
+                            i18n(context, 'formulasolver_formulas_allformulas'),
+                                () {
+                              var formulasToRemove = List.from(widget.group.formulas);
+                              formulasToRemove.forEach((formula) => _removeFormula(formula));
+                              setState(() {});
+                            },
+                          )),
+                      if (_foundCoordinates.length > 0)
                         GCWPopupMenuItem(
-                            child:
-                                iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformulas'),
-                            action: (index) => showDeleteAlertDialog(
-                                  context,
-                                  i18n(context, 'formulasolver_formulas_allformulas'),
-                                  () {
-                                    var formulasToRemove = List.from(widget.group.formulas);
-                                    formulasToRemove.forEach((formula) => _removeFormula(formula));
-                                    setState(() {});
-                                  },
-                                )),
-                        if (_foundCoordinates.length > 0)
-                          GCWPopupMenuItem(
-                              child: iconedGCWPopupMenuItem(
-                                context,
-                                Icons.my_location,
-                                'formulasolver_formulas_showonmap',
-                              ),
-                              action: (index) {
-                                _showFormulaResultOnMap(_foundCoordinates.entries.map((coordinate) {
-                                  return GCWMapPoint(
-                                      point: coordinate.value['coordinate'],
-                                      markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') +
-                                          ' ${coordinate.key}',
-                                      coordinateFormat: {'format': coordinate.value['format']});
-                                }).toList());
-                              })
-                      ])));
+                            child: iconedGCWPopupMenuItem(
+                              context,
+                              Icons.my_location,
+                              'formulasolver_formulas_showonmap',
+                            ),
+                            action: (index) {
+                              _showFormulaResultOnMap(_foundCoordinates.entries.map((coordinate) {
+                                return GCWMapPoint(
+                                    point: coordinate.value['coordinate'],
+                                    markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') +
+                                        ' ${coordinate.key}',
+                                    coordinateFormat: {'format': coordinate.value['format']});
+                              }).toList());
+                            })
+                    ])
+                ]
+              )
+
+
+        ));
     }
 
     return Column(children: rows);
@@ -433,5 +460,56 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
                 suppressToolMargin: true)));
+  }
+
+  Widget _buildFormulaText(String formula, Map<String, String> values, int formulaIndex) {
+    return SelectableText.rich(TextSpan(
+      children:
+          _buildTextSpans(formula,
+              paintFormula(formula, values, formulaIndex, Prefs.getBool('formulasolver_coloredformulas'))
+          )
+    ));
+  }
+
+  List<InlineSpan> _buildTextSpans(String formula, String formulaColors) {
+    var list = <TextSpan>[];
+    var startIndex = 0;
+    var gcwStyle = gcwTextStyle();
+
+    for (int i = 0; i < formula.length; i++) {
+      if ((i == formula.length - 1) || (formulaColors[i + 1] != formulaColors[i])) {
+        TextStyle textStyle;
+        switch (formulaColors[i]) {
+          case 'g':
+            textStyle = TextStyle(color: themeColors().formulaNumber());
+            break;
+          case 'r':
+            textStyle = TextStyle(color: themeColors().formulaVariable());
+            break;
+         case 'b':
+            textStyle = TextStyle(color:themeColors().formulaMath());
+            break;
+          case 'R':
+          case 'G':
+          case 'B':
+            textStyle = TextStyle(color: themeColors().formulaError(), fontWeight: FontWeight.bold);
+            break;
+          default:
+            textStyle = TextStyle();
+        }
+        var text = formula.substring(startIndex, i+1);
+        var textSpan = TextSpan(text: text, style: TextStyle(
+            fontSize: gcwStyle.fontSize,
+            fontFamily: gcwStyle.fontFamily,
+            color: (textStyle.color == null) ? gcwStyle.color : textStyle.color,
+            fontWeight: (textStyle.fontWeight == null) ? gcwStyle.fontWeight : textStyle.fontWeight,
+          )
+        );
+        list.add(textSpan);
+
+        startIndex = i + 1;
+      }
+    }
+    return list;
   }
 }

@@ -8,12 +8,14 @@ class GCWAlphabetModificationDropDownButton extends StatefulWidget {
   final Function onChanged;
   final value;
   final List<AlphabetModificationMode> allowedModifications;
+  final bool suppressTitle;
 
   const GCWAlphabetModificationDropDownButton({
     Key key,
     this.onChanged,
     this.value,
     this.allowedModifications,
+    this.suppressTitle: false
   }) : super(key: key);
 
   @override
@@ -49,7 +51,8 @@ class GCWAlphabetModificationDropDownButtonState extends State<GCWAlphabetModifi
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Expanded(child: GCWText(text: i18n(context, 'common_alphabetmodification_title') + ':'), flex: 1),
+        if (!widget.suppressTitle)
+          Expanded(child: GCWText(text: i18n(context, 'common_alphabetmodification_title') + ':'), flex: 1),
         Expanded(
             child: GCWDropDownButton(
               value: _currentValue ?? widget.value ?? AlphabetModificationMode.J_TO_I,

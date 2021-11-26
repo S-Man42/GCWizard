@@ -45,8 +45,7 @@ Future<Map<String, String>> _getSearchStringsForLocale(String locale) async {
 
 // Build indexed strings for each tool : concatenated lower case no accent
 void createIndexedSearchStrings() {
-  if (registeredTools == null)
-    return;
+  if (registeredTools == null) return;
 
   for (GCWTool tool in registeredTools) {
     List<String> searchStrings = [];
@@ -54,13 +53,10 @@ void createIndexedSearchStrings() {
       var commonStrings = _COMMON_SEARCHSTRINGS[searchKey];
       var enStrings = _EN_SEARCHSTRINGS[searchKey];
       var localeStrings = _LOCALE_SEARCHSTRINGS[searchKey];
-      
-      if (commonStrings != null && commonStrings.isNotEmpty)
-        searchStrings.add(commonStrings);
-      if (enStrings != null && enStrings.isNotEmpty)
-        searchStrings.add(enStrings);
-      if (localeStrings != null && localeStrings.isNotEmpty)
-        searchStrings.add(localeStrings);
+
+      if (commonStrings != null && commonStrings.isNotEmpty) searchStrings.add(commonStrings);
+      if (enStrings != null && enStrings.isNotEmpty) searchStrings.add(enStrings);
+      if (localeStrings != null && localeStrings.isNotEmpty) searchStrings.add(localeStrings);
     }
 
     var _indexedSearchStrings = removeAccents(searchStrings.join(' ').toLowerCase());

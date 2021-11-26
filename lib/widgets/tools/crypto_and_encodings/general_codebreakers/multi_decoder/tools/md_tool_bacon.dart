@@ -17,7 +17,7 @@ class MultiDecoderToolBacon extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_BACON,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               return decodeBacon(input, false, options[MDT_BACON_OPTION_MODE] == MDT_BACON_OPTION_MODE_01);
             },
             options: options,

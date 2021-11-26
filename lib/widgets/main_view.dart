@@ -114,6 +114,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
@@ -300,10 +301,8 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    if (registeredTools == null)
-      initializeRegistry(context);
-    if (_mainToolList == null)
-      _initStaticToolList();
+    if (registeredTools == null) initializeRegistry(context);
+    if (_mainToolList == null) _initStaticToolList();
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
@@ -380,8 +379,7 @@ class _MainViewState extends State<MainView> {
     Set<String> _queryTexts = removeAccents(_searchText.toLowerCase()).split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
-      if (tool.indexedSearchStrings == null)
-        return false;
+      if (tool.indexedSearchStrings == null) return false;
 
       //Search result as AND result of separated words
       for (final q in _queryTexts) {
@@ -536,6 +534,7 @@ void _initStaticToolList() {
       className(PigLatin()),
       className(Playfair()),
       className(Polybios()),
+      className(PrimeAlphabet()),
       className(PrimesSelection()),
       className(Projectiles()),
       className(QrCode()),

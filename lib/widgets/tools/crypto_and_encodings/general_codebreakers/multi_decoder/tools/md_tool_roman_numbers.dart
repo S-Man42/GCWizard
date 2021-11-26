@@ -18,7 +18,7 @@ class MultiDecoderToolRomanNumbers extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ROMANNUMBERS,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               var type = options[MDT_ROMANNUMBERS_OPTION_MODE] == MDT_ROMANNUMBERS_OPTION_MODE_SUBTRACTION
                   ? RomanNumberType.USE_SUBTRACTION_RULE
                   : RomanNumberType.ONLY_ADDITION;

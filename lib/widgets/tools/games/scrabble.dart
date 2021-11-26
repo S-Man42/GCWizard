@@ -87,7 +87,7 @@ class ScrabbleState extends State<Scrabble> {
           },
         ),
         GCWDefaultOutput(child: _output),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(text: _currentInput, values: _currentValues) : Container()
+        _currentCrosstotalMode ? GCWCrosstotalOutput(text: _currentInput, values: List<int>.from(_currentValues)) : Container()
       ],
     );
   }
@@ -99,6 +99,6 @@ class ScrabbleState extends State<Scrabble> {
       _currentValues = textToLetterFrequencies(_currentInput, _currentScrabbleVersion);
     }
 
-    _output = intListToString(_currentValues, delimiter: ', ');
+    _output = intListToString(_currentValues, delimiter: ' ');
   }
 }

@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'dart:math';
 
 final FONT_SIZE_MIN = 10;
 final FONT_SIZE_MAX = 30;
@@ -12,6 +13,10 @@ final DEFAULT_DESCRIPTION_MARGIN = 10.0;
 
 final DEFAULT_LISTITEM_SIZE = 42.0;
 
+dynamic fontSizeSmall() {
+  return defaultFontSize() - 4;
+}
+
 TextStyle gcwTextStyle() {
   return TextStyle(color: themeColors().mainFont(), fontSize: defaultFontSize(), fontFamily: 'Roboto Condensed');
 }
@@ -20,7 +25,7 @@ TextStyle gcwBetaStyle() {
   return TextStyle(
       // backgroundColor: themeColors().accent(),
       color: themeColors().dialogText(),
-      fontSize: defaultFontSize() - 4,
+      fontSize: fontSizeSmall(),
       fontWeight: FontWeight.bold,
       letterSpacing: 1.7);
 }

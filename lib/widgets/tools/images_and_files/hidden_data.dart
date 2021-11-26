@@ -264,7 +264,7 @@ class HiddenDataState extends State<HiddenData> {
                           GCWText(
                               text: parentsString,
                               style: gcwTextStyle()
-                                  .copyWith(fontSize: defaultFontSize() - 4, color: themeColors().dialogText())),
+                                  .copyWith(fontSize: fontSizeSmall(), color: themeColors().dialogText())),
                         Row(
                           children: [
                             Expanded(

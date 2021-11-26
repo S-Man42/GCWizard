@@ -59,21 +59,21 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
             : GCWIntegerListTextField(
-          controller: _decodeController,
-          onChanged: (value) {
-            setState(() {
-              _currentDecodeInput = value['text'];
-            });
-          },
-        ),
+                controller: _decodeController,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDecodeInput = value['text'];
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           leftValue: 'A-Z → ' + (i18n(context, widget.charsetName) ?? '123'),
@@ -94,8 +94,7 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
             });
           },
         ),
-        if (_currentSimpleMode == GCWSwitchPosition.right)
-          _buildAdvancedWidgets(),
+        if (_currentSimpleMode == GCWSwitchPosition.right) _buildAdvancedWidgets(),
         GCWDefaultOutput(child: _calculateOutput()),
         _buildCrossTotals()
       ],
@@ -103,56 +102,51 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
   }
 
   _buildAdvancedWidgets() {
-    return Column(
-        children: [
-          GCWDropDownButton(
-            title: i18n(context, 'charsets_coding'),
-            value: _currentRadix,
-            items: <int, String>{
-              10: 'common_numeralbase_denary',
-              2: 'common_numeralbase_binary',
-              16: 'common_numeralbase_hexadecimal'
-            }.map((key, value){
-              return MapEntry(
-                  key,
-                  GCWDropDownMenuItem(
-                      value: key,
-                      child: i18n(context, value)
-                  )
-              );
-            }).values.toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentRadix = value;
-              });
-            },
-          ),
-          GCWTwoOptionsSwitch(
-            title: i18n(context, 'charsets_blocksize'),
-            leftValue: i18n(context, 'charsets_blocksize_variable'),
-            rightValue: i18n(context, 'charsets_blocksize_fixed'),
-            value: _currentBlockSizeMode,
-            onChanged: (value) {
-              setState(() {
-                _currentBlockSizeMode = value;
-              });
-            },
-          ),
-          if (_currentBlockSizeMode == GCWSwitchPosition.right)
-            GCWIntegerSpinner(
-              min: 1,
-              max: 32,
-              value: _currentBlockSize,
-              onChanged: (value) {
-                setState(() {
-                  _currentBlockSize = value;
-                });
-              },
-            )
-        ]
-    );
+    return Column(children: [
+      GCWDropDownButton(
+        title: i18n(context, 'charsets_coding'),
+        value: _currentRadix,
+        items: <int, String>{
+          10: 'common_numeralbase_denary',
+          2: 'common_numeralbase_binary',
+          16: 'common_numeralbase_hexadecimal'
+        }
+            .map((key, value) {
+              return MapEntry(key, GCWDropDownMenuItem(value: key, child: i18n(context, value)));
+            })
+            .values
+            .toList(),
+        onChanged: (value) {
+          setState(() {
+            _currentRadix = value;
+          });
+        },
+      ),
+      GCWTwoOptionsSwitch(
+        title: i18n(context, 'charsets_blocksize'),
+        leftValue: i18n(context, 'charsets_blocksize_variable'),
+        rightValue: i18n(context, 'charsets_blocksize_fixed'),
+        value: _currentBlockSizeMode,
+        onChanged: (value) {
+          setState(() {
+            _currentBlockSizeMode = value;
+          });
+        },
+      ),
+      if (_currentBlockSizeMode == GCWSwitchPosition.right)
+        GCWIntegerSpinner(
+          min: 1,
+          max: 32,
+          value: _currentBlockSize,
+          onChanged: (value) {
+            setState(() {
+              _currentBlockSize = value;
+            });
+          },
+        )
+    ]);
   }
-  
+
   _buildCrossTotals() {
     if (_currentMode == GCWSwitchPosition.left) {
       return GCWCrosstotalOutput(text: _currentEncodeInput, values: widget.encode(_currentEncodeInput));
@@ -180,8 +174,7 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
   }
 
   _calculateDecoded() {
-    if (_currentDecoded != null)
-      return _currentDecoded;
+    if (_currentDecoded != null) return _currentDecoded;
 
     int radix = _getRadix();
     int blockSize = _getBlockSize();
@@ -219,7 +212,7 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
         if (radix != 10) {
           try {
             valueStr = convertBase(valueStr, 10, radix);
-          } catch(e) {
+          } catch (e) {
             return '';
           }
         }
