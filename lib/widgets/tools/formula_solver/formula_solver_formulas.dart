@@ -187,27 +187,32 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   _buildGroupList(BuildContext context) {
-    Map<String, String> values = {};
+    Map<String, FormulaValue> values = {};
     widget.group.values.forEach((value) {
-      values.putIfAbsent(value.key, () => value.value);
+      values.putIfAbsent(value.key, () => value);
     });
 
     var odd = true;
 
-    var formulaResults = <String, String>{};
+    var formulaReferences = <String, String>{};
 
     var rows = widget.group.formulas
         .asMap()
         .map((index, formula) {
+          /*
+              TECHNICAL DEBT:
+              - Violation of layer separation principle (https://en.wikipedia.org/wiki/Separation_of_concerns)
+              - Logic should be completely separated from UI
+           */
           //TODO: In fact, this is for the recursive formulas... An therefore, this is part of
           // the logic. It needs to be moved from the frontend part
-          var formulaToParse = substitution(formula.formula, formulaResults, caseSensitive: false);
+          var formulaToParse = substitution(formula.formula, formulaReferences, caseSensitive: false);
           var calculated = formulaParser.parse(formulaToParse, values);
 
-          var formulaResult = calculated['result'];
-          if (calculated['state'] != STATE_OK) formulaResult = '($formulaResult)';
+          var firstFormulaResult = calculated['result'] != null ? calculated['result'].first;
+          if (calculated['state'] != STATE_OK) firstFormulaResult = '($firstFormulaResult)';
 
-          formulaResults.putIfAbsent('{${index + 1}}', () => formulaResult);
+          formulaReferences.putIfAbsent('{${index + 1}}', () => firstFormulaResult);
 
           Widget output;
 

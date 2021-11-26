@@ -54,22 +54,27 @@ class Formula {
   }
 }
 
+enum FormulaValueType {VALUE, RANGE}
+
 class FormulaValue {
   int id;
   String key;
   String value;
+  FormulaValueType type;
 
-  FormulaValue(this.key, this.value);
+  FormulaValue(this.key, this.value, {this.type});
 
   FormulaValue.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         key = json['key'],
-        value = json['value'];
+        value = json['value'],
+        type = json['type'];
 
   Map<String, dynamic> toMap() => {
         'id': id,
         'key': key,
         'value': value,
+        'type': type,
       };
 
   @override

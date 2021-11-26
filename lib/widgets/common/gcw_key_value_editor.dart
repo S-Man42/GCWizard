@@ -12,6 +12,25 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 
+/*
+  TECHNICAL DEBT:
+  - Violation of SoC (https://en.wikipedia.org/wiki/Separation_of_concerns)
+  - Violation of OCP (https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle)
+  - General library/class contains consumer specific logic (e.g. alphabet values, formula values)
+  - Changing the specific consumer effects the global class and therefore indirectly may effect independent other consumer
+
+  - Proposal:
+  - One base class, several inherited classes for specific requirements
+  - Main Class contains:
+    - General logic for add/delete/update an entry
+    - Copy/Paste Buttons for key/value pairs
+    - UI, especially the odd/even colors
+    - Basic text fields for key/value
+    - Hooks for onDeleted, onInserted, onUpdated
+    - Possibility to override simple key/value widget
+    - Possibility to override simple copy/paste function
+*/
+
 class GCWKeyValueEditor extends StatefulWidget {
   final Function onNewEntryChanged;
   final String keyHintText;

@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/crosstotals.dart';
@@ -8,7 +11,12 @@ import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 const STATE_OK = 'ok';
-const STATE_ERROR = 'error';
+const STATE_EXPANDED_OK = 'expanded_ok';
+const STATE_EXPANDED_ERROR = 'expanded_error';
+const STATE_ERROR_GENERAL = 'error';
+const STATE_EXPANDED_ERROR_EXCEEDEDRANGE = 'expanded_error_exceededrange';
+
+const _MAX_EXPANDED = 100;
 
 class FormulaParser {
   ContextModel _context;
@@ -129,35 +137,76 @@ class FormulaParser {
     return formula;
   }
 
-  dynamic _evaluateFormula(String formula, Map<String, String> values) {
+  Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues, bool uniqueResults) {
     formula = normalizeMathematicalSymbols(formula);
 
-    Map<String, String> preparedValues = _prepareValues(values);
+    List<FormulaValue> preparedValues = _prepareValues(values);
+
+    var fixedValues = <String, String>{};
+    var variableValues = <String, String>{};
+    preparedValues.forEach((value) {
+      if (expandValues == false || value.type == null || value.type == FormulaValueType.VALUE) {
+        fixedValues.putIfAbsent(value.key, () => value.value);
+      } else {
+        variableValues.putIfAbsent(value.key, () => value.value);
+      }
+    });
 
     //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(formula);
+
     //replace values
     int i = pow(values.length, 2);
     var substitutedFormula = safedFormulaNames['formula'];
     var fullySubstituded = false;
     while (i > 0 && !fullySubstituded) {
-      var tempSubstitutedFormula = substitution(substitutedFormula, preparedValues, caseSensitive: false);
+      var tempSubstitutedFormula = substitution(substitutedFormula, fixedValues, caseSensitive: false);
       fullySubstituded = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
 
       substitutedFormula = tempSubstitutedFormula;
       i--;
     }
-    //restore the formula names
-    substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
-    try {
-      Expression expression = parser.parse(substitutedFormula.toLowerCase());
-      var result = expression.evaluate(EvaluationType.REAL, _context);
-      if (result == null) throw Exception();
 
-      return result.floor() == result ? result.floor() : result;
-    } catch (e) {
-      print(e);
-      throw FormatException(substitutedFormula);
+    //expand formulas with range values
+    List<Map<String, dynamic>> expandedFormulas;
+    if (expandValues && variableValues.length > 0) {
+      var count = VariableStringExpander(substitutedFormula, variableValues).run(onlyPrecheck: true).first['count'];
+      if (count == null) {
+        return {'state': STATE_ERROR_GENERAL, 'result': formula};
+      } else if (count > _MAX_EXPANDED) {
+        return {'state': STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
+      }
+
+      expandedFormulas = VariableStringExpander(substitutedFormula, variableValues, uniqueResults: uniqueResults).run();
+
+      var results = <Map<String, dynamic>>[];
+      var hasError = false;
+      for (var expandedFormula in expandedFormulas) {
+        substitutedFormula = substitution(expandedFormula['text'], safedFormulaNames['map']);
+
+        try {
+          var result = _evaluateFormula(substitutedFormula, fixedValues);
+          results.add({'state': STATE_OK, 'result': result, 'variables': expandedFormula['variables']});
+        } catch (e) {
+          results.add({'state': STATE_ERROR_GENERAL, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
+          hasError = true;
+        }
+      }
+
+      if (count == 1) {
+        return {'state': hasError ? STATE_ERROR_GENERAL : STATE_OK, 'result': results.first['result']};
+      }
+
+      return {'state': hasError ? STATE_EXPANDED_ERROR : STATE_EXPANDED_OK, 'result': results};
+    } else {
+      substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
+
+      try {
+        var result = _evaluateFormula(substitutedFormula, fixedValues);
+        return {'state': STATE_OK, 'result': result};
+      } catch (e) {
+        return {'state': STATE_ERROR_GENERAL, 'result': substitutedFormula};
+      }
     }
   }
 
@@ -166,61 +215,126 @@ class FormulaParser {
         substitutedFormula == tempSubstitutedFormula.replaceAll(RegExp(r'[\(\)]'), '');
   }
 
-  Map<String, String> _prepareValues(Map<String, String> values) {
-    Map<String, String> val = {};
-    values.entries.forEach((element) {
+  dynamic _evaluateFormula(String formula, Map<String, String> values) {
+    Expression expression = parser.parse(formula.toLowerCase());
+    var result = expression.evaluate(EvaluationType.REAL, _context);
+    if (result == null) throw Exception();
+
+    return result;
+  }
+
+  List<FormulaValue> _prepareValues(List<FormulaValue> values) {
+    List<FormulaValue> val = [];
+    values.forEach((element) {
       var key = element.key.trim();
       var value = element.value;
 
-      if (value == null || value.length == 0) val.putIfAbsent(key, () => key);
+      if (value == null || value.length == 0) {
+        value = key;
+      } else if (element.type == FormulaValueType.VALUE && double.tryParse(value) == null) {
+        value = '($value)';
+      }
 
-      if (double.tryParse(value) != null)
-        val.putIfAbsent(key, () => value);
-      else
-        val.putIfAbsent(key, () => '($value)');
+      val.add(FormulaValue(key, value, type: element.type));
     });
     return val;
   }
 
-  Map<String, String> parse(String formula, Map<String, String> values) {
-    if (formula == null) return {'state': STATE_ERROR, 'result': formula};
+  Map<String, dynamic> parse(String formula, List<FormulaValue> values, {expandValues: true, uniqueResults: false}) {
+    if (formula == null) return {'state': STATE_ERROR_GENERAL, 'output': [{'result': formula, 'state': STATE_ERROR_GENERAL}]};
 
     formula = formula.trim();
 
-    if (formula == '') return {'state': STATE_ERROR, 'result': formula};
+    if (formula == '') return {'state': STATE_ERROR_GENERAL, 'output': [{'result': formula, 'state': STATE_ERROR_GENERAL}]};
 
-    if (values == null) values = <String, String>{};
+    if (values == null) values = <FormulaValue>[];
 
-    RegExp regExp = new RegExp(r'\[.+?\]');
-    var matches = regExp.allMatches(formula.trim());
+    RegExp regExp = RegExp(r'\[.+?\]');
+    var matches = regExp.allMatches(formula);
 
-    bool hasError = false;
-    if (matches.length > 0) {
+    var hasBrackets = true;
+    if (matches.length == 0) {
+      matches = RegExp(r'^.*$').allMatches(formula);
+      hasBrackets = false;
+    }
+
+    Map<String, Map<String, Map<String, dynamic>>> matchedVariables = {};
+
+    var overallState = STATE_OK;
+    matches.forEach((match) {
+      var matchString = match.group(0);
+      var content = hasBrackets ? matchString.substring(1, matchString.length - 1) : matchString;
+
+      var result = _parseFormula(content, values, expandValues, uniqueResults);
+      var state = result['state'];
+      switch (state) {
+        case STATE_OK:
+          Map<String, dynamic> out = {'result': _formatOutput(result['result']), 'state': state};
+          if (matchedVariables.containsKey(null)) {
+            matchedVariables[null].putIfAbsent(matchString, () => out);
+          } else {
+            matchedVariables.putIfAbsent(null, () => {matchString: out});
+          }
+          break;
+        case STATE_ERROR_GENERAL:
+        case STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
+          matchedVariables.putIfAbsent(null, () => {matchString: {'result': hasBrackets ? '[${result['result']}]' : result['result'], 'state': state}});
+          if (overallState != STATE_EXPANDED_ERROR)
+            overallState = state;
+          break;
+        case STATE_EXPANDED_OK:
+        case STATE_EXPANDED_ERROR:
+          result['result'].forEach((result) {
+            var formatted;
+            if (result['state'] == STATE_OK) {
+              formatted = _formatOutput(result['result']);
+            } else {
+              formatted =  hasBrackets ? '[${result['result']}]' : result['result'];
+            }
+
+            Map<String, dynamic> out = {'result': formatted, 'variables': result['variables'], 'state': result['state']};
+
+            var variables = result['variables'].toString();
+            if (matchedVariables.containsKey(variables)) {
+              matchedVariables[variables].putIfAbsent(matchString, () => out);
+            } else {
+              matchedVariables.putIfAbsent(variables, () => {matchString: out});
+            }
+
+            if (state == STATE_EXPANDED_OK) {
+              if (overallState == STATE_ERROR_GENERAL)
+                overallState = STATE_EXPANDED_ERROR;
+              else if (overallState != STATE_EXPANDED_ERROR)
+                overallState = result['state'] == STATE_OK ? STATE_EXPANDED_OK : STATE_EXPANDED_ERROR;
+            } else {
+              overallState = STATE_EXPANDED_ERROR;
+            }
+          });
+
+          break;
+      }
+    });
+
+    List<Map<String, dynamic>> output = [];
+    matchedVariables.values.forEach((Map<String, Map<String, dynamic>> matchedResults) {
       Map<String, String> substitutions = {};
-
-      matches.forEach((match) {
-        var matchString = match.group(0);
-        var content = matchString.substring(1, matchString.length - 1);
-
-        var result;
-        try {
-          result = _evaluateFormula(content, values);
-        } catch (e) {
-          hasError = true;
-          result = '[' + e.message + ']';
-        }
-
-        substitutions.putIfAbsent(matchString, () => _formatOutput(result));
+      var variables;
+      var state = STATE_OK;
+      matchedResults.forEach((String matchedString, Map<String, dynamic> result) {
+        if (variables == null)
+          variables = result['variables'];
+        if (result['state'] == STATE_ERROR_GENERAL)
+          state = STATE_ERROR_GENERAL;
+        substitutions.putIfAbsent(matchedString, () => result['result']);
       });
 
-      return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': substitution(formula, substitutions)};
-    } else {
-      try {
-        return {'state': hasError ? STATE_ERROR : STATE_OK, 'result': _formatOutput(_evaluateFormula(formula, values))};
-      } catch (e) {
-        return {'state': STATE_ERROR, 'result': e.message};
-      }
-    }
+      Map<String, dynamic> out = {'result': substitution(formula, substitutions), 'state': state};
+      if (variables != null)
+        out.putIfAbsent('variables', () => variables);
+      output.add(out);
+    });
+
+    return {'state': overallState, 'output': output};
   }
 
   String _formatOutput(dynamic value) {
