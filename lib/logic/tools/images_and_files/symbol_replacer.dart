@@ -62,7 +62,7 @@ Future<SymbolImage> replaceSymbols(Uint8List image,
       (blackLevel * 255/100).toInt(),
       similarityLevel,
       gap: gap,
-      compareImages: compareSymbols,
+      compareSymbols: compareSymbols,
       similarityCompareLevel: similarityCompareLevel
   );
 
@@ -114,7 +114,7 @@ class SymbolImage {
   splitAndGroupSymbols(int blackLevel,
       double similarityLevel,
       {int gap = 1,
-      List<Map<String, SymbolData>> compareImages,
+      List<Map<String, SymbolData>> compareSymbols,
       double similarityCompareLevel = 80,
       bool groupSymbols = true
       }) {
@@ -155,12 +155,15 @@ class SymbolImage {
     if (symbolGroups.isEmpty && groupSymbols)
       _groupSymbols();
 
-    if (groupSymbols & (compareImages != null) & (_similarityCompareLevel != null)) {
-      if (_compareSymbols != compareImages || _compareImage == null) {
-        _compareImage = _buildCompareSymbols(compareImages);
+    if (_compareSymbols != compareSymbols)
+      _compareImage = null;
+
+    if (groupSymbols & (compareSymbols != null) & (_similarityCompareLevel != null) & (_compareImage == null)) {
+      if (_compareSymbols != compareSymbols || _compareImage == null) {
+        _compareImage = _buildCompareSymbols(compareSymbols);
       }
       _useCompareSymbols(_compareImage);
-      _compareSymbols = compareImages;
+      _compareSymbols = compareSymbols;
     }
 
     var mergeText = false;
@@ -213,22 +216,22 @@ class SymbolImage {
       compareSymbolImage.symbols[i].hash = imageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
 
     for (int i = 0; i < symbolGroups.length; i++) {
-      double maxPercent = 0.0;
-      _Symbol maxPercentSymbol;
+      if ((symbolGroups[i].text == null) || (symbolGroups[i].text.isEmpty)) {
+        double maxPercent = 0.0;
+        _Symbol maxPercentSymbol;
 
-      _Symbol symbol1 = symbolGroups[i].symbols.first;
+        _Symbol symbol1 = symbolGroups[i].symbols.first;
 
-      for (int x = 0; x < compareSymbolImage.symbols.length; x++) {
-        var similarity = imageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
-        if (similarity > maxPercent) {
-          maxPercent = similarity;
-          maxPercentSymbol = compareSymbolImage.symbols[x];
+        for (int x = 0; x < compareSymbolImage.symbols.length; x++) {
+          var similarity = imageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
+          if (similarity > maxPercent) {
+            maxPercent = similarity;
+            maxPercentSymbol = compareSymbolImage.symbols[x];
+          }
         }
-      }
-      if (maxPercent >= _similarityCompareLevel) {
-        symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
-        //ToDo wieder raus nur für Test
-        //symbolGroups[i].symbols.add(maxPercentSymbol);
+        if (maxPercent >= _similarityCompareLevel) {
+          symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
+        }
       }
     }
   }

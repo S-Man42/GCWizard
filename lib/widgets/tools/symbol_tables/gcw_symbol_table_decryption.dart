@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -7,10 +9,13 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_zoom_buttons.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class GCWSymbolTableDecryption extends StatefulWidget {
   final int countColumns;
@@ -36,6 +41,9 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   @override
   Widget build(BuildContext context) {
     _data = widget.data;
+    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40)/ 3;
+    var _decryptionSwitchWidth = (MediaQuery.of(context).size.width - 40 - 57 - 20);
+    var _decryptionSwitchPartWidth = (_symbolTableSwitchPartWidth / _decryptionSwitchWidth * 100).toInt();
 
     return Column(
       children: <Widget>[
@@ -45,6 +53,9 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                 child: GCWOnOffSwitch(
                   value: _currentShowOverlayedSymbols,
                   title: i18n(context, 'symboltables_showoverlay'),
+                  flex: [_decryptionSwitchPartWidth,
+                         _decryptionSwitchPartWidth,
+                          max(100 - 2 * _decryptionSwitchPartWidth, 0)],
                   onChanged: (value) {
                     setState(() {
                       _currentShowOverlayedSymbols = value;
@@ -52,6 +63,12 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                   },
                 ),
                 flex: 4),
+            GCWIconButton(
+                iconData: Icons.app_registration,
+                onPressed: () {
+                  openInSymbolReplacer(context, widget.data);
+                }),
+            Container(width: 15),
             GCWSymbolTableZoomButtons(
                 countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
           ],
@@ -173,5 +190,13 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
     return Column(
       children: rows,
     );
+  }
+
+  openInSymbolReplacer(BuildContext context, SymbolTableData data) {
+    Navigator.push(
+        context,
+        NoAnimationMaterialPageRoute(
+            builder: (context) => GCWTool(
+                tool: SymbolReplacer(symbolTableData: data), toolName: i18n(context, 'symbol_replacer_title'), i18nPrefix: '')));
   }
 }
