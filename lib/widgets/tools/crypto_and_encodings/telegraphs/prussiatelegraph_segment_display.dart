@@ -187,8 +187,8 @@ class PrussiaTelegraphSegmentDisplay extends NSegmentDisplay {
         canvas.touchCanvas.drawPath(pathB4, paint, onTapDown: (tapDetail) {
               setSegmentState('b4', !currentSegments['b4']);
               if (currentSegments['b4']) {
-                    setSegmentState('b4', false);
                     setSegmentState('b6', false);
+                    setSegmentState('b5', false);
               }
         });
 
