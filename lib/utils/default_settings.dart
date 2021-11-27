@@ -88,6 +88,7 @@ void initDefaultSettings() {
     ]);
   }
 
+  Prefs.setStringList('formulasolver_formulas', []);
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }

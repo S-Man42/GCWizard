@@ -68,14 +68,20 @@ class FormulaValue {
       : id = json['id'],
         key = json['key'],
         value = json['value'],
-        type = json['type'];
+        type = json['type'] == 'interpolate' ? FormulaValueType.RANGE : FormulaValueType.VALUE;
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'key': key,
-        'value': value,
-        'type': type,
-      };
+  Map<String, dynamic> toMap() {
+    var map = {
+      'id': id,
+      'key': key,
+      'value': value,
+    };
+
+    if (type == FormulaValueType.RANGE)
+      map.putIfAbsent('type', () => 'interpolate');
+
+    return map;
+  }
 
   @override
   String toString() {

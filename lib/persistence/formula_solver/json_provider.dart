@@ -9,6 +9,7 @@ void refreshFormulas() {
   if (formulas == null || formulas.length == 0) return;
 
   formulaGroups = formulas.where((group) => group.length > 0).map((group) {
+    print(formulas);
     return FormulaGroup.fromJson(jsonDecode(group));
   }).toList();
 }

@@ -9,11 +9,7 @@ import 'package:gc_wizard/utils/crosstotals.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-const STATE_OK = 'ok';
-const STATE_EXPANDED_OK = 'expanded_ok';
-const STATE_EXPANDED_ERROR = 'expanded_error';
-const STATE_ERROR_GENERAL = 'error';
-const STATE_EXPANDED_ERROR_EXCEEDEDRANGE = 'expanded_error_exceededrange';
+enum FormulaState {STATE_OK, STATE_EXPANDED_OK, STATE_EXPANDED_ERROR, STATE_ERROR_GENERAL, STATE_EXPANDED_ERROR_EXCEEDEDRANGE}
 
 const _MAX_EXPANDED = 100;
 
@@ -171,9 +167,9 @@ class FormulaParser {
     if (expandValues && variableValues.length > 0) {
       var count = VariableStringExpander(substitutedFormula, variableValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
-        return {'state': STATE_ERROR_GENERAL, 'result': formula};
+        return {'state': FormulaState.STATE_ERROR_GENERAL, 'result': formula};
       } else if (count > _MAX_EXPANDED) {
-        return {'state': STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
+        return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
       }
 
       expandedFormulas = VariableStringExpander(substitutedFormula, variableValues).run();
@@ -185,26 +181,26 @@ class FormulaParser {
 
         try {
           var result = _evaluateFormula(substitutedFormula, fixedValues);
-          results.add({'state': STATE_OK, 'result': result, 'variables': expandedFormula['variables']});
+          results.add({'state': FormulaState.STATE_OK, 'result': result, 'variables': expandedFormula['variables']});
         } catch (e) {
-          results.add({'state': STATE_ERROR_GENERAL, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
+          results.add({'state': FormulaState.STATE_ERROR_GENERAL, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
           hasError = true;
         }
       }
 
       if (count == 1) {
-        return {'state': hasError ? STATE_ERROR_GENERAL : STATE_OK, 'result': results.first['result']};
+        return {'state': hasError ? FormulaState.STATE_ERROR_GENERAL : FormulaState.STATE_OK, 'result': results.first['result']};
       }
 
-      return {'state': hasError ? STATE_EXPANDED_ERROR : STATE_EXPANDED_OK, 'result': results};
+      return {'state': hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK, 'result': results};
     } else {
       substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
 
       try {
         var result = _evaluateFormula(substitutedFormula, fixedValues);
-        return {'state': STATE_OK, 'result': result};
+        return {'state': FormulaState.STATE_OK, 'result': result};
       } catch (e) {
-        return {'state': STATE_ERROR_GENERAL, 'result': substitutedFormula};
+        return {'state': FormulaState.STATE_ERROR_GENERAL, 'result': substitutedFormula};
       }
     }
   }
@@ -239,12 +235,20 @@ class FormulaParser {
     return val;
   }
 
-  Map<String, dynamic> parse(String formula, List<FormulaValue> values, {expandValues: true}) {
-    if (formula == null) return {'state': STATE_ERROR_GENERAL, 'output': [{'result': formula, 'state': STATE_ERROR_GENERAL}]};
+  FormulaSolverOutput _simpleErrorOutput(String formula) {
+    return FormulaSolverOutput(FormulaState.STATE_ERROR_GENERAL, [FormulaSolverResult(FormulaState.STATE_ERROR_GENERAL, formula)]);
+  }
+
+  FormulaSolverOutput parse(String formula, List<FormulaValue> values, {expandValues: true}) {
+    if (formula == null) {
+      return _simpleErrorOutput(formula);
+    }
 
     formula = formula.trim();
 
-    if (formula == '') return {'state': STATE_ERROR_GENERAL, 'output': [{'result': formula, 'state': STATE_ERROR_GENERAL}]};
+    if (formula == '') {
+      return _simpleErrorOutput(formula);
+    }
 
     if (values == null) values = <FormulaValue>[];
 
@@ -257,9 +261,9 @@ class FormulaParser {
       hasBrackets = false;
     }
 
-    Map<String, Map<String, Map<String, dynamic>>> matchedVariables = {};
+    Map<String, Map<String, FormulaSolverResult>> matchedVariables = {};
 
-    var overallState = STATE_OK;
+    var overallState = FormulaState.STATE_OK;
     matches.forEach((match) {
       var matchString = match.group(0);
       var content = hasBrackets ? matchString.substring(1, matchString.length - 1) : matchString;
@@ -267,31 +271,37 @@ class FormulaParser {
       var result = _parseFormula(content, values, expandValues);
       var state = result['state'];
       switch (state) {
-        case STATE_OK:
-          Map<String, dynamic> out = {'result': _formatOutput(result['result']), 'state': state};
+        case FormulaState.STATE_OK:
+          var out = FormulaSolverResult(state, _formatOutput(result['result']));
           if (matchedVariables.containsKey(null)) {
             matchedVariables[null].putIfAbsent(matchString, () => out);
           } else {
             matchedVariables.putIfAbsent(null, () => {matchString: out});
           }
           break;
-        case STATE_ERROR_GENERAL:
-        case STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
-          matchedVariables.putIfAbsent(null, () => {matchString: {'result': hasBrackets ? '[${result['result']}]' : result['result'], 'state': state}});
-          if (overallState != STATE_EXPANDED_ERROR)
+        case FormulaState.STATE_ERROR_GENERAL:
+        case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
+          var out = FormulaSolverResult(state, hasBrackets ? '[${result['result']}]' : result['result']);
+          if (matchedVariables.containsKey(null)) {
+            matchedVariables[null].putIfAbsent(matchString, () => out);
+          } else {
+            matchedVariables.putIfAbsent(null, () => {matchString: out});
+          }
+
+          if (overallState != FormulaState.STATE_EXPANDED_ERROR)
             overallState = state;
           break;
-        case STATE_EXPANDED_OK:
-        case STATE_EXPANDED_ERROR:
+        case FormulaState.STATE_EXPANDED_OK:
+        case FormulaState.STATE_EXPANDED_ERROR:
           result['result'].forEach((result) {
             var formatted;
-            if (result['state'] == STATE_OK) {
+            if (result['state'] == FormulaState.STATE_OK) {
               formatted = _formatOutput(result['result']);
             } else {
               formatted =  hasBrackets ? '[${result['result']}]' : result['result'];
             }
 
-            Map<String, dynamic> out = {'result': formatted, 'variables': result['variables'], 'state': result['state']};
+            var out = FormulaSolverResult(result['state'], formatted, variables: result['variables']);
 
             var variables = result['variables'].toString();
             if (matchedVariables.containsKey(variables)) {
@@ -300,13 +310,13 @@ class FormulaParser {
               matchedVariables.putIfAbsent(variables, () => {matchString: out});
             }
 
-            if (state == STATE_EXPANDED_OK) {
-              if (overallState == STATE_ERROR_GENERAL)
-                overallState = STATE_EXPANDED_ERROR;
-              else if (overallState != STATE_EXPANDED_ERROR)
-                overallState = result['state'] == STATE_OK ? STATE_EXPANDED_OK : STATE_EXPANDED_ERROR;
+            if (state == FormulaState.STATE_EXPANDED_OK) {
+              if (overallState == FormulaState.STATE_ERROR_GENERAL)
+                overallState = FormulaState.STATE_EXPANDED_ERROR;
+              else if (overallState != FormulaState.STATE_EXPANDED_ERROR)
+                overallState = result['state'] == FormulaState.STATE_OK ? FormulaState.STATE_EXPANDED_OK : FormulaState.STATE_EXPANDED_ERROR;
             } else {
-              overallState = STATE_EXPANDED_ERROR;
+              overallState = FormulaState.STATE_EXPANDED_ERROR;
             }
           });
 
@@ -314,37 +324,35 @@ class FormulaParser {
       }
     });
 
-    List<Map<String, dynamic>> output = [];
-    matchedVariables.values.forEach((Map<String, Map<String, dynamic>> matchedResults) {
+    List<FormulaSolverResult> output = [];
+    matchedVariables.values.forEach((Map<String, FormulaSolverResult> matchedResults) {
       Map<String, String> substitutions = {};
       var variables;
-      var state = STATE_OK;
-      matchedResults.forEach((String matchedString, Map<String, dynamic> result) {
+      var state = FormulaState.STATE_OK;
+      matchedResults.forEach((String matchedString, FormulaSolverResult result) {
         if (variables == null)
-          variables = result['variables'];
-        if (result['state'] == STATE_ERROR_GENERAL)
-          state = STATE_ERROR_GENERAL;
-        substitutions.putIfAbsent(matchedString, () => result['result']);
+          variables = result.variables;
+        if (result.state == FormulaState.STATE_ERROR_GENERAL)
+          state = FormulaState.STATE_ERROR_GENERAL;
+        substitutions.putIfAbsent(matchedString, () => result.result);
       });
 
       var backSubstituted = substitution(formula, substitutions);
       var exists = false;
       for (int i = 0; i < output.length; i++) {
-        if (output[i]['result'] == backSubstituted) {
+        if (output[i].result == backSubstituted) {
           exists = true;
           break;
         }
       }
 
       if (!exists) {
-        Map<String, dynamic> out = {'result': substitution(formula, substitutions), 'state': state};
-        if (variables != null)
-          out.putIfAbsent('variables', () => variables);
+        FormulaSolverResult out = FormulaSolverResult(state, substitution(formula, substitutions), variables: variables);
         output.add(out);
       }
     });
 
-    return {'state': overallState, 'output': output};
+    return FormulaSolverOutput(overallState, output);
   }
 
   String _formatOutput(dynamic value) {
@@ -353,5 +361,30 @@ class FormulaParser {
     } else {
       return value.toString();
     }
+  }
+}
+
+class FormulaSolverResult {
+  final FormulaState state;
+  String result;
+  final Map<String, String> variables;
+
+  FormulaSolverResult(this.state, this.result, {this.variables});
+
+  @override
+  String toString() {
+    return "{'state': $state, 'result': $result, 'variables': $variables}";
+  }
+}
+
+class FormulaSolverOutput {
+  final FormulaState state;
+  final List<FormulaSolverResult> results;
+
+  FormulaSolverOutput(this.state, this.results);
+
+  @override
+  String toString() {
+    return "{'state': $state, 'results': $results}";
   }
 }
