@@ -11,7 +11,7 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : 'sin( pi * 2.3  )', 'values': <String, String>{}, 'expectedOutput' : 'bbbbbgggbbgggggb'},
+      {'formula' : '+-1 + A', 'values': values, 'expectedOutput' : 'bgggggbbr'},
 
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
@@ -26,9 +26,11 @@ void main() {
       {'formula' : '1', 'values': values, 'expectedOutput' : 'g'},
       {'formula' : '-1', 'values': values, 'expectedOutput' : 'bg'},
       {'formula' : '-1.23', 'values': values, 'expectedOutput' : 'bgggg'},
-      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'gbgg'},
+      {'formula' : '1.', 'values': values, 'expectedOutput' : 'gg'},
+      {'formula' : '.5', 'values': values, 'expectedOutput' : 'gg'},
+      {'formula' : '1,23', 'values': values, 'expectedOutput' : 'gBgg'},
       {'formula' : '-1.23 + A', 'values': values, 'expectedOutput' : 'bgggggbbr'},
-      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgbgggbbggg'},
+      {'formula' : '-1,23 + 200', 'values': values, 'expectedOutput' : 'bgBgggbbggg'},
 
       {'formula' : 'A', 'values': values, 'expectedOutput' : 'r'},
       {'formula' : 'AB', 'values': values, 'expectedOutput' : 'rr'},
@@ -43,17 +45,17 @@ void main() {
       {'formula' : 'A+B', 'values': values, 'expectedOutput' : 'rbr'},
       {'formula' : 'A + B', 'values': values, 'expectedOutput' : 'rrbbr'},
       {'formula' : '[A + B]', 'values': values, 'expectedOutput' : 'brrbbrb'},
-      {'formula' : '[A] + [B]', 'values': values, 'expectedOutput' : 'brbbttbrb'},
+      {'formula' : '[A] + [B]', 'values': values, 'expectedOutput' : 'brbtttbrb'},
       {'formula' : 'AB + C', 'values': values, 'expectedOutput' : 'rrrbbr'},
       {'formula' : '(AB) + C', 'values': values, 'expectedOutput' : 'brrbbbbr'},
       {'formula' : 'A(B + C)', 'values': values, 'expectedOutput' : 'rbrrbbrb'},
       {'formula' : '[A][(B + C)]', 'values': values, 'expectedOutput' : 'brbbbrrbbrbb'},
       {'formula' : 'A*(B + C)', 'values': values, 'expectedOutput' : 'rbbrrbbrb'},
-      {'formula' : '[]', 'values': values, 'expectedOutput' : 'bb'},
-      {'formula' : '()', 'values': values, 'expectedOutput' : 'bb'},
-      {'formula' : '?!', 'values': values, 'expectedOutput' : 'tt'},
-      {'formula' : 'A []', 'values': values, 'expectedOutput' : 'ttbb'},
-      {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttbb'},
+      {'formula' : '[]', 'values': values, 'expectedOutput' : 'BB'},
+      {'formula' : '()', 'values': values, 'expectedOutput' : 'BB'},
+      {'formula' : '?!', 'values': values, 'expectedOutput' : 'RR'},
+      {'formula' : 'A []', 'values': values, 'expectedOutput' : 'ttBB'},
+      {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
       {'formula' : 'N', 'values': values, 'expectedOutput' : 'R'},
       {'formula' : 'E', 'values': values, 'expectedOutput' : 'r'},
       {'formula' : 'e', 'values': values, 'expectedOutput' : 'r'},
@@ -63,10 +65,10 @@ void main() {
       {'formula' : 'E * PI', 'values': values, 'expectedOutput' : 'rrbbgg'},
       {'formula' : 'E [PI]', 'values': values, 'expectedOutput' : 'ttbggb'},
       {'formula' : '[A*B*2].[C+d+D];', 'values': values, 'expectedOutput' : 'brbrbgbtbrbrbrbt'},
-      {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : 'tttttbrrbtbrbrbrbgbbtttttbrbrbtbrrrbbrb'},
+      {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : 'tttttbrrbtbrbrbrbgbttttttbrbrbtbrrrbbrb'},
       {'formula' : 'A + B [A + B]', 'values': values, 'expectedOutput' : 'ttttttbrrbbrb'},
-      {'formula' : 'A + B]', 'values': values, 'expectedOutput' : 'tttttB'},
-      {'formula' : '[A + B', 'values': values, 'expectedOutput' : 'Bttttt'},
+      {'formula' : 'A + B]', 'values': values, 'expectedOutput' : 'rrbbrB'},
+      {'formula' : '[A + B', 'values': values, 'expectedOutput' : 'Brrbbr'},
 
       //Trim empty space
       {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgbb'},
@@ -78,19 +80,22 @@ void main() {
       {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
       {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},
       {'formula' : 'round(1.247)', 'expectedOutput' : 'bbbbbbgggggb'},
-      {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
+      {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'}, //log EXAKT 1 komma; round kein oder ein komma; MIN/MAX/CS/CSI beliebig viele
       {'formula' : 'ROUND(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
       {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'},
       {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'},
 
-      {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'ttBt'},
-      {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttbb'},
-      {'formula' : 'N [F', 'values': values, 'expectedOutput' : 'ttBt'},
+      {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'RRBg'},
+      {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
+      {'formula' : 'N [F', 'values': values, 'expectedOutput' : 'RRBR'},
       {'formula' : 'N [F]', 'values': values, 'expectedOutput' : 'ttbRb'},
-      {'formula' : 'N [A].[{(B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbBBBBBb'},
-      {'formula' : 'N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbbBBBBB'},
-      {'formula' : '  N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttttbrbtbbBBBBB'},
-      {'formula' : '  N [AB].[({B)}]', 'values': values, 'expectedOutput' : 'ttttbrrbtbbBBBBB'},
+      {'formula' : 'N [A].[{B}]', 'values': values, 'expectedOutput' : 'ttbrbtbbrbb'},
+      {'formula' : 'N [A].[{H}]', 'values': values, 'expectedOutput' : 'ttbrbtbbRbb'},
+      {'formula' : 'N [A].[{04}]', 'values': values, 'expectedOutput' : 'ttbrbtbbggbb'},
+      {'formula' : 'N [A].[{(B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbbBBBbb'},
+      {'formula' : 'N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttbrbtbbBrbBb'},
+      {'formula' : '  N [A].[({B)}]', 'values': values, 'expectedOutput' : 'ttttbrbtbbBrbBb'},
+      {'formula' : '  N [AB].[({B)}]', 'values': values, 'expectedOutput' : 'ttttbrrbtbbBrbBb'},
       {'formula' : '  N [AB].[B]', 'values': {'AB':'3', 'B':'20'}, 'expectedOutput' : 'ttttbrrbtbrb'},
       {'formula' : '  N [AB].[B]', 'values': {'AB':'3', 'B':'20'}, 'expectedOutput' : 'ttttbrrbtbrb'},
 
@@ -100,7 +105,7 @@ void main() {
       {'formula' : 'e(1)', 'values': <String, String>{}, 'expectedOutput' : 'bbgb'},
       {'formula' : 'e(1)', 'values': <String, String>{'E':'1'}, 'expectedOutput' : 'bbgb'},
       {'formula' : 'E    (1)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbbbgb'},
-      {'formula' : 'E()', 'values': <String, String>{}, 'expectedOutput' : 'BBB'},
+      {'formula' : 'E()', 'values': <String, String>{}, 'expectedOutput' : 'BBB'}, //invalid function
       {'formula' : 'e   ()', 'values': <String, String>{}, 'expectedOutput' : 'BBBBBB'},
       {'formula' : 'e   ()', 'values': {'E':'1'}, 'expectedOutput' : 'BBBBBB'},
       {'formula' : 'e   (e)', 'values': {'E':'1'}, 'expectedOutput' : 'bbbbbrb'},
@@ -119,11 +124,12 @@ void main() {
       {'formula' : 'sin + (12)', 'values': {'SI': '1', 'N': '3'}, 'expectedOutput' : 'rrrrbbbggb'},
       {'formula' : 'sin(12.2) + S + (I) + n + cOs( IN )', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'bbbbggggbbbbrrbbbrbbbbrrbbbbbbbrrrb'},
       {'formula' : 'sin(  )', 'values': <String, String>{}, 'expectedOutput' : 'BBBBBBB'},
-      {'formula' : 'SI(12)', 'values': <String, String>{}, 'expectedOutput' : 'RRBGGB'},
+      {'formula' : 'SI(12)', 'values': <String, String>{}, 'expectedOutput' : 'RRBGGB'}, //Operator davor
+      {'formula' : 'SI(12)', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'rrBGGB'},
 
       {'formula' : '+1', 'values': <String, String>{}, 'expectedOutput' : 'Bg'},
       {'formula' : '-1', 'values': <String, String>{}, 'expectedOutput' : 'bg'},  // oder, einfacher, bg, gg
-      {'formula' : '+-1', 'values': <String, String>{}, 'expectedOutput' : 'Bbg'}, // oder Bbg, Bgg
+      {'formula' : '+-1', 'values': <String, String>{}, 'expectedOutput' : 'BBg'}, // oder Bbg, Bgg
       {'formula' : '-+1', 'values': <String, String>{}, 'expectedOutput' : 'BBg'},
       {'formula' : '1+2', 'values': <String, String>{}, 'expectedOutput' : 'gbg'},
       {'formula' : '1++2', 'values': <String, String>{}, 'expectedOutput' : 'gBBg'},
