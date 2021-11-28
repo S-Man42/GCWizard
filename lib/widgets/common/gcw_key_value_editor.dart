@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -156,7 +158,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                     });
                   },
                 ),
-                flex: 1),
+                flex: 2),
             Icon(
               Icons.arrow_forward,
               color: themeColors().mainFont(),
@@ -173,27 +175,29 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                   });
                 },
               ),
-              flex: widget.valueFlex ?? 1,
+              flex: widget.valueFlex ?? 2,
             ),
             widget.formulaValueList != null
                 ? Expanded(child:
                     Container(
-                      child: GCWDropDownButton(
-                          value: _currentFormulaValueTypeInput,
-                          onChanged: (value) {
+                        child: GCWIconButton(
+                          iconData: _currentFormulaValueTypeInput == FormulaValueType.RANGE ? Icons.expand : Icons.vertical_align_center_outlined,
+                          rotateDegrees: 90.0,
+                          onPressed: () {
                             setState(() {
-                              _currentFormulaValueTypeInput = value;
+                              if (_currentFormulaValueTypeInput == FormulaValueType.RANGE) {
+                                _currentFormulaValueTypeInput = FormulaValueType.VALUE;
+                              } else {
+                                _currentFormulaValueTypeInput = FormulaValueType.RANGE;
+                              }
+
+                              showToast('Value set to ' + _currentFormulaValueTypeInput.toString()); //TODO
                             });
                           },
-                          items: [FormulaValueType.VALUE, FormulaValueType.RANGE].map((type) {
-                            return GCWDropDownMenuItem(
-                                value: type,
-                                child: type.toString().split('.').last //TODO
-                            );
-                          }).toList()
-                      ),
-                      padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DEFAULT_MARGIN)
-                    )
+                        ),
+                        padding: EdgeInsets.only(left: DEFAULT_MARGIN)
+                    ),
+                    flex: 1
                   )
                 : Container(),
             widget.alphabetInstertButtonLabel != null
@@ -370,23 +374,27 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               child: Container(
                 child: _currentEditId == _getEntryId(entry)
                     ? Container(
-                        child: GCWDropDownButton(
-                            value: _currentEditedFormulaValueTypeInput,
-                            onChanged: (value) {
-                              setState(() {
-                                _currentEditedFormulaValueTypeInput = value;
-                              });
-                            },
-                            items: [FormulaValueType.VALUE, FormulaValueType.RANGE].map((type) {
-                              return GCWDropDownMenuItem(
-                                  value: type,
-                                  child: type.toString().split('.').last //TODO
-                              );
-                            }).toList()
+                        child: GCWIconButton(
+                          iconData: _currentEditedFormulaValueTypeInput == FormulaValueType.RANGE ? Icons.expand : Icons.vertical_align_center_outlined,
+                          rotateDegrees: 90.0,
+                          onPressed: () {
+                            setState(() {
+                              if (_currentEditedFormulaValueTypeInput == FormulaValueType.RANGE) {
+                                _currentEditedFormulaValueTypeInput = FormulaValueType.VALUE;
+                              } else {
+                                _currentEditedFormulaValueTypeInput = FormulaValueType.RANGE;
+                              }
+
+                              showToast('Value set to ' + _currentEditedFormulaValueTypeInput.toString()); //TODO
+                            });
+                          },
                         ),
-                        padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN, right: DEFAULT_MARGIN)
+                        padding: EdgeInsets.only(left: DEFAULT_MARGIN)
                       )
-                    : GCWText(text: _addFormulaValueTypeText(entry))
+                    : Transform.rotate(
+                        child: Icon(entry.type == FormulaValueType.RANGE ? Icons.expand : Icons.vertical_align_center_outlined, color: themeColors().mainFont()),
+                        angle: degreesToRadian(90.0)
+                      )
               )
             )
           : Container(),
@@ -409,16 +417,6 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     }
 
     return output;
-  }
-
-  _addFormulaValueTypeText(dynamic entry) {
-    if (widget.formulaValueList == null)
-      return '';
-
-    if (!(entry is FormulaValue))
-      return '';
-
-    return ' (' + entry.type.toString().split('.').last + ')';
   }
 
   Widget _editButton(dynamic entry) {

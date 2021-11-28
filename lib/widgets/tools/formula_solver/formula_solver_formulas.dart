@@ -12,10 +12,12 @@ import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -50,7 +52,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var _currentEditedFormula = '';
   var _currentEditId;
 
-  Map<int, List<Map<String, dynamic>>> _foundCoordinates = {};
+  Map<int, Map<int, Map<String, dynamic>>> _foundCoordinates = {};
 
   ThemeColors _themeColors;
 
@@ -204,6 +206,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
            */
           var formulaToParse = substitution(formula.formula, formulaReferences, caseSensitive: false);
           FormulaSolverOutput calculated = formulaParser.parse(formulaToParse, widget.group.values);
+
           var resultType = calculated.results.length > 1 ? _FormulaSolverResultType.INTERPOLATED : _FormulaSolverResultType.FIXED;
 
           String firstFormulaResult;
@@ -217,47 +220,49 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           Widget output;
 
-          var _foundFormulaCoordinates = <Map<String, dynamic>>[];
-          calculated.results.forEach((result) {
+          Map<int, Map<String, dynamic>> _foundFormulaCoordinates = {};
+          calculated.results.asMap().forEach((idx, result) {
             var _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
             if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.length > 0) {
-              _foundFormulaCoordinates.add({'coordinate': _foundFormulaCoordinate, 'resultType': resultType});
+              _foundFormulaCoordinates.putIfAbsent(idx + 1, () => {'coordinate': _foundFormulaCoordinate, 'resultType': resultType});
             }
           });
           if (_foundFormulaCoordinates.isNotEmpty)
             _foundCoordinates.putIfAbsent(index + 1, () => _foundFormulaCoordinates);
 
-          var row = Container(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: _currentEditId == formula.id
-                      ? Padding(
-                          child: GCWTextField(
-                            controller: _editFormulaController,
-                            onChanged: (text) {
-                              setState(() {
-                                _currentEditedFormula = text;
-                              });
-                            },
-                          ),
-                          padding: EdgeInsets.only(
-                            right: 2,
-                          ),
-                        )
+          Widget row = Container(
+              padding: EdgeInsets.only(top: DEFAULT_MARGIN),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: _currentEditId == formula.id
+                        ? Padding(
+                      child: GCWTextField(
+                        controller: _editFormulaController,
+                        onChanged: (text) {
+                          setState(() {
+                            _currentEditedFormula = text;
+                          });
+                        },
+                      ),
+                      padding: EdgeInsets.only(
+                        right: 2,
+                      ),
+                    )
                       : Column(children: <Widget>[
-                          Row(
-                            children: [
-                              Container(
-                                child: GCWText(text: (index + 1).toString() + '.'),
-                                width: 35
-                              ),
-                              Flexible(
-                                child: _buildFormulaText(formula.formula, widget.group.values, formula.id),
-                              )
-                            ],
+                      Row(
+                        children: [
+                          Container(
+                              child: GCWText(text: (index + 1).toString() + '.'),
+                              width: 35
                           ),
-                          Row(
+                          Flexible(
+                            child: _buildFormulaText(formula.formula, widget.group.values, formula.id),
+                          )
+                        ],
+                      ),
+                      IntrinsicHeight(
+                          child: Row(
                             children: <Widget>[
                               Container(
                                 child: [FormulaState.STATE_OK, FormulaState.STATE_EXPANDED_OK].contains(calculated.state)
@@ -270,66 +275,70 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                   color: themeColors().formulaError(),
                                 ),
                                 width: 35,
-                                alignment: Alignment.centerLeft,
+                                alignment: Alignment.topLeft,
                               ),
 
                               Flexible(
-                                child: GCWText(text: calculated.results.first.result), //TODO: MAIN WIDGET
+                                  child: _buildFormulaOutput(index, calculated, _foundFormulaCoordinates)
                               )
                             ],
                           )
-                        ]),
-                  flex: 1,
-                ),
-                _currentEditId == formula.id
-                    ? GCWIconButton(
-                        iconData: Icons.check,
-                        onPressed: () {
-                          formula.formula = _currentEditedFormula;
-                          _updateFormula(formula);
-
-                          setState(() {
-                            _currentEditId = null;
-                            _editFormulaController.clear();
-                          });
-                        },
                       )
+
+                    ]),
+                    flex: 1,
+                  ),
+                  _currentEditId == formula.id
+                      ? GCWIconButton(
+                    iconData: Icons.check,
+                    onPressed: () {
+                      formula.formula = _currentEditedFormula;
+                      _updateFormula(formula);
+
+                      setState(() {
+                        _currentEditId = null;
+                        _editFormulaController.clear();
+                      });
+                    },
+                  )
                     : Container(),
-                GCWPopupMenu(
-                    iconData: Icons.more_vert,
-                    menuItemBuilder: (context) => [
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: GCWPopupMenu(
+                        iconData: Icons.more_vert,
+                        menuItemBuilder: (context) => [
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_editformula'),
                               action: (index) => setState(() {
-                                    _currentEditId = formula.id;
-                                    _currentEditedFormula = formula.formula;
-                                    _editFormulaController.text = formula.formula;
-                                  })),
+                                _currentEditId = formula.id;
+                                _currentEditedFormula = formula.formula;
+                                _editFormulaController.text = formula.formula;
+                              })),
                           GCWPopupMenuItem(
                               child:
-                                  iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformula'),
+                              iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformula'),
                               action: (index) => setState(() {
-                                    showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
-                                      if (value.first == null ||
-                                          value.first.formula == null ||
-                                          formula.formula == value.first.formula) return;
+                                showFormulaReplaceDialog(context, [formula], onOkPressed: (value) {
+                                  if (value.first == null ||
+                                      value.first.formula == null ||
+                                      formula.formula == value.first.formula) return;
 
-                                      formula.formula = value.first.formula;
-                                      _updateFormula(formula);
-                                      setState(() {});
-                                    });
-                                  })),
+                                  formula.formula = value.first.formula;
+                                  _updateFormula(formula);
+                                  setState(() {});
+                                });
+                              })),
                           GCWPopupMenuItem(
                               child:
-                                  iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformula'),
+                              iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformula'),
                               action: (index) => showDeleteAlertDialog(
-                                    context,
-                                    formula.formula,
+                                context,
+                                formula.formula,
                                     () {
-                                      _removeFormula(formula);
-                                      setState(() {});
-                                    },
-                                  )),
+                                  _removeFormula(formula);
+                                  setState(() {});
+                                },
+                              )),
                           GCWPopupMenuItem(
                             child: iconedGCWPopupMenuItem(
                                 context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
@@ -359,14 +368,23 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                 action: (index) {
                                   if (_foundFormulaCoordinates.isEmpty) return;
 
-                                  _showFormulaResultOnMap(_foundFormulaCoordinates.map((coordinate) {
-                                    return _createMapPoint(coordinate, i18n(context, 'formulasolver_formulas_showonmap_coordinatetext')); //TODO: Variables)
-                                  }).toList());
+                                  _showFormulaResultOnMap(_foundFormulaCoordinates.map((index, coordinate) {
+                                    return MapEntry(index,
+                                        _createMapPoint(coordinate, i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'))
+                                    ); //TODO: Variables)
+                                  }).values.toList());
                                 })
                         ])
-              ],
-            ),
+                  )
+                ],
+              ),
           );
+
+          if (_currentEditId != formula.id) {
+            row = IntrinsicHeight(
+              child: row
+            );
+          }
 
           if (odd) {
             output = Container(color: _themeColors.outputListOddRows(), child: row);
@@ -442,9 +460,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                               List<GCWMapPoint> mapPoints = [];
 
                               _foundCoordinates.forEach((index, coordinates) {
-                                mapPoints.addAll(coordinates.map((coordinate) {
-                                  return _createMapPoint(coordinate, i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $index'); //TODO: Variables
-                                }).toList());
+                                mapPoints.addAll(coordinates.map((index, coordinate) {
+                                  return MapEntry(index,
+                                    _createMapPoint(coordinate, i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $index') //TODO: Variables
+                                  );
+                                }).values.toList());
                               });
 
                               if (mapPoints.isNotEmpty) {
@@ -460,6 +480,82 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return Column(children: rows);
   }
 
+  _buildFormulaOutput(int formulaIndex, FormulaSolverOutput output, Map<int, Map<String, dynamic>> coordinates) {
+    switch (output.state) {
+      case FormulaState.STATE_OK:
+      case FormulaState.STATE_ERROR_GENERAL:
+        return GCWText(text: output.results.first.result);
+      case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
+        return GCWText(text: 'Too much value combinations'); // TODO
+      case FormulaState.STATE_EXPANDED_ERROR:
+      case FormulaState.STATE_EXPANDED_OK:
+        return Container(
+          padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+          child: GCWExpandableTextDivider(
+              expanded: false,
+              text: '${output.results.length} Interpolated Results',   //TODO
+              child: Column(
+                  children: output.results.asMap().map((index, result) {
+                    return MapEntry(index,
+                        Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Flexible(
+                                      child: Column(
+                                        children: [
+                                          GCWText(text: result.result),
+                                          Container(height: DOUBLE_DEFAULT_MARGIN),
+                                          GCWText(
+                                            text: result.variables.map((key, value) {
+                                              return MapEntry(key,
+                                                  '$key: $value'
+                                              );
+                                            }).values.join(', '),
+                                            style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
+                                          )
+                                        ],
+                                      )
+                                  ),
+                                  GCWPopupMenu(
+                                      iconData: Icons.more_vert,
+                                      size: IconButtonSize.SMALL,
+                                      menuItemBuilder: (context) => [
+                                        GCWPopupMenuItem(
+                                            child: iconedGCWPopupMenuItem(context, Icons.content_copy, 'formulasolver_formulas_copyresult'),
+                                            action: (index) => insertIntoGCWClipboard(context, result.result)
+                                        ),
+                                        if (coordinates[index + 1] != null)
+                                          GCWPopupMenuItem(
+                                              child: iconedGCWPopupMenuItem(
+                                                context,
+                                                Icons.my_location,
+                                                'formulasolver_formulas_showonmap',
+                                              ),
+                                              action: (index) {
+                                                _showFormulaResultOnMap(
+                                                    [_createMapPoint(coordinates[index + 1], i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' ${formulaIndex + 1}.${index + 1}')] //TODO: Variables
+                                                );
+                                              })
+                                      ]
+                                  ),
+                                ],
+                              ),
+                              if (index < output.results.length - 1)
+                                GCWDivider()
+                            ]
+                        )
+                    );
+
+                    //return GCWText(text: result.result);
+                  }).values.toList()
+              )
+          )
+
+        );
+    }
+  }
+
   GCWMapPoint _createMapPoint(Map<String, dynamic> coordinate, String text) {
     var coord = coordinate['coordinate'];
     var resultType = coordinate['resultType'];
@@ -473,8 +569,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   _showFormulaResultOnMap(coordinates) {
-    print(coordinates);
-
     Navigator.push(
         context,
         MaterialPageRoute(

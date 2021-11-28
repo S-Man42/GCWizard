@@ -6,6 +6,7 @@ import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/crosstotals.dart';
+import 'package:image/image.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -188,10 +189,6 @@ class FormulaParser {
         }
       }
 
-      if (count == 1) {
-        return {'state': hasError ? FormulaState.STATE_ERROR_GENERAL : FormulaState.STATE_OK, 'result': results.first['result']};
-      }
-
       return {'state': hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK, 'result': results};
     } else {
       substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
@@ -351,6 +348,13 @@ class FormulaParser {
         output.add(out);
       }
     });
+
+    if (output.length <= 1) {
+      if (overallState == FormulaState.STATE_EXPANDED_OK)
+        overallState = FormulaState.STATE_OK;
+      if (overallState == FormulaState.STATE_EXPANDED_ERROR)
+        overallState = FormulaState.STATE_ERROR_GENERAL;
+    }
 
     return FormulaSolverOutput(overallState, output);
   }

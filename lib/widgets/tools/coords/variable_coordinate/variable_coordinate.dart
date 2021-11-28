@@ -368,7 +368,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     _currentOutput = List<GCWOutputText>.from(
         (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
       var formattedCoordinate = formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid());
-      return GCWOutputText(
+      return GCWOutputText(                                                               //TODO Column(GCWOutputText, GCWText small variables)
         text: formattedCoordinate + '\n' + _formatVariables(coord['variables']),
         copyText: formattedCoordinate,
       );

@@ -156,7 +156,7 @@ void main() {
   group("FormulaParser.parse - Expanded functions:", () {
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : 'A', 'values': [FormulaValue('A', '1', type: FormulaValueType.RANGE)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok'}]}},
+      {'formula' : 'A', 'values': [FormulaValue('A', '1', type: FormulaValueType.RANGE)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok', 'variables': {'A': '1'}}]}},
       {'formula' : 'A', 'values': [FormulaValue('A', '1-3', type: FormulaValueType.RANGE)], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '1', 'variables': {'A': '1'}, 'state': 'ok'},
         {'result': '2', 'variables': {'A': '2'}, 'state': 'ok'},
@@ -167,7 +167,7 @@ void main() {
       {'formula' : 'AB', 'values': [
         FormulaValue('A', '1', type: FormulaValueType.RANGE),
         FormulaValue('B', '1', type: FormulaValueType.VALUE),
-      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '11', 'state': 'ok'}]}},
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '11', 'state': 'ok', 'variables': {'A': '1'}}]}},
 
       {'formula' : 'AB', 'values': [
         FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
@@ -186,7 +186,7 @@ void main() {
       {'formula' : 'AB', 'values': [
         FormulaValue('A', '1', type: FormulaValueType.RANGE),
         FormulaValue('B', '1', type: FormulaValueType.RANGE),
-      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '11', 'state': 'ok'}]}},
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '11', 'state': 'ok', 'variables': {'A': '1', 'B': '1'}}]}},
 
       {'formula' : 'AB', 'values': [
         FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
@@ -284,6 +284,13 @@ void main() {
         {'result': 'N 52 [Q2].150 2 6 8 8 9', 'variables': {'R': '2', 'S': '6'}, 'state': 'error'},
         {'result': 'N 52 [Q3].62 3 2 5 5 6', 'variables': {'R': '3', 'S': '2'}, 'state': 'error'},
         {'result': 'N 52 [Q3].186 3 6 9 9 10', 'variables': {'R': '3', 'S': '6'}, 'state': 'error'}
+      ]}},
+
+      {'formula' : 'N 51.[C]20 E 11.423', 'values': [
+        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
+        FormulaValue('B', '1', type: FormulaValueType.RANGE),
+      ], 'expectedOutput' : {'state': 'error', 'output': [
+        {'result': 'N 51.[C]20 E 11.423', 'state': 'error', 'variables': {'A': '1', 'B': '1'}},
       ]}},
 
       // no duplicates
