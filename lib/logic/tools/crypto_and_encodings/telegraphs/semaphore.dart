@@ -40,7 +40,7 @@ final Map<String, List<String>> CODEBOOK_SEMAPHORE = {
   '8': ['l3', 'l4'],
   '9': ['l2', 'l4'],
   'symboltables_semaphore_cancel':['l2', 'r4'],
-  'symboltables_semaphore_correct':['l2', 'r5'],
+  //'symboltables_semaphore_correct':['l2', 'r5'],
   'symboltables_semaphore_error':['l2', 'r2'],
   'symboltables_semaphore_attention':['l2', 'r2'],
   'symboltables_semaphore_letters_following':['l1', 'r3'],
@@ -102,7 +102,7 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
   var displays = <List<String>>[];
   var segment = <String>[];
   bool number_follows = false;
-  bool letter_follows = false;
+  bool letter_follows = true;
 
   Map<List<String>, String> CODEBOOK = switchMapKeyValue(CODEBOOK_SEMAPHORE);
 
@@ -123,7 +123,6 @@ Map<String, dynamic> decodeSemaphore(List<String> inputs) {
     } else {
       symbol = CODEBOOK.map((key, value) =>
           MapEntry(key.join(), value.toString()))[input.split('').join()];
-
       if (symbol == 'symboltables_semaphore_letters_following'  || symbol == 'symboltables_semaphore_numerals_following'  || symbol == 'symboltables_semaphore_rest') {
         switch (symbol) {
           case 'symboltables_semaphore_letters_following' :
