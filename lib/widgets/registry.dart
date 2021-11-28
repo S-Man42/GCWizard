@@ -3090,7 +3090,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
       'symbol_prussian_colors_infantery',
     ]),
-    GCWSymbolTableTool(symbolKey: 'prussian_optical_telegraph', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
       'telegraph',
       'symbol_prussian_optical_telegraph',
     ]),
