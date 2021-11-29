@@ -202,16 +202,21 @@ class VariableStringExpander {
     }
 
     // expand all groups, initialize lists
-    _substitutions.entries.forEach((substitution) {
+    for (MapEntry<String, String> substitution in _substitutions.entries) {
       _substitutionKeys.add(substitution.key.toUpperCase());
-      var group = _expandVariableGroup(substitution.value);
+      var group;
+      try {
+        group = _expandVariableGroup(substitution.value);
+      } catch(e) {
+        return [{'text': _input, 'variables': {}}];
+      }
       if (group.length > 0) {
         _expandedVariableGroups.add(group);
         _countVariableValues.add(group.length);
         _variableValueIndexes.add(0);
         _currentVariableIndex++;
       }
-    });
+    }
 
     // check number of combinations
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);

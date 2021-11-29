@@ -68,9 +68,8 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
     }
   }
 
-  var calculated = FormulaParser().parse(textToExpand, substitutions.entries.map((e) => FormulaValue(e.key, e.value)).toList());
+  var calculated = FormulaParser().parse(textToExpand, substitutions.entries.map((e) => FormulaValue(e.key, e.value, type: FormulaValueType.INTERPOLATED)).toList());
 
-  // TODO: weg?
   // var expandedTexts = VariableStringExpander(textToExpand, substitutions, onAfterExpandedText: (expandedText) {
   //   return formulaParser.parse(expandedText, {})['result'].replaceAll(RegExp(r'[\[\]]'), '');
   // }, uniqueResults: true)

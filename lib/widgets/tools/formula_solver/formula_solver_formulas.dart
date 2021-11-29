@@ -224,7 +224,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
           calculated.results.asMap().forEach((idx, result) {
             var _foundFormulaCoordinate = parseStandardFormats(result.result, wholeString: true);
             if (_foundFormulaCoordinate != null && _foundFormulaCoordinate.length > 0) {
-              _foundFormulaCoordinates.putIfAbsent(idx + 1, () => {'coordinate': _foundFormulaCoordinate, 'resultType': resultType});
+              _foundFormulaCoordinates.putIfAbsent(idx + 1, () => {
+                'coordinate': _foundFormulaCoordinate,
+                'resultType': resultType,
+                'name': '${formula.id}' + (calculated.results.length > 1 ? '.${idx + 1}' : '')
+              });
             }
           });
           if (_foundFormulaCoordinates.isNotEmpty)
@@ -346,7 +350,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           ),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
-                                  context, Icons.content_copy, 'formulasolver_formulas_copyresult'), //TODO: "copy results"
+                                  context, Icons.content_copy, calculated.results.length > 1 ? 'formulasolver_formulas_copyresults': 'formulasolver_formulas_copyresult'),
                               action: (index) => insertIntoGCWClipboard(context, calculated.results.map((result) => result.result).join('\n'))),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(
@@ -370,8 +374,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
                                   _showFormulaResultOnMap(_foundFormulaCoordinates.map((index, coordinate) {
                                     return MapEntry(index,
-                                        _createMapPoint(coordinate, i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'))
-                                    ); //TODO: Variables)
+                                      _createMapPoint(coordinate)
+                                    );
                                   }).values.toList());
                                 })
                         ])
@@ -460,9 +464,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                               List<GCWMapPoint> mapPoints = [];
 
                               _foundCoordinates.forEach((index, coordinates) {
-                                mapPoints.addAll(coordinates.map((index, coordinate) {
-                                  return MapEntry(index,
-                                    _createMapPoint(coordinate, i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $index') //TODO: Variables
+                                mapPoints.addAll(coordinates.map((idx, coordinate) {
+                                  return MapEntry(idx,
+                                    _createMapPoint(coordinate)
                                   );
                                 }).values.toList());
                               });
@@ -486,14 +490,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       case FormulaState.STATE_ERROR_GENERAL:
         return GCWText(text: output.results.first.result);
       case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
-        return GCWText(text: 'Too much value combinations'); // TODO
+        return GCWText(text: i18n(context, 'formulasolver_values_type_interpolated_exceeded'));
       case FormulaState.STATE_EXPANDED_ERROR:
       case FormulaState.STATE_EXPANDED_OK:
         return Container(
           padding: EdgeInsets.only(right: DEFAULT_MARGIN),
           child: GCWExpandableTextDivider(
               expanded: false,
-              text: '${output.results.length} Interpolated Results',   //TODO
+              text: '${output.results.length} ' + i18n(context, 'formulasolver_values_type_interpolated_result'),
               child: Column(
                   children: output.results.asMap().map((index, result) {
                     return MapEntry(index,
@@ -532,9 +536,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                                 Icons.my_location,
                                                 'formulasolver_formulas_showonmap',
                                               ),
-                                              action: (index) {
+                                              action: (idx) {
                                                 _showFormulaResultOnMap(
-                                                    [_createMapPoint(coordinates[index + 1], i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' ${formulaIndex + 1}.${index + 1}')] //TODO: Variables
+                                                    [_createMapPoint(coordinates[index + 1])]
                                                 );
                                               })
                                       ]
@@ -556,13 +560,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     }
   }
 
-  GCWMapPoint _createMapPoint(Map<String, dynamic> coordinate, String text) {
+  GCWMapPoint _createMapPoint(Map<String, dynamic> coordinate) {
     var coord = coordinate['coordinate'];
     var resultType = coordinate['resultType'];
+    var name = coordinate['name'];
 
     return GCWMapPoint(
       point: coord['coordinate'],
-      markerText: text,
+      markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' $name',
       coordinateFormat: {'format': coord['format']},
       color: resultType == _FormulaSolverResultType.FIXED ? COLOR_MAP_POINT : COLOR_FORMULASOLVER_INTERPOLATED_MAP_POINT
     );

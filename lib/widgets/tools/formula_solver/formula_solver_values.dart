@@ -85,7 +85,6 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
           keyHintText: i18n(context, 'formulasolver_values_key'),
           keyController: _newKeyController,
           valueHintText: i18n(context, 'formulasolver_values_value'),
-          // valueFlex: 2,
           onAddEntry: _addEntry,
           dividerText: i18n(context, 'formulasolver_values_currentvalues'),
           formulaValueList: widget.group.values,

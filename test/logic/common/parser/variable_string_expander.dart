@@ -79,6 +79,21 @@ void main() {
     });
   });
 
+  group("VariableStringExpander.runError:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input': 'A', 'substitutions': {'A': '1-Z', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+        'expectedOutput': [{'text': 'A', 'variables': {}}]
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
+        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition']).run();
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
   group("VariableStringExpander.runOnlyPrecheck:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,

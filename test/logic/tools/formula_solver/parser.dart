@@ -153,25 +153,60 @@ void main() {
     });
   });
 
+  group("FormulaParser.parse - String functions:", () {
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'formula' : 'bww(ABCD)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '10', 'state': 'ok'}]}},
+      {'formula' : 'bww(123)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
+      {'formula' : 'bww(AB)C)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(AB)C)', 'state': 'error'}]}},
+      {'formula' : 'bww(1-3#2,7)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '13', 'state': 'ok'}]}},
+      {'formula' : 'bww(A)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
+      {'formula' : 'bww(A) + bww(A)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
+      {'formula' : '1+ BWW(A) + cs(12) + bww(A) * 2', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '22', 'state': 'ok'}]}},
+      {'formula' : 'bWw(c)', 'values': [
+          FormulaValue('A', '1-3', type: FormulaValueType.FIXED),
+          FormulaValue('B', '1-3', type: FormulaValueType.INTERPOLATED),
+          FormulaValue('C', '1-3', type: FormulaValueType.TEXT),
+        ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '4', 'state': 'ok', 'variables': {'B': '1'}}]}
+      },
+
+      // ABCD incl. variable A = ABC; so ABCD will be converted to ABCBCD
+      {'formula' : '1+ bww(A) + cs(12) + bww(ABCD) * 2', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '40', 'state': 'ok'}]}},
+
+      {'formula' : 'len(ABC)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'len(ABC)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '5', 'state': 'ok'}]}},
+
+      {'formula' : 'len(ABC) * bww(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '30', 'state': 'ok'}]}},
+      {'formula' : 'cs(bww(ABCDE)) * len(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('formula: ${elem['formula']}, values: ${elem['values']}', () {
+        var _actual = FormulaParser().parse(elem['formula'], elem['values']);
+        expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
+      });
+    });
+  });
+
   group("FormulaParser.parse - Expanded functions:", () {
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : 'A', 'values': [FormulaValue('A', '1', type: FormulaValueType.RANGE)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok', 'variables': {'A': '1'}}]}},
-      {'formula' : 'A', 'values': [FormulaValue('A', '1-3', type: FormulaValueType.RANGE)], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
+      {'formula' : 'A', 'values': [FormulaValue('A', '1', type: FormulaValueType.INTERPOLATED)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1', 'state': 'ok', 'variables': {'A': '1'}}]}},
+      {'formula' : 'A', 'values': [FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED)], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '1', 'variables': {'A': '1'}, 'state': 'ok'},
         {'result': '2', 'variables': {'A': '2'}, 'state': 'ok'},
         {'result': '3', 'variables': {'A': '3'}, 'state': 'ok'}
       ]}},
-      {'formula' : 'A', 'values': [FormulaValue('A', '1-3', type: FormulaValueType.RANGE)], 'expandValues': false, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '-2', 'state': 'ok'}]}},
+      {'formula' : 'A', 'values': [FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED)], 'expandValues': false, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '-2', 'state': 'ok'}]}},
 
       {'formula' : 'AB', 'values': [
-        FormulaValue('A', '1', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.VALUE),
+        FormulaValue('A', '1', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '11', 'state': 'ok', 'variables': {'A': '1'}}]}},
 
       {'formula' : 'AB', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.VALUE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '11', 'variables': {'A': '1'}, 'state': 'ok'},
         {'result': '21', 'variables': {'A': '2'}, 'state': 'ok'},
@@ -179,18 +214,18 @@ void main() {
       ]}},
 
       {'formula' : 'A+B', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.VALUE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.FIXED),
       ], 'expandValues': false, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '-1', 'state': 'ok'}]}},
 
       {'formula' : 'AB', 'values': [
-        FormulaValue('A', '1', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.INTERPOLATED),
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '11', 'state': 'ok', 'variables': {'A': '1', 'B': '1'}}]}},
 
       {'formula' : 'AB', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.INTERPOLATED),
       ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '11', 'variables': {'A': '1', 'B': '1'}, 'state': 'ok'},
         {'result': '21', 'variables': {'A': '2', 'B': '1'}, 'state': 'ok'},
@@ -198,13 +233,13 @@ void main() {
       ]}},
 
       {'formula' : 'A+B', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.INTERPOLATED),
       ], 'expandValues': false, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '-1', 'state': 'ok'}]}},
 
       {'formula' : 'AB', 'values': [
-        FormulaValue('A', '1', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1,4-8#2', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1,4-8#2', type: FormulaValueType.INTERPOLATED),
       ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '11', 'variables': {'A': '1', 'B': '1'}, 'state': 'ok'},
         {'result': '14', 'variables': {'A': '1', 'B': '4'}, 'state': 'ok'},
@@ -213,8 +248,8 @@ void main() {
       ]}},
 
       {'formula' : 'AB', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1,4-8#2', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1,4-8#2', type: FormulaValueType.INTERPOLATED),
       ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '11', 'variables': {'A': '1', 'B': '1'}, 'state': 'ok'},
         {'result': '14', 'variables': {'A': '1', 'B': '4'}, 'state': 'ok'},
@@ -231,22 +266,22 @@ void main() {
       ]}},
 
       {'formula' : 'A+B', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1,4-8#2', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1,4-8#2', type: FormulaValueType.INTERPOLATED),
       ], 'expandValues': false, 'expectedOutput' : {'state': 'error', 'output': [{'result': '1-3+1,4-8#2', 'state': 'error'}]}},
 
       {'formula' : 'A+B', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '4-8', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '4-8', type: FormulaValueType.INTERPOLATED),
       ], 'expandValues': false, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '-6', 'state': 'ok'}]}},
 
       {'formula' : 'N 52 [QR].[S+T*U*2] [R] [S] [R+S] [T] [U]', 'values': [
-        FormulaValue('Q', '1', type: FormulaValueType.VALUE),
-        FormulaValue('R', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('S', '2,6', type: FormulaValueType.RANGE),
-        FormulaValue('T', 'S+R', type: FormulaValueType.VALUE),
-        FormulaValue('U', 'T+1', type: FormulaValueType.VALUE),
-        FormulaValue('N', '7', type: FormulaValueType.VALUE),
+        FormulaValue('Q', '1', type: FormulaValueType.FIXED),
+        FormulaValue('R', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('S', '2,6', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('T', 'S+R', type: FormulaValueType.FIXED),
+        FormulaValue('U', 'T+1', type: FormulaValueType.FIXED),
+        FormulaValue('N', '7', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': 'N 52 11.26 1 2 3 3 4', 'variables': {'R': '1', 'S': '2'}, 'state': 'ok'},
         {'result': 'N 52 11.118 1 6 7 7 8', 'variables': {'R': '1', 'S': '6'}, 'state': 'ok'},
@@ -257,11 +292,11 @@ void main() {
       ]}},
 
       {'formula' : 'N 52 [QR].[S+T*U*2] [R] [S] [R+S] [T] [U]', 'values': [
-        FormulaValue('R', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('S', '2,6', type: FormulaValueType.RANGE),
-        FormulaValue('T', 'S+R', type: FormulaValueType.VALUE),
-        FormulaValue('U', 'T+1', type: FormulaValueType.VALUE),
-        FormulaValue('N', '7', type: FormulaValueType.VALUE),
+        FormulaValue('R', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('S', '2,6', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('T', 'S+R', type: FormulaValueType.FIXED),
+        FormulaValue('U', 'T+1', type: FormulaValueType.FIXED),
+        FormulaValue('N', '7', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'expanded_error', 'output': [
         {'result': 'N 52 [Q1].26 1 2 3 3 4', 'variables': {'R': '1', 'S': '2'}, 'state': 'error'},
         {'result': 'N 52 [Q1].118 1 6 7 7 8', 'variables': {'R': '1', 'S': '6'}, 'state': 'error'},
@@ -272,11 +307,11 @@ void main() {
       ]}},
 
       {'formula' : 'N 52 [QR].[S+T*U*2] [R] [S] [R+S] [T] [U]', 'values': [
-        FormulaValue('R', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('S', '2,6', type: FormulaValueType.RANGE),
-        FormulaValue('T', 'S+R', type: FormulaValueType.VALUE),
-        FormulaValue('U', 'T+1', type: FormulaValueType.VALUE),
-        FormulaValue('N', '7', type: FormulaValueType.VALUE),
+        FormulaValue('R', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('S', '2,6', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('T', 'S+R', type: FormulaValueType.FIXED),
+        FormulaValue('U', 'T+1', type: FormulaValueType.FIXED),
+        FormulaValue('N', '7', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'expanded_error', 'output': [
         {'result': 'N 52 [Q1].26 1 2 3 3 4', 'variables': {'R': '1', 'S': '2'}, 'state': 'error'},
         {'result': 'N 52 [Q1].118 1 6 7 7 8', 'variables': {'R': '1', 'S': '6'}, 'state': 'error'},
@@ -287,17 +322,17 @@ void main() {
       ]}},
 
       {'formula' : 'N 51.[C]20 E 11.423', 'values': [
-        FormulaValue('A', '1-3', type: FormulaValueType.RANGE),
-        FormulaValue('B', '1', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1-3', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '1', type: FormulaValueType.INTERPOLATED),
       ], 'expectedOutput' : {'state': 'error', 'output': [
         {'result': 'N 51.[C]20 E 11.423', 'state': 'error', 'variables': {'A': '1', 'B': '1'}},
       ]}},
 
       // no duplicates
       {'formula' : '[A + B]', 'values': [
-        FormulaValue('A', '1,3,5', type: FormulaValueType.RANGE),
-        FormulaValue('B', '2-8#2', type: FormulaValueType.RANGE),
-        FormulaValue('C', '10-12', type: FormulaValueType.RANGE),
+        FormulaValue('A', '1,3,5', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('B', '2-8#2', type: FormulaValueType.INTERPOLATED),
+        FormulaValue('C', '10-12', type: FormulaValueType.INTERPOLATED),
       ], 'expectedOutput' : {'state': 'expanded_ok', 'output': [
         {'result': '3', 'state': 'ok', 'variables': {'A': '1', 'B': '2', 'C': '10'}},
         {'result': '5', 'state': 'ok', 'variables': {'A': '1', 'B': '4', 'C': '10'}},

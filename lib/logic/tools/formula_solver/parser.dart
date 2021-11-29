@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/crosstotals.dart';
-import 'package:image/image.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -67,6 +67,12 @@ class FormulaParser {
     'arctandeg': (List<double> numbers) => atan(degreesToRadian(numbers.first)),
   };
 
+  static final Map<String, Function> _CUSTOM_TEXT_FUNCTIONS = {
+    'bww': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true)),
+    'av': (String arg) => sum(AlphabetValues().textToValues(arg, keepNumbers: true)),
+    'len': (String arg) => arg.length,
+  };
+
   // different minus/hyphens/dashes
   static final Map<String, String> alternateOperators = {
     '-': '—–˗−‒',
@@ -90,6 +96,9 @@ class FormulaParser {
   static List<String> availableParserFunctions() {
     var result = List<String>.from(_BUILTIN_FUNCTIONS);
     _CUSTOM_FUNCTIONS.forEach((name, handler) {
+      result.add(name);
+    });
+    _CUSTOM_TEXT_FUNCTIONS.forEach((name, handler) {
       result.add(name);
     });
 
@@ -139,12 +148,24 @@ class FormulaParser {
     List<FormulaValue> preparedValues = _prepareValues(values);
 
     var fixedValues = <String, String>{};
-    var variableValues = <String, String>{};
+    var textValues = <String, String>{};
+    var interpolatedValues = <String, String>{};
     preparedValues.forEach((value) {
-      if (expandValues == false || value.type == null || value.type == FormulaValueType.VALUE) {
+      if (expandValues == false || value.type == null) {
         fixedValues.putIfAbsent(value.key, () => value.value);
-      } else {
-        variableValues.putIfAbsent(value.key, () => value.value);
+        return;
+      }
+
+      switch (value.type) {
+        case FormulaValueType.FIXED:
+          fixedValues.putIfAbsent(value.key, () => value.value);
+          break;
+        case FormulaValueType.INTERPOLATED:
+          interpolatedValues.putIfAbsent(value.key, () => value.value);
+          break;
+        case FormulaValueType.TEXT:
+          textValues.putIfAbsent(value.key, () => value.value);
+          break;
       }
     });
 
@@ -154,26 +175,27 @@ class FormulaParser {
     //replace values
     int i = pow(values.length, 2);
     var substitutedFormula = safedFormulaNames['formula'];
-    var fullySubstituded = false;
-    while (i > 0 && !fullySubstituded) {
+    var fullySubstituted = false;
+    while (i > 0 && !fullySubstituted) {
       var tempSubstitutedFormula = substitution(substitutedFormula, fixedValues, caseSensitive: false);
-      fullySubstituded = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
+      fullySubstituted = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
 
       substitutedFormula = tempSubstitutedFormula;
       i--;
     }
+    substitutedFormula = substitution(substitutedFormula, textValues, caseSensitive: false);
 
     //expand formulas with range values
     List<Map<String, dynamic>> expandedFormulas;
-    if (expandValues && variableValues.length > 0) {
-      var count = VariableStringExpander(substitutedFormula, variableValues).run(onlyPrecheck: true).first['count'];
+    if (expandValues && interpolatedValues.length > 0) {
+      var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
         return {'state': FormulaState.STATE_ERROR_GENERAL, 'result': formula};
       } else if (count > _MAX_EXPANDED) {
         return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
       }
 
-      expandedFormulas = VariableStringExpander(substitutedFormula, variableValues).run();
+      expandedFormulas = VariableStringExpander(substitutedFormula, interpolatedValues).run();
 
       var results = <Map<String, dynamic>>[];
       var hasError = false;
@@ -181,7 +203,7 @@ class FormulaParser {
         substitutedFormula = substitution(expandedFormula['text'], safedFormulaNames['map']);
 
         try {
-          var result = _evaluateFormula(substitutedFormula, fixedValues);
+          var result = _evaluateFormula(substitutedFormula);
           results.add({'state': FormulaState.STATE_OK, 'result': result, 'variables': expandedFormula['variables']});
         } catch (e) {
           results.add({'state': FormulaState.STATE_ERROR_GENERAL, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
@@ -194,7 +216,7 @@ class FormulaParser {
       substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
 
       try {
-        var result = _evaluateFormula(substitutedFormula, fixedValues);
+        var result = _evaluateFormula(substitutedFormula);
         return {'state': FormulaState.STATE_OK, 'result': result};
       } catch (e) {
         return {'state': FormulaState.STATE_ERROR_GENERAL, 'result': substitutedFormula};
@@ -207,7 +229,28 @@ class FormulaParser {
         substitutedFormula == tempSubstitutedFormula.replaceAll(RegExp(r'[\(\)]'), '');
   }
 
-  dynamic _evaluateFormula(String formula, Map<String, String> values) {
+  String _evaluateTextFunctions(String formula) {
+    var out = formula.toLowerCase();
+
+    _CUSTOM_TEXT_FUNCTIONS.forEach((name, function) {
+      var regex = RegExp('(' + name + r'\s*\(\s*([^\(\)]+)\s*\))');
+      var matches = regex.allMatches(out);
+
+      matches.forEach((match) {
+        var foundFunction = match.group(1);
+        var argument = match.group(2);
+        var result = function(argument);
+
+        out = out.replaceFirst(foundFunction, result.toString());
+      });
+    });
+
+    return out;
+  }
+
+  dynamic _evaluateFormula(String formula) {
+    formula = _evaluateTextFunctions(formula);
+
     Expression expression = parser.parse(formula.toLowerCase());
     var result = expression.evaluate(EvaluationType.REAL, _context);
     if (result == null) throw Exception();
@@ -223,7 +266,7 @@ class FormulaParser {
 
       if (value == null || value.length == 0) {
         value = key;
-      } else if (element.type == FormulaValueType.VALUE && double.tryParse(value) == null) {
+      } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
         value = '($value)';
       }
 

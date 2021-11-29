@@ -54,9 +54,20 @@ class Formula {
   }
 }
 
-enum FormulaValueType {VALUE, RANGE}
+enum FormulaValueType {FIXED, INTERPOLATED, TEXT}
+const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
+const _FORMULAVALUETYPE_TEXT = 'text';
+
+FormulaValueType _readType(String jsonType) {
+  switch (jsonType) {
+    case _FORMULAVALUETYPE_INTERPOLATE: return FormulaValueType.INTERPOLATED;
+    case _FORMULAVALUETYPE_TEXT: return FormulaValueType.TEXT;
+    default: return FormulaValueType.FIXED;
+  }
+}
 
 class FormulaValue {
+
   int id;
   String key;
   String value;
@@ -68,7 +79,7 @@ class FormulaValue {
       : id = json['id'],
         key = json['key'],
         value = json['value'],
-        type = json['type'] == 'interpolate' ? FormulaValueType.RANGE : FormulaValueType.VALUE;
+        type = _readType(json['type']);
 
   Map<String, dynamic> toMap() {
     var map = {
@@ -77,8 +88,14 @@ class FormulaValue {
       'value': value,
     };
 
-    if (type == FormulaValueType.RANGE)
-      map.putIfAbsent('type', () => 'interpolate');
+    var mapType;
+    switch(type) {
+      case FormulaValueType.INTERPOLATED: mapType = _FORMULAVALUETYPE_TEXT; break;
+      case FormulaValueType.TEXT: mapType = _FORMULAVALUETYPE_INTERPOLATE; break;
+      default: break;
+    }
+    if (mapType != null)
+      map.putIfAbsent('type', () => mapType);
 
     return map;
   }
