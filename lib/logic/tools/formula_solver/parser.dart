@@ -10,7 +10,7 @@ import 'package:gc_wizard/utils/crosstotals.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-enum FormulaState {STATE_OK, STATE_EXPANDED_OK, STATE_EXPANDED_ERROR, STATE_ERROR_GENERAL, STATE_EXPANDED_ERROR_EXCEEDEDRANGE}
+enum FormulaState {STATE_SINGLE_OK, STATE_EXPANDED_OK, STATE_EXPANDED_ERROR, STATE_SINGLE_ERROR, STATE_EXPANDED_ERROR_EXCEEDEDRANGE}
 
 const _MAX_EXPANDED = 100;
 
@@ -172,7 +172,7 @@ class FormulaParser {
     //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(formula);
 
-    //replace values
+    //replace fixed values recursively
     int i = pow(values.length, 2);
     var substitutedFormula = safedFormulaNames['formula'];
     var fullySubstituted = false;
@@ -183,14 +183,18 @@ class FormulaParser {
       substitutedFormula = tempSubstitutedFormula;
       i--;
     }
+    // replace text values non-recursively afterwards
+    // because C = FLOWER, the letters F,L,O,W,E,R should not be treated as new variables
     substitutedFormula = substitution(substitutedFormula, textValues, caseSensitive: false);
 
-    //expand formulas with range values
+    //expand formulas with interpolation values if exist
+    // --> evaluate each interpolated result
+    //if no interpolation: simply evaluate the formula directly
     List<Map<String, dynamic>> expandedFormulas;
     if (expandValues && interpolatedValues.length > 0) {
       var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
-        return {'state': FormulaState.STATE_ERROR_GENERAL, 'result': formula};
+        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': formula};
       } else if (count > _MAX_EXPANDED) {
         return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
       }
@@ -204,9 +208,9 @@ class FormulaParser {
 
         try {
           var result = _evaluateFormula(substitutedFormula);
-          results.add({'state': FormulaState.STATE_OK, 'result': result, 'variables': expandedFormula['variables']});
+          results.add({'state': FormulaState.STATE_SINGLE_OK, 'result': result, 'variables': expandedFormula['variables']});
         } catch (e) {
-          results.add({'state': FormulaState.STATE_ERROR_GENERAL, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
+          results.add({'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
           hasError = true;
         }
       }
@@ -217,9 +221,9 @@ class FormulaParser {
 
       try {
         var result = _evaluateFormula(substitutedFormula);
-        return {'state': FormulaState.STATE_OK, 'result': result};
+        return {'state': FormulaState.STATE_SINGLE_OK, 'result': result};
       } catch (e) {
-        return {'state': FormulaState.STATE_ERROR_GENERAL, 'result': substitutedFormula};
+        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
       }
     }
   }
@@ -276,7 +280,7 @@ class FormulaParser {
   }
 
   FormulaSolverOutput _simpleErrorOutput(String formula) {
-    return FormulaSolverOutput(FormulaState.STATE_ERROR_GENERAL, [FormulaSolverResult(FormulaState.STATE_ERROR_GENERAL, formula)]);
+    return FormulaSolverOutput(FormulaState.STATE_SINGLE_ERROR, [FormulaSolverResult(FormulaState.STATE_SINGLE_ERROR, formula)]);
   }
 
   FormulaSolverOutput parse(String formula, List<FormulaValue> values, {expandValues: true}) {
@@ -296,6 +300,7 @@ class FormulaParser {
     var matches = regExp.allMatches(formula);
 
     var hasBrackets = true;
+    // if formula has no [ ], then match the whole string
     if (matches.length == 0) {
       matches = RegExp(r'^.*$').allMatches(formula);
       hasBrackets = false;
@@ -303,77 +308,110 @@ class FormulaParser {
 
     Map<String, Map<String, FormulaSolverResult>> matchedVariables = {};
 
-    var overallState = FormulaState.STATE_OK;
-    matches.forEach((match) {
-      var matchString = match.group(0);
-      var content = hasBrackets ? matchString.substring(1, matchString.length - 1) : matchString;
+    var overallState = FormulaState.STATE_SINGLE_OK;
+    try {
+      matches.forEach((match) {
+        var matchString = match.group(0);
+        // groups with surrounding brackets need to remove them before parsing
+        var content = hasBrackets ? matchString.substring(1, matchString.length - 1) : matchString;
 
-      var result = _parseFormula(content, values, expandValues);
-      var state = result['state'];
-      switch (state) {
-        case FormulaState.STATE_OK:
-          var out = FormulaSolverResult(state, _formatOutput(result['result']));
-          if (matchedVariables.containsKey(null)) {
-            matchedVariables[null].putIfAbsent(matchString, () => out);
-          } else {
-            matchedVariables.putIfAbsent(null, () => {matchString: out});
-          }
-          break;
-        case FormulaState.STATE_ERROR_GENERAL:
-        case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
-          var out = FormulaSolverResult(state, hasBrackets ? '[${result['result']}]' : result['result']);
-          if (matchedVariables.containsKey(null)) {
-            matchedVariables[null].putIfAbsent(matchString, () => out);
-          } else {
-            matchedVariables.putIfAbsent(null, () => {matchString: out});
-          }
+        ////////// MAGIC
+        var result = _parseFormula(content, values, expandValues);
+        //////////
 
-          if (overallState != FormulaState.STATE_EXPANDED_ERROR)
-            overallState = state;
-          break;
-        case FormulaState.STATE_EXPANDED_OK:
-        case FormulaState.STATE_EXPANDED_ERROR:
-          result['result'].forEach((result) {
-            var formatted;
-            if (result['state'] == FormulaState.STATE_OK) {
-              formatted = _formatOutput(result['result']);
+        var state = result['state'];
+
+        // each match may return more than one result due to interpolation
+        // final output map matches current match string to list of interpolation results
+        //
+        // if interpolation than several matches need clustering to same variables sets
+        // Example: [A][A] for A = 1-2.
+        // Two matches -> two iterations.
+        // each iteration has two results. If simple adding results to final result set,
+        // it would yield: 11, 12, 21, 22.
+        // But this is obviously wrong result, because the user would not expect 12 and 21.
+        // because A can not be two different values at once
+        // So, results will be clustered by variables, A = 1 or A = 2, in that case
+        // Then each match string will be in fitting variable set: {{A: 1}: [[1], [1]], {A:2}: [[2], [2]]}
+        // Later the substitutions can be for each unique variable set dependently
+        //
+        // if no interpolation (only one or no result), variables key is NULL for simplicity
+        switch (state) {
+          case FormulaState.STATE_SINGLE_OK:
+            var out = FormulaSolverResult(state, _formatOutput(result['result']));
+            if (matchedVariables.containsKey(null)) {
+              matchedVariables[null].putIfAbsent(matchString, () => out);
             } else {
-              formatted =  hasBrackets ? '[${result['result']}]' : result['result'];
+              matchedVariables.putIfAbsent(null, () => {matchString: out});
+            }
+            break;
+          case FormulaState.STATE_SINGLE_ERROR:
+          case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
+            // restore brackets if formerly removed
+            var out = FormulaSolverResult(state, hasBrackets ? '[${result['result']}]' : result['result']);
+            if (matchedVariables.containsKey(null)) {
+              matchedVariables[null].putIfAbsent(matchString, () => out);
+            } else {
+              matchedVariables.putIfAbsent(null, () => {matchString: out});
             }
 
-            var out = FormulaSolverResult(result['state'], formatted, variables: result['variables']);
+            // overallState turns into error, if currently ok.
+            // EXPANDED_ERROR cannot be overwritten
+            if (overallState != FormulaState.STATE_EXPANDED_ERROR)
+              overallState = state;
+            break;
+          case FormulaState.STATE_EXPANDED_OK:
+          case FormulaState.STATE_EXPANDED_ERROR:
+            result['result'].forEach((result) {
+              var formatted;
+              if (result['state'] == FormulaState.STATE_SINGLE_OK) {
+                formatted = _formatOutput(result['result']);
+              } else {
+                // restore brackets if formerly removed
+                formatted =  hasBrackets ? '[${result['result']}]' : result['result'];
+              }
 
-            var variables = result['variables'].toString();
-            if (matchedVariables.containsKey(variables)) {
-              matchedVariables[variables].putIfAbsent(matchString, () => out);
-            } else {
-              matchedVariables.putIfAbsent(variables, () => {matchString: out});
-            }
+              var out = FormulaSolverResult(result['state'], formatted, variables: result['variables']);
 
-            if (state == FormulaState.STATE_EXPANDED_OK) {
-              if (overallState == FormulaState.STATE_ERROR_GENERAL)
+              var variables = result['variables'].toString();
+              if (matchedVariables.containsKey(variables)) {
+                matchedVariables[variables].putIfAbsent(matchString, () => out);
+              } else {
+                matchedVariables.putIfAbsent(variables, () => {matchString: out});
+              }
+
+              // SINGLE_ERROR can be overwritten by EXPANDED_ERROR
+              // SINGLE_OK can be overwritten by EXPANDED_OK
+              // *_OK can overwritten by *_ERROR
+              if (state == FormulaState.STATE_EXPANDED_OK) {
+                if (overallState == FormulaState.STATE_SINGLE_ERROR)
+                  overallState = FormulaState.STATE_EXPANDED_ERROR;
+                else if (overallState != FormulaState.STATE_EXPANDED_ERROR)
+                  overallState = result['state'] == FormulaState.STATE_SINGLE_OK ? FormulaState.STATE_EXPANDED_OK : FormulaState.STATE_EXPANDED_ERROR;
+              } else {
                 overallState = FormulaState.STATE_EXPANDED_ERROR;
-              else if (overallState != FormulaState.STATE_EXPANDED_ERROR)
-                overallState = result['state'] == FormulaState.STATE_OK ? FormulaState.STATE_EXPANDED_OK : FormulaState.STATE_EXPANDED_ERROR;
-            } else {
-              overallState = FormulaState.STATE_EXPANDED_ERROR;
-            }
-          });
+              }
+            });
 
-          break;
-      }
-    });
+            break;
+        }
+      });
+    } catch (e, s) {
+      print(s);
+    }
 
+    // Here the magic happens, which was decribed above
+    // Variable sets with independent matchStrings will be substituted dependently here
     List<FormulaSolverResult> output = [];
     matchedVariables.values.forEach((Map<String, FormulaSolverResult> matchedResults) {
       Map<String, String> substitutions = {};
       var variables;
-      var state = FormulaState.STATE_OK;
+      var state = FormulaState.STATE_SINGLE_OK;
       matchedResults.forEach((String matchedString, FormulaSolverResult result) {
         if (variables == null)
           variables = result.variables;
-        if (result.state == FormulaState.STATE_ERROR_GENERAL)
-          state = FormulaState.STATE_ERROR_GENERAL;
+        if (result.state == FormulaState.STATE_SINGLE_ERROR)
+          state = FormulaState.STATE_SINGLE_ERROR;
         substitutions.putIfAbsent(matchedString, () => result.result);
       });
 
@@ -392,11 +430,12 @@ class FormulaParser {
       }
     });
 
+    // if EXPANDED state althought only one result -> make it to SINGLE state
     if (output.length <= 1) {
       if (overallState == FormulaState.STATE_EXPANDED_OK)
-        overallState = FormulaState.STATE_OK;
+        overallState = FormulaState.STATE_SINGLE_OK;
       if (overallState == FormulaState.STATE_EXPANDED_ERROR)
-        overallState = FormulaState.STATE_ERROR_GENERAL;
+        overallState = FormulaState.STATE_SINGLE_ERROR;
     }
 
     return FormulaSolverOutput(overallState, output);

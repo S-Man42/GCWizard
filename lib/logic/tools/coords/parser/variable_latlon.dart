@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
@@ -69,11 +68,6 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
   }
 
   var calculated = FormulaParser().parse(textToExpand, substitutions.entries.map((e) => FormulaValue(e.key, e.value, type: FormulaValueType.INTERPOLATED)).toList());
-
-  // var expandedTexts = VariableStringExpander(textToExpand, substitutions, onAfterExpandedText: (expandedText) {
-  //   return formulaParser.parse(expandedText, {})['result'].replaceAll(RegExp(r'[\[\]]'), '');
-  // }, uniqueResults: true)
-  //     .run();
 
   var coords = <Map<String, dynamic>>[];
   var leftPadCoords = <Map<String, dynamic>>[];

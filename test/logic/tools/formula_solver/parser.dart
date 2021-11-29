@@ -7,10 +7,10 @@ import 'package:gc_wizard/persistence/formula_solver/model.dart';
 void main() {
   _formulaStateToString(FormulaState state) {
     switch (state) {
-      case FormulaState.STATE_ERROR_GENERAL: return 'error';
+      case FormulaState.STATE_SINGLE_ERROR: return 'error';
       case FormulaState.STATE_EXPANDED_OK: return 'expanded_ok';
       case FormulaState.STATE_EXPANDED_ERROR: return 'expanded_error';
-      case FormulaState.STATE_OK: return 'ok';
+      case FormulaState.STATE_SINGLE_OK: return 'ok';
       case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE: return 'expanded_exceededrange';
     }
   }

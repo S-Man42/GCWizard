@@ -211,8 +211,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           String firstFormulaResult;
           switch (calculated.state) {
-            case FormulaState.STATE_OK: firstFormulaResult = calculated.results.first.result; break;
-            case FormulaState.STATE_ERROR_GENERAL: firstFormulaResult = '(${calculated.results.first.result})'; break;
+            case FormulaState.STATE_SINGLE_OK: firstFormulaResult = calculated.results.first.result; break;
+            case FormulaState.STATE_SINGLE_ERROR: firstFormulaResult = '(${calculated.results.first.result})'; break;
             default: firstFormulaResult = '(${formula.formula})'; break;
           }
 
@@ -269,7 +269,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                child: [FormulaState.STATE_OK, FormulaState.STATE_EXPANDED_OK].contains(calculated.state)
+                                child: [FormulaState.STATE_SINGLE_OK, FormulaState.STATE_EXPANDED_OK].contains(calculated.state)
                                     ? Icon(
                                   Icons.check,
                                   color: _themeColors.mainFont(),
@@ -486,8 +486,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
   _buildFormulaOutput(int formulaIndex, FormulaSolverOutput output, Map<int, Map<String, dynamic>> coordinates) {
     switch (output.state) {
-      case FormulaState.STATE_OK:
-      case FormulaState.STATE_ERROR_GENERAL:
+      case FormulaState.STATE_SINGLE_OK:
+      case FormulaState.STATE_SINGLE_ERROR:
         return GCWText(text: output.results.first.result);
       case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
         return GCWText(text: i18n(context, 'formulasolver_values_type_interpolated_exceeded'));
