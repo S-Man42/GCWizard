@@ -183,10 +183,10 @@ class SymbolImage {
     }
   }
 
-  SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareImages) {
-    var compareSymbolImage = SymbolImage(compareImages.first.values.first.bytes);
+  SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareSymbols) {
+    var compareSymbolImage = SymbolImage(compareSymbols.first.values.first.bytes);
 
-    compareImages.forEach((element) {
+    compareSymbols.forEach((element) {
       element.forEach((text, symbolData) {
         if (symbolData != null && symbolData.bytes != null) {
           var symbolImage = SymbolImage(symbolData.bytes);
@@ -197,11 +197,11 @@ class SymbolImage {
             symbolGroup.symbols = symbolImage.symbols;
             symbolGroup.text = text;
             symbolGroup.symbols.forEach((symbol) {symbol.symbolGroup = symbolGroup; });
-            symbolImage.symbols = null;
 
             compareSymbolImage.symbols.addAll(symbolGroup.symbols);
             compareSymbolImage.symbolGroups.add(symbolGroup);
           });
+          symbolImage.symbols = null;
         }
       });
     });
