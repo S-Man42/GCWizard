@@ -11,7 +11,7 @@ class MultiDecoderToolROT47 extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ROT47,
-            onDecode: (input) {
+            onDecode: (String input, String key) {
               return Rotator().rot47(input);
             },
             options: options);

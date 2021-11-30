@@ -7,8 +7,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class GCWABCSpinner extends StatefulWidget {
   final Function onChanged;
   final SpinnerLayout layout;
-  final value;
-  final suppressLetterValues;
+  final int value;
+  final bool suppressLetterValues;
   final String title;
 
   const GCWABCSpinner(

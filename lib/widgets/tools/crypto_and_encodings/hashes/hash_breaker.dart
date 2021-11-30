@@ -126,7 +126,6 @@ class _HashBreakerState extends State<HashBreaker> {
         valueFlex: 2,
         onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
-        middleWidget: SizedBox(height: 10),
         keyKeyValueMap: _currentSubstitutions,
         onUpdateEntry: _updateEntry,
         onRemoveEntry: _removeEntry);

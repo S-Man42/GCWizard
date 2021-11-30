@@ -86,7 +86,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
           valueHintText: i18n(context, 'formulasolver_values_value'),
           valueFlex: 2,
           onAddEntry: _addEntry,
-          listHeaderWidget: GCWTextDivider(text: i18n(context, 'formulasolver_values_currentvalues')),
+          dividerText: i18n(context, 'formulasolver_values_currentvalues'),
           formulaValueList: widget.group.values,
           onUpdateEntry: _updateEntry,
           onRemoveEntry: _removeEntry,

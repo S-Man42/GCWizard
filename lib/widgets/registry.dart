@@ -106,7 +106,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
@@ -140,6 +139,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
@@ -184,6 +184,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
@@ -410,10 +411,7 @@ initializeRegistry(BuildContext context) {
       'binary',
     ]),
     GCWTool(
-        tool: BaseSelection(),
-        i18nPrefix: 'base_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: []),
+        tool: BaseSelection(), i18nPrefix: 'base_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
     GCWTool(tool: BCDSelection(), i18nPrefix: 'bcd_selection', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -510,6 +508,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: ColorPicker(), i18nPrefix: 'colors', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'color',
       'colorpicker',
     ]),
     GCWTool(
@@ -637,10 +636,7 @@ initializeRegistry(BuildContext context) {
       'gray',
     ]),
     GCWTool(
-        tool: HashSelection(),
-        i18nPrefix: 'hashes_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: []),
+        tool: HashSelection(), i18nPrefix: 'hashes_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
     GCWTool(tool: Hexadecimal(), i18nPrefix: 'hexadecimal', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
@@ -724,6 +720,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: [
       'keyboard',
+      'keyboard_numbers'
     ]),
     GCWTool(
         tool: KeyboardSelection(),
@@ -819,8 +816,12 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: PredatorSelection(), i18nPrefix: 'predator_selection', categories: [
       ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: []),
+    GCWTool(tool: PrimeAlphabet(), i18nPrefix: 'primealphabet', categories: [
+      ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
-      'predator',
+      'primes',
+      'primealphabet',
     ]),
     GCWTool(
         tool: PrimesSelection(),
@@ -1894,13 +1895,10 @@ initializeRegistry(BuildContext context) {
       'numbersequence',
       'numbersequence_mersenneselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceMersennePrimesSelection(),
-        i18nPrefix: 'numbersequence_mersenneprimes',
-        searchKeys: [
-          'numbersequence',
-          'numbersequence_mersenneprimesselection',
-        ]),
+    GCWTool(tool: NumberSequenceMersennePrimesSelection(), i18nPrefix: 'numbersequence_mersenneprimes', searchKeys: [
+      'numbersequence',
+      'numbersequence_mersenneprimesselection',
+    ]),
     GCWTool(
         tool: NumberSequenceMersenneExponentsSelection(),
         i18nPrefix: 'numbersequence_mersenneexponents',
@@ -1908,24 +1906,18 @@ initializeRegistry(BuildContext context) {
           'numbersequence',
           'numbersequence_mersenneexponentsselection',
         ]),
-    GCWTool(
-        tool: NumberSequenceMersenneFermatSelection(),
-        i18nPrefix: 'numbersequence_mersennefermat',
-        searchKeys: [
-          'numbersequence',
-          'numbersequence_mersennefermatselection',
-        ]),
+    GCWTool(tool: NumberSequenceMersenneFermatSelection(), i18nPrefix: 'numbersequence_mersennefermat', searchKeys: [
+      'numbersequence',
+      'numbersequence_mersennefermatselection',
+    ]),
     GCWTool(tool: NumberSequenceFermatSelection(), i18nPrefix: 'numbersequence_fermat', searchKeys: [
       'numbersequence',
       'numbersequence_fermatselection',
     ]),
-    GCWTool(
-        tool: NumberSequencePerfectNumbersSelection(),
-        i18nPrefix: 'numbersequence_perfectnumbers',
-        searchKeys: [
-          'numbersequence',
-          'numbersequence_perfectnumbersselection',
-        ]),
+    GCWTool(tool: NumberSequencePerfectNumbersSelection(), i18nPrefix: 'numbersequence_perfectnumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_perfectnumbersselection',
+    ]),
     GCWTool(
         tool: NumberSequenceSuperPerfectNumbersSelection(),
         i18nPrefix: 'numbersequence_superperfectnumbers',
@@ -1944,13 +1936,10 @@ initializeRegistry(BuildContext context) {
       'numbersequence',
       'numbersequence_weirdnumbersselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceSublimeNumbersSelection(),
-        i18nPrefix: 'numbersequence_sublimenumbers',
-        searchKeys: [
-          'numbersequence',
-          'numbersequence_sublimenumbersselection',
-        ]),
+    GCWTool(tool: NumberSequenceSublimeNumbersSelection(), i18nPrefix: 'numbersequence_sublimenumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_sublimenumbersselection',
+    ]),
     GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', searchKeys: [
       'numbersequence',
       'numbersequence_bellselection',
@@ -1971,13 +1960,10 @@ initializeRegistry(BuildContext context) {
       'numbersequence',
       'numbersequence_jacobsthalselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceJacobsthalLucasSelection(),
-        i18nPrefix: 'numbersequence_jacobsthallucas',
-        searchKeys: [
-          'numbersequence',
-          'numbersequence_jacobsthallucasselection',
-        ]),
+    GCWTool(tool: NumberSequenceJacobsthalLucasSelection(), i18nPrefix: 'numbersequence_jacobsthallucas', searchKeys: [
+      'numbersequence',
+      'numbersequence_jacobsthallucasselection',
+    ]),
     GCWTool(
         tool: NumberSequenceJacobsthalOblongSelection(),
         i18nPrefix: 'numbersequence_jacobsthaloblong',
@@ -2011,12 +1997,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceFactorialDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
       'numbersequence_factorialselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceFactorialContainsDigits(),
-        i18nPrefix: 'numbersequence_containsdigits',
-        searchKeys: [
-          'numbersequence_factorialselection',
-        ]),
+    GCWTool(tool: NumberSequenceFactorialContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_factorialselection',
+    ]),
 
     //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
     GCWTool(tool: NumberSequenceMersenneFermatNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
@@ -2085,12 +2068,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceFibonacciDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
       'numbersequence_fibonacciselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceFibonacciContainsDigits(),
-        i18nPrefix: 'numbersequence_containsdigits',
-        searchKeys: [
-          'numbersequence_fibonacciselection',
-        ]),
+    GCWTool(tool: NumberSequenceFibonacciContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_fibonacciselection',
+    ]),
 
     //NumberSequenceSelection Mersenne ****************************************************************************************
     GCWTool(tool: NumberSequenceMersenneNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
@@ -2105,12 +2085,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceMersenneDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
       'numbersequence_mersenneselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceMersenneContainsDigits(),
-        i18nPrefix: 'numbersequence_containsdigits',
-        searchKeys: [
-          'numbersequence_mersenneselection',
-        ]),
+    GCWTool(tool: NumberSequenceMersenneContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_mersenneselection',
+    ]),
 
     //NumberSequenceSelection Bell ****************************************************************************************
     GCWTool(tool: NumberSequenceBellNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
@@ -2159,12 +2136,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequencePellLucasDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
       'numbersequence_pelllucasselection',
     ]),
-    GCWTool(
-        tool: NumberSequencePellLucasContainsDigits(),
-        i18nPrefix: 'numbersequence_containsdigits',
-        searchKeys: [
-          'numbersequence_pelllucasselection',
-        ]),
+    GCWTool(tool: NumberSequencePellLucasContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_pelllucasselection',
+    ]),
 
     //NumberSequenceSelection Jacobsthal ****************************************************************************************
     GCWTool(tool: NumberSequenceJacobsthalNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
@@ -2179,12 +2153,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceJacobsthalDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
       'numbersequence_jacobsthalselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceJacobsthalContainsDigits(),
-        i18nPrefix: 'numbersequence_containsdigits',
-        searchKeys: [
-          'numbersequence_jacobsthalselection',
-        ]),
+    GCWTool(tool: NumberSequenceJacobsthalContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_jacobsthalselection',
+    ]),
 
     //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
     GCWTool(tool: NumberSequenceJacobsthalLucasNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
@@ -2353,12 +2324,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceWeirdNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
       'numbersequence_weirdnumbersselection',
     ]),
-    GCWTool(
-        tool: NumberSequenceWeirdNumbersContainsDigits(),
-        i18nPrefix: 'numbersequence_containsdigits',
-        searchKeys: [
-          'numbersequence_weirdnumbersselection',
-        ]),
+    GCWTool(tool: NumberSequenceWeirdNumbersContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
+      'numbersequence_weirdnumbersselection',
+    ]),
 
     //NumberSequenceSelection Sublime numbers ****************************************************************************************
     GCWTool(tool: NumberSequenceSublimeNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
@@ -2381,30 +2349,21 @@ initializeRegistry(BuildContext context) {
         ]),
 
     //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
-    GCWTool(
-        tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(),
-        i18nPrefix: 'numbersequence_nth',
-        searchKeys: [
-          'numbersequence_primarypseudoperfectnumbersselection',
-        ]),
-    GCWTool(
-        tool: NumberSequencePrimaryPseudoPerfectNumbersRange(),
-        i18nPrefix: 'numbersequence_range',
-        searchKeys: [
-          'numbersequence_primarypseudoperfectnumbersselection',
-        ]),
+    GCWTool(tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_primarypseudoperfectnumbersselection',
+    ]),
+    GCWTool(tool: NumberSequencePrimaryPseudoPerfectNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_primarypseudoperfectnumbersselection',
+    ]),
     GCWTool(
         tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
         searchKeys: [
           'numbersequence_primarypseudoperfectnumbersselection',
         ]),
-    GCWTool(
-        tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
-        i18nPrefix: 'numbersequence_digits',
-        searchKeys: [
-          'numbersequence_primarypseudoperfectnumbersselection',
-        ]),
+    GCWTool(tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_primarypseudoperfectnumbersselection',
+    ]),
     GCWTool(
         tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
         i18nPrefix: 'numbersequence_containsdigits',
@@ -2840,6 +2799,18 @@ initializeRegistry(BuildContext context) {
       'symbol_flags',
       'symbol_flags_nato',
     ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_howe', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_howe',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_marryat', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_marryat',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'flags_rn_popham', symbolSearchStrings: [
+      'symbol_flags',
+      'symbol_flags_rn_popham',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: [
       'symbol_fonic',
     ]),
@@ -3132,6 +3103,12 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'prussian_colors_artillery', symbolSearchStrings: [
+      'symbol_prussian_colors_artillery',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
+      'symbol_prussian_colors_infantery',
     ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
