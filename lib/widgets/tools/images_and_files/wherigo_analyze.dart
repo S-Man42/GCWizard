@@ -19,6 +19,7 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -112,6 +113,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
+  _exportLUACFile(BuildContext context, Uint8List data) async {
+    //var value = await saveByteDataToFile(context, data, "cartridge.luac");
+    var value = await createTmpFile("cartridge.luac", data);
+  }
+
+
   _buildOutput() {
     if (_bytes == null) return null;
 
@@ -121,6 +128,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 //      text: _bytes.join(' '),
 //      style: gcwMonotypeTextStyle(),
 //    );
+
+    // save LUAByteCode to device with filename "cartridge.luac"
+    _exportLUACFile(context, _cartridge
+        .MediaFilesContents[_mediaFile].MediaFileBytes);
+
+    // rest-api to unluac => String LUA
+
+    // analyze cartridge with String LUA
+
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
       [
@@ -178,6 +194,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
       case WHERIGO.LUABYTECODE:
         return GCWText(
+          // text: file2hexstring(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
           text: _cartridge
               .MediaFilesContents[_mediaFile].MediaFileBytes.join(' '),
         );

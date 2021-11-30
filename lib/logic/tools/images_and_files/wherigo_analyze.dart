@@ -203,6 +203,13 @@ class ObjectData{
   ObjectData(this.ObjectName, this.ObjectDescription);
 }
 
+class TimerData{
+  final String TimerName;
+  final String TimerDescription;
+
+  TimerData(this.TimerName, this.TimerDescription);
+}
+
 class InputData{
   final String InputName;
   final String InputDescription;
@@ -241,6 +248,7 @@ class WherigoCartridge{
   final List<ObjectData> Tasks;
   final List<InputData> Inputs;
   final List<ZoneData> Zones;
+  final List<TimerData> Timers;
 
 
   WherigoCartridge(this.Signature,
@@ -254,7 +262,7 @@ class WherigoCartridge{
       this.Version, this.Author, this.Company,
       this.RecommendedDevice,
       this.LengthOfCompletionCode, this.CompletionCode,
-      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones);
+      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -311,7 +319,7 @@ const LENGTH_DOUBLE = 8;
 
 WherigoCartridge getCartridge(Uint8List byteList){
   if (byteList == [] || byteList == null)
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], []);
+    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
@@ -345,6 +353,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   List<ObjectData> Tasks = [];
   List<InputData> Inputs = [];
   List<ZoneData> Zones = [];
+  List<TimerData> Timers = [];
 
   int Unknown3 = 0;
 
@@ -430,9 +439,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   CompletionCode = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
 
   // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
-  print('### READ LUA CODE');
   MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-  print('=> '+MediaFileLength.toString());
   MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
   //for (int i = offset; i <= ObjectLength; i++){
   //  Objects[0].Bytes.add(byteList[i]);
@@ -440,9 +447,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   offset = offset + MediaFileLength;
 
   // read Objects
-  print('### READ OBJECTS');
   for (int i = 1; i < NumberOfObjects; i++){
-    print('### READ OBJECT '+i.toString());
     ValidMediaFile = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
     if (ValidMediaFile != 0) {
       MediaFileType = readInt(byteList, offset);     offset = offset + LENGTH_INT;
@@ -474,7 +479,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
     CartridgeName, CartridgeGUID, CartridgeDescription, StartingLocationDescription,
     Version, Author, Company, RecommendedDevice,
     LengthOfCompletionCode, CompletionCode,
-    Characters, Items, Tasks, Inputs, Zones);
+    Characters, Items, Tasks, Inputs, Zones, Timers);
 }
 
 String _decompileLUA(Uint8List LUA){
