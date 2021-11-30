@@ -19,7 +19,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 };
 
 const _PREDATOR_RELATIVE_DISPLAY_WIDTH = 170; //110;
-const _PREDATOR_RELATIVE_DISPLAY_HEIGHT = 260; //100;
+const _PREDATOR_RELATIVE_DISPLAY_HEIGHT = 300; //100;
 
 class PredatorSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -41,10 +41,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathA = Path();
-        pathA.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *   0, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  70);
-        pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  70);
-        pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
-        pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *   0, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
+        pathA.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *   0, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  98);
+        pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  98);
+        pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
+        pathA.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *   0, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
         pathA.close();
         if (size.height < 180)
           if (currentSegments['a'])
@@ -57,8 +57,8 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
         var pathB = Path();
         pathB.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *   0);
         pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *   0);
-        pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  50);
-        pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  50);
+        pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
+        pathB.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
         pathB.close();
         if (size.height < 180)
           if (currentSegments['b'])
@@ -69,10 +69,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathC = Path();
-        pathC.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  50);
-        pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  10);
-        pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  20);
-        pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  60);
+        pathC.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
+        pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  40);
+        pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  50);
+        pathC.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  90);
         pathC.close();
         if (size.height < 180)
           if (currentSegments['c'])
@@ -83,10 +83,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathD = Path();
-        pathD.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  70);
-        pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 150, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  70);
-        pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 150, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
-        pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  80);
+        pathD.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  98);
+        pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 150, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  98);
+        pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 150, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
+        pathD.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 113);
         pathD.close();
         if (size.height < 180)
           if (currentSegments['d'])
@@ -97,10 +97,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathE = Path();
-        pathE.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  90);
-        pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 100);
-        pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  20, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 140);
-        pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  10, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 130);
+        pathE.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 120);
+        pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 130);
+        pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  20, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 170);
+        pathE.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  10, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 160);
         pathE.close();
         if (size.height < 180)
           if (currentSegments['e'])
@@ -111,10 +111,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathF = Path();
-        pathF.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 100);
-        pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT *  90);
-        pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 130);
-        pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 140);
+        pathF.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 130);
+        pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 120);
+        pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 160);
+        pathF.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 170);
         pathF.close();
         if (size.height < 180)
           if (currentSegments['f'])
@@ -125,10 +125,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['g'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathG = Path();
-        pathG.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  10, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 160);
-        pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  20, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 150);
-        pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 190);
-        pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 200);
+        pathG.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  10, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 190);
+        pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  20, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 180);
+        pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 220);
+        pathG.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 230);
         pathG.close();
         if (size.height < 180)
           if (currentSegments['g'])
@@ -139,10 +139,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['h'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathH = Path();
-        pathH.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 190);
-        pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 150);
-        pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 160);
-        pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 200);
+        pathH.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 220);
+        pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 130, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 180);
+        pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 190);
+        pathH.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 230);
         pathH.close();
         if (size.height < 180)
           if (currentSegments['h'])
@@ -153,10 +153,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['i'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathI = Path();
-        pathI.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 210);
-        pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 210);
-        pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 260);
-        pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 260);
+        pathI.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 240);
+        pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 240);
+        pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  60, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
+        pathI.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  50, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
         pathI.close();
         if (size.height < 180)
           if (currentSegments['i'])
@@ -167,10 +167,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['j'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathJ = Path();
-        pathJ.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 210);
-        pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 210);
-        pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 260);
-        pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 260);
+        pathJ.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 240);
+        pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 240);
+        pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  80, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
+        pathJ.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  70, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
         pathJ.close();
         if (size.height < 180)
           if (currentSegments['j'])
@@ -181,10 +181,10 @@ class PredatorSegmentDisplay extends NSegmentDisplay {
 
         paint.color = currentSegments['k'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var pathK = Path();
-        pathK.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 210);
-        pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 210);
-        pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 260);
-        pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 260);
+        pathK.moveTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 240);
+        pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 240);
+        pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
+        pathK.lineTo(size.width / _PREDATOR_RELATIVE_DISPLAY_WIDTH *  90, size.width / _PREDATOR_RELATIVE_DISPLAY_HEIGHT * 310);
         pathK.close();
         if (size.height < 180)
           if (currentSegments['k'])
