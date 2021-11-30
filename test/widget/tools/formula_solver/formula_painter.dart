@@ -76,14 +76,18 @@ void main() {
       //math library testing
       {'formula' : '36^(1/2)', 'expectedOutput' : 'ggbbgbgb'},
       {'formula' : 'phi * 2', 'expectedOutput' : 'ggggbbg'},
-      {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'},
+      {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'}, // 1 comma
       {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
-      {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},
+      {'formula' : 'log(100)', 'expectedOutput' : 'bbbbRRRb'},
+      {'formula' : 'log(100,2,1)', 'expectedOutput' : 'bbbbRRRRRRRb'},
+      {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},  // 0 or 1 comma
       {'formula' : 'round(1.247)', 'expectedOutput' : 'bbbbbbgggggb'},
-      {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'}, //log EXAKT 1 komma; round kein oder ein komma; MIN/MAX/CS/CSI beliebig viele
-      {'formula' : 'ROUND(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
-      {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'},
-      {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'},
+      {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
+      {'formula' : 'round(1.234,2,1)', 'expectedOutput' : 'bbbbbbRRRRRRRRRb'},
+      {'formula' : 'cs(88,99)', 'expectedOutput' : 'bbbggbggb'}, // any number of commas
+      {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'}, // any number of commas
+      {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
+      {'formula' : 'MAX(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
 
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
@@ -136,16 +140,16 @@ void main() {
       {'formula' : 'sin + (12)', 'values': {'SI': '1', 'N': '3'}, 'expectedOutput' : 'rrrrbbbggb'},
       {'formula' : 'sin(12.2) + S + (I) + n + cOs( IN )', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'bbbbggggbbbbrrbbbrbbbbrrbbbbbbbrrrb'},
       {'formula' : 'sin(  )', 'values': <String, String>{}, 'expectedOutput' : 'BBBBBBB'},
-      {'formula' : 'SI(12)', 'values': <String, String>{}, 'expectedOutput' : 'RRBGGB'}, //Operator davor
+      {'formula' : 'SI(12)', 'values': <String, String>{}, 'expectedOutput' : 'RRBGGB'}, // missing operator
       {'formula' : 'SI(12)', 'values': {'S': '1', 'I': '2', 'N': '3'}, 'expectedOutput' : 'rrBGGB'},
 
       {'formula' : '+1', 'values': <String, String>{}, 'expectedOutput' : 'Bg'},
-      {'formula' : '-1', 'values': <String, String>{}, 'expectedOutput' : 'bg'},  // oder, einfacher, bg, gg
-      {'formula' : '+-1', 'values': <String, String>{}, 'expectedOutput' : 'BBg'}, // oder Bbg, Bgg
+      {'formula' : '-1', 'values': <String, String>{}, 'expectedOutput' : 'bg'},  // or gg
+      {'formula' : '+-1', 'values': <String, String>{}, 'expectedOutput' : 'BBg'}, // or Bbg, Bgg
       {'formula' : '-+1', 'values': <String, String>{}, 'expectedOutput' : 'BBg'},
       {'formula' : '1+2', 'values': <String, String>{}, 'expectedOutput' : 'gbg'},
       {'formula' : '1++2', 'values': <String, String>{}, 'expectedOutput' : 'gBBg'},
-      {'formula' : '1+-2', 'values': <String, String>{}, 'expectedOutput' : 'gbbg'}, // oder gbbg
+      {'formula' : '1+-2', 'values': <String, String>{}, 'expectedOutput' : 'gbbg'},
       {'formula' : '1-2', 'values': <String, String>{}, 'expectedOutput' : 'gbg'},
       {'formula' : '1+*2', 'values': <String, String>{}, 'expectedOutput' : 'gBBg'},
       {'formula' : '1+++2', 'values': <String, String>{}, 'expectedOutput' : 'gBBBg'},
