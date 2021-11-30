@@ -6,11 +6,12 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 class GCWSlider extends StatefulWidget {
   final String title;
   final Function onChanged;
+  final Function onChangeEnd;
   final double value;
   final double min;
   final double max;
 
-  const GCWSlider({Key key, this.title, this.value, this.onChanged, this.min, this.max}) : super(key: key);
+  const GCWSlider({Key key, this.title, this.value, this.onChanged, this.onChangeEnd, this.min, this.max}) : super(key: key);
 
   @override
   _GCWSliderState createState() => _GCWSliderState();
@@ -41,7 +42,12 @@ class _GCWSliderState extends State<GCWSlider> {
             onChanged: (value) {
               setState(() {
                 _currentValue = value;
-                widget.onChanged(_currentValue);
+                if (widget.onChanged != null) widget.onChanged(_currentValue);
+              });
+            },
+            onChangeEnd: (value) {
+              setState(() {
+                if (widget.onChangeEnd != null) widget.onChangeEnd(_currentValue);
               });
             },
             activeColor: themeColors().switchThumb2(),

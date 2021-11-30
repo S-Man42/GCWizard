@@ -169,7 +169,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         value: _similarityLevel,
         min: 0,
         max: 100,
-        onChanged: (value) {
+        onChangeEnd: (value) {
           _similarityLevel = value;
           _replaceSymbols(false);
         }
@@ -179,7 +179,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         value: _blackLevel,
         min: 0,
         max: 100,
-        onChanged: (value) {
+          onChangeEnd: (value) {
           _blackLevel = value;
           _replaceSymbols(false);
         }
@@ -222,7 +222,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         value: _similarityCompareLevel,
         min: 0,
         max: 100,
-        onChanged: (value) {
+        onChangeEnd: (value) {
           _similarityCompareLevel = value;
           _replaceSymbols(false);
         }
