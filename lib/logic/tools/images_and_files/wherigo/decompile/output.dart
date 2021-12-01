@@ -2,20 +2,18 @@
 
 class Output {
 
-  private OutputProvider out;
-  private int indentationLevel = 0;
-  private int position = 0;
+  OutputProvider out;
+  int indentationLevel = 0;
+  int position = 0;
 
-  public Output() {
+  Output() {
     this(new OutputProvider() {
 
-      @Override
-      public void print(String s) {
+      void print(String s) {
         System.out.print(s);
       }
 
-      @Override
-      public void print(byte b) {
+      void print(byte b) {
         System.out.write(b);
       }
 
@@ -27,31 +25,31 @@ class Output {
     });
   }
 
-  public Output(OutputProvider out) {
+  Output(OutputProvider out) {
     this.out = out;
   }
 
-  public void indent() {
+  void indent() {
     indentationLevel += 2;
   }
 
-  public void dedent() {
+  void dedent() {
     indentationLevel -= 2;
   }
 
-  public int getIndentationLevel() {
+  int getIndentationLevel() {
     return indentationLevel;
   }
 
-  public int getPosition() {
+  int getPosition() {
     return position;
   }
 
-  public void setIndentationLevel(int indentationLevel) {
+  void setIndentationLevel(int indentationLevel) {
     this.indentationLevel = indentationLevel;
   }
 
-  private void start() {
+  void start() {
     if(position == 0) {
       for(int i = indentationLevel; i != 0; i--) {
         out.print(" ");
@@ -60,25 +58,25 @@ class Output {
     }
   }
 
-  public void print(String s) {
+  void print(String s) {
     start();
     out.print(s);
-    position += s.length();
+    position += s.length;
   }
 
-  public void print(byte b) {
+  void print(int b) {
     start();
     out.print(b);
     position += 1;
   }
 
-  public void println() {
+  void println() {
     start();
     out.println();
     position = 0;
   }
 
-  public void println(String s) {
+  void println(String s) {
     print(s);
     println();
   }

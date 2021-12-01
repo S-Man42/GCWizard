@@ -13,14 +13,14 @@ public class BooleanIndicator extends Block {
 
   @Override
   public void addStatement(Statement statement) {
-    
+
   }
 
   @Override
   public boolean isContainer() {
     return false;
   }
-  
+
   @Override
   public boolean isUnprotected() {
     return false;
@@ -30,7 +30,7 @@ public class BooleanIndicator extends Block {
   public boolean breakable() {
     return false;
   }
-  
+
   @Override
   public int getLoopback() {
     throw new IllegalStateException();
@@ -40,5 +40,5 @@ public class BooleanIndicator extends Block {
   public void print(Decompiler d, Output out) {
     out.print("-- unhandled boolean indicator");
   }
-  
+
 }

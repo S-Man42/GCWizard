@@ -1,7 +1,6 @@
-package unluac.decompile;
 
-import java.util.HashSet;
-import java.util.Set;
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/decompiler.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/output.dart';
 
 import unluac.parse.LBoolean;
 import unluac.parse.LNil;
@@ -9,9 +8,9 @@ import unluac.parse.LNumber;
 import unluac.parse.LObject;
 import unluac.parse.LString;
 
-public class Constant {
+class Constant {
 
-  private static final Set<String> reservedWords = new HashSet<String>();
+  final Set<String> reservedWords = new HashSet<String>();
 
   static {
     reservedWords.add("and");
@@ -37,20 +36,20 @@ public class Constant {
     reservedWords.add("while");
   }
 
-  private final int type;
+  final int type;
 
-  private final boolean bool;
-  private final LNumber number;
-  private final String string;
+  final bool bool;
+  final LNumber number;
+  final String string;
 
-  public Constant(int constant) {
+  Constant(int constant) {
     type = 2;
     bool = false;
     number = LNumber.makeInteger(constant);
     string = null;
   }
 
-  public Constant(LObject constant) {
+  Constant(LObject constant) {
     if(constant instanceof LNil) {
       type = 0;
       bool = false;
@@ -76,7 +75,7 @@ public class Constant {
     }
   }
 
-  public void print(Decompiler d, Output out, boolean braced) {
+  void print(Decompiler d, Output out, bool braced) {
     switch(type) {
       case 0:
         out.print("nil");
@@ -90,7 +89,7 @@ public class Constant {
       case 3:
         int newlines = 0;
         int unprintable = 0;
-        boolean rawstring = d.getConfiguration().rawstring;
+        bool rawstring = d.getConfiguration().rawstring;
         for(int i = 0; i < string.length(); i++) {
           char c = string.charAt(i);
           if(c == '\n') {
@@ -179,34 +178,34 @@ public class Constant {
     }
   }
 
-  public boolean isNil() {
+  bool isNil() {
     return type == 0;
   }
 
-  public boolean isBoolean() {
+  bool isBoolean() {
     return type == 1;
   }
 
-  public boolean isNumber() {
+  bool isNumber() {
     return type == 2;
   }
 
-  public boolean isInteger() {
+  bool isInteger() {
     return number.value() == Math.round(number.value());
   }
 
-  public int asInteger() {
+  int asInteger() {
     if(!isInteger()) {
       throw new IllegalStateException();
     }
     return (int) number.value();
   }
 
-  public boolean isString() {
+  bool isString() {
     return type == 3;
   }
 
-  public boolean isIdentifier() {
+  bool isIdentifier() {
     if(!isString()) {
       return false;
     }
@@ -236,7 +235,7 @@ public class Constant {
     return true;
   }
 
-  public String asName() {
+  String asName() {
     if(type != 3) {
       throw new IllegalStateException();
     }

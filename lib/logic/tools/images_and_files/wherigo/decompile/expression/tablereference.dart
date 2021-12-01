@@ -1,27 +1,25 @@
-package unluac.decompile.expression;
 
-import unluac.decompile.Decompiler;
-import unluac.decompile.Output;
 
-public class TableReference extends Expression {
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/decompiler.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/expression/expression.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/output.dart';
 
-  private final Expression table;
-  private final Expression index;
+
+class TableReference extends Expression {
+
+  final Expression table;
+  final Expression index;
   
-  public TableReference(Expression table, Expression index) {
+  TableReference(this.table, this.index) {
     super(PRECEDENCE_ATOMIC);
-    this.table = table;
-    this.index = index;
   }
 
-  @Override
-  public int getConstantIndex() {
+  int getConstantIndex() {
     return Math.max(table.getConstantIndex(), index.getConstantIndex());
   }
   
-  @Override
-  public void print(Decompiler d, Output out) {
-    boolean isGlobal = table.isEnvironmentTable(d) && index.isIdentifier();
+  void print(Decompiler d, Output out) {
+    bool isGlobal = table.isEnvironmentTable(d) && index.isIdentifier();
     if(!isGlobal) {
       if(table.isUngrouped()) {
         out.print("(");
@@ -45,28 +43,23 @@ public class TableReference extends Expression {
     }
   }
 
-  @Override
-  public boolean isDotChain() {
+  bool isDotChain() {
     return index.isIdentifier() && table.isDotChain();
   }
   
-  @Override
-  public boolean isMemberAccess() {
+  bool isMemberAccess() {
     return index.isIdentifier();
   }
   
-  @Override
-  public boolean beginsWithParen() {
+  bool beginsWithParen() {
     return table.isUngrouped() || table.beginsWithParen();
   }
   
-  @Override
-  public Expression getTable() {
+  Expression getTable() {
     return table;
   }
   
-  @Override
-  public String getField() {
+  String getField() {
     return index.asName();
   }
 

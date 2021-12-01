@@ -1,100 +1,98 @@
-package unluac.decompile.expression;
 
-import java.util.List;
+//import unluac.decompile.Constant;
+//import unluac.parse.LNil;
 
-import unluac.decompile.Constant;
-import unluac.decompile.Decompiler;
-import unluac.decompile.Output;
-import unluac.decompile.target.Target;
-import unluac.parse.LNil;
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/decompiler.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/output.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/decompile/target/target.dart';
 
-abstract public class Expression {
+class Expression {
 
-  public static final int PRECEDENCE_OR = 1;
-  public static final int PRECEDENCE_AND = 2;
-  public static final int PRECEDENCE_COMPARE = 3;
-  public static final int PRECEDENCE_BOR = 4;
-  public static final int PRECEDENCE_BXOR = 5;
-  public static final int PRECEDENCE_BAND = 6;
-  public static final int PRECEDENCE_SHIFT = 7;
-  public static final int PRECEDENCE_CONCAT = 8;
-  public static final int PRECEDENCE_ADD = 9;
-  public static final int PRECEDENCE_MUL = 10;
-  public static final int PRECEDENCE_UNARY = 11;
-  public static final int PRECEDENCE_POW = 12;
-  public static final int PRECEDENCE_ATOMIC = 13;
+  int PRECEDENCE_OR = 1;
+  final int PRECEDENCE_AND = 2;
+  final int PRECEDENCE_COMPARE = 3;
+  final int PRECEDENCE_BOR = 4;
+  final int PRECEDENCE_BXOR = 5;
+  final int PRECEDENCE_BAND = 6;
+  final int PRECEDENCE_SHIFT = 7;
+  final int PRECEDENCE_CONCAT = 8;
+  final int PRECEDENCE_ADD = 9;
+  final int PRECEDENCE_MUL = 10;
+  final int PRECEDENCE_UNARY = 11;
+  final int PRECEDENCE_POW = 12;
+  final int PRECEDENCE_ATOMIC = 13;
   
-  public static final int ASSOCIATIVITY_NONE = 0;
-  public static final int ASSOCIATIVITY_LEFT = 1;
-  public static final int ASSOCIATIVITY_RIGHT = 2;
+  final int ASSOCIATIVITY_NONE = 0;
+  final int ASSOCIATIVITY_LEFT = 1;
+  final int ASSOCIATIVITY_RIGHT = 2;
   
-  public static final Expression NIL = new ConstantExpression(new Constant(LNil.NIL), -1);
+  final Expression NIL = new ConstantExpression(new Constant(LNil.NIL), -1);
   
-  public static BinaryExpression makeCONCAT(Expression left, Expression right) {
+  BinaryExpression makeCONCAT(Expression left, Expression right) {
     return new BinaryExpression("..", left, right, PRECEDENCE_CONCAT, ASSOCIATIVITY_RIGHT);
   }
   
-  public static BinaryExpression makeADD(Expression left, Expression right) {
+  BinaryExpression makeADD(Expression left, Expression right) {
     return new BinaryExpression("+", left, right, PRECEDENCE_ADD, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeSUB(Expression left, Expression right) {
+  BinaryExpression makeSUB(Expression left, Expression right) {
     return new BinaryExpression("-", left, right, PRECEDENCE_ADD, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeMUL(Expression left, Expression right) {
+  BinaryExpression makeMUL(Expression left, Expression right) {
     return new BinaryExpression("*", left, right, PRECEDENCE_MUL, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeDIV(Expression left, Expression right) {
+  BinaryExpression makeDIV(Expression left, Expression right) {
     return new BinaryExpression("/", left, right, PRECEDENCE_MUL, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeMOD(Expression left, Expression right) {
+  BinaryExpression makeMOD(Expression left, Expression right) {
     return new BinaryExpression("%", left, right, PRECEDENCE_MUL, ASSOCIATIVITY_LEFT);
   }
   
-  public static UnaryExpression makeUNM(Expression expression) {
+  UnaryExpression makeUNM(Expression expression) {
     return new UnaryExpression("-", expression, PRECEDENCE_UNARY);
   }
   
-  public static UnaryExpression makeNOT(Expression expression) {
+  UnaryExpression makeNOT(Expression expression) {
     return new UnaryExpression("not ", expression, PRECEDENCE_UNARY);
   }
   
-  public static UnaryExpression makeLEN(Expression expression) {
+  UnaryExpression makeLEN(Expression expression) {
     return new UnaryExpression("#", expression, PRECEDENCE_UNARY);
   }
   
-  public static BinaryExpression makePOW(Expression left, Expression right) {
+  BinaryExpression makePOW(Expression left, Expression right) {
     return new BinaryExpression("^", left, right, PRECEDENCE_POW, ASSOCIATIVITY_RIGHT);
   }
   
-  public static BinaryExpression makeIDIV(Expression left, Expression right) {
+  BinaryExpression makeIDIV(Expression left, Expression right) {
     return new BinaryExpression("//", left, right, PRECEDENCE_MUL, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeBAND(Expression left, Expression right) {
+  BinaryExpression makeBAND(Expression left, Expression right) {
     return new BinaryExpression("&", left, right, PRECEDENCE_BAND, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeBOR(Expression left, Expression right) {
+  BinaryExpression makeBOR(Expression left, Expression right) {
     return new BinaryExpression("|", left, right, PRECEDENCE_BOR, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeBXOR(Expression left, Expression right) {
+  BinaryExpression makeBXOR(Expression left, Expression right) {
     return new BinaryExpression("~", left, right, PRECEDENCE_BXOR, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeSHL(Expression left, Expression right) {
+  BinaryExpression makeSHL(Expression left, Expression right) {
     return new BinaryExpression("<<", left, right, PRECEDENCE_SHIFT, ASSOCIATIVITY_LEFT);
   }
   
-  public static BinaryExpression makeSHR(Expression left, Expression right) {
+  BinaryExpression makeSHR(Expression left, Expression right) {
     return new BinaryExpression(">>", left, right, PRECEDENCE_SHIFT, ASSOCIATIVITY_LEFT);
   }
   
-  public static UnaryExpression makeBNOT(Expression expression) {
+  UnaryExpression makeBNOT(Expression expression) {
     return new UnaryExpression("~", expression, PRECEDENCE_UNARY);
   }
   
@@ -102,23 +100,23 @@ abstract public class Expression {
    * Prints out a sequences of expressions with commas, and optionally
    * handling multiple expressions and return value adjustment.
    */
-  public static void printSequence(Decompiler d, Output out, List<Expression> exprs, boolean linebreak, boolean multiple) {
+  void printSequence(Decompiler d, Output out, List<Expression> exprs, bool linebreak, bool multiple) {
     int n = exprs.size();
     int i = 1;
-    for(Expression expr : exprs) {
-      boolean last = (i == n);
-      if(expr.isMultiple()) {
+    for (int i = 0; i < exprs.length; i++) {
+      bool last = (i == n);
+      if(exprs[i].isMultiple()) {
         last = true;
       }
       if(last) {
         if(multiple) {
-          expr.printMultiple(d, out);
+          exprs[i].printMultiple(d, out);
         } else {
-          expr.print(d, out);
+          exprs[i].print(d, out);
         }
         break;
       } else {
-        expr.print(d, out);
+        exprs[].print(d, out);
         out.print(",");
         if(linebreak) {
           out.println();
@@ -130,18 +128,18 @@ abstract public class Expression {
     }
   }
   
-  public final int precedence;
+  final int precedence;
   
-  public Expression(int precedence) {
+  Expression(int precedence) {
     this.precedence = precedence;
   }
   
-  protected static void printUnary(Decompiler d, Output out, String op, Expression expression) {
+  void printUnary(Decompiler d, Output out, String op, Expression expression) {
     out.print(op);
     expression.print(d, out);
   }
   
-  protected static void printBinary(Decompiler d, Output out, String op, Expression left, Expression right) {
+  void printBinary(Decompiler d, Output out, String op, Expression left, Expression right) {
     left.print(d, out);
     out.print(" ");
     out.print(op);
@@ -149,14 +147,14 @@ abstract public class Expression {
     right.print(d, out);
   }
   
-  abstract public void print(Decompiler d, Output out);
+  void print(Decompiler d, Output out);
   
   /**
    * Prints the expression in a context where it is surrounded by braces.
    * (Thus if the expression would begin with a brace, it must be enclosed
    * in parentheses to avoid ambiguity.)
    */
-  public void printBraced(Decompiler d, Output out) {
+  void printBraced(Decompiler d, Output out) {
     print(d, out);
   }
   
@@ -165,7 +163,7 @@ abstract public class Expression {
    * (Thus, if an expression that normally could return multiple values
    * doesn't, it should use parens to adjust to 1.)
    */
-  public void printMultiple(Decompiler d, Output out) {
+  void printMultiple(Decompiler d, Output out) {
     print(d, out);
   }
   
@@ -173,21 +171,21 @@ abstract public class Expression {
    * Determines the index of the last-declared constant in this expression.
    * If there is no constant in the expression, return -1.
    */
-  abstract public int getConstantIndex();
+  int getConstantIndex();
   
-  public boolean beginsWithParen() {
+  bool beginsWithParen() {
     return false;
   }
   
-  public boolean isNil() {
+  bool isNil() {
     return false;
   }
   
-  public boolean isClosure() {
+  bool isClosure() {
     return false;
   }
   
-  public boolean isConstant() {
+  bool isConstant() {
     return false;
   }
   
@@ -198,32 +196,32 @@ abstract public class Expression {
    * e.g.
    *  (a+b).c; ("asdf"):gsub()
    */
-  public boolean isUngrouped() {
+  bool isUngrouped() {
     return false;
   }
   
   // Only supported for closures
-  public boolean isUpvalueOf(int register) {
+  bool isUpvalueOf(int register) {
     throw new IllegalStateException();
   }
   
-  public boolean isBoolean() {
+  bool isBoolean() {
     return false;
   }
   
-  public boolean isInteger() {
+  bool isInteger() {
     return false;
   }
   
-  public int asInteger() {
+  int asInteger() {
     throw new IllegalStateException();
   }
   
-  public boolean isString() {
+  bool isString() {
     return false;
   }
   
-  public boolean isIdentifier() {
+  bool isIdentifier() {
     return false;
   }
   
@@ -231,58 +229,58 @@ abstract public class Expression {
    * Determines if this can be part of a function name.
    * Is it of the form: {Name . } Name
    */
-  public boolean isDotChain() {
+  bool isDotChain() {
     return false;
   }
   
-  public int closureUpvalueLine() {
+  int closureUpvalueLine() {
     throw new IllegalStateException();
   }
   
-  public void printClosure(Decompiler d, Output out, Target name) {
+  void printClosure(Decompiler d, Output out, Target name) {
     throw new IllegalStateException();
   }
   
-  public String asName() {
+  String asName() {
     throw new IllegalStateException();
   }
   
-  public boolean isTableLiteral() {
+  bool isTableLiteral() {
     return false;
   }
   
-  public boolean isNewEntryAllowed() {
+  bool isNewEntryAllowed() {
     throw new IllegalStateException();
   }
   
-  public void addEntry(TableLiteral.Entry entry) {
+  void addEntry(TableLiteral.Entry entry) {
     throw new IllegalStateException();
   }
   
   /**
    * Whether the expression has more than one return stored into registers.
    */
-  public boolean isMultiple() {
+  bool isMultiple() {
     return false;
   }
   
-  public boolean isMemberAccess() {
+  bool isMemberAccess() {
     return false;
   }
   
-  public Expression getTable() {
+  Expression getTable() {
     throw new IllegalStateException();
   }
   
-  public String getField() {
+  String getField() {
     throw new IllegalStateException();
   }  
   
-  public boolean isBrief() {
+  bool isBrief() {
     return false;
   }
   
-  public boolean isEnvironmentTable(Decompiler d) {
+  bool isEnvironmentTable(Decompiler d) {
     return false;
   }
   

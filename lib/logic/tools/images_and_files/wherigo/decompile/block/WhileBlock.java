@@ -1,7 +1,3 @@
-package unluac.decompile.block;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import unluac.decompile.Decompiler;
 import unluac.decompile.Output;
