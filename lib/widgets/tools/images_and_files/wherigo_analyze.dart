@@ -17,7 +17,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 
@@ -36,6 +36,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   var _cartridgeData = WHERIGO.HEADER;
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
   int _mediaFile = 1;
+
+  var _currentByteCodeMode = GCWSwitchPosition.right;
 
   AudioCache audioCache = AudioCache();
   AudioPlayer advancedPlayer = AudioPlayer();
@@ -123,7 +125,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (_bytes == null) return null;
 
     _cartridge = getCartridge(_bytes);
-//    String _hexData = file2hexstring(bytes);
 //    return GCWText(
 //      text: _bytes.join(' '),
 //      style: gcwMonotypeTextStyle(),
@@ -193,10 +194,27 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children: columnedMultiLineOutput(context, _outputHeader));
         break;
       case WHERIGO.LUABYTECODE:
-        return GCWText(
-          // text: file2hexstring(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
-          text: _cartridge
-              .MediaFilesContents[_mediaFile].MediaFileBytes.join(' '),
+        return Column(
+          children: <Widget>[
+            GCWTwoOptionsSwitch(
+              value: _currentByteCodeMode,
+              rightValue: i18n(context, 'wherigo_bytecode_decimal'),
+              leftValue: i18n(context, 'wherigo_bytecode_hexadecimal'),
+              onChanged: (value) {
+                setState(() {
+                  _currentByteCodeMode = value;
+                });
+              },
+            ),
+            _currentByteCodeMode == GCWSwitchPosition.right
+            ? GCWText(
+              text: _cartridge
+                  .MediaFilesContents[_mediaFile].MediaFileBytes.join(' '),
+              )
+            : GCWText(
+              text: file2hexstring(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
+              )
+          ],
         );
         break;
       case WHERIGO.MEDIA:
