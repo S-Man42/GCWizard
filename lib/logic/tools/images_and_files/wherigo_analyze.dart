@@ -91,6 +91,7 @@ import 'dart:ffi';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS}
@@ -445,10 +446,10 @@ WherigoCartridge getCartridge(Uint8List byteList){
   // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
   MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
   MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
-  //for (int i = offset; i <= ObjectLength; i++){
-  //  Objects[0].Bytes.add(byteList[i]);
-  //}
   offset = offset + MediaFileLength;
+
+  // save LUAByteCode to device with filename "cartridge.luac"
+  _exportLUACFile(MediaFilesContents[0].MediaFileBytes);
 
   // read Objects
   for (int i = 1; i < NumberOfObjects; i++){
@@ -466,6 +467,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
   // decompile LUA
   LUA = _decompileLUA(MediaFilesContents[0].MediaFileBytes);
 
+  // analyze cartridge with String LUA
   Characters = _getCharactersFromCartridge(LUA);
   Items = _getItemsFromCartridge(LUA);
   Tasks = _getTasksFromCartridge(LUA);
@@ -488,6 +490,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
 }
 
 String _decompileLUA(Uint8List LUA){
+  // online solution via REST-API
   return '';
 }
 
@@ -645,3 +648,8 @@ Powered by WordPress. Designed by Yossy's web service.
 
 
 }*/
+
+_exportLUACFile(Uint8List data) async {
+  //var value = await saveByteDataToFile(context, data, "cartridge.luac");
+  var value = await createTmpFile("cartridge.luac", data);
+}

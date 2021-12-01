@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/wherigo_analyze.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -115,28 +116,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     );
   }
 
-  _exportLUACFile(BuildContext context, Uint8List data) async {
-    //var value = await saveByteDataToFile(context, data, "cartridge.luac");
-    var value = await createTmpFile("cartridge.luac", data);
-  }
-
-
   _buildOutput() {
     if (_bytes == null) return null;
 
     _cartridge = getCartridge(_bytes);
-//    return GCWText(
-//      text: _bytes.join(' '),
-//      style: gcwMonotypeTextStyle(),
-//    );
-
-    // save LUAByteCode to device with filename "cartridge.luac"
-    _exportLUACFile(context, _cartridge
-        .MediaFilesContents[_mediaFile].MediaFileBytes);
-
-    // rest-api to unluac => String LUA
-
-    // analyze cartridge with String LUA
 
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
@@ -208,11 +191,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ),
             _currentByteCodeMode == GCWSwitchPosition.right
             ? GCWText(
-              text: _cartridge
+                text: _cartridge
                   .MediaFilesContents[_mediaFile].MediaFileBytes.join(' '),
+                style: gcwMonotypeTextStyle(),
               )
             : GCWText(
-              text: file2hexstring(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
+                text: insertSpaceEveryNthCharacter(file2hexstring(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes), 2),
+                style: gcwMonotypeTextStyle(),
               )
           ],
         );
@@ -254,6 +239,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   GCWText(
                     text: _getTextFromBytelist(_cartridge
                         .MediaFilesContents[_mediaFile].MediaFileBytes),
+                    style: gcwMonotypeTextStyle(),
                   ),
                 ],
               ),
