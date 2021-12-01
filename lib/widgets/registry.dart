@@ -3099,7 +3099,7 @@ initializeRegistry(BuildContext context) {
       'symbol_postnet',
     ]),
     GCWSymbolTableTool(symbolKey: 'predator', symbolSearchStrings: [
-      'symbol_predator',
+      'predator',
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
