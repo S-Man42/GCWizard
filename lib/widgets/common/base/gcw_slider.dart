@@ -61,7 +61,8 @@ class _GCWSliderState extends State<GCWSlider> {
           onPressed: () {
             setState(() {
               _currentValue = _initialValue;
-              widget.onChanged(_currentValue);
+              if (widget.onChanged != null) widget.onChanged(_currentValue);
+              if (widget.onChangeEnd != null) widget.onChangeEnd(_currentValue);
             });
           },
         )

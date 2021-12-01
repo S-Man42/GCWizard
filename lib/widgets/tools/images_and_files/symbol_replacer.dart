@@ -141,17 +141,48 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   _replaceSymbols(bool useAsyncExecuter) async {
 
-    useAsyncExecuter = useAsyncExecuter || (_symbolImage?.symbolGroups == null) || (_symbolImage.symbolGroups.isEmpty);
-    var _jobData = ReplaceSymbolsInput(
-      image: _platformFile?.bytes,
-      blackLevel: _blackLevel.toInt(),
-      similarityLevel: _similarityLevel,
-      symbolImage: _symbolImage,
-      compareSymbols: _currentSymbolTableViewData?.data?.images,
-      similarityCompareLevel: _similarityCompareLevel
-    );
+    useAsyncExecuter = ((useAsyncExecuter ||
+        (_symbolImage?.symbolGroups == null) ||
+        (_symbolImage.symbolGroups.isEmpty)) &&
+        _platformFile?.bytes.length > 100000);
 
-    _showOutput(await replaceSymbolsAsync(GCWAsyncExecuterParameters(_jobData)));
+    if (!useAsyncExecuter) {
+      var _jobData = await _buildJobDataReplacer();
+
+      _showOutput(await replaceSymbolsAsync(_jobData));
+    } else {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Center(
+            child: Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: replaceSymbolsAsync,
+                parameter: _buildJobDataReplacer(),
+                onReady: (data) => _showOutput(data),
+                isOverlay: true,
+              ),
+              height: 220,
+              width: 150,
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobDataReplacer() async {
+    return GCWAsyncExecuterParameters(
+        ReplaceSymbolsInput(
+          image: _platformFile?.bytes,
+          blackLevel: _blackLevel.toInt(),
+          similarityLevel: _similarityLevel,
+          symbolImage: _symbolImage,
+          compareSymbols: _currentSymbolTableViewData?.data?.images,
+          similarityCompareLevel: _similarityCompareLevel
+        )
+    );
   }
 
   _showOutput(SymbolImage output) {
@@ -181,7 +212,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         max: 100,
           onChangeEnd: (value) {
           _blackLevel = value;
-          _replaceSymbols(false);
+          _replaceSymbols(true);
         }
       ),
       _buildSymbolTableDropDown(),
