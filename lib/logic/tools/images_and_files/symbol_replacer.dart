@@ -146,11 +146,15 @@ class SymbolImage {
     if (lines.isEmpty)
       _splitToLines();
 
-    if (symbols.isEmpty)
+    if (symbols.isEmpty) {
       lines.forEach((line) {
         line._splitLineToSymbols( gap, _blackLevel);
         symbols.addAll(line.symbols);
       });
+
+      var referenceWidth = _referenceWidth(symbols);
+      if (referenceWidth != null) _mergeSymbols(referenceWidth);
+    }
 
     if (symbolGroups.isEmpty && groupSymbols)
       _groupSymbols();
@@ -191,6 +195,10 @@ class SymbolImage {
         if (symbolData != null && symbolData.bytes != null) {
           var symbolImage = SymbolImage(symbolData.bytes);
           symbolImage.splitAndGroupSymbols(_blackLevel, _similarityLevel, gap: _gap, groupSymbols: false);
+          if (symbolImage.symbols != null) {
+            for (var i = symbolImage.symbols.length - 2; i >= 0; i-- )
+              symbolImage.mergeSymbol(symbolImage.symbols[i], symbolImage.symbols[i + 1], null);
+          }
 
           symbolImage.symbols.forEach((element) {
             var symbolGroup = SymbolGroup();
@@ -210,7 +218,7 @@ class SymbolImage {
   }
 
   _useCompareSymbols(SymbolImage compareSymbolImage) {
-    var imageHashing = new ImageHashing();
+    var imageHashing = ImageHashing();
 
     for (int i = 0; i < compareSymbolImage.symbols.length; i++)
       compareSymbolImage.symbols[i].hash = imageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
@@ -297,7 +305,7 @@ class SymbolImage {
   }
 
   _cutLine(int startIndex, int endIndex) {
-    var rect = new ui.Rect.fromLTWH(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
+    var rect = ui.Rect.fromLTWH(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
 
     if (rect.height > 0)
       lines.add(_SymbolRow(rect,
@@ -310,7 +318,7 @@ class SymbolImage {
   }
 
   _groupSymbols() {
-    var imageHashing = new ImageHashing();
+    var imageHashing = ImageHashing();
 
     for (int i = 0; i < symbols.length; i++)
       symbols[i].hash = imageHashing.AverageHash(symbols[i].bmp);
@@ -330,7 +338,7 @@ class SymbolImage {
       }
 
       if ((maxPercent < _similarityLevel) | (maxPercentSymbolIndex > i)) {
-        var group = new SymbolGroup();
+        var group = SymbolGroup();
         symbolGroups.add(group);
         symbolGroups[symbolGroups.length - 1].symbols.add(symbol1);
         symbol1.symbolGroup = group;
@@ -357,6 +365,62 @@ class SymbolImage {
 
   static bool _blackPixel(int color, int blackLevel) {
     return (Image.getLuminance(color) <= blackLevel);
+  }
+
+  static int _referenceWidth(List<_Symbol> symbols) {
+    int width = 0;
+    if (symbols == null) return null;
+
+    symbols.forEach((symbol) {width = max (symbol.bmp.width, width);});
+
+    return width;
+  }
+
+  _mergeSymbols( int referenceWidth) {
+    if (lines == null) return;
+    if (referenceWidth == null) return;
+
+    const widthTolerance = 1.05;
+    const distanceTolerance = 0.1;
+    var maxWidth = referenceWidth * widthTolerance;
+    var maxDistance = referenceWidth * distanceTolerance;
+
+    lines.forEach((line) {
+      for (var i = line.symbols.length - 2; i >= 0; i-- ) {
+        var sumWidth = line.symbols[i + 1].refPoint.dx + line.symbols[i + 1].bmp.width - line.symbols[i].refPoint.dx;
+        var distance = line.symbols[i + 1].refPoint.dx - (line.symbols[i].refPoint.dx + line.symbols[i].bmp.width);
+        if ((sumWidth < maxWidth) && (distance < maxDistance)) {
+          mergeSymbol(line.symbols[i], line.symbols[i + 1], line);
+        }
+      }
+    });
+  }
+
+  mergeSymbol(_Symbol symbol1, _Symbol symbol2, _SymbolRow line) {
+    var box = ui.Rect.fromLTRB(
+      min(symbol1.refPoint.dx, symbol2.refPoint.dx),
+      min(symbol1.refPoint.dy, symbol2.refPoint.dy),
+      max(symbol1.refPoint.dx + symbol1.bmp.width, symbol2.refPoint.dx + symbol2.bmp.width),
+      max(symbol1.refPoint.dy + symbol1.bmp.height, symbol2.refPoint.dy + symbol2.bmp.height),
+    );
+
+    symbol1.refPoint = Offset(box.left, box.top);
+    symbol1.bmp = Image.copyCrop(_bmp,
+        box.left.toInt(),
+        box.top.toInt(),
+        box.width.toInt(),
+        box.height.toInt());
+
+    if (symbolGroups != null) {
+      for (SymbolGroup group in symbolGroups) {
+        if (group?.symbols?.contains(symbol2)) {
+          group.symbols.remove(symbol2);
+          break;
+        }
+      }
+    }
+    symbols?.remove(symbol2);
+    line?.symbols?.remove(symbol2);
   }
 }
 
@@ -439,7 +503,7 @@ class _SymbolRow {
   }
 
   ui.Rect _cutSymbol(int startIndex, int endIndex, int blackLevel) {
-    var rect = new ui.Rect.fromLTWH(
+    var rect = ui.Rect.fromLTWH(
         startIndex.toDouble(),
         0,
         (endIndex - startIndex).toDouble(),
@@ -449,7 +513,7 @@ class _SymbolRow {
       var box = _boundingBox(bmp, rect, blackLevel);
       var refPoint = ui.Offset(box.left, box.top);
       refPoint = refPoint.translate(size.left, size.top);
-      symbols.add(new _Symbol(refPoint,
+      symbols.add(_Symbol(refPoint,
           Image.copyCrop(bmp,
               box.left.toInt(),
               box.top.toInt(),
@@ -539,8 +603,8 @@ class SymbolGroup {
     var maxWidth = 999999999.0;
 
     do {
-      size = new ui.Offset(0, 0);
-      rowSize = new ui.Offset(0, 0);
+      size = ui.Offset(0, 0);
+      rowSize = ui.Offset(0, 0);
       symbols.forEach((symbol) {
         if (rowSize.dx + symbol.bmp.width + gap > maxWidth) {
           size = size.translate(max(rowSize.dx, size.dx) - size.dx, rowSize.dy);
