@@ -43,6 +43,7 @@ class FormulaSolverFormulas extends StatefulWidget {
 
 class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var formulaParser = FormulaParser();
+  var formulaPainter = FormulaPainter();
 
   var _newFormulaController;
   var _editFormulaController;
@@ -466,7 +467,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return SelectableText.rich(TextSpan(
       children:
           _buildTextSpans(formula,
-              paintFormula(formula, values, formulaIndex, Prefs.getBool('formulasolver_coloredformulas'))
+              formulaPainter.paintFormula(formula, values, formulaIndex, Prefs.getBool('formulasolver_coloredformulas'))
           )
     ));
   }
