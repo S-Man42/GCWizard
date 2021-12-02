@@ -327,6 +327,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/search_strings.dart';
 
@@ -2527,6 +2528,11 @@ initializeRegistry(BuildContext context) {
     ]),
 
     //Symbol Tables **********************************************************************************************
+    GCWTool(tool: SymbolTableExamplesSelect(), autoScroll: false, i18nPrefix: 'symboltablesexamples', searchKeys: [
+      'symbol',
+      'symboltablesexamples',
+    ]),
+
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
       'symbol_adlam',
     ]),
