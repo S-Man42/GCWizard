@@ -100,8 +100,8 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
               clipBehavior: Clip.hardEdge,
               children: <Widget>[
                 GCWSymbolContainer(
-                  borderColor: image.selected ? colors.dialog() : null,
-                  borderWidth: image.selected ? 5.0 : null,
+                  borderColor: image.primarySelected ? colors.dialog() : (image.secondarySelected ? colors.focused() : null),
+                  borderWidth: image.primarySelected || image.secondarySelected ? 5.0 : null,
                   symbol: Image.memory(image.bytes),
                 ),
                 _currentShowOverlayedSymbols
@@ -125,8 +125,13 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
             ),
             onTap: () {
               setState(() {
-                if (selectable) image.selected = !image.selected;
+                if (selectable) {
+                  image.primarySelected = !image.primarySelected;
+                  image.secondarySelected = false;
+                }
+
                 onSymbolTapped(symbolText, image);
+
               });
             },
           );

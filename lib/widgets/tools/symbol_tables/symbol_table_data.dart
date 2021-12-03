@@ -177,7 +177,8 @@ class _SymbolTableConstants {
 class SymbolData {
   final String path;
   final List<int> bytes;
-  bool selected = false;
+  bool primarySelected = false;
+  bool secondarySelected = false;
   final String displayName;
 
   SymbolData({this.path, this.bytes, this.displayName});
