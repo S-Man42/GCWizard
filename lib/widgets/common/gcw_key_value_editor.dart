@@ -110,6 +110,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   var _currentEditedFormulaValueTypeInput = FormulaValueType.FIXED;
   var _currentEditId;
 
+  FocusNode _focusNodeEditValue;
+
   @override
   void initState() {
     super.initState();
@@ -125,6 +127,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     _editKeyController = TextEditingController(text: _currentEditedKey);
     _editValueController = TextEditingController(text: _currentEditedValue);
+
+    _focusNodeEditValue = FocusNode();
   }
 
   @override
@@ -137,6 +141,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     _editKeyController.dispose();
     _editValueController.dispose();
+
+    _focusNodeEditValue.dispose();
 
     super.dispose();
   }
@@ -368,8 +374,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               child: _currentEditId == _getEntryId(entry)
                   ? GCWTextField(
                       controller: _editValueController,
+                      focusNode: _focusNodeEditValue,
                       inputFormatters: widget.valueInputFormatters,
-                      autofocus: true,
                       onChanged: (text) {
                         setState(() {
                           _currentEditedValue = text;
@@ -476,6 +482,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             iconData: Icons.edit,
             onPressed: () {
               setState(() {
+                FocusScope.of(context).requestFocus(_focusNodeEditValue);
+
                 _currentEditId = _getEntryId(entry);
                 _editKeyController.text = _getEntryKey(entry);
                 _editValueController.text = _getEntryValue(entry);
