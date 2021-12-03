@@ -107,9 +107,9 @@ class _GpxWriter {
             });
           });
         } else {
-          _writeElement(builder, 'name', stageName);
+          _writeElement(builder, 'name', wpt.markerText);
           _writeElement(builder, 'cmt', '');
-          _writeElement(builder, 'desc', wpt.markerText);
+          _writeElement(builder, 'desc', '');
           _writeElement(builder, 'sym', 'Virtual Stage');
           _writeElement(builder, 'type', 'Waypoint|Virtual Stage');
           builder.element('gsak:wptExtension', nest: () {
