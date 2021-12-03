@@ -588,7 +588,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   }
 
   Widget _buildFormulaText(String formula, List<FormulaValue> values, int formulaIndex) {
-    //TODO: paintFormula gets List<FormulaValue> as well.
     Map<String, String> vals = {};
     values.forEach((value) {
       vals.putIfAbsent(value.key, () => value.value);
