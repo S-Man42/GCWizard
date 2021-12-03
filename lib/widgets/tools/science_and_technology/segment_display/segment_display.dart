@@ -207,7 +207,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction: (displayedSegments, readOnly, tapeStyle) {
+        segmentFunction: (displayedSegments, readOnly) {
           switch (widget.type) {
             case SegmentDisplayType.SEVEN:
               return SevenSegmentDisplay(

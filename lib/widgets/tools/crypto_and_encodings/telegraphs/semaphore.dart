@@ -140,8 +140,8 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
-          return SemaphoreSegmentDisplay(segments: displayedSegments, readOnly: readOnly,tapeStyle: tapeStyle);
+        segmentFunction:(displayedSegments, readOnly) {
+          return SemaphoreSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true

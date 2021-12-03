@@ -52,11 +52,11 @@ class CCITTSegmentDisplay extends NSegmentDisplay {
         var pointSize = size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * _CCITT_RADIUS;
 
         circles.forEach((key, value) {
-
-          canvas.touchCanvas.drawCircle(
+          paint.color = Colors.black;
+              canvas.touchCanvas.drawCircle(
               Offset(size.width / _CCITT_RELATIVE_DISPLAY_WIDTH * (value[0] ),
                   size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * (value[1]) ),
-              pointSize + 1,
+              pointSize + 2,
               paint);
 
           if (size.height < 50)
@@ -79,10 +79,11 @@ class CCITTSegmentDisplay extends NSegmentDisplay {
 
         });
 
+        paint.color = Colors.grey;
         canvas.touchCanvas.drawCircle(
             Offset(size.width / _CCITT_RELATIVE_DISPLAY_WIDTH * 70.0,
                 size.height / _CCITT_RELATIVE_DISPLAY_HEIGHT * 20.0),
             pointSize / 2.0,
-            defaultSegmentPaint());
+            paint);
       });
 }

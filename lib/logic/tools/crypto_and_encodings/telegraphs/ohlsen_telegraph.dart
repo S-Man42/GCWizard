@@ -5,55 +5,55 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 final CODEBOOK_OHLSEN = {
-  '000' : 'Seilere sees, som kommme vestlig fra.',
-  '001' : 'Seilere sees, som kommer nord fra.',
-  '002' : 'Seilere sees, som kommer sydlig fra.',
-  '003' : 'Det er Krigsskibe, som sees.',
-  '004' : 'Skibene, som sees, ere fiend tlige.',
-  '005' : 'Skibene, som sees, ere danske.',
-  '006' : 'De Skibe, som sees, bestaae af Orlogsskibe, Fregatter og andre Krigsfartøier og ere i Antal.',
-  '007' : 'De Skibe, som sees, ere Orlogsskibe.',
-  '008' : 'De Skibe, som sees, ere Fregatter',
-  '009' : 'De Skibe, som sees , ere smaa Krigsskibe og bestaae af Brigger og mindre Fartøier.',
-  '010' : 'De Skibe, som sees, ere Stevnbevæpnede Roe Fartøier.',
-  '011' : 'Med Skibene følge en Transportflaade',
-  '012' : 'De signalerede Skibe seile ind efter',
-  '013' : 'De signalerede Skibe seile nord efter.',
-  '014' : 'De signalerede Skibe styre mod Landet.',
-  '015' : 'De signalerede Skibe styre fra Landet.',
-  '016' : 'De signalerede Skibe løbe ind i en havn sønden for mig.',
-  '017' : 'De signalerede Skibe løbe ind i en havn norden for mig.',
-  '018' : 'De fiendtlige Skibe slaaes med vore.',
-  '019' : 'Vore Skibe behøve Undsætning og Hielp.',
-  '020' : 'Vore Skibe have fordeel før Fienden.',
-  '021' : 'Fienden giør Landgang sønden for mig.',
-  '022' : 'Fienden giør Landgang norden for mig.',
-  '023' : 'Den fiendtlige Landgang skeer med mindre end end 100 Mand. ',
-  '024' : 'Den fiendtlige Landgang skeer med over 100 Mand.',
-  '025' : 'Den fiendtlige Landgang skeer med nogle Hundrede Mand.',
-  '026' : 'Den fiendtlige Landgang skeer med 1000 Mand og derover.',
-  '027' : 'Fartøier ere ankomne fra Danmark.',
-  '028' : 'Fartøier ere ankomne fra Archangel.',
-  '029' : 'Fienden har jaget og taget et af vore Krigsfartøier.',
-  '030' : 'Vore Krigsfartøier have bemæstret dem et fiendtligt Fartøi.',
-  '031' : 'Fienden jager et -dansk Fartøi, som trænger til Undsæ tning.',
-  '032' : 'De signalerede Skibe ere ud af Sigte.',
-  '033' : 'De signalerede Skibe holde det krydsende ved Kysten.',
-  '034' : 'Den fiendtlige Landgang er bevirket.',
-  '035' : 'Den fiendtlige Landgang ere afslaaet.',
-  '036' : 'Meer Hielp maa tilsendes Kystbevogterne.',
-  '037' : 'Skydning høres sønder fra.',
-  '038' : 'Skydning høres nord fra.',
-  '039' : 'Signalet kommer fra Hovedstation	A.',
-  '040' : 'Signalet kommer fra Hovedstation	B.',
-  '041' : 'Signalet kommer fra Hovedstation	C.',
-  '042' : 'Signalet kommer fra Hovedstation	D.',
-  '043' : 'Signalet kommer fra Hovedstation	E.',
-  '044' : 'Signalet kommer fra Hovedstation	F.',
-  '045' : 'Signalet kommer fra Hovedstation	G.',
-  '046' : 'Signalet kommer fra Hovedstation	H.',
-  '047' : 'Signalet kommer fra Hovedstation	I.',
-  '048' : 'Signalet kommer fra Hovedstation	K.',
+  '000' : 'seilere sees, som kommme vestlig fra.',
+  '001' : 'seilere sees, som kommer nord fra.',
+  '002' : 'seilere sees, som kommer sydlig fra.',
+  '003' : 'det er krigsskibe, som sees.',
+  '004' : 'skibene, som sees, ere fiend tlige.',
+  '005' : 'skibene, som sees, ere danske.',
+  '006' : 'de skibe, som sees, bestaae af orlogsskibe, fregatter og andre krigsfartøier og ere i antal.',
+  '007' : 'de skibe, som sees, ere orlogsskibe.',
+  '008' : 'de skibe, som sees, ere fregatter',
+  '009' : 'de skibe, som sees , ere smaa krigsskibe og bestaae af brigger og mindre fartøier.',
+  '010' : 'de skibe, som sees, ere stevnbevæpnede roe fartøier.',
+  '011' : 'med skibene følge en transportflaade',
+  '012' : 'de signalerede skibe seile ind efter',
+  '013' : 'de signalerede skibe seile nord efter.',
+  '014' : 'de signalerede skibe styre mod Landet.',
+  '015' : 'de signalerede skibe styre fra Landet.',
+  '016' : 'de signalerede skibe løbe ind i en havn sønden for mig.',
+  '017' : 'de signalerede skibe løbe ind i en havn norden for mig.',
+  '018' : 'de fiendtlige skibe slaaes med vore.',
+  '019' : 'vore skibe behøve undsætning og hielp.',
+  '020' : 'vore skibe have fordeel før fienden.',
+  '021' : 'fienden giør landgang sønden for mig.',
+  '022' : 'fienden giør landgang norden for mig.',
+  '023' : 'den fiendtlige landgang skeer med mindre end end 100 mand. ',
+  '024' : 'den fiendtlige landgang skeer med over 100 mand.',
+  '025' : 'den fiendtlige landgang skeer med nogle hundrede mand.',
+  '026' : 'den fiendtlige landgang skeer med 1000 mand og derover.',
+  '027' : 'fartøier ere ankomne fra danmark.',
+  '028' : 'fartøier ere ankomne fra archangel.',
+  '029' : 'fienden har jaget og taget et af vore krigsfartøier.',
+  '030' : 'vore krigsfartøier have bemæstret dem et fiendtligt fartøi.',
+  '031' : 'fienden jager et -dansk fartøi, som trænger til undsæ tning.',
+  '032' : 'de signalerede skibe ere ud af Sigte.',
+  '033' : 'de signalerede skibe holde det krydsende ved kysten.',
+  '034' : 'den fiendtlige landgang er bevirket.',
+  '035' : 'den fiendtlige landgang ere afslaaet.',
+  '036' : 'meer hielp maa tilsendes kystbevogterne.',
+  '037' : 'skydning høres sønder fra.',
+  '038' : 'skydning høres nord fra.',
+  '039' : 'signalet kommer fra hovedstation	a.',
+  '040' : 'signalet kommer fra hovedstation	b.',
+  '041' : 'signalet kommer fra hovedstation	c.',
+  '042' : 'signalet kommer fra hovedstation	d.',
+  '043' : 'signalet kommer fra hovedstation	e.',
+  '044' : 'signalet kommer fra hovedstation	f.',
+  '045' : 'signalet kommer fra hovedstation	g.',
+  '046' : 'signalet kommer fra hovedstation	h.',
+  '047' : 'signalet kommer fra hovedstation	i.',
+  '048' : 'signalet kommer fra hovedstation	k.',
   '049' : '',
   '050' : '',
   '051' : '',
@@ -65,28 +65,28 @@ final CODEBOOK_OHLSEN = {
   '057' : '',
   '058' : '',
   '059' : '',
-  '060' : 'Skydning høres vester fra.',
-  '061' : 'Nordlandsfarere ere komne nord fra.',
-  '062' : 'Nordlandsfarere er kom e syd fra.',
-  '063' : 'Det er sandsynlig at Fienden vil giøre an Attaque paa Christiansund.',
-  '064' : 'Det er sandsynlig at Fienden vil trænge ind at Fiordene norden for Christiansund.',
-  '065' : 'De signalerede Skibe ere Handelsskibe, som seile eller krydse langs Kysten.',
-  '066' : 'Fienden begynder Anfaldet.',
-  '067' : 'Fienden er tilbagedrevet. ',
-  '068' : 'Vi have lidt meget.',
-  '069' : 'Vort tab er ubetydeligt.',
-  '070' : 'Efterretninger haves, at Fienden har giort et Anfald i Bergens Stift.',
-  '071' : 'Efterretninger haves, at Fienden har giort et Anfald i Christiansands Stift.',
-  '072' : 'Efterretninger haves, at Fienden har giort et Anfald i Aggershuus Stift.',
-  '073' : 'Fienden har seiret.',
-  '074' : 'Fienden er afslaaet.',
-  '075' : 'Et dansk eller norsk Skib er strandet og gives Hielp.',
-  '076' : 'Et fiendtlig Skib er strandet paa Kysten; man beimægtiger sig Vraget og Folkene .',
-  '077' : 'Det strandede Skib er betydeligt.',
-  '078' : 'Det strandede Skib er ubetydeljgt.',
-  '079' : 'En Konvoi ligger færdig, til at omgaae Stat sønder efter.',
-  '080' : 'I dette Øieblik afgaar Konvoien sønder efter.',
-  '081' : 'I Dag, indtil Øieblikket; have ingen Seilere viist sig paa Kysten.',
+  '060' : 'skydning høres vester fra.',
+  '061' : 'nordlandsfarere ere komne nord fra.',
+  '062' : 'nordlandsfarere er kom e syd fra.',
+  '063' : 'det er sandsynlig at fienden vil giøre an attaque paa christiansund.',
+  '064' : 'det er sandsynlig at fienden vil trænge ind at Fiordene norden for christiansund.',
+  '065' : 'de signalerede Skibe ere handelsskibe, som seile eller krydse langs kysten.',
+  '066' : 'fienden begynder anfaldet.',
+  '067' : 'fienden er tilbagedrevet. ',
+  '068' : 'vi have lidt meget.',
+  '069' : 'vort tab er ubetydeligt.',
+  '070' : 'efterretninger haves, at fienden har giort et anfald i bergens stift.',
+  '071' : 'efterretninger haves, at fienden har giort et anfald i christiansands stift.',
+  '072' : 'efterretninger haves, at fienden har giort et anfald i aggershuus stift.',
+  '073' : 'fienden har seiret.',
+  '074' : 'fienden er afslaaet.',
+  '075' : 'et dansk eller norsk Skib er strandet og gives hielp.',
+  '076' : 'et fiendtlig Skib er strandet paa kysten; man beimægtiger sig vraget og folkene .',
+  '077' : 'det strandede skib er betydeligt.',
+  '078' : 'det strandede skib er ubetydeljgt.',
+  '079' : 'en konvoi ligger færdig, til at omgaae stat sønder efter.',
+  '080' : 'i dette Øieblik afgaar konvoien sønder efter.',
+  '081' : 'i dag, indtil Øieblikket; have ingen seilere viist sig paa kysten.',
   '082' : '',
   '083' : '',
   '084' : '',
@@ -274,6 +274,9 @@ List<List<String>> encodeOhlsenTelegraph(String input) {
   List<List<String>> encodedText = [];
   var CODEBOOK = switchMapKeyValue(CODEBOOK_OHLSEN);
 
+  if (CODEBOOK[input] != null)
+    encodedText.add(_buildShutters(CODEBOOK[input]));
+
   input.split('').forEach((element) {
     if (CODEBOOK[element] != null)
         encodedText.add(CODEBOOK[element].split(''));
@@ -339,6 +342,7 @@ List<String> _stringToSegment(String input){
   return result;
 }
 
+
 String segmentToCode(List<String> segment){
   int a = 0;
 
@@ -395,7 +399,7 @@ print('_buildShutters from '+segments);
         codepoint = codepoint - 6;
         break;
       case 7:
-        resultElement.add('c1o');
+        resultElement.add('b1u');
         resultElement.add('c1u');
         codepoint = codepoint - 7;
         break;
@@ -467,8 +471,8 @@ print('_buildShutters from '+segments);
         codepoint = codepoint - 60;
         break;
       case 70:
-        resultElement.add('b2o');
-        resultElement.add('b2u');
+        resultElement.add('c2o');
+        resultElement.add('a2u');
         codepoint = codepoint - 70;
         break;
       case 80:
@@ -477,8 +481,8 @@ print('_buildShutters from '+segments);
         codepoint = codepoint - 80;
         break;
       case 90:
-        resultElement.add('c2o');
-        resultElement.add('c2u');
+        resultElement.add('a2u');
+        resultElement.add('b2u');
         codepoint = codepoint - 90;
         break;
     }

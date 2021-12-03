@@ -179,8 +179,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
-          return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+        segmentFunction:(displayedSegments, readOnly) {
+          return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true
@@ -189,7 +189,13 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {//encode
+      print(_currentEncodeInput);
       List<List<String>> segments = encodeOhlsenTelegraph(_currentEncodeInput.toLowerCase());
+      print(segments);
+      List<String> code = [];
+      segments.forEach((element) {
+        code.add(segmentToCode(element));
+      });
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -197,7 +203,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
             text: i18n(context, 'telegraph_codepoints'),
           ),
           GCWOutputText(
-            text: _buildCodelets(segments),
+            //text: _buildCodelets(segments),
+            text: code.join(' '),
           )
         ],
       );

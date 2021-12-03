@@ -163,8 +163,8 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       return Column(
         children: <Widget>[
           GCWSegmentDisplayOutput(
-              segmentFunction: (displayedSegments, readOnly, tapeStyle) {
-                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+              segmentFunction: (displayedSegments, readOnly) {
+                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
               segments: segments,
               readOnly: true),
@@ -189,8 +189,8 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       return Column(
         children: <Widget>[
           GCWSegmentDisplayOutput(
-              segmentFunction: (displayedSegments, readOnly, tapeStyle) {
-                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+              segmentFunction: (displayedSegments, readOnly) {
+                return _ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
               },
               segments: segments['displays'],
               readOnly: true),

@@ -14,22 +14,22 @@ import 'base/gcw_iconbutton.dart';
 import 'gcw_exported_file_dialog.dart';
 import 'gcw_text_divider.dart';
 
-class GCWSegmentDisplayOutput extends StatefulWidget {
+class GCWPunchtapeSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
   final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
 
-  const GCWSegmentDisplayOutput(
+  const GCWPunchtapeSegmentDisplayOutput(
       {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
       : super(key: key);
 
   @override
-  _GCWSegmentDisplayOutputState createState() => _GCWSegmentDisplayOutputState();
+  _GCWPunchtapeSegmentDisplayOutputState createState() => _GCWPunchtapeSegmentDisplayOutputState();
 }
 
-class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
+class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDisplayOutput> {
   var _currentUpsideDown = false;
   List<NSegmentDisplay> _displays;
 
@@ -70,7 +70,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
                 iconData: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
-                  await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
+                  await buildPunchtapeSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                         _exportFile(context, data.buffer.asUint8List());
@@ -124,7 +124,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
         : _displays.map((display) {
             return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
           }).toList();
-    return buildSegmentDisplayOutput(countColumns, viewList);
+    return buildPunchtapeSegmentDisplayOutput(countColumns, viewList);
   }
 }
 

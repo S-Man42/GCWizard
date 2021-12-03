@@ -525,7 +525,7 @@ final CODEBOOK_EDELCRANTZ_1795 = {
   '774' : '',
   '775' : '',
   '776' : '',
-  '777' : '',
+  '777' : ' ',
 };
 
 final CODEBOOK_EDELCRANTZ_1808 = {
@@ -1082,7 +1082,7 @@ final CODEBOOK_EDELCRANTZ_1808 = {
   '774' : 'o',
   '775' : 'om',
   '776' : 'on',
-  '777' : '',
+  '777' : ' ',
 
   'a001': '',
   'a001': '',

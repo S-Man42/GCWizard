@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false};
 
 const _MURRAY_RELATIVE_DISPLAY_WIDTH = 50;
-const _MURRAY_RELATIVE_DISPLAY_HEIGHT = 100;
+const _MURRAY_RELATIVE_DISPLAY_HEIGHT = 110;
 const _MURRAY_RADIUS = 10.0;
 
 class MurraySegmentDisplay extends NSegmentDisplay {
@@ -36,11 +36,12 @@ class MurraySegmentDisplay extends NSegmentDisplay {
         };
         var pointSize = size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * _MURRAY_RADIUS;
 
+        paint.color = Colors.black;
         shutters.forEach((key, value) {
           canvas.touchCanvas.drawRect(
               Offset(size.width / _MURRAY_RELATIVE_DISPLAY_WIDTH * (value[0] - 1),
                   size.height / _MURRAY_RELATIVE_DISPLAY_HEIGHT * (value[1]) - 1) &
-              Size(pointSize * 3 + 4, pointSize * 2 + 2),
+              Size(pointSize * 3 + 2, pointSize * 2 + 2),
               paint);
 
           if (size.height < 50)

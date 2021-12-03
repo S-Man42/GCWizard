@@ -166,9 +166,9 @@ class BrailleState extends State<Braille> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction: (displayedSegments, readOnly, tapeStyle) {
+        segmentFunction: (displayedSegments, readOnly) {
           if (_currentLanguage == BrailleLanguage.EUR)
-            return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+            return BrailleEuroSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
           else
             return BrailleSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },

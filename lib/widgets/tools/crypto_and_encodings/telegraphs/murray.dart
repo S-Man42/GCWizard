@@ -7,7 +7,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray_segment_display.dart';
@@ -114,7 +113,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
       children: <Widget>[
         Container(
           width: 180,
-          height: 200,
+          height: 220,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
@@ -159,8 +158,8 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
-            return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+        segmentFunction:(displayedSegments, readOnly) {
+            return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true

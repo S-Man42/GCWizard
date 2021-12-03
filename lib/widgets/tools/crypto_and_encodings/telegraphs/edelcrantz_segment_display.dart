@@ -55,11 +55,12 @@ class EdelcrantzSegmentDisplay extends NSegmentDisplay {
         };
         var pointSize = size.height / _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT * _EDELCRANTZ_RADIUS;
 
+        paint.color = Colors.black;
         shutters.forEach((key, value) {
               canvas.touchCanvas.drawRect(
                   Offset(size.width / _EDELCRANTZ_RELATIVE_DISPLAY_WIDTH * (value[0] - 1),
                       size.height / _EDELCRANTZ_RELATIVE_DISPLAY_HEIGHT * (value[1]) - 1) &
-                  Size(pointSize * 3 + 4, pointSize * 2 + 2),
+                  Size(pointSize * 3 + 1, pointSize * 2 + 2),
                   paint);
 
               if (size.height < 50)

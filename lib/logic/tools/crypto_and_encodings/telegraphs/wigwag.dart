@@ -239,7 +239,8 @@ String decodeWigWag(List<int> cypherText, WigWagCodebook language){
 
   List<String> output = [];
   cypherText.forEach((element) {
-    output.add(codebook[element]);
+    if (codebook[element] != null)
+      output.add(codebook[element]);
   });
   return output.join(' ')
       .replaceAll('ENDOFWORD', 'END OF WORD')

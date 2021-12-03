@@ -184,8 +184,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
-          return ChappeTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+        segmentFunction:(displayedSegments, readOnly) {
+          return ChappeTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true

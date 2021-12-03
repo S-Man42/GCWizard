@@ -11,7 +11,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 };
 
 const _OHLSEN_RELATIVE_DISPLAY_WIDTH = 150;
-const _OHLSEN_RELATIVE_DISPLAY_HEIGHT = 150;
+const _OHLSEN_RELATIVE_DISPLAY_HEIGHT = 160;
 const _OHLSEN_RADIUS = 10.0;
 
 class OhlsenSegmentDisplay extends NSegmentDisplay {
@@ -77,11 +77,12 @@ class OhlsenSegmentDisplay extends NSegmentDisplay {
           '18': [ 90, 130, width, width],
         };
 
+        paint.color = Colors.black;
         shutters.forEach((key, value) {
           canvas.touchCanvas.drawRect(
               Offset(size.width / _OHLSEN_RELATIVE_DISPLAY_WIDTH * (value[0] - 1),
                   size.height / _OHLSEN_RELATIVE_DISPLAY_HEIGHT * (value[1]) - 1) &
-              Size(value[2] * 3 + 4, value[3] * 2 + 2),
+              Size(value[2] * 3 + 2, value[3] * 2 + 2),
               paint);
 
           if (size.height < 50)

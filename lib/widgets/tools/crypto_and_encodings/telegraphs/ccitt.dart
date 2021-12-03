@@ -7,8 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_punchtape_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt_segment_display.dart';
@@ -140,7 +139,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
     return Column(
       children: <Widget>[
         Container(
-          //width: 200,
+          width: 300,
           height: 60,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
@@ -185,10 +184,10 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
-    return GCWSegmentDisplayOutput(
+    return GCWPunchtapeSegmentDisplayOutput(
         //tapeStyle: true,
-        segmentFunction:(displayedSegments, readOnly, tapeStyle) {
-          return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly, tapeStyle: tapeStyle);
+        segmentFunction:(displayedSegments, readOnly) {
+          return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true
