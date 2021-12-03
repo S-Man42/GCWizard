@@ -64,6 +64,7 @@ import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/predator_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
@@ -182,6 +183,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numer
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
@@ -819,6 +821,9 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'polybios',
     ]),
+    GCWTool(tool: PredatorSelection(), i18nPrefix: 'predator_selection', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: []),
     GCWTool(tool: PrimeAlphabet(), i18nPrefix: 'primealphabet', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -2417,6 +2422,11 @@ initializeRegistry(BuildContext context) {
       'periodictable_atomicnumbers',
     ]),
 
+    //Predator Selection **************************************************************************************
+    GCWTool(tool: Predator(), i18nPrefix: 'predator', searchKeys: [
+      'predator',
+    ]),
+
     //PrimesSelection **********************************************************************************************
     GCWTool(tool: NthPrime(), i18nPrefix: 'primes_nthprime', searchKeys: [
       'primes',
@@ -3099,6 +3109,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: [
       'barcodes',
       'symbol_postnet',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'predator', symbolSearchStrings: [
+      'predator',
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',

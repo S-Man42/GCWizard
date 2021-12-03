@@ -35,6 +35,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/predator_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
@@ -534,6 +535,7 @@ void _initStaticToolList() {
       className(PigLatin()),
       className(Playfair()),
       className(Polybios()),
+      className(PredatorSelection()),
       className(PrimeAlphabet()),
       className(PrimesSelection()),
       className(Projectiles()),

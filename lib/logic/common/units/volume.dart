@@ -170,7 +170,7 @@ final VOLUME_STERE =
   Volume(name: 'common_unit_volume_stere_name', symbol: 'st', inCubicMeters: 1.0);
 
 final VOLUME_WASHINGMACHINE =
-  Volume(name: 'common_unit_volume_washingmachine_name', symbol: 'wm', inCubicMeters: 0.85 * 0.60 * 0.55);
+  Volume(name: 'common_unit_volume_washingmachine_name', symbol: 'wm', inCubicMeters: 0.85 * 0.60 * 0.60);
 
 final List<Unit> volumes = [
   VOLUME_CUBICMILLIMETER,
