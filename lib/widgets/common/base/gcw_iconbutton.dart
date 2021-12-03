@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 enum IconButtonSize { NORMAL, SMALL, TINY }
 
@@ -11,9 +13,10 @@ class GCWIconButton extends StatelessWidget {
   IconButtonSize size;
   final Color iconColor;
   final Color backgroundColor;
+  final double rotateDegrees;
 
   GCWIconButton(
-      {Key key, this.onPressed, this.iconData, this.customIcon, this.size, this.iconColor, this.backgroundColor})
+      {Key key, this.onPressed, this.iconData, this.customIcon, this.size, this.iconColor, this.backgroundColor, this.rotateDegrees})
       : super(key: key);
 
   @override
@@ -51,8 +54,10 @@ class GCWIconButton extends StatelessWidget {
         child: FlatButton(
           color: backgroundColor,
           padding: EdgeInsets.zero,
-          child:
-              this.customIcon ?? Icon(this.iconData, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+          child: Transform.rotate(
+            child: this.customIcon ?? Icon(this.iconData, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+            angle: degreesToRadian(this.rotateDegrees ?? 0.0),
+          ),
           onPressed: this.onPressed,
           shape: RoundedRectangleBorder(
               side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),

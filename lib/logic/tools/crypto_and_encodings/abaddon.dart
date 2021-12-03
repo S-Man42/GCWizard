@@ -45,7 +45,6 @@ encryptAbaddon(String input, Map<String, String> replaceCharacters) {
       .map((character) => substitution(character, AZToAbaddon))
       .join();
 
-  //TODO: Expert Mode
   if (replaceCharacters != null) abaddon = substitution(abaddon, replaceCharacters);
 
   return abaddon;

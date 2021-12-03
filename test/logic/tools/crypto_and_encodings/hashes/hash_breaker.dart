@@ -21,7 +21,7 @@ void main() {
 
   group("HashBreaker.preCheck:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'substitutions': {'A':'100-300', 'B': '1000-3000'}, 'expectedOutput' : {'status': 'high-count', 'count': 402201}},
+      {'substitutions': {'A':'100-300', 'B': '1000-3000'}, 'expectedOutput' : 402201},
     ];
 
     _inputsToExpected.forEach((elem) {
