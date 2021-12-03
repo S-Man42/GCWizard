@@ -155,7 +155,6 @@ encryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
         .join(' ');
   }
 
-  //TODO: Expert Mode
   if (replaceCharacters != null) decabit = substitution(decabit, replaceCharacters);
 
   return decabit;

@@ -62,11 +62,3 @@ List<LatLng> reverseProjection(LatLng coord, double bearing, double distance, El
 
   return _ReverseProjectionCalculator({'coord': coord, 'bearing': bearing, 'distance': distance}, ellipsoid).check();
 }
-
-main() {
-  var coord = LatLng(52.5918, 13.2080333333333333);
-  var bearing = 30.36;
-  var distance = 17468.5;
-
-  print(reverseProjection(coord, bearing, distance, getEllipsoidByName("WGS84")));
-}

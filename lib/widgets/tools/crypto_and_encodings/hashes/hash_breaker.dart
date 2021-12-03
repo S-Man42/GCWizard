@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/variablestring_textinputformatter.dart';
 
 final _ALERT_COMBINATIONS = 100000;
 
@@ -122,8 +122,8 @@ class _HashBreakerState extends State<HashBreaker> {
     return GCWKeyValueEditor(
         keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
         valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-        valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
-        valueFlex: 2,
+        valueInputFormatters: [VariableStringTextInputFormatter()],
+        valueFlex: 4,
         onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
         keyKeyValueMap: _currentSubstitutions,

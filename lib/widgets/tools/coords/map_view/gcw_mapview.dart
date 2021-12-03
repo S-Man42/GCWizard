@@ -743,7 +743,7 @@ class GCWMapViewState extends State<GCWMapView> {
         decoration: ShapeDecoration(
           color: colors.dialog(),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundedBorderRadius),
+            borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
             side: BorderSide(
               width: 1,
               color: colors.dialogText(),

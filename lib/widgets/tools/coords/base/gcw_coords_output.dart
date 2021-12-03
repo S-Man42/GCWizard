@@ -13,12 +13,13 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
+  final List<dynamic> copyTexts;
   List<GCWMapPoint> points;
   List<GCWMapPolyline> polylines;
   final bool mapButtonTop;
   final String title;
 
-  GCWCoordsOutput({Key key, this.outputs, this.points, this.polylines, this.mapButtonTop: false, this.title})
+  GCWCoordsOutput({Key key, this.outputs, this.copyTexts, this.points, this.polylines, this.mapButtonTop: false, this.title})
       : super(key: key) {
     if (points == null) this.points = [];
     if (polylines == null) this.polylines = [];
@@ -31,14 +32,16 @@ class GCWCoordsOutput extends StatefulWidget {
 class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   @override
   Widget build(BuildContext context) {
-    var children = widget.outputs.map((output) {
-      return Container(
+    var children = widget.outputs.asMap().map((index, output) {
+      return MapEntry(index,
+       Container(
         child: GCWOutput(
           child: output,
+          copyText: widget.copyTexts != null && widget.copyTexts.length > index ? widget.copyTexts[index] : null,
         ),
         padding: EdgeInsets.only(bottom: 15),
-      );
-    }).toList();
+      ));
+    }).values.toList();
     var _outputText = Column(
       children: children,
     );

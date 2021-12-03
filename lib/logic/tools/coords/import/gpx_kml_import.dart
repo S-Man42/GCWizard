@@ -120,7 +120,9 @@ class _GpxReader {
     var lon = xmlElement.getAttribute('lon');
     if (lat != null && lon != null) {
       var wpt = GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true);
-      wpt.markerText = xmlElement.getElement('desc')?.innerText;
+      wpt.markerText = xmlElement.getElement('name')?.innerText;
+      if (wpt.markerText == null || wpt.markerText.length == 0)
+        wpt.markerText = xmlElement.getElement('desc')?.innerText;
       return wpt;
     }
     return null;
