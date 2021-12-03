@@ -98,7 +98,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
                   setState(() {
                     images.forEach((image) {
                       var data = image.values.first;
-                      data.selected = true;
+                      data.primarySelected = true;
                       selectedSymbolTables.add(_symbolKey(data.path));
                     });
                   });
@@ -114,7 +114,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
                     setState(() {
                       images.forEach((image) {
                         var data = image.values.first;
-                        data.selected = false;
+                        data.primarySelected = false;
                         selectedSymbolTables = <String>[];
                       });
                     });
@@ -133,7 +133,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
               selectable: true,
               allowOverlays: false,
               onSymbolTapped: (String tappedText, SymbolData imageData) {
-                if (imageData.selected) {
+                if (imageData.primarySelected) {
                   selectedSymbolTables.add(_symbolKey(imageData.path));
                 } else {
                   selectedSymbolTables.remove(_symbolKey(imageData.path));
