@@ -56,7 +56,7 @@ class GCWIconButton extends StatelessWidget {
           onPressed: this.onPressed,
           shape: RoundedRectangleBorder(
               side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),
-              borderRadius: BorderRadius.circular(roundedBorderRadius)),
+              borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS)),
         ),
       ),
       padding: EdgeInsets.only(left: 2, right: 2),

@@ -101,7 +101,7 @@
   "coordinates_resection": "two three angles directions resection bearings",
   "coordinates_segmentbearing": "segments segmentbearings regularly angles bearings courses bisectors",
   "coordinates_segmentline": "segments segmentlines  regularly bisectors",
-  "coordinates_variablecoordinateformulas": "waypoints flex",
+  "coordinates_variablecoordinateformulas": "waypoints flex varcoords variablecoordinates variablesinterpolation",
   "coordinates_waypointprojection": "angles waypointprojections bearings cardinaldirections reverse projections ",
   "countries": "countries country nations states internationals",
   "countries_callingcodes": "callingcodes prefixes areacodes preselection pre-selection",

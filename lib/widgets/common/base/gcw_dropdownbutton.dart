@@ -37,7 +37,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
                 height: 39,
                 margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(roundedBorderRadius),
+                  borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
                   border: Border.all(color: colors.accent(), style: BorderStyle.solid, width: 1.0),
                 ),
                 child: DropdownButtonHideUnderline(

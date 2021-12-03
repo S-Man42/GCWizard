@@ -41,7 +41,15 @@ final LENGTH_LAR = Length(name: 'common_unit_length_lar_name', symbol: 'lar', in
 
 final LENGTH_RANGAR = Length(name: 'common_unit_length_rangar_name', symbol: 'rangar', inMeters: 4827 / 5000);
 
+final LENGTH_CABLELENGTH_IMP = Length(name: 'common_unit_length_cablelength_imp_name', symbol: 'kbl', inMeters: 182.88);
+
+final LENGTH_CABLELENGTH_US = Length(name: 'common_unit_length_cablelength_us_name', symbol: 'kbl', inMeters: 219.456);
+
+final LENGTH_CABLELENGTH_GB = Length(name: 'common_unit_length_cablelength_gb_name', symbol: 'kbl', inMeters: 185.3184);
+
 final LENGTH_FATHOM = Length(name: 'common_unit_length_fathom_name', symbol: 'fm', inMeters: 1.8288);
+
+final LENGTH_KLAFTER = Length(name: 'common_unit_length_klafter_name', symbol: 'klafter', inMeters: 1.8288);
 
 final LENGTH_FURLONG = Length(name: 'common_unit_length_furlong_name', symbol: 'fur', inMeters: 201.168);
 
@@ -62,6 +70,10 @@ final List<Unit> baseLengths = [
   LENGTH_CHAIN,
   LENGTH_ROD,
   LENGTH_LINK,
+  LENGTH_CABLELENGTH_IMP,
+  LENGTH_CABLELENGTH_US,
+  LENGTH_CABLELENGTH_GB,
+  LENGTH_KLAFTER,
   LENGTH_USSURVEYFOOT,
   LENGTH_NAUTICALMILE,
   LENGTH_LIGHTYEAR,

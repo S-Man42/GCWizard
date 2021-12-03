@@ -1,21 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/symbol_replacer.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_zoom_buttons.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class GCWSymbolTableDecryption extends StatefulWidget {
   final int countColumns;
@@ -33,7 +23,6 @@ class GCWSymbolTableDecryption extends StatefulWidget {
 }
 
 class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
-  var _currentShowOverlayedSymbols = true;
   String _decryptionOutput = '';
 
   SymbolTableData _data;
@@ -41,39 +30,48 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   @override
   Widget build(BuildContext context) {
     _data = widget.data;
-    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40)/ 3;
-    var _decryptionSwitchWidth = (MediaQuery.of(context).size.width - 40 - 57 - 20);
-    var _decryptionSwitchPartWidth = (_symbolTableSwitchPartWidth / _decryptionSwitchWidth * 100).toInt();
 
     return Column(
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-                child: GCWOnOffSwitch(
-                  value: _currentShowOverlayedSymbols,
-                  title: i18n(context, 'symboltables_showoverlay'),
-                  flex: [_decryptionSwitchPartWidth,
-                         _decryptionSwitchPartWidth,
-                          max(100 - 2 * _decryptionSwitchPartWidth, 0)],
-                  onChanged: (value) {
-                    setState(() {
-                      _currentShowOverlayedSymbols = value;
-                    });
-                  },
-                ),
-                flex: 4),
-            GCWIconButton(
-                iconData: Icons.app_registration,
-                onPressed: () {
-                  openInSymbolReplacer(context, widget.data);
-                }),
-            Container(width: 15),
-            GCWSymbolTableZoomButtons(
-                countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
-          ],
+        (widget.data == null) ? Container() :
+        GCWSymbolSymbolMatrix(
+          imageData: _data.images,
+          countColumns: widget.countColumns,
+          mediaQueryData: widget.mediaQueryData,
+          onChanged: widget.onChanged,
+          onSymbolTapped: (String tappedText, SymbolData imageData) {
+            setState(() {
+              _decryptionOutput += tappedText;
+            });
+          },
         ),
-        _buildDecryptionButtonMatrix(widget.countColumns),
+        GCWToolBar(children: [
+          GCWIconButton(
+            iconData: Icons.space_bar,
+            onPressed: () {
+              setState(() {
+                _decryptionOutput += ' ';
+              });
+            },
+          ),
+          GCWIconButton(
+            iconData: Icons.backspace,
+            onPressed: () {
+              setState(() {
+                if (_decryptionOutput.length > 0)
+                  _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
+              });
+            },
+          ),
+          GCWIconButton(
+            iconData: Icons.clear,
+            onPressed: () {
+              setState(() {
+                _decryptionOutput = '';
+              });
+            },
+          )
+        ]),
         widget.onAfterDecrypt != null
             ? Column(
                 children: [
@@ -84,119 +82,5 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
             : GCWDefaultOutput(child: _decryptionOutput),
       ],
     );
-  }
-
-  _showSpaceSymbolInOverlay(text) {
-    return text == ' ' ? String.fromCharCode(9251) : text;
-  }
-
-  _buildDecryptionButtonMatrix(countColumns) {
-    if (_data == null) return Container();
-
-    var rows = <Widget>[];
-    var countRows = (_data.images.length / countColumns).floor();
-
-    ThemeColors colors = themeColors();
-
-    var symbolTexts = _data.images.map((element) => element.keys.first).toList();
-    var images = _data.images.map((element) => element.values.first).toList();
-    for (var i = 0; i <= countRows; i++) {
-      var columns = <Widget>[];
-
-      for (var j = 0; j < countColumns; j++) {
-        var widget;
-        var imageIndex = i * countColumns + j;
-
-        if (imageIndex < _data.images.length) {
-          var symbolText = symbolTexts[imageIndex];
-          var image = images[imageIndex];
-
-          widget = InkWell(
-            child: Stack(
-              overflow: Overflow.clip,
-              children: <Widget>[
-                GCWSymbolContainer(
-                  symbol: Image.memory(image.bytes),
-                ),
-                _currentShowOverlayedSymbols
-                    ? Opacity(
-                        child: Container(
-                          //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
-                          child: Text(
-                            _showSpaceSymbolInOverlay(symbolText),
-                            style: gcwTextStyle().copyWith(color: colors.dialogText(), fontWeight: FontWeight.bold),
-                          ),
-                          height: defaultFontSize() + 5,
-                          decoration: ShapeDecoration(
-                              color: colors.dialog(),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
-                              )),
-                        ),
-                        opacity: 0.85)
-                    : Container()
-              ],
-            ),
-            onTap: () {
-              setState(() {
-                _decryptionOutput += symbolText;
-              });
-            },
-          );
-        } else {
-          widget = Container();
-        }
-
-        columns.add(Expanded(
-            child: Container(
-          child: widget,
-          padding: EdgeInsets.all(3),
-        )));
-      }
-
-      rows.add(Row(
-        children: columns,
-      ));
-    }
-
-    rows.add(GCWToolBar(children: [
-      GCWIconButton(
-        iconData: Icons.space_bar,
-        onPressed: () {
-          setState(() {
-            _decryptionOutput += ' ';
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.backspace,
-        onPressed: () {
-          setState(() {
-            if (_decryptionOutput.length > 0)
-              _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.clear,
-        onPressed: () {
-          setState(() {
-            _decryptionOutput = '';
-          });
-        },
-      )
-    ]));
-
-    return Column(
-      children: rows,
-    );
-  }
-
-  openInSymbolReplacer(BuildContext context, SymbolTableData data) {
-    Navigator.push(
-        context,
-        NoAnimationMaterialPageRoute(
-            builder: (context) => GCWTool(
-                tool: SymbolReplacer(symbolTableData: data), toolName: i18n(context, 'symbol_replacer_title'), i18nPrefix: '')));
   }
 }

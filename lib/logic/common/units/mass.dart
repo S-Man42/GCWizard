@@ -49,6 +49,8 @@ final MASS_ZENTNER = Mass(name: 'common_unit_mass_ztr_name', symbol: 'Ztr', inGr
 
 final MASS_STONE = Mass(name: 'common_unit_mass_st_name', symbol: 'st', inGram: 6350.29317888);
 
+final MASS_ELEPHANT = Mass(name: 'common_unit_mass_elephant_name', symbol: 'el', inGram: 5000000.0);
+
 final List<Unit> baseMasses = [
   MASS_GRAM,
   MASS_TON,
@@ -66,7 +68,8 @@ final List<Unit> baseMasses = [
   MASS_CARAT,
   MASS_PFUND,
   MASS_ZENTNER,
-  MASS_STONE
+  MASS_STONE,
+  MASS_ELEPHANT
 ];
 
 final MASS_KILOGRAM = Mass(name: 'common_unit_mass_kg_name', symbol: 'kg', inGram: 1000.0);
