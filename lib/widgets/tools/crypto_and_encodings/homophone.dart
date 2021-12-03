@@ -293,7 +293,7 @@ class HomophoneState extends State<Homophone> {
         keyController: _newKeyController,
         keyInputFormatters: [_keyMaskInputFormatter],
         valueHintText: i18n(context, 'homophone_own_key_hint'),
-        valueFlex: 2,
+        valueFlex: 4,
         keyValueMap: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,

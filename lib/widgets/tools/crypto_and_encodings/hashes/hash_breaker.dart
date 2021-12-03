@@ -123,7 +123,7 @@ class _HashBreakerState extends State<HashBreaker> {
         keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
         valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
         valueInputFormatters: [VariableStringTextInputFormatter()],
-        valueFlex: 2,
+        valueFlex: 4,
         onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
         keyKeyValueMap: _currentSubstitutions,

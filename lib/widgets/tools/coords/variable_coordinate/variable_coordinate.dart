@@ -227,7 +227,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
       valueInputFormatters: [VariableStringTextInputFormatter()],
-      valueFlex: 2,
+      valueFlex: 4,
       onAddEntry: _addEntry,
       onNewEntryChanged: _updateNewEntry,
       onDispose: _disposeEntry,
