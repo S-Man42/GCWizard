@@ -31,9 +31,10 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 
 class SymbolReplacer extends StatefulWidget {
   final local.PlatformFile platformFile;
-  final SymbolTableData symbolTableData;
+  final String symbolKey;
+  final List<Map<String, SymbolData>> imageData;
 
-  const SymbolReplacer({Key key, this.platformFile, this.symbolTableData}) : super(key: key);
+  const SymbolReplacer({Key key, this.platformFile, this.symbolKey, this.imageData}) : super(key: key);
 
   @override
   SymbolReplacerState createState() => SymbolReplacerState();
@@ -87,11 +88,13 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           )
       );
     }
-    if ((widget.symbolTableData != null) && (_compareSymbolItems != null) && (_currentSymbolTableViewData == null)) {
+    if ((widget.imageData != null) && (_compareSymbolItems != null) && (_currentSymbolTableViewData == null)) {
       for (GCWDropDownMenuItem item in _compareSymbolItems)
         if (( item.value is SymbolTableViewData) &&
-            ((item.value as SymbolTableViewData).symbolKey ==  widget.symbolTableData.symbolKey)) {
-          (item.value as SymbolTableViewData).data = widget.symbolTableData;
+            ((item.value as SymbolTableViewData).symbolKey ==  widget.symbolKey)) {
+          if ((item.value as SymbolTableViewData).data == null)
+            (item.value as SymbolTableViewData).data = SymbolTableData(context, (item.value as SymbolTableViewData).symbolKey);
+          (item.value as SymbolTableViewData).data.images = widget.imageData;
           _currentSymbolTableViewData = item.value;
           break;
         }

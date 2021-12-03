@@ -36,6 +36,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
         (widget.data == null) ? Container() :
         GCWSymbolSymbolMatrix(
           imageData: _data.images,
+          symbolKey: _data.symbolKey,
           countColumns: widget.countColumns,
           mediaQueryData: widget.mediaQueryData,
           onChanged: widget.onChanged,
