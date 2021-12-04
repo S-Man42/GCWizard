@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
@@ -82,10 +82,12 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
-        return Column(children: [
-          GCWOutput(child: outputOriginal, title: i18n(context, 'gausswebertelegraph_original')),
-          GCWOutput(child: outputAlt, title: i18n(context, 'gausswebertelegraph_alternative')),
-        ]);
+        return Column(
+          children: [
+            GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original')),
+            GCWOutput(child: outputAlt, title: i18n(context, 'telegraph_gausswebertelegraph_alternative')),
+          ]
+        );
       } else {
         var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;
         var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
@@ -94,10 +96,11 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL
             : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
-            child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
-                .replaceAll('schillingcanstatt_stop', i18n(context, 'schillingcanstatt_stop'))
-                .replaceAll('schillingcanstatt_goon', i18n(context, 'schillingcanstatt_goon'))
-                .replaceAll('schillingcanstatt_finish', i18n(context, 'schillingcanstatt_finish')));
+          child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
+              .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
+              .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
+              .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'))
+        );
       }
     } else {
       var output;
@@ -105,9 +108,9 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
         output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
       } else {
         output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode)
-            .replaceAll('schillingcanstatt_stop', i18n(context, 'schillingcanstatt_stop'))
-            .replaceAll('schillingcanstatt_goon', i18n(context, 'schillingcanstatt_goon'))
-            .replaceAll('schillingcanstatt_finish', i18n(context, 'schillingcanstatt_finish'));
+            .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
+            .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
+            .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'));
       }
 
       return GCWDefaultOutput(child: output);

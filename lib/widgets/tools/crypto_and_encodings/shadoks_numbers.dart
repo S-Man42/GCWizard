@@ -150,7 +150,7 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     return result;
   }
 
-  Widget _ShadoksNumbersSegmentDisplay({Map<String, bool> segments, bool readOnly}) {
+  Widget _ShadoksNumbersSegmentDisplay({Map<String, bool> segments, bool readOnly, bool tapeStyle}) {
     segments.putIfAbsent('a', () => false);
     return ShadoksNumbersSegmentDisplay(segments: segments, readOnly: true);
   }
