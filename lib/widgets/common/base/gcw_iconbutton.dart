@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -16,7 +15,14 @@ class GCWIconButton extends StatelessWidget {
   final double rotateDegrees;
 
   GCWIconButton(
-      {Key key, this.onPressed, this.iconData, this.customIcon, this.size, this.iconColor, this.backgroundColor, this.rotateDegrees})
+      {Key key,
+      this.onPressed,
+      this.iconData,
+      this.customIcon,
+      this.size,
+      this.iconColor,
+      this.backgroundColor,
+      this.rotateDegrees})
       : super(key: key);
 
   @override
@@ -55,7 +61,8 @@ class GCWIconButton extends StatelessWidget {
           color: backgroundColor,
           padding: EdgeInsets.zero,
           child: Transform.rotate(
-            child: this.customIcon ?? Icon(this.iconData, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+            child: this.customIcon ??
+                Icon(this.iconData, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
             angle: degreesToRadian(this.rotateDegrees ?? 0.0),
           ),
           onPressed: this.onPressed,

@@ -1,20 +1,51 @@
-
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum MurrayCodebook { GEOCACHING, ROYALNAVY, FISCHER, ROUCOUX, GEOCACHINGTOOLBOX_1, GEOCACHINGTOOLBOX_2, GEOCACHINGTOOLBOX_3, MYGEOTOOLS }
+enum MurrayCodebook {
+  GEOCACHING,
+  ROYALNAVY,
+  FISCHER,
+  ROUCOUX,
+  GEOCACHINGTOOLBOX_1,
+  GEOCACHINGTOOLBOX_2,
+  GEOCACHINGTOOLBOX_3,
+  MYGEOTOOLS
+}
 
 Map<MurrayCodebook, Map<String, String>> MURRAY_CODEBOOK = {
-  MurrayCodebook.GEOCACHING: {'title': 'telegraph_murray_geocaching_title', 'subtitle': 'telegraph_murray_geocaching_description'},
-  MurrayCodebook.ROYALNAVY: {'title': 'telegraph_murray_royalnavy_title', 'subtitle': 'telegraph_murray_royalnavy_description'},
-  MurrayCodebook.FISCHER: {'title': 'telegraph_murray_fischer_title', 'subtitle': 'telegraph_murray_fischer_description'},
-  MurrayCodebook.ROUCOUX : {'title': 'telegraph_murray_roucoux_title', 'subtitle': 'telegraph_murray_roucoux_description'},
-  MurrayCodebook.GEOCACHINGTOOLBOX_1: {'title': 'telegraph_murray_geocachingtoolbox_1_title', 'subtitle': 'telegraph_murray_geocachingtoolbox_1_description'},
-  MurrayCodebook.GEOCACHINGTOOLBOX_2: {'title': 'telegraph_murray_geocachingtoolbox_2_title', 'subtitle': 'telegraph_murray_geocachingtoolbox_2_description'},
-  MurrayCodebook.GEOCACHINGTOOLBOX_3: {'title': 'telegraph_murray_geocachingtoolbox_3_title', 'subtitle': 'telegraph_murray_geocachingtoolbox_3_description'},
-  MurrayCodebook.MYGEOTOOLS: {'title': 'telegraph_murray_mygeotools_title', 'subtitle': 'telegraph_murray_mygeotools_description'},
+  MurrayCodebook.GEOCACHING: {
+    'title': 'telegraph_murray_geocaching_title',
+    'subtitle': 'telegraph_murray_geocaching_description'
+  },
+  MurrayCodebook.ROYALNAVY: {
+    'title': 'telegraph_murray_royalnavy_title',
+    'subtitle': 'telegraph_murray_royalnavy_description'
+  },
+  MurrayCodebook.FISCHER: {
+    'title': 'telegraph_murray_fischer_title',
+    'subtitle': 'telegraph_murray_fischer_description'
+  },
+  MurrayCodebook.ROUCOUX: {
+    'title': 'telegraph_murray_roucoux_title',
+    'subtitle': 'telegraph_murray_roucoux_description'
+  },
+  MurrayCodebook.GEOCACHINGTOOLBOX_1: {
+    'title': 'telegraph_murray_geocachingtoolbox_1_title',
+    'subtitle': 'telegraph_murray_geocachingtoolbox_1_description'
+  },
+  MurrayCodebook.GEOCACHINGTOOLBOX_2: {
+    'title': 'telegraph_murray_geocachingtoolbox_2_title',
+    'subtitle': 'telegraph_murray_geocachingtoolbox_2_description'
+  },
+  MurrayCodebook.GEOCACHINGTOOLBOX_3: {
+    'title': 'telegraph_murray_geocachingtoolbox_3_title',
+    'subtitle': 'telegraph_murray_geocachingtoolbox_3_description'
+  },
+  MurrayCodebook.MYGEOTOOLS: {
+    'title': 'telegraph_murray_mygeotools_title',
+    'subtitle': 'telegraph_murray_mygeotools_description'
+  },
 };
-
 
 final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
   // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_2016.pdf
@@ -58,7 +89,8 @@ final Map<String, List<String>> CODEBOOK_ROYALNAVY = {
   ';': ['2', '5'],
 };
 
-final Map<String, List<String>> CODEBOOK_GEOCACHING = {// https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf
+final Map<String, List<String>> CODEBOOK_GEOCACHING = {
+  // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_f_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
   'C': ['1', '2', '3', '4', '5', '6'],
@@ -103,7 +135,8 @@ final Map<String, List<String>> CODEBOOK_GEOCACHING = {// https://cms.sachsen.sc
   '.': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_FISCHER = {// https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_b_2007.pdf
+final Map<String, List<String>> CODEBOOK_FISCHER = {
+  // https://cms.sachsen.schule/fileadmin/_special/gruppen/592/klappentelegraph/download/klappentelegraphenalphabet_b_2007.pdf
   'A': [],
   'B': ['1', '3', '5'],
   'C': ['1', '2', '3', '4', '5', '6'],
@@ -148,7 +181,8 @@ final Map<String, List<String>> CODEBOOK_FISCHER = {// https://cms.sachsen.schul
   '.': ['6'],
 };
 
-final Map<String, List<String>> CODEBOOK_ROUCOUX = { // http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm
+final Map<String, List<String>> CODEBOOK_ROUCOUX = {
+  // http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station_enlargement.htm
   'A': ['2', '3', '4', '5', '6'],
   'B': ['1', '3', '4', '5', '6'],
   'C': ['1', '2', '4', '5', '6'],
@@ -167,7 +201,7 @@ final Map<String, List<String>> CODEBOOK_ROUCOUX = { // http://virtual-library.c
   'Q': ['1', '3', '4', '5'],
   'R': ['1', '2'],
   'S': ['1', '3', '5', '6'],
-  'T': ['1', '2',  '4', '6'],
+  'T': ['1', '2', '4', '6'],
   'V': ['4', '6'],
   'W': ['2', '3', '4', '6'],
   'X': ['2', '6'],
@@ -230,7 +264,7 @@ final Map<String, List<String>> CODEBOOK_GEOCACHINGTOOLBOX_3 = {
   'Q': ['1', '3', '4', '5'],
   'R': ['1', '2'],
   'S': ['1', '3', '5', '6'],
-  'T': ['1', '2',  '4', '6'],
+  'T': ['1', '2', '4', '6'],
   'V': ['4', '6'],
   'W': ['2', '3', '4', '6'],
   'X': ['2', '6'],
@@ -271,20 +305,18 @@ List<List<String>> encodeMurray(String input, MurrayCodebook language) {
     case MurrayCodebook.MYGEOTOOLS:
       CODEBOOK = CODEBOOK_MYGEOTOOLS;
       break;
-    }
+  }
 
   List<String> inputs = input.split('');
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK[inputs[i].toUpperCase()] != null)
-      result.add(CODEBOOK[inputs[i].toUpperCase()]);
+    if (CODEBOOK[inputs[i].toUpperCase()] != null) result.add(CODEBOOK[inputs[i].toUpperCase()]);
   }
   return result;
 }
 
-Map<String, dynamic> decodeMurray(
-  List<String> inputs, MurrayCodebook language) {
+Map<String, dynamic> decodeMurray(List<String> inputs, MurrayCodebook language) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -330,13 +362,10 @@ Map<String, dynamic> decodeMurray(
       display.add(element);
     });
 
-    if (CODEBOOK.map((key, value) =>
-    MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-    null) {
+    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) =>
-      MapEntry(key.join(), value.toString()))[input.split('').join()];
+      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       char = char + charH;
     }
 
@@ -346,7 +375,4 @@ Map<String, dynamic> decodeMurray(
   }).toList();
 
   return {'displays': displays, 'chars': text};
-
-
 }
-

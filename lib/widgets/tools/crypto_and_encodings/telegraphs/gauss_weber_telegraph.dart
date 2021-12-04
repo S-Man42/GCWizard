@@ -82,12 +82,10 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL);
         var outputAlt = encodeGaussWeberTelegraph(_currentEncodeInput, GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE);
 
-        return Column(
-          children: [
-            GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original')),
-            GCWOutput(child: outputAlt, title: i18n(context, 'telegraph_gausswebertelegraph_alternative')),
-          ]
-        );
+        return Column(children: [
+          GCWOutput(child: outputOriginal, title: i18n(context, 'telegraph_gausswebertelegraph_original')),
+          GCWOutput(child: outputAlt, title: i18n(context, 'telegraph_gausswebertelegraph_alternative')),
+        ]);
       } else {
         var countOriginal = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^\+\-]'), '').length;
         var countAlt = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^rl]'), '').length;
@@ -96,11 +94,10 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
             ? GaussWeberTelegraphMode.GAUSS_WEBER_ORIGINAL
             : GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE;
         return GCWDefaultOutput(
-          child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
-              .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
-              .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
-              .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'))
-        );
+            child: decodeGaussWeberTelegraph(_currentDecodeInput, mode)
+                .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
+                .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
+                .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish')));
       }
     } else {
       var output;

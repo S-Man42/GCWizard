@@ -1,4 +1,3 @@
-
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
@@ -12,42 +11,66 @@ Map<CCITTCodebook, Map<String, String>> CCITT_CODEBOOK = {
 
 List<String> decenary2segments(String decenary) {
   String binary = convertBase(decenary, 10, 2);
-  for (int i = 0; i < 6 - binary.length; i++)
-    binary = '0' + binary;
+  for (int i = 0; i < 6 - binary.length; i++) binary = '0' + binary;
   List<String> result = [];
-  for (int i = 0; i < binary.length; i++)
-    if (binary[i] == '1')
-      result.add((i + 1).toString());
+  for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
 
 List<String> binary2segments(String binary) {
-  for (int i = 0; i < 5 - binary.length; i++)
-    binary = '0' + binary;
+  for (int i = 0; i < 5 - binary.length; i++) binary = '0' + binary;
   List<String> result = [];
-  for (int i = 0; i < binary.length; i++)
-    if (binary[i] == '1')
-      result.add((i + 1).toString());
+  for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
 
-String segments2binary(List<String> segments){
+String segments2binary(List<String> segments) {
   String result = '';
-  if (segments.contains('1')) result = result + '1'; else result = result + '0';
-  if (segments.contains('2')) result = result + '1'; else result = result + '0';
-  if (segments.contains('3')) result = result + '1'; else result = result + '0';
-  if (segments.contains('4')) result = result + '1'; else result = result + '0';
-  if (segments.contains('5')) result = result + '1'; else result = result + '0';
+  if (segments.contains('1'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('2'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('3'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('4'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('5'))
+    result = result + '1';
+  else
+    result = result + '0';
   return result;
 }
 
-String segments2decenary(List<String> segments){
+String segments2decenary(List<String> segments) {
   String result = '';
-  if (segments.contains('1')) result = result + '1'; else result = result + '0';
-  if (segments.contains('2')) result = result + '1'; else result = result + '0';
-  if (segments.contains('3')) result = result + '1'; else result = result + '0';
-  if (segments.contains('4')) result = result + '1'; else result = result + '0';
-  if (segments.contains('5')) result = result + '1'; else result = result + '0';
+  if (segments.contains('1'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('2'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('3'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('4'))
+    result = result + '1';
+  else
+    result = result + '0';
+  if (segments.contains('5'))
+    result = result + '1';
+  else
+    result = result + '0';
   return convertBase(result, 2, 10);
 }
 
@@ -101,11 +124,7 @@ Map<String, dynamic> decodeTextCCITTTelegraph(String inputs, CCITTCodebook langu
 }
 
 Map<String, dynamic> decodeVisualCCITT(List<String> inputs, CCITTCodebook language) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'text': ''
-    };
+  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'text': ''};
 
   var displays = <List<String>>[];
 
@@ -125,9 +144,7 @@ Map<String, dynamic> decodeVisualCCITT(List<String> inputs, CCITTCodebook langua
         return decodeCCITT2([int.parse(segments2decenary(input.split('')))]);
         break;
     }
-
   }).toList();
 
   return {'displays': displays, 'text': text.join(' ')};
 }
-

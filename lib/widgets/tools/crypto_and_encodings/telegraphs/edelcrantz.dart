@@ -63,8 +63,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-          );
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -86,42 +85,42 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
         },
       ),
       if (_currentMode == GCWSwitchPosition.left) // encrypt
-       GCWTextField(
+        GCWTextField(
           controller: _EncodeInputController,
           onChanged: (text) {
             setState(() {
-               _currentEncodeInput = text;
+              _currentEncodeInput = text;
             });
           },
         )
       else
         Column(// decryt
-          children: <Widget>[
-            GCWTwoOptionsSwitch(
-              value: _currentDecodeMode,
-              leftValue: i18n(context, 'telegraph_decode_textmode'),
-              rightValue: i18n(context, 'telegraph_decode_visualmode'),
-              onChanged: (value) {
+            children: <Widget>[
+          GCWTwoOptionsSwitch(
+            value: _currentDecodeMode,
+            leftValue: i18n(context, 'telegraph_decode_textmode'),
+            rightValue: i18n(context, 'telegraph_decode_visualmode'),
+            onChanged: (value) {
+              setState(() {
+                _currentDecodeMode = value;
+              });
+            },
+          ),
+          if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+            _buildVisualDecryption()
+          else // decode text
+            GCWTextField(
+              controller: _DecodeInputController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),
+              ],
+              onChanged: (text) {
                 setState(() {
-                  _currentDecodeMode = value;
+                  _currentDecodeInput = text;
                 });
               },
-            ),
-            if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
-              _buildVisualDecryption()
-            else // decode text
-              GCWTextField(
-                controller: _DecodeInputController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),],
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                  });
-                },
-              )
-
-          ]
-        ),
+            )
+        ]),
       _buildOutput()
     ]);
   }
@@ -197,39 +196,82 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
     );
   }
 
-  List<List<String>> _buildShutters(List<List<String>> segments){
+  List<List<String>> _buildShutters(List<List<String>> segments) {
     List<List<String>> result = [];
     segments.forEach((element) {
-      if (element != null)
-      if (int.tryParse(element.join('')) != null) {
+      if (element != null) if (int.tryParse(element.join('')) != null) {
         List<String> resultElement = [];
         switch (element[0]) {
-          case '0' : resultElement = []; break;
-          case '1' : resultElement = ['a1']; break;
-          case '2' : resultElement = ['a2']; break;
-          case '3' : resultElement = ['a1', 'a2']; break;
-          case '4' : resultElement = ['a3']; break;
-          case '5' : resultElement = ['a3', 'a1']; break;
-          case '6' : resultElement = ['a3', 'a2']; break;
-          case '7' : resultElement = ['a3', 'a2', 'a1']; break;
+          case '0':
+            resultElement = [];
+            break;
+          case '1':
+            resultElement = ['a1'];
+            break;
+          case '2':
+            resultElement = ['a2'];
+            break;
+          case '3':
+            resultElement = ['a1', 'a2'];
+            break;
+          case '4':
+            resultElement = ['a3'];
+            break;
+          case '5':
+            resultElement = ['a3', 'a1'];
+            break;
+          case '6':
+            resultElement = ['a3', 'a2'];
+            break;
+          case '7':
+            resultElement = ['a3', 'a2', 'a1'];
+            break;
         }
         switch (element[1]) {
-          case '1' : resultElement.addAll(['b1']); break;
-          case '2' : resultElement.addAll(['b2']); break;
-          case '3' : resultElement.addAll(['b1', 'b2']); break;
-          case '4' : resultElement.addAll(['b3']); break;
-          case '5' : resultElement.addAll(['b3', 'b1']); break;
-          case '6' : resultElement.addAll(['b3', 'b2']); break;
-          case '7' : resultElement.addAll(['b3', 'b2', 'b1']); break;
+          case '1':
+            resultElement.addAll(['b1']);
+            break;
+          case '2':
+            resultElement.addAll(['b2']);
+            break;
+          case '3':
+            resultElement.addAll(['b1', 'b2']);
+            break;
+          case '4':
+            resultElement.addAll(['b3']);
+            break;
+          case '5':
+            resultElement.addAll(['b3', 'b1']);
+            break;
+          case '6':
+            resultElement.addAll(['b3', 'b2']);
+            break;
+          case '7':
+            resultElement.addAll(['b3', 'b2', 'b1']);
+            break;
         }
         switch (element[2]) {
-          case '1' : resultElement.addAll(['c1']); break;
-          case '2' : resultElement.addAll(['c2']); break;
-          case '3' : resultElement.addAll(['c1', 'c2']); break;
-          case '4' : resultElement.addAll(['c3']); break;
-          case '5' : resultElement.addAll(['c3', 'c1']); break;
-          case '6' : resultElement.addAll(['c3', 'c2']); break;
-          case '7' : resultElement.addAll(['c3', 'c2', 'c1']); break;
+          case '1':
+            resultElement.addAll(['c1']);
+            break;
+          case '2':
+            resultElement.addAll(['c2']);
+            break;
+          case '3':
+            resultElement.addAll(['c1', 'c2']);
+            break;
+          case '4':
+            resultElement.addAll(['c3']);
+            break;
+          case '5':
+            resultElement.addAll(['c3', 'c1']);
+            break;
+          case '6':
+            resultElement.addAll(['c3', 'c2']);
+            break;
+          case '7':
+            resultElement.addAll(['c3', 'c2', 'c1']);
+            break;
         }
         result.add(resultElement);
       } else
@@ -238,24 +280,29 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
     return result;
   }
 
-  String _buildCodelets(List<List<String>> segments){
+  String _buildCodelets(List<List<String>> segments) {
     List<String> result = [];
     segments.forEach((codelet) {
-      if (codelet != null)
-        result.add(codelet.join(''));
+      if (codelet != null) result.add(codelet.join(''));
     });
     return result.join(' ');
   }
 
-  String _segmentsToText(String text){
+  String _segmentsToText(String text) {
     return text
-        .replaceAll('telegraph_edelcrantz_a_museum_messagereceived', i18n(context, 'telegraph_edelcrantz_a_museum_messagereceived'))
+        .replaceAll('telegraph_edelcrantz_a_museum_messagereceived',
+            i18n(context, 'telegraph_edelcrantz_a_museum_messagereceived'))
         .replaceAll('telegraph_edelcrantz_a_museum_doyoucopy', i18n(context, 'telegraph_edelcrantz_a_museum_doyoucopy'))
-        .replaceAll('telegraph_edelcrantz_a_museum_understood', i18n(context, 'telegraph_edelcrantz_a_museum_understood'))
-        .replaceAll('telegraph_edelcrantz_a_museum_repeatmessage', i18n(context, 'telegraph_edelcrantz_a_museum_repeatmessage'))
-        .replaceAll('telegraph_edelcrantz_a_museum_endcommunication', i18n(context, 'telegraph_edelcrantz_a_museum_endcommunication'))
-        .replaceAll('telegraph_edelcrantz_a_museum_whoamitalkingto', i18n(context, 'telegraph_edelcrantz_a_museum_whoamitalkingto'))
-        .replaceAll('telegraph_edelcrantz_a_museum_tellmemore', i18n(context, 'telegraph_edelcrantz_a_museum_tellmemore'))
+        .replaceAll(
+            'telegraph_edelcrantz_a_museum_understood', i18n(context, 'telegraph_edelcrantz_a_museum_understood'))
+        .replaceAll(
+            'telegraph_edelcrantz_a_museum_repeatmessage', i18n(context, 'telegraph_edelcrantz_a_museum_repeatmessage'))
+        .replaceAll('telegraph_edelcrantz_a_museum_endcommunication',
+            i18n(context, 'telegraph_edelcrantz_a_museum_endcommunication'))
+        .replaceAll('telegraph_edelcrantz_a_museum_whoamitalkingto',
+            i18n(context, 'telegraph_edelcrantz_a_museum_whoamitalkingto'))
+        .replaceAll(
+            'telegraph_edelcrantz_a_museum_tellmemore', i18n(context, 'telegraph_edelcrantz_a_museum_tellmemore'))
         .replaceAll('telegraph_edelcrantz_a_museum_yes', i18n(context, 'telegraph_edelcrantz_a_museum_yes'))
         .replaceAll('telegraph_edelcrantz_a_museum_no', i18n(context, 'telegraph_edelcrantz_a_museum_no'))
         .replaceAll('telegraph_edelcrantz_a_museum_maybe', i18n(context, 'telegraph_edelcrantz_a_museum_maybe'))
@@ -275,17 +322,18 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     segments = _buildShutters(segments);
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return EdelcrantzSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {//encode
-      List<List<String>> segments = encodeEdelcrantzTelegraph(_currentEncodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
+      List<List<String>> segments = encodeEdelcrantzTelegraph(
+          _currentEncodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -297,11 +345,15 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
           )
         ],
       );
-    } else { //decode
+    } else {
+      //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
-        segments = decodeTextEdelcrantzTelegraph(_currentDecodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
-      } else { // visual
+      if (_currentDecodeMode == GCWSwitchPosition.left) {
+        // text
+        segments = decodeTextEdelcrantzTelegraph(
+            _currentDecodeInput.toLowerCase(), _currentLanguage, (_currentTime == GCWSwitchPosition.left));
+      } else {
+        // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();

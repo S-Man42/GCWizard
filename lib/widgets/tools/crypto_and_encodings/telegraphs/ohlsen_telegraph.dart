@@ -68,31 +68,31 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
       else
         Column(// decryt
             children: <Widget>[
-              GCWTwoOptionsSwitch(
-                value: _currentDecodeMode,
-                leftValue: i18n(context, 'telegraph_decode_textmode'),
-                rightValue: i18n(context, 'telegraph_decode_visualmode'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentDecodeMode = value;
-                  });
-                },
-              ),
-              if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
-                _buildVisualDecryption()
-              else // decode text
-                GCWTextField(
-                  controller: _DecodeInputController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentDecodeInput = text;
-                    });
-                  },
-                )
-
-            ]
-        ),
+          GCWTwoOptionsSwitch(
+            value: _currentDecodeMode,
+            leftValue: i18n(context, 'telegraph_decode_textmode'),
+            rightValue: i18n(context, 'telegraph_decode_visualmode'),
+            onChanged: (value) {
+              setState(() {
+                _currentDecodeMode = value;
+              });
+            },
+          ),
+          if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+            _buildVisualDecryption()
+          else // decode text
+            GCWTextField(
+              controller: _DecodeInputController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),
+              ],
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            )
+        ]),
       _buildOutput()
     ]);
   }
@@ -168,27 +168,26 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
     );
   }
 
-  String _buildCodelets(List<List<String>> segments){
+  String _buildCodelets(List<List<String>> segments) {
     List<String> result = [];
     segments.forEach((codelet) {
-      if (codelet != null)
-        result.add(codelet.join(''));
+      if (codelet != null) result.add(codelet.join(''));
     });
     return result.join(' ');
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return OhlsenSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {//encode
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
       print(_currentEncodeInput);
       List<List<String>> segments = encodeOhlsenTelegraph(_currentEncodeInput.toLowerCase());
       print(segments);
@@ -208,11 +207,14 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
           )
         ],
       );
-    } else { //decode
+    } else {
+      //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
+      if (_currentDecodeMode == GCWSwitchPosition.left) {
+        // text
         segments = decodeTextOhlsenTelegraph(_currentDecodeInput.toLowerCase());
-      } else { // visual
+      } else {
+        // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
@@ -220,7 +222,8 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
       }
       return Column(
         children: <Widget>[
-          if (_currentDecodeMode == GCWSwitchPosition.right) GCWOutput(title: i18n(context, 'telegraph_codepoints'), child: segments['codepoints']),
+          if (_currentDecodeMode == GCWSwitchPosition.right)
+            GCWOutput(title: i18n(context, 'telegraph_codepoints'), child: segments['codepoints']),
           GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['text']),
           _buildDigitalOutput(segments['displays']),
         ],

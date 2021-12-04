@@ -10,13 +10,9 @@ class GCWAlphabetModificationDropDownButton extends StatefulWidget {
   final List<AlphabetModificationMode> allowedModifications;
   final bool suppressTitle;
 
-  const GCWAlphabetModificationDropDownButton({
-    Key key,
-    this.onChanged,
-    this.value,
-    this.allowedModifications,
-    this.suppressTitle: false
-  }) : super(key: key);
+  const GCWAlphabetModificationDropDownButton(
+      {Key key, this.onChanged, this.value, this.allowedModifications, this.suppressTitle: false})
+      : super(key: key);
 
   @override
   GCWAlphabetModificationDropDownButtonState createState() => GCWAlphabetModificationDropDownButtonState();

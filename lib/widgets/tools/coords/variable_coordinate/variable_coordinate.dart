@@ -103,7 +103,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
     if (currentFromInput.length > 0) {
-      insertFormulaValue(formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED), widget.formula);
+      insertFormulaValue(
+          formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
+          widget.formula);
     }
   }
 
@@ -367,18 +369,13 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
 
-    _currentOutput = List.from(
-        (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
+    _currentOutput =
+        List.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
       var formattedCoordinate = formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid());
       return Column(
         children: [
-          GCWOutputText(
-              text: formattedCoordinate
-          ),
-          GCWText(
-              text: _formatVariables(coord['variables']),
-              style: gcwTextStyle().copyWith(fontSize: fontSizeSmall())
-          )
+          GCWOutputText(text: formattedCoordinate),
+          GCWText(text: _formatVariables(coord['variables']), style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
         ],
       );
     }));

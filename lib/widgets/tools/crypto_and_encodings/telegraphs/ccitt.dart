@@ -58,8 +58,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-          );
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -98,7 +97,9 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
             else // decode text
               GCWTextField(
                 controller: _DecodeInputController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),
+                ],
                 onChanged: (text) {
                   setState(() {
                     _currentDecodeInput = text;
@@ -186,27 +187,30 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWPunchtapeSegmentDisplayOutput(
         //tapeStyle: true,
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) { //encode
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
       List<List<String>> segments = encodeCCITT(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
         ],
       );
-    } else { //decode
+    } else {
+      //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
+      if (_currentDecodeMode == GCWSwitchPosition.left) {
+        // text
         segments = decodeTextCCITTTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
-      } else { // visual
+      } else {
+        // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();

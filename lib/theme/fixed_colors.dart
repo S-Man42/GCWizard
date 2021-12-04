@@ -16,4 +16,3 @@ const COLOR_QR_BACKGROUND = Colors.white;
 const COLOR_QR_TEXT = Colors.white;
 
 const COLOR_FORMULASOLVER_INTERPOLATED_MAP_POINT = Colors.black45;
-

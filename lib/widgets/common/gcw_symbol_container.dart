@@ -39,7 +39,8 @@ class _GCWSymbolContainerState extends State<GCWSymbolContainer> {
 
     return Container(
       child: widget.symbol,
-      decoration: BoxDecoration(color: backgroundColor, border: Border.all(color: borderColor, width: widget.borderWidth ?? 1.0)),
+      decoration: BoxDecoration(
+          color: backgroundColor, border: Border.all(color: borderColor, width: widget.borderWidth ?? 1.0)),
       padding: EdgeInsets.all(2),
     );
   }

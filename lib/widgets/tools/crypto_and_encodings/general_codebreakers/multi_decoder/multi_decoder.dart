@@ -125,27 +125,27 @@ class MultiDecoderState extends State<MultiDecoder> {
     return Column(
       children: [
         GCWExpandableTextDivider(
-            text: i18n(context, 'common_mode_advanced'),
-            expanded: _currentExpanded,
-            onChanged: (value) {
-              setState(() {
-                _currentExpanded = value;
-              });
-            },
-            child: Row(
-              children: [
-                Expanded(child: GCWText(text: i18n(context, 'multidecoder_key')), flex: 1),
-                Expanded(
-                    child: GCWTextField(
-                      onChanged: (text) {
-                        setState(() {
-                          _currentKey = text;
-                        });
-                      },
-                    ),
-                    flex: 3)
-              ],
-            ),
+          text: i18n(context, 'common_mode_advanced'),
+          expanded: _currentExpanded,
+          onChanged: (value) {
+            setState(() {
+              _currentExpanded = value;
+            });
+          },
+          child: Row(
+            children: [
+              Expanded(child: GCWText(text: i18n(context, 'multidecoder_key')), flex: 1),
+              Expanded(
+                  child: GCWTextField(
+                    onChanged: (text) {
+                      setState(() {
+                        _currentKey = text;
+                      });
+                    },
+                  ),
+                  flex: 3)
+            ],
+          ),
         ),
       ],
     );
@@ -183,10 +183,8 @@ class MultiDecoderState extends State<MultiDecoder> {
       var result;
 
       try {
-        if (
-          tool.requiresKey && (_currentKey ?? '').isEmpty
-          || !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty)
-        ) {
+        if (tool.requiresKey && (_currentKey ?? '').isEmpty ||
+            !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty)) {
           result = null;
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
@@ -198,42 +196,32 @@ class MultiDecoderState extends State<MultiDecoder> {
           title: _toolTitle(tool),
           child: result,
         );
-      else if ((result is Future<String>) )
+      else if ((result is Future<String>))
         return FutureBuilder(
             future: result,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData && snapshot.data is String &&
-                  ((snapshot.data as String).length != 0)) {
-                return GCWOutput(
-                    title: _toolTitle(tool),
-                    child: snapshot.data
-                );
+              if (snapshot.hasData && snapshot.data is String && ((snapshot.data as String).length != 0)) {
+                return GCWOutput(title: _toolTitle(tool), child: snapshot.data);
               } else
                 return Container();
             });
-      else if ((result is Future<Uint8List>) )
+      else if ((result is Future<Uint8List>))
         return FutureBuilder(
-          future: result,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData && snapshot.data is Uint8List &&
-                ((snapshot.data as Uint8List).length > 0)) {
-              return GCWOutput(
-                title: _toolTitle(tool),
-                child: GCWImageView(
-                    imageData: GCWImageViewData(PlatformFile(
-                        bytes: (snapshot.data as Uint8List),
-                        name: _toolTitle(tool))
-                    )
-                )
-              );
-            } else
-              return Container();
-          });
+            future: result,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData && snapshot.data is Uint8List && ((snapshot.data as Uint8List).length > 0)) {
+                return GCWOutput(
+                    title: _toolTitle(tool),
+                    child: GCWImageView(
+                        imageData: GCWImageViewData(
+                            PlatformFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
+              } else
+                return Container();
+            });
       else
         return Container();
-
     }).toList();
 
-     _currentOutput = Column(children: results);
+    _currentOutput = Column(children: results);
   }
 }

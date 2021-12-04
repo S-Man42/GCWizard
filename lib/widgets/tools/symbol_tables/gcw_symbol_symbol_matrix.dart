@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -21,14 +20,13 @@ class GCWSymbolSymbolMatrix extends StatefulWidget {
 
   const GCWSymbolSymbolMatrix(
       {Key key,
-        this.imageData,
-        this.countColumns,
-        this.mediaQueryData,
-        this.onChanged,
-        this.selectable: false,
-        this.onSymbolTapped,
-        this.allowOverlays: true
-      })
+      this.imageData,
+      this.countColumns,
+      this.mediaQueryData,
+      this.onChanged,
+      this.selectable: false,
+      this.onSymbolTapped,
+      this.allowOverlays: true})
       : super(key: key);
 
   @override
@@ -41,33 +39,32 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.allowOverlays)
-      _currentShowOverlayedSymbols = false;
+    if (!widget.allowOverlays) _currentShowOverlayedSymbols = false;
 
     _imageData = widget.imageData;
 
-    return Column(
-      children: [
-        Row(
-          children: <Widget>[
-            Expanded(
-                child: widget.allowOverlays ? GCWOnOffSwitch(
-                  value: _currentShowOverlayedSymbols,
-                  title: i18n(context, 'symboltables_showoverlay'),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentShowOverlayedSymbols = value;
-                    });
-                  },
-                ) : Container(),
-                flex: 4),
-            GCWSymbolTableZoomButtons(
-                countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
-          ],
-        ),
-        _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
-      ]
-    );
+    return Column(children: [
+      Row(
+        children: <Widget>[
+          Expanded(
+              child: widget.allowOverlays
+                  ? GCWOnOffSwitch(
+                      value: _currentShowOverlayedSymbols,
+                      title: i18n(context, 'symboltables_showoverlay'),
+                      onChanged: (value) {
+                        setState(() {
+                          _currentShowOverlayedSymbols = value;
+                        });
+                      },
+                    )
+                  : Container(),
+              flex: 4),
+          GCWSymbolTableZoomButtons(
+              countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
+        ],
+      ),
+      _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
+    ]);
   }
 
   _showSpaceSymbolInOverlay(text) {
@@ -100,26 +97,27 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
               clipBehavior: Clip.hardEdge,
               children: <Widget>[
                 GCWSymbolContainer(
-                  borderColor: image.primarySelected ? colors.dialog() : (image.secondarySelected ? colors.focused() : null),
+                  borderColor:
+                      image.primarySelected ? colors.dialog() : (image.secondarySelected ? colors.focused() : null),
                   borderWidth: image.primarySelected || image.secondarySelected ? 5.0 : null,
                   symbol: Image.memory(image.bytes),
                 ),
                 _currentShowOverlayedSymbols
                     ? Opacity(
-                    child: Container(
-                      //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
-                      child: Text(
-                        _showSpaceSymbolInOverlay(symbolText),
-                        style: gcwTextStyle().copyWith(color: colors.dialogText(), fontWeight: FontWeight.bold),
-                      ),
-                      height: defaultFontSize() + 5,
-                      decoration: ShapeDecoration(
-                          color: colors.dialog(),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
-                          )),
-                    ),
-                    opacity: 0.85)
+                        child: Container(
+                          //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
+                          child: Text(
+                            _showSpaceSymbolInOverlay(symbolText),
+                            style: gcwTextStyle().copyWith(color: colors.dialogText(), fontWeight: FontWeight.bold),
+                          ),
+                          height: defaultFontSize() + 5,
+                          decoration: ShapeDecoration(
+                              color: colors.dialog(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(ROUNDED_BORDER_RADIUS)),
+                              )),
+                        ),
+                        opacity: 0.85)
                     : Container()
               ],
             ),
@@ -131,7 +129,6 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
                 }
 
                 onSymbolTapped(symbolText, image);
-
               });
             },
           );
@@ -141,9 +138,9 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
 
         columns.add(Expanded(
             child: Container(
-              child: widget,
-              padding: EdgeInsets.all(3),
-            )));
+          child: widget,
+          padding: EdgeInsets.all(3),
+        )));
       }
 
       rows.add(Row(

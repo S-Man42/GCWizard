@@ -58,9 +58,7 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
       else
         Column(
           // decrpyt: input segment => output number
-          children: <Widget>[
-            _buildVisualDecryption()
-          ],
+          children: <Widget>[_buildVisualDecryption()],
         ),
       _buildOutput()
     ]);
@@ -140,12 +138,11 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return SemaphoreSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {
@@ -172,15 +169,17 @@ class SemaphoreTelegraphState extends State<SemaphoreTelegraph> {
     }
   }
 
-  String _normalize(String input){
-    return input.replaceAll('symboltables_semaphore_cancel', ' ' + i18n(context, 'symboltables_semaphore_cancel') + ' ')
+  String _normalize(String input) {
+    return input
+        .replaceAll('symboltables_semaphore_cancel', ' ' + i18n(context, 'symboltables_semaphore_cancel') + ' ')
         .replaceAll('symboltables_semaphore_correct', ' ' + i18n(context, 'symboltables_semaphore_correct') + ' ')
         .replaceAll('symboltables_semaphore_error', ' ' + i18n(context, 'symboltables_semaphore_error') + ' ')
         .replaceAll('symboltables_semaphore_attention', ' ' + i18n(context, 'symboltables_semaphore_attention') + ' ')
-        .replaceAll('symboltables_semaphore_letters_following', ' ' + i18n(context, 'symboltables_semaphore_letters_following') + ' ')
-        .replaceAll('symboltables_semaphore_numerals_following', ' ' + i18n(context, 'symboltables_semaphore_numerals_following') + ' ')
+        .replaceAll('symboltables_semaphore_letters_following',
+            ' ' + i18n(context, 'symboltables_semaphore_letters_following') + ' ')
+        .replaceAll('symboltables_semaphore_numerals_following',
+            ' ' + i18n(context, 'symboltables_semaphore_numerals_following') + ' ')
         .replaceAll('symboltables_semaphore_rest', ' ' + i18n(context, 'symboltables_semaphore_rest') + ' ')
         .trim();
   }
 }
-

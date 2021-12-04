@@ -723,10 +723,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: KeyboardLayout(), i18nPrefix: 'keyboard_layout', searchKeys: [
       'keyboard',
     ]),
-    GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: [
-      'keyboard',
-      'keyboard_numbers'
-    ]),
+    GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: ['keyboard', 'keyboard_numbers']),
     GCWTool(
         tool: KeyboardSelection(),
         i18nPrefix: 'keyboard_selection',
@@ -819,9 +816,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'polybios',
     ]),
-    GCWTool(tool: PredatorSelection(), i18nPrefix: 'predator_selection', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: []),
+    GCWTool(
+        tool: PredatorSelection(),
+        i18nPrefix: 'predator_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
     GCWTool(tool: PrimeAlphabet(), i18nPrefix: 'primealphabet', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -3345,7 +3344,6 @@ initializeRegistry(BuildContext context) {
       'telegraph',
       'telegraph_ccitt',
     ]),
-
 
     // TomTomSelection *********************************************************************************************
     GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', searchKeys: [

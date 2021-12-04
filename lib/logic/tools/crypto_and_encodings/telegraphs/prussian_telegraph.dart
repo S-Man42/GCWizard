@@ -5,7 +5,8 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
+final CODEBOOK_PRUSSIA = {
+  // codebook classe 5.2
   // Seite 1
   '4.100': 'ERWARTET EINE DEPESCHE.',
   '4.200': '',
@@ -14,8 +15,8 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '5.200': 'SCHLUSSZEICHEN',
   '5.300': 'DER TELEGRAPHIST MUSS AM FERNROHR SEIN.',
   '04.10': '',
-  '04.20' : 'DIE DEPESCHE WIRD ABGEBROCHEN.',
-  '04.30' : 'DIE DEPESCHE IST NICHT VERSTANDEN WORDEN.',
+  '04.20': 'DIE DEPESCHE WIRD ABGEBROCHEN.',
+  '04.30': 'DIE DEPESCHE IST NICHT VERSTANDEN WORDEN.',
   '4.141.0': 'DER TELEGRAPHIST KANN DEN TELEGRAPHEN VERLASSEN.',
   '4.14.20': '',
   '4.14.30': 'ES SIND HIER FEHLER VORGEFALLEN, DIE DEPESCHE WIRD WIEDER ANGEFANGEN.',
@@ -23,7 +24,7 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '4.15.20': '',
   '4.15.30': '',
   '4.24.10': '',
-  '4.242.0' : 'FORTSETZUNG DER ABGEBROCHENEN DEPESCHE.',
+  '4.242.0': 'FORTSETZUNG DER ABGEBROCHENEN DEPESCHE.',
   '4.24.30': '',
   '4.25.10': '',
   '4.25.20': '',
@@ -72,7 +73,7 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '4.305.2': 'WIE WEIT ARBEITET DIE LINIE?',
   '4.305.3': 'WIR ERWARTEN DAS EMPFANGSZEICHEN VON DEPESCHE NR.',
   '5.104.1': '',
-  '5.104.2' : 'DIE DEPESCHE NR. ## IST AN IHREM BESTIMMUNGSORT GELANGT.',
+  '5.104.2': 'DIE DEPESCHE NR. ## IST AN IHREM BESTIMMUNGSORT GELANGT.',
   '5.104.3': '',
   '5.105.1': 'DIE DEPESCHE IST AUFGENOMMEN VON',
   '5.105.2': '',
@@ -81,7 +82,7 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '5.204.2': '',
   '5.204.3': 'HIER IST NICHTS MEHR ZU BERICHTEN.',
   '5.205.1': '',
-  '5.205.2' : 'NICHTS NEUES!',
+  '5.205.2': 'NICHTS NEUES!',
   '5.205.3': '',
   '5.304.1': '',
   '5.304.3': 'DIE UHREN SOLLEN GESTELLT WERDEN, um',
@@ -95,7 +96,7 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '04.15.2': '',
   '04.15.3': '',
   '04.24.1': '',
-  '04.24.2' : 'DEIN ZEICHEN IST UNDEUTLICH.',
+  '04.24.2': 'DEIN ZEICHEN IST UNDEUTLICH.',
   '04.24.3': '',
   '04.25.1': '',
   '04.25.2': '',
@@ -129,8 +130,8 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '004.2': 'DIE DEPESCHE VON STATION ##, WELCHE HIER AUFGENOMMEN WORDEN, WIRD JETZT WEITER GEGEBEN.',
   '004.3': 'CITISSIME VON STATION ##',
   '005.1': 'AN STATION ##',
-  '005.2' : 'MELDUNG VON STATION ##',
-  '005.3' : 'FALSCHES ZEICHEN VON STATION ##.',
+  '005.2': 'MELDUNG VON STATION ##',
+  '005.3': 'FALSCHES ZEICHEN VON STATION ##.',
   // Seite 4
   '4.14.14.1': 'AACHEN',
   '4.14.14.2': 'AMSTERDAM',
@@ -1947,97 +1948,97 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '608': 'W',
   '609': 'WA',
   // page 32
-  '610' : 'WE',
-  '611' : 'WI',
-  '612' : 'WL',
-  '613' : 'WLA',
-  '614' : 'WLE',
-  '615' : 'WLI',
-  '616' : 'WLO',
-  '617' : 'WLU',
-  '618' : 'WO',
-  '619' : 'WR',
-  '620' : 'WRA',
-  '621' : 'WRE',
-  '622' : 'WRI',
-  '623' : 'WRO',
-  '624' : 'WRU',
-  '625' : 'WU',
-  '626' : 'X',
-  '627' : 'XA',
-  '628' : 'XE',
-  '629' : 'XI',
-  '630' : 'XO',
-  '631' : 'XU',
-  '632' : 'Y',
-  '633' : 'Z',
-  '634' : 'ZA',
-  '635' : 'ZE',
-  '636' : 'ZEN',
-  '637' : 'ZER',
-  '638' : 'ZES',
-  '639' : 'ZET',
-  '640' : 'ZEV',
-  '641' : 'ZI',
-  '642' : 'ZIE',
-  '643' : 'ZIEN',
-  '644' : 'ZIN',
-  '645' : 'ZIP',
-  '646' : 'ZIR',
-  '647' : 'ZIS',
-  '648' : 'ZIT',
-  '649' : 'ZIV',
-  '650' : 'ZO',
-  '651' : 'ZOR',
-  '652' : 'ZOS',
-  '653' : 'ZOT',
-  '654' : 'ZOV',
-  '655' : 'ZU',
-  '656' : 'ZW',
-  '657' : 'ZWA',
-  '658' : 'ZWE',
-  '659' : 'ZWI',
-  '660' : 'ZWO',
-  '661' : 'ZWU',
+  '610': 'WE',
+  '611': 'WI',
+  '612': 'WL',
+  '613': 'WLA',
+  '614': 'WLE',
+  '615': 'WLI',
+  '616': 'WLO',
+  '617': 'WLU',
+  '618': 'WO',
+  '619': 'WR',
+  '620': 'WRA',
+  '621': 'WRE',
+  '622': 'WRI',
+  '623': 'WRO',
+  '624': 'WRU',
+  '625': 'WU',
+  '626': 'X',
+  '627': 'XA',
+  '628': 'XE',
+  '629': 'XI',
+  '630': 'XO',
+  '631': 'XU',
+  '632': 'Y',
+  '633': 'Z',
+  '634': 'ZA',
+  '635': 'ZE',
+  '636': 'ZEN',
+  '637': 'ZER',
+  '638': 'ZES',
+  '639': 'ZET',
+  '640': 'ZEV',
+  '641': 'ZI',
+  '642': 'ZIE',
+  '643': 'ZIEN',
+  '644': 'ZIN',
+  '645': 'ZIP',
+  '646': 'ZIR',
+  '647': 'ZIS',
+  '648': 'ZIT',
+  '649': 'ZIV',
+  '650': 'ZO',
+  '651': 'ZOR',
+  '652': 'ZOS',
+  '653': 'ZOT',
+  '654': 'ZOV',
+  '655': 'ZU',
+  '656': 'ZW',
+  '657': 'ZWA',
+  '658': 'ZWE',
+  '659': 'ZWI',
+  '660': 'ZWO',
+  '661': 'ZWU',
   '662': ',',
   '663': '.',
   '664': '?',
   '665': ':',
-  '666' : 'DAS BUCHSTABIERTE WORT IST ZU ENDE',
-  '667' : 'SONNTAG',
-  '668' : 'MONTAG',
-  '669' : 'DIENSTAG',
-  '670' : 'MITTWOCH',
-  '671' : 'DONNERSTAG',
-  '672' : 'FREITAG',
-  '673' : 'SAMSTAG',
-  '674' : 'FEIERTAG',
-  '675' : 'JANUAR',
-  '676' : 'FEBRUAR',
-  '677' : 'MÄRZ',
-  '678' : 'APRIL',
-  '679' : 'MAI',
-  '680' : 'JUNI',
-  '681' : 'JULI',
-  '682' : 'AUGUST',
-  '683' : 'SEPTEMBER',
-  '684' : 'OKTOBER',
-  '685' : 'NOVEMBER',
-  '686' : 'DEZEMBER',
-  '687' : 'EIN UHR',
-  '688' : 'ZWEI UHR',
-  '689' : 'DREI UHR',
-  '690' : 'VIER UHR',
-  '691' : 'FÜNF UHR',
-  '692' : 'SECHS UHR',
-  '693' : 'SIEBEN UHR',
-  '694' : 'ACHT UHR',
-  '695' : 'NEUN UHR',
-  '696' : 'ZEHN UHR',
-  '697' : 'ELF UHR',
-  '698' : 'ZWÖLF UHR',
-  '699' : 'HALB',
-  '700' : 'VIERTEL',
+  '666': 'DAS BUCHSTABIERTE WORT IST ZU ENDE',
+  '667': 'SONNTAG',
+  '668': 'MONTAG',
+  '669': 'DIENSTAG',
+  '670': 'MITTWOCH',
+  '671': 'DONNERSTAG',
+  '672': 'FREITAG',
+  '673': 'SAMSTAG',
+  '674': 'FEIERTAG',
+  '675': 'JANUAR',
+  '676': 'FEBRUAR',
+  '677': 'MÄRZ',
+  '678': 'APRIL',
+  '679': 'MAI',
+  '680': 'JUNI',
+  '681': 'JULI',
+  '682': 'AUGUST',
+  '683': 'SEPTEMBER',
+  '684': 'OKTOBER',
+  '685': 'NOVEMBER',
+  '686': 'DEZEMBER',
+  '687': 'EIN UHR',
+  '688': 'ZWEI UHR',
+  '689': 'DREI UHR',
+  '690': 'VIER UHR',
+  '691': 'FÜNF UHR',
+  '692': 'SECHS UHR',
+  '693': 'SIEBEN UHR',
+  '694': 'ACHT UHR',
+  '695': 'NEUN UHR',
+  '696': 'ZEHN UHR',
+  '697': 'ELF UHR',
+  '698': 'ZWÖLF UHR',
+  '699': 'HALB',
+  '700': 'VIERTEL',
   // page 33
   '701': '1',
   '702': '2',
@@ -2341,8 +2342,7 @@ final CODEBOOK_PRUSSIA = {   // codebook classe 5.2
   '997': '',
   '998': '',
   '999': '',
-  };
-
+};
 
 List<List<String>> encodePrussianTelegraph(String input) {
   if (input == null || input == '') return <List<String>>[];
@@ -2352,7 +2352,6 @@ List<List<String>> encodePrussianTelegraph(String input) {
       return switchMapKeyValue(CODEBOOK_PRUSSIA)[letter].split('');
   }).toList();
 }
-
 
 Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
@@ -2378,7 +2377,6 @@ Map<String, dynamic> decodeVisualPrussianTelegraph(List<String> inputs) {
   return {'displays': displays, 'text': text};
 }
 
-
 Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
   if (inputs == null || inputs.length == 0)
     return {
@@ -2389,14 +2387,24 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
   var displays = <List<String>>[];
   String text = '';
   String decodedElement = '';
-  inputs.replaceAll('A', '').replaceAll('a', '')
-      .replaceAll('B', '').replaceAll('b', '')
-      .replaceAll('C', '').replaceAll('c', '')
-      .split(' ').forEach((element) {
+  inputs
+      .replaceAll('A', '')
+      .replaceAll('a', '')
+      .replaceAll('B', '')
+      .replaceAll('b', '')
+      .replaceAll('C', '')
+      .replaceAll('c', '')
+      .split(' ')
+      .forEach((element) {
     //check for messages with station number: xy(5.2|5.3|4.1|4.3)
     if (element.length == 5) {
-      if (int.tryParse(element.substring(0,2)) != null && (element.endsWith('5.2') || element.endsWith('5.3') || element.endsWith('4.1')  || element.endsWith('4.2') || element.endsWith('4.3'))) {
-        text = text + CODEBOOK_PRUSSIA['00' + element.substring(2)].replaceAll('##', element.substring(0,2));
+      if (int.tryParse(element.substring(0, 2)) != null &&
+          (element.endsWith('5.2') ||
+              element.endsWith('5.3') ||
+              element.endsWith('4.1') ||
+              element.endsWith('4.2') ||
+              element.endsWith('4.3'))) {
+        text = text + CODEBOOK_PRUSSIA['00' + element.substring(2)].replaceAll('##', element.substring(0, 2));
       }
     } else if (CODEBOOK_PRUSSIA[element] != null) {
       decodedElement = CODEBOOK_PRUSSIA[element];
@@ -2412,23 +2420,23 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
   return {'displays': displays, 'text': text};
 }
 
-String _replaceNumber(String plainText, code){
+String _replaceNumber(String plainText, code) {
   String number = '++';
   print(code);
   return plainText.replaceAll('##', number);
 }
 
-List<String> _stringToSegment(String input){
+List<String> _stringToSegment(String input) {
   List<String> result = [];
   int j = 0;
-  for (int i = 0; i < input.length /2; i++) {
+  for (int i = 0; i < input.length / 2; i++) {
     result.add(input[j] + input[j + 1]);
     j = j + 2;
   }
   return result;
 }
 
-String segmentToCode(List<String> input){
+String segmentToCode(List<String> input) {
   var segment = [];
   segment.addAll(input);
   String a = '0';
@@ -2440,7 +2448,7 @@ String segmentToCode(List<String> input){
     segment.remove('a1');
     segment.remove('a6');
   }
-  if (segment.contains('a2') && segment.contains('a6')){
+  if (segment.contains('a2') && segment.contains('a6')) {
     a = '8';
     segment.remove('a2');
     segment.remove('a6');
@@ -2455,7 +2463,7 @@ String segmentToCode(List<String> input){
     segment.remove('b1');
     segment.remove('b6');
   }
-  if (segment.contains('b2') && segment.contains('b6')){
+  if (segment.contains('b2') && segment.contains('b6')) {
     b = '8';
     segment.remove('b2');
     segment.remove('b6');
@@ -2470,7 +2478,7 @@ String segmentToCode(List<String> input){
     segment.remove('c1');
     segment.remove('c6');
   }
-  if (segment.contains('c2') && segment.contains('c6')){
+  if (segment.contains('c2') && segment.contains('c6')) {
     c = '8';
     segment.remove('c2');
     segment.remove('c6');
@@ -2483,235 +2491,284 @@ String segmentToCode(List<String> input){
   bool firstA = true;
   bool firstB = true;
   bool firstC = true;
-  for (int i  = 0; i < segment.length; i++){
+  for (int i = 0; i < segment.length; i++) {
     switch (segment[i]) {
-      case 'a1' : if (firstA) {
+      case 'a1':
+        if (firstA) {
           a = '1';
           firstA = false;
-        } else a = '1.' + a; break;
-      case 'a2' : if (firstA) {
+        } else
+          a = '1.' + a;
+        break;
+      case 'a2':
+        if (firstA) {
           a = '2';
           firstA = false;
-        } else a = '2.' + a; break;
-      case 'a3' : if (firstA) {
+        } else
+          a = '2.' + a;
+        break;
+      case 'a3':
+        if (firstA) {
           a = '3';
           firstA = false;
-        } else a = '3.' + a; break;
-      case 'a4' : if (firstA) {
+        } else
+          a = '3.' + a;
+        break;
+      case 'a4':
+        if (firstA) {
           a = '4';
           firstA = false;
-        } else a = '4.' + a; break;
-      case 'a5' : if (firstA) {
+        } else
+          a = '4.' + a;
+        break;
+      case 'a5':
+        if (firstA) {
           a = '5';
           firstA = false;
-        } else a = '5.' + a; break;
-      case 'a6' : if (firstA) {
+        } else
+          a = '5.' + a;
+        break;
+      case 'a6':
+        if (firstA) {
           a = '6';
           firstA = false;
-        } else a = '6.' + a; break;
-      case 'b1' : if (firstB) {
-        b = '1';
-        firstB = false;
-      } else b = '1.' + b; break;
-      case 'b2' : if (firstB) {
-        b = '2';
-        firstB = false;
-      } else b = '2.' + b; break;
-      case 'b3' : if (firstB) {
+        } else
+          a = '6.' + a;
+        break;
+      case 'b1':
+        if (firstB) {
+          b = '1';
+          firstB = false;
+        } else
+          b = '1.' + b;
+        break;
+      case 'b2':
+        if (firstB) {
+          b = '2';
+          firstB = false;
+        } else
+          b = '2.' + b;
+        break;
+      case 'b3':
+        if (firstB) {
           b = '3';
           firstB = false;
-        } else b = '3.' + b; break;
-      case 'b4' : if (firstB) {
+        } else
+          b = '3.' + b;
+        break;
+      case 'b4':
+        if (firstB) {
           b = '4';
           firstB = false;
-        } else b = '4.' + b; break;
-      case 'b5' : if (firstB) {
+        } else
+          b = '4.' + b;
+        break;
+      case 'b5':
+        if (firstB) {
           b = '5';
           firstB = false;
-        } else b = '5.' + b; break;
-      case 'b6' : if (firstB) {
+        } else
+          b = '5.' + b;
+        break;
+      case 'b6':
+        if (firstB) {
           b = '6';
           firstB = false;
-        } else b = '6.' + b; break;
-      case 'c1' : if (firstC) {
+        } else
+          b = '6.' + b;
+        break;
+      case 'c1':
+        if (firstC) {
           c = '1';
           firstC = false;
-        } else c = '1.' + c; break;
-      case 'c2' : if (firstC) {
+        } else
+          c = '1.' + c;
+        break;
+      case 'c2':
+        if (firstC) {
           c = '2';
           firstC = false;
-        } else c = '2.' + c; break;
-      case 'c3' : if (firstC) {
+        } else
+          c = '2.' + c;
+        break;
+      case 'c3':
+        if (firstC) {
           c = '3';
           firstC = false;
-        } else c = '3.' + c; break;
-      case 'c4' : if (firstC) {
+        } else
+          c = '3.' + c;
+        break;
+      case 'c4':
+        if (firstC) {
           c = '4';
           firstC = false;
-        } else c = '4.' + c; break;
-      case 'c5' : if (firstC) {
+        } else
+          c = '4.' + c;
+        break;
+      case 'c5':
+        if (firstC) {
           c = '5';
           firstC = false;
-        } else c = '5.' + c; break;
-      case 'c6' : if (firstC) {
+        } else
+          c = '5.' + c;
+        break;
+      case 'c6':
+        if (firstC) {
           c = '6';
           firstC = false;
-        } else c = '6.' + c; break;
+        } else
+          c = '6.' + c;
+        break;
     }
   }
 
   return a + b + c;
 }
 
-
-List<String> _buildShutters(String input){
+List<String> _buildShutters(String input) {
   List<String> resultElement = [];
 
   String segments = input;
   String level = 'A1';
 
   while (segments.length > 0) {
-    if (level == 'A2' && segments[0] != '.')
-      level = 'B1';
+    if (level == 'A2' && segments[0] != '.') level = 'B1';
     if (segments[0] == '.' && level == 'A2') {
-      if (segments.length > 1)
-        segments = segments.substring(1);
+      if (segments.length > 1) segments = segments.substring(1);
     }
-    if (level == 'B2' && segments[0] != '.')
-      level = 'C1';
+    if (level == 'B2' && segments[0] != '.') level = 'C1';
     if (segments[0] == '.' && level == 'B2') {
-      if (segments.length > 1)
-        segments = segments.substring(1);
+      if (segments.length > 1) segments = segments.substring(1);
     }
 
     switch (level) {
-      case 'A1' :
+      case 'A1':
         switch (segments[0]) {
-          case '1' :
-          case '2' :
-          case '3' :
-          case '4' :
-          case '5' :
-          case '6' :
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
             resultElement.addAll(['a' + segments[0]]);
             break;
-          case '7' :
+          case '7':
             resultElement.addAll(['a1', 'a6']);
             break;
-          case '8' :
+          case '8':
             resultElement.addAll(['a2', 'a6']);
             break;
-          case '9' :
+          case '9':
             resultElement.addAll(['a3', 'a6']);
             break;
-          case '0' :
-          case '.' :
+          case '0':
+          case '.':
             break;
         }
         segments = segments.substring(1);
         level = 'A2';
         break;
 
-      case 'A2' :
+      case 'A2':
         switch (segments[0]) {
-          case '1' :
-          case '2' :
-          case '3' :
-          case '4' :
-          case '5' :
-          case '6' :
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
             resultElement.addAll(['a' + segments[0]]);
             break;
-          case '7' :
+          case '7':
             resultElement.addAll(['a1', 'a6']);
             break;
-          case '8' :
+          case '8':
             resultElement.addAll(['a2', 'a6']);
             break;
-          case '9' :
+          case '9':
             resultElement.addAll(['a3', 'a6']);
             break;
-          case '.' :
+          case '.':
             break;
         }
         segments = segments.substring(1);
         level = 'B1';
         break;
-      case 'B1' :
+      case 'B1':
         switch (segments[0]) {
-          case '1' :
-          case '2' :
-          case '3' :
-          case '4' :
-          case '5' :
-          case '6' :
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
             resultElement.addAll(['b' + segments[0]]);
             break;
-          case '7' :
+          case '7':
             resultElement.addAll(['b1', 'b6']);
             break;
-          case '8' :
+          case '8':
             resultElement.addAll(['b2', 'b6']);
             break;
-          case '9' :
+          case '9':
             resultElement.addAll(['b3', 'b6']);
             break;
-          case '.' :
+          case '.':
             break;
         }
         segments = segments.substring(1);
         level = 'B2';
         break;
-      case 'B2' :
+      case 'B2':
         switch (segments[0]) {
-          case '1' :
-          case '2' :
-          case '3' :
-          case '4' :
-          case '5' :
-          case '6' :
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
             resultElement.addAll(['b' + segments[0]]);
             break;
-          case '7' :
+          case '7':
             resultElement.addAll(['b1', 'b6']);
             break;
-          case '8' :
+          case '8':
             resultElement.addAll(['b2', 'b6']);
             break;
-          case '9' :
+          case '9':
             resultElement.addAll(['b3', 'b6']);
             break;
-          case '.' :
+          case '.':
             break;
         }
         segments = segments.substring(1);
         level = 'C1';
         break;
-      case 'C1' :
-      case 'C2' :
+      case 'C1':
+      case 'C2':
         switch (segments[0]) {
-          case '1' :
-          case '2' :
-          case '3' :
-          case '4' :
-          case '5' :
-          case '6' :
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
             resultElement.addAll(['c' + segments[0]]);
             level = 'C2';
             break;
-          case '7' :
+          case '7':
             resultElement.addAll(['c1', 'c6']);
             level = 'C2';
             break;
-          case '8' :
+          case '8':
             resultElement.addAll(['c2', 'c6']);
             level = 'C2';
             break;
-          case '9' :
+          case '9':
             resultElement.addAll(['c3', 'c6']);
             level = 'C2';
             break;
-          case '.' :
+          case '.':
             break;
         }
         segments = segments.substring(1);

@@ -575,9 +575,9 @@ List<int> textToAtomicNumbers(String input) {
 
   var chemSymbol = RegExp(r'[A-Z][a-z]*');
   return chemSymbol.allMatches(input).map((symbol) {
-    var element = allPeriodicTableElements.firstWhere((element) => element.chemicalSymbol == symbol.group(0), orElse: () => null);
-    if (element == null)
-      return null;
+    var element =
+        allPeriodicTableElements.firstWhere((element) => element.chemicalSymbol == symbol.group(0), orElse: () => null);
+    if (element == null) return null;
 
     return element.atomicNumber;
   }).toList();

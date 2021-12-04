@@ -52,8 +52,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-          );
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
       ),
       GCWTwoOptionsSwitch(
@@ -76,9 +75,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
       else
         Column(
           // decrpyt: input segment => output number
-          children: <Widget>[
-            _buildVisualDecryption()
-          ],
+          children: <Widget>[_buildVisualDecryption()],
         ),
       _buildOutput()
     ]);
@@ -117,12 +114,12 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
-                Expanded(
-                  child: MurraySegmentDisplay(
-                    segments: currentDisplay,
-                    onChanged: onChanged,
-                  ),
-                )
+              Expanded(
+                child: MurraySegmentDisplay(
+                  segments: currentDisplay,
+                  onChanged: onChanged,
+                ),
+              )
             ],
           ),
         ),
@@ -158,12 +155,11 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
-            return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction: (displayedSegments, readOnly) {
+          return MurraySegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {

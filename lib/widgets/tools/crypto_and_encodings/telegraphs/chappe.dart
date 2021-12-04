@@ -30,7 +30,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
 
   var _currentLanguage = ChappeCodebook.ALPHABET;
 
-    @override
+  @override
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
@@ -59,11 +59,10 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-          );
+              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
       ),
-       GCWTwoOptionsSwitch(
+      GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
           setState(() {
@@ -81,7 +80,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
           },
         )
       else
-        Column(// decrpyt: input segment => output number
+        Column(
+          // decrpyt: input segment => output number
           children: <Widget>[
             GCWTwoOptionsSwitch(
               value: _currentDecodeMode,
@@ -98,13 +98,16 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
             else // decode text
               GCWTextField(
                 controller: _DecodeInputController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),
+                ],
                 onChanged: (text) {
                   setState(() {
                     _currentDecodeInput = text;
                   });
                 },
-              )          ],
+              )
+          ],
         ),
       _buildOutput()
     ]);
@@ -184,27 +187,30 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return ChappeTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) { //encode
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
       List<List<String>> segments = encodeChappe(_currentEncodeInput, _currentLanguage);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
         ],
       );
-    } else { //decode
+    } else {
+      //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
+      if (_currentDecodeMode == GCWSwitchPosition.left) {
+        // text
         segments = decodeTextChappeTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
-      } else { // visual
+      } else {
+        // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();

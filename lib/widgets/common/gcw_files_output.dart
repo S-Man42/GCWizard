@@ -19,9 +19,7 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 class GCWFilesOutput extends StatefulWidget {
   final List<PlatformFile> files;
 
-  const GCWFilesOutput(
-      {Key key, @required this.files})
-      : super(key: key);
+  const GCWFilesOutput({Key key, @required this.files}) : super(key: key);
 
   @override
   _GCWFilesOutputState createState() => _GCWFilesOutputState();
@@ -30,9 +28,7 @@ class GCWFilesOutput extends StatefulWidget {
 class _GCWFilesOutputState extends State<GCWFilesOutput> {
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      _buildFileTree(widget.files, [])
-    ]);
+    return Column(children: <Widget>[_buildFileTree(widget.files, [])]);
   }
 
   Widget _buildFileTree(List<PlatformFile> files, List<String> parents, {level: 0}) {

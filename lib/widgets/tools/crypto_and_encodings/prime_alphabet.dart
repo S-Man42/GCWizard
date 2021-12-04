@@ -18,7 +18,6 @@ final _MAX_PRIME_INDEX = 26 * 10;
 final _PRIMES_LIST = primes.sublist(0, _MAX_PRIME_INDEX);
 
 class PrimeAlphabetState extends State<PrimeAlphabet> {
-
   TextEditingController _encryptInputController;
   TextEditingController _decryptInputController;
   var _currentEncryptInput = '';
@@ -49,22 +48,22 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encryptInputController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncryptInput = text;
-                });
-              },
-            )
-          : GCWTextField(
-              controller: _decryptInputController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecryptInput = text;
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _encryptInputController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncryptInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decryptInputController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecryptInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -75,28 +74,27 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
         ),
         GCWTextDivider(text: i18n(context, 'primealphabet_recognizedprimes')),
         GCWDropDownSpinner(
-          title: i18n(context, 'primealphabet_firstprime'),
-          index: _currentStartIndex,
-          onChanged: (value) {
-            setState(() {
-              _currentStartIndex = value;
-              if (_currentEndIndex > _MAX_PRIME_INDEX - _currentStartIndex - 1)
-                _currentEndIndex = _MAX_PRIME_INDEX - _currentStartIndex - 1;
-            });
-          },
-          items: _getItemEntries(0)
-        ),
-        _currentMode == GCWSwitchPosition.right ? Container() :
-          GCWDropDownSpinner(
-            title: i18n(context, 'primealphabet_lastprime'),
-            index: _currentEndIndex,
+            title: i18n(context, 'primealphabet_firstprime'),
+            index: _currentStartIndex,
             onChanged: (value) {
               setState(() {
-                _currentEndIndex = value;
+                _currentStartIndex = value;
+                if (_currentEndIndex > _MAX_PRIME_INDEX - _currentStartIndex - 1)
+                  _currentEndIndex = _MAX_PRIME_INDEX - _currentStartIndex - 1;
               });
             },
-            items: _getItemEntries(_currentStartIndex)
-          ),
+            items: _getItemEntries(0)),
+        _currentMode == GCWSwitchPosition.right
+            ? Container()
+            : GCWDropDownSpinner(
+                title: i18n(context, 'primealphabet_lastprime'),
+                index: _currentEndIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _currentEndIndex = value;
+                  });
+                },
+                items: _getItemEntries(_currentStartIndex)),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
@@ -112,13 +110,12 @@ class PrimeAlphabetState extends State<PrimeAlphabet> {
     if (_currentMode == GCWSwitchPosition.right) {
       return decryptPrimeAlphabet(
           RegExp(r'[0-9]+').allMatches(_currentDecryptInput).map((number) => int.tryParse(number.group(0))).toList(),
-          firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex]
-      );
+          firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex]);
     } else {
       return encryptPrimeAlphabet(
-          _currentEncryptInput,
-          firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex],
-          lastRecognizedPrime: _PRIMES_LIST[_currentStartIndex + _currentEndIndex],
+        _currentEncryptInput,
+        firstRecognizedPrime: _PRIMES_LIST[_currentStartIndex],
+        lastRecognizedPrime: _PRIMES_LIST[_currentStartIndex + _currentEndIndex],
       ).map((element) => element ?? UNKNOWN_ELEMENT).join(' ');
     }
   }

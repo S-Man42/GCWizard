@@ -11,7 +11,8 @@ class GCWSlider extends StatefulWidget {
   final double max;
   final bool suppressReset;
 
-  const GCWSlider({Key key, this.title, this.value, this.onChanged, this.min, this.max, this.suppressReset: false}) : super(key: key);
+  const GCWSlider({Key key, this.title, this.value, this.onChanged, this.min, this.max, this.suppressReset: false})
+      : super(key: key);
 
   @override
   _GCWSliderState createState() => _GCWSliderState();

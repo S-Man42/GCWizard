@@ -10,7 +10,13 @@ import 'package:gc_wizard/utils/crosstotals.dart';
 import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
-enum FormulaState {STATE_SINGLE_OK, STATE_EXPANDED_OK, STATE_EXPANDED_ERROR, STATE_SINGLE_ERROR, STATE_EXPANDED_ERROR_EXCEEDEDRANGE}
+enum FormulaState {
+  STATE_SINGLE_OK,
+  STATE_EXPANDED_OK,
+  STATE_EXPANDED_ERROR,
+  STATE_SINGLE_ERROR,
+  STATE_EXPANDED_ERROR_EXCEEDEDRANGE
+}
 
 const _MAX_EXPANDED = 100;
 
@@ -54,8 +60,7 @@ class FormulaParser {
     'max': (List<double> numbers) => numbers.reduce(max),
     'round': (List<double> numbers) {
       var precision = 0;
-      if (numbers.length > 1)
-        precision = numbers[1].toInt();
+      if (numbers.length > 1) precision = numbers[1].toInt();
 
       return round(numbers.first, precision: precision);
     },
@@ -208,14 +213,22 @@ class FormulaParser {
 
         try {
           var result = _evaluateFormula(substitutedFormula);
-          results.add({'state': FormulaState.STATE_SINGLE_OK, 'result': result, 'variables': expandedFormula['variables']});
+          results.add(
+              {'state': FormulaState.STATE_SINGLE_OK, 'result': result, 'variables': expandedFormula['variables']});
         } catch (e) {
-          results.add({'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula, 'variables': expandedFormula['variables']});
+          results.add({
+            'state': FormulaState.STATE_SINGLE_ERROR,
+            'result': substitutedFormula,
+            'variables': expandedFormula['variables']
+          });
           hasError = true;
         }
       }
 
-      return {'state': hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK, 'result': results};
+      return {
+        'state': hasError ? FormulaState.STATE_EXPANDED_ERROR : FormulaState.STATE_EXPANDED_OK,
+        'result': results
+      };
     } else {
       substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
 
@@ -280,7 +293,8 @@ class FormulaParser {
   }
 
   FormulaSolverOutput _simpleErrorOutput(String formula) {
-    return FormulaSolverOutput(FormulaState.STATE_SINGLE_ERROR, [FormulaSolverResult(FormulaState.STATE_SINGLE_ERROR, formula)]);
+    return FormulaSolverOutput(
+        FormulaState.STATE_SINGLE_ERROR, [FormulaSolverResult(FormulaState.STATE_SINGLE_ERROR, formula)]);
   }
 
   FormulaSolverOutput parse(String formula, List<FormulaValue> values, {expandValues: true}) {
@@ -357,8 +371,7 @@ class FormulaParser {
 
             // overallState turns into error, if currently ok.
             // EXPANDED_ERROR cannot be overwritten
-            if (overallState != FormulaState.STATE_EXPANDED_ERROR)
-              overallState = state;
+            if (overallState != FormulaState.STATE_EXPANDED_ERROR) overallState = state;
             break;
           case FormulaState.STATE_EXPANDED_OK:
           case FormulaState.STATE_EXPANDED_ERROR:
@@ -368,7 +381,7 @@ class FormulaParser {
                 formatted = _formatOutput(result['result']);
               } else {
                 // restore brackets if formerly removed
-                formatted =  hasBrackets ? '[${result['result']}]' : result['result'];
+                formatted = hasBrackets ? '[${result['result']}]' : result['result'];
               }
 
               var out = FormulaSolverResult(result['state'], formatted, variables: result['variables']);
@@ -387,7 +400,9 @@ class FormulaParser {
                 if (overallState == FormulaState.STATE_SINGLE_ERROR)
                   overallState = FormulaState.STATE_EXPANDED_ERROR;
                 else if (overallState != FormulaState.STATE_EXPANDED_ERROR)
-                  overallState = result['state'] == FormulaState.STATE_SINGLE_OK ? FormulaState.STATE_EXPANDED_OK : FormulaState.STATE_EXPANDED_ERROR;
+                  overallState = result['state'] == FormulaState.STATE_SINGLE_OK
+                      ? FormulaState.STATE_EXPANDED_OK
+                      : FormulaState.STATE_EXPANDED_ERROR;
               } else {
                 overallState = FormulaState.STATE_EXPANDED_ERROR;
               }
@@ -408,10 +423,8 @@ class FormulaParser {
       var variables;
       var state = FormulaState.STATE_SINGLE_OK;
       matchedResults.forEach((String matchedString, FormulaSolverResult result) {
-        if (variables == null)
-          variables = result.variables;
-        if (result.state == FormulaState.STATE_SINGLE_ERROR)
-          state = FormulaState.STATE_SINGLE_ERROR;
+        if (variables == null) variables = result.variables;
+        if (result.state == FormulaState.STATE_SINGLE_ERROR) state = FormulaState.STATE_SINGLE_ERROR;
         substitutions.putIfAbsent(matchedString, () => result.result);
       });
 
@@ -425,17 +438,16 @@ class FormulaParser {
       }
 
       if (!exists) {
-        FormulaSolverResult out = FormulaSolverResult(state, substitution(formula, substitutions), variables: variables);
+        FormulaSolverResult out =
+            FormulaSolverResult(state, substitution(formula, substitutions), variables: variables);
         output.add(out);
       }
     });
 
     // if EXPANDED state althought only one result -> make it to SINGLE state
     if (output.length <= 1) {
-      if (overallState == FormulaState.STATE_EXPANDED_OK)
-        overallState = FormulaState.STATE_SINGLE_OK;
-      if (overallState == FormulaState.STATE_EXPANDED_ERROR)
-        overallState = FormulaState.STATE_SINGLE_ERROR;
+      if (overallState == FormulaState.STATE_EXPANDED_OK) overallState = FormulaState.STATE_SINGLE_OK;
+      if (overallState == FormulaState.STATE_EXPANDED_ERROR) overallState = FormulaState.STATE_SINGLE_ERROR;
     }
 
     return FormulaSolverOutput(overallState, output);

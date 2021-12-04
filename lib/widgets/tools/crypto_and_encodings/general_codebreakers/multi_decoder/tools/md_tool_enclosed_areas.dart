@@ -9,7 +9,6 @@ import '../gcw_multi_decoder_tool_configuration.dart';
 const MDT_INTERNALNAMES_ENCLOSEDAREAS = 'multidecoder_tool_enclosedareas_title';
 const MDT_ENCLOSEDAREAS_OPTION_MODE = 'multidecoder_tool_bacon_option_mode';
 
-
 class MultiDecoderToolEnclosedAreas extends GCWMultiDecoderTool {
   MultiDecoderToolEnclosedAreas({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
@@ -23,12 +22,15 @@ class MultiDecoderToolEnclosedAreas extends GCWMultiDecoderTool {
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_ENCLOSEDAREAS_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'enclosedareas_with4' ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                value: options[MDT_ENCLOSEDAREAS_OPTION_MODE] == 'enclosedareas_with4'
+                    ? GCWSwitchPosition.left
+                    : GCWSwitchPosition.right,
                 notitle: true,
                 leftValue: i18n(context, 'enclosedareas_with4'),
                 rightValue: i18n(context, 'enclosedareas_without4'),
                 onChanged: (value) {
-                  options[MDT_ENCLOSEDAREAS_OPTION_MODE] = value == GCWSwitchPosition.left ? 'enclosedareas_with4' : 'enclosedareas_without4';
+                  options[MDT_ENCLOSEDAREAS_OPTION_MODE] =
+                      value == GCWSwitchPosition.left ? 'enclosedareas_with4' : 'enclosedareas_without4';
                 },
               )
             }));

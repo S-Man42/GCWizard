@@ -33,18 +33,19 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
 
     return Column(
       children: <Widget>[
-        (widget.data == null) ? Container() :
-        GCWSymbolSymbolMatrix(
-          imageData: _data.images,
-          countColumns: widget.countColumns,
-          mediaQueryData: widget.mediaQueryData,
-          onChanged: widget.onChanged,
-          onSymbolTapped: (String tappedText, SymbolData imageData) {
-            setState(() {
-              _decryptionOutput += tappedText;
-            });
-          },
-        ),
+        (widget.data == null)
+            ? Container()
+            : GCWSymbolSymbolMatrix(
+                imageData: _data.images,
+                countColumns: widget.countColumns,
+                mediaQueryData: widget.mediaQueryData,
+                onChanged: widget.onChanged,
+                onSymbolTapped: (String tappedText, SymbolData imageData) {
+                  setState(() {
+                    _decryptionOutput += tappedText;
+                  });
+                },
+              ),
         GCWToolBar(children: [
           GCWIconButton(
             iconData: Icons.space_bar,

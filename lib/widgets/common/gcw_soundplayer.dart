@@ -7,9 +7,7 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 class GCWSoundPlayer extends StatefulWidget {
   final PlatformFile file;
 
-  const GCWSoundPlayer(
-      {Key key, @required this.file})
-      : super(key: key);
+  const GCWSoundPlayer({Key key, @required this.file}) : super(key: key);
 
   @override
   _GCWSoundPlayerState createState() => _GCWSoundPlayerState();
@@ -22,23 +20,14 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       children: [
         GCWIconButton(
           iconData: Icons.play_arrow,
-          onPressed: () {
-
-          },
+          onPressed: () {},
         ),
         GCWIconButton(
           iconData: Icons.stop,
-          onPressed: () {
-
-          },
+          onPressed: () {},
         ),
         Expanded(
-          child: GCWSlider(
-              value: 0.0,
-              min: 0.0,
-              max: 100.0,
-              suppressReset: true
-          ),
+          child: GCWSlider(value: 0.0, min: 0.0, max: 100.0, suppressReset: true),
         ),
         GCWText(text: '0:42 / 10:00')
       ],

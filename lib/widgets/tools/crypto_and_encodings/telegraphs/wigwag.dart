@@ -55,28 +55,26 @@ class WigWagSemaphoreTelegraphState extends State<WigWagSemaphoreTelegraph> {
             return GCWDropDownMenuItem(
                 value: mode.key,
                 child: i18n(context, mode.value['title']),
-                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null
-            );
+                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
           }).toList(),
         ),
-
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
             : GCWIntegerListTextField(
-          controller: _decodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-            });
-          },
-        ),
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {

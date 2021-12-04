@@ -48,12 +48,12 @@ class VariableStringExpander {
   VariableStringExpanderBreakCondition breakCondition;
   bool uniqueResults;
 
-  VariableStringExpander(this._input, this._substitutions, {this.onAfterExpandedText,
+  VariableStringExpander(this._input, this._substitutions,
+      {this.onAfterExpandedText,
       this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
       this.uniqueResults = false,
       this.sendAsyncPort}) {
-    if (this.onAfterExpandedText == null)
-      this.onAfterExpandedText = (e) => e;
+    if (this.onAfterExpandedText == null) this.onAfterExpandedText = (e) => e;
   }
 
   List<List<String>> _expandedVariableGroups = [];
@@ -183,9 +183,9 @@ class VariableStringExpander {
 
     for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
       _variableGroup = _variableGroup.toUpperCase().replaceAll(
-        _substitutionKeys[_variableValueIndex],
-        _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
-      );
+            _substitutionKeys[_variableValueIndex],
+            _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
+          );
     }
 
     _result = _result.replaceFirst(_input, _variableGroup);
@@ -207,8 +207,10 @@ class VariableStringExpander {
       var group;
       try {
         group = _expandVariableGroup(substitution.value);
-      } catch(e) {
-        return [{'text': _input, 'variables': {}}];
+      } catch (e) {
+        return [
+          {'text': _input, 'variables': {}}
+        ];
       }
       if (group.length > 0) {
         _expandedVariableGroups.add(group);

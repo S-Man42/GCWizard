@@ -13,7 +13,7 @@ class HomophoneOutput {
 enum HomophoneErrorCode { OK, TABLE, CUSTOM_KEY_COUNT, CUSTOM_KEY_DUPLICATE }
 
 HomophoneOutput encryptHomophoneWithKeyMap(String input, Map<String, List<int>> keyMap) {
-  if (keyMap == null || keyMap.isEmpty){
+  if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
 
@@ -35,13 +35,12 @@ Map<String, List<int>> _keyListToKeyMap(Map<String, int> letterFrequencies, List
 }
 
 HomophoneOutput encryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int> keyList) {
-  if (keyList == null || keyList.length != 100){
+  if (keyList == null || keyList.length != 100) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
 
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null)
-    return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
+  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
   var keyMap = _keyListToKeyMap(letterFrequencies, keyList);
 
   return _encryptHomophone(input, keyMap);
@@ -65,8 +64,7 @@ Map<String, List<int>> _generateKeyMap(Map<String, int> letterFrequencies, int r
 
 HomophoneOutput encryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null)
-    return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
+  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
 
   return _encryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));
 }
@@ -83,16 +81,16 @@ HomophoneOutput _encryptHomophone(String input, Map<String, List<int>> keyMap) {
   input = input.split('').map((character) => keyMap.containsKey(character) ? character : '').join();
 
   var output = input
-    .toUpperCase()
-    .split('')
-    .map((character) => _charToNumber(character, keyMap).toString().padLeft(2, '0'))
-    .join(' ');
+      .toUpperCase()
+      .split('')
+      .map((character) => _charToNumber(character, keyMap).toString().padLeft(2, '0'))
+      .join(' ');
 
   return HomophoneOutput(output, _keyMapToString(keyMap), error);
 }
 
 HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>> keyMap) {
-  if (keyMap == null || keyMap.isEmpty){
+  if (keyMap == null || keyMap.isEmpty) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
 
@@ -100,13 +98,12 @@ HomophoneOutput decryptHomophoneWithKeyMap(String input, Map<String, List<int>> 
 }
 
 HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, List<int> keyList) {
-  if (keyList == null || keyList.length != 100){
+  if (keyList == null || keyList.length != 100) {
     return HomophoneOutput('', '', HomophoneErrorCode.CUSTOM_KEY_COUNT);
   }
 
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null)
-    return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
+  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
   var keyMap = _keyListToKeyMap(letterFrequencies, keyList);
 
   return _decryptHomophone(input, keyMap);
@@ -114,13 +111,12 @@ HomophoneOutput decryptHomophoneWithKeyList(String input, Alphabet alphabet, Lis
 
 HomophoneOutput decryptHomophoneWithGeneratedKey(String input, Alphabet alphabet, int rotation, int multiplier) {
   var letterFrequencies = getLetterFrequenciesFromAlphabet(alphabet);
-  if (letterFrequencies == null)
-    return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
+  if (letterFrequencies == null) return HomophoneOutput('', '', HomophoneErrorCode.TABLE);
 
   return _decryptHomophone(input, _generateKeyMap(letterFrequencies, rotation, multiplier));
 }
 
-HomophoneOutput _decryptHomophone(String input,  Map<String, List<int>> keyMap) {
+HomophoneOutput _decryptHomophone(String input, Map<String, List<int>> keyMap) {
   if (input == null || input == '') return HomophoneOutput('', '', HomophoneErrorCode.OK);
 
   var error = HomophoneErrorCode.OK;
@@ -150,7 +146,7 @@ bool _checkDoubleKey(Map<String, List<int>> table) {
   table.values.forEach((element) {
     keyList.addAll(element);
   });
-  return (keyList.length != keyList.toSet().length );
+  return (keyList.length != keyList.toSet().length);
 }
 
 int _charToNumber(String character, Map<String, List<int>> table) {

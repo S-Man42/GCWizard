@@ -68,31 +68,31 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
       else
         Column(// decryt
             children: <Widget>[
-              GCWTwoOptionsSwitch(
-                value: _currentDecodeMode,
-                leftValue: i18n(context, 'telegraph_decode_textmode'),
-                rightValue: i18n(context, 'telegraph_decode_visualmode'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentDecodeMode = value;
-                  });
-                },
-              ),
-              if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
-                _buildVisualDecryption()
-              else // decode text
-                GCWTextField(
-                  controller: _DecodeInputController,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[aAbBcC. 0-9]')),],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentDecodeInput = text;
-                    });
-                  },
-                )
-
-            ]
-        ),
+          GCWTwoOptionsSwitch(
+            value: _currentDecodeMode,
+            leftValue: i18n(context, 'telegraph_decode_textmode'),
+            rightValue: i18n(context, 'telegraph_decode_visualmode'),
+            onChanged: (value) {
+              setState(() {
+                _currentDecodeMode = value;
+              });
+            },
+          ),
+          if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+            _buildVisualDecryption()
+          else // decode text
+            GCWTextField(
+              controller: _DecodeInputController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[aAbBcC. 0-9]')),
+              ],
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            )
+        ]),
       _buildOutput()
     ]);
   }
@@ -168,79 +168,133 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
     );
   }
 
-  List<List<String>> _buildShutters(List<List<String>> segments){
+  List<List<String>> _buildShutters(List<List<String>> segments) {
     List<List<String>> result = [];
     segments.forEach((element) {
-      if (element != null)
-        if (int.tryParse(element.join('')) != null) {
-          List<String> resultElement = [];
-          switch (element[0]) {
-            case '0' : resultElement = []; break;
-            case '1' : resultElement = ['a1']; break;
-            case '2' : resultElement = ['a2']; break;
-            case '3' : resultElement = ['a3']; break;
-            case '4' : resultElement = ['a4']; break;
-            case '5' : resultElement = ['a5']; break;
-            case '6' : resultElement = ['a6']; break;
-            case '7' : resultElement = ['a1', 'a6']; break;
-            case '8' : resultElement = ['a2', 'a6']; break;
-            case '9' : resultElement = ['a3', 'a6']; break;
-          }
-          switch (element[1]) {
-            case '1' : resultElement.addAll(['b1']); break;
-            case '2' : resultElement.addAll(['b2']); break;
-            case '3' : resultElement.addAll(['b3']); break;
-            case '4' : resultElement.addAll(['b4']); break;
-            case '5' : resultElement.addAll(['b5']); break;
-            case '6' : resultElement.addAll(['b6']); break;
-            case '7' : resultElement.addAll(['b1', 'b6']); break;
-            case '8' : resultElement.addAll(['b2', 'b6']); break;
-            case '9' : resultElement.addAll(['b3', 'b6']); break;
-          }
-          switch (element[2]) {
-            case '1' : resultElement.addAll(['c1']); break;
-            case '2' : resultElement.addAll(['c2']); break;
-            case '3' : resultElement.addAll(['c3']); break;
-            case '4' : resultElement.addAll(['c4']); break;
-            case '5' : resultElement.addAll(['c5']); break;
-            case '6' : resultElement.addAll(['c6']); break;
-            case '7' : resultElement.addAll(['c1', 'c6']); break;
-            case '8' : resultElement.addAll(['c2', 'c6']); break;
-            case '9' : resultElement.addAll(['c3', 'c6']); break;
-          }
-          result.add(resultElement);
-        } else
-          result.add(element);
+      if (element != null) if (int.tryParse(element.join('')) != null) {
+        List<String> resultElement = [];
+        switch (element[0]) {
+          case '0':
+            resultElement = [];
+            break;
+          case '1':
+            resultElement = ['a1'];
+            break;
+          case '2':
+            resultElement = ['a2'];
+            break;
+          case '3':
+            resultElement = ['a3'];
+            break;
+          case '4':
+            resultElement = ['a4'];
+            break;
+          case '5':
+            resultElement = ['a5'];
+            break;
+          case '6':
+            resultElement = ['a6'];
+            break;
+          case '7':
+            resultElement = ['a1', 'a6'];
+            break;
+          case '8':
+            resultElement = ['a2', 'a6'];
+            break;
+          case '9':
+            resultElement = ['a3', 'a6'];
+            break;
+        }
+        switch (element[1]) {
+          case '1':
+            resultElement.addAll(['b1']);
+            break;
+          case '2':
+            resultElement.addAll(['b2']);
+            break;
+          case '3':
+            resultElement.addAll(['b3']);
+            break;
+          case '4':
+            resultElement.addAll(['b4']);
+            break;
+          case '5':
+            resultElement.addAll(['b5']);
+            break;
+          case '6':
+            resultElement.addAll(['b6']);
+            break;
+          case '7':
+            resultElement.addAll(['b1', 'b6']);
+            break;
+          case '8':
+            resultElement.addAll(['b2', 'b6']);
+            break;
+          case '9':
+            resultElement.addAll(['b3', 'b6']);
+            break;
+        }
+        switch (element[2]) {
+          case '1':
+            resultElement.addAll(['c1']);
+            break;
+          case '2':
+            resultElement.addAll(['c2']);
+            break;
+          case '3':
+            resultElement.addAll(['c3']);
+            break;
+          case '4':
+            resultElement.addAll(['c4']);
+            break;
+          case '5':
+            resultElement.addAll(['c5']);
+            break;
+          case '6':
+            resultElement.addAll(['c6']);
+            break;
+          case '7':
+            resultElement.addAll(['c1', 'c6']);
+            break;
+          case '8':
+            resultElement.addAll(['c2', 'c6']);
+            break;
+          case '9':
+            resultElement.addAll(['c3', 'c6']);
+            break;
+        }
+        result.add(resultElement);
+      } else
+        result.add(element);
     });
     return result;
   }
 
-  String _buildCodelets(List<List<String>> segments){
+  String _buildCodelets(List<List<String>> segments) {
     List<String> result = [];
     segments.forEach((codelet) {
-      if (codelet != null)
-        result.add(codelet.join(''));
+      if (codelet != null) result.add(codelet.join(''));
     });
     return result.join(' ');
   }
 
-  String _segmentsToText(String text){
+  String _segmentsToText(String text) {
     return text;
   }
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     segments = _buildShutters(segments);
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return PrussiaTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {//encode
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
       var segments = encodePrussianTelegraph(_currentEncodeInput.toUpperCase());
       return Column(
         children: <Widget>[
@@ -253,11 +307,14 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
           )
         ],
       );
-    } else { //decode
+    } else {
+      //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left){ // text
+      if (_currentDecodeMode == GCWSwitchPosition.left) {
+        // text
         segments = decodeTextPrussianTelegraph(_currentDecodeInput.toUpperCase());
-      } else { // visual
+      } else {
+        // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();

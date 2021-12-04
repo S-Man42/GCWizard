@@ -8,35 +8,34 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays) {
   var countRows = (displays.length / countColumns).floor();
 
   for (var i = 0; i <= countRows; i++) {
-      var columns = <Widget>[];
+    var columns = <Widget>[];
 
-      for (var j = 0; j < countColumns; j++) {
-        var widget;
-        var displayIndex = i * countColumns + j;
+    for (var j = 0; j < countColumns; j++) {
+      var widget;
+      var displayIndex = i * countColumns + j;
 
-        if (displayIndex < displays.length) {
-          var display = displays[displayIndex];
+      if (displayIndex < displays.length) {
+        var display = displays[displayIndex];
 
-          widget = Container(
-            child: display,
-            padding: EdgeInsets.all(2),
-          );
-        } else {
-          widget = Container();
-        }
-
-        columns.add(Expanded(
-            child: Container(
-              child: widget,
-              padding: EdgeInsets.all(3),
-            )
-        ));
+        widget = Container(
+          child: display,
+          padding: EdgeInsets.all(2),
+        );
+      } else {
+        widget = Container();
       }
 
-      rows.add(Row(
-        children: columns,
-      ));
+      columns.add(Expanded(
+          child: Container(
+        child: widget,
+        padding: EdgeInsets.all(3),
+      )));
     }
+
+    rows.add(Row(
+      children: columns,
+    ));
+  }
 
   return Column(
     children: rows,
@@ -60,12 +59,10 @@ Widget buildPunchtapeSegmentDisplayOutput(int countColumns, List<dynamic> displa
     );
 
     columns.add(Expanded(
-      child:  Container(
-                child: widget,
-                padding: EdgeInsets.all(3),
-              )
-    ));
-
+        child: Container(
+      child: widget,
+      padding: EdgeInsets.all(3),
+    )));
 
     rows.add(Row(
       children: columns,
@@ -152,7 +149,8 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   return canvasRecorder.endRecording().toImage(width.toInt(), height.toInt());
 }
 
-Future<ui.Image> buildPunchtapeSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays, bool upsideDown) async {
+Future<ui.Image> buildPunchtapeSegmentDisplayImage(
+    int countColumns, List<NSegmentDisplay> displays, bool upsideDown) async {
   const double bounds = 3.0;
   const double padding = 2.0;
   var width = 0.0;
@@ -189,7 +187,6 @@ Future<ui.Image> buildPunchtapeSegmentDisplayImage(int countColumns, List<NSegme
     ..style = PaintingStyle.fill;
 
   canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-
 
   for (var imageIndex = 0; imageIndex < images.length; imageIndex++) {
     offset = ui.Offset(bounds, offset.dy);

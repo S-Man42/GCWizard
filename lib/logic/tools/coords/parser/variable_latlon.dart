@@ -67,7 +67,8 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
     }
   }
 
-  var calculated = FormulaParser().parse(textToExpand, substitutions.entries.map((e) => FormulaValue(e.key, e.value, type: FormulaValueType.INTERPOLATED)).toList());
+  var calculated = FormulaParser().parse(textToExpand,
+      substitutions.entries.map((e) => FormulaValue(e.key, e.value, type: FormulaValueType.INTERPOLATED)).toList());
 
   var coords = <Map<String, dynamic>>[];
   var leftPadCoords = <Map<String, dynamic>>[];

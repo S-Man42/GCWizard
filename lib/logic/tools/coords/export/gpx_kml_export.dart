@@ -7,7 +7,8 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-Future<File> exportCoordinates(BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+Future<File> exportCoordinates(
+    BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false, String json}) async {
   String data;
   String extension;

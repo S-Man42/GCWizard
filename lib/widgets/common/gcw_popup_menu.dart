@@ -118,7 +118,8 @@ class GCWPopupMenuItem {
   GCWPopupMenuItem({this.child, this.action, this.onLongPress, this.isDivider: false});
 }
 
-iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title, {double rotateDegrees: 0.0, Function onLongPress}) {
+iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
+    {double rotateDegrees: 0.0, Function onLongPress}) {
   var color = themeColors().dialogText();
 
   return Row(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -97,11 +96,10 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
               onChanged: widget.onChanged,
             )),
         GCWSymbolTableTextToSymbols(
-          text: _currentEncryptionInput,
-          ignoreUnknown: _currentIgnoreUnknown,
-          countColumns: widget.countColumns,
-          data: widget.data
-        ),
+            text: _currentEncryptionInput,
+            ignoreUnknown: _currentIgnoreUnknown,
+            countColumns: widget.countColumns,
+            data: widget.data),
       ],
     );
   }
