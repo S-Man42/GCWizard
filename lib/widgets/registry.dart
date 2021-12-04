@@ -975,7 +975,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(
         tool: TelegraphSelection(),
         i18nPrefix: 'telegraph_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: []),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
