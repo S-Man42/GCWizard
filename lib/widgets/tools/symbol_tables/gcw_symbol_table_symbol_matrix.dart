@@ -115,7 +115,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                           child: AutoSizeText(
                             _showSpaceSymbolInOverlay(symbolText),
                             style: gcwTextStyle().copyWith(color: colors.dialogText(), fontWeight: FontWeight.bold),
-                            maxLines: 1,
+                            maxLines: 2,
                             minFontSize: 9.0,
                           ),
                           height: defaultFontSize() + 5,
