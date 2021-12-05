@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -9,16 +10,16 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_zoom_butt
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class GCWSymbolSymbolMatrix extends StatefulWidget {
+class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final int countColumns;
   final MediaQueryData mediaQueryData;
   final List<Map<String, SymbolData>> imageData;
   final bool selectable;
   final Function onChanged;
   final Function onSymbolTapped;
-  final bool allowOverlays;
+  final bool overlayOn;
 
-  const GCWSymbolSymbolMatrix(
+  const GCWSymbolTableSymbolMatrix(
       {Key key,
       this.imageData,
       this.countColumns,
@@ -26,38 +27,41 @@ class GCWSymbolSymbolMatrix extends StatefulWidget {
       this.onChanged,
       this.selectable: false,
       this.onSymbolTapped,
-      this.allowOverlays: true})
+      this.overlayOn: true})
       : super(key: key);
 
   @override
-  GCWSymbolSymbolMatrixState createState() => GCWSymbolSymbolMatrixState();
+  GCWSymbolTableSymbolMatrixState createState() => GCWSymbolTableSymbolMatrixState();
 }
 
-class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
+class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
   var _currentShowOverlayedSymbols = true;
   List<Map<String, SymbolData>> _imageData;
 
   @override
-  Widget build(BuildContext context) {
-    if (!widget.allowOverlays) _currentShowOverlayedSymbols = false;
+  void initState() {
+    super.initState();
+    _currentShowOverlayedSymbols = widget.overlayOn;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     _imageData = widget.imageData;
 
     return Column(children: [
       Row(
         children: <Widget>[
           Expanded(
-              child: widget.allowOverlays
-                  ? GCWOnOffSwitch(
-                      value: _currentShowOverlayedSymbols,
-                      title: i18n(context, 'symboltables_showoverlay'),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentShowOverlayedSymbols = value;
-                        });
-                      },
-                    )
-                  : Container(),
+              child:
+              GCWOnOffSwitch(
+                value: _currentShowOverlayedSymbols,
+                title: i18n(context, 'symboltables_showoverlay'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentShowOverlayedSymbols = value;
+                  });
+                },
+              ),
               flex: 4),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
@@ -106,9 +110,11 @@ class GCWSymbolSymbolMatrixState extends State<GCWSymbolSymbolMatrix> {
                     ? Opacity(
                         child: Container(
                           //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
-                          child: Text(
+                          child: AutoSizeText(
                             _showSpaceSymbolInOverlay(symbolText),
                             style: gcwTextStyle().copyWith(color: colors.dialogText(), fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            minFontSize: 9.0,
                           ),
                           height: defaultFontSize() + 5,
                           decoration: ShapeDecoration(

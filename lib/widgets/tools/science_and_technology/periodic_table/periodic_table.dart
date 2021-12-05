@@ -74,14 +74,14 @@ class PeriodicTableState extends State<PeriodicTable> {
                       child: AutoSizeText(
                     element.atomicNumber.toString(),
                     style: gcwTextStyle().copyWith(color: Colors.black),
-                    minFontSize: 6,
+                    minFontSize: AUTO_FONT_SIZE_MIN,
                     maxLines: 1,
                   )),
                   Expanded(
                       child: AutoSizeText(
                     element.chemicalSymbol,
                     style: gcwTextStyle().copyWith(color: Colors.black),
-                    minFontSize: 6,
+                    minFontSize: AUTO_FONT_SIZE_MIN,
                     maxLines: 1,
                   ))
                 ],
@@ -108,14 +108,14 @@ class PeriodicTableState extends State<PeriodicTable> {
               child: AutoSizeText(
             iupacGroup.toString(),
             style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
-            minFontSize: 6,
+            minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
           )),
           Expanded(
               child: AutoSizeText(
             encodeRomanNumbers(group['value']),
             style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
-            minFontSize: 6,
+            minFontSize: AUTO_FONT_SIZE_MIN,
             maxLines: 1,
           ))
         ],
@@ -185,7 +185,7 @@ class PeriodicTableState extends State<PeriodicTable> {
             child: AutoSizeText(
               i18n(context, 'periodictable_attribute_iupacgroupname_lanthanides'),
               style: gcwTextStyle(),
-              minFontSize: 6,
+              minFontSize: AUTO_FONT_SIZE_MIN,
               maxLines: 1,
             )));
 
@@ -205,7 +205,7 @@ class PeriodicTableState extends State<PeriodicTable> {
             child: AutoSizeText(
               i18n(context, 'periodictable_attribute_iupacgroupname_actinides'),
               style: gcwTextStyle(),
-              minFontSize: 6,
+              minFontSize: AUTO_FONT_SIZE_MIN,
               maxLines: 1,
             )));
 
