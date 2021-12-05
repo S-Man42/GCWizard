@@ -26,13 +26,12 @@ class MultiDecoderToolKeyboardNumbers extends GCWMultiDecoderTool {
                 onChanged: (newValue) {
                   options[MDT_KEYBOARDNUMBERS_OPTION_TYPE] = newValue;
                 },
-                items: keyboardNumbersByName.map((name, function) {
-                  return MapEntry(name,
-                    GCWDropDownMenuItem(
-                        value: name,
-                        child: i18n(context, name)
-                    ));
-                }).values.toList(),
+                items: keyboardNumbersByName
+                    .map((name, function) {
+                      return MapEntry(name, GCWDropDownMenuItem(value: name, child: i18n(context, name)));
+                    })
+                    .values
+                    .toList(),
               )
             }));
 }

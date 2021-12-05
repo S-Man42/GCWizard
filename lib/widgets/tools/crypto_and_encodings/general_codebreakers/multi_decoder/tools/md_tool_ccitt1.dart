@@ -31,12 +31,15 @@ class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_CCITT1_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_CCITT1_OPTION_MODE] == MDT_CCITT1_OPTION_MODE_BINARY ? GCWSwitchPosition.right : GCWSwitchPosition.left,
+                value: options[MDT_CCITT1_OPTION_MODE] == MDT_CCITT1_OPTION_MODE_BINARY
+                    ? GCWSwitchPosition.right
+                    : GCWSwitchPosition.left,
                 notitle: true,
                 leftValue: i18n(context, 'common_numeralbase_denary'),
                 rightValue: i18n(context, 'common_numeralbase_binary'),
                 onChanged: (value) {
-                  options[MDT_CCITT1_OPTION_MODE] = value == GCWSwitchPosition.left ? MDT_CCITT1_OPTION_MODE_DENARY : MDT_CCITT1_OPTION_MODE_BINARY;
+                  options[MDT_CCITT1_OPTION_MODE] =
+                      value == GCWSwitchPosition.left ? MDT_CCITT1_OPTION_MODE_DENARY : MDT_CCITT1_OPTION_MODE_BINARY;
                 },
               )
             }));

@@ -4,8 +4,9 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:latlong2/latlong.dart';
 
-void main() {
+import '../utils.dart';
 
+void main() {
   group("Parser.variableLatLon.parseVariableLatLon:", () {
     final expectedLatLngList = {
       'coordinates': [
@@ -68,7 +69,14 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
         var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
-        expect(_actual, elem['expectedOutput']);
+
+        List<Map<String, dynamic>> _actualCoords = _actual['coordinates'];
+        var _expectedCoords = elem['expectedOutput']['coordinates'];
+        _actualCoords.asMap().forEach((index, actualCoord) {
+          expect(true, equalsLatLng(actualCoord['coordinate'], _expectedCoords[index]['coordinate']));
+          expect(actualCoord['variables'], _expectedCoords[index]['variables']);
+        });
+        expect(_actual['leftPadCoordinates'], elem['expectedOutput']['leftPadCoordinates']);
       });
     });
   });
@@ -90,7 +98,7 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'text': 'N 52° 30.123 E [11° 20.E4]', 'values': {'E': '5'}, 'expectedOutput': expectedLatLngList},
+      {'text': 'N 52° 30.123 E 11° [20.E4]', 'values': {'E': '5'}, 'expectedOutput': expectedLatLngList},
       {'text': 'N 52° 30.123 E 12', 'values': {'E': '5'}, 'expectedOutput':  {'coordinates': [{'variables': {'E': '5'}, 'coordinate': LatLng(52.50205, 5.2)}],'leftPadCoordinates': [{'variables': {'E': '5'},'coordinate': LatLng(52.50205, 5.2)}]}},
       {'text': '52° 30.123 11° 20.E4', 'values': {'E': '5'}, 'expectedOutput': expectedLatLngList},
     ];
@@ -98,7 +106,20 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
         var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
-        expect(_actual, elem['expectedOutput']);
+
+        List<Map<String, dynamic>> _actualCoords = _actual['coordinates'];
+        var _expectedCoords = elem['expectedOutput']['coordinates'];
+        _actualCoords.asMap().forEach((index, actualCoord) {
+          expect(true, equalsLatLng(actualCoord['coordinate'], _expectedCoords[index]['coordinate']));
+          expect(actualCoord['variables'], _expectedCoords[index]['variables']);
+        });
+
+        List<Map<String, dynamic>> _actualLeftPadCoords = _actual['leftPadCoordinates'];
+        var _expectedLeftPadCoords = elem['expectedOutput']['leftPadCoordinates'];
+        _actualLeftPadCoords.asMap().forEach((index, actualCoord) {
+          expect(true, equalsLatLng(actualCoord['coordinate'], _expectedLeftPadCoords[index]['coordinate']));
+          expect(actualCoord['variables'], _expectedCoords[index]['variables']);
+        });
       });
     });
   });

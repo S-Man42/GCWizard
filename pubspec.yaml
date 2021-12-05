@@ -1,13 +1,13 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.0.0+122
+version: 2.1.0+124
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   archive: ^3.1.2
-  auto_size_text: ^2.1.0
+  auto_size_text: ^3.0.0
   base32: ^2.0.0
   cached_network_image: ^3.1.0
   diacritic: ^0.1.1
@@ -33,13 +33,13 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.5
   permission_handler: ^8.1.6
-  photo_view: ^0.12.0
+  photo_view: ^0.13.0
   pointycastle: ^3.3.3
   prefs: ^3.3.0
   provider: ^6.0.1
   qr: ^2.1.0
   r_scan: ^0.1.6+1
-  scrollable_positioned_list: ^0.1.10
+  scrollable_positioned_list: ^0.2.3
   touchable: ^1.0.0
   universal_html: ^2.0.4
   uuid: ^3.0.4
@@ -96,8 +96,6 @@ flutter:
     - assets/symbol_tables/chappe_1794/
     - assets/symbol_tables/chappe_1809/
     - assets/symbol_tables/chappe_v1/
-    - assets/symbol_tables/chappe_v2/
-    - assets/symbol_tables/chappe_v3/
     - assets/symbol_tables/cherokee/
     - assets/symbol_tables/chinese_numerals/
     - assets/symbol_tables/cirth_erebor/
@@ -201,6 +199,9 @@ flutter:
     - assets/symbol_tables/minimoys/
     - assets/symbol_tables/moon/
     - assets/symbol_tables/murray/
+    - assets/symbol_tables/murray_v2_fischer_corrected/
+    - assets/symbol_tables/murray_v3_navy_1796/
+    - assets/symbol_tables/murray_v4_roucoux/
     - assets/symbol_tables/murraybaudot/
     - assets/symbol_tables/musica/
     - assets/symbol_tables/nazcaan/
@@ -227,8 +228,10 @@ flutter:
     - assets/symbol_tables/postcode_01247/
     - assets/symbol_tables/postcode_8421/
     - assets/symbol_tables/postnet/
+    - assets/symbol_tables/predator/
     - assets/symbol_tables/prussian_colors_artillery/
     - assets/symbol_tables/prussian_colors_infantery/
+#    - assets/symbol_tables/prussian_optical_telegraph/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/
@@ -257,6 +260,7 @@ flutter:
     - assets/symbol_tables/surf/
     - assets/symbol_tables/tae/
     - assets/symbol_tables/tamil_numerals/
+    - assets/symbol_tables/telegraph_prussia/
     - assets/symbol_tables/templers/
     - assets/symbol_tables/tenctonese/
     - assets/symbol_tables/tengwar_beleriand/

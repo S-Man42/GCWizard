@@ -31,10 +31,7 @@ class MultiDecoderToolKeyboardLayout extends GCWMultiDecoderTool {
                 },
                 items: allKeyboards.map((keyboard) {
                   return GCWDropDownMenuItem(
-                      value: keyboard.name,
-                      child: i18n(context, keyboard.name),
-                      subtitle: keyboard.example
-                  );
+                      value: keyboard.name, child: i18n(context, keyboard.name), subtitle: keyboard.example);
                 }).toList(),
               ),
               MDT_KEYBOARDLAYOUT_OPTION_TO: GCWStatefulDropDownButton(
@@ -44,10 +41,7 @@ class MultiDecoderToolKeyboardLayout extends GCWMultiDecoderTool {
                 },
                 items: allKeyboards.map((keyboard) {
                   return GCWDropDownMenuItem(
-                      value: keyboard.name,
-                      child: i18n(context, keyboard.name),
-                      subtitle: keyboard.example
-                  );
+                      value: keyboard.name, child: i18n(context, keyboard.name), subtitle: keyboard.example);
                 }).toList(),
               ),
             }));

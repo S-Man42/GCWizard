@@ -38,7 +38,7 @@ Map<String, dynamic> breakHash(
       hashFunction == null) return null;
 
   input = input.toLowerCase();
-  var expander = VariableStringExpander(searchMask, substitutions, (expandedText) {
+  var expander = VariableStringExpander(searchMask, substitutions, onAfterExpandedText: (expandedText) {
     var withoutBrackets = expandedText.replaceAll(RegExp(r'[\[\]]'), '');
     var hashValue = hashFunction(withoutBrackets).toLowerCase();
 

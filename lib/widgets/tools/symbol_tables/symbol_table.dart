@@ -45,6 +45,7 @@ class SymbolTableState extends State<SymbolTable> {
         : Prefs.get('symboltables_countcolumns_landscape');
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Row(
           children: <Widget>[
@@ -63,7 +64,7 @@ class SymbolTableState extends State<SymbolTable> {
           ],
         ),
         _currentMode == GCWSwitchPosition.left
-            ? GCWSymbolTableEncryption(
+            ? Expanded(child: GCWSymbolTableEncryption(
                 data: _data,
                 countColumns: countColumns,
                 mediaQueryData: mediaQueryData,
@@ -73,8 +74,8 @@ class SymbolTableState extends State<SymbolTable> {
                 onChanged: () {
                   setState(() {});
                 },
-              )
-            : GCWSymbolTableDecryption(
+              ))
+            : Expanded(child: GCWSymbolTableDecryption(
                 data: _data,
                 countColumns: countColumns,
                 mediaQueryData: mediaQueryData,
@@ -82,7 +83,7 @@ class SymbolTableState extends State<SymbolTable> {
                 onChanged: () {
                   setState(() {});
                 },
-              )
+              ))
       ],
     );
   }

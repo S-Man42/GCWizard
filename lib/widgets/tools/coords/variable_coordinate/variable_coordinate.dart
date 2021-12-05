@@ -27,7 +27,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/variablestring_textinputformatter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -101,9 +101,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     updateFormulaValue(value, widget.formula);
   }
 
-  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  _addEntry(String currentFromInput, String currentToInput, formula_base.FormulaValueType type, BuildContext context) {
     if (currentFromInput.length > 0) {
-      insertFormulaValue(formula_base.FormulaValue(currentFromInput, currentToInput), widget.formula);
+      insertFormulaValue(
+          formula_base.FormulaValue(currentFromInput, currentToInput, type: formula_base.FormulaValueType.INTERPOLATED),
+          widget.formula);
     }
   }
 
@@ -112,10 +114,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     _currentToInput = currentToInput;
   }
 
-  _updateEntry(dynamic id, String key, String value) {
+  _updateEntry(dynamic id, String key, String value, formula_base.FormulaValueType type) {
     var entry = widget.formula.values.firstWhere((element) => element.id == id);
     entry.key = key;
     entry.value = value;
+    entry.type = formula_base.FormulaValueType.INTERPOLATED;
     _updateValue(entry);
   }
 
@@ -128,7 +131,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         currentFromInput.length > 0 &&
         currentToInput != null &&
         currentToInput.length > 0) {
-      _addEntry(currentFromInput, currentToInput, context);
+      _addEntry(currentFromInput, currentToInput, formula_base.FormulaValueType.INTERPOLATED, context);
     }
   }
 
@@ -225,12 +228,13 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     return GCWKeyValueEditor(
       keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
       valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-      valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
-      valueFlex: 2,
+      valueInputFormatters: [VariableStringTextInputFormatter()],
+      valueFlex: 4,
       onAddEntry: _addEntry,
       onNewEntryChanged: _updateNewEntry,
       onDispose: _disposeEntry,
       formulaValueList: widget.formula.values,
+      varcoords: true,
       onUpdateEntry: _updateEntry,
       onRemoveEntry: _removeEntry,
     );
@@ -365,12 +369,14 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
 
-    _currentOutput = List<GCWOutputText>.from(
-        (_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
+    _currentOutput =
+        List.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
       var formattedCoordinate = formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid());
-      return GCWOutputText(
-        text: formattedCoordinate + '\n' + _formatVariables(coord['variables']),
-        copyText: formattedCoordinate,
+      return Column(
+        children: [
+          GCWOutputText(text: formattedCoordinate),
+          GCWText(text: _formatVariables(coord['variables']), style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()))
+        ],
       );
     }));
 
