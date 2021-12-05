@@ -80,7 +80,7 @@ class SymbolImage {
   double _similarityCompareLevel;
 
   List<_SymbolRow> lines = [];
-  List<_Symbol> symbols = [];
+  List<Symbol> symbols = [];
   List<SymbolGroup> symbolGroups = [];
 
   int _blackLevel;
@@ -226,9 +226,9 @@ class SymbolImage {
     for (int i = 0; i < symbolGroups.length; i++) {
       if ((symbolGroups[i].text == null) || (symbolGroups[i].text.isEmpty)) {
         double maxPercent = 0.0;
-        _Symbol maxPercentSymbol;
+        Symbol maxPercentSymbol;
 
-        _Symbol symbol1 = symbolGroups[i].symbols.first;
+        Symbol symbol1 = symbolGroups[i].symbols.first;
 
         for (int x = 0; x < compareSymbolImage.symbols.length; x++) {
           var similarity = imageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
@@ -327,7 +327,7 @@ class SymbolImage {
       double maxPercent = 0;
       int maxPercentSymbolIndex = 0;
 
-      _Symbol symbol1 = symbols[i];
+      Symbol symbol1 = symbols[i];
 
       for (int x = 0; x < i; x++) {
         var similarity = imageHashing.Similarity(symbol1.hash, symbols[x].hash);
@@ -367,7 +367,7 @@ class SymbolImage {
     return (Image.getLuminance(color) <= blackLevel);
   }
 
-  static int _referenceWidth(List<_Symbol> symbols) {
+  static int _referenceWidth(List<Symbol> symbols) {
     int width = 0;
     if (symbols == null) return null;
 
@@ -396,7 +396,7 @@ class SymbolImage {
     });
   }
 
-  mergeSymbol(_Symbol symbol1, _Symbol symbol2, _SymbolRow line) {
+  mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow line) {
     var box = ui.Rect.fromLTRB(
       min(symbol1.refPoint.dx, symbol2.refPoint.dx),
       min(symbol1.refPoint.dy, symbol2.refPoint.dy),
@@ -427,7 +427,7 @@ class SymbolImage {
 class _SymbolRow {
   ui.Rect size;
   Image.Image bmp;
-  var symbols = <_Symbol>[];
+  var symbols = <Symbol>[];
   Uint8List _outputImageBytes;
 
   _SymbolRow(ui.Rect size, Image.Image bmp) {
@@ -513,7 +513,7 @@ class _SymbolRow {
       var box = _boundingBox(bmp, rect, blackLevel);
       var refPoint = ui.Offset(box.left, box.top);
       refPoint = refPoint.translate(size.left, size.top);
-      symbols.add(_Symbol(refPoint,
+      symbols.add(Symbol(refPoint,
           Image.copyCrop(bmp,
               box.left.toInt(),
               box.top.toInt(),
@@ -546,7 +546,7 @@ class _SymbolRow {
   }
 }
 
-class _Symbol {
+class Symbol {
   ui.Offset refPoint;
   Image.Image bmp; // bitmap;
   int hash;
@@ -555,7 +555,7 @@ class _Symbol {
   Uint8List _outputImageBytes;
 
 
-  _Symbol(ui.Offset refPoint, Image.Image bmp, _SymbolRow row) {
+  Symbol(ui.Offset refPoint, Image.Image bmp, _SymbolRow row) {
     this.refPoint = refPoint;
     this.bmp = bmp;
     this.row = row;
@@ -573,7 +573,7 @@ class _Symbol {
 class SymbolGroup {
   String text;
   bool viewGroupImage = false;
-  var symbols = <_Symbol>[];
+  var symbols = <Symbol>[];
   Uint8List _outputImageGroupBytes;
 
   Uint8List getImage() {

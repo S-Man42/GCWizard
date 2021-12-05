@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
-import 'package:prefs/prefs.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
@@ -56,7 +53,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   SymbolTableViewData _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
   var _isLoading = <bool>[false];
-  var _symbolMap = Map<SymbolData, Symbol>();
 
   var _editValueController = <TextEditingController>[];
 
@@ -69,12 +65,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
-
-
     if (_compareSymbolItems == null) {
       List<GCWTool> _toolList = registeredTools.where((element) {
         return [
@@ -145,7 +135,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       ),
       _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
       GCWDefaultOutput(
-          child: _buildMatrix(_symbolImage, countColumns, mediaQueryData),
+          child: _buildList(),
       ),
       _buildOutput()
     ]);
@@ -275,78 +265,111 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
 
-  Widget _buildMatrix(SymbolImage symbolImage, int countColumns, MediaQueryData mediaQueryData) {
-    var images = <Map<String, SymbolData>>[];
-
-    _symbolMap.clear();
-    if (symbolImage?.symbols == null)
+  Widget _buildList() {
+    if (_symbolImage == null)
       return Container();
 
-    images = symbolImage.symbols.map((symbol){
-      var symbolData = SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '');
-      _symbolMap.addAll({symbolData: symbol});
-      return {null: symbolData};
+    var odd = false;
+    var index = 0;
+
+    var rows = _symbolImage.symbolGroups.map((entry) {
+      odd = !odd;
+      TextEditingController controller;
+      if (index >= _editValueController.length) {
+        controller = TextEditingController();
+        _editValueController.add(controller);
+      } else
+        controller = _editValueController[index];
+      controller.text = entry.text;
+
+      index ++;
+      return _buildRow(entry, controller, odd);
     }).toList();
 
-    // return Expanded (
-    //     child: SingleChildScrollView(
-    return SingleChildScrollView(
-            child: GCWSymbolSymbolMatrix(
-              imageData: images,
-              countColumns: countColumns,
-              mediaQueryData: mediaQueryData,
-              onChanged: () => setState((){}),
-              selectable: true,
-              allowOverlays: true,
-              onSymbolTapped: (String tappedText, SymbolData imageData) {
-                _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected) );
-                // if (imageData.primarySelected) {
-                //   //selectedSymbolTables.add(_symbolKey(imageData.path));
-                // } else {
-                //   //selectedSymbolTables.remove(_symbolKey(imageData.path));
-                // }
-              },
-            )
-        // )
-    );
+    return Column(children: rows);
   }
 
-  SymbolData _getSymbolData(Symbol symbol) {
-    var _symbolMapSwitch = switchMapKeyValue(_symbolMap);
-    return _symbolMapSwitch[_symbolMap];
-  }
+  Widget _buildRow(SymbolGroup entry, TextEditingController textEditingController, bool odd) {
+    Widget output;
 
-  _selectGroupSymbols(SymbolData imageData, bool selected) {
-    Symbol _symbol = _symbolMap[imageData];
+    var row = Container(
+        child: Column(children: <Widget>[
+          Row(children: <Widget>[
+            Expanded(
+              child: DecoratedBox(
+                decoration: BoxDecoration( border: Border.all(color: themeColors().mainFont()), borderRadius: BorderRadius.circular(4)),
+                child: Image.memory(entry.getImage(),
+                    height: 80
+                  )
+                ),
+              flex: 2,
+            ),
+            Icon(
+              Icons.arrow_forward,
+              color: themeColors().mainFont(),
+            ),
+            Expanded(
+              child: Column(children: <Widget>[
+                  GCWTextField(
+                    controller: TextEditingController(text: entry.text),
+                    autofocus: true,
+                    onChanged: (text) {
+                      entry.text = text;
+                      _replaceSymbols(false);
+                    },
+                  ),
 
-    var _symbolMapSwitch = switchMapKeyValue(_symbolMap);
+                  Row(children: <Widget>[
+                      Expanded(child:
+                        Text(entry.symbols.length.toString() + ' ' + i18n(context, 'symbol_replacer_found_symbols')),
+                      ),
+                    GCWIconButton(
+                      iconData: entry.viewGroupImage ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                      onPressed: () {
+                        setState(() {
+                          entry.viewGroupImage = !entry.viewGroupImage;
+                        });
+                      },
+                    )
+                  ],
+                  ),
+              ]),
+              flex: 3),
+            ],
+          ),
+          (entry.viewGroupImage != true)
+            ? Container()
+            : Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 50,
+                child: ScrollablePositionedList.builder(
+                  itemScrollController: ItemScrollController(),
+                  itemCount: entry.symbols.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) => InkWell(
+                    child: Image.memory(entry.symbols[index].getImage()),
+                  )
+                ),
+              )
+          ]),
+        );
 
-    if (selected)
-      // reset all sections
-      _symbolMap.forEach((_imageData, symbol) {
-        _imageData.primarySelected = false;
-        _imageData.secondarySelected = false;
-      });
-
-    if (_symbol?.symbolGroup?.symbols != null) {
-      _symbol.symbolGroup.symbols.forEach((symbol) {
-        var _imageData = _symbolMapSwitch[symbol];
-        if (symbol != _symbol) {
-          if (_imageData != null)
-            _imageData.secondarySelected = selected;
-        } else
-          _imageData.primarySelected = selected;
-      });
+    if (odd) {
+      output = Container(color: themeColors().outputListOddRows(), child: row);
+    } else {
+      output = Container(child: row);
     }
+
+    return output;
   }
 
   Widget _buildOutput() {
     if (_symbolImage == null)
       return Container();
 
-    //var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
+    var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
     return Column(children: <Widget>[
-        //GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
+        GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
         GCWDefaultOutput(child: _symbolImage.getTextOutput()),
         GCWButton(
           text: 'Automatic',//i18n(context, 'substitutionbreaker_exporttosubstition'),
