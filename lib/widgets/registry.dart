@@ -3108,10 +3108,6 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
       'symbol_prussian_colors_infantery',
     ]),
-    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
-      'telegraph',
-      'symbol_prussian_optical_telegraph',
-    ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
     ]),
@@ -3192,6 +3188,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
       'symbol_tamil_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
+      'telegraph',
+      'symbol_telegraph_prussia',
     ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',

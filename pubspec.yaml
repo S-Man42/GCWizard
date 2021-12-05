@@ -230,7 +230,6 @@ flutter:
     - assets/symbol_tables/predator/
     - assets/symbol_tables/prussian_colors_artillery/
     - assets/symbol_tables/prussian_colors_infantery/
-#    - assets/symbol_tables/prussian_optical_telegraph/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/
