@@ -456,9 +456,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
     ValidMediaFile = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
     if (ValidMediaFile != 0) {
       MediaFileType = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-      print('=> '+MediaFileType.toString());
-      MediaFileLength = readInt(byteList, offset);     offset = offset + LENGTH_INT;
-      print('=> '+MediaFileLength.toString());
+      MediaFileLength = readInt(byteList, offset);   offset = offset + LENGTH_INT;
       MediaFilesContents.add(MediaFileContent(MediaFileType, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
       offset = offset + MediaFileLength;
     }

@@ -1,9 +1,5 @@
-import 'dart:async';
 import 'dart:collection';
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:audioplayers/audioplayers.dart'; // https://pub.dev/packages/audioplayers
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
@@ -21,10 +17,7 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
-
-enum PlayerState { stopped, playing, paused }
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -42,28 +35,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   var _currentByteCodeMode = GCWSwitchPosition.right;
 
-  AudioCache audioCache = AudioCache();
-  AudioPlayer advancedPlayer = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
-    if (kIsWeb) {
-      // Calls to Platform.isIOS fails on web
-      return;
-    }
-    if (Platform.isIOS) {
-      audioCache.fixedPlayer?.notificationService.startHeadlessService();
-    }
-    advancedPlayer.onPlayerCompletion.listen((event) {
-      onComplete();
-      setState(() => playerState = PlayerState.stopped);
-    });
   }
 
   @override
   void dispose() {
-    advancedPlayer.stop();
     super.dispose();
   }
 
@@ -237,52 +216,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               files: [PlatformFile(bytes:_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes)],
               ),
             Column(children: columnedMultiLineOutput(context, _outputMedia)),
-/*
-            if (_cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
-                MEDIATYPE_TXT)
-              Column(
-                children: <Widget>[
-                  GCWText(
-                    text: _getTextFromBytelist(_cartridge
-                        .MediaFilesContents[_mediaFile].MediaFileBytes),
-                    style: gcwMonotypeTextStyle(),
-                  ),
-                ],
-              ),
-            if (_cartridge
-                        .MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_BMP ||
-                _cartridge
-                        .MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_PNG ||
-                _cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_JPG ||
-                _cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_GIF)
-              Column(
-                children: <Widget>[
-                  Image.memory(
-                      _cartridge.MediaFilesContents[_mediaFile].MediaFileBytes),
-                ],
-              ),
-            if (_cartridge
-                        .MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_WAV ||
-                _cartridge
-                        .MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_OGG ||
-                _cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_MP3 ||
-                _cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
-                    MEDIATYPE_SND)
-              _buildPlayer(),
-            if (_cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
-                MEDIATYPE_FDL)
-              GCWText(
-                text: MEDIATYPE[
-                    _cartridge.MediaFilesContents[_mediaFile].MediaFileType],
-              ),
-*/
           ],
         );
         break;
@@ -300,70 +233,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     // Date of creation   ; Seconds since 2004-02-10 01:00:00
     return (DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)))
         .toString();
-  }
-
-  String _getTextFromBytelist(Uint8List bytes) {
-    String result = '';
-    bytes.forEach((element) {
-      result = result + String.fromCharCode(element);
-    });
-    return result;
-  }
-
-  play(Uint8List byteData) async {
-    int result = await advancedPlayer.playBytes(byteData);
-    setState(() => playerState = PlayerState.playing);
-  }
-
-  PlayerState playerState = PlayerState.stopped;
-
-  get isPlaying => playerState == PlayerState.playing;
-
-  get isPaused => playerState == PlayerState.paused;
-
-  Widget _buildPlayer() => Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(mainAxisSize: MainAxisSize.min, children: [
-              IconButton(
-                onPressed: isPlaying
-                    ? null
-                    : () => play(_cartridge
-                        .MediaFilesContents[_mediaFile].MediaFileBytes),
-                iconSize: 64.0,
-                icon: Icon(Icons.play_arrow),
-              ),
-              IconButton(
-                onPressed: isPlaying ? () => pause() : null,
-                iconSize: 64.0,
-                icon: Icon(Icons.pause),
-              ),
-              IconButton(
-                onPressed: isPlaying || isPaused ? () => stop() : null,
-                iconSize: 64.0,
-                icon: Icon(Icons.stop),
-              ),
-            ]),
-          ],
-        ),
-      );
-
-  void onComplete() {
-    setState(() => playerState = PlayerState.stopped);
-  }
-
-  Future pause() async {
-    await advancedPlayer.pause();
-    setState(() => playerState = PlayerState.paused);
-  }
-
-  Future stop() async {
-    await advancedPlayer.stop();
-    setState(() {
-      playerState = PlayerState.stopped;
-    });
   }
 
 }

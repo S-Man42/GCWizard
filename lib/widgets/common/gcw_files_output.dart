@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
+import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -112,8 +113,8 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
             Container(child: GCWImageView(imageData: GCWImageViewData(file)), margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.TEXT)
             Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
-          // if (file.fileClass == FileClass.SOUND)
-          //   Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
+          if (file.fileClass == FileClass.SOUND)
+             Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
           if (hasChildren)
             Container(
               child: _buildFileTree(file.children, newParents, level: level + 1),
