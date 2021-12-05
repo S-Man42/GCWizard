@@ -67,7 +67,9 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
         ],
       ),
-      _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
+      Expanded(child: SingleChildScrollView(
+        child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
+      ))
     ]);
   }
 

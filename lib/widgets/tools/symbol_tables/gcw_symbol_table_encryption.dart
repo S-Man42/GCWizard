@@ -95,11 +95,11 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
               mediaQueryData: widget.mediaQueryData,
               onChanged: widget.onChanged,
             )),
-        GCWSymbolTableTextToSymbols(
+        Expanded(child: GCWSymbolTableTextToSymbols(
             text: _currentEncryptionInput,
             ignoreUnknown: _currentIgnoreUnknown,
             countColumns: widget.countColumns,
-            data: widget.data),
+            data: widget.data)),
       ],
     );
   }
