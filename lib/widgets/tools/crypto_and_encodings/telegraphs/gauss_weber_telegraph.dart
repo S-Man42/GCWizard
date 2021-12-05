@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
@@ -24,6 +25,7 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
   String _currentEncodeInput = '';
 
   var _currentMode = GCWSwitchPosition.right;
+  var _currentNeedleNumber = GaussWeberTelegraphMode.WHEATSTONE_COOKE_5;
 
   @override
   void initState() {
@@ -45,6 +47,21 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
+          GCWDropDownButton(
+            value: _currentNeedleNumber,
+            onChanged: (value) {
+              setState(() {
+                _currentNeedleNumber = value;
+              });
+            },
+            items: WHEATSTONECOOKENEEDLENUMBER.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: i18n(context, mode.value['title']),
+                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+            }).toList(),
+          ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
@@ -102,9 +119,16 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
     } else {
       var output;
       if (_currentMode == GCWSwitchPosition.left) {
-        output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
+        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
+          output = encodeGaussWeberTelegraph(_currentEncodeInput, _currentNeedleNumber);
+        else
+          output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
       } else {
-        output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode)
+        if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
+          output = decodeGaussWeberTelegraph(_currentEncodeInput, _currentNeedleNumber);
+        else
+          output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode);
+        output = output
             .replaceAll('telegraph_schillingcanstatt_stop', i18n(context, 'telegraph_schillingcanstatt_stop'))
             .replaceAll('telegraph_schillingcanstatt_goon', i18n(context, 'telegraph_schillingcanstatt_goon'))
             .replaceAll('telegraph_schillingcanstatt_finish', i18n(context, 'telegraph_schillingcanstatt_finish'));
