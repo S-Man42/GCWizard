@@ -45,17 +45,26 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       }
 
       var fileName = file.name;
-      if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
-        var index = fileName.split('_').last;
-        var prefix;
-        if (index == '0') {
-          prefix = i18n(context, 'hiddendata_source');
-        } else {
-          prefix = i18n(context, 'hiddendata_hidden') + ' $index';
-        }
+      if (fileName != null) {
+        if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
+          var index = fileName
+              .split('_')
+              .last;
+          var prefix;
+          if (index == '0') {
+            prefix = i18n(context, 'hiddendata_source');
+          } else {
+            prefix = i18n(context, 'hiddendata_hidden') + ' $index';
+          }
 
-        fileName = '$prefix: ' + file.fileType.toString().split('.').last;
+          fileName = '$prefix: ' + file.fileType
+              .toString()
+              .split('.')
+              .last;
+        }
       }
+      else
+        fileName = '';
 
       var parentsString = parents.join(' → ');
       var newParents = List<String>.from(parents);

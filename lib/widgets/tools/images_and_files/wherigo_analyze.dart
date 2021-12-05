@@ -15,12 +15,14 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -231,7 +233,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 });
               },
             ),
+            GCWFilesOutput(
+              files: [PlatformFile(bytes:_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes)],
+              ),
             Column(children: columnedMultiLineOutput(context, _outputMedia)),
+/*
             if (_cartridge.MediaFilesContents[_mediaFile].MediaFileType ==
                 MEDIATYPE_TXT)
               Column(
@@ -276,6 +282,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 text: MEDIATYPE[
                     _cartridge.MediaFilesContents[_mediaFile].MediaFileType],
               ),
+*/
           ],
         );
         break;
