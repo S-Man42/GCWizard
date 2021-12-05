@@ -93,10 +93,10 @@ class FormulaValue {
     var mapType;
     switch (type) {
       case FormulaValueType.INTERPOLATED:
-        mapType = _FORMULAVALUETYPE_TEXT;
+        mapType = _FORMULAVALUETYPE_INTERPOLATE;
         break;
       case FormulaValueType.TEXT:
-        mapType = _FORMULAVALUETYPE_INTERPOLATE;
+        mapType = _FORMULAVALUETYPE_TEXT;
         break;
       default:
         break;
