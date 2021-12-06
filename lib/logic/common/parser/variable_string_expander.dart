@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
+import 'dart:math';
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
@@ -42,22 +42,23 @@ enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 class VariableStringExpander {
   String _input;
   Map<String, String> _substitutions;
-  Function addAsResult;
+  Function onAfterExpandedText;
   SendPort sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
   bool uniqueResults;
 
-  VariableStringExpander(this._input, this._substitutions, this.addAsResult,
-      {this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
+  VariableStringExpander(this._input, this._substitutions,
+      {this.onAfterExpandedText,
+      this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
       this.uniqueResults = false,
-      this.sendAsyncPort});
+      this.sendAsyncPort}) {
+    if (this.onAfterExpandedText == null) this.onAfterExpandedText = (e) => e;
+  }
 
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
 
-  List<String> _variableGroups;
-  int _countVariableGroups;
   String _variableGroup;
 
   List<Map<String, dynamic>> _results = [];
@@ -138,7 +139,7 @@ class VariableStringExpander {
     return false;
   }
 
-  int _variableGroupIndex, _variableValueIndex;
+  int _variableValueIndex;
   String _result;
 
   Map<String, String> _getCurrentVariables() {
@@ -156,9 +157,9 @@ class VariableStringExpander {
     int progressStep = max((_countCombinations / 100).toInt(), 1); // 100 steps
 
     do {
-      _substitude();
+      _substitute();
 
-      _result = addAsResult(_result);
+      _result = onAfterExpandedText(_result);
       if (_result != null) {
         if (uniqueResults && _uniqueResults.contains(_result)) continue;
 
@@ -176,31 +177,23 @@ class VariableStringExpander {
   }
 
   // do the substitution of the variables set with their specific values given by their counted indexes
-  void _substitude() {
+  void _substitute() {
     _result = _input;
-    for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
-      _variableGroup = _variableGroups[_variableGroupIndex];
+    _variableGroup = _input;
 
-      for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
-        _variableGroup = _variableGroup.toUpperCase().replaceAll(
-              _substitutionKeys[_variableValueIndex],
-              _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
-            );
-      }
-
-      _result = _result.replaceFirst(_variableGroups[_variableGroupIndex], _variableGroup);
+    for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
+      _variableGroup = _variableGroup.toUpperCase().replaceAll(
+            _substitutionKeys[_variableValueIndex],
+            _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
+          );
     }
-  }
 
-  _sanitizeForFormula(String formula) {
-    RegExp regExp = new RegExp(r'\[.+?\]');
-    if (regExp.hasMatch(formula)) return formula;
-
-    return '[$formula]';
+    _result = _result.replaceFirst(_input, _variableGroup);
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
     if (_input == null || _input.length == 0) return [];
+    _input = _input.trim();
 
     if (_substitutions == null || _substitutions.length == 0) {
       return [
@@ -208,20 +201,24 @@ class VariableStringExpander {
       ];
     }
 
-    _input = _sanitizeForFormula(_input);
-
     // expand all groups, initialize lists
-    _substitutions.entries.forEach((substitution) {
+    for (MapEntry<String, String> substitution in _substitutions.entries) {
       _substitutionKeys.add(substitution.key.toUpperCase());
-      var group = _expandVariableGroup(substitution.value);
+      var group;
+      try {
+        group = _expandVariableGroup(substitution.value);
+      } catch (e) {
+        return [
+          {'text': _input, 'variables': {}}
+        ];
+      }
       if (group.length > 0) {
         _expandedVariableGroups.add(group);
-
         _countVariableValues.add(group.length);
         _variableValueIndexes.add(0);
         _currentVariableIndex++;
       }
-    });
+    }
 
     // check number of combinations
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
@@ -231,11 +228,6 @@ class VariableStringExpander {
       ];
     }
 
-    // Find matching formula groups
-    RegExp regExp = new RegExp(r'\[.+?\]');
-    _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)).toList();
-    _countVariableGroups = _variableGroups.length;
-
     // gogogo!
     _generateCartesianVariables();
 
@@ -244,7 +236,7 @@ class VariableStringExpander {
 }
 
 int preCheckCombinations(Map<String, String> substitutions) {
-  var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
+  var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
   var count = expander.run(onlyPrecheck: true);
 
   return count[0]['count'];

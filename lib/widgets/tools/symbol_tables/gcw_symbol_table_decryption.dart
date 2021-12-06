@@ -4,7 +4,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 
 class GCWSymbolTableDecryption extends StatefulWidget {
@@ -33,19 +33,20 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
 
     return Column(
       children: <Widget>[
-        (widget.data == null) ? Container() :
-        GCWSymbolSymbolMatrix(
-          imageData: _data.images,
-          symbolKey: _data.symbolKey,
-          countColumns: widget.countColumns,
-          mediaQueryData: widget.mediaQueryData,
-          onChanged: widget.onChanged,
-          onSymbolTapped: (String tappedText, SymbolData imageData) {
-            setState(() {
-              _decryptionOutput += tappedText;
-            });
-          },
-        ),
+        (widget.data == null)
+            ? Container()
+            : Expanded(child: GCWSymbolTableSymbolMatrix(
+                imageData: _data.images,
+                symbolKey: _data.symbolKey,
+                countColumns: widget.countColumns,
+                mediaQueryData: widget.mediaQueryData,
+                onChanged: widget.onChanged,
+                onSymbolTapped: (String tappedText, SymbolData imageData) {
+                  setState(() {
+                    _decryptionOutput += tappedText;
+                  });
+                },
+        )),
         GCWToolBar(children: [
           GCWIconButton(
             iconData: Icons.space_bar,

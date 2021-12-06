@@ -40,7 +40,6 @@ encryptTomTom(String input, Map<String, String> replaceCharacters) {
       .map((character) => substitution(character, AZToTomTom))
       .join(' ');
 
-  //TODO: Expert Mode
   if (replaceCharacters != null) tomtom = substitution(tomtom, replaceCharacters);
 
   return tomtom;

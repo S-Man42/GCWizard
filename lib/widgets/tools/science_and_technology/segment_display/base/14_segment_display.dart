@@ -24,8 +24,9 @@ class FourteenSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
+  final bool tapeStyle;
 
-  FourteenSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
+  FourteenSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,

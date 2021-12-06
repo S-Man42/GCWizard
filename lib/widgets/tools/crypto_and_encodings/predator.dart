@@ -57,9 +57,7 @@ class PredatorState extends State<Predator> {
       else
         Column(
           // decrpyt: input segment => output number
-          children: <Widget>[
-            _buildVisualDecryption()
-          ],
+          children: <Widget>[_buildVisualDecryption()],
         ),
       _buildOutput()
     ]);
@@ -139,12 +137,11 @@ class PredatorState extends State<Predator> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
-        segmentFunction:(displayedSegments, readOnly) {
+        segmentFunction: (displayedSegments, readOnly) {
           return PredatorSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
-        readOnly: true
-    );
+        readOnly: true);
   }
 
   Widget _buildOutput() {

@@ -1,4 +1,3 @@
-
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -73,18 +72,13 @@ List<List<String>> encodePredator(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK_PREDATOR[inputs[i]] != null)
-      result.add(CODEBOOK_PREDATOR[inputs[i]]);
+    if (CODEBOOK_PREDATOR[inputs[i]] != null) result.add(CODEBOOK_PREDATOR[inputs[i]]);
   }
   return result;
 }
 
 Map<String, dynamic> decodePredator(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'chars': []
-    };
+  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'chars': []};
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -100,13 +94,10 @@ Map<String, dynamic> decodePredator(List<String> inputs) {
     var char = '';
     var charH = '';
 
-    if (CODEBOOK.map((key, value) =>
-        MapEntry(key.join(), value.toString()))[input.split('').join()] ==
-        null) {
+    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) =>
-          MapEntry(key.join(), value.toString()))[input.split('').join()];
+      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       char = char + charH;
     }
 
@@ -116,7 +107,7 @@ Map<String, dynamic> decodePredator(List<String> inputs) {
   return {'displays': displays, 'chars': text};
 }
 
-List<String> _stringToSegment(String input){
+List<String> _stringToSegment(String input) {
   List<String> result = [];
   for (int i = 0; i < input.length; i++) {
     result.add(input[i]);

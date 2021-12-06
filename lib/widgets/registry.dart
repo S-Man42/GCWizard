@@ -75,6 +75,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
@@ -155,7 +156,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
@@ -201,7 +201,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/schilling_cannstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
@@ -209,6 +208,17 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
@@ -617,12 +627,6 @@ initializeRegistry(BuildContext context) {
         'games',
       ],
     ),
-    GCWTool(tool: GaussWeberTelegraph(), i18nPrefix: 'gausswebertelegraph', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'telegraph',
-      'gausswebertelegraph',
-    ]),
     GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -725,10 +729,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: KeyboardLayout(), i18nPrefix: 'keyboard_layout', searchKeys: [
       'keyboard',
     ]),
-    GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: [
-      'keyboard',
-      'keyboard_numbers'
-    ]),
+    GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', searchKeys: ['keyboard', 'keyboard_numbers']),
     GCWTool(
         tool: KeyboardSelection(),
         i18nPrefix: 'keyboard_selection',
@@ -821,9 +822,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'polybios',
     ]),
-    GCWTool(tool: PredatorSelection(), i18nPrefix: 'predator_selection', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: []),
+    GCWTool(
+        tool: PredatorSelection(),
+        i18nPrefix: 'predator_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
     GCWTool(tool: PrimeAlphabet(), i18nPrefix: 'primealphabet', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -895,12 +898,6 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'primes',
-    ]),
-    GCWTool(tool: SchillingCannstattTelegraph(), i18nPrefix: 'schillingcanstatt', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'telegraph',
-      'schillingcanstatt',
     ]),
     GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', searchKeys: [
       'scienceandtechnologyselection',
@@ -981,6 +978,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'tapir',
     ]),
+    GCWTool(
+        tool: TelegraphSelection(),
+        i18nPrefix: 'telegraph_selection',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: []),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -2665,16 +2667,6 @@ initializeRegistry(BuildContext context) {
       'symbol_chappe',
       'symbol_chappe_v1',
     ]),
-    GCWSymbolTableTool(symbolKey: 'chappe_v2', symbolSearchStrings: [
-      'telegraph',
-      'symbol_chappe',
-      'symbol_chappe_v2',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'chappe_v3', symbolSearchStrings: [
-      'telegraph',
-      'symbol_chappe',
-      'symbol_chappe_v3',
-    ]),
     GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: [
       'symbol_cherokee',
     ]),
@@ -3122,6 +3114,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
       'symbol_prussian_colors_infantery',
     ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
+      'telegraph',
+      'symbol_prussian_optical_telegraph',
+    ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
     ]),
@@ -3307,6 +3303,52 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: [
       'symbol_zodiac_z408',
+    ]),
+
+    // TelegraphSelection *********************************************************************************************
+    GCWTool(tool: ChappeTelegraph(), i18nPrefix: 'telegraph_chappe', searchKeys: [
+      'telegraph',
+      'telegraph_chappe',
+    ]),
+    GCWTool(tool: EdelcrantzTelegraph(), i18nPrefix: 'telegraph_edelcrantz', searchKeys: [
+      'telegraph',
+      'telegraph_edelcrantz',
+    ]),
+    GCWTool(tool: MurrayTelegraph(), i18nPrefix: 'telegraph_murray', searchKeys: [
+      'telegraph',
+      'telegraph_murray',
+    ]),
+    GCWTool(tool: OhlsenTelegraph(), i18nPrefix: 'telegraph_ohlsen', searchKeys: [
+      'telegraph',
+      'telegraph_ohlsen',
+    ]),
+    GCWTool(tool: PrussiaTelegraph(), i18nPrefix: 'telegraph_prussia', searchKeys: [
+      'telegraph',
+      'telegraph_prussia',
+    ]),
+    GCWTool(tool: SemaphoreTelegraph(), i18nPrefix: 'symboltables_semaphore', searchKeys: [
+      'telegraph',
+      'telegraph_semaphore',
+    ]),
+    GCWTool(tool: WigWagSemaphoreTelegraph(), i18nPrefix: 'telegraph_wigwag', searchKeys: [
+      'telegraph',
+      'telegraph_wigwag',
+    ]),
+    GCWTool(tool: GaussWeberTelegraph(), i18nPrefix: 'telegraph_gausswebertelegraph', searchKeys: [
+      'telegraph',
+      'telegraph_gaussweber',
+    ]),
+    GCWTool(tool: SchillingCanstattTelegraph(), i18nPrefix: 'telegraph_schillingcanstatt', searchKeys: [
+      'telegraph',
+      'telegraph_schillingcanstatt',
+    ]),
+    GCWTool(tool: WheatstoneCooke5NeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke5needle', searchKeys: [
+      'telegraph',
+      'telegraph_wheatstonecooke5needle',
+    ]),
+    GCWTool(tool: CCITTTelegraph(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
+      'telegraph',
+      'telegraph_ccitt',
     ]),
 
     // TomTomSelection *********************************************************************************************

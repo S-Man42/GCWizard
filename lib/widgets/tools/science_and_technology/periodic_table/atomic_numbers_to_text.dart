@@ -44,21 +44,21 @@ class AtomicNumbersToTextState extends State<AtomicNumbersToText> {
             style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
           ),
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encryptController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncryptInput = text;
-                });
-              },
-            )
-          : GCWIntegerListTextField(
-              onChanged: (result) {
-                setState(() {
-                  _currentDecryptInput = result['values'];
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _encryptController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncryptInput = text;
+                  });
+                },
+              )
+            : GCWIntegerListTextField(
+                onChanged: (result) {
+                  setState(() {
+                    _currentDecryptInput = result['values'];
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           leftValue: i18n(context, 'atomicnumberstotext_symboltonumber'),

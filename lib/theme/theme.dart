@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 final FONT_SIZE_MIN = 10;
 final FONT_SIZE_MAX = 30;
+final AUTO_FONT_SIZE_MIN = 6.0;
 
 final DEFAULT_MARGIN = 2.0;
 final DOUBLE_DEFAULT_MARGIN = 2 * DEFAULT_MARGIN;

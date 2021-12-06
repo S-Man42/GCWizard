@@ -641,7 +641,7 @@ final letterFrequencyAlphabetGreek2 = {
   'Ώ': 1
 };
 
-Map<String, int> getLetterFrequenciesFromAlphabet(Alphabet alphabet)  {
+Map<String, int> getLetterFrequenciesFromAlphabet(Alphabet alphabet) {
   if (alphabet == alphabetGerman1) return letterFrequencyAlphabetGerman1;
   if (alphabet == alphabetEnglish) return letterFrequencyAlphabetEnglish1;
   if (alphabet == alphabetSpanish2) return letterFrequencyAlphabetSpanish2;

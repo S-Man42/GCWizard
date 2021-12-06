@@ -21,10 +21,9 @@ class MultiDecoderToolVigenere extends GCWMultiDecoderTool {
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_VIGENERE_OPTION_KEY: GCWIntegerSpinner(
-                value: options[MDT_VIGENERE_OPTION_KEY],
-                onChanged: (value) {
-                  options[MDT_VIGENERE_OPTION_KEY] = value;
-                }
-              ),
+                  value: options[MDT_VIGENERE_OPTION_KEY],
+                  onChanged: (value) {
+                    options[MDT_VIGENERE_OPTION_KEY] = value;
+                  }),
             }));
 }

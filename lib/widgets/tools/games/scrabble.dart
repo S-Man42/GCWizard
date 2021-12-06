@@ -87,7 +87,9 @@ class ScrabbleState extends State<Scrabble> {
           },
         ),
         GCWDefaultOutput(child: _output),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(text: _currentInput, values: List<int>.from(_currentValues)) : Container()
+        _currentCrosstotalMode
+            ? GCWCrosstotalOutput(text: _currentInput, values: List<int>.from(_currentValues))
+            : Container()
       ],
     );
   }

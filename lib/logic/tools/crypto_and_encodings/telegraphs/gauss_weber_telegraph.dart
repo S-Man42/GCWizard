@@ -1,6 +1,6 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum GaussWeberTelegraphMode { GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANNSTATT }
+enum GaussWeberTelegraphMode { GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANSTATT, WHEATSTONE_COOKE_5 }
 
 Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'A': '+',
@@ -65,7 +65,7 @@ Map<String, String> _GAUSS_WEBER_ALTERNATIVE = {
   '9': 'llll'
 };
 
-Map<String, String> _SCHILLING_CANNSTATT = {
+Map<String, String> _SCHILLING_CANSTATT = {
   'A': 'rl',
   'B': 'rrr',
   'C': 'rll',
@@ -108,6 +108,29 @@ Map<String, String> _SCHILLING_CANNSTATT = {
   'schillingcanntatt_finish': 'llrl'
 };
 
+Map<String, String> _WHEATSTONE_COOKE_5 = {
+  'A': '/|||\\',
+  'B': '/||\\|',
+  'D': '|/||\\',
+  'E': '/|\\||',
+  'F': '|/|\\|',
+  'G': '||/|\\',
+  'H': '/\\|||',
+  'I': '|/\|||',
+  'K': '||/\\|',
+  'L': '|||/\\',
+  'M': '\\/|||',
+  'N': '|\\/||',
+  'O': '||\\/|',
+  'P': '|||\\/',
+  'R': '\\|/||',
+  'S': '|\\|/|',
+  'T': '||\\|/',
+  'U': '\\||/|',
+  'W': '|\||/',
+  'Y': '\\|||/',
+};
+
 String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
   if (input == null || input.isEmpty) return '';
 
@@ -119,8 +142,11 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     case GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE:
       map = switchMapKeyValue(_GAUSS_WEBER_ALTERNATIVE);
       break;
-    case GaussWeberTelegraphMode.SCHILLING_CANNSTATT:
-      map = switchMapKeyValue(_SCHILLING_CANNSTATT);
+    case GaussWeberTelegraphMode.SCHILLING_CANSTATT:
+      map = switchMapKeyValue(_SCHILLING_CANSTATT);
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5:
+      map = switchMapKeyValue(_WHEATSTONE_COOKE_5);
       break;
     default:
       return '';
@@ -147,8 +173,11 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     case GaussWeberTelegraphMode.GAUSS_WEBER_ALTERNATIVE:
       map = _GAUSS_WEBER_ALTERNATIVE;
       break;
-    case GaussWeberTelegraphMode.SCHILLING_CANNSTATT:
-      map = _SCHILLING_CANNSTATT;
+    case GaussWeberTelegraphMode.SCHILLING_CANSTATT:
+      map = _SCHILLING_CANSTATT;
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5:
+      map = _WHEATSTONE_COOKE_5;
       break;
     default:
       return '';
