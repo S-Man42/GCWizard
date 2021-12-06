@@ -316,7 +316,7 @@ class FormulaParser {
     var hasBrackets = true;
     // if formula has no [ ], then match the whole string
     if (matches.length == 0) {
-      matches = RegExp(r'^.*$').allMatches(formula);
+      matches = RegExp(r'^.*$', multiLine: true).allMatches(formula);
       hasBrackets = false;
     }
 
