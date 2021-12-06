@@ -2422,7 +2422,6 @@ Map<String, dynamic> decodeTextPrussianTelegraph(String inputs) {
 
 String _replaceNumber(String plainText, code) {
   String number = '++';
-  print(code);
   return plainText.replaceAll('##', number);
 }
 

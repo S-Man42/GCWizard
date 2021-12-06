@@ -188,9 +188,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      print(_currentEncodeInput);
       List<List<String>> segments = encodeOhlsenTelegraph(_currentEncodeInput.toLowerCase());
-      print(segments);
       List<String> code = [];
       segments.forEach((element) {
         code.add(segmentToCode(element));

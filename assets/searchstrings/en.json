@@ -492,6 +492,7 @@
   "symbol_sanluca": "kalabrian",
   "symbol_sarati": "spokenlanguage elves elvish",
   "symbol_semaphore": "flags",
+  "symbol_shoes": "shoes pumps high-heels highheels boots flats",
   "symbol_signlanguage": "hands  thumbs signs signlanguage",
   "symbol_skullz": "skull skullz skulls pirates",
   "symbol_slash_and_pipe": "",
@@ -562,6 +563,12 @@
   "vigenerebreaker": "",
   "wasd": "videogames cursorkeys keyboards up down left right directions arrows arrowkeys",
   "visualcryptography": "visualcryptography black white grey gray",
+  "weather": "weather",
+  "weather_clouds": "clouds cloudformations",
+  "weather_a": "barometer barometrics airpressure",
+  "weather_n": "totalamount cloudcoverage",
+  "weather_w": "past",
+  "weather_ww": "present current forecast",
   "window": "windows",
   "z22": ""
 }

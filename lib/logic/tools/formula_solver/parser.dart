@@ -412,7 +412,6 @@ class FormulaParser {
         }
       });
     } catch (e, s) {
-      print(s);
     }
 
     // Here the magic happens, which was decribed above

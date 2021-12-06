@@ -1011,7 +1011,7 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits) {
   } else if (sequence == NumberSequencesMode.RECAMAN) {
     BigInt pn0 = Zero;
     List<BigInt> recamanSequence = new List<BigInt>();
-    for (int index = 0; index < 100000; index++) {
+    for (int index = 0; index < 11111; index++) {
       if (index == 0)
         number = Zero;
       else if ((pn0 - BigInt.from(index)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(index)))
