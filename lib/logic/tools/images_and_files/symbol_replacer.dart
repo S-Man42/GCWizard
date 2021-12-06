@@ -18,7 +18,7 @@ class ReplaceSymbolsInput {
 
   ReplaceSymbolsInput({this.image,
     this.blackLevel: 50,
-    this.similarityLevel: 100.0,
+    this.similarityLevel: 90.0,
     this.gap: 1,
     this.symbolImage,
     this.compareSymbols,
@@ -185,6 +185,19 @@ class SymbolImage {
       _outputImage = _bmp;
       _outputImageBytes = _image;
     }
+  }
+
+  addToGroup(Symbol symbol, SymbolGroup symbolGroup) {
+    if (symbol == null) return;
+    if (symbolGroup != null) symbolGroup.symbols.remove(symbol);
+    symbol.symbolGroup = symbolGroup;
+  }
+
+  removeFromGroup(Symbol symbol) {
+    if (symbol == null) return;
+    var symbolGroup = SymbolGroup();
+    symbolGroup.symbols.add(symbol);
+    symbol.symbolGroup = symbolGroup;
   }
 
   SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareSymbols) {
