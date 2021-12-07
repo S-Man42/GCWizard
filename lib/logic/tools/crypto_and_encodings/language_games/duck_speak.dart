@@ -53,21 +53,22 @@ String decodeDuckSpeak(text) {
 }
 
 String encodeDuckSpeakNumbers(List<int> numbers) {
-  if (numbers == null)
-    return '';
+  if (numbers == null) return '';
 
   return numbers.map((number) => halfByteToDuck[number.toString()]).join(' ');
 }
 
 List<int> decodeDuckSpeakNumbers(String text) {
-  if (text == null)
-    return [];
+  if (text == null) return [];
 
-  return text.split(RegExp(r'\s+')).map((code) {
-    var number = duckToHalfByte[code];
-    if (number == null)
-      return null;
+  return text
+      .split(RegExp(r'\s+'))
+      .map((code) {
+        var number = duckToHalfByte[code];
+        if (number == null) return null;
 
-    return int.tryParse(number);
-  }).where((number) => number != null).toList();
+        return int.tryParse(number);
+      })
+      .where((number) => number != null)
+      .toList();
 }

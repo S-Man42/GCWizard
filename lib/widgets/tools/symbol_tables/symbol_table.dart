@@ -64,7 +64,8 @@ class SymbolTableState extends State<SymbolTable> {
           ],
         ),
         _currentMode == GCWSwitchPosition.left
-            ? Expanded(child: GCWSymbolTableEncryption(
+            ? Expanded(
+                child: GCWSymbolTableEncryption(
                 data: _data,
                 countColumns: countColumns,
                 mediaQueryData: mediaQueryData,
@@ -75,7 +76,8 @@ class SymbolTableState extends State<SymbolTable> {
                   setState(() {});
                 },
               ))
-            : Expanded(child: GCWSymbolTableDecryption(
+            : Expanded(
+                child: GCWSymbolTableDecryption(
                 data: _data,
                 countColumns: countColumns,
                 mediaQueryData: mediaQueryData,

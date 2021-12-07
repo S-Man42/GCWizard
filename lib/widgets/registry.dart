@@ -1014,11 +1014,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'wasd',
     ]),
-    GCWTool(tool: WeatherSymbols(), i18nPrefix: 'weathersymbols', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'weather', 'weather_clouds', 'weather_a'
-    ]),
+    GCWTool(
+        tool: WeatherSymbols(),
+        i18nPrefix: 'weathersymbols',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: ['weather', 'weather_clouds', 'weather_a']),
     GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -3259,30 +3259,14 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: [
       'symbol_wakandan',
     ]),
-    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: [
-      'weather', 'weather_a'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: [
-      'weather', 'weather_c', 'weather_clouds'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: [
-      'weather', 'weather_cl', 'weather_clouds'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: [
-      'weather', 'weather_cm', 'weather_clouds'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_cn', symbolSearchStrings: [
-      'weather', 'weather_cn', 'weather_clouds'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: [
-      'weather', 'weather_n', 'weather_clouds'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: [
-      'weather', 'weather_w'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: [
-      'weather', 'weather_ww'
-    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: ['weather', 'weather_a']),
+    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: ['weather', 'weather_c', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: ['weather', 'weather_cl', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: ['weather', 'weather_cm', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_cn', symbolSearchStrings: ['weather', 'weather_cn', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: ['weather', 'weather_n', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: ['weather', 'weather_w']),
+    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
       'symbol_webdings',
     ]),

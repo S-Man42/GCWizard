@@ -61,12 +61,12 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
   }
 
   _buildOutput() {
-    if (_data == null || _data.isEmpty)
-      return null;
+    if (_data == null || _data.isEmpty) return null;
 
     SymbolTableData data = _data[_currentWeatherSymbolClazz];
     return Column(
-      children: columnedMultiLineOutput(context,
+      children: columnedMultiLineOutput(
+        context,
         data.images.map((Map<String, SymbolData> image) {
           return [
             image.keys.first,
@@ -75,12 +75,12 @@ class WeatherSymbolsState extends State<WeatherSymbols> {
                 symbol: Image.memory(image.values.first.bytes),
               ),
               padding: EdgeInsets.all(10.0),
-            ),            
+            ),
             i18n(context, 'weathersymbols_${_currentWeatherSymbolClazz}_${image.keys.first}')
           ];
         }).toList(),
         copyColumn: 2,
-        flexValues: [1,2,6],
+        flexValues: [1, 2, 6],
       ),
     );
   }

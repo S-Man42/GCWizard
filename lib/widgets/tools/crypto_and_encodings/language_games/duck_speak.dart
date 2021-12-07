@@ -55,7 +55,8 @@ class DuckSpeakState extends State<DuckSpeak> {
       return _currentMode == GCWSwitchPosition.left ? encodeDuckSpeak(_currentInput) : decodeDuckSpeak(_currentInput);
     } else {
       if (_currentMode == GCWSwitchPosition.left) {
-        var numbers = _currentInput.replaceAll(RegExp(r'[^0-9]'), '')
+        var numbers = _currentInput
+            .replaceAll(RegExp(r'[^0-9]'), '')
             .split('')
             .map((number) => int.tryParse(number))
             .where((number) => number != null)

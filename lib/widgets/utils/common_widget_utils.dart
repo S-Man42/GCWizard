@@ -66,8 +66,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
             if (tappables == null || tappables.isEmpty) {
               child = GCWText(text: column != null ? column.toString() : '', style: textStyle);
             } else {
-              child = Text(
-                  column != null ? column.toString() : '', style: textStyle);
+              child = Text(column != null ? column.toString() : '', style: textStyle);
             }
           }
 

@@ -411,8 +411,7 @@ class FormulaParser {
             break;
         }
       });
-    } catch (e, s) {
-    }
+    } catch (e, s) {}
 
     // Here the magic happens, which was decribed above
     // Variable sets with independent matchStrings will be substituted dependently here
