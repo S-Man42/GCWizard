@@ -37,7 +37,7 @@ dependencies:
   pointycastle: ^3.3.3
   prefs: ^3.3.0
   provider: ^6.0.1
-  qr: ^2.1.0
+  qr: ^3.0.0
   r_scan: ^0.1.6+1
   scrollable_positioned_list: ^0.2.3
   touchable: ^1.0.0
