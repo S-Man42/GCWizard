@@ -225,6 +225,13 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                 : GCWIconButton(
                     iconData: Icons.add,
                     onPressed: () {
+                      if (_currentFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
+                        if (!VARIABLESTRING_VARIABLE.hasMatch(_currentValueInput.toLowerCase())) {
+                          showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+                          return;
+                        }
+                      }
+
                       setState(() {
                         _addEntry(_currentKeyInput, _currentValueInput, formulaType: _currentFormulaValueTypeInput);
                       });

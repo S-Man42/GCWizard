@@ -199,12 +199,16 @@ class FormulaParser {
     if (expandValues && interpolatedValues.length > 0) {
       var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
-        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': formula};
+        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
       } else if (count > _MAX_EXPANDED) {
-        return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
+        return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': substitutedFormula};
       }
 
-      expandedFormulas = VariableStringExpander(substitutedFormula, interpolatedValues).run();
+      try {
+        expandedFormulas = VariableStringExpander(substitutedFormula, interpolatedValues).run();
+      } catch(e) {
+        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
+      }
 
       var results = <Map<String, dynamic>>[];
       var hasError = false;
