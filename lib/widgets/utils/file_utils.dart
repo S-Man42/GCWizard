@@ -16,7 +16,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, GZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
@@ -105,6 +105,14 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x30, 0x26, 0xB2, 0x75]
     ],
     'mime_types': ['application/x-7z-compressed', 'application/octet-stream'],
+    'file_class': FileClass.ARCHIVE
+  },
+  FileType.GZIP: {
+    'extensions': ['gz'],
+    'magic_bytes': <List<int>>[
+      [0x1F, 0x8B]
+    ],
+    'mime_types': ['application/gzip'],
     'file_class': FileClass.ARCHIVE
   },
   FileType.WMV: {
@@ -424,6 +432,14 @@ List<PlatformFile> extractArchive(PlatformFile file) {
         return _archiveToPlatformFileList(ZipDecoder().decodeBuffer(input));
       case FileType.TAR:
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
+      case FileType.BZIP2:
+        return _archiveToPlatformFileList(BZIP2 Decoder().decodeBuffer(input));
+      case FileType.GZip:
+        var output = OutputStream();
+        var archive = Archive();
+        GZipDecoder().decodeStream(input, output);
+        archive.addFile(ArchiveFile(changeExtension(file.name, '.xxx'), null, output.getBytes()));
+        return _archiveToPlatformFileList(archive);
       case FileType.RAR:
         return null;
         break;
