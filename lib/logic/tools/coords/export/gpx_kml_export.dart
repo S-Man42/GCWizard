@@ -280,7 +280,7 @@ class _KmlWriter {
         if (!waypoint) {
           _writeElement(builder, 'name', cacheName);
         } else {
-          _writeElement(builder, 'description', wpt.markerText);
+          _writeElement(builder, 'name', wpt.markerText);
         }
         _writeElement(builder, 'altitudeMode', 'absolute');
         _writeElement(builder, 'styleUrl', styleId);
