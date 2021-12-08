@@ -94,6 +94,7 @@ import 'dart:convert';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
+
 enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS}
 
 Map<WHERIGO, String> WHERIGO_DATA = {
@@ -136,11 +137,6 @@ int readLong(Uint8List byteList, int offset){ // 8 Byte
       + byteList[offset + 1] * 256
       + byteList[offset + 2] * 256 * 256
       + byteList[offset + 3] * 256 * 256 * 256;
-//      + byteList[offset + 4] * 256 * 256 * 256 * 256
-//      + byteList[offset + 5] * 256 * 256 * 256 * 256 * 256
-//      + byteList[offset + 6] * 256 * 256 * 256 * 256 * 256 * 256
-//      + byteList[offset + 7] * 256 * 256 * 256 * 256 * 256 * 256 * 256
-//      - (pow(2, 63) - 1);
 }
 
 int readInt(Uint8List byteList, int offset){ // 4 Byte
@@ -148,7 +144,6 @@ int readInt(Uint8List byteList, int offset){ // 4 Byte
       + byteList[offset + 1] * 256
       + byteList[offset + 2] * 256 * 256
       + byteList[offset + 3] * 256 * 256 * 256;
-//      - 2147483647;
 }
 
 int readShort(Uint8List byteList, int offset){ // 2 Byte
@@ -322,7 +317,9 @@ const LENGTH_INT = 4;
 const LENGTH_LONG = 4;
 const LENGTH_DOUBLE = 8;
 
-WherigoCartridge getCartridge(Uint8List byteList){
+String plainLUA = '';
+
+WherigoCartridge getCartridge(Uint8List byteList) {
   if (byteList == [] || byteList == null)
     return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], [], []);
 
@@ -330,7 +327,6 @@ WherigoCartridge getCartridge(Uint8List byteList){
   int NumberOfObjects = 0;
   List<MediaFileHeader> MediaFilesHeaders = [];
   List<MediaFileContent> MediaFilesContents = [];
-  String LUA = '';
   int MediaFileID = 0;
   int Address = 0;
   int HeaderLength = 0;
@@ -448,9 +444,6 @@ WherigoCartridge getCartridge(Uint8List byteList){
   MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
   offset = offset + MediaFileLength;
 
-  // save LUAByteCode to device with filename "cartridge.luac"
-  _exportLUACFile(MediaFilesContents[0].MediaFileBytes);
-
   // read Objects
   for (int i = 1; i < NumberOfObjects; i++){
     ValidMediaFile = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
@@ -463,18 +456,19 @@ WherigoCartridge getCartridge(Uint8List byteList){
   }
 
   // decompile LUA
-  LUA = _decompileLUA(MediaFilesContents[0].MediaFileBytes);
+  _decompileLUA(MediaFilesContents[0].MediaFileBytes);
+  print('after decompile '+plainLUA);
 
   // analyze cartridge with String LUA
-  Characters = _getCharactersFromCartridge(LUA);
-  Items = _getItemsFromCartridge(LUA);
-  Tasks = _getTasksFromCartridge(LUA);
-  Inputs = _getInputsFromCartridge(LUA);
-  Zones = _getZonesFromCartridge(LUA);
-  Timers = _getTimersFromCartridge(LUA);
+  Characters = _getCharactersFromCartridge(plainLUA);
+  Items = _getItemsFromCartridge(plainLUA);
+  Tasks = _getTasksFromCartridge(plainLUA);
+  Inputs = _getInputsFromCartridge(plainLUA);
+  Zones = _getZonesFromCartridge(plainLUA);
+  Timers = _getTimersFromCartridge(plainLUA);
 
   return WherigoCartridge(Signature,
-    NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUA,
+    NumberOfObjects, MediaFilesHeaders, MediaFilesContents, plainLUA,
     HeaderLength,
     Latitude, Longitude, Altitude,
     Splashscreen, SplashscreenIcon,
@@ -487,10 +481,7 @@ WherigoCartridge getCartridge(Uint8List byteList){
     Characters, Items, Tasks, Inputs, Zones, Timers);
 }
 
-String _decompileLUA(Uint8List LUA){
-  // online solution via REST-API
-  return '';
-}
+
 
 List<ObjectData>_getCharactersFromCartridge(String LUA){
   return [];
@@ -515,6 +506,18 @@ List<ZoneData>_getZonesFromCartridge(String LUA){
 List<TimerData>_getTimersFromCartridge(String LUA){
   return [];
 }
+
+_decompileLUA(Uint8List LUA) async {
+  // online solution via REST-API
+  plainLUA = '';
+  print('inside decompile');
+  print(LUA);
+  var result = await http.post(Uri.parse('https://lua-decompiler.ferib.dev/api/decompile/'), body: LUA);
+  plainLUA = result.body;
+  print(plainLUA);
+  // {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
+}
+
 
 // https://lua-decompiler.ferib.dev/
 // POST	/api/decompile/	Decompiles the embedded Lua binary file.
@@ -622,32 +625,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-void main() => runApp(MyApp());
-
-Recent Posts
-Calculate Output Size of Convolutional and Pooling layers in CNN.
-Create DataLoader with collate_fn() for variable-length input in PyTorch.
-Feature extraction from an image using pre-trained PyTorch model
-How to add L1, L2 regularization in PyTorch loss function?
-Load custom image datasets into PyTorch DataLoader without using ImageFolder.
-PyTorch Freeze Layer for fixed feature extractor in Transfer Learning
-How to use kernel, bias, and activity Layer Weight regularizers in Keras
-PyTorch K-Fold Cross-Validation using Dataloader and Sklearn
-Micro and Macro Averages for imbalance multiclass classification
-Explain Pooling layers: Max Pooling, Average Pooling, Global Average Pooling, and Global Max pooling.
-Categories
-Categories
-Select Category
-
-
 Privacy Policy
 Copyright © 2021 knowledge Transfer All Rights Reserved.
 Powered by WordPress. Designed by Yossy's web service.
 
-
 }*/
 
-_exportLUACFile(Uint8List data) async {
-  //var value = await saveByteDataToFile(context, data, "cartridge.luac");
-  var value = await createTmpFile("cartridge.luac", data);
-}
