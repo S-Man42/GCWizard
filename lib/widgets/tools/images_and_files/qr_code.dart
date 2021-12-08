@@ -89,17 +89,17 @@ class QrCodeState extends State<QrCode> {
               )
             : Container(),
         _currentMode == GCWSwitchPosition.right
-          ? Container()
-          : GCWIntegerSpinner(
-              title: i18n(context, 'qr_code_modulsize'),
-              value: _currentModulSize,
-              min: 1,
-              max: 100,
-              onChanged: (value) {
-                _currentModulSize = value;
-                _updateOutput();
-              },
-            ),
+            ? Container()
+            : GCWIntegerSpinner(
+                title: i18n(context, 'qr_code_modulsize'),
+                value: _currentModulSize,
+                min: 1,
+                max: 100,
+                onChanged: (value) {
+                  _currentModulSize = value;
+                  _updateOutput();
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {

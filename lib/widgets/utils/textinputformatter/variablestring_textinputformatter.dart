@@ -1,12 +1,11 @@
 import 'package:flutter/services.dart';
-
-final RegExp VARIABLESTRING_VARIABLE = RegExp(r'^((\d+(\-(\d*|\d+#\d*))?),)*(\d*|(\d+\-(\d*|\d+#\d*)))$');
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 
 class VariableStringTextInputFormatter extends TextInputFormatter {
   RegExp _exp;
 
   VariableStringTextInputFormatter() {
-    _exp = VARIABLESTRING_VARIABLE;
+    _exp = VARIABLESTRING;
   }
 
   @override
