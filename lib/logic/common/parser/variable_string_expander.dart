@@ -1,6 +1,8 @@
+import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
-import 'dart:math';
+
+final RegExp VARIABLESTRING = RegExp(r'^((\d+(\-(\d*|\d+#\d*))?),)*(\d*|(\d+\-(\d*|\d+#\d*)))$');
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
@@ -59,6 +61,8 @@ class VariableStringExpander {
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
 
+  List<String> _variableGroups;
+  int _countVariableGroups;
   String _variableGroup;
 
   List<Map<String, dynamic>> _results = [];
@@ -139,7 +143,7 @@ class VariableStringExpander {
     return false;
   }
 
-  int _variableValueIndex;
+  int _variableGroupIndex, _variableValueIndex;
   String _result;
 
   Map<String, String> _getCurrentVariables() {
@@ -179,21 +183,22 @@ class VariableStringExpander {
   // do the substitution of the variables set with their specific values given by their counted indexes
   void _substitute() {
     _result = _input;
-    _variableGroup = _input;
+    for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
+      _variableGroup = _variableGroups[_variableGroupIndex];
 
-    for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
-      _variableGroup = _variableGroup.toUpperCase().replaceAll(
-            _substitutionKeys[_variableValueIndex],
-            _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
-          );
+      for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
+        _variableGroup = _variableGroup.toUpperCase().replaceAll(
+              _substitutionKeys[_variableValueIndex],
+              _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
+            );
+      }
+
+      _result = _result.replaceFirst(_variableGroups[_variableGroupIndex], _variableGroup);
     }
-
-    _result = _result.replaceFirst(_input, _variableGroup);
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
     if (_input == null || _input.length == 0) return [];
-    _input = _input.trim();
 
     if (_substitutions == null || _substitutions.length == 0) {
       return [
@@ -203,17 +208,18 @@ class VariableStringExpander {
 
     // expand all groups, initialize lists
     for (MapEntry<String, String> substitution in _substitutions.entries) {
-      _substitutionKeys.add(substitution.key.toUpperCase());
-      var group;
-      try {
-        group = _expandVariableGroup(substitution.value);
-      } catch (e) {
+      if (!VARIABLESTRING.hasMatch(substitution.value)) {
         return [
           {'text': _input, 'variables': {}}
         ];
       }
+
+      _substitutionKeys.add(substitution.key.toUpperCase());
+      var group = _expandVariableGroup(substitution.value);
+
       if (group.length > 0) {
         _expandedVariableGroups.add(group);
+
         _countVariableValues.add(group.length);
         _variableValueIndexes.add(0);
         _currentVariableIndex++;
@@ -227,6 +233,15 @@ class VariableStringExpander {
         {'count': _countCombinations}
       ];
     }
+
+    // Find matching formula groups
+    RegExp regExp = RegExp(r'\[.+?\]');
+    if (regExp.hasMatch(_input)) {
+      _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)).toList();
+    } else {
+      _variableGroups = [_input];
+    }
+    _countVariableGroups = _variableGroups.length;
 
     // gogogo!
     _generateCartesianVariables();

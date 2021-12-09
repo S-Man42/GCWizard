@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
@@ -26,6 +27,7 @@ class QrCode extends StatefulWidget {
 
 class QrCodeState extends State<QrCode> {
   var _currentInput = '';
+  var _currentModulSize = 5;
   Uint8List _outData;
   Uint8List _outDataEncrypt;
   String _outDataDecrypt;
@@ -86,6 +88,18 @@ class QrCodeState extends State<QrCode> {
                 padding: EdgeInsets.symmetric(vertical: 20),
               )
             : Container(),
+        _currentMode == GCWSwitchPosition.right
+            ? Container()
+            : GCWIntegerSpinner(
+                title: i18n(context, 'qr_code_modulsize'),
+                value: _currentModulSize,
+                min: 1,
+                max: 100,
+                onChanged: (value) {
+                  _currentModulSize = value;
+                  _updateOutput();
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -121,7 +135,7 @@ class QrCodeState extends State<QrCode> {
   _updateOutput() {
     try {
       if (_currentMode == GCWSwitchPosition.left) {
-        generateBarCode(_currentInput).then((qr_code) {
+        generateBarCode(_currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize).then((qr_code) {
           setState(() {
             _outDataEncrypt = qr_code;
           });

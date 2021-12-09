@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.1.0+125
+version: 2.1.0+127
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -37,7 +37,7 @@ dependencies:
   pointycastle: ^3.3.3
   prefs: ^3.3.0
   provider: ^6.0.1
-  qr: ^2.1.0
+  qr: ^3.0.0
   r_scan: ^0.1.6+1
   scrollable_positioned_list: ^0.2.3
   touchable: ^1.0.0
@@ -246,8 +246,9 @@ flutter:
     - assets/symbol_tables/sanluca/
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
-    - assets/symbol_tables/sign/
     - assets/symbol_tables/shadoks/
+    - assets/symbol_tables/shoes/
+    - assets/symbol_tables/sign/
     - assets/symbol_tables/skullz/
     - assets/symbol_tables/slash_and_pipe/
     - assets/symbol_tables/solmisation/
@@ -278,6 +279,14 @@ flutter:
     - assets/symbol_tables/visitor_2009/
     - assets/symbol_tables/vulcanian/
     - assets/symbol_tables/wakandan/
+    - assets/symbol_tables/weather_a/
+    - assets/symbol_tables/weather_c/
+    - assets/symbol_tables/weather_cl/
+    - assets/symbol_tables/weather_cm/
+    - assets/symbol_tables/weather_cn/
+    - assets/symbol_tables/weather_n/
+    - assets/symbol_tables/weather_w/
+    - assets/symbol_tables/weather_ww/
     - assets/symbol_tables/webdings/
     - assets/symbol_tables/windforce_beaufort/
     - assets/symbol_tables/windforce_knots/

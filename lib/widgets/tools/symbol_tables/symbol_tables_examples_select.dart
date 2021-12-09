@@ -121,7 +121,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
           ],
         ),
         Expanded(
-             child:  GCWSymbolTableSymbolMatrix(
+            child: GCWSymbolTableSymbolMatrix(
           imageData: images,
           countColumns: countColumns,
           mediaQueryData: mediaQueryData,
@@ -135,8 +135,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
               selectedSymbolTables.remove(_symbolKey(imageData.path));
             }
           },
-          )
-        ),
+        )),
         GCWButton(
           text: i18n(context, 'symboltablesexamples_submitandnext'),
           margin: EdgeInsets.only(top: 5.0, bottom: 5.0),

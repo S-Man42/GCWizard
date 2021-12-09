@@ -229,6 +229,16 @@ class FormulaPainter {
           isOperator = true;
         }
       }
+      // new line
+      if (offset == 0) {
+        _parserResult = _isNewLine(formula);
+        if (_parserResult != null) {
+          result = _coloredSpaces(result, _parserResult);
+          offset = _calcOffset(_parserResult);
+          isOperator = true;
+        }
+      }
+
       // spaces
       if (offset == 0) {
         _parserResult = _isSpaces(formula);
@@ -263,6 +273,13 @@ class FormulaPainter {
 
   List<String> _isSpaces(String formula) {
     RegExp regex = RegExp(r'^(\s*)');
+    var match = regex.firstMatch(formula);
+
+    return (match == null) ? null : [match.group(0)];
+  }
+
+  List<String> _isNewLine(String formula) {
+    RegExp regex = RegExp(r'^([\r\n])');
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
