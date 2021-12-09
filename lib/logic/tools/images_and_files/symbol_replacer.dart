@@ -189,13 +189,19 @@ class SymbolImage {
 
   addToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     if (symbol == null) return;
-    if (symbolGroup != null) symbolGroup.symbols.remove(symbol);
+    if (symbol.symbolGroup != null) {
+      symbol.symbolGroup?.symbols?.remove(symbol);
+      if (symbol.symbolGroup.symbols.isEmpty) symbolGroups.remove(symbolGroup);
+    }
+    symbolGroup.symbols.add(symbol);
     symbol.symbolGroup = symbolGroup;
   }
 
   removeFromGroup(Symbol symbol) {
     if (symbol == null) return;
+    if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols?.remove(symbol);
     var symbolGroup = SymbolGroup();
+    symbolGroups.add(symbolGroup);
     symbolGroup.symbols.add(symbol);
     symbol.symbolGroup = symbolGroup;
   }

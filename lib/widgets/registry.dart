@@ -710,7 +710,7 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'stegano',
     ]),
-    GCWTool(tool: SymbolReplacer(), i18nPrefix: 'symbol_replacer', isBeta: true, categories: [
+    GCWTool(tool: SymbolReplacer(), autoScroll: false, i18nPrefix: 'symbol_replacer', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'symbol_replacer',

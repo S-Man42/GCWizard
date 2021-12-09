@@ -3,7 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:prefs/prefs.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
@@ -56,9 +57,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   SymbolTableViewData _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
   var _isLoading = <bool>[false];
-  //var images = <Map<String, SymbolData>>[];
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
   SymbolData _selectedSymbolData;
+  var _removeActiv = false;
+  var _addActiv = false;
 
   TextEditingController _editValueController;
 
@@ -123,39 +125,70 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       _replaceSymbols(true);
     }
 
-    return Column(children: <Widget>[
-      GCWOpenFile(
-        supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-        onLoaded: (_file) {
-          if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-            return;
-          }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        GCWOpenFile(
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+          onLoaded: (_file) {
+            if (_file == null) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
 
-          if (_file != null) {
-            setState(() {
-              _platformFile = _file;
-              _symbolImage = null;
-              _replaceSymbols(true);
+            if (_file != null) {
+              setState(() {
+                _platformFile = _file;
+                _symbolImage = null;
+                _symbolMap.clear();
+                _replaceSymbols(true);
+              });
+            }
+          },
+        ),
+        GCWDropDownButton(
+          value: _currentSymbolTableViewData,
+          onChanged: (value) async {
+            _currentSymbolTableViewData = value;
+            if ((_currentSymbolTableViewData is SymbolTableViewData) && (_currentSymbolTableViewData.data == null) ){
+              await _currentSymbolTableViewData.initialize(context);
+            }
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _replaceSymbols(false);
             });
-          }
-        },
-      ),
-      GCWTwoOptionsSwitch(
-        value: _currentSimpleMode,
-        leftValue: i18n(context, 'common_mode_simple'),
-        rightValue: i18n(context, 'common_mode_advanced'),
-        onChanged: (value) {
-          setState(() {
-            _currentSimpleMode = value;
-          });
-        },
-      ),
-      _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
-      _buildMatrix(_symbolImage, countColumns, mediaQueryData),
-      _buildEditText(),
-      _buildOutput()
-    ]);
+          },
+          items: _compareSymbolItems,
+          selectedItemBuilder: (BuildContext context) {
+            return _compareSymbolItems.map((item) {
+              return _buildDropDownMenuItem(
+                  (item.value is SymbolTableViewData)
+                      ? (item.value as SymbolTableViewData).icon
+                      : null,
+                  (item.value is SymbolTableViewData)
+                      ? (item.value as SymbolTableViewData).toolName
+                      : i18n(context, 'symbol_replacer_no_symbol_table'),
+                  null);
+            }).toList();
+          },
+        ),
+
+        GCWTwoOptionsSwitch(
+          value: _currentSimpleMode,
+          leftValue: i18n(context, 'common_mode_simple'),
+          rightValue: i18n(context, 'common_mode_advanced'),
+          onChanged: (value) {
+            setState(() {
+              _currentSimpleMode = value;
+            });
+          },
+        ),
+        _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
+        _buildMatrix(_symbolImage, countColumns, mediaQueryData),
+        _buildEditLine(), //_selectedSymbolData != null ? _buildEditText() : Container(),
+        _buildOutput()
+      ]
+    );
   }
 
 
@@ -163,8 +196,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
     useAsyncExecuter = ((useAsyncExecuter ||
         (_symbolImage?.symbolGroups == null) ||
-        (_symbolImage.symbolGroups.isEmpty)) &&
-        _platformFile?.bytes.length > 100000);
+        (_symbolImage?.symbolGroups?.isEmpty)) &&
+        ((_platformFile?.bytes?.length != null) &&
+        _platformFile?.bytes?.length > 100000));
 
     if (!useAsyncExecuter) {
       var _jobData = await _buildJobDataReplacer();
@@ -242,32 +276,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Widget _buildSymbolTableDropDown() {
     return Column(children: <Widget>[
       GCWTextDivider(text: i18n(context, 'symbol_replacer_symbol_table')),
-      GCWDropDownButton(
-        value: _currentSymbolTableViewData,
-        onChanged: (value) async {
-          _currentSymbolTableViewData = value;
-          if ((_currentSymbolTableViewData is SymbolTableViewData) && (_currentSymbolTableViewData.data == null) ){
-            await _currentSymbolTableViewData.initialize(context);
-          }
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _replaceSymbols(false);
-          });
-        },
-        items: _compareSymbolItems,
-        selectedItemBuilder: (BuildContext context) {
-          return _compareSymbolItems.map((item) {
-            return _buildDropDownMenuItem(
-              (item.value is SymbolTableViewData)
-                  ? (item.value as SymbolTableViewData).icon
-                  : null,
-              (item.value is SymbolTableViewData)
-                  ? (item.value as SymbolTableViewData).toolName
-                  : i18n(context, 'symbol_replacer_no_symbol_table'),
-              null);
-          }).toList();
-        },
-      ),
       GCWSlider(
         title: i18n(context, 'symbol_replacer_similarity_level'),
         value: _similarityCompareLevel,
@@ -286,33 +294,27 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (symbolImage?.symbols == null)
       return Container();
 
-    //if (_symbolMap.isEmpty) {
-    //   _symbolMap.clear();
-      symbolImage.symbols.forEach((symbol) {
-        if (_symbolMap.containsKey(symbol))
-          _symbolMap[symbol] = _cloneSymbolData(_symbolMap[symbol], symbol?.symbolGroup?.text ?? '');
-        else
-          _symbolMap.addAll({symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}});
-      });
-    //}
+    symbolImage.symbols.forEach((symbol) {
+      if (_symbolMap.containsKey(symbol))
+        ;
+        //_symbolMap[symbol] = _cloneSymbolData(_symbolMap[symbol], symbol?.symbolGroup?.text ?? '');
+      else
+        _symbolMap.addAll({symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}});
+    });
 
-    return SingleChildScrollView(
-            child: GCWSymbolSymbolMatrix(
-              imageData: _symbolMap.values.toList(),
-              countColumns: countColumns,
-              mediaQueryData: mediaQueryData,
-              onChanged: () => setState((){}),
-              selectable: true,
-              allowOverlays: true,
-              onSymbolTapped: (String tappedText, SymbolData imageData) {
-                _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected) );
-                // if (imageData.primarySelected) {
-                //   //selectedSymbolTables.add(_symbolKey(imageData.path));
-                // } else {
-                //   //selectedSymbolTables.remove(_symbolKey(imageData.path));
-                // }
-              },
-            )
+    return Expanded(
+      child: GCWSymbolTableSymbolMatrix(
+        imageData: _symbolMap.values.toList(),
+        countColumns: countColumns,
+        mediaQueryData: mediaQueryData,
+        onChanged: () => setState((){}),
+        selectable: true,
+        overlayOn: true,
+        onSymbolTapped: (String tappedText, SymbolData imageData) {
+          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected) );
+        },
+      )
+      //  )
     );
   }
 
@@ -324,112 +326,118 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
   
   Symbol _getSymbol(SymbolData imageData) {
-    return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData).key;
+    return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData, orElse: () => null)?.key;
   }
 
   _selectGroupSymbols(SymbolData imageData, bool selected) {
-    _selectedSymbolData = (imageData.primarySelected || imageData.secondarySelected) ? imageData : null;
+    if (!(_addActiv || _removeActiv))
+      _selectedSymbolData = selected ? imageData : null;
+    else
+      selected = !selected || (imageData.primarySelected && imageData != _selectedSymbolData );
 
-    //var _symbolMapSwitch = switchMapKeyValue(_symbolMap);
     Symbol _symbol = _getSymbol(imageData);
+    // vorher -> nachher
+    // primary -> not seleted
+    // second -> primary
+    // not selected -> primary
 
-    if (selected)
+    if (_addActiv ) {
+      if (!selected) {
+        _symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
+        imageData.primarySelected = false;
+        imageData.secondarySelected = true;
+      } //else {
+      //   // restore
+      //   imageData.primarySelected = (imageData == _selectedSymbolData);
+      //   imageData.secondarySelected = !imageData.primarySelected;
+      // }
+    }
+
+    if (_removeActiv) {
+      if (selected) {
+        _symbolImage.removeFromGroup(_symbol);
+        imageData.primarySelected = false;
+        imageData.secondarySelected = false;
+      }
+      // else {
+      //   imageData.primarySelected = false;
+      //   imageData.secondarySelected = false;
+      // }
+    }
+
+    if (selected || (_addActiv || _removeActiv))
       // reset all sections
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = false;
         image.values.first.secondarySelected = false;
       });
 
-    if (_symbol?.symbolGroup?.symbols != null) {
-      _symbol.symbolGroup.symbols.forEach((symbol) {
-        var image = _symbolMap[symbol];
-        // primary ?
-        if (symbol == _symbol) {
-          image.values.first.primarySelected = selected;
-          _editValueController.text = image.values.first.displayName;
-        } else
-          image.values.first.secondarySelected = selected;
-      });
-    }
+      if (_symbol?.symbolGroup?.symbols != null) {
+        _symbol.symbolGroup.symbols.forEach((symbol) {
+          var image = _symbolMap[symbol];
+          // primary ?
+          if (symbol == _symbol) {
+            image.values.first.primarySelected = selected;
+            _editValueController.text = image.values.first.displayName;
+          } else
+            image.values.first.secondarySelected = selected;
+        });
+      }
   }
 
   _setGroupText(SymbolData imageData, String text, bool single) {
     Symbol _symbol = _getSymbol(imageData);
-    if (single) _symbolImage.removeFromGroup(_symbol);
+    if (single) {
+      _symbolImage.removeFromGroup(_symbol);
+      // reset all secondary sections
+      _symbolMap.values.forEach((image) {image.values.first.secondarySelected = false;});
+    }
     if (_symbol?.symbolGroup != null) _symbol.symbolGroup.text = text;
   }
 
-  Widget _buildEditText() {
-    // SymbolData primaryEntry;
-    // if (_symbolMap?.keys != null) {
-    //   var _entryList = _symbolMap?.values?.where((symbolData) => symbolData.primarySelected);
-    //   if (_entryList.isNotEmpty)
-    //     primaryEntry = _entryList.first;
-    // }
-
-
-    // if (primaryEntry == null)
-    //   return Container();
-
-    return Container(
-      child: Column(children: <Widget>[
-        Row(children: <Widget>[
-          // Expanded(
-          //   child: DecoratedBox(
-          //       decoration: BoxDecoration( border: Border.all(color: themeColors().mainFont()), borderRadius: BorderRadius.circular(4)),
-          //       child: Image.memory(entry.getImage(),
-          //           height: 80
-          //       )
-          //   ),
-          //   flex: 2,
-          // ),
-          // Icon(
-          //   Icons.arrow_forward,
-          //   color: themeColors().mainFont(),
-          // ),
-          Expanded(
-              child: Column(children: <Widget>[
-                Row(children: <Widget>[
-                  Expanded(child:
-                    GCWTextField(
-                      controller: _editValueController,
-                      autofocus: true,
-                      // onChanged: (text) {
-                      //   setState(() {
-                      //     _setGroupText(_symbolMap[primaryEntry], _editValueController.text);
-                      //   });
-                    ),
-                    flex: 1,
-                  ),
-                  Expanded(child:
-                    GCWButton(
-                      text: 'Change',
-                      onPressed: () {
-                        setState(() {
-                          _setGroupText(_selectedSymbolData, _editValueController.text, false);
-                       });
-                      },
-                    ),
-                    flex: 1,
-                  ),
-                  Expanded(child:
-                    GCWButton(
-                      text: 'ChangeAll',
-                      onPressed: () {
-                        setState(() {
-                          _setGroupText(_selectedSymbolData, _editValueController.text, true);
-                        });
-                      },
-                    ),
-                    flex: 1,
-                  )
-                ],
-                ),
-              ]),
-              flex: 1),
-        ],
+  Widget _buildEditLine() {
+    return GCWToolBar(children: <Widget>[
+        GCWTextField(
+          controller: _editValueController,
+          autofocus: true,
         ),
-      ]),
+        GCWIconButton(
+          iconData: Icons.alt_route,
+          onPressed: () {
+            setState(() {
+              _setGroupText(_selectedSymbolData, _editValueController.text, false);
+           });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.update,
+          onPressed: () {
+            setState(() {
+              _setGroupText(_selectedSymbolData, _editValueController.text, true);
+            });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.add,
+          iconColor: _addActiv ? null : themeColors().inActive(),
+          onPressed: () {
+            setState(() {
+              _addActiv = !_addActiv;
+              if (_addActiv) _removeActiv = false;
+            });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.remove,
+          iconColor: _removeActiv ? null : themeColors().inActive(),
+          onPressed: () {
+            setState(() {
+              _removeActiv = !_removeActiv;
+              if (_removeActiv) _addActiv = false;
+            });
+          },
+        )
+      ],
     );
   }
 
@@ -437,8 +445,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (_symbolImage == null)
       return Container();
 
-    //var imageData = GCWImageViewData(local.PlatformFile(bytes: _symbolImage.getImage()));
-    return Column(children: <Widget>[
+    return Column(
+        children: <Widget>[
         //GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
         GCWDefaultOutput(child: _symbolImage.getTextOutput()),
         GCWButton(
