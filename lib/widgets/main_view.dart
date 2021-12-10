@@ -607,7 +607,7 @@ void _initStaticToolList() {
       className(WASD()),
       className(WaypointProjection()),
       className(Weekday()),
-      className(WheatstoneCooke5NeedleTelegraph()),
+      className(WheatstoneCookeNeedleTelegraph()),
       className(WhitespaceLanguage()),
       className(WigWagSemaphoreTelegraph()),
       className(Windchill()),
