@@ -4,7 +4,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 
 class GCWSymbolTableDecryption extends StatefulWidget {
@@ -27,6 +27,24 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
 
   SymbolTableData _data;
 
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  _scrollToBottom() {
+    _scrollController.position.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
   @override
   Widget build(BuildContext context) {
     _data = widget.data;
@@ -35,7 +53,8 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
       children: <Widget>[
         (widget.data == null)
             ? Container()
-            : GCWSymbolSymbolMatrix(
+            : Expanded(
+                child: GCWSymbolTableSymbolMatrix(
                 imageData: _data.images,
                 countColumns: widget.countColumns,
                 mediaQueryData: widget.mediaQueryData,
@@ -43,44 +62,60 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                 onSymbolTapped: (String tappedText, SymbolData imageData) {
                   setState(() {
                     _decryptionOutput += tappedText;
+                    _scrollToBottom();
                   });
                 },
-              ),
-        GCWToolBar(children: [
-          GCWIconButton(
-            iconData: Icons.space_bar,
-            onPressed: () {
-              setState(() {
-                _decryptionOutput += ' ';
-              });
-            },
+              )),
+        ConstrainedBox(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GCWToolBar(children: [
+                GCWIconButton(
+                  iconData: Icons.space_bar,
+                  onPressed: () {
+                    setState(() {
+                      _decryptionOutput += ' ';
+                      _scrollToBottom();
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  iconData: Icons.backspace,
+                  onPressed: () {
+                    setState(() {
+                      if (_decryptionOutput.length > 0)
+                        _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
+                      _scrollToBottom();
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  iconData: Icons.clear,
+                  onPressed: () {
+                    setState(() {
+                      _decryptionOutput = '';
+                      _scrollToBottom();
+                    });
+                  },
+                )
+              ]),
+              Flexible(
+                  child: SingleChildScrollView(
+                controller: _scrollController,
+                child: widget.onAfterDecrypt != null
+                    ? Column(
+                        children: [
+                          GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
+                          GCWDefaultOutput(child: widget.onAfterDecrypt(_decryptionOutput))
+                        ],
+                      )
+                    : GCWDefaultOutput(child: _decryptionOutput),
+              ))
+            ],
           ),
-          GCWIconButton(
-            iconData: Icons.backspace,
-            onPressed: () {
-              setState(() {
-                if (_decryptionOutput.length > 0)
-                  _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
-              });
-            },
-          ),
-          GCWIconButton(
-            iconData: Icons.clear,
-            onPressed: () {
-              setState(() {
-                _decryptionOutput = '';
-              });
-            },
-          )
-        ]),
-        widget.onAfterDecrypt != null
-            ? Column(
-                children: [
-                  GCWOutput(title: i18n(context, 'common_input'), child: _decryptionOutput),
-                  GCWDefaultOutput(child: widget.onAfterDecrypt(_decryptionOutput))
-                ],
-              )
-            : GCWDefaultOutput(child: _decryptionOutput),
+          constraints: BoxConstraints(maxHeight: widget.mediaQueryData.orientation == Orientation.portrait ? 350 : 150),
+        ),
       ],
     );
   }

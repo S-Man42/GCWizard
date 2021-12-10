@@ -68,6 +68,13 @@ void main() {
           {'text': '34', 'variables': {'A': '3', 'B': '4'}},
           {'text': '36', 'variables': {'A': '3', 'B': '6'}}
         ]
+      },
+      {'input': 'N49 32.[n] E010 59.[e]', 'substitutions': {'n':'3-5', 'e': '7'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+        'expectedOutput': [
+          {'text': 'N49 32.[3] E010 59.[7]', 'variables': {'N': '3', 'E': '7'}},
+          {'text': 'N49 32.[4] E010 59.[7]', 'variables': {'N': '4', 'E': '7'}},
+          {'text': 'N49 32.[5] E010 59.[7]', 'variables': {'N': '5', 'E': '7'}},
+        ]
       }
     ];
 

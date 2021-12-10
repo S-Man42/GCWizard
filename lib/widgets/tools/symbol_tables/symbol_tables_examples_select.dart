@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
@@ -121,14 +121,13 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
           ],
         ),
         Expanded(
-            child: SingleChildScrollView(
-                child: GCWSymbolSymbolMatrix(
+            child: GCWSymbolTableSymbolMatrix(
           imageData: images,
           countColumns: countColumns,
           mediaQueryData: mediaQueryData,
           onChanged: () => setState(() {}),
           selectable: true,
-          allowOverlays: false,
+          overlayOn: false,
           onSymbolTapped: (String tappedText, SymbolData imageData) {
             if (imageData.primarySelected) {
               selectedSymbolTables.add(_symbolKey(imageData.path));
@@ -136,7 +135,7 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
               selectedSymbolTables.remove(_symbolKey(imageData.path));
             }
           },
-        ))),
+        )),
         GCWButton(
           text: i18n(context, 'symboltablesexamples_submitandnext'),
           margin: EdgeInsets.only(top: 5.0, bottom: 5.0),

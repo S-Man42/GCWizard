@@ -32,11 +32,6 @@ class PianoState extends State<Piano> {
   var _isColorSort = false;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var field = _currentSort == 0 ? fields[0] : fields[_currentSort - 1];
     return Column(

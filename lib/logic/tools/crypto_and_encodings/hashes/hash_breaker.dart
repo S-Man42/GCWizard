@@ -10,8 +10,8 @@ class HashBreakerJobData {
   HashBreakerJobData({
     this.input = '',
     this.searchMask = '',
-    this.substitutions = null,
-    this.hashFunction = null,
+    this.substitutions,
+    this.hashFunction,
   });
 }
 

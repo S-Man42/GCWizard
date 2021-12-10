@@ -164,6 +164,7 @@ class AboutState extends State<About> {
                             '\'alantheandroid\' (IT)',
                             'Cavit A. (TR)',
                             '\'crazedllama\' (KO)',
+                            '\'Henrike71\' (NL)',
                             '\'j_janus (PL)',
                             '\'Johan-V (NL)',
                             'Paul Z. (NL)',

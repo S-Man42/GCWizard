@@ -262,6 +262,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/compound_interest.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
@@ -285,6 +286,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -338,6 +340,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.d
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/weather_symbols.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
@@ -532,6 +535,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'complexnumbers',
     ]),
+    GCWTool(tool: CompoundInterest(), i18nPrefix: 'compoundinterest', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'compoundinterest',
+    ]),
     GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', searchKeys: [
       'coordinates',
     ]),
@@ -682,7 +690,6 @@ initializeRegistry(BuildContext context) {
         'iataicao',
       ],
     ),
-
     GCWTool(
       tool: IceCodesSelection(),
       i18nPrefix: 'icecodes_selection',
@@ -704,10 +711,8 @@ initializeRegistry(BuildContext context) {
           'color',
           'image_colorcorrections',
         ]),
-    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: [
-      'stegano',
+    GCWTool(tool: IPCodes(), i18nPrefix: 'ipcodes', categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: [
+      'ipcodes'
     ]),
     GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -927,6 +932,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'solitaire',
     ]),
+    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'stegano',
+    ]),
     GCWTool(tool: StraddlingCheckerboard(), i18nPrefix: 'straddlingcheckerboard', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -992,11 +1002,6 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'unitconverter',
     ]),
-    GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'wasd',
-    ]),
     GCWTool(
         tool: VanitySelection(),
         i18nPrefix: 'vanity_selection',
@@ -1013,6 +1018,16 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'visualcryptography',
     ]),
+    GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'wasd',
+    ]),
+    GCWTool(
+        tool: WeatherSymbols(),
+        i18nPrefix: 'weathersymbols',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: ['weather', 'weather_clouds', 'weather_a']),
     GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -3155,7 +3170,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
       'shadoksnumbers',
     ]),
-    GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: []),
+    GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
+      'symbol_shoes',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: ['symbol_signlanguage']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
       'symbol_skullz',
     ]),
@@ -3250,6 +3268,14 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: [
       'symbol_wakandan',
     ]),
+    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: ['weather', 'weather_a']),
+    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: ['weather', 'weather_c', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: ['weather', 'weather_cl', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: ['weather', 'weather_cm', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_cn', symbolSearchStrings: ['weather', 'weather_cn', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: ['weather', 'weather_n', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: ['weather', 'weather_w']),
+    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
       'symbol_webdings',
     ]),
@@ -3340,7 +3366,7 @@ initializeRegistry(BuildContext context) {
       'telegraph',
       'telegraph_wheatstonecooke_needle',
     ]),
-    GCWTool(tool: CCITTTelegraph(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
+    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
       'telegraph',
       'telegraph_ccitt',
     ]),

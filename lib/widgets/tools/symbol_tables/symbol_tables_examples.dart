@@ -23,7 +23,6 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
   var _controller;
   String _currentInput = 'ABC123';
 
-  var _currentIgnoreUnknown = false;
   var symbolKeys = <String>[];
 
   Map<String, SymbolTableData> data = {};
@@ -100,12 +99,12 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
 
     var symbols = symbolKeys.map<Widget>((symbolKey) {
       var tableOutput = GCWSymbolTableTextToSymbols(
-        text: _currentInput,
-        ignoreUnknown: true,
-        countColumns: countColumns,
-        data: data[symbolKey],
-        showExportButton: false,
-      );
+          text: _currentInput,
+          ignoreUnknown: true,
+          countColumns: countColumns,
+          data: data[symbolKey],
+          showExportButton: false,
+          fixed: true);
 
       return Column(
         children: [

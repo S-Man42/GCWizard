@@ -11,8 +11,6 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
-
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},
@@ -194,6 +192,13 @@ void main() {
       {'formula' : 'A{2}B[A+B]', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'tbBbtbRbRb'},  // IF: formula id <= 2
       {'formula' : 'AB[A+B]{2}', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'ttbRbRbbBb'},  // IF: formula id <= 2
       {'formula' : '[AB]{2}[A+B]', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bRRbbBbbRbRb'},  // IF: formula id <= 2
+
+      // new line
+      {'formula' : 'sindeg(90)\r\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
+      {'formula' : 'sindeg(90)\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
+      {'formula' : 'sindeg(90)\rsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
+      {'formula' : 'sindeg(90)\n\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
+
     ];
 
     _inputsToExpected.forEach((elem) {

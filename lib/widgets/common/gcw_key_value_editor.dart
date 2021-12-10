@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -16,7 +17,6 @@ import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/variablestring_textinputformatter.dart';
 
 /*
   TODO: TECHNICAL DEBT:
@@ -225,6 +225,13 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                 : GCWIconButton(
                     iconData: Icons.add,
                     onPressed: () {
+                      if (_currentFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
+                        if (!VARIABLESTRING.hasMatch(_currentValueInput.toLowerCase())) {
+                          showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
+                          return;
+                        }
+                      }
+
                       setState(() {
                         _addEntry(_currentKeyInput, _currentValueInput, formulaType: _currentFormulaValueTypeInput);
                       });
@@ -335,6 +342,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               iconData: Icons.content_copy,
               onPressed: () {
                 var copyText = _toJson();
+                if (copyText == null) return;
                 insertIntoGCWClipboard(context, copyText);
               },
             )
@@ -469,7 +477,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                   widget.onUpdateEntry(_currentEditId, _currentEditedKey, _currentEditedValue);
                 } else {
                   if (_currentEditedFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
-                    if (!VARIABLESTRING_VARIABLE.hasMatch(_currentEditedValue.toLowerCase())) {
+                    if (!VARIABLESTRING.hasMatch(_currentEditedValue.toLowerCase())) {
                       showToast(i18n(context, 'formulasolver_values_novalidinterpolated'));
                       return;
                     }
@@ -543,6 +551,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     var list = json.map((e) {
       return jsonEncode({'key': e.key, 'value': e.value});
     }).toList();
+
+    if (list.isEmpty) return null;
 
     return jsonEncode(list);
   }
