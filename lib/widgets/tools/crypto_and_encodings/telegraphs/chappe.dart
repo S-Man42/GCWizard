@@ -21,7 +21,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
-  TextEditingController _DecodeInputController;
+  TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -34,13 +34,13 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
-    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
+    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
     _encodeController.dispose();
-    _DecodeInputController.dispose();
+    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -97,7 +97,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
               _buildVisualDecryption()
             else // decode text
               GCWTextField(
-                controller: _DecodeInputController,
+                controller: _decodeInputController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),
                 ],
