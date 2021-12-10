@@ -19,7 +19,7 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final int countColumns;
   final MediaQueryData mediaQueryData;
-  final List<Map<String, SymbolData>> imageData;
+  final Iterable<Map<String, SymbolData>> imageData;
   final bool selectable;
   final Function onChanged;
   final Function onSymbolTapped;
@@ -35,7 +35,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       this.onChanged,
       this.selectable: false,
       this.onSymbolTapped,
-	  this.fixed: false,
+	    this.fixed: false,
       this.overlayOn: true,
       this.symbolKey})
       : super(key: key);
@@ -46,7 +46,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
 
 class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
   var _currentShowOverlayedSymbols = true;
-  List<Map<String, SymbolData>> _imageData;
+  Iterable<Map<String, SymbolData>> _imageData;
 
   @override
   void initState() {

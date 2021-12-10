@@ -184,9 +184,17 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           },
         ),
         _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
-        _buildMatrix(_symbolImage, countColumns, mediaQueryData),
-        _buildEditLine(), //_selectedSymbolData != null ? _buildEditText() : Container(),
-        _buildOutput()
+        _symbolImage != null ? _buildEditLine() : Container(),
+        Expanded(
+            child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    _buildMatrix(_symbolImage, countColumns, mediaQueryData),
+                    _buildOutput()
+                  ]
+                )
+            )
+        )
       ]
     );
   }
@@ -270,6 +278,30 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         }
       ),
       _buildSymbolTableDropDown(),
+      GCWButton(
+          text: i18n(context, 'symbol_replacer_automatic'),
+          onPressed: () async {
+            await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return Center(
+                  child: Container(
+                    child: GCWAsyncExecuter(
+                      isolatedFunction: break_cipherAsync,
+                      parameter: _buildSubstitutionBreakerJobData(),
+                      onReady: (data) => _showSubstitutionBreakerOutput(data),
+                      isOverlay: true,
+                    ),
+                    height: 220,
+                    width: 150,
+                  ),
+                );
+              },
+            );
+          }
+      )
+
     ]);
   }
 
@@ -295,26 +327,30 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       return Container();
 
     symbolImage.symbols.forEach((symbol) {
-      if (_symbolMap.containsKey(symbol))
-        ;
-        //_symbolMap[symbol] = _cloneSymbolData(_symbolMap[symbol], symbol?.symbolGroup?.text ?? '');
-      else
+      if (_symbolMap.containsKey(symbol)) {
+        var _symbolData = _symbolMap[symbol];
+        var _displayText = symbol?.symbolGroup?.text ?? '';
+        if (_symbolData?.values?.first?.displayName != _displayText) {
+          _symbolMap[symbol] = _cloneSymbolData(_symbolData, _displayText);
+          if (_selectedSymbolData == _symbolData) _selectedSymbolData = _symbolMap[symbol]?.values?.first;
+        }
+      } else
         _symbolMap.addAll({symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}});
     });
 
-    return Expanded(
-      child: GCWSymbolTableSymbolMatrix(
-        imageData: _symbolMap.values.toList(),
-        countColumns: countColumns,
-        mediaQueryData: mediaQueryData,
-        onChanged: () => setState((){}),
-        selectable: true,
-        overlayOn: true,
-        onSymbolTapped: (String tappedText, SymbolData imageData) {
-          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected) );
-        },
-      )
-      //  )
+    return GCWSymbolTableSymbolMatrix(
+      fixed: true,
+      imageData: _symbolMap.values,
+      countColumns: countColumns,
+      mediaQueryData: mediaQueryData,
+      onChanged: () => setState((){}),
+      selectable: true,
+      overlayOn: true,
+      onSymbolTapped: (String tappedText, SymbolData imageData) {
+        setState(() {
+          _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
+        });
+      },
     );
   }
 
@@ -330,59 +366,50 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   _selectGroupSymbols(SymbolData imageData, bool selected) {
+    Symbol _symbol = _getSymbol(imageData);
+
     if (!(_addActiv || _removeActiv))
       _selectedSymbolData = selected ? imageData : null;
     else
-      selected = !selected || (imageData.primarySelected && imageData != _selectedSymbolData );
+      selected = _symbol?.symbolGroup == _getSymbol(_selectedSymbolData).symbolGroup;
 
-    Symbol _symbol = _getSymbol(imageData);
-    // vorher -> nachher
-    // primary -> not seleted
-    // second -> primary
-    // not selected -> primary
-
-    if (_addActiv ) {
-      if (!selected) {
-        _symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
-        imageData.primarySelected = false;
-        imageData.secondarySelected = true;
-      } //else {
-      //   // restore
-      //   imageData.primarySelected = (imageData == _selectedSymbolData);
-      //   imageData.secondarySelected = !imageData.primarySelected;
-      // }
+    if (_addActiv && !selected) {
+      _symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
+      imageData.primarySelected = false;
+      imageData.secondarySelected = true;
+      _symbol = _getSymbol(_selectedSymbolData);
+      selected = true;
     }
 
-    if (_removeActiv) {
-      if (selected) {
+    if (_removeActiv && selected) {
+      if (_selectedSymbolData == imageData) {
+        var symbolGroup = _getSymbol(_selectedSymbolData)?.symbolGroup;
         _symbolImage.removeFromGroup(_symbol);
-        imageData.primarySelected = false;
-        imageData.secondarySelected = false;
-      }
-      // else {
-      //   imageData.primarySelected = false;
-      //   imageData.secondarySelected = false;
-      // }
+        _selectedSymbolData =
+        symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
+      } else
+        _symbolImage.removeFromGroup(_symbol);
+      _symbol = _getSymbol(_selectedSymbolData);
     }
 
-    if (selected || (_addActiv || _removeActiv))
+    if (selected)
       // reset all sections
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = false;
         image.values.first.secondarySelected = false;
       });
 
-      if (_symbol?.symbolGroup?.symbols != null) {
-        _symbol.symbolGroup.symbols.forEach((symbol) {
-          var image = _symbolMap[symbol];
-          // primary ?
-          if (symbol == _symbol) {
-            image.values.first.primarySelected = selected;
-            _editValueController.text = image.values.first.displayName;
-          } else
-            image.values.first.secondarySelected = selected;
-        });
-      }
+    if (_symbol?.symbolGroup?.symbols != null) {
+      _symbol.symbolGroup.symbols.forEach((symbol) {
+        var image = _symbolMap[symbol];
+        // primary ?
+        if (symbol == _symbol) {
+          image.values.first.primarySelected = selected;
+          _editValueController.text = image.values.first.displayName;
+        } else
+          image.values.first.secondarySelected = selected;
+      });
+    }
   }
 
   _setGroupText(SymbolData imageData, String text, bool single) {
@@ -403,6 +430,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         ),
         GCWIconButton(
           iconData: Icons.alt_route,
+          iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
           onPressed: () {
             setState(() {
               _setGroupText(_selectedSymbolData, _editValueController.text, false);
@@ -410,7 +438,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           },
         ),
         GCWIconButton(
-          iconData: Icons.update,
+          iconData: Icons.arrow_upward,
+          iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
           onPressed: () {
             setState(() {
               _setGroupText(_selectedSymbolData, _editValueController.text, true);
@@ -418,8 +447,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           },
         ),
         GCWIconButton(
-          iconData: Icons.add,
-          iconColor: _addActiv ? null : themeColors().inActive(),
+          iconData: Icons.add_circle,
+          iconColor: _selectedSymbolData == null ? themeColors().inActive() : _addActiv ? Colors.red : null,
           onPressed: () {
             setState(() {
               _addActiv = !_addActiv;
@@ -428,8 +457,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           },
         ),
         GCWIconButton(
-          iconData: Icons.remove,
-          iconColor: _removeActiv ? null : themeColors().inActive(),
+          iconData: Icons.remove_circle,
+          iconColor: _selectedSymbolData == null ? themeColors().inActive() : _removeActiv ? Colors.red : null,
           onPressed: () {
             setState(() {
               _removeActiv = !_removeActiv;
@@ -449,29 +478,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         children: <Widget>[
         //GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
         GCWDefaultOutput(child: _symbolImage.getTextOutput()),
-        GCWButton(
-          text: 'Automatic',//i18n(context, 'substitutionbreaker_exporttosubstition'),
-          onPressed: () async {
-            await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-                return Center(
-                  child: Container(
-                    child: GCWAsyncExecuter(
-                      isolatedFunction: break_cipherAsync,
-                      parameter: _buildSubstitutionBreakerJobData(),
-                      onReady: (data) => _showSubstitutionBreakerOutput(data),
-                      isOverlay: true,
-                    ),
-                    height: 220,
-                    width: 150,
-                ),
-              );
-            },
-            );
-        }
-      )
     ]);
   }
 
@@ -482,7 +488,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
     var quadgrams = await SubstitutionBreakerState.loadQuadgramsAssets(SubstitutionBreakerAlphabet.GERMAN, context, _quadgrams, _isLoading);
     if (_symbolImage.symbolGroups.length > quadgrams.alphabet.length) {
-      showToast('Too many groups');
+      showToast(i18n(context, 'symbol_replacer_automatic_groups'));
       return null;
     }
 
