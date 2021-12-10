@@ -336,7 +336,7 @@ class _KmlWriter {
         } else if ((wpt.markerText != null) && wpt.markerText.isNotEmpty) {
           _writeElement(builder, 'name', _checkName(wpt.markerText));
         }
-        _writeElement(builder, 'altitudeMode', 'absolute');
+        _writeElement(builder, 'altitudeMode', 'relativeToGround');
         _writeElement(builder, 'styleUrl', styleId);
         builder.element('Point', nest: () {
           _writeElement(builder, 'coordinates', [wpt.point.longitude, wpt.point.latitude].join(','));
@@ -355,7 +355,7 @@ class _KmlWriter {
 
         builder.element('LineString', nest: () {
           _writeElement(builder, 'tesselerate', 1);
-          _writeElement(builder, 'altitudeMode', 'absolute');
+          _writeElement(builder, 'altitudeMode', 'relativeToGround');
           _writeElement(
               builder, 'coordinates', shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
         });
