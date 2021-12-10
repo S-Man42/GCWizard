@@ -189,13 +189,12 @@ class _KmlWriter {
           for (i = 0; i < points.length; i++) {
             var styleId = 'waypoint' + i.toString();
             if (styleMap[styleId] == styleId) {
-              builder.element('Style', nest: () {
-                builder.attribute('id', 'waypoint' + i.toString());
-                _writeElement(builder, 'color', _ColorCode(points[i].color));
-                builder.element('IconStyle', nest: () {
-                  builder.element('Icon', nest: () {
-                    _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
-                  });
+              builder.element('StyleMap', nest: () {
+                builder.attribute('id', styleId);
+
+                builder.element('Pair', nest: () {
+                  _writeElement(builder, 'key', 'normal');
+                  _writeElement(builder, 'styleUrl', '#' + styleId);
                 });
               });
             }
@@ -203,12 +202,13 @@ class _KmlWriter {
           for (i = 0; i < points.length; i++) {
             var styleId = 'waypoint' + i.toString();
             if (styleMap[styleId] == styleId) {
-              builder.element('StyleMap', nest: () {
-                builder.attribute('id', styleId);
-
-                builder.element('Pair', nest: () {
-                  _writeElement(builder, 'key', 'normal');
-                  _writeElement(builder, 'styleUrl', '#' + styleId);
+              builder.element('Style', nest: () {
+                builder.attribute('id', 'waypoint' + i.toString());
+                _writeElement(builder, 'color', _ColorCode(points[i].color));
+                builder.element('IconStyle', nest: () {
+                  builder.element('Icon', nest: () {
+                    _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
+                  });
                 });
               });
             }
@@ -229,19 +229,6 @@ class _KmlWriter {
           for (i = 0; i < circles.length; i++) {
             var styleId = 'circle' + i.toString();
             if (styleMap[styleId] == styleId) {
-              builder.element('Style', nest: () {
-                builder.attribute('id', styleId);
-                builder.element('LineStyle', nest: () {
-                  _writeElement(builder, 'color', _ColorCode(circles[i].color));
-                  _writeElement(builder, 'width', 3);
-                });
-                _writeElement(builder, 'color', _ColorCode(circles[i].color));
-              });
-            }
-          }
-          for (i = 0; i < circles.length; i++) {
-            var styleId = 'circle' + i.toString();
-            if (styleMap[styleId] == styleId) {
               builder.element('StyleMap', nest: () {
                 builder.attribute('id', styleId);
 
@@ -249,6 +236,19 @@ class _KmlWriter {
                   _writeElement(builder, 'key', 'normal');
                   _writeElement(builder, 'styleUrl', '#' + styleId);
                 });
+              });
+            }
+          }
+          for (i = 0; i < circles.length; i++) {
+            var styleId = 'circle' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('Style', nest: () {
+                builder.attribute('id', styleId);
+                builder.element('LineStyle', nest: () {
+                  _writeElement(builder, 'color', _ColorCode(circles[i].color));
+                  _writeElement(builder, 'width', 3);
+                });
+                _writeElement(builder, 'color', _ColorCode(circles[i].color));
               });
             }
           }
@@ -266,19 +266,6 @@ class _KmlWriter {
           for (i = 0; i < polylines.length; i++) {
             var styleId = 'polyline' + i.toString();
             if (styleMap[styleId] == styleId) {
-              builder.element('Style', nest: () {
-                builder.attribute('id', styleId);
-                builder.element('LineStyle', nest: () {
-                  _writeElement(builder, 'color', _ColorCode(polylines[i].color));
-                  _writeElement(builder, 'width', 3);
-                });
-                _writeElement(builder, 'color', _ColorCode(polylines[i].color));
-              });
-            }
-          }
-          for (i = 0; i < polylines.length; i++) {
-            var styleId = 'polyline' + i.toString();
-            if (styleMap[styleId] == styleId) {
               builder.element('StyleMap', nest: () {
                 builder.attribute('id', styleId);
 
@@ -289,6 +276,20 @@ class _KmlWriter {
               });
             }
           }
+          for (i = 0; i < polylines.length; i++) {
+            var styleId = 'polyline' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('Style', nest: () {
+                builder.attribute('id', styleId);
+                builder.element('LineStyle', nest: () {
+                  _writeElement(builder, 'color', _ColorCode(polylines[i].color));
+                  _writeElement(builder, 'width', 3);
+                });
+                _writeElement(builder, 'color', _ColorCode(polylines[i].color));
+              });
+            }
+          }
+
         }
 
         builder.element('Folder', nest: () {
@@ -319,9 +320,7 @@ class _KmlWriter {
     return builder.buildDocument();
   }
 
-  String _checkName(String label, String alternateName) {
-    if ((label == null) || label.isEmpty)
-      label = alternateName;
+  String _checkName(String label) {
     var count = elementNames.where((element) => label == element).length;
      elementNames.add(label);
     if (count > 0 && (label != null)) return label + ' ($count)';
@@ -333,9 +332,9 @@ class _KmlWriter {
     if (wpt != null) {
       builder.element('Placemark', nest: () {
         if (!waypoint) {
-          _writeElement(builder, 'name', _checkName(cacheName, "GC Wizard"));
-        } else  {
-          _writeElement(builder, 'name', _checkName(wpt.markerText, "waypoint"));
+          _writeElement(builder, 'name', _checkName(cacheName));
+        } else if ((wpt.markerText != null) && wpt.markerText.isNotEmpty) {
+          _writeElement(builder, 'name', _checkName(wpt.markerText));
         }
         _writeElement(builder, 'altitudeMode', 'absolute');
         _writeElement(builder, 'styleUrl', styleId);
@@ -349,7 +348,8 @@ class _KmlWriter {
   void _writeLines(XmlBuilder builder, String name, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
-        _writeElement(builder, 'name', _checkName(name, "line"));
+        if ((name != null) && name.isNotEmpty)
+          _writeElement(builder, 'name', _checkName(name));
         _writeElement(builder, 'visibility', 1);
         _writeElement(builder, 'styleUrl', styleId);
 
