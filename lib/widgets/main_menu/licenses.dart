@@ -86,6 +86,7 @@ class LicensesState extends State<Licenses> {
           ['www.steinerverlag.de', 'Eurythmy'],
           ['www.breitkopf.de', 'Solmisation'],
           ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
+          ['Japiejo from https://www.geocachingtoolbox.com/', 'Murray']
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_telegraphs')),
