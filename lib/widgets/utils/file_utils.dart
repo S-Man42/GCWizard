@@ -19,10 +19,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
-enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC }
+enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
+  // https://en.wikipedia.org/wiki/List_of_file_signatures
   FileType.JPEG: {
     'extensions': ['jpg', 'jpeg'],
     'magic_bytes': <List<int>>[
@@ -129,10 +130,10 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'mime_types': ['audio/mpeg', 'audio/mp3', 'audio/mpeg3', 'audio/x-mpeg-3'],
     'file_class': FileClass.SOUND
   },
-  FileType.OGG: {
+  FileType.OGG: { //
     'extensions': ['ogg'],
     'magic_bytes': <List<int>>[
-      [0x30, 0x26, 0xB2, 0x75]
+      [0x4F, 0x67, 0x67, 0x53]
     ],
     'mime_types': ['audio/ogg',],
     'file_class': FileClass.SOUND
@@ -140,16 +141,14 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.SND: {
     'extensions': ['snd'],
     'magic_bytes': <List<int>>[
-      [0x30, 0x26, 0xB2, 0x75]
-    ],
+      [0x46, 0x4F, 0x52, 0x4D],
+      [0x38, 0x53, 0x56, 0x58]],
     'mime_types': ['audio/snd'],
     'file_class': FileClass.SOUND
   },
   FileType.FDL: {
     'extensions': ['fdl'],
-    'magic_bytes': <List<int>>[
-      [0x30, 0x26, 0xB2, 0x75]
-    ],
+    'magic_bytes': <List<int>>[[]],
     'mime_types': ['audio/fdl', 'audio/fdl'],
     'file_class': FileClass.SOUND
   },
@@ -196,6 +195,12 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'file_class': FileClass.DATA,
     'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml'],
     'mime_type': 'application/vnd.google-earth.kmz'
+  },
+  FileType.LUAC: {
+    'extensions': ['luac'],
+    'magic_bytes': <List<int>>[[0x1B, 0x4C, 0x75, 0x61]],
+    'mime_types': ['binary/luac'],
+    'file_class': FileClass.BINARY
   },
 };
 

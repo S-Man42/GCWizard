@@ -102,12 +102,12 @@ Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.LUA: 'wherigo_data_lua',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIA: 'wherigo_data_media',
-  WHERIGO.CHARACTER: 'wherigo_data_character',
-  WHERIGO.ITEMS: 'wherigo_data_items',
-  WHERIGO.ZONES: 'wherigo_data_zones',
-  WHERIGO.INPUTS: 'wherigo_data_inputs',
-  WHERIGO.TASKS: 'wherigo_data_tasks',
-  WHERIGO.TIMERS: 'wherigo_data_timers',
+  //WHERIGO.CHARACTER: 'wherigo_data_character',
+  //WHERIGO.ITEMS: 'wherigo_data_items',
+  //WHERIGO.ZONES: 'wherigo_data_zones',
+  //WHERIGO.INPUTS: 'wherigo_data_inputs',
+  //WHERIGO.TASKS: 'wherigo_data_tasks',
+  //WHERIGO.TIMERS: 'wherigo_data_timers',
 };
 
 StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
@@ -319,9 +319,32 @@ const LENGTH_DOUBLE = 8;
 
 String plainLUA = '';
 
+bool isInvalidCartridge(Uint8List byteList){
+  // @0000:                      ; Signature
+  //        BYTE     0x02        ; Version Major 2
+  //        BYTE     0x0a        ;         Minor 10 11
+  //        BYTE     "CART"
+  //        BYTE     0x00
+  String Signature = '';
+  Signature = Signature + byteList[0].toString();           // 2
+  Signature = Signature + byteList[1].toString();           // 10 or 11
+  Signature = Signature + String.fromCharCode(byteList[2]); // C
+  Signature = Signature + String.fromCharCode(byteList[3]); // A
+  Signature = Signature + String.fromCharCode(byteList[4]); // R
+  Signature = Signature + String.fromCharCode(byteList[5]); // T
+  if (Signature == '210CART' || Signature == '211CART'){
+    return false;
+  } else {
+    return true;
+  }
+}
+
 WherigoCartridge getCartridge(Uint8List byteList) {
   if (byteList == [] || byteList == null)
     return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], [], []);
+
+  if (isInvalidCartridge(byteList))
+    return WherigoCartridge('ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
@@ -457,7 +480,6 @@ WherigoCartridge getCartridge(Uint8List byteList) {
 
   // decompile LUA
   _decompileLUA(MediaFilesContents[0].MediaFileBytes);
-  print('after decompile '+plainLUA);
 
   // analyze cartridge with String LUA
   Characters = _getCharactersFromCartridge(plainLUA);
@@ -509,125 +531,10 @@ List<TimerData>_getTimersFromCartridge(String LUA){
 
 _decompileLUA(Uint8List LUA) async {
   // online solution via REST-API
-  plainLUA = '';
   print('inside decompile');
-  print(LUA);
   var result = await http.post(Uri.parse('https://lua-decompiler.ferib.dev/api/decompile/'), body: LUA);
   plainLUA = result.body;
   print(plainLUA);
   // {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
 }
-
-
-// https://lua-decompiler.ferib.dev/
-// POST	/api/decompile/	Decompiles the embedded Lua binary file.
-//
-// https://flutterawesome.com/how-to-integrate-rest-api-in-flutter/
-// https://www.developerlibs.com/2019/01/flutter-get-and-post-http-requests.html
-
-// https://androidkt.com/http-post-request-in-flutter/
-
-
-/*
-
-
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-class Post {
-  final String userId;
-  final int id;
-  final String title;
-  final String body;
-
-  Post({this.userId, this.id, this.title, this.body});
-
-  factory Post.fromJson(Map json) {
-    return Post(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-    );
-  }
-
-  Map toMap() {
-    var map = new Map();
-    map["userId"] = userId;
-    map["title"] = title;
-    map["body"] = body;
-
-    return map;
-  }
-}
-
-Future createPost(String url, {Map body}) async {
-  return http.post(url, body: body).then((http.Response response) {
-    final int statusCode = response.statusCode;
-
-    if (statusCode < 200 || statusCode > 400 || json == null) {
-      throw new Exception("Error while fetching data");
-    }
-    return Post.fromJson(json.decode(response.body));
-  });
-}
-
-class MyApp extends StatelessWidget {
-  final Future post;
-
-  MyApp({Key key, this.post}) : super(key: key);
-  static final CREATE_POST_URL = 'https://jsonplaceholder.typicode.com/posts';
-  TextEditingController titleControler = new TextEditingController();
-  TextEditingController bodyControler = new TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      title: "WEB SERVICE",
-      theme: ThemeData(
-        primaryColor: Colors.deepOrange,
-      ),
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('Create Post'),
-          ),
-          body: new Container(
-            margin: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: new Column(
-              children: [
-                new TextField(
-                  controller: titleControler,
-                  decoration: InputDecoration(
-                      hintText: "title....", labelText: 'Post Title'),
-                ),
-                new TextField(
-                  controller: bodyControler,
-                  decoration: InputDecoration(
-                      hintText: "body....", labelText: 'Post Body'),
-                ),
-                new RaisedButton(
-                  onPressed: () async {
-                    Post newPost = new Post(
-                        userId: "123", id: 0, title: titleControler.text, body: bodyControler.text);
-                    Post p = await createPost(CREATE_POST_URL,
-                        body: newPost.toMap());
-                    print(p.title);
-                  },
-                  child: const Text("Create"),
-                )
-              ],
-            ),
-          )),
-    );
-  }
-}
-
-Privacy Policy
-Copyright © 2021 knowledge Transfer All Rights Reserved.
-Powered by WordPress. Designed by Yossy's web service.
-
-}*/
 

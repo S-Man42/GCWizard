@@ -5,19 +5,22 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/wherigo_analyze.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
-import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:intl/intl.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -65,6 +68,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_file != null) {
               _setData(_file.bytes);
+              _cartridge = getCartridge(_bytes);
 
               setState(() {});
             }
@@ -84,23 +88,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             );
           }).toList(),
         ),
-        GCWDefaultOutput(
-            child: _buildOutput(),
-            trailing: GCWIconButton(
-              iconData: Icons.text_snippet_outlined,
-              size: IconButtonSize.SMALL,
-              onPressed: () {
-                openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
-              },
-            ))
+        _buildOutput()
       ],
     );
   }
 
   _buildOutput() {
-    if (_bytes == null) return null;
-
-    _cartridge = getCartridge(_bytes);
+    if (_bytes == null) return Container();
 
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
@@ -171,15 +165,68 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               },
             ),
             _currentByteCodeMode == GCWSwitchPosition.right
-            ? GCWText(
-                text: _cartridge
-                  .MediaFilesContents[_mediaFile].MediaFileBytes.join(' '),
-                style: gcwMonotypeTextStyle(),
-              )
-            : GCWText(
-                text: insertSpaceEveryNthCharacter(file2hexstring(_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes), 2),
-                style: gcwMonotypeTextStyle(),
-              )
+            ? GCWDefaultOutput( // decimal
+                child: GCWText(
+                  text: _cartridge
+                      .MediaFilesContents[0].MediaFileBytes.join(' '),
+                  style: gcwMonotypeTextStyle(),
+                ),
+                trailing: Row(
+                  children: <Widget>[
+                    GCWIconButton(
+                      iconColor: themeColors().mainFont(),
+                      size: IconButtonSize.SMALL,
+                      iconData: Icons.content_copy,
+                      onPressed: () {
+                        var copyText = _cartridge
+                            .MediaFilesContents[0].MediaFileBytes != null ? _cartridge.MediaFilesContents[0].MediaFileBytes.join(' ') : '';
+                        insertIntoGCWClipboard(context, copyText);
+                      },
+                    ),
+                    GCWIconButton(
+                      iconData: Icons.save,
+                      size: IconButtonSize.SMALL,
+                      iconColor: _cartridge
+                          .MediaFilesContents[0].MediaFileBytes == null ? themeColors().inActive() : null,
+                      onPressed: () {
+                        _cartridge
+                            .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _cartridge
+                            .MediaFilesContents[0].MediaFileBytes);
+                      },
+                    )                  ]
+                )
+            )
+            : GCWDefaultOutput( // hexadecimal
+                child: GCWText(
+                  text: insertSpaceEveryNthCharacter(file2hexstring(_cartridge.MediaFilesContents[0].MediaFileBytes), 2),
+                  style: gcwMonotypeTextStyle(),
+                ),
+                trailing: Row(
+                  children: <Widget>[
+                    GCWIconButton(
+                      iconColor: themeColors().mainFont(),
+                      size: IconButtonSize.SMALL,
+                      iconData: Icons.content_copy,
+                      onPressed: () {
+                        var copyText = _cartridge
+                            .MediaFilesContents[0].MediaFileBytes != null ? insertSpaceEveryNthCharacter(file2hexstring(_cartridge.MediaFilesContents[0].MediaFileBytes), 2) : '';
+                        insertIntoGCWClipboard(context, copyText);
+                      },
+                    ),
+                    GCWIconButton(
+                      iconData: Icons.save,
+                      size: IconButtonSize.SMALL,
+                      iconColor: _cartridge
+                          .MediaFilesContents[0].MediaFileBytes == null ? themeColors().inActive() : null,
+                      onPressed: () {
+                        _cartridge
+                            .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _cartridge
+                            .MediaFilesContents[0].MediaFileBytes);
+                      },
+                    ),
+                  ],
+                )
+                )
           ],
         );
         break;
@@ -234,5 +281,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return (DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)))
         .toString();
   }
+
+  _exportFile(BuildContext context, Uint8List data) async {
+    var fileType = getFileType(data);
+    var value = await saveByteDataToFile(
+        context, data, "luabytecode_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+
+    if (value != null) showExportedFileDialog(context, fileType: fileType);
+  }
+
 
 }
