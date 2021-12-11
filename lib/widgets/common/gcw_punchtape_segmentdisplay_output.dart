@@ -80,30 +80,6 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
               ),
               padding: EdgeInsets.only(right: 10.0),
             ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
           ],
         ),
       ),
