@@ -199,12 +199,16 @@ class FormulaParser {
     if (expandValues && interpolatedValues.length > 0) {
       var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
-        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': formula};
+        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
       } else if (count > _MAX_EXPANDED) {
-        return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': formula};
+        return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': substitutedFormula};
       }
 
-      expandedFormulas = VariableStringExpander(substitutedFormula, interpolatedValues).run();
+      try {
+        expandedFormulas = VariableStringExpander(substitutedFormula, interpolatedValues).run();
+      } catch (e) {
+        return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
+      }
 
       var results = <Map<String, dynamic>>[];
       var hasError = false;
@@ -266,6 +270,10 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula) {
+    // Remove Brackets; the formula evaluation only needs the internal content
+    var hasBrackets = formula.startsWith('[') && formula.endsWith(']');
+    formula = hasBrackets ? formula.substring(1, formula.length - 1) : formula;
+
     formula = _evaluateTextFunctions(formula);
 
     Expression expression = parser.parse(formula.toLowerCase());
@@ -313,11 +321,9 @@ class FormulaParser {
     RegExp regExp = RegExp(r'\[.+?\]');
     var matches = regExp.allMatches(formula);
 
-    var hasBrackets = true;
     // if formula has no [ ], then match the whole string
     if (matches.length == 0) {
-      matches = RegExp(r'^.*$').allMatches(formula);
-      hasBrackets = false;
+      matches = RegExp(r'^.*$', multiLine: true).allMatches(formula);
     }
 
     Map<String, Map<String, FormulaSolverResult>> matchedVariables = {};
@@ -326,11 +332,9 @@ class FormulaParser {
     try {
       matches.forEach((match) {
         var matchString = match.group(0);
-        // groups with surrounding brackets need to remove them before parsing
-        var content = hasBrackets ? matchString.substring(1, matchString.length - 1) : matchString;
 
         ////////// MAGIC
-        var result = _parseFormula(content, values, expandValues);
+        var result = _parseFormula(matchString, values, expandValues);
         //////////
 
         var state = result['state'];
@@ -362,7 +366,7 @@ class FormulaParser {
           case FormulaState.STATE_SINGLE_ERROR:
           case FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE:
             // restore brackets if formerly removed
-            var out = FormulaSolverResult(state, hasBrackets ? '[${result['result']}]' : result['result']);
+            var out = FormulaSolverResult(state, result['result']);
             if (matchedVariables.containsKey(null)) {
               matchedVariables[null].putIfAbsent(matchString, () => out);
             } else {
@@ -381,7 +385,7 @@ class FormulaParser {
                 formatted = _formatOutput(result['result']);
               } else {
                 // restore brackets if formerly removed
-                formatted = hasBrackets ? '[${result['result']}]' : result['result'];
+                formatted = result['result'];
               }
 
               var out = FormulaSolverResult(result['state'], formatted, variables: result['variables']);
@@ -411,9 +415,7 @@ class FormulaParser {
             break;
         }
       });
-    } catch (e, s) {
-      print(s);
-    }
+    } catch (e, s) {}
 
     // Here the magic happens, which was decribed above
     // Variable sets with independent matchStrings will be substituted dependently here

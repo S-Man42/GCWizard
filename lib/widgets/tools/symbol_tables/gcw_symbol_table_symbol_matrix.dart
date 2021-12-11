@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,6 +20,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final Function onChanged;
   final Function onSymbolTapped;
   final bool overlayOn;
+  final bool fixed;
 
   const GCWSymbolTableSymbolMatrix(
       {Key key,
@@ -27,6 +30,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       this.onChanged,
       this.selectable: false,
       this.onSymbolTapped,
+      this.fixed: false,
       this.overlayOn: true})
       : super(key: key);
 
@@ -52,8 +56,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
       Row(
         children: <Widget>[
           Expanded(
-              child:
-              GCWOnOffSwitch(
+              child: GCWOnOffSwitch(
                 value: _currentShowOverlayedSymbols,
                 title: i18n(context, 'symboltables_showoverlay'),
                 onChanged: (value) {
@@ -67,9 +70,11 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
         ],
       ),
-      Expanded(child: SingleChildScrollView(
-        child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
-      ))
+      widget.fixed
+          ? _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)
+          : Expanded(
+              child: SingleChildScrollView(
+                  child: _buildDecryptionButtonMatrix(widget.countColumns, widget.selectable, widget.onSymbolTapped)))
     ]);
   }
 

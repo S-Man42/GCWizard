@@ -208,6 +208,7 @@
   "images": "",
   "imagesandfilesselection": "",
   "stegano": "lsb leastsignificantbit least-significant-bit",
+  "ipcodes": "ipcodes internationalprotection iso20653 din60529 dinen60529",
   "irrationalnumbers": "",
   "iteratedcrosssumrange": "",
   "iteratedcrossumrangefrequency": "",
@@ -560,6 +561,10 @@
   "vigenerebreaker": "",
   "wasd": "wasd ijkm esdf qwes udlr",
   "wherigo": "wherigo wig cartridge",
+  "weather_cl": "cl",
+  "weather_cm": "cm",
+  "weather_cn": "cn",
+  "weather_ww": "ww",
   "visualcryptography": "pixels",
   "window": "johannes balthasar friderici cryptographia",
   "z22": "konrad zuse z-22 z22"

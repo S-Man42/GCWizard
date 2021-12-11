@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/language_games/duck_speak.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -12,6 +13,7 @@ class DuckSpeak extends StatefulWidget {
 class DuckSpeakState extends State<DuckSpeak> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.right;
+  var _currentDuckSpeakMode = GCWSwitchPosition.left;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,17 @@ class DuckSpeakState extends State<DuckSpeak> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          value: _currentDuckSpeakMode,
+          title: i18n(context, 'duckspeak_version'),
+          leftValue: i18n(context, 'duckspeak_version_normal'),
+          rightValue: i18n(context, 'duckspeak_version_onlydigits'),
+          onChanged: (value) {
+            setState(() {
+              _currentDuckSpeakMode = value;
+            });
+          },
+        ),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
@@ -38,8 +51,20 @@ class DuckSpeakState extends State<DuckSpeak> {
   _buildOutput() {
     if (_currentInput == null) return '';
 
-    var out = _currentMode == GCWSwitchPosition.left ? encodeDuckSpeak(_currentInput) : decodeDuckSpeak(_currentInput);
-
-    return out;
+    if (_currentDuckSpeakMode == GCWSwitchPosition.left) {
+      return _currentMode == GCWSwitchPosition.left ? encodeDuckSpeak(_currentInput) : decodeDuckSpeak(_currentInput);
+    } else {
+      if (_currentMode == GCWSwitchPosition.left) {
+        var numbers = _currentInput
+            .replaceAll(RegExp(r'[^0-9]'), '')
+            .split('')
+            .map((number) => int.tryParse(number))
+            .where((number) => number != null)
+            .toList();
+        return encodeDuckSpeakNumbers(numbers);
+      } else {
+        return decodeDuckSpeakNumbers(_currentInput).join();
+      }
+    }
   }
 }

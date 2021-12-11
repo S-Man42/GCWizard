@@ -12,16 +12,16 @@ import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt_segment_display.dart';
 
-class CCITTTelegraph extends StatefulWidget {
+class CCITTPunchTape extends StatefulWidget {
   @override
-  CCITTTelegraphState createState() => CCITTTelegraphState();
+  CCITTPunchTapeState createState() => CCITTPunchTapeState();
 }
 
-class CCITTTelegraphState extends State<CCITTTelegraph> {
+class CCITTPunchTapeState extends State<CCITTPunchTape> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
-  var _DecodeInputController;
+  var _decodeInputController;
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -34,12 +34,13 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
-    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
+    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
     _encodeController.dispose();
+    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -96,7 +97,7 @@ class CCITTTelegraphState extends State<CCITTTelegraph> {
               _buildVisualDecryption()
             else // decode text
               GCWTextField(
-                controller: _DecodeInputController,
+                controller: _decodeInputController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),
                 ],

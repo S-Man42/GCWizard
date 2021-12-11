@@ -3,6 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
@@ -30,17 +32,17 @@ class MultiDecoderToolCcitt2 extends GCWMultiDecoderTool {
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_CCITT2_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_CCITT2_OPTION_MODE] == MDT_CCITT2_OPTION_MODE_BINARY
-                    ? GCWSwitchPosition.right
-                    : GCWSwitchPosition.left,
-                notitle: true,
-                leftValue: i18n(context, 'common_numeralbase_denary'),
-                rightValue: i18n(context, 'common_numeralbase_binary'),
-                onChanged: (value) {
-                  options[MDT_CCITT2_OPTION_MODE] =
-                      value == GCWSwitchPosition.left ? MDT_CCITT2_OPTION_MODE_DENARY : MDT_CCITT2_OPTION_MODE_BINARY;
+              MDT_CCITT2_OPTION_MODE: GCWStatefulDropDownButton(
+                value: options[MDT_CCITT2_OPTION_MODE],
+                onChanged: (newValue) {
+                  options[MDT_CCITT2_OPTION_MODE] = newValue;
                 },
+                items: [MDT_CCITT2_OPTION_MODE_DENARY, MDT_CCITT2_OPTION_MODE_BINARY].map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode,
+                    child: i18n(context, mode),
+                  );
+                }).toList(),
               )
             }));
 }
