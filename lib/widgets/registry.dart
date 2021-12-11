@@ -3211,6 +3211,18 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
       'symbol_tamil_numerals',
     ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_pasley', symbolSearchStrings: [
+      'telegraph',
+      'symbol_pasley_telegraph',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_popham_1', symbolSearchStrings: [
+      'telegraph',
+      'symbol_popham_telegraph',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_popham_2', symbolSearchStrings: [
+      'telegraph',
+      'symbol_popham_telegraph',
+    ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',
     ]),
