@@ -113,7 +113,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                     : null),
             onChanged: widget.onChanged,
             controller: widget.controller ?? _controller,
-            autovalidate: true,
+            autovalidateMode: AutovalidateMode.always,
             validator: widget.validate,
             inputFormatters: widget.inputFormatters,
             keyboardType: widget.keyboardType,
