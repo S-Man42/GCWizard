@@ -14,6 +14,9 @@ void main() {
       {'coord' : LatLng(73.72400894425445, 78.32961501166722), 'expectedOutput': LatLng(67.48990578579877, 41.6956772704653), 'bearing': 46.33023075527244, 'distance': 1492701.569869107},
       {'coord' : LatLng(19.793545607027113, -52.008335207337154), 'expectedOutput': LatLng(16.86823975391602, -21.715970998711896), 'bearing': 280.50657372921285, 'distance': 3214178.0255869143},
       {'coord' : LatLng(-78.35656674071589, -70.35858934072675), 'expectedOutput': LatLng(6.13284033603278, -123.91294932358062), 'bearing': 170.61935386006067, 'distance': 9902447.165614301},
+      {'coord' : LatLng(-78.35656674071589, -70.35858934072675), 'expectedOutput': LatLng(6.13284033603278, -123.91294932358062), 'bearing': 170.61935386006067, 'distance': 9902447.165614301},
+
+      {'coord' : LatLng(50.9824, 011.0930833333), 'expectedOutput': LatLng(6.13284033603278, -123.91294932358062), 'bearing': 45.631928848, 'distance': 6885736.0},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -21,9 +24,12 @@ void main() {
         var actual = reverseProjection(elem['coord'], elem['bearing'], elem['distance'], getEllipsoidByName(ELLIPSOID_NAME_WGS84));
         var equals = false;
         for (LatLng l in actual) {
+          print(l);
+
           if (equalsLatLng(l, elem['expectedOutput']))
             equals = true;
         }
+        print(actual);
 
         expect(equals, true);
       });
