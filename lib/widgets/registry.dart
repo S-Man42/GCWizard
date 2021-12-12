@@ -3209,7 +3209,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
       'telegraph',
-      'symbol_telegraph_prussia',
+      'telegraph_prussia',
     ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',
@@ -3369,6 +3369,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
       'telegraph',
       'telegraph_ccitt',
+      'ccitt',
+      'ccitt1',
+      'ccitt2',
     ]),
 
     // TomTomSelection *********************************************************************************************
