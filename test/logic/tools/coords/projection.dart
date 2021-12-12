@@ -16,7 +16,7 @@ void main() {
       {'coord' : LatLng(-78.35656674071589, -70.35858934072675), 'expectedOutput': LatLng(6.13284033603278, -123.91294932358062), 'bearing': 170.61935386006067, 'distance': 9902447.165614301},
       {'coord' : LatLng(-78.35656674071589, -70.35858934072675), 'expectedOutput': LatLng(6.13284033603278, -123.91294932358062), 'bearing': 170.61935386006067, 'distance': 9902447.165614301},
 
-      {'coord' : LatLng(50.9824, 011.0930833333), 'expectedOutput': LatLng(6.13284033603278, -123.91294932358062), 'bearing': 45.631928848, 'distance': 6885736.0},
+      {'coord' : LatLng(50.9824, 011.0930833333), 'expectedOutput': LatLng(37.459265, -78.848104), 'bearing': 45.631928848, 'distance': 6885736.0},
     ];
 
     _inputsToExpected.forEach((elem) {

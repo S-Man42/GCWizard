@@ -16,10 +16,14 @@ void main() {
         ]},
       {'coord1': LatLng(49.6647, 10.7999), 'angle12': 28.5, 'coord2': LatLng(49.6713, 10.8051), 'angle23': 22.5, 'coord3': LatLng(49.6739, 10.8132),
         'expectedOutput': [
-          LatLng(49.66043527105709, 10.821665008672595),
-          LatLng(49.67886463173016, 10.79250548737008),
-          LatLng(-49.67130000000082, -168.8255611035552),
-          LatLng(-49.67130000000082, -169.55985516849327),
+          LatLng(49.660435, 10.821665),
+          LatLng(49.678865, 10.792505),
+          LatLng(-49.445364, -169.194801),
+          LatLng(-49.657084, -168.78753),
+          LatLng(-49.678912, -168.817342),
+          LatLng(-49.889824, -169.195246),
+          LatLng(-49.660435, -169.568451),
+          LatLng(-49.680072, -169.599516)
         ]
       },
       {'coord1': LatLng(53.963431, 16.264892), 'angle12': 141.0, 'coord2': LatLng(49.838948, 16.539551), 'angle23': 126.4, 'coord3': LatLng(52.242173, 19.989258),
@@ -45,6 +49,8 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('coord1: ${elem['coord1']}, angle12: ${elem['angle12']}, coord2: ${elem['coord2']}, angle23: ${elem['angle23']}, coord3: ${elem['coord3']}', () {
         var actual = resection(elem['coord1'], elem['angle12'], elem['coord2'], elem['angle23'], elem['coord3'], getEllipsoidByName(ELLIPSOID_NAME_WGS84));
+        print(actual);
+
         List<LatLng> expected = elem['expectedOutput'];
         expect(actual.length, expected.length);
         for (int i = 0; i < actual.length; i++) {
