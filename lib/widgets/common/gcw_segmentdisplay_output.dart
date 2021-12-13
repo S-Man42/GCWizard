@@ -20,9 +20,10 @@ class GCWSegmentDisplayOutput extends StatefulWidget {
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
+  final bool showZoomButtons;
 
   const GCWSegmentDisplayOutput(
-      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
+      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.showZoomButtons: true})
       : super(key: key);
 
   @override
@@ -80,7 +81,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
               ),
               padding: EdgeInsets.only(right: 10.0),
             ),
-            GCWIconButton(
+            if (widget.showZoomButtons)
+              GCWIconButton(
               size: IconButtonSize.SMALL,
               iconData: Icons.zoom_in,
               onPressed: () {
@@ -92,7 +94,8 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
                 });
               },
             ),
-            GCWIconButton(
+            if (widget.showZoomButtons)
+              GCWIconButton(
               size: IconButtonSize.SMALL,
               iconData: Icons.zoom_out,
               onPressed: () {
