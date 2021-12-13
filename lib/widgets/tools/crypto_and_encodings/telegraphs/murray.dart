@@ -23,7 +23,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
-  var _currentLanguage = MurrayCodebook.GEOCACHING;
+  var _currentLanguage = MurrayCodebook.ROYALNAVY;
 
   @override
   void initState() {

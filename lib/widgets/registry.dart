@@ -3123,10 +3123,6 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
       'symbol_prussian_colors_infantery',
     ]),
-    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
-      'telegraph',
-      'symbol_prussian_optical_telegraph',
-    ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
     ]),
@@ -3210,6 +3206,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
       'symbol_tamil_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
+      'telegraph',
+      'telegraph_prussia',
     ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',
@@ -3362,13 +3362,16 @@ initializeRegistry(BuildContext context) {
       'telegraph',
       'telegraph_schillingcanstatt',
     ]),
-    GCWTool(tool: WheatstoneCooke5NeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke5needle', searchKeys: [
+    GCWTool(tool: WheatstoneCookeNeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke_needle', searchKeys: [
       'telegraph',
-      'telegraph_wheatstonecooke5needle',
+      'telegraph_wheatstonecooke_needle',
     ]),
     GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
       'telegraph',
       'telegraph_ccitt',
+      'ccitt',
+      'ccitt1',
+      'ccitt2',
     ]),
 
     // TomTomSelection *********************************************************************************************

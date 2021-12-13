@@ -142,7 +142,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
       children: <Widget>[
         Container(
           width: 300,
-          height: 60,
+          height: 70,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
@@ -187,7 +187,6 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWPunchtapeSegmentDisplayOutput(
-        //tapeStyle: true,
         segmentFunction: (displayedSegments, readOnly) {
           return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
