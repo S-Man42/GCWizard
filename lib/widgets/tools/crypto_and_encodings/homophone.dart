@@ -80,7 +80,7 @@ class HomophoneState extends State<Homophone> {
 
   _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
     if (currentFromInput.length > 0)
-      _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () =>  currentToInput);
+      _currentSubstitutions.putIfAbsent(currentFromInput.toUpperCase(), () => currentToInput);
 
     _newKeyController.text = _maxLetter();
 
@@ -96,7 +96,6 @@ class HomophoneState extends State<Homophone> {
     _currentSubstitutions.remove(id);
     setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -187,9 +186,7 @@ class HomophoneState extends State<Homophone> {
                 },
               )
             : Container(),
-        _currentKeyType == _KeyType.CUSTOM_KEY_MAP
-            ? _buildVariablesEditor()
-            : Container(),
+        _currentKeyType == _KeyType.CUSTOM_KEY_MAP ? _buildVariablesEditor() : Container(),
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'common_alphabet') + ':'), flex: 1),
           Expanded(
@@ -232,25 +229,31 @@ class HomophoneState extends State<Homophone> {
     if (_currentMode == GCWSwitchPosition.left) {
       switch (_currentKeyType) {
         case _KeyType.GENERATED:
-          _currentOutput = encryptHomophoneWithGeneratedKey(_currentInput, _currentAlphabet, _currentRotation, _currentMultiplier);
+          _currentOutput =
+              encryptHomophoneWithGeneratedKey(_currentInput, _currentAlphabet, _currentRotation, _currentMultiplier);
           break;
         case _KeyType.CUSTOM_KEY_LIST:
-          _currentOutput = encryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
+          _currentOutput =
+              encryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
           break;
         case _KeyType.CUSTOM_KEY_MAP:
-          _currentOutput = encryptHomophoneWithKeyMap(_currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
+          _currentOutput = encryptHomophoneWithKeyMap(
+              _currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
           break;
       }
     } else {
       switch (_currentKeyType) {
         case _KeyType.GENERATED:
-          _currentOutput = decryptHomophoneWithGeneratedKey(_currentInput, _currentAlphabet, _currentRotation, _currentMultiplier);
+          _currentOutput =
+              decryptHomophoneWithGeneratedKey(_currentInput, _currentAlphabet, _currentRotation, _currentMultiplier);
           break;
         case _KeyType.CUSTOM_KEY_LIST:
-          _currentOutput = decryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
+          _currentOutput =
+              decryptHomophoneWithKeyList(_currentInput, _currentAlphabet, textToIntList(_currentCustomKeyList));
           break;
         case _KeyType.CUSTOM_KEY_MAP:
-          _currentOutput = decryptHomophoneWithKeyMap(_currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
+          _currentOutput = decryptHomophoneWithKeyMap(
+              _currentInput, _currentSubstitutions.map((key, value) => MapEntry(key, textToIntList(value))));
           break;
       }
     }
@@ -280,10 +283,8 @@ class HomophoneState extends State<Homophone> {
   }
 
   _generateItemDescription(Alphabet alphabet) {
-    if (alphabet == alphabetGreek1)
-        return i18n(context, 'alphabet_name_greek1_description');
-    if (alphabet == alphabetGreek2)
-        return i18n(context, 'alphabet_name_greek2_description');
+    if (alphabet == alphabetGreek1) return i18n(context, 'alphabet_name_greek1_description');
+    if (alphabet == alphabetGreek2) return i18n(context, 'alphabet_name_greek2_description');
 
     return null;
   }
@@ -293,7 +294,7 @@ class HomophoneState extends State<Homophone> {
         keyController: _newKeyController,
         keyInputFormatters: [_keyMaskInputFormatter],
         valueHintText: i18n(context, 'homophone_own_key_hint'),
-        valueFlex: 2,
+        valueFlex: 4,
         keyValueMap: _currentSubstitutions,
         //onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,

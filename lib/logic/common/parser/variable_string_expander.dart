@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
 
+final RegExp VARIABLESTRING = RegExp(r'^((\d+(\-(\d*|\d+#\d*))?),)*(\d*|(\d+\-(\d*|\d+#\d*)))$');
+
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
 /*
@@ -42,16 +44,19 @@ enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 class VariableStringExpander {
   String _input;
   Map<String, String> _substitutions;
-  Function addAsResult;
+  Function onAfterExpandedText;
   SendPort sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
   bool uniqueResults;
 
-  VariableStringExpander(this._input, this._substitutions, this.addAsResult,
-      {this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
+  VariableStringExpander(this._input, this._substitutions,
+      {this.onAfterExpandedText,
+      this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
       this.uniqueResults = false,
-      this.sendAsyncPort});
+      this.sendAsyncPort}) {
+    if (this.onAfterExpandedText == null) this.onAfterExpandedText = (e) => e;
+  }
 
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
@@ -156,9 +161,9 @@ class VariableStringExpander {
     int progressStep = max((_countCombinations / 100).toInt(), 1); // 100 steps
 
     do {
-      _substitude();
+      _substitute();
 
-      _result = addAsResult(_result);
+      _result = onAfterExpandedText(_result);
       if (_result != null) {
         if (uniqueResults && _uniqueResults.contains(_result)) continue;
 
@@ -176,7 +181,7 @@ class VariableStringExpander {
   }
 
   // do the substitution of the variables set with their specific values given by their counted indexes
-  void _substitude() {
+  void _substitute() {
     _result = _input;
     for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
       _variableGroup = _variableGroups[_variableGroupIndex];
@@ -192,13 +197,6 @@ class VariableStringExpander {
     }
   }
 
-  _sanitizeForFormula(String formula) {
-    RegExp regExp = new RegExp(r'\[.+?\]');
-    if (regExp.hasMatch(formula)) return formula;
-
-    return '[$formula]';
-  }
-
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
     if (_input == null || _input.length == 0) return [];
 
@@ -208,12 +206,17 @@ class VariableStringExpander {
       ];
     }
 
-    _input = _sanitizeForFormula(_input);
-
     // expand all groups, initialize lists
-    _substitutions.entries.forEach((substitution) {
+    for (MapEntry<String, String> substitution in _substitutions.entries) {
+      if (!VARIABLESTRING.hasMatch(substitution.value)) {
+        return [
+          {'text': _input, 'variables': {}}
+        ];
+      }
+
       _substitutionKeys.add(substitution.key.toUpperCase());
       var group = _expandVariableGroup(substitution.value);
+
       if (group.length > 0) {
         _expandedVariableGroups.add(group);
 
@@ -221,7 +224,7 @@ class VariableStringExpander {
         _variableValueIndexes.add(0);
         _currentVariableIndex++;
       }
-    });
+    }
 
     // check number of combinations
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
@@ -232,8 +235,12 @@ class VariableStringExpander {
     }
 
     // Find matching formula groups
-    RegExp regExp = new RegExp(r'\[.+?\]');
-    _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)).toList();
+    RegExp regExp = RegExp(r'\[.+?\]');
+    if (regExp.hasMatch(_input)) {
+      _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)).toList();
+    } else {
+      _variableGroups = [_input];
+    }
     _countVariableGroups = _variableGroups.length;
 
     // gogogo!
@@ -244,7 +251,7 @@ class VariableStringExpander {
 }
 
 int preCheckCombinations(Map<String, String> substitutions) {
-  var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
+  var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
   var count = expander.run(onlyPrecheck: true);
 
   return count[0]['count'];

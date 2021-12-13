@@ -16,4 +16,3 @@ class MultiDecoderToolChronogram extends GCWMultiDecoderTool {
             },
             options: options);
 }
-

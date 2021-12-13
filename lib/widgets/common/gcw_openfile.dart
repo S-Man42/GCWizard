@@ -326,7 +326,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
 
       var uint8List = Uint8List.fromList(_bytes);
       if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
-      result = Future.value(uint8List) ;
+      result = Future.value(uint8List);
     });
   });
 

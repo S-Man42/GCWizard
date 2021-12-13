@@ -245,12 +245,13 @@ Future<bool> checkStoragePermission() async {
 
 Future<Uint8List> saveByteDataToFile(BuildContext context, Uint8List data, String fileName,
     {String subDirectory}) async {
-
   if (kIsWeb) {
     var blob = new html.Blob([data], 'image/png');
     html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
-      )..setAttribute("download", fileName)..click();
+    )
+      ..setAttribute("download", fileName)
+      ..click();
 
     return Future.value(data);
   } else {
@@ -283,7 +284,9 @@ Future<File> saveStringToFile(BuildContext context, String data, String fileName
     var blob = html.Blob([data], 'text/plain', 'native');
     html.AnchorElement(
       href: html.Url.createObjectUrl(blob),
-      )..setAttribute("download", fileName)..click();
+    )
+      ..setAttribute("download", fileName)
+      ..click();
 
     fileX = File(data);
   } else {

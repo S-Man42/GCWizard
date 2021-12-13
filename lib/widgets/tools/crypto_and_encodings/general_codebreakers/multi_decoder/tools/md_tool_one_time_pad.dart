@@ -21,10 +21,9 @@ class MultiDecoderToolOneTimePad extends GCWMultiDecoderTool {
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
               MDT_ONETIMEPAD_OPTION_KEY: GCWIntegerSpinner(
-                value: options[MDT_ONETIMEPAD_OPTION_KEY],
-                onChanged: (value) {
-                  options[MDT_ONETIMEPAD_OPTION_KEY] = value;
-                }
-              ),
+                  value: options[MDT_ONETIMEPAD_OPTION_KEY],
+                  onChanged: (value) {
+                    options[MDT_ONETIMEPAD_OPTION_KEY] = value;
+                  }),
             }));
 }

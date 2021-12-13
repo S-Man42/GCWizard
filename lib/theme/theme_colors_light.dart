@@ -33,7 +33,7 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color inputBackground() {
-    return Colors.white; //TODO
+    return Colors.white;
   }
 
   @override

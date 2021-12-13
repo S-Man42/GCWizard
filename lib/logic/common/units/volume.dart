@@ -163,14 +163,12 @@ final VOLUME_USSMIDGEN =
 final VOLUME_USDROP =
     Volume(name: 'common_unit_volume_dr_name', symbol: 'dr', inCubicMeters: 0.001 * 0.001 * 4.928922 / 96.0);
 
-final VOLUME_WOODKLAFTER =
-  Volume(name: 'common_unit_volume_woodklafter_name', symbol: 'klafter', inCubicMeters: 3.0);
+final VOLUME_WOODKLAFTER = Volume(name: 'common_unit_volume_woodklafter_name', symbol: 'klafter', inCubicMeters: 3.0);
 
-final VOLUME_STERE =
-  Volume(name: 'common_unit_volume_stere_name', symbol: 'st', inCubicMeters: 1.0);
+final VOLUME_STERE = Volume(name: 'common_unit_volume_stere_name', symbol: 'st', inCubicMeters: 1.0);
 
 final VOLUME_WASHINGMACHINE =
-  Volume(name: 'common_unit_volume_washingmachine_name', symbol: 'wm', inCubicMeters: 0.85 * 0.60 * 0.55);
+    Volume(name: 'common_unit_volume_washingmachine_name', symbol: 'wm', inCubicMeters: 0.85 * 0.60 * 0.60);
 
 final List<Unit> volumes = [
   VOLUME_CUBICMILLIMETER,

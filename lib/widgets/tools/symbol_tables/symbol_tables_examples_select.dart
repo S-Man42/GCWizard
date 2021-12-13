@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
@@ -17,15 +17,13 @@ const _LOGO_NAME = 'logo.png';
 const _ALERT_COUNT_SELECTIONS = 50;
 
 class SymbolTableExamplesSelect extends StatefulWidget {
-  const SymbolTableExamplesSelect({Key key})
-      : super(key: key);
+  const SymbolTableExamplesSelect({Key key}) : super(key: key);
 
   @override
   SymbolTableExamplesSelectState createState() => SymbolTableExamplesSelectState();
 }
 
 class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
-
   List<Map<String, SymbolData>> images = [];
   List<String> selectedSymbolTables = [];
 
@@ -52,9 +50,8 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
-    final imagePaths = manifestMap.keys
-        .where((String key) => key.contains(_pathKey()) && key.contains(_LOGO_NAME))
-        .toList();
+    final imagePaths =
+        manifestMap.keys.where((String key) => key.contains(_pathKey()) && key.contains(_LOGO_NAME)).toList();
 
     if (imagePaths.isEmpty) return;
 
@@ -62,20 +59,22 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
       final data = await DefaultAssetBundle.of(context).load(imagePath);
       var key = _symbolKey(imagePath);
 
-      images.add({key: SymbolData(path: imagePath, bytes: data.buffer.asUint8List(), displayName: i18n(context, 'symboltables_${key}_title'))});
+      images.add({
+        key: SymbolData(
+            path: imagePath, bytes: data.buffer.asUint8List(), displayName: i18n(context, 'symboltables_${key}_title'))
+      });
     }
 
     images.sort((a, b) {
       return a.values.first.displayName.compareTo(b.values.first.displayName);
     });
 
-    setState((){});
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    if (images == null || images.isEmpty)
-      return Container();
+    if (images == null || images.isEmpty) return Container();
 
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
@@ -91,57 +90,52 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
         Row(
           children: [
             Expanded(
-              child: GCWButton(
-                text: i18n(context, 'symboltablesexamples_selectall'),
-                margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                onPressed: () {
-                  setState(() {
-                    images.forEach((image) {
-                      var data = image.values.first;
-                      data.selected = true;
-                      selectedSymbolTables.add(_symbolKey(data.path));
-                    });
+                child: GCWButton(
+              text: i18n(context, 'symboltablesexamples_selectall'),
+              margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              onPressed: () {
+                setState(() {
+                  images.forEach((image) {
+                    var data = image.values.first;
+                    data.primarySelected = true;
+                    selectedSymbolTables.add(_symbolKey(data.path));
                   });
-                },
-              )
-            ),
+                });
+              },
+            )),
             Container(width: DOUBLE_DEFAULT_MARGIN),
             Expanded(
                 child: GCWButton(
-                  text: i18n(context, 'symboltablesexamples_deselectall'),
-                  margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                  onPressed: () {
-                    setState(() {
-                      images.forEach((image) {
-                        var data = image.values.first;
-                        data.selected = false;
-                        selectedSymbolTables = <String>[];
-                      });
-                    });
-                  },
-                )
-            ),
+              text: i18n(context, 'symboltablesexamples_deselectall'),
+              margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              onPressed: () {
+                setState(() {
+                  images.forEach((image) {
+                    var data = image.values.first;
+                    data.primarySelected = false;
+                    selectedSymbolTables = <String>[];
+                  });
+                });
+              },
+            )),
           ],
         ),
-        Expanded (
-          child: SingleChildScrollView(
-            child: GCWSymbolSymbolMatrix(
-              imageData: images,
-              countColumns: countColumns,
-              mediaQueryData: mediaQueryData,
-              onChanged: () => setState((){}),
-              selectable: true,
-              allowOverlays: false,
-              onSymbolTapped: (String tappedText, SymbolData imageData) {
-                if (imageData.selected) {
-                  selectedSymbolTables.add(_symbolKey(imageData.path));
-                } else {
-                  selectedSymbolTables.remove(_symbolKey(imageData.path));
-                }
-              },
-            )
-          )
-        ),
+        Expanded(
+            child: GCWSymbolTableSymbolMatrix(
+          imageData: images,
+          countColumns: countColumns,
+          mediaQueryData: mediaQueryData,
+          onChanged: () => setState(() {}),
+          selectable: true,
+          overlayOn: false,
+          onSymbolTapped: (String tappedText, SymbolData imageData) {
+            if (imageData.primarySelected) {
+              selectedSymbolTables.add(_symbolKey(imageData.path));
+            } else {
+              selectedSymbolTables.remove(_symbolKey(imageData.path));
+            }
+          },
+        )),
         GCWButton(
           text: i18n(context, 'symboltablesexamples_submitandnext'),
           margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
@@ -149,8 +143,11 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
             if (selectedSymbolTables.length <= _ALERT_COUNT_SELECTIONS) {
               _openInSymbolSearch();
             } else {
-              showGCWAlertDialog(context, i18n(context, 'symboltablesexamples_manyselections_title'),
-                  i18n(context, 'symboltablesexamples_manyselections_text', parameters: [selectedSymbolTables.length]), () => _openInSymbolSearch(),
+              showGCWAlertDialog(
+                  context,
+                  i18n(context, 'symboltablesexamples_manyselections_title'),
+                  i18n(context, 'symboltablesexamples_manyselections_text', parameters: [selectedSymbolTables.length]),
+                  () => _openInSymbolSearch(),
                   cancelButton: true);
 
               return;
@@ -166,11 +163,11 @@ class SymbolTableExamplesSelectState extends State<SymbolTableExamplesSelect> {
         context,
         NoAnimationMaterialPageRoute(
             builder: (context) => GCWTool(
-              tool: SymbolTableExamples(
-                symbolKeys: selectedSymbolTables,
-              ),
-              autoScroll: false,
-              i18nPrefix: 'symboltablesexamples',
-            )));
+                  tool: SymbolTableExamples(
+                    symbolKeys: selectedSymbolTables,
+                  ),
+                  autoScroll: false,
+                  i18nPrefix: 'symboltablesexamples',
+                )));
   }
 }

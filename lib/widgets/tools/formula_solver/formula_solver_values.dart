@@ -54,9 +54,9 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
     updateFormulaValue(value, widget.group);
   }
 
-  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+  _addEntry(String currentFromInput, String currentToInput, FormulaValueType type, BuildContext context) {
     if (currentFromInput.length > 0) {
-      var newValue = FormulaValue(currentFromInput, currentToInput);
+      var newValue = FormulaValue(currentFromInput, currentToInput, type: type);
       insertFormulaValue(newValue, widget.group);
 
       _newKeyController.text = _maxLetter();
@@ -64,10 +64,11 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
     }
   }
 
-  _updateEntry(dynamic id, String key, String value) {
+  _updateEntry(dynamic id, String key, String value, FormulaValueType type) {
     var entry = widget.group.values.firstWhere((element) => element.id == id);
     entry.key = key;
     entry.value = value;
+    entry.type = type;
     _updateValue(entry);
   }
 
@@ -84,7 +85,6 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
           keyHintText: i18n(context, 'formulasolver_values_key'),
           keyController: _newKeyController,
           valueHintText: i18n(context, 'formulasolver_values_value'),
-          valueFlex: 2,
           onAddEntry: _addEntry,
           dividerText: i18n(context, 'formulasolver_values_currentvalues'),
           formulaValueList: widget.group.values,

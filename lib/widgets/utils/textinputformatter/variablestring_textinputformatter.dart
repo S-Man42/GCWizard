@@ -1,10 +1,11 @@
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 
-class CoordsTextVariableCoordinateTextInputFormatter extends TextInputFormatter {
+class VariableStringTextInputFormatter extends TextInputFormatter {
   RegExp _exp;
 
-  CoordsTextVariableCoordinateTextInputFormatter() {
-    _exp = new RegExp(r'^((\d+(\-(\d*|\d+#\d*))?),)*(\d*|(\d+\-(\d*|\d+#\d*)))$');
+  VariableStringTextInputFormatter() {
+    _exp = VARIABLESTRING;
   }
 
   @override

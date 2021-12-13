@@ -96,11 +96,9 @@ List<int> getNearestPrime(int n) {
 int getNextPrime(int n) {
   if (n == null || n > 1000000) return null;
 
-  if (isPrime(BigInt.from(n)))
-    n++;
+  if (isPrime(BigInt.from(n))) n++;
 
-  while (!isPrime(BigInt.from(n)))
-    n++;
+  while (!isPrime(BigInt.from(n))) n++;
 
   return n;
 }
@@ -108,11 +106,9 @@ int getNextPrime(int n) {
 int getPreviousPrime(int n) {
   if (n == null || n <= 2) return null;
 
-  if (isPrime(BigInt.from(n)))
-    n--;
+  if (isPrime(BigInt.from(n))) n--;
 
-  while (!isPrime(BigInt.from(n)))
-    n--;
+  while (!isPrime(BigInt.from(n))) n--;
 
   return n;
 }

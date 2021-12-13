@@ -13,8 +13,7 @@ import 'package:prefs/prefs.dart';
 class SymbolTableExamples extends StatefulWidget {
   final List<String> symbolKeys;
 
-  const SymbolTableExamples({Key key, this.symbolKeys})
-      : super(key: key);
+  const SymbolTableExamples({Key key, this.symbolKeys}) : super(key: key);
 
   @override
   SymbolTableExamplesState createState() => SymbolTableExamplesState();
@@ -24,7 +23,6 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
   var _controller;
   String _currentInput = 'ABC123';
 
-  var _currentIgnoreUnknown = false;
   var symbolKeys = <String>[];
 
   Map<String, SymbolTableData> data = {};
@@ -85,57 +83,50 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
             trailing: GCWSymbolTableZoomButtons(
               countColumns: countColumns,
               mediaQueryData: mediaQueryData,
-              onChanged:  () {
+              onChanged: () {
                 setState(() {});
               },
             )),
         Expanded(
           child: _createSymbols(countColumns),
         )
-
       ],
     );
   }
 
   _createSymbols(int countColumns) {
-    if (data == null || data.isEmpty)
-      return Container();
+    if (data == null || data.isEmpty) return Container();
 
     var symbols = symbolKeys.map<Widget>((symbolKey) {
       var tableOutput = GCWSymbolTableTextToSymbols(
-        text: _currentInput,
-        ignoreUnknown: true,
-        countColumns: countColumns,
-        data: data[symbolKey],
-        showExportButton: false,
-      );
+          text: _currentInput,
+          ignoreUnknown: true,
+          countColumns: countColumns,
+          data: data[symbolKey],
+          showExportButton: false,
+          fixed: true);
 
       return Column(
         children: [
           GCWTextDivider(
-            text: i18n(context, 'symboltables_${symbolKey}_title'),
-            trailing: GCWIconButton(
-              iconData: Icons.open_in_new,
-              size: IconButtonSize.SMALL,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    NoAnimationMaterialPageRoute(
-                        builder: (context) => GCWSymbolTableTool(
-                          symbolKey: symbolKey,
-                        )));
-              },
-            )
-          ),
+              text: i18n(context, 'symboltables_${symbolKey}_title'),
+              trailing: GCWIconButton(
+                iconData: Icons.open_in_new,
+                size: IconButtonSize.SMALL,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      NoAnimationMaterialPageRoute(
+                          builder: (context) => GCWSymbolTableTool(
+                                symbolKey: symbolKey,
+                              )));
+                },
+              )),
           tableOutput
         ],
       );
     }).toList();
 
-    return SingleChildScrollView(
-      child: Column(
-        children: symbols
-      )
-    );
+    return SingleChildScrollView(child: Column(children: symbols));
   }
 }

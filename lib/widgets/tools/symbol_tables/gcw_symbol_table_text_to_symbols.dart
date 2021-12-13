@@ -21,15 +21,16 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
   final int countColumns;
   final SymbolTableData data;
   final bool showExportButton;
+  final bool fixed;
 
   const GCWSymbolTableTextToSymbols(
       {Key key,
-        this.text,
-        this.ignoreUnknown,
-        this.data,
-        this.countColumns,
-        this.showExportButton: true
-      })
+      this.text,
+      this.ignoreUnknown,
+      this.data,
+      this.countColumns,
+      this.showExportButton: true,
+      this.fixed: false})
       : super(key: key);
 
   @override
@@ -60,27 +61,29 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _buildEncryptionOutput(widget.countColumns),
+        widget.fixed
+            ? _buildEncryptionOutput(widget.countColumns)
+            : Expanded(child: SingleChildScrollView(child: _buildEncryptionOutput(widget.countColumns))),
         widget.showExportButton && _encryptionHasImages
             ? GCWButton(
-          text: i18n(context, 'common_exportfile_saveoutput'),
-          onPressed: () {
-            _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
-              if (value == null) {
-                return;
-              }
+                text: i18n(context, 'common_exportfile_saveoutput'),
+                onPressed: () {
+                  _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
+                    if (value == null) {
+                      return;
+                    }
 
-              showExportedFileDialog(
-                context,
-                contentWidget: Container(
-                  child: Image.memory(value),
-                  margin: EdgeInsets.only(top: 25),
-                  decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
-                ),
-              );
-            });
-          },
-        )
+                    showExportedFileDialog(
+                      context,
+                      contentWidget: Container(
+                        child: Image.memory(value),
+                        margin: EdgeInsets.only(top: 25),
+                        decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
+                      ),
+                    );
+                  });
+                },
+              )
             : Container()
       ],
     );

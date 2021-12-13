@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -17,21 +18,20 @@ Future<String> scanBytes(Uint8List bytes) async {
 }
 
 /// Generating Bar Code
-Future<Uint8List> generateBarCode(String code) async {
+Future<Uint8List> generateBarCode(String code, {int moduleSize = 5, int border = 10}) async {
   if (code == null || code == "") return null;
 
   var qrCode = qr.QrCode.fromData(
     data: code,
     errorCorrectLevel: qr.QrErrorCorrectLevel.L,
   );
-
-  return _createQrCode(qrCode);
+  moduleSize = max(1, moduleSize);
+  return _createQrCode(qrCode, moduleSize.toDouble(), border.toDouble());
 }
 
-Future<Uint8List> _createQrCode(qr.QrCode qrCode, {double border = 10}) async {
+Future<Uint8List> _createQrCode(qr.QrCode qrCode, double moduleSize, double border) async {
   try {
-    qrCode.make();
-    const double moduleSize = 5;
+    var qrImage = qr.QrImage(qrCode);
     final canvasRecorder = ui.PictureRecorder();
     final rect = ui.Rect.fromLTWH(
         0, 0, moduleSize * qrCode.moduleCount + 2 * border, moduleSize * qrCode.moduleCount + 2 * border);
@@ -44,7 +44,7 @@ Future<Uint8List> _createQrCode(qr.QrCode qrCode, {double border = 10}) async {
     paint.color = Colors.black;
     for (int x = 0; x < qrCode.moduleCount; x++) {
       for (int y = 0; y < qrCode.moduleCount; y++) {
-        if (qrCode.isDark(y, x)) {
+        if (qrImage.isDark(y, x)) {
           canvas.drawRect(
               ui.Rect.fromLTWH(x * moduleSize + border, y * moduleSize + border, moduleSize, moduleSize), paint);
         }

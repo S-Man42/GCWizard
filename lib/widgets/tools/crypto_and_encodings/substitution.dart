@@ -6,7 +6,6 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 
-
 class Substitution extends StatefulWidget {
   final String input;
   final Map<String, String> substitutions;
@@ -100,17 +99,16 @@ class SubstitutionState extends State<Substitution> {
         valueHintText: i18n(context, 'substitution_to'),
         onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
-        middleWidget: Column(
-            children: <Widget>[
-                GCWOnOffSwitch(
-                  title: i18n(context, 'substitution_case_sensitive'),
-                  value: _currentCaseSensitive,
-                  onChanged: (value) {
-                    _currentCaseSensitive = value;
-                    _calculateOutput();
-                  },
-                ),
-              ]),
+        middleWidget: Column(children: <Widget>[
+          GCWOnOffSwitch(
+            title: i18n(context, 'substitution_case_sensitive'),
+            value: _currentCaseSensitive,
+            onChanged: (value) {
+              _currentCaseSensitive = value;
+              _calculateOutput();
+            },
+          ),
+        ]),
         dividerText: i18n(context, 'substitution_current_substitutions'),
         keyKeyValueMap: _currentSubstitutions,
         onUpdateEntry: _updateEntry,

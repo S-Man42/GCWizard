@@ -341,11 +341,9 @@ List<String> allCharacters() {
 }
 
 dynamic round(double number, {int precision: 0}) {
-  if (number == null)
-    return null;
+  if (number == null) return null;
 
-  if (precision == null || precision <= 0)
-    return number.round();
+  if (precision == null || precision <= 0) return number.round();
 
   var exp = pow(10, precision);
   return (number * exp).round() / exp;

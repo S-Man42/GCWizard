@@ -21,7 +21,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final int leftPadZeros;
   final controller;
   final SpinnerLayout layout;
-  final FocusNode focusNode ;
+  final FocusNode focusNode;
   final SpinnerOverflowType overflow;
 
   const GCWIntegerSpinner(

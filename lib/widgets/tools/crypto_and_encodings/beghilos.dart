@@ -26,8 +26,6 @@ class BeghilosState extends State<Beghilos> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentDisplays = <List<String>>[];
 
-  var _currentUpsideDown = true;
-
   @override
   void initState() {
     super.initState();
