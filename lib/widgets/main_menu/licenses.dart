@@ -99,7 +99,7 @@ class LicensesState extends State<Licenses> {
           ['Ohlsen Telegraph', 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
           [
             'Murray Telegraph',
-            'Helmar Fischer,\nhttps://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/\nOmer Roucoux,\nhttp://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station.htm'
+            'Helmar Fischer,\nhttps://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/\nJohn Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux,\nhttp://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station.htm'
           ],
           [
             'Preußischer optischer Telegraf',
