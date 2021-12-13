@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
+import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -358,6 +359,10 @@ String getFileBaseNameWithoutExtension(String fileName) {
   return fileName == null ? null : basenameWithoutExtension(fileName);
 }
 
+String getFileBaseNameWithExtension(String fileName) {
+  return fileName == null ? null : path.basename(fileName);
+}
+
 String changeExtension(String fileName, String extension) {
   return setExtension(fileName, extension);
 }
@@ -369,13 +374,22 @@ String normalizePath(String path) {
 Future<File> createTmpFile(String extension, Uint8List bytes) async {
   try {
     String tmpDir = (await getTemporaryDirectory()).path;
-    var r = Random();
-    String randomFileName = String.fromCharCodes(List.generate(20, (index) => r.nextInt(33) + 89));
+    var random = Random();
+    String randomFileName = String.fromCharCodes(List.generate(20, (index) => random.nextInt(33) + 89));
     var filePath = '$tmpDir/$randomFileName.$extension';
 
     return File(filePath).writeAsBytes(bytes);
   } on Exception {
     return null;
+  }
+}
+
+Future<bool> createDirectory(String directory) async {
+  try {
+    await Directory(directory).create(recursive: true);
+    return true;
+  } on Exception {
+    return false;
   }
 }
 
