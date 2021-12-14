@@ -32,7 +32,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   Uint8List _bytes;
   WherigoCartridge _cartridge;
+  WherigoCartridgeDetails _cartridgeDetails;
+  String _LUA = '';
+
   var _cartridgeData = WHERIGO.HEADER;
+
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
   int _mediaFile = 1;
 
@@ -49,10 +53,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     super.dispose();
   }
 
-  _setData(Uint8List bytes) {
-    _bytes = bytes;
-  }
-
   @override
   Widget build(BuildContext context) {
     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA)
@@ -60,15 +60,36 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return Column(
       children: <Widget>[
         GCWOpenFile(
-          onLoaded: (_file) {
-            if (_file == null) {
+          //supportedFileTypes: [FileType.GWC],
+          title: i18n(context, 'wherigo_open_gwc'),
+          onLoaded: (_GWCfile) {
+            if (_GWCfile == null) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
 
-            if (_file != null) {
-              _setData(_file.bytes);
-              _cartridge = getCartridge(_bytes);
+            if (_GWCfile != null) {
+              _cartridge = getCartridge(_GWCfile.bytes);
+
+              setState(() {});
+            }
+          },
+        ),
+        GCWOpenFile(
+          //supportedFileTypes: [FileType.LUA],
+          title: i18n(context, 'wherigo_open_lua'),
+          onLoaded: (_LUAfile) {
+            if (_LUAfile == null) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
+
+            if (_LUAfile != null) {
+              _LUA = '';
+              for (int i = 0; i < _LUAfile.bytes.length; i++) {
+                _LUA = _LUA + String.fromCharCode(_LUAfile.bytes[i]);
+              }
+              _cartridgeDetails = getCartridgeDetails(_LUA);
 
               setState(() {});
             }
@@ -95,7 +116,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _buildOutput() {
     if (_bytes == null) return Container();
-
+    print('LUA'+_cartridge.LUA);
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
       [
@@ -270,9 +291,39 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.ITEMS:
       case WHERIGO.TASKS:
       case WHERIGO.ZONES:
-      case WHERIGO.LUA:
       case WHERIGO.INPUTS:
         return Container();
+      case WHERIGO.LUA:
+        return GCWDefaultOutput( // decimal
+            child: GCWText(
+              text: _cartridge.LUA,
+              style: gcwMonotypeTextStyle(),
+            ),
+            trailing: Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconColor: themeColors().mainFont(),
+                    size: IconButtonSize.SMALL,
+                    iconData: Icons.content_copy,
+                    onPressed: () {
+                      var copyText = _cartridge
+                          .MediaFilesContents[0].MediaFileBytes != null ? _cartridge.MediaFilesContents[0].MediaFileBytes.join(' ') : '';
+                      insertIntoGCWClipboard(context, copyText);
+                    },
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.save,
+                    size: IconButtonSize.SMALL,
+                    iconColor: _cartridge
+                        .MediaFilesContents[0].MediaFileBytes == null ? themeColors().inActive() : null,
+                    onPressed: () {
+                      _cartridge
+                          .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _cartridge
+                          .MediaFilesContents[0].MediaFileBytes);
+                    },
+                  )                  ]
+            )
+        );
     }
   }
 

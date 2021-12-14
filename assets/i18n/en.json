@@ -4597,6 +4597,8 @@
   "wherigo_header_creationdate": "Date of creation",
   "wherigo_media_type": "Media Type",
   "wherigo_media_length": "Length of File",
+  "wherigo_open_gwc": "GWC-File - Cartridge",
+  "wherigo_open_lua": "LUA-File - Sourcecode",
   "weathersymbols_title": "Weather Symbols",
   "weathersymbols_description": "Symbols and their meanings",
   "weathersymbols_a_0": "Rising then falling. Now higher than, or the same as, 3 hours ago.",

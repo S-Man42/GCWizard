@@ -265,6 +265,24 @@ class WherigoCartridge{
       this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers);
 }
 
+class WherigoCartridgeDetails{
+  final List<ObjectData> Characters;
+  final List<ObjectData> Items;
+  final List<ObjectData> Tasks;
+  final List<InputData> Inputs;
+  final List<ZoneData> Zones;
+  final List<TimerData> Timers;
+
+
+  WherigoCartridgeDetails(
+      this.Characters,
+      this.Items,
+      this.Tasks,
+      this.Inputs,
+      this.Zones,
+      this.Timers);
+}
+
 int START_NUMBEROFOBJECTS = 7;
 int START_OBJCETADRESS = 9;
 int START_HEADER = 0;
@@ -503,7 +521,24 @@ WherigoCartridge getCartridge(Uint8List byteList) {
     Characters, Items, Tasks, Inputs, Zones, Timers);
 }
 
+WherigoCartridgeDetails getCartridgeDetails(String LUA){
+  List<ObjectData> Characters = [];
+  List<ObjectData> Items = [];
+  List<ObjectData> Tasks = [];
+  List<InputData> Inputs = [];
+  List<ZoneData> Zones = [];
+  List<TimerData> Timers = [];
 
+  Characters = _getCharactersFromCartridge(LUA);
+  Items = _getItemsFromCartridge(LUA);
+  Tasks = _getTasksFromCartridge(LUA);
+  Inputs = _getInputsFromCartridge(LUA);
+  Zones = _getZonesFromCartridge(LUA);
+  Timers = _getTimersFromCartridge(LUA);
+
+  return WherigoCartridgeDetails(
+      Characters, Items, Tasks, Inputs, Zones, Timers);
+}
 
 List<ObjectData>_getCharactersFromCartridge(String LUA){
   return [];
@@ -533,8 +568,18 @@ _decompileLUA(Uint8List LUA) async {
   // online solution via REST-API
   print('inside decompile');
   var result = await http.post(Uri.parse('https://lua-decompiler.ferib.dev/api/decompile/'), body: LUA);
-  plainLUA = result.body;
+  plainLUA = JASONStringToString(result.body);
   print(plainLUA);
+  print('got plainLUA');
   // {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
+}
+
+String JASONStringToString(String JSON){
+  return JSON.replaceAll('{', '')
+             .replaceAll('}', '')
+             .replaceAll('"', '')
+             .replaceAll(':', ': ')
+             .split(',')
+             .join('\n');
 }
 
