@@ -19,11 +19,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   // https://en.wikipedia.org/wiki/List_of_file_signatures
+  // https://wiki.selfhtml.org/wiki/MIME-Type/%C3%9Cbersicht   oder   https://www.iana.org/assignments/media-types/media-types.xhtml
   FileType.JPEG: {
     'extensions': ['jpg', 'jpeg'],
     'magic_bytes': <List<int>>[
@@ -149,7 +150,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.FDL: {
     'extensions': ['fdl'],
     'magic_bytes': <List<int>>[[]],
-    'mime_types': ['audio/fdl', 'audio/fdl'],
+    'mime_types': ['application/octet-stream'],
     'file_class': FileClass.SOUND
   },
   FileType.TXT: {
@@ -199,7 +200,15 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.LUAC: {
     'extensions': ['luac'],
     'magic_bytes': <List<int>>[[0x1B, 0x4C, 0x75, 0x61]],
-    'mime_types': ['binary/luac'],
+    'mime_types': ['application/octet-stream'],
+    'file_class': FileClass.BINARY
+  },
+  FileType.GWC: {
+    'extensions': ['gwc'],
+    'magic_bytes': <List<int>>[
+      [0x02, 0x0A, 0x43, 0x41, 0x52, 0x54, 0x00],
+      [0x02, 0x0B, 0x43, 0x41, 0x52, 0x54, 0x00]],
+    'mime_types': ['application/octet-stream'],
     'file_class': FileClass.BINARY
   },
 };
@@ -210,6 +219,7 @@ FileType fileTypeByFilename(String fileName) {
 }
 
 String fileExtension(FileType type) {
+  print(_FILE_TYPES[type]['extensions'].first);
   return _FILE_TYPES[type]['extensions'].first;
 }
 
