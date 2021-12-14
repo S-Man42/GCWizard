@@ -13,9 +13,9 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
-import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:unrar_file/unrar_file.dart';
 
 enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, GZIP, BZIP2, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
@@ -465,7 +465,7 @@ List<PlatformFile> extractArchive(PlatformFile file) {
         GZipDecoder().decodeStream(input, output);
         return {PlatformFile(name: changeExtension(file?.name, '.xxx'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
-        return null;
+        return extractRarArchive(file);
         break;
       default:
         return null;
@@ -473,6 +473,21 @@ List<PlatformFile> extractArchive(PlatformFile file) {
   } catch (e) {
     return null;
   }
+}
+
+Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password}) async {
+  var fileList = <PlatformFile>[];
+  var tmpFile = await createTmpFile('rar', file.bytes);
+
+  var directory = changeExtension(tmpFile.path, '');
+  createDirectory(directory);
+  var result = await UnrarFile.extract_rar(tmpFile.path,  directory, password: password);
+
+  await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
+    fileList.add(PlatformFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
+  }).toList();
+
+  return fileList;
 }
 
 Uint8List encodeTrimmedPng(img.Image image) {

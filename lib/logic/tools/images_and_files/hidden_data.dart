@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:tuple/tuple.dart';
-import 'package:unrar_file/unrar_file.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -582,18 +581,5 @@ int tarFileSize(Uint8List data) {
   return offset;
 }
 
-Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password}) async {
-  var fileList = <PlatformFile>[];
-  var tmpFile = await createTmpFile('rar', file.bytes);
 
-  var directory = changeExtension(tmpFile.path, '');
-  createDirectory(directory);
-  var result = await UnrarFile.extract_rar(tmpFile.path,  directory, password: password);
-
-  await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
-    fileList.add(PlatformFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
-  }).toList();
-
-  return fileList;
-}
 
