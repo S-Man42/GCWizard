@@ -206,6 +206,10 @@ class SymbolImage {
     symbol.symbolGroup = symbolGroup;
   }
 
+  resetGroupText() {
+    symbolGroups.forEach((group) {group.text= null; });
+  }
+
   SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareSymbols) {
     var compareSymbolImage = SymbolImage(compareSymbols.first.values.first.bytes);
 

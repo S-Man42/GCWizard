@@ -1,12 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:prefs/prefs.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
@@ -20,7 +19,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -279,6 +277,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             if (_symbolImage != null) {
               if (!(_currentSymbolTableViewData is SymbolTableViewData))
                 _symbolImage.symbolGroups.forEach((group) { group.text = null;});
+              else
+                _symbolImage.resetGroupText();
 
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _replaceSymbols(false);
@@ -565,7 +565,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 icon: tool.icon,
                 toolName: tool.toolName,
                 description: tool.description),
-            child: _buildDropDownMenuItem(tool.icon, tool.toolName, tool.description));
+            child: _buildDropDownMenuItem(tool.icon, tool.toolName, null));
       }).toList();
       _compareSymbolItems.insert(0,
           GCWDropDownMenuItem(
