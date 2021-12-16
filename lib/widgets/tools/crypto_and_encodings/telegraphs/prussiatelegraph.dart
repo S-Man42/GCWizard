@@ -20,9 +20,9 @@ class PrussiaTelegraph extends StatefulWidget {
 
 class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   var _currentEncodeInput = '';
-  var _EncodeInputController;
+  var _encodeInputController;
 
-  var _DecodeInputController;
+  var _decodeInputController;
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -33,14 +33,14 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
   void initState() {
     super.initState();
 
-    _EncodeInputController = TextEditingController(text: _currentEncodeInput);
-    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
+    _encodeInputController = TextEditingController(text: _currentEncodeInput);
+    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
-    _EncodeInputController.dispose();
-    _DecodeInputController.dispose();
+    _encodeInputController.dispose();
+    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -58,7 +58,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
       ),
       if (_currentMode == GCWSwitchPosition.left) // encrypt
         GCWTextField(
-          controller: _EncodeInputController,
+          controller: _encodeInputController,
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -82,7 +82,7 @@ class PrussiaTelegraphState extends State<PrussiaTelegraph> {
             _buildVisualDecryption()
           else // decode text
             GCWTextField(
-              controller: _DecodeInputController,
+              controller: _decodeInputController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[aAbBcC. 0-9]')),
               ],

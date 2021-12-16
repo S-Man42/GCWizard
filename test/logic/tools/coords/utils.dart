@@ -2,12 +2,8 @@ import 'package:latlong2/latlong.dart';
 
 bool equalsLatLng(LatLng a, LatLng b) {
   final TOLERANCE = 1e-5;
-  //
-  // print('...');
-  // print(a);
-  // print(b);
 
-  if ((a.latitude.abs() - 90.0) <= TOLERANCE && (b.latitude.abs() - 90.0) <= TOLERANCE && a.latitude.sign == b.latitude.sign)
+  if ((a.latitude.abs() - 90.0).abs() <= TOLERANCE && (b.latitude.abs() - 90.0).abs() <= TOLERANCE && a.latitude.sign == b.latitude.sign)
     return true;
 
   if ((a.latitude - b.latitude).abs() <= TOLERANCE) {

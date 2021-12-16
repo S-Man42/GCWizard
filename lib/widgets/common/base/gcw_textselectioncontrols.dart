@@ -67,7 +67,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
                       offset: textBefore.length + text.length,
                     ),
                   ),
-                  SelectionChangedCause.toolBar,
+                  SelectionChangedCause.toolbar,
                 );
               }
               delegate.bringIntoView(delegate.textEditingValue.selection.extent);
@@ -78,7 +78,7 @@ class GCWTextSelectionControls extends MaterialTextSelectionControls {
           ? () {
               insertIntoGCWClipboard(
                   context, delegate.textEditingValue.selection.textInside(delegate.textEditingValue.text));
-              handleCut(delegate);
+              handleCut(delegate, clipboardStatus);
             }
           : null,
       // handlePaste: canPaste(delegate) && handlePaste != null

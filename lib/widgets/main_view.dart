@@ -43,7 +43,6 @@ import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
@@ -80,9 +79,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -96,7 +92,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
@@ -136,11 +131,14 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
@@ -181,6 +179,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/compound_interest.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
@@ -203,6 +202,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicac
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
@@ -449,6 +449,7 @@ void _initStaticToolList() {
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
       className(Chao()),
+      className(ChappeTelegraph()),
       className(Chef()),
       className(ChickenLanguage()),
       className(Chronogram()),
@@ -458,6 +459,7 @@ void _initStaticToolList() {
       className(Combination()),
       className(CombinationPermutation()),
       className(ComplexNumbers()),
+      className(CompoundInterest()),
       className(CoordinateAveraging()),
       className(CountriesCallingCodes()),
       className(CountriesFlags()),
@@ -481,6 +483,7 @@ void _initStaticToolList() {
       className(SilverRatioSelection()),
       className(DuckSpeak()),
       className(EasterSelection()),
+      className(EdelcrantzTelegraph()),
       className(EllipsoidTransform()),
       className(EnclosedAreas()),
       className(Enigma()),
@@ -514,6 +517,7 @@ void _initStaticToolList() {
       className(Intersection()),
       className(IntersectThreeCircles()),
       className(IntersectTwoCircles()),
+      className(IPCodes()),
       className(IteratedCrossSumRange()),
       className(IteratedCrossSumRangeFrequency()),
       className(Kamasutra()),
@@ -528,11 +532,13 @@ void _initStaticToolList() {
       className(MoonPosition()),
       className(MoonRiseSet()),
       className(Morse()),
+      className(MurrayTelegraph()),
       className(Navajo()),
       className(NumberSequenceSelection()),
       className(MultiDecoder()),
       className(NumeralBases()),
       className(NumeralWordsSelection()),
+      className(OhlsenTelegraph()),
       className(OneTimePad()),
       className(Ook()),
       className(PeriodicTable()),
@@ -548,6 +554,7 @@ void _initStaticToolList() {
       className(PrimeAlphabet()),
       className(PrimesSelection()),
       className(Projectiles()),
+      className(PrussiaTelegraph()),
       className(QrCode()),
       className(QuadraticEquation()),
       className(RailFence()),
@@ -570,6 +577,7 @@ void _initStaticToolList() {
       className(ShadowLength()),
       className(ShadoksSelection()),
       className(Seasons()),
+      className(SemaphoreTelegraph()),
       className(SevenSegments()),
       className(SixteenSegments()),
       className(Skytale()),
@@ -586,7 +594,6 @@ void _initStaticToolList() {
       className(SymbolTableSelection()),
       className(TapCode()),
       className(Tapir()),
-      className(TelegraphSelection()),
       className(TimeCalculator()),
       className(TomTomSelection()),
       className(Trifid()),
@@ -598,9 +605,11 @@ void _initStaticToolList() {
       className(VigenereBreaker()),
       className(VisualCryptography()),
       className(WASD()),
-      className(Weekday()),
-      className(WhitespaceLanguage()),
       className(WaypointProjection()),
+      className(Weekday()),
+      className(WheatstoneCookeNeedleTelegraph()),
+      className(WhitespaceLanguage()),
+      className(WigWagSemaphoreTelegraph()),
       className(Windchill()),
       className(Z22()),
       className(ZamonianNumbers()),

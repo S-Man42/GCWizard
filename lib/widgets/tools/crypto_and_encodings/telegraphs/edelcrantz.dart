@@ -21,9 +21,9 @@ class EdelcrantzTelegraph extends StatefulWidget {
 
 class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   var _currentEncodeInput = '';
-  var _EncodeInputController;
+  var _encodeInputController;
 
-  var _DecodeInputController;
+  var _decodeInputController;
   var _currentDecodeInput = '';
 
   var _currentLanguage = EdelcrantzCodebook.YEAR_1795;
@@ -37,14 +37,14 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
   void initState() {
     super.initState();
 
-    _EncodeInputController = TextEditingController(text: _currentEncodeInput);
-    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
+    _encodeInputController = TextEditingController(text: _currentEncodeInput);
+    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
-    _EncodeInputController.dispose();
-    _DecodeInputController.dispose();
+    _encodeInputController.dispose();
+    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -86,7 +86,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
       ),
       if (_currentMode == GCWSwitchPosition.left) // encrypt
         GCWTextField(
-          controller: _EncodeInputController,
+          controller: _encodeInputController,
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -110,7 +110,7 @@ class EdelcrantzTelegraphState extends State<EdelcrantzTelegraph> {
             _buildVisualDecryption()
           else // decode text
             GCWTextField(
-              controller: _DecodeInputController,
+              controller: _decodeInputController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[aA 0-9]')),
               ],

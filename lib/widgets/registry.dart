@@ -262,6 +262,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/compound_interest.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
@@ -285,6 +286,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -533,6 +535,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'complexnumbers',
     ]),
+    GCWTool(tool: CompoundInterest(), i18nPrefix: 'compoundinterest', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'compoundinterest',
+    ]),
     GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', searchKeys: [
       'coordinates',
     ]),
@@ -683,7 +690,6 @@ initializeRegistry(BuildContext context) {
         'iataicao',
       ],
     ),
-
     GCWTool(
       tool: IceCodesSelection(),
       i18nPrefix: 'icecodes_selection',
@@ -705,10 +711,8 @@ initializeRegistry(BuildContext context) {
           'color',
           'image_colorcorrections',
         ]),
-    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: [
-      'stegano',
+    GCWTool(tool: IPCodes(), i18nPrefix: 'ipcodes', categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: [
+      'ipcodes'
     ]),
     GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -927,6 +931,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'solitaire',
+    ]),
+    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'stegano',
     ]),
     GCWTool(tool: StraddlingCheckerboard(), i18nPrefix: 'straddlingcheckerboard', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -3114,10 +3123,6 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
       'symbol_prussian_colors_infantery',
     ]),
-    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
-      'telegraph',
-      'symbol_prussian_optical_telegraph',
-    ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
     ]),
@@ -3201,6 +3206,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
       'symbol_tamil_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
+      'telegraph',
+      'telegraph_prussia',
     ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',
@@ -3353,13 +3362,16 @@ initializeRegistry(BuildContext context) {
       'telegraph',
       'telegraph_schillingcanstatt',
     ]),
-    GCWTool(tool: WheatstoneCooke5NeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke5needle', searchKeys: [
+    GCWTool(tool: WheatstoneCookeNeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke_needle', searchKeys: [
       'telegraph',
-      'telegraph_wheatstonecooke5needle',
+      'telegraph_wheatstonecooke_needle',
     ]),
-    GCWTool(tool: CCITTTelegraph(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
+    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
       'telegraph',
       'telegraph_ccitt',
+      'ccitt',
+      'ccitt1',
+      'ccitt2',
     ]),
 
     // TomTomSelection *********************************************************************************************
