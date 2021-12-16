@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
-List<PlatformFile> hiddenData(PlatformFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) {
+Future<List<PlatformFile>> hiddenData(PlatformFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
   if (data == null) return [];
 
   var resultList = <PlatformFile>[];
@@ -62,7 +62,7 @@ List<PlatformFile> hiddenData(PlatformFile data, {bool calledFromSearchMagicByte
     }
 
     List<PlatformFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE) children = extractArchive(PlatformFile(bytes: resultBytes));
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE) children = await extractArchive(PlatformFile(bytes: resultBytes));
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
@@ -95,7 +95,7 @@ List<PlatformFile> hiddenData(PlatformFile data, {bool calledFromSearchMagicByte
 _searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
   fileTypeList.forEach((fileType) {
     var magicBytesList = magicBytes(fileType);
-    magicBytesList.forEach((magicBytes) {
+    magicBytesList.forEach((magicBytes) async {
       var bytes = data.bytes;
       if (bytes == null) return;
 
@@ -112,7 +112,7 @@ _searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
           if (validMagicBytes) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             if (i - bytesOffset >= 0) {
-              var children = hiddenData(PlatformFile(bytes: bytes.sublist(i - bytesOffset)),
+              var children = await hiddenData(PlatformFile(bytes: bytes.sublist(i - bytesOffset)),
                   calledFromSearchMagicBytes: true, fileIndex: data.children.length + 1);
               if ((children != null) && (children.length > 0)) {
                 if (data.children != null) data.children.addAll(children);

@@ -360,7 +360,7 @@ String getFileBaseNameWithoutExtension(String fileName) {
 }
 
 String getFileBaseNameWithExtension(String fileName) {
-  return fileName == null ? null : path.basename(fileName);
+  return fileName == null ? null : basename(fileName);
 }
 
 String changeExtension(String fileName, String extension) {
@@ -447,7 +447,7 @@ List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
       .toList();
 }
 
-List<PlatformFile> extractArchive(PlatformFile file) {
+Future<List<PlatformFile>> extractArchive(PlatformFile file) async {
   if (fileClass(file.fileType) != FileClass.ARCHIVE) return null;
 
   try {
@@ -465,7 +465,7 @@ List<PlatformFile> extractArchive(PlatformFile file) {
         GZipDecoder().decodeStream(input, output);
         return {PlatformFile(name: changeExtension(file?.name, '.xxx'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
-        return extractRarArchive(file);
+        return await extractRarArchive(file);
         break;
       default:
         return null;
@@ -488,6 +488,12 @@ Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password
   }).toList();
 
   return fileList;
+}
+
+List<PlatformFile> extractRarArchive1(PlatformFile file) {
+  extractRarArchive(file).then((value) {
+    return value;
+  });
 }
 
 Uint8List encodeTrimmedPng(img.Image image) {
