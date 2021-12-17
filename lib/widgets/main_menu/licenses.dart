@@ -74,6 +74,7 @@ class LicensesState extends State<Licenses> {
           ['Malbolge Code', 'lscheffer.com, Matthias Ernst', 'CC0, Public Domain'],
           ['Substitution Breaker', 'Jens Guballa (guballa.de)', 'MIT License'],
           ['Sudoku Solver', 'Peter Norvig (norvig.com), \'dartist\'', 'MIT License'],
+          ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
           ['Vigenère Breaker', 'Jens Guballa (guballa.de)', null],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
         ]),
