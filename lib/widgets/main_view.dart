@@ -145,6 +145,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whereigo_urwigo/urwigo_hashbreaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whereigo_urwigo/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
@@ -599,6 +601,8 @@ void _initStaticToolList() {
       className(Trifid()),
       className(Trithemius()),
       className(UnitConverter()),
+      className(UrwigoHashBreaker()),
+      className(UrwigoTextDeobfuscation()),
       className(VanitySelection()),
       className(VariableCoordinateFormulas()),
       className(Vigenere()),

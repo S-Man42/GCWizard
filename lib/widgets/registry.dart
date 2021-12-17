@@ -79,6 +79,7 @@ import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/whereigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
@@ -224,6 +225,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whereigo_urwigo/urwigo_hashbreaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whereigo_urwigo/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
@@ -1024,6 +1027,11 @@ initializeRegistry(BuildContext context) {
       'wasd',
     ]),
     GCWTool(
+        tool: WhereIGoUrwigoSelection(),
+        i18nPrefix: 'whereigourwigo_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(
         tool: WeatherSymbols(),
         i18nPrefix: 'weathersymbols',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
@@ -1649,6 +1657,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
       'codebreaker',
+      'hashes',
+      'hashbreaker',
+    ]),
+    GCWTool(tool: UrwigoHashBreaker(), i18nPrefix: 'urwigo_hashbreaker', searchKeys: [
+      'whereigourwigo',
       'hashes',
       'hashbreaker',
     ]),
@@ -3420,6 +3433,14 @@ initializeRegistry(BuildContext context) {
       'rotation',
       'trithemius',
     ]),
+
+    //WhereIGoUrwigoSelection **************************************************************************************
+    //UrwigoHashBreaker already inserted in section "Hashes"
+    GCWTool(tool: UrwigoTextDeobfuscation(), i18nPrefix: 'urwigo_textdeobfuscation', searchKeys: [
+      'whereigourwigo',
+      'urwigo_textdeobfuscation'
+    ]),
+
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);

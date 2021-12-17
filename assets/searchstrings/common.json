@@ -551,6 +551,7 @@
   "tomtom": "a-tom-tom atomtom",
   "trithemius": "trithemius tabularecta",
   "unitconverter": "watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda atm psi bar radiant celsius kelvin fahrenheit rankine reaumur kilogramm feinunze troyounce pints",
+  "urwigo_textdeobfuscation": "",
   "vanity": "vanity t9 sms",
   "vanitymultitap": "",
   "vanitysingletap": "",
@@ -558,12 +559,13 @@
   "vanitywordslist": "",
   "vigenere": "vigenere",
   "vigenerebreaker": "",
+  "visualcryptography": "pixels",
   "wasd": "wasd ijkm esdf qwes udlr",
+  "whereigourwigo": "wigs whereigos wherigos urwigos uwigos urwegos uwegos",
   "weather_cl": "cl",
   "weather_cm": "cm",
   "weather_cn": "cn",
   "weather_ww": "ww",
-  "visualcryptography": "pixels",
   "window": "johannes balthasar friderici cryptographia",
   "z22": "konrad zuse z-22 z22"
 }
