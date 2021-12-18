@@ -34,7 +34,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _LUAbytes;
 
   WherigoCartridge _cartridge;
-  WherigoCartridgeDetails _cartridgeDetails;
   String _LUA = '';
 
   var _cartridgeData = WHERIGO.HEADER;
@@ -43,9 +42,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _mediaFile = 1;
 
   var _currentByteCodeMode = GCWSwitchPosition.right;
-
-  bool _GWCloaded = false;
-  bool _LUAloaded = false;
 
   @override
   void initState() {
@@ -59,10 +55,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
-  }
-
-  _setLUAData(Uint8List bytes) {
-    _LUAbytes = bytes;
   }
 
   @override
@@ -81,31 +73,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             }
 
             if (_GWCfile != null) {
-              _GWCloaded = true;
               _setGWCData(_GWCfile.bytes);
               _cartridge = getCartridge(_GWCbytes);
 
-              setState(() {});
-            }
-          },
-        ),
-        GCWOpenFile(
-          //supportedFileTypes: [FileType.LUA],
-          title: i18n(context, 'wherigo_open_lua'),
-          onLoaded: (_LUAfile) {
-            if (_LUAfile == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-              return;
-            }
-
-            if (_LUAfile != null) {
-              _LUAloaded = true;
-              _LUA = '';
-              for (int i = 0; i < _LUAfile.bytes.length; i++) {
-                _LUA = _LUA + String.fromCharCode(_LUAfile.bytes[i]);
-              }
-              print(_LUA);
-              _cartridgeDetails = getCartridgeDetails(_LUA);
               setState(() {});
             }
           },
@@ -131,8 +101,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _buildOutput() {
     if (_GWCbytes == null) return Container();
-    //print('LUA'+_cartridge.LUA);
-    print(_LUA);
+
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
       [
@@ -304,57 +273,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.CHARACTER:
-      case WHERIGO.TASKS:
       case WHERIGO.ZONES:
       case WHERIGO.INPUTS:
+      case WHERIGO.TASKS:
+      case WHERIGO.TIMERS:
         return Container();
-      case WHERIGO.ITEMS:
-        print('items');
-        var _outputItems;
-        _cartridgeDetails.Items.forEach((element) {
-          _outputItems.add(
-              element.ObjectID + '\n' +
-              element.ObjectName + '\n' +
-              element.ObjectDescription + '\n' +
-              element.ObjectMediaType  + '\n' +
-              element.ObjectMediaFilename);
-        });
-        print(_outputItems);
-        return Column(
-            children: columnedMultiLineOutput(context, _outputItems));
-      case WHERIGO.LUA:
-        print(_LUA);
-        return GCWDefaultOutput( // decimal
-            child: GCWText(
-              //text: _cartridge.LUA,
-              text: _LUA,
-              style: gcwMonotypeTextStyle(),
-            ),
-            trailing: Row(
-                children: <Widget>[
-                  GCWIconButton(
-                    iconColor: themeColors().mainFont(),
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.content_copy,
-                    onPressed: () {
-                      var copyText = _cartridge
-                          .MediaFilesContents[0].MediaFileBytes != null ? _cartridge.MediaFilesContents[0].MediaFileBytes.join(' ') : '';
-                      insertIntoGCWClipboard(context, copyText);
-                    },
-                  ),
-                  GCWIconButton(
-                    iconData: Icons.save,
-                    size: IconButtonSize.SMALL,
-                    iconColor: _cartridge
-                        .MediaFilesContents[0].MediaFileBytes == null ? themeColors().inActive() : null,
-                    onPressed: () {
-                      _cartridge
-                          .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _cartridge
-                          .MediaFilesContents[0].MediaFileBytes);
-                    },
-                  )                  ]
-            )
-        );
+        break;
+
     }
   }
 
@@ -371,6 +296,4 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
-
-
 }

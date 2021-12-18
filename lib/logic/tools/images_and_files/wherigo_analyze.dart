@@ -163,14 +163,18 @@ class StringOffset{
   final String ASCIIZ;
   final int Offset;
 
-  StringOffset(this.ASCIIZ, this.Offset);
+  StringOffset(
+      this.ASCIIZ,
+      this.Offset);
 }
 
 class MediaFileHeader{
   final int MediaFileID;
   final int MediaFileAddress;
 
-  MediaFileHeader(this.MediaFileID, this.MediaFileAddress);
+  MediaFileHeader(
+      this.MediaFileID,
+      this.MediaFileAddress);
 }
 
 class MediaFileContent{
@@ -178,7 +182,10 @@ class MediaFileContent{
   final Uint8List MediaFileBytes;
   final int MediaFileLength;
 
-  MediaFileContent(this.MediaFileType, this.MediaFileBytes, this.MediaFileLength);
+  MediaFileContent(
+      this.MediaFileType,
+      this.MediaFileBytes,
+      this.MediaFileLength);
 }
 
 class ZonePoint{
@@ -186,39 +193,119 @@ class ZonePoint{
   final Double Latitude;
   final Double Altitude;
 
-  ZonePoint(this.Longitude, this.Latitude, this.Altitude);
+  ZonePoint(
+      this.Longitude,
+      this.Latitude,
+      this.Altitude);
 }
 
 class ZoneData{
+  final String ZoneLUAName;
+  final String ZoneID;
   final String ZoneName;
   final String ZoneDescription;
+  final String ZoneVisible;
+  final String ZoneActive;
+  final String ZoneMediaName;
+  final String ZoneIconName;
   final List<ZonePoint> ZonePoints;
 
-  ZoneData(this.ZoneName, this.ZoneDescription, this.ZonePoints);
+  ZoneData(
+      this.ZoneLUAName,
+      this.ZoneID,
+      this.ZoneName,
+      this.ZoneDescription,
+      this.ZoneVisible,
+      this.ZoneActive,
+      this.ZoneMediaName,
+      this.ZoneIconName,
+      this.ZonePoints);
 }
 
 class ObjectData{
+  final String ObjectLUAName;
   final String ObjectID;
   final String ObjectName;
   final String ObjectDescription;
   final String ObjectMediaType;
   final String ObjectMediaFilename;
 
-  ObjectData(this.ObjectID, this.ObjectName, this.ObjectDescription, this.ObjectMediaType, this.ObjectMediaFilename);
+  ObjectData(
+      this.ObjectLUAName,
+      this.ObjectID,
+      this.ObjectName,
+      this.ObjectDescription,
+      this.ObjectMediaType,
+      this.ObjectMediaFilename);
+}
+
+class CharacterData{
+  final String CharacterLUAName;
+  final String CharacterID;
+  final String CharacterName;
+  final String CharacterDescription;
+  final String CharacterVisible;
+  final String CharacterMediaName;
+  final String CharacterIconName;
+  final String CharacterLocation;
+  final String CharacterGender;
+  final String CharacterType;
+
+  CharacterData(
+      this.CharacterLUAName,
+      this.CharacterID,
+      this.CharacterName,
+      this.CharacterDescription,
+      this.CharacterVisible,
+      this.CharacterMediaName,
+      this.CharacterIconName,
+      this.CharacterLocation,
+      this.CharacterGender,
+      this.CharacterType);
 }
 
 class TimerData{
+  final String TimerLUAName;
+  final String TimerID;
   final String TimerName;
   final String TimerDescription;
+  final String TimerVisible;
+  final String TimerDuration;
+  final String TimerType;
 
-  TimerData(this.TimerName, this.TimerDescription);
+  TimerData(
+      this.TimerLUAName,
+      this.TimerID,
+      this.TimerName,
+      this.TimerDescription,
+      this.TimerVisible,
+      this.TimerDuration,
+      this.TimerType);
 }
 
 class InputData{
+  final String InputLUAName;
+  final String InputID;
   final String InputName;
   final String InputDescription;
+  final String InputVisible;
+  final String InputMedia;
+  final String InputIcon;
+  final String InputType;
+  final String InputText;
+  final List<String> InputChoices;
 
-  InputData(this.InputName, this.InputDescription);
+  InputData(
+      this.InputLUAName,
+      this.InputID,
+      this.InputName,
+      this.InputDescription,
+      this.InputVisible,
+      this.InputMedia,
+      this.InputIcon,
+      this.InputType,
+      this.InputText,
+      this.InputChoices);
 }
 
 class WherigoCartridge{
@@ -226,7 +313,7 @@ class WherigoCartridge{
   final int NumberOfObjects;
   final List<MediaFileHeader> MediaFilesHeaders;
   final List<MediaFileContent> MediaFilesContents;
-  final String LUA;
+  final String LUAFile;
   final int HeaderLength;
   final int Splashscreen;
   final int SplashscreenIcon;
@@ -247,7 +334,8 @@ class WherigoCartridge{
   final String RecommendedDevice;
   final int LengthOfCompletionCode;
   final String CompletionCode;
-  final List<ObjectData> Characters;
+  final String dtable;
+  final List<CharacterData> Characters;
   final List<ObjectData> Items;
   final List<ObjectData> Tasks;
   final List<InputData> Inputs;
@@ -256,7 +344,7 @@ class WherigoCartridge{
 
 
   WherigoCartridge(this.Signature,
-      this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUA,
+      this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUAFile,
       this.HeaderLength,
       this.Latitude, this.Longitude, this.Altitude,
       this.Splashscreen, this.SplashscreenIcon,
@@ -266,27 +354,8 @@ class WherigoCartridge{
       this.Version, this.Author, this.Company,
       this.RecommendedDevice,
       this.LengthOfCompletionCode, this.CompletionCode,
-      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers);
-}
-
-class WherigoCartridgeDetails{
-  final String dtable;
-  final List<ObjectData> Characters;
-  final List<ObjectData> Items;
-  final List<ObjectData> Tasks;
-  final List<InputData> Inputs;
-  final List<ZoneData> Zones;
-  final List<TimerData> Timers;
-
-
-  WherigoCartridgeDetails(
       this.dtable,
-      this.Characters,
-      this.Items,
-      this.Tasks,
-      this.Inputs,
-      this.Zones,
-      this.Timers);
+      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -341,8 +410,6 @@ const LENGTH_INT = 4;
 const LENGTH_LONG = 4;
 const LENGTH_DOUBLE = 8;
 
-String plainLUA = '';
-
 bool isInvalidCartridge(Uint8List byteList){
   // @0000:                      ; Signature
   //        BYTE     0x02        ; Version Major 2
@@ -365,15 +432,16 @@ bool isInvalidCartridge(Uint8List byteList){
 
 WherigoCartridge getCartridge(Uint8List byteList) {
   if (byteList == [] || byteList == null)
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], [], []);
+    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], []);
 
   if (isInvalidCartridge(byteList))
-    return WherigoCartridge('ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', [], [], [], [], [], []);
+    return WherigoCartridge('ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
   List<MediaFileHeader> MediaFilesHeaders = [];
   List<MediaFileContent> MediaFilesContents = [];
+  String LUAFile = '';
   int MediaFileID = 0;
   int Address = 0;
   int HeaderLength = 0;
@@ -395,8 +463,9 @@ WherigoCartridge getCartridge(Uint8List byteList) {
   String Company = '';
   String RecommendedDevice = '';
   int LengthOfCompletionCode = 0;
+  String dtable = '';
   String CompletionCode = '';
-  List<ObjectData> Characters = [];
+  List<CharacterData> Characters = [];
   List<ObjectData> Items = [];
   List<ObjectData> Tasks = [];
   List<InputData> Inputs = [];
@@ -491,6 +560,8 @@ WherigoCartridge getCartridge(Uint8List byteList) {
   MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteList, offset, offset + MediaFileLength), MediaFileLength));
   offset = offset + MediaFileLength;
 
+  LUAFile = _decompileLUA(MediaFilesContents[0].MediaFileBytes);
+
   // read Objects
   for (int i = 1; i < NumberOfObjects; i++){
     ValidMediaFile = readByte(byteList, offset);     offset = offset + LENGTH_BYTE;
@@ -502,19 +573,16 @@ WherigoCartridge getCartridge(Uint8List byteList) {
     }
   }
 
-  // decompile LUA
-  _decompileLUA(MediaFilesContents[0].MediaFileBytes);
-
-  // analyze cartridge with String LUA
-  Characters = _getCharactersFromCartridge(plainLUA);
-  Items = _getItemsFromCartridge(plainLUA);
-  Tasks = _getTasksFromCartridge(plainLUA);
-  Inputs = _getInputsFromCartridge(plainLUA);
-  Zones = _getZonesFromCartridge(plainLUA);
-  Timers = _getTimersFromCartridge(plainLUA);
+  dtable = _getdtableFromCartridge(LUAFile);
+  Characters = _getCharactersFromCartridge(LUAFile, dtable);
+  Items = _getItemsFromCartridge(LUAFile, dtable);
+  Tasks = _getTasksFromCartridge(LUAFile, dtable);
+  Inputs = _getInputsFromCartridge(LUAFile, dtable);
+  Zones = _getZonesFromCartridge(LUAFile, dtable);
+  Timers = _getTimersFromCartridge(LUAFile, dtable);
 
   return WherigoCartridge(Signature,
-    NumberOfObjects, MediaFilesHeaders, MediaFilesContents, plainLUA,
+    NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
     HeaderLength,
     Latitude, Longitude, Altitude,
     Splashscreen, SplashscreenIcon,
@@ -524,38 +592,43 @@ WherigoCartridge getCartridge(Uint8List byteList) {
     CartridgeName, CartridgeGUID, CartridgeDescription, StartingLocationDescription,
     Version, Author, Company, RecommendedDevice,
     LengthOfCompletionCode, CompletionCode,
+    dtable,
     Characters, Items, Tasks, Inputs, Zones, Timers);
 }
 
-WherigoCartridgeDetails getCartridgeDetails(String LUA){
-  print('getcartridgedetails');
-  String dtable = '';
-  List<ObjectData> Characters = [];
-  List<ObjectData> Items = [];
-  List<ObjectData> Tasks = [];
-  List<InputData> Inputs = [];
-  List<ZoneData> Zones = [];
-  List<TimerData> Timers = [];
 
-  Characters = _getCharactersFromCartridge(LUA);
-  Items = _getItemsFromCartridge(LUA);
-  Tasks = _getTasksFromCartridge(LUA);
-  Inputs = _getInputsFromCartridge(LUA);
-  Zones = _getZonesFromCartridge(LUA);
-  Timers = _getTimersFromCartridge(LUA);
+List<CharacterData>_getCharactersFromCartridge(String LUA, dtable){
+  RegExp re = RegExp(r'( = Wherigo.ZCharacter)');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  List<CharacterData> result = [];
+  CharacterData item;
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      index = i;
+      item = CharacterData(
+          lines[index],
+          lines[index + 1],
+          lines[index + 2],
+          lines[index + 3],
+          lines[index + 4],
+          lines[index + 5],
+          lines[index + 6],
+          lines[index + 7],
+          lines[index + 7],
+          lines[index + 8]);
+      result.add(item);
+      i = i + 9;
+    }
+  };
 
-  return WherigoCartridgeDetails(
-      dtable, Characters, Items, Tasks, Inputs, Zones, Timers);
+  return result;
 }
 
-List<ObjectData>_getCharactersFromCartridge(String LUA){
-  return [];
-}
-
-List<ObjectData>_getItemsFromCartridge(String LUA){
-  print('getItems');
-  print(LUA);
-  RegExp re = RegExp(r'( = Wherigo.ZMedia)');
+List<ObjectData>_getItemsFromCartridge(String LUA, dtable){
+  RegExp re = RegExp(r'( = Wherigo.ZItem)');
   List<String> lines = LUA.split('\n');
   String line = '';
   int index = 0;
@@ -566,7 +639,13 @@ List<ObjectData>_getItemsFromCartridge(String LUA){
     line = lines[i];
     if (re.hasMatch(line)) {
       index = i;
-      item = ObjectData(lines[index + 1], lines[index + 2], lines[index + 3], lines[index + 7], lines[index + 8]);
+      item = ObjectData(
+          lines[index],
+          lines[index + 1],
+          lines[index + 2],
+          lines[index + 3],
+          lines[index + 7],
+          lines[index + 8]);
       result.add(item);
       i = i + 9;
     }
@@ -574,30 +653,145 @@ List<ObjectData>_getItemsFromCartridge(String LUA){
   return result;
 }
 
-List<ObjectData>_getTasksFromCartridge(String LUA){
-  return [];
+List<ObjectData>_getTasksFromCartridge(String LUA, dtable){
+  RegExp re = RegExp(r'( = Wherigo.ZTask)');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  List<ObjectData> result = [];
+  ObjectData item;
+
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      index = i;
+      item = ObjectData(
+          lines[index],
+          lines[index + 1],
+          lines[index + 2],
+          lines[index + 3],
+          lines[index + 7],
+          lines[index + 8]);
+      result.add(item);
+      i = i + 9;
+    }
+  };
+  return result;
 }
 
-List<InputData>_getInputsFromCartridge(String LUA){
-  return [];
+List<InputData>_getInputsFromCartridge(String LUA, dtable){
+  RegExp re = RegExp(r'( = Wherigo.ZInput)');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  List<InputData> result = [];
+  InputData item;
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      index = i;
+      item = InputData(
+          lines[index],
+          lines[index + 1],
+          lines[index + 2],
+          lines[index + 3],
+          lines[index + 4],
+          lines[index + 5],
+          lines[index + 6],
+          lines[index + 7],
+          lines[index + 8],
+          []);
+      result.add(item);
+      i = i + 9;
+    }
+  };
+
+  return result;
 }
 
-List<ZoneData>_getZonesFromCartridge(String LUA){
-  return [];
+List<ZoneData>_getZonesFromCartridge(String LUA, dtable){
+  RegExp re = RegExp(r'( = Wherigo.Zone)');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  List<ZoneData> result = [];
+  ZoneData item;
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      index = i;
+      item = ZoneData(
+          lines[index],
+          lines[index + 1],
+          lines[index + 2],
+          lines[index + 3],
+          lines[index + 7],
+          lines[index + 8],
+          lines[index + 8],
+          lines[index + 8],
+          []);
+      result.add(item);
+      i = i + 9;
+    }
+  };
+
+  return result;
 }
 
-List<TimerData>_getTimersFromCartridge(String LUA){
-  return [];
+List<TimerData>_getTimersFromCartridge(String LUA, dtable){
+  RegExp re = RegExp(r'( = Wherigo.ZTimer)');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  List<TimerData> result = [];
+  TimerData item;
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      index = i;
+      item = TimerData(
+          lines[index],
+          lines[index + 1],  //id
+          lines[index + 2],  //name
+          lines[index + 3],  //description
+          lines[index + 4],  //visible
+          lines[index + 5],   //duration
+          lines[index + 6]);  //type
+      result.add(item);
+      i = i + 9;
+    }
+  };
+
+  return result;
 }
 
-_decompileLUA(Uint8List LUA) async {
-  // online solution via REST-API
-  print('inside decompile');
-  var result = await http.post(Uri.parse('https://lua-decompiler.ferib.dev/api/decompile/'), body: LUA);
-  plainLUA = JASONStringToString(result.body);
-  print(plainLUA);
-  print('got plainLUA');
-  // {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
+
+String _getdtableFromCartridge(String LUA){
+  RegExp re = RegExp(r'local dtable = ")');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  String result = '';
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      line = line.trimLeft().replaceAll('local dtable = "', '').replaceAll('"', '');
+      return line;
+    }
+  };
+  return '';
+}
+//String plainLUA = '';
+//_decompileLUA(Uint8List LUA) async {
+// online solution via REST-API
+//  print('inside decompile');
+//  var result = await http.post(Uri.parse('https://lua-decompiler.ferib.dev/api/decompile/'), body: LUA);
+//  plainLUA = JASONStringToString(result.body);
+// {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
+//}
+
+_decompileLUA(Uint8List LUA) {
+  return '';
 }
 
 String JASONStringToString(String JSON){
