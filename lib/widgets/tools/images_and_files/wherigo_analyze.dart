@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_analyze.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_character.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_input.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_item.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_task.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_timer.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_zone.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -152,6 +158,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_header_completion'), _cartridge.CompletionCode],
     ];
 
+    int _zoneIndex = 0;
+    int _inputIndex = 0;
+    int _characterIndex = 0;
+    int _timerIndex = 0;
+    int _taskIndex = 0;
+    int _itemIndex = 0;
+
     switch (_cartridgeData) {
       case WHERIGO.HEADER:
         return Column(
@@ -273,15 +286,156 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.LUA:
-      case WHERIGO.CHARACTER:
-      case WHERIGO.ZONES:
-      case WHERIGO.INPUTS:
-      case WHERIGO.TASKS:
-      case WHERIGO.TIMERS:
         return Container();
         break;
-
+      case WHERIGO.CHARACTER:
+        return Column(
+            children : <Widget>[
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Characters.length,
+                value: _characterIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _characterIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex])))
+            ]
+        );
+        break;
+      case WHERIGO.ZONES:
+        return Column(
+            children : <Widget>[
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Zones.length,
+                value: _zoneIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _zoneIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex]))
+              )]
+        );
+        break;
+      case WHERIGO.INPUTS:
+        return Column(
+            children : <Widget>[
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Inputs.length,
+                value: _inputIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _inputIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex])))
+            ]
+        );
+        break;
+      case WHERIGO.TASKS:
+        return Column(
+            children : <Widget>[
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Tasks.length,
+                value: _taskIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _taskIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex])))
+            ]
+        );
+        break;
+      case WHERIGO.TIMERS:
+        return Column(
+            children : <Widget>[
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Timers.length,
+                value: _timerIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _timerIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex])))
+            ]
+        );
+        break;
+      case WHERIGO.ITEMS:
+        return Column(
+          children : <Widget>[
+            GCWIntegerSpinner(
+              min: 0,
+              max: _cartridge.Items.length,
+              value: _itemIndex,
+              onChanged: (value) {
+                setState(() {
+                  _itemIndex = value;
+                });
+              },
+            ),
+            Column(
+                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex])))
+          ]
+        );
+        break;
     }
+  }
+
+  List _outputZone(ZoneData data){
+    List<String> points = [];
+    List result = [
+    [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
+    [i18n(context, 'wherigo_output_id'), data.ZoneID],
+    [i18n(context, 'wherigo_output_name'), data.ZoneName],
+    [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
+    [i18n(context, 'wherigo_output_visible'), data.ZoneVisible],
+    [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName],
+    [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName],
+    [i18n(context, 'wherigo_output_active'), data.ZoneActive]
+    ];
+    data.ZonePoints.forEach((point) {
+      points.add('(' + point.Latitude + ', ' + point.Longitude + ', ' + point.Altitude + ')');
+    });
+    result.add([i18n(context, 'wherigo_output_zonepoints'), points.join('\n')]);
+    return result;
+  }
+
+  List _outputItem(ItemData data){
+
+  }
+
+  List _outputTask(TaskData data){
+
+  }
+
+  List _outputTimer(TimerData data){
+
+  }
+
+  List _outputCharacter(CharacterData data){
+
+  }
+
+  List _outputInput(InputData data){
+
   }
 
   String _getCreationDate(int duration) {
