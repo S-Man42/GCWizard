@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo_analyze.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_analyze.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
