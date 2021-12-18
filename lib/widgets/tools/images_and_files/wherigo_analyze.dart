@@ -315,7 +315,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   size: IconButtonSize.SMALL,
                   iconColor: _cartridge.LUAFile == null ? themeColors().inActive() : null,
                   onPressed: () {
-                    _cartridge.LUAFile == null ? null : _exportFile(context, _StringToUint8List(_cartridge.LUAFile));
+                    _cartridge.LUAFile == null ? null : _exportFile(context, _cartridge.LUAFile.codeUnits);
                   },
                 ),
               ],
@@ -544,11 +544,4 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
 
-  Uint8List _StringToUint8List(String file){
-    Uint8List result;
-    file.split('').forEach((element) {
-      result.add(element.codeUnitAt(0));
-    });
-    return result;
-  }
 }
