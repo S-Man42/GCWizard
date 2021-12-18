@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong2/latlong.dart';
 
 void main() {
-  group("Converter.reverseWhereIGoWaldmeister.latlonToWaldmeister:", () {
+  group("Converter.reverseWherigoWaldmeister.latlonToWaldmeister:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'coord': LatLng(0.0, 0.0), 'expectedOutput': ['000100', '009000', '005000']},
       {'coord': LatLng(-87.08835, -179.80245), 'expectedOutput': ['580497', '850012', '847837']},
@@ -27,7 +27,7 @@ void main() {
     });
   });
 
-  group("Converter.reverseWhereIGoWaldmeister.waldmeisterToLatLon:", () {
+  group("Converter.reverseWherigooWaldmeister.waldmeisterToLatLon:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'expectedOutput': LatLng(0.0, 0.0), 'input': ['000100', '009000', '005000']},
       {'expectedOutput': LatLng(-87.08835, -179.80245), 'input': ['580497', '850012', '847837']},
@@ -54,11 +54,11 @@ void main() {
     });
   });
 
-  group("Converter.reverse_whereigo_waldmeister.parseLatLon:", () {
+  group("Converter.reverse_wherigo_waldmeister.parseLatLon:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'text': '', 'expectedOutput': null},
-      {'text': '104181 924569 248105', 'expectedOutput': {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
-      {'text': '104181\n924569\n248105', 'expectedOutput': {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
+      {'text': '104181 924569 248105', 'expectedOutput': {'format': keyCoordsReverseWherigoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
+      {'text': '104181\n924569\n248105', 'expectedOutput': {'format': keyCoordsReverseWherigoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
     ];
 
     _inputsToExpected.forEach((elem) {

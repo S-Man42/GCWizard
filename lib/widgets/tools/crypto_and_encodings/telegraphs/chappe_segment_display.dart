@@ -5,66 +5,17 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
-  '10': false,
-  '20': false,
-  '30': false,
-  '40': false,
-  '50': false,
-  '60': false,
-  '70': false,
-  '80': false,
-  '1l': false,
-  '2l': false,
-  '3l': false,
-  '4l': false,
-  '5l': false,
-  '6l': false,
-  '7l': false,
-  '8l': false,
-  '1r': false,
-  '2r': false,
-  '3r': false,
-  '4r': false,
-  '5r': false,
-  '6r': false,
-  '7r': false,
-  '8r': false,
-  '1o': false,
-  '2o': false,
-  '3o': false,
-  '4o': false,
-  '5o': false,
-  '6o': false,
-  '7o': false,
-  '8o': false,
-  '1u': false,
-  '2u': false,
-  '3u': false,
-  '4u': false,
-  '5u': false,
-  '6u': false,
-  '7u': false,
-  '8u': false,
-  '1a': false,
-  '2a': false,
-  '3a': false,
-  '4a': false,
-  '5a': false,
-  '6a': false,
-  '7a': false,
-  '8a': false,
-  '1b': false,
-  '2b': false,
-  '3b': false,
-  '4b': false,
-  '5b': false,
-  '6b': false,
-  '7b': false,
-  '8b': false,
+  '10': false,  '20': false,  '30': false,  '40': false,  '50': false,  '60': false,  '70': false,  '80': false,
+  '1l': false,  '2l': false,  '3l': false,  '4l': false,  '5l': false,  '6l': false,  '7l': false,  '8l': false,
+  '1r': false,  '2r': false,  '3r': false,  '4r': false,  '5r': false,  '6r': false,  '7r': false,  '8r': false,
+  '1o': false,  '2o': false,  '3o': false,  '4o': false,  '5o': false,  '6o': false,  '7o': false,  '8o': false,
+  '1u': false,  '2u': false,  '3u': false,  '4u': false,  '5u': false,  '6u': false,  '7u': false,  '8u': false,
+  '1a': false,  '2a': false,  '3a': false,  '4a': false,  '5a': false,  '6a': false,  '7a': false,  '8a': false,
+  '1b': false,  '2b': false,  '3b': false,  '4b': false,  '5b': false,  '6b': false,  '7b': false,  '8b': false,
 };
 
-const _CHAPPE_RELATIVE_DISPLAY_WIDTH = 190;
-const _CHAPPE_RELATIVE_DISPLAY_HEIGHT = 190;
+const _CHAPPE_RELATIVE_DISPLAY_WIDTH = 180;
+const _CHAPPE_RELATIVE_DISPLAY_HEIGHT = 200;
 
 class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -89,27 +40,19 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               paint.color = Colors.grey;
               canvas.touchCanvas.drawCircle(
                   Offset(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 95,
-                      size.height / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 91),
+                      size.height / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 74),
                   size.height / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 13.0,
                   paint);
 
               var path00 = Path();
-              path00.moveTo(
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
-              path00.lineTo(
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
-              path00.lineTo(
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
-              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100,
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
-              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100,
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
-              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170,
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 190);
-              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170,
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 200);
-              path00.lineTo(
-                  size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 200);
+              path00.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20,  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 210);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90,  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 210);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 90,  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 120);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 210);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 210);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 170, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 220);
+              path00.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 20,  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 220);
               path00.close();
               canvas.touchCanvas.drawPath(path00, paint);
 
@@ -449,6 +392,42 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
                   setSegmentState('3b', !currentSegments['3b']);
                 });
 
+              paint.color = currentSegments['3u'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              var path3u = Path();
+              path3u.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  90,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  30);
+              path3u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  80,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  50);
+              path3u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  70,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  40);
+              path3u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  80,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  30);
+              path3u.close();
+              if (size.height < 180) if (currentSegments['3u'])
+                canvas.touchCanvas.drawPath(path3u, paint, onTapDown: (tapDetail) {
+                  setSegmentState('3u', !currentSegments['3u']);
+                });
+              else
+                ;
+              else
+                canvas.touchCanvas.drawPath(path3u, paint, onTapDown: (tapDetail) {
+                  setSegmentState('3u', !currentSegments['3u']);
+                });
+
+              paint.color = currentSegments['3o'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              var path3o = Path();
+              path3o.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  30);
+              path3o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  50);
+              path3o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  40);
+              path3o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT *  30);
+              path3o.close();
+              if (size.height < 180) if (currentSegments['3o'])
+                canvas.touchCanvas.drawPath(path3o, paint, onTapDown: (tapDetail) {
+                  setSegmentState('3o', !currentSegments['3o']);
+                });
+              else
+                ;
+              else
+                canvas.touchCanvas.drawPath(path3o, paint, onTapDown: (tapDetail) {
+                  setSegmentState('3o', !currentSegments['3o']);
+                });
+
               paint.color = currentSegments['40'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var path40 = Path();
               path40.moveTo(
@@ -597,7 +576,7 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
                   size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 140, size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 90);
               path5o.close();
               if (size.height < 180) if (currentSegments['5o'])
-                canvas.touchCanvas.drawPath(path1o, paint, onTapDown: (tapDetail) {
+                canvas.touchCanvas.drawPath(path5o, paint, onTapDown: (tapDetail) {
                   setSegmentState('5o', !currentSegments['5o']);
                 });
               else
@@ -851,6 +830,42 @@ class ChappeTelegraphSegmentDisplay extends NSegmentDisplay {
               else
                 canvas.touchCanvas.drawPath(path7b, paint, onTapDown: (tapDetail) {
                   setSegmentState('7b', !currentSegments['7b']);
+                });
+
+              paint.color = currentSegments['7u'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              var path7u = Path();
+              path7u.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  90,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+              path7u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  80,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
+              path7u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  70,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+              path7u.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH *  80,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+              path7u.close();
+              if (size.height < 180) if (currentSegments['7u'])
+                canvas.touchCanvas.drawPath(path7u, paint, onTapDown: (tapDetail) {
+                  setSegmentState('7u', !currentSegments['7u']);
+                });
+              else
+                ;
+              else
+                canvas.touchCanvas.drawPath(path7u, paint, onTapDown: (tapDetail) {
+                  setSegmentState('7u', !currentSegments['7u']);
+                });
+
+              paint.color = currentSegments['7o'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              var path7o = Path();
+              path7o.moveTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 100,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+              path7o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 140);
+              path7o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 120,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 150);
+              path7o.lineTo(size.width / _CHAPPE_RELATIVE_DISPLAY_WIDTH * 110,                  size.width / _CHAPPE_RELATIVE_DISPLAY_HEIGHT * 160);
+              path7o.close();
+              if (size.height < 180) if (currentSegments['7o'])
+                canvas.touchCanvas.drawPath(path7o, paint, onTapDown: (tapDetail) {
+                  setSegmentState('7o', !currentSegments['7o']);
+                });
+              else
+                ;
+              else
+                canvas.touchCanvas.drawPath(path7o, paint, onTapDown: (tapDetail) {
+                  setSegmentState('7o', !currentSegments['7o']);
                 });
 
               paint.color = currentSegments['80'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
