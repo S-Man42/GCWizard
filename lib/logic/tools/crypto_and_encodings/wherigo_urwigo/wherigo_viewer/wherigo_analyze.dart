@@ -91,13 +91,14 @@
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_media.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_timer.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_character.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_input.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_item.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_task.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_zone.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_timer.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_character.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_input.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_item.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_task.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -370,6 +371,8 @@ WherigoCartridge getCartridge(Uint8List byteList) {
   int ValidMediaFile = 0;
   int MediaFileType = 0;
 
+  String obfuscator = '';
+
   Signature = Signature + byteList[0].toString();
   Signature = Signature + byteList[1].toString();
   Signature = Signature + String.fromCharCode(byteList[2]);
@@ -464,13 +467,14 @@ WherigoCartridge getCartridge(Uint8List byteList) {
   }
 
   dtable = _getdtableFromCartridge(LUAFile);
+  obfuscator = getObfuscatorFunction(LUAFile);
   Characters = getCharactersFromCartridge(LUAFile, dtable);
   Items = getItemsFromCartridge(LUAFile, dtable);
   Tasks = getTasksFromCartridge(LUAFile, dtable);
   Inputs = getInputsFromCartridge(LUAFile, dtable);
-  Zones = getZonesFromCartridge(LUAFile, dtable);
+  Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
   Timers = getTimersFromCartridge(LUAFile, dtable);
-  Media = getMediaFromCartridge(LUAFile, dtable);
+  Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
 
   return WherigoCartridge(Signature,
     NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,

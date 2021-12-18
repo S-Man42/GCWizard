@@ -1,5 +1,5 @@
 
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class MediaData {
   final String MediaLUAName;
@@ -19,7 +19,7 @@ class MediaData {
 }
 
 
-List<MediaData>getMediaFromCartridge(String LUA, dtable){
+List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZMedia)');
   List<String> lines = LUA.split('\n');
   String line = '';
@@ -34,9 +34,9 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable){
       LUAname = getLUAName(lines[index]);
       element = MediaData(
           LUAname,
-          getLineData(lines[index + 1], LUAname, 'Id'),
-          getLineData(lines[index + 2], LUAname, 'Name'),
-          getLineData(lines[index + 3], LUAname, 'Description'),
+          getLineData(lines[index + 1], LUAname, 'Id', obfuscator, dtable),
+          getLineData(lines[index + 2], LUAname, 'Name', obfuscator, dtable),
+          getLineData(lines[index + 3], LUAname, 'Description', obfuscator, dtable),
           getStructData(lines[index + 7], 'Type'),
           getStructData(lines[index + 8], 'Filename'));
       result.add(element);

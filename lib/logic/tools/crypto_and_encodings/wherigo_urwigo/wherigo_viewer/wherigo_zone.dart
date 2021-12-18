@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-import 'package:gc_wizard/logic/tools/images_and_files/wherigo/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class ZonePoint{
   final String Longitude;
@@ -37,7 +37,7 @@ class ZoneData{
 }
 
 
-List<ZoneData>getZonesFromCartridge(String LUA, dtable){
+List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.Zone)');
   List<String> lines = LUA.split('\n');
   String line = '';
@@ -60,13 +60,13 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable){
       }
       item = ZoneData(
           LUAname,
-          getLineData(lines[index + 1], LUAname, 'Id'),
-          getLineData(lines[index + 2], LUAname, 'Name'),
-          getLineData(lines[index + 3], LUAname, 'Description'),
-          getLineData(lines[index + 4], LUAname, 'Visible'),
-          getLineData(lines[index + 4], LUAname, 'Media'),
-          getLineData(lines[index + 6], LUAname, 'Icon'),
-          getLineData(lines[index + 12], LUAname, 'Active'),
+          getLineData(lines[index + 1], LUAname, 'Id', obfuscator, dtable),
+          getLineData(lines[index + 2], LUAname, 'Name', obfuscator, dtable),
+          getLineData(lines[index + 3], LUAname, 'Description', obfuscator, dtable),
+          getLineData(lines[index + 4], LUAname, 'Visible', obfuscator, dtable),
+          getLineData(lines[index + 4], LUAname, 'Media', obfuscator, dtable),
+          getLineData(lines[index + 6], LUAname, 'Icon', obfuscator, dtable),
+          getLineData(lines[index + 12], LUAname, 'Active', obfuscator, dtable),
           []);
       result.add(item);
       i = i + 9;
