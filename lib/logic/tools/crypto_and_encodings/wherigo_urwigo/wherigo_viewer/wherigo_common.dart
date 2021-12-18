@@ -7,6 +7,7 @@ String getLUAName(String line) {
     result = result + line[i];
     i++;
   }
+  return result;
 }
 
 String getLineData(String line, LUAname, type, obfuscator, dtable){
@@ -15,7 +16,7 @@ String getLineData(String line, LUAname, type, obfuscator, dtable){
     result = result.replaceAll(obfuscator,'').replaceAll('(', '').replaceAll('"', '').replaceAll(')', '');
     result = deobfuscateUrwigoText(result, dtable);
   } else {
-    result = result.replaceAll('""', '""');
+    result = result.replaceAll('"', '');
   }
   return result;
 }
