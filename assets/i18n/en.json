@@ -4561,7 +4561,7 @@
   "wasd_custom_down" : "Down",
   "wasd_custom_right" : "Right",
   "wasd_custom_left" : "Left",
-  "wherigo_title" : "Wherigo Analyzer",
+  "wherigo_title" : "Wherigo Viewer/Analyzer",
   "wherigo_description" : "Lists Zones, Media Files, etc. of a Wherigo Cartridge",
   "wherigo_bytecode_decimal": "Decimal",
   "wherigo_bytecode_hexadecimal": "Hexadecimal",

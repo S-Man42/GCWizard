@@ -19,7 +19,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC, LUA }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
@@ -156,7 +156,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.TXT: {
     'extensions': ['txt'],
     'magic_bytes': <List<int>>[],
-    'mime_types': ['audio/mpeg', 'audio/mp3'],
+    'mime_types': ['text/plain'],
     'file_class': FileClass.TEXT
   },
   FileType.PDF: {
@@ -210,6 +210,12 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x02, 0x0B, 0x43, 0x41, 0x52, 0x54, 0x00]],
     'mime_types': ['application/octet-stream'],
     'file_class': FileClass.BINARY
+  },
+  FileType.LUA: {
+    'extensions': ['lua'],
+    'magic_bytes': <List<int>>[],
+    'mime_types': ['text/plain'],
+    'file_class': FileClass.TEXT
   },
 };
 

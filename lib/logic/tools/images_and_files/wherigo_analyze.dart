@@ -99,16 +99,17 @@ enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, 
 
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.LUA: 'wherigo_data_lua',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIA: 'wherigo_data_media',
+  WHERIGO.LUA: 'wherigo_data_lua',
+  WHERIGO.ITEMS: 'wherigo_data_items',
   //WHERIGO.CHARACTER: 'wherigo_data_character',
-  //WHERIGO.ITEMS: 'wherigo_data_items',
   //WHERIGO.ZONES: 'wherigo_data_zones',
   //WHERIGO.INPUTS: 'wherigo_data_inputs',
   //WHERIGO.TASKS: 'wherigo_data_tasks',
   //WHERIGO.TIMERS: 'wherigo_data_timers',
 };
+
 
 StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
   String result = '';
@@ -197,10 +198,13 @@ class ZoneData{
 }
 
 class ObjectData{
+  final String ObjectID;
   final String ObjectName;
   final String ObjectDescription;
+  final String ObjectMediaType;
+  final String ObjectMediaFilename;
 
-  ObjectData(this.ObjectName, this.ObjectDescription);
+  ObjectData(this.ObjectID, this.ObjectName, this.ObjectDescription, this.ObjectMediaType, this.ObjectMediaFilename);
 }
 
 class TimerData{
@@ -266,6 +270,7 @@ class WherigoCartridge{
 }
 
 class WherigoCartridgeDetails{
+  final String dtable;
   final List<ObjectData> Characters;
   final List<ObjectData> Items;
   final List<ObjectData> Tasks;
@@ -275,6 +280,7 @@ class WherigoCartridgeDetails{
 
 
   WherigoCartridgeDetails(
+      this.dtable,
       this.Characters,
       this.Items,
       this.Tasks,
@@ -522,6 +528,8 @@ WherigoCartridge getCartridge(Uint8List byteList) {
 }
 
 WherigoCartridgeDetails getCartridgeDetails(String LUA){
+  print('getcartridgedetails');
+  String dtable = '';
   List<ObjectData> Characters = [];
   List<ObjectData> Items = [];
   List<ObjectData> Tasks = [];
@@ -537,7 +545,7 @@ WherigoCartridgeDetails getCartridgeDetails(String LUA){
   Timers = _getTimersFromCartridge(LUA);
 
   return WherigoCartridgeDetails(
-      Characters, Items, Tasks, Inputs, Zones, Timers);
+      dtable, Characters, Items, Tasks, Inputs, Zones, Timers);
 }
 
 List<ObjectData>_getCharactersFromCartridge(String LUA){
@@ -545,7 +553,25 @@ List<ObjectData>_getCharactersFromCartridge(String LUA){
 }
 
 List<ObjectData>_getItemsFromCartridge(String LUA){
-  return [];
+  print('getItems');
+  print(LUA);
+  RegExp re = RegExp(r'( = Wherigo.ZMedia)');
+  List<String> lines = LUA.split('\n');
+  String line = '';
+  int index = 0;
+  List<ObjectData> result = [];
+  ObjectData item;
+
+  for (int i = 0; i < lines.length; i++){
+    line = lines[i];
+    if (re.hasMatch(line)) {
+      index = i;
+      item = ObjectData(lines[index + 1], lines[index + 2], lines[index + 3], lines[index + 7], lines[index + 8]);
+      result.add(item);
+      i = i + 9;
+    }
+  };
+  return result;
 }
 
 List<ObjectData>_getTasksFromCartridge(String LUA){

@@ -30,7 +30,9 @@ class WherigoAnalyze extends StatefulWidget {
 class WherigoAnalyzeState extends State<WherigoAnalyze> {
   ScrollController _scrollControllerHex;
 
-  Uint8List _bytes;
+  Uint8List _GWCbytes;
+  Uint8List _LUAbytes;
+
   WherigoCartridge _cartridge;
   WherigoCartridgeDetails _cartridgeDetails;
   String _LUA = '';
@@ -42,6 +44,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   var _currentByteCodeMode = GCWSwitchPosition.right;
 
+  bool _GWCloaded = false;
+  bool _LUAloaded = false;
 
   @override
   void initState() {
@@ -51,6 +55,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  _setGWCData(Uint8List bytes) {
+    _GWCbytes = bytes;
+  }
+
+  _setLUAData(Uint8List bytes) {
+    _LUAbytes = bytes;
   }
 
   @override
@@ -69,7 +81,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             }
 
             if (_GWCfile != null) {
-              _cartridge = getCartridge(_GWCfile.bytes);
+              _GWCloaded = true;
+              _setGWCData(_GWCfile.bytes);
+              _cartridge = getCartridge(_GWCbytes);
 
               setState(() {});
             }
@@ -85,12 +99,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             }
 
             if (_LUAfile != null) {
+              _LUAloaded = true;
               _LUA = '';
               for (int i = 0; i < _LUAfile.bytes.length; i++) {
                 _LUA = _LUA + String.fromCharCode(_LUAfile.bytes[i]);
               }
+              print(_LUA);
               _cartridgeDetails = getCartridgeDetails(_LUA);
-
               setState(() {});
             }
           },
@@ -115,8 +130,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildOutput() {
-    if (_bytes == null) return Container();
-    print('LUA'+_cartridge.LUA);
+    if (_GWCbytes == null) return Container();
+    //print('LUA'+_cartridge.LUA);
+    print(_LUA);
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
       [
@@ -288,15 +304,30 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.CHARACTER:
-      case WHERIGO.ITEMS:
       case WHERIGO.TASKS:
       case WHERIGO.ZONES:
       case WHERIGO.INPUTS:
         return Container();
+      case WHERIGO.ITEMS:
+        print('items');
+        var _outputItems;
+        _cartridgeDetails.Items.forEach((element) {
+          _outputItems.add(
+              element.ObjectID + '\n' +
+              element.ObjectName + '\n' +
+              element.ObjectDescription + '\n' +
+              element.ObjectMediaType  + '\n' +
+              element.ObjectMediaFilename);
+        });
+        print(_outputItems);
+        return Column(
+            children: columnedMultiLineOutput(context, _outputItems));
       case WHERIGO.LUA:
+        print(_LUA);
         return GCWDefaultOutput( // decimal
             child: GCWText(
-              text: _cartridge.LUA,
+              //text: _cartridge.LUA,
+              text: _LUA,
               style: gcwMonotypeTextStyle(),
             ),
             trailing: Row(
