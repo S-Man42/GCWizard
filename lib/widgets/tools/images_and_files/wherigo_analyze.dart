@@ -22,6 +22,8 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -168,11 +170,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     switch (_cartridgeData) {
       case WHERIGO.HEADER:
         return Column(
-            children: columnedMultiLineOutput(context, _outputHeader));
+          children: <Widget>[
+            GCWDefaultOutput(),
+            Column(
+              children: columnedMultiLineOutput(context, _outputHeader))
+            ]);
         break;
       case WHERIGO.LUABYTECODE:
         return Column(
           children: <Widget>[
+            GCWDefaultOutput(),
             GCWTwoOptionsSwitch(
               value: _currentByteCodeMode,
               rightValue: i18n(context, 'wherigo_bytecode_decimal'),
@@ -268,6 +275,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         ];
         return Column(
           children: <Widget>[
+            GCWDefaultOutput(),
             GCWIntegerSpinner(
               min: 1,
               max: _cartridge.NumberOfObjects - 1,
@@ -286,11 +294,38 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.LUA:
-        return Container();
+        return GCWDefaultOutput(
+            child: GCWText(
+              text: _cartridge.LUAFile,
+              style: gcwMonotypeTextStyle(),
+            ),
+            trailing: Row(
+              children: <Widget>[
+                GCWIconButton(
+                  iconColor: themeColors().mainFont(),
+                  size: IconButtonSize.SMALL,
+                  iconData: Icons.content_copy,
+                  onPressed: () {
+                    var copyText = _cartridge.LUAFile != null ? _cartridge.LUAFile : '';
+                    insertIntoGCWClipboard(context, copyText);
+                  },
+                ),
+                GCWIconButton(
+                  iconData: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  iconColor: _cartridge.LUAFile == null ? themeColors().inActive() : null,
+                  onPressed: () {
+                    _cartridge.LUAFile == null ? null : _exportFile(context, _StringToUint8List(_cartridge.LUAFile));
+                  },
+                ),
+              ],
+            )
+        );
         break;
       case WHERIGO.CHARACTER:
         return Column(
             children : <Widget>[
+              GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
                 max: _cartridge.Characters.length,
@@ -302,13 +337,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 },
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex])))
+                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex]))
+              )
             ]
         );
         break;
       case WHERIGO.ZONES:
         return Column(
             children : <Widget>[
+              GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
                 max: _cartridge.Zones.length,
@@ -327,6 +364,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.INPUTS:
         return Column(
             children : <Widget>[
+              GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
                 max: _cartridge.Inputs.length,
@@ -338,13 +376,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 },
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex])))
+                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex]))
+              )
             ]
         );
         break;
       case WHERIGO.TASKS:
         return Column(
             children : <Widget>[
+              GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
                 max: _cartridge.Tasks.length,
@@ -356,13 +396,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 },
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex])))
+                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex]))
+              )
             ]
         );
         break;
       case WHERIGO.TIMERS:
         return Column(
             children : <Widget>[
+              GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
                 max: _cartridge.Timers.length,
@@ -374,13 +416,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 },
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex])))
+                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex]))
+              )
             ]
         );
         break;
       case WHERIGO.ITEMS:
         return Column(
           children : <Widget>[
+            GCWDefaultOutput(),
             GCWIntegerSpinner(
               min: 0,
               max: _cartridge.Items.length,
@@ -392,7 +436,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               },
             ),
             Column(
-                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex])))
+                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex]))
+            )
           ]
         );
         break;
@@ -419,23 +464,70 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List _outputItem(ItemData data){
-
+    List result = [
+      [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
+      [i18n(context, 'wherigo_output_id'), data.ItemID],
+      [i18n(context, 'wherigo_output_name'), data.ItemName],
+      [i18n(context, 'wherigo_output_description'), data.ItemDescription],
+      [i18n(context, 'wherigo_output_medianame'), data.ItemMediaFilename],
+      [i18n(context, 'wherigo_output_type'), data.ItemMediaType],
+    ];
+    return result;
   }
 
   List _outputTask(TaskData data){
-
+    List result = [
+      [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName],
+      [i18n(context, 'wherigo_output_id'), data.TaskID],
+      [i18n(context, 'wherigo_output_name'), data.TaskName],
+      [i18n(context, 'wherigo_output_description'), data.TaskDescription],
+      [i18n(context, 'wherigo_output_medianame'), data.TaskMediaFilename],
+      [i18n(context, 'wherigo_output_type'), data.TaskMediaType],
+    ];
+    return result;
   }
 
   List _outputTimer(TimerData data){
-
+    List result = [
+      [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName],
+      [i18n(context, 'wherigo_output_id'), data.TimerID],
+      [i18n(context, 'wherigo_output_name'), data.TimerName],
+      [i18n(context, 'wherigo_output_description'), data.TimerDescription],
+      [i18n(context, 'wherigo_output_duration'), data.TimerDuration],
+      [i18n(context, 'wherigo_output_type'), data.TimerType],
+      [i18n(context, 'wherigo_output_visible'), data.TimerVisible],
+    ];
+    return result;
   }
 
   List _outputCharacter(CharacterData data){
-
+    List result = [
+      [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
+      [i18n(context, 'wherigo_output_id'), data.CharacterID],
+      [i18n(context, 'wherigo_output_name'), data.CharacterName],
+      [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
+      [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName],
+      [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName],
+      [i18n(context, 'wherigo_output_duration'), data.CharacterLocation],
+      [i18n(context, 'wherigo_output_duration'), data.CharacterGender],
+      [i18n(context, 'wherigo_output_type'), data.CharacterType],
+      [i18n(context, 'wherigo_output_visible'), data.CharacterVisible],
+    ];
+    return result;
   }
 
   List _outputInput(InputData data){
-
+    List result = [
+      [i18n(context, 'wherigo_output_luaname'), data.InputLUAName],
+      [i18n(context, 'wherigo_output_id'), data.InputID],
+      [i18n(context, 'wherigo_output_name'), data.InputName],
+      [i18n(context, 'wherigo_output_description'), data.InputDescription],
+      [i18n(context, 'wherigo_output_text'), data.InputText],
+      [i18n(context, 'wherigo_output_choices'), data.InputChoices],
+      [i18n(context, 'wherigo_output_type'), data.InputType],
+      [i18n(context, 'wherigo_output_visible'), data.InputVisible],
+    ];
+    return result;
   }
 
   String _getCreationDate(int duration) {
@@ -450,5 +542,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         context, data, "luabytecode_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);
+  }
+
+  Uint8List _StringToUint8List(String file){
+    Uint8List result;
+    file.split('').forEach((element) {
+      result.add(element.codeUnitAt(0));
+    });
+    return result;
   }
 }
