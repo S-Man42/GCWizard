@@ -41,7 +41,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
   int _mediaFile = 1;
 
-  var _currentByteCodeMode = GCWSwitchPosition.right;
+  var _currentByteCodeMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -170,7 +170,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 });
               },
             ),
-            _currentByteCodeMode == GCWSwitchPosition.right
+            _currentByteCodeMode == GCWSwitchPosition.left
             ? GCWDefaultOutput( // decimal
                 child: GCWText(
                   text: _cartridge
@@ -272,6 +272,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ],
         );
         break;
+      case WHERIGO.LUA:
       case WHERIGO.CHARACTER:
       case WHERIGO.ZONES:
       case WHERIGO.INPUTS:
