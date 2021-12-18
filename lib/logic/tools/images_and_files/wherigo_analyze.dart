@@ -101,8 +101,8 @@ Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIA: 'wherigo_data_media',
-  WHERIGO.LUA: 'wherigo_data_lua',
-  WHERIGO.ITEMS: 'wherigo_data_items',
+  //WHERIGO.LUA: 'wherigo_data_lua',
+  //WHERIGO.ITEMS: 'wherigo_data_items',
   //WHERIGO.CHARACTER: 'wherigo_data_character',
   //WHERIGO.ZONES: 'wherigo_data_zones',
   //WHERIGO.INPUTS: 'wherigo_data_inputs',
@@ -767,7 +767,7 @@ List<TimerData>_getTimersFromCartridge(String LUA, dtable){
 
 
 String _getdtableFromCartridge(String LUA){
-  RegExp re = RegExp(r'local dtable = ")');
+  RegExp re = RegExp(r'(local dtable = ")');
   List<String> lines = LUA.split('\n');
   String line = '';
   int index = 0;
