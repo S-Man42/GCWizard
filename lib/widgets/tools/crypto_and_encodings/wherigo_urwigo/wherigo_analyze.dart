@@ -63,6 +63,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _GWCbytes = bytes;
   }
 
+  _setLUAData(Uint8List bytes) {
+    _LUAbytes = bytes;
+  }
+
   @override
   Widget build(BuildContext context) {
     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA)
@@ -80,7 +84,24 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
-              _cartridge = getCartridge(_GWCbytes);
+              _cartridge = getCartridge(_GWCbytes, _LUAbytes);
+
+              setState(() {});
+            }
+          },
+        ),
+        GCWOpenFile(
+          //supportedFileTypes: [FileType.LUA],
+          title: i18n(context, 'wherigo_open_lua'),
+          onLoaded: (_LUAfile) {
+            if (_LUAfile == null) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
+
+            if (_LUAfile != null) {
+              _setLUAData(_LUAfile.bytes);
+              _cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
             }
