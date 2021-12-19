@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_character.dart';
@@ -39,7 +40,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
-  WherigoCartridge _cartridge;
+  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], []);
   String _LUA = '';
 
   var _cartridgeData = WHERIGO.HEADER;
@@ -55,6 +56,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _timerIndex = 0;
   int _taskIndex = 0;
   int _itemIndex = 0;
+  int _mediaIndex = 0;
 
   @override
   void initState() {
@@ -109,7 +111,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
               _cartridge = getCartridge(_GWCbytes, _LUAbytes);
-
+print('cartridge analysed');
               setState(() {});
             }
           },
@@ -134,7 +136,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildOutput() {
-    if (_GWCbytes == null) return Container();
+    if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == [])) return Container();
 
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
@@ -209,6 +211,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           )
         );
         break;
+
       case WHERIGO.HEADER:
         return Column(
           children: <Widget>[
@@ -217,6 +220,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               children: columnedMultiLineOutput(context, _outputHeader))
             ]);
         break;
+
       case WHERIGO.LUABYTECODE:
         return Column(
           children: <Widget>[
@@ -297,7 +301,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ],
         );
         break;
-      case WHERIGO.MEDIA:
+
+      case WHERIGO.MEDIAFILES:
+        if (_cartridge.MediaFilesContents == [] || _cartridge.MediaFilesContents == null || _cartridge.MediaFilesContents.length == 0)
+          return Container();
+
         var _outputMedia = [
           [
             i18n(context, 'wherigo_media_type'),
@@ -334,6 +342,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ],
         );
         break;
+
       case WHERIGO.LUA:
         return GCWDefaultOutput(
             child: GCWText(
@@ -363,8 +372,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             )
         );
         break;
+
       case WHERIGO.CHARACTER:
-        if (_cartridge.Characters == [])
+        if (_cartridge.Characters == [] || _cartridge.Characters == null || _cartridge.Characters.length == 0)
           return Container();
 
         return Column(
@@ -386,8 +396,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]
         );
         break;
+
       case WHERIGO.ZONES:
-        if (_cartridge.Zones == [])
+        if (_cartridge.Zones == [] || _cartridge.Zones == null || _cartridge.Zones.length == 0)
           return Container();
 
         return Column(
@@ -408,9 +419,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               )]
         );
         break;
+
       case WHERIGO.INPUTS:
-        if (_cartridge.Inputs == [])
+        if (_cartridge.Inputs == [] || _cartridge.Inputs == null || _cartridge.Inputs.length == 0)
           return Container();
+
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -430,9 +443,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]
         );
         break;
+
       case WHERIGO.TASKS:
-        if (_cartridge.Tasks == [])
+        if (_cartridge.Tasks == [] || _cartridge.Tasks == null || _cartridge.Tasks.length == 0)
           return Container();
+
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -452,9 +467,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]
         );
         break;
+
       case WHERIGO.TIMERS:
-        if (_cartridge.Timers == [])
+        if (_cartridge.Timers == [] || _cartridge.Timers == null || _cartridge.Timers.length == 0)
           return Container();
+
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -474,9 +491,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]
         );
         break;
+
       case WHERIGO.ITEMS:
-        if (_cartridge.Items == [])
+        if (_cartridge.Items == [] || _cartridge.Items == null || _cartridge.Items.length == 0)
           return Container();
+
         return Column(
           children : <Widget>[
             GCWDefaultOutput(),
@@ -494,6 +513,30 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex]))
             )
           ]
+        );
+        break;
+
+      case WHERIGO.MEDIA:
+        if (_cartridge.Media == [] || _cartridge.Media == null || _cartridge.Media.length == 0)
+          return Container();
+
+        return Column(
+            children : <Widget>[
+              GCWDefaultOutput(),
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Media.length - 1,
+                value: _mediaIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _mediaIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputMedia(_cartridge.Media[_mediaIndex]))
+              )
+            ]
         );
         break;
     }
@@ -523,6 +566,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
     result.add([i18n(context, 'wherigo_output_zonepoints'), points.join('\n')]);
     return result;
+  }
+
+  List<List<dynamic>> _outputMedia(MediaData data){
+    return [
+      [i18n(context, 'wherigo_output_luaname'), data.MediaLUAName],
+      [i18n(context, 'wherigo_output_id'), data.MediaID],
+      [i18n(context, 'wherigo_output_name'), data.MediaName],
+      [i18n(context, 'wherigo_output_description'), data.MediaDescription],
+      [i18n(context, 'wherigo_output_medianame'), data.MediaFilename],
+      [i18n(context, 'wherigo_output_type'), data.MediaType],
+    ];
   }
 
   List<List<dynamic>> _outputItem(ItemData data){
@@ -597,6 +651,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   String _getCreationDate(int duration) {
     // Date of creation   ; Seconds since 2004-02-10 01:00:00
+    if (duration == null)
+      return DateTime(2004, 2, 1, 1, 0, 0, 0).toString();
     return (DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)))
         .toString();
   }

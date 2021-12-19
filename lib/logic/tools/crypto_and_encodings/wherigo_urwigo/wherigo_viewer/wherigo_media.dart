@@ -36,12 +36,9 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
-print((i+1).toString()+' '+line);
       LUAname = getLUAName(line);
       id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-print('    '+id);
       name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
-print('    '+name);
 
       description = '';
       section = true;
@@ -53,10 +50,8 @@ print('    '+name);
           section = false;
       } while (section);
       description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
-print('    '+description);
       section = true;
       do {
-        print(lines[i + 2 + j]);
         if ((i + 2 + j) < lines.length - 1) {
           if (lines[i + 2 + j].trimLeft().startsWith('Filename = '))
             media = getStructData(lines[i + 2 + j], 'Filename');
@@ -76,7 +71,6 @@ print('    '+description);
           type,
           media,
       ));
-      print('element added');
       i = i + 2 + j;
     }
   };

@@ -22,7 +22,7 @@ String getLineData(String line, LUAname, type, obfuscator, dtable){
 }
 
 String getStructData(String line, type){
-  return line.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '');
+  return line.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '').replaceAll(',', '');
 }
 
 String getObfuscatorFunction(String source){

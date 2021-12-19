@@ -103,11 +103,12 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE}
+enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES}
 
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.DTABLE: 'wherigo_data_dtable',
   WHERIGO.LUA: 'wherigo_data_lua',
@@ -546,23 +547,14 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
 
 
   dtable = _getdtableFromCartridge(LUAFile);
-  print(dtable);
   obfuscator = getObfuscatorFunction(LUAFile);
-  print(obfuscator);
-  Characters = getCharactersFromCartridge(LUAFile, dtable);
-  print(Characters);
+  Characters = getCharactersFromCartridge(LUAFile, dtable, obfuscator);
   Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
-  print(Items);
   Tasks = getTasksFromCartridge(LUAFile, dtable, obfuscator);
-  print(Tasks);
   Inputs = getInputsFromCartridge(LUAFile, dtable, obfuscator);
-  print(Inputs);
   Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
-  print(Zones);
   Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
-  print(Timers);
   Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
-  print(Media);
 
   return WherigoCartridge(Signature,
     NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
