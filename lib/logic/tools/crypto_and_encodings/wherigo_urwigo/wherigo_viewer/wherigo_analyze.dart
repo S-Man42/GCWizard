@@ -476,11 +476,11 @@ print('LUAFILE');
   dtable = _getdtableFromCartridge(LUAFile);
   obfuscator = getObfuscatorFunction(LUAFile);
   Characters = getCharactersFromCartridge(LUAFile, dtable);
-  Items = getItemsFromCartridge(LUAFile, dtable);
-  Tasks = getTasksFromCartridge(LUAFile, dtable);
-  Inputs = getInputsFromCartridge(LUAFile, dtable);
+  Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
+  Tasks = getTasksFromCartridge(LUAFile, dtable, obfuscator);
+  Inputs = getInputsFromCartridge(LUAFile, dtable, obfuscator);
   Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
-  Timers = getTimersFromCartridge(LUAFile, dtable);
+  Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
   Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
 
   return WherigoCartridge(Signature,

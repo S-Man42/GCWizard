@@ -25,7 +25,7 @@ class InputData{
 }
 
 
-List<InputData>getInputsFromCartridge(String LUA, dtable){
+List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZInput)');
   List<String> lines = LUA.split('\n');
   String line = '';

@@ -49,6 +49,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   var _currentByteCodeMode = GCWSwitchPosition.left;
 
+  int _zoneIndex = 0;
+  int _inputIndex = 0;
+  int _characterIndex = 0;
+  int _timerIndex = 0;
+  int _taskIndex = 0;
+  int _itemIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -178,13 +185,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_header_device'), _cartridge.RecommendedDevice],
       [i18n(context, 'wherigo_header_completion'), _cartridge.CompletionCode],
     ];
-
-    int _zoneIndex = 0;
-    int _inputIndex = 0;
-    int _characterIndex = 0;
-    int _timerIndex = 0;
-    int _taskIndex = 0;
-    int _itemIndex = 0;
 
     switch (_cartridgeData) {
       case WHERIGO.DTABLE:
@@ -389,7 +389,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
-                max: _cartridge.Zones.length,
+                max: _cartridge.Zones.length - 1,
                 value: _zoneIndex,
                 onChanged: (value) {
                   setState(() {
@@ -408,7 +408,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
-                max: _cartridge.Inputs.length,
+                max: _cartridge.Inputs.length - 1,
                 value: _inputIndex,
                 onChanged: (value) {
                   setState(() {
@@ -428,7 +428,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
-                max: _cartridge.Tasks.length,
+                max: _cartridge.Tasks.length - 1,
                 value: _taskIndex,
                 onChanged: (value) {
                   setState(() {
@@ -448,7 +448,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
-                max: _cartridge.Timers.length,
+                max: _cartridge.Timers.length - 1,
                 value: _timerIndex,
                 onChanged: (value) {
                   setState(() {
@@ -468,7 +468,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             GCWDefaultOutput(),
             GCWIntegerSpinner(
               min: 0,
-              max: _cartridge.Items.length,
+              max: _cartridge.Items.length - 1,
               value: _itemIndex,
               onChanged: (value) {
                 setState(() {
@@ -485,9 +485,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-  List _outputZone(ZoneData data){
+  List<List<dynamic>> _outputZone(ZoneData data){
     List<String> points = [];
-    List result = [
+    List<List<dynamic>> result = [
     [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
     [i18n(context, 'wherigo_output_id'), data.ZoneID],
     [i18n(context, 'wherigo_output_name'), data.ZoneName],
@@ -504,8 +504,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List _outputItem(ItemData data){
-    List result = [
+  List<List<dynamic>> _outputItem(ItemData data){
+    return [
       [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
       [i18n(context, 'wherigo_output_id'), data.ItemID],
       [i18n(context, 'wherigo_output_name'), data.ItemName],
@@ -513,23 +513,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_medianame'), data.ItemMediaFilename],
       [i18n(context, 'wherigo_output_type'), data.ItemMediaType],
     ];
-    return result;
   }
 
-  List _outputTask(TaskData data){
-    List result = [
+  List<List<dynamic>> _outputTask(TaskData data){
+    return [
       [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName],
       [i18n(context, 'wherigo_output_id'), data.TaskID],
       [i18n(context, 'wherigo_output_name'), data.TaskName],
       [i18n(context, 'wherigo_output_description'), data.TaskDescription],
-      [i18n(context, 'wherigo_output_medianame'), data.TaskMediaFilename],
-      [i18n(context, 'wherigo_output_type'), data.TaskMediaType],
+      [i18n(context, 'wherigo_output_visible'), data.TaskVisible],
+      [i18n(context, 'wherigo_output_medianame'), data.TaskMedia],
+      [i18n(context, 'wherigo_output_iconname'), data.TaskIcon],
+      [i18n(context, 'wherigo_output_active'), data.TaskActive]
     ];
-    return result;
   }
 
-  List _outputTimer(TimerData data){
-    List result = [
+  List<List<dynamic>> _outputTimer(TimerData data){
+    return [
       [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName],
       [i18n(context, 'wherigo_output_id'), data.TimerID],
       [i18n(context, 'wherigo_output_name'), data.TimerName],
@@ -538,11 +538,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_type'), data.TimerType],
       [i18n(context, 'wherigo_output_visible'), data.TimerVisible],
     ];
-    return result;
   }
 
-  List _outputCharacter(CharacterData data){
-    List result = [
+  List<List<dynamic>> _outputCharacter(CharacterData data){
+    return [
       [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
       [i18n(context, 'wherigo_output_id'), data.CharacterID],
       [i18n(context, 'wherigo_output_name'), data.CharacterName],
@@ -554,11 +553,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_type'), data.CharacterType],
       [i18n(context, 'wherigo_output_visible'), data.CharacterVisible],
     ];
-    return result;
   }
 
-  List _outputInput(InputData data){
-    List result = [
+  List<List<dynamic>> _outputInput(InputData data){
+    return [
       [i18n(context, 'wherigo_output_luaname'), data.InputLUAName],
       [i18n(context, 'wherigo_output_id'), data.InputID],
       [i18n(context, 'wherigo_output_name'), data.InputName],
@@ -568,7 +566,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_type'), data.InputType],
       [i18n(context, 'wherigo_output_visible'), data.InputVisible],
     ];
-    return result;
   }
 
   String _getCreationDate(int duration) {

@@ -64,10 +64,10 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
           getLineData(lines[index + 2], LUAname, 'Name', obfuscator, dtable),
           getLineData(lines[index + 3], LUAname, 'Description', obfuscator, dtable),
           getLineData(lines[index + 4], LUAname, 'Visible', obfuscator, dtable),
-          getLineData(lines[index + 4], LUAname, 'Media', obfuscator, dtable),
+          getLineData(lines[index + 5], LUAname, 'Media', obfuscator, dtable),
           getLineData(lines[index + 6], LUAname, 'Icon', obfuscator, dtable),
           getLineData(lines[index + 12], LUAname, 'Active', obfuscator, dtable),
-          []);
+          points);
       result.add(item);
       i = i + 9;
     }

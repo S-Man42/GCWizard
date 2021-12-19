@@ -18,7 +18,7 @@ class ItemData{
 
 
 
-List<ItemData>getItemsFromCartridge(String LUA, dtable){
+List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZItem)');
   List<String> lines = LUA.split('\n');
   String line = '';

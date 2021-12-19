@@ -1,4 +1,6 @@
 
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+
 class TimerData{
   final String TimerLUAName;
   final String TimerID;
@@ -18,27 +20,27 @@ class TimerData{
       this.TimerType);
 }
 
-List<TimerData>getTimersFromCartridge(String LUA, dtable){
+List<TimerData>getTimersFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZTimer)');
   List<String> lines = LUA.split('\n');
   String line = '';
-  int index = 0;
   List<TimerData> result = [];
-  TimerData item;
+  String LUAname = '';
+
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
-      index = i;
-      item = TimerData(
-          lines[index],
-          lines[index + 1],  //id
-          lines[index + 2],  //name
-          lines[index + 3],  //description
-          lines[index + 4],  //visible
-          lines[index + 5],   //duration
-          lines[index + 6]);  //type
-      result.add(item);
-      i = i + 9;
+      LUAname = getLUAName(line);
+      result.add(TimerData(
+        LUAname,
+        getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable),
+        getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable),
+        getLineData(lines[i + 3], LUAname, 'Description', obfuscator, dtable),
+        getLineData(lines[i + 4], LUAname, 'Visible', obfuscator, dtable),
+        getLineData(lines[i + 5], LUAname, 'Duration', obfuscator, dtable),
+        getLineData(lines[i + 6], LUAname, 'Type', obfuscator, dtable),
+      ));
+      i = i + 7;
     }
   };
 

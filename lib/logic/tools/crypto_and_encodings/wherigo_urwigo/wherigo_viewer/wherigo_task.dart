@@ -1,44 +1,51 @@
 
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+
 class TaskData{
   final String TaskLUAName;
   final String TaskID;
   final String TaskName;
   final String TaskDescription;
-  final String TaskMediaType;
-  final String TaskMediaFilename;
+  final String TaskVisible;
+  final String TaskMedia;
+  final String TaskIcon;
+  final String TaskActive;
 
   TaskData(
       this.TaskLUAName,
       this.TaskID,
       this.TaskName,
       this.TaskDescription,
-      this.TaskMediaType,
-      this.TaskMediaFilename);
+      this.TaskVisible,
+      this.TaskMedia,
+      this.TaskIcon,
+      this.TaskActive);
 }
 
 
 
-List<TaskData>getTasksFromCartridge(String LUA, dtable){
+List<TaskData>getTasksFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZTask)');
   List<String> lines = LUA.split('\n');
   String line = '';
-  int index = 0;
   List<TaskData> result = [];
-  TaskData item;
+  String LUAname = '';
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
-      index = i;
-      item = TaskData(
-          lines[index],
-          lines[index + 1],
-          lines[index + 2],
-          lines[index + 3],
-          lines[index + 7],
-          lines[index + 8]);
-      result.add(item);
-      i = i + 9;
+      LUAname = getLUAName(line);
+      result.add(TaskData(
+          LUAname,
+          getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable),
+          getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable),
+          getLineData(lines[i + 3], LUAname, 'Description', obfuscator, dtable),
+          getLineData(lines[i + 4], LUAname, 'Visible', obfuscator, dtable),
+          getLineData(lines[i + 5], LUAname, 'Media', obfuscator, dtable),
+          getLineData(lines[i + 6], LUAname, 'Icon', obfuscator, dtable),
+          getLineData(lines[i + 7], LUAname, 'Active', obfuscator, dtable)
+      ));
+      i = i + 8;
     }
   };
   return result;
