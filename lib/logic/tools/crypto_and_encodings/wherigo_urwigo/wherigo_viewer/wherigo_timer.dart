@@ -25,22 +25,62 @@ List<TimerData>getTimersFromCartridge(String LUA, dtable, obfuscator){
   List<String> lines = LUA.split('\n');
   String line = '';
   List<TimerData> result = [];
+    bool section = true;
+  int j = 1;
   String LUAname = '';
+  String id = '';
+  String name = '';
+  String description = '';
+  String visible = '';
+  String type = '';
+  String duration = '';
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
       LUAname = getLUAName(line);
+      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
+      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+
+      description = '';
+      section = true;
+      j = 1;
+      do {
+        description = description + lines[i + 2 + j];
+        j = j + 1;
+        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
+          section = false;
+      } while (section);
+      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+
+      section = true;
+      do {
+        if ((i + 2 + j) < lines.length - 1) {
+          if (lines[i + 2 + j].startsWith(LUAname + '.Visible'))
+            visible = getLineData(
+                lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
+          if (lines[i + 2 + j].startsWith(LUAname + '.Duration'))
+            duration = getLineData(
+                lines[i + 2 + j], LUAname, 'Duration', obfuscator, dtable);
+          if (lines[i + 2 + j].startsWith(LUAname + '.Type'))
+            type = getLineData(
+                lines[i + 2 + j], LUAname, 'Type', obfuscator, dtable);
+          if (lines[i + 2 + j].startsWith(LUAname + '.Type'))
+            section = false;
+          j = j + 1;
+        }
+      } while (section);
+
       result.add(TimerData(
         LUAname,
-        getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable),
-        getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable),
-        getLineData(lines[i + 3], LUAname, 'Description', obfuscator, dtable),
-        getLineData(lines[i + 4], LUAname, 'Visible', obfuscator, dtable),
-        getLineData(lines[i + 5], LUAname, 'Duration', obfuscator, dtable),
-        getLineData(lines[i + 6], LUAname, 'Type', obfuscator, dtable),
+        id,
+        name,
+        description,
+        visible,
+        duration,
+        type,
       ));
-      i = i + 7;
+      i = i + 2 + j;
     }
   };
 

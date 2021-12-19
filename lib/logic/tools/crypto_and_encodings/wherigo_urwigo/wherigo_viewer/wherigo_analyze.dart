@@ -302,6 +302,8 @@ const LENGTH_LONG = 4;
 const LENGTH_DOUBLE = 8;
 
 bool isInvalidCartridge(Uint8List byteList){
+  if (byteList == [] || byteList == null)
+    return true;
   // @0000:                      ; Signature
   //        BYTE     0x02        ; Version Major 2
   //        BYTE     0x0a        ;         Minor 10 11
@@ -322,11 +324,8 @@ bool isInvalidCartridge(Uint8List byteList){
 }
 
 WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
-  if (byteListGWC == [] || byteListGWC == null)
+  if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null))
     return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], []);
-
-  if (isInvalidCartridge(byteListGWC))
-    return WherigoCartridge('ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
@@ -373,86 +372,169 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
   int MediaFileType = 0;
 
   String obfuscator = '';
+  if (byteListGWC == [] || byteListGWC == null) {
+  } else {
+    if (isInvalidCartridge(byteListGWC)) {
+      return WherigoCartridge(
+          'ERROR',
+          0,
+          [],
+          [],
+          '',
+          0,
+          0.0,
+          0.0,
+          0.0,
+          0,
+          0,
+          0,
+          '',
+          '',
+          0,
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          0,
+          '',
+          '',
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []);
+    } else {
+      Signature = Signature + byteListGWC[0].toString();
+      Signature = Signature + byteListGWC[1].toString();
+      Signature = Signature + String.fromCharCode(byteListGWC[2]);
+      Signature = Signature + String.fromCharCode(byteListGWC[3]);
+      Signature = Signature + String.fromCharCode(byteListGWC[4]);
+      Signature = Signature + String.fromCharCode(byteListGWC[5]);
 
-  Signature = Signature + byteListGWC[0].toString();
-  Signature = Signature + byteListGWC[1].toString();
-  Signature = Signature + String.fromCharCode(byteListGWC[2]);
-  Signature = Signature + String.fromCharCode(byteListGWC[3]);
-  Signature = Signature + String.fromCharCode(byteListGWC[4]);
-  Signature = Signature + String.fromCharCode(byteListGWC[5]);
+      NumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
 
-  NumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
+      offset = START_OBJCETADRESS; // File Header LUA File
+      for (int i = 0; i < NumberOfObjects; i++) {
+        MediaFileID = readUShort(byteListGWC, offset);
+        offset = offset + LENGTH_USHORT;
+        Address = readInt(byteListGWC, offset);
+        offset = offset + LENGTH_INT;
+        MediaFilesHeaders.add(MediaFileHeader(MediaFileID, Address));
+      }
 
-  offset = START_OBJCETADRESS; // File Header LUA File
-  for (int i = 0; i < NumberOfObjects; i++){
-    MediaFileID = readUShort(byteListGWC, offset); offset = offset + LENGTH_USHORT;
-    Address = readInt(byteListGWC, offset);     offset = offset + LENGTH_INT;
-    MediaFilesHeaders.add(MediaFileHeader(MediaFileID, Address));
+      START_HEADER = START_OBJCETADRESS + NumberOfObjects * 6;
+      offset = START_HEADER;
+
+      HeaderLength = readLong(byteListGWC, offset);
+      offset = offset + LENGTH_LONG;
+      START_FILES = START_HEADER + HeaderLength;
+
+      Latitude = readDouble(byteListGWC, offset);
+      offset = offset + LENGTH_DOUBLE;
+
+      Longitude = readDouble(byteListGWC, offset);
+      offset = offset + LENGTH_DOUBLE;
+
+      Altitude = readDouble(byteListGWC, offset);
+      offset = offset + LENGTH_DOUBLE;
+
+      DateOfCreation = readLong(byteListGWC, offset);
+      offset = offset + LENGTH_LONG;
+
+      Unknown3 = readLong(byteListGWC, offset);
+      offset = offset + LENGTH_LONG;
+
+      Splashscreen = readShort(byteListGWC, offset);
+      offset = offset + LENGTH_SHORT;
+
+      SplashscreenIcon = readShort(byteListGWC, offset);
+      offset = offset + LENGTH_SHORT;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      TypeOfCartridge = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      Player = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      PlayerID = readLong(byteListGWC, offset);
+      offset = offset + LENGTH_LONG;
+
+      PlayerID = readLong(byteListGWC, offset);
+      offset = offset + LENGTH_LONG;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      CartridgeName = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      CartridgeGUID = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      CartridgeDescription = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      StartingLocationDescription = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      Version = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      Author = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      Company = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      RecommendedDevice = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      LengthOfCompletionCode = readInt(byteListGWC, offset);
+      offset = offset + LENGTH_INT;
+
+      ASCIIZ = readString(byteListGWC, offset);
+      CompletionCode = ASCIIZ.ASCIIZ;
+      offset = ASCIIZ.Offset;
+
+      // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
+      MediaFileLength = readInt(byteListGWC, offset);
+      offset = offset + LENGTH_INT;
+      MediaFilesContents.add(MediaFileContent(0,
+          Uint8List.sublistView(byteListGWC, offset, offset + MediaFileLength),
+          MediaFileLength));
+      offset = offset + MediaFileLength;
+
+      // read Objects
+      for (int i = 1; i < NumberOfObjects; i++) {
+        ValidMediaFile = readByte(byteListGWC, offset);
+        offset = offset + LENGTH_BYTE;
+        if (ValidMediaFile != 0) {
+          MediaFileType = readInt(byteListGWC, offset);
+          offset = offset + LENGTH_INT;
+          MediaFileLength = readInt(byteListGWC, offset);
+          offset = offset + LENGTH_INT;
+          MediaFilesContents.add(MediaFileContent(MediaFileType,
+              Uint8List.sublistView(
+                  byteListGWC, offset, offset + MediaFileLength),
+              MediaFileLength));
+          offset = offset + MediaFileLength;
+        }
+      }
+    }
   }
-
-  START_HEADER = START_OBJCETADRESS + NumberOfObjects * 6;
-  offset = START_HEADER;
-
-  HeaderLength = readLong(byteListGWC, offset);        offset = offset + LENGTH_LONG;
-  START_FILES = START_HEADER + HeaderLength;
-
-  Latitude = readDouble(byteListGWC, offset);         offset = offset + LENGTH_DOUBLE;
-
-  Longitude = readDouble(byteListGWC, offset);        offset = offset + LENGTH_DOUBLE;
-
-  Altitude = readDouble(byteListGWC, offset);         offset = offset + LENGTH_DOUBLE;
-
-  DateOfCreation = readLong(byteListGWC, offset);     offset = offset + LENGTH_LONG;
-
-  Unknown3 = readLong(byteListGWC, offset);     offset = offset + LENGTH_LONG;
-
-  Splashscreen = readShort(byteListGWC, offset);      offset = offset + LENGTH_SHORT;
-
-  SplashscreenIcon = readShort(byteListGWC, offset);  offset = offset + LENGTH_SHORT;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  TypeOfCartridge = ASCIIZ.ASCIIZ;                 offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  Player = ASCIIZ.ASCIIZ;                          offset = ASCIIZ.Offset;
-
-  PlayerID = readLong(byteListGWC, offset);           offset = offset + LENGTH_LONG;
-
-  PlayerID = readLong(byteListGWC, offset);           offset = offset + LENGTH_LONG;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  CartridgeName = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  CartridgeGUID = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  CartridgeDescription = ASCIIZ.ASCIIZ;            offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  StartingLocationDescription = ASCIIZ.ASCIIZ;     offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  Version = ASCIIZ.ASCIIZ;                         offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  Author = ASCIIZ.ASCIIZ;                          offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  Company = ASCIIZ.ASCIIZ;                         offset = ASCIIZ.Offset;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  RecommendedDevice = ASCIIZ.ASCIIZ;               offset = ASCIIZ.Offset;
-
-  LengthOfCompletionCode = readInt(byteListGWC, offset);     offset = offset + LENGTH_INT;
-
-  ASCIIZ = readString(byteListGWC, offset);
-  CompletionCode = ASCIIZ.ASCIIZ;                   offset = ASCIIZ.Offset;
-
-  // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
-  MediaFileLength = readInt(byteListGWC, offset);     offset = offset + LENGTH_INT;
-  MediaFilesContents.add(MediaFileContent(0, Uint8List.sublistView(byteListGWC, offset, offset + MediaFileLength), MediaFileLength));
-  offset = offset + MediaFileLength;
 
   // get LUA-Sourcecode-File
   // from byteListLUA
@@ -461,27 +543,26 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
     LUAFile = _decompileLUAfromLUA(byteListLUA);
   else
     LUAFile = _decompileLUAfromGWC(MediaFilesContents[0].MediaFileBytes);
-print('LUAFILE');
-  // read Objects
-  for (int i = 1; i < NumberOfObjects; i++){
-    ValidMediaFile = readByte(byteListGWC, offset);     offset = offset + LENGTH_BYTE;
-    if (ValidMediaFile != 0) {
-      MediaFileType = readInt(byteListGWC, offset);     offset = offset + LENGTH_INT;
-      MediaFileLength = readInt(byteListGWC, offset);   offset = offset + LENGTH_INT;
-      MediaFilesContents.add(MediaFileContent(MediaFileType, Uint8List.sublistView(byteListGWC, offset, offset + MediaFileLength), MediaFileLength));
-      offset = offset + MediaFileLength;
-    }
-  }
+
 
   dtable = _getdtableFromCartridge(LUAFile);
+  print(dtable);
   obfuscator = getObfuscatorFunction(LUAFile);
+  print(obfuscator);
   Characters = getCharactersFromCartridge(LUAFile, dtable);
+  print(Characters);
   Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
+  print(Items);
   Tasks = getTasksFromCartridge(LUAFile, dtable, obfuscator);
+  print(Tasks);
   Inputs = getInputsFromCartridge(LUAFile, dtable, obfuscator);
+  print(Inputs);
   Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
+  print(Zones);
   Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
+  print(Timers);
   Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
+  print(Media);
 
   return WherigoCartridge(Signature,
     NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,

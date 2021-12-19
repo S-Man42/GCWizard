@@ -364,6 +364,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.CHARACTER:
+        if (_cartridge.Characters == [])
+          return Container();
+
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -384,6 +387,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.ZONES:
+        if (_cartridge.Zones == [])
+          return Container();
+
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -403,6 +409,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.INPUTS:
+        if (_cartridge.Inputs == [])
+          return Container();
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -423,6 +431,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.TASKS:
+        if (_cartridge.Tasks == [])
+          return Container();
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -443,6 +453,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.TIMERS:
+        if (_cartridge.Timers == [])
+          return Container();
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -463,6 +475,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
       case WHERIGO.ITEMS:
+        if (_cartridge.Items == [])
+          return Container();
         return Column(
           children : <Widget>[
             GCWDefaultOutput(),
@@ -488,14 +502,21 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<List<dynamic>> _outputZone(ZoneData data){
     List<String> points = [];
     List<List<dynamic>> result = [
-    [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
-    [i18n(context, 'wherigo_output_id'), data.ZoneID],
-    [i18n(context, 'wherigo_output_name'), data.ZoneName],
-    [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
-    [i18n(context, 'wherigo_output_visible'), data.ZoneVisible],
-    [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName],
-    [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName],
-    [i18n(context, 'wherigo_output_active'), data.ZoneActive]
+      [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
+      [i18n(context, 'wherigo_output_id'), data.ZoneID],
+      [i18n(context, 'wherigo_output_name'), data.ZoneName],
+      [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
+      [i18n(context, 'wherigo_output_visible'), data.ZoneVisible],
+      [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName],
+      [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName],
+      [i18n(context, 'wherigo_output_active'), data.ZoneActive],
+      [i18n(context, 'wherigo_output_showObjects'), data.ZoneShowObjects],
+      [i18n(context, 'wherigo_output_distanceRange'), data.ZoneDistanceRange],
+      [i18n(context, 'wherigo_output_distanceRangeUOM'), data.ZoneDistanceRangeUOM],
+      [i18n(context, 'wherigo_output_proximityRange'), data.ZoneProximityRange],
+      [i18n(context, 'wherigo_output_proximityRangeUOM'), data.ZoneProximityRangeUOM],
+      [i18n(context, 'wherigo_output_outOfRange'), data.ZoneOutOfRange],
+      [i18n(context, 'wherigo_output_originalPoint'), data.ZoneOriginalPoint],
     ];
     data.ZonePoints.forEach((point) {
       points.add('(' + point.Latitude + ', ' + point.Longitude + ', ' + point.Altitude + ')');
@@ -510,8 +531,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_id'), data.ItemID],
       [i18n(context, 'wherigo_output_name'), data.ItemName],
       [i18n(context, 'wherigo_output_description'), data.ItemDescription],
-      [i18n(context, 'wherigo_output_medianame'), data.ItemMediaFilename],
-      [i18n(context, 'wherigo_output_type'), data.ItemMediaType],
+      [i18n(context, 'wherigo_output_visible'), data.ItemVisible],
+      [i18n(context, 'wherigo_output_medianame'), data.ItemMedia],
+      [i18n(context, 'wherigo_output_iconname'), data.ItemIcon],
+      [i18n(context, 'wherigo_output_location'), data.ItemLocation],
+      [i18n(context, 'wherigo_output_locked'), data.ItemLocked],
+      [i18n(context, 'wherigo_output_opened'), data.ItemOpened],
     ];
   }
 
@@ -524,7 +549,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_visible'), data.TaskVisible],
       [i18n(context, 'wherigo_output_medianame'), data.TaskMedia],
       [i18n(context, 'wherigo_output_iconname'), data.TaskIcon],
-      [i18n(context, 'wherigo_output_active'), data.TaskActive]
+      [i18n(context, 'wherigo_output_active'), data.TaskActive],
+      [i18n(context, 'wherigo_output_complete'), data.TaskComplete],
+      [i18n(context, 'wherigo_output_correctstate'), data.TaskCorrectstate]
     ];
   }
 
@@ -548,8 +575,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
       [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName],
       [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName],
-      [i18n(context, 'wherigo_output_duration'), data.CharacterLocation],
-      [i18n(context, 'wherigo_output_duration'), data.CharacterGender],
+      [i18n(context, 'wherigo_output_location'), data.CharacterLocation],
+      [i18n(context, 'wherigo_output_gender'), data.CharacterGender],
       [i18n(context, 'wherigo_output_type'), data.CharacterType],
       [i18n(context, 'wherigo_output_visible'), data.CharacterVisible],
     ];
