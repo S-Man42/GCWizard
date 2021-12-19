@@ -5,13 +5,17 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class WherigoUrwigoSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [className(UrwigoHashBreaker()), className(UrwigoTextDeobfuscation())]
+      return [
+        className(UrwigoHashBreaker()),
+        className(UrwigoTextDeobfuscation()),
+        className(WherigoAnalyze()), ]
           .contains(className(element.tool));
     }).toList();
 

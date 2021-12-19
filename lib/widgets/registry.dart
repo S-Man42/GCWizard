@@ -1011,10 +1011,10 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'wasd',
     ]),
-    GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo_viewer', categories: [
+    GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
-      'wherigo_viewer',
+      'wherigourwigo',
     ]),
     GCWTool(
         tool: VanitySelection(),

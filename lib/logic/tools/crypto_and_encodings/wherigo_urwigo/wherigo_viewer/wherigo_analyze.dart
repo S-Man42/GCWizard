@@ -103,19 +103,20 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS}
+enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE}
 
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIA: 'wherigo_data_media',
-  //WHERIGO.LUA: 'wherigo_data_lua',
-  //WHERIGO.ITEMS: 'wherigo_data_items',
-  //WHERIGO.CHARACTER: 'wherigo_data_character',
-  //WHERIGO.ZONES: 'wherigo_data_zones',
-  //WHERIGO.INPUTS: 'wherigo_data_inputs',
-  //WHERIGO.TASKS: 'wherigo_data_tasks',
-  //WHERIGO.TIMERS: 'wherigo_data_timers',
+  WHERIGO.DTABLE: 'wherigo_data_dtable',
+  WHERIGO.LUA: 'wherigo_data_lua',
+  WHERIGO.ITEMS: 'wherigo_data_items',
+  WHERIGO.CHARACTER: 'wherigo_data_character',
+  WHERIGO.ZONES: 'wherigo_data_zones',
+  WHERIGO.INPUTS: 'wherigo_data_inputs',
+  WHERIGO.TASKS: 'wherigo_data_tasks',
+  WHERIGO.TIMERS: 'wherigo_data_timers',
 };
 
 

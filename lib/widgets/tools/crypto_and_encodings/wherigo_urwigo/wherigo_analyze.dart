@@ -187,6 +187,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     int _itemIndex = 0;
 
     switch (_cartridgeData) {
+      case WHERIGO.DTABLE:
+        return GCWDefaultOutput(
+          child: GCWText(
+            text: _cartridge.dtable,
+            style: gcwMonotypeTextStyle(),
+          ),
+          trailing: Row(
+              children: <Widget>[
+                GCWIconButton(
+                  iconColor: themeColors().mainFont(),
+                  size: IconButtonSize.SMALL,
+                  iconData: Icons.content_copy,
+                  onPressed: () {
+                    var copyText = _cartridge
+                        .MediaFilesContents[0].MediaFileBytes != null ? _cartridge.MediaFilesContents[0].MediaFileBytes.join(' ') : '';
+                    insertIntoGCWClipboard(context, copyText);
+                  },
+                )
+              ]
+          )
+        );
+        break;
       case WHERIGO.HEADER:
         return Column(
           children: <Widget>[
