@@ -111,7 +111,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
               _cartridge = getCartridge(_GWCbytes, _LUAbytes);
-print('cartridge analysed');
+
               setState(() {});
             }
           },
