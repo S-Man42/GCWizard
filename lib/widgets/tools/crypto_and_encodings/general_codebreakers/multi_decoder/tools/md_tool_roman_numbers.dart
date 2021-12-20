@@ -23,7 +23,7 @@ class MultiDecoderToolRomanNumbers extends GCWMultiDecoderTool {
                   ? RomanNumberType.USE_SUBTRACTION_RULE
                   : RomanNumberType.ONLY_ADDITION;
 
-              return decodeRomanNumbers(input, type: type);
+              return decodeRomanNumbers(input, type: type)?.toString();
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
