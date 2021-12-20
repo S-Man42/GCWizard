@@ -29,6 +29,7 @@ class ZoneData{
   final String ZoneDistanceRangeUOM;
   final String ZoneProximityRangeUOM;
   final String ZoneOutOfRange;
+  final String ZoneInRange;
   final List<ZonePoint> ZonePoints;
 
   ZoneData(
@@ -47,6 +48,7 @@ class ZoneData{
       this.ZoneDistanceRangeUOM,
       this.ZoneProximityRangeUOM,
       this.ZoneOutOfRange,
+      this.ZoneInRange,
       this.ZonePoints);
 }
 
@@ -68,18 +70,37 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
   String media = '';
   String icon = '';
   String active = '';
-  String distanceRange;
-  String showObjects;
-  String proximityRange;
-  String originalPoint;
-  String distanceRangeUOM;
-  String proximityRangeUOM;
-  String outOfRange;
+  String distanceRange = '';
+  String showObjects = '';
+  String proximityRange = '';
+  String originalPoint = '';
+  String distanceRangeUOM = '';
+  String proximityRangeUOM = '';
+  String outOfRange = '';
+  String inRange = '';
+
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
       points = [];
+      LUAname = '';
+      id = '';
+      name = '';
+      description = '';
+      visible = '';
+      media = '';
+      icon = '';
+      active = '';
+      distanceRange = '';
+      showObjects = '';
+      proximityRange = '';
+      originalPoint = '';
+      distanceRangeUOM = '';
+      proximityRangeUOM = '';
+      outOfRange = '';
+      inRange = '';
+
       LUAname = getLUAName(line);
       id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
       name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
@@ -106,20 +127,22 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
             icon = getLineData(lines[i + 2 + j], LUAname, 'Icon', obfuscator, dtable);
           if (lines[i + 2 + j].startsWith(LUAname + '.Active'))
             active = getLineData(lines[i + 2 + j], LUAname, 'Active', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.DistanceRange'))
+          if (lines[i + 2 + j].startsWith(LUAname + '.DistanceRangeUOM ='))
+            distanceRangeUOM = getLineData(lines[i + 2 + j], LUAname, 'DistanceRangeUOM', obfuscator, dtable);
+          if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRangeUOM ='))
+            proximityRangeUOM = getLineData(lines[i + 2 + j], LUAname, 'ProximityRangeUOM', obfuscator, dtable);
+          if (lines[i + 2 + j].startsWith(LUAname + '.DistanceRange ='))
             distanceRange = getLineData(lines[i + 2 + j], LUAname, 'DistanceRange', obfuscator, dtable);
           if (lines[i + 2 + j].startsWith(LUAname + '.ShowObjects'))
             showObjects = getLineData(lines[i + 2 + j], LUAname, 'ShowObjects', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRange'))
+          if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRange ='))
             proximityRange = getLineData(lines[i + 2 + j], LUAname, 'ProximityRange', obfuscator, dtable);
           if (lines[i + 2 + j].startsWith(LUAname + '.OriginalPoint'))
-            originalPoint = getLineData(lines[i + 2 + j], LUAname, 'OriginalPoint', obfuscator, dtable).replaceAll('ZonePoint', '').replaceAll('(', '').replaceAll(')', '');
-          if (lines[i + 2 + j].startsWith(LUAname + '.DistanceRangeUOM'))
-            distanceRangeUOM = getLineData(lines[i + 2 + j], LUAname, 'DistanceRangeUOM', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRangeUOM'))
-            proximityRangeUOM = getLineData(lines[i + 2 + j], LUAname, 'ProximityRangeUOM', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.OutOfRange'))
-            outOfRange = getLineData(lines[i + 2 + j], LUAname, 'OutOfRange', obfuscator, dtable);
+            originalPoint = getLineData(lines[i + 2 + j], LUAname, 'OriginalPoint', obfuscator, dtable).replaceAll('ZonePoint(', '').replaceAll('0)', '').split(',').join('\n');
+          if (lines[i + 2 + j].startsWith(LUAname + '.OutOfRangeName'))
+            outOfRange = getLineData(lines[i + 2 + j], LUAname, 'OutOfRangeName', obfuscator, dtable);
+          if (lines[i + 2 + j].startsWith(LUAname + '.InRangeName'))
+            inRange = getLineData(lines[i + 2 + j], LUAname, 'InRangeName', obfuscator, dtable);
 
 
           if (lines[i + 2 + j].startsWith(LUAname + '.Points = ')) {
@@ -154,6 +177,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
           distanceRangeUOM,
           proximityRangeUOM,
           outOfRange,
+          inRange,
           points,
       ));
       i = i + 2 + j;
@@ -163,7 +187,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
 }
 
 ZonePoint _getPoint(String line){
-  List<String> data = line.trimLeft().replaceAll('ZonePoint', '').replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
+  List<String> data = line.trimLeft().replaceAll('ZonePoint(', '').replaceAll('),', '').replaceAll(')', '').replaceAll(' ', '').split(',');
   return ZonePoint(data[0], data[1], data[2]);
 }
 

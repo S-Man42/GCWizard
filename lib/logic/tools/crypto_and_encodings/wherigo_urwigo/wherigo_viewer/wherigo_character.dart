@@ -48,6 +48,17 @@ List<CharacterData>getCharactersFromCartridge(String LUA, dtable, obfuscator){
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
+      LUAname = '';
+      id = '';
+      name = '';
+      description = '';
+      visible = '';
+      media = '';
+      icon = '';
+      location = '';
+      gender = '';
+      type = '';
+
       LUAname = getLUAName(line);
       id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
       name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);

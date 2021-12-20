@@ -612,7 +612,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<List<dynamic>> _outputZone(ZoneData data){
-    List<String> points = [];
     List<List<dynamic>> result = [
       [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
       [i18n(context, 'wherigo_output_id'), data.ZoneID],
@@ -622,18 +621,19 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName],
       [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName],
       [i18n(context, 'wherigo_output_active'), data.ZoneActive],
-      [i18n(context, 'wherigo_output_showObjects'), data.ZoneShowObjects],
-      [i18n(context, 'wherigo_output_distanceRange'), data.ZoneDistanceRange],
-      [i18n(context, 'wherigo_output_distanceRangeUOM'), data.ZoneDistanceRangeUOM],
-      [i18n(context, 'wherigo_output_proximityRange'), data.ZoneProximityRange],
-      [i18n(context, 'wherigo_output_proximityRangeUOM'), data.ZoneProximityRangeUOM],
-      [i18n(context, 'wherigo_output_outOfRange'), data.ZoneOutOfRange],
-      [i18n(context, 'wherigo_output_originalPoint'), data.ZoneOriginalPoint],
+      [i18n(context, 'wherigo_output_showobjects'), data.ZoneShowObjects],
+      [i18n(context, 'wherigo_output_distancerange'), data.ZoneDistanceRange],
+      [i18n(context, 'wherigo_output_distancerangeuom'), data.ZoneDistanceRangeUOM],
+      [i18n(context, 'wherigo_output_proximityrange'), data.ZoneProximityRange],
+      [i18n(context, 'wherigo_output_proximityrangeuom'), data.ZoneProximityRangeUOM],
+      [i18n(context, 'wherigo_output_outofrange'), data.ZoneOutOfRange],
+      [i18n(context, 'wherigo_output_inrange'), data.ZoneInRange],
+      [i18n(context, 'wherigo_output_originalpoint'), data.ZoneOriginalPoint],
+      [i18n(context, 'wherigo_output_zonepoints'), ''],
     ];
     data.ZonePoints.forEach((point) {
-      points.add('(' + point.Latitude + ', ' + point.Longitude + ', ' + point.Altitude + ')');
+      result.add(['', point.Longitude + ',\n' + point.Latitude]);
     });
-    result.add([i18n(context, 'wherigo_output_zonepoints'), points.join('\n')]);
     return result;
   }
 

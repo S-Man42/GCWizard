@@ -30,6 +30,11 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (line.trimRight().endsWith(':OnGetInput(input)')) {
+      inputObject = '';
+      question = '';
+      help = '';
+      answer = '';
+
       inputObject = line.replaceAll('function ', '').replaceAll(':OnGetInput(input)', '');
       inputs.forEach((element) {
         if (element.InputLUAName == inputObject){
