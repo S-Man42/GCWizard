@@ -558,7 +558,6 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
 
 
   dtable = _getdtableFromCartridge(LUAFile);
-  print(dtable);
   obfuscator = getObfuscatorFunction(LUAFile);
   Characters = getCharactersFromCartridge(LUAFile, dtable, obfuscator);
   Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
@@ -568,7 +567,7 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
   Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
   Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
   Messages = getMessagesFromCartridge(LUAFile, dtable, obfuscator);
-  Answers = getAnswersFromCartridge(LUAFile, dtable, obfuscator);
+  Answers = getAnswersFromCartridge(LUAFile, Inputs, dtable, obfuscator);
 
   return WherigoCartridge(Signature,
     NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
