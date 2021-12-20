@@ -13,7 +13,7 @@ String getLUAName(String line) {
 String getLineData(String analyseLine, String LUAname, String type, String obfuscator, String dtable){
   String result = analyseLine.replaceAll(LUAname + '.' + type + ' = ', '');
   if (result.startsWith(obfuscator)) {
-    result = result.replaceAll(obfuscator,'').replaceAll('(', '').replaceAll('"', '').replaceAll(')', '').replaceAll('\n', ' ');
+    result = result.replaceAll(obfuscator + '("','').replaceAll('")', '').replaceAll('\n', ' ');
     result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n');
   } else {
     result = result.replaceAll('"', '');

@@ -386,7 +386,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               GCWDefaultOutput(),
               GCWIntegerSpinner(
                 min: 0,
-                max: _cartridge.Characters.length,
+                max: _cartridge.Characters.length - 1,
                 value: _characterIndex,
                 onChanged: (value) {
                   setState(() {
