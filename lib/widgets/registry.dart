@@ -233,6 +233,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
@@ -496,7 +497,6 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'catan',
     ]),
-
     GCWTool(
         tool: CCITT1Selection(),
         i18nPrefix: 'ccitt1_selection',
@@ -647,6 +647,12 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: Gray(), i18nPrefix: 'gray', categories: [
       ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'binary',
+      'gray',
+    ]),
+    GCWTool(tool: Grid(), i18nPrefix: 'gray', categories: [
+      ToolCategory.GAMES
     ], searchKeys: [
       'binary',
       'gray',
