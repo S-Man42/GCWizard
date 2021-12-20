@@ -558,6 +558,7 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
 
 
   dtable = _getdtableFromCartridge(LUAFile);
+  print(dtable);
   obfuscator = getObfuscatorFunction(LUAFile);
   Characters = getCharactersFromCartridge(LUAFile, dtable, obfuscator);
   Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
@@ -593,7 +594,8 @@ String _getdtableFromCartridge(String LUA){
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
-      line = line.trimLeft().replaceAll('local dtable = "', '').replaceAll('"', '');
+      line = line.trimLeft().replaceAll('local dtable = "', '');
+      line = line.substring(0, line.length - 1);
       return line;
     }
   };

@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 
 String getLUAName(String line) {
   String result = '';
@@ -13,7 +14,7 @@ String getLUAName(String line) {
 String getLineData(String analyseLine, String LUAname, String type, String obfuscator, String dtable){
   String result = analyseLine.replaceAll(LUAname + '.' + type + ' = ', '');
   if (result.startsWith(obfuscator)) {
-    result = result.replaceAll(obfuscator + '("','').replaceAll('")', '').replaceAll('\n', ' ');
+    result = result.replaceAll(obfuscator + '("','').replaceAll('")', '');
     result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n');
   } else {
     result = result.replaceAll('"', '');
@@ -86,5 +87,13 @@ String getObfuscatorFunction(String source){
       i = source.length;
     }
   }
+  return result;
+}
+
+List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obfuscator, String dtable){
+  List<String> result = [];
+  choicesLine.replaceAll(LUAname + '.Choices = {', '').replaceAll('"', '').replaceAll('}', '').split(',').forEach((element) {
+    result.add(element.trim());
+  });
   return result;
 }

@@ -391,6 +391,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _characterIndex = value;
+                    if (_characterIndex > _cartridge.Characters.length - 1)
+                      _characterIndex = _cartridge.Characters.length - 1;
                   });
                 },
               ),
@@ -415,6 +417,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _zoneIndex = value;
+                    if (_zoneIndex > _cartridge.Zones.length - 1)
+                      _zoneIndex = _cartridge.Zones.length - 1;
                   });
                 },
               ),
@@ -438,6 +442,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _inputIndex = value;
+                    if (_inputIndex > _cartridge.Inputs.length - 1)
+                      _inputIndex = _cartridge.Inputs.length - 1;
                   });
                 },
               ),
@@ -451,7 +457,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.TASKS:
         if (_cartridge.Tasks == [] || _cartridge.Tasks == null || _cartridge.Tasks.length == 0)
           return Container();
-
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
@@ -462,6 +467,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _taskIndex = value;
+                    if (_taskIndex > _cartridge.Tasks.length - 1)
+                      _taskIndex = _cartridge.Tasks.length - 1;
                   });
                 },
               ),
@@ -486,6 +493,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _timerIndex = value;
+                    if (_timerIndex > _cartridge.Timers.length - 1)
+                      _timerIndex = _cartridge.Timers.length - 1;
                   });
                 },
               ),
@@ -510,6 +519,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               onChanged: (value) {
                 setState(() {
                   _itemIndex = value;
+                  if (_itemIndex > _cartridge.Items.length - 1)
+                    _itemIndex = _cartridge.Items.length - 1;
                 });
               },
             ),
@@ -534,6 +545,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _mediaIndex = value;
+                    if (_mediaIndex > _cartridge.Media.length - 1)
+                      _mediaIndex = _cartridge.Media.length - 1;
                   });
                 },
               ),
@@ -558,6 +571,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _messageIndex = value;
+                    if (_messageIndex > _cartridge.Messages.length - 1)
+                      _messageIndex = _cartridge.Messages.length - 1;
                   });
                 },
               ),
@@ -582,6 +597,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onChanged: (value) {
                   setState(() {
                     _answerIndex = value;
+                    if (_answerIndex > _cartridge.Answers.length - 1)
+                      _answerIndex = _cartridge.Answers.length - 1;
                   });
                 },
               ),

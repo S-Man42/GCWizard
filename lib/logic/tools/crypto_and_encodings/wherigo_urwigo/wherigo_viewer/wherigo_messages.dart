@@ -27,6 +27,7 @@ List<MessageData>getMessagesFromCartridge(String LUA, dtable, obfuscator){
     } else if (line.trimLeft().startsWith('_Urwigo.Dialog(')) {
       section = true;
       List<String> dialog = [];
+      j = 1;
       do {
         if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(')) {
           dialog.add(getTextData(lines[i + j], obfuscator, dtable)); dialog.add('');
