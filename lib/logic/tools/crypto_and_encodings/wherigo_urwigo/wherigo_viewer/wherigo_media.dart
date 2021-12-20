@@ -6,6 +6,7 @@ class MediaData {
   final String MediaID;
   final String MediaName;
   final String MediaDescription;
+  final String MediaAltText;
   final String MediaType;
   final String MediaFilename;
 
@@ -14,6 +15,7 @@ class MediaData {
       this.MediaID,
       this.MediaName,
       this.MediaDescription,
+      this.MediaAltText,
       this.MediaType,
       this.MediaFilename);
 }
@@ -32,6 +34,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
   String description = '';
   String type = '';
   String media = '';
+  String alttext = '';
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
@@ -57,6 +60,8 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
             media = getStructData(lines[i + 2 + j], 'Filename');
           if (lines[i + 2 + j].trimLeft().startsWith('Type = '))
             type = getStructData(lines[i + 2 + j], 'Type');
+          if (lines[i + 2 + j].trimLeft().startsWith('AltText = '))
+            type = getStructData(lines[i + 2 + j], 'AltText');
           if (lines[i + 2 + j].trimLeft().startsWith('Directives ='))
             section = false;
           j = j + 1;
@@ -68,6 +73,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
           id,
           name,
           description,
+          alttext,
           type,
           media,
       ));

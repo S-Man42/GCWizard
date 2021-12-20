@@ -91,8 +91,10 @@
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_answers.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_timer.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_character.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_input.dart';
@@ -103,7 +105,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES}
+enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS}
 
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
@@ -118,6 +120,8 @@ Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.INPUTS: 'wherigo_data_inputs',
   WHERIGO.TASKS: 'wherigo_data_tasks',
   WHERIGO.TIMERS: 'wherigo_data_timers',
+  WHERIGO.MESSAGES: 'wherigo_data_messages',
+  WHERIGO.ANSWERS: 'wherigo_data_questions',
 };
 
 
@@ -233,6 +237,8 @@ class WherigoCartridge{
   final List<ZoneData> Zones;
   final List<TimerData> Timers;
   final List<MediaData> Media;
+  final List<MessageData> Messages;
+  final List<AnswerData> Answers;
 
 
   WherigoCartridge(this.Signature,
@@ -247,7 +253,8 @@ class WherigoCartridge{
       this.RecommendedDevice,
       this.LengthOfCompletionCode, this.CompletionCode,
       this.dtable,
-      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media);
+      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media,
+      this.Messages, this.Answers);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -326,7 +333,7 @@ bool isInvalidCartridge(Uint8List byteList){
 
 WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
   if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null))
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], []);
+    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
@@ -363,6 +370,8 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
   List<ZoneData> Zones = [];
   List<TimerData> Timers = [];
   List<MediaData> Media = [];
+  List<MessageData> Messages = [];
+  List<AnswerData> Answers = [];
 
   int Unknown3 = 0;
 
@@ -403,6 +412,8 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
           0,
           '',
           '',
+          [],
+          [],
           [],
           [],
           [],
@@ -555,6 +566,8 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
   Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
   Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
   Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
+  Messages = getMessagesFromCartridge(LUAFile, dtable, obfuscator);
+  Answers = getAnswersFromCartridge(LUAFile, dtable, obfuscator);
 
   return WherigoCartridge(Signature,
     NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
@@ -568,7 +581,8 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
     Version, Author, Company, RecommendedDevice,
     LengthOfCompletionCode, CompletionCode,
     dtable,
-    Characters, Items, Tasks, Inputs, Zones, Timers, Media);
+    Characters, Items, Tasks, Inputs, Zones, Timers, Media,
+    Messages,Answers);
 }
 
 

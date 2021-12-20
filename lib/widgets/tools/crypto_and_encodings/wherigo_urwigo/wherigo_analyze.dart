@@ -2,8 +2,10 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_answers.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_character.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_input.dart';
@@ -40,7 +42,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
-  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], []);
+  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], []);
   String _LUA = '';
 
   var _cartridgeData = WHERIGO.HEADER;
@@ -57,6 +59,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _taskIndex = 0;
   int _itemIndex = 0;
   int _mediaIndex = 0;
+  int _messageIndex = 0;
+  int _answerIndex = 0;
 
   @override
   void initState() {
@@ -539,6 +543,54 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]
         );
         break;
+
+      case WHERIGO.MESSAGES:
+        if (_cartridge.Messages == [] || _cartridge.Messages == null || _cartridge.Messages.length == 0)
+          return Container();
+
+        return Column(
+            children : <Widget>[
+              GCWDefaultOutput(),
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Messages.length - 1,
+                value: _messageIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _messageIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex]))
+              )
+            ]
+        );
+        break;
+
+      case WHERIGO.ANSWERS:
+        if (_cartridge.Answers == [] || _cartridge.Answers == null || _cartridge.Answers.length == 0)
+          return Container();
+
+        return Column(
+            children : <Widget>[
+              GCWDefaultOutput(),
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Answers.length - 1,
+                value: _answerIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _answerIndex = value;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Answers[_answerIndex]))
+              )
+            ]
+        );
+        break;
     }
   }
 
@@ -574,6 +626,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_id'), data.MediaID],
       [i18n(context, 'wherigo_output_name'), data.MediaName],
       [i18n(context, 'wherigo_output_description'), data.MediaDescription],
+      [i18n(context, 'wherigo_output_alttext'), data.MediaAltText],
       [i18n(context, 'wherigo_output_medianame'), data.MediaFilename],
       [i18n(context, 'wherigo_output_type'), data.MediaType],
     ];
@@ -646,6 +699,19 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_choices'), data.InputChoices],
       [i18n(context, 'wherigo_output_type'), data.InputType],
       [i18n(context, 'wherigo_output_visible'), data.InputVisible],
+    ];
+  }
+
+  List<List<dynamic>> _outputMessage(MessageData data){
+    return [
+      [data.MessageText],
+    ];
+  }
+
+  List<List<dynamic>> _outputAnswer(AnswerData data){
+    return [
+      [i18n(context, 'wherigo_output_question'), data.AnswerQuestion],
+      [i18n(context, 'wherigo_output_text'), data.AnswerText],
     ];
   }
 
