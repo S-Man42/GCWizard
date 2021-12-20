@@ -2,6 +2,20 @@
 // https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
 // https://en.wikipedia.org/wiki/Telegraph_code#Edelcrantz_code
 
+/*
+    Gerard Holzmann,
+    https://archive.org/details/earlyhistoryofda0000holz
+
+    Silvia Rubio Hernández
+
+    Vapriikki Case: Design and Evaluation of an Interactive Mixed-Reality Museum Exhibit
+    https://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y
+
+    Anders Lindeberg-Lindvet, Curator Tekniskamuseet Stockholm
+
+    Erika Tanhua-Piiroinen, Tampere University Finland'
+ */
+
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 

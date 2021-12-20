@@ -12,7 +12,7 @@ class MultiDecoderToolChronogram extends GCWMultiDecoderTool {
             name: name,
             internalToolName: MDT_INTERNALNAMES_CHRONOGRAM,
             onDecode: (String input, String key) {
-              return recognizableChronogramInput(input);
+              return decodeChronogram(input);
             },
             options: options);
 }

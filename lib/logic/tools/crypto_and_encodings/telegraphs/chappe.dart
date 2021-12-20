@@ -213,7 +213,7 @@ List<List<String>> encodeChappe(String input, ChappeCodebook language) {
     inputs = input.split(' ');
   else
     inputs = input.split('');
-   List<List<String>> result = [];
+  List<List<String>> result = [];
 
   var CODEBOOK;
   switch (language) {

@@ -42,16 +42,15 @@ class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
               flex: 1,
             ),
             Expanded(
-              child: GCWTextField(
-                controller: _inputController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentInput = text;
-                  });
-                },
-              ),
-              flex: 3
-            )
+                child: GCWTextField(
+                  controller: _inputController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentInput = text;
+                    });
+                  },
+                ),
+                flex: 3)
           ],
         ),
         Row(
@@ -69,8 +68,7 @@ class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
                     });
                   },
                 ),
-                flex: 3
-            )
+                flex: 3)
           ],
         ),
         GCWDefaultOutput(child: deobfuscateUrwigoText(_currentInput, _currentDTable))

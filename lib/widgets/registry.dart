@@ -714,9 +714,11 @@ initializeRegistry(BuildContext context) {
           'color',
           'image_colorcorrections',
         ]),
-    GCWTool(tool: IPCodes(), i18nPrefix: 'ipcodes', categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY], searchKeys: [
-      'ipcodes'
-    ]),
+    GCWTool(
+        tool: IPCodes(),
+        i18nPrefix: 'ipcodes',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: ['ipcodes']),
     GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -2642,9 +2644,6 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
       'symbol_birds_on_a_wire',
     ]),
-    GCWSymbolTableTool(symbolKey: 'birkenbihl', symbolSearchStrings: [
-      'symbol_birkenbihl',
-    ]),
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: [
       'symbol_blox',
     ]),
@@ -2694,6 +2693,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: [
       'symbol_chinese_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: [
+      'symbol_christmas',
     ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: [
       'symbol_runes',
@@ -3127,6 +3129,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'predator', symbolSearchStrings: [
       'predator',
     ]),
+    GCWSymbolTableTool(symbolKey: 'prosyl', symbolSearchStrings: [
+      'symbol_prosyl',
+    ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
     ]),
@@ -3436,11 +3441,10 @@ initializeRegistry(BuildContext context) {
 
     //WherigoUrwigoSelection **************************************************************************************
     //UrwigoHashBreaker already inserted in section "Hashes"
-    GCWTool(tool: UrwigoTextDeobfuscation(), i18nPrefix: 'urwigo_textdeobfuscation', searchKeys: [
-      'wherigourwigo',
-      'urwigo_textdeobfuscation'
-    ]),
-
+    GCWTool(
+        tool: UrwigoTextDeobfuscation(),
+        i18nPrefix: 'urwigo_textdeobfuscation',
+        searchKeys: ['wherigourwigo', 'urwigo_textdeobfuscation']),
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);

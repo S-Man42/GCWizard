@@ -11,8 +11,7 @@ class WherigoUrwigoSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
-      return [className(UrwigoHashBreaker()), className(UrwigoTextDeobfuscation())]
-          .contains(className(element.tool));
+      return [className(UrwigoHashBreaker()), className(UrwigoTextDeobfuscation())].contains(className(element.tool));
     }).toList();
 
     return Container(child: GCWToolList(toolList: _toolList));

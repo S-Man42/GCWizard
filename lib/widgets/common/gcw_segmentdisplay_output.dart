@@ -23,7 +23,13 @@ class GCWSegmentDisplayOutput extends StatefulWidget {
   final bool showZoomButtons;
 
   const GCWSegmentDisplayOutput(
-      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.showZoomButtons: true})
+      {Key key,
+      this.upsideDownButton: false,
+      this.segmentFunction,
+      this.segments,
+      this.readOnly,
+      this.trailing,
+      this.showZoomButtons: true})
       : super(key: key);
 
   @override
@@ -83,30 +89,30 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
             ),
             if (widget.showZoomButtons)
               GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
+                size: IconButtonSize.SMALL,
+                iconData: Icons.zoom_in,
+                onPressed: () {
+                  setState(() {
+                    int newCountColumn = max(countColumns - 1, 1);
+                    mediaQueryData.orientation == Orientation.portrait
+                        ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                        : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  });
+                },
+              ),
             if (widget.showZoomButtons)
               GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
+                size: IconButtonSize.SMALL,
+                iconData: Icons.zoom_out,
+                onPressed: () {
+                  setState(() {
+                    int newCountColumn = countColumns + 1;
+                    mediaQueryData.orientation == Orientation.portrait
+                        ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                        : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  });
+                },
+              ),
           ],
         ),
       ),
