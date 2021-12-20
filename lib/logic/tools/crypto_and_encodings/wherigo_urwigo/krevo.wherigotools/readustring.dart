@@ -4,7 +4,6 @@
  * MIT License
  */
 
-
 String _udecrypt(String str, String dtable) {
   var res = '';
   for (var i = 0; i < str.length; i++) {
@@ -16,7 +15,7 @@ String _udecrypt(String str, String dtable) {
       res += str[i];
     }
   }
-  
+
   return res;
 }
 
@@ -24,15 +23,15 @@ String _luaStringToString(String luaStr) {
   var res = RegExp("\\\\[0-9]{3}").allMatches(luaStr);
 
   var searchReplace = {
-    "\\b" : "\x08",
-    "\\v" : "\x0B",
-    "\\a" : "\x07",
-    "\\t" : "\t",
-    "\\r" : "\r",
-    "\\n" : "\n",
-    "\\f" : "\f",
-    "\\\\" : "\\",
-    "\\\"" : "\"",
+    "\\b": "\x08",
+    "\\v": "\x0B",
+    "\\a": "\x07",
+    "\\t": "\t",
+    "\\r": "\r",
+    "\\n": "\n",
+    "\\f": "\f",
+    "\\\\": "\\",
+    "\\\"": "\"",
   };
 
   for (var match in res) {
@@ -40,12 +39,12 @@ String _luaStringToString(String luaStr) {
     var code = matched.substring(1);
     searchReplace.putIfAbsent(matched, () => String.fromCharCode(int.tryParse(code)));
   }
-  
+
   var out = luaStr;
   searchReplace.entries.forEach((element) {
     out = out.replaceAll(element.key, element.value);
   });
-  
+
   return out;
 }
 

@@ -8,24 +8,27 @@ import 'dart:math';
 // n compounding frequency - Zinsperioden im Jahr
 // t total years
 
-enum COMPOUND_FREQUENCY{YEARLY, MONTHLY, QUARTERLY, WEEKLY, DAILY_360, DAILY_365}
+enum COMPOUND_FREQUENCY { YEARLY, MONTHLY, QUARTERLY, WEEKLY, DAILY_360, DAILY_365 }
 
 int compoundFrequency(COMPOUND_FREQUENCY freq) {
   switch (freq) {
-    case COMPOUND_FREQUENCY.YEARLY: return 1;
-    case COMPOUND_FREQUENCY.MONTHLY: return 12;
-    case COMPOUND_FREQUENCY.QUARTERLY: return 4;
-    case COMPOUND_FREQUENCY.WEEKLY: return 52;
-    case COMPOUND_FREQUENCY.DAILY_360: return 360;
-    case COMPOUND_FREQUENCY.DAILY_365: return 365;
+    case COMPOUND_FREQUENCY.YEARLY:
+      return 1;
+    case COMPOUND_FREQUENCY.MONTHLY:
+      return 12;
+    case COMPOUND_FREQUENCY.QUARTERLY:
+      return 4;
+    case COMPOUND_FREQUENCY.WEEKLY:
+      return 52;
+    case COMPOUND_FREQUENCY.DAILY_360:
+      return 360;
+    case COMPOUND_FREQUENCY.DAILY_365:
+      return 365;
   }
 }
 
 double principalSumCompound(double p_, r, t, int n) {
-  return p_ * pow(
-    1 + (r / n / 100.0),
-    n * t
-  );
+  return p_ * pow(1 + (r / n / 100.0), n * t);
 }
 
 double principalSum(double p_, r, t) {
@@ -34,10 +37,7 @@ double principalSum(double p_, r, t) {
 }
 
 double originalPrincipalSumCompound(double p, r, t, int n) {
-  return p / pow(
-      1 + (r / n / 100.0),
-      n * t
-  );
+  return p / pow(1 + (r / n / 100.0), n * t);
 }
 
 double originalPrincipalSum(double p, r, t) {

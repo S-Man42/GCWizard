@@ -10,7 +10,7 @@ It was originally created to offer Geocachers an offline tool to support them wi
 
 Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
 
-Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 (Crowdin: [Translate into your language](https://crowdin.com/project/gc-wizard))
+Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇳🇱 (Crowdin: [Translate into your language](https://crowdin.com/project/gc-wizard))
 
 Based on **Flutter/Dart**.
 

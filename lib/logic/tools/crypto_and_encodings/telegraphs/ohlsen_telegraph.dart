@@ -1,4 +1,7 @@
-import 'dart:developer';
+/*
+Anne Solberg
+Norsk Teknisk Museum, Oslo
+ */
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -359,7 +362,6 @@ String segmentToCode(List<String> segment) {
 List<String> _buildShutters(String segments) {
   List<String> resultElement = [];
   int codepoint = 0;
-  print('_buildShutters from ' + segments);
   if (int.tryParse(segments) != null) {
     codepoint = int.parse(segments);
 
