@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 
 String getLUAName(String line) {
   String result = '';
@@ -32,8 +31,12 @@ String getTextData(String analyseLine, String obfuscator, String dtable){
     result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')');
     result = _getDetails(result, obfuscator, dtable);
   } else if (result.startsWith(obfuscator)) {
-    result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '');
-    result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n');
+    if (_compositeText(result)) {
+      result = _getCompositeText(result, obfuscator, dtable);
+    } else {
+      result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '');
+      result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n');
+    }
   } else {
     result = result.replaceAll('"', '');
   }
@@ -95,5 +98,24 @@ List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obf
   choicesLine.replaceAll(LUAname + '.Choices = {', '').replaceAll('"', '').replaceAll('}', '').split(',').forEach((element) {
     result.add(element.trim());
   });
+  return result;
+}
+
+bool _compositeText(String text){
+   RegExp expr = RegExp(r'"\) .. ');
+   return (expr.hasMatch(text));
+}
+
+String _getCompositeText(String text, String obfuscator, String dtable){
+  String hashText = '';
+  String result = '';
+
+  int i = obfuscator.length + 2;
+  do {
+    hashText = hashText + text[i];
+    i++;
+  } while ((text[i] + text[i + 1] != '")'));
+  text = text.substring(i + 2);
+  result = result + deobfuscateUrwigoText(hashText, dtable) + text;
   return result;
 }

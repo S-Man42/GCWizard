@@ -97,6 +97,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
+              _zoneIndex = 0;
+              _inputIndex = 0;
+              _characterIndex = 0;
+              _timerIndex = 0;
+              _taskIndex = 0;
+              _itemIndex = 0;
+              _mediaIndex = 0;
+              _messageIndex = 0;
+              _answerIndex = 0;
               _cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -114,6 +123,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
+              _zoneIndex = 0;
+              _inputIndex = 0;
+              _characterIndex = 0;
+              _timerIndex = 0;
+              _taskIndex = 0;
+              _itemIndex = 0;
+              _mediaIndex = 0;
+              _messageIndex = 0;
+              _answerIndex = 0;
               _cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -726,12 +744,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<List<dynamic>> _outputAnswer(AnswerData data){
-    return [
+    List<List<dynamic>> result = [
       [i18n(context, 'wherigo_output_input'), data.AnswerInput],
       [i18n(context, 'wherigo_output_question'), data.AnswerQuestion],
       [i18n(context, 'wherigo_output_hint'), data.AnswerHelp],
       [i18n(context, 'wherigo_output_answer'), data.AnswerAnswer],
-    ];
+      [i18n(context, 'wherigo_output_answercorrect'), ''],];
+
+    data.AnswerCorrect.forEach((element) {
+      result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
+    });
+
+    result.add([i18n(context, 'wherigo_output_answerwrong'), '']);
+    data.AnswerWrong.forEach((element) {
+      result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
+    });
+
+    return result;
   }
 
   String _getCreationDate(int duration) {

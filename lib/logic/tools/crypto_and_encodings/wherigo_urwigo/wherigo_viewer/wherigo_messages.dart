@@ -29,7 +29,8 @@ List<MessageData>getMessagesFromCartridge(String LUA, dtable, obfuscator){
       List<String> dialog = [];
       j = 1;
       do {
-        if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(')) {
+        if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
+            lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
           dialog.add(getTextData(lines[i + j], obfuscator, dtable)); dialog.add('');
         }
         if (lines[i + j].trimLeft().startsWith('}, function(action)')) {
@@ -45,7 +46,8 @@ List<MessageData>getMessagesFromCartridge(String LUA, dtable, obfuscator){
       section = true;
       List<String> dialog = [];
       do {
-        if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(')) {
+        if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
+            lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
           dialog.add(getTextData(lines[i + j], obfuscator, dtable)); dialog.add('');
         }
         if (lines[i + j].trimLeft().startsWith('})')) {

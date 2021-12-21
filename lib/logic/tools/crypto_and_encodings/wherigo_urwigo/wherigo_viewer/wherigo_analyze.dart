@@ -331,7 +331,7 @@ bool isInvalidCartridge(Uint8List byteList){
   }
 }
 
-WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
+WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
   if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null))
     return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], []);
 
@@ -551,11 +551,10 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, byteListLUA) {
   // get LUA-Sourcecode-File
   // from byteListLUA
   // from MediaFilesContents[0].MediaFileBytes
-  if (byteListLUA != null)
-    LUAFile = _decompileLUAfromLUA(byteListLUA);
-  else
+  if (byteListLUA == null || byteListLUA == [])
     LUAFile = _decompileLUAfromGWC(MediaFilesContents[0].MediaFileBytes);
-
+  else
+    LUAFile = _LUAUint8ListToString(byteListLUA);
 
   dtable = _getdtableFromCartridge(LUAFile);
   print('got dtable');
@@ -624,7 +623,7 @@ String _decompileLUAfromGWC(Uint8List LUA) {
   return '';
 }
 
-String _decompileLUAfromLUA(Uint8List LUA) {
+String _LUAUint8ListToString(Uint8List LUA) {
   String result = '';
   for (int i = 0; i < LUA.length; i++){
     if (LUA[i] != 0)
