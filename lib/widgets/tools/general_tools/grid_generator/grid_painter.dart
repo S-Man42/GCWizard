@@ -54,8 +54,8 @@ class GridPainter extends StatefulWidget {
 
   GridPainter({Key key,
     this.mode: GridMode.BOXES,
-    this.countRows: 2,
-    this.countColumns: 2,
+    this.countRows: 10,
+    this.countColumns: 10,
     this.tapColor: GridPaintColor.BLACK,
     this.boxEnumeration: const [
       '1','2','3','4','5','6','7','8','9','10',
@@ -487,7 +487,7 @@ class CustomGridPainter extends CustomPainter {
           if (enumerationText == null || enumerationText.isEmpty)
             continue;
 
-          var textColor = themeColors().mainFont();
+          var textColor = gridState != null && gridState[i] != null && gridState[i][j] != null ? GRID_COLORS[gridState[i][j]]['fontColor'] : themeColors().mainFont();
 
           var fontSize = 20.0;
           TextPainter textPainter;
