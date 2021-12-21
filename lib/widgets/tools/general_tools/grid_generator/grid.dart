@@ -28,7 +28,7 @@ class GridState extends State<Grid> {
           constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
           child: GridPainter(
             tapColor: _currentColor,
-            // mode: GridMode.
+            mode: GridMode.BOXES
             //
             // onChanged: (newBoard) {
             //   setState(() {
@@ -45,11 +45,11 @@ class GridState extends State<Grid> {
                     height: 50,
                     decoration: _currentColor == GridPaintColor.BLACK
                       ? BoxDecoration(
-                          color: Colors.black,
+                          color: GRID_COLORS[GridPaintColor.BLACK]['color'],
                           border: Border.all(color: themeColors().accent(), width: 5)
                       )
                           : BoxDecoration(
-                          color: Colors.black,
+                          color: GRID_COLORS[GridPaintColor.BLACK]['color'],
                           border: Border.all(color: themeColors().mainFont(), width: 1.0)
                       ),
                     margin: EdgeInsets.only(right: DEFAULT_MARGIN),
@@ -67,11 +67,11 @@ class GridState extends State<Grid> {
                     height: 50,
                     decoration: _currentColor == GridPaintColor.WHITE
                         ? BoxDecoration(
-                        color: Colors.white,
+                        color: GRID_COLORS[GridPaintColor.WHITE]['color'],
                         border: Border.all(color: themeColors().accent(), width: 5)
                     )
                         : BoxDecoration(
-                        color: Colors.white,
+                        color: GRID_COLORS[GridPaintColor.WHITE]['color'],
                         border: Border.all(color: themeColors().mainFont(), width: 1.0)
                     ),
                     margin : EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
@@ -89,11 +89,11 @@ class GridState extends State<Grid> {
                     height: 50,
                     decoration: _currentColor == GridPaintColor.RED
                         ? BoxDecoration(
-                        color: Colors.red,
+                        color: GRID_COLORS[GridPaintColor.RED]['color'],
                         border: Border.all(color: themeColors().accent(), width: 5)
                     )
                         : BoxDecoration(
-                        color: Colors.red,
+                        color: GRID_COLORS[GridPaintColor.RED]['color'],
                         border: Border.all(color: themeColors().mainFont(), width: 1.0)
                     ),
                     margin : EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
@@ -111,11 +111,11 @@ class GridState extends State<Grid> {
                     height: 50,
                     decoration: _currentColor == GridPaintColor.YELLOW
                         ? BoxDecoration(
-                        color: Colors.yellow,
+                        color: GRID_COLORS[GridPaintColor.YELLOW]['color'],
                         border: Border.all(color: themeColors().accent(), width: 5)
                     )
                         : BoxDecoration(
-                        color: Colors.yellow,
+                        color: GRID_COLORS[GridPaintColor.YELLOW]['color'],
                         border: Border.all(color: themeColors().mainFont(), width: 1.0)
                     ),
                     margin : EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
@@ -133,11 +133,11 @@ class GridState extends State<Grid> {
                     height: 50,
                     decoration: _currentColor == GridPaintColor.BLUE
                         ? BoxDecoration(
-                        color: Colors.blue,
+                        color: GRID_COLORS[GridPaintColor.BLUE]['color'],
                         border: Border.all(color: themeColors().accent(), width: 5)
                     )
                         : BoxDecoration(
-                        color: Colors.blue,
+                        color: GRID_COLORS[GridPaintColor.BLUE]['color'],
                         border: Border.all(color: themeColors().mainFont(), width: 1.0)
                     ),
                     margin : EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
@@ -155,11 +155,11 @@ class GridState extends State<Grid> {
                     height: 50,
                     decoration: _currentColor == GridPaintColor.GREEN
                         ? BoxDecoration(
-                        color: Colors.green,
+                        color: GRID_COLORS[GridPaintColor.GREEN]['color'],
                         border: Border.all(color: themeColors().accent(), width: 5)
                     )
                         : BoxDecoration(
-                        color: Colors.green,
+                        color: GRID_COLORS[GridPaintColor.GREEN]['color'],
                         border: Border.all(color: themeColors().mainFont(), width: 1.0)
                     ),
                     margin : EdgeInsets.only(left: DEFAULT_MARGIN),
