@@ -1013,7 +1013,7 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'wasd',
     ]),
-    GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', categories: [
+    GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'wherigourwigo',

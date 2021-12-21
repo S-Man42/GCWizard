@@ -30,9 +30,9 @@ class InputData{
 List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZInput)');
   List<String> lines = LUA.split('\n');
-  String line = '';
 
   bool section = true;
+  bool sectionChoices = true;
   int j = 1;
   int k = 1;
   String LUAname = '';
@@ -48,8 +48,8 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   List<InputData> result = [];
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (re.hasMatch(line)) {
+
+    if (re.hasMatch(lines[i])) {
       LUAname = '';
       id = '';
       name = '';
@@ -61,7 +61,7 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
       text = '';
       choices = [];
 
-      LUAname = getLUAName(line);
+      LUAname = getLUAName(lines[i]);
       id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
       name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
 
@@ -100,17 +100,21 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
                 lines[i + 2 + j], LUAname, 'Text', obfuscator, dtable);
           }
           if (lines[i + 2 + j].startsWith(LUAname + '.Choices')) {
+
             choices = [];
             if (lines[i + 2 + j + 1].startsWith(LUAname + '.InputType')) {
               choices.addAll(getChoicesSingleLine(lines[i + 2 + j], LUAname, obfuscator, dtable));
             } else {
               k = 1;
+              sectionChoices = true;
               do {
-                while (lines[i + 2 + j + k].trimLeft().startsWith('""')) {
-                  choices.add(lines[i + 2 + j + k].trimLeft().replaceAll('"', ''));
+                if (lines[i + 2 + j + k].trimLeft().startsWith('"')) {
+                  choices.add(lines[i + 2 + j + k].trimLeft().replaceAll('"', '').replaceAll(',', ''));
                   k++;
+                } else {
+                  sectionChoices = false;
                 }
-              } while (lines[i + 2 + j + k].trimLeft().startsWith('"'));
+              } while (sectionChoices);
               j = j + k;
             }
           }
