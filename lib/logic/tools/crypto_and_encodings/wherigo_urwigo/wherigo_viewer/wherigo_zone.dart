@@ -3,13 +3,13 @@ import 'dart:ffi';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class ZonePoint{
-  final String Longitude;
   final String Latitude;
+  final String Longitude;
   final String Altitude;
 
   ZonePoint(
-      this.Longitude,
       this.Latitude,
+      this.Longitude,
       this.Altitude);
 }
 
@@ -25,7 +25,7 @@ class ZoneData{
   final String ZoneDistanceRange;
   final String ZoneShowObjects;
   final String ZoneProximityRange;
-  final String ZoneOriginalPoint;
+  final ZonePoint ZoneOriginalPoint;
   final String ZoneDistanceRangeUOM;
   final String ZoneProximityRangeUOM;
   final String ZoneOutOfRange;
@@ -73,7 +73,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
   String distanceRange = '';
   String showObjects = '';
   String proximityRange = '';
-  String originalPoint = '';
+  ZonePoint originalPoint;
   String distanceRangeUOM = '';
   String proximityRangeUOM = '';
   String outOfRange = '';
@@ -95,7 +95,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
       distanceRange = '';
       showObjects = '';
       proximityRange = '';
-      originalPoint = '';
+      originalPoint;
       distanceRangeUOM = '';
       proximityRangeUOM = '';
       outOfRange = '';
@@ -137,8 +137,12 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
             showObjects = getLineData(lines[i + 2 + j], LUAname, 'ShowObjects', obfuscator, dtable);
           if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRange ='))
             proximityRange = getLineData(lines[i + 2 + j], LUAname, 'ProximityRange', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.OriginalPoint'))
-            originalPoint = getLineData(lines[i + 2 + j], LUAname, 'OriginalPoint', obfuscator, dtable).replaceAll('ZonePoint(', '').replaceAll('0)', '').split(',').join('\n');
+          if (lines[i + 2 + j].startsWith(LUAname + '.OriginalPoint')) {
+            List<String> pointdata = getLineData(
+                lines[i + 2 + j], LUAname, 'OriginalPoint', obfuscator, dtable)
+                .replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
+            originalPoint = ZonePoint(pointdata[0], pointdata[1], pointdata[2]);
+          }
           if (lines[i + 2 + j].startsWith(LUAname + '.OutOfRangeName'))
             outOfRange = getLineData(lines[i + 2 + j], LUAname, 'OutOfRangeName', obfuscator, dtable);
           if (lines[i + 2 + j].startsWith(LUAname + '.InRangeName'))

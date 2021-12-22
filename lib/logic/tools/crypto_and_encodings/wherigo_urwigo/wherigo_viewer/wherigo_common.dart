@@ -119,3 +119,4 @@ String _getCompositeText(String text, String obfuscator, String dtable){
   result = result + deobfuscateUrwigoText(hashText, dtable) + text;
   return result;
 }
+

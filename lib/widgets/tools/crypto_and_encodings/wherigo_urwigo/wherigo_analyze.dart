@@ -42,6 +42,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
+  Uint8List _outData;
 
   WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
   String _LUA = '';
@@ -298,7 +299,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       onPressed: () {
                         _cartridge
                             .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _cartridge
-                            .MediaFilesContents[0].MediaFileBytes);
+                            .MediaFilesContents[0].MediaFileBytes, 'LUAByteCode');
                       },
                     )                  ]
                 )
@@ -328,7 +329,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       onPressed: () {
                         _cartridge
                             .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _cartridge
-                            .MediaFilesContents[0].MediaFileBytes);
+                            .MediaFilesContents[0].MediaFileBytes, 'LUAByteCode');
                       },
                     ),
                   ],
@@ -401,7 +402,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   size: IconButtonSize.SMALL,
                   iconColor: _cartridge.LUAFile == null ? themeColors().inActive() : null,
                   onPressed: () {
-                    _cartridge.LUAFile == null ? null : _exportFile(context, _cartridge.LUAFile.codeUnits);
+                    _cartridge.LUAFile == null ? null : _exportFile(context, _cartridge.LUAFile.codeUnits, 'LUAsourceCode');
                   },
                 ),
               ],
@@ -441,7 +442,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
         return Column(
             children : <Widget>[
-              GCWDefaultOutput(),
+              GCWDefaultOutput(
+                trailing: Row(
+                    children: <Widget>[
+                      Container(
+                        child: GCWIconButton(
+                          iconData: Icons.save,
+                          size: IconButtonSize.SMALL,
+                          iconColor: themeColors().mainFont(),
+                          onPressed: () {
+                            try {
+                              var fileName = 'zonen_' + _cartridge.CartridgeGUID + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.gpx';
+                              return saveStringToFile(context, _buildGPXString(_cartridge), fileName);
+                            } on Exception {
+                              return null;
+                            }
+
+                          },
+                        ),
+                        padding: EdgeInsets.only(right: 10.0),
+                      ),                    ]
+                ),
+              ),
               GCWIntegerSpinner(
                 min: 0,
                 max: _cartridge.Zones.length - 1,
@@ -686,11 +708,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_proximityrangeuom'), data.ZoneProximityRangeUOM],
       [i18n(context, 'wherigo_output_outofrange'), data.ZoneOutOfRange],
       [i18n(context, 'wherigo_output_inrange'), data.ZoneInRange],
-      [i18n(context, 'wherigo_output_originalpoint'), data.ZoneOriginalPoint],
+      [i18n(context, 'wherigo_output_originalpoint'), data.ZoneOriginalPoint.Latitude + '\n' + data.ZoneOriginalPoint.Longitude],
       [i18n(context, 'wherigo_output_zonepoints'), ''],
     ];
     data.ZonePoints.forEach((point) {
-      result.add(['', point.Longitude + ',\n' + point.Latitude]);
+      result.add(['', point.Latitude + ',\n' + point.Longitude]);
     });
     return result;
   }
@@ -831,12 +853,45 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         .toString();
   }
 
-  _exportFile(BuildContext context, Uint8List data) async {
+  _exportFile(BuildContext context, Uint8List data, String name) async {
     var fileType = getFileType(data);
     var value = await saveByteDataToFile(
-        context, data, "luabytecode_" + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
+        context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
     if (value != null) showExportedFileDialog(context, fileType: fileType);
+  }
+
+
+  String _buildGPXString(WherigoCartridge cartridge){
+    List<String> WPT = [];
+    List<String> GPX = [];
+    List<String> TRK = [];
+    GPX.add('<?xml version="1.0" encoding="UTF-8"?>');
+    GPX.add('<gpx version="1.0" creator="GC Wizard" xsi:schemaLocation="&quot;http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">');
+    GPX.add('  <metadata>');
+    GPX.add('    <name>' + _cartridge.CartridgeName + '</name>');
+    GPX.add('  </metadata>');
+
+    cartridge.Zones.forEach((zone) {
+      WPT.add('  <wpt lat="' + zone.ZoneOriginalPoint.Latitude + '" lon="' + zone.ZoneOriginalPoint.Longitude + '">');
+      WPT.add('    <name>OriginalPoint' + zone.ZoneLUAName + '</name>');
+      WPT.add('  </wpt>');
+      TRK.add('  <trk>');
+      TRK.add('    <name>' + zone.ZoneLUAName + '</name>');
+      TRK.add('    <trkseg>');
+
+      zone.ZonePoints.forEach((zonepoint) {
+        TRK.add('      <trkpt lat="' + zonepoint.Latitude + '" lon="' + zonepoint.Longitude + '"/>');
+      });
+      TRK.add('    </trkseg>');
+      TRK.add('  </trk>');
+    });
+
+    GPX.addAll(WPT);
+    GPX.addAll(TRK);
+    GPX.add('</gpx>');
+
+    return GPX.join('\n');
   }
 
 }
