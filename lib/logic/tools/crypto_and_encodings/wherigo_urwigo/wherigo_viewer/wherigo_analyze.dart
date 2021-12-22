@@ -93,6 +93,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_answers.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_timer.dart';
@@ -105,7 +106,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS}
+enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS, IDENTIFIER}
 
 Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.HEADER: 'wherigo_data_header',
@@ -122,6 +123,7 @@ Map<WHERIGO, String> WHERIGO_DATA = {
   WHERIGO.TIMERS: 'wherigo_data_timers',
   WHERIGO.MESSAGES: 'wherigo_data_messages',
   WHERIGO.ANSWERS: 'wherigo_data_questions',
+  WHERIGO.IDENTIFIER: 'wherigo_data_identifier',
 };
 
 
@@ -237,8 +239,9 @@ class WherigoCartridge{
   final List<ZoneData> Zones;
   final List<TimerData> Timers;
   final List<MediaData> Media;
-  final List<MessageData> Messages;
+  final List<List<MessageElementData>> Messages;
   final List<AnswerData> Answers;
+  final List<IdentifierData> Identifiers;
 
 
   WherigoCartridge(this.Signature,
@@ -254,7 +257,7 @@ class WherigoCartridge{
       this.LengthOfCompletionCode, this.CompletionCode,
       this.dtable,
       this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media,
-      this.Messages, this.Answers);
+      this.Messages, this.Answers, this.Identifiers);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -331,9 +334,17 @@ bool isInvalidCartridge(Uint8List byteList){
   }
 }
 
+bool isInvalidLUASourcecode(Uint8List byteList){
+  // require("Wherigo") - 14 letters
+  Uint8List ORIG = Uint8List.fromList([114, 101, 113, 117, 105, 114, 101, 40, 34, 87, 104, 101, 114, 105, 103, 111, 34, 41]);
+  Uint8List CHCK = Uint8List.sublistView(byteList, 0, 18);
+
+  return (ORIG.join('') != CHCK.join(''));
+}
+
 WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
   if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null))
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], []);
+    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
 
   String Signature = '';
   int NumberOfObjects = 0;
@@ -370,8 +381,9 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
   List<ZoneData> Zones = [];
   List<TimerData> Timers = [];
   List<MediaData> Media = [];
-  List<MessageData> Messages = [];
+  List<List<MessageElementData>> Messages = [];
   List<AnswerData> Answers = [];
+  List<IdentifierData> Identifiers = [];
 
   int Unknown3 = 0;
 
@@ -420,7 +432,9 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
           [],
           [],
           [],
-          []);
+          [],
+          []
+      );
     } else {
       Signature = Signature + byteListGWC[0].toString();
       Signature = Signature + byteListGWC[1].toString();
@@ -578,6 +592,8 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
   print('got messages');
   Answers = getAnswersFromCartridge(LUAFile, Inputs, dtable, obfuscator);
   print('got answers');
+  Identifiers = getIdentifiersFromCartridge(LUAFile, dtable, obfuscator);
+  print('got Identifiers');
 
   return WherigoCartridge(Signature,
     NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
@@ -592,7 +608,7 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
     LengthOfCompletionCode, CompletionCode,
     dtable,
     Characters, Items, Tasks, Inputs, Zones, Timers, Media,
-    Messages,Answers);
+    Messages, Answers, Identifiers);
 }
 
 

@@ -2,17 +2,29 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class MessageData{
-  final String MessageText;
+  final List<List<MessageElementData>> MessageElement;
 
   MessageData(
-      this.MessageText);
+      this.MessageElement,
+      );
+}
+
+class MessageElementData{
+  final String MessageType;
+  final String MessageContent;
+
+  MessageElementData(
+    this.MessageType,
+    this.MessageContent,
+  );
 }
 
 
 
-List<MessageData>getMessagesFromCartridge(String LUA, dtable, obfuscator){
+List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfuscator){
   List<String> lines = LUA.split('\n');
-  List<MessageData> result = [];
+  List<MessageElementData> singleMessageDialog = [];
+  List<List<MessageElementData>> result = [];
   bool section = true;
   int j = 1;
   String line = '';
@@ -20,44 +32,90 @@ List<MessageData>getMessagesFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
+
     if (line.trimLeft().startsWith('_Urwigo.MessageBox(')) {
-      text = getTextData(lines[i + 1], obfuscator, dtable);
-      result.add(MessageData(text));
-      i = i + 1;
-    } else if (line.trimLeft().startsWith('_Urwigo.Dialog(')) {
+      singleMessageDialog = [];
+      j = 1;
+      do {
+        if (lines[i + j].trimLeft().startsWith('Text')) {
+          singleMessageDialog.add(MessageElementData(
+              'txt', getTextData(lines[i + j], obfuscator, dtable)));
+        }
+
+        else if (lines[i + j].trimLeft().startsWith('Media')) {
+          singleMessageDialog.add(MessageElementData('img',
+              lines[i + j].trimLeft().replaceAll('Media = ', '')));
+        }
+
+        else if (lines[i + j].trimLeft().startsWith('Buttons')) {
+          j++;
+          do {
+            singleMessageDialog.add(MessageElementData('btn',
+                getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
+            j++;
+          } while (!lines[i + j].trimLeft().startsWith('}'));
+        }
+        j++;
+      } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('}'));
+      i = i + j;
+      result.add(singleMessageDialog);
+    }
+
+    else if (line.trimLeft().startsWith('_Urwigo.Dialog(')) {
       section = true;
-      List<String> dialog = [];
+      singleMessageDialog = [];
       j = 1;
       do {
         if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
             lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
-          dialog.add(getTextData(lines[i + j], obfuscator, dtable)); dialog.add('');
+          singleMessageDialog.add(MessageElementData('txt', getTextData(lines[i + j], obfuscator, dtable)));
+        } else if (lines[i + j].trimLeft().startsWith('Media')) {
+          singleMessageDialog.add(MessageElementData('img',
+              lines[i + j].trimLeft().replaceAll('Media = ', '')));
+        } else if (lines[i + j].trimLeft().startsWith('Buttons')) {
+          j++;
+          do {
+            singleMessageDialog.add(MessageElementData('btn',
+                getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
+            j++;
+          } while (lines[i + j].trimLeft() != '}');
         }
-        if (lines[i + j].trimLeft().startsWith('}, function(action)')) {
+        if (lines[i + j].trimLeft().startsWith('}, function(action)') ||
+            lines[i + j].trimLeft().startsWith('}, nil)')) {
           section = false;
         }
         j = j + 1;
       } while (section);
-      text = dialog.join('\n');
-      result.add(MessageData(text));
       i = i + j;
-    } else if (line.trimLeft().startsWith('_Urwigo.OldDialog(')) {
+      result.add(singleMessageDialog);
+    }
+
+    else if (line.trimLeft().startsWith('_Urwigo.OldDialog(')) {
       j = 1;
       section = true;
-      List<String> dialog = [];
+      singleMessageDialog = [];
       do {
         if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
             lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
-          dialog.add(getTextData(lines[i + j], obfuscator, dtable)); dialog.add('');
+          singleMessageDialog.add(MessageElementData('txt', getTextData(lines[i + j], obfuscator, dtable)));
+        } else if (lines[i + j].trimLeft().startsWith('Media')) {
+          singleMessageDialog.add(MessageElementData('img',
+              lines[i + j].trimLeft().replaceAll('Media = ', '')));
+        } else if (lines[i + j].trimLeft().startsWith('Buttons')) {
+          j++;
+          do {
+            singleMessageDialog.add(MessageElementData('btn',
+                getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
+            j++;
+          } while (lines[i + j].trimLeft() != '}');
         }
         if (lines[i + j].trimLeft().startsWith('})')) {
           section = false;
         }
         j = j + 1;
       } while (section);
-      text = dialog.join('\n');
-      result.add(MessageData(text));
       i = i + j;
+      result.add(singleMessageDialog);
     }
   };
   return result;

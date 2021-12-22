@@ -180,7 +180,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
           inRange,
           points,
       ));
-      i = i + 2 + j;
+      i = i + 1 + j;
     }
   };
   return result;

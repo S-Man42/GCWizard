@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_answers.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
@@ -42,7 +43,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
-  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], []);
+  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
   String _LUA = '';
 
   var _cartridgeData = WHERIGO.HEADER;
@@ -61,6 +62,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _mediaIndex = 0;
   int _messageIndex = 0;
   int _answerIndex = 0;
+  int _identifierIndex = 0;
 
   @override
   void initState() {
@@ -95,6 +97,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               return;
             }
 
+            if (isInvalidCartridge(_GWCfile.bytes)){
+              showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
+              return;
+            }
+
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
               _zoneIndex = 0;
@@ -106,6 +113,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _mediaIndex = 0;
               _messageIndex = 0;
               _answerIndex = 0;
+              _identifierIndex = 0;
               _cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -121,6 +129,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               return;
             }
 
+            if (isInvalidLUASourcecode(_LUAfile.bytes)){
+              showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
+              return;
+            }
+
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
               _zoneIndex = 0;
@@ -132,6 +145,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _mediaIndex = 0;
               _messageIndex = 0;
               _answerIndex = 0;
+              _identifierIndex = 0;
               _cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -626,6 +640,32 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]
         );
         break;
+
+      case WHERIGO.IDENTIFIER:
+        if (_cartridge.Identifiers == [] || _cartridge.Identifiers == null || _cartridge.Identifiers.length == 0)
+          return Container();
+
+        return Column(
+            children : <Widget>[
+              GCWDefaultOutput(),
+              GCWIntegerSpinner(
+                min: 0,
+                max: _cartridge.Identifiers.length - 1,
+                value: _identifierIndex,
+                onChanged: (value) {
+                  setState(() {
+                    _identifierIndex = value;
+                    if (_identifierIndex > _cartridge.Identifiers.length - 1)
+                      _identifierIndex = 0;
+                  });
+                },
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputIdentifier(_cartridge.Identifiers[_identifierIndex]))
+              )
+            ]
+        );
+        break;
     }
   }
 
@@ -737,9 +777,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     ];
   }
 
-  List<List<dynamic>> _outputMessage(MessageData data){
+  List<List<dynamic>> _outputMessage(List<MessageElementData> data){
+    List<List<dynamic>> result = [];
+    data.forEach((element) {
+      result.add([i18n(context, 'wherigo_output_action_' + element.MessageType), element.MessageContent]);
+    });
+    return result;
+  }
+
+  List<List<dynamic>> _outputIdentifier(IdentifierData data){
     return [
-      [data.MessageText],
+      [i18n(context, 'wherigo_output_luaname'), data.IdentifierLUAName],
+      [i18n(context, 'wherigo_output_text'), data.IdentifierName],
     ];
   }
 
@@ -748,17 +797,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_input'), data.AnswerInput],
       [i18n(context, 'wherigo_output_question'), data.AnswerQuestion],
       [i18n(context, 'wherigo_output_hint'), data.AnswerHelp],
-      [i18n(context, 'wherigo_output_answer'), data.AnswerAnswer],
-      [i18n(context, 'wherigo_output_answercorrect'), ''],];
+      [i18n(context, 'wherigo_output_answer'), data.AnswerAnswer],];
 
-    data.AnswerCorrect.forEach((element) {
-      result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
-    });
+    if (data.AnswerActions.length > 0){
+      result.add([i18n(context, 'wherigo_output_answeractions'), '']);
+      data.AnswerActions.forEach((element) {
+        result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
+      });
+    }
 
-    result.add([i18n(context, 'wherigo_output_answerwrong'), '']);
-    data.AnswerWrong.forEach((element) {
-      result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
-    });
+    if (data.AnswerCorrectActions.length > 0){
+      result.add([i18n(context, 'wherigo_output_answeractions_correct'), '']);
+      data.AnswerCorrectActions.forEach((element) {
+        result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
+      });
+    }
+
+    if (data.AnswerWrongActions.length > 0){
+      result.add([i18n(context, 'wherigo_output_answeractions_wrong'), '']);
+      data.AnswerWrongActions.forEach((element) {
+        result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
+      });
+    }
 
     return result;
   }
