@@ -87,8 +87,8 @@ final _GRID_CONFIGURATIONS = {
   'grid_germantoto6of45' : _GridConfiguration(GridType.BOXES, 7, 7,
     enumeration: '1-45',
   ),
-  'grid_eurojackpot5of50' : _GridConfiguration(GridType.GRID, 10, 5,
-    enumeration: '1-50'
+  'grid_eurojackpot5of50' : _GridConfiguration(GridType.BOXES, 10, 5,
+    enumeration: '1-50',
   ),
 };
 
