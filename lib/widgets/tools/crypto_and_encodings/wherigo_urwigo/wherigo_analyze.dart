@@ -235,6 +235,38 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_header_completion'), _cartridge.CompletionCode],
     ];
 
+    // Build Zones for Export to OpenMap
+    _points.add(
+        GCWMapPoint(
+            uuid: 'Cartridge Start',
+            point: LatLng(_cartridge.Latitude, _cartridge.Longitude),
+            color: COLOR_MAP_POINT));
+
+    _cartridge.Zones.forEach((zone) {
+      _points.add(
+          GCWMapPoint(
+              uuid: 'Original Point ' + zone.ZoneLUAName,
+              point: LatLng(double.parse(zone.ZoneOriginalPoint.Latitude), double.parse(zone.ZoneOriginalPoint.Longitude)),
+              color: COLOR_MAP_POINT));
+
+      List<GCWMapPoint> polyline = [];
+      zone.ZonePoints.forEach((point) {
+        polyline.add(
+            GCWMapPoint(
+                point: LatLng(double.parse(point.Latitude), double.parse(point.Longitude)),
+                color: COLOR_MAP_POINT));
+      });
+      polyline.add(
+          GCWMapPoint(
+              point: LatLng(double.parse(zone.ZonePoints[0].Latitude), double.parse(zone.ZonePoints[0].Longitude)),
+              color: COLOR_MAP_POINT));
+      _polylines.add(
+          GCWMapPolyline(
+              uuid: zone.ZoneLUAName,
+              points: polyline,
+              color: COLOR_MAP_POINT));
+    });
+
     switch (_cartridgeData) {
       case WHERIGO.DTABLE:
         return GCWDefaultOutput(
@@ -449,17 +481,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.ZONES:
         if (_cartridge.Zones == [] || _cartridge.Zones == null || _cartridge.Zones.length == 0)
           return Container();
-
-        _points.add(GCWMapPoint(point: LatLng(_cartridge.Latitude, _cartridge.Longitude), color: COLOR_MAP_POINT));
-        _cartridge.Zones.forEach((zone) {
-          _points.add(GCWMapPoint(point: LatLng(double.parse(zone.ZoneOriginalPoint.Latitude), double.parse(zone.ZoneOriginalPoint.Longitude)), color: COLOR_MAP_POINT));
-
-          List<GCWMapPoint> polyline = [];
-          zone.ZonePoints.forEach((point) {
-            polyline.add(GCWMapPoint(point: LatLng(double.parse(point.Latitude), double.parse(point.Longitude)), color: COLOR_MAP_POINT));
-          });
-          _polylines.add(GCWMapPolyline(points: polyline, color: COLOR_MAP_POINT));
-        });
 
         return Column(
             children : <Widget>[
