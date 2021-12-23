@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:typed_data';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -177,12 +178,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             );
           }).toList(),
         ),
-        _buildOutput()
+        _buildOutput(context)
       ],
     );
   }
 
-  _buildOutput() {
+  _buildOutput(BuildContext context) {
     if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == [])) return Container();
 
     var _outputHeader = [
@@ -492,12 +493,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           size: IconButtonSize.SMALL,
                           iconColor: themeColors().mainFont(),
                           onPressed: () {
-                            try {
-                              var fileName = 'zonen_' + _cartridge.CartridgeGUID + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.gpx';
-                              return saveStringToFile(context, _buildGPXString(_cartridge), fileName);
-                            } on Exception {
-                              return null;
-                            }
+                            _exportCoordinates(context, _points, _polylines);
                           },
                         ),
                       GCWIconButton(
@@ -908,42 +904,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (value != null) showExportedFileDialog(context, fileType: fileType);
   }
 
-
-  String _buildGPXString(WherigoCartridge cartridge){
-    List<String> WPT = [];
-    List<String> GPX = [];
-    List<String> TRK = [];
-    GPX.add('<?xml version="1.0" encoding="UTF-8"?>');
-    GPX.add('<gpx version="1.0" creator="GC Wizard" xsi:schemaLocation="&quot;http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">');
-    GPX.add('  <metadata>');
-    GPX.add('    <name>' + cartridge.CartridgeName + '</name>');
-    GPX.add('  </metadata>');
-
-    WPT.add('  <wpt lat="' + cartridge.Latitude.toString() + '" lon="' + cartridge.Longitude.toString() + '">');
-    WPT.add('    <name>Cartridge Location</name>');
-    WPT.add('  </wpt>');
-
-    cartridge.Zones.forEach((zone) {
-      WPT.add('  <wpt lat="' + zone.ZoneOriginalPoint.Latitude + '" lon="' + zone.ZoneOriginalPoint.Longitude + '">');
-      WPT.add('    <name>OriginalPoint' + zone.ZoneLUAName + '</name>');
-      WPT.add('  </wpt>');
-
-      TRK.add('  <trk>');
-      TRK.add('    <name>' + zone.ZoneLUAName + '</name>');
-      TRK.add('    <trkseg>');
-      zone.ZonePoints.forEach((zonepoint) {
-        TRK.add('      <trkpt lat="' + zonepoint.Latitude + '" lon="' + zonepoint.Longitude + '"/>');
-      });
-      //TRK.add('      <trkpt lat="' + (double.parse(zone.ZonePoints[0].Latitude) - 0.0001).toString() + '" lon="' + (double.parse(zone.ZonePoints[0].Longitude) - 0.0001).toString() + '"/>');
-      TRK.add('    </trkseg>');
-      TRK.add('  </trk>');
-    });
-
-    GPX.addAll(WPT);
-    GPX.addAll(TRK);
-    GPX.add('</gpx>');
-
-    return GPX.join('\n');
+  Future<bool> _exportCoordinates(
+      BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
+    showCoordinatesExportDialog(context, points, polylines);
   }
 
   _openInMap() { 
