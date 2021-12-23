@@ -78,11 +78,12 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
 
       if (lines[i + 1].trimLeft() == 'if input == nil then')
         i = i + 3;
-      if (lines[i + 1].trimLeft() == 'input = tonumber(input)')
+      else if (lines[i + 1].trimLeft() == 'input = tonumber(input)')
         i = i + 4;
 
       // searching for inputs and actions
       k = 1;
+      l = 1;
       do {
         sectionAnalysed = false;
         skipWrongSection = false;
@@ -153,7 +154,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
           do {
             answerActions.add(ActionData('act', lines[i + k + l].trimLeft()));
             l++;
-          } while (lines[i + k + l].trimLeft() != 'end' && lines[i + k + l + 1].trimLeft() != 'function');
+          } while (!(lines[i + k + l].trimLeft() == 'end' && lines[i + k + l + 1].trimLeft() == 'function'));
 
           actionsToCheck = false;
         }
@@ -164,18 +165,28 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
           answerCorrect = [];
           answerWrong = [];
           sectionAnalysed = false;
+          getInputAnalysed = false;
           skipWrongSection = false;
 
-          l = 1;
           do {
-            if ((i + k + l > lines.length) || (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('function'))) {
+            if (i + k + l + 1 > lines.length) {
               getInputAnalysed = true;
               sectionAnalysed = true;
             }
 
-            else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('elseif input ==')) {
+            else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('function')) {
+              getInputAnalysed = true;
+              sectionAnalysed = true;
+            }
+
+//            else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('elseif input ==')) {
+            else if (lines[i + k + l].trimLeft().startsWith('elseif input ==')) {
                 skipWrongSection = true;
                 sectionAnalysed = true;
+            }
+
+            else if (lines[i + k + l].trimLeft().startsWith('else')) {
+              sectionAnalysed = true;
             }
 
             else if (lines[i + k + l].trimLeft().startsWith('_Urwigo') ||
@@ -185,9 +196,11 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
                 lines[i + k + l].trimLeft().startsWith('Callback') ||
                 lines[i + k + l].trimLeft().startsWith('if action') ||
                 lines[i + k + l].trimLeft().startsWith('end')) {
+              // do nothing
             }
 
             else if (lines[i + k + l].trimLeft().startsWith('elseif _Urwigo')) {
+              // jump over this input
               do {
                 k++;
               } while (!lines[i + k + l + 1].trimLeft().startsWith('else'));
@@ -209,7 +222,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
                 answerCorrect.add(ActionData('btn',
                     getTextData('Text = ' + lines[i + k + l].trim(), obfuscator, dtable)));
                 l++;
-              } while (lines[i + k + l].trimLeft() != '}');
+              } while (!lines[i + k + l].trimLeft().startsWith('}'));
             }
 
             else {
@@ -217,21 +230,26 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
             }
 
             l++;
-            if (i + k + l < lines.length && lines[i + k + l].trimLeft().startsWith('else'))
-              sectionAnalysed = true;
-          } while(!sectionAnalysed && ((i + k + l < lines.length)));
+          } while(!sectionAnalysed);
 
           // get actions branch - wrong answer
           if (!skipWrongSection) {
             answerWrong = [];
             sectionAnalysed = false;
-            l++;
+            //l++;
             do {
-              if ((i + k + l > lines.length) || (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('elseif input == '))) {
+              if (i + k + l > lines.length) {
+                sectionAnalysed = true;
+                getInputAnalysed = true;
+              }
+
+              else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('elseif input == ')) {
+                getInputAnalysed = true;
                 sectionAnalysed = true;
               }
 
               else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('function')) {
+                sectionAnalysed = true;
                 getInputAnalysed = true;
               }
 
@@ -260,7 +278,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
                   answerWrong.add(ActionData('btn',
                       getTextData('Text = ' + lines[i + k + l].trim(), obfuscator, dtable)));
                   l++;
-                } while (lines[i + k + l].trimLeft() != '}');
+                } while (!lines[i + k + l].trimLeft().startsWith('}'));
               }
 
               else {
@@ -294,8 +312,8 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
                   answerActions,
                   answerCorrect,
                   answerWrong));
-      } while (!getInputAnalysed);
-    }
-  }
+      } while (!getInputAnalysed); // do search actions
+    } // end if OnGetInput
+  } // end for i=0 to lines.length
   return result;
 }
