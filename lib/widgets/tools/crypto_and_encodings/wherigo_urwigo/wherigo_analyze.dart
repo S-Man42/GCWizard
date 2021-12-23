@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:typed_data';
+import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
@@ -14,6 +15,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherig
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_task.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_timer.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -26,11 +28,15 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
+//import 'package:universal_html/html.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -43,6 +49,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
   Uint8List _outData;
+
+  List<GCWMapPoint> _points = [];
+  List<GCWMapPolyline> _polylines = [];
+
 
   WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
   String _LUA = '';
@@ -440,13 +450,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         if (_cartridge.Zones == [] || _cartridge.Zones == null || _cartridge.Zones.length == 0)
           return Container();
 
+        _points.add(GCWMapPoint(point: LatLng(_cartridge.Latitude, _cartridge.Longitude), color: COLOR_MAP_POINT));
+        _cartridge.Zones.forEach((zone) {
+          _points.add(GCWMapPoint(point: LatLng(double.parse(zone.ZoneOriginalPoint.Latitude), double.parse(zone.ZoneOriginalPoint.Longitude)), color: COLOR_MAP_POINT));
+
+          List<GCWMapPoint> polyline = [];
+          zone.ZonePoints.forEach((point) {
+            polyline.add(GCWMapPoint(point: LatLng(double.parse(point.Latitude), double.parse(point.Longitude)), color: COLOR_MAP_POINT));
+          });
+          _polylines.add(GCWMapPolyline(points: polyline, color: COLOR_MAP_POINT));
+        });
+
         return Column(
             children : <Widget>[
               GCWDefaultOutput(
                 trailing: Row(
                     children: <Widget>[
-                      Container(
-                        child: GCWIconButton(
+                        GCWIconButton(
                           iconData: Icons.save,
                           size: IconButtonSize.SMALL,
                           iconColor: themeColors().mainFont(),
@@ -457,11 +477,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                             } on Exception {
                               return null;
                             }
-
                           },
                         ),
-                        padding: EdgeInsets.only(right: 10.0),
-                      ),                    ]
+                      GCWIconButton(
+                        iconData: Icons.assistant_navigation,
+                        size: IconButtonSize.SMALL,
+                        iconColor: themeColors().mainFont(),
+                        onPressed: () {
+                          _openInMap();
+                        },
+                      ),
+                    ]
                 ),
               ),
               GCWIntegerSpinner(
@@ -869,20 +895,25 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     GPX.add('<?xml version="1.0" encoding="UTF-8"?>');
     GPX.add('<gpx version="1.0" creator="GC Wizard" xsi:schemaLocation="&quot;http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">');
     GPX.add('  <metadata>');
-    GPX.add('    <name>' + _cartridge.CartridgeName + '</name>');
+    GPX.add('    <name>' + cartridge.CartridgeName + '</name>');
     GPX.add('  </metadata>');
+
+    WPT.add('  <wpt lat="' + cartridge.Latitude.toString() + '" lon="' + cartridge.Longitude.toString() + '">');
+    WPT.add('    <name>Cartridge Location</name>');
+    WPT.add('  </wpt>');
 
     cartridge.Zones.forEach((zone) {
       WPT.add('  <wpt lat="' + zone.ZoneOriginalPoint.Latitude + '" lon="' + zone.ZoneOriginalPoint.Longitude + '">');
       WPT.add('    <name>OriginalPoint' + zone.ZoneLUAName + '</name>');
       WPT.add('  </wpt>');
+
       TRK.add('  <trk>');
       TRK.add('    <name>' + zone.ZoneLUAName + '</name>');
       TRK.add('    <trkseg>');
-
       zone.ZonePoints.forEach((zonepoint) {
         TRK.add('      <trkpt lat="' + zonepoint.Latitude + '" lon="' + zonepoint.Longitude + '"/>');
       });
+      //TRK.add('      <trkpt lat="' + (double.parse(zone.ZonePoints[0].Latitude) - 0.0001).toString() + '" lon="' + (double.parse(zone.ZonePoints[0].Longitude) - 0.0001).toString() + '"/>');
       TRK.add('    </trkseg>');
       TRK.add('  </trk>');
     });
@@ -894,4 +925,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return GPX.join('\n');
   }
 
+  _openInMap() { 
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GCWTool(
+                tool: GCWMapView(
+                  points: List<GCWMapPoint>.from(_points),
+                  polylines: List<GCWMapPolyline>.from(_polylines),
+                  isEditable: false,
+                ),
+                i18nPrefix: 'coords_openmap',
+                autoScroll: false,
+                suppressToolMargin: true)));
+  }
 }
