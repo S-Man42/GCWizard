@@ -604,15 +604,12 @@ class CustomGridPainter extends CustomPainter {
         if (i == 0 && j == 0)
           continue;
 
-        if (boxEnumeration != null) {
-          if (i == 0 || j == 0)
-            continue;
-
-          enumerationText = _getEnumeration(boxEnumeration, enumerationIndex);
-        } else if (i == 0) {
+        if (i == 0) {
           enumerationText = _getEnumeration(columnEnumeration, j - 1);
         } else if (j == 0) {
           enumerationText = _getEnumeration(rowEnumeration, i - 1);
+        } else {
+          enumerationText = _getEnumeration(boxEnumeration, enumerationIndex);
         }
 
         if (enumerationText == null || enumerationText.isEmpty)
