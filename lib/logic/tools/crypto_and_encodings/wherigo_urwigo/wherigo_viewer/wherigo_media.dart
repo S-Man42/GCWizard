@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class MediaData {
@@ -24,57 +25,81 @@ class MediaData {
 List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZMedia)');
   List<String> lines = LUA.split('\n');
-  String line = '';
   List<MediaData> result = [];
-  bool section = true;
+  bool sectionMedia = true;
+  bool sectionInner = true;
   int j = 1;
   String LUAname = '';
   String id = '';
   String name = '';
   String description = '';
   String type = '';
-  String media = '';
+  String medianame = '';
   String alttext = '';
 
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (re.hasMatch(line)) {
+    if (re.hasMatch(lines[i])) {
       LUAname = '';
       id = '';
       name = '';
       description = '';
       type = '';
-      media = '';
+      medianame = '';
       alttext = '';
 
-      LUAname = getLUAName(line);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+      LUAname = getLUAName(lines[i]);
 
-      description = '';
-      section = true;
+      sectionMedia = true;
       j = 1;
       do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.AltText'))
-          section = false;
-      } while (section);
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
-      section = true;
-      do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].trimLeft().startsWith('Filename = '))
-            media = getStructData(lines[i + 2 + j], 'Filename');
-          if (lines[i + 2 + j].trimLeft().startsWith('Type = '))
-            type = getStructData(lines[i + 2 + j], 'Type');
-          if (lines[i + 2 + j].trimLeft().startsWith('AltText = '))
-            type = getStructData(lines[i + 2 + j], 'AltText');
-          if (lines[i + 2 + j].trimLeft().startsWith('Directives ='))
-            section = false;
-          j = j + 1;
+        if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
+          id = getLineData(lines[i + j], LUAname, 'Id', obfuscator, dtable);
         }
-      } while (section);
+
+        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Name')) {
+          name = getLineData(lines[i + j], LUAname, 'Name', obfuscator, dtable);
+        }
+
+        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Description')) {
+          if (lines[i + j + 1].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+            description = getLineData(lines[i + j], LUAname, 'Description', obfuscator, dtable);
+          } else {
+            sectionInner = true;
+            description = lines[i + j].trim().replaceAll(LUAname + '.', '');
+            j++;
+            do {
+              if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('AltText'))
+                sectionInner = false;
+              else
+                description = description + lines[i + j];
+              j++;
+            } while (sectionInner);
+          }
+        }
+
+        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+          alttext = getLineData(lines[i + j], LUAname, 'AltText', obfuscator, dtable);
+        }
+
+        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Resources')) {
+          j++;
+          sectionInner = true;
+          do {
+            if (lines[i + j].trimLeft().startsWith('Filename = '))
+              medianame = getStructData(lines[i + j], 'Filename');
+            if (lines[i + j].trimLeft().startsWith('Type = '))
+              type = getStructData(lines[i + j], 'Type');
+            if (lines[i + j].trimLeft().startsWith('Directives = '))
+              sectionInner = false;
+            j++;
+          } while (sectionInner);
+        }
+
+        else if (lines[i + j].trimLeft().startsWith('Directives ='))
+          sectionMedia = false;
+        j++;
+      } while (sectionMedia);
+      i = i + j;
 
       result.add(MediaData(
           LUAname,
@@ -83,7 +108,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
           description,
           alttext,
           type,
-          media,
+          medianame,
       ));
       i = i + 2 + j;
     }
