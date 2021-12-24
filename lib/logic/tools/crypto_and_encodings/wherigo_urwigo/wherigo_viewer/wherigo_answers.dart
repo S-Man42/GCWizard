@@ -9,8 +9,6 @@ class AnswerData{
   final String AnswerHelp;
   final String AnswerAnswer;
   final List<ActionData> AnswerActions;
-  final List<ActionData> AnswerCorrectActions;
-  final List<ActionData> AnswerWrongActions;
 
   AnswerData(
       this.AnswerInput,
@@ -18,8 +16,7 @@ class AnswerData{
       this.AnswerHelp,
       this.AnswerAnswer,
       this.AnswerActions,
-      this.AnswerCorrectActions,
-      this.AnswerWrongActions);
+      );
 }
 
 class ActionData{
@@ -34,286 +31,194 @@ class ActionData{
 
 List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtable, obfuscator){
   List<String> lines = LUA.split('\n');
-  List<String> answerList = [];
   List<AnswerData> result = [];
+
+  List<String> answerList = [];
   String inputObject = '';
   String question = '';
   String help = '';
   String answer = '';
-  List<ActionData> answerCorrect = [];
-  List<ActionData> answerWrong = [];
+  ActionData action;
   List<ActionData> answerActions = [];
   bool sectionAnalysed = false;
-  bool getInputAnalysed = false;
-  bool actionsToCheck = true;
-  bool multiAnswer = false;
-  bool skipWrongSection = false;
-  int k = 0;
-  int l = 0;
+  bool insideInputFunction = false;
 
-  for (int i = 0; i < lines.length; i++){
+  for (int i = 0; i < lines.length - 1; i++) {
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
-      // function for getting an input for an inputobject found
+      // function for getting all inputs for an inputobject found
+      print((i+1).toString()+' '+lines[i]);
+      insideInputFunction = true;
       inputObject = '';
       question = '';
       help = '';
       answer = '';
-      answerCorrect = [];
-      answerWrong = [];
       answerActions = [];
-      actionsToCheck = true;
-      sectionAnalysed = false;
-      getInputAnalysed = false;
-      skipWrongSection = false;
-      multiAnswer = false;
 
       // getting name of function
-      inputObject = lines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '');
+      inputObject = lines[i].replaceAll('function ', '').replaceAll(
+          ':OnGetInput(input)', '');
       inputs.forEach((element) {
-        if (element.InputLUAName == inputObject){
+        if (element.InputLUAName == inputObject) {
           question = element.InputName;
           help = element.InputText;
         }
       });
+      i++;
+    } // end if identify input function
 
-      if (lines[i + 1].trimLeft() == 'if input == nil then')
-        i = i + 3;
-      else if (lines[i + 1].trimLeft() == 'input = tonumber(input)')
-        i = i + 4;
+    if (lines[i].trimLeft() == 'input = tonumber(input)') {
+      print((i+1).toString()+' '+lines[i]);
+      // do nothing;
+    }
 
-      // searching for inputs and actions
-      k = 1;
-      l = 1;
+    else if (lines[i].trimLeft() == 'if input == nil then') {
+      print((i+1).toString()+' '+lines[i]);
+      answer = 'NIL';
+      i++;
+      sectionAnalysed = false;
       do {
-        sectionAnalysed = false;
-        skipWrongSection = false;
-
-        if ((i + k + l > lines.length) || (lines[i + k].trimLeft().startsWith('end') && lines[i + k + 1].trimLeft().startsWith('function'))) {
-          getInputAnalysed = true;
-        }
-
-        else if (lines[i + k].trimLeft().startsWith('if _Urwigo.Hash(') ||
-            lines[i + k].trimLeft().startsWith('elseif _Urwigo.Hash(')) {
-          // get answer
-          answer = lines[i + k].trimLeft()
-              .replaceAll('input', '')
-              .replaceAll('string.lower()', '')
-              .replaceAll('string.upper()', '')
-              .replaceAll('if _Urwigo.Hash() == ', '')
-              .replaceAll('else', '')
-              .replaceAll(' then', '');
-            answer = breakUrwigoHash(int.parse(answer));
-          // get actions branch - correct answer
-          // get actions branch - wrong answer
-          actionsToCheck = true;
-
-        }
-
-        else if (lines[i + k].trimLeft().startsWith('if Wherigo.NoCaseEquals(input')) {
-          // get answer
-          answer = lines[i + k].trimLeft()
-              .replaceAll('if Wherigo.NoCaseEquals(input, "', '')
-              .replaceAll('") then', '');
-          // get actions branch - correct answer
-          // get actions branch - wrong answer
-          actionsToCheck = true;
-
-        }
-
-        else if ((lines[i + k].trimLeft().startsWith('if input == ') ||
-            lines[i + k].trimLeft().startsWith('elseif input == ')) &&
-            (lines[i + k].trimLeft() != 'if input == nil then')) {
-
-          // get answer
-          answerList = lines[i + k].trimLeft()
-              .replaceAll('if', '')
-              .replaceAll('else', '')
-              .replaceAll('input == ', '')
-              .replaceAll('then', '')
-              .replaceAll(' ', '').split('or');
-
-          if (answerList.length > 1)
-            multiAnswer = true;
-          answer = answerList[0];
-
-          // get actions branch - correct answer
-          // get actions branch - wrong answer
-          actionsToCheck = true;
-        }
-
-        else if (lines[i + k].trim().replaceAll('input', '') != '=tonumber()'){
-          answerCorrect = [];
-          answerWrong = [];
-          answerActions = [];
-
-          // get answer
-          answer = lines[i + k].trimLeft();
-
-          // get actions branch - correct answer
-          l = 1;
+        if (lines[i].trimLeft().startsWith('Buttons = ')) {
           do {
-            answerActions.add(ActionData('act', lines[i + k + l].trimLeft()));
-            l++;
-          } while (!(lines[i + k + l].trimLeft() == 'end' && lines[i + k + l + 1].trimLeft() == 'function'));
-
-          actionsToCheck = false;
+            i++;
+            if (lines[i].trim() != '}') {
+              if (lines[i].trimLeft().startsWith(obfuscator))
+                answerActions.add(ActionData('btn', deobfuscateUrwigoText(lines[i], dtable)));
+              else
+                answerActions.add(ActionData('btn', lines[i]));
+            }
+          } while (lines[i].trim() != '}');
         }
-
-        // check actions
-        if (actionsToCheck = true) {
-          // get actions branch - correct answer
-          answerCorrect = [];
-          answerWrong = [];
-          sectionAnalysed = false;
-          getInputAnalysed = false;
-          skipWrongSection = false;
-
-          do {
-            if (i + k + l + 1 > lines.length) {
-              getInputAnalysed = true;
-              sectionAnalysed = true;
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('function')) {
-              getInputAnalysed = true;
-              sectionAnalysed = true;
-            }
-
-//            else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('elseif input ==')) {
-            else if (lines[i + k + l].trimLeft().startsWith('elseif input ==')) {
-                skipWrongSection = true;
-                sectionAnalysed = true;
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('else')) {
-              sectionAnalysed = true;
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('_Urwigo') ||
-                lines[i + k + l].trimLeft().startsWith('{') ||
-                lines[i + k + l].trimLeft().startsWith('}') ||
-                lines[i + k + l].trimLeft().startsWith('Wherigo') ||
-                lines[i + k + l].trimLeft().startsWith('Callback') ||
-                lines[i + k + l].trimLeft().startsWith('if action') ||
-                lines[i + k + l].trimLeft().startsWith('end')) {
-              // do nothing
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('elseif _Urwigo')) {
-              // jump over this input
-              do {
-                k++;
-              } while (!lines[i + k + l + 1].trimLeft().startsWith('else'));
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('Text')) {
-              answerCorrect.add(ActionData(
-                  'txt', getTextData(lines[i + k + l], obfuscator, dtable)));
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('Media')) {
-              answerCorrect.add(ActionData('img',
-                  lines[i + k + l].trimLeft().replaceAll('Media = ', '')));
-            }
-
-            else if (lines[i + k + l].trimLeft().startsWith('Buttons')) {
-              l++;
-              do {
-                answerCorrect.add(ActionData('btn',
-                    getTextData('Text = ' + lines[i + k + l].trim(), obfuscator, dtable)));
-                l++;
-              } while (!lines[i + k + l].trimLeft().startsWith('}'));
-            }
-
-            else {
-              answerCorrect.add(ActionData('act', lines[i + k + l].trimLeft()));
-            }
-
-            l++;
-          } while(!sectionAnalysed);
-
-          // get actions branch - wrong answer
-          if (!skipWrongSection) {
-            answerWrong = [];
-            sectionAnalysed = false;
-            //l++;
-            do {
-              if (i + k + l > lines.length) {
-                sectionAnalysed = true;
-                getInputAnalysed = true;
-              }
-
-              else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('elseif input == ')) {
-                getInputAnalysed = true;
-                sectionAnalysed = true;
-              }
-
-              else if (lines[i + k + l].trimLeft().startsWith('end') && lines[i + k + l + 1].trimLeft().startsWith('function')) {
-                sectionAnalysed = true;
-                getInputAnalysed = true;
-              }
-
-              else if (lines[i + k + l].trimLeft().startsWith('_Urwigo') ||
-                  lines[i + k + l].trimLeft().startsWith('{') ||
-                  lines[i + k + l].trimLeft().startsWith('}') ||
-                  lines[i + k + l].trimLeft().startsWith('Wherigo') ||
-                  lines[i + k + l].trimLeft().startsWith('Callback') ||
-                  lines[i + k + l].trimLeft().startsWith('if action') ||
-                  lines[i + k + l].trimLeft().startsWith('end')) {
-              }
-
-              else if (lines[i + k + l].trimLeft().startsWith('Text')) {
-                answerWrong.add(ActionData(
-                    'txt', getTextData(lines[i + k + l], obfuscator, dtable)));
-              }
-
-              else if (lines[i + k + l].trimLeft().startsWith('Media')) {
-                answerWrong.add(ActionData('img',
-                    lines[i + k + l].trimLeft().replaceAll('Media = ', '').replaceAll(',', '')));
-              }
-
-              else if (lines[i + k + l].trimLeft().startsWith('Buttons')) {
-                l++;
-                do {
-                  answerWrong.add(ActionData('btn',
-                      getTextData('Text = ' + lines[i + k + l].trim(), obfuscator, dtable)));
-                  l++;
-                } while (!lines[i + k + l].trimLeft().startsWith('}'));
-              }
-
-              else {
-                answerWrong.add(ActionData('act', lines[i + k + l].trimLeft()));
-              }
-
-              l++;
-            } while(!sectionAnalysed && !getInputAnalysed && (i + k + l < lines.length));          }
+        else {
+          action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
+          if (action != null)
+            answerActions.add(action);
         }
-        i = i + k + l - 1;
+        i++;
+        if (lines[i].trim() == 'end')
+          sectionAnalysed = true;
+      } while (!sectionAnalysed);
 
-        if (multiAnswer)
-          answerList.forEach((element) {
-            result.add(
-                AnswerData(
-                    inputObject,
-                    question,
-                    help,
-                    element,
-                    answerActions,
-                    answerCorrect,
-                    answerWrong));
-          });
-        else
-          result.add(
-              AnswerData(
-                  inputObject,
-                  question,
-                  help,
-                  answer,
-                  answerActions,
-                  answerCorrect,
-                  answerWrong));
-      } while (!getInputAnalysed); // do search actions
-    } // end if OnGetInput
-  } // end for i=0 to lines.length
+      result.add(AnswerData(
+        inputObject,
+        question,
+        help,
+        answer,
+        answerActions,
+      ));
+      answerActions = [];
+    }
+
+    else if (_SectionEnd(lines[i])) {
+      print((i+1).toString()+' '+lines[i]);
+      if (insideInputFunction) {
+        answerList.forEach((answer) {
+          result.add(AnswerData(
+            inputObject,
+            question,
+            help,
+            answer,
+            answerActions,
+          ));
+        });
+        answerList = _getAnswers(lines[i]);
+      }
+    }
+
+    else if (_FunctionEnd(lines[i], lines[i + 1])) {
+      print((i+1).toString()+' '+lines[i]);
+      if (insideInputFunction) {
+        insideInputFunction = false;
+        answerList.forEach((answer) {
+          result.add(AnswerData(
+            inputObject,
+            question,
+            help,
+            answer,
+            answerActions,
+          ));
+        });
+      }
+    }
+
+    else {
+      action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
+      if (action != null)
+        answerActions.add(action);
+    }
+
+  } // end for - got all functions
+
   return result;
 }
+
+
+List<String> _getAnswers(String line){
+  if (line.trim().startsWith('if input == ') ||
+      line.trim().startsWith('elseif input == ')) {
+    return line.trimLeft()
+        .replaceAll('if', '')
+        .replaceAll('else', '')
+        .replaceAll('input == ', '')
+        .replaceAll('then', '')
+        .replaceAll(' ', '')
+        .split('or');
+  }
+  else if (line.trim().startsWith('if _Urwigo.Hash(') ||
+      line.trim().startsWith('elseif _Urwigo.Hash(')) {
+    return (['TODO']);
+  }
+  else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+      line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
+    return (['TODO']);
+  }
+}
+
+bool _SectionEnd(String line){
+  if (line.trim().startsWith('if input == ') ||
+      line.trim().startsWith('elseif input == ') ||
+      line.trim().startsWith('if _Urwigo.Hash(') ||
+      line.trim().startsWith('elseif _Urwigo.Hash(') ||
+      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+      line.trim().startsWith('elseif Wherigo.NoCaseEquals('))
+    return true;
+  else
+    return false;
+}
+
+bool _FunctionEnd(String line1, String line2) {
+ return (line1.trim() == 'end' && line2.trimLeft().startsWith('function'));
+}
+
+
+ActionData _handleLine(String line, String dtable, String obfuscator) {
+  if (line.startsWith('_Urwigo') ||
+      line.startsWith('Callback') ||
+      line.startsWith('Wherigo') ||
+      line.startsWith('Buttons') ||
+      line.startsWith('end') ||
+      line == 'else' ||
+      line.startsWith('if action') ||
+      line.startsWith('{') ||
+      line.startsWith('}'))
+    return null;
+  else
+    if (line.startsWith('Text = '))
+      if (line.replaceAll('Text = ', '').startsWith(obfuscator))
+        return ActionData('txt', getTextData(line, obfuscator, dtable));
+      else
+        return ActionData('txt', line);
+    else
+    if (line.startsWith('Media = '))
+      return ActionData('img', line.trimLeft().replaceAll('Media = ', ''));
+    else
+    if (line.startsWith('if '))
+      return ActionData('cse', line.trimLeft());
+    if (line.startsWith('elseif '))
+      return ActionData('cse', line.trimLeft());
+    if (line.startsWith('else '))
+      return ActionData('cse', line.trimLeft());
+    else
+      return ActionData('act', line.trimLeft());
+}
+
+

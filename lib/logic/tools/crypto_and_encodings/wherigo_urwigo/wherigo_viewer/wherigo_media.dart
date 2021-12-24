@@ -39,6 +39,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length; i++){
     if (re.hasMatch(lines[i])) {
+      print((i+1).toString()+' '+lines[i]);
       LUAname = '';
       id = '';
       name = '';
@@ -98,7 +99,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
         else if (lines[i + j].trimLeft().startsWith('Directives ='))
           sectionMedia = false;
         j++;
-      } while (sectionMedia);
+      } while (sectionMedia && (i + j < lines.length));
       i = i + j;
 
       result.add(MediaData(

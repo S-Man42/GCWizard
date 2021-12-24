@@ -407,7 +407,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             GCWDefaultOutput(),
             GCWIntegerSpinner(
               min: 1,
-              max: _cartridge.NumberOfObjects - 1,
+              max: _cartridge.NumberOfObjects,
               value: _mediaFile,
               onChanged: (value) {
                 setState(() {
@@ -461,8 +461,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Characters.length - 1,
+                min: 1,
+                max: _cartridge.Characters.length,
                 value: _characterIndex,
                 onChanged: (value) {
                   setState(() {
@@ -508,8 +508,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ),
               ),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Zones.length - 1,
+                min: 1,
+                max: _cartridge.Zones.length,
                 value: _zoneIndex,
                 onChanged: (value) {
                   setState(() {
@@ -533,8 +533,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Inputs.length - 1,
+                min: 1,
+                max: _cartridge.Inputs.length,
                 value: _inputIndex,
                 onChanged: (value) {
                   setState(() {
@@ -558,8 +558,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Tasks.length - 1,
+                min: 1,
+                max: _cartridge.Tasks.length,
                 value: _taskIndex,
                 onChanged: (value) {
                   setState(() {
@@ -584,8 +584,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Timers.length - 1,
+                min: 1,
+                max: _cartridge.Timers.length,
                 value: _timerIndex,
                 onChanged: (value) {
                   setState(() {
@@ -610,8 +610,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           children : <Widget>[
             GCWDefaultOutput(),
             GCWIntegerSpinner(
-              min: 0,
-              max: _cartridge.Items.length - 1,
+              min: 1,
+              max: _cartridge.Items.length,
               value: _itemIndex,
               onChanged: (value) {
                 setState(() {
@@ -636,8 +636,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Media.length - 1,
+                min: 1,
+                max: _cartridge.Media.length,
                 value: _mediaIndex,
                 onChanged: (value) {
                   setState(() {
@@ -662,8 +662,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Messages.length - 1,
+                min: 1,
+                max: _cartridge.Messages.length,
                 value: _messageIndex,
                 onChanged: (value) {
                   setState(() {
@@ -688,8 +688,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Answers.length - 1,
+                min: 1,
+                max: _cartridge.Answers.length,
                 value: _answerIndex,
                 onChanged: (value) {
                   setState(() {
@@ -714,8 +714,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Identifiers.length - 1,
+                min: 1,
+                max: _cartridge.Identifiers.length,
                 value: _identifierIndex,
                 onChanged: (value) {
                   setState(() {
@@ -870,7 +870,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
       });
     }
-
+/*
     if (data.AnswerCorrectActions.length > 0){
       result.add([i18n(context, 'wherigo_output_answeractions_correct'), '']);
       data.AnswerCorrectActions.forEach((element) {
@@ -884,6 +884,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
       });
     }
+*/
 
     return result;
   }

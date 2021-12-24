@@ -4642,6 +4642,7 @@
   "wherigo_output_action_img": "Image to show",
   "wherigo_output_action_act": "Action to do",
   "wherigo_output_action_btn": "Button to show",
+  "wherigo_output_action_cse": "Case/Branch",
   "wherigo_output_hint": "Hint",
   "wherigo_output_input": "Input Object",
   "wherigo_output_alttext": "Alternate Text",
