@@ -102,9 +102,14 @@ class SymbolImage {
 
   String getTextOutput() {
     var output = '';
+    var referenceWidth = _referenceWidth(symbols);
+
     lines.forEach((line) {
+      var rightBorder = 0.0;
       line.symbols.forEach((symbol) {
+        if (symbol?.refPoint.dx - rightBorder > referenceWidth) output += ' ';
         output += symbol.symbolGroup?.text != null ? symbol.symbolGroup.text : '';
+        rightBorder = symbol.refPoint.dx + symbol.bmp.width;
       });
       output += '\r\n';
     });
