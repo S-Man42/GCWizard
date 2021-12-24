@@ -10,14 +10,18 @@ Map<CCITTCodebook, Map<String, String>> CCITT_CODEBOOK = {
 };
 
 List<String> decenary2segments(String decenary) {
+  // 0 ... 31 => 00000 ... 11111
   String binary = convertBase(decenary, 10, 2);
-  for (int i = 0; i < 6 - binary.length; i++) binary = '0' + binary;
+  while (binary.length < 5){
+    binary = '0' + binary;
+  }
   List<String> result = [];
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
 
 List<String> binary2segments(String binary) {
+  // 00000 ... 11111 => [1,2,3,4,5]
   for (int i = 0; i < 5 - binary.length; i++) binary = '0' + binary;
   List<String> result = [];
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
@@ -25,6 +29,7 @@ List<String> binary2segments(String binary) {
 }
 
 String segments2binary(List<String> segments) {
+  // [1,2,3,4,5] => 00000 ... 11111
   String result = '';
   if (segments.contains('1'))
     result = result + '1';
@@ -50,6 +55,7 @@ String segments2binary(List<String> segments) {
 }
 
 String segments2decenary(List<String> segments) {
+  // [1,2,3,4,5] => 0 ... 31
   String result = '';
   if (segments.contains('1'))
     result = result + '1';
@@ -90,6 +96,7 @@ List<List<String>> encodeCCITT(String input, CCITTCodebook language) {
   }
 
   code.forEach((element) {
+    if (int.tryParse(element) != null)
     result.add(decenary2segments(element));
   });
 
