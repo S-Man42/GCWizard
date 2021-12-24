@@ -32,8 +32,7 @@ class TelegraphSelection extends GCWSelection {
         className(WigWagSemaphoreTelegraph()),
         className(GaussWeberTelegraph()),
         className(SchillingCanstattTelegraph()),
-        className(WheatstoneCooke5NeedleTelegraph()),
-        className(CCITTTelegraph()),
+        className(WheatstoneCookeNeedleTelegraph()),
       ].contains(className(element.tool));
     }).toList();
 

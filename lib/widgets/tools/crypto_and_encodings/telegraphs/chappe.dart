@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -21,7 +22,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
-  TextEditingController _DecodeInputController;
+  TextEditingController _decodeInputController;
   String _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -34,13 +35,13 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
-    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
+    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
     _encodeController.dispose();
-    _DecodeInputController.dispose();
+    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -93,11 +94,11 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
                 });
               },
             ),
-            if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
+            if (_currentDecodeMode == GCWSwitchPosition.right) // decode visual mode
               _buildVisualDecryption()
-            else // decode text
+            else // decode text mode
               GCWTextField(
-                controller: _DecodeInputController,
+                controller: _decodeInputController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),
                 ],
@@ -141,8 +142,8 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
     return Column(
       children: <Widget>[
         Container(
-          width: 180,
-          height: 200,
+          width: 300,
+          //height: 200,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
@@ -207,17 +208,18 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
       //decode
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
-        // text
+        // decode text mode
         segments = decodeTextChappeTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
       } else {
-        // visual
+        // decode visual mode
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeChappe(output, _currentLanguage);
+        segments = decodeVisualChappe(output, _currentLanguage);
       }
       return Column(
         children: <Widget>[
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),
           _buildDigitalOutput(segments['displays']),
         ],
       );

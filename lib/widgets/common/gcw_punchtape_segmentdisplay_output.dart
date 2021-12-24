@@ -42,9 +42,6 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
 
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
-    var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
 
     return Column(children: <Widget>[
       GCWTextDivider(
@@ -70,7 +67,7 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
                 iconData: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
-                  await buildPunchtapeSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
+                  await buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {
                     if (image != null)
                       image.toByteData(format: ui.ImageByteFormat.png).then((data) {
                         _exportFile(context, data.buffer.asUint8List());
@@ -80,38 +77,14 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
               ),
               padding: EdgeInsets.only(right: 10.0),
             ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_in,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = max(countColumns - 1, 1);
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
-            GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.zoom_out,
-              onPressed: () {
-                setState(() {
-                  int newCountColumn = countColumns + 1;
-                  mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                });
-              },
-            ),
           ],
         ),
       ),
-      _buildDigitalOutput(countColumns, widget.segments)
+      _buildDigitalOutput(widget.segments)
     ]);
   }
 
-  Widget _buildDigitalOutput(int countColumns, List<List<String>> segments) {
+  Widget _buildDigitalOutput(List<List<String>> segments) {
     var list = _currentUpsideDown ? segments.reversed : segments;
 
     _displays = list.where((character) => character != null).map((character) {
@@ -124,7 +97,7 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
         : _displays.map((display) {
             return Transform.rotate(angle: _currentUpsideDown ? pi : 0, child: display);
           }).toList();
-    return buildPunchtapeSegmentDisplayOutput(countColumns, viewList);
+    return buildPunchtapeSegmentDisplayOutput(viewList);
   }
 }
 

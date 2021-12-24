@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
-class GCWCoordsReverseWhereIGoWaldmeister extends StatefulWidget {
+class GCWCoordsReverseWherigoWaldmeister extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
 
-  const GCWCoordsReverseWhereIGoWaldmeister({Key key, this.onChanged, this.coordinates}) : super(key: key);
+  const GCWCoordsReverseWherigoWaldmeister({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
-  GCWCoordsReverseWhereIGoWaldmeisterState createState() => GCWCoordsReverseWhereIGoWaldmeisterState();
+  GCWCoordsReverseWherigoWaldmeisterState createState() => GCWCoordsReverseWherigoWaldmeisterState();
 }
 
-class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhereIGoWaldmeister> {
+class GCWCoordsReverseWherigoWaldmeisterState extends State<GCWCoordsReverseWherigoWaldmeister> {
   var _ControllerA;
   var _ControllerB;
   var _ControllerC;

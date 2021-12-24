@@ -29,7 +29,7 @@ class SymbolTableSelection extends GCWSelection {
 }
 
 String symboltablesDownloadLink(BuildContext context) {
-  final _SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'ko'];
+  final _SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'ko', 'nl'];
   var locale = Localizations.localeOf(context).languageCode;
 
   var usedLocale = 'en';

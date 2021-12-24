@@ -19,7 +19,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
@@ -48,7 +48,7 @@ const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
-const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
+const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister';
 
 class CoordinateFormat {
   final key;
@@ -86,7 +86,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
-  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', '042325, 436113, 935102'),
+  CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
@@ -611,7 +611,7 @@ class SlippyMap extends BaseCoordinates {
 }
 
 class Waldmeister extends BaseCoordinates {
-  String get key => keyCoordsReverseWhereIGoWaldmeister;
+  String get key => keyCoordsReverseWherigoWaldmeister;
   String a, b, c;
 
   Waldmeister(this.a, this.b, this.c);

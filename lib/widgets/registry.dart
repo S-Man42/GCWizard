@@ -79,6 +79,7 @@ import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
@@ -224,6 +225,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
@@ -263,6 +266,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/compound_interest.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_calling_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_ioc_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/countries/countries_iso_codes.dart';
@@ -286,6 +290,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -534,6 +539,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'complexnumbers',
     ]),
+    GCWTool(tool: CompoundInterest(), i18nPrefix: 'compoundinterest', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'compoundinterest',
+    ]),
     GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', searchKeys: [
       'coordinates',
     ]),
@@ -684,7 +694,6 @@ initializeRegistry(BuildContext context) {
         'iataicao',
       ],
     ),
-
     GCWTool(
       tool: IceCodesSelection(),
       i18nPrefix: 'icecodes_selection',
@@ -716,6 +725,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'symbol_replacer',
     ]),
+    GCWTool(
+        tool: IPCodes(),
+        i18nPrefix: 'ipcodes',
+        categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
+        searchKeys: ['ipcodes']),
     GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -934,6 +948,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'solitaire',
     ]),
+    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'stegano',
+    ]),
     GCWTool(tool: StraddlingCheckerboard(), i18nPrefix: 'straddlingcheckerboard', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -1021,6 +1040,11 @@ initializeRegistry(BuildContext context) {
       'wasd',
     ]),
     GCWTool(
+        tool: WherigoUrwigoSelection(),
+        i18nPrefix: 'wherigourwigo_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(
         tool: WeatherSymbols(),
         i18nPrefix: 'weathersymbols',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
@@ -1031,7 +1055,7 @@ initializeRegistry(BuildContext context) {
       'ccitt2',
       'z22',
     ]),
-    GCWTool(tool: ZamonianNumbers(), i18nPrefix: 'zamoniannumbers', categories: [
+    GCWTool(tool: ZamonianNumbers(), autoScroll: false, i18nPrefix: 'zamoniannumbers', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'symbol_zamonian',
@@ -1646,6 +1670,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
       'codebreaker',
+      'hashes',
+      'hashbreaker',
+    ]),
+    GCWTool(tool: UrwigoHashBreaker(), i18nPrefix: 'urwigo_hashbreaker', searchKeys: [
+      'wherigourwigo',
       'hashes',
       'hashbreaker',
     ]),
@@ -2626,9 +2655,6 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
       'symbol_birds_on_a_wire',
     ]),
-    GCWSymbolTableTool(symbolKey: 'birkenbihl', symbolSearchStrings: [
-      'symbol_birkenbihl',
-    ]),
     GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: [
       'symbol_blox',
     ]),
@@ -2678,6 +2704,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: [
       'symbol_chinese_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: [
+      'symbol_christmas',
     ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: [
       'symbol_runes',
@@ -3111,6 +3140,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'predator', symbolSearchStrings: [
       'predator',
     ]),
+    GCWSymbolTableTool(symbolKey: 'prosyl', symbolSearchStrings: [
+      'symbol_prosyl',
+    ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
     ]),
@@ -3119,10 +3151,6 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'prussian_colors_infantery', symbolSearchStrings: [
       'symbol_prussian_colors_infantery',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
-      'telegraph',
-      'symbol_prussian_optical_telegraph',
     ]),
     GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
       'symbol_quadoo',
@@ -3207,6 +3235,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
       'symbol_tamil_numerals',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'telegraph_prussia', symbolSearchStrings: [
+      'telegraph',
+      'telegraph_prussia',
     ]),
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',
@@ -3359,13 +3391,16 @@ initializeRegistry(BuildContext context) {
       'telegraph',
       'telegraph_schillingcanstatt',
     ]),
-    GCWTool(tool: WheatstoneCooke5NeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke5needle', searchKeys: [
+    GCWTool(tool: WheatstoneCookeNeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke_needle', searchKeys: [
       'telegraph',
-      'telegraph_wheatstonecooke5needle',
+      'telegraph_wheatstonecooke_needle',
     ]),
-    GCWTool(tool: CCITTTelegraph(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
+    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
       'telegraph',
       'telegraph_ccitt',
+      'ccitt',
+      'ccitt1',
+      'ccitt2',
     ]),
 
     // TomTomSelection *********************************************************************************************
@@ -3414,6 +3449,13 @@ initializeRegistry(BuildContext context) {
       'rotation',
       'trithemius',
     ]),
+
+    //WherigoUrwigoSelection **************************************************************************************
+    //UrwigoHashBreaker already inserted in section "Hashes"
+    GCWTool(
+        tool: UrwigoTextDeobfuscation(),
+        i18nPrefix: 'urwigo_textdeobfuscation',
+        searchKeys: ['wherigourwigo', 'urwigo_textdeobfuscation']),
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);

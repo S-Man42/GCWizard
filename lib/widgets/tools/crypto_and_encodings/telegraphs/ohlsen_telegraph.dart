@@ -20,9 +20,9 @@ class OhlsenTelegraph extends StatefulWidget {
 
 class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   var _currentEncodeInput = '';
-  var _EncodeInputController;
+  var _dncodeInputController;
 
-  var _DecodeInputController;
+  var _decodeInputController;
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
@@ -33,14 +33,14 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
   void initState() {
     super.initState();
 
-    _EncodeInputController = TextEditingController(text: _currentEncodeInput);
-    _DecodeInputController = TextEditingController(text: _currentDecodeInput);
+    _dncodeInputController = TextEditingController(text: _currentEncodeInput);
+    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
-    _EncodeInputController.dispose();
-    _DecodeInputController.dispose();
+    _dncodeInputController.dispose();
+    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -58,7 +58,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
       ),
       if (_currentMode == GCWSwitchPosition.left) // encrypt
         GCWTextField(
-          controller: _EncodeInputController,
+          controller: _dncodeInputController,
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -82,7 +82,7 @@ class OhlsenTelegraphState extends State<OhlsenTelegraph> {
             _buildVisualDecryption()
           else // decode text
             GCWTextField(
-              controller: _DecodeInputController,
+              controller: _decodeInputController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),
               ],

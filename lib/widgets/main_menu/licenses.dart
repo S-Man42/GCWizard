@@ -63,7 +63,7 @@ class LicensesState extends State<Licenses> {
             'Wesley Janssen, Joost Rijneveld, Mathijs Vos',
             'CC0 1.0 Universal Public Domain Dedication'
           ],
-          ['Color Picker', 'flutter_hsvcolor_picker (minimized)', 'Color Picker', null],
+          ['Color Picker', 'flutter_hsvcolor_picker (minimized)', null],
           ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
           ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
           ['Cow Generator', 'Frank Buss', null],
@@ -74,6 +74,7 @@ class LicensesState extends State<Licenses> {
           ['Malbolge Code', 'lscheffer.com, Matthias Ernst', 'CC0, Public Domain'],
           ['Substitution Breaker', 'Jens Guballa (guballa.de)', 'MIT License'],
           ['Sudoku Solver', 'Peter Norvig (norvig.com), \'dartist\'', 'MIT License'],
+          ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
           ['Vigenère Breaker', 'Jens Guballa (guballa.de)', null],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
         ]),
@@ -81,33 +82,44 @@ class LicensesState extends State<Licenses> {
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),
       Column(
         children: columnedMultiLineOutput(null, [
-          ['myGeoTools', 'several'],
-          ['Wikipedia', 'several'],
-          ['www.steinerverlag.de', 'Eurythmy'],
-          ['www.breitkopf.de', 'Solmisation'],
-          ['game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)', 'Geocache Attributes'],
+          ['several', 'myGeoTools'],
+          ['several', 'Wikipedia'],
+          [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
+          [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
+          [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (Online Web Fonts) (CC BY-SA 3.0)'],
+          [
+            i18n(context, 'symboltables_gc_attributes_ids_title'),
+            'game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)'
+          ],
+          [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_kabouter_abc_title'), 'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'],
+          [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
+          [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
+          [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
+          [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
+          [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
+          [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)']
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_telegraphs')),
       Column(
         children: columnedMultiLineOutput(null, [
           [
-            'Edelcrantz Telegraph',
-            'Gerard Holzmann,\nhttps://archive.org/details/earlyhistoryofda0000holz\nSilvia Rubio Hernández\nVapriikki Case: Design and Evaluation of an Interactive Mixed-Reality Museum Exhibit\nhttps://trepo.tuni.fi/bitstream/handle/10024/102557/1513599679.pdf?sequence=1&isAllowed=y\nAnders Lindeberg-Lindvet, Curator Tekniskamuseet Stockholm\nErika Tanhua-Piiroinen, Tampere University Finland'
-          ],
-          ['Ohlsen Telegraph', 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
-          [
-            'Murray Telegraph',
-            'Helmar Fischer,\nhttps://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/\nOmer Roucoux,\nhttp://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station.htm'
+            i18n(context, 'telegraph_edelcrantz_title'),
+            'Gerard Holzmann,\nSilvia Rubio Hernández\nAnders Lindeberg-Lindvet, Curator Tekniskamuseet Stockholm\nErika Tanhua-Piiroinen, Tampere University Finland'
           ],
           [
-            'Preußischer optischer Telegraf',
-            'Bilddatenbank der Museumsstiftung Post und Telekommunikation Creative Commons Lizenz CC BY-SA '
+            i18n(context, 'telegraph_murray_title'),
+            'Helmar Fischer,\nJohn Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux'
           ],
+          [i18n(context, 'telegraph_ohlsen_title'), 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
           [
-            'Schilling Canstatt Telegraph',
-            'Volker Aschoff,\nPaul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen\nISBN 3-486-20691-5'
+            i18n(context, 'telegraph_prussia_title'),
+            'Bilddatenbank der Museumsstiftung Post und Telekommunikation (CC BY-SA)'
           ],
+          [i18n(context, 'telegraph_schillingcanstatt_title'), 'Volker Aschoff'],
         ]),
       ),
     ]);

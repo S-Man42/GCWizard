@@ -1,9 +1,17 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
+/*
+Helmar Fischer,
+https://cms.sachsen.schule/typoecke2/typo-experimente/informationuebertragung-mit-dem-klappentelegraph/
+
+John Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux,
+http://virtual-library.culturalservices.net/webingres/bedfordshire/vlib/0.digitised_resources/dunstable_article_signalling_station.htm
+ */
+
 enum MurrayCodebook {
-  GEOCACHING,
   ROYALNAVY,
+  GEOCACHING,
   FISCHER,
   ROUCOUX,
   GEOCACHINGTOOLBOX_1,
@@ -13,13 +21,13 @@ enum MurrayCodebook {
 }
 
 Map<MurrayCodebook, Map<String, String>> MURRAY_CODEBOOK = {
-  MurrayCodebook.GEOCACHING: {
-    'title': 'telegraph_murray_geocaching_title',
-    'subtitle': 'telegraph_murray_geocaching_description'
-  },
   MurrayCodebook.ROYALNAVY: {
     'title': 'telegraph_murray_royalnavy_title',
     'subtitle': 'telegraph_murray_royalnavy_description'
+  },
+  MurrayCodebook.GEOCACHING: {
+    'title': 'telegraph_murray_geocaching_title',
+    'subtitle': 'telegraph_murray_geocaching_description'
   },
   MurrayCodebook.FISCHER: {
     'title': 'telegraph_murray_fischer_title',

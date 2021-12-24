@@ -1,6 +1,21 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum GaussWeberTelegraphMode { GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANSTATT, WHEATSTONE_COOKE_5 }
+/*
+  Schilling Canstatt:
+
+  Volker Aschoff
+  "Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen"
+  ISBN 3-486-20691-5
+ */
+
+enum GaussWeberTelegraphMode {
+  GAUSS_WEBER_ORIGINAL,
+  GAUSS_WEBER_ALTERNATIVE,
+  SCHILLING_CANSTATT,
+  WHEATSTONE_COOKE_5,
+  WHEATSTONE_COOKE_2,
+  WHEATSTONE_COOKE_1
+}
 
 Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'A': '+',
@@ -131,6 +146,72 @@ Map<String, String> _WHEATSTONE_COOKE_5 = {
   'Y': '\\|||/',
 };
 
+Map<String, String> _WHEATSTONE_COOKE_2 = {
+  'A': '[\\\\  |]',
+  'B': '[\\\\\\ |]',
+  'D': '[/\\ |]',
+  'E': '[\\/ |]',
+  'F': '[// |]',
+  'G': '[/// |]',
+  'H': '[| \\]',
+  'I': '[| \\\\]',
+  'K': '[| \\\\\\]',
+  'L': '[| /\\]',
+  'M': '[| \\/]',
+  'N': '[| /]',
+  'O': '[| //]',
+  'P': '[| ///]',
+  'R': '[\\ \\]',
+  'S': '[\\\\ \\\\]',
+  'T': '[\\\\\\ \\\\\\]',
+  'U': '[/\\ /\\]',
+  'V': '[\\/ \\/]',
+  'W': '[/ /]',
+  'X': '[// //]',
+  'Y': '[/// ///]',
+};
+
+Map<String, String> _WHEATSTONE_COOKE_1 = {
+  'A': '\\\\',
+  'B': '\\\\\\',
+  'C': '\\\\\\\\',
+  'D': '/\\',
+  'E': '\\/\\',
+  'F': '\\\\/\\',
+  'G': '//\\',
+  'H': '\\//\\',
+  'I': '///\\',
+  'K': '/\\\\',
+  'L': '/\\/\\',
+  'M': '/',
+  'N': '//',
+  'O': '///',
+  'P': '////',
+  'R': '\\/',
+  'S': '\\//',
+  'T': '\\///',
+  'U': '\\\\/',
+  'V': '\\\\//',
+  'W': '\\\\\\/',
+  'X': '/\\/',
+  'Y': '\\/\\/',
+};
+
+Map<GaussWeberTelegraphMode, Map<String, String>> WHEATSTONECOOKENEEDLENUMBER = {
+  GaussWeberTelegraphMode.WHEATSTONE_COOKE_1: {
+    'title': 'telegraph_wheatstonecooke_1_needle_title',
+    'subtitle': 'telegraph_wheatstonecooke_1_needle_description'
+  },
+  GaussWeberTelegraphMode.WHEATSTONE_COOKE_2: {
+    'title': 'telegraph_wheatstonecooke_2_needle_title',
+    'subtitle': 'telegraph_wheatstonecooke_2_needle_description'
+  },
+  GaussWeberTelegraphMode.WHEATSTONE_COOKE_5: {
+    'title': 'telegraph_wheatstonecooke_5_needle_title',
+    'subtitle': 'telegraph_wheatstonecooke_5_needle_description'
+  },
+};
+
 String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
   if (input == null || input.isEmpty) return '';
 
@@ -147,6 +228,12 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
       break;
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5:
       map = switchMapKeyValue(_WHEATSTONE_COOKE_5);
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_2:
+      map = switchMapKeyValue(_WHEATSTONE_COOKE_2);
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_1:
+      map = switchMapKeyValue(_WHEATSTONE_COOKE_1);
       break;
     default:
       return '';
@@ -178,6 +265,12 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
       break;
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5:
       map = _WHEATSTONE_COOKE_5;
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_2:
+      map = _WHEATSTONE_COOKE_2;
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_1:
+      map = _WHEATSTONE_COOKE_1;
       break;
     default:
       return '';

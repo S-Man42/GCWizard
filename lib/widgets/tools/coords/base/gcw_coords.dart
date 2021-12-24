@@ -20,7 +20,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.d
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewherigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgridplus.dart';
@@ -281,8 +281,8 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
-        'widget': GCWCoordsReverseWhereIGoWaldmeister(
+        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoWaldmeister),
+        'widget': GCWCoordsReverseWherigoWaldmeister(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -428,7 +428,7 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsGeo3x3:
       case keyCoordsOpenLocationCode:
       case keyCoordsQuadtree:
-      case keyCoordsReverseWhereIGoWaldmeister:
+      case keyCoordsReverseWherigoWaldmeister:
         break;
       default:
         _currentCoordsFormat = {'format': keyCoordsDMM};
