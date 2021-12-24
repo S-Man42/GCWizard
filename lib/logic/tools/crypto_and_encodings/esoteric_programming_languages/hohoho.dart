@@ -1,4 +1,5 @@
 // https://arxiv.org/pdf/1712.06259.pdf
+// https://hohoho.jakobsenkl.pw/
 // https://www.geocaching.com/geocache/GC9GFQM_hohoho
 //
 // Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Hohohohohoho! Ho! Hoho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Hoho! Ho! Hohoho! Ho! Ho! Hoho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Hoho! Hohohohohohohohoho! Hoho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Hoho! Hohohohohohohohohohohohohohohohohohohohoho! Hohohohohoho! Hohohohohoho! Hoho! Ho! Ho! Hoho! Hoho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Hoho! Hoho! Ho! Ho! Hoho! Hohohohohoho! Hoho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Ho! Hoho! Hohoho! Ho! Ho!
@@ -38,13 +39,11 @@ HohohoOutput interpretHohoho(String plainText, {String STDIN}){
     if (i % 6 == 0)
       test = test + ' ';
   }
-  print(test);
 
   // convert to Brainfck
   Map BRAINF_CK = switchMapKeyValue(brainfkTrivialSubstitutions['Hohoho!']);
   result = '';
   test.split(' ').forEach((element) {
-    print(element);
     if (BRAINF_CK[element] != null)
       result = result + BRAINF_CK[element];
   });
@@ -57,6 +56,9 @@ HohohoOutput interpretHohoho(String plainText, {String STDIN}){
 }
 
 String generateHohoho(String OutputText){
+  if (OutputText == '' || OutputText == null)
+    return '';
+
   // generate Brainfck
   String code = generateBrainfk(OutputText);
   String result = '';
@@ -67,6 +69,9 @@ String generateHohoho(String OutputText){
   });
 
   // normalize
+  code = result.replaceAll('H', '! H') + '!';
+  code = code.substring(2);
 
   // return result
+  return code;
 }
