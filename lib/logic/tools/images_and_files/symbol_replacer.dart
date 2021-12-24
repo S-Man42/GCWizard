@@ -312,8 +312,11 @@ class SymbolImage {
     for (int y = 0; y < _bmp.height; y++)
       if (_emptyRow(_bmp, 0, _bmp.width - 1, y, _blackLevel)) emptyLineIndex.add(y);
 
-    // split lines
-    if (emptyLineIndex.length > 0) {
+    if (emptyLineIndex.isEmpty)
+      emptyLineIndex.add(_bmp.width -1);
+
+      // split lines
+    if (emptyLineIndex.isNotEmpty) {
       if (emptyLineIndex.first != 0)
         _cutLine(0, emptyLineIndex.first - 1);
 
@@ -381,7 +384,8 @@ class SymbolImage {
   static bool _emptyRow(Image.Image bmp, int startColumn, int endColumn, int row, int blackLevel) {
     for (int x = startColumn; x <= endColumn; x++) {
       var pixel = bmp.getPixel(x, row);
-      if (_blackPixel(pixel, blackLevel)) return false;
+      if (_blackPixel(pixel, blackLevel))
+        return false;
     }
     return true;
   }
