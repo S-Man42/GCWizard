@@ -151,6 +151,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/hohoho.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
@@ -1636,6 +1637,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_deadfish',
+    ]),
+    GCWTool(tool: Hohoho(), i18nPrefix: 'hohoho', searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_hohoho',
     ]),
     GCWTool(tool: KarolRobot(), i18nPrefix: 'karol_robot', searchKeys: [
       'esoteric_karol_robot',
