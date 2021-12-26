@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt1.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 
 void main() {
   group("CCITT1.encodeCCITT1:", () {
@@ -38,7 +39,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeCCITT1(elem['input']);
+        var _actual = encodeCCITT(elem['input'], CCITTCodebook.CCITT_BAUDOT_MISS);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -69,7 +70,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeCCITT1(elem['input']);
+        var _actual = decodeCCITT(elem['input'], CCITTCodebook.CCITT_BAUDOT_MISS);
         expect(_actual, elem['expectedOutput']);
       });
     });
