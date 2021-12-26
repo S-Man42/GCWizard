@@ -3030,9 +3030,6 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
       'ccitt',
-      'ccitt',
-      'ccitt2',
-      'ccitt2',
       'symbol_murraybaudot',
     ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
@@ -3377,11 +3374,6 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: WheatstoneCookeNeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke_needle', searchKeys: [
       'telegraph',
       'telegraph_wheatstonecooke_needle',
-    ]),
-    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
-      'telegraph',
-      'telegraph_ccitt',
-      'ccitt',
     ]),
 
     // TomTomSelection *********************************************************************************************

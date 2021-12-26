@@ -5,8 +5,8 @@ import 'package:gc_wizard/utils/common_utils.dart';
 enum CCITTCodebook { CCITT_BAUDOT, CCITT_BAUDOT_MISS, CCITT_ITA1_EU, CCITT_ITA1_UK, CCITT_ITA2, CCITT_MTK2, CCITT_ITA5, CCITT_USTTY }
 
 Map<CCITTCodebook, Map<String, String>> CCITT_CODEBOOK = {
-  CCITTCodebook.CCITT_BAUDOT: {'title': 'punchtape_ccitt_baudot_title', 'subtitle': 'punchtape_ccitt_baudot_description'},
-  CCITTCodebook.CCITT_BAUDOT_MISS: {'title': 'punchtape_baudot_miss_title', 'subtitle': 'punchtape_ccitt_baudot_miss_description'},
+  CCITTCodebook.CCITT_BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
+  CCITTCodebook.CCITT_BAUDOT_MISS: {'title': 'punchtape_ccitt_baudot_miss_title', 'subtitle': 'punchtape_ccitt_baudot_miss_description'},
   CCITTCodebook.CCITT_ITA1_EU: {'title': 'punchtape_ccitt_ita1_eu_title', 'subtitle': 'punchtape_ccitt_ita1_eu_description'},
   CCITTCodebook.CCITT_ITA1_UK: {'title': 'punchtape_ccitt_ita1_uk_title', 'subtitle': 'punchtape_ccitt_ita1_uk_description'},
   CCITTCodebook.CCITT_ITA2: {'title': 'punchtape_ccitt_ita2_title', 'subtitle': 'punchtape_ccitt_ita2_description'},
