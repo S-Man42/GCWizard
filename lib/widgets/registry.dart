@@ -2627,7 +2627,11 @@ initializeRegistry(BuildContext context) {
       'barcodes',
       'barcode39',
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: [
+      'ccitt',
+      'symbol_baudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_ita1', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
     ]),
@@ -3029,6 +3033,10 @@ initializeRegistry(BuildContext context) {
       'symbol_murray',
     ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
+      'ccitt',
+      'symbol_murraybaudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murraybaudot_miss', symbolSearchStrings: [
       'ccitt',
       'symbol_murraybaudot',
     ]),

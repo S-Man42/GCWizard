@@ -14,8 +14,10 @@ class CCITTSelection extends GCWSelection {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       if (className(element.tool) == className(SymbolTable()) )
           if ((element.tool as SymbolTable).symbolKey == 'baudot_miss' ||
-              (element.tool as SymbolTable).symbolKey == 'baudot' ||
-              (element.tool as SymbolTable).symbolKey == 'murraybaudot')
+              (element.tool as SymbolTable).symbolKey == 'baudot_1888' ||
+              (element.tool as SymbolTable).symbolKey == 'baudot_ita1' ||
+              (element.tool as SymbolTable).symbolKey == 'murraybaudot' ||
+              (element.tool as SymbolTable).symbolKey == 'murraybaudot_miss')
         return true;
 
       return [
