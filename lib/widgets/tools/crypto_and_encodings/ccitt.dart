@@ -105,23 +105,23 @@ class CCITTState extends State<CCITT> {
   _buildOutput() {
     var output = '';
 
-    if (_currentMode == GCWSwitchPosition.left) {
+    if (_currentMode == GCWSwitchPosition.left) { // encrypt
       output = encodeCCITT(_currentEncodeInput, _currentCode);
-      if (_currentRadix == GCWSwitchPosition.right) {
+      if (_currentRadix == GCWSwitchPosition.right) { // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
           return out.padLeft(5, '0');
         }).join(' ');
       }
-      return output;
-    } else {
-      if (_currentRadix == GCWSwitchPosition.right) {
+      return output; // decimal
+    } else { // decrypt
+      if (_currentRadix == GCWSwitchPosition.right) { // binary
         return decodeCCITT(textToBinaryList(_currentDecodeInput['text']).map((value) {
           return int.tryParse(convertBase(value, 2, 10));
         }).toList(), CCITTCodebook.CCITT_ITA2);
       }
 
-      return decodeCCITT(List<int>.from(_currentDecodeInput['values']), _currentCode);
+      return decodeCCITT(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
     }
   }
 }
