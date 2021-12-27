@@ -443,9 +443,11 @@ final NumbersToCCITT_ITA2_USTTY = {
 };
 final CCITT_USTTYToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_USTTY);
 
-final _NUMBERS_FOLLOW = 27;
-final _LETTERS_FOLLOW = 31;
+final _NUMBERS_FOLLOW_CCITT_1 = 8;
+final _LETTERS_FOLLOW_CCITT_1 = 16;
 
+final _NUMBERS_FOLLOW_CCITT_2 = 27;
+final _LETTERS_FOLLOW_CCITT_2 = 31;
 
 int _EncodeAZ(CCITTCodebook language, String text){
     switch (language) {
@@ -471,26 +473,27 @@ int _EncodeNumber(CCITTCodebook language, String text){
     }
 }
 
-Map _getDecodeMap(CCITTCodebook language, bool isLetterMode){
-  if (isLetterMode)
+String _DecodeAZ(CCITTCodebook language, int code){
     switch (language) {
-      case CCITTCodebook.CCITT_BAUDOT: return CCITT_BAUDOTToNumbers; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return CCITT_ITA1_MISSToNumbers; break;
-      case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToNumbers; break;
-      case CCITTCodebook.CCITT_ITA1_UK: return CCITT_ITA1_UKToNumbers; break;
-      case CCITTCodebook.CCITT_ITA2: return CCITT_ITA2ToNumbers; break;
-      case CCITTCodebook.CCITT_MTK2: return CCITT_MTK2ToNumbers; break;
-      case CCITTCodebook.CCITT_USTTY: return CCITT_USTTYToNumbers; break;
+      case CCITTCodebook.CCITT_BAUDOT: return CCITT_BAUDOTToAZ[code]; break;
+      case CCITTCodebook.CCITT_BAUDOT_MISS: return CCITT_ITA1_MISSToAZ[code]; break;
+      case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToAZ[code]; break;
+      case CCITTCodebook.CCITT_ITA1_UK: return CCITT_ITA1_UKToAZ[code]; break;
+      case CCITTCodebook.CCITT_ITA2: return CCITT_ITA2ToAZ[code]; break;
+      case CCITTCodebook.CCITT_MTK2: return CCITT_ITA2_MTK2ToAZ[code]; break;
+      case CCITTCodebook.CCITT_USTTY: return CCITT_USTTYToAZ[code]; break;
     }
-  else
+}
+
+String _DecodeNumber(CCITTCodebook language, int code){
     switch (language) {
-      case CCITTCodebook.CCITT_BAUDOT: return CCITT_BAUDOTToAZ; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return CCITT_ITA2ToAZ; break;
-      case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToAZ; break;
-      case CCITTCodebook.CCITT_ITA1_UK: return CCITT_ITA1_UKToAZ; break;
-      case CCITTCodebook.CCITT_ITA2: return CCITT_ITA2ToAZ; break;
-      case CCITTCodebook.CCITT_MTK2: return CCITT_ITA2_MTK2ToAZ; break;
-      case CCITTCodebook.CCITT_USTTY: return CCITT_USTTYToAZ; break;
+      case CCITTCodebook.CCITT_BAUDOT: return CCITT_BAUDOTToNumbers[code]; break;
+      case CCITTCodebook.CCITT_BAUDOT_MISS: return CCITT_ITA1_MISSToNumbers[code]; break;
+      case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToNumbers[code]; break;
+      case CCITTCodebook.CCITT_ITA1_UK: return CCITT_ITA1_UKToNumbers[code]; break;
+      case CCITTCodebook.CCITT_ITA2: return CCITT_ITA2ToNumbers[code]; break;
+      case CCITTCodebook.CCITT_MTK2: return CCITT_MTK2ToNumbers[code]; break;
+      case CCITTCodebook.CCITT_USTTY: return CCITT_USTTYToNumbers[code]; break;
     }
 }
 
@@ -522,15 +525,15 @@ String encodeCCITT(String input, CCITTCodebook language) {
             var code = _EncodeAZ(language, character);
             if (code != null) {
               if (cachedSpace) {
-                out.add(_LETTERS_FOLLOW);
+                out.add(_LETTERS_FOLLOW_CCITT_1);
                 cachedSpace = false;
               }
               return out.add(code);
             }
 
-            code = _EncodeAZ(language, character);
+            code = _EncodeNumber(language, character);
             if (code != null) {
-              out.add(_NUMBERS_FOLLOW);
+              out.add(_NUMBERS_FOLLOW_CCITT_1);
               out.add(code);
               isLetterMode = false;
               cachedSpace = false;
@@ -539,15 +542,15 @@ String encodeCCITT(String input, CCITTCodebook language) {
             var code = _EncodeNumber(language, character);
             if (code != null) {
               if (cachedSpace) {
-                out.add(_NUMBERS_FOLLOW);
+                out.add(_NUMBERS_FOLLOW_CCITT_1);
                 cachedSpace = false;
               }
               return out.add(code);
             }
 
-            code = _EncodeNumber(language, character);
+            code = _EncodeAZ(language, character);
             if (code != null) {
-              out.add(_LETTERS_FOLLOW);
+              out.add(_LETTERS_FOLLOW_CCITT_1);
               out.add(code);
               isLetterMode = true;
               cachedSpace = false;
@@ -561,31 +564,31 @@ String encodeCCITT(String input, CCITTCodebook language) {
     case CCITTCodebook.CCITT_ITA2:
     case CCITTCodebook.CCITT_MTK2:
     case CCITTCodebook.CCITT_USTTY:
-    removeAccents(input.toUpperCase()).split('').forEach((character) {
-      if (isLetterMode) {
-        var code = _EncodeAZ(language, character);
-        if (code != null) return out.add(code);
+        removeAccents(input.toUpperCase()).split('').forEach((character) {
+          if (isLetterMode) {
+            var code = _EncodeAZ(language, character);
+            if (code != null) return out.add(code);
 
-        code = _EncodeAZ(language, character);
-        if (code != null) {
-          out.add(_NUMBERS_FOLLOW);
-          out.add(code);
-          isLetterMode = false;
-        }
-      } else {
-        var code = _EncodeNumber(language, character);
-        if (code != null) return out.add(code);
+            code = _EncodeNumber(language, character);
+            if (code != null) {
+              out.add(_NUMBERS_FOLLOW_CCITT_2);
+              out.add(code);
+              isLetterMode = false;
+            }
+          } else {
+            var code = _EncodeNumber(language, character);
+            if (code != null) return out.add(code);
 
-        code = _EncodeNumber(language, character);
-        if (code != null) {
-          out.add(_LETTERS_FOLLOW);
-          out.add(code);
-          isLetterMode = true;
-        }
-      }
-    });
+            code = _EncodeAZ(language, character);
+            if (code != null) {
+              out.add(_LETTERS_FOLLOW_CCITT_2);
+              out.add(code);
+              isLetterMode = true;
+            }
+          }
+        });
 
-    return out.join(' ');
+        return out.join(' ');
       break;
   }
 }
@@ -609,27 +612,59 @@ String decodeCCITT(List<int> values, CCITTCodebook language) {
   String out = '';
   var isLetterMode = true;
 
-  values.forEach((value) {
-    if (value == _NUMBERS_FOLLOW) {
-      if (out.length > 0) out += ' ';
-      isLetterMode = false;
-      return;
-    }
+  switch (language) {
+  // CCITT1
+    case CCITTCodebook.CCITT_BAUDOT:
+    case CCITTCodebook.CCITT_BAUDOT_MISS:
+    case CCITTCodebook.CCITT_ITA1_EU:
+    case CCITTCodebook.CCITT_ITA1_UK:
+        values.forEach((value) {
+          if (value == _NUMBERS_FOLLOW_CCITT_1) {
+            if (out.length > 0) out += ' ';
+            isLetterMode = false;
+            return;
+          }
 
-    if (value == _LETTERS_FOLLOW) {
-      out += ' ';
-      isLetterMode = true;
-      return;
-    }
+          if (value == _LETTERS_FOLLOW_CCITT_1) {
+            out += ' ';
+            isLetterMode = true;
+            return;
+          }
 
-    if (isLetterMode) {
-      out += _getDecodeMap(language, isLetterMode)[value] ?? '';
-    } else {
-      out += _getDecodeMap(language, isLetterMode)[value] ?? '';
-    }
-  });
+          if (isLetterMode) {
+            out += _DecodeAZ(language, value) ?? '';
+          } else {
+            out += _DecodeNumber(language, value) ?? '';
+          }
+        });
 
-  return out;
+        return out;
+      break;
+
+  // CCITT 2
+    case CCITTCodebook.CCITT_ITA2:
+    case CCITTCodebook.CCITT_MTK2:
+    case CCITTCodebook.CCITT_USTTY:
+    values.forEach((value) {
+      if (value == _NUMBERS_FOLLOW_CCITT_2) {
+        isLetterMode = false;
+        return;
+      }
+
+      if (value == _LETTERS_FOLLOW_CCITT_2) {
+        isLetterMode = true;
+        return;
+      }
+
+      if (isLetterMode) {
+        out += _DecodeAZ(language, value) ?? '';
+      } else {
+        out += _DecodeNumber(language, value) ?? '';
+      }
+    });
+
+    return out;      break;
+  }
 }
 
 
