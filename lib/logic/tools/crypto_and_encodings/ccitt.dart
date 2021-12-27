@@ -450,7 +450,7 @@ final _LETTERS_FOLLOW = 31;
 int _EncodeAZ(CCITTCodebook language, String text){
     switch (language) {
       case CCITTCodebook.CCITT_BAUDOT: return AZToCCITT_BAUDOT[text]; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return AZToCCITT_ITA2[text]; break;
+      case CCITTCodebook.CCITT_BAUDOT_MISS: return AZToCCITT_ITA1_MISS[text]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return AZToCCITT_ITA1_EU[text]; break;
       case CCITTCodebook.CCITT_ITA1_UK: return AZToCCITT_ITA1_UK[text]; break;
       case CCITTCodebook.CCITT_ITA2: return AZToCCITT_ITA2[text]; break;

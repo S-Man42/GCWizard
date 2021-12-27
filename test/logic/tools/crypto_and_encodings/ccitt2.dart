@@ -1,6 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 
 void main() {
   group("CCITT2.encodeCCITT2:", () {
