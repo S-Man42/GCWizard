@@ -81,19 +81,21 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     String output = '';
     int ambigous = 0;
     for (int i = 0; i < detailedOutput.length; i++) {
-      if (detailedOutput[i].number != '') if (ambigous > 0 || detailedOutput[i].ambigous) {
-        if (ambigous == 0) {
-          output = output + ' (' + detailedOutput[i].digit;
+      if (detailedOutput[i].number != '')
+        if (ambigous > 0 || detailedOutput[i].ambigous) {
+          if (ambigous == 0) {
+          output = output + ' (' + (detailedOutput[i].digit.startsWith('numeralwords_') ? ' ' + i18n(context, detailedOutput[i].digit) + ' ' : detailedOutput[i].digit);
           ambigous++;
         }
-        if (ambigous == 1) {
-          output = output + '  | ' + detailedOutput[i].digit + ') - ' + i18n(context, 'vanity_words_search_ambigous');
+        else if (ambigous == 1) {
+          output = output + '  | ' + (detailedOutput[i].digit.startsWith('numeralwords_') ? ' ' + i18n(context, detailedOutput[i].digit) + ' ' : detailedOutput[i].digit) + ') - ' + i18n(context, 'vanity_words_search_ambigous');
           ambigous++;
         }
-      } else if (detailedOutput[i].number == '?')
-        output = output + ' .';
+      }
+      else if (detailedOutput[i].number == '?')
+        output = output + '.';
       else
-        output = output + ' ' + detailedOutput[i].digit;
+        output = output + (detailedOutput[i].digit.startsWith('numeralwords_') ? ' ' + i18n(context, detailedOutput[i].digit) + ' ' : detailedOutput[i].digit);
     }
 
     List<List<String>> columnData = new List<List<String>>();
@@ -102,9 +104,11 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     ambigous = 0;
     for (int i = 0; i < detailedOutput.length; i++) {
       if (ambigous < 2) {
-        if (detailedOutput[i].ambigous) ambigous++;
-        if (ambigous == 1) columnData.add([i18n(context, 'vanity_words_search_ambigous'), '', '']);
-        columnData.add([detailedOutput[i].number, detailedOutput[i].numWord, detailedOutput[i].digit]);
+        if (detailedOutput[i].ambigous)
+          ambigous++;
+        if (ambigous == 1)
+          columnData.add([i18n(context, 'vanity_words_search_ambigous'), '', '']);
+        columnData.add([detailedOutput[i].number, detailedOutput[i].numWord, (detailedOutput[i].digit.toString().startsWith('numeralwords_') ? i18n(context, detailedOutput[i].digit) + ' ' : detailedOutput[i].digit)]);
       }
     }
     flexData = [2, 2, 1];

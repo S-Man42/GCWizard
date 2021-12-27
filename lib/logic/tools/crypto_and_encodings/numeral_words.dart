@@ -382,7 +382,7 @@ final Map<String, String> ITAWordToNum = {
   'virgola': ',',
   'nord': 'numeralwords_n',
   'est': 'numeralwords_e',
-  'west': 'numeralwords_w',
+  'ovest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
 final Map<String, String> FRAWordToNum = {
@@ -422,7 +422,7 @@ final Map<String, String> FRAWordToNum = {
   'komma': ',',
   'nord': 'numeralwords_n',
   'est': 'numeralwords_e',
-  'oest': 'numeralwords_w',
+  'ouest': 'numeralwords_w',
   'sud': 'numeralwords_s'
 };
 final Map<String, String> ESPWordToNum = {
