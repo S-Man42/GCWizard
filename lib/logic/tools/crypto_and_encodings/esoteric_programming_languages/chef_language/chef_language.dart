@@ -325,10 +325,21 @@ List<String> interpretChef(String language, recipe, input) {
 
 List<String> decodeChef(String language, recipe, additionalIngredients) {
   Chef interpreter = Chef(recipe, language);
+  List<String> result = [];
   if (interpreter.valid) {
     interpreter.bake(language, additionalIngredients);
-    if (interpreter.valid)
-      return interpreter.meal;
+    if (interpreter.valid) {
+      result.addAll(interpreter.meal);
+      if (interpreter.liquefyMissing) {
+        result.add('chef_warning_liquefy_missing_title');
+        if (language == "ENG")
+          result.add('» Liquefy contents of the mixing bowl. «');
+        else
+          result.add('» Inhalt der Schüssel auf dem Stövchen erhitzen. «');
+        result.add('chef_warning_liquefy_missing_hint');
+      }
+      return result;
+    }
     else // runtime error
       return interpreter.error;
   } else {
@@ -354,6 +365,7 @@ class Chef {
   List<String> error;
   bool valid;
   List<String> meal;
+  bool liquefyMissing;
 
   Chef(String readRecipe, language) {
     if (readRecipe == '' || readRecipe == null) return;
@@ -362,6 +374,7 @@ class Chef {
     valid = true;
     error = new List<String>();
     recipes = new Map<String, Recipe>();
+    liquefyMissing = true;
     int progress = 0;
     Recipe r = null;
     String title = '';
@@ -699,5 +712,6 @@ class Chef {
     this.valid = k.valid;
     this.meal = k.meal;
     this.error = k.error;
+    this.liquefyMissing = k.liquefyMissing;
   }
 }
