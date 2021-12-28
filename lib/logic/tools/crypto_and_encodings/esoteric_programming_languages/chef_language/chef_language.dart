@@ -331,12 +331,17 @@ List<String> decodeChef(String language, recipe, additionalIngredients) {
     if (interpreter.valid) {
       result.addAll(interpreter.meal);
       if (interpreter.liquefyMissing) {
+        result.add('\n');
         result.add('chef_warning_liquefy_missing_title');
         if (language == "ENG")
           result.add('» Liquefy contents of the mixing bowl. «');
         else
           result.add('» Inhalt der Schüssel auf dem Stövchen erhitzen. «');
         result.add('chef_warning_liquefy_missing_hint');
+        if (language == "ENG")
+          result.add('» Pour contents of the mixing bowl into the baking dish. «');
+        else
+          result.add('» Schüssel in eine Servierschale stürzen. «');
       }
       return result;
     }

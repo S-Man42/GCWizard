@@ -584,7 +584,7 @@
   "chef_error_runtime_stir_in_empty_mixing_bowl": "Stir in empty mixing bowl",
   "chef_error_runtime_mix_empty_mixing_bowl": "Mix empty mixing bowl",
   "chef_warning_liquefy_missing_title": "Attention:\nThe meal might not taste good!\nThe recipe is missing the method",
-  "chef_warning_liquefy_missing_hint": "In case of a strange meal served please add the method.",
+  "chef_warning_liquefy_missing_hint": "In case of a strange meal served please add the method before serving; eg. before the method",
   "chef_hint_recipe_hint": "Hint:",
   "chef_hint_recipe_ingredients_en": "Did you specify 'Ingredients.' above the ingredient list?",
   "chef_hint_recipe_ingredients_de": "Did you specify 'Zutaten:' above the ingredient list?",
