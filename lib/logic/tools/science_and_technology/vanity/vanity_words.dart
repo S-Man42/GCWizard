@@ -133,7 +133,7 @@ final VanityToNLD = {
   '685': 'NUL',
   '336': 'EEN',
   '9933': 'ZWEE',
-  '8743': 'TRIE',
+  '3743': 'DRIE',
   '8437': 'VIER',
   '8453': 'VIJF',
   '937': 'ZES',
@@ -273,7 +273,7 @@ final VanityToEPO = {
   '628': 'NAŬ',
 };
 final VanityToSOL = {
-  '765': 'SOLDO',
+  '76536': 'SOLDO',
   '733636': 'REDODO',
   '736464': 'REMIMI',
   '733232': 'REFAFA',

@@ -230,7 +230,7 @@ final Map<String, String> NLDWordToNum = {
   'nul': '0',
   'een': '1',
   'zwee': '2',
-  'trie': '3',
+  'drie': '3',
   'vier': '4',
   'vijf': '5',
   'zes': '6',
