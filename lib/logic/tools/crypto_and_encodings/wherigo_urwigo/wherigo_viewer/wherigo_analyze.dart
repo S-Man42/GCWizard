@@ -265,6 +265,7 @@ int START_OBJCETADRESS = 9;
 int START_HEADER = 0;
 int START_FILES = 0;
 
+const MEDIATYPE_UNK = 0;
 const MEDIATYPE_BMP = 1;
 const MEDIATYPE_PNG = 2;
 const MEDIATYPE_JPG = 3;
@@ -278,6 +279,7 @@ const MEDIATYPE_SWF = 33;
 const MEDIATYPE_TXT = 49;
 
 Map MEDIATYPE = {
+  MEDIATYPE_UNK: '<?>',
   MEDIATYPE_BMP:'bmp',
   MEDIATYPE_PNG:'png',
   MEDIATYPE_JPG:'jpg',
@@ -292,6 +294,7 @@ Map MEDIATYPE = {
 };
 
 Map MEDIACLASS = {
+  MEDIATYPE_UNK: 'n/a',
   MEDIATYPE_BMP:'Image',
   MEDIATYPE_PNG:'Image',
   MEDIATYPE_JPG:'Image',

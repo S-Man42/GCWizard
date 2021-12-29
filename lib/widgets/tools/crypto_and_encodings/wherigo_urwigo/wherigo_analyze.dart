@@ -61,10 +61,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   var _cartridgeData = WHERIGO.HEADER;
 
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
-  int _mediaFile = 1;
 
   var _currentByteCodeMode = GCWSwitchPosition.left;
 
+  int _mediaFileIndex = 0;
   int _zoneIndex = 0;
   int _inputIndex = 0;
   int _characterIndex = 0;
@@ -116,6 +116,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
+              _mediaFileIndex = 0;
               _zoneIndex = 0;
               _inputIndex = 0;
               _characterIndex = 0;
@@ -148,6 +149,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
+              _mediaFileIndex = 0;
               _zoneIndex = 0;
               _inputIndex = 0;
               _characterIndex = 0;
@@ -390,14 +392,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           [
             i18n(context, 'wherigo_media_type'),
             MEDIACLASS[
-                    _cartridge.MediaFilesContents[_mediaFile].MediaFileType] +
+                    _cartridge.MediaFilesContents[_mediaFileIndex].MediaFileType] +
                 ' : ' +
                 MEDIATYPE[
-                    _cartridge.MediaFilesContents[_mediaFile].MediaFileType]
+                    _cartridge.MediaFilesContents[_mediaFileIndex].MediaFileType]
           ],
           [
             i18n(context, 'wherigo_media_length'),
-            _cartridge.MediaFilesContents[_mediaFile].MediaFileLength
+            _cartridge.MediaFilesContents[_mediaFileIndex].MediaFileLength
                     .toString() +
                 ' Bytes'
           ]
@@ -407,16 +409,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             GCWDefaultOutput(),
             GCWIntegerSpinner(
               min: 1,
-              max: _cartridge.NumberOfObjects,
-              value: _mediaFile,
+              max: _cartridge.NumberOfObjects - 1,
+              value: _mediaFileIndex,
               onChanged: (value) {
                 setState(() {
-                  _mediaFile = value;
+                  _mediaFileIndex = value;
                 });
               },
             ),
             GCWFilesOutput(
-              files: [PlatformFile(bytes:_cartridge.MediaFilesContents[_mediaFile].MediaFileBytes)],
+              files: [PlatformFile(bytes:_cartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes)],
               ),
             Column(children: columnedMultiLineOutput(context, _outputMedia)),
           ],
@@ -461,8 +463,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Characters.length,
+                min: 0,
+                max: _cartridge.Characters.length - 1,
                 value: _characterIndex,
                 onChanged: (value) {
                   setState(() {
@@ -508,8 +510,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ),
               ),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Zones.length,
+                min: 0,
+                max: _cartridge.Zones.length - 1,
                 value: _zoneIndex,
                 onChanged: (value) {
                   setState(() {
@@ -533,8 +535,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Inputs.length,
+                min: 0,
+                max: _cartridge.Inputs.length - 1,
                 value: _inputIndex,
                 onChanged: (value) {
                   setState(() {
@@ -558,8 +560,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Tasks.length,
+                min: 0,
+                max: _cartridge.Tasks.length - 1,
                 value: _taskIndex,
                 onChanged: (value) {
                   setState(() {
@@ -584,8 +586,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Timers.length,
+                min: 0,
+                max: _cartridge.Timers.length - 1,
                 value: _timerIndex,
                 onChanged: (value) {
                   setState(() {
@@ -610,8 +612,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           children : <Widget>[
             GCWDefaultOutput(),
             GCWIntegerSpinner(
-              min: 1,
-              max: _cartridge.Items.length,
+              min: 0,
+              max: _cartridge.Items.length - 1,
               value: _itemIndex,
               onChanged: (value) {
                 setState(() {
@@ -636,8 +638,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Media.length,
+                min: 0,
+                max: _cartridge.Media.length - 1,
                 value: _mediaIndex,
                 onChanged: (value) {
                   setState(() {
@@ -662,8 +664,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Messages.length,
+                min: 0,
+                max: _cartridge.Messages.length - 1,
                 value: _messageIndex,
                 onChanged: (value) {
                   setState(() {
@@ -688,8 +690,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Answers.length,
+                min: 0,
+                max: _cartridge.Answers.length - 1,
                 value: _answerIndex,
                 onChanged: (value) {
                   setState(() {
@@ -714,8 +716,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             children : <Widget>[
               GCWDefaultOutput(),
               GCWIntegerSpinner(
-                min: 1,
-                max: _cartridge.Identifiers.length,
+                min: 0,
+                max: _cartridge.Identifiers.length - 1,
                 value: _identifierIndex,
                 onChanged: (value) {
                   setState(() {
