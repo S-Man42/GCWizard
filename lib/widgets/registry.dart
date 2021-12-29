@@ -2635,7 +2635,7 @@ initializeRegistry(BuildContext context) {
       'ccitt',
       'symbol_baudot',
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_miss', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'baudot_mis', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
     ]),
