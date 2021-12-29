@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt2.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class CCITT2 extends StatefulWidget {
+class CCITT extends StatefulWidget {
   @override
-  CCITT2State createState() => CCITT2State();
+  CCITTState createState() => CCITTState();
 }
 
-class CCITT2State extends State<CCITT2> {
+class CCITTState extends State<CCITT> {
   var _encodeController;
   var _decodeController;
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
+
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
+
+  var _currentCode = CCITTCodebook.CCITT_BAUDOT;
 
   @override
   void initState() {
@@ -43,7 +48,20 @@ class CCITT2State extends State<CCITT2> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left
+        GCWDropDownButton(
+          value: _currentCode,
+          onChanged: (value) {
+            setState(() {
+              _currentCode = value;
+            });
+          },
+          items: CCITT_CODEBOOK.entries.map((mode) {
+            return GCWDropDownMenuItem(
+                value: mode.key,
+                child: i18n(context, mode.value['title']),
+                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+          }).toList(),
+        ),        _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
                 onChanged: (text) {
@@ -87,23 +105,23 @@ class CCITT2State extends State<CCITT2> {
   _buildOutput() {
     var output = '';
 
-    if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeCCITT2(_currentEncodeInput);
-      if (_currentRadix == GCWSwitchPosition.right) {
+    if (_currentMode == GCWSwitchPosition.left) { // encrypt
+      output = encodeCCITT(_currentEncodeInput, _currentCode);
+      if (_currentRadix == GCWSwitchPosition.right) { // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
           return out.padLeft(5, '0');
         }).join(' ');
       }
-      return output;
-    } else {
-      if (_currentRadix == GCWSwitchPosition.right) {
-        return decodeCCITT2(textToBinaryList(_currentDecodeInput['text']).map((value) {
+      return output; // decimal
+    } else { // decrypt
+      if (_currentRadix == GCWSwitchPosition.right) { // binary
+        return decodeCCITT(textToBinaryList(_currentDecodeInput['text']).map((value) {
           return int.tryParse(convertBase(value, 2, 10));
-        }).toList());
+        }).toList(), CCITTCodebook.CCITT_ITA2);
       }
 
-      return decodeCCITT2(List<int>.from(_currentDecodeInput['values']));
+      return decodeCCITT(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
     }
   }
 }

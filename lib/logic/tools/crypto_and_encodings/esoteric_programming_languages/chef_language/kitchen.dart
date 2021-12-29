@@ -15,6 +15,7 @@ class Kitchen {
   bool exception;
   List<String> error;
   List<String> meal;
+  bool liquefyMissing;
 
   Kitchen(Map<String, Recipe> recipes, Recipe mainrecipe, List<Container> mbowls, List<Container> bdishes,
       String language) {
@@ -23,6 +24,7 @@ class Kitchen {
     this.meal = new List<String>();
     this.error = new List<String>();
     this.recipes = recipes;
+    this.liquefyMissing = true;
     //start with at least 1 mixing bowl.
     int maxbowl = 0, maxdish = -1;
     this.recipe = mainrecipe;
@@ -237,6 +239,7 @@ class Kitchen {
         case Type.LiquefyBowl:
         case Type.SchuesselErhitzen:
           mixingbowls[m.mixingbowl].liquefy();
+          liquefyMissing = false;
           break;
 
         case Type.Stir:
