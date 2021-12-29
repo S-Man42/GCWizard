@@ -15,11 +15,11 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   String result = analyseLine.replaceAll(LUAname + '.' + type + ' = ', '');
   if (result.startsWith(obfuscator)) {
     result = result.replaceAll(obfuscator + '("','').replaceAll('")', '');
-    result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n').replaceAll(String.fromCharCode(92) + 'n', '\n');
+    result = deobfuscateUrwigoText(result, dtable);
   } else {
     result = result.replaceAll('"', '');
   }
-  return result;
+  return _normalizeText(result);
 }
 
 
@@ -44,7 +44,7 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     }
   }
 
-  return result.replaceAll(String.fromCharCode(92) + '"', "'").replaceAll('"', '').replaceAll('<BR>', '\n').replaceAll(String.fromCharCode(92) + 'n', '\n');
+  return _normalizeText(result);
 }
 
 
@@ -61,7 +61,7 @@ String _getDetails(String line, String obfuscator, String dtable){
       element = element + line[i];
       i = i + 1;
     } while(line[i ] + line[i + 1] != '")');
-    result = result + deobfuscateUrwigoText(element, dtable).replaceAll('<BR>', '\n');
+    result = result + deobfuscateUrwigoText(element, dtable);
     line = line.substring(i + 2);
 
     i = 0;
@@ -77,7 +77,7 @@ String _getDetails(String line, String obfuscator, String dtable){
 
   } while(line.length != 0);
 
-  return result;
+  return _normalizeText(result);
 }
 
 String getObfuscatorFunction(String source){
@@ -122,6 +122,15 @@ String _getCompositeText(String text, String obfuscator, String dtable){
   } while ((text[i] + text[i + 1] != '")'));
   text = text.substring(i + 2);
   result = result + deobfuscateUrwigoText(hashText, dtable) + text;
-  return result;
+  return _normalizeText(result);
 }
 
+
+String _normalizeText(String text){
+  return text
+      .replaceAll(String.fromCharCode(92) + '"', "'")
+      .replaceAll('"', '')
+      .replaceAll('&nbsp;', ' ')
+      .replaceAll('<BR>', '\n')
+      .replaceAll(String.fromCharCode(92) + 'n', '\n');
+}

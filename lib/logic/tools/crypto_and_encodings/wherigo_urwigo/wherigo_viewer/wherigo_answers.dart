@@ -46,7 +46,6 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
   for (int i = 0; i < lines.length - 1; i++) {
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
       // function for getting all inputs for an inputobject found
-      print((i+1).toString()+' '+lines[i]);
       insideInputFunction = true;
       inputObject = '';
       question = '';
@@ -67,12 +66,10 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
     } // end if identify input function
 
     if (lines[i].trimLeft() == 'input = tonumber(input)') {
-      print((i+1).toString()+' '+lines[i]);
       // do nothing;
     }
 
     else if (lines[i].trimLeft() == 'if input == nil then') {
-      print((i+1).toString()+' '+lines[i]);
       answer = 'NIL';
       i++;
       sectionAnalysed = false;
@@ -98,7 +95,6 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
           sectionAnalysed = true;
       } while (!sectionAnalysed); // end of section
 
-      print('AUSGABE NIL '+(i+1).toString());
       result.add(AnswerData(
         inputObject,
         question,
@@ -110,9 +106,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
     } // end of NIL
 
     else if (_SectionEnd(lines[i])) { //
-      print('_sectionEnd found '+(i+1).toString()+' '+lines[i]);
       if (insideInputFunction) {
-        print('AUSGABE list '+(i+1).toString());
         answerList.forEach((answer) {
           result.add(AnswerData(
             inputObject,
@@ -128,10 +122,8 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
     }
 
     else if (_FunctionEnd(lines[i], lines[i + 1])) {
-      print('_functionEnd found '+(i+1).toString()+' '+lines[i]);
       if (insideInputFunction) {
         insideInputFunction = false;
-        print('AUSGABE list'+(i+1).toString());
         answerList.forEach((answer) {
           result.add(AnswerData(
             inputObject,

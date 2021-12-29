@@ -29,42 +29,44 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
   int j = 1;
   String line = '';
   String text = '';
+  bool urwigo = (lines[6].trim().startsWith('local dtable = "'));
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
 
     if (line.trimLeft().startsWith('_Urwigo.MessageBox(') || line.trimLeft().startsWith('Wherigo.MessageBox(')) {
-      print('message found '+(i+1).toString());
-      singleMessageDialog = [];
-      j = 1;
-      do {
-        if (lines[i + j].trimLeft().startsWith('Text')) {
-          print('text found '+(i+1).toString());
-          singleMessageDialog.add(MessageElementData(
-              'txt', getTextData(lines[i + j], obfuscator, dtable)));
-        }
+      if (urwigo && i <100)
+        i = 190;
+      else {
+        singleMessageDialog = [];
+        j = 1;
+        do {
+          if (lines[i + j].trimLeft().startsWith('Text')) {
+            singleMessageDialog.add(MessageElementData(
+                'txt', getTextData(lines[i + j], obfuscator, dtable)));
+          }
 
-        else if (lines[i + j].trimLeft().startsWith('Media')) {
-          singleMessageDialog.add(MessageElementData('img',
-              lines[i + j].trimLeft().replaceAll('Media = ', '')));
-        }
+          else if (lines[i + j].trimLeft().startsWith('Media')) {
+            singleMessageDialog.add(MessageElementData('img',
+                lines[i + j].trimLeft().replaceAll('Media = ', '')));
+          }
 
-        else if (lines[i + j].trimLeft().startsWith('Buttons')) {
-          j++;
-          do {
-            singleMessageDialog.add(MessageElementData('btn',
-                getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
+          else if (lines[i + j].trimLeft().startsWith('Buttons')) {
             j++;
-          } while (!lines[i + j].trimLeft().startsWith('}'));
-        }
-        j++;
-      } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('})'));
-      i = i + j;
-      result.add(singleMessageDialog);
+            do {
+              singleMessageDialog.add(MessageElementData('btn',
+                  getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
+              j++;
+            } while (!lines[i + j].trimLeft().startsWith('}'));
+          }
+          j++;
+        } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('})'));
+        i = i + j;
+        result.add(singleMessageDialog);
+      }
     }
 
     else if (line.trimLeft().startsWith('_Urwigo.Dialog(') || line.trimLeft().startsWith('Wherigo.Dialog(')) {
-      print('dialog found '+(i+1).toString());
       section = true;
       singleMessageDialog = [];
       j = 1;
@@ -72,7 +74,6 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
         if (lines[i + j].trimLeft().startsWith('Text = ') ||
             lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
             lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
-          print('text found '+(i+1).toString());
           singleMessageDialog.add(MessageElementData('txt', getTextData(lines[i + j], obfuscator, dtable)));
         } else if (lines[i + j].trimLeft().startsWith('Media')) {
           singleMessageDialog.add(MessageElementData('img',
