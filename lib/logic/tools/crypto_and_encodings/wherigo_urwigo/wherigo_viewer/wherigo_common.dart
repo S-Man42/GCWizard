@@ -1,5 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 
+
 String getLUAName(String line) {
   String result = '';
   int i = 0;
@@ -14,34 +15,38 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   String result = analyseLine.replaceAll(LUAname + '.' + type + ' = ', '');
   if (result.startsWith(obfuscator)) {
     result = result.replaceAll(obfuscator + '("','').replaceAll('")', '');
-    result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n');
+    result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n').replaceAll(String.fromCharCode(92) + 'n', '\n');
   } else {
     result = result.replaceAll('"', '');
   }
   return result;
 }
+
 
 String getStructData(String analyseLine, String type){
   return analyseLine.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '').replaceAll(',', '');
 }
 
-String getTextData(String analyseLine, String obfuscator, String dtable){
-  String result = analyseLine.trimLeft().replaceAll('Text = ', '');
+
+String getTextData( String analyseLine, String obfuscator, String dtable){
+  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('[[', '').replaceAll(']]', '');
   if (result.startsWith('(' + obfuscator)) {
     result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')');
     result = _getDetails(result, obfuscator, dtable);
-  } else if (result.startsWith(obfuscator)) {
+  }
+
+  else if (result.startsWith(obfuscator)) {
     if (_compositeText(result)) {
       result = _getCompositeText(result, obfuscator, dtable);
     } else {
-      result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '');
-      result = deobfuscateUrwigoText(result, dtable).replaceAll('<BR>', '\n');
+      result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '').replaceAll('")', '');
+      result = deobfuscateUrwigoText(result, dtable);
     }
-  } else {
-    result = result.replaceAll('"', '');
   }
-  return result;
+
+  return result.replaceAll(String.fromCharCode(92) + '"', "'").replaceAll('"', '').replaceAll('<BR>', '\n').replaceAll(String.fromCharCode(92) + 'n', '\n');
 }
+
 
 String _getDetails(String line, String obfuscator, String dtable){
   String element = '';

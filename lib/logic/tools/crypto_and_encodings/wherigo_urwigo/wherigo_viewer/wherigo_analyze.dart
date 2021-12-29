@@ -508,11 +508,11 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
       offset = ASCIIZ.Offset;
 
       ASCIIZ = readString(byteListGWC, offset);
-      CartridgeDescription = ASCIIZ.ASCIIZ;
+      CartridgeDescription = ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
       offset = ASCIIZ.Offset;
 
       ASCIIZ = readString(byteListGWC, offset);
-      StartingLocationDescription = ASCIIZ.ASCIIZ;
+      StartingLocationDescription = ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
       offset = ASCIIZ.Offset;
 
       ASCIIZ = readString(byteListGWC, offset);
@@ -572,6 +572,9 @@ WherigoCartridge getCartridge(Uint8List byteListGWC, Uint8List byteListLUA) {
     LUAFile = _decompileLUAfromGWC(MediaFilesContents[0].MediaFileBytes);
   else
     LUAFile = _LUAUint8ListToString(byteListLUA);
+
+  // normalize
+  LUAFile = _normalizeLUAmultiLineText(LUAFile);
 
   dtable = _getdtableFromCartridge(LUAFile);
   print('got dtable');
@@ -659,5 +662,9 @@ String JASONStringToString(String JSON){
              .replaceAll(':', ': ')
              .split(',')
              .join('\n');
+}
+
+String _normalizeLUAmultiLineText(String LUA) {
+  return LUA.replaceAll('[[\n', '[[').replaceAll('<BR>\n', '<BR>');
 }
 

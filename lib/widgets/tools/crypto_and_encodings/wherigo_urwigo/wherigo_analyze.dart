@@ -64,7 +64,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   var _currentByteCodeMode = GCWSwitchPosition.left;
 
-  int _mediaFileIndex = 0;
+  int _mediaFileIndex = 1;
   int _zoneIndex = 0;
   int _inputIndex = 0;
   int _characterIndex = 0;
@@ -116,7 +116,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
-              _mediaFileIndex = 0;
+              _mediaFileIndex = 1;
               _zoneIndex = 0;
               _inputIndex = 0;
               _characterIndex = 0;
@@ -149,7 +149,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
-              _mediaFileIndex = 0;
+              _mediaFileIndex = 1;
               _zoneIndex = 0;
               _inputIndex = 0;
               _characterIndex = 0;
@@ -404,6 +404,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ' Bytes'
           ]
         ];
+        if (_cartridge.Media.length > 0) {
+          _outputMedia.add([i18n(context, 'wherigo_media_filename'), _cartridge.Media[_mediaFileIndex - 1].MediaFilename]);
+          _outputMedia.add([i18n(context, 'wherigo_media_data'), '']);
+          _outputMedia.add([i18n(context, 'wherigo_media_id'), _cartridge.Media[_mediaFileIndex - 1].MediaID]);
+          _outputMedia.add([i18n(context, 'wherigo_media_luaname'), _cartridge.Media[_mediaFileIndex - 1].MediaLUAName]);
+          _outputMedia.add([i18n(context, 'wherigo_media_name'), _cartridge.Media[_mediaFileIndex - 1].MediaName]);
+          _outputMedia.add([i18n(context, 'wherigo_media_description'), _cartridge.Media[_mediaFileIndex - 1].MediaDescription]);
+          _outputMedia.add([i18n(context, 'wherigo_media_alttext'), _cartridge.Media[_mediaFileIndex - 1].MediaAltText]);
+        }
+
         return Column(
           children: <Widget>[
             GCWDefaultOutput(),

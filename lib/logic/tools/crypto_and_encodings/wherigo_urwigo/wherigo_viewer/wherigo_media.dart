@@ -39,7 +39,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length; i++){
     if (re.hasMatch(lines[i])) {
-      print((i+1).toString()+' '+lines[i]);
+      print('##### ZMedia found ##### '+(i+1).toString()+' '+lines[i]);
       LUAname = '';
       id = '';
       name = '';
@@ -51,56 +51,65 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
       LUAname = getLUAName(lines[i]);
 
       sectionMedia = true;
-      j = 1;
       do {
-        if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
-          id = getLineData(lines[i + j], LUAname, 'Id', obfuscator, dtable);
+        i++;
+        print('     analyze '+(i+1).toString()+' '+lines[i].trim().replaceAll(LUAname + '.', ''));
+        if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+          print((i+1).toString()+' ID ' +id);
         }
 
-        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Name')) {
-          name = getLineData(lines[i + j], LUAname, 'Name', obfuscator, dtable);
+        else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Name')) {
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
+          print((i+1).toString()+' name ' +name);
         }
 
-        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Description')) {
-          if (lines[i + j + 1].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
-            description = getLineData(lines[i + j], LUAname, 'Description', obfuscator, dtable);
+        else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Description')) {
+          if (lines[i + 1].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+            description = getLineData(lines[i], LUAname, 'Description', obfuscator, dtable);
           } else {
             sectionInner = true;
-            description = lines[i + j].trim().replaceAll(LUAname + '.', '');
-            j++;
+            description = lines[i].trim().replaceAll(LUAname + '.', '');
+            i++;
             do {
-              if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('AltText'))
+              if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText'))
                 sectionInner = false;
               else
-                description = description + lines[i + j];
-              j++;
+                description = description + lines[i];
+              i++;
             } while (sectionInner);
           }
+          print((i+1).toString()+' description ' +description);
         }
 
-        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
-          alttext = getLineData(lines[i + j], LUAname, 'AltText', obfuscator, dtable);
+        else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+          alttext = getLineData(lines[i], LUAname, 'AltText', obfuscator, dtable);
+          print((i+1).toString()+' alttext ' +alttext);
         }
 
-        else if (lines[i + j].trim().replaceAll(LUAname + '.', '').startsWith('Resources')) {
-          j++;
+        else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Resources')) {
+          i++;
           sectionInner = true;
           do {
-            if (lines[i + j].trimLeft().startsWith('Filename = '))
-              medianame = getStructData(lines[i + j], 'Filename');
-            if (lines[i + j].trimLeft().startsWith('Type = '))
-              type = getStructData(lines[i + j], 'Type');
-            if (lines[i + j].trimLeft().startsWith('Directives = '))
+            if (lines[i].trimLeft().startsWith('Filename = ')) {
+              medianame = getStructData(lines[i], 'Filename');
+              print((i+1).toString()+' medianame ' +medianame);
+            }
+            else if (lines[i].trimLeft().startsWith('Type = ')) {
+              type = getStructData(lines[i], 'Type');
+              print((i+1).toString()+' type ' +type);
+            }
+            else if (lines[i].trimLeft().startsWith('Directives = ')) {
               sectionInner = false;
-            j++;
+              sectionMedia = false;
+              print((i+1).toString()+' Directives => ' +sectionInner.toString());
+            }
+            i++;
           } while (sectionInner);
         }
 
-        else if (lines[i + j].trimLeft().startsWith('Directives ='))
-          sectionMedia = false;
-        j++;
-      } while (sectionMedia && (i + j < lines.length));
-      i = i + j;
+      } while (sectionMedia && (i < lines.length - 1));
+      //i = i + j;
 
       result.add(MediaData(
           LUAname,
@@ -111,7 +120,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
           type,
           medianame,
       ));
-      i = i + 2 + j;
+      print('##### ZMedia ende ##### '+(i+1).toString()+' '+lines[i]);
     }
   };
   return result;

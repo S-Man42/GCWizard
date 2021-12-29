@@ -72,6 +72,7 @@ List<TaskData>getTasksFromCartridge(String LUA, dtable, obfuscator){
         if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
           section = false;
       } while (section);
+      description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
       description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
       section = true;

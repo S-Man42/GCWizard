@@ -82,22 +82,23 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
             i++;
             if (lines[i].trim() != '}') {
               if (lines[i].trimLeft().startsWith(obfuscator))
-                answerActions.add(ActionData('btn', deobfuscateUrwigoText(lines[i], dtable)));
+                answerActions.add(ActionData('btn', deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
               else
-                answerActions.add(ActionData('btn', lines[i]));
+                answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
             }
           } while (lines[i].trim() != '}');
-        }
+        } // end if buttons
         else {
           action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
           if (action != null)
             answerActions.add(action);
-        }
+        } // end if other line content
         i++;
         if (lines[i].trim() == 'end')
           sectionAnalysed = true;
-      } while (!sectionAnalysed);
+      } while (!sectionAnalysed); // end of section
 
+      print('AUSGABE NIL '+(i+1).toString());
       result.add(AnswerData(
         inputObject,
         question,
@@ -106,11 +107,12 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
         answerActions,
       ));
       answerActions = [];
-    }
+    } // end of NIL
 
-    else if (_SectionEnd(lines[i])) {
-      print((i+1).toString()+' '+lines[i]);
+    else if (_SectionEnd(lines[i])) { //
+      print('_sectionEnd found '+(i+1).toString()+' '+lines[i]);
       if (insideInputFunction) {
+        print('AUSGABE list '+(i+1).toString());
         answerList.forEach((answer) {
           result.add(AnswerData(
             inputObject,
@@ -120,14 +122,16 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
             answerActions,
           ));
         });
-        answerList = _getAnswers(lines[i]);
+        answerActions = [];
+        answerList = _getAnswers(lines[i], lines[i - 1]);
       }
     }
 
     else if (_FunctionEnd(lines[i], lines[i + 1])) {
-      print((i+1).toString()+' '+lines[i]);
+      print('_functionEnd found '+(i+1).toString()+' '+lines[i]);
       if (insideInputFunction) {
         insideInputFunction = false;
+        print('AUSGABE list'+(i+1).toString());
         answerList.forEach((answer) {
           result.add(AnswerData(
             inputObject,
@@ -137,13 +141,29 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
             answerActions,
           ));
         });
+        answerActions = [];
       }
     }
 
-    else {
-      action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
-      if (action != null)
-        answerActions.add(action);
+    else { // handle action
+      if (lines[i].trimLeft().startsWith('Buttons = ')) {
+        do {
+          i++;
+          if (lines[i].trim() != '}') {
+            if (lines[i].trimLeft().startsWith(obfuscator)) {
+              answerActions.add(ActionData(
+                  'btn', deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
+            } else {
+              answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
+            }
+          }
+        } while (lines[i].trim() != '}');
+      } // end if buttons
+      else {
+        action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
+        if (action != null)
+          answerActions.add(action);
+      } // end if other line content
     }
 
   } // end for - got all functions
@@ -152,7 +172,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
 }
 
 
-List<String> _getAnswers(String line){
+List<String> _getAnswers(String line, String lineBefore){
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ')) {
     return line.trimLeft()
@@ -165,11 +185,28 @@ List<String> _getAnswers(String line){
   }
   else if (line.trim().startsWith('if _Urwigo.Hash(') ||
       line.trim().startsWith('elseif _Urwigo.Hash(')) {
-    return (['TODO']);
+    return ['TODO'];
+    return [line.trim()
+        .replaceAll('if ', '')
+        .replaceAll('elseif ', '')
+        .replaceAll('_Urwigo.Hash', '')
+        .replaceAll('")', '')
+        .replaceAll('("', '')];
   }
   else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    return (['TODO']);
+    if (lineBefore.endsWith('= input'))
+      lineBefore = lineBefore.trim().replaceAll(' = input', '').replaceAll(' ', '');
+    return [line.trim()
+        .replaceAll('if ', '')
+        .replaceAll('elseif ', '')
+        .replaceAll('Wherigo.NoCaseEquals', '')
+        .replaceAll(lineBefore + ',', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '')
+        .replaceAll('"', '')
+        .replaceAll('then', '')
+        .replaceAll(' ', '')];
   }
 }
 
@@ -196,17 +233,17 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
       line.startsWith('Wherigo') ||
       line.startsWith('Buttons') ||
       line.startsWith('end') ||
-      line == 'else' ||
+      line == ']]' ||
       line.startsWith('if action') ||
       line.startsWith('{') ||
       line.startsWith('}'))
     return null;
   else
     if (line.startsWith('Text = '))
-      if (line.replaceAll('Text = ', '').startsWith(obfuscator))
+//      if (line.replaceAll('Text = ', '').startsWith(obfuscator))
         return ActionData('txt', getTextData(line, obfuscator, dtable));
-      else
-        return ActionData('txt', line);
+//      else
+//        return ActionData('txt', line);
     else
     if (line.startsWith('Media = '))
       return ActionData('img', line.trimLeft().replaceAll('Media = ', ''));
@@ -215,7 +252,7 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
       return ActionData('cse', line.trimLeft());
     if (line.startsWith('elseif '))
       return ActionData('cse', line.trimLeft());
-    if (line.startsWith('else '))
+    if (line.startsWith('else'))
       return ActionData('cse', line.trimLeft());
     else
       return ActionData('act', line.trimLeft());

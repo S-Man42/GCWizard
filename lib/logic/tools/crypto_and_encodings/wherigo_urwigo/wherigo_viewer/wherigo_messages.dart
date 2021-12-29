@@ -33,11 +33,13 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
 
-    if (line.trimLeft().startsWith('_Urwigo.MessageBox(')) {
+    if (line.trimLeft().startsWith('_Urwigo.MessageBox(') || line.trimLeft().startsWith('Wherigo.MessageBox(')) {
+      print('message found '+(i+1).toString());
       singleMessageDialog = [];
       j = 1;
       do {
         if (lines[i + j].trimLeft().startsWith('Text')) {
+          print('text found '+(i+1).toString());
           singleMessageDialog.add(MessageElementData(
               'txt', getTextData(lines[i + j], obfuscator, dtable)));
         }
@@ -56,18 +58,21 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
           } while (!lines[i + j].trimLeft().startsWith('}'));
         }
         j++;
-      } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('}'));
+      } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('})'));
       i = i + j;
       result.add(singleMessageDialog);
     }
 
-    else if (line.trimLeft().startsWith('_Urwigo.Dialog(')) {
+    else if (line.trimLeft().startsWith('_Urwigo.Dialog(') || line.trimLeft().startsWith('Wherigo.Dialog(')) {
+      print('dialog found '+(i+1).toString());
       section = true;
       singleMessageDialog = [];
       j = 1;
       do {
-        if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
+        if (lines[i + j].trimLeft().startsWith('Text = ') ||
+            lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
             lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
+          print('text found '+(i+1).toString());
           singleMessageDialog.add(MessageElementData('txt', getTextData(lines[i + j], obfuscator, dtable)));
         } else if (lines[i + j].trimLeft().startsWith('Media')) {
           singleMessageDialog.add(MessageElementData('img',
@@ -81,11 +86,12 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
           } while (lines[i + j].trimLeft() != '}');
         }
         if (lines[i + j].trimLeft().startsWith('}, function(action)') ||
-            lines[i + j].trimLeft().startsWith('}, nil)')) {
+            lines[i + j].trimLeft().startsWith('}, nil)') ||
+            lines[i + j].trimLeft().startsWith('})')) {
           section = false;
         }
         j = j + 1;
-      } while (section);
+      } while (section && (i + j < lines.length));
       i = i + j;
       result.add(singleMessageDialog);
     }
