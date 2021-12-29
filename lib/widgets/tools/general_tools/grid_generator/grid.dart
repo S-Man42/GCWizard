@@ -5,20 +5,25 @@ import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid_painter.dart';
 
 class _GridConfiguration {
-  final GridType type;
-  final int width;
-  final int height;
-  final String enumeration;
-  final String columnEnumeration;
-  final String rowEnumeration;
-  final GridEnumerationStart enumerationStart;
-  final GridBoxEnumerationStartDirection enumerationStartDirection;
-  final GridBoxEnumerationBehaviour enumerationBehaviour;
+  GridType type;
+  int width;
+  int height;
+  String enumeration;
+  String columnEnumeration;
+  String rowEnumeration;
+  GridEnumerationStart enumerationStart;
+  GridBoxEnumerationStartDirection enumerationStartDirection;
+  GridBoxEnumerationBehaviour enumerationBehaviour;
 
-  const _GridConfiguration(
+  _GridConfiguration(
       this.type, 
       this.width, 
       this.height, 
@@ -33,8 +38,12 @@ class _GridConfiguration {
   );
 }
 
+final _GRID_CUSTOM_KEY = 'grid_custom';
+
 final _GRID_CONFIGURATIONS = {
-  'grid_custom' : null,
+  _GRID_CUSTOM_KEY : _GridConfiguration(GridType.BOXES, 10, 10,
+    enumeration: '1-100',
+  ),
   'grid_intersections_5x5' : _GridConfiguration(GridType.POINTS, 5, 5, 
     columnEnumeration: '12345',
     rowEnumeration: '12345'
@@ -101,9 +110,72 @@ class GridState extends State<Grid> {
   var _currentColor = GridPaintColor.RED;
   var _currentGridConfiguration = 'grid_boxes_10x10';
 
+  var _isConfiguration = false;
+  var _currentConfigType;
+  var _currentConfigColumns;
+  var _currentConfigRows;
+  var _currentConfigBoxEnumeration = '';
+  var _currentConfigColumnEnumeration = '';
+  var _currentConfigRowEnumeration = '';
+  var _currentConfigBoxEnumerationStart;
+  var _currentConfigBoxEnumerationStartDirection;
+  var _currentConfigBoxEnumerationBehaviour;
+
+  var _currentConfigBoxEnumerationStartDirections;
+
+  var _boxEnumerationController;
+  var _columnEnumerationController;
+  var _rowEnumerationController;
+
   @override
   void initState() {
     super.initState();
+
+    _boxEnumerationController = TextEditingController(text: _currentConfigBoxEnumeration);
+    _columnEnumerationController = TextEditingController(text: _currentConfigColumnEnumeration);
+    _rowEnumerationController = TextEditingController(text: _currentConfigRowEnumeration);
+
+    _initializeDefaultGrid();
+  }
+
+  @override
+  void dispose() {
+    _boxEnumerationController.dispose();
+    _columnEnumerationController.dispose();
+    _rowEnumerationController.dispose();
+
+    super.dispose();
+  }
+
+  _initializeDefaultGrid() {
+    _currentConfigType = _GRID_CONFIGURATIONS[_currentGridConfiguration].type ?? GridType.BOXES;
+    _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration].width ?? 10;
+    _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration].height ?? 10;
+    _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumeration ?? '';
+    _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].columnEnumeration ?? '';
+    _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].rowEnumeration ?? '';
+    _currentConfigBoxEnumerationStart = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStart ?? GridEnumerationStart.TOP_LEFT;
+    _currentConfigBoxEnumerationStartDirection = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStartDirection ?? GridBoxEnumerationStartDirection.RIGHT;
+    _currentConfigBoxEnumerationBehaviour = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour ?? GridBoxEnumerationBehaviour.STRAIGHT;
+
+    _boxEnumerationController.text = _currentConfigBoxEnumeration;
+    _columnEnumerationController.text = _currentConfigColumnEnumeration;
+    _rowEnumerationController.text = _currentConfigRowEnumeration;
+
+    _currentConfigBoxEnumerationStartDirections = _possibleStartDirections();
+  }
+
+  _possibleStartDirections() {
+    switch (_currentConfigBoxEnumerationStart) {
+      case GridEnumerationStart.TOP_LEFT:
+        return [GridBoxEnumerationStartDirection.RIGHT, GridBoxEnumerationStartDirection.DOWN];
+      case GridEnumerationStart.TOP_RIGHT:
+        return [GridBoxEnumerationStartDirection.LEFT, GridBoxEnumerationStartDirection.DOWN];
+      case GridEnumerationStart.BOTTOM_LEFT:
+        return [GridBoxEnumerationStartDirection.RIGHT, GridBoxEnumerationStartDirection.UP];
+      case GridEnumerationStart.BOTTOM_RIGHT:
+        return [GridBoxEnumerationStartDirection.LEFT, GridBoxEnumerationStartDirection.UP];
+    }
   }
 
   @override
@@ -126,25 +198,272 @@ class GridState extends State<Grid> {
                 onChanged: (value) {
                   setState(() {
                     _currentGridConfiguration = value;
+
+                    _currentConfigType = _GRID_CONFIGURATIONS[_currentGridConfiguration].type;
+                    _currentConfigColumns = _GRID_CONFIGURATIONS[_currentGridConfiguration].width;
+                    _currentConfigRows = _GRID_CONFIGURATIONS[_currentGridConfiguration].height;
+                    _currentConfigBoxEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumeration;
+                    _boxEnumerationController.text = _currentConfigBoxEnumeration ?? '';
+                    _currentConfigColumnEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].columnEnumeration;
+                    _columnEnumerationController.text = _currentConfigColumnEnumeration ?? '';
+                    _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].rowEnumeration;
+                    _rowEnumerationController.text = _currentConfigRowEnumeration ?? '';
+                    _currentConfigBoxEnumerationStart = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStart;
+                    _currentConfigBoxEnumerationStartDirection = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStartDirection;
+                    _currentConfigBoxEnumerationBehaviour = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour;
+
+                    if (_currentGridConfiguration == _GRID_CUSTOM_KEY)
+                      _isConfiguration = true;
                   });
                 },
               ),
+            ),
+            GCWIconButton(
+              iconData: _isConfiguration ? Icons.check : Icons.edit,
+              onPressed: () {
+                setState(() {
+                  if (_isConfiguration) {
+                    _currentGridConfiguration = _GRID_CUSTOM_KEY;
+                  }
+
+                  _isConfiguration = !_isConfiguration;
+                });
+              },
             )
           ],
-        ),        
+        ),
+        if (_isConfiguration)
+          _buildConfiguration()
+        else
+          _buildGrid()
+      ],
+    );
+  }
+
+  _buildConfiguration() {
+    return Column(
+      children: [
+        GCWTextDivider(text: 'grid_configuration',),
+        GCWDropDownButton(
+          title: 'grid_type_title',
+          value: _currentConfigType,
+          items: {
+            GridType.BOXES: 'grid_boxes_title',
+            GridType.POINTS: 'grid_points_title',
+            GridType.GRID: 'grid_grid_title',
+          }.map((type, name) {
+            return MapEntry(
+              type,
+              GCWDropDownMenuItem(
+                value: type,
+                child: name
+              )
+            );
+          }).values.toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentConfigType = value;
+            });
+          },
+        ),
+
+        GCWIntegerSpinner(
+          title: 'grid_columns',
+          value: _currentConfigColumns,
+          min: 1,
+          max: 100,
+          onChanged: (value) {
+            setState(() {
+              _currentConfigColumns = value;
+            });
+          },
+        ),
+        GCWIntegerSpinner(
+          title: 'grid_rows',
+          value: _currentConfigRows,
+          min: 1,
+          max: 100,
+          onChanged: (value) {
+            setState(() {
+              _currentConfigRows = value;
+            });
+          },
+        ),
+
+        _currentConfigType == GridType.BOXES
+          ? Row (
+              children: [
+                Expanded(
+                  child: GCWText(text: 'grid_boxenumeration' + ':'),
+                  flex: 1
+                ),
+                Expanded(
+                  child: GCWTextField(
+                    controller: _boxEnumerationController,
+                    onChanged: (text) {
+                      setState(() {
+                        _currentConfigBoxEnumeration = text;
+                      });
+                    },
+                  ),
+                  flex: 3
+                )
+              ],
+            )
+          : Container(),
+
+        _currentConfigType == GridType.GRID
+          ? Container()
+          : Row (
+              children: [
+                Expanded(
+                  child: GCWText(text: 'grid_columnenumeration' + ':',),
+                  flex: 1
+                ),
+                Expanded(
+                  child: GCWTextField(
+                    controller: _columnEnumerationController,
+                    onChanged: (text) {
+                      setState(() {
+                        _currentConfigColumnEnumeration = text;
+                      });
+                    },
+                  ),
+                  flex: 3
+                )
+              ],
+            ),
+
+        _currentConfigType == GridType.GRID
+          ? Container()
+          : Row (
+              children: [
+                Expanded(
+                    child: GCWText(text: 'grid_rowenumeration' + ':',),
+                    flex: 1
+                ),
+                Expanded(
+                    child: GCWTextField(
+                      controller: _rowEnumerationController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentConfigRowEnumeration = text;
+                        });
+                      },
+                    ),
+                    flex: 3
+                )
+              ],
+            ),
+
+        _currentConfigType == GridType.BOXES
+          ? _buildBoxEnumerationOptions()
+          : Container()
+      ],
+    );
+  }
+
+  _buildBoxEnumerationOptions() {
+    return Column(
+      children: [
+        GCWDropDownButton(
+          title: 'grid_boxes_start_title',
+          value: _currentConfigBoxEnumerationStart,
+          items: {
+            GridEnumerationStart.TOP_LEFT : 'grid_boxes_start_topleft',
+            GridEnumerationStart.TOP_RIGHT : 'grid_boxes_start_topright',
+            GridEnumerationStart.BOTTOM_LEFT : 'grid_boxes_start_bottomleft',
+            GridEnumerationStart.BOTTOM_RIGHT : 'grid_boxes_start_bottomright',
+          }.map((corner, name) {
+            return MapEntry(
+              corner,
+              GCWDropDownMenuItem(
+                value: corner,
+                child: name
+              )
+            );
+          }).values.toList(),
+          onChanged: (value) {
+            if (value == _currentConfigBoxEnumerationStart)
+              return;
+
+            setState(() {
+              _currentConfigBoxEnumerationStart = value;
+              _currentConfigBoxEnumerationStartDirections = _possibleStartDirections();
+
+              if (!_currentConfigBoxEnumerationStartDirections.contains(_currentConfigBoxEnumerationStartDirection)) {
+                _currentConfigBoxEnumerationStartDirection = _currentConfigBoxEnumerationStartDirections.first;
+              }
+            });
+          },
+        ),
+
+        GCWDropDownButton(
+          title: 'grid_boxes_startdirection_title',
+          value: _currentConfigBoxEnumerationStartDirection,
+          items: _currentConfigBoxEnumerationStartDirections.map<GCWDropDownMenuItem>((direction) {
+            var name;
+            switch (direction) {
+              case GridBoxEnumerationStartDirection.RIGHT: name = 'grid_boxes_startdirection_right'; break;
+              case GridBoxEnumerationStartDirection.LEFT: name = 'grid_boxes_startdirection_left'; break;
+              case GridBoxEnumerationStartDirection.UP: name = 'grid_boxes_startdirection_up'; break;
+              case GridBoxEnumerationStartDirection.DOWN: name = 'grid_boxes_startdirection_down'; break;
+            }
+
+            return GCWDropDownMenuItem(
+              value: direction,
+              child: name
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentConfigBoxEnumerationStartDirection = value;
+            });
+          },
+        ),
+
+        GCWDropDownButton(
+          title: 'grid_boxes_behaviour_title',
+          value: _currentConfigBoxEnumerationBehaviour,
+          items: {
+            GridBoxEnumerationBehaviour.STRAIGHT: 'grid_boxes_behaviour_straight',
+            GridBoxEnumerationBehaviour.ALTERNATED: 'grid_boxes_behaviour_alternated',
+            GridBoxEnumerationBehaviour.SPIRAL: 'grid_boxes_behaviour_spiral',
+          }.map((behaviour, name) {
+            return MapEntry(
+              behaviour,
+              GCWDropDownMenuItem(
+                value: behaviour,
+                child: name
+              )
+            );
+          }).values.toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentConfigBoxEnumerationBehaviour = value;
+            });
+          },
+        )
+      ],
+    );
+  }
+
+  _buildGrid() {
+    return Column(
+      children: [
         Container(
           constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
           child: GridPainter(
             tapColor: _currentColor,
-            type: _GRID_CONFIGURATIONS[_currentGridConfiguration].type,
-            countColumns: _GRID_CONFIGURATIONS[_currentGridConfiguration].width,
-            countRows: _GRID_CONFIGURATIONS[_currentGridConfiguration].height,
-            boxEnumeration: _getEnumeration(_GRID_CONFIGURATIONS[_currentGridConfiguration].enumeration),
-            columnEnumeration: _getEnumeration(_GRID_CONFIGURATIONS[_currentGridConfiguration].columnEnumeration),
-            rowEnumeration: _getEnumeration(_GRID_CONFIGURATIONS[_currentGridConfiguration].rowEnumeration),
-            boxEnumerationStart: _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStart,
-            boxEnumerationStartDirection: _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStartDirection,
-            boxEnumerationBehaviour: _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour,
+            type: _currentConfigType,
+            countColumns: _currentConfigColumns,
+            countRows: _currentConfigRows,
+            boxEnumeration: _getEnumeration(_currentConfigBoxEnumeration),
+            columnEnumeration: _getEnumeration(_currentConfigColumnEnumeration),
+            rowEnumeration: _getEnumeration(_currentConfigRowEnumeration),
+            boxEnumerationStart: _currentConfigBoxEnumerationStart,
+            boxEnumerationStartDirection: _currentConfigBoxEnumerationStartDirection,
+            boxEnumerationBehaviour: _currentConfigBoxEnumerationBehaviour,
           ),
           margin: EdgeInsets.symmetric(vertical: 20.0),
         ),
