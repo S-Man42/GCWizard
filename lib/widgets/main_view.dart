@@ -16,8 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -446,8 +445,7 @@ void _initStaticToolList() {
       className(Caesar()),
       className(Calendar()),
       className(Catan()),
-      className(CCITT1Selection()),
-      className(CCITT2Selection()),
+      className(CCITTSelection()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
       className(Chao()),

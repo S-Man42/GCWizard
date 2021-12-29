@@ -12,7 +12,6 @@ class NSegmentDisplay extends StatefulWidget {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
-  final bool tapeStyle;
 
   final Function customPaint;
   NSegmentDisplayState nSegmentDisplayState;
@@ -25,8 +24,7 @@ class NSegmentDisplay extends StatefulWidget {
       this.readOnly: false,
       this.onChanged,
       this.customPaint,
-      this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT,
-      this.tapeStyle: false})
+      this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
       : super(key: key);
 
   @override
