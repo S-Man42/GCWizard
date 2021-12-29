@@ -136,6 +136,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_we
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
@@ -446,6 +447,7 @@ void _initStaticToolList() {
       className(Calendar()),
       className(Catan()),
       className(CCITTSelection()),
+      className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
       className(Chao()),
