@@ -187,6 +187,7 @@ class AboutState extends State<About> {
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
                     '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                    '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
                     'Johannes C.',

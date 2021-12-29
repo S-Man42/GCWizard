@@ -3290,7 +3290,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: ['weather', 'weather_c', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: ['weather', 'weather_cl', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: ['weather', 'weather_cm', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_cn', symbolSearchStrings: ['weather', 'weather_cn', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: ['weather', 'weather_ch', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: ['weather', 'weather_n', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: ['weather', 'weather_w']),
     GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
