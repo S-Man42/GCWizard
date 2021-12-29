@@ -1,6 +1,24 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+// Ressources
+// 1. US Patent No 388244, 21. August 1888, https://pdfpiw.uspto.gov/.piw?PageNum=0&docid=00388244&IDKey=72154382AC1E%0D%0A&HomeUrl=%2F%2Fpatft.uspto.gov%2Fnetahtml%2FPTO%2Fpatimg.htm
+// 2. https://en.wikipedia.org/wiki/Baudot_code
+// 3. https://de.wikipedia.org/wiki/Baudot-Code
+// 4. https://cryptii.com/pipes/baudot
+// 5. https://cryptomuseum.com/ref/ita2/index.htm
+// 6. CCITT - ITU
+//    6.1 Recommendation S.1 (11/88) International Telegraph Alphabet No. 2 https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-S.1-198811-S!!PDF-E&type=items
+//
+// Code Tables
+// - CCITT_BAUDOT       according to 1. with Bit-Order 54321
+// - CCITT_BAUDOT_MISS  according to 3. ITA1
+// - CCITT_ITA1_EU      according to 2.
+// - CCITT_ITA1_UK      according to 2.
+// - CCITT_ITA2         according to 2., 4., 5.
+// - CCITT_MTK2         according to 2.
+// - CCITT_USTTY        according to 2., 4.
+//
+
+
 import 'package:gc_wizard/utils/common_utils.dart';
-// https://en.wikipedia.org/wiki/Baudot_code
 
 enum CCITTCodebook { CCITT_BAUDOT, CCITT_BAUDOT_MISS, CCITT_ITA1_EU, CCITT_ITA1_UK, CCITT_ITA2, CCITT_MTK2, CCITT_ITA5, CCITT_USTTY }
 
