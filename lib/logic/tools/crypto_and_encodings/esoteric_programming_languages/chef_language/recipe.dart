@@ -14,6 +14,7 @@ class Recipe {
   int serves;
   bool error;
   List<String> errorList;
+  bool liquefyMissing;
 
   Recipe(String title) {
     this.title = title;
@@ -21,6 +22,7 @@ class Recipe {
     this.serves = 0;
     this.error = false;
     this.errorList = new List<String>();
+    this.liquefyMissing = false;
   }
 
   void setIngredients(String Input, language) {

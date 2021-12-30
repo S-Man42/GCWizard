@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -10,7 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_punchtape_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape_segment_display.dart';
 
 class CCITTPunchTape extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
-  var _currentLanguage = CCITTCodebook.CCITT1;
+  var _currentCode = CCITTCodebook.CCITT_BAUDOT;
 
   @override
   void initState() {
@@ -49,10 +50,10 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       GCWDropDownButton(
-        value: _currentLanguage,
+        value: _currentCode,
         onChanged: (value) {
           setState(() {
-            _currentLanguage = value;
+            _currentCode = value;
           });
         },
         items: CCITT_CODEBOOK.entries.map((mode) {
@@ -147,7 +148,8 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: CCITTSegmentDisplay(
+                child: PUNCHTAPESegmentDisplay(
+                  _currentCode,
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -187,17 +189,22 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
 
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWPunchtapeSegmentDisplayOutput(
-        segmentFunction: (displayedSegments, readOnly) {
-          return CCITTSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+        segmentFunction: (displayedSegments, readOnly, codeBook) {
+          return PUNCHTAPESegmentDisplay(
+              _currentCode,
+              segments: displayedSegments,
+              readOnly: readOnly,
+              );
         },
         segments: segments,
-        readOnly: true);
+        readOnly: true,
+        codeBook: _currentCode);
   }
 
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeCCITT(_currentEncodeInput, _currentLanguage);
+      List<List<String>> segments = encodePunchtape(_currentEncodeInput, _currentCode);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -208,13 +215,13 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // text
-        segments = decodeTextCCITTTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
+        segments = decodeTextPunchtape(_currentDecodeInput.toUpperCase(), _currentCode);
       } else {
         // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualCCITT(output, _currentLanguage);
+        segments = decodeVisualPunchtape(output, _currentCode);
       }
       return Column(
         children: <Widget>[

@@ -67,6 +67,7 @@ class _SymbolTableConstants {
     "middle_dot": "·",
     "minus": "-",
     "my": "µ",
+    "number": "N°",
     "not": "¬",
     "one_fourth": "¼",
     "one_half": "½",
