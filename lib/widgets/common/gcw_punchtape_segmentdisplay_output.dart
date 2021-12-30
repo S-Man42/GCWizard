@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:prefs/prefs.dart';
 
 import 'base/gcw_iconbutton.dart';
 import 'gcw_exported_file_dialog.dart';
@@ -16,13 +16,14 @@ import 'gcw_text_divider.dart';
 
 class GCWPunchtapeSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
-  final NSegmentDisplay Function(Map<String, bool>, bool) segmentFunction;
+  final NSegmentDisplay Function(Map<String, bool>, bool, CCITTCodebook) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
+  final CCITTCodebook codeBook;
 
   const GCWPunchtapeSegmentDisplayOutput(
-      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing})
+      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.codeBook})
       : super(key: key);
 
   @override
@@ -89,7 +90,7 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
 
     _displays = list.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return widget.segmentFunction(displayedSegments, widget.readOnly);
+      return widget.segmentFunction(displayedSegments, widget.readOnly, widget.codeBook);
     }).toList();
 
     var viewList = !_currentUpsideDown

@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.1.0+133
+version: 2.1.0+134
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -81,7 +81,9 @@ flutter:
     - assets/symbol_tables/ballet/
     - assets/symbol_tables/barbier/
     - assets/symbol_tables/barcode39/
-    - assets/symbol_tables/baudot/
+    - assets/symbol_tables/baudot_1888/
+    - assets/symbol_tables/baudot_ita1/
+    - assets/symbol_tables/baudot_mis/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
@@ -203,6 +205,7 @@ flutter:
     - assets/symbol_tables/murray_v3_navy_1796/
     - assets/symbol_tables/murray_v4_roucoux/
     - assets/symbol_tables/murraybaudot/
+    - assets/symbol_tables/murraybaudot_miss/
     - assets/symbol_tables/musica/
     - assets/symbol_tables/nazcaan/
     - assets/symbol_tables/new_zealand_sign_language/
@@ -284,7 +287,7 @@ flutter:
     - assets/symbol_tables/weather_c/
     - assets/symbol_tables/weather_cl/
     - assets/symbol_tables/weather_cm/
-    - assets/symbol_tables/weather_cn/
+    - assets/symbol_tables/weather_ch/
     - assets/symbol_tables/weather_n/
     - assets/symbol_tables/weather_w/
     - assets/symbol_tables/weather_ww/

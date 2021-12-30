@@ -162,13 +162,25 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                             '\'alantheandroid\' (IT)',
+                            '\'alexgonc\' (PT)',
                             'Cavit A. (TR)',
                             '\'crazedllama\' (KO)',
+                            '\'hakuchi\' (IT)',
                             '\'Henrike71\' (NL)',
+                            'Igor Č. (SK)',
                             '\'j_janus\' (PL)',
+                            'Joao F. (PT)',
                             '\'Johan-V\' (NL)',
+                            '\'MAJ\' (ES)',
+                            '\'n3oklan\' (CZ)',
                             'Paul Z. (NL)',
                             'Paweł B. (PL)',
+                            '\'QouiZ\' (EL)',
+                            '\'proXmiii\' (SK)',
+                            'Silvia O. (SK)',
+                            '\'tkemer\' (EL)',
+                            '\'Todclerc\' (NL)',
+                            '\'vike91\' (FI)',
                             '\'Xoyn\' (RU)',
                           ].join('\n') +
                           '\n')
@@ -187,6 +199,7 @@ class AboutState extends State<About> {
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
                     '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                    '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
                     'Johannes C.',
