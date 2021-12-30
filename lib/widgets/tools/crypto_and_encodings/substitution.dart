@@ -99,16 +99,18 @@ class SubstitutionState extends State<Substitution> {
         valueHintText: i18n(context, 'substitution_to'),
         onNewEntryChanged: _updateNewEntry,
         onAddEntry: _addEntry,
-        middleWidget: GCWOnOffSwitch(
-          title: i18n(context, 'substitution_case_sensitive'),
-          value: false,
-          onChanged: (value) {
-            _currentCaseSensitive = value;
-            _calculateOutput();
-          },
-        ),
-        keyKeyValueMap: _currentSubstitutions,
+        middleWidget: Column(children: <Widget>[
+          GCWOnOffSwitch(
+            title: i18n(context, 'substitution_case_sensitive'),
+            value: _currentCaseSensitive,
+            onChanged: (value) {
+              _currentCaseSensitive = value;
+              _calculateOutput();
+            },
+          ),
+        ]),
         dividerText: i18n(context, 'substitution_current_substitutions'),
+        keyKeyValueMap: _currentSubstitutions,
         onUpdateEntry: _updateEntry,
         onRemoveEntry: _removeEntry);
   }

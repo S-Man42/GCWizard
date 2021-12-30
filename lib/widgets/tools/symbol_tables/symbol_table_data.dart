@@ -67,6 +67,7 @@ class _SymbolTableConstants {
     "middle_dot": "·",
     "minus": "-",
     "my": "µ",
+    "number": "N°",
     "not": "¬",
     "one_fourth": "¼",
     "one_half": "½",
@@ -75,7 +76,7 @@ class _SymbolTableConstants {
     "parentheses_open": "(",
     "parentheses_close": ")",
     "percent": "%",
-    "pi": "¶",
+    "pi": "π",
     "pipe": "|",
     "plus": "+",
     "plus_minus": "±",
@@ -177,8 +178,11 @@ class _SymbolTableConstants {
 class SymbolData {
   final String path;
   final List<int> bytes;
+  bool primarySelected = false;
+  bool secondarySelected = false;
+  final String displayName;
 
-  SymbolData({this.path, this.bytes});
+  SymbolData({this.path, this.bytes, this.displayName});
 }
 
 class SymbolTableData {
@@ -197,7 +201,7 @@ class SymbolTableData {
 
   initialize() async {
     await _loadConfig();
-    await _initalizeImages();
+    await _initializeImages();
   }
 
   bool isCaseSensitive() {
@@ -287,7 +291,7 @@ class SymbolTableData {
     return key;
   }
 
-  _initalizeImages() async {
+  _initializeImages() async {
     //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
@@ -312,7 +316,7 @@ class SymbolTableData {
           var value = imagePath;
           var data = file.content;
 
-          return {key: new SymbolData(path: value, bytes: data)};
+          return {key: SymbolData(path: value, bytes: data)};
         })
         .where((element) => !config[_constants.CONFIG_IGNORE].contains(element.keys.first.toLowerCase()))
         .where((element) => element.values.first.path != null)

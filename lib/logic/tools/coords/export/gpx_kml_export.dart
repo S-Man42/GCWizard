@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:xml/xml.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-Future<File> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+Future<File> exportCoordinates(
+    BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
     {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
@@ -27,7 +29,7 @@ Future<File> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMa
 
   try {
     var fileName = 'coords_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + extension;
-    return saveStringToFile(data, fileName, subDirectory: 'coordinate_export');
+    return saveStringToFile(context, data, fileName, subDirectory: 'coordinate_export');
   } on Exception {
     return null;
   }
@@ -106,9 +108,9 @@ class _GpxWriter {
             });
           });
         } else {
-          _writeElement(builder, 'name', stageName);
+          _writeElement(builder, 'name', wpt.markerText);
           _writeElement(builder, 'cmt', '');
-          _writeElement(builder, 'desc', wpt.markerText);
+          _writeElement(builder, 'desc', '');
           _writeElement(builder, 'sym', 'Virtual Stage');
           _writeElement(builder, 'type', 'Waypoint|Virtual Stage');
           builder.element('gsak:wptExtension', nest: () {
@@ -151,6 +153,8 @@ class _GpxWriter {
 
 /// Convert Gpx into KML
 class _KmlWriter {
+  var elementNames = <String>[];
+
   /// Convert points into KML as String
   String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) =>
       _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
@@ -162,8 +166,10 @@ class _KmlWriter {
   XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     final builder = XmlBuilder();
     var i = 0;
+    var styleMap = Map<String, String>();
 
     if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0)) return null;
+    elementNames.clear();
 
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
     builder.element('kml', nest: () {
@@ -174,25 +180,39 @@ class _KmlWriter {
 
         if (points != null) {
           for (i = 0; i < points.length; i++) {
-            builder.element('StyleMap', nest: () {
-              builder.attribute('id', 'waypoint' + i.toString());
-
-              builder.element('Pair', nest: () {
-                _writeElement(builder, 'key', 'normal');
-                _writeElement(builder, 'styleUrl', '#waypoint' + i.toString());
-              });
-            });
+            for (var x = 0; x <= i; x++) {
+              if (points[x].color == points[i].color) {
+                styleMap.addAll({'waypoint' + i.toString(): 'waypoint' + x.toString()});
+                break;
+              }
+            }
           }
           for (i = 0; i < points.length; i++) {
-            builder.element('Style', nest: () {
-              builder.attribute('id', 'waypoint' + i.toString());
-              _writeElement(builder, 'color', _ColorCode(points[i].color));
-              builder.element('IconStyle', nest: () {
-                builder.element('Icon', nest: () {
-                  _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
+            var styleId = 'waypoint' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('StyleMap', nest: () {
+                builder.attribute('id', styleId);
+
+                builder.element('Pair', nest: () {
+                  _writeElement(builder, 'key', 'normal');
+                  _writeElement(builder, 'styleUrl', '#' + styleId);
                 });
               });
-            });
+            }
+          }
+          for (i = 0; i < points.length; i++) {
+            var styleId = 'waypoint' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('Style', nest: () {
+                builder.attribute('id', 'waypoint' + i.toString());
+                _writeElement(builder, 'color', _ColorCode(points[i].color));
+                builder.element('IconStyle', nest: () {
+                  builder.element('Icon', nest: () {
+                    _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
+                  });
+                });
+              });
+            }
           }
         }
 
@@ -200,47 +220,75 @@ class _KmlWriter {
 
         if (circles != null) {
           for (i = 0; i < circles.length; i++) {
-            builder.element('StyleMap', nest: () {
-              builder.attribute('id', 'circle' + i.toString());
-
-              builder.element('Pair', nest: () {
-                _writeElement(builder, 'key', 'normal');
-                _writeElement(builder, 'styleUrl', '#circle' + i.toString());
-              });
-            });
+            for (var x = 0; x <= i; x++) {
+              if (circles[x].color == circles[i].color) {
+                styleMap.addAll({'circle' + i.toString(): 'circle' + x.toString()});
+                break;
+              }
+            }
           }
           for (i = 0; i < circles.length; i++) {
-            builder.element('Style', nest: () {
-              builder.attribute('id', 'circle' + i.toString());
-              builder.element('LineStyle', nest: () {
-                _writeElement(builder, 'color', _ColorCode(circles[i].color));
-                _writeElement(builder, 'width', 3);
+            var styleId = 'circle' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('StyleMap', nest: () {
+                builder.attribute('id', styleId);
+
+                builder.element('Pair', nest: () {
+                  _writeElement(builder, 'key', 'normal');
+                  _writeElement(builder, 'styleUrl', '#' + styleId);
+                });
               });
-              _writeElement(builder, 'color', _ColorCode(circles[i].color));
-            });
+            }
+          }
+          for (i = 0; i < circles.length; i++) {
+            var styleId = 'circle' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('Style', nest: () {
+                builder.attribute('id', styleId);
+                builder.element('LineStyle', nest: () {
+                  _writeElement(builder, 'color', _ColorCode(circles[i].color));
+                  _writeElement(builder, 'width', 3);
+                });
+                _writeElement(builder, 'color', _ColorCode(circles[i].color));
+              });
+            }
           }
         }
 
         if (polylines != null) {
           for (i = 0; i < polylines.length; i++) {
-            builder.element('StyleMap', nest: () {
-              builder.attribute('id', 'polyline' + i.toString());
-
-              builder.element('Pair', nest: () {
-                _writeElement(builder, 'key', 'normal');
-                _writeElement(builder, 'styleUrl', '#polyline' + i.toString());
-              });
-            });
+            for (var x = 0; x <= i; x++) {
+              if (polylines[x].color == polylines[i].color) {
+                styleMap.addAll({'polyline' + i.toString(): 'polyline' + x.toString()});
+                break;
+              }
+            }
           }
           for (i = 0; i < polylines.length; i++) {
-            builder.element('Style', nest: () {
-              builder.attribute('id', 'polyline' + i.toString());
-              builder.element('LineStyle', nest: () {
-                _writeElement(builder, 'color', _ColorCode(polylines[i].color));
-                _writeElement(builder, 'width', 3);
+            var styleId = 'polyline' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('StyleMap', nest: () {
+                builder.attribute('id', styleId);
+
+                builder.element('Pair', nest: () {
+                  _writeElement(builder, 'key', 'normal');
+                  _writeElement(builder, 'styleUrl', '#' + styleId);
+                });
               });
-              _writeElement(builder, 'color', _ColorCode(polylines[i].color));
-            });
+            }
+          }
+          for (i = 0; i < polylines.length; i++) {
+            var styleId = 'polyline' + i.toString();
+            if (styleMap[styleId] == styleId) {
+              builder.element('Style', nest: () {
+                builder.attribute('id', styleId);
+                builder.element('LineStyle', nest: () {
+                  _writeElement(builder, 'color', _ColorCode(polylines[i].color));
+                  _writeElement(builder, 'width', 3);
+                });
+                _writeElement(builder, 'color', _ColorCode(polylines[i].color));
+              });
+            }
           }
         }
 
@@ -248,22 +296,25 @@ class _KmlWriter {
           _writeElement(builder, 'name', 'Waypoints');
           if (points != null) {
             for (i = 0; i < points.length; i++) {
-              if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
-              _writePoint(builder, true, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
+              if (i == 0)
+                _writePoint(
+                    builder, false, name, 'S' + i.toString(), points[i], '#' + styleMap['waypoint' + i.toString()]);
+              _writePoint(
+                  builder, true, name, 'S' + i.toString(), points[i], '#' + styleMap['waypoint' + i.toString()]);
             }
           }
         });
 
         if (circles != null) {
           for (i = 0; i < circles.length; i++) {
-            _writeLines(builder, 'circle', circles[i].shape, '#circle' + i.toString());
+            _writeLines(builder, 'circle', circles[i].shape, '#' + styleMap['circle' + i.toString()]);
           }
         }
 
         if (polylines != null && polylines.length > 0) {
           for (i = 0; i < polylines.length; i++) {
             _writeLines(builder, 'line', polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
-                '#polyline' + i.toString());
+                '#' + styleMap['polyline' + i.toString()]);
           }
         }
       });
@@ -272,16 +323,23 @@ class _KmlWriter {
     return builder.buildDocument();
   }
 
+  String _checkName(String label) {
+    var count = elementNames.where((element) => label == element).length;
+    elementNames.add(label);
+    if (count > 0 && (label != null)) return label + ' ($count)';
+    return label;
+  }
+
   void _writePoint(
       XmlBuilder builder, bool waypoint, String cacheName, String stageName, GCWMapPoint wpt, String styleId) {
     if (wpt != null) {
       builder.element('Placemark', nest: () {
         if (!waypoint) {
-          _writeElement(builder, 'name', cacheName);
-        } else {
-          _writeElement(builder, 'description', wpt.markerText);
+          _writeElement(builder, 'name', _checkName(cacheName));
+        } else if ((wpt.markerText != null) && wpt.markerText.isNotEmpty) {
+          _writeElement(builder, 'name', _checkName(wpt.markerText));
         }
-        _writeElement(builder, 'altitudeMode', 'absolute');
+        _writeElement(builder, 'altitudeMode', 'relativeToGround');
         _writeElement(builder, 'styleUrl', styleId);
         builder.element('Point', nest: () {
           _writeElement(builder, 'coordinates', [wpt.point.longitude, wpt.point.latitude].join(','));
@@ -293,13 +351,13 @@ class _KmlWriter {
   void _writeLines(XmlBuilder builder, String name, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
-        _writeElement(builder, 'name', name);
+        if ((name != null) && name.isNotEmpty) _writeElement(builder, 'name', _checkName(name));
         _writeElement(builder, 'visibility', 1);
         _writeElement(builder, 'styleUrl', styleId);
 
         builder.element('LineString', nest: () {
           _writeElement(builder, 'tesselerate', 1);
-          _writeElement(builder, 'altitudeMode', 'absolute');
+          _writeElement(builder, 'altitudeMode', 'relativeToGround');
           _writeElement(
               builder, 'coordinates', shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
         });

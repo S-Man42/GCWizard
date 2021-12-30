@@ -215,7 +215,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
         if (_currentExpanded && _loadedFile != null)
           GCWText(
             text: i18n(context, 'common_loadfile_currentlyloaded') + ': ' + (_loadedFile.name ?? ''),
-            style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 4),
+            style: gcwTextStyle().copyWith(fontSize: fontSizeSmall()),
           ),
         if (!_currentExpanded && _loadedFile != null)
           GCWText(
@@ -295,6 +295,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   int _total = 0;
   int _received = 0;
   List<int> _bytes = [];
+  Future<Uint8List> result;
   SendPort sendAsyncPort = jobData?.sendAsyncPort;
   Uri uri = jobData?.parameters;
 
@@ -303,7 +304,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
   await client.send(request).timeout(Duration(seconds: 10), onTimeout: () {
     if (sendAsyncPort != null) sendAsyncPort.send(null);
     return null; //http.Response('Error', 500);
-  }).then((http.StreamedResponse response) {
+  }).then((http.StreamedResponse response) async {
     if (response.statusCode != 200) {
       if (sendAsyncPort != null) sendAsyncPort.send('common_loadfile_exception_responsestatus');
       return 'common_loadfile_exception_responsestatus';
@@ -311,7 +312,7 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
     _total = response.contentLength ?? 0;
     int progressStep = max((_total / 100).toInt(), 1);
 
-    response.stream.listen((value) {
+    await response.stream.listen((value) {
       _bytes.addAll(value);
 
       if (_total != 0 &&
@@ -325,8 +326,10 @@ Future<dynamic> _downloadFileAsync(dynamic jobData) async {
 
       var uint8List = Uint8List.fromList(_bytes);
       if (sendAsyncPort != null) sendAsyncPort.send(uint8List);
-
-      return uint8List;
+      result = Future.value(uint8List);
     });
   });
+
+  await result;
+  return result;
 }

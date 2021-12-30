@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:intl/intl.dart';
 
 final CHANGELOG = {
+  '2.1.0': DateTime(2021, 12, 22),
   '2.0.1': DateTime(2021, 10, 21),
   '2.0.0': DateTime(2021, 10, 15),
   '1.5.1': DateTime(2021, 05, 10),

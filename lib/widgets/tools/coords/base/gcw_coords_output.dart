@@ -4,21 +4,23 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
+  final List<dynamic> copyTexts;
   List<GCWMapPoint> points;
   List<GCWMapPolyline> polylines;
   final bool mapButtonTop;
   final String title;
 
-  GCWCoordsOutput({Key key, this.outputs, this.points, this.polylines, this.mapButtonTop: false, this.title})
+  GCWCoordsOutput(
+      {Key key, this.outputs, this.copyTexts, this.points, this.polylines, this.mapButtonTop: false, this.title})
       : super(key: key) {
     if (points == null) this.points = [];
     if (polylines == null) this.polylines = [];
@@ -31,14 +33,22 @@ class GCWCoordsOutput extends StatefulWidget {
 class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   @override
   Widget build(BuildContext context) {
-    var children = widget.outputs.map((output) {
-      return Container(
-        child: GCWOutput(
-          child: output,
-        ),
-        padding: EdgeInsets.only(bottom: 15),
-      );
-    }).toList();
+    var children = widget.outputs
+        .asMap()
+        .map((index, output) {
+          return MapEntry(
+              index,
+              Container(
+                child: GCWOutput(
+                  child: output,
+                  copyText:
+                      widget.copyTexts != null && widget.copyTexts.length > index ? widget.copyTexts[index] : null,
+                ),
+                padding: EdgeInsets.only(bottom: 15),
+              ));
+        })
+        .values
+        .toList();
     var _outputText = Column(
       children: children,
     );
@@ -89,16 +99,14 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         context,
         MaterialPageRoute(
             builder: (context) => GCWTool(
-                  tool: GCWMapView(
-                    points: List<GCWMapPoint>.from(widget.points),
-                    polylines: List<GCWMapPolyline>.from(widget.polylines),
-                    isEditable: freeMap,
-                  ),
-                  i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
-                  autoScroll: false,
-                  suppressToolMargin: true,
-                  helpLocales: ['de', 'en', 'fr'],
-                )));
+                tool: GCWMapView(
+                  points: List<GCWMapPoint>.from(widget.points),
+                  polylines: List<GCWMapPolyline>.from(widget.polylines),
+                  isEditable: freeMap,
+                ),
+                i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
+                autoScroll: false,
+                suppressToolMargin: true)));
   }
 
   Future<bool> _exportCoordinates(

@@ -244,7 +244,8 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
 
                               if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
                                 value = getCoordinateFormatByKey(entry.value).name;
-                              } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD].contains(tool.internalToolName)) {
+                              } else if ([MDT_INTERNALNAMES_BASE, MDT_INTERNALNAMES_BCD]
+                                  .contains(tool.internalToolName)) {
                                 value += '_title';
                               }
 

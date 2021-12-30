@@ -33,7 +33,7 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   Color inputBackground() {
-    return Colors.white; //TODO
+    return Colors.white;
   }
 
   @override
@@ -155,5 +155,25 @@ class ThemeColorsLight extends ThemeColors {
   @override
   Color textFieldFillText() {
     return Colors.white;
+  }
+
+  @override
+  Color formulaNumber() {
+    return Color.fromRGBO(48, 145, 0, 1);
+  }
+
+  @override
+  Color formulaVariable() {
+    return Color.fromRGBO(255, 135, 0, 1);
+  }
+
+  @override
+  Color formulaMath() {
+    return Colors.indigoAccent;
+  }
+
+  @override
+  Color formulaError() {
+    return Colors.red;
   }
 }

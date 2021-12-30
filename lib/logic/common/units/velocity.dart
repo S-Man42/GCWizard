@@ -36,6 +36,13 @@ final VELOCITY_YDS = Velocity(name: 'common_unit_velocity_yds_name', symbol: 'yd
 
 final VELOCITY_YDMIN = Velocity(name: 'common_unit_velocity_ydmin_name', symbol: 'yd/min', inMS: 0.01524);
 
+//Mach source: https://de.wikipedia.org/w/index.php?title=Schallgeschwindigkeit&oldid=211662455#Temperaturabh%C3%A4ngigkeit
+final VELOCITY_MACH0 = Velocity(name: 'common_unit_velocity_mach0_name', symbol: 'Ma', inMS: 343.46);
+
+final VELOCITY_MACHNEG50 = Velocity(name: 'common_unit_velocity_machneg50_name', symbol: 'Ma', inMS: 331.5);
+
+final VELOCITY_MACH20 = Velocity(name: 'common_unit_velocity_mach20_name', symbol: 'Ma', inMS: 299.63);
+
 final List<Unit> velocities = [
   VELOCITY_MS,
   VELOCITY_MMIN,
@@ -48,5 +55,8 @@ final List<Unit> velocities = [
   VELOCITY_FTS,
   VELOCITY_FTMIN,
   VELOCITY_YDS,
-  VELOCITY_YDMIN
+  VELOCITY_YDMIN,
+  VELOCITY_MACH20,
+  VELOCITY_MACH0,
+  VELOCITY_MACHNEG50
 ];

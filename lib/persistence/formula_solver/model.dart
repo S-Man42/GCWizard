@@ -42,9 +42,30 @@ class Formula {
       : id = json['id'],
         formula = json['formula'];
 
+  static Formula fromFormula(Formula formula) {
+    var newFormula = Formula(formula.formula);
+    newFormula.id = formula.id;
+    return newFormula;
+  }
+
   @override
   String toString() {
     return toMap().toString();
+  }
+}
+
+enum FormulaValueType { FIXED, INTERPOLATED, TEXT }
+const _FORMULAVALUETYPE_INTERPOLATE = 'interpolate';
+const _FORMULAVALUETYPE_TEXT = 'text';
+
+FormulaValueType _readType(String jsonType) {
+  switch (jsonType) {
+    case _FORMULAVALUETYPE_INTERPOLATE:
+      return FormulaValueType.INTERPOLATED;
+    case _FORMULAVALUETYPE_TEXT:
+      return FormulaValueType.TEXT;
+    default:
+      return FormulaValueType.FIXED;
   }
 }
 
@@ -52,19 +73,38 @@ class FormulaValue {
   int id;
   String key;
   String value;
+  FormulaValueType type;
 
-  FormulaValue(this.key, this.value);
+  FormulaValue(this.key, this.value, {this.type});
 
   FormulaValue.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         key = json['key'],
-        value = json['value'];
+        value = json['value'],
+        type = _readType(json['type']);
 
-  Map<String, dynamic> toMap() => {
-        'id': id,
-        'key': key,
-        'value': value,
-      };
+  Map<String, dynamic> toMap() {
+    var map = {
+      'id': id,
+      'key': key,
+      'value': value,
+    };
+
+    var mapType;
+    switch (type) {
+      case FormulaValueType.INTERPOLATED:
+        mapType = _FORMULAVALUETYPE_INTERPOLATE;
+        break;
+      case FormulaValueType.TEXT:
+        mapType = _FORMULAVALUETYPE_TEXT;
+        break;
+      default:
+        break;
+    }
+    if (mapType != null) map.putIfAbsent('type', () => mapType);
+
+    return map;
+  }
 
   @override
   String toString() {

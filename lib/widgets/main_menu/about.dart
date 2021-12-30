@@ -103,7 +103,7 @@ class AboutState extends State<About> {
           onTap: () {
             Navigator.of(context).push(NoAnimationMaterialPageRoute(
                 builder: (context) =>
-                    Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
+                    registeredTools.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
           },
         ),
         GCWDivider(),
@@ -140,7 +140,6 @@ class AboutState extends State<About> {
                       text: [
                             '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
                             '\'capoaira\' (Code)',
-                            'Cavit A. (Translation TR)',
                             'Dennis \'dennistreysa\' (Code)',
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
                             '\'Geo-Link\' (Hardware & Symbol Tables)',
@@ -163,12 +162,25 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                             '\'alantheandroid\' (IT)',
+                            '\'alexgonc\' (PT)',
                             'Cavit A. (TR)',
                             '\'crazedllama\' (KO)',
-                            '\'j_janus (PL)',
-                            '\'Johan-V (NL)',
+                            '\'hakuchi\' (IT)',
+                            '\'Henrike71\' (NL)',
+                            'Igor Č. (SK)',
+                            '\'j_janus\' (PL)',
+                            'Joao F. (PT)',
+                            '\'Johan-V\' (NL)',
+                            '\'MAJ\' (ES)',
+                            '\'n3oklan\' (CZ)',
                             'Paul Z. (NL)',
                             'Paweł B. (PL)',
+                            '\'QouiZ\' (EL)',
+                            '\'proXmiii\' (SK)',
+                            'Silvia O. (SK)',
+                            '\'tkemer\' (EL)',
+                            '\'Todclerc\' (NL)',
+                            '\'vike91\' (FI)',
                             '\'Xoyn\' (RU)',
                           ].join('\n') +
                           '\n')
@@ -187,6 +199,7 @@ class AboutState extends State<About> {
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
                     '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                    '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
                     'Johannes C.',

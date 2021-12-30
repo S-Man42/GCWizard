@@ -567,3 +567,18 @@ String atomicNumbersToText(List<int> atomicNumbers) {
     return element != null ? element.chemicalSymbol : UNKNOWN_ELEMENT;
   }).join();
 }
+
+List<int> textToAtomicNumbers(String input) {
+  if (input == null || input.isEmpty) return <int>[];
+  input = input.replaceAll(RegExp(r'[^A-Za-z]'), '');
+  if (input.isEmpty) return <int>[];
+
+  var chemSymbol = RegExp(r'[A-Z][a-z]*');
+  return chemSymbol.allMatches(input).map((symbol) {
+    var element =
+        allPeriodicTableElements.firstWhere((element) => element.chemicalSymbol == symbol.group(0), orElse: () => null);
+    if (element == null) return null;
+
+    return element.atomicNumber;
+  }).toList();
+}

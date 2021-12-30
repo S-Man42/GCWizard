@@ -60,10 +60,14 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
 
           var child;
 
-          if (tappables == null || tappables.isEmpty) {
-            child = GCWText(text: column != null ? column.toString() : '', style: textStyle);
+          if (column is Widget) {
+            child = column;
           } else {
-            child = Text(column != null ? column.toString() : '', style: textStyle);
+            if (tappables == null || tappables.isEmpty) {
+              child = GCWText(text: column != null ? column.toString() : '', style: textStyle);
+            } else {
+              child = Text(column != null ? column.toString() : '', style: textStyle);
+            }
           }
 
           return MapEntry(index, Expanded(child: child, flex: index < flexValues.length ? flexValues[index] : 1));
@@ -75,11 +79,10 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     var copyText = rowData[copyColumn].toString();
     if (isFirst && hasHeader && copyAll) {
       copyText = '';
-      data.where((row) => row != null).forEach((dataRow) {
+      data.where((row) => row != null).skip(1).forEach((dataRow) {
         copyText += dataRow[copyColumn].toString() + '\n';
       });
     }
-    ;
 
     var row = Container(
       child: Row(

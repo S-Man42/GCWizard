@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class CryptographySelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList
+    final List<GCWTool> _toolList = registeredTools
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.CRYPTOGRAPHY))
         .toList();
     _toolList.sort((a, b) => sortToolListAlphabetically(a, b));

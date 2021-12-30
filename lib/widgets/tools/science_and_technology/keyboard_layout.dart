@@ -18,8 +18,8 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
 
   String _currentInput = '';
 
-  enumKeyboardLayout _currentKeyboardFrom = enumKeyboardLayout.QWERTZ_T1;
-  enumKeyboardLayout _currentKeyboardTo = enumKeyboardLayout.QWERTY_US_INT;
+  var _currentKeyboardFrom = KeyboardType.QWERTZ_T1;
+  var _currentKeyboardTo = KeyboardType.QWERTY_US_INT;
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                       },
                       items: allKeyboards.map((keyboard) {
                         return GCWDropDownMenuItem(
-                            value: keyboard.key, child: i18n(context, keyboard.name), subtitle: keyboard.example);
+                            value: keyboard.type, child: i18n(context, keyboard.name), subtitle: keyboard.example);
                       }).toList(),
                     ),
                   ],
@@ -83,7 +83,7 @@ class KeyboardLayoutState extends State<KeyboardLayout> {
                       },
                       items: allKeyboards.map((keyboard) {
                         return GCWDropDownMenuItem(
-                            value: keyboard.key, child: i18n(context, keyboard.name), subtitle: keyboard.example);
+                            value: keyboard.type, child: i18n(context, keyboard.name), subtitle: keyboard.example);
                       }).toList(),
                     ),
                   ],

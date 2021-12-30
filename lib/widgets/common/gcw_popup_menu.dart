@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 
@@ -8,6 +9,7 @@ class GCWPopupMenu extends StatefulWidget {
   final List<GCWPopupMenuItem> Function(BuildContext context) menuItemBuilder;
   final IconData iconData;
   final Widget customIcon;
+  final double rotateDegrees;
   final IconButtonSize size;
   final Color iconColor;
   final Color backgroundColor;
@@ -22,6 +24,7 @@ class GCWPopupMenu extends StatefulWidget {
     this.menuItemBuilder,
     this.iconData,
     this.customIcon,
+    this.rotateDegrees,
     this.size: IconButtonSize.NORMAL,
     this.iconColor,
     this.backgroundColor,
@@ -67,6 +70,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
     return GCWIconButton(
         iconData: widget.iconData,
         customIcon: widget.customIcon,
+        rotateDegrees: widget.rotateDegrees,
         size: widget.size,
         iconColor: widget.iconColor,
         backgroundColor: widget.backgroundColor,
@@ -93,7 +97,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
       elevation: 8.0,
       color: themeColors().accent(),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(roundedBorderRadius),
+        borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
       ),
     ).then((itemSelected) {
       if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
@@ -114,19 +118,23 @@ class GCWPopupMenuItem {
   GCWPopupMenuItem({this.child, this.action, this.onLongPress, this.isDivider: false});
 }
 
-iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey, {Function onLongPress}) {
+iconedGCWPopupMenuItem(BuildContext context, IconData icon, String title,
+    {double rotateDegrees: 0.0, Function onLongPress}) {
   var color = themeColors().dialogText();
 
   return Row(
     children: [
       GestureDetector(
         child: Container(
-          child: Icon(icon, color: color),
+          child: Transform.rotate(
+            angle: degreesToRadian(rotateDegrees),
+            child: Icon(icon, color: color),
+          ),
           padding: EdgeInsets.only(right: 10),
         ),
         onLongPress: onLongPress,
       ),
-      Text(i18n(context, i18nKey), style: TextStyle(color: color))
+      Text(i18n(context, title) ?? title, style: TextStyle(color: color))
     ],
   );
 }

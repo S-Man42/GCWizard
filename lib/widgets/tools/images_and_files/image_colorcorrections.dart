@@ -447,10 +447,6 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
   for (var i = 0, len = pixels.length; i < len; i += 4) {
     var pixel = RGBPixel(pixels[i].toDouble(), pixels[i + 1].toDouble(), pixels[i + 2].toDouble());
 
-    if (input.invert) pixel = invert(pixel);
-
-    if (input.grayscale) pixel = grayscale(pixel);
-
     if (input.red != 0.0 || input.green != 0.0 || input.blue != 0.0)
       pixel = colorOffset(pixel, input.red, input.green, input.blue);
 
@@ -468,6 +464,10 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
     pixels[i] = pixel.red.round().clamp(0, 255);
     pixels[i + 1] = pixel.green.round().clamp(0, 255);
     pixels[i + 2] = pixel.blue.round().clamp(0, 255);
+
+    if (input.invert) pixel = invert(pixel);
+
+    if (input.grayscale) pixel = grayscale(pixel);
   }
 
   return image;
@@ -481,6 +481,5 @@ openInColorCorrections(BuildContext context, PlatformFile file) {
               tool: ImageColorCorrections(file: file),
               toolName: i18n(context, 'image_colorcorrections_title'),
               i18nPrefix: '',
-              autoScroll: false,
-              helpLocales: ['de', 'en', 'fr'])));
+              autoScroll: false)));
 }

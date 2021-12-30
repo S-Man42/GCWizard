@@ -9,8 +9,10 @@ class GCWSlider extends StatefulWidget {
   final double value;
   final double min;
   final double max;
+  final bool suppressReset;
 
-  const GCWSlider({Key key, this.title, this.value, this.onChanged, this.min, this.max}) : super(key: key);
+  const GCWSlider({Key key, this.title, this.value, this.onChanged, this.min, this.max, this.suppressReset: false})
+      : super(key: key);
 
   @override
   _GCWSliderState createState() => _GCWSliderState();
@@ -49,16 +51,17 @@ class _GCWSliderState extends State<GCWSlider> {
           ),
           flex: 3,
         ),
-        GCWIconButton(
-          iconData: Icons.refresh,
-          size: IconButtonSize.SMALL,
-          onPressed: () {
-            setState(() {
-              _currentValue = _initialValue;
-              widget.onChanged(_currentValue);
-            });
-          },
-        )
+        if (!widget.suppressReset)
+          GCWIconButton(
+            iconData: Icons.refresh,
+            size: IconButtonSize.SMALL,
+            onPressed: () {
+              setState(() {
+                _currentValue = _initialValue;
+                widget.onChanged(_currentValue);
+              });
+            },
+          )
       ],
     );
   }

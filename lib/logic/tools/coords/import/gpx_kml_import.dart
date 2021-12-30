@@ -120,7 +120,9 @@ class _GpxReader {
     var lon = xmlElement.getAttribute('lon');
     if (lat != null && lon != null) {
       var wpt = GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true);
-      wpt.markerText = xmlElement.getElement('desc')?.innerText;
+      wpt.markerText = xmlElement.getElement('name')?.innerText;
+      if (wpt.markerText == null || wpt.markerText.length == 0)
+        wpt.markerText = xmlElement.getElement('desc')?.innerText;
       return wpt;
     }
     return null;
@@ -211,7 +213,9 @@ class _KmlReader {
       var lon = coordinates.group(1);
       if (lat != null && lon != null) {
         var wpt = GCWMapPoint(point: new LatLng(double.tryParse(lat), double.tryParse(lon)));
-        wpt.markerText = xmlElement.getElement('description')?.innerText;
+        wpt.markerText = xmlElement.getElement('name')?.innerText;
+        if (wpt.markerText == null || wpt.markerText.length == 0)
+          wpt.markerText = xmlElement.getElement('description')?.innerText;
 
         if (line.points.length == 0)
           wpt = _readPointStyleMap(wpt, xmlElement.getElement('styleUrl')?.innerText, styleParent);

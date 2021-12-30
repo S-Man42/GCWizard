@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class GamesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList
+    final List<GCWTool> _toolList = registeredTools
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.GAMES))
         .toList();
     _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
