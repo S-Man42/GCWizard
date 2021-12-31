@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:typed_data';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _messageIndex = 0;
               _answerIndex = 0;
               _identifierIndex = 0;
-              _cartridge = getCartridge(_GWCbytes, _LUAbytes);
+
+              _analyseCartridgeFileAsync();
+              //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
             }
@@ -160,7 +163,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _messageIndex = 0;
               _answerIndex = 0;
               _identifierIndex = 0;
-              _cartridge = getCartridge(_GWCbytes, _LUAbytes);
+              _analyseCartridgeFileAsync();
+              //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
             }
@@ -935,5 +939,44 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 i18nPrefix: 'coords_openmap',
                 autoScroll: false,
                 suppressToolMargin: true)));
+  }
+
+  _analyseCartridgeFileAsync() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: Container(
+            child: GCWAsyncExecuter(
+              isolatedFunction: getCartridgeAsync, //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
+              parameter: _buildGWCJobData(),
+              onReady: (data) => _showGWCOutput(data),
+              isOverlay: true,
+            ),
+            height: 220,
+            width: 150,
+          ),
+        );
+      },
+    );
+  }
+  Future<GCWAsyncExecuterParameters> _buildGWCJobData() async {
+    return GCWAsyncExecuterParameters({_GWCbytes, _LUAbytes});
+  }
+  _showGWCOutput(WherigoCartridge output) {
+    _cartridge = output;
+
+    // restore references (problem with sendPort, lose references)
+    if (_cartridge != null) {
+
+    } else {
+      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }
