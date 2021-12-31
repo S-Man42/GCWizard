@@ -5,10 +5,10 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:touchable/touchable.dart';
 
-enum GridType {BOXES, GRID, POINTS}
+enum GridType {BOXES, LINES, INTERSECTIONS}
 enum GridEnumerationStart {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT}
 enum GridBoxEnumerationStartDirection {UP, DOWN, LEFT, RIGHT}
-enum GridBoxEnumerationBehaviour {STRAIGHT, ALTERNATED, SPIRAL}
+enum GridBoxEnumerationBehaviour {ALIGNED, ALTERNATED, SPIRAL}
 enum GridPaintColor {BLACK, WHITE, RED, YELLOW, BLUE, GREEN}
 
 enum _TapMode {SINGLE, ROW, COLUMN, ALL}
@@ -69,7 +69,7 @@ class GridPainter extends StatefulWidget {
     if (boxEnumerationStartDirection == null)
       boxEnumerationStartDirection = GridBoxEnumerationStartDirection.RIGHT;
     if (boxEnumerationBehaviour == null)
-      boxEnumerationBehaviour = GridBoxEnumerationBehaviour.STRAIGHT;
+      boxEnumerationBehaviour = GridBoxEnumerationBehaviour.ALIGNED;
   }
 
   @override
@@ -107,7 +107,7 @@ class GridPainterState extends State<GridPainter> {
             i--;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.STRAIGHT:
+              case GridBoxEnumerationBehaviour.ALIGNED:
                 if (widget.boxEnumerationStart == GridEnumerationStart.BOTTOM_LEFT) {
                   j++;
                 } else {
@@ -143,7 +143,7 @@ class GridPainterState extends State<GridPainter> {
             i++;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.STRAIGHT:
+              case GridBoxEnumerationBehaviour.ALIGNED:
                 if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT) {
                   j++;
                 } else {
@@ -179,7 +179,7 @@ class GridPainterState extends State<GridPainter> {
             j--;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.STRAIGHT:
+              case GridBoxEnumerationBehaviour.ALIGNED:
                 if (widget.boxEnumerationStart == GridEnumerationStart.TOP_RIGHT) {
                   i++;
                 } else {
@@ -215,7 +215,7 @@ class GridPainterState extends State<GridPainter> {
             j++;
           } else {
             switch (widget.boxEnumerationBehaviour) {
-              case GridBoxEnumerationBehaviour.STRAIGHT:
+              case GridBoxEnumerationBehaviour.ALIGNED:
                 if (widget.boxEnumerationStart == GridEnumerationStart.TOP_LEFT) {
                   i++;
                 } else {
@@ -382,8 +382,8 @@ class CustomGridPainter extends CustomPainter {
 
     switch (type) {
       case GridType.BOXES: _drawBoxesBoard(size, paint, _touchCanvas, canvas); break;
-      case GridType.POINTS: _drawPointsBoard(size, paint, _touchCanvas, canvas); break;
-      case GridType.GRID: _drawGridBoard(size, paint, _touchCanvas); break;
+      case GridType.INTERSECTIONS: _drawPointsBoard(size, paint, _touchCanvas, canvas); break;
+      case GridType.LINES: _drawGridBoard(size, paint, _touchCanvas); break;
     }
   }
 

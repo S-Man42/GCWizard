@@ -157,6 +157,7 @@
   "gccode": "hexadecimal",
   "glagolitic": "glagolitic slavic slavian",
   "gray": "distance",
+  "grid": "lines intersections boxes points coordinatesystems gridpaper graphpaper squaredpaper cross-hatchedpaper crosshatchedpaper quadpaper checkedpaper checkeredpaper chessboard checkersboard lottery",
   "gronsfeld": "",
   "hashbreaker": "hashbreaker hashsolver hashcracker",
   "hashes": "onewayencryptions hashvalues message digests",

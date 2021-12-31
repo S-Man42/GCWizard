@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -44,27 +45,27 @@ final _GRID_CONFIGURATIONS = {
   _GRID_CUSTOM_KEY : _GridConfiguration(GridType.BOXES, 10, 10,
     enumeration: '1-100',
   ),
-  'grid_intersections_5x5' : _GridConfiguration(GridType.POINTS, 5, 5, 
+  'grid_intersections_5x5' : _GridConfiguration(GridType.INTERSECTIONS, 5, 5,
     columnEnumeration: '12345',
     rowEnumeration: '12345'
   ),
-  'grid_intersections_6x6' : _GridConfiguration(GridType.POINTS, 6, 6,
+  'grid_intersections_6x6' : _GridConfiguration(GridType.INTERSECTIONS, 6, 6,
     columnEnumeration: '123456',
     rowEnumeration: '123456'
   ),
-  'grid_intersections_7x7' : _GridConfiguration(GridType.POINTS, 7, 7,
+  'grid_intersections_7x7' : _GridConfiguration(GridType.INTERSECTIONS, 7, 7,
     columnEnumeration: '1234567',
     rowEnumeration: '1,2,3,4,5-7'
   ),
-  'grid_intersections_8x8' : _GridConfiguration(GridType.POINTS, 8, 8,
+  'grid_intersections_8x8' : _GridConfiguration(GridType.INTERSECTIONS, 8, 8,
     columnEnumeration: '12345678',
     rowEnumeration: '12345678'
   ),
-  'grid_intersections_9x9' : _GridConfiguration(GridType.POINTS, 9, 9,
+  'grid_intersections_9x9' : _GridConfiguration(GridType.INTERSECTIONS, 9, 9,
     columnEnumeration: '123456789',
     rowEnumeration: '123456789'
   ),
-  'grid_intersections_10x10' : _GridConfiguration(GridType.GRID, 10, 10,
+  'grid_intersections_10x10' : _GridConfiguration(GridType.LINES, 10, 10,
     columnEnumeration: '1 2 3 4 5 6 7 8 9 10',
     rowEnumeration: '1 2 3 4 5 6 7 8 9 10'
   ),
@@ -93,10 +94,10 @@ final _GRID_CONFIGURATIONS = {
   'grid_germanlotto' : _GridConfiguration(GridType.BOXES, 7, 7,
     enumeration: '1-49',
   ),
-  'grid_germantoto6of45' : _GridConfiguration(GridType.BOXES, 7, 7,
+  'grid_germantoto6from45' : _GridConfiguration(GridType.BOXES, 7, 7,
     enumeration: '1-45',
   ),
-  'grid_eurojackpot5of50' : _GridConfiguration(GridType.BOXES, 10, 5,
+  'grid_eurojackpot5from50' : _GridConfiguration(GridType.BOXES, 10, 5,
     enumeration: '1-50',
   ),
 };
@@ -156,7 +157,7 @@ class GridState extends State<Grid> {
     _currentConfigRowEnumeration = _GRID_CONFIGURATIONS[_currentGridConfiguration].rowEnumeration ?? '';
     _currentConfigBoxEnumerationStart = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStart ?? GridEnumerationStart.TOP_LEFT;
     _currentConfigBoxEnumerationStartDirection = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationStartDirection ?? GridBoxEnumerationStartDirection.RIGHT;
-    _currentConfigBoxEnumerationBehaviour = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour ?? GridBoxEnumerationBehaviour.STRAIGHT;
+    _currentConfigBoxEnumerationBehaviour = _GRID_CONFIGURATIONS[_currentGridConfiguration].enumerationBehaviour ?? GridBoxEnumerationBehaviour.ALIGNED;
 
     _boxEnumerationController.text = _currentConfigBoxEnumeration;
     _columnEnumerationController.text = _currentConfigColumnEnumeration;
@@ -191,7 +192,7 @@ class GridState extends State<Grid> {
                   return MapEntry(key, 
                     GCWDropDownMenuItem(
                       value: key,
-                      child: key
+                      child: i18n(context, key)
                     )                    
                   );
                 }).values.toList(),
@@ -243,20 +244,20 @@ class GridState extends State<Grid> {
   _buildConfiguration() {
     return Column(
       children: [
-        GCWTextDivider(text: 'grid_configuration',),
+        GCWTextDivider(text: i18n(context, 'grid_configuration'),),
         GCWDropDownButton(
-          title: 'grid_type_title',
+          title: i18n(context, 'grid_type_title'),
           value: _currentConfigType,
           items: {
             GridType.BOXES: 'grid_boxes_title',
-            GridType.POINTS: 'grid_points_title',
-            GridType.GRID: 'grid_grid_title',
+            GridType.INTERSECTIONS: 'grid_intersections_title',
+            GridType.LINES: 'grid_lines_title',
           }.map((type, name) {
             return MapEntry(
               type,
               GCWDropDownMenuItem(
                 value: type,
-                child: name
+                child: i18n(context, name)
               )
             );
           }).values.toList(),
@@ -268,7 +269,7 @@ class GridState extends State<Grid> {
         ),
 
         GCWIntegerSpinner(
-          title: 'grid_columns',
+          title: i18n(context, 'grid_columns'),
           value: _currentConfigColumns,
           min: 1,
           max: 100,
@@ -279,7 +280,7 @@ class GridState extends State<Grid> {
           },
         ),
         GCWIntegerSpinner(
-          title: 'grid_rows',
+          title: i18n(context, 'grid_rows'),
           value: _currentConfigRows,
           min: 1,
           max: 100,
@@ -294,7 +295,7 @@ class GridState extends State<Grid> {
           ? Row (
               children: [
                 Expanded(
-                  child: GCWText(text: 'grid_boxenumeration' + ':'),
+                  child: GCWText(text: i18n(context, 'grid_boxenumeration') + ':'),
                   flex: 1
                 ),
                 Expanded(
@@ -312,12 +313,12 @@ class GridState extends State<Grid> {
             )
           : Container(),
 
-        _currentConfigType == GridType.GRID
+        _currentConfigType == GridType.LINES
           ? Container()
           : Row (
               children: [
                 Expanded(
-                  child: GCWText(text: 'grid_columnenumeration' + ':',),
+                  child: GCWText(text: i18n(context, 'grid_columnenumeration') + ':',),
                   flex: 1
                 ),
                 Expanded(
@@ -334,12 +335,12 @@ class GridState extends State<Grid> {
               ],
             ),
 
-        _currentConfigType == GridType.GRID
+        _currentConfigType == GridType.LINES
           ? Container()
           : Row (
               children: [
                 Expanded(
-                    child: GCWText(text: 'grid_rowenumeration' + ':',),
+                    child: GCWText(text: i18n(context, 'grid_rowenumeration') + ':',),
                     flex: 1
                 ),
                 Expanded(
@@ -364,10 +365,9 @@ class GridState extends State<Grid> {
   }
 
   _buildBoxEnumerationOptions() {
-    return Column(
-      children: [
+    return Column(children: [
         GCWDropDownButton(
-          title: 'grid_boxes_start_title',
+          title: i18n(context, 'grid_boxes_start_title'),
           value: _currentConfigBoxEnumerationStart,
           items: {
             GridEnumerationStart.TOP_LEFT : 'grid_boxes_start_topleft',
@@ -379,7 +379,7 @@ class GridState extends State<Grid> {
               corner,
               GCWDropDownMenuItem(
                 value: corner,
-                child: name
+                child: i18n(context, name)
               )
             );
           }).values.toList(),
@@ -399,7 +399,7 @@ class GridState extends State<Grid> {
         ),
 
         GCWDropDownButton(
-          title: 'grid_boxes_startdirection_title',
+          title: i18n(context, 'grid_boxes_startdirection_title'),
           value: _currentConfigBoxEnumerationStartDirection,
           items: _currentConfigBoxEnumerationStartDirections.map<GCWDropDownMenuItem>((direction) {
             var name;
@@ -412,7 +412,7 @@ class GridState extends State<Grid> {
 
             return GCWDropDownMenuItem(
               value: direction,
-              child: name
+              child: i18n(context, name)
             );
           }).toList(),
           onChanged: (value) {
@@ -423,18 +423,19 @@ class GridState extends State<Grid> {
         ),
 
         GCWDropDownButton(
-          title: 'grid_boxes_behaviour_title',
+          title: i18n(context, 'grid_boxes_behaviour_title'),
           value: _currentConfigBoxEnumerationBehaviour,
           items: {
-            GridBoxEnumerationBehaviour.STRAIGHT: 'grid_boxes_behaviour_straight',
-            GridBoxEnumerationBehaviour.ALTERNATED: 'grid_boxes_behaviour_alternated',
-            GridBoxEnumerationBehaviour.SPIRAL: 'grid_boxes_behaviour_spiral',
+            GridBoxEnumerationBehaviour.ALIGNED: {'title': 'grid_boxes_behaviour_aligned_title', 'description': 'grid_boxes_behaviour_aligned_description'},
+            GridBoxEnumerationBehaviour.ALTERNATED: {'title': 'grid_boxes_behaviour_alternated_title', 'description': 'grid_boxes_behaviour_alternated_description'},
+            GridBoxEnumerationBehaviour.SPIRAL: {'title': 'grid_boxes_behaviour_spiral_title', 'description': 'grid_boxes_behaviour_spiral_description'},
           }.map((behaviour, name) {
             return MapEntry(
               behaviour,
               GCWDropDownMenuItem(
                 value: behaviour,
-                child: name
+                child: i18n(context, name['title']),
+                subtitle: i18n(context, name['description'])
               )
             );
           }).values.toList(),

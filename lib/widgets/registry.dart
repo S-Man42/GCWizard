@@ -651,11 +651,10 @@ initializeRegistry(BuildContext context) {
       'binary',
       'gray',
     ]),
-    GCWTool(tool: Grid(), i18nPrefix: 'gray', categories: [
+    GCWTool(tool: Grid(), i18nPrefix: 'grid', categories: [
       ToolCategory.GAMES
     ], searchKeys: [
-      'binary',
-      'gray',
+      'grid',
     ]),
     GCWTool(
         tool: HashSelection(), i18nPrefix: 'hashes_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
