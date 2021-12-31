@@ -347,10 +347,12 @@ bool isInvalidLUASourcecode(Uint8List byteList){
 }
 
 Future <WherigoCartridge> getCartridgeAsync(dynamic jobData) async {
-  if ((jobData.byteListGWC == [] || jobData.byteListGWC == null) && (jobData.byteListLUA == [] || jobData.byteListLUA == null))
+  if ((jobData.parameters["byteListGWC"] == [] || jobData.parameters["byteListGWC"] == null) &&
+      (jobData.parameters["byteListLUA"] == [] || jobData.parameters["byteListLUA"] == null))
     return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
 
-  var output = await getCartridge(jobData.byteListGWC, jobData.byteListLUA, sendAsyncPort: jobData.sendAsyncPort);
+  print('sendasnycport '+jobData.sendAsyncPort.toString());
+  WherigoCartridge output = await getCartridge(jobData.parameters["byteListGWC"], jobData.parameters["byteListLUA"], sendAsyncPort: jobData.sendAsyncPort);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
@@ -363,6 +365,8 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
     return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
 
   try {
+    int progress = 0;
+    int progressStep = 0;
     String Signature = '';
     int NumberOfObjects = 0;
     List<MediaFileHeader> MediaFilesHeaders = [];
@@ -411,48 +415,17 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
     int MediaFileType = 0;
 
     String obfuscator = '';
+
     if (byteListGWC == [] || byteListGWC == null) {
-    } else {
+    }
+
+    else {
       if (isInvalidCartridge(byteListGWC)) {
         return WherigoCartridge(
-            'ERROR',
-            0,
-            [],
-            [],
-            '',
-            0,
-            0.0,
-            0.0,
-            0.0,
-            0,
-            0,
-            0,
-            '',
-            '',
-            0,
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            0,
-            '',
-            '',
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
+            'ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', 0,'', '', [], [], [], [], [], [], [], [], [], []
         );
-      } else {
+      }
+      else {
         Signature = Signature + byteListGWC[0].toString();
         Signature = Signature + byteListGWC[1].toString();
         Signature = Signature + String.fromCharCode(byteListGWC[2]);
@@ -581,7 +554,7 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
           }
         }
       }
-    }
+    } // end if byteListGWC != null
 
     // get LUA-Sourcecode-File
     // from byteListLUA

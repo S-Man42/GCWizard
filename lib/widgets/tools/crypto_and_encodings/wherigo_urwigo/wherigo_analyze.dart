@@ -129,7 +129,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _answerIndex = 0;
               _identifierIndex = 0;
 
-              _analyseCartridgeFileAsync();
+              _analyseCartridgeFileAsync('GWC-Cartrdige');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -163,7 +163,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _messageIndex = 0;
               _answerIndex = 0;
               _identifierIndex = 0;
-              _analyseCartridgeFileAsync();
+              _analyseCartridgeFileAsync('LUA-Sourcecode');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -190,7 +190,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildOutput(BuildContext context) {
-    if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == [])) return Container();
+    if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == []))
+      return Container();
+
+    if (_cartridge == null) {
+      return Container;
+    }
 
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
@@ -941,7 +946,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 suppressToolMargin: true)));
   }
 
-  _analyseCartridgeFileAsync() async {
+  _analyseCartridgeFileAsync(String dataType) async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -951,7 +956,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             child: GCWAsyncExecuter(
               isolatedFunction: getCartridgeAsync, //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
               parameter: _buildGWCJobData(),
-              onReady: (data) => _showGWCOutput(data),
+              onReady: (data) => _showGWCOutput(data, dataType),
               isOverlay: true,
             ),
             height: 220,
@@ -961,18 +966,21 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       },
     );
   }
+
   Future<GCWAsyncExecuterParameters> _buildGWCJobData() async {
-    return GCWAsyncExecuterParameters({_GWCbytes, _LUAbytes});
+    return GCWAsyncExecuterParameters({'byteListGWC':_GWCbytes, 'byteListLUA':_LUAbytes});
   }
-  _showGWCOutput(WherigoCartridge output) {
+
+  _showGWCOutput(WherigoCartridge output, String dataType) {
     _cartridge = output;
 
     // restore references (problem with sendPort, lose references)
-    if (_cartridge != null) {
-
-    } else {
+    if (_cartridge == null) {
+      print('_showOutput: notloaded');
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       return;
+    } else {
+      showToast(i18n(context, 'wherigo_data_loaded') + ': ' + dataType);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

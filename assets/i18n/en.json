@@ -4623,6 +4623,7 @@
   "wherigo_data_timers" : "List of Timer Objects",
   "wherigo_data_zones" : "List of Zone Objects",
   "wherigo_data_dtable" : "Obfuscation: dtable",
+  "wherigo_data_loaded" : "Data loaded",
   "wherigo_header_signature": "Signature",
   "wherigo_header_numberofobjects": "Number of Media Files",
   "wherigo_header_latitude": "Latitude",
