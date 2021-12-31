@@ -1969,7 +1969,7 @@
   "grid_boxes_behaviour_title": "Enum. Behaviour",
   "grid_boxes_behaviour_aligned_title": "Aligned",
   "grid_boxes_behaviour_aligned_description": "Every row/column enumerates the same direction",
-  "grid_boxes_behaviour_alternated_title": "Alterating",
+  "grid_boxes_behaviour_alternated_title": "Alternating",
   "grid_boxes_behaviour_alternated_description": "Every row/column enumerates the opposite direction (there and back)",
   "grid_boxes_behaviour_spiral_title": "Spiral",
   "grid_boxes_behaviour_spiral_description": "Enumeration goes as a spiral from outer to inner boxes",
