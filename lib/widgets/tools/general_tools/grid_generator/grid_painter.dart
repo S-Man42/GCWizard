@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -395,7 +397,7 @@ class CustomGridPainter extends CustomPainter {
     double boxHeight = size.height / (_countRows - 1);
 
     paint.color = themeColors().accent().withOpacity(0.1);
-    paint.strokeWidth = 2;
+    paint.strokeWidth = _strokeWidth();
 
     for (int i = 1; i < _countRows - 1; i++) {
       for (int j = 1; j < _countColumns - 1; j++) {
@@ -474,7 +476,7 @@ class CustomGridPainter extends CustomPainter {
     double boxHeight = size.height / _countRows;
 
     paint.color = themeColors().accent();
-    paint.strokeWidth = 2;
+    paint.strokeWidth = _strokeWidth();
 
     for (int i = 0; i < _countRows - 1; i++) {
       for (int j = 0; j < _countColumns - 1; j++) {
@@ -555,7 +557,7 @@ class CustomGridPainter extends CustomPainter {
   }
 
   void _drawBoxesBoard(Size size, Paint paint, TouchyCanvas _touchCanvas, Canvas canvas) {
-     int _countRows = countRows + 1;
+    int _countRows = countRows + 1;
     int _countColumns = countColumns + 1;
 
     double boxWidth = size.width / _countColumns;
@@ -594,7 +596,7 @@ class CustomGridPainter extends CustomPainter {
         );
 
         paint.color = themeColors().accent();
-        paint.strokeWidth = 2;
+        paint.strokeWidth = _strokeWidth();
 
         _touchCanvas.drawLine(Offset(x + boxWidth, 0.0), Offset(x + boxWidth, size.width / (countColumns / countRows)), paint);
         _touchCanvas.drawLine(Offset(0.0, y + boxHeight), Offset(size.height * (countColumns / countRows), y + boxHeight), paint);
@@ -630,6 +632,10 @@ class CustomGridPainter extends CustomPainter {
             Offset(x + (boxWidth - textPainter.width) * 0.5, y + (boxHeight - textPainter.height) * 0.5));
       }
     }
+  }
+
+  double _strokeWidth() {
+    return max(countRows, countColumns) > 20 ? 1 : 2;
   }
 
   TextPainter _setFontSize(Color textColor, String text, double maxHeight, double maxWidth) {
