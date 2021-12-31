@@ -479,7 +479,7 @@ class GridState extends State<Grid> {
       return <String>[];
 
     if (enumeration.contains(RegExp(r'[\,\-]')) && VARIABLESTRING.hasMatch(enumeration)) {
-      var expanded = VariableStringExpander('x', {'x': enumeration}).run()
+      var expanded = VariableStringExpander('x', {'x': enumeration}, orderAndUnique: false).run()
           .map((e) => e['text'].toString()).toList();
 
       expanded.sort((a, b) => int.tryParse(a).compareTo(int.tryParse(b)));
