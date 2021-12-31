@@ -83,7 +83,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
               else
                 answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
             }
-          } while (lines[i].trim() != '}');
+          } while (!lines[i].trim().startsWith('}'));
         } // end if buttons
         else {
           action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
@@ -117,7 +117,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
           ));
         });
         answerActions = [];
-        answerList = _getAnswers(lines[i], lines[i - 1]);
+        answerList = _getAnswers(i, lines[i], lines[i - 1]);
       }
     }
 
@@ -134,6 +134,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
           ));
         });
         answerActions = [];
+        answerList = [];
       }
     }
 
@@ -149,7 +150,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
               answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
             }
           }
-        } while (lines[i].trim() != '}');
+        } while (!lines[i].trim().startsWith('}'));
       } // end if buttons
       else {
         action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
@@ -164,7 +165,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
 }
 
 
-List<String> _getAnswers(String line, String lineBefore){
+List<String> _getAnswers(int i, String line, String lineBefore){
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ')) {
     return line.trimLeft()
@@ -177,13 +178,25 @@ List<String> _getAnswers(String line, String lineBefore){
   }
   else if (line.trim().startsWith('if _Urwigo.Hash(') ||
       line.trim().startsWith('elseif _Urwigo.Hash(')) {
-    return ['TODO'];
-    return [line.trim()
+    List<String> results = [];
+    int hashvalue = 0;
+    line.trim()
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
         .replaceAll('_Urwigo.Hash', '')
-        .replaceAll('")', '')
-        .replaceAll('("', '')];
+        .replaceAll('input', '')
+        .replaceAll('=', '')
+        .replaceAll('string.lower', '')
+        .replaceAll('string.upper', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '')
+        .replaceAll('then', '')
+        .replaceAll(' ', '')
+        .split('or').forEach((element) {
+          hashvalue = int.parse(element);
+      results.add(breakUrwigoHash(hashvalue).toString());
+    });
+    return results;
   }
   else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
