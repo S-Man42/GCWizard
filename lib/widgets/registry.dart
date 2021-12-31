@@ -15,8 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -138,8 +137,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
@@ -209,7 +207,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
@@ -498,13 +496,8 @@ initializeRegistry(BuildContext context) {
       'catan',
     ]),
     GCWTool(
-        tool: CCITT1Selection(),
-        i18nPrefix: 'ccitt1_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: []),
-    GCWTool(
-        tool: CCITT2Selection(),
-        i18nPrefix: 'ccitt2_selection',
+        tool: CCITTSelection(),
+        i18nPrefix: 'ccitt_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
     GCWTool(tool: Chao(), i18nPrefix: 'chao', categories: [
@@ -1046,10 +1039,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Z22(), i18nPrefix: 'z22', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
-      'ccitt2',
       'z22',
     ]),
-    GCWTool(tool: ZamonianNumbers(), i18nPrefix: 'zamoniannumbers', categories: [
+    GCWTool(tool: ZamonianNumbers(), autoScroll: false, i18nPrefix: 'zamoniannumbers', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'symbol_zamonian',
@@ -1220,8 +1212,8 @@ initializeRegistry(BuildContext context) {
     ]),
 
     //CCITT*Selection **********************************************************************************************
-    GCWTool(tool: CCITT1(), i18nPrefix: 'ccitt1', searchKeys: ['ccitt1']),
-    GCWTool(tool: CCITT2(), i18nPrefix: 'ccitt2', searchKeys: ['ccitt2']),
+    GCWTool(tool: CCITT(), i18nPrefix: 'ccitt', searchKeys: ['ccitt']),
+    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'punchtape', searchKeys: ['ccitt', 'punchtape']),
 
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', searchKeys: [
@@ -2641,9 +2633,16 @@ initializeRegistry(BuildContext context) {
       'barcodes',
       'barcode39',
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: [
       'ccitt',
-      'ccitt1',
+      'symbol_baudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_ita1', symbolSearchStrings: [
+      'ccitt',
+      'symbol_baudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_mis', symbolSearchStrings: [
+      'ccitt',
       'symbol_baudot',
     ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
@@ -3041,9 +3040,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
       'ccitt',
+      'symbol_murraybaudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'murraybaudot_miss', symbolSearchStrings: [
       'ccitt',
-      'ccitt2',
-      'ccitt2',
       'symbol_murraybaudot',
     ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
@@ -3295,7 +3295,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: ['weather', 'weather_c', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: ['weather', 'weather_cl', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: ['weather', 'weather_cm', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_cn', symbolSearchStrings: ['weather', 'weather_cn', 'weather_clouds']),
+    GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: ['weather', 'weather_ch', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: ['weather', 'weather_n', 'weather_clouds']),
     GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: ['weather', 'weather_w']),
     GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
@@ -3388,13 +3388,6 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: WheatstoneCookeNeedleTelegraph(), i18nPrefix: 'telegraph_wheatstonecooke_needle', searchKeys: [
       'telegraph',
       'telegraph_wheatstonecooke_needle',
-    ]),
-    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'telegraph_ccitt', searchKeys: [
-      'telegraph',
-      'telegraph_ccitt',
-      'ccitt',
-      'ccitt1',
-      'ccitt2',
     ]),
 
     // TomTomSelection *********************************************************************************************
