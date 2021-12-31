@@ -129,6 +129,15 @@ void main() {
           {'text': '100', 'variables': {'A': '100'}},
         ]
       },
+      {'input': 'AA', 'substitutions': {'A': '1,2,1,1,2'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+        'expectedOutput': [
+          {'text': '11', 'variables': {'A': '1'}},
+          {'text': '22', 'variables': {'A': '2'}},
+          {'text': '11', 'variables': {'A': '1'}},
+          {'text': '11', 'variables': {'A': '1'}},
+          {'text': '22', 'variables': {'A': '2'}},
+        ]
+      },
       {'input': 'AA', 'substitutions': {'A': '3-1,2-4'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           {'text': '33', 'variables': {'A': '3'}},
