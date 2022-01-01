@@ -33,7 +33,7 @@ void main(){
           VanityWordsDecodeOutput('3467', 'EINS', '1', false),
           VanityWordsDecodeOutput('9934', 'ZWEI', '2', false),
           VanityWordsDecodeOutput('996', 'ZWO', '2', false),
-          VanityWordsDecodeOutput('7334', 'DREI', '3', false),
+          VanityWordsDecodeOutput('3734', 'DREI', '3', false),
           VanityWordsDecodeOutput('8437', 'VIER', '4', false),
           VanityWordsDecodeOutput('38363', 'FUENF', '5', false),
           VanityWordsDecodeOutput('73247', 'SECHS', '6', false),
