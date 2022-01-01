@@ -1,14 +1,15 @@
+import 'package:prefs/prefs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
-import 'package:prefs/prefs.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
@@ -285,6 +286,31 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               });
             };
           }
+        ),
+        Container(width: 5),
+        GCWIconButton(
+            iconData: Icons.youtube_searched_for,
+            iconColor: _symbolImage == null ? themeColors().inActive() : null,
+            onPressed: () async {
+              await showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                return Center(
+                  child: Container(
+                    child: GCWAsyncExecuter(
+                      isolatedFunction: searchSymbolTableAsync,
+                      parameter: _buildJobDataSearchSymbolTable(),
+                      onReady: (data) => _showJobDataSearchSymbolTableOutput(data),
+                      isOverlay: true,
+                    ),
+                    height: 220,
+                    width: 150,
+                  ),
+                );
+              },
+              );
+            }
         ),
       ],
 
@@ -607,6 +633,34 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             ])
         )
     ]);
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobDataSearchSymbolTable() async {
+    List<Future<List<Map<String, SymbolData>>>> list;
+
+    list = _compareSymbolItems.map((symbolTableViewData) {
+      if (symbolTableViewData?.value != null) {
+        if (symbolTableViewData.value.data == null)
+          symbolTableViewData.value.initialize(context);
+        return symbolTableViewData?.value?.data?.images;
+      };
+    }).toList();
+
+    return GCWAsyncExecuterParameters(
+      Tuple2<SymbolImage, List<Future<List<Map<String, SymbolData>>>>>(
+        _symbolImage,
+        list
+      )
+    );
+  }
+
+  _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolData>> output) {
+    // _symbolImage = output;
+    print(output?.length);
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   setState(() { });
+    // });
   }
 }
 

@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -245,8 +246,9 @@ class SymbolImage {
     return compareSymbolImage;
   }
 
-  _useCompareSymbols(SymbolImage compareSymbolImage) {
+  double _useCompareSymbols(SymbolImage compareSymbolImage) {
     var imageHashing = ImageHashing();
+    var percentSum = 0.0;
 
     for (int i = 0; i < compareSymbolImage.symbols.length; i++)
       compareSymbolImage.symbols[i].hash = imageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
@@ -268,8 +270,10 @@ class SymbolImage {
         if (maxPercent >= _similarityCompareLevel) {
           symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
         }
+        percentSum += maxPercent;
       }
     }
+    return percentSum;
   }
 
   Image.Image _mergeSymbolData() {
@@ -777,3 +781,55 @@ class ImageHashing {
     return Similarity(hash1, hash2);
   }
 }
+
+
+Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) async {
+  if (jobData == null) return null;
+
+  var output = await searchSymbolTable(
+      jobData.parameters.item1,
+      jobData.parameters.item2
+  );
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+List<Map<String, SymbolData>> searchSymbolTable(SymbolImage image, List<Future<List<Map<String, SymbolData>>>> compareSymbols, {SendPort sendAsyncPort}) {
+  if (image == null) return null;
+  if (compareSymbols == null) return null;
+  var progress = 0;
+
+  double maxPercent = 0.0;
+  List<Map<String, SymbolData>> maxPercentSymbolTable;
+  var imageTmp = SymbolImage(image._image);
+  imageTmp.symbols = image.symbols;
+  imageTmp.symbolGroups = image.symbolGroups;
+  imageTmp._blackLevel = image._blackLevel;
+  imageTmp._similarityLevel = 0; //image._similarityLevel;
+  imageTmp._gap = image._gap;
+
+  if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
+
+  compareSymbols.forEach((futureSymbolTable) {
+    futureSymbolTable.then((symbolTable) {
+      imageTmp.symbolGroups.forEach((group) { group.text = null;});
+
+      var compareSymbolImage = imageTmp._buildCompareSymbols(symbolTable);
+      var percent = imageTmp._useCompareSymbols(compareSymbolImage);
+      if (maxPercent < percent) {
+        maxPercent = percent;
+        maxPercentSymbolTable = symbolTable;
+      }
+    });
+    progress++;
+    if (sendAsyncPort != null) {
+      sendAsyncPort.send({'progress': progress / compareSymbols.length});
+    }
+  });
+
+  return maxPercentSymbolTable;
+}
+
+
