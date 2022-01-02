@@ -179,14 +179,14 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
 
 final _MODIFIER_4 = ['4'];
 final _MODIFIER_5 = ['5'];
-final _MODIFIER_6 = ['6'];
-final _MODIFIER_45 = ['4', '5'];
+final _MODIFIER_6 = ['6']; // small Letters follows '
+final _MODIFIER_45 = ['4', '5']; // capital letters follow <
 final _MODIFIER_46 = ['4', '6'];
 final _MODIFIER_56 = ['5', '6'];
 final _MODIFIER_345 = ['3', '4', '5'];
 final _MODIFIER_356 = ['3', '5', '6'];
 final _MODIFIER_456 = ['4', '5', '6'];
-final _MODIFIER_3456 = ['3', '4', '5', '6'];
+final _MODIFIER_3456 = ['3', '4', '5', '6']; // Number follows
 
 final Map<BrailleLanguage, List<String>> _Modifier = {
   BrailleLanguage.DEU: [
@@ -1078,6 +1078,10 @@ bool _isNumberLetter(String s) {
   return _NumberLetters.contains(s);
 }
 
+bool _isLetter(String s){
+  return (_isCapital(s) || _isSmallLetter(s));
+}
+
 List<List<String>> _encodeBrailleSIMPLE(String input) {
   List<String> inputs = input.split('');
   List<List<String>> result = [];
@@ -1441,14 +1445,17 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {
       charH = _segmentsToCharsSIMPLEBrailleFrench
           .map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       if (charH == 'NUMBERFOLLOWS') {
+        char = char + '<NUMBER FOLLOWS>';
         _numberFollows = true;
       } else if (charH == 'ANTOINENUMBERFOLLOWS') {
+        char = char + '<ANTOINE NUMBER FOLLOWS>';
         _antoinenumberFollows = true;
         _numberFollows = false;
-      } else if (charH == ' ') {
+      } else if (charH == ' ' || char == '\'' || char == '>') {
         _numberFollows = false;
         _antoinenumberFollows = false;
-        char = char + charH;
+        if (char == ' ')
+          char = char + charH;
       } else {
         // no switch but char to analyze
         if (_numberFollows) {
