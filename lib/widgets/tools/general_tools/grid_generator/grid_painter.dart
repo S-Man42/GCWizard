@@ -620,7 +620,7 @@ class CustomGridPainter extends CustomPainter {
         var x = j * boxWidth;
         var y = i * boxHeight;
 
-        paint.color = gridState != null && gridState[i] != null && gridState[i][j] != null ? GRID_COLORS[gridState[i][j]]['color'] : themeColors().sudokuBackground();
+        paint.color = gridState != null && gridState[i] != null && gridState[i][j] != null ? GRID_COLORS[gridState[i][j]]['color'] : themeColors().gridBackground();
         paint.style = PaintingStyle.fill;
 
         if (i == 0 || j == 0)

@@ -138,7 +138,7 @@ class ThemeColorsLight extends ThemeColors {
   }
 
   @override
-  Color sudokuBackground() {
+  Color gridBackground() {
     return Colors.white;
   }
 

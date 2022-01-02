@@ -137,7 +137,7 @@ class ThemeColorsDark extends ThemeColors {
   }
 
   @override
-  Color sudokuBackground() {
+  Color gridBackground() {
     return Color.fromARGB(255, 85, 85, 85);
   }
 
