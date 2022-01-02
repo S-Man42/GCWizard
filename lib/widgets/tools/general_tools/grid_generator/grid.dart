@@ -65,7 +65,7 @@ final _GRID_CONFIGURATIONS = {
     columnEnumeration: '123456789',
     rowEnumeration: '123456789'
   ),
-  'grid_intersections_10x10' : _GridConfiguration(GridType.LINES, 10, 10,
+  'grid_intersections_10x10' : _GridConfiguration(GridType.INTERSECTIONS, 10, 10,
     columnEnumeration: '1 2 3 4 5 6 7 8 9 10',
     rowEnumeration: '1 2 3 4 5 6 7 8 9 10'
   ),
@@ -313,49 +313,45 @@ class GridState extends State<Grid> {
             )
           : Container(),
 
-        _currentConfigType == GridType.LINES
-          ? Container()
-          : Row (
-              children: [
-                Expanded(
-                  child: GCWText(text: i18n(context, 'grid_columnenumeration') + ':',),
-                  flex: 1
-                ),
-                Expanded(
-                  child: GCWTextField(
-                    controller: _columnEnumerationController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentConfigColumnEnumeration = text;
-                      });
-                    },
-                  ),
-                  flex: 3
-                )
-              ],
+        Row (
+          children: [
+            Expanded(
+                child: GCWText(text: i18n(context, 'grid_columnenumeration') + ':',),
+                flex: 1
             ),
+            Expanded(
+                child: GCWTextField(
+                  controller: _columnEnumerationController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentConfigColumnEnumeration = text;
+                    });
+                  },
+                ),
+                flex: 3
+            )
+          ],
+        ),
 
-        _currentConfigType == GridType.LINES
-          ? Container()
-          : Row (
-              children: [
-                Expanded(
-                    child: GCWText(text: i18n(context, 'grid_rowenumeration') + ':',),
-                    flex: 1
-                ),
-                Expanded(
-                    child: GCWTextField(
-                      controller: _rowEnumerationController,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentConfigRowEnumeration = text;
-                        });
-                      },
-                    ),
-                    flex: 3
-                )
-              ],
+        Row (
+          children: [
+            Expanded(
+                child: GCWText(text: i18n(context, 'grid_rowenumeration') + ':',),
+                flex: 1
             ),
+            Expanded(
+                child: GCWTextField(
+                  controller: _rowEnumerationController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentConfigRowEnumeration = text;
+                    });
+                  },
+                ),
+                flex: 3
+            )
+          ],
+        ),
 
         _currentConfigType == GridType.BOXES
           ? _buildBoxEnumerationOptions()

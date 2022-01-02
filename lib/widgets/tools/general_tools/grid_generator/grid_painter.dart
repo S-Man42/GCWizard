@@ -1,5 +1,3 @@
-
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -385,32 +383,68 @@ class CustomGridPainter extends CustomPainter {
     switch (type) {
       case GridType.BOXES: _drawBoxesBoard(size, paint, _touchCanvas, canvas); break;
       case GridType.INTERSECTIONS: _drawPointsBoard(size, paint, _touchCanvas, canvas); break;
-      case GridType.LINES: _drawGridBoard(size, paint, _touchCanvas); break;
+      case GridType.LINES: _drawGridBoard(size, paint, _touchCanvas, canvas); break;
     }
   }
 
-  void _drawGridBoard(Size size, Paint paint, TouchyCanvas _touchCanvas) {
-    double _countRows = countRows + 1.5;
-    double _countColumns = countColumns + 1.5;
+  void _drawGridBoard(Size size, Paint paint, TouchyCanvas _touchCanvas, Canvas canvas) {
+    double _countRows = countRows + 0.5;
+    double _countColumns = countColumns + 0.5;
 
-    double boxWidth = size.width / (_countColumns - 1);
-    double boxHeight = size.height / (_countRows - 1);
+    double boxWidth = size.width / _countColumns;
+    double boxHeight = size.height / _countRows;
 
-    paint.color = themeColors().accent().withOpacity(0.1);
+    paint.color = themeColors().accent();
     paint.strokeWidth = _strokeWidth();
 
-    for (int i = 1; i < _countRows - 1; i++) {
-      for (int j = 1; j < _countColumns - 1; j++) {
+    for (int i = 0; i < _countRows - 1; i++) {
+      for (int j = 0; j < _countColumns - 1; j++) {
         var x = j * boxWidth;
         var y = i * boxHeight;
 
-        _touchCanvas.drawLine(Offset(x + 0.25 * boxWidth, 0.25 * boxHeight), Offset(x + 0.25 * boxWidth, size.width / (countColumns / countRows) - 0.25 * boxHeight), paint);
-        _touchCanvas.drawLine(Offset(0.25 * boxWidth, y + 0.25 * boxHeight), Offset(size.height * (countColumns / countRows) - boxWidth * 0.25, y + 0.25 * boxHeight), paint);
+        _touchCanvas.drawLine(Offset(x + boxWidth, boxHeight * 0.8), Offset(x + boxWidth, (size.width / (countColumns / countRows) - boxHeight / 2) ), paint);
+        _touchCanvas.drawLine(Offset(boxWidth * 0.8, y + boxHeight), Offset((size.height * (countColumns / countRows) - boxWidth / 2) , y + boxHeight), paint);
       }
     }
 
-    for (int i = 0; i < (_countRows * 2 - 2); i++) {
-      for (int j = 0; j < (_countColumns * 2 - 2); j++) {
+
+    for (int i = 0; i < _countRows - 1; i++) {
+      for (int j = 0; j < _countColumns - 1; j++) {
+        var x = j * boxWidth;
+        var y = i * boxHeight;
+
+        String enumerationTextColumn;
+        String enumerationTextRow;
+        if (i == 0) {
+          enumerationTextColumn = _getEnumeration(columnEnumeration, j);
+        } if (j == 0) {
+          enumerationTextRow = _getEnumeration(rowEnumeration, i);
+        }
+
+        var textColor = themeColors().mainFont();
+
+        if (enumerationTextColumn != null && enumerationTextColumn.isNotEmpty) {
+          TextPainter textPainter = _setFontSize(textColor, enumerationTextColumn, boxHeight, boxWidth);
+
+          textPainter.paint(
+              canvas,
+              Offset(x + boxWidth - textPainter.width * 0.5, 0.0)
+          );
+        }
+
+        if (enumerationTextRow != null && enumerationTextRow.isNotEmpty) {
+          TextPainter textPainter = _setFontSize(textColor, enumerationTextRow, boxHeight, boxWidth);
+
+          textPainter.paint(
+              canvas,
+              Offset(0.0, y + boxHeight - textPainter.height * 0.5)
+          );
+        }
+      }
+    }
+
+    for (int i = 0; i < (_countRows * 2 - 1); i++) {
+      for (int j = 0; j < (_countColumns * 2 - 1); j++) {
         if ((i + j) % 2 == 0)
           continue;
 
@@ -424,11 +458,11 @@ class CustomGridPainter extends CustomPainter {
 
           var path = Path();
 
-          if (j % 2 == 0 && j > 0) {
-            path.moveTo(x + boxWidth * 0.25 , y - boxHeight * 0.25);
+          if (j % 2 == 0 && i > 1) {
+            path.moveTo(x + boxWidth, y - boxHeight * 0.5);
             path.relativeLineTo(0.0, boxHeight);
-          } else if (i % 2 == 0 && i > 0) {
-            path.moveTo(x - boxWidth * 0.25, y + boxHeight * 0.25);
+          } else if (i % 2 == 0 && j > 1) {
+            path.moveTo(x - boxWidth * 0.5, y + boxHeight);
             path.relativeLineTo(boxWidth, 0.0);
           }
 
@@ -441,18 +475,32 @@ class CustomGridPainter extends CustomPainter {
         var mode =  _TapMode.SINGLE;
 
         var path = Path();
-        if (j % 2 == 0 && j > 0) {
-          path.moveTo(x + boxWidth * 0.25 , y - boxHeight * 0.25);
-          path.relativeLineTo(boxWidth / 2, boxHeight / 2);
-          path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
-          path.relativeLineTo(-boxWidth / 2, -boxHeight / 2);
-          path.relativeLineTo(boxWidth / 2, -boxHeight / 2);
-        } else if (i % 2 == 0 && i > 0) {
-          path.moveTo(x - boxWidth * 0.25, y + boxHeight * 0.25);
-          path.relativeLineTo(boxWidth / 2, -boxHeight / 2);
-          path.relativeLineTo(boxWidth / 2, boxHeight / 2);
-          path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
-          path.relativeLineTo(-boxWidth / 2, -boxHeight / 2);
+        if (i % 2 == 0) {
+          path.moveTo(x, y + boxHeight * 0.5);
+          if (j == 1) {
+            path.relativeLineTo(boxWidth / 2, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, 0.0);
+            path.relativeLineTo(0.0, -boxHeight);
+          } else {
+            path.relativeLineTo(boxWidth / 2, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, -boxHeight / 2);
+            path.relativeLineTo(boxWidth / 2, -boxHeight / 2);
+          }
+        } else if (j % 2 == 0) {
+          path.moveTo(x + boxWidth * 0.5, y);
+          if (i == 1) {
+            path.relativeLineTo(0.0, -boxHeight / 2);
+            path.relativeLineTo(boxWidth, 0.0);
+            path.relativeLineTo(0.0, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
+          } else {
+            path.relativeLineTo(boxWidth / 2, -boxHeight / 2);
+            path.relativeLineTo(boxWidth / 2, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, boxHeight / 2);
+            path.relativeLineTo(-boxWidth / 2, -boxHeight / 2);
+          }
         }
 
         _touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
