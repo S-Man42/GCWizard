@@ -12,23 +12,27 @@ class Hohoho extends StatefulWidget {
 }
 
 class HohohoState extends State<Hohoho> {
-  var _textController;
+  var _textEncodeController;
+  var _textDecodeController;
   var _inputController;
 
-  var _currentText = '';
+  var _currentEncodeText = '';
+  var _currentDecodeText = '';
   var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController(text: _currentText);
+    _textEncodeController = TextEditingController(text: _currentEncodeText);
+    _textDecodeController = TextEditingController(text: _currentDecodeText);
     _inputController = TextEditingController(text: _currentInput);
   }
 
   @override
   void dispose() {
-    _textController.dispose();
+    _textEncodeController.dispose();
+    _textDecodeController.dispose();
     _inputController.dispose();
     super.dispose();
   }
@@ -47,12 +51,22 @@ class HohohoState extends State<Hohoho> {
             });
           },
         ),
-        GCWTextField(
-          controller: _textController,
-          hintText: _currentMode == GCWSwitchPosition.left ? i18n(context, 'cow_code') : i18n(context, 'cow_text'),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+          controller: _textDecodeController,
+          hintText: i18n(context, 'cow_code'),
           onChanged: (text) {
             setState(() {
-              _currentText = text;
+              _currentDecodeText = text;
+            });
+          },
+        )
+        :  GCWTextField(
+          controller: _textEncodeController,
+          hintText: i18n(context, 'cow_text'),
+          onChanged: (text) {
+            setState(() {
+              _currentEncodeText = text;
             });
           },
         ),
@@ -75,7 +89,7 @@ class HohohoState extends State<Hohoho> {
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
-        HohohoOutput output = interpretHohoho(_currentText, STDIN: _currentInput);
+        HohohoOutput output = interpretHohoho(_currentDecodeText, STDIN: _currentInput);
         if (output.error == '')
           return output.output;
         else
@@ -84,7 +98,7 @@ class HohohoState extends State<Hohoho> {
         return printErrorMessage(context, e.message);
       }
     } else {
-      return generateHohoho(_currentText);
+      return generateHohoho(_currentEncodeText);
     }
   }
 }
