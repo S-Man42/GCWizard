@@ -346,23 +346,22 @@ bool isInvalidLUASourcecode(Uint8List byteList){
   return (ORIG.join('') != CHCK.join(''));
 }
 
-Future <WherigoCartridge> getCartridgeAsync(dynamic jobData) async {
-  if ((jobData.parameters["byteListGWC"] == [] || jobData.parameters["byteListGWC"] == null) &&
-      (jobData.parameters["byteListLUA"] == [] || jobData.parameters["byteListLUA"] == null))
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
+Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {
+  var output = await getCartridge(jobData.parameters["byteListGWC"], jobData.parameters["byteListLUA"], sendAsyncPort: jobData.sendAsyncPort);
 
-  print('sendasnycport '+jobData.sendAsyncPort.toString());
-  WherigoCartridge output = await getCartridge(jobData.parameters["byteListGWC"], jobData.parameters["byteListLUA"], sendAsyncPort: jobData.sendAsyncPort);
-
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
-
+  if (jobData.sendAsyncPort != null) {
+    jobData.sendAsyncPort.send(output);
+  }
   return output;
 }
 
-Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteListLUA, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteListLUA, {SendPort sendAsyncPort}) async {
+  var out = Map<String, dynamic>();
 
-  if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null))
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
+  if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null)) {
+    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [])});
+    return out;
+  }
 
   try {
     int progress = 0;
@@ -421,9 +420,10 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
 
     else {
       if (isInvalidCartridge(byteListGWC)) {
-        return WherigoCartridge(
+        out.addAll({'cartridge': WherigoCartridge(
             'ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', 0,'', '', [], [], [], [], [], [], [], [], [], []
-        );
+        )});
+        return out;
       }
       else {
         Signature = Signature + byteListGWC[0].toString();
@@ -525,7 +525,7 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
         CompletionCode = ASCIIZ.ASCIIZ;
         offset = ASCIIZ.Offset;
 
-        if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 5}); }
+        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 5}); }
 
         // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
         MediaFileLength = readInt(byteListGWC, offset);
@@ -535,7 +535,7 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
             MediaFileLength));
         offset = offset + MediaFileLength;
 
-        if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
+        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
 
         // read Objects
         for (int i = 1; i < NumberOfObjects; i++) {
@@ -568,53 +568,41 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
     LUAFile = _normalizeLUAmultiLineText(LUAFile);
 
     dtable = _getdtableFromCartridge(LUAFile);
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 8}); }
-    print('got dtable');
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 8}); }
 
     obfuscator = getObfuscatorFunction(LUAFile);
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 9}); }
-    print('got obfuscator');
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 9}); }
 
     Characters = getCharactersFromCartridge(LUAFile, dtable, obfuscator);
-    print('got characters');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 10}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 10}); }
 
     Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
-    print('got items');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 20}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 20}); }
 
     Tasks = getTasksFromCartridge(LUAFile, dtable, obfuscator);
-    print('got tasks');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 30}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 30}); }
 
     Inputs = getInputsFromCartridge(LUAFile, dtable, obfuscator);
-    print('got inputs');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 40}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 40}); }
 
     Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
-    print('got zones');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 50}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 50}); }
 
     Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
-    print('got timers');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 60}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 60}); }
 
     Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
-    print('got media');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 70}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 70}); }
 
     Messages = getMessagesFromCartridge(LUAFile, dtable, obfuscator);
-    print('got messages');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
 
     Answers = getAnswersFromCartridge(LUAFile, Inputs, dtable, obfuscator);
-    print('got answers');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 90}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 90}); }
     Identifiers = getIdentifiersFromCartridge(LUAFile, dtable, obfuscator);
-    print('got Identifiers');
-    if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 100}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 100}); }
 
-    return WherigoCartridge(Signature,
+    out.addAll({'cartridge': WherigoCartridge(Signature,
         NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
         HeaderLength,
         Latitude, Longitude, Altitude,
@@ -627,10 +615,11 @@ Future <WherigoCartridge> getCartridge(Uint8List byteListGWC, Uint8List byteList
         LengthOfCompletionCode, CompletionCode,
         dtable,
         Characters, Items, Tasks, Inputs, Zones, Timers, Media,
-        Messages, Answers, Identifiers);
+        Messages, Answers, Identifiers)});
   } on Exception {
-    return null;
+    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [])});
   }
+  return out;
 }
 
 

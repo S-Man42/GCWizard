@@ -50,14 +50,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
-  Uint8List _outData;
+
+  bool _fileLoadedGWC = false;
+  bool _fileLoadedLUA = false;
 
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-
   WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
-  String _LUA = '';
+  Map<String, dynamic> _outData;
 
   var _cartridgeData = WHERIGO.HEADER;
 
@@ -89,10 +90,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
+    _fileLoadedGWC = true;
   }
 
   _setLUAData(Uint8List bytes) {
     _LUAbytes = bytes;
+    _fileLoadedLUA = true;
   }
 
   @override
@@ -129,7 +132,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _answerIndex = 0;
               _identifierIndex = 0;
 
-              _analyseCartridgeFileAsync('GWC-Cartrdige');
+              _analyseCartridgeFileAsync('GWC-Cartridge');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {});
@@ -891,22 +894,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
       });
     }
-/*
-    if (data.AnswerCorrectActions.length > 0){
-      result.add([i18n(context, 'wherigo_output_answeractions_correct'), '']);
-      data.AnswerCorrectActions.forEach((element) {
-        result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
-      });
-    }
-
-    if (data.AnswerWrongActions.length > 0){
-      result.add([i18n(context, 'wherigo_output_answeractions_wrong'), '']);
-      data.AnswerWrongActions.forEach((element) {
-        result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
-      });
-    }
-*/
-
     return result;
   }
 
@@ -954,9 +941,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Center(
           child: Container(
             child: GCWAsyncExecuter(
-              isolatedFunction: getCartridgeAsync, //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
+              isolatedFunction: getCartridgeAsync,
               parameter: _buildGWCJobData(),
-              onReady: (data) => _showGWCOutput(data, dataType),
+              onReady: (data) => _showCartridgeOutput(data, dataType),
               isOverlay: true,
             ),
             height: 220,
@@ -971,16 +958,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return GCWAsyncExecuterParameters({'byteListGWC':_GWCbytes, 'byteListLUA':_LUAbytes});
   }
 
-  _showGWCOutput(WherigoCartridge output, String dataType) {
-    _cartridge = output;
+  _showCartridgeOutput(Map<String, dynamic> output, String dataType) {
+    _outData = output;
 
     // restore references (problem with sendPort, lose references)
-    if (_cartridge == null) {
-      print('_showOutput: notloaded');
+    if (_outData == null) {
       showToast(i18n(context, 'common_loadfile_exception_notloaded'));
       return;
     } else {
       showToast(i18n(context, 'wherigo_data_loaded') + ': ' + dataType);
+      _cartridge = _outData['cartridge'];
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
