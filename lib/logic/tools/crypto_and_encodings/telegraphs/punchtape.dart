@@ -123,5 +123,12 @@ Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, CCITTCodebook la
 
   }).toList();
 
-  return {'displays': displays, 'text': text.join(' ')};
+  // convert list of displays to list of decimal using String segments2decenary(List<String> segments)
+  List<int> intList = [];
+  displays.forEach((element) {
+    intList.add(int.parse(segments2decenary(element)));
+  });
+
+  // convert list of decimal to character using String decodeCCITT(List<int> values, CCITTCodebook language)
+  return {'displays': displays, 'text': decodeCCITT(intList, language)};
 }

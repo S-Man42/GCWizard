@@ -116,9 +116,12 @@ class CCITTState extends State<CCITT> {
       return output; // decimal
     } else { // decrypt
       if (_currentRadix == GCWSwitchPosition.right) { // binary
-        return decodeCCITT(textToBinaryList(_currentDecodeInput['text']).map((value) {
-          return int.tryParse(convertBase(value, 2, 10));
-        }).toList(), CCITTCodebook.CCITT_ITA2);
+        return decodeCCITT(
+            textToBinaryList(_currentDecodeInput['text'])
+                .map((value) {
+                  return int.tryParse(convertBase(value, 2, 10));
+                }).toList(),
+            _currentCode);
       }
 
       return decodeCCITT(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
