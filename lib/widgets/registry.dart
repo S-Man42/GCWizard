@@ -1632,6 +1632,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Hohoho(), i18nPrefix: 'hohoho', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_hohoho',
+      'symbol_christmas'
     ]),
     GCWTool(tool: KarolRobot(), i18nPrefix: 'karol_robot', searchKeys: [
       'esoteric_karol_robot',
