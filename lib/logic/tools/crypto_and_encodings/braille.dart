@@ -179,8 +179,8 @@ final Map<BrailleLanguage, Map<String, List<String>>> _CharsToSegmentsSymbols = 
 
 final _MODIFIER_4 = ['4'];
 final _MODIFIER_5 = ['5'];
-final _MODIFIER_6 = ['6']; // small Letters follows '
-final _MODIFIER_45 = ['4', '5']; // capital letters follow <
+final _MODIFIER_6 = ['6'];
+final _MODIFIER_45 = ['4', '5'];
 final _MODIFIER_46 = ['4', '6'];
 final _MODIFIER_56 = ['5', '6'];
 final _MODIFIER_345 = ['3', '4', '5'];
@@ -1451,11 +1451,10 @@ Map<String, dynamic> _decodeBrailleSIMPLE(List<String> inputs) {
         char = char + '<ANTOINE NUMBER FOLLOWS>';
         _antoinenumberFollows = true;
         _numberFollows = false;
-      } else if (charH == ' ' || char == '\'' || char == '>') {
+      } else if (charH == ' ') {
         _numberFollows = false;
         _antoinenumberFollows = false;
-        if (char == ' ')
-          char = char + charH;
+        char = char + charH;
       } else {
         // no switch but char to analyze
         if (_numberFollows) {

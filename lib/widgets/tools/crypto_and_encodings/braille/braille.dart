@@ -223,10 +223,12 @@ class BrailleState extends State<Braille> {
   }
 
   String _normalizeChars(String input){
-    if (input.endsWith('FOLLOWS>')) {
-      return input.replaceAll('<NUMBER FOLLOWS>', i18n(context, 'symboltables_braille_de_number_follows')).replaceAll('<ANTOINE NUMBER FOLLOWS>', i18n(context, 'symboltables_braille_en_mathmatics_follows'));
-    } else {
+    if (input.endsWith('NUMBER FOLLOWS>'))
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') + i18n(context, 'symboltables_braille_de_number_follows');
+    else if (input.endsWith('ANTOINE NUMBER FOLLOWS>'))
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') + i18n(context, 'symboltables_braille_en_mathmatics_follows');
+    else
       return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
-    }
+
   }
 }
