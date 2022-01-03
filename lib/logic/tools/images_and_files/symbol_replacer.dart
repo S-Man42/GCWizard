@@ -217,7 +217,7 @@ class SymbolImage {
   }
 
   SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareSymbols) {
-    var compareSymbolImage = SymbolImage(compareSymbols.first.values.first.bytes);
+    var compareSymbolImage = SymbolImage(compareSymbols?.first?.values?.first?.bytes);
 
     compareSymbols.forEach((element) {
       element.forEach((text, symbolData) {
@@ -267,7 +267,7 @@ class SymbolImage {
             maxPercentSymbol = compareSymbolImage.symbols[x];
           }
         }
-        if (maxPercent >= _similarityCompareLevel) {
+        if (maxPercent >= _similarityCompareLevel && (maxPercentSymbol?.symbolGroup != null)) {
           symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
         }
         percentSum += maxPercent;
@@ -788,7 +788,8 @@ Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) as
 
   var output = await searchSymbolTable(
       jobData.parameters.item1,
-      jobData.parameters.item2
+      jobData.parameters.item2,
+      sendAsyncPort: jobData.sendAsyncPort
   );
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
@@ -796,33 +797,37 @@ Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) as
   return output;
 }
 
-List<Map<String, SymbolData>> searchSymbolTable(SymbolImage image, List<Future<List<Map<String, SymbolData>>>> compareSymbols, {SendPort sendAsyncPort}) {
+List<Map<String, SymbolData>> searchSymbolTable(
+    SymbolImage image,
+    List<List<Map<String,
+    SymbolData>>> compareSymbols,
+    {SendPort sendAsyncPort}) {
+
   if (image == null) return null;
   if (compareSymbols == null) return null;
   var progress = 0;
 
-  double maxPercent = 0.0;
+  double maxPercentSum = 0.0;
   List<Map<String, SymbolData>> maxPercentSymbolTable;
   var imageTmp = SymbolImage(image._image);
   imageTmp.symbols = image.symbols;
   imageTmp.symbolGroups = image.symbolGroups;
   imageTmp._blackLevel = image._blackLevel;
-  imageTmp._similarityLevel = 0; //image._similarityLevel;
+  imageTmp._similarityCompareLevel = 0;
+  imageTmp._similarityLevel = 0;
   imageTmp._gap = image._gap;
 
   if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
 
-  compareSymbols.forEach((futureSymbolTable) {
-    futureSymbolTable.then((symbolTable) {
-      imageTmp.symbolGroups.forEach((group) { group.text = null;});
+  compareSymbols.forEach((symbolTable) {
+    imageTmp.symbolGroups?.forEach((group) { group.text = null;});
 
-      var compareSymbolImage = imageTmp._buildCompareSymbols(symbolTable);
-      var percent = imageTmp._useCompareSymbols(compareSymbolImage);
-      if (maxPercent < percent) {
-        maxPercent = percent;
-        maxPercentSymbolTable = symbolTable;
-      }
-    });
+    var compareSymbolImage = imageTmp._buildCompareSymbols(symbolTable);
+    var percent = imageTmp._useCompareSymbols(compareSymbolImage);
+    if (maxPercentSum <= percent) {
+      maxPercentSum = percent;
+      maxPercentSymbolTable = symbolTable;
+    }
     progress++;
     if (sendAsyncPort != null) {
       sendAsyncPort.send({'progress': progress / compareSymbols.length});

@@ -2,6 +2,7 @@ import 'package:prefs/prefs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
+import 'package:collection/collection.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
@@ -618,6 +619,30 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
   }
 
+  _selectSymbolDataItem1(List<Map<String, SymbolData>> imageData) {
+    if ((imageData != null) && (_compareSymbolItems != null)) {
+      var counter = 0;
+      for (GCWDropDownMenuItem item in _compareSymbolItems) {
+        var found = true;
+        if (item.value is SymbolTableViewData) {
+          var images = (item.value as SymbolTableViewData)?.data?.images;
+          if (images?.length == imageData.length) {
+            for(var i=0; i< imageData.length; i++) {
+              if (!ListEquality().equals(imageData[i]?.values?.first?.bytes, images[i]?.values?.first?.bytes)) {
+                found = false;
+                break;
+              }
+            }
+            if (found) {
+              _currentSymbolTableViewData = item.value;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
   Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
     return Row( children: [
       Container(
@@ -636,18 +661,18 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataSearchSymbolTable() async {
-    List<Future<List<Map<String, SymbolData>>>> list;
+    var list = <List<Map<String, SymbolData>>>[];
 
-    list = _compareSymbolItems.map((symbolTableViewData) {
+    _compareSymbolItems.forEach((symbolTableViewData) {
       if (symbolTableViewData?.value != null) {
         if (symbolTableViewData.value.data == null)
           symbolTableViewData.value.initialize(context);
-        return symbolTableViewData?.value?.data?.images;
+        list.add(symbolTableViewData?.value?.data?.images);
       };
-    }).toList();
+    });
 
     return GCWAsyncExecuterParameters(
-      Tuple2<SymbolImage, List<Future<List<Map<String, SymbolData>>>>>(
+      Tuple2<SymbolImage, List<List<Map<String, SymbolData>>>>(
         _symbolImage,
         list
       )
@@ -657,10 +682,10 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolData>> output) {
     // _symbolImage = output;
     print(output?.length);
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   setState(() { });
-    // });
+    _selectSymbolDataItem1(output);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() { });
+    });
   }
 }
 
