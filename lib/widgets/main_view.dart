@@ -16,8 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -137,6 +136,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_we
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
@@ -145,6 +145,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
@@ -444,8 +446,8 @@ void _initStaticToolList() {
       className(Caesar()),
       className(Calendar()),
       className(Catan()),
-      className(CCITT1Selection()),
-      className(CCITT2Selection()),
+      className(CCITTSelection()),
+      className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
       className(Chao()),
@@ -599,6 +601,8 @@ void _initStaticToolList() {
       className(Trifid()),
       className(Trithemius()),
       className(UnitConverter()),
+      className(UrwigoHashBreaker()),
+      className(UrwigoTextDeobfuscation()),
       className(VanitySelection()),
       className(VariableCoordinateFormulas()),
       className(Vigenere()),

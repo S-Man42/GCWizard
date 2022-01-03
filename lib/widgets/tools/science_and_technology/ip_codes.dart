@@ -22,10 +22,9 @@ class IPCodesState extends State<IPCodes> {
           value: _currentIPClass,
           items: IP_CODES.keys.map((clazz) {
             return GCWDropDownMenuItem(
-              value: clazz,
-              child: i18n(context, 'ipcodes_${clazz}_title'),
-              subtitle: i18n(context, 'ipcodes_${clazz}_description')
-            );
+                value: clazz,
+                child: i18n(context, 'ipcodes_${clazz}_title'),
+                subtitle: i18n(context, 'ipcodes_${clazz}_description'));
           }).toList(),
           onChanged: (value) {
             setState(() {
@@ -33,16 +32,13 @@ class IPCodesState extends State<IPCodes> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        ),
+        GCWDefaultOutput(child: _buildOutput()),
       ],
     );
   }
 
   String _ipTexts(String key) {
-    if (_currentIPClass != 'ip1')
-      return i18n(context, 'ipcodes_${_currentIPClass}_$key');
+    if (_currentIPClass != 'ip1') return i18n(context, 'ipcodes_${_currentIPClass}_$key');
 
     var effect = i18n(context, 'ipcodes_ip1_${key}_effect');
     var example = i18n(context, 'ipcodes_ip1_${key}_example');
@@ -52,25 +48,20 @@ class IPCodesState extends State<IPCodes> {
   }
 
   _buildOutput() {
-    var children = columnedMultiLineOutput(context,
+    var children = columnedMultiLineOutput(
+        context,
         IP_CODES[_currentIPClass].map((key) {
-          return [
-            key,
-            _ipTexts(key)
-          ];
+          return [key, _ipTexts(key)];
         }).toList(),
-        flexValues: [1, 4]
-    );
+        flexValues: [1, 4]);
 
-    children.insert(0,
+    children.insert(
+        0,
         Container(
           child: GCWText(text: i18n(context, 'ipcodes_${_currentIPClass}_description')),
           padding: EdgeInsets.only(bottom: 10),
-        )
-    );
+        ));
 
-    return Column(
-      children: children
-    );
+    return Column(children: children);
   }
 }

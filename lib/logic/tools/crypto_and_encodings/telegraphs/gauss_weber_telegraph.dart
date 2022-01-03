@@ -1,6 +1,21 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum GaussWeberTelegraphMode { GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANSTATT, WHEATSTONE_COOKE_5, WHEATSTONE_COOKE_2, WHEATSTONE_COOKE_1 }
+/*
+  Schilling Canstatt:
+
+  Volker Aschoff
+  "Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen"
+  ISBN 3-486-20691-5
+ */
+
+enum GaussWeberTelegraphMode {
+  GAUSS_WEBER_ORIGINAL,
+  GAUSS_WEBER_ALTERNATIVE,
+  SCHILLING_CANSTATT,
+  WHEATSTONE_COOKE_5,
+  WHEATSTONE_COOKE_2,
+  WHEATSTONE_COOKE_1
+}
 
 Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'A': '+',

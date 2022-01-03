@@ -219,10 +219,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
       }
       return Column(
         children: <Widget>[
-          GCWOutput(
-              title: i18n(context, 'telegraph_text'),
-              child: segments['chars']
-          ),
+          GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),
           _buildDigitalOutput(segments['displays']),
         ],
       );

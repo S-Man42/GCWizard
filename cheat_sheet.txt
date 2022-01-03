@@ -65,6 +65,10 @@ flutter clean
 iOS build: GeneratedPluginRegistrant.m Module not found.
 
 -> Open XCode with .xcworkspace file instead of .xcodeproj
+---------------
+Xcode 10: unable to attach DB error
+
+-> Delete /users/.../Library/Developer/Xcode/DerivedData directory
 
 ========
 Crowdin Script, install jq using Scoop.sh:

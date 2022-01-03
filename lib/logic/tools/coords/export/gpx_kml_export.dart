@@ -290,15 +290,17 @@ class _KmlWriter {
               });
             }
           }
-
         }
 
         builder.element('Folder', nest: () {
           _writeElement(builder, 'name', 'Waypoints');
           if (points != null) {
             for (i = 0; i < points.length; i++) {
-              if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), points[i], '#' + styleMap['waypoint' + i.toString()]);
-              _writePoint(builder, true, name, 'S' + i.toString(), points[i], '#' + styleMap['waypoint' + i.toString()]);
+              if (i == 0)
+                _writePoint(
+                    builder, false, name, 'S' + i.toString(), points[i], '#' + styleMap['waypoint' + i.toString()]);
+              _writePoint(
+                  builder, true, name, 'S' + i.toString(), points[i], '#' + styleMap['waypoint' + i.toString()]);
             }
           }
         });
@@ -323,7 +325,7 @@ class _KmlWriter {
 
   String _checkName(String label) {
     var count = elementNames.where((element) => label == element).length;
-     elementNames.add(label);
+    elementNames.add(label);
     if (count > 0 && (label != null)) return label + ' ($count)';
     return label;
   }
@@ -349,8 +351,7 @@ class _KmlWriter {
   void _writeLines(XmlBuilder builder, String name, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
-        if ((name != null) && name.isNotEmpty)
-          _writeElement(builder, 'name', _checkName(name));
+        if ((name != null) && name.isNotEmpty) _writeElement(builder, 'name', _checkName(name));
         _writeElement(builder, 'visibility', 1);
         _writeElement(builder, 'styleUrl', styleId);
 

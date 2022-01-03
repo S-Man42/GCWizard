@@ -71,9 +71,8 @@ Widget buildPunchtapeSegmentDisplayOutput(List<dynamic> displays) {
   return Container(
       width: 300,
       child: Column(
-              children: rows,
-              )
-    );
+        children: rows,
+      ));
 }
 
 Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay> displays, bool upsideDown) async {
@@ -151,8 +150,7 @@ Future<ui.Image> buildSegmentDisplayImage(int countColumns, List<NSegmentDisplay
   return canvasRecorder.endRecording().toImage(width.toInt(), height.toInt());
 }
 
-Future<ui.Image> buildPunchtapeSegmentDisplayImage(
-    List<NSegmentDisplay> displays, bool upsideDown) async {
+Future<ui.Image> buildPunchtapeSegmentDisplayImage(List<NSegmentDisplay> displays, bool upsideDown) async {
   const double bounds = 3.0;
   const double padding = 2.0;
   var width = 0.0;
