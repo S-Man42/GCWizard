@@ -375,7 +375,7 @@ Future<File> createTmpFile(String extension, Uint8List bytes) async {
   try {
     String tmpDir = (await getTemporaryDirectory()).path;
     var random = Random();
-    String randomFileName = String.fromCharCodes(List.generate(20, (index) => random.nextInt(33) + 89));
+    String randomFileName = String.fromCharCodes(List.generate(20, (index) => random.nextInt(26) + 97));
     var filePath = '$tmpDir/$randomFileName.$extension';
 
     return File(filePath).writeAsBytes(bytes);
@@ -387,6 +387,24 @@ Future<File> createTmpFile(String extension, Uint8List bytes) async {
 Future<bool> createDirectory(String directory) async {
   try {
     await Directory(directory).create(recursive: true);
+    return true;
+  } on Exception {
+    return false;
+  }
+}
+
+Future<bool> deleteDirectory(String directory) async {
+  try {
+    await Directory(directory).delete(recursive: true);
+    return true;
+  } on Exception {
+    return false;
+  }
+}
+
+Future<bool> deleteFile(String path) async {
+  try {
+    File(path).delete();
     return true;
   } on Exception {
     return false;
@@ -478,14 +496,19 @@ Future<List<PlatformFile>> extractArchive(PlatformFile file) async {
 Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password}) async {
   var fileList = <PlatformFile>[];
   var tmpFile = await createTmpFile('rar', file.bytes);
-
   var directory = changeExtension(tmpFile.path, '');
-  createDirectory(directory);
-  var result = await UnrarFile.extract_rar(tmpFile.path,  directory, password: password);
 
-  await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
-    fileList.add(PlatformFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
-  }).toList();
+  try {
+    createDirectory(directory);
+    var result = await UnrarFile.extract_rar( tmpFile.path, directory + '/', password: password);
+
+    await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
+      fileList.add(PlatformFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
+    }).toList();
+  } catch (e) {}
+
+  deleteFile(tmpFile.path);
+  deleteDirectory(directory);
 
   return fileList;
 }

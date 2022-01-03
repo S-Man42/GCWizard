@@ -407,7 +407,7 @@ int rarFileSize(Uint8List data) {
         var nameLength = _rarVint(data, offset); // Name length
         offset += nameLength.item2;
 
-        var nameArray = data.sublist(offset, nameLength.item1);
+        var nameArray = data.sublist(offset, offset + nameLength.item1);
         var name = utf8.decode(nameArray);
         if ((name != null) & (name.length > 0)) fileNames.add(name);
         offset += nameLength.item1; //Name
