@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_language.dart' as chef;
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart' as chefWidget;
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -17,7 +14,6 @@ const MDT_ESOTERIC_LANGUAGES_OPTION_MODE = 'esotericprogramminglanguage';
 
 const MDT_ESOTERIC_LANGUAGES_OPTION_BEATNIK = 'beatnik_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK = 'brainfk_title';
-const MDT_ESOTERIC_LANGUAGES_OPTION_CHEF = 'chef_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_COW = 'cow_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH = 'deadfish_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT = 'karol_robot_title';

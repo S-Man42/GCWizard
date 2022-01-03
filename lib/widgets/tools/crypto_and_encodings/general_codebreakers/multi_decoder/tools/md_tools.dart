@@ -23,7 +23,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_chronogram.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_enclosed_areas.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_languages_beatnik.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_beatnik.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_chef.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
@@ -168,6 +169,10 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK:
       gcwTool =
           MultiDecoderToolEsotericLanguageBeatnik(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
+    case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF:
+      gcwTool =
+          MultiDecoderToolEsotericLanguageChef(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ENCLOSEDAREAS:
       gcwTool = MultiDecoderToolEnclosedAreas(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
@@ -320,6 +325,8 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK,
         options: [MultiDecoderToolOption(MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE, scrabbleID_EN)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
+        options: [MultiDecoderToolOption(MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE, MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH)]),
   ];
 
   for (int i = 25; i >= 1; i--) {
