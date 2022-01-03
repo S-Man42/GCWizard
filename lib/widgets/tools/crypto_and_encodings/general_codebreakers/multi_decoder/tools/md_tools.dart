@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_beatnik.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_chef.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
@@ -79,6 +80,9 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_TAPIR,
   MDT_INTERNALNAMES_ONETIMEPAD,
   MDT_INTERNALNAMES_VIGENERE,
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK,
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH
 ];
 
 final _initialOptions = <String, Map<String, dynamic>>{
@@ -89,6 +93,10 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_CCITT1: {MDT_CCITT1_OPTION_MODE: MDT_CCITT1_OPTION_MODE_BINARY},
   MDT_INTERNALNAMES_CCITT2: {MDT_CCITT2_OPTION_MODE: MDT_CCITT2_OPTION_MODE_BINARY},
   MDT_INTERNALNAMES_COORDINATEFORMATS: {MDT_COORDINATEFORMATS_OPTION_FORMAT: keyCoordsUTM},
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK: {MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE: scrabbleID_EN},
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF: {MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH},
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH: {MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_IDSO},
+
   MDT_INTERNALNAMES_GCCODE: {MDT_GCCODE_OPTION_MODE: MDT_GCCODE_OPTION_MODE_IDTOGCCODE},
   MDT_INTERNALNAMES_ENCLOSEDAREAS: {MDT_ENCLOSEDAREAS_OPTION_MODE: 'enclosedareas_with4'},
   MDT_INTERNALNAMES_KEYBOARDLAYOUT: {
@@ -171,6 +179,10 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
           MultiDecoderToolEsotericLanguageBeatnik(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF:
+      gcwTool =
+          MultiDecoderToolEsotericLanguageChef(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
+    case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH:
       gcwTool =
           MultiDecoderToolEsotericLanguageChef(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
@@ -323,10 +335,9 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT1), MDT_INTERNALNAMES_CCITT1),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK,
-        options: [MultiDecoderToolOption(MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE, scrabbleID_EN)]),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
-        options: [MultiDecoderToolOption(MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE, MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH),
   ];
 
   for (int i = 25; i >= 1; i--) {

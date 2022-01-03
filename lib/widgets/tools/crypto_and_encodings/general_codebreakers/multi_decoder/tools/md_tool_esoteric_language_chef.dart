@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_language.dart' as chef;
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart' as chefWidget;
-
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
 
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF = 'chef_title';
-const MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE = 'esotericprogramminglanguage';
+const MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE = 'settings_general_i18n_language';
 
 const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH = 'common_language_english';
 const MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_GERMAN = 'common_language_german';
@@ -27,14 +22,11 @@ class MultiDecoderToolEsotericLanguageChef extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
             onDecode: (String input, String key) {
               try {
-                if (chef.isValid(input)) {
+                if (chef.isValid(input))
                   return chefWidget.ChefState().buildOutputText(
                       chef.interpretChef(options[MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE], input.toLowerCase().replaceAll('  ', ' '), key));
-                } else
-                  return null;
-              } catch (e) {
-                return null;
-              }
+              } catch (e) {}
+              return null;
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {

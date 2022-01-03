@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -12,7 +14,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGES = 'multidecoder_tool_esotericlanguage_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_MODE = 'esotericprogramminglanguage';
 
-const MDT_ESOTERIC_LANGUAGES_OPTION_BEATNIK = 'beatnik_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK = 'brainfk_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_COW = 'cow_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH = 'deadfish_title';
@@ -55,25 +56,25 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGES,
             onDecode: (String input, String key) {
               switch (options[MDT_ESOTERIC_LANGUAGES_OPTION_MODE]) {
-                case MDT_ESOTERIC_LANGUAGES_OPTION_BEATNIK:
-                  break;
                 case MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK:
                   try {
                     return interpretBrainfk(input, input: key);
-                  } catch (e) {
-                    return null;
-                  }
-                case MDT_ESOTERIC_LANGUAGES_OPTION_CHEF:
+                  } catch (e) {}
+                  return null;
+                case MDT_ESOTERIC_LANGUAGES_OPTION_COW:
                   try {
-                    if (chef.isValid(input)) {
-                      return chefWidget.ChefState().buildOutputText(
-                          chef.interpretChef(language, input.toLowerCase().replaceAll('  ', ' '), key));
-                    }
-                  } catch (e) {
-                      return null;
-                    }
-                  }
-
+                    CowOutput output = interpretCow(input, STDIN: key);
+                    if (output.error == '')
+                      return output.output;
+                  } catch (e) {}
+                  return null;
+                case MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH:
+                  try {
+                    CowOutput output = interpretCow(input, STDIN: key);
+                    if (output.error == '')
+                      return output.output;
+                  } catch (e) {}
+                  return null;
               }
 
             },
@@ -84,9 +85,7 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGES_OPTION_MODE] = newValue;
                 },
-                items: [MDT_ESOTERIC_LANGUAGES_OPTION_BEATNIK,
-                        MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK,
-                        MDT_ESOTERIC_LANGUAGES_OPTION_CHEF,
+                items: [MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK,
                         MDT_ESOTERIC_LANGUAGES_OPTION_COW,
                         MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH,
                         MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT,
