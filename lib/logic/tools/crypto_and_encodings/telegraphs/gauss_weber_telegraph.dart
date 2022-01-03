@@ -149,8 +149,9 @@ Map<String, String> _WHEATSTONE_COOKE_5 = {
 Map<String, String> _WHEATSTONE_COOKE_2 = {
   'A': '[\\\\  |]',
   'B': '[\\\\\\ |]',
+  'C': '[\\/ |]',
   'D': '[/\\ |]',
-  'E': '[\\/ |]',
+  'E': '[/ |]',
   'F': '[// |]',
   'G': '[/// |]',
   'H': '[| \\]',
@@ -239,14 +240,26 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
       return '';
   }
 
-  return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
-    if (code == null || code.isEmpty) return '';
+  print('decode '+input+' with '+map.toString());
+  if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_2) {
+    input = input.replaceAll('  ', ' ').replaceAll('] [', ']] [[');
+    return input.toLowerCase().split('] [').map((code) {
+      print(code);
+      if (code == null || code.isEmpty) return '';
 
-    var character = map[code];
-    if (character == null || character.isEmpty) return '';
+      var character = map[code];
+      if (character == null || character.isEmpty) return '';
+      return character;
+    }).join();
+  } else
+      return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
+        print(code);
+        if (code == null || code.isEmpty) return '';
 
-    return character;
-  }).join();
+        var character = map[code];
+        if (character == null || character.isEmpty) return '';
+        return character;
+      }).join();
 }
 
 String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
