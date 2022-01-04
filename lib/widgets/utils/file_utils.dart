@@ -120,6 +120,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.WAV: {
     'extensions': ['wav'],
+    'magic_bytes': <List<int>>[],
     'mime_types': ['audio/wav', 'audio/x-wav'],
     'file_class': FileClass.SOUND
   },
