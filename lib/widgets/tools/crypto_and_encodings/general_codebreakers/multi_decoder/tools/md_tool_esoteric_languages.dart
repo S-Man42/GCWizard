@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
@@ -62,7 +63,8 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
               switch (options[MDT_ESOTERIC_LANGUAGES_OPTION_MODE]) {
                 case MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK:
                   try {
-                    return interpretBrainfk(input, input: key);
+                    var result = interpretBrainfk(input, input: key);
+                    return result.replaceAll(String.fromCharCode(0), "").isEmpty ? null : result;
                   } catch (e) {}
                   return null;
                 case MDT_ESOTERIC_LANGUAGES_OPTION_COW:
@@ -75,7 +77,7 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                 case MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT:
                   try {
                     var output = KarolRobotOutputDecode(input);
-                    if (output != null)
+                    if ((output != null) && (output != "####\n#####\n#####\n#####"))
                       return byteColor2image(output);
                   } catch (e) {}
                   return null;
@@ -113,6 +115,41 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                     //     _showDialogBox(context, output.output);
                     //   }
                     // });
+                  } catch (e) {}
+                  return null;
+                case MDT_ESOTERIC_LANGUAGES_OPTION_ALPHK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_BINARYFK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_BLUB:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_BTJZXGQUARTFRQIFJLV:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_COLONOSCOPY:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_DETAILEDFK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_FLUFFLEPUFF:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_FUCKBEES:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_GERMAN:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_KENNYSPEAK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_KONFK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_MORSEFK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_NAK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_OMAM:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_OOK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_PSSCRIPT:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_PIKALANG:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_REVERSEFK:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_REVOLUTION9:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_ROADRUNNER:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_SCREAMCODE:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_TERNARY:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_TRIPLET:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_UWU:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_ZZZ:
+                  try {
+                    var transformed = substitution(input,
+                        switchMapKeyValue(
+                            brainfkTrivialSubstitutions[options[MDT_ESOTERIC_LANGUAGES_OPTION_MODE]]));
+                    if (transformed == input) return null;
+
+                    var result = interpretBrainfk(transformed, input: key);
+                    return result.replaceAll(String.fromCharCode(0), "").isEmpty ? null : result;
                   } catch (e) {}
                   return null;
               }
@@ -161,4 +198,8 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                 }).toList(),
               )
             }));
+}
+
+BrainfkTrivial getLanguageByName(String name) {
+  return switchMapKeyValue(BRAINFK_TRIVIAL_LIST)[name];
 }
