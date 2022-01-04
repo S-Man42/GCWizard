@@ -192,6 +192,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
         context,
         NoAnimationMaterialPageRoute(
             builder: (context) => GCWTool(
+                autoScroll: false,
                 tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey), toolName: i18n(context, 'symbol_replacer_title'), i18nPrefix: '')));
   }
 }

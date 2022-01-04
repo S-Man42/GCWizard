@@ -199,6 +199,8 @@ class SymbolImage {
       symbol.symbolGroup?.symbols?.remove(symbol);
       if (symbol.symbolGroup.symbols.isEmpty) symbolGroups.remove(symbolGroup);
     }
+    if (symbolGroup.symbols == null) symbolGroup.symbols = <Symbol>[];
+
     symbolGroup.symbols.add(symbol);
     symbol.symbolGroup = symbolGroup;
   }
