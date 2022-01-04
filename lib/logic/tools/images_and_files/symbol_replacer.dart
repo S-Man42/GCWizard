@@ -101,7 +101,7 @@ class SymbolImage {
     return _outputImageBytes;
   }
 
-  String getTextOutput() {
+  String getTextOutput({bool withLinebreak : false}) {
     var output = '';
     var referenceWidth = _referenceWidth(symbols);
 
@@ -112,7 +112,7 @@ class SymbolImage {
         output += symbol.symbolGroup?.text != null ? symbol.symbolGroup.text : '';
         rightBorder = symbol.refPoint.dx + symbol.bmp.width;
       });
-      output += '\r\n';
+      if (withLinebreak) output += '\r\n';
     });
     return output.trim();
   }

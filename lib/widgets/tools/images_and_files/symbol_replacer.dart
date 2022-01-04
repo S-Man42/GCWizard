@@ -680,8 +680,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolData>> output) {
-    // _symbolImage = output;
-    print(output?.length);
     _selectSymbolDataItem1(output);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() { });
