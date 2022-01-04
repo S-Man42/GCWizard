@@ -169,7 +169,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['kml'],
     'magic_bytes': <List<int>>[],
     'file_class': FileClass.DATA,
-    'mime_types': ['application/kml', 'application/kml+xml', 'application/xml', 'application/vnd.google-earth.kml+xml'],
+    'mime_types': ['application/kml', 'application/kml+xml', 'application/xml', 'application/vnd.google-earth.kml+xml', 'application/vnd.google-earth.kml'],
     'uniform_type_identifier': 'com.google.earth.kml'
   },
   FileType.KMZ: {
