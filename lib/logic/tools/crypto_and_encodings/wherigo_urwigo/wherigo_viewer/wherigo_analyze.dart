@@ -107,9 +107,11 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS, IDENTIFIER}
+enum WHERIGO {NULL, HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS, IDENTIFIER}
 
-Map<WHERIGO, String> WHERIGO_DATA = {
+enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
+
+Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',

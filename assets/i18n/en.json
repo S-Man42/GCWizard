@@ -4664,6 +4664,7 @@
   "wherigo_data_items" : "List of Item Objects",
   "wherigo_data_media" : "List of Media Objects",
   "wherigo_data_messages" : "List of Messages/Dialogs",
+  "wherigo_data_null": "No file loaded",
   "wherigo_data_questions" : "List of Questions/Answers",
   "wherigo_data_tasks" : "List of Task Objects",
   "wherigo_data_timers" : "List of Timer Objects",

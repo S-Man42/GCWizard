@@ -56,8 +56,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
-  bool _fileLoadedGWC = false;
-  bool _fileLoadedLUA = false;
+  FILE_LOAD_STATE _fileLoadedState = FILE_LOAD_STATE.NULL;
 
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
@@ -65,7 +64,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
   Map<String, dynamic> _outData;
 
-  var _cartridgeData = WHERIGO.HEADER;
+  var _displayedCartridgeData = WHERIGO.HEADER;
 
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
 
@@ -95,18 +94,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
-    _fileLoadedGWC = true;
+    if (_fileLoadedState == FILE_LOAD_STATE.NULL)
+      _fileLoadedState = FILE_LOAD_STATE.GWC;
+    else if (_fileLoadedState == FILE_LOAD_STATE.LUA)
+      _fileLoadedState = FILE_LOAD_STATE.FULL;
   }
 
   _setLUAData(Uint8List bytes) {
     _LUAbytes = bytes;
-    _fileLoadedLUA = true;
+    if (_fileLoadedState == FILE_LOAD_STATE.NULL)
+      _fileLoadedState = FILE_LOAD_STATE.LUA;
+    else if (_fileLoadedState == FILE_LOAD_STATE.GWC)
+      _fileLoadedState = FILE_LOAD_STATE.FULL;
   }
 
   @override
   Widget build(BuildContext context) {
-    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA)
-        .map((key, value) => MapEntry(i18n(context, key), value)));
+
     return Column(
       children: <Widget>[
         GCWOpenFile(
@@ -125,6 +129,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
+
               _mediaFileIndex = 1;
               _zoneIndex = 1;
               _inputIndex = 1;
@@ -140,7 +145,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _analyseCartridgeFileAsync('GWC-Cartridge');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
-              setState(() {});
+              setState(() {
+                switch (_fileLoadedState) {
+                  case FILE_LOAD_STATE.GWC:
+                    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_GWC)
+                        .map((key, value) => MapEntry(i18n(context, key), value)));
+                    break;
+                  case FILE_LOAD_STATE.LUA:
+                    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_LUA)
+                        .map((key, value) => MapEntry(i18n(context, key), value)));
+                    break;
+                  case FILE_LOAD_STATE.FULL:
+                    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_FULL)
+                        .map((key, value) => MapEntry(i18n(context, key), value)));
+                    break;
+                }
+              });
             }
           },
         ),
@@ -160,6 +180,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
+
               _mediaFileIndex = 1;
               _zoneIndex = 1;
               _inputIndex = 1;
@@ -174,35 +195,51 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _analyseCartridgeFileAsync('LUA-Sourcecode');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
-              setState(() {});
+              setState(() {
+                switch (_fileLoadedState) {
+                  case FILE_LOAD_STATE.GWC:
+                    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_GWC)
+                        .map((key, value) => MapEntry(i18n(context, key), value)));
+                    break;
+                  case FILE_LOAD_STATE.LUA:
+                    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_LUA)
+                        .map((key, value) => MapEntry(i18n(context, key), value)));
+                    break;
+                  case FILE_LOAD_STATE.FULL:
+                    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_FULL)
+                        .map((key, value) => MapEntry(i18n(context, key), value)));
+                    break;
+                }
+              });
             }
           },
         ),
-        GCWDropDownButton(
-          value: _cartridgeData,
-          onChanged: (value) {
-            setState(() {
-              _cartridgeData = value;
-              _mediaFileIndex = 1;
-              _zoneIndex = 1;
-              _inputIndex = 1;
-              _characterIndex = 1;
-              _timerIndex = 1;
-              _taskIndex = 1;
-              _itemIndex = 1;
-              _mediaIndex = 1;
-              _messageIndex = 1;
-              _answerIndex = 1;
-              _identifierIndex = 1;
-            });
-          },
-          items: _WHERIGO_DATA.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.value,
-              child: mode.key,
-            );
-          }).toList(),
-        ),
+        if (_fileLoadedState != FILE_LOAD_STATE.NULL)
+          GCWDropDownButton(
+            value: _displayedCartridgeData,
+            onChanged: (value) {
+              setState(() {
+                _displayedCartridgeData = value;
+                _mediaFileIndex = 1;
+                _zoneIndex = 1;
+                _inputIndex = 1;
+                _characterIndex = 1;
+                _timerIndex = 1;
+                _taskIndex = 1;
+                _itemIndex = 1;
+                _mediaIndex = 1;
+                _messageIndex = 1;
+                _answerIndex = 1;
+                _identifierIndex = 1;
+              });
+            },
+            items: _WHERIGO_DATA.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                value: mode.value,
+                child: mode.key,
+              );
+            }).toList(),
+          ),
         _buildOutput(context)
       ],
     );
@@ -295,9 +332,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               color: COLOR_MAP_POINT));
     });
 
-    switch (_cartridgeData) {
-      case WHERIGO.DTABLE:
+    switch (_displayedCartridgeData) {
+      case WHERIGO.NULL:
+        return GCWDefaultOutput(
+          child: GCWOutputText(
+            text: i18n(context, 'wherigo_data_null'),
+            suppressCopyButton: true,
+          ),
+        );
+        break;
 
+      case WHERIGO.DTABLE:
         return GCWDefaultOutput(
           child: GCWOutputText(
             text: _cartridge.dtable,
@@ -1173,8 +1218,5 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         name: filename
     );
   }
-//    bytes:_cartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
-//    name: filename),
-//],
 
 }
