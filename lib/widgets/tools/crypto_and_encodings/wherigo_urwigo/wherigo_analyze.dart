@@ -605,6 +605,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
+              GCWFilesOutput(
+                files: [_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)],
+              ),
               Column(
                   children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]))
               )]
@@ -787,6 +790,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     });
                   },
                 ),              ],
+            ),
+            GCWFilesOutput(
+              files: [_getFileFrom(_cartridge.Items[_itemIndex - 1].ItemMedia)],
             ),
             Column(
                 children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex - 1]))
