@@ -87,7 +87,7 @@ class SudokuBoardPainter extends CustomPainter {
             double yInner = l * heightInner + yOuter;
 
             paint.style = PaintingStyle.fill;
-            paint.color = colors.sudokuBackground();
+            paint.color = colors.gridBackground();
 
             var boardY = i * 3 + k;
             var boardX = j * 3 + l;

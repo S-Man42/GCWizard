@@ -47,7 +47,7 @@ abstract class ThemeColors {
 
   Color messageBackground();
 
-  Color sudokuBackground();
+  Color gridBackground();
 
   Color formulaNumber();
   Color formulaMath();

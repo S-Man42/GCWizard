@@ -29,7 +29,7 @@ enum BrainfkTrivial {
   TRIPLET,
   UWU,
   ZZZ,
-  HOHOHO,
+  //HOHOHO,
   CUSTOM
 }
 
@@ -186,7 +186,7 @@ Map<BrainfkTrivial, String> BRAINFK_TRIVIAL_LIST = {
   BrainfkTrivial.FLUFFLEPUFF: 'Fluffle Puff',
   BrainfkTrivial.FUCKBEES: 'FuckbeEs',
   BrainfkTrivial.GERMAN: 'German',
-  BrainfkTrivial.HOHOHO: 'Hohoho!',
+  //BrainfkTrivial.HOHOHO: 'Hohoho!',
   BrainfkTrivial.KENNYSPEAK: 'Kenny Speak',
   BrainfkTrivial.KONFK: 'K-on F**k',
   BrainfkTrivial.MORSEFK: 'MorseF**k',

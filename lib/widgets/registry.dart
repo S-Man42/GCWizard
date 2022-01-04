@@ -232,6 +232,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
@@ -643,6 +644,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'binary',
       'gray',
+    ]),
+    GCWTool(tool: Grid(), i18nPrefix: 'grid', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'grid',
     ]),
     GCWTool(
         tool: HashSelection(), i18nPrefix: 'hashes_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
@@ -1632,7 +1638,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Hohoho(), i18nPrefix: 'hohoho', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_hohoho',
-      'symbol_christmas'
+      'christmas'
     ]),
     GCWTool(tool: KarolRobot(), i18nPrefix: 'karol_robot', searchKeys: [
       'esoteric_karol_robot',
@@ -2699,7 +2705,7 @@ initializeRegistry(BuildContext context) {
       'symbol_chinese_numerals',
     ]),
     GCWSymbolTableTool(symbolKey: 'christmas', symbolSearchStrings: [
-      'symbol_christmas',
+      'christmas',
     ]),
     GCWSymbolTableTool(symbolKey: 'cirth_erebor', symbolSearchStrings: [
       'symbol_runes',

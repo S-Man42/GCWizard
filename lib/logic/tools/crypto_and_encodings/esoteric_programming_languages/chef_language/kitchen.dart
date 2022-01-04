@@ -108,7 +108,7 @@ class Kitchen {
           if (ingredients[m.ingredient] == null) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString(),
               Messages[language]['chef_error_runtime_ingredient_not_found'],
@@ -127,7 +127,7 @@ class Kitchen {
           } else {
             valid = false;
             error.addAll(
-                [Messages[language]['chef_error_runtime'], Messages[language]['chef_error_runtime_missing_input'], '']);
+                [Messages[language]['common_programming_error_runtime'], Messages[language]['chef_error_runtime_missing_input'], '']);
             return null;
           }
           break;
@@ -142,7 +142,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_folded_from_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
@@ -160,7 +160,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_add_to_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
@@ -177,7 +177,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_remove_from_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
@@ -194,7 +194,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_combine_with_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
@@ -211,7 +211,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_divide_from_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString()
@@ -247,7 +247,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_stir_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString()
@@ -262,7 +262,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_stir_in_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString()
@@ -277,7 +277,7 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_mix_empty_mixing_bowl'],
               Messages[language]['chef_error_runtime_method_step'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString()
@@ -309,7 +309,7 @@ class Kitchen {
           if (end == methods.length) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_method_loop'],
               m.n.toString() + ' : ' + m.type.toString()
             ]);
@@ -327,7 +327,7 @@ class Kitchen {
           if (!_sameVerb(loops[0].verb, m.verb, language)) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_method_loop_end'],
               m.n.toString() + ' : ' + m.type.toString()
             ]);
@@ -344,7 +344,7 @@ class Kitchen {
           if (loops.length == 0) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_method_loop_aside'],
               m.n.toString() + ' : ' + m.type.toString()
             ]);
@@ -361,7 +361,7 @@ class Kitchen {
           if (recipes[m.auxrecipe.toLowerCase()] == null) {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_method_aux_recipe'],
               m.n.toString() + ' : ' + m.type.toString() + ' => ' + m.auxrecipe
             ]);
@@ -382,7 +382,7 @@ class Kitchen {
             else {
               valid = false;
               error.addAll([
-                Messages[language]['chef_error_runtime'],
+                Messages[language]['common_programming_error_runtime'],
                 Messages[language]['chef_error_runtime_method_aux_recipe'],
                 Messages[language]['chef_error_runtime_method_aux_recipe_return'],
                 '=> ' + m.auxrecipe,
@@ -393,7 +393,7 @@ class Kitchen {
             valid = false;
             exception = true;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_runtime_exception'],
               Messages[language]['chef_error_runtime_serving_aux'],
               e.toString(),
@@ -419,7 +419,7 @@ class Kitchen {
           {
             valid = false;
             error.addAll([
-              Messages[language]['chef_error_runtime'],
+              Messages[language]['common_programming_error_runtime'],
               Messages[language]['chef_error_syntax_method_unsupported'],
               m.n.toString() + ' : ' + m.type.toString()
             ]);

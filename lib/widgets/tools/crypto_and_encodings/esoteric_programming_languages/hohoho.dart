@@ -42,8 +42,8 @@ class HohohoState extends State<Hohoho> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'cow_interpret'),
-          rightValue: i18n(context, 'cow_generate'),
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -54,7 +54,7 @@ class HohohoState extends State<Hohoho> {
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
           controller: _textDecodeController,
-          hintText: i18n(context, 'cow_code'),
+          hintText: i18n(context, 'common_programming_hint_sourcecode'),
           onChanged: (text) {
             setState(() {
               _currentDecodeText = text;
@@ -63,7 +63,7 @@ class HohohoState extends State<Hohoho> {
         )
         :  GCWTextField(
           controller: _textEncodeController,
-          hintText: i18n(context, 'cow_text'),
+          hintText: i18n(context, 'common_programming_hint_output'),
           onChanged: (text) {
             setState(() {
               _currentEncodeText = text;
@@ -73,7 +73,7 @@ class HohohoState extends State<Hohoho> {
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
           controller: _inputController,
-          hintText: i18n(context, 'cow_input'),
+          hintText: i18n(context, 'common_programming_hint_input'),
           onChanged: (text) {
             setState(() {
               _currentInput = text;
