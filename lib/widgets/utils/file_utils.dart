@@ -19,7 +19,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
@@ -112,10 +112,15 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.WMV: {
     'extensions': ['wmv'],
+    'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
     'magic_bytes': <List<int>>[
       [0x30, 0x26, 0xB2, 0x75]
     ],
-    'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
+    'file_class': FileClass.SOUND
+  },
+  FileType.WAV: {
+    'extensions': ['wav'],
+    'mime_types': ['audio/wav', 'audio/x-wav'],
     'file_class': FileClass.SOUND
   },
   FileType.MP3: {
