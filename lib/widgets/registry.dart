@@ -241,7 +241,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/symbol_replacer.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -711,11 +711,6 @@ initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'stegano',
-    ]),
-    GCWTool(tool: SymbolReplacer(), autoScroll: false, i18nPrefix: 'symbol_replacer', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: [
-      'symbol_replacer',
     ]),
     GCWTool(
         tool: IPCodes(),
@@ -2575,6 +2570,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: SymbolTableExamplesSelect(), autoScroll: false, i18nPrefix: 'symboltablesexamples', searchKeys: [
       'symbol',
       'symboltablesexamples',
+    ]),
+    GCWTool(tool: SymbolReplacer(), autoScroll: false, i18nPrefix: 'symbol_replacer',  searchKeys: [
+      'symbol_replacer',
     ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
