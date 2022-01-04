@@ -156,7 +156,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x4D, 0x5A, 0x90, 0x00]
     ],
     'mime_types': ['application/octet-stream'],
-    'mime_type': FileClass.DATA
+    'file_class': FileClass.DATA
   },
   FileType.GPX: {
     'extensions': ['gpx'],
@@ -176,8 +176,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['kmz'],
     'magic_bytes': <List<int>>[],
     'file_class': FileClass.DATA,
-    'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml'],
-    'mime_type': 'application/vnd.google-earth.kmz'
+    'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml', 'application/vnd.google-earth.kmz']
   },
 };
 
