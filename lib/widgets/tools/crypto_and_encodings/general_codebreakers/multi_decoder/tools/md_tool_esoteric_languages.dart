@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -11,15 +16,14 @@ import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
 
-const MDT_INTERNALNAMES_ESOTERIC_LANGUAGES = 'multidecoder_tool_esotericlanguage_title';
-const MDT_ESOTERIC_LANGUAGES_OPTION_MODE = 'esotericprogramminglanguage';
+const MDT_INTERNALNAMES_ESOTERIC_LANGUAGES = 'multidecoder_tool_esotericlanguages_title';
+const MDT_ESOTERIC_LANGUAGES_OPTION_MODE = 'common_language';
 
 const MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK = 'brainfk_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_COW = 'cow_title';
-const MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH = 'deadfish_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT = 'karol_robot_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_MALBOLGE = 'malbolge_title';
-const MDT_ESOTERIC_LANGUAGES_OPTION_WHITESPACE = 'whitespacelanguage_title';
+const MDT_ESOTERIC_LANGUAGES_OPTION_WHITESPACE = 'whitespace_language_title';
 
 const MDT_ESOTERIC_LANGUAGES_OPTION_ALPHK = 'Alph**k';
 const MDT_ESOTERIC_LANGUAGES_OPTION_BINARYFK = 'BinaryFuck';
@@ -68,15 +72,50 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                       return output.output;
                   } catch (e) {}
                   return null;
-                case MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH:
+                case MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT:
                   try {
-                    CowOutput output = interpretCow(input, STDIN: key);
-                    if (output.error == '')
-                      return output.output;
+                    var output = KarolRobotOutputDecode(input);
+                    if (output != null)
+                      return byteColor2image(output);
+                  } catch (e) {}
+                  return null;
+                case MDT_ESOTERIC_LANGUAGES_OPTION_MALBOLGE:
+                  try {
+                    var outputList = interpretMalbolge(input, key, false);
+                    if (outputList != null) {
+                      String output = '';
+                      outputList.output.forEach((element) {
+                        if (element != null)
+                          if (!element.startsWith('malbolge_'))
+                            output = output + element + '\n';
+                      });
+                      output = output.trim();
+                      return output.isEmpty ? null : output;
+                    }
+                  } catch (e) {}
+                  return null;
+                case MDT_ESOTERIC_LANGUAGES_OPTION_WHITESPACE:
+                  try {
+                    WhitespaceState _continueState = null;
+                    return interpreterWhitespace(input, '', continueState: _continueState);
+                    //var currentOutputFuture = interpreterWhitespace(input, '', continueState: _continueState);
+                    // _continueState = null;
+                    //
+                    // currentOutputFuture.then((output) {
+                    //   if (output.finished) {
+                    //     return output;
+                    //     // _currentOutput = output;
+                    //     // _isStarted = false;
+                    //     // this.setState(() {});
+                    //   } else {
+                    //     _continueState = output.state;
+                    //     _currentInput = "";
+                    //     _showDialogBox(context, output.output);
+                    //   }
+                    // });
                   } catch (e) {}
                   return null;
               }
-
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
@@ -87,7 +126,6 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                 },
                 items: [MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK,
                         MDT_ESOTERIC_LANGUAGES_OPTION_COW,
-                        MDT_ESOTERIC_LANGUAGES_OPTION_DEADFISH,
                         MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT,
                         MDT_ESOTERIC_LANGUAGES_OPTION_MALBOLGE,
                         MDT_ESOTERIC_LANGUAGES_OPTION_WHITESPACE,
@@ -115,10 +153,10 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                         MDT_ESOTERIC_LANGUAGES_OPTION_TERNARY,
                         MDT_ESOTERIC_LANGUAGES_OPTION_TRIPLET,
                         MDT_ESOTERIC_LANGUAGES_OPTION_UWU,
-                        MDT_ESOTERIC_LANGUAGES_OPTION_ZZZ].map((mode) {
+                        MDT_ESOTERIC_LANGUAGES_OPTION_ZZZ].map((language) {
                   return GCWDropDownMenuItem(
-                    value: mode,
-                    child: i18n(context, mode),
+                    value: language,
+                    child: i18n(context, language) ?? language,
                   );
                 }).toList(),
               )
