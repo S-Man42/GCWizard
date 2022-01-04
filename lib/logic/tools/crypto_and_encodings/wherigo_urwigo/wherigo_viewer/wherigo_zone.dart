@@ -193,7 +193,6 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
 
 ZonePoint _getPoint(String line){
   List<String> data = line.trimLeft().replaceAll('ZonePoint(', '').replaceAll('),', '').replaceAll(')', '').replaceAll(' ', '').split(',');
-  print(data[0]+'.'+data[1]+'.'+data[2]);
   return ZonePoint(double.parse(data[0]), double.parse(data[1]), double.parse(data[2]));
 }
 

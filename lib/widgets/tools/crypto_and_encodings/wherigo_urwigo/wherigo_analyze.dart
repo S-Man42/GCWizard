@@ -72,16 +72,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   var _currentByteCodeMode = GCWSwitchPosition.left;
 
   int _mediaFileIndex = 1;
-  int _zoneIndex = 0;
-  int _inputIndex = 0;
-  int _characterIndex = 0;
-  int _timerIndex = 0;
-  int _taskIndex = 0;
-  int _itemIndex = 0;
-  int _mediaIndex = 0;
-  int _messageIndex = 0;
-  int _answerIndex = 0;
-  int _identifierIndex = 0;
+  int _zoneIndex = 1;
+  int _inputIndex = 1;
+  int _characterIndex = 1;
+  int _timerIndex = 1;
+  int _taskIndex = 1;
+  int _itemIndex = 1;
+  int _mediaIndex = 1;
+  int _messageIndex = 1;
+  int _answerIndex = 1;
+  int _identifierIndex = 1;
 
   @override
   void initState() {
@@ -126,16 +126,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             if (_GWCfile != null) {
               _setGWCData(_GWCfile.bytes);
               _mediaFileIndex = 1;
-              _zoneIndex = 0;
-              _inputIndex = 0;
-              _characterIndex = 0;
-              _timerIndex = 0;
-              _taskIndex = 0;
-              _itemIndex = 0;
-              _mediaIndex = 0;
-              _messageIndex = 0;
-              _answerIndex = 0;
-              _identifierIndex = 0;
+              _zoneIndex = 1;
+              _inputIndex = 1;
+              _characterIndex = 1;
+              _timerIndex = 1;
+              _taskIndex = 1;
+              _itemIndex = 1;
+              _mediaIndex = 1;
+              _messageIndex = 1;
+              _answerIndex = 1;
+              _identifierIndex = 1;
 
               _analyseCartridgeFileAsync('GWC-Cartridge');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
@@ -161,16 +161,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             if (_LUAfile != null) {
               _setLUAData(_LUAfile.bytes);
               _mediaFileIndex = 1;
-              _zoneIndex = 0;
-              _inputIndex = 0;
-              _characterIndex = 0;
-              _timerIndex = 0;
-              _taskIndex = 0;
-              _itemIndex = 0;
-              _mediaIndex = 0;
-              _messageIndex = 0;
-              _answerIndex = 0;
-              _identifierIndex = 0;
+              _zoneIndex = 1;
+              _inputIndex = 1;
+              _characterIndex = 1;
+              _timerIndex = 1;
+              _taskIndex = 1;
+              _itemIndex = 1;
+              _mediaIndex = 1;
+              _messageIndex = 1;
+              _answerIndex = 1;
+              _identifierIndex = 1;
               _analyseCartridgeFileAsync('LUA-Sourcecode');
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
@@ -184,16 +184,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             setState(() {
               _cartridgeData = value;
               _mediaFileIndex = 1;
-              _zoneIndex = 0;
-              _inputIndex = 0;
-              _characterIndex = 0;
-              _timerIndex = 0;
-              _taskIndex = 0;
-              _itemIndex = 0;
-              _mediaIndex = 0;
-              _messageIndex = 0;
-              _answerIndex = 0;
-              _identifierIndex = 0;
+              _zoneIndex = 1;
+              _inputIndex = 1;
+              _characterIndex = 1;
+              _timerIndex = 1;
+              _taskIndex = 1;
+              _itemIndex = 1;
+              _mediaIndex = 1;
+              _messageIndex = 1;
+              _answerIndex = 1;
+              _identifierIndex = 1;
             });
           },
           items: _WHERIGO_DATA.entries.map((mode) {
@@ -382,15 +382,34 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
           children: <Widget>[
             GCWDefaultOutput(),
-            GCWIntegerSpinner(
-              min: 1,
-              max: _cartridge.NumberOfObjects - 1,
-              value: _mediaFileIndex,
-              onChanged: (value) {
-                setState(() {
-                  _mediaFileIndex = value;
-                });
-              },
+            Row(
+              children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _mediaFileIndex--;
+                      if (_mediaFileIndex < 1)
+                        _mediaFileIndex = _cartridge.NumberOfObjects - 1;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                    align: Alignment.center,
+                    text: _mediaFileIndex.toString() + ' / ' + (_cartridge.NumberOfObjects - 1).toString(),
+                  ),
+                ),
+                GCWIconButton(
+                  iconData: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _mediaFileIndex++;
+                      if (_mediaFileIndex > _cartridge.NumberOfObjects - 1)
+                        _mediaFileIndex = 1;
+                    });
+                  },
+                ),              ],
             ),
             GCWFilesOutput(
               files: [
@@ -398,7 +417,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     bytes:_cartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
                     name: filename),
               ],
-              ),
+            ),
 
             if (_outputMedia != null)
                 Column(children: columnedMultiLineOutput(context,  _outputMedia)),
@@ -446,20 +465,40 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Characters.length - 1,
-                value: _characterIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _characterIndex = value;
-                    if (_characterIndex > _cartridge.Characters.length - 1)
-                      _characterIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _characterIndex--;
+                        if (_characterIndex < 1)
+                          _characterIndex = _cartridge.Characters.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _characterIndex.toString() + ' / ' + (_cartridge.Characters.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _characterIndex++;
+                        if (_characterIndex > _cartridge.Characters.length)
+                          _characterIndex = 1;
+                      });
+                    },
+                  ),              ],
+              ),
+              GCWFilesOutput(
+                files: [_getFileFrom(_cartridge.Characters[_characterIndex - 1].CharacterMediaName)],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex]))
+                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex - 1]))
               )
             ]
         );
@@ -496,20 +535,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     ]
                 ),
               ),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Zones.length - 1,
-                value: _zoneIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _zoneIndex = value;
-                    if (_zoneIndex > _cartridge.Zones.length - 1)
-                      _zoneIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _zoneIndex--;
+                        if (_zoneIndex < 1)
+                          _zoneIndex = _cartridge.Zones.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _zoneIndex.toString() + ' / ' + (_cartridge.Zones.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _zoneIndex++;
+                        if (_zoneIndex > _cartridge.Zones.length)
+                          _zoneIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex]))
+                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]))
               )]
         );
         break;
@@ -524,20 +580,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Inputs.length - 1,
-                value: _inputIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _inputIndex = value;
-                    if (_inputIndex > _cartridge.Inputs.length - 1)
-                      _inputIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _inputIndex--;
+                        if (_inputIndex < 1)
+                          _inputIndex = _cartridge.Inputs.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _inputIndex.toString() + ' / ' + (_cartridge.Inputs.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _inputIndex++;
+                        if (_inputIndex > _cartridge.Inputs.length)
+                          _inputIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex]))
+                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex - 1]))
               )
             ]
         );
@@ -553,20 +626,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Tasks.length - 1,
-                value: _taskIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _taskIndex = value;
-                    if (_taskIndex > _cartridge.Tasks.length - 1)
-                      _taskIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _taskIndex--;
+                        if (_taskIndex < 1)
+                          _taskIndex = _cartridge.Tasks.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _taskIndex.toString() + ' / ' + (_cartridge.Tasks.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _taskIndex++;
+                        if (_taskIndex > _cartridge.Tasks.length)
+                          _taskIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex]))
+                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex - 1]))
               )
             ]
         );
@@ -582,20 +672,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Timers.length - 1,
-                value: _timerIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _timerIndex = value;
-                    if (_timerIndex > _cartridge.Timers.length - 1)
-                      _timerIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _timerIndex--;
+                        if (_timerIndex < 1)
+                          _timerIndex = _cartridge.Timers.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _timerIndex.toString() + ' / ' + (_cartridge.Timers.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _timerIndex++;
+                        if (_timerIndex > _cartridge.Timers.length)
+                          _timerIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex]))
+                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex - 1]))
               )
             ]
         );
@@ -611,20 +718,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
           children : <Widget>[
             GCWDefaultOutput(),
-            GCWIntegerSpinner(
-              min: 0,
-              max: _cartridge.Items.length - 1,
-              value: _itemIndex,
-              onChanged: (value) {
-                setState(() {
-                  _itemIndex = value;
-                  if (_itemIndex > _cartridge.Items.length - 1)
-                    _itemIndex = 0;
-                });
-              },
+            Row(
+              children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _itemIndex--;
+                      if (_itemIndex < 1)
+                        _itemIndex = _cartridge.Items.length;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                    align: Alignment.center,
+                    text: _itemIndex.toString() + ' / ' + (_cartridge.Items.length).toString(),
+                  ),
+                ),
+                GCWIconButton(
+                  iconData: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _itemIndex++;
+                      if (_itemIndex > _cartridge.Items.length)
+                        _itemIndex = 1;
+                    });
+                  },
+                ),              ],
             ),
             Column(
-                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex]))
+                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex - 1]))
             )
           ]
         );
@@ -640,20 +764,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Media.length - 1,
-                value: _mediaIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _mediaIndex = value;
-                    if (_mediaIndex > _cartridge.Media.length - 1)
-                      _mediaIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _mediaIndex--;
+                        if (_mediaIndex < 1)
+                          _mediaIndex = _cartridge.Media.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _mediaIndex.toString() + ' / ' + (_cartridge.Media.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _mediaIndex++;
+                        if (_mediaIndex > _cartridge.Media.length)
+                          _mediaIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputMedia(_cartridge.Media[_mediaIndex]))
+                  children: columnedMultiLineOutput(context, _outputMedia(_cartridge.Media[_mediaIndex - 1]))
               )
             ]
         );
@@ -669,20 +810,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Messages.length - 1,
-                value: _messageIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _messageIndex = value;
-                    if (_messageIndex > _cartridge.Messages.length - 1)
-                      _messageIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _messageIndex--;
+                        if (_messageIndex < 1)
+                          _messageIndex = _cartridge.Messages.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _messageIndex.toString() + ' / ' + (_cartridge.Messages.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _messageIndex++;
+                        if (_messageIndex > _cartridge.Messages.length)
+                          _messageIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex]))
+                  children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex - 1]))
               )
             ]
         );
@@ -698,20 +856,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Answers.length - 1,
-                value: _answerIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _answerIndex = value;
-                    if (_answerIndex > _cartridge.Answers.length - 1)
-                      _answerIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _answerIndex--;
+                        if (_answerIndex < 1)
+                          _answerIndex = _cartridge.Answers.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _answerIndex.toString() + ' / ' + (_cartridge.Answers.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _answerIndex++;
+                        if (_answerIndex > _cartridge.Answers.length)
+                          _answerIndex = 1;
+                      });
+                    },
+                  ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Answers[_answerIndex]))
+                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Answers[_answerIndex - 1]))
               )
             ]
         );
@@ -727,20 +902,38 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Column(
             children : <Widget>[
               GCWDefaultOutput(),
-              GCWIntegerSpinner(
-                min: 0,
-                max: _cartridge.Identifiers.length - 1,
-                value: _identifierIndex,
-                onChanged: (value) {
-                  setState(() {
-                    _identifierIndex = value;
-                    if (_identifierIndex > _cartridge.Identifiers.length - 1)
-                      _identifierIndex = 0;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _identifierIndex--;
+                        if (_identifierIndex < 1)
+                          _identifierIndex = _cartridge.Identifiers.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: _identifierIndex.toString() + ' / ' + (_cartridge.Identifiers.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _identifierIndex++;
+                        if (_identifierIndex > _cartridge.Identifiers.length)
+                          _identifierIndex = 1;
+                      });
+                    },
+                  ),
+                ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputIdentifier(_cartridge.Identifiers[_identifierIndex]))
+                  children: columnedMultiLineOutput(context, _outputIdentifier(_cartridge.Identifiers[_identifierIndex - 1]))
               )
             ]
         );
@@ -965,4 +1158,27 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       setState(() {});
     });
   }
+
+  PlatformFile _getFileFrom(String ressourceName){
+    Uint8List filedata;
+    String filename;
+    int fileindex = 0;
+
+    _cartridge.Media.forEach((element) {
+      if (element.MediaLUAName == ressourceName) {
+        filename = element.MediaFilename;
+        filedata = _cartridge.MediaFilesContents[fileindex + 1].MediaFileBytes;
+      }
+      fileindex++;
+    });
+
+    return PlatformFile(
+        bytes: filedata,
+        name: filename
+    );
+  }
+//    bytes:_cartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
+//    name: filename),
+//],
+
 }
