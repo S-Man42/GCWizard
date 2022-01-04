@@ -3,9 +3,9 @@ import 'dart:ffi';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class ZonePoint{
-  final String Latitude;
-  final String Longitude;
-  final String Altitude;
+  final double Latitude;
+  final double Longitude;
+  final double Altitude;
 
   ZonePoint(
       this.Latitude,
@@ -142,7 +142,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
             List<String> pointdata = getLineData(
                 lines[i + 2 + j], LUAname, 'OriginalPoint', obfuscator, dtable)
                 .replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
-            originalPoint = ZonePoint(pointdata[0], pointdata[1], pointdata[2]);
+            originalPoint = ZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
           }
           if (lines[i + 2 + j].startsWith(LUAname + '.OutOfRangeName'))
             outOfRange = getLineData(lines[i + 2 + j], LUAname, 'OutOfRangeName', obfuscator, dtable);
@@ -193,7 +193,8 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
 
 ZonePoint _getPoint(String line){
   List<String> data = line.trimLeft().replaceAll('ZonePoint(', '').replaceAll('),', '').replaceAll(')', '').replaceAll(' ', '').split(',');
-  return ZonePoint(data[0], data[1], data[2]);
+  print(data[0]+'.'+data[1]+'.'+data[2]);
+  return ZonePoint(double.parse(data[0]), double.parse(data[1]), double.parse(data[2]));
 }
 
 
