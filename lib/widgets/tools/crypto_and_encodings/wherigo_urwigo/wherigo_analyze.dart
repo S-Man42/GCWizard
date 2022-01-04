@@ -223,12 +223,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         (_cartridge.NumberOfObjects - 1).toString()
       ],
       [
-        i18n(context, 'wherigo_header_latitude'),
-        _cartridge.Latitude.toString()
-      ],
-      [
-        i18n(context, 'wherigo_header_longitude'),
-        _cartridge.Longitude.toString()
+        i18n(context, 'wherigo_output_location'),
+        formatCoordOutput(LatLng(_cartridge.Latitude, _cartridge.Longitude), {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
       ],
       [
         i18n(context, 'wherigo_header_altitude'),
