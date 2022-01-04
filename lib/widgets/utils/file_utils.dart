@@ -19,13 +19,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
-<<<<<<< HEAD
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC, LUA }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, OGG, SND, FDL, MIDI, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC, LUA }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
-=======
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, OGG, MIDI, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
-enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
->>>>>>> 8529676e30a4465df525d1b2f90865b939233119
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   // https://en.wikipedia.org/wiki/List_of_file_signatures
@@ -153,13 +148,12 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'mime_types': ['audio/mpeg', 'audio/mp3', 'audio/mpeg3', 'audio/x-mpeg-3'],
     'file_class': FileClass.SOUND
   },
-<<<<<<< HEAD
-  FileType.OGG: { //
-    'extensions': ['ogg'],
+  FileType.OGG: {
+    'extensions': ['ogg', 'oga'],
     'magic_bytes': <List<int>>[
-      [0x4F, 0x67, 0x67, 0x53]
+    [0x4F, 0x67, 0x67, 0x53]
     ],
-    'mime_types': ['audio/ogg',],
+    'mime_types': ['audio/ogg', 'application/ogg'],
     'file_class': FileClass.SOUND
   },
   FileType.SND: {
@@ -174,14 +168,6 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['fdl'],
     'magic_bytes': <List<int>>[[]],
     'mime_types': ['application/octet-stream'],
-=======
-  FileType.OGG: {
-    'extensions': ['ogg', 'oga'],
-    'magic_bytes': <List<int>>[
-      [0x4F, 0x67, 0x67, 0x53]
-    ],
-    'mime_types': ['audio/ogg', 'application/ogg'],
->>>>>>> 8529676e30a4465df525d1b2f90865b939233119
     'file_class': FileClass.SOUND
   },
   FileType.TXT: {
