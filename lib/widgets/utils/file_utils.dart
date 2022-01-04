@@ -19,8 +19,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
+<<<<<<< HEAD
 enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, MP3, OGG, FDL, SND, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC, LUA }
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
+=======
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, OGG, MIDI, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
+enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
+>>>>>>> 8529676e30a4465df525d1b2f90865b939233119
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   // https://en.wikipedia.org/wiki/List_of_file_signatures
@@ -114,10 +119,27 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.WMV: {
     'extensions': ['wmv'],
+    'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
     'magic_bytes': <List<int>>[
       [0x30, 0x26, 0xB2, 0x75]
     ],
-    'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
+    'file_class': FileClass.SOUND
+  },
+  FileType.WAV: {
+    'extensions': ['wav'],
+    'magic_bytes': <List<int>>[
+      [0x52, 0x49, 0x46, 0x46],
+      [0x57, 0x41, 0x56, 0x45]
+    ],
+    'mime_types': ['audio/wav', 'audio/x-wav'],
+    'file_class': FileClass.SOUND
+  },
+  FileType.MIDI: {
+    'extensions': ['mid', 'midi'],
+    'magic_bytes': <List<int>>[
+      [0x4D, 0x54, 0x68, 0x64]
+    ],
+    'mime_types': ['audio/midi', 'audio/x-midi'],
     'file_class': FileClass.SOUND
   },
   FileType.MP3: {
@@ -131,6 +153,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'mime_types': ['audio/mpeg', 'audio/mp3', 'audio/mpeg3', 'audio/x-mpeg-3'],
     'file_class': FileClass.SOUND
   },
+<<<<<<< HEAD
   FileType.OGG: { //
     'extensions': ['ogg'],
     'magic_bytes': <List<int>>[
@@ -151,6 +174,14 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['fdl'],
     'magic_bytes': <List<int>>[[]],
     'mime_types': ['application/octet-stream'],
+=======
+  FileType.OGG: {
+    'extensions': ['ogg', 'oga'],
+    'magic_bytes': <List<int>>[
+      [0x4F, 0x67, 0x67, 0x53]
+    ],
+    'mime_types': ['audio/ogg', 'application/ogg'],
+>>>>>>> 8529676e30a4465df525d1b2f90865b939233119
     'file_class': FileClass.SOUND
   },
   FileType.TXT: {
@@ -174,7 +205,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x4D, 0x5A, 0x90, 0x00]
     ],
     'mime_types': ['application/octet-stream'],
-    'mime_type': FileClass.DATA
+    'file_class': FileClass.DATA
   },
   FileType.GPX: {
     'extensions': ['gpx'],
@@ -187,15 +218,14 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['kml'],
     'magic_bytes': <List<int>>[],
     'file_class': FileClass.DATA,
-    'mime_types': ['application/kml', 'application/kml+xml', 'application/xml', 'application/vnd.google-earth.kml+xml'],
+    'mime_types': ['application/kml', 'application/kml+xml', 'application/xml', 'application/vnd.google-earth.kml+xml', 'application/vnd.google-earth.kml'],
     'uniform_type_identifier': 'com.google.earth.kml'
   },
   FileType.KMZ: {
     'extensions': ['kmz'],
     'magic_bytes': <List<int>>[],
     'file_class': FileClass.DATA,
-    'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml'],
-    'mime_type': 'application/vnd.google-earth.kmz'
+    'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml', 'application/vnd.google-earth.kmz']
   },
   FileType.LUAC: {
     'extensions': ['luac'],

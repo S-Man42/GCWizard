@@ -202,7 +202,7 @@ class BrailleState extends State<Braille> {
           if (_currentLanguage == BrailleLanguage.SIMPLE)
             Column(
               children: [
-                GCWDefaultOutput(child: segments['chars'].join()),
+                GCWDefaultOutput(child: _normalizeChars(segments['chars'].join())),
                 if (segmentsBasicLetters['chars'].join().toUpperCase() != segments['chars'].join())
                   GCWOutput(
                     title: i18n(context, 'brailledotnumbers_basic_letters'),
@@ -220,5 +220,15 @@ class BrailleState extends State<Braille> {
         ],
       );
     }
+  }
+
+  String _normalizeChars(String input){
+    if (input.endsWith('NUMBER FOLLOWS>'))
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') + i18n(context, 'symboltables_braille_de_number_follows');
+    else if (input.endsWith('ANTOINE NUMBER FOLLOWS>'))
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '') + i18n(context, 'symboltables_braille_en_mathmatics_follows');
+    else
+      return input.replaceAll('<NUMBER FOLLOWS>', '').replaceAll('<ANTOINE NUMBER FOLLOWS>', '');
+
   }
 }

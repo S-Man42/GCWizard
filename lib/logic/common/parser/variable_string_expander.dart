@@ -48,12 +48,12 @@ class VariableStringExpander {
   SendPort sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
-  bool uniqueResults;
+  bool orderAndUnique;
 
   VariableStringExpander(this._input, this._substitutions,
       {this.onAfterExpandedText,
       this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
-      this.uniqueResults = false,
+      this.orderAndUnique = true,
       this.sendAsyncPort}) {
     if (this.onAfterExpandedText == null) this.onAfterExpandedText = (e) => e;
   }
@@ -76,7 +76,12 @@ class VariableStringExpander {
 
   // Expands a "compressed" variable group like "5-10" to "5,6,7,8,9,10"
   List<String> _expandVariableGroup(String group) {
-    var output = SplayTreeSet<String>();
+    var output;
+
+    if (orderAndUnique)
+      output = SplayTreeSet<String>();
+    else
+      output = <String>[];
 
     if (group == null) return [];
 
@@ -165,10 +170,9 @@ class VariableStringExpander {
 
       _result = onAfterExpandedText(_result);
       if (_result != null) {
-        if (uniqueResults && _uniqueResults.contains(_result)) continue;
+        if (_uniqueResults.contains(_result)) continue;
 
         _results.add({'text': _result, 'variables': _getCurrentVariables()});
-        if (uniqueResults) _uniqueResults.add(_result);
 
         if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
       }
