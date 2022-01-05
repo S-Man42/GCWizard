@@ -1,5 +1,17 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 
+class ObjectData{
+  final String ObjectID;
+  final String ObjectName;
+  final String ObjectMedia;
+
+  ObjectData(
+      this.ObjectID,
+      this.ObjectName,
+      this.ObjectMedia,
+  );
+}
+
 
 String getLUAName(String line) {
   String result = '';

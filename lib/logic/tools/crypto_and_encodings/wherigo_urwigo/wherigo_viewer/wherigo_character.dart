@@ -27,11 +27,13 @@ class CharacterData{
 }
 
 
-List<CharacterData>getCharactersFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZCharacter)');
   List<String> lines = LUA.split('\n');
   String line = '';
-  List<CharacterData> result = [];
+  List<CharacterData> Characters = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
   bool section = true;
   int j = 1;
   String LUAname = '';
@@ -102,7 +104,7 @@ List<CharacterData>getCharactersFromCartridge(String LUA, dtable, obfuscator){
         }
       } while (section);
 
-      result.add(CharacterData(
+      Characters.add(CharacterData(
            LUAname ,
            id,
            name,
@@ -118,5 +120,7 @@ List<CharacterData>getCharactersFromCartridge(String LUA, dtable, obfuscator){
     }
   };
 
-  return result;
+  out.addAll({'content': Characters});
+  out.addAll({'names': NameToObject});
+  return out;
 }

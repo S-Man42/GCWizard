@@ -28,11 +28,13 @@ class TaskData{
 
 
 
-List<TaskData>getTasksFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZTask)');
   List<String> lines = LUA.split('\n');
   String line = '';
-  List<TaskData> result = [];
+  List<TaskData> Tasks = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
   bool section = true;
   int j = 1;
   String LUAname = '';
@@ -102,7 +104,7 @@ List<TaskData>getTasksFromCartridge(String LUA, dtable, obfuscator){
         }
       } while (section);
 
-      result.add(TaskData(
+      Tasks.add(TaskData(
           LUAname,
           id,
           name,
@@ -117,5 +119,8 @@ List<TaskData>getTasksFromCartridge(String LUA, dtable, obfuscator){
       i = i + 2 + j;
     }
   };
-  return result;
+
+  out.addAll({'content': Tasks});
+  out.addAll({'names': NameToObject});
+  return out;
 }

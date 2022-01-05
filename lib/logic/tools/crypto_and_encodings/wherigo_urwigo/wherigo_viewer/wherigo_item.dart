@@ -33,11 +33,13 @@ class ItemData{
 
 
 
-List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZItem)');
   List<String> lines = LUA.split('\n');
   String line = '';
-  List<ItemData> result = [];
+  List<ItemData> Items = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
   bool section = true;
   int j = 1;
   String LUAname = '';
@@ -120,7 +122,7 @@ List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
       } while (section);
       j--;
 
-      result.add(ItemData(
+      Items.add(ItemData(
           LUAname,
           id,
           name,
@@ -136,6 +138,9 @@ List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
       i = i + 2 + j;
     }
   };
-  return result;
+
+  out.addAll({'content': Items});
+  out.addAll({'names': NameToObject});
+  return out;
 }
 

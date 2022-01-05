@@ -4691,7 +4691,7 @@
   "wherigo_header_completion": "Completion Code",
   "wherigo_header_splashscreen": "ID of Splashscreen Image",
   "wherigo_header_splashicon": "ID of Splashscreen Icon",
-  "wherigo_hint_openinhexviewer": "Due to performance reasons the Bytecode should be opened in the HexViewer-Tool",
+  "wherigo_hint_openinhexviewer": "Due to performance reasons the Bytecode should be opened in the HexViewer-Tool.\nFor further investigations esp. getting the LUA-Sourcecode you should save it to file.\n\nTo extract the LUA-Sourcecode youz need Java and also unluac.jar from sourecforge.net\nhttps://sourceforge.net/projects/unluac/files/latest/download\n\nUsage:\njava -jar unluac.jar myfile.lua > myfile_decompiled.lua",
   "wherigo_header_creationdate": "Date of creation",
   "wherigo_media_type": "Media Type",
   "wherigo_media_size": "Size of File (Bytes)",

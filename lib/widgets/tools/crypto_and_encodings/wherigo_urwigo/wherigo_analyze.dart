@@ -63,7 +63,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
+  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {});
   Map<String, dynamic> _outData;
 
   var _displayedCartridgeData = WHERIGO.NULL;
@@ -464,7 +464,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ),
 
             if (_outputMedia != null)
-                Column(children: columnedMultiLineOutput(context,  _outputMedia), flexValues: [1,3]),
+                Column(children: columnedMultiLineOutput(context,  _outputMedia, flexValues: [1,3])),
           ],
         );
         break;
@@ -612,7 +612,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 files: [_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]), flexValues: [1,3], flexValues: [1,3])
+                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]), flexValues: [1,3])
               )]
         );
         break;

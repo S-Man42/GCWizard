@@ -53,11 +53,13 @@ class ZoneData{
 }
 
 
-List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r' = Wherigo.Zone\(');
   List<String> lines = LUA.split('\n');
   String line = '';
-  List<ZoneData> result = [];
+  List<ZoneData> Zones = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
   List<ZonePoint> points = [];
   bool section = true;
   int j = 1;
@@ -166,7 +168,7 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
         }
       } while (section);
 
-      result.add(ZoneData(
+      Zones.add(ZoneData(
           LUAname,
           id,
           name,
@@ -188,7 +190,10 @@ List<ZoneData>getZonesFromCartridge(String LUA, dtable, obfuscator){
       i = i + 1 + j;
     }
   };
-  return result;
+
+  out.addAll({'content': Zones});
+  out.addAll({'names': NameToObject});
+  return out;
 }
 
 ZonePoint _getPoint(String line){

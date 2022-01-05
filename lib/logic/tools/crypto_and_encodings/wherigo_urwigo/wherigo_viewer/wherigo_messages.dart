@@ -21,13 +21,15 @@ class MessageElementData{
 
 
 
-List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getMessagesFromCartridge(String LUA, dtable, obfuscator){
   if (LUA == null || LUA == '') {
-    return [];
+    return {'content': [], 'names': []};
   } else {
     List<String> lines = LUA.split('\n');
     List<MessageElementData> singleMessageDialog = [];
-    List<List<MessageElementData>> result = [];
+    List<List<MessageElementData>> Messages = [];
+    Map<String, ObjectData> NameToObject = {};
+    var out = Map<String, dynamic>();
     bool section = true;
     int j = 1;
     String line = '';
@@ -65,7 +67,7 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
             j++;
           } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('})'));
           i = i + j;
-          result.add(singleMessageDialog);
+          Messages.add(singleMessageDialog);
         }
       }
 
@@ -97,7 +99,7 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
           j = j + 1;
         } while (section && (i + j < lines.length));
         i = i + j;
-        result.add(singleMessageDialog);
+        Messages.add(singleMessageDialog);
       }
 
       else if (line.trimLeft().startsWith('_Urwigo.OldDialog(')) {
@@ -125,9 +127,12 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
           j = j + 1;
         } while (section);
         i = i + j;
-        result.add(singleMessageDialog);
+        Messages.add(singleMessageDialog);
       }
     };
-    return result;
+
+    out.addAll({'content': Messages});
+    out.addAll({'names': NameToObject});
+    return out;
   }
 }

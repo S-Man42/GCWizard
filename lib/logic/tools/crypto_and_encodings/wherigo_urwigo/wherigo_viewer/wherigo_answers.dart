@@ -29,11 +29,14 @@ class ActionData{
       );
 }
 
-List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtable, obfuscator){
+Map<String, dynamic> getAnswersFromCartridge(String LUA, List<InputData> inputs, dtable, obfuscator){
   List<String> lines = LUA.split('\n');
-  List<AnswerData> result = [];
+  List<AnswerData> Answers = [];
 
   List<String> answerList = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
+
   String inputObject = '';
   String question = '';
   String help = '';
@@ -110,7 +113,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
     else if (_SectionEnd(lines[i])) { //
       if (insideInputFunction) {
         answerList.forEach((answer) {
-          result.add(AnswerData(
+          Answers.add(AnswerData(
             inputObject,
             question,
             help,
@@ -127,7 +130,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
       if (insideInputFunction) {
         insideInputFunction = false;
         answerList.forEach((answer) {
-          result.add(AnswerData(
+          Answers.add(AnswerData(
             inputObject,
             question,
             help,
@@ -163,7 +166,9 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
 
   } // end for - got all functions
 
-  return result;
+  out.addAll({'content': Answers});
+  out.addAll({'names': NameToObject});
+  return out;
 }
 
 

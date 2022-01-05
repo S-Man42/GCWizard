@@ -27,7 +27,7 @@ class InputData{
 }
 
 
-List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZInput)');
   List<String> lines = LUA.split('\n');
 
@@ -44,7 +44,10 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
   String text = '';
   List<String> choices = [];
 
-  List<InputData> result = [];
+  List<InputData> Inputs = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
+
   for (int i = 0; i < lines.length; i++){
 
     if (re.hasMatch(lines[i])) {
@@ -130,7 +133,7 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
         i++;
       } while (section);
       i--;
-      result.add(InputData(
+      Inputs.add(InputData(
         LUAname,
         id,
         name,
@@ -144,5 +147,8 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
       ));
     }
   };
-  return result;
+
+  out.addAll({'content': Inputs});
+  out.addAll({'names': NameToObject});
+  return out;
 }

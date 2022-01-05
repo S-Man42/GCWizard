@@ -22,10 +22,12 @@ class MediaData {
 }
 
 
-List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZMedia)');
   List<String> lines = LUA.split('\n');
-  List<MediaData> result = [];
+  List<MediaData> Medias = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
   bool sectionMedia = true;
   bool sectionInner = true;
   int j = 1;
@@ -102,7 +104,7 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
       } while (sectionMedia && (i < lines.length - 1));
       //i = i + j;
 
-      result.add(MediaData(
+      Medias.add(MediaData(
           LUAname,
           id,
           name,
@@ -113,5 +115,8 @@ List<MediaData>getMediaFromCartridge(String LUA, dtable, obfuscator){
       ));
     }
   };
-  return result;
+
+  out.addAll({'content': Medias});
+  out.addAll({'names': NameToObject});
+  return out;
 }

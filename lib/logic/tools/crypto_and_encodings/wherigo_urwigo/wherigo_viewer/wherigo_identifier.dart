@@ -11,11 +11,14 @@ class IdentifierData{
       this.IdentifierName);
 }
 
-List<IdentifierData> getIdentifiersFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getIdentifiersFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'(.ZVariables)');
   List<String> lines = LUA.split('\n');
   List<String> declaration = [];
-  List<IdentifierData> result = [];
+  List<IdentifierData> Identifiers = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
+
   int j = 1;
 
   for (int i = 0; i < lines.length; i++){
@@ -24,13 +27,15 @@ List<IdentifierData> getIdentifiersFromCartridge(String LUA, dtable, obfuscator)
       do {
         declaration = lines[i + j].trim().replaceAll(',', '').replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').split('=');
         if (declaration.length == 2)
-          result.add(IdentifierData(declaration[0], deobfuscateUrwigoText(declaration[1], dtable)));
+          Identifiers.add(IdentifierData(declaration[0], deobfuscateUrwigoText(declaration[1], dtable)));
         else
-          result.add(IdentifierData(declaration[0], ''));
+          Identifiers.add(IdentifierData(declaration[0], ''));
         j++;
       } while(lines[i + j].trimLeft() != '}');
     }
   };
 
-  return result;
+  out.addAll({'content': Identifiers});
+  out.addAll({'names': NameToObject});
+  return out;
 }

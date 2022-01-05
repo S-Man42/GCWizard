@@ -20,11 +20,13 @@ class TimerData{
       this.TimerType);
 }
 
-List<TimerData>getTimersFromCartridge(String LUA, dtable, obfuscator){
+Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZTimer)');
   List<String> lines = LUA.split('\n');
   String line = '';
-  List<TimerData> result = [];
+  List<TimerData> Timers = [];
+  Map<String, ObjectData> NameToObject = {};
+  var out = Map<String, dynamic>();
     bool section = true;
   int j = 1;
   String LUAname = '';
@@ -78,7 +80,7 @@ List<TimerData>getTimersFromCartridge(String LUA, dtable, obfuscator){
         }
       } while (section);
 
-      result.add(TimerData(
+      Timers.add(TimerData(
         LUAname,
         id,
         name,
@@ -91,5 +93,7 @@ List<TimerData>getTimersFromCartridge(String LUA, dtable, obfuscator){
     }
   };
 
-  return result;
+  out.addAll({'content': Timers});
+  out.addAll({'names': NameToObject});
+  return out;
 }

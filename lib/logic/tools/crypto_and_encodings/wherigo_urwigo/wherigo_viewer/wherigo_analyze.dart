@@ -268,7 +268,7 @@ class WherigoCartridge{
   final List<List<MessageElementData>> Messages;
   final List<AnswerData> Answers;
   final List<IdentifierData> Identifiers;
-
+  final Map<String, ObjectData> NameToObject;
 
   WherigoCartridge(this.Signature,
       this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUAFile,
@@ -283,7 +283,8 @@ class WherigoCartridge{
       this.LengthOfCompletionCode, this.CompletionCode,
       this.dtable,
       this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media,
-      this.Messages, this.Answers, this.Identifiers);
+      this.Messages, this.Answers, this.Identifiers,
+      this.NameToObject);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -384,12 +385,12 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   var out = Map<String, dynamic>();
 
   if ((byteListGWC == [] || byteListGWC == null) && (byteListLUA == [] || byteListLUA == null)) {
-    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [])});
+    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {})});
     return out;
   }
 
   try {
-    int _rogress = 0;
+    int _progress = 0;
     int _progressStep = 0;
     String _Signature = '';
     int _NumberOfObjects = 0;
@@ -429,6 +430,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     List<List<MessageElementData>> _Messages = [];
     List<AnswerData> _Answers = [];
     List<IdentifierData> _Identifiers = [];
+    Map<String, ObjectData> _NameToObject = {};
 
     int _Unknown3 = 0;
 
@@ -438,6 +440,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     int _ValidMediaFile = 0;
     int _MediaFileType = 0;
 
+    var _cartridgeData = Map<String, dynamic>();
+
     String _obfuscator = '';
 
     if (byteListGWC == [] || byteListGWC == null) {
@@ -446,7 +450,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     else {
       if (isInvalidCartridge(byteListGWC)) {
         out.addAll({'cartridge': WherigoCartridge(
-            'ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', 0,'', '', [], [], [], [], [], [], [], [], [], []
+            'ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', 0,'', '', [], [], [], [], [], [], [], [], [], [], {}
         )});
         return out;
       }
@@ -598,42 +602,63 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _obfuscator = getObfuscatorFunction(_LUAFile);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 9}); }
 
-    _Characters = getCharactersFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getCharactersFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Characters = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got characters');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 10}); }
 
-    _Items = getItemsFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getItemsFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Items = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got items');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 20}); }
 
-    _Tasks = getTasksFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getTasksFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Tasks = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got tasks');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 30}); }
 
-    _Inputs = getInputsFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getInputsFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Inputs = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got inputs');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 40}); }
 
-    _Zones = getZonesFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getZonesFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Zones = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got zones');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 50}); }
 
-    _Timers = getTimersFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getTimersFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Timers = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got timers');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 60}); }
 
-    _Media = getMediaFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getMediaFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Media = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got media');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 70}); }
 
-    _Messages = getMessagesFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _cartridgeData = getMessagesFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Messages = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got messages');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
 
-    _Answers = getAnswersFromCartridge(_LUAFile, _Inputs, _dtable, _obfuscator);
+    _cartridgeData = getAnswersFromCartridge(_LUAFile, _Inputs, _dtable, _obfuscator);
+    _Answers = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got answers');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 90}); }
-    _Identifiers = getIdentifiersFromCartridge(_LUAFile, _dtable, _obfuscator);
+
+    _cartridgeData = getIdentifiersFromCartridge(_LUAFile, _dtable, _obfuscator);
+    _Identifiers = _cartridgeData['content'];
+    _NameToObject.addAll(_cartridgeData['names']);
     print('got identifiers');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 100}); }
 
@@ -650,11 +675,12 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _LengthOfCompletionCode, _CompletionCode,
         _dtable,
         _Characters, _Items, _Tasks, _Inputs, _Zones, _Timers, _Media,
-        _Messages, _Answers, _Identifiers)});
+        _Messages, _Answers, _Identifiers, _NameToObject)});
   } catch (Exception) {
     print('Exception: '+Exception.toString());
-    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [])});
+    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {})});
   }
+
   return out;
 }
 
