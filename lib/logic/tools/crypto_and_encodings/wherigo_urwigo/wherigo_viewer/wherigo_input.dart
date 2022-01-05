@@ -33,8 +33,6 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   bool section = true;
   bool sectionChoices = true;
-  int j = 1;
-  int k = 1;
   String LUAname = '';
   String id = '';
   String name = '';
@@ -42,7 +40,7 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
   String visible = '';
   String media = '';
   String icon = '';
-  String type = '';
+  String inputType = '';
   String text = '';
   List<String> choices = [];
 
@@ -50,6 +48,7 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
   for (int i = 0; i < lines.length; i++){
 
     if (re.hasMatch(lines[i])) {
+print(lines[i]);
       LUAname = '';
       id = '';
       name = '';
@@ -57,73 +56,85 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
       visible = '';
       media = '';
       icon = '';
-      type = '';
+      inputType = '';
       text = '';
       choices = [];
 
       LUAname = getLUAName(lines[i]);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+
+      i++;
+      id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+
+      i++;
+      name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
 
       description = '';
       section = true;
-      j = 1;
+      i++;
       do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
+        description = description + lines[i];
+        i++;
+        if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
           section = false;
       } while (section);
       description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
       section = true;
       do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].startsWith(LUAname + '.Visible')) {
+        if (i < lines.length - 1) {
+          if (lines[i].startsWith(LUAname + '.Visible')) {
             visible = getLineData(
-                lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
+                lines[i], LUAname, 'Visible', obfuscator, dtable);
+            print(visible);
           }
-          if (lines[i + 2 + j].startsWith(LUAname + '.Media')){
-            media = getLineData(
-                lines[i + 2 + j], LUAname, 'Media', obfuscator, dtable);
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.Icon')){
-            icon = getLineData(
-                lines[i + 2 + j], LUAname, 'Icon', obfuscator, dtable);
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.InputType')) {
-            type = getLineData(
-                lines[i + 2 + j], LUAname, 'InputType', obfuscator, dtable);
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.Text')) {
-            text = getLineData(
-                lines[i + 2 + j], LUAname, 'Text', obfuscator, dtable);
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.Choices')) {
 
+          if (lines[i].startsWith(LUAname + '.Media')){
+            media = getLineData(
+                lines[i], LUAname, 'Media', obfuscator, dtable);
+            print(media);
+          }
+
+          if (lines[i].startsWith(LUAname + '.Icon')){
+            icon = getLineData(
+                lines[i], LUAname, 'Icon', obfuscator, dtable);
+            print(icon);
+          }
+
+          if (lines[i].startsWith(LUAname + '.InputType')) {
+            inputType = getLineData(
+                lines[i], LUAname, 'InputType', obfuscator, dtable);
+            print(inputType);
+          }
+
+          if (lines[i].startsWith(LUAname + '.Text')) {
+            text = getLineData(
+                lines[i], LUAname, 'Text', obfuscator, dtable);
+          }
+
+          if (lines[i].startsWith(LUAname + '.Choices')) {
             choices = [];
-            if (lines[i + 2 + j + 1].startsWith(LUAname + '.InputType')) {
-              choices.addAll(getChoicesSingleLine(lines[i + 2 + j], LUAname, obfuscator, dtable));
+            if (lines[i].startsWith(LUAname + '.InputType')) {
+              choices.addAll(getChoicesSingleLine(lines[i], LUAname, obfuscator, dtable));
             } else {
-              k = 1;
+              i++;
               sectionChoices = true;
               do {
-                if (lines[i + 2 + j + k].trimLeft().startsWith('"')) {
-                  choices.add(lines[i + 2 + j + k].trimLeft().replaceAll('"', '').replaceAll(',', ''));
-                  k++;
+                if (lines[i].trimLeft().startsWith('"')) {
+                  choices.add(lines[i ].trimLeft().replaceAll('"', '').replaceAll(',', ''));
+                  i++;
                 } else {
                   sectionChoices = false;
                 }
               } while (sectionChoices);
-              j = j + k;
             }
           }
-          if (lines[i + 2 + j].startsWith(LUAname + '.Text'))
-            section = false;
-          j = j + 1;
-        }
-      } while (section);
 
+          if (lines[i].startsWith(LUAname + '.Text'))
+            section = false;
+        }
+        i++;
+      } while (section);
+i--;
       result.add(InputData(
         LUAname,
         id,
@@ -132,13 +143,12 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
         visible,
         media,
         icon,
-        type,
+        inputType,
         text,
         choices
       ));
-      i = i + 1 + j;
     }
   };
-
+print(result);
   return result;
 }

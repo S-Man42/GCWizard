@@ -112,6 +112,7 @@ enum WHERIGO {NULL, HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, IN
 enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
 
 Map<WHERIGO, String> WHERIGO_DATA_FULL = {
+  WHERIGO.NULL: 'wherigo_data_null',
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -130,12 +131,14 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL = {
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_GWC = {
+  WHERIGO.NULL: 'wherigo_data_null',
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_LUA = {
+  WHERIGO.NULL: 'wherigo_data_null',
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.DTABLE: 'wherigo_data_dtable',
   WHERIGO.LUA: 'wherigo_data_lua',
@@ -200,11 +203,11 @@ int readByte(Uint8List byteList, int offset){ // 1 Byte
 
 class StringOffset{
   final String ASCIIZ;
-  final int Offset;
+  final int offset;
 
   StringOffset(
       this.ASCIIZ,
-      this.Offset);
+      this.offset);
 }
 
 class MediaFileHeader{
@@ -386,56 +389,56 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   }
 
   try {
-    int progress = 0;
-    int progressStep = 0;
-    String Signature = '';
-    int NumberOfObjects = 0;
-    List<MediaFileHeader> MediaFilesHeaders = [];
-    List<MediaFileContent> MediaFilesContents = [];
-    String LUAFile = '';
-    int MediaFileID = 0;
-    int Address = 0;
-    int HeaderLength = 0;
-    double Latitude = 0.0;
-    double Longitude = 0.0;
-    double Altitude = 0.0;
-    int Splashscreen = 0;
-    int SplashscreenIcon = 0;
-    int DateOfCreation;
-    String TypeOfCartridge = '';
-    String Player = '';
-    int PlayerID = 0;
-    String CartridgeName = '';
-    String CartridgeGUID = '';
-    String CartridgeDescription = '';
-    String StartingLocationDescription = '';
-    String Version = '';
-    String Author = '';
-    String Company = '';
-    String RecommendedDevice = '';
-    int LengthOfCompletionCode = 0;
-    String dtable = '';
-    String CompletionCode = '';
-    List<CharacterData> Characters = [];
-    List<ItemData> Items = [];
-    List<TaskData> Tasks = [];
-    List<InputData> Inputs = [];
-    List<ZoneData> Zones = [];
-    List<TimerData> Timers = [];
-    List<MediaData> Media = [];
-    List<List<MessageElementData>> Messages = [];
-    List<AnswerData> Answers = [];
-    List<IdentifierData> Identifiers = [];
+    int _rogress = 0;
+    int _progressStep = 0;
+    String _Signature = '';
+    int _NumberOfObjects = 0;
+    List<MediaFileHeader> _MediaFilesHeaders = [];
+    List<MediaFileContent> _MediaFilesContents = [];
+    String _LUAFile = '';
+    int _MediaFileID = 0;
+    int _Address = 0;
+    int _HeaderLength = 0;
+    double _Latitude = 0.0;
+    double _Longitude = 0.0;
+    double _Altitude = 0.0;
+    int _Splashscreen = 0;
+    int _SplashscreenIcon = 0;
+    int _DateOfCreation;
+    String _TypeOfCartridge = '';
+    String _Player = '';
+    int _PlayerID = 0;
+    String _CartridgeName = '';
+    String _CartridgeGUID = '';
+    String _CartridgeDescription = '';
+    String _StartingLocationDescription = '';
+    String _Version = '';
+    String _Author = '';
+    String _Company = '';
+    String _RecommendedDevice = '';
+    int _LengthOfCompletionCode = 0;
+    String _dtable = '';
+    String _CompletionCode = '';
+    List<CharacterData> _Characters = [];
+    List<ItemData> _Items = [];
+    List<TaskData> _Tasks = [];
+    List<InputData> _Inputs = [];
+    List<ZoneData> _Zones = [];
+    List<TimerData> _Timers = [];
+    List<MediaData> _Media = [];
+    List<List<MessageElementData>> _Messages = [];
+    List<AnswerData> _Answers = [];
+    List<IdentifierData> _Identifiers = [];
 
-    int Unknown3 = 0;
+    int _Unknown3 = 0;
 
-    int offset = 0;
-    StringOffset ASCIIZ;
-    int MediaFileLength = 0;
-    int ValidMediaFile = 0;
-    int MediaFileType = 0;
+    int _offset = 0;
+    StringOffset _ASCIIZ;
+    int _MediaFileLength = 0;
+    int _ValidMediaFile = 0;
+    int _MediaFileType = 0;
 
-    String obfuscator = '';
+    String _obfuscator = '';
 
     if (byteListGWC == [] || byteListGWC == null) {
     }
@@ -448,131 +451,130 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         return out;
       }
       else {
-        Signature = Signature + byteListGWC[0].toString();
-        Signature = Signature + byteListGWC[1].toString();
-        Signature = Signature + String.fromCharCode(byteListGWC[2]);
-        Signature = Signature + String.fromCharCode(byteListGWC[3]);
-        Signature = Signature + String.fromCharCode(byteListGWC[4]);
-        Signature = Signature + String.fromCharCode(byteListGWC[5]);
-
-        NumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
-
-        offset = START_OBJCETADRESS; // File Header LUA File
-        for (int i = 0; i < NumberOfObjects; i++) {
-          MediaFileID = readUShort(byteListGWC, offset);
-          offset = offset + LENGTH_USHORT;
-          Address = readInt(byteListGWC, offset);
-          offset = offset + LENGTH_INT;
-          MediaFilesHeaders.add(MediaFileHeader(MediaFileID, Address));
+        _Signature = _Signature + byteListGWC[0].toString();
+        _Signature = _Signature + byteListGWC[1].toString();
+        _Signature = _Signature + String.fromCharCode(byteListGWC[2]);
+        _Signature = _Signature + String.fromCharCode(byteListGWC[3]);
+        _Signature = _Signature + String.fromCharCode(byteListGWC[4]);
+        _Signature = _Signature + String.fromCharCode(byteListGWC[5]);
+        _NumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
+        _offset = START_OBJCETADRESS; // File Header LUA File
+        for (int i = 0; i < _NumberOfObjects; i++) {
+          _MediaFileID = readUShort(byteListGWC, _offset);
+          _offset = _offset + LENGTH_USHORT;
+          _Address = readInt(byteListGWC, _offset);
+          _offset = _offset + LENGTH_INT;
+          _MediaFilesHeaders.add(MediaFileHeader(_MediaFileID, _Address));
         }
 
-        START_HEADER = START_OBJCETADRESS + NumberOfObjects * 6;
-        offset = START_HEADER;
+        START_HEADER = START_OBJCETADRESS + _NumberOfObjects * 6;
+        _offset = START_HEADER;
 
-        HeaderLength = readLong(byteListGWC, offset);
-        offset = offset + LENGTH_LONG;
-        START_FILES = START_HEADER + HeaderLength;
+        _HeaderLength = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+        START_FILES = START_HEADER + _HeaderLength;
 
-        Latitude = readDouble(byteListGWC, offset);
-        offset = offset + LENGTH_DOUBLE;
+        _Latitude = readDouble(byteListGWC, _offset);
+        if (_Latitude < -90.0 || _Latitude > 90.0)
+          _Latitude = 0.0;
+        _offset = _offset + LENGTH_DOUBLE;
+        _Longitude = readDouble(byteListGWC, _offset);
+        if (_Longitude < -180.0 || _Longitude > 180.0)
+          _Longitude = 0.0;
+        _offset = _offset + LENGTH_DOUBLE;
+        _Altitude = readDouble(byteListGWC, _offset);
+        _offset = _offset + LENGTH_DOUBLE;
 
-        Longitude = readDouble(byteListGWC, offset);
-        offset = offset + LENGTH_DOUBLE;
+        _DateOfCreation = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
 
-        Altitude = readDouble(byteListGWC, offset);
-        offset = offset + LENGTH_DOUBLE;
+        _Unknown3 = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+        _Splashscreen = readShort(byteListGWC, _offset);
+        _offset = _offset + LENGTH_SHORT;
 
-        DateOfCreation = readLong(byteListGWC, offset);
-        offset = offset + LENGTH_LONG;
+        _SplashscreenIcon = readShort(byteListGWC, _offset);
+        _offset = _offset + LENGTH_SHORT;
 
-        Unknown3 = readLong(byteListGWC, offset);
-        offset = offset + LENGTH_LONG;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _TypeOfCartridge = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        Splashscreen = readShort(byteListGWC, offset);
-        offset = offset + LENGTH_SHORT;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Player = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        SplashscreenIcon = readShort(byteListGWC, offset);
-        offset = offset + LENGTH_SHORT;
+        _PlayerID = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        TypeOfCartridge = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _PlayerID = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        Player = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CartridgeName = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        PlayerID = readLong(byteListGWC, offset);
-        offset = offset + LENGTH_LONG;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CartridgeGUID = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        PlayerID = readLong(byteListGWC, offset);
-        offset = offset + LENGTH_LONG;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CartridgeDescription = _ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
+        _offset = _ASCIIZ.offset;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        CartridgeName = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _StartingLocationDescription = _ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
+        _offset = _ASCIIZ.offset;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        CartridgeGUID = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Version = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        CartridgeDescription = ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Author = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        StartingLocationDescription = ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Company = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        Version = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _RecommendedDevice = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        Author = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _LengthOfCompletionCode = readInt(byteListGWC, _offset);
+        _offset = _offset + LENGTH_INT;
 
-        ASCIIZ = readString(byteListGWC, offset);
-        Company = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
-
-        ASCIIZ = readString(byteListGWC, offset);
-        RecommendedDevice = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
-
-        LengthOfCompletionCode = readInt(byteListGWC, offset);
-        offset = offset + LENGTH_INT;
-
-        ASCIIZ = readString(byteListGWC, offset);
-        CompletionCode = ASCIIZ.ASCIIZ;
-        offset = ASCIIZ.Offset;
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CompletionCode = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
 
         //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 5}); }
 
         // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
-        MediaFileLength = readInt(byteListGWC, offset);
-        offset = offset + LENGTH_INT;
-        MediaFilesContents.add(MediaFileContent(0,
-            Uint8List.sublistView(byteListGWC, offset, offset + MediaFileLength),
-            MediaFileLength));
-        offset = offset + MediaFileLength;
+        _MediaFileLength = readInt(byteListGWC, _offset);
+        _offset = _offset + LENGTH_INT;
+        _MediaFilesContents.add(MediaFileContent(0,
+            Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength),
+            _MediaFileLength));
+        _offset = _offset + _MediaFileLength;
 
         //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
 
         // read Objects
-        for (int i = 1; i < NumberOfObjects; i++) {
-          ValidMediaFile = readByte(byteListGWC, offset);
-          offset = offset + LENGTH_BYTE;
-          if (ValidMediaFile != 0) {
-            MediaFileType = readInt(byteListGWC, offset);
-            offset = offset + LENGTH_INT;
-            MediaFileLength = readInt(byteListGWC, offset);
-            offset = offset + LENGTH_INT;
-            MediaFilesContents.add(MediaFileContent(MediaFileType,
+        for (int i = 1; i < _NumberOfObjects; i++) {
+          _ValidMediaFile = readByte(byteListGWC, _offset);
+          _offset = _offset + LENGTH_BYTE;
+          if (_ValidMediaFile != 0) {
+            _MediaFileType = readInt(byteListGWC, _offset);
+            _offset = _offset + LENGTH_INT;
+            _MediaFileLength = readInt(byteListGWC, _offset);
+            _offset = _offset + LENGTH_INT;
+            _MediaFilesContents.add(MediaFileContent(_MediaFileType,
                 Uint8List.sublistView(
-                    byteListGWC, offset, offset + MediaFileLength),
-                MediaFileLength));
-            offset = offset + MediaFileLength;
+                    byteListGWC, _offset, _offset + _MediaFileLength),
+                _MediaFileLength));
+            _offset = _offset + _MediaFileLength;
           }
         }
       }
@@ -582,62 +584,62 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     // from byteListLUA
     // from MediaFilesContents[0].MediaFileBytes
     if (byteListLUA == null || byteListLUA == [])
-      LUAFile = _decompileLUAfromGWC(MediaFilesContents[0].MediaFileBytes);
+      _LUAFile = _decompileLUAfromGWC(_MediaFilesContents[0].MediaFileBytes);
     else
-      LUAFile = _LUAUint8ListToString(byteListLUA);
+      _LUAFile = _LUAUint8ListToString(byteListLUA);
 
     // normalize
-    LUAFile = _normalizeLUAmultiLineText(LUAFile);
+    _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
 
-    dtable = _getdtableFromCartridge(LUAFile);
+    _dtable = _getdtableFromCartridge(_LUAFile);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 8}); }
 
-    obfuscator = getObfuscatorFunction(LUAFile);
+    _obfuscator = getObfuscatorFunction(_LUAFile);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 9}); }
 
-    Characters = getCharactersFromCartridge(LUAFile, dtable, obfuscator);
+    _Characters = getCharactersFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 10}); }
 
-    Items = getItemsFromCartridge(LUAFile, dtable, obfuscator);
+    _Items = getItemsFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 20}); }
 
-    Tasks = getTasksFromCartridge(LUAFile, dtable, obfuscator);
+    _Tasks = getTasksFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 30}); }
 
-    Inputs = getInputsFromCartridge(LUAFile, dtable, obfuscator);
+    _Inputs = getInputsFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 40}); }
 
-    Zones = getZonesFromCartridge(LUAFile, dtable, obfuscator);
+    _Zones = getZonesFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 50}); }
 
-    Timers = getTimersFromCartridge(LUAFile, dtable, obfuscator);
+    _Timers = getTimersFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 60}); }
 
-    Media = getMediaFromCartridge(LUAFile, dtable, obfuscator);
+    _Media = getMediaFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 70}); }
 
-    Messages = getMessagesFromCartridge(LUAFile, dtable, obfuscator);
+    _Messages = getMessagesFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
 
-    Answers = getAnswersFromCartridge(LUAFile, Inputs, dtable, obfuscator);
+    _Answers = getAnswersFromCartridge(_LUAFile, _Inputs, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 90}); }
-    Identifiers = getIdentifiersFromCartridge(LUAFile, dtable, obfuscator);
+    _Identifiers = getIdentifiersFromCartridge(_LUAFile, _dtable, _obfuscator);
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 100}); }
 
-    out.addAll({'cartridge': WherigoCartridge(Signature,
-        NumberOfObjects, MediaFilesHeaders, MediaFilesContents, LUAFile,
-        HeaderLength,
-        Latitude, Longitude, Altitude,
-        Splashscreen, SplashscreenIcon,
-        DateOfCreation,
-        TypeOfCartridge,
-        Player, PlayerID,
-        CartridgeName, CartridgeGUID, CartridgeDescription, StartingLocationDescription,
-        Version, Author, Company, RecommendedDevice,
-        LengthOfCompletionCode, CompletionCode,
-        dtable,
-        Characters, Items, Tasks, Inputs, Zones, Timers, Media,
-        Messages, Answers, Identifiers)});
+    out.addAll({'cartridge': WherigoCartridge(_Signature,
+        _NumberOfObjects, _MediaFilesHeaders, _MediaFilesContents, _LUAFile,
+        _HeaderLength,
+        _Latitude, _Longitude, _Altitude,
+        _Splashscreen, _SplashscreenIcon,
+        _DateOfCreation,
+        _TypeOfCartridge,
+        _Player, _PlayerID,
+        _CartridgeName, _CartridgeGUID, _CartridgeDescription, _StartingLocationDescription,
+        _Version, _Author, _Company, _RecommendedDevice,
+        _LengthOfCompletionCode, _CompletionCode,
+        _dtable,
+        _Characters, _Items, _Tasks, _Inputs, _Zones, _Timers, _Media,
+        _Messages, _Answers, _Identifiers)});
   } on Exception {
     out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [])});
   }

@@ -64,7 +64,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], []);
   Map<String, dynamic> _outData;
 
-  var _displayedCartridgeData = WHERIGO.HEADER;
+  var _displayedCartridgeData = WHERIGO.NULL;
 
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
 
@@ -334,6 +334,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     switch (_displayedCartridgeData) {
       case WHERIGO.NULL:
+        return Container();
         return GCWDefaultOutput(
           child: GCWOutputText(
             text: i18n(context, 'wherigo_data_null'),
@@ -615,6 +616,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.INPUTS:
+        print(_cartridge.Inputs);
         if (_cartridge.Inputs == [] || _cartridge.Inputs == null || _cartridge.Inputs.length == 0)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
@@ -1091,7 +1093,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.InputName],
         [i18n(context, 'wherigo_output_description'), data.InputDescription],
         [i18n(context, 'wherigo_output_text'), data.InputText],
-        [i18n(context, 'wherigo_output_choices'), data.InputChoices],
+        [i18n(context, 'wherigo_output_choices'), data.InputChoices.join('\n')],
         [i18n(context, 'wherigo_output_type'), data.InputType],
         [i18n(context, 'wherigo_output_visible'), data.InputVisible],
       ];

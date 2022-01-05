@@ -1,5 +1,6 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
 
 class ItemData{
   final String ItemLUAName;
@@ -10,6 +11,8 @@ class ItemData{
   final String ItemMedia;
   final String ItemIcon;
   final String ItemLocation;
+  final ZonePoint ItemZonepoint;
+  final String itemContainer;
   final String ItemLocked;
   final String ItemOpened;
 
@@ -22,6 +25,8 @@ class ItemData{
       this.ItemMedia,
       this.ItemIcon,
       this.ItemLocation,
+      this.ItemZonepoint,
+      this.itemContainer,
       this.ItemLocked,
       this.ItemOpened);
 }
@@ -43,8 +48,10 @@ List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
   String media = '';
   String icon = '';
   String location = '';
+  ZonePoint zonePoint = ZonePoint(0.0, 0.0, 0.0);
   String locked = '';
   String opened = '';
+  String container = '';
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
@@ -57,8 +64,10 @@ List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
       media = '';
       icon = '';
       location = '';
+      zonePoint = ZonePoint(0.0, 0.0, 0.0);
       locked = '';
       opened = '';
+      container = '';
 
       LUAname = getLUAName(line);
       id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
@@ -98,6 +107,12 @@ List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
             location = getLineData(
                 lines[i + 2 + j], LUAname, 'ObjectLocation', obfuscator,
                 dtable);
+          if (location.endsWith('INVALID_ZONEPOINT'))
+            location = '';
+          if (location.startsWith('ZonePoint')){
+            location = location.replaceAll('Zonepoint(', '')..replaceAll(')', '').replaceAll(' ', '');
+            zonePoint = ZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]), double.parse(location.split(',')[2]));
+          }
           if (lines[i + 2 + j].startsWith(LUAname + '.Opened'))
             section = false;
           j = j + 1;
@@ -114,6 +129,8 @@ List<ItemData>getItemsFromCartridge(String LUA, dtable, obfuscator){
           media,
           icon,
           location,
+          zonePoint,
+          container,
           locked,
           opened));
       i = i + 2 + j;
