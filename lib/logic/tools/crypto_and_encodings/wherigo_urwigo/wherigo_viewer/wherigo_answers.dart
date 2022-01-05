@@ -191,6 +191,7 @@ List<String> _getAnswers(int i, String line, String lineBefore){
         .replaceAll('(', '')
         .replaceAll(')', '')
         .replaceAll('then', '')
+        .replaceAll('else', '')
         .replaceAll(' ', '')
         .split('or').forEach((element) {
           hashvalue = int.parse(element);
@@ -211,6 +212,7 @@ List<String> _getAnswers(int i, String line, String lineBefore){
         .replaceAll(')', '')
         .replaceAll('"', '')
         .replaceAll('then', '')
+        .replaceAll('else', '')
         .replaceAll(' ', '')];
   }
 }

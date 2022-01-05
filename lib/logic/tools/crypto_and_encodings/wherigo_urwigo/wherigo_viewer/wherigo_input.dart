@@ -48,7 +48,6 @@ List<InputData>getInputsFromCartridge(String LUA, dtable, obfuscator){
   for (int i = 0; i < lines.length; i++){
 
     if (re.hasMatch(lines[i])) {
-print(lines[i]);
       LUAname = '';
       id = '';
       name = '';
@@ -85,25 +84,21 @@ print(lines[i]);
           if (lines[i].startsWith(LUAname + '.Visible')) {
             visible = getLineData(
                 lines[i], LUAname, 'Visible', obfuscator, dtable);
-            print(visible);
           }
 
           if (lines[i].startsWith(LUAname + '.Media')){
             media = getLineData(
                 lines[i], LUAname, 'Media', obfuscator, dtable);
-            print(media);
           }
 
           if (lines[i].startsWith(LUAname + '.Icon')){
             icon = getLineData(
                 lines[i], LUAname, 'Icon', obfuscator, dtable);
-            print(icon);
           }
 
           if (lines[i].startsWith(LUAname + '.InputType')) {
             inputType = getLineData(
                 lines[i], LUAname, 'InputType', obfuscator, dtable);
-            print(inputType);
           }
 
           if (lines[i].startsWith(LUAname + '.Text')) {
@@ -134,7 +129,7 @@ print(lines[i]);
         }
         i++;
       } while (section);
-i--;
+      i--;
       result.add(InputData(
         LUAname,
         id,
@@ -149,6 +144,5 @@ i--;
       ));
     }
   };
-print(result);
   return result;
 }
