@@ -45,6 +45,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
 
   for (int i = 0; i < lines.length - 1; i++) {
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
+      print((i+1).toString()+' '+lines[i]);
       // function for getting all inputs for an inputobject found
       insideInputFunction = true;
       inputObject = '';
@@ -70,39 +71,40 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
     }
 
     else if (lines[i].trimLeft() == 'if input == nil then') {
-      answer = 'NIL';
+      // suppress this
+      //answer = 'NIL';
       i++;
       sectionAnalysed = false;
       do {
-        if (lines[i].trimLeft().startsWith('Buttons = ')) {
-          do {
-            i++;
-            if (lines[i].trim() != '}') {
-              if (lines[i].trimLeft().startsWith(obfuscator))
-                answerActions.add(ActionData('btn', deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
-              else
-                answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
-            }
-          } while (!lines[i].trim().startsWith('}'));
-        } // end if buttons
-        else {
-          action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
-          if (action != null)
-            answerActions.add(action);
-        } // end if other line content
+        // if (lines[i].trimLeft().startsWith('Buttons = ')) {
+        //   do {
+        //     i++;
+        //     if (lines[i].trim() != '}' || lines[i].trim() != '{,') {
+        //       if (lines[i].trimLeft().startsWith(obfuscator))
+        //         answerActions.add(ActionData('btn', deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
+        //       else
+        //         answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
+        //     }
+        //   } while (!lines[i].trim().startsWith('}'));
+        // } // end if buttons
+        // else {
+        //   action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
+        //   if (action != null)
+        //     answerActions.add(action);
+        // } // end if other line content
         i++;
         if (lines[i].trim() == 'end')
           sectionAnalysed = true;
       } while (!sectionAnalysed); // end of section
 
-      result.add(AnswerData(
-        inputObject,
-        question,
-        help,
-        answer,
-        answerActions,
-      ));
-      answerActions = [];
+      // result.add(AnswerData(
+      //   inputObject,
+      //   question,
+      //   help,
+      //   answer,
+      //   answerActions,
+      // ));
+      // answerActions = [];
     } // end of NIL
 
     else if (_SectionEnd(lines[i])) { //
@@ -142,7 +144,7 @@ List<AnswerData>getAnswersFromCartridge(String LUA, List<InputData> inputs, dtab
       if (lines[i].trimLeft().startsWith('Buttons = ')) {
         do {
           i++;
-          if (lines[i].trim() != '}') {
+          if (lines[i].trim() != '}' || lines[i].trim() != '{,') {
             if (lines[i].trimLeft().startsWith(obfuscator)) {
               answerActions.add(ActionData(
                   'btn', deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));

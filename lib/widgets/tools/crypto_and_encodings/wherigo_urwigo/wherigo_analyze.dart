@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
@@ -462,7 +464,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ),
 
             if (_outputMedia != null)
-                Column(children: columnedMultiLineOutput(context,  _outputMedia)),
+                Column(children: columnedMultiLineOutput(context,  _outputMedia), flexValues: [1,3]),
           ],
         );
         break;
@@ -540,7 +542,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 files: [_getFileFrom(_cartridge.Characters[_characterIndex - 1].CharacterMediaName)],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex - 1]), flexValues: [1,3])
               )
             ]
         );
@@ -610,7 +612,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 files: [_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]), flexValues: [1,3], flexValues: [1,3])
               )]
         );
         break;
@@ -656,7 +658,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex - 1]), flexValues: [1,3])
               )
             ]
         );
@@ -702,7 +704,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex - 1]), flexValues: [1,3])
               )
             ]
         );
@@ -748,7 +750,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputTimer(_cartridge.Timers[_timerIndex - 1]), flexValues: [1,3])
               )
             ]
         );
@@ -797,7 +799,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               files: [_getFileFrom(_cartridge.Items[_itemIndex - 1].ItemMedia)],
             ),
             Column(
-                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex - 1]))
+                children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex - 1]), flexValues: [1,3])
             )
           ]
         );
@@ -843,7 +845,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputMedia(_cartridge.Media[_mediaIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputMedia(_cartridge.Media[_mediaIndex - 1]), flexValues: [1,3])
               )
             ]
         );
@@ -889,7 +891,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex - 1]), flexValues: [1,3])
               )
             ]
         );
@@ -935,8 +937,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Answers[_answerIndex - 1]))
-              )
+                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Answers[_answerIndex - 1]), flexValues: [1,3])
+              ),
+              GCWExpandableTextDivider(
+                text: i18n(context, 'wherigo_output_answeractions'),
+                child: Column(
+                  children: columnedMultiLineOutput(context, _outputAnswerActions(_cartridge.Answers[_answerIndex - 1]), flexValues: [1,3])
+                ),
+              ),
             ]
         );
         break;
@@ -1121,13 +1129,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_hint'), data.AnswerHelp],
         [i18n(context, 'wherigo_output_answer'), data.AnswerAnswer],];
 
-      if (data.AnswerActions.length > 0){
-        result.add([i18n(context, 'wherigo_output_answeractions'), '']);
-        data.AnswerActions.forEach((element) {
-          result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
-        });
-      }
       return result;
+  }
+
+  List<List<dynamic>> _outputAnswerActions(AnswerData data){
+    List<List<dynamic>> result = [];
+
+    if (data.AnswerActions.length > 0){
+      data.AnswerActions.forEach((element) {
+        result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
+      });
+    }
+    return result;
   }
 
   String _getCreationDate(int duration) {
