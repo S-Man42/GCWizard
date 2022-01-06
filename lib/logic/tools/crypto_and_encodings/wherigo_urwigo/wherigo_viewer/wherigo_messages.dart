@@ -21,9 +21,9 @@ class MessageElementData{
 
 
 
-Map<String, dynamic> getMessagesFromCartridge(String LUA, dtable, obfuscator){
+List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfuscator){
   if (LUA == null || LUA == '') {
-    return {'content': [], 'names': []};
+    return [];
   } else {
     List<String> lines = LUA.split('\n');
     List<MessageElementData> singleMessageDialog = [];
@@ -131,8 +131,6 @@ Map<String, dynamic> getMessagesFromCartridge(String LUA, dtable, obfuscator){
       }
     };
 
-    out.addAll({'content': Messages});
-    out.addAll({'names': NameToObject});
-    return out;
+    return Messages;
   }
 }

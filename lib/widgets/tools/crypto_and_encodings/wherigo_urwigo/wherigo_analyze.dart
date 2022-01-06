@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
@@ -68,6 +69,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   var _displayedCartridgeData = WHERIGO.NULL;
 
+  List<List<dynamic>> _GWCStructure;
+
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
 
   var _currentByteCodeMode = GCWSwitchPosition.left;
@@ -84,6 +87,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   int _answerIndex = 1;
   int _identifierIndex = 1;
 
+  Map<String, ObjectData> NameToObject;
+
   @override
   void initState() {
     super.initState();
@@ -96,6 +101,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
+    _GWCStructure = _outputBytecodeStructure(_GWCbytes);
+
     if (_fileLoadedState == FILE_LOAD_STATE.NULL)
       _fileLoadedState = FILE_LOAD_STATE.GWC;
     else if (_fileLoadedState == FILE_LOAD_STATE.LUA)
@@ -152,16 +159,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   case FILE_LOAD_STATE.GWC:
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_GWC)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
+                    _displayedCartridgeData = WHERIGO.HEADER;
                     break;
                   case FILE_LOAD_STATE.LUA:
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_LUA)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
+                    _displayedCartridgeData = WHERIGO.ZONES;
                     break;
                   case FILE_LOAD_STATE.FULL:
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_FULL)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
+                    _displayedCartridgeData = WHERIGO.HEADER;
                     break;
                 }
+                _WHERIGO_DATA.removeWhere((k, v) => v == WHERIGO.NULL);
               });
             }
           },
@@ -202,16 +213,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   case FILE_LOAD_STATE.GWC:
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_GWC)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
+                    _displayedCartridgeData = WHERIGO.HEADER;
                     break;
                   case FILE_LOAD_STATE.LUA:
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_LUA)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
+                    _displayedCartridgeData = WHERIGO.ZONES;
                     break;
                   case FILE_LOAD_STATE.FULL:
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_FULL)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
+                    _displayedCartridgeData = WHERIGO.HEADER;
                     break;
                 }
+                _WHERIGO_DATA.removeWhere((k, v) => v == WHERIGO.NULL);
               });
             }
           },
@@ -252,13 +267,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       return Container();
 
     if (_cartridge == null) {
-      return Container;
+      return Container();
     }
 
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
       [
-        i18n(context, 'wherigo_header_numberofobjects'),
+        i18n(context, 'wherigo_header_numberofmediafiles'),
         (_cartridge.NumberOfObjects - 1).toString()
       ],
       [
@@ -305,14 +320,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _points.add(
         GCWMapPoint(
             uuid: 'Cartridge Start',
+            markerText: i18n(context, _cartridge.CartridgeName),
             point: LatLng(_cartridge.Latitude, _cartridge.Longitude),
             color: COLOR_MAP_POINT));
 
     _cartridge.Zones.forEach((zone) {
       _points.add(
           GCWMapPoint(
-              uuid: 'Original Point ' + zone.ZoneLUAName,
-              markerText: zone.ZoneLUAName,
+              uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName].ObjectName,
+              markerText: NameToObject[zone.ZoneLUAName].ObjectName,
               point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
               color: COLOR_MAP_POINT));
 
@@ -363,6 +379,38 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ]);
         break;
 
+      case WHERIGO.GWCFILE:
+        PlatformFile file = PlatformFile(bytes: _GWCbytes);
+
+        return Column(
+          children: <Widget>[
+            // openInHexViewer(BuildContext context, PlatformFile file)
+            GCWDefaultOutput(
+              child: i18n(context, 'wherigo_media_size') + ': ' + _GWCbytes.length.toString() + '\n\n' + i18n(context, 'wherigo_hint_openinhexviewer_1'),
+              suppressCopyButton: true,
+              trailing: Row(
+                  children: <Widget>[
+                    GCWIconButton(
+                      iconColor: themeColors().mainFont(),
+                      size: IconButtonSize.SMALL,
+                      iconData: Icons.input,
+                      onPressed: () {
+                        openInHexViewer(context, file);
+                      },
+                    ),
+                  ]
+              ),
+            ),
+            GCWExpandableTextDivider(
+              text: i18n(context, 'wherigo_bytecode'),
+              child: Column(
+                  children: columnedMultiLineOutput(context, _GWCStructure, flexValues: [1, 3, 2])
+              ),
+            )
+          ],
+        );
+        break;
+
       case WHERIGO.LUABYTECODE:
         PlatformFile file = PlatformFile(bytes: _cartridge
             .MediaFilesContents[0].MediaFileBytes);
@@ -371,8 +419,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           children: <Widget>[
             // openInHexViewer(BuildContext context, PlatformFile file)
             GCWDefaultOutput(
-              child: i18n(context, 'wherigo_media_size') + ': ' + _cartridge
-                  .MediaFilesContents[0].MediaFileLength.toString() + '\n\n' + i18n(context, 'wherigo_hint_openinhexviewer'),
+              child: i18n(context, 'wherigo_media_size')
+                  + ': '
+                  + _cartridge.MediaFilesContents[0].MediaFileLength.toString()
+                  + '\n\n'
+                  + i18n(context, 'wherigo_hint_openinhexviewer_1')
+                  + '\n\n'
+                  + i18n(context, 'wherigo_hint_openinhexviewer_2'),
               suppressCopyButton: true,
               trailing: Row(
                   children: <Widget>[
@@ -396,8 +449,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       },
                     )
                   ]
+                ),
               ),
-            ),
           ],
         );
         break;
@@ -469,7 +522,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         );
         break;
 
-      case WHERIGO.LUA:
+      case WHERIGO.LUAFILE:
         return GCWDefaultOutput(
             child: GCWText(
               text: _cartridge.LUAFile,
@@ -618,7 +671,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.INPUTS:
-        print(_cartridge.Inputs);
         if (_cartridge.Inputs == [] || _cartridge.Inputs == null || _cartridge.Inputs.length == 0)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
@@ -1214,6 +1266,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     } else {
       showToast(i18n(context, 'wherigo_data_loaded') + ': ' + dataType);
       _cartridge = _outData['cartridge'];
+      NameToObject = _cartridge.NameToObject;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1238,6 +1291,60 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         bytes: filedata,
         name: filename
     );
+  }
+
+  List<List<dynamic>> _outputBytecodeStructure(Uint8List bytes){
+    int offset = 0;
+    int numberOfObjects = readShort(bytes, 7);
+    List<List<dynamic>> result = [
+        [i18n(context, 'wherigo_bytecode_offset'), i18n(context, 'wherigo_bytecode_bytes'), i18n(context, 'wherigo_bytecode_content'), ],
+        ['', i18n(context, 'wherigo_header_signature'), ''],
+        ['0000', bytes.sublist(0, 7).join('.'), bytes[0].toString() + '.' + bytes[1].toString() + readString(bytes, 2).ASCIIZ],
+        ['', i18n(context, 'wherigo_header_numberofobjects'), ''],
+        ['0007', bytes.sublist(7, 9).join('.'), numberOfObjects.toString()],
+        ['', i18n(context, 'wherigo_data_luabytecode'), 'ID Offset'],
+        ['0009', bytes.sublist(9, 11).join('.') + ' ' + bytes.sublist(11, 15).join('.'), readShort(bytes, 9).toString() + ' ' + readInt(bytes, 11).toString()],
+      ];
+
+    // id and offset of files
+    offset = 15;
+    for (int i = 1; i < numberOfObjects; i++) {
+      if (i == 1)
+        result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'ID Offset'],);
+
+      result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 2).join('.') + ' ' + bytes.sublist(offset + 2 , offset + 6).join('.'), readShort(bytes, offset).toString() + ' ' + readInt(bytes, offset + 2).toString()]);
+      offset = offset + 6;
+    }
+
+    // header
+    result.add(['', i18n(context, 'wherigo_data_header'), '']);
+    result.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
+    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
+
+    offset = offset + 4 + readInt(bytes, offset);
+
+    // length of lua byte code
+    result.add(['', i18n(context, 'wherigo_data_luabytecode'), 'Size']);
+    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
+
+    // type and length of files
+    offset = offset + 1 + readInt(bytes, offset);
+    for (int i = 1; i < numberOfObjects; i++) {
+      if (i == 1)
+        result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'valid type size'],);
+      if (readByte(bytes, offset) != 0) {
+        result.add([
+          offset.toString().padLeft(4, '0'),
+          bytes.sublist(offset, offset + 1).join('.') + ' ' + bytes.sublist(offset + 1, offset + 5).join('.') + ' ' + bytes.sublist(offset + 5, offset + 9).join('.'),
+          readByte(bytes, offset).toString() + ' ' + readInt(bytes, offset + 1).toString() + ' ' + readInt(bytes, offset + 5).toString()]);
+        offset = offset + 1 + 4 + 4 + readInt(bytes, offset+5);
+      } else {
+        result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 1).join('.'), readByte(bytes, offset).toString()]);
+        offset = offset + 1;
+      }
+    }
+
+    return result;
   }
 
 }

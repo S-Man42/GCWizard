@@ -113,6 +113,7 @@ Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
           type,
           medianame,
       ));
+      NameToObject[LUAname] = ObjectData(id, name, medianame);
     }
   };
 

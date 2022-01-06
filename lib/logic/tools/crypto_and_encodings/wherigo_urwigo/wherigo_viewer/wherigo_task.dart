@@ -116,6 +116,7 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
           complete,
           correctstate
       ));
+      NameToObject[LUAname] = ObjectData(id, name, media);
       i = i + 2 + j;
     }
   };

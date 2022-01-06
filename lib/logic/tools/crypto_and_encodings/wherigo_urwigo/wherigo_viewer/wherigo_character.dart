@@ -1,4 +1,6 @@
 
+import 'dart:isolate';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
 class CharacterData{
@@ -47,7 +49,8 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
   String gender = '';
   String type = '';
 
-  for (int i = 0; i < lines.length; i++){
+  int maxLoop = lines.length;
+  for (int i = 0; i < maxLoop; i++){
     line = lines[i];
     if (re.hasMatch(line)) {
       LUAname = '';
@@ -116,6 +119,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
            gender,
            type
       ));
+      NameToObject[LUAname] = ObjectData(id, name, media);
       i = i + 1 + j;
     }
   };

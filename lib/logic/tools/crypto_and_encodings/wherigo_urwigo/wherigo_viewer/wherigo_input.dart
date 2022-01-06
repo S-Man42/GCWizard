@@ -145,6 +145,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         text,
         choices
       ));
+      NameToObject[LUAname] = ObjectData(id, name, media);
     }
   };
 

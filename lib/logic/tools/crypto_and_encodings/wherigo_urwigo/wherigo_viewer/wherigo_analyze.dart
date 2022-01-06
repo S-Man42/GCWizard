@@ -107,18 +107,21 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {NULL, HEADER, LUA, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS, IDENTIFIER}
+enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS, IDENTIFIER}
 
 enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
+
+enum BUILDER {EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN}
 
 Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.NULL: 'wherigo_data_null',
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.GWCFILE: 'wherigo_data_gwc',
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.DTABLE: 'wherigo_data_dtable',
-  WHERIGO.LUA: 'wherigo_data_lua',
+  WHERIGO.LUAFILE: 'wherigo_data_lua',
   WHERIGO.ITEMS: 'wherigo_data_items',
   WHERIGO.CHARACTER: 'wherigo_data_character',
   WHERIGO.ZONES: 'wherigo_data_zones',
@@ -135,13 +138,14 @@ Map<WHERIGO, String> WHERIGO_DATA_GWC = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.GWCFILE: 'wherigo_data_gwc',
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_LUA = {
   WHERIGO.NULL: 'wherigo_data_null',
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.DTABLE: 'wherigo_data_dtable',
-  WHERIGO.LUA: 'wherigo_data_lua',
+  WHERIGO.LUAFILE: 'wherigo_data_lua',
   WHERIGO.ITEMS: 'wherigo_data_items',
   WHERIGO.CHARACTER: 'wherigo_data_character',
   WHERIGO.ZONES: 'wherigo_data_zones',
@@ -392,6 +396,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   try {
     int _progress = 0;
     int _progressStep = 0;
+    int _progressMax = 0;
+
     String _Signature = '';
     int _NumberOfObjects = 0;
     List<MediaFileHeader> _MediaFilesHeaders = [];
@@ -600,7 +606,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 8}); }
 
     _obfuscator = getObfuscatorFunction(_LUAFile);
-    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 9}); }
+    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 1}); }
 
     _cartridgeData = getCharactersFromCartridge(_LUAFile, _dtable, _obfuscator);
     _Characters = _cartridgeData['content'];
@@ -644,9 +650,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     print('got media');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 70}); }
 
-    _cartridgeData = getMessagesFromCartridge(_LUAFile, _dtable, _obfuscator);
-    _Messages = _cartridgeData['content'];
-    _NameToObject.addAll(_cartridgeData['names']);
+    _Messages = getMessagesFromCartridge(_LUAFile, _dtable, _obfuscator);
     print('got messages');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
 

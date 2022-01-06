@@ -187,6 +187,7 @@ Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
           inRange,
           points,
       ));
+      NameToObject[LUAname] = ObjectData(id, name, media);
       i = i + 1 + j;
     }
   };
