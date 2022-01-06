@@ -30,7 +30,8 @@ class MultiDecoderToolEsotericLanguageDeadfish extends GCWMultiDecoderTool {
                       .replaceAll('k', 's')
                       .replaceAll('c', 'o');
 
-                return decodeDeadfish(decodeable);
+                var output = decodeDeadfish(decodeable);
+                return output?.trim().isEmpty ? null : output;
               } catch (e) {}
               return null;
             },

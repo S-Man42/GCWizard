@@ -86,13 +86,15 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                     var outputList = interpretMalbolge(input, key, false);
                     if (outputList != null) {
                       String output = '';
-                      outputList.output.forEach((element) {
+                      for (var element in outputList.output) {
                         if (element != null)
-                          if (!element.startsWith('malbolge_'))
+                          if (element == 'malbolge_error_invalid_program')
+                            return null;
+                          else if (!element.startsWith('malbolge_'))
                             output = output + element + '\n';
-                      });
+                      };
                       output = output.trim();
-                      return output.isEmpty ? null : output;
+                      return output?.isEmpty ? null : output;
                     }
                   } catch (e) {}
                   return null;
@@ -149,7 +151,7 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                     if (transformed == input) return null;
 
                     var result = interpretBrainfk(transformed, input: key);
-                    return result.replaceAll(String.fromCharCode(0), "").isEmpty ? null : result;
+                    return result?.replaceAll(String.fromCharCode(0), "").isEmpty ? null : result;
                   } catch (e) {}
                   return null;
               }
