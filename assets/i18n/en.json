@@ -1740,7 +1740,7 @@
   "dates_daycalculator_seconds": "Seconds",
   "dates_timecalculator_title": "Time Calculator",
   "dates_timecalculator_description": "Adds or subtracts days, hours, minutes and seconds",
-  "dates_timecalculator_starttime": "Days, Hours, Min., Sec.)",
+  "dates_timecalculator_starttime": "Days, Hours, Min., Sec.",
   "dates_timecalculator_endtime": "Days, Hours, Min., Sec.",
   "dates_timecalculator_operation": "Operation",
   "dates_timecalculator_resulttoinput": "Result as new input",
