@@ -92,7 +92,6 @@ import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_answers.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
@@ -107,11 +106,14 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
 
 
-enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, ANSWERS, IDENTIFIER}
+enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, DTABLE, MEDIAFILES, MESSAGES, IDENTIFIER}
 
 enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
 
 enum BUILDER {EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN}
+
+Map<WHERIGO, String> WHERIGO_DATA = {
+};
 
 Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.NULL: 'wherigo_data_null',
@@ -122,14 +124,13 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.DTABLE: 'wherigo_data_dtable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.ITEMS: 'wherigo_data_items',
+  WHERIGO.ITEMS: 'wherigo_data_items_list',
   WHERIGO.CHARACTER: 'wherigo_data_character',
-  WHERIGO.ZONES: 'wherigo_data_zones',
-  WHERIGO.INPUTS: 'wherigo_data_inputs',
-  WHERIGO.TASKS: 'wherigo_data_tasks',
-  WHERIGO.TIMERS: 'wherigo_data_timers',
-  WHERIGO.MESSAGES: 'wherigo_data_messages',
-  WHERIGO.ANSWERS: 'wherigo_data_questions',
+  WHERIGO.ZONES: 'wherigo_data_zones_list',
+  WHERIGO.INPUTS: 'wherigo_data_inputs_list',
+  WHERIGO.TASKS: 'wherigo_data_tasks_list',
+  WHERIGO.TIMERS: 'wherigo_data_timers_list',
+  WHERIGO.MESSAGES: 'wherigo_data_messages_list',
   WHERIGO.IDENTIFIER: 'wherigo_data_identifier',
 };
 
@@ -146,14 +147,13 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
   WHERIGO.MEDIA: 'wherigo_data_media',
   WHERIGO.DTABLE: 'wherigo_data_dtable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.ITEMS: 'wherigo_data_items',
-  WHERIGO.CHARACTER: 'wherigo_data_character',
-  WHERIGO.ZONES: 'wherigo_data_zones',
-  WHERIGO.INPUTS: 'wherigo_data_inputs',
-  WHERIGO.TASKS: 'wherigo_data_tasks',
-  WHERIGO.TIMERS: 'wherigo_data_timers',
-  WHERIGO.MESSAGES: 'wherigo_data_messages',
-  WHERIGO.ANSWERS: 'wherigo_data_questions',
+  WHERIGO.ITEMS: 'wherigo_data_items_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zones_list',
+  WHERIGO.INPUTS: 'wherigo_data_inputs_list',
+  WHERIGO.TASKS: 'wherigo_data_tasks_list',
+  WHERIGO.TIMERS: 'wherigo_data_timers_list',
+  WHERIGO.MESSAGES: 'wherigo_data_messages_list',
   WHERIGO.IDENTIFIER: 'wherigo_data_identifier',
 };
 
@@ -653,12 +653,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _Messages = getMessagesFromCartridge(_LUAFile, _dtable, _obfuscator);
     print('got messages');
     //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
-
-    _cartridgeData = getAnswersFromCartridge(_LUAFile, _Inputs, _dtable, _obfuscator);
-    _Answers = _cartridgeData['content'];
-    _NameToObject.addAll(_cartridgeData['names']);
-    print('got answers');
-    //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 90}); }
 
     _cartridgeData = getIdentifiersFromCartridge(_LUAFile, _dtable, _obfuscator);
     _Identifiers = _cartridgeData['content'];

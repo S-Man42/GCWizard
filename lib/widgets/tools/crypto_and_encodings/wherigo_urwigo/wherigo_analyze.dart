@@ -13,8 +13,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/hexstring2file.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_answers.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
@@ -35,7 +33,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -120,6 +117,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   Widget build(BuildContext context) {
 
+    _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA)
+        .map((key, value) => MapEntry(i18n(context, key), value)));
+
     return Column(
       children: <Widget>[
         GCWOpenFile(
@@ -155,8 +155,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               //_cartridge = getCartridge(_GWCbytes, _LUAbytes);
 
               setState(() {
+                print(_fileLoadedState);
                 switch (_fileLoadedState) {
                   case FILE_LOAD_STATE.GWC:
+                    print(switchMapKeyValue(WHERIGO_DATA_GWC));
                     _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_GWC)
                         .map((key, value) => MapEntry(i18n(context, key), value)));
                     _displayedCartridgeData = WHERIGO.HEADER;
@@ -355,7 +357,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Container();
         return GCWDefaultOutput(
           child: GCWOutputText(
-            text: i18n(context, 'wherigo_data_null'),
+            text: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
           ),
         );
@@ -465,6 +467,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ' : ' +
             MEDIATYPE[
             _cartridge.MediaFilesContents[_mediaFileIndex].MediaFileType];
+
         if (_cartridge.Media.length > 0) {
           filename = _cartridge.Media[_mediaFileIndex - 1].MediaFilename;
           _outputMedia = [
@@ -494,7 +497,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 Expanded(
                   child: GCWText(
                     align: Alignment.center,
-                    text: _mediaFileIndex.toString() + ' / ' + (_cartridge.NumberOfObjects - 1).toString(),
+                    text: i18n(context, 'wherigo_data_media') + ' ' + _mediaFileIndex.toString() + ' / ' + (_cartridge.NumberOfObjects - 1).toString(),
                   ),
                 ),
                 GCWIconButton(
@@ -577,7 +580,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _characterIndex.toString() + ' / ' + (_cartridge.Characters.length).toString(),
+                      text: i18n(context, 'wherigo_data_character') + ' ' + _characterIndex.toString() + ' / ' + (_cartridge.Characters.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -591,9 +594,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
-              GCWFilesOutput(
-                files: [_getFileFrom(_cartridge.Characters[_characterIndex - 1].CharacterMediaName)],
-              ),
+              if (_cartridge.Characters[_characterIndex - 1].CharacterMediaName != '' && _cartridge.MediaFilesContents.length > 1)
+                GCWFilesOutput(
+                  files: [_getFileFrom(_cartridge.Characters[_characterIndex - 1].CharacterMediaName)],
+                ),
               Column(
                   children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex - 1]), flexValues: [1,3])
               )
@@ -647,7 +651,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _zoneIndex.toString() + ' / ' + (_cartridge.Zones.length).toString(),
+                      text: i18n(context, 'wherigo_data_zone') + ' ' + _zoneIndex.toString() + ' / ' + (_cartridge.Zones.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -661,9 +665,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
-              GCWFilesOutput(
-                files: [_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)],
-              ),
+              if ((_cartridge.Zones[_zoneIndex - 1].ZoneMediaName != '') && _cartridge.MediaFilesContents.length > 1)
+                GCWFilesOutput(
+                  files: [_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)],
+                ),
               Column(
                   children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]), flexValues: [1,3])
               )]
@@ -695,7 +700,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _inputIndex.toString() + ' / ' + (_cartridge.Inputs.length).toString(),
+                      text: i18n(context, 'wherigo_data_input') + ' ' + _inputIndex.toString() + ' / ' + (_cartridge.Inputs.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -709,9 +714,51 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
+              if (_cartridge.Inputs[_inputIndex - 1].InputMedia != '' && _cartridge.MediaFilesContents.length > 1)
+                GCWFilesOutput(
+                  files: [_getFileFrom(_cartridge.Inputs[_inputIndex - 1].InputMedia)],
+                ),
               Column(
                   children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex - 1]), flexValues: [1,3])
-              )
+              ),
+              Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconData: Icons.arrow_back_ios,
+                    onPressed: () {
+                      setState(() {
+                        _answerIndex--;
+                        if (_answerIndex < 1)
+                          _answerIndex = _cartridge.Inputs[_inputIndex].InputAnswers.length;
+                      });
+                    },
+                  ),
+                  Expanded(
+                    child: GCWText(
+                      align: Alignment.center,
+                      text: i18n(context, 'wherigo_data_answer') + ' ' + _answerIndex.toString() + ' / ' + (_cartridge.Inputs[_inputIndex].InputAnswers.length).toString(),
+                    ),
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.arrow_forward_ios,
+                    onPressed: () {
+                      setState(() {
+                        _answerIndex++;
+                        if (_answerIndex > _cartridge.Inputs[_inputIndex].InputAnswers.length)
+                          _answerIndex = 1;
+                      });
+                    },
+                  ),              ],
+              ),
+              Column(
+                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+              ),
+              GCWExpandableTextDivider(
+                text: i18n(context, 'wherigo_output_answeractions'),
+                child: Column(
+                    children: columnedMultiLineOutput(context, _outputAnswerActions(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+                ),
+              ),
             ]
         );
         break;
@@ -741,7 +788,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _taskIndex.toString() + ' / ' + (_cartridge.Tasks.length).toString(),
+                      text: i18n(context, 'wherigo_data_task') + ' ' + _taskIndex.toString() + ' / ' + (_cartridge.Tasks.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -755,6 +802,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
+              if (_cartridge.Tasks[_taskIndex - 1].TaskMedia != '' && _cartridge.MediaFilesContents.length > 1)
+                GCWFilesOutput(
+                  files: [_getFileFrom(_cartridge.Tasks[_taskIndex - 1].TaskMedia)],
+                ),
               Column(
                   children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex - 1]), flexValues: [1,3])
               )
@@ -787,7 +838,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _timerIndex.toString() + ' / ' + (_cartridge.Timers.length).toString(),
+                      text: i18n(context, 'wherigo_data_timer') + ' ' + _timerIndex.toString() + ' / ' + (_cartridge.Timers.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -833,7 +884,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 Expanded(
                   child: GCWText(
                     align: Alignment.center,
-                    text: _itemIndex.toString() + ' / ' + (_cartridge.Items.length).toString(),
+                    text: i18n(context, 'wherigo_data_item') + ' ' + _itemIndex.toString() + ' / ' + (_cartridge.Items.length).toString(),
                   ),
                 ),
                 GCWIconButton(
@@ -847,9 +898,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   },
                 ),              ],
             ),
-            GCWFilesOutput(
-              files: [_getFileFrom(_cartridge.Items[_itemIndex - 1].ItemMedia)],
-            ),
+            if (_cartridge.Items[_itemIndex - 1].ItemMedia != '' && _cartridge.MediaFilesContents.length > 1)
+              GCWFilesOutput(
+                files: [_getFileFrom(_cartridge.Items[_itemIndex - 1].ItemMedia)],
+              ),
             Column(
                 children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex - 1]), flexValues: [1,3])
             )
@@ -882,7 +934,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _mediaIndex.toString() + ' / ' + (_cartridge.Media.length).toString(),
+                      text: i18n(context, 'wherigo_data_media') + ' ' + _mediaIndex.toString() + ' / ' + (_cartridge.Media.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -928,7 +980,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _messageIndex.toString() + ' / ' + (_cartridge.Messages.length).toString(),
+                      text: i18n(context, 'wherigo_data_message') + ' ' + _messageIndex.toString() + ' / ' + (_cartridge.Messages.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -945,58 +997,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               Column(
                   children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex - 1]), flexValues: [1,3])
               )
-            ]
-        );
-        break;
-
-      case WHERIGO.ANSWERS:
-        if (_cartridge.Answers == [] || _cartridge.Answers == null || _cartridge.Answers.length == 0)
-          return GCWDefaultOutput(
-            child: i18n(context, 'wherigo_data_nodata'),
-            suppressCopyButton: true,
-          );
-
-        return Column(
-            children : <Widget>[
-              GCWDefaultOutput(),
-              Row(
-                children: <Widget>[
-                  GCWIconButton(
-                    iconData: Icons.arrow_back_ios,
-                    onPressed: () {
-                      setState(() {
-                        _answerIndex--;
-                        if (_answerIndex < 1)
-                          _answerIndex = _cartridge.Answers.length;
-                      });
-                    },
-                  ),
-                  Expanded(
-                    child: GCWText(
-                      align: Alignment.center,
-                      text: _answerIndex.toString() + ' / ' + (_cartridge.Answers.length).toString(),
-                    ),
-                  ),
-                  GCWIconButton(
-                    iconData: Icons.arrow_forward_ios,
-                    onPressed: () {
-                      setState(() {
-                        _answerIndex++;
-                        if (_answerIndex > _cartridge.Answers.length)
-                          _answerIndex = 1;
-                      });
-                    },
-                  ),              ],
-              ),
-              Column(
-                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Answers[_answerIndex - 1]), flexValues: [1,3])
-              ),
-              GCWExpandableTextDivider(
-                text: i18n(context, 'wherigo_output_answeractions'),
-                child: Column(
-                  children: columnedMultiLineOutput(context, _outputAnswerActions(_cartridge.Answers[_answerIndex - 1]), flexValues: [1,3])
-                ),
-              ),
             ]
         );
         break;
@@ -1176,9 +1176,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputAnswer(AnswerData data){
       List<List<dynamic>> result = [
-        [i18n(context, 'wherigo_output_input'), data.AnswerInput],
-        [i18n(context, 'wherigo_output_question'), data.AnswerQuestion],
-        [i18n(context, 'wherigo_output_hint'), data.AnswerHelp],
+        //[i18n(context, 'wherigo_output_input'), data.AnswerInput],
+        //[i18n(context, 'wherigo_output_question'), data.AnswerQuestion],
+        //[i18n(context, 'wherigo_output_hint'), data.AnswerHelp],
         [i18n(context, 'wherigo_output_answer'), data.AnswerAnswer],];
 
       return result;
@@ -1192,6 +1192,60 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         result.add([i18n(context, 'wherigo_output_action_' + element.ActionType), element.ActionContent]);
       });
     }
+    return result;
+  }
+
+  List<List<dynamic>> _outputBytecodeStructure(Uint8List bytes){
+    int offset = 0;
+    int numberOfObjects = readShort(bytes, 7);
+    List<List<dynamic>> result = [
+      [i18n(context, 'wherigo_bytecode_offset'), i18n(context, 'wherigo_bytecode_bytes'), i18n(context, 'wherigo_bytecode_content'), ],
+      ['', i18n(context, 'wherigo_header_signature'), ''],
+      ['0000', bytes.sublist(0, 7).join('.'), bytes[0].toString() + '.' + bytes[1].toString() + readString(bytes, 2).ASCIIZ],
+      ['', i18n(context, 'wherigo_header_numberofobjects'), ''],
+      ['0007', bytes.sublist(7, 9).join('.'), numberOfObjects.toString()],
+      ['', i18n(context, 'wherigo_data_luabytecode'), 'ID Offset'],
+      ['0009', bytes.sublist(9, 11).join('.') + ' ' + bytes.sublist(11, 15).join('.'), readShort(bytes, 9).toString() + ' ' + readInt(bytes, 11).toString()],
+    ];
+
+    // id and offset of files
+    offset = 15;
+    for (int i = 1; i < numberOfObjects; i++) {
+      if (i == 1)
+        result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'ID Offset'],);
+
+      result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 2).join('.') + ' ' + bytes.sublist(offset + 2 , offset + 6).join('.'), readShort(bytes, offset).toString() + ' ' + readInt(bytes, offset + 2).toString()]);
+      offset = offset + 6;
+    }
+
+    // header
+    result.add(['', i18n(context, 'wherigo_data_header'), '']);
+    result.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
+    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
+
+    offset = offset + 4 + readInt(bytes, offset);
+
+    // length of lua byte code
+    result.add(['', i18n(context, 'wherigo_data_luabytecode'), 'Size']);
+    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
+
+    // type and length of files
+    offset = offset + 1 + readInt(bytes, offset);
+    for (int i = 1; i < numberOfObjects; i++) {
+      if (i == 1)
+        result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'valid type size'],);
+      if (readByte(bytes, offset) != 0) {
+        result.add([
+          offset.toString().padLeft(4, '0'),
+          bytes.sublist(offset, offset + 1).join('.') + ' ' + bytes.sublist(offset + 1, offset + 5).join('.') + ' ' + bytes.sublist(offset + 5, offset + 9).join('.'),
+          readByte(bytes, offset).toString() + ' ' + readInt(bytes, offset + 1).toString() + ' ' + readInt(bytes, offset + 5).toString()]);
+        offset = offset + 1 + 4 + 4 + readInt(bytes, offset+5);
+      } else {
+        result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 1).join('.'), readByte(bytes, offset).toString()]);
+        offset = offset + 1;
+      }
+    }
+
     return result;
   }
 
@@ -1279,72 +1333,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     String filename;
     int fileindex = 0;
 
-    _cartridge.Media.forEach((element) {
-      if (element.MediaLUAName == ressourceName) {
-        filename = element.MediaFilename;
-        filedata = _cartridge.MediaFilesContents[fileindex + 1].MediaFileBytes;
-      }
-      fileindex++;
-    });
+    if (_cartridge.MediaFilesContents.length > 1) {
+      _cartridge.Media.forEach((element) {
+        if (element.MediaLUAName == ressourceName) {
+          filename = element.MediaFilename;
+          filedata = _cartridge.MediaFilesContents[fileindex + 1].MediaFileBytes;
+        }
+        fileindex++;
+      });
 
-    return PlatformFile(
-        bytes: filedata,
-        name: filename
-    );
+      return PlatformFile(
+          bytes: filedata,
+          name: filename
+      );
+    } else
+      return null;
+
   }
 
-  List<List<dynamic>> _outputBytecodeStructure(Uint8List bytes){
-    int offset = 0;
-    int numberOfObjects = readShort(bytes, 7);
-    List<List<dynamic>> result = [
-        [i18n(context, 'wherigo_bytecode_offset'), i18n(context, 'wherigo_bytecode_bytes'), i18n(context, 'wherigo_bytecode_content'), ],
-        ['', i18n(context, 'wherigo_header_signature'), ''],
-        ['0000', bytes.sublist(0, 7).join('.'), bytes[0].toString() + '.' + bytes[1].toString() + readString(bytes, 2).ASCIIZ],
-        ['', i18n(context, 'wherigo_header_numberofobjects'), ''],
-        ['0007', bytes.sublist(7, 9).join('.'), numberOfObjects.toString()],
-        ['', i18n(context, 'wherigo_data_luabytecode'), 'ID Offset'],
-        ['0009', bytes.sublist(9, 11).join('.') + ' ' + bytes.sublist(11, 15).join('.'), readShort(bytes, 9).toString() + ' ' + readInt(bytes, 11).toString()],
-      ];
-
-    // id and offset of files
-    offset = 15;
-    for (int i = 1; i < numberOfObjects; i++) {
-      if (i == 1)
-        result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'ID Offset'],);
-
-      result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 2).join('.') + ' ' + bytes.sublist(offset + 2 , offset + 6).join('.'), readShort(bytes, offset).toString() + ' ' + readInt(bytes, offset + 2).toString()]);
-      offset = offset + 6;
-    }
-
-    // header
-    result.add(['', i18n(context, 'wherigo_data_header'), '']);
-    result.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
-    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
-
-    offset = offset + 4 + readInt(bytes, offset);
-
-    // length of lua byte code
-    result.add(['', i18n(context, 'wherigo_data_luabytecode'), 'Size']);
-    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
-
-    // type and length of files
-    offset = offset + 1 + readInt(bytes, offset);
-    for (int i = 1; i < numberOfObjects; i++) {
-      if (i == 1)
-        result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'valid type size'],);
-      if (readByte(bytes, offset) != 0) {
-        result.add([
-          offset.toString().padLeft(4, '0'),
-          bytes.sublist(offset, offset + 1).join('.') + ' ' + bytes.sublist(offset + 1, offset + 5).join('.') + ' ' + bytes.sublist(offset + 5, offset + 9).join('.'),
-          readByte(bytes, offset).toString() + ' ' + readInt(bytes, offset + 1).toString() + ' ' + readInt(bytes, offset + 5).toString()]);
-        offset = offset + 1 + 4 + 4 + readInt(bytes, offset+5);
-      } else {
-        result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 1).join('.'), readByte(bytes, offset).toString()]);
-        offset = offset + 1;
-      }
-    }
-
-    return result;
-  }
 
 }
