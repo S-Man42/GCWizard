@@ -56,23 +56,22 @@ class GameOfLifePainter extends CustomPainter {
 
     for (int i = 0; i < this.size; i++) {
       for (int j = 0; j < this.size; j++) {
-        paint.strokeWidth = 2;
+        paint.strokeWidth = this.size > 20 ? 1 : 2;
 
         var x = j * boxSize;
         var y = i * boxSize;
 
-        paint.color = themeColors().gridBackground();
+        var isSet = state != null && state[i] != null && state[i][j] != null && state[i][j] == true;
+
+        paint.color = isSet ? themeColors().mainFont() : themeColors().gridBackground();
         paint.style = PaintingStyle.fill;
 
         _touchCanvas.drawRect(Rect.fromLTWH(x, y, boxSize, boxSize), paint);
 
-        paint.color = themeColors().mainFont();
-        var isSet = state != null && state[i] != null && state[i][j] != null && state[i][j] == true;
-        paint.color = paint.color.withOpacity(isSet ? 1.0 : 0.0);
-
-        _touchCanvas.drawCircle(Offset(x + boxSize / 2, y + boxSize / 2), boxSize * 0.8 / 2, paint);
-
         paint.color = themeColors().accent();
+
+        if (this.size > 50)
+          paint.color = paint.color.withOpacity(0.0);
 
         _touchCanvas.drawLine(Offset(x, 0.0), Offset(x, size.width), paint);
         _touchCanvas.drawLine(Offset(0.0, y), Offset(size.height, y), paint);
@@ -86,7 +85,10 @@ class GameOfLifePainter extends CustomPainter {
       }
     }
 
-    paint.color = themeColors().accent();
+    if (this.size > 50)
+      paint.color = paint.color.withOpacity(0.0);
+    else
+      paint.color = themeColors().accent();
 
     _touchCanvas.drawLine(Offset(size.height, 0.0), Offset(size.height, size.width), paint);
     _touchCanvas.drawLine(Offset(0.0, size.width), Offset(size.height, size.width), paint);

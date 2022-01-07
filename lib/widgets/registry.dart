@@ -631,7 +631,7 @@ initializeRegistry(BuildContext context) {
         'games',
       ],
     ),
-    GCWTool(tool: GameOfLife(), i18nPrefix: 'gccode', categories: [
+    GCWTool(tool: GameOfLife(), i18nPrefix: 'gameoflife', categories: [
       ToolCategory.GAMES
     ], searchKeys: [
       'gameoflife',
