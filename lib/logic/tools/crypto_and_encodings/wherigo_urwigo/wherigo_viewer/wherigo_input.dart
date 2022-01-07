@@ -275,7 +275,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       if (lines[i].trimLeft().startsWith('Buttons = ')) {
         do {
           i++;
-          if (lines[i].trim() != '}' || lines[i].trim() != '{,') {
+          if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
             if (lines[i].trimLeft().startsWith(obfuscator)) {
               answerActions.add(
                   ActionData(
@@ -395,6 +395,7 @@ bool _FunctionEnd(String line1, String line2) {
 
 
 ActionData _handleLine(String line, String dtable, String obfuscator) {
+  line = line.trim();
   if (line.startsWith('_Urwigo') ||
       line.startsWith('Callback') ||
       line.startsWith('Wherigo') ||

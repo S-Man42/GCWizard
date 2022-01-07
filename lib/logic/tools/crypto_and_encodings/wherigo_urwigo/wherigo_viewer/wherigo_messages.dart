@@ -34,10 +34,9 @@ List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfu
   bool section = true;
   int j = 1;
   String line = '';
-  String text = '';
   bool urwigo = (lines[6].trim().startsWith('local dtable = "'));
 
-  for (int i = 0; i < lines.length; i++){
+  for (int i = 0; i < lines.length - 1; i++){
     line = lines[i];
 
     if (line.trimLeft().startsWith('_Urwigo.MessageBox(') || line.trimLeft().startsWith('Wherigo.MessageBox(')) {

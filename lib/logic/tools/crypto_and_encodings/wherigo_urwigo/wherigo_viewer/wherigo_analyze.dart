@@ -368,12 +368,8 @@ bool isInvalidCartridge(Uint8List byteList){
   }
 }
 
-bool isInvalidLUASourcecode(Uint8List byteList){
-  // require("Wherigo") - 14 letters
-  Uint8List ORIG = Uint8List.fromList([114, 101, 113, 117, 105, 114, 101, 40, 34, 87, 104, 101, 114, 105, 103, 111, 34, 41]);
-  Uint8List CHCK = Uint8List.sublistView(byteList, 0, 18);
-
-  return (ORIG.join('') != CHCK.join(''));
+bool isInvalidLUASourcecode(String header){
+  return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
 Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {

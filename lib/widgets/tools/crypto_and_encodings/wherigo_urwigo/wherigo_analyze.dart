@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -184,7 +185,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               return;
             }
 
-            if (isInvalidLUASourcecode(_LUAfile.bytes)){
+            if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0,18)))){
               showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
               return;
             }
@@ -591,8 +592,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               if (_cartridge.Characters[_characterIndex - 1].CharacterMediaName != '' && _cartridge.MediaFilesContents.length > 1)
-                GCWFilesOutput(
-                  files: [_getFileFrom(_cartridge.Characters[_characterIndex - 1].CharacterMediaName)],
+                GCWImageView(
+                  imageData: GCWImageViewData(_getFileFrom(_cartridge.Characters[_characterIndex - 1].CharacterMediaName)),
+                  suppressedButtons: {GCWImageViewButtons.ALL},
                 ),
               Column(
                   children: columnedMultiLineOutput(context, _outputCharacter(_cartridge.Characters[_characterIndex - 1]), flexValues: [1,3])
@@ -662,8 +664,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               if ((_cartridge.Zones[_zoneIndex - 1].ZoneMediaName != '') && _cartridge.MediaFilesContents.length > 1)
-                GCWFilesOutput(
-                  files: [_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)],
+                GCWImageView(
+                  imageData: GCWImageViewData(_getFileFrom(_cartridge.Zones[_zoneIndex - 1].ZoneMediaName)),
+                  suppressedButtons: {GCWImageViewButtons.ALL},
                 ),
               Column(
                   children: columnedMultiLineOutput(context, _outputZone(_cartridge.Zones[_zoneIndex - 1]), flexValues: [1,3])
@@ -711,8 +714,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               if (_cartridge.Inputs[_inputIndex - 1].InputMedia != '' && _cartridge.MediaFilesContents.length > 1)
-                GCWFilesOutput(
-                  files: [_getFileFrom(_cartridge.Inputs[_inputIndex - 1].InputMedia)],
+                GCWImageView(
+                  imageData: GCWImageViewData(_getFileFrom(_cartridge.Inputs[_inputIndex - 1].InputMedia)),
+                  suppressedButtons: {GCWImageViewButtons.ALL},
                 ),
               Column(
                   children: columnedMultiLineOutput(context, _outputInput(_cartridge.Inputs[_inputIndex - 1]), flexValues: [1,3])
@@ -752,7 +756,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               GCWExpandableTextDivider(
                 text: i18n(context, 'wherigo_output_answeractions'),
                 child: Column(
-                    children: columnedMultiLineOutput(context, _outputAnswerActions(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+                    //children: columnedMultiLineOutput(context, _outputAnswerActions(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+                  children: _outputAnswerActionsWidgets(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1])
                 ),
               ),
             ]
@@ -799,8 +804,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               if (_cartridge.Tasks[_taskIndex - 1].TaskMedia != '' && _cartridge.MediaFilesContents.length > 1)
-                GCWFilesOutput(
-                  files: [_getFileFrom(_cartridge.Tasks[_taskIndex - 1].TaskMedia)],
+                GCWImageView(
+                  imageData: GCWImageViewData(_getFileFrom(_cartridge.Tasks[_taskIndex - 1].TaskMedia)),
+                  suppressedButtons: {GCWImageViewButtons.ALL},
                 ),
               Column(
                   children: columnedMultiLineOutput(context, _outputTask(_cartridge.Tasks[_taskIndex - 1]), flexValues: [1,3])
@@ -895,8 +901,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ),              ],
             ),
             if (_cartridge.Items[_itemIndex - 1].ItemMedia != '' && _cartridge.MediaFilesContents.length > 1)
-              GCWFilesOutput(
-                files: [_getFileFrom(_cartridge.Items[_itemIndex - 1].ItemMedia)],
+              GCWImageView(
+                imageData: GCWImageViewData(_getFileFrom(_cartridge.Items[_itemIndex - 1].ItemMedia)),
+                suppressedButtons: {GCWImageViewButtons.ALL},
               ),
             Column(
                 children: columnedMultiLineOutput(context, _outputItem(_cartridge.Items[_itemIndex - 1]), flexValues: [1,3])
@@ -991,7 +998,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ),              ],
               ),
               Column(
-                  //children: columnedMultiLineOutput(context, _outputMessage(_cartridge.Messages[_messageIndex - 1]), flexValues: [1,3])
                   children: _outputMessageWidgets(_cartridge.Messages[_messageIndex - 1])
               )
             ]
@@ -1096,6 +1102,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_medianame'), data.ItemMedia],
         [i18n(context, 'wherigo_output_iconname'), data.ItemIcon],
         [i18n(context, 'wherigo_output_location'), data.ItemLocation],
+        [i18n(context, 'wherigo_output_container'), data.ItemContainer],
         [i18n(context, 'wherigo_output_locked'), data.ItemLocked],
         [i18n(context, 'wherigo_output_opened'), data.ItemOpened],
       ];
@@ -1137,6 +1144,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName],
         [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName],
         [i18n(context, 'wherigo_output_location'), data.CharacterLocation],
+        [i18n(context, 'wherigo_output_container'), data.CharacterContainer],
         [i18n(context, 'wherigo_output_gender'), data.CharacterGender],
         [i18n(context, 'wherigo_output_type'), data.CharacterType],
         [i18n(context, 'wherigo_output_visible'), data.CharacterVisible],
@@ -1157,52 +1165,43 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<Widget> _outputMessageWidgets(List<MessageElementData> data){
-    //GCWImageView(
-    //         imageData: GCWImageViewData(file),
-    //         suppressOpenInTool: {GCWImageViewOpenInTools.METADATA},
-    //       ),
     List<Widget> resultWidget = [];
     data.forEach((element) {
       switch(element.MessageType) {
         case ACTIONMESSAGETYPE.TEXT:
-          print(element.MessageType.toString()+' - '+element.MessageContent+' - '+NameToObject[element.MessageContent].toString());
           resultWidget.add(
             GCWOutput(
               child: element.MessageContent,
+              suppressCopyButton: true,
             )
           );
           break;
         case ACTIONMESSAGETYPE.IMAGE:
-          print(element.MessageType.toString()+' - '+element.MessageContent+' - '+NameToObject[element.MessageContent].ObjectMedia);
           resultWidget.add(
-              GCWFilesOutput(
-                files: [_getFileFrom(element.MessageContent)],
-              )
+            Container(
+              child: GCWImageView(
+                         imageData: GCWImageViewData(_getFileFrom(element.MessageContent)),
+                         suppressedButtons: {GCWImageViewButtons.ALL},
+                       ),
+            )
           );
           break;
         case ACTIONMESSAGETYPE.BUTTON:
-          print(element.MessageType.toString()+' - '+element.MessageContent+' - '+NameToObject[element.MessageContent].toString());
           resultWidget.add(
-              GCWOutput(
-                child: element.MessageContent,
+              Container(
+                  child: Text(
+                    element.MessageContent,
+                    textAlign: TextAlign.center,
+                  )
               )
           );
           break;
-
       }
     });
     return resultWidget;
-    }
-
-  List<List<dynamic>> _outputMessage(List<MessageElementData> data){
-      List<List<dynamic>> result = [];
-      data.forEach((element) {
-        result.add([i18n(context, 'wherigo_output_action_' + ACTIONMESSAGETYPE_TEXT[element.MessageType]), element.MessageContent]);
-      });
-      return result;
   }
 
-  List<List<dynamic>> _outputIdentifier(IdentifierData data){
+    List<List<dynamic>> _outputIdentifier(IdentifierData data){
       return [
         [i18n(context, 'wherigo_output_luaname'), data.IdentifierLUAName],
         [i18n(context, 'wherigo_output_text'), data.IdentifierName],
@@ -1225,6 +1224,55 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       });
     }
     return result;
+  }
+
+  List<Widget> _outputAnswerActionsWidgets(AnswerData data){
+    List<Widget> resultWidget = [];
+
+    if (data.AnswerActions.length > 0){
+      data.AnswerActions.forEach((element) {
+        switch(element.ActionType) {
+          case ACTIONMESSAGETYPE.TEXT:
+            resultWidget.add(
+                GCWOutput(
+                  child: element.ActionContent,
+                  suppressCopyButton: true,
+                )
+            );
+            break;
+          case ACTIONMESSAGETYPE.IMAGE:
+            resultWidget.add(
+                Container(
+                  child: GCWImageView(
+                    imageData: GCWImageViewData(_getFileFrom(element.ActionContent)),
+                    suppressedButtons: {GCWImageViewButtons.ALL},
+                  ),
+                )
+            );
+            break;
+          case ACTIONMESSAGETYPE.BUTTON:
+            resultWidget.add(
+                Container(
+                  child: Text(
+                      element.ActionContent,
+                      textAlign: TextAlign.center,
+                  )
+                )
+            );
+            break;
+          case ACTIONMESSAGETYPE.CASE:
+            resultWidget.add(
+                GCWOutput(
+                  child: '\n' + element.ActionContent + '\n',
+                  suppressCopyButton: true,
+                )
+            );
+            break;
+        }
+      });
+    }
+    return resultWidget;
+
   }
 
   List<List<dynamic>> _outputBytecodeStructure(Uint8List bytes){

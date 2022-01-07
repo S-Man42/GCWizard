@@ -19,19 +19,17 @@ Map<String, dynamic> getIdentifiersFromCartridge(String LUA, dtable, obfuscator)
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
 
-  int j = 1;
-
-  for (int i = 0; i < lines.length; i++){
+    for (int i = 0; i < lines.length - 1; i++){
     if (re.hasMatch(lines[i])) {
-      j = 1;
+      i++;
       do {
-        declaration = lines[i + j].trim().replaceAll(',', '').replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').split('=');
+        declaration = lines[i].trim().replaceAll(',', '').replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').split('=');
         if (declaration.length == 2)
           Identifiers.add(IdentifierData(declaration[0], deobfuscateUrwigoText(declaration[1], dtable)));
         else
           Identifiers.add(IdentifierData(declaration[0], ''));
-        j++;
-      } while(lines[i + j].trimLeft() != '}');
+        i++;
+      } while ((i < lines.length - 1) && (lines[i].trimLeft() != '}'));
     }
   };
 

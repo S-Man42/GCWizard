@@ -54,9 +54,9 @@ String getStructData(String analyseLine, String type){
 
 
 String getTextData( String analyseLine, String obfuscator, String dtable){
-  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('[[', '').replaceAll(']]', '');
+  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '');
   if (result.startsWith('(' + obfuscator)) {
-    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')');
+    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll(')', ')');
     result = _getDetails(result, obfuscator, dtable);
   }
 
@@ -158,4 +158,17 @@ String _normalizeText(String text){
       .replaceAll('&nbsp;', ' ')
       .replaceAll('<BR>', '\n')
       .replaceAll(String.fromCharCode(92) + 'n', '\n');
+}
+
+String getContainer(String line) {
+  RegExp re = RegExp(r'(Container = )');
+  String result = '';
+  if (re.hasMatch(line)) {
+    result = line;
+    while (!result.startsWith('Container =')) {
+      result = result.substring(1);
+    }
+    result = result.replaceAll('Container = ', '').replaceAll('}', '').replaceAll(')', '');
+  }
+  return result;
 }

@@ -12,6 +12,7 @@ class CharacterData{
   final String CharacterMediaName;
   final String CharacterIconName;
   final String CharacterLocation;
+  final String CharacterContainer;
   final String CharacterGender;
   final String CharacterType;
 
@@ -24,6 +25,7 @@ class CharacterData{
       this.CharacterMediaName,
       this.CharacterIconName,
       this.CharacterLocation,
+      this.CharacterContainer,
       this.CharacterGender,
       this.CharacterType);
 }
@@ -36,8 +38,9 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
   List<CharacterData> Characters = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
-  bool section = true;
-  int j = 1;
+  bool sectionCharacter = true;
+  bool sectionDescription = true;
+
   String LUAname = '';
   String id = '';
   String name = '';
@@ -48,6 +51,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
   String location = '';
   String gender = '';
   String type = '';
+  String container = '';
 
   int maxLoop = lines.length;
   for (int i = 0; i < maxLoop; i++){
@@ -65,47 +69,67 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
       type = '';
 
       LUAname = getLUAName(line);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+      container = getContainer(lines[i]);
 
       description = '';
-      section = true;
-      j = 1;
-      do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-          section = false;
-      } while (section);
-      description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+      sectionCharacter = true;
 
-      section = true;
       do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-            visible = getLineData(
-                lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Media'))
-            media = getLineData(
-                lines[i + 2 + j], LUAname, 'Media', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Icon'))
-            icon = getLineData(
-                lines[i + 2 + j], LUAname, 'Icon', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ObjectLocation'))
-            location = getLineData(
-                lines[i + 2 + j], LUAname, 'ObjectLocation', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Gender'))
-            gender = getLineData(
-                lines[i + 2 + j], LUAname, 'Gender', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Type'))
-            type = getLineData(
-                lines[i + 2 + j], LUAname, 'Type', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Type'))
-            section = false;
-          j = j + 1;
+        i++;
+        if (lines[i].trim().startsWith(LUAname + 'Container =')) {
+          container = getContainer(lines[i]);
         }
-      } while (section);
+
+        if (lines[i].trim().startsWith(LUAname + '.Id')) {
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Name')) {
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Description')) {
+          description = '';
+          sectionDescription = true;
+          do {
+            description = description + lines[i];
+            i++;
+            if ((i) > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible')) {
+              sectionDescription = false;
+            }
+          } while (sectionDescription);
+          description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+          description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+        }
+
+        if (lines[i].startsWith(LUAname + '.Visible'))
+          visible = getLineData(
+              lines[i], LUAname, 'Visible', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Media'))
+          media = getLineData(
+              lines[i], LUAname, 'Media', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Icon'))
+          icon = getLineData(
+              lines[i], LUAname, 'Icon', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.ObjectLocation'))
+          location = getLineData(
+              lines[i], LUAname, 'ObjectLocation', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Gender'))
+          gender = getLineData(
+              lines[i], LUAname, 'Gender', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Type'))
+          type = getLineData(
+              lines[i], LUAname, 'Type', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Type'))
+          sectionCharacter = false;
+
+      } while (sectionCharacter);
 
       Characters.add(CharacterData(
            LUAname ,
@@ -116,13 +140,13 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
            media,
            icon,
            location,
+           container,
            gender,
            type
       ));
       NameToObject[LUAname] = ObjectData(id, name, media);
-      i = i + 1 + j;
-    }
-  };
+    } // end if
+  }; // end for
 
   out.addAll({'content': Characters});
   out.addAll({'names': NameToObject});

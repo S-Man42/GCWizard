@@ -12,7 +12,7 @@ class ItemData{
   final String ItemIcon;
   final String ItemLocation;
   final ZonePoint ItemZonepoint;
-  final String itemContainer;
+  final String ItemContainer;
   final String ItemLocked;
   final String ItemOpened;
 
@@ -26,7 +26,7 @@ class ItemData{
       this.ItemIcon,
       this.ItemLocation,
       this.ItemZonepoint,
-      this.itemContainer,
+      this.ItemContainer,
       this.ItemLocked,
       this.ItemOpened);
 }
@@ -36,12 +36,11 @@ class ItemData{
 Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZItem)');
   List<String> lines = LUA.split('\n');
-  String line = '';
   List<ItemData> Items = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
-  bool section = true;
-  int j = 1;
+  bool sectionItem = true;
+  bool sectionDescription = true;
   String LUAname = '';
   String id = '';
   String name = '';
@@ -56,9 +55,9 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
   String container = '';
 
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (re.hasMatch(line)) {
+    if (re.hasMatch(lines[i])) {
       LUAname = '';
+      container = '';
       id = '';
       name = '';
       description = '';
@@ -71,56 +70,74 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
       opened = '';
       container = '';
 
-      LUAname = getLUAName(line);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+      LUAname = getLUAName(lines[i]);
+      container = getContainer(lines[i]);
 
-      description = '';
-      section = true;
-      j = 1;
+      sectionItem = true;
       do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-          section = false;
-      } while (section);
-      description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
-
-      section = true;
-      do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-            visible = getLineData(
-                lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Media'))
-            media = getLineData(
-                lines[i + 2 + j], LUAname, 'Media', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Icon'))
-            icon = getLineData(
-                lines[i + 2 + j], LUAname, 'Icon', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Locked'))
-            locked = getLineData(
-                lines[i + 2 + j], LUAname, 'Locked', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Opened'))
-            opened = getLineData(
-                lines[i + 2 + j], LUAname, 'Opened', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ObjectLocation'))
-            location = getLineData(
-                lines[i + 2 + j], LUAname, 'ObjectLocation', obfuscator,
-                dtable);
-          if (location.endsWith('INVALID_ZONEPOINT'))
-            location = '';
-          if (location.startsWith('ZonePoint')){
-            location = location.replaceAll('Zonepoint(', '')..replaceAll(')', '').replaceAll(' ', '');
-            zonePoint = ZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]), double.parse(location.split(',')[2]));
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.Opened'))
-            section = false;
-          j = j + 1;
+        i++;
+        if (lines[i].trim().startsWith(LUAname + 'Container =')) {
+          container = getContainer(lines[i]);
         }
-      } while (section);
-      j--;
+
+        if (lines[i].trim().startsWith(LUAname + '.Id')) {
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Name')) {
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Description')) {
+          description = '';
+          sectionDescription = true;
+          do {
+            description = description + lines[i];
+            i++;
+            if ((i) > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible')) {
+              sectionDescription = false;
+            }
+          } while (sectionDescription);
+          description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+          description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Visible'))
+          visible = getLineData(
+              lines[i], LUAname, 'Visible', obfuscator, dtable);
+
+        if (lines[i].trim().startsWith(LUAname + '.Media'))
+          media = getLineData(
+              lines[i], LUAname, 'Media', obfuscator, dtable);
+
+        if (lines[i].trim().startsWith(LUAname + '.Icon'))
+          icon = getLineData(
+              lines[i], LUAname, 'Icon', obfuscator, dtable);
+
+        if (lines[i].trim().startsWith(LUAname + '.Locked'))
+          locked = getLineData(
+              lines[i], LUAname, 'Locked', obfuscator, dtable);
+
+        if (lines[i].trim().startsWith(LUAname + '.Opened')) {
+          opened = getLineData(
+              lines[i], LUAname, 'Opened', obfuscator, dtable);
+          sectionItem = false;
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.ObjectLocation'))
+          location = getLineData(
+              lines[i], LUAname, 'ObjectLocation', obfuscator,
+              dtable);
+
+        if (location.endsWith('INVALID_ZONEPOINT'))
+          location = '';
+
+        if (location.startsWith('ZonePoint')){
+          location = location.replaceAll('Zonepoint(', '').replaceAll(')', '').replaceAll(' ', '');
+          zonePoint = ZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]), double.parse(location.split(',')[2]));
+        }
+
+      } while (sectionItem);
 
       Items.add(ItemData(
           LUAname,
@@ -135,10 +152,10 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
           container,
           locked,
           opened));
+
       NameToObject[LUAname] = ObjectData(id, name, media);
-      i = i + 2 + j;
-    }
-  };
+    } // end if
+  }; // end for
 
   out.addAll({'content': Items});
   out.addAll({'names': NameToObject});
