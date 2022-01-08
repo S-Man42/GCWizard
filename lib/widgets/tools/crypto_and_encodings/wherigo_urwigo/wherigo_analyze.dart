@@ -63,7 +63,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {});
+  WherigoCartridge _cartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], []);
   Map<String, dynamic> _outData;
 
   var _displayedCartridgeData = WHERIGO.NULL;
@@ -269,6 +269,36 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       return Container();
     }
 
+    var _errorMsg = [];
+    if (_cartridge.ResultStatus == ANALYSE_RESULT_STATUS.OK)
+      _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
+    else {
+      _errorMsg.add(i18n(context, 'wherigo_error_runtime'));
+      switch (_cartridge.ResultStatus) {
+        case ANALYSE_RESULT_STATUS.ERROR_GWC:
+          _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
+          for (int i = 0; i < _cartridge.ResultsGWC.length; i++)
+            _errorMsg.add(_cartridge.ResultsGWC[i]);
+          break;
+        case ANALYSE_RESULT_STATUS.ERROR_LUA:
+          _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
+          for (int i = 0; i < _cartridge.ResultsLUA.length; i++)
+            _errorMsg.add(_cartridge.ResultsLUA[i]);
+          break;
+        case ANALYSE_RESULT_STATUS.ERROR_FULL:
+          _errorMsg.add('- ' + i18n(context, 'wherigo_error_runtime_gwc'));
+          for (int i = 0; i < _cartridge.ResultsGWC.length; i++)
+            _errorMsg.add('  - ' + _cartridge.ResultsGWC[i]);
+          _errorMsg.add('');
+          _errorMsg.add('- ' + i18n(context, 'wherigo_error_runtime_lua'));
+          for (int i = 0; i < _cartridge.ResultsLUA.length; i++)
+            _errorMsg.add('  - ' + _cartridge.ResultsLUA[i]);
+          break;
+      }
+      _errorMsg.add('');
+      _errorMsg.add(i18n(context, 'wherigo_error_hint_2'));
+    }
+
     var _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _cartridge.Signature],
       [
@@ -350,15 +380,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
 
     switch (_displayedCartridgeData) {
+      case WHERIGO.RESULTS_GWC:
+      case WHERIGO.RESULTS_LUA:
+      return GCWDefaultOutput(
+        child: GCWOutputText(
+          text: _errorMsg.join('\n'),
+          style: gcwMonotypeTextStyle(),
+        ),
+      );
+        break;
       case WHERIGO.NULL:
         return Container();
-        return GCWDefaultOutput(
-          child: GCWOutputText(
-            text: i18n(context, 'wherigo_data_nodata'),
-            suppressCopyButton: true,
-          ),
-        );
-        break;
 
       case WHERIGO.DTABLE:
         return GCWDefaultOutput(
@@ -1392,15 +1424,42 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _showCartridgeOutput(Map<String, dynamic> output, String dataType) {
     _outData = output;
-
+    String toastMessage = '';
+    int toastTime = 3;
     // restore references (problem with sendPort, lose references)
     if (_outData == null) {
-      showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-      return;
+      toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
     } else {
-      showToast(i18n(context, 'wherigo_data_loaded') + ': ' + dataType);
       _cartridge = _outData['cartridge'];
       NameToObject = _cartridge.NameToObject;
+      switch (_cartridge.ResultStatus) {
+        case ANALYSE_RESULT_STATUS.OK:
+          toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + dataType;
+          break;
+        case ANALYSE_RESULT_STATUS.ERROR_GWC:
+          toastMessage =
+              i18n(context,'wherigo_error_runtime') + '\n' +
+              i18n(context,'wherigo_error_runtime_gwc') + '\n\n' +
+              i18n(context,'wherigo_error_hint_1');
+          toastTime = 15;
+          break;
+        case ANALYSE_RESULT_STATUS.ERROR_LUA:
+          toastMessage =
+              i18n(context,'wherigo_error_runtime') + '\n' +
+              i18n(context,'wherigo_error_runtime_lua') + '\n\n' +
+              i18n(context,'wherigo_error_hint_1');
+          toastTime = 15;
+          break;
+        case ANALYSE_RESULT_STATUS.ERROR_FULL:
+          toastMessage =
+              i18n(context,'wherigo_error_runtime') + '\n' +
+              i18n(context,'wherigo_error_runtime_gwc') + '\n' +
+              i18n(context,'wherigo_error_runtime_lua') + '\n\n' +
+              i18n(context,'wherigo_error_hint_1');
+          toastTime = 15;
+          break;
+      }
+    showToast(toastMessage, time: toastTime);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
