@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_derivate.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 class Brainfk extends StatefulWidget {
   final Function interpret;
@@ -23,27 +21,27 @@ class Brainfk extends StatefulWidget {
 class BrainfkState extends State<Brainfk> {
   var _textController;
   var _inputController;
-  var _inputController_greater;
-  var _inputController_smaller;
-  var _inputController_plus;
-  var _inputController_minus;
-  var _inputController_dot;
-  var _inputController_komma;
-  var _inputController_open;
-  var _inputController_close;
+  var _inputController_shiftRight;
+  var _inputController_shiftLeft;
+  var _inputController_increaseValue;
+  var _inputController_decreaseValue;
+  var _inputController_output;
+  var _inputController_input;
+  var _inputController_startLoop;
+  var _inputController_endLoop;
 
-  var _currentSubstitition = BrainfkTrivial.PIKALANG;
+  var _currentDerivate = BRAINFKDERIVATE_OOK;
 
   var _currentText = '';
   var _currentInput = '';
-  var _currentInput_greater;
-  var _currentInput_smaller;
-  var _currentInput_plus;
-  var _currentInput_minus;
-  var _currentInput_dot;
-  var _currentInput_komma;
-  var _currentInput_open;
-  var _currentInput_close;
+  var _currentInput_shiftRight;
+  var _currentInput_shiftLeft;
+  var _currentInput_increaseValue;
+  var _currentInput_decreaseValue;
+  var _currentInput_output;
+  var _currentInput_input;
+  var _currentInput_startLoop;
+  var _currentInput_endLoop;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentOriginal = GCWSwitchPosition.left;
@@ -53,28 +51,28 @@ class BrainfkState extends State<Brainfk> {
     super.initState();
     _textController = TextEditingController(text: _currentText);
     _inputController = TextEditingController(text: _currentInput);
-    _inputController_greater = TextEditingController(text: _currentInput_greater);
-    _inputController_smaller = TextEditingController(text: _currentInput_smaller);
-    _inputController_plus = TextEditingController(text: _currentInput_plus);
-    _inputController_minus = TextEditingController(text: _currentInput_minus);
-    _inputController_dot = TextEditingController(text: _currentInput_dot);
-    _inputController_komma = TextEditingController(text: _currentInput_komma);
-    _inputController_open = TextEditingController(text: _currentInput_open);
-    _inputController_close = TextEditingController(text: _currentInput_close);
+    _inputController_shiftRight = TextEditingController(text: _currentInput_shiftRight);
+    _inputController_shiftLeft = TextEditingController(text: _currentInput_shiftLeft);
+    _inputController_increaseValue = TextEditingController(text: _currentInput_increaseValue);
+    _inputController_decreaseValue = TextEditingController(text: _currentInput_decreaseValue);
+    _inputController_output = TextEditingController(text: _currentInput_output);
+    _inputController_input = TextEditingController(text: _currentInput_input);
+    _inputController_startLoop = TextEditingController(text: _currentInput_startLoop);
+    _inputController_endLoop = TextEditingController(text: _currentInput_endLoop);
   }
 
   @override
   void dispose() {
     _textController.dispose();
     _inputController.dispose();
-    _inputController_greater.dispose();
-    _inputController_smaller.dispose();
-    _inputController_plus.dispose();
-    _inputController_minus.dispose();
-    _inputController_dot.dispose();
-    _inputController_komma.dispose();
-    _inputController_open.dispose();
-    _inputController_close.dispose();
+    _inputController_shiftRight.dispose();
+    _inputController_shiftLeft.dispose();
+    _inputController_increaseValue.dispose();
+    _inputController_decreaseValue.dispose();
+    _inputController_output.dispose();
+    _inputController_input.dispose();
+    _inputController_startLoop.dispose();
+    _inputController_endLoop.dispose();
     super.dispose();
   }
 
@@ -106,91 +104,90 @@ class BrainfkState extends State<Brainfk> {
             ? Container()
             : Column(children: <Widget>[
                 GCWDropDownButton(
-                  value: _currentSubstitition,
+                  value: _currentDerivate,
                   onChanged: (value) {
                     setState(() {
-                      _currentSubstitition = value;
+                      _currentDerivate = value;
                     });
                   },
-                  items: BRAINFK_TRIVIAL_LIST.entries.map((mode) {
+                  items: BRAINFK_DERIVATES.entries.map((mode) {
                     return GCWDropDownMenuItem(
                       value: mode.key,
-                      //child: i18n(context, mode.value),
                       child: mode.value,
                     );
                   }).toList(),
                 ),
-                _currentSubstitition == BrainfkTrivial.CUSTOM
+                _currentDerivate == BRAINFKDERIVATE_CUSTOM
                     ? Column(children: [
                         GCWTextField(
-                          controller: _inputController_greater,
+                          controller: _inputController_shiftRight,
                           hintText: i18n(context, 'brainfk_input_greater'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_greater = text;
+                              _currentInput_shiftRight = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_smaller,
+                          controller: _inputController_shiftLeft,
                           hintText: i18n(context, 'brainfk_input_smaller'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_smaller = text;
+                              _currentInput_shiftLeft = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_plus,
+                          controller: _inputController_increaseValue,
                           hintText: i18n(context, 'brainfk_input_plus'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_plus = text;
+                              _currentInput_increaseValue = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_minus,
+                          controller: _inputController_decreaseValue,
                           hintText: i18n(context, 'brainfk_input_minus'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_minus = text;
+                              _currentInput_decreaseValue = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_dot,
+                          controller: _inputController_output,
                           hintText: i18n(context, 'brainfk_input_dot'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_dot = text;
+                              _currentInput_output = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_komma,
+                          controller: _inputController_input,
                           hintText: i18n(context, 'brainfk_input_komma'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_komma = text;
+                              _currentInput_input = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_open,
+                          controller: _inputController_startLoop,
                           hintText: i18n(context, 'brainfk_input_open'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_open = text;
+                              _currentInput_startLoop = text;
                             });
                           },
                         ),
                         GCWTextField(
-                          controller: _inputController_close,
+                          controller: _inputController_endLoop,
                           hintText: i18n(context, 'brainfk_input_close'),
                           onChanged: (text) {
                             setState(() {
-                              _currentInput_close = text;
+                              _currentInput_endLoop = text;
                             });
                           },
                         ),
@@ -234,60 +231,45 @@ class BrainfkState extends State<Brainfk> {
           return printErrorMessage(context, e.message);
         }
       else {
-        if (_currentSubstitition == BrainfkTrivial.CUSTOM)
+        if (_currentDerivate == BRAINFKDERIVATE_CUSTOM)
           try {
-            return interpretBrainfk(
-                substitution(_currentText, {
-                  _currentInput_smaller: '<',
-                  _currentInput_greater: '>',
-                  _currentInput_minus: '-',
-                  _currentInput_plus: '+',
-                  _currentInput_open: '[',
-                  _currentInput_close: ']',
-                  _currentInput_komma: ',',
-                  _currentInput_dot: '.'
-                }),
-                input: _currentInput);
+            return BrainfkDerivate(
+              pointerShiftRightInstruction: _currentInput_shiftRight,
+              pointerShiftLeftInstruction: _currentInput_shiftLeft,
+              increaseValueInstruction: _currentInput_increaseValue,
+              decreaseValueInstruction: _currentInput_decreaseValue,
+              outputInstruction: _currentInput_output,
+              inputInstruction: _currentInput_input,
+              startLoopInstruction: _currentInput_startLoop,
+              endLoopInstruction: _currentInput_endLoop
+            ).interpretBrainfkDerivat(_currentText, input: _currentInput);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
         else
-          return interpretBrainfk(
-              substitution(_currentText,
-                  switchMapKeyValue(brainfkTrivialSubstitutions[BRAINFK_TRIVIAL_LIST[_currentSubstitition]])),
-              input: _currentInput);
+          return _currentDerivate.interpretBrainfkDerivat(_currentText, input: _currentInput);
       }
     } else {
       if (_currentOriginal == GCWSwitchPosition.left)
         return widget.generate == null ? generateBrainfk(_currentText) : widget.generate(_currentText);
       else {
-        if (_currentSubstitition == BrainfkTrivial.CUSTOM)
+        if (_currentDerivate == BRAINFKDERIVATE_CUSTOM)
           try {
-            return substitution(generateBrainfk(_currentText).split('').join(' '), {
-              '<': _currentInput_smaller,
-              '>': _currentInput_greater,
-              '-': _currentInput_minus,
-              '+': _currentInput_plus,
-              '[': _currentInput_open,
-              ']': _currentInput_close,
-              ',': _currentInput_komma,
-              '.': _currentInput_dot
-            });
+            return BrainfkDerivate(
+                pointerShiftRightInstruction: _currentInput_shiftRight,
+                pointerShiftLeftInstruction: _currentInput_shiftLeft,
+                increaseValueInstruction: _currentInput_increaseValue,
+                decreaseValueInstruction: _currentInput_decreaseValue,
+                outputInstruction: _currentInput_output,
+                inputInstruction: _currentInput_input,
+                startLoopInstruction: _currentInput_startLoop,
+                endLoopInstruction: _currentInput_endLoop
+            ).generateBrainfkDerivat(_currentText);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
         else
-          switch (_currentSubstitition) {
-            case BrainfkTrivial.DETAILEDFK:
-            case BrainfkTrivial.OMAM:
-            case BrainfkTrivial.REVOLUTION9:
-              return substitution(generateBrainfk(_currentText).split('').join('\n'),
-                  brainfkTrivialSubstitutions[BRAINFK_TRIVIAL_LIST[_currentSubstitition]]);
-              break;
-            default:
-              return substitution(generateBrainfk(_currentText).split('').join(' '),
-                  brainfkTrivialSubstitutions[BRAINFK_TRIVIAL_LIST[_currentSubstitition]]);
-          }
+          return _currentDerivate.generateBrainfkDerivat(_currentText);
       }
     }
   }
