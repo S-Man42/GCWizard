@@ -39,8 +39,12 @@ Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
   String medianame = '';
   String alttext = '';
 
+  int index = 0;
+
+
   for (int i = 0; i < lines.length; i++){
     if (re.hasMatch(lines[i])) {
+      index++;
       LUAname = '';
       id = '';
       name = '';
@@ -113,7 +117,7 @@ Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
           type,
           medianame,
       ));
-      NameToObject[LUAname] = ObjectData(id, name, medianame, OBJECT_TYPE.MEDIA);
+      NameToObject[LUAname] = ObjectData(id, index, name, medianame, OBJECT_TYPE.MEDIA);
     }
   };
 

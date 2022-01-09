@@ -153,7 +153,7 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
           locked,
           opened));
 
-      NameToObject[LUAname] = ObjectData(id, name, media, OBJECT_TYPE.ITEM);
+      NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.ITEM);
     } // end if
   }; // end for
 

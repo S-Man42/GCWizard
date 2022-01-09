@@ -3,17 +3,21 @@ import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart'; // https://pub.dev/packages/audioplayers
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 enum PlayerState { stopped, playing, paused }
 
 class GCWSoundPlayer extends StatefulWidget {
   final PlatformFile file;
+  final bool showMetadata;
 
-  const GCWSoundPlayer({Key key, @required this.file}) : super(key: key);
+  const GCWSoundPlayer({Key key, @required this.file, this.showMetadata: false}) : super(key: key);
 
   @override
   _GCWSoundPlayerState createState() => _GCWSoundPlayerState();
@@ -59,6 +63,26 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
         GCWIconButton(
           iconData: Icons.stop,
           onPressed: isPlaying || isPaused ? () => _AudioPlayerStop() : null,
+        ),
+        if (widget.showMetadata)
+        Expanded(
+          child: Container(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GCWText(
+                            text: widget.file.name,
+                            style: gcwTextStyle()
+                                .copyWith(fontWeight: FontWeight.bold, color: themeColors().dialogText())),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              color: themeColors().accent(),
+              padding: EdgeInsets.all(DOUBLE_DEFAULT_MARGIN)),
         ),
 //        Expanded(
 //          child: GCWSlider(value: 0.0, min: 0.0, max: 100.0, suppressReset: true),

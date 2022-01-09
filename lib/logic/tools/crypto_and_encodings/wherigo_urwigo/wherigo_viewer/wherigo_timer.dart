@@ -95,9 +95,8 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
         type,
       ));
 
-      NameToObject[LUAname] = ObjectData(id, name, '', OBJECT_TYPE.TIMER);
+      NameToObject[LUAname] = ObjectData(id, 0, name, '', OBJECT_TYPE.TIMER);
       i--;
-      print('found timer name2obj '+LUAname+'.'+id+'.'+name);
     }
   };
 

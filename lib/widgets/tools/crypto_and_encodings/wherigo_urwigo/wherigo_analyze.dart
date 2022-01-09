@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
@@ -745,6 +746,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
+
+              // Widget for Answer-Details
               if (_cartridge.Inputs[_inputIndex - 1].InputMedia != '' && _cartridge.MediaFilesContents.length > 1)
                 GCWImageView(
                   imageData: GCWImageViewData(_getFileFrom(_cartridge.Inputs[_inputIndex - 1].InputMedia)),
@@ -761,14 +764,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       setState(() {
                         _answerIndex--;
                         if (_answerIndex < 1)
-                          _answerIndex = _cartridge.Inputs[_inputIndex].InputAnswers.length;
+                          _answerIndex = _cartridge.Inputs[_inputIndex - 1].InputAnswers.length;
                       });
                     },
                   ),
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: i18n(context, 'wherigo_data_answer') + ' ' + _answerIndex.toString() + ' / ' + (_cartridge.Inputs[_inputIndex].InputAnswers.length).toString(),
+                      text: i18n(context, 'wherigo_data_answer') + ' ' + _answerIndex.toString() + ' / ' + (_cartridge.Inputs[_inputIndex - 1].InputAnswers.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -776,20 +779,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     onPressed: () {
                       setState(() {
                         _answerIndex++;
-                        if (_answerIndex > _cartridge.Inputs[_inputIndex].InputAnswers.length)
+                        if (_answerIndex > _cartridge.Inputs[_inputIndex - 1].InputAnswers.length)
                           _answerIndex = 1;
                       });
                     },
                   ),              ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+                  children: columnedMultiLineOutput(context, _outputAnswer(_cartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
               ),
               GCWExpandableTextDivider(
                 text: i18n(context, 'wherigo_output_answeractions'),
                 child: Column(
                     //children: columnedMultiLineOutput(context, _outputAnswerActions(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
-                  children: _outputAnswerActionsWidgets(_cartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1])
+                  children: _outputAnswerActionsWidgets(_cartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])
                 ),
               ),
             ]
@@ -1235,6 +1238,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               )
           );
           break;
+        case ACTIONMESSAGETYPE.COMMAND:
+          if (element.MessageContent.startsWith('Wherigo.PlayAudio')){
+            print(element.MessageContent);
+            String LUAName = element.MessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
+            print(LUAName);
+            resultWidget.add(
+                GCWSoundPlayer(
+                  file: PlatformFile(
+                      bytes:_cartridge.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
+                      name: NameToObject[LUAName].ObjectMedia),
+                  showMetadata: true,
+                )
+            );
+          }
+          else
+            resultWidget.add(
+                GCWOutput(
+                  child: '\n' + resolveLUAName(element.MessageContent) + '\n',
+                  suppressCopyButton: true,
+                )
+            );
+          break;
       }
     });
     return resultWidget;
@@ -1346,17 +1371,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       return result;
   }
 
-  List<List<dynamic>> _outputAnswerActions(AnswerData data){
-    List<List<dynamic>> result = [];
-
-    if (data.AnswerActions.length > 0){
-      data.AnswerActions.forEach((element) {
-        result.add([i18n(context, 'wherigo_output_action_' + ACTIONMESSAGETYPE_TEXT[element.ActionType]), element.ActionContent]);
-      });
-    }
-    return result;
-  }
-
   List<Widget> _outputAnswerActionsWidgets(AnswerData data){
     List<Widget> resultWidget = [];
 
@@ -1393,8 +1407,32 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             break;
           case ACTIONMESSAGETYPE.CASE:
             resultWidget.add(
+                Container(
+                  child: Text(
+                    '\n' + (element.ActionContent.toUpperCase()) + '\n',
+                    textAlign: TextAlign.center,
+                )
+              )
+            );
+            break;
+          case ACTIONMESSAGETYPE.COMMAND:
+            if (element.ActionContent.startsWith('Wherigo.PlayAudio')){
+              print(element.ActionContent);
+              String LUAName = element.ActionContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
+              print(LUAName);
+              resultWidget.add(
+                  GCWSoundPlayer(
+                      file: PlatformFile(
+                             bytes:_cartridge.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
+                             name: NameToObject[LUAName].ObjectMedia),
+                      showMetadata: true,
+                  )
+              );
+            }
+            else
+              resultWidget.add(
                 GCWOutput(
-                  child: '\n' + element.ActionContent + '\n',
+                  child: '\n' + resolveLUAName(element.ActionContent) + '\n',
                   suppressCopyButton: true,
                 )
             );
@@ -1589,5 +1627,35 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   }
 
+  String resolveLUAName(String chiffre) {
+
+    String resolve(List<String> chiffreList, String joinPattern){
+      List<String> result = [];
+      result.add(NameToObject[chiffreList[0]].ObjectType.toString().split('.')[1] + ' ' + NameToObject[chiffreList[0]].ObjectName);
+      for (int i = 1; i < chiffreList.length; i++)
+        result.add(chiffreList[i]);
+      return result.join(joinPattern);
+    }
+
+    if (chiffre.split('.').length > 1) {
+      List<String> listChiffre = chiffre.split('.');
+      if (NameToObject[listChiffre[0]] != null) {
+        return resolve(listChiffre, '.');
+      } else
+        return chiffre;
+    }
+
+    else if (chiffre.split(':').length > 1) {
+      List<String> listChiffre = chiffre.split(':');
+      if (NameToObject[listChiffre[0]] != null) {
+        return resolve(listChiffre, ':');
+      } else
+        return chiffre;
+    }
+
+    else
+      return chiffre;
+
+  }
 
 }

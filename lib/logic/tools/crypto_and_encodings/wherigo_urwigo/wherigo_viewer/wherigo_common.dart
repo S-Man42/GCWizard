@@ -5,12 +5,14 @@ enum OBJECT_TYPE {CHARACTER, INPUT, ITEM, MEDIA, TASK, TIMER, ZONE}
 
 class ObjectData{
   final String ObjectID;
+  final int ObjectIndex;
   final String ObjectName;
   final String ObjectMedia;
   final OBJECT_TYPE ObjectType;
 
   ObjectData(
       this.ObjectID,
+      this.ObjectIndex,
       this.ObjectName,
       this.ObjectMedia,
       this.ObjectType,

@@ -127,7 +127,7 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
           complete,
           correctstate
       ));
-      NameToObject[LUAname] = ObjectData(id, name, media, OBJECT_TYPE.TASK);
+      NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.TASK);
 
     } // end if task
 

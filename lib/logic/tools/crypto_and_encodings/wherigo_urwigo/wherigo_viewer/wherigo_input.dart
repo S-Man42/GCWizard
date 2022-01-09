@@ -64,17 +64,16 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   String icon = '';
   String inputType = '';
   String text = '';
-  List<String> choices = [];
-  List<AnswerData> answers = [];
+  List<String> listChoices = [];
 
   String inputObject = '';
-  String question = '';
-  String help = '';
-  String answer = '';
+
   List<String> answerList = [];
   Map<String, List<AnswerData>> Answers = {};
+
   ActionData action;
   List<ActionData> answerActions = [];
+
   bool sectionAnalysed = false;
   bool insideInputFunction = false;
 
@@ -83,8 +82,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
 
-  for (int i = 0; i < lines.length - 1; i++){
-
+  for (int i = 0; i < lines.length - 1; i++) {
     // get all ZInput-Objects
     if (re.hasMatch(lines[i])) {
       LUAname = '';
@@ -96,7 +94,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       icon = '';
       inputType = '';
       text = '';
-      choices = [];
+      listChoices = [];
 
       LUAname = getLUAName(lines[i]);
 
@@ -115,7 +113,8 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
           section = false;
       } while (section);
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+      description =
+          getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
       section = true;
       do {
@@ -125,12 +124,12 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
                 lines[i], LUAname, 'Visible', obfuscator, dtable);
           }
 
-          if (lines[i].startsWith(LUAname + '.Media')){
+          if (lines[i].startsWith(LUAname + '.Media')) {
             media = getLineData(
                 lines[i], LUAname, 'Media', obfuscator, dtable);
           }
 
-          if (lines[i].startsWith(LUAname + '.Icon')){
+          if (lines[i].startsWith(LUAname + '.Icon')) {
             icon = getLineData(
                 lines[i], LUAname, 'Icon', obfuscator, dtable);
           }
@@ -146,15 +145,18 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
           }
 
           if (lines[i].startsWith(LUAname + '.Choices')) {
-            choices = [];
+            listChoices = [];
             if (lines[i + 1].startsWith(LUAname + '.InputType')) {
-              choices.addAll(getChoicesSingleLine(lines[i], LUAname, obfuscator, dtable));
+              listChoices.addAll(
+                  getChoicesSingleLine(lines[i], LUAname, obfuscator, dtable));
             } else {
               i++;
               sectionChoices = true;
               do {
                 if (lines[i].trimLeft().startsWith('"')) {
-                  choices.add(lines[i ].trimLeft().replaceAll('"', '').replaceAll(',', ''));
+                  listChoices.add(
+                      lines[i ].trimLeft().replaceAll('"', '').replaceAll(
+                          ',', ''));
                   i++;
                 } else {
                   sectionChoices = false;
@@ -179,20 +181,18 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         icon,
         inputType,
         text,
-        choices,
-        answers,
+        listChoices,
+        [],
       ));
-      NameToObject[LUAname] = ObjectData(id, name, media, OBJECT_TYPE.INPUT);
+      NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.INPUT);
     }
 
-    // get all Answers
+    // get all Answers - these are part of the function <InputObjcet>:OnGetInput(input)
+
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
       // function for getting all inputs for an input object found
       insideInputFunction = true;
       inputObject = '';
-      question = '';
-      help = '';
-      answer = '';
       answerActions = [];
 
       // getting name of function
@@ -234,9 +234,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
       // result.add(AnswerData(
       //   inputObject,
-      //   question,
-      //   help,
-      //   answer,
       //   answerActions,
       // ));
       // answerActions = [];
@@ -249,7 +246,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
               AnswerData(
                 answer,
                 answerActions,
-          ));
+              ));
         });
         answerActions = [];
         answerList = _getAnswers(i, lines[i], lines[i - 1]);
@@ -264,39 +261,18 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
               AnswerData(
                 answer,
                 answerActions,
-          ));
+              ));
         });
         answerActions = [];
         answerList = [];
       }
     }
 
-    else { // handle action
-      if (lines[i].trimLeft().startsWith('Buttons = ')) {
-        do {
-          i++;
-          if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
-            if (lines[i].trimLeft().startsWith(obfuscator)) {
-              answerActions.add(
-                  ActionData(
-                      ACTIONMESSAGETYPE.BUTTON,
-                      deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
-            } else {
-              answerActions.add(
-                  ActionData(
-                      ACTIONMESSAGETYPE.BUTTON,
-                      lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
-            }
-          }
-        } while (!lines[i].trim().startsWith('}'));
-      } // end if buttons
-      else {
-        action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
-        if (action != null)
-          answerActions.add(action);
-      } // end if other line content
-    }
-    // combine Inputs and Answers
+    else {
+      action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
+      if (action != null)
+        answerActions.add(action);
+    } // end if other line content
 
   };
 
@@ -393,7 +369,12 @@ bool _FunctionEnd(String line1, String line2) {
 
 ActionData _handleLine(String line, String dtable, String obfuscator) {
   line = line.trim();
-  if (line.startsWith('_Urwigo') ||
+  if (line.startsWith('Wherigo.PlayAudio'))
+    return ActionData(
+        ACTIONMESSAGETYPE.COMMAND,
+        line.trim());
+
+  else if (line.startsWith('_Urwigo') ||
       line.startsWith('Callback') ||
       line.startsWith('Wherigo') ||
       line.startsWith('Buttons') ||
@@ -403,31 +384,33 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
       line.startsWith('{') ||
       line.startsWith('}'))
     return null;
+
+  else if (line.startsWith('Text = '))
+      return ActionData(
+          ACTIONMESSAGETYPE.TEXT,
+          getTextData(line, obfuscator, dtable));
+
+  else if (line.startsWith('Media = '))
+      return ActionData(
+          ACTIONMESSAGETYPE.IMAGE,
+          line.trimLeft().replaceAll('Media = ', ''));
+
+  else if (line.startsWith('if '))
+      return ActionData(
+          ACTIONMESSAGETYPE.CASE,
+          line.trimLeft());
+
+  else if (line.startsWith('elseif '))
+      return ActionData(
+          ACTIONMESSAGETYPE.CASE,
+          line.trimLeft());
+
+  else if (line.startsWith('else'))
+      return ActionData(
+          ACTIONMESSAGETYPE.CASE,
+          line.trimLeft());
   else
-  if (line.startsWith('Text = '))
-    return ActionData(
-        ACTIONMESSAGETYPE.TEXT,
-        getTextData(line, obfuscator, dtable));
-  else
-  if (line.startsWith('Media = '))
-    return ActionData(
-        ACTIONMESSAGETYPE.IMAGE,
-        line.trimLeft().replaceAll('Media = ', ''));
-  else
-  if (line.startsWith('if '))
-    return ActionData(
-        ACTIONMESSAGETYPE.CASE,
-        line.trimLeft());
-  if (line.startsWith('elseif '))
-    return ActionData(
-        ACTIONMESSAGETYPE.CASE,
-        line.trimLeft());
-  if (line.startsWith('else'))
-    return ActionData(
-        ACTIONMESSAGETYPE.CASE,
-        line.trimLeft());
-  else
-    return ActionData(
-        ACTIONMESSAGETYPE.COMMAND,
-        line.trimLeft());
+      return ActionData(
+          ACTIONMESSAGETYPE.COMMAND,
+          line.trimLeft());
 }
