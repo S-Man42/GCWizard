@@ -144,7 +144,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
            gender,
            type
       ));
-      NameToObject[LUAname] = ObjectData(id, name, media);
+      NameToObject[LUAname] = ObjectData(id, name, media, OBJECT_TYPE.CHARACTER);
     } // end if
   }; // end for
 

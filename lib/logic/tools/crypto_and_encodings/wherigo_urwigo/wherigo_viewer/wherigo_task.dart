@@ -31,12 +31,12 @@ class TaskData{
 Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZTask)');
   List<String> lines = LUA.split('\n');
-  String line = '';
   List<TaskData> Tasks = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
-  bool section = true;
-  int j = 1;
+  bool sectionTask = true;
+  bool sectionDescription = true;
+
   String LUAname = '';
   String id = '';
   String name = '';
@@ -49,8 +49,8 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
   String active = '';
 
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (re.hasMatch(line)) {
+
+    if (re.hasMatch(lines[i])) {
       LUAname = '';
       id = '';
       name = '';
@@ -61,48 +61,59 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
       complete = '';
       correctstate = '';
       active = '';
-      LUAname = getLUAName(line);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+
+      LUAname = getLUAName(lines[i]);
+
+      i++; id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+      i++; name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
+
+      sectionTask = true;
 
       description = '';
-      section = true;
-      j = 1;
+      sectionDescription = true;
+
       do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-          section = false;
-      } while (section);
+        i++;
+        description = description + lines[i];
+        if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+          sectionDescription = false;
+      } while (sectionDescription);
       description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
       description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
-      section = true;
       do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].startsWith(LUAname + '.Visible'))
+
+          if (lines[i].startsWith(LUAname + '.Visible'))
             visible = getLineData(
-                lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Media'))
+                lines[i], LUAname, 'Visible', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.Media'))
             media = getLineData(
-                lines[i + 2 + j], LUAname, 'Media', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Icon'))
+                lines[i], LUAname, 'Media', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.Icon'))
             icon = getLineData(
-                lines[i + 2 + j], LUAname, 'Icon', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Active'))
+                lines[i], LUAname, 'Icon', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.Active'))
             active = getLineData(
-                lines[i + 2 + j], LUAname, 'Active', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.CorrectState'))
+                lines[i], LUAname, 'Active', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.CorrectState'))
             correctstate = getLineData(
-                lines[i + 2 + j], LUAname, 'CorrectState', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Complete'))
+                lines[i], LUAname, 'CorrectState', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.Complete'))
             complete = getLineData(
-                lines[i + 2 + j], LUAname, 'Complete', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.CorrectState'))
-            section = false;
-          j = j + 1;
-        }
-      } while (section);
+                lines[i], LUAname, 'Complete', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.CorrectState'))
+            sectionTask = false;
+
+          i++;
+      } while (sectionTask && (i < lines.length - 1));
+
+      i--;
 
       Tasks.add(TaskData(
           LUAname,
@@ -116,10 +127,12 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
           complete,
           correctstate
       ));
-      NameToObject[LUAname] = ObjectData(id, name, media);
-      i = i + 2 + j;
-    }
-  };
+      NameToObject[LUAname] = ObjectData(id, name, media, OBJECT_TYPE.TASK);
+
+    } // end if task
+
+
+  }; // for
 
   out.addAll({'content': Tasks});
   out.addAll({'names': NameToObject});

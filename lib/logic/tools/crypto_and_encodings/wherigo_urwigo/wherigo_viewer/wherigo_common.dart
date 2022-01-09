@@ -1,15 +1,19 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
+enum OBJECT_TYPE {CHARACTER, INPUT, ITEM, MEDIA, TASK, TIMER, ZONE}
+
 class ObjectData{
   final String ObjectID;
   final String ObjectName;
   final String ObjectMedia;
+  final OBJECT_TYPE ObjectType;
 
   ObjectData(
       this.ObjectID,
       this.ObjectName,
       this.ObjectMedia,
+      this.ObjectType,
   );
 }
 

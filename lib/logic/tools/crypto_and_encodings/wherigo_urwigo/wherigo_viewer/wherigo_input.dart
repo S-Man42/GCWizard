@@ -147,7 +147,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
           if (lines[i].startsWith(LUAname + '.Choices')) {
             choices = [];
-            if (lines[i].startsWith(LUAname + '.InputType')) {
+            if (lines[i + 1].startsWith(LUAname + '.InputType')) {
               choices.addAll(getChoicesSingleLine(lines[i], LUAname, obfuscator, dtable));
             } else {
               i++;
@@ -182,12 +182,12 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         choices,
         answers,
       ));
-      NameToObject[LUAname] = ObjectData(id, name, media);
+      NameToObject[LUAname] = ObjectData(id, name, media, OBJECT_TYPE.INPUT);
     }
 
     // get all Answers
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
-      // function for getting all inputs for an inputobject found
+      // function for getting all inputs for an input object found
       insideInputFunction = true;
       inputObject = '';
       question = '';
@@ -296,27 +296,24 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
           answerActions.add(action);
       } // end if other line content
     }
-
-
     // combine Inputs and Answers
-
 
   };
 
-  Inputs.forEach((element) {
+  Inputs.forEach((inputObject) {
     resultInputs.add(
         InputData(
-            element.InputLUAName,
-            element.InputID,
-            element.InputName,
-            element.InputDescription,
-            element.InputVisible,
-            element.InputMedia,
-            element.InputIcon,
-            element.InputType,
-            element.InputText,
-            element.InputChoices,
-            Answers[element.InputLUAName])
+            inputObject.InputLUAName,
+            inputObject.InputID,
+            inputObject.InputName,
+            inputObject.InputDescription,
+            inputObject.InputVisible,
+            inputObject.InputMedia,
+            inputObject.InputIcon,
+            inputObject.InputType,
+            inputObject.InputText,
+            inputObject.InputChoices,
+            Answers[inputObject.InputLUAName])
     );
   });
 

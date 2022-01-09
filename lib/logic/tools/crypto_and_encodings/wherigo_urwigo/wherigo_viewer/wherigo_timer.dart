@@ -23,12 +23,14 @@ class TimerData{
 Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
   RegExp re = RegExp(r'( = Wherigo.ZTimer)');
   List<String> lines = LUA.split('\n');
-  String line = '';
+
   List<TimerData> Timers = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
-    bool section = true;
-  int j = 1;
+
+  bool sectionTimer = true;
+  bool sectionDescription = true;
+
   String LUAname = '';
   String id = '';
   String name = '';
@@ -38,8 +40,8 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
   String duration = '';
 
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (re.hasMatch(line)) {
+
+    if (re.hasMatch(lines[i])) {
       LUAname = '';
       id = '';
       name = '';
@@ -47,38 +49,41 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
       visible = '';
       type = '';
       duration = '';
-      LUAname = getLUAName(line);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+
+      LUAname = getLUAName(lines[i]);
+
+      i++; id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+      i++; name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
 
       description = '';
-      section = true;
-      j = 1;
+      sectionTimer = true;
+      sectionDescription = true;
+
       do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-          section = false;
-      } while (section);
+        i++;
+        description = description + lines[i];
+        if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+          sectionDescription = false;
+      } while (sectionDescription);
       description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
-      section = true;
       do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].startsWith(LUAname + '.Visible'))
+          if (lines[i].startsWith(LUAname + '.Visible'))
             visible = getLineData(
-                lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Duration'))
+                lines[i], LUAname, 'Visible', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.Duration'))
             duration = getLineData(
-                lines[i + 2 + j], LUAname, 'Duration', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Type'))
+                lines[i], LUAname, 'Duration', obfuscator, dtable);
+
+          if (lines[i].startsWith(LUAname + '.Type')) {
             type = getLineData(
-                lines[i + 2 + j], LUAname, 'Type', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Type'))
-            section = false;
-          j = j + 1;
-        }
-      } while (section);
+                lines[i], LUAname, 'Type', obfuscator, dtable);
+            sectionTimer = false;
+          }
+
+          i++;
+      } while (sectionTimer && i < lines.length - 1);
 
       Timers.add(TimerData(
         LUAname,
@@ -89,7 +94,10 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
         duration,
         type,
       ));
-      i = i + 2 + j;
+
+      NameToObject[LUAname] = ObjectData(id, name, '', OBJECT_TYPE.TIMER);
+      i--;
+      print('found timer name2obj '+LUAname+'.'+id+'.'+name);
     }
   };
 

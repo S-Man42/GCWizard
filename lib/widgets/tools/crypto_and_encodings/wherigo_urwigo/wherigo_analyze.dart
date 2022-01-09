@@ -1078,7 +1078,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
               Column(
                   children: columnedMultiLineOutput(context, _outputIdentifier(_cartridge.Identifiers[_identifierIndex - 1]))
-              )
+              ),
+              GCWExpandableTextDivider(
+                text: i18n(context, 'wherigo_output_identifier_details'),
+                child: Column(
+                    children: columnedMultiLineOutput(context, _outputIdentifierDetails(_cartridge.Identifiers[_identifierIndex - 1]))
+                ),
+              ),
+
             ]
         );
         break;
@@ -1190,8 +1197,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.InputName],
         [i18n(context, 'wherigo_output_description'), data.InputDescription],
         [i18n(context, 'wherigo_output_text'), data.InputText],
-        [i18n(context, 'wherigo_output_choices'), data.InputChoices.join('\n')],
         [i18n(context, 'wherigo_output_type'), data.InputType],
+        [i18n(context, 'wherigo_output_choices'), data.InputChoices.join('\n')],
         [i18n(context, 'wherigo_output_visible'), data.InputVisible],
       ];
   }
@@ -1233,11 +1240,103 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return resultWidget;
   }
 
-    List<List<dynamic>> _outputIdentifier(IdentifierData data){
+  List<List<dynamic>> _outputIdentifier(IdentifierData data){
       return [
         [i18n(context, 'wherigo_output_luaname'), data.IdentifierLUAName],
         [i18n(context, 'wherigo_output_text'), data.IdentifierName],
       ];
+  }
+
+  List<List<dynamic>> _outputIdentifierDetails(IdentifierData data){
+    List<List<dynamic>> result = [];
+
+    if (data.IdentifierName.startsWith('@mR')) {
+
+      String IdentifierDetail = data.IdentifierName.substring(5);
+
+      if (NameToObject[IdentifierDetail] == null)
+        result = [[i18n(context, 'wherigo_output_identifier_no_detail'), '']];
+      else {
+        result = [[i18n(context, 'wherigo_output_identifier_detail_title'), NameToObject[IdentifierDetail].ObjectType.toString().split('.')[1]]];
+
+        switch (NameToObject[IdentifierDetail].ObjectType) {
+          case OBJECT_TYPE.CHARACTER:
+            for (int i = 0; i < _cartridge.Characters.length; i++) {
+              if (_cartridge.Characters[i].CharacterLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Characters[i].CharacterID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Characters[i].CharacterName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Characters[i].CharacterDescription]);
+                result.add([i18n(context, 'wherigo_output_medianame'), _cartridge.Characters[i].CharacterMediaName]);
+              }
+            }
+            break;
+          case OBJECT_TYPE.INPUT:
+            for (int i = 0; i < _cartridge.Inputs.length; i++) {
+              if (_cartridge.Inputs[i].InputLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Inputs[i].InputID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Inputs[i].InputName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Inputs[i].InputDescription]);
+                result.add([i18n(context, 'wherigo_output_medianame'), _cartridge.Inputs[i].InputMedia]);
+                result.add([i18n(context, 'wherigo_output_question'), _cartridge.Inputs[i].InputText]);
+              }
+            }
+            break;
+          case OBJECT_TYPE.ITEM:
+            for (int i = 0; i < _cartridge.Items.length; i++) {
+              if (_cartridge.Items[i].ItemLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Items[i].ItemID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Items[i].ItemName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Items[i].ItemDescription]);
+                result.add([i18n(context, 'wherigo_output_medianame'), _cartridge.Items[i].ItemMedia]);
+              }
+            }
+            break;
+          case OBJECT_TYPE.MEDIA:
+            for (int i = 0; i < _cartridge.Media.length; i++) {
+              if (_cartridge.Media[i].MediaLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Media[i].MediaID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Media[i].MediaName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Media[i].MediaDescription]);
+                result.add([i18n(context, 'wherigo_output_medianame'), _cartridge.Media[i].MediaFilename]);
+              }
+            }
+            break;
+          case OBJECT_TYPE.TASK:
+            for (int i = 0; i < _cartridge.Tasks.length; i++) {
+              if (_cartridge.Tasks[i].TaskLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Tasks[i].TaskID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Tasks[i].TaskName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Tasks[i].TaskDescription]);
+                result.add([i18n(context, 'wherigo_output_medianame'), _cartridge.Tasks[i].TaskMedia]);
+              }
+            }
+            break;
+          case OBJECT_TYPE.TIMER:
+            for (int i = 0; i < _cartridge.Timers.length; i++) {
+              if (_cartridge.Timers[i].TimerLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Timers[i].TimerID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Timers[i].TimerName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Timers[i].TimerDescription]);
+                result.add([i18n(context, 'wherigo_output_duration'), _cartridge.Timers[i].TimerDuration]);
+                result.add([i18n(context, 'wherigo_output_type'), _cartridge.Timers[i].TimerType]);
+                result.add([i18n(context, 'wherigo_output_visible'), _cartridge.Timers[i].TimerVisible]);
+              }
+            }
+            break;
+          case OBJECT_TYPE.ZONE:
+            for (int i = 0; i < _cartridge.Zones.length; i++) {
+              if (_cartridge.Zones[i].ZoneLUAName == IdentifierDetail) {
+                result.add([i18n(context, 'wherigo_output_id'), _cartridge.Zones[i].ZoneID]);
+                result.add([i18n(context, 'wherigo_output_name'), _cartridge.Zones[i].ZoneName]);
+                result.add([i18n(context, 'wherigo_output_description'), _cartridge.Zones[i].ZoneDescription]);
+                result.add([i18n(context, 'wherigo_output_medianame'), _cartridge.Zones[i].ZoneMediaName]);
+              }
+            }
+            break;
+        }
+      }
+    }
+    return result;
   }
 
   List<List<dynamic>> _outputAnswer(AnswerData data){

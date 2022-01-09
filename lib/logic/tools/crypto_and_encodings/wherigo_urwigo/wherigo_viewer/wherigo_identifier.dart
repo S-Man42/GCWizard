@@ -20,14 +20,22 @@ Map<String, dynamic> getIdentifiersFromCartridge(String LUA, dtable, obfuscator)
   var out = Map<String, dynamic>();
 
     for (int i = 0; i < lines.length - 1; i++){
+
     if (re.hasMatch(lines[i])) {
       i++;
       do {
-        declaration = lines[i].trim().replaceAll(',', '').replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').split('=');
-        if (declaration.length == 2)
-          Identifiers.add(IdentifierData(declaration[0], deobfuscateUrwigoText(declaration[1], dtable)));
+        declaration = lines[i].trim().replaceAll(',', '').replaceAll(' ', '').split('=');
+
+        if (declaration.length == 2) {
+          if (declaration[1].startsWith(obfuscator))
+            Identifiers.add(IdentifierData(
+              declaration[0].trim(), deobfuscateUrwigoText(declaration[1].replaceAll('("', '').replaceAll('")', ''), dtable)));
+          else
+            Identifiers.add(IdentifierData(declaration[0].trim(), declaration[1].replaceAll('"', '')));
+        }
         else
-          Identifiers.add(IdentifierData(declaration[0], ''));
+          Identifiers.add(IdentifierData(declaration[0].trim(), ''));
+
         i++;
       } while ((i < lines.length - 1) && (lines[i].trimLeft() != '}'));
     }
