@@ -268,6 +268,18 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       }
     }
 
+    else if (lines[i].trimLeft().startsWith('Buttons')) {
+      do {
+        i++;
+        if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
+          if (lines[i].trimLeft().startsWith(obfuscator))
+            answerActions.add(ActionData(ACTIONMESSAGETYPE.BUTTON, deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
+          else
+            answerActions.add(ActionData(ACTIONMESSAGETYPE.BUTTON, lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
+        }
+      } while (!lines[i].trim().startsWith('}'));
+    }
+
     else {
       action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
       if (action != null)

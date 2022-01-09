@@ -1212,9 +1212,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       switch(element.MessageType) {
         case ACTIONMESSAGETYPE.TEXT:
           resultWidget.add(
-            GCWOutput(
-              child: element.MessageContent,
-              suppressCopyButton: true,
+            Container(
+              child: GCWOutput(
+                child: element.MessageContent,
+                suppressCopyButton: true,
+              ),
+              padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
             )
           );
           break;
@@ -1232,8 +1235,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           resultWidget.add(
               Container(
                   child: Text(
-                    element.MessageContent,
+                    '\n' + '« ' + element.MessageContent + ' »' +'\n',
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    )
                   )
               )
           );
@@ -1379,9 +1385,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         switch(element.ActionType) {
           case ACTIONMESSAGETYPE.TEXT:
             resultWidget.add(
-                GCWOutput(
-                  child: element.ActionContent,
-                  suppressCopyButton: true,
+                Container(
+                  child: GCWOutput(
+                    child: element.ActionContent,
+                    suppressCopyButton: true,
+                  ),
+                  padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
                 )
             );
             break;
@@ -1398,10 +1407,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           case ACTIONMESSAGETYPE.BUTTON:
             resultWidget.add(
                 Container(
-                  child: Text(
-                      element.ActionContent,
-                      textAlign: TextAlign.center,
-                  )
+                    child: Text(
+                        '\n' + '« ' + element.ActionContent + ' »' +'\n',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        )
+                    )
                 )
             );
             break;
