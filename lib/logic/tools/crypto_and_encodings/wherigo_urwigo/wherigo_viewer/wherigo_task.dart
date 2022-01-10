@@ -69,19 +69,21 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
 
       sectionTask = true;
 
-      description = '';
-      sectionDescription = true;
-
       do {
-        i++;
-        description = description + lines[i];
-        if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
-          sectionDescription = false;
-      } while (sectionDescription);
-      description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
-      do {
+          if (lines[i].startsWith(LUAname + '.Description')) {
+            description = '';
+            sectionDescription = true;
+
+            do {
+              description = description + lines[i];
+              i++;
+              if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+                sectionDescription = false;
+            } while (sectionDescription);
+            description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+            description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+          }
 
           if (lines[i].startsWith(LUAname + '.Visible'))
             visible = getLineData(

@@ -350,7 +350,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _points.add(
         GCWMapPoint(
             uuid: 'Cartridge Start',
-            markerText: i18n(context, _cartridge.CartridgeName),
+            markerText: 'Wherigo "' + _cartridge.CartridgeName + '"',
             point: LatLng(_cartridge.Latitude, _cartridge.Longitude),
             color: COLOR_MAP_POINT));
 
