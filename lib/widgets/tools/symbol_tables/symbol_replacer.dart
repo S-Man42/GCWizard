@@ -95,7 +95,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
+       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
@@ -128,17 +128,17 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           },
         ),
         _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
-        _symbolImage != null ? _buildEditRow() : Container(),
         Expanded(
-            child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    _buildMatrix(_symbolImage, countColumns, mediaQueryData),
-                    _buildOutput()
-                  ]
-                )
-            )
-        )
+          child:
+            SingleChildScrollView(
+              child: Column(
+                 children: <Widget>[
+                     _buildMatrix(_symbolImage, countColumns, mediaQueryData),
+                     _buildOutput(),
+                ]),
+              ),
+         ),
+        _symbolImage != null ? _buildEditRow() : Container(),
       ]
     );
   }
