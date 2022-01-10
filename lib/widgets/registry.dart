@@ -2986,6 +2986,7 @@ initializeRegistry(BuildContext context) {
       'symbol_klingon',
     ]),
     GCWSymbolTableTool(symbolKey: 'klingon_klinzhai', symbolSearchStrings: [
+      'symbol_klingon',
       'symbol_klingon_klinzhai',
     ]),
     GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: [
