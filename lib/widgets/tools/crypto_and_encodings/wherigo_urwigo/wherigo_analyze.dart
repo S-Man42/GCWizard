@@ -274,26 +274,27 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (_cartridge.ResultStatus == ANALYSE_RESULT_STATUS.OK)
       _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
     else {
-      _errorMsg.add(i18n(context, 'wherigo_error_runtime'));
       switch (_cartridge.ResultStatus) {
         case ANALYSE_RESULT_STATUS.ERROR_GWC:
           _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
           for (int i = 0; i < _cartridge.ResultsGWC.length; i++)
-            _errorMsg.add(_cartridge.ResultsGWC[i]);
+            _errorMsg.add(i18n(context, _cartridge.ResultsGWC[i]));
           break;
+
         case ANALYSE_RESULT_STATUS.ERROR_LUA:
           _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
           for (int i = 0; i < _cartridge.ResultsLUA.length; i++)
-            _errorMsg.add(_cartridge.ResultsLUA[i]);
+            _errorMsg.add(i18n(context, _cartridge.ResultsLUA[i]));
           break;
+
         case ANALYSE_RESULT_STATUS.ERROR_FULL:
           _errorMsg.add('- ' + i18n(context, 'wherigo_error_runtime_gwc'));
           for (int i = 0; i < _cartridge.ResultsGWC.length; i++)
-            _errorMsg.add('  - ' + _cartridge.ResultsGWC[i]);
+            _errorMsg.add('  - ' + i18n(context, _cartridge.ResultsGWC[i]));
           _errorMsg.add('');
           _errorMsg.add('- ' + i18n(context, 'wherigo_error_runtime_lua'));
           for (int i = 0; i < _cartridge.ResultsLUA.length; i++)
-            _errorMsg.add('  - ' + _cartridge.ResultsLUA[i]);
+            _errorMsg.add('  - ' + i18n(context, _cartridge.ResultsLUA[i]));
           break;
       }
       _errorMsg.add('');
@@ -1590,14 +1591,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context,'wherigo_error_runtime') + '\n' +
               i18n(context,'wherigo_error_runtime_gwc') + '\n\n' +
               i18n(context,'wherigo_error_hint_1');
-          toastTime = 15;
+          toastTime = 20;
           break;
         case ANALYSE_RESULT_STATUS.ERROR_LUA:
           toastMessage =
               i18n(context,'wherigo_error_runtime') + '\n' +
               i18n(context,'wherigo_error_runtime_lua') + '\n\n' +
               i18n(context,'wherigo_error_hint_1');
-          toastTime = 15;
+          toastTime = 20;
           break;
         case ANALYSE_RESULT_STATUS.ERROR_FULL:
           toastMessage =
@@ -1605,7 +1606,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context,'wherigo_error_runtime_gwc') + '\n' +
               i18n(context,'wherigo_error_runtime_lua') + '\n\n' +
               i18n(context,'wherigo_error_hint_1');
-          toastTime = 15;
+          toastTime = 20;
           break;
       }
     showToast(toastMessage, time: toastTime);
