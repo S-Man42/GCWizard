@@ -278,23 +278,35 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         case ANALYSE_RESULT_STATUS.ERROR_GWC:
           _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
           for (int i = 0; i < _cartridge.ResultsGWC.length; i++)
-            _errorMsg.add(i18n(context, _cartridge.ResultsGWC[i]));
+            if (_cartridge.ResultsGWC[i].startsWith('wherigo'))
+              _errorMsg.add(i18n(context, _cartridge.ResultsGWC[i]));
+            else
+              _errorMsg.add(_cartridge.ResultsGWC[i]);
           break;
 
         case ANALYSE_RESULT_STATUS.ERROR_LUA:
           _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
           for (int i = 0; i < _cartridge.ResultsLUA.length; i++)
-            _errorMsg.add(i18n(context, _cartridge.ResultsLUA[i]));
+            if (_cartridge.ResultsLUA[i].startsWith('wherigo'))
+              _errorMsg.add(i18n(context, _cartridge.ResultsLUA[i]));
+            else
+              _errorMsg.add(_cartridge.ResultsLUA[i]);
           break;
 
         case ANALYSE_RESULT_STATUS.ERROR_FULL:
           _errorMsg.add('- ' + i18n(context, 'wherigo_error_runtime_gwc'));
           for (int i = 0; i < _cartridge.ResultsGWC.length; i++)
-            _errorMsg.add('  - ' + i18n(context, _cartridge.ResultsGWC[i]));
+            if (_cartridge.ResultsGWC[i].startsWith('wherigo'))
+              _errorMsg.add(i18n(context, _cartridge.ResultsGWC[i]));
+            else
+              _errorMsg.add(_cartridge.ResultsGWC[i]);
           _errorMsg.add('');
           _errorMsg.add('- ' + i18n(context, 'wherigo_error_runtime_lua'));
           for (int i = 0; i < _cartridge.ResultsLUA.length; i++)
-            _errorMsg.add('  - ' + i18n(context, _cartridge.ResultsLUA[i]));
+            if (_cartridge.ResultsLUA[i].startsWith('wherigo'))
+              _errorMsg.add(i18n(context, _cartridge.ResultsLUA[i]));
+            else
+              _errorMsg.add(_cartridge.ResultsLUA[i]);
           break;
       }
       _errorMsg.add('');
@@ -1136,7 +1148,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<List<dynamic>> _outputItem(ItemData data){
-      return [
+    List<List<dynamic>> result = [
         [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
         [i18n(context, 'wherigo_output_id'), data.ItemID],
         [i18n(context, 'wherigo_output_name'), data.ItemName],
@@ -1144,11 +1156,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_visible'), data.ItemVisible],
         [i18n(context, 'wherigo_output_medianame'), data.ItemMedia],
         [i18n(context, 'wherigo_output_iconname'), data.ItemIcon],
-        [i18n(context, 'wherigo_output_location'), data.ItemLocation],
-        [i18n(context, 'wherigo_output_container'), data.ItemContainer],
-        [i18n(context, 'wherigo_output_locked'), data.ItemLocked],
-        [i18n(context, 'wherigo_output_opened'), data.ItemOpened],
       ];
+    if (data.ItemLocation == 'ZonePoint')
+      result.add([i18n(context, 'wherigo_output_location'), formatCoordOutput(
+                                                               LatLng(data.ItemZonepoint.Latitude, data.ItemZonepoint.Longitude), {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())]);
+    else
+      result.add([i18n(context, 'wherigo_output_location'), data.ItemLocation]);
+
+    result.add([i18n(context, 'wherigo_output_container'), data.ItemContainer]);
+    result.add([i18n(context, 'wherigo_output_locked'), data.ItemLocked]);
+    result.add([i18n(context, 'wherigo_output_opened'), data.ItemOpened]);
+    return result;
   }
 
   List<List<dynamic>> _outputTask(TaskData data){

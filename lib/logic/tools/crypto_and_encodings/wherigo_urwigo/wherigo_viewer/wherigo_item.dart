@@ -1,6 +1,9 @@
-
+import 'package:latlong2/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:prefs/prefs.dart';
 
 class ItemData{
   final String ItemLUAName;
@@ -124,19 +127,27 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
           sectionItem = false;
         }
 
-        if (lines[i].trim().startsWith(LUAname + '.ObjectLocation'))
+        if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
+          location = lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
+          print('location '+location);
+          if (location.endsWith('INVALID_ZONEPOINT'))
+            location = '';
+          else if (location.startsWith('ZonePoint')) {
+            location = location
+                .replaceAll('ZonePoint(', '')
+                .replaceAll(')', '')
+                .replaceAll(' ', '');
+            print('location '+location);
+            zonePoint = ZonePoint(double.parse(location.split(',')[0]),
+                double.parse(location.split(',')[1]),
+                double.parse(location.split(',')[2]));
+            location = 'ZonePoint';
+          }
+          else
           location = getLineData(
               lines[i], LUAname, 'ObjectLocation', obfuscator,
               dtable);
-
-        if (location.endsWith('INVALID_ZONEPOINT'))
-          location = '';
-
-        if (location.startsWith('ZonePoint')){
-          location = location.replaceAll('Zonepoint(', '').replaceAll(')', '').replaceAll(' ', '');
-          zonePoint = ZonePoint(double.parse(location.split(',')[0]), double.parse(location.split(',')[1]), double.parse(location.split(',')[2]));
         }
-
       } while (sectionItem);
 
       Items.add(ItemData(
