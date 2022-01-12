@@ -499,7 +499,7 @@ Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password
   var directory = changeExtension(tmpFile.path, '');
 
   try {
-    createDirectory(directory);
+    await createDirectory(directory);
     var result = await UnrarFile.extract_rar( tmpFile.path, directory + '/', password: password);
 
     await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
