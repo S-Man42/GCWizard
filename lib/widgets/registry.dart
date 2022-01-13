@@ -2571,7 +2571,7 @@ initializeRegistry(BuildContext context) {
       'symbol',
       'symboltablesexamples',
     ]),
-    GCWTool(tool: SymbolReplacer(), autoScroll: false, i18nPrefix: 'symbol_replacer',  searchKeys: [
+    GCWTool(tool: SymbolReplacer(), i18nPrefix: 'symbol_replacer',  searchKeys: [
       'symbol_replacer',
     ]),
 

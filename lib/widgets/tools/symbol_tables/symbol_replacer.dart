@@ -130,17 +130,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           },
         ),
         _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
-        Expanded(
-          child:
-            SingleChildScrollView(
-              child: Column(
-                 children: <Widget>[
-                     _buildMatrix(_symbolImage, countColumns, mediaQueryData),
-                     _buildOutput(),
-                ]),
-              ),
-         ),
         _symbolImage != null ? _buildEditRow() : Container(),
+        _buildMatrix(_symbolImage, countColumns, mediaQueryData),
+        _buildOutput(),
       ]
     );
   }
