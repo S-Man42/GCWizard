@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:prefs/prefs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -238,7 +240,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         max: 100,
         onChanged: (value) {
           _similarityCompareLevel = value;
-          _replaceSymbols(false);
+          if (_selectedSymbolData != null) _replaceSymbols(false);
         }
       ),
     ]);
@@ -530,7 +532,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildSubstitutionBreakerJobData() async {
-
     if (_symbolImage == null) return null;
     if (_symbolImage.symbolGroups == null) return null;
 
@@ -544,9 +545,9 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     _symbolImage.lines.forEach((line) {
       line.symbols.forEach((symbol) {
         var index = _symbolImage.symbolGroups.indexOf(symbol.symbolGroup);
-        input += symbol.symbolGroup == null ? '' : quadgrams.alphabet[index];
+        if (index >= 0)
+          input += symbol.symbolGroup == null ? '' : quadgrams.alphabet[index];
       });
-      input += '\r\n';
     });
     input = input.trim();
 
@@ -557,8 +558,12 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     if (output == null) return;
 
     if (output.errorCode == SubstitutionBreakerErrorCode.OK) {
-      for (int i = 0; i < _symbolImage.symbolGroups.length; i++)
-        _symbolImage.symbolGroups[i].text = output.key[i].toUpperCase();
+      var len = min(_symbolImage.symbolGroups.length, output.alphabet.length);
+      for (int i = 0; i < len; i++) {
+        var index = output.key.indexOf(output.alphabet[i]);
+        if (index < output.alphabet.length)
+          _symbolImage.symbolGroups[i].text = output.alphabet[index].toUpperCase();
+      }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -584,6 +589,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           className(SymbolTable()),
         ].contains(className(element.tool));
       }).toList();
+      _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
 
       _compareSymbolItems = _toolList.map((tool) {
         return GCWDropDownMenuItem(

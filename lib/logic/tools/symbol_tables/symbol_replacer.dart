@@ -168,7 +168,7 @@ class SymbolImage {
     if (_compareSymbols != compareSymbols)
       _compareImage = null;
 
-    if (groupSymbols & (compareSymbols != null) & (_similarityCompareLevel != null) & (_compareImage == null)) {
+    if (groupSymbols & (compareSymbols != null) & (_similarityCompareLevel != null)) {
       if (_compareSymbols != compareSymbols || _compareImage == null) {
         _compareImage = _buildCompareSymbols(compareSymbols);
       }
@@ -197,7 +197,7 @@ class SymbolImage {
     if (symbol == null) return;
     if (symbol.symbolGroup != null) {
       symbol.symbolGroup?.symbols?.remove(symbol);
-      if (symbol.symbolGroup.symbols.isEmpty) symbolGroups.remove(symbolGroup);
+      if (symbol.symbolGroup.symbols.isEmpty) symbolGroups.remove(symbol.symbolGroup);
     }
     if (symbolGroup.symbols == null) symbolGroup.symbols = <Symbol>[];
 
