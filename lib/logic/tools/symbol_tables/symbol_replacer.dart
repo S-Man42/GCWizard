@@ -94,11 +94,19 @@ class SymbolImage {
   }
 
   Uint8List getImage() {
+    return _image;
+  }
+
+  Uint8List getReplacedImage() {
     if (_outputImageBytes != null)
       return _outputImageBytes;
 
     _outputImageBytes = encodeTrimmedPng(_outputImage);
     return _outputImageBytes;
+  }
+
+  SymbolImage getCompareImage() {
+    return _compareImage;
   }
 
   String getTextOutput({bool withLinebreak : false}) {
@@ -220,6 +228,7 @@ class SymbolImage {
 
   SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareSymbols) {
     var compareSymbolImage = SymbolImage(compareSymbols?.first?.values?.first?.bytes);
+    if (compareSymbols == null) return null;
 
     compareSymbols.forEach((element) {
       element.forEach((text, symbolData) {
