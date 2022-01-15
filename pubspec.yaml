@@ -14,7 +14,7 @@ dependencies:
   file_picker: ^4.1.0
   file_picker_writable: ^2.0.1
   encrypt: ^5.0.0
-  exif: ^3.0.0
+  exif: ^3.1.1
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -23,8 +23,8 @@ dependencies:
   flutter_map_marker_popup: ^1.0.1
   flutter_map_tappable_polyline: ^3.0.0
   fluttertoast: ^8.0.8
-  http: ^0.13.3
-  image: ^3.0.5
+  http: ^0.13.4
+  image: ^3.1.1
   intl: ^0.17.0
   location: ^4.3.0
   mask_text_input_formatter: ^2.0.0
