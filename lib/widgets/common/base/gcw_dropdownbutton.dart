@@ -91,6 +91,8 @@ _buildMenuItemChild(GCWDropDownMenuItem item) {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           item.child.toString(),
+          maxLines: 1,
+          overflow: TextOverflow.clip,
           style: item.style ?? gcwTextStyle(),
         ),
         Container(

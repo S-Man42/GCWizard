@@ -74,7 +74,7 @@ class QrCodeState extends State<QrCode> {
               )
             : GCWTextField(
                 controller: _inputController,
-                maxLength: 999,
+                maxLength: 2950,
                 onChanged: (value) {
                   setState(() {
                     _currentInput = value;
