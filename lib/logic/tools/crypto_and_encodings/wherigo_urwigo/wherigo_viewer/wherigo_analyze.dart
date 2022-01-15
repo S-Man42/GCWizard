@@ -237,6 +237,31 @@ class MediaFileContent{
       this.MediaFileLength);
 }
 
+class EarwigoCartridge{
+  final BUILDER Builder;
+  final String BuilderVersion;
+  final String TargetDeviceVersion;
+  final String StateID;
+  final String CountryID;
+  final String UseLogging;
+  final String CreateDate;
+  final String PublishDate;
+  final String UpdateDate;
+  final String LastPlayedDate;
+
+  EarwigoCartridge(
+      this.Builder,
+      this.BuilderVersion,
+      this.TargetDeviceVersion,
+      this.CountryID,
+      this.StateID,
+      this.UseLogging,
+      this.CreateDate,
+      this.PublishDate,
+      this.UpdateDate,
+      this.LastPlayedDate
+      );
+}
 
 class WherigoCartridge{
   final String Signature;
@@ -398,7 +423,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({'cartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
+    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
+    out.addAll({'EarwigoCartridge': EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
     return out;
   }
 
@@ -468,6 +494,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       out.addAll({'cartridge': WherigoCartridge(
           'ERROR', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', 0,'', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_GWC, _ResultsGWC, []
       )});
+      out.addAll({'EarwigoCartridge': EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
       return out;
     }
     else {
@@ -796,7 +823,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       _ResultsLUA.add(exception.toString());
     }
 
-    out.addAll({'cartridge': WherigoCartridge(_Signature,
+    out.addAll({'cartridge': WherigoCartridge(
+        _Signature,
         _NumberOfObjects, _MediaFilesHeaders, _MediaFilesContents, _LUAFile,
         _HeaderLength,
         _Latitude, _Longitude, _Altitude,
@@ -812,7 +840,76 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _Messages, _Answers, _Identifiers, _NameToObject,
         _Status, _ResultsGWC, _ResultsLUA )});
   }
+  out.addAll({'EarwigoCartridge': _getEarwigoCartridge(_LUAFile, _dtable, _obfuscator)});
   return out;
+}
+
+EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscator){
+  String _cartridgeName;
+  BUILDER _builder = BUILDER.UNKNOWN;
+  String _BuilderVersion;
+  String _TargetDeviceVersion;
+  String _CountryID;
+  String _StateID;
+  String _UseLogging;
+  String _CreateDate;
+  String _PublishDate;
+  String _UpdateDate;
+  String _LastPlayedDate;
+
+  RegExp re = RegExp(r'(_Urwigo)');
+  if (RegExp(r'(_Urwigo)').hasMatch(LUA))
+    _builder = BUILDER.URWIGO;
+  else if (RegExp(r'(WWB_deobf)').hasMatch(LUA))
+    _builder = BUILDER.EARWIGO;
+
+  re = RegExp(r'( = Wherigo.ZCartridge)');
+  List<String> lines = LUA.split('\n');
+  for (int i = 0; i < lines.length; i++) {
+    if (re.hasMatch(lines[i])) {
+      _cartridgeName = lines[i].replaceAll(' = Wherigo.ZCartridge()', '').trim();
+    }
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.BuilderVersion'))
+      _BuilderVersion = lines[i].replaceAll(_cartridgeName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.TargetDeviceVersion'))
+      _TargetDeviceVersion = lines[i].replaceAll(_cartridgeName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CountryID'))
+      _CountryID = lines[i].replaceAll(_cartridgeName + '.CountryID = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.StateID'))
+      _StateID = lines[i].replaceAll(_cartridgeName + '.StateID = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UseLogging'))
+      _UseLogging = lines[i].replaceAll(_cartridgeName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CreateDate'))
+      _CreateDate = lines[i].replaceAll(_cartridgeName + '.CreateDate = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.PublishDate'))
+      _PublishDate = lines[i].replaceAll(_cartridgeName + '.PublishDate = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UpdateDate'))
+      _UpdateDate = lines[i].replaceAll(_cartridgeName + '.UpdateDate = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.LastPlayedDate'))
+      _LastPlayedDate = lines[i].replaceAll(_cartridgeName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
+
+
+  }
+  return EarwigoCartridge(
+      _builder,
+      _BuilderVersion,
+      _TargetDeviceVersion,
+      _CountryID,
+      _StateID,
+      _UseLogging,
+      _CreateDate,
+      _PublishDate,
+      _UpdateDate,
+      _LastPlayedDate);
 }
 
 

@@ -114,16 +114,21 @@ String _getDetails(String line, String obfuscator, String dtable){
 String getObfuscatorFunction(String source){
   String result = '';
   List<String> LUA = source.split('\n');
-  for (int i = 0; i < LUA.length; i++){
-    if (LUA[i].startsWith('function')) {
-      result = LUA[i].substring(9);
-      for (int j = result.length - 1; j > 0; j--) {
-        if (result[j] == '(') {
-          result = result.substring(0, j);
-          j = 0;
+
+  result = 'WWB_deobf';
+
+  if (RegExp(r'(_Urwigo)').hasMatch(source)) {
+    for (int i = 0; i < LUA.length; i++){
+      if (LUA[i].startsWith('function')) {
+        result = LUA[i].substring(9);
+        for (int j = result.length - 1; j > 0; j--) {
+          if (result[j] == '(') {
+            result = result.substring(0, j);
+            j = 0;
+          }
         }
+        i = source.length;
       }
-      i = source.length;
     }
   }
   return result;
