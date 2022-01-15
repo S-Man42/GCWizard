@@ -33,7 +33,7 @@ class QrCodeState extends State<QrCode> {
   String _outDataDecrypt;
   TextEditingController _inputController;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
-  static int maxLength = 2953;
+  static int maxLength = 2952;
   var lastCurrentInputLength = 0;
 
   @override
