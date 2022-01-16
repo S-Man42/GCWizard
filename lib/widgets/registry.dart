@@ -2970,7 +2970,11 @@ initializeRegistry(BuildContext context) {
       'ccitt',
       'symbol_baudot',
     ]),
-    GCWSymbolTableTool(symbolKey: 'ita2', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: [
+      'ccitt',
+      'symbol_murray',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: [
       'ccitt',
       'symbol_murray',
     ]),

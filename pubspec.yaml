@@ -176,7 +176,8 @@ flutter:
     - assets/symbol_tables/iokharic/
     - assets/symbol_tables/ita1_1926/
     - assets/symbol_tables/ita1_1929/
-    - assets/symbol_tables/ita2/
+    - assets/symbol_tables/ita2_1929/
+    - assets/symbol_tables/ita2_1931/
     - assets/symbol_tables/japanese_numerals/
     - assets/symbol_tables/kabouter_abc/
     - assets/symbol_tables/kabouter_abc_1947/
