@@ -1,3 +1,14 @@
+#
+# https://support.crowdin.com/cli-tool/
+# https://support.crowdin.com/configuration-file/#writing-a-simple-configuration-file
+# https://support.crowdin.com/cli-tool/?q=Check%20the%20source%20paths%20in%20your%20configuration%20file
+#
+# Project Crowdin : https://crowdin.com/project/gc-wizard/content/files
+#
+# crowdin status
+# crowdin list project
+#
+#
 # set -x
 source ./crowdin_token.sh
 URL=https://api.crowdin.com/api/v2
