@@ -81,8 +81,7 @@ flutter:
     - assets/symbol_tables/barbier/
     - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot_1888/
-    - assets/symbol_tables/baudot_ita1/
-    - assets/symbol_tables/baudot_mis/
+    - assets/symbol_tables/baudot_54123/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
@@ -175,6 +174,9 @@ flutter:
     - assets/symbol_tables/illuminati_v2/
     - assets/symbol_tables/intergalactic/
     - assets/symbol_tables/iokharic/
+    - assets/symbol_tables/ita1_1926/
+    - assets/symbol_tables/ita1_1929/
+    - assets/symbol_tables/ita2/
     - assets/symbol_tables/japanese_numerals/
     - assets/symbol_tables/kabouter_abc/
     - assets/symbol_tables/kabouter_abc_1947/
@@ -204,7 +206,6 @@ flutter:
     - assets/symbol_tables/murray_v3_navy_1796/
     - assets/symbol_tables/murray_v4_roucoux/
     - assets/symbol_tables/murraybaudot/
-    - assets/symbol_tables/murraybaudot_miss/
     - assets/symbol_tables/musica/
     - assets/symbol_tables/nazcaan/
     - assets/symbol_tables/new_zealand_sign_language/
@@ -291,6 +292,7 @@ flutter:
     - assets/symbol_tables/weather_w/
     - assets/symbol_tables/weather_ww/
     - assets/symbol_tables/webdings/
+    - assets/symbol_tables/westernunion/
     - assets/symbol_tables/windforce_beaufort/
     - assets/symbol_tables/windforce_knots/
     - assets/symbol_tables/window/

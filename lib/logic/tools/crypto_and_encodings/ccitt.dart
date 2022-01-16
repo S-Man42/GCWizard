@@ -20,11 +20,11 @@
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum CCITTCodebook { CCITT_BAUDOT, CCITT_BAUDOT_MISS, CCITT_ITA1_EU, CCITT_ITA1_UK, CCITT_ITA2, CCITT_MTK2, CCITT_ITA5, CCITT_USTTY }
+enum CCITTCodebook { CCITT_BAUDOT, CCITT_BAUDOT_54123, CCITT_ITA1_EU, CCITT_ITA1_UK, CCITT_ITA2, CCITT_MTK2, CCITT_ITA5, CCITT_USTTY }
 
 Map<CCITTCodebook, Map<String, String>> CCITT_CODEBOOK = {
   CCITTCodebook.CCITT_BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
-  CCITTCodebook.CCITT_BAUDOT_MISS: {'title': 'punchtape_ccitt_baudot_miss_title', 'subtitle': 'punchtape_ccitt_baudot_miss_description'},
+  CCITTCodebook.CCITT_BAUDOT_54123: {'title': 'punchtape_ccitt_baudot_54123_title', 'subtitle': 'punchtape_ccitt_baudot_54123_description'},
   CCITTCodebook.CCITT_ITA1_EU: {'title': 'punchtape_ccitt_ita1_eu_title', 'subtitle': 'punchtape_ccitt_ita1_eu_description'},
   CCITTCodebook.CCITT_ITA1_UK: {'title': 'punchtape_ccitt_ita1_uk_title', 'subtitle': 'punchtape_ccitt_ita1_uk_description'},
   CCITTCodebook.CCITT_ITA2: {'title': 'punchtape_ccitt_ita2_title', 'subtitle': 'punchtape_ccitt_ita2_description'},
@@ -35,7 +35,7 @@ Map<CCITTCodebook, Map<String, String>> CCITT_CODEBOOK = {
 
 Map<CCITTCodebook, Map<String, int>> punchTapeDefinition = {
   CCITTCodebook.CCITT_BAUDOT : {'punchHoles' : 5, 'sprocketHole': 0},
-  CCITTCodebook.CCITT_BAUDOT_MISS : {'punchHoles' : 5, 'sprocketHole': 3},
+  CCITTCodebook.CCITT_BAUDOT_54123 : {'punchHoles' : 5, 'sprocketHole': 3},
   CCITTCodebook.CCITT_ITA1_EU : {'punchHoles' : 5, 'sprocketHole': 4},
   CCITTCodebook.CCITT_ITA1_UK : {'punchHoles' : 5, 'sprocketHole': 4},
   CCITTCodebook.CCITT_ITA2 : {'punchHoles' : 5, 'sprocketHole': 4},
@@ -482,7 +482,7 @@ final _LETTERS_FOLLOW_CCITT_2 = 31;
 int _EncodeAZ(CCITTCodebook language, String text){
     switch (language) {
       case CCITTCodebook.CCITT_BAUDOT: return AZToCCITT_BAUDOT[text]; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return AZToCCITT_ITA1_MISS[text]; break;
+      case CCITTCodebook.CCITT_BAUDOT_54123: return AZToCCITT_ITA1_MISS[text]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return AZToCCITT_ITA1_EU[text]; break;
       case CCITTCodebook.CCITT_ITA1_UK: return AZToCCITT_ITA1_UK[text]; break;
       case CCITTCodebook.CCITT_ITA2: return AZToCCITT_ITA2[text]; break;
@@ -494,7 +494,7 @@ int _EncodeAZ(CCITTCodebook language, String text){
 int _EncodeNumber(CCITTCodebook language, String text){
     switch (language) {
       case CCITTCodebook.CCITT_BAUDOT: return NumbersToCCITT_BAUDOT[text]; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return NumbersToCCITT_ITA1_MISS[text]; break;
+      case CCITTCodebook.CCITT_BAUDOT_54123: return NumbersToCCITT_ITA1_MISS[text]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return NumbersToCCITT_ITA1_EU[text]; break;
       case CCITTCodebook.CCITT_ITA1_UK: return NumbersToCCITT_ITA1_UK[text]; break;
       case CCITTCodebook.CCITT_ITA2: return NumbersToCCITT_ITA2[text]; break;
@@ -506,7 +506,7 @@ int _EncodeNumber(CCITTCodebook language, String text){
 String _DecodeAZ(CCITTCodebook language, int code){
     switch (language) {
       case CCITTCodebook.CCITT_BAUDOT: return CCITT_BAUDOTToAZ[code]; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return CCITT_ITA1_MISSToAZ[code]; break;
+      case CCITTCodebook.CCITT_BAUDOT_54123: return CCITT_ITA1_MISSToAZ[code]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToAZ[code]; break;
       case CCITTCodebook.CCITT_ITA1_UK: return CCITT_ITA1_UKToAZ[code]; break;
       case CCITTCodebook.CCITT_ITA2: return CCITT_ITA2ToAZ[code]; break;
@@ -518,7 +518,7 @@ String _DecodeAZ(CCITTCodebook language, int code){
 String _DecodeNumber(CCITTCodebook language, int code){
     switch (language) {
       case CCITTCodebook.CCITT_BAUDOT: return CCITT_BAUDOTToNumbers[code]; break;
-      case CCITTCodebook.CCITT_BAUDOT_MISS: return CCITT_ITA1_MISSToNumbers[code]; break;
+      case CCITTCodebook.CCITT_BAUDOT_54123: return CCITT_ITA1_MISSToNumbers[code]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToNumbers[code]; break;
       case CCITTCodebook.CCITT_ITA1_UK: return CCITT_ITA1_UKToNumbers[code]; break;
       case CCITTCodebook.CCITT_ITA2: return CCITT_ITA2ToNumbers[code]; break;
@@ -538,7 +538,7 @@ String encodeCCITT(String input, CCITTCodebook language) {
   switch (language) {
     // CCITT1
     case CCITTCodebook.CCITT_BAUDOT:
-    case CCITTCodebook.CCITT_BAUDOT_MISS:
+    case CCITTCodebook.CCITT_BAUDOT_54123:
     case CCITTCodebook.CCITT_ITA1_EU:
     case CCITTCodebook.CCITT_ITA1_UK:
         input = input.toUpperCase().replaceAll(String.fromCharCode(201), String.fromCharCode(0));
@@ -645,7 +645,7 @@ String decodeCCITT(List<int> values, CCITTCodebook language) {
   switch (language) {
   // CCITT1
     case CCITTCodebook.CCITT_BAUDOT:
-    case CCITTCodebook.CCITT_BAUDOT_MISS:
+    case CCITTCodebook.CCITT_BAUDOT_54123:
     case CCITTCodebook.CCITT_ITA1_EU:
     case CCITTCodebook.CCITT_ITA1_UK:
         values.forEach((value) {

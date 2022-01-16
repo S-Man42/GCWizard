@@ -2643,11 +2643,7 @@ initializeRegistry(BuildContext context) {
       'ccitt',
       'symbol_baudot',
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_ita1', symbolSearchStrings: [
-      'ccitt',
-      'symbol_baudot',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_mis', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
     ]),
@@ -2966,6 +2962,18 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
       'symbol_iokharic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: [
+      'ccitt',
+      'symbol_baudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: [
+      'ccitt',
+      'symbol_baudot',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita2', symbolSearchStrings: [
+      'ccitt',
+      'symbol_murray',
+    ]),
     GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
       'japanese_numerals',
     ]),
@@ -3046,10 +3054,6 @@ initializeRegistry(BuildContext context) {
       'symbol_murray',
     ]),
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
-      'ccitt',
-      'symbol_murraybaudot',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'murraybaudot_miss', symbolSearchStrings: [
       'ccitt',
       'symbol_murraybaudot',
     ]),
@@ -3203,6 +3207,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
       'symbol_shoes',
     ]),
+    GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: [
+      'ccitt',
+      'symbol_siemens',
+    ]),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: ['symbol_signlanguage']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
       'symbol_skullz',
@@ -3308,6 +3316,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
       'symbol_webdings',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: [
+      'ccitt',
+      'symbol_westernunion',
     ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
       'beaufort',
