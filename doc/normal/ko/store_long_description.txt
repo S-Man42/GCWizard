@@ -1,0 +1,61 @@
+GC Wizard는 오픈 소스 도구 모음입니다.
+
+이것은 원래 지오캐셔를 현장 미스터리와 수수께끼로 지원하는 오프라인 도구로 제공하기 위해 만들어졌습니다. 따라서 GC Wizard에는 수백 가지의 다양한 기호 집합뿐만 아니라 간단한 암호화, 지리 및 과학적 계산을 위한 수많은 도구가 포함되어 있습니다.
+
+이 프로젝트는 매우 거대해졌으며 지오캐싱 이외의 많은 용도로 실용적일 수 있습니다.
+
+🇬🇧 🇩🇪 🇫🇷 🇰🇷으로 번역
+
+<b>하이라이트</b>
+
+<b>일반</b>
+• 수식 해법기: 다단계 변수 처리용
+• 멀티 해독기: 알 수 없는 암호를 입력하고 여러 해독기와 계산기가 이를 연속적으로 해석하도록 합니다.
+• 200개 이상의 기호 테이블 세트: 기호를 문자로 직접 해독합니다. 자체 부호화를 이미지로 저장
+• 온라인 설명서: 모든 도구에는 🇬🇧 🇩🇪 🇫🇷으로 번역된 자체 매뉴얼 페이지가 있습니다.
+
+<b>암호화 및 부호화</b>
+• 알파벳 값(A = 1, B = 2, ...): 언어별 특수 문자 처리로 구성 가능한 알파벳
+• 점자 그래픽 해독기: 그래픽 인터페이스에 포인트를 입력하십시오. 다국어 지원
+• 책 암호: 올바른 시스템(예: 줄 + 문자 번호 또는 섹션 + 줄 + 단어 번호, 등)을 선택하고 특수 문자와 빈 줄을 처리합니다.
+• 수수께끼: 완전한 작동 수수께끼 시뮬레이터 포함. 수많은 가능한 설정
+• 난해한 언어: 브레인퍽, 우크, 말레볼제 및 요리사와 같은 여러 난해한 프로그래밍 언어용 생성기 및 번역기
+• 모스 부호
+• 숫자 단어: 다른 언어로 된 중요한 숫자의 목록입니다. 영어와 독일어의 경우 복잡한 숫자 단어도 식별하는 파서가 있습니다.
+• 문자 교환식 및 비즈네르 코드 차단기: 키를 모르는 상태에서 코드를 해독하기
+• 클래식 코드: 플레이페어, 폴리바이오스, 레일펜스, 등
+• 역사적 코드: 시저 암호, 비즈네르, 전신 코드, 등
+• 군사 코드: ADFGX, 암호 휠, 테이퍼, 등
+• 기술 부호화: BCD, CCITT, 해시(포함 무차별 대입 해시 차단기), RSA, 등
+
+<b>좌표</b>
+• 항상 지구의 모양(타원체)을 고려하여 매우 먼 거리에서도 정확한 계산을 지원하는 고정밀 좌표 알고리즘
+• 다른 타원체, 심지어 다른 행성 지원
+• 좌표 형식: UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, 지오해시, 등
+• 지점 투영: 정확한 역 투영 포함
+• Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
+• Variable Coordinate: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map
+• Cross bearing, Center point of two and three coordinates, different intersections of lines and circles, ...
+
+<b>과학 및 기술</b>
+• Astronomy: Calculate position of sun and moon at a certain place and time
+• Color Space Converter: Convert color values between RGB, HSL, Hex, CMYK, ...
+• Countries: ISO, calling and vehicle registration codes, flags
+• Date and Time functions: Weekday, time differences, ...
+• Irrational Numbers: π, φ and e: Show and search up to > 1 Mio. digits
+• Number sequences: Factorial, Fibonacci and Co.
+• Numeral Systems: Converts decimal to binary, hexadecimal, ...
+• Periodic Table of the Elements: Interactive view; lists which order the elements by any criterion
+• Phone Keys: Converts classic phone keys to letters. Supports phone model specific behaviours
+• Prime Numbers: Search prime numbers up to 1 Mio.
+• Segment Display: Graphical interface for decoding and encoding 7 to 16 segment displays
+• Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
+• Apparent Temperature, Cross Sums, DTMF, Keyboard layouts, Projectiles, Resistor codes, ...
+
+<b>이미지 및 파일</b>
+• 헥스 뷰어
+• Exif/메타데이터 뷰어
+• 애니메이션 이미지의 프레임 분석
+• 색상 보정: 대비, 채도, 가장자리 감지 등을 조정합니다.
+• 숨겨진 데이터 또는 숨겨진 아카이브 검색
+• 이미지에서 QR/바코드를 읽고 2진법 입력에서 생성
