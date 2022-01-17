@@ -182,7 +182,7 @@ class AboutState extends State<About> {
                             '\'Todclerc\' (NL)',
                             '\'vike91\' (FI)',
                             '\'Xoyn\' (RU)',
-                          ].join('\n') +
+                          ].join(', ') +
                           '\n')
                 ], style: gcwTextStyle()),
               ),
@@ -202,6 +202,7 @@ class AboutState extends State<About> {
                     '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
+                    '\'GrafZahl75\'',
                     'Johannes C.',
                     'Jonas M.',
                     '\'Klumpenkukuk\'',
