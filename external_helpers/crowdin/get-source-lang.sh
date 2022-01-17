@@ -1,3 +1,8 @@
+#
+# Obsolete : Use [crowdin CLI](https://support.crowdin.com/cli-tool/)
+# > crowdin download sources
+#
+#
 # set -x
 source ./crowdin_token.sh
 URL=https://api.crowdin.com/api/v2

@@ -1,3 +1,7 @@
+#
+# Download translations
+# > crowdin download
+#
 # set -x
 
 source ./crowdin_token.sh
