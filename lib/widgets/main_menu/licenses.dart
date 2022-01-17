@@ -67,6 +67,7 @@ class LicensesState extends State<Licenses> {
           ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
           ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
           ['Cow Generator', 'Frank Buss', null],
+          ['DutchGrid Code', '@djvanderlaan', 'MIT License'],
           ['Gauss-Krüger Code', 'moenk', null],
           ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
           ['Geodetics Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],

@@ -52,6 +52,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return SwissGridPlus.fromLatLon(_coords, ells).toString();
     case keyCoordsGaussKrueger:
       return GaussKrueger.fromLatLon(_coords, _getGKCode(), ells).toString();
+    case keyCoordsDutchGrid:
+      return DutchGrid.fromLatLon(_coords).toString();
     case keyCoordsMaidenhead:
       return Maidenhead.fromLatLon(_coords).toString();
     case keyCoordsMercator:

@@ -1530,6 +1530,8 @@
   "coords_formatconverter_mgrs_northing": "Northing",
   "coords_formatconverter_swissgrid_easting": "Y (Easting)",
   "coords_formatconverter_swissgrid_northing": "X (Northing)",
+  "coords_formatconverter_dutchgrid_x": "X",
+  "coords_formatconverter_dutchgrid_y": "Y",
   "coords_formatconverter_gausskrueger_easting": "R (Easting)",
   "coords_formatconverter_gausskrueger_northing": "H (Northing)",
   "coords_formatconverter_gausskrueger": "Gauss-Krueger",

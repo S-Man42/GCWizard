@@ -88,7 +88,7 @@
   "coordinates_distancebearing": "",
   "coordinates_ellipsoidtransform": "bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 1830 potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 wgs84",
   "coordinates_equilateraltriangle": "",
-  "coordinates_formatconverter": "quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewherigo reversewhereigo reversewig maidenhead geo-hash geohash geohex geo3x3 qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ lv03 lv95 slippymap tiles",
+  "coordinates_formatconverter": "quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewherigo reversewhereigo amersfoort reversewig maidenhead geo-hash dutchgrid rd rijksdriehoeks geohash geohex geo3x3 qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ lv03 lv95 slippymap tiles",
   "coordinates_intersectbearing": "",
   "coordinates_intersectfourpoints": "4",
   "coordinates_intersectgeodeticandcircle": "",
