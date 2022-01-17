@@ -2815,8 +2815,14 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: [
       'symbol_eurythmy',
     ]),
+    GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: [
+    'symbol_face_it',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: [
       'symbol_fakoo',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: [
+      'symbol_fez',
     ]),
     GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: [
       'symbol_signlanguage',
@@ -2882,6 +2888,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
       'glagolitic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: [
+      'symbol_gerudo',
+    ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
       'symbol_gnommish',
     ]),
@@ -2927,9 +2936,21 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: [
       'symbol_hvd',
     ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_64', symbolSearchStrings: [
+      'symbol_hylian',
+      'hylian_64',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_ablw_botw', symbolSearchStrings: [
+      'symbol_hylian',
+      'symbol_hylian_ablw_botw',
+    ]),
     GCWSymbolTableTool(symbolKey: 'hylian_skyward_sword', symbolSearchStrings: [
       'symbol_hylian',
       'symbol_hylian_skywardsword',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: [
+      'symbol_hylian',
+      'symbol_hylian_symbols',
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
       'symbol_hylian',
@@ -3199,6 +3220,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
       'shadoksnumbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: [
+      'symbol_sheikah',
     ]),
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
       'symbol_shoes',
