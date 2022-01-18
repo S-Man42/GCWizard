@@ -13,15 +13,10 @@ To translate, click your language and follow instructions.
 To integrate, several ways : 
 Recommended way is [crowdin CLI](https://support.crowdin.com/cli-tool/)
 
-You can use intelliJ or AndroidStuido plugin too.
-
-Our own scripts on API are deprecated.
-
-
 ## Setup
 Follow [instructions](https://support.crowdin.com/cli-tool/) to install.
 
-Then init using [sample](external_helpers/crowdin/crowdin.yml). Just change API key
+Copy [sample](external_helpers/crowdin/crowdin.yml) into project root directory and set your personal API key.
 
 Our project_id is 445424.
 
