@@ -2889,6 +2889,7 @@ initializeRegistry(BuildContext context) {
       'glagolitic',
     ]),
     GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: [
+      'symbol_hylian',
       'symbol_gerudo',
     ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
