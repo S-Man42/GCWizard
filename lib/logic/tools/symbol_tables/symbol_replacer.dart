@@ -261,6 +261,8 @@ class SymbolImage {
     var imageHashing = ImageHashing();
     var percentSum = 0.0;
 
+    if (compareSymbolImage?.symbols == null) return percentSum;
+
     for (int i = 0; i < compareSymbolImage.symbols.length; i++)
       compareSymbolImage.symbols[i].hash = imageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
 

@@ -507,19 +507,20 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Future<GCWAsyncExecuterParameters> _buildJobDataSearchSymbolTable() async {
     var list = <List<Map<String, SymbolData>>>[];
 
-    _compareSymbolItems.forEach((symbolTableViewData) {
+    await _compareSymbolItems.forEach((symbolTableViewData) async {
       if (symbolTableViewData?.value != null) {
         if (symbolTableViewData.value.data == null)
-          symbolTableViewData.value.initialize(context);
+          await symbolTableViewData.value.initialize(context);
+
         list.add(symbolTableViewData?.value?.data?.images);
       };
     });
 
     return GCWAsyncExecuterParameters(
-        Tuple2<SymbolImage, List<List<Map<String, SymbolData>>>>(
-            _symbolImage,
-            list
-        )
+      Tuple2<SymbolImage, List<List<Map<String, SymbolData>>>>(
+          _symbolImage,
+          list
+      )
     );
   }
 
@@ -553,9 +554,11 @@ class SymbolTableViewData {
 
   SymbolTableViewData({this.symbolKey, this.icon, this.toolName, this.description, this.data});
 
-  Future initialize(BuildContext context) async {
+  Future<SymbolTableData> initialize(BuildContext context) async {
     var symbolTableData = SymbolTableData(context, symbolKey);
+
     await symbolTableData.initialize();
     data = symbolTableData;
+    return data;
   }
 }
