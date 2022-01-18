@@ -3223,6 +3223,7 @@ initializeRegistry(BuildContext context) {
       'shadoksnumbers',
     ]),
     GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: [
+      'symbol_hylian',
       'symbol_sheikah',
     ]),
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
