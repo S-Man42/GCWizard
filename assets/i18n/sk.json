@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "CHYBA: Nenájdený indexový symbol",
   "burrowswheeler_error_char_index": "CHYBA: Indexový symbol by nemal byť súčasťou textu",
   "caesar_title": "Cézarova šifra",
-  "caesar_description": "Posun znakov v abecede o 13 pozícií (ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Kúpte nám kávu",
   "callforcontribution_1": "GC Wizard je nástroj od geocacherov pre geocacherov.\n\n",

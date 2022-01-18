@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "FEL: Indextecken saknas",
   "burrowswheeler_error_char_index": "FEL: Indextecken ska inte vara en del av texten",
   "caesar_title": "Caesar Chiffer",
-  "caesar_description": "Skiftar bokstäver på standardalfabetet med 13 (ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Köp en kaffe till oss",
   "callforcontribution_1": "GC Wizard är ett verktyg från geocachare för geocachare.\n\n",

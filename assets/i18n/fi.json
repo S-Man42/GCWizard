@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "VIRHE: Indeksimerkki puuttuu",
   "burrowswheeler_error_char_index": "VIRHE: Indeksimerkki ei saa olla osa tekstiä",
   "caesar_title": "Caesar-salakirjoitus",
-  "caesar_description": "Siirtää kirjaimia vakioaakkosissa 13:sta eteenpäin (ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Osta meille kahvi",
   "callforcontribution_1": "GC Wizard on työkalu geokätköilijöiltä geokätköilijöille.\n",

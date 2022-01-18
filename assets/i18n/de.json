@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "FEHLER: Das Index-Zeichen fehlt",
   "burrowswheeler_error_char_index": "FEHLER: Index-Zeichen darf nicht Teil des Textes sein",
   "caesar_title": "Caesar Chiffre",
-  "caesar_description": "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
+  "caesar_description": "Verschiebt Buchstaben im Alphabet (Mit Schlüssel = 13: Entschlüsselung von Hinweisen in Geocaching-Beschreibungen)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Spende uns einen Kaffee",
   "callforcontribution_1": "GC Wizard ist ein Tool von Geocachern für Geocacher.\n\n",

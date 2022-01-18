@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "오류: 색인 문자가 없습니다",
   "burrowswheeler_error_char_index": "오류: 색인 문자는 텍스트의 일부가 아니어야 합니다",
   "caesar_title": "시저 암호",
-  "caesar_description": "표준 알파벳의 문자를 13 p(ROT-13)만큼 이동합니다.",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "개발자에게 커피를 사주기",
   "callforcontribution_1": "GC Wizard는 지오캐셔를 위한 지오캐셔의 도구입니다.\n\n",

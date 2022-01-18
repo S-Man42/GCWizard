@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "ERREUR: Le caractère de l'index est manquant",
   "burrowswheeler_error_char_index": "ERREUR : Le caractère de l'index ne doit pas faire partie du texte",
   "caesar_title": "César",
-  "caesar_description": "Décaler les lettres sur l'alphabet standard de 13 p(ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Offrez-nous un café",
   "callforcontribution_1": "GC Wizard est un outil de géocacheurs pour les géocacheurs.\n\n",

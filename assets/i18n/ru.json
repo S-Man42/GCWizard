@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "ОШИБКА: отсутствует индекс символа",
   "burrowswheeler_error_char_index": "ОШИБКА: индекс символа не должен быть частью текста",
   "caesar_title": "Caesar шифр",
-  "caesar_description": "Сдвигает буквы стандартного алфавита на 13 позиций (ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Купите нам кофе",
   "callforcontribution_1": "GC Wizard - это инструмент, созданный геокэшерами для геокэшеров.\n\n",

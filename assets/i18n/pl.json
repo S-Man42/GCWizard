@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "BŁĄD: Brak znaku indeksu",
   "burrowswheeler_error_char_index": "BŁĄD: Znak indeksowy nie powinien być częścią tekstu",
   "caesar_title": "Szyfr Cezara",
-  "caesar_description": "Przesuwa litery w standardowym alfabecie o 13 (ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Postaw nam kawę",
   "callforcontribution_1": "Kreator GC jest narzędziem stworzonym przez keszerów dla keszerów.\n\n",

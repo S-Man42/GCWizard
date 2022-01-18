@@ -425,7 +425,7 @@
   "burrowswheeler_error_no_index": "ERROR: Index Character is missing",
   "burrowswheeler_error_char_index": "ERROR: Index Character should not be part of text",
   "caesar_title": "Caesar Cipher",
-  "caesar_description": "Shifts letters on standard alphabet by 13 (ROT-13)",
+  "caesar_description": "Shifts letters on standard alphabet (With key = 13: Decrypter for hints in Geocaching listings)",
   "caesar_example": "ABC → NOP",
   "callforcontribution_coffee": "Buy us a coffee",
   "callforcontribution_1": "GC Wizard is a tool from Geocachers for Geocachers.\n\n",
