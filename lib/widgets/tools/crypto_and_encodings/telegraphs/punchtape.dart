@@ -29,7 +29,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
-  var _currentCode = CCITTCodebook.CCITT_BAUDOT;
+  var _currentCode = CCITTCodebook.BAUDOT;
 
   @override
   void initState() {

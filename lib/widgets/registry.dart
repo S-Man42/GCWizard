@@ -1218,8 +1218,23 @@ initializeRegistry(BuildContext context) {
     ]),
 
     //CCITT*Selection **********************************************************************************************
-    GCWTool(tool: CCITT(), i18nPrefix: 'ccitt', searchKeys: ['ccitt']),
-    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'punchtape', searchKeys: ['ccitt', 'punchtape']),
+    GCWTool(tool: CCITT(), i18nPrefix: 'ccitt', searchKeys: [
+      'ccitt',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
+      'ccitt',
+      'punchtape',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
 
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', searchKeys: [
@@ -2642,10 +2657,12 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
       'symbol_birds_on_a_wire',
@@ -2965,18 +2982,22 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: [
       'ccitt',
       'symbol_murray',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: [
       'ccitt',
       'symbol_murray',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
       'japanese_numerals',
@@ -3060,6 +3081,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
       'ccitt',
       'symbol_murraybaudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'symbol_musica',
@@ -3212,8 +3234,8 @@ initializeRegistry(BuildContext context) {
       'symbol_shoes',
     ]),
     GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: [
-      'ccitt',
       'symbol_siemens',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: ['symbol_signlanguage']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
@@ -3322,8 +3344,8 @@ initializeRegistry(BuildContext context) {
       'symbol_webdings',
     ]),
     GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: [
-      'ccitt',
       'symbol_westernunion',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
       'beaufort',

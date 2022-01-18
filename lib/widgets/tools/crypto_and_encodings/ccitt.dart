@@ -26,7 +26,7 @@ class CCITTState extends State<CCITT> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
-  var _currentCode = CCITTCodebook.CCITT_BAUDOT;
+  var _currentCode = CCITTCodebook.BAUDOT;
 
   @override
   void initState() {
