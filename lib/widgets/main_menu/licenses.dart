@@ -88,6 +88,7 @@ class LicensesState extends State<Licenses> {
           [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
+          [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (Online Web Fonts) (CC BY-SA 3.0)'],
           [
             i18n(context, 'symboltables_gc_attributes_ids_title'),
