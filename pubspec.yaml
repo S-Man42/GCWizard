@@ -130,7 +130,9 @@ flutter:
     - assets/symbol_tables/elia/
     - assets/symbol_tables/enochian/
     - assets/symbol_tables/eurythmy/
+    - assets/symbol_tables/face_it/
     - assets/symbol_tables/fakoo/
+    - assets/symbol_tables/fez/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/finger_numbers/
     - assets/symbol_tables/flags/
@@ -150,6 +152,7 @@ flutter:
     - assets/symbol_tables/gc_attributes_ids/
     - assets/symbol_tables/gc_attributes_meaning/
     - assets/symbol_tables/genreich/
+    - assets/symbol_tables/gerudo/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/greek_numerals/
@@ -164,7 +167,10 @@ flutter:
     - assets/symbol_tables/hieroglyphs/
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
+    - assets/symbol_tables/hylian_64/
+    - assets/symbol_tables/hylian_ablw_botw/
     - assets/symbol_tables/hylian_skyward_sword/
+    - assets/symbol_tables/hylian_symbols/
     - assets/symbol_tables/hylian_twilight_princess_gcn/
     - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
@@ -250,6 +256,7 @@ flutter:
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/shadoks/
+    - assets/symbol_tables/sheikah/
     - assets/symbol_tables/shoes/
     - assets/symbol_tables/sign/
     - assets/symbol_tables/skullz/
