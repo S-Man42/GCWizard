@@ -219,7 +219,7 @@ class _GCWToolState extends State<GCWTool> {
     }
 
     searchString = _normalizeSearchString(searchString);
-    String locale = defaultLanguage;
+    String locale = DEFAULT_LOCALE.languageCode;
 
     if (!_needsDefaultHelp(appLocale)) locale = Localizations.localeOf(context).languageCode;
 
