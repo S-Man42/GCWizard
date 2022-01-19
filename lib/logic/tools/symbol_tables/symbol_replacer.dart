@@ -301,7 +301,6 @@ class SymbolImage {
         });
       } else {
         var font = Image.arial_14;
-        var color = Colors.red.value;
         ui.Offset offset;
         symbolGroup.symbols.forEach((symbol) {
           if (symbol.row.size.height < 24) {
@@ -314,7 +313,7 @@ class SymbolImage {
             font = Image.arial_48;
             offset = ui.Offset(-14, -24);
           }
-          // Image.drawImage(bmp, symbol.bmp, dstX: symbol.refPoint.dx.toInt(), dstY: symbol.refPoint.dy.toInt() );
+
           Image.drawString(bmp, font,
               (symbol.refPoint.dx + symbol.bmp.width/2 + offset.dx).toInt(),
               (symbol.row.size.center.dy + offset.dy).toInt(),
@@ -799,9 +798,9 @@ class ImageHashing {
 Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var output = await searchSymbolTable(
+    var output = await searchSymbolTable(
       jobData.parameters.item1,
-      jobData.parameters.item2,
+        jobData.parameters.item2,
       sendAsyncPort: jobData.sendAsyncPort
   );
 
@@ -810,10 +809,9 @@ Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) as
   return output;
 }
 
-List<Map<String, SymbolData>> searchSymbolTable(
+List<Map<String, SymbolData>> searchSymbolTable (
     SymbolImage image,
-    List<List<Map<String,
-    SymbolData>>> compareSymbols,
+    List<List<Map<String, SymbolData>>> compareSymbols,
     {SendPort sendAsyncPort}) {
 
   if (image == null) return null;
@@ -833,11 +831,10 @@ List<Map<String, SymbolData>> searchSymbolTable(
   if (sendAsyncPort != null) sendAsyncPort.send({'progress': 0.0});
 
   compareSymbols.forEach((symbolTable) {
-    imageTmp.symbolGroups?.forEach((group) { group.text = null;});
-
+    imageTmp.resetGroupText();
     var compareSymbolImage = imageTmp._buildCompareSymbols(symbolTable);
     var percent = imageTmp._useCompareSymbols(compareSymbolImage);
-    if (maxPercentSum <= percent) {
+    if (maxPercentSum < percent) {
       maxPercentSum = percent;
       maxPercentSymbolTable = symbolTable;
     }
@@ -846,7 +843,6 @@ List<Map<String, SymbolData>> searchSymbolTable(
       sendAsyncPort.send({'progress': progress / compareSymbols.length});
     }
   });
-
   return maxPercentSymbolTable;
 }
 

@@ -131,7 +131,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
       _showOutput(await replaceSymbolsAsync(_jobData));
     } else {
-      await showDialog(
+      showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -251,10 +251,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             iconColor: _symbolImage == null ? themeColors().inActive() : null,
             onPressed: () {
               if (_symbolImage != null) {
-                if (!(_currentSymbolTableViewData is SymbolTableViewData))
-                  _symbolImage.symbolGroups.forEach((group) { group.text = null;});
-                else
-                  _symbolImage.resetGroupText();
+                _symbolImage.resetGroupText();
 
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   _replaceSymbols(false);
@@ -269,7 +266,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             onPressed: () { _showAutoSearchDialog(); }
         ),
       ],
-
     );
   }
 
@@ -279,7 +275,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
     return Column(
         children: <Widget>[
-          //GCWDefaultOutput(child: GCWImageView(imageData: imageData)),
           GCWDefaultOutput(child: _symbolImage.getTextOutput()),
         ]);
   }
@@ -310,7 +305,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               ),
               GCWDialogButton(
                 text: i18n(context, 'symbol_replacer_start'),
-                onPressed: () async {_startSubstitutionBreaker();},
+                onPressed: () {_startSubstitutionBreaker();},
               ),
               Container(height: 20),
               GCWTextDivider(
@@ -319,7 +314,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               ),
               GCWDialogButton(
                 text: i18n(context, 'symbol_replacer_start'),
-                onPressed: () async {_startJobDataSearchSymbolTable();},
+                onPressed: () {_startJobDataSearchSymbolTable();},
               ),
             ]
         ),
@@ -328,7 +323,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   }
 
   _startSubstitutionBreaker() async {
-    await showDialog(
+    showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -348,8 +343,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     );
   }
 
-  _startJobDataSearchSymbolTable() async {
-    await showDialog(
+  _startJobDataSearchSymbolTable() {
+    showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
@@ -423,30 +418,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
     }
   }
 
-  _selectSymbolDataItem1(List<Map<String, SymbolData>> imageData) {
-    if ((imageData != null) && (_compareSymbolItems != null)) {
-      var counter = 0;
-      for (GCWDropDownMenuItem item in _compareSymbolItems) {
-        var found = true;
-        if (item.value is SymbolTableViewData) {
-          var images = (item.value as SymbolTableViewData)?.data?.images;
-          if (images?.length == imageData.length) {
-            for(var i=0; i< imageData.length; i++) {
-              if (!ListEquality().equals(imageData[i]?.values?.first?.bytes, images[i]?.values?.first?.bytes)) {
-                found = false;
-                break;
-              }
-            }
-            if (found) {
-              _currentSymbolTableViewData = item.value;
-              break;
-            }
-          }
-        }
-      }
-    }
-  }
-
   Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
     return Row( children: [
       Container(
@@ -507,14 +478,15 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Future<GCWAsyncExecuterParameters> _buildJobDataSearchSymbolTable() async {
     var list = <List<Map<String, SymbolData>>>[];
 
-    await _compareSymbolItems.forEach((symbolTableViewData) async {
-      if (symbolTableViewData?.value != null) {
-        if (symbolTableViewData.value.data == null)
-          await symbolTableViewData.value.initialize(context);
+    list = await Future.wait(_compareSymbolItems.map((_symbolTableViewData) async {
+      SymbolTableViewData symbolTableViewData =_symbolTableViewData?.value;
+      if (symbolTableViewData != null) {
+        if (symbolTableViewData.data == null)
+          await symbolTableViewData.initialize(context);
 
-        list.add(symbolTableViewData?.value?.data?.images);
+        return symbolTableViewData.data.images;
       };
-    });
+    }).toList());
 
     return GCWAsyncExecuterParameters(
       Tuple2<SymbolImage, List<List<Map<String, SymbolData>>>>(
@@ -527,8 +499,35 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   _showJobDataSearchSymbolTableOutput(List<Map<String, SymbolData>> output) {
     _selectSymbolDataItem1(output);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() { });
+      setState(() {
+        if (output != null && _symbolImage != null)
+        _symbolImage.resetGroupText();
+        _replaceSymbols(false);
+      });
     });
+  }
+
+  _selectSymbolDataItem1(List<Map<String, SymbolData>> imageData) {
+    if ((imageData != null) && (_compareSymbolItems != null)) {
+      for (GCWDropDownMenuItem item in _compareSymbolItems) {
+        var found = true;
+        if (item.value is SymbolTableViewData) {
+          var images = (item.value as SymbolTableViewData)?.data?.images;
+          if (images?.length == imageData.length) {
+            for(var i=0; i< imageData.length; i++) {
+              if (!ListEquality().equals(imageData[i]?.values?.first?.bytes, images[i]?.values?.first?.bytes)) {
+                found = false;
+                break;
+              }
+            }
+            if (found) {
+              _currentSymbolTableViewData = item.value;
+              break;
+            }
+          }
+        }
+      }
+    }
   }
 
   _navigateToSubPage() {
@@ -555,10 +554,9 @@ class SymbolTableViewData {
   SymbolTableViewData({this.symbolKey, this.icon, this.toolName, this.description, this.data});
 
   Future<SymbolTableData> initialize(BuildContext context) async {
-    var symbolTableData = SymbolTableData(context, symbolKey);
+    data = SymbolTableData(context, symbolKey);
 
-    await symbolTableData.initialize();
-    data = symbolTableData;
+    await data.initialize();
     return data;
   }
 }
