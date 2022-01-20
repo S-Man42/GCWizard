@@ -116,7 +116,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             _symbolImage != null
               ? GCWImageView(
                   imageData: GCWImageViewData(
-                    local.PlatformFile(bytes: _symbolImage.getImage())
+                    local.PlatformFile(bytes: _symbolImage.getBorderImage())
                   ),
                   suppressedButtons: {GCWImageViewButtons.SAVE},
                   suppressOpenInTool: {GCWImageViewOpenInTools.HIDDENDATA},
@@ -240,44 +240,28 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       children: <Widget>[
         Expanded(
           child: GCWText(
-            text:  ('Symbolgröße') + ':', // i18n(context, 'common_mode')
-            //align: Alignment.center,
-            //style: textStyle,
+            text:  i18n(context, 'symbol_replacer_symbol_size') + ':',
           ),
           flex: 1),
           GCWIconButton(
             iconData: Icons.remove,
             iconColor: _symbolImage == null ? themeColors().inActive() : null,
             onPressed: () {
-              //setState(() {
-              if (_symbolImage?.mergeDistanceSteps != null && _symbolImage.mergeDistanceSteps.length > 0)
+              if (_symbolImage != null)
                 if (_mergeDistance != null) {
-                  var next = _symbolImage.mergeDistanceSteps.where((value) => value < _mergeDistance).last;
-                  if (next != null) {
-                    _mergeDistance = next;
-                    _replaceSymbols(false);
-                  }
+                  _mergeDistance = _symbolImage.prevMergeDistance(_mergeDistance);
+                  _replaceSymbols(false);
                 }
-              //});
             },
           ),
           GCWIconButton(
             iconData: Icons.add,
             iconColor: _symbolImage == null ? themeColors().inActive() : null,
             onPressed: () {
-              //setState(() {
-                if (_symbolImage?.mergeDistanceSteps != null && _symbolImage.mergeDistanceSteps.length > 0)
-                if (_mergeDistance == null) {
-                  _mergeDistance = _symbolImage.mergeDistanceSteps[0];
-                  _replaceSymbols(false);
-                } else {
-                  var next = _symbolImage.mergeDistanceSteps.where((value) => value > _mergeDistance).first;
-                  if (next != null) {
-                    _mergeDistance = next;
-                    _replaceSymbols(false);
-                  }
-                }
-              //});
+              if (_symbolImage != null) {
+                _mergeDistance = _symbolImage.nextMergeDistance(_mergeDistance);
+                _replaceSymbols(false);
+              }
             },
           ),
           Expanded(

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
@@ -91,7 +92,7 @@ class SymbolImage {
   List<Symbol> _sourceSymbols = [];
   List<SymbolGroup> symbolGroups = [];
 
-  List<int> mergeDistanceSteps;
+  List<int> _mergeDistanceSteps = [];
   int _mergeDistance;
 
   int _blackLevel;
@@ -194,22 +195,16 @@ class SymbolImage {
         line._splitLineToSymbols( gap, _blackLevel);
         _sourceSymbols.addAll(line.symbols);
       });
-      mergeDistanceSteps = _calcDistancesList();
       _cloneSourceSymbols();
-      //var referenceWidth = _referenceWidth(symbols);
-      //if (referenceWidth != null) _mergeSymbols(referenceWidth);
-      // symbols = _sourceSymbols;
-      // lines = _sourceLines;
     }
-
-
-
 
     if (symbolGroups.isEmpty && groupSymbols) {
       if (_mergeDistance != null) {
         _cloneSourceSymbols();
-        _mergeLineSymbols(_mergeDistance);
-        _mergeColumnSymbols(_mergeDistance);
+        _mergeSymbols(_mergeDistance);
+        print(_mergeDistance);
+        // _mergeLineSymbols(_mergeDistance);
+        // _mergeColumnSymbols(_mergeDistance);
       }
       _groupSymbols();
     }
@@ -228,12 +223,6 @@ class SymbolImage {
 
     const bool mergeText = false;
     const bool mergeBorder = true;
-    // for (SymbolGroup group in symbolGroups) {
-    //   if (group.text != null || group.text != '') {
-    //     mergeText = true;
-    //     break;
-    //   }
-    // }
 
     if (mergeBorder) {
       _outputImage = _mergeBorderData();
@@ -378,12 +367,15 @@ class SymbolImage {
     Image.drawImage(bmp, _bmp);
 
     symbols.forEach((symbol) {
-      Image.drawRect(bmp,
-          symbol.refPoint.dx.toInt(),
-          symbol.refPoint.dy.toInt(),
-          symbol.refPoint.dx.toInt() + symbol.bmp.width,
-          symbol.refPoint.dy.toInt() + symbol.bmp.height,
-          Colors.orange.value);
+      var rect = Rectangle(
+        symbol.refPoint.dx.toInt(),
+        symbol.refPoint.dy.toInt(),
+        symbol.bmp.width,
+        symbol.bmp.height,
+      );
+
+      Image.drawRect(bmp, rect.left, rect.top, rect.right, rect.bottom, Colors.blue.value);
+      Image.drawRect(bmp, rect.left-1, rect.top-1, rect.right+2, rect.bottom+2, Colors.blue.value);
     });
 
     return bmp;
@@ -487,7 +479,93 @@ class SymbolImage {
     return width;
   }
 
-  _mergeLineSymbols( int maxDistance) {
+  int nextMergeDistance(int actMergeDistance) {
+    int next;
+    if (actMergeDistance != null) {
+      var nextl = _mergeDistanceSteps.where((value) => value > actMergeDistance);
+      if (nextl.isNotEmpty) next = nextl.first;
+    }
+
+    if (next == null) {
+      int minDist;
+      for (int x = 0; x < symbols.length; x++) {
+        for (int y = x+1; y < symbols.length; y++) {
+          var dist = _rectangleDistance(_mergeRectangle(symbols[x], 0), _mergeRectangle(symbols[y], 0));
+          if (dist > 0) minDist = min(minDist ?? 99999999, dist);
+        }
+      }
+      minDist = minDist ?? 0;
+      next = (actMergeDistance ?? 0) + (minDist/2).ceilToDouble().toInt();
+      _mergeDistanceSteps.add(next);
+    }
+    return next;
+  }
+
+  int prevMergeDistance(int actMergeDistance) {
+    int prev;
+    if (actMergeDistance != null) {
+      var prevl = _mergeDistanceSteps.where((value) => value < actMergeDistance);
+      if (prevl.isNotEmpty) prev = prevl.last;
+    }
+    return prev;
+  }
+
+  _mergeSymbols(int maxDistance) {
+    if (lines == null) return;
+    if (maxDistance == null) return;
+
+    var rectList = <Rectangle>[];
+    var symbolList =  <Symbol>[];
+
+    symbolList.addAll(symbols);
+    symbolList.forEach((symbol) {
+      rectList.add(_mergeRectangle(symbol, maxDistance));
+    });
+
+    for (int x = 0; x < symbolList.length; x++) {
+      for (int y = x+1; y < symbolList.length; y++) {
+        if (symbolList[x] != null && symbolList[y] != null) {
+          if (rectList[x].intersects(rectList[y])) {
+            var line = _foundSymbolRow(symbolList[y]);
+            if (line != null) {
+              mergeSymbol(symbolList[x], symbolList[y], line);
+              rectList[x] = _mergeRectangle(symbolList[x], maxDistance);
+              symbolList[y] = null;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  Rectangle _mergeRectangle(Symbol symbol, int maxDistance) {
+    return Rectangle(
+        symbol.refPoint.dx - maxDistance,
+        symbol.refPoint.dy - maxDistance,
+        symbol.bmp.width + 2*maxDistance,
+        symbol.bmp.height + 2*maxDistance
+    );
+  }
+
+  _SymbolRow _foundSymbolRow(Symbol symbol) {
+    for (_SymbolRow line in lines)
+      if (line.symbols.contains(symbol)) return line;
+  }
+
+  int _rectangleDistance(Rectangle rect1, Rectangle rect2) {
+    var m1 = _rectMiddlePoint(rect1);
+    var m2 = _rectMiddlePoint(rect2);
+    var dist1 = (m1.x-m2.x).abs()-(rect1.width+rect2.width)/2;
+    var dist2 = (m1.y-m2.y).abs()-(rect1.height+rect2.height)/2;
+    if (min(dist1, dist2) > 0) return min(dist1, dist2).toInt();
+    return max(dist1, dist2).toInt();
+  }
+
+  Point _rectMiddlePoint(Rectangle rect) {
+    return Point(rect.left + rect.width/2, rect.top + rect.height/2);
+  }
+
+  _mergeLineSymbols(int maxDistance) {
     if (lines == null) return;
     if (maxDistance == null) return;
 
@@ -509,8 +587,12 @@ class SymbolImage {
       var line1 = lines[r + 1];
       for (var i = line.symbols.length - 1; i >= 0; i--) {
         for (var i1 = line1.symbols.length - 1; i1 >= 0; i1--) {
-          if ((line1.symbols[i1].refPoint.dx >= line.symbols[i].refPoint.dx) &
-              (line1.symbols[i1].refPoint.dx <= line.symbols[i].refPoint.dx + line.symbols[i].bmp.width)) {
+
+          if (((line1.symbols[i1].refPoint.dx >= line.symbols[i].refPoint.dx) &
+              (line1.symbols[i1].refPoint.dx <= line.symbols[i].refPoint.dx + line.symbols[i].bmp.width)) ||
+            ((line.symbols[i].refPoint.dx >= line1.symbols[i1].refPoint.dx) &
+          (line.symbols[i].refPoint.dx <= line1.symbols[i1].refPoint.dx + line1.symbols[i1].bmp.width)))
+          {
             var distance = line1.symbols[i1].refPoint.dy - (line.symbols[i].refPoint.dy + line.symbols[i].bmp.height);
             if (distance < maxDistance) {
               mergeSymbol(line.symbols[i], line1.symbols[i1], line1);
