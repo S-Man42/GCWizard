@@ -1,29 +1,28 @@
 import 'dart:math';
 
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
-import 'package:collection/collection.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
 import 'package:gc_wizard/logic/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer1.dart';
@@ -31,7 +30,9 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:tuple/tuple.dart';
 
 
 class SymbolReplacer extends StatefulWidget {
@@ -106,7 +107,15 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
             _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
             Container(height: 10),
-            _symbolImage != null ? Image.memory(_symbolImage.getImage()) : Container(),
+            _symbolImage != null
+              ? GCWImageView(
+                  imageData: GCWImageViewData(
+                    local.PlatformFile(bytes: _symbolImage.getImage())
+                  ),
+                  suppressedButtons: {GCWImageViewButtons.SAVE},
+                  suppressOpenInTool: {GCWImageViewOpenInTools.HIDDENDATA},
+                )
+              : Container(),
             _symbolImage != null
                 ? GCWButton(
                     text: i18n(context, 'symbol_replacer_letters_manually'),
@@ -288,9 +297,11 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               GCWTextDivider(
                 text: i18n(context, 'symbol_replacer_automatic_header'),
                 style: gcwDialogTextStyle(),
+                suppressTopSpace: true,
               ),
               GCWDropDownButton(
                 value: _currentAlphabet,
+                alternativeColor: true,
                 onChanged: (value) {
                   setState(() {
                     _currentAlphabet = value;
