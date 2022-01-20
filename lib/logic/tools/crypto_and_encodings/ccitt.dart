@@ -91,7 +91,7 @@ final CCITT_BAUDOTToAZ = switchMapKeyValue(AZToCCITT_BAUDOT);
 final NumbersToCCITT_BAUDOT = {};
 final CCITT_BAUDOTToNumbers = switchMapKeyValue(NumbersToCCITT_BAUDOT);
 
-final AZToCCITT_ITA1_MISS = {
+final AZToBaudot_54123 = {
   // Baudot-Code from DEU Wikipedia in Bit-Orde 54321
   'Y': 1,
   'E': 2,
@@ -122,9 +122,9 @@ final AZToCCITT_ITA1_MISS = {
   'L': 30,
   'P': 31,
 };
-final CCITT_ITA1_MISSToAZ = switchMapKeyValue(AZToCCITT_ITA1_MISS);
+final Baudot_54123ToAZ = switchMapKeyValue(AZToBaudot_54123);
 
-final NumbersToCCITT_ITA1_MISS = {
+final NumbersToBaudot_54123 = {
   '1': 4,
   '2': 2,
   '3': 1,
@@ -154,7 +154,199 @@ final NumbersToCCITT_ITA1_MISS = {
   '=': 30,
   String.fromCharCode(163) /* £ */ : 27,
 };
-final CCITT_ITA1_MISSToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_MISS);
+final Baudot_54123ToNumbers = switchMapKeyValue(NumbersToBaudot_54123);
+
+final AZToMurray = {
+  'A': 3,
+  'B': 25,
+  'C': 14,
+  'D': 9,
+  'E': 1,
+  'F': 13,
+  'G': 26,
+  'H': 20,
+  'I': 6,
+  'J': 11,
+  'K': 15,
+  'L': 18,
+  'M': 28,
+  'N': 12,
+  'O': 24,
+  'P': 22,
+  'Q': 23,
+  'R': 10,
+  'S': 5,
+  'T': 16,
+  'U': 7,
+  'V': 30,
+  'W': 19,
+  'X': 29,
+  'Y': 21,
+  'Z': 17,
+  '+': 8,
+  ' ': 4
+};
+final MurrayToAZ = switchMapKeyValue(AZToMurray);
+
+final NumbersToMurray = {
+//  'A': 3,
+  '/': 25,
+  '\'': 14,
+  '&': 9,
+  '3': 1,
+  '!': 13,
+  '"': 26,
+  ';': 20,
+  '8': 6,
+  '=': 11,
+  '§': 15,
+//  'L': 18,
+  '?': 28,
+  '-': 12,
+  '9': 24,
+  '0': 22,
+  '1': 23,
+  '4': 10,
+  ':': 5,
+  '5': 16,
+  '7': 7,
+  '(': 30,
+  ')': 30,
+  '2': 19,
+  '%': 29,
+  '6': 21,
+  ',': 17,
+  '.': 8,
+  ' ': 4
+};
+final MurrayToNumbers = switchMapKeyValue(NumbersToMurray);
+
+final AZToWesternunion = {
+  'A': 3,
+  'B': 25,
+  'C': 14,
+  'D': 9,
+  'E': 1,
+  'F': 13,
+  'G': 26,
+  'H': 20,
+  'I': 6,
+  'J': 11,
+  'K': 15,
+  'L': 18,
+  'M': 28,
+  'N': 12,
+  'O': 24,
+  'P': 22,
+  'Q': 23,
+  'R': 10,
+  'S': 5,
+  'T': 16,
+  'U': 7,
+  'V': 30,
+  'W': 19,
+  'X': 29,
+  'Y': 21,
+  'Z': 17,
+  ' ': 4,
+  '\r': 8,
+  '\n': 2,
+};
+final WesternunionToAZ = switchMapKeyValue(AZToWesternunion);
+
+final NumbersToWesternunion = {
+  '-': 3,
+  '?': 25,
+  ':': 14,
+  '\$': 9,
+  '3': 1,
+  'city': 13,
+  '&': 26,
+  '£': 20,
+  '8': 6,
+  '*': 11,
+  '(': 15,
+  ')': 18,
+  '.': 28,
+  ',': 12,
+  '9': 24,
+  '0': 22,
+  '1': 23,
+  '4': 10,
+  'thru': 5,
+  '5': 16,
+  '7': 7,
+  ';': 30,
+  '2': 19,
+  '/': 29,
+  '6': 21,
+  '"': 17,
+  ' ': 4,
+  '\r': 8,
+  '\n': 2,
+};
+final WesternunionToNumbers = switchMapKeyValue(NumbersToWesternunion);
+
+final AZToSiemens = {
+  'A': 6,
+  'B': 26,
+  'C': 23,
+  'D': 17,
+  'E': 7,
+  'F': 13,
+  'G': 27,
+  'H': 19,
+  'I': 1,
+  'J': 18,
+  'K': 8,
+  'L': 15,
+  'M': 2,
+  'N': 3,
+  'O': 25,
+  'P': 22,
+  'Q': 20,
+  'R': 24,
+  'S': 12,
+  'T': 16,
+  'U': 14,
+  'V': 29,
+  'W': 9,
+  'X': 10,
+  'Y': 5,
+  'Z': 21,
+};
+final SiemensToAZ = switchMapKeyValue(AZToSiemens);
+
+final NumbersToSiemens = {
+  '.': 6,
+  '/': 26,
+  '\'': 23,
+  '&': 17,
+  '3': 7,
+  '!': 13,
+  '"': 27,
+  ';': 19,
+  '8': 1,
+  '=': 18,
+  '§': 8,
+  '+': 15,
+  '?': 2,
+  '-': 3,
+  '9': 25,
+  '0': 22,
+  '1': 20,
+  '4': 24,
+  ':': 12,
+  '5': 16,
+  '7': 14,
+  ')': 29,
+  '2': 9,
+  '(': 10,
+  '6': 5,
+  ',': 21,
+};
+final SiemensToNumbers = switchMapKeyValue(NumbersToSiemens);
+
 
 final AZToCCITT_ITA1_EU = {
   // Code according to ENG Wikipedia, Bit-Order 54321
@@ -517,7 +709,7 @@ final _LETTERS_FOLLOW = {
 int _EncodeAZ(CCITTCodebook language, String text){
     switch (language) {
       case CCITTCodebook.BAUDOT: return AZToCCITT_BAUDOT[text]; break;
-      case CCITTCodebook.BAUDOT_54123: return AZToCCITT_ITA1_MISS[text]; break;
+      case CCITTCodebook.BAUDOT_54123: return AZToBaudot_54123[text]; break;
       case CCITTCodebook.CCITT_ITA1_1926: return AZToCCITT_ITA1_1926[text]; break;
       case CCITTCodebook.CCITT_ITA1_1929: return AZToCCITT_ITA1_1929[text]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return AZToCCITT_ITA1_EU[text]; break;
@@ -526,13 +718,16 @@ int _EncodeAZ(CCITTCodebook language, String text){
       case CCITTCodebook.CCITT_ITA2_1931: return AZToCCITT_ITA2_1931[text]; break;
       case CCITTCodebook.CCITT_MTK2: return AZToCCITT_ITA2_MTK2[text]; break;
       case CCITTCodebook.CCITT_USTTY: return AZToCCITT_USTTY[text]; break;
+      case CCITTCodebook.MURRAY: return AZToMurray[text]; break;
+      case CCITTCodebook.SIEMENS: return AZToSiemens[text]; break;
+      case CCITTCodebook.WESTERNUNION: return AZToWesternunion[text]; break;
     }
 }
 
 int _EncodeNumber(CCITTCodebook language, String text){
     switch (language) {
       case CCITTCodebook.BAUDOT: return NumbersToCCITT_BAUDOT[text]; break;
-      case CCITTCodebook.BAUDOT_54123: return NumbersToCCITT_ITA1_MISS[text]; break;
+      case CCITTCodebook.BAUDOT_54123: return NumbersToBaudot_54123[text]; break;
       case CCITTCodebook.CCITT_ITA1_1926: return NumbersToCCITT_ITA1_1926[text]; break;
       case CCITTCodebook.CCITT_ITA1_1929: return NumbersToCCITT_ITA1_1929[text]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return NumbersToCCITT_ITA1_EU[text]; break;
@@ -541,13 +736,16 @@ int _EncodeNumber(CCITTCodebook language, String text){
       case CCITTCodebook.CCITT_ITA2_1931: return NumbersToCCITT_ITA2_1931[text]; break;
       case CCITTCodebook.CCITT_MTK2: return NumbersToCCITT_MTK2[text]; break;
       case CCITTCodebook.CCITT_USTTY: return NumbersToCCITT_ITA2_USTTY[text]; break;
+      case CCITTCodebook.MURRAY: return NumbersToMurray[text]; break;
+      case CCITTCodebook.SIEMENS: return NumbersToSiemens[text]; break;
+      case CCITTCodebook.WESTERNUNION: return NumbersToWesternunion[text]; break;
     }
 }
 
 String _DecodeAZ(CCITTCodebook language, int code){
     switch (language) {
       case CCITTCodebook.BAUDOT: return CCITT_BAUDOTToAZ[code]; break;
-      case CCITTCodebook.BAUDOT_54123: return CCITT_ITA1_MISSToAZ[code]; break;
+      case CCITTCodebook.BAUDOT_54123: return Baudot_54123ToAZ[code]; break;
       case CCITTCodebook.CCITT_ITA1_1926: return CCITT_ITA1_1926ToAZ[code]; break;
       case CCITTCodebook.CCITT_ITA1_1929: return CCITT_ITA1_1929ToAZ[code]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToAZ[code]; break;
@@ -556,13 +754,16 @@ String _DecodeAZ(CCITTCodebook language, int code){
       case CCITTCodebook.CCITT_ITA2_1931: return CCITT_ITA2_1931ToAZ[code]; break;
       case CCITTCodebook.CCITT_MTK2: return CCITT_ITA2_MTK2ToAZ[code]; break;
       case CCITTCodebook.CCITT_USTTY: return CCITT_USTTYToAZ[code]; break;
+      case CCITTCodebook.MURRAY: return MurrayToAZ[code]; break;
+      case CCITTCodebook.SIEMENS: return SiemensToAZ[code]; break;
+      case CCITTCodebook.WESTERNUNION: return WesternunionToAZ[code]; break;
     }
 }
 
 String _DecodeNumber(CCITTCodebook language, int code){
     switch (language) {
       case CCITTCodebook.BAUDOT: return CCITT_BAUDOTToNumbers[code]; break;
-      case CCITTCodebook.BAUDOT_54123: return CCITT_ITA1_MISSToNumbers[code]; break;
+      case CCITTCodebook.BAUDOT_54123: return Baudot_54123ToNumbers[code]; break;
       case CCITTCodebook.CCITT_ITA1_1926: return CCITT_ITA1_1926ToNumbers[code]; break;
       case CCITTCodebook.CCITT_ITA1_1929: return CCITT_ITA1_1929ToNumbers[code]; break;
       case CCITTCodebook.CCITT_ITA1_EU: return CCITT_ITA1_EUToNumbers[code]; break;
@@ -571,6 +772,9 @@ String _DecodeNumber(CCITTCodebook language, int code){
       case CCITTCodebook.CCITT_ITA2_1931: return CCITT_ITA2_1931ToNumbers[code]; break;
       case CCITTCodebook.CCITT_MTK2: return CCITT_MTK2ToNumbers[code]; break;
       case CCITTCodebook.CCITT_USTTY: return CCITT_USTTYToNumbers[code]; break;
+      case CCITTCodebook.MURRAY: return MurrayToNumbers[code]; break;
+      case CCITTCodebook.SIEMENS: return SiemensToNumbers[code]; break;
+      case CCITTCodebook.WESTERNUNION: return WesternunionToNumbers[code]; break;
     }
 }
 
