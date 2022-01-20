@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +62,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Map<SubstitutionBreakerAlphabet, String> _breakerAlphabetItems ;
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
+  int _mergeDistance;
 
 
   @override
@@ -86,6 +89,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                   setState(() {
                     _platformFile = _file;
                     _symbolImage = null;
+                    _mergeDistance = null;
                     _replaceSymbols(true);
                   });
                 }
@@ -106,7 +110,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
             _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
             Container(height: 10),
-            _symbolImage != null ? Image.memory(_symbolImage.getImage()) : Container(),
+            _symbolImage != null ? Image.memory(_symbolImage.getBorderImage()) : Container(),
             _symbolImage != null
                 ? GCWButton(
                     text: i18n(context, 'symbol_replacer_letters_manually'),
@@ -163,7 +167,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             similarityLevel: _similarityLevel,
             symbolImage: _symbolImage,
             compareSymbols: _currentSymbolTableViewData?.data?.images,
-            similarityCompareLevel: _similarityCompareLevel
+            similarityCompareLevel: _similarityCompareLevel,
+            mergeDistance: _mergeDistance
         )
     );
   }
@@ -199,6 +204,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           }
       ),
       _buildSymbolTableConfig(),
+      _buildSymbolSizeRow()
     ]);
   }
 
@@ -216,6 +222,58 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           }
       ),
     ]);
+  }
+
+  Widget _buildSymbolSizeRow() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: GCWText(
+            text:  ('Symbolgröße') + ':', // i18n(context, 'common_mode')
+            //align: Alignment.center,
+            //style: textStyle,
+          ),
+          flex: 1),
+          GCWIconButton(
+            iconData: Icons.remove,
+            iconColor: _symbolImage == null ? themeColors().inActive() : null,
+            onPressed: () {
+              //setState(() {
+              if (_symbolImage?.mergeDistanceSteps != null && _symbolImage.mergeDistanceSteps.length > 0)
+                if (_mergeDistance != null) {
+                  var next = _symbolImage.mergeDistanceSteps.where((value) => value < _mergeDistance).last;
+                  if (next != null) {
+                    _mergeDistance = next;
+                    _replaceSymbols(false);
+                  }
+                }
+              //});
+            },
+          ),
+          GCWIconButton(
+            iconData: Icons.add,
+            iconColor: _symbolImage == null ? themeColors().inActive() : null,
+            onPressed: () {
+              //setState(() {
+                if (_symbolImage?.mergeDistanceSteps != null && _symbolImage.mergeDistanceSteps.length > 0)
+                if (_mergeDistance == null) {
+                  _mergeDistance = _symbolImage.mergeDistanceSteps[0];
+                  _replaceSymbols(false);
+                } else {
+                  var next = _symbolImage.mergeDistanceSteps.where((value) => value > _mergeDistance).first;
+                  if (next != null) {
+                    _mergeDistance = next;
+                    _replaceSymbols(false);
+                  }
+                }
+              //});
+            },
+          ),
+          Expanded(
+              child: Container(),
+          flex: 1)
+        ],
+    );
   }
 
   Widget _buildSymbolTableDropDownRow() {

@@ -16,6 +16,7 @@ class ReplaceSymbolsInput {
   final SymbolImage symbolImage;
   final List<Map<String, SymbolData>> compareSymbols;
   final double similarityCompareLevel;
+  final int mergeDistance;
 
   ReplaceSymbolsInput({this.image,
     this.blackLevel: 50,
@@ -23,7 +24,8 @@ class ReplaceSymbolsInput {
     this.gap: 1,
     this.symbolImage,
     this.compareSymbols,
-    this.similarityCompareLevel: 80.0
+    this.similarityCompareLevel: 80.0,
+    this.mergeDistance
   }) {}
 }
 
@@ -37,7 +39,8 @@ Future<SymbolImage> replaceSymbolsAsync(dynamic jobData) async {
       gap: jobData.parameters.gap,
       symbolImage: jobData.parameters.symbolImage,
       compareSymbols: jobData.parameters.compareSymbols,
-      similarityCompareLevel: jobData.parameters.similarityCompareLevel
+      similarityCompareLevel: jobData.parameters.similarityCompareLevel,
+      mergeDistance: jobData.parameters.mergeDistance
       );
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
@@ -52,7 +55,8 @@ Future<SymbolImage> replaceSymbols(Uint8List image,
     {int gap = 1,
       SymbolImage symbolImage,
       List<Map<String, SymbolData>> compareSymbols,
-      double similarityCompareLevel
+      double similarityCompareLevel,
+      int mergeDistance
     }) async {
 
   if ((image == null) && (symbolImage == null)) return null;
@@ -64,7 +68,8 @@ Future<SymbolImage> replaceSymbols(Uint8List image,
       similarityLevel,
       gap: gap,
       compareSymbols: compareSymbols,
-      similarityCompareLevel: similarityCompareLevel
+      similarityCompareLevel: similarityCompareLevel,
+      mergeDistance: mergeDistance
   );
 
   return Future.value(symbolImage);
@@ -81,8 +86,13 @@ class SymbolImage {
   double _similarityCompareLevel;
 
   List<_SymbolRow> lines = [];
+  List<_SymbolRow> _sourceLines = [];
   List<Symbol> symbols = [];
+  List<Symbol> _sourceSymbols = [];
   List<SymbolGroup> symbolGroups = [];
+
+  List<int> mergeDistanceSteps;
+  int _mergeDistance;
 
   int _blackLevel;
   double _similarityLevel;
@@ -95,6 +105,14 @@ class SymbolImage {
 
   Uint8List getImage() {
     return _image;
+  }
+
+  Uint8List getBorderImage() {
+    if (_outputImageBytes != null)
+      return _outputImageBytes;
+
+    _outputImageBytes = encodeTrimmedPng(_outputImage);
+    return _outputImageBytes;
   }
 
   Uint8List getReplacedImage() {
@@ -130,7 +148,8 @@ class SymbolImage {
       {int gap = 1,
       List<Map<String, SymbolData>> compareSymbols,
       double similarityCompareLevel = 80,
-      bool groupSymbols = true
+      bool groupSymbols = true,
+      int mergeDistance = null
       }) {
     if (_image == null) return;
     if (_bmp == null)
@@ -141,13 +160,16 @@ class SymbolImage {
 
     if (_blackLevel != blackLevel) {
       lines.clear();
+      _sourceLines.clear();
       symbols.clear();
+      _sourceSymbols.clear();
       symbolGroups.clear();
     }
     _blackLevel = blackLevel;
 
     if (_gap != gap) {
       symbols.clear();
+      _sourceSymbols.clear();
       symbolGroups.clear();
     }
     _gap = gap;
@@ -157,21 +179,41 @@ class SymbolImage {
     _similarityLevel = similarityLevel;
     _similarityCompareLevel = similarityCompareLevel;
 
-    if (lines.isEmpty)
+    if (_mergeDistance != mergeDistance) {
+      lines.clear();
+      symbols.clear();
+      symbolGroups.clear();
+    }
+    _mergeDistance = mergeDistance;
+
+    if (_sourceLines.isEmpty)
       _splitToLines();
 
-    if (symbols.isEmpty) {
-      lines.forEach((line) {
+    if (_sourceSymbols.isEmpty) {
+      _sourceLines.forEach((line) {
         line._splitLineToSymbols( gap, _blackLevel);
-        symbols.addAll(line.symbols);
+        _sourceSymbols.addAll(line.symbols);
       });
-
-      var referenceWidth = _referenceWidth(symbols);
-      if (referenceWidth != null) _mergeSymbols(referenceWidth);
+      mergeDistanceSteps = _calcDistancesList();
+      _cloneSourceSymbols();
+      //var referenceWidth = _referenceWidth(symbols);
+      //if (referenceWidth != null) _mergeSymbols(referenceWidth);
+      // symbols = _sourceSymbols;
+      // lines = _sourceLines;
     }
 
-    if (symbolGroups.isEmpty && groupSymbols)
+
+
+
+    if (symbolGroups.isEmpty && groupSymbols) {
+      if (_mergeDistance != null) {
+        _cloneSourceSymbols();
+        _mergeLineSymbols(_mergeDistance);
+        _mergeColumnSymbols(_mergeDistance);
+      }
       _groupSymbols();
+    }
+
 
     if (_compareSymbols != compareSymbols)
       _compareImage = null;
@@ -184,15 +226,19 @@ class SymbolImage {
       _compareSymbols = compareSymbols;
     }
 
-    var mergeText = false;
-    for (SymbolGroup group in symbolGroups) {
-      if (group.text != null || group.text != '') {
-        mergeText = true;
-        break;
-      }
-    }
+    const bool mergeText = false;
+    const bool mergeBorder = true;
+    // for (SymbolGroup group in symbolGroups) {
+    //   if (group.text != null || group.text != '') {
+    //     mergeText = true;
+    //     break;
+    //   }
+    // }
 
-    if (mergeText) {
+    if (mergeBorder) {
+      _outputImage = _mergeBorderData();
+      _outputImageBytes = null;
+    } else if (mergeText) {
       _outputImage = _mergeSymbolData();
       _outputImageBytes = null;
     } else {
@@ -326,6 +372,23 @@ class SymbolImage {
     return bmp;
   }
 
+  Image.Image _mergeBorderData() {
+    var bmp = Image.Image(_bmp.width, _bmp.height);
+
+    Image.drawImage(bmp, _bmp);
+
+    symbols.forEach((symbol) {
+      Image.drawRect(bmp,
+          symbol.refPoint.dx.toInt(),
+          symbol.refPoint.dy.toInt(),
+          symbol.refPoint.dx.toInt() + symbol.bmp.width,
+          symbol.refPoint.dy.toInt() + symbol.bmp.height,
+          Colors.orange.value);
+    });
+
+    return bmp;
+  }
+
   _splitToLines() {
     var emptyLineIndex = <int>[];
 
@@ -355,7 +418,7 @@ class SymbolImage {
     var rect = ui.Rect.fromLTWH(0, startIndex.toDouble(), _bmp.width.toDouble(), (endIndex - startIndex).toDouble());
 
     if (rect.height > 0)
-      lines.add(_SymbolRow(rect,
+      _sourceLines.add(_SymbolRow(rect,
           Image.copyCrop(_bmp,
               rect.left.toInt(),
               rect.top.toInt(),
@@ -424,24 +487,38 @@ class SymbolImage {
     return width;
   }
 
-  _mergeSymbols( int referenceWidth) {
+  _mergeLineSymbols( int maxDistance) {
     if (lines == null) return;
-    if (referenceWidth == null) return;
-
-    const widthTolerance = 1.05;
-    const distanceTolerance = 0.1;
-    var maxWidth = referenceWidth * widthTolerance;
-    var maxDistance = referenceWidth * distanceTolerance;
+    if (maxDistance == null) return;
 
     lines.forEach((line) {
       for (var i = line.symbols.length - 2; i >= 0; i-- ) {
-        var sumWidth = line.symbols[i + 1].refPoint.dx + line.symbols[i + 1].bmp.width - line.symbols[i].refPoint.dx;
-        var distance = line.symbols[i + 1].refPoint.dx - (line.symbols[i].refPoint.dx + line.symbols[i].bmp.width);
-        if ((sumWidth < maxWidth) && (distance < maxDistance)) {
+        if (_symbolDistanceX(line.symbols[i], line.symbols[i + 1]) < maxDistance) {
           mergeSymbol(line.symbols[i], line.symbols[i + 1], line);
         }
       }
     });
+  }
+
+  _mergeColumnSymbols(int maxDistance) {
+    if (lines == null) return;
+    if (maxDistance == null) return;
+
+    for (var r = 0; r < lines.length - 1; r++) {
+      var line = lines[r];
+      var line1 = lines[r + 1];
+      for (var i = line.symbols.length - 1; i >= 0; i--) {
+        for (var i1 = line1.symbols.length - 1; i1 >= 0; i1--) {
+          if ((line1.symbols[i1].refPoint.dx >= line.symbols[i].refPoint.dx) &
+              (line1.symbols[i1].refPoint.dx <= line.symbols[i].refPoint.dx + line.symbols[i].bmp.width)) {
+            var distance = line1.symbols[i1].refPoint.dy - (line.symbols[i].refPoint.dy + line.symbols[i].bmp.height);
+            if (distance < maxDistance) {
+              mergeSymbol(line.symbols[i], line1.symbols[i1], line1);
+            }
+          }
+        }
+      }
+    }
   }
 
   mergeSymbol(Symbol symbol1, Symbol symbol2, _SymbolRow line) {
@@ -470,6 +547,36 @@ class SymbolImage {
     symbols?.remove(symbol2);
     line?.symbols?.remove(symbol2);
   }
+
+  _cloneSourceSymbols() {
+    lines.clear();
+    symbols.clear();
+    _sourceLines.forEach((line) {
+      var lineClone = line._clone();
+      lines.add(lineClone);
+      symbols.addAll(lineClone.symbols);
+    });
+  }
+
+  double _symbolDistanceX (Symbol symbol1, Symbol symbol2) {
+    return symbol2.refPoint.dx - (symbol1.refPoint.dx + symbol1.bmp.width);
+  }
+
+  List<int> _calcDistancesList() {
+    var distances =< int >[];
+
+    _sourceLines.forEach((line) {
+      for (var i = line.symbols.length - 2; i >= 0; i--)
+        distances.add(_symbolDistanceX(line.symbols[i], line.symbols[i + 1]).toInt());
+    });
+
+    for (var r = 0; r < _sourceLines.length - 1; r++)
+      distances.add((_sourceLines[r + 1].size.top - _sourceLines[r].size.bottom).toInt());
+
+    var list = distances.toSet().toList();
+    list.sort();
+    return list;
+  }
 }
 
 class _SymbolRow {
@@ -489,6 +596,16 @@ class _SymbolRow {
 
     _outputImageBytes = encodeTrimmedPng(bmp);
     return _outputImageBytes;
+  }
+
+  _SymbolRow _clone() {
+    var symbolRow = _SymbolRow(size, bmp);
+    symbols.forEach((symbol) {
+      var symbolClone = symbol._clone();
+      symbolClone.row = symbolRow;
+      symbolRow.symbols.add(symbolClone);
+    });
+    return symbolRow;
   }
 
   _splitLineToSymbols(int gap, int blackLevel) {
@@ -607,6 +724,12 @@ class Symbol {
     this.refPoint = refPoint;
     this.bmp = bmp;
     this.row = row;
+  }
+
+  Symbol _clone() {
+    var symbol = Symbol(refPoint, bmp, row);
+    symbol.hash = hash;
+    return symbol;
   }
 
   Uint8List getImage() {
