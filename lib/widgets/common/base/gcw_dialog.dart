@@ -38,7 +38,6 @@ showGCWAlertDialog(BuildContext context, String title, String text, Function onO
 
 class GCWDialogButton extends StatefulWidget {
   final String text;
-  // final isCancelButton;
   final Function onPressed;
   final bool suppressClose;
 
