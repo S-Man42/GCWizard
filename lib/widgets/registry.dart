@@ -229,8 +229,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
+import 'package:gc_wizard/widgets/tools/games/game_of_life/game_of_life.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
@@ -630,6 +632,11 @@ initializeRegistry(BuildContext context) {
         'games',
       ],
     ),
+    GCWTool(tool: GameOfLife(), i18nPrefix: 'gameoflife', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'gameoflife',
+    ]),
     GCWTool(tool: GCCode(), i18nPrefix: 'gccode', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -643,6 +650,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'binary',
       'gray',
+    ]),
+    GCWTool(tool: Grid(), i18nPrefix: 'grid', categories: [
+      ToolCategory.GAMES
+    ], searchKeys: [
+      'grid',
     ]),
     GCWTool(
         tool: HashSelection(), i18nPrefix: 'hashes_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
@@ -1660,7 +1672,8 @@ initializeRegistry(BuildContext context) {
       'hashbreaker',
     ]),
     GCWTool(tool: UrwigoHashBreaker(), i18nPrefix: 'urwigo_hashbreaker', searchKeys: [
-      'wherigourwigo',
+      'wherigo',
+      'urwigo',
       'hashes',
       'hashbreaker',
     ]),
@@ -2812,8 +2825,14 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: [
       'symbol_eurythmy',
     ]),
+    GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: [
+    'symbol_face_it',
+    ]),
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: [
       'symbol_fakoo',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'fez', symbolSearchStrings: [
+      'symbol_fez',
     ]),
     GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: [
       'symbol_signlanguage',
@@ -2879,6 +2898,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
       'glagolitic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: [
+      'zelda',
+      'symbol_gerudo',
+    ]),
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
       'symbol_gnommish',
     ]),
@@ -2924,20 +2947,31 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: [
       'symbol_hvd',
     ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_64', symbolSearchStrings: [
+      'zelda',
+      'hylian_64',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_albw_botw', symbolSearchStrings: [
+      'zelda',
+      'symbol_hylian_albw_botw',
+    ]),
     GCWSymbolTableTool(symbolKey: 'hylian_skyward_sword', symbolSearchStrings: [
-      'symbol_hylian',
+      'zelda',
       'symbol_hylian_skywardsword',
     ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: [
+      'zelda'
+    ]),
     GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
-      'symbol_hylian',
+      'zelda',
       'symbol_hylian_twilightprincess_gcn',
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_wii', symbolSearchStrings: [
-      'symbol_hylian',
+      'zelda',
       'symbol_hylian_twilightprincess_wii',
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_wind_waker', symbolSearchStrings: [
-      'symbol_hylian',
+      'zelda',
       'symbol_hylian_windwaker',
     ]),
     GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: [
@@ -2983,6 +3017,7 @@ initializeRegistry(BuildContext context) {
       'symbol_klingon',
     ]),
     GCWSymbolTableTool(symbolKey: 'klingon_klinzhai', symbolSearchStrings: [
+      'symbol_klingon',
       'symbol_klingon_klinzhai',
     ]),
     GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: [
@@ -3195,6 +3230,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
       'shadoksnumbers',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sheikah', symbolSearchStrings: [
+      'zelda',
+      'symbol_sheikah',
     ]),
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
       'symbol_shoes',
@@ -3445,7 +3484,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(
         tool: UrwigoTextDeobfuscation(),
         i18nPrefix: 'urwigo_textdeobfuscation',
-        searchKeys: ['wherigourwigo', 'urwigo_textdeobfuscation']),
+        searchKeys: ['wherigo', 'urwigo', 'urwigo_textdeobfuscation']),
   ].map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);

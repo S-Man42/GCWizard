@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
@@ -182,7 +182,7 @@ class AboutState extends State<About> {
                             '\'Todclerc\' (NL)',
                             '\'vike91\' (FI)',
                             '\'Xoyn\' (RU)',
-                          ].join('\n') +
+                          ].join(', ') +
                           '\n')
                 ], style: gcwTextStyle()),
               ),
@@ -202,6 +202,7 @@ class AboutState extends State<About> {
                     '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
+                    '\'GrafZahl75\'',
                     'Johannes C.',
                     'Jonas M.',
                     '\'Klumpenkukuk\'',

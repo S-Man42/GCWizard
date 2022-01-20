@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dutchgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geo3x3.dart';
@@ -173,6 +174,17 @@ class GCWCoordsState extends State<GCWCoords> {
         'widget': GCWCoordsGaussKrueger(
           coordinates: _pastedCoords,
           subtype: _currentCoordsFormat['subtype'],
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDutchGrid),
+        'widget': GCWCoordsDutchGrid(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -417,9 +429,11 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsGaussKruegerGK5:
         _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK5});
         break;
+      case keyCoordsDutchGrid:
       case keyCoordsMaidenhead:
       case keyCoordsMercator:
       case keyCoordsNaturalAreaCode:
+        break;
       case keyCoordsSlippyMap:
         _currentCoordsFormat.addAll({'subtype': '10.0'});
         break;
