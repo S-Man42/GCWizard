@@ -157,7 +157,7 @@ class _GCWToolState extends State<GCWTool> {
 
   @override
   Widget build(BuildContext context) {
-    // this is the case when Tool is not called by Registry but as subpage from another tool
+    // this is the case when Tool is not called by Registry but as subpage of another tool
     if (_toolName == null) _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
 
     if (_defaultLanguageToolName == null)
@@ -219,7 +219,7 @@ class _GCWToolState extends State<GCWTool> {
     }
 
     searchString = _normalizeSearchString(searchString);
-    String locale = defaultLanguage;
+    String locale = DEFAULT_LOCALE.languageCode;
 
     if (!_needsDefaultHelp(appLocale)) locale = Localizations.localeOf(context).languageCode;
 

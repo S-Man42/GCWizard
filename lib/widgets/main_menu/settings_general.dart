@@ -19,25 +19,6 @@ import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-var _LANGUAGES = {
-  'cz': {'name_native': '🇨🇿 Čeština', 'percent_translated': 5},
-  'da': {'name_native': '🇩🇰 Dansk', 'percent_translated': 2},
-  'de': {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},
-  'el': {'name_native': '🇬🇷 Ελληνικά', 'percent_translated': 5},
-  'en': {'name_native': '🇬🇧🇺🇸 English', 'percent_translated': 100},
-  'es': {'name_native': '🇪🇸 Español', 'percent_translated': 4},
-  'fi': {'name_native': '🇫🇮 Suomi', 'percent_translated': 21},
-  'fr': {'name_native': '🇫🇷 Français', 'percent_translated': 79},
-  'it': {'name_native': '🇮🇹 Italiano', 'percent_translated': 10},
-  'ko': {'name_native': '🇰🇷 한국어', 'percent_translated': 79},
-  'nl': {'name_native': '🇳🇱 Nederlands', 'percent_translated': 100},
-  'pl': {'name_native': '🇵🇱 Polski', 'percent_translated': 45},
-  'pt': {'name_native': '🇵🇹 Português', 'percent_translated': 13},
-  'ru': {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 7},
-  'sk': {'name_native': '🇸🇰 Slovenský', 'percent_translated': 1},
-  'tr': {'name_native': '🇹🇷 Türkçe', 'percent_translated': 14},
-};
-
 class GeneralSettings extends StatefulWidget {
   @override
   GeneralSettingsState createState() => GeneralSettingsState();
@@ -68,22 +49,22 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         final currentLocale = snapshot.data;
 
                         return GCWStatefulDropDownButton(
-                            items: SUPPORTED_LOCALES.map((locale) {
-                              Map<String, dynamic> language = _LANGUAGES[locale.languageCode ?? defaultLanguage];
-                              String languageName = language['name_native'];
+                            items: SUPPORTED_LOCALES.entries.map((locale) {
+                              String languageName = locale.value['name_native'];
 
                               var subtitle;
-                              if (language['percent_translated'] < 90) {
+                              if (locale.value['percent_translated'] as int < 90) {
                                 subtitle = i18n(context, 'settings_general_i18n_language_partlytranslated',
-                                    parameters: [language['percent_translated']]);
+                                    parameters: [locale.value['percent_translated']]);
                               }
 
                               return GCWDropDownMenuItem(
-                                  value: locale.languageCode ?? defaultLanguage,
-                                  child: languageName,
-                                  subtitle: subtitle);
+                                value: locale.key.languageCode,
+                                child: languageName,
+                                subtitle: subtitle
+                              );
                             }).toList(),
-                            value: currentLocale.languageCode ?? defaultLanguage,
+                            value: isLocaleSupported(currentLocale) ? currentLocale.languageCode : DEFAULT_LOCALE.languageCode,
                             onChanged: (newValue) {
                               appLanguage.changeLanguage(newValue);
                             });

@@ -52,12 +52,14 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return SwissGridPlus.fromLatLon(_coords, ells).toString();
     case keyCoordsGaussKrueger:
       return GaussKrueger.fromLatLon(_coords, _getGKCode(), ells).toString();
+    case keyCoordsDutchGrid:
+      return DutchGrid.fromLatLon(_coords).toString();
     case keyCoordsMaidenhead:
       return Maidenhead.fromLatLon(_coords).toString();
     case keyCoordsMercator:
       return Mercator.fromLatLon(_coords, ells).toString();
     case keyCoordsNaturalAreaCode:
-      return NaturalAreaCode.fromLatLon(_coords).toString();
+      return NaturalAreaCode.fromLatLon(_coords, precision: 8).toString();
     case keyCoordsSlippyMap:
       return SlippyMap.fromLatLon(_coords, double.tryParse(_outputFormat['subtype'])).toString();
     case keyCoordsGeohash:
@@ -69,7 +71,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsOpenLocationCode:
       return OpenLocationCode.fromLatLon(_coords, codeLength: 14).toString();
     case keyCoordsQuadtree:
-      return Quadtree.fromLatLon(_coords).toString();
+      return Quadtree.fromLatLon(_coords, precision: 40).toString();
     case keyCoordsReverseWherigoWaldmeister:
       return Waldmeister.fromLatLon(_coords).toString();
     default:

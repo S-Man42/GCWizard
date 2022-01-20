@@ -14,7 +14,7 @@ dependencies:
   file_picker: ^4.1.0
   file_picker_writable: ^2.0.1
   encrypt: ^5.0.0
-  exif: ^3.0.0
+  exif: ^3.1.1
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -23,13 +23,13 @@ dependencies:
   flutter_map_marker_popup: ^1.0.1
   flutter_map_tappable_polyline: ^3.0.0
   fluttertoast: ^8.0.8
-  http: ^0.13.3
-  image: ^3.0.5
+  http: ^0.13.4
+  image: ^3.1.1
   intl: ^0.17.0
   location: ^4.3.0
   mask_text_input_formatter: ^2.0.0
-  math_expressions: ^2.2.0
-  package_info: ^2.0.0
+  math_expressions: ^2.3.0
+  package_info_plus: ^1.3.0
   path: ^1.8.0
   path_provider: ^2.0.5
   permission_handler: ^8.1.6
@@ -130,7 +130,9 @@ flutter:
     - assets/symbol_tables/elia/
     - assets/symbol_tables/enochian/
     - assets/symbol_tables/eurythmy/
+    - assets/symbol_tables/face_it/
     - assets/symbol_tables/fakoo/
+    - assets/symbol_tables/fez/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/finger_numbers/
     - assets/symbol_tables/flags/
@@ -150,6 +152,7 @@ flutter:
     - assets/symbol_tables/gc_attributes_ids/
     - assets/symbol_tables/gc_attributes_meaning/
     - assets/symbol_tables/genreich/
+    - assets/symbol_tables/gerudo/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/greek_numerals/
@@ -164,7 +167,10 @@ flutter:
     - assets/symbol_tables/hieroglyphs/
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
+    - assets/symbol_tables/hylian_64/
+    - assets/symbol_tables/hylian_albw_botw/
     - assets/symbol_tables/hylian_skyward_sword/
+    - assets/symbol_tables/hylian_symbols/
     - assets/symbol_tables/hylian_twilight_princess_gcn/
     - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
@@ -250,6 +256,7 @@ flutter:
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/shadoks/
+    - assets/symbol_tables/sheikah/
     - assets/symbol_tables/shoes/
     - assets/symbol_tables/sign/
     - assets/symbol_tables/skullz/
