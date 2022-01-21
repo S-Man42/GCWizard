@@ -5,7 +5,7 @@
 // 4. https://cryptii.com/pipes/baudot
 // 5. https://cryptomuseum.com/ref/ita2/index.htm
 // 6. CCITT - ITU
-//    6.1 Recommendation S.1 (11/88) International Telegraph Alphabet No. 2 https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-S.1-198811-S!!PDF-E&type=items
+//    6.1 Recommendation S.1 (11/88) International Telegraph Alphabet No. 2 https://www.itu.int/rec/dologin_pub.asp?lang=e&id=T-REC-S.1-195811-S!!PDF-E&type=items
 //
 // Code Tables
 // - CCITT_BAUDOT       according to 1. with Bit-Order 54321
@@ -25,9 +25,9 @@ enum CCITTCodebook { BAUDOT, BAUDOT_54123, CCITT_ITA1_1926, CCITT_ITA1_1929, CCI
 Map<CCITTCodebook, Map<String, String>> CCITT_CODEBOOK = {
   CCITTCodebook.BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
   CCITTCodebook.BAUDOT_54123: {'title': 'punchtape_baudot_54123_title', 'subtitle': 'punchtape_baudot_54123_description'},
-  CCITTCodebook.MURRAY: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
-  CCITTCodebook.SIEMENS: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
-  CCITTCodebook.WESTERNUNION: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
+  CCITTCodebook.MURRAY: {'title': 'punchtape_murray_title', 'subtitle': 'punchtape_murray_description'},
+  CCITTCodebook.SIEMENS: {'title': 'punchtape_siemens_title', 'subtitle': 'punchtape_siemens_description'},
+  CCITTCodebook.WESTERNUNION: {'title': 'punchtape_westernunion_title', 'subtitle': 'punchtape_westernunion_description'},
   CCITTCodebook.CCITT_ITA1_1926: {'title': 'punchtape_ccitt_ita1_1926_title', 'subtitle': 'punchtape_ccitt_ita1_1926_description'},
   CCITTCodebook.CCITT_ITA1_1929: {'title': 'punchtape_ccitt_ita1_1929_title', 'subtitle': 'punchtape_ccitt_ita1_1929_description'},
   CCITTCodebook.CCITT_ITA1_EU: {'title': 'punchtape_ccitt_ita1_eu_title', 'subtitle': 'punchtape_ccitt_ita1_eu_description'},
@@ -479,70 +479,6 @@ final NumbersToCCITT_ITA1_UK = {
 };
 final CCITT_ITA1_UKToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_UK);
 
-final AZToCCITT_ITA2 = {
-  //according to ENG Wikipedia, Bit-Order 54321
-  ' ': 4,
-  '\r': 2,
-  '\n': 8,
-  'E': 1,
-  'A': 3,
-  'S': 5,
-  'I': 6,
-  'U': 7,
-  'D': 9,
-  'R': 10,
-  'J': 11,
-  'N': 12,
-  'F': 13,
-  'C': 14,
-  'K': 15,
-  'T': 16,
-  'Z': 17,
-  'L': 18,
-  'W': 19,
-  'H': 20,
-  'Y': 21,
-  'P': 22,
-  'Q': 23,
-  'O': 24,
-  'B': 25,
-  'G': 26,
-  'M': 28,
-  'X': 29,
-  'V': 30
-};
-final CCITT_ITA2ToAZ = switchMapKeyValue(AZToCCITT_ITA2);
-
-final NumbersToCCITT_ITA2 = {
-  //according to ENG Wikipedia, Bit-Order 54321
-  ' ': 4,
-  '\r': 2,
-  '\n': 8,
-  '3': 1,
-  '-': 3,
-  '\'': 5,
-  '8': 6,
-  '7': 7,
-  '4': 10,
-  '@': 11,
-  ',': 12,
-  ':': 14,
-  '(': 15,
-  '5': 16,
-  '+': 17,
-  ')': 18,
-  '2': 19,
-  '6': 21,
-  '0': 22,
-  '1': 23,
-  '9': 24,
-  '?': 25,
-  '.': 28,
-  '/': 29,
-  '=': 30
-};
-final CCITT_ITA2ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2);
-
 final AZToCCITT_ITA2_MTK2 = {
   //according to ENG Wikipedia, Bit-Order 54321
   ' ': 4,
@@ -675,6 +611,269 @@ final NumbersToCCITT_ITA2_USTTY = {
 };
 final CCITT_USTTYToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_USTTY);
 
+final AZToCCITT_ITA1_1926 = {
+  'A': 1,
+  'B': 12,
+  'C': 13,
+  'D': 15,
+  'E': 2,
+  'É': 3,
+  'F': 14,
+  'G': 10,
+  'H': 11,
+  'I': 6,
+  'J': 9,
+  'K': 25,
+  'L': 27,
+  'M': 26,
+  'N': 30,
+  'O': 7,
+  'P': 31,
+  'Q': 29,
+  'R': 28,
+  'S': 20,
+  'T': 21,
+  'U': 5,
+  'V': 23,
+  'W': 22,
+  'X': 18,
+  'Y': 4,
+  'Z': 19,
+  'Ṯ': 17,
+  '✲': 24,
+};
+final CCITT_ITA1_1926ToAZ = switchMapKeyValue(AZToCCITT_ITA1_1926);
+
+final AZToCCITT_ITA1_1929 = {
+  'A': 1,
+  'B': 12,
+  'C': 13,
+  'D': 15,
+  'E': 2,
+  'F': 14,
+  'G': 10,
+  'H': 11,
+  'I': 6,
+  'J': 9,
+  'K': 25,
+  'L': 27,
+  'M': 26,
+  'N': 30,
+  'O': 7,
+  'P': 31,
+  'Q': 29,
+  'R': 28,
+  'S': 20,
+  'T': 21,
+  'U': 5,
+  'V': 23,
+  'W': 22,
+  'X': 18,
+  'Y': 4,
+  'Z': 19,
+  '✲': 24,
+  '\n': 3,
+  '\r': 17,
+};
+final CCITT_ITA1_1929ToAZ = switchMapKeyValue(AZToCCITT_ITA1_1929);
+
+final AZToCCITT_ITA2_1929 = {
+  'A': 1,
+  'B': 12,
+  'C': 13,
+  'D': 15,
+  'E': 2,
+  'F': 14,
+  'G': 10,
+  'H': 11,
+  'I': 6,
+  'J': 9,
+  'K': 25,
+  'L': 27,
+  'M': 26,
+  'N': 30,
+  'O': 7,
+  'P': 24,
+  'Q': 29,
+  'R': 28,
+  'S': 20,
+  'T': 21,
+  'U': 5,
+  'V': 23,
+  'W': 22,
+  'X': 18,
+  'Y': 4,
+  'Z': 19,
+  '\n': 3,
+  '\r': 17,
+};
+final CCITT_ITA2_1929ToAZ = switchMapKeyValue(AZToCCITT_ITA2_1929);
+
+final AZToCCITT_ITA2_1931 = {
+  'A': 3,
+  'B': 25,
+  'C': 14,
+  'D': 9,
+  'E': 1,
+  'F': 13,
+  'G': 26,
+  'H': 20,
+  'I': 6,
+  'J': 11,
+  'K': 15,
+  'L': 18,
+  'M': 28,
+  'N': 12,
+  'O': 24,
+  'P': 22,
+  'Q': 23,
+  'R': 10,
+  'S': 5,
+  'T': 16,
+  'U': 7,
+  'V': 30,
+  'W': 19,
+  'X': 29,
+  'Y': 21,
+  'Z': 17,
+  ' ': 4,
+  '\r': 2,
+  '\n': 8,
+};
+final CCITT_ITA2_1931ToAZ = switchMapKeyValue(AZToCCITT_ITA2_1931);
+
+final NumbersToCCITT_ITA1_1926 = {
+  '1': 1,
+  '8': 12,
+  '9': 13,
+  '0': 15,
+  '2': 2,
+  //'national': 3,
+  //'national': 14,
+  '7': 10,
+  //'national': 11,
+  //'national': 6,
+  '6': 9,
+  '(': 25,
+  '=': 27,
+  ')': 26,
+  '№': 30,
+  '5': 7,
+  '%': 31,
+  '/': 29,
+  '-': 28,
+  ';': 20,
+  '!': 21,
+  '4': 5,
+  '\'': 23,
+  '?': 22,
+  ',': 18,
+  '3': 4,
+  ':': 19,
+  '.': 17,
+  '✲': 24,
+};
+final CCITT_ITA1_1926ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_1926);
+
+final NumbersToCCITT_ITA1_1929 = {
+  '1': 1,
+  '8': 12,
+  '9': 13,
+  '0': 15,
+  '2': 2,
+  //'national': 14,
+  '7': 10,
+  //'national': 11,
+  //'national': 6,
+  '6': 9,
+  '(': 25,
+  '=': 27,
+  ')': 26,
+  '+': 30,
+  '5': 7,
+  '%': 31,
+  '/': 29,
+  '-': 28,
+  '.': 20,
+  //'national': 21,
+  '4': 5,
+  '\'': 23,
+  '?': 22,
+  ',': 18,
+  '3': 4,
+  ':': 19,
+  '✲': 24,
+  '\n': 3,
+  '\r': 17,
+};
+final CCITT_ITA1_1929ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA1_1929);
+
+final NumbersToCCITT_ITA2_1929 = {
+  ':': 1,
+  '?': 12,
+  '(': 13,
+  ',': 15,
+  '3': 2,
+  '/': 14,
+  // 'national': 10,
+  '+': 11,
+  '8': 6,
+  '🔔': 9,
+  // 'national': 25,
+  '=': 27,
+  '\'': 26,
+  '-': 30,
+  '9': 7,
+  '0': 24,
+  '1': 29,
+  '4': 28,
+  //'national': 20,
+  '5': 21,
+  '7': 5,
+  ')': 23,
+  '2': 22,
+  // 'national': 18,
+  '6': 4,
+  '.': 19,
+  '\n': 3,
+  '\r': 17,
+};
+final CCITT_ITA2_1929ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_1929);
+
+final NumbersToCCITT_ITA2_1931 = {
+  '-': 3,
+  '?': 25,
+  ':': 14,
+  // national : 9
+  '3': 1,
+  // national : 13
+  // national : 26
+  // national : 20
+  '8': 6,
+  '🔔' : 11, // Bell
+  '(': 15,
+  ')': 18,
+  '.': 28,
+  ',': 12,
+  '9': 24,
+  '0': 22,
+  '1': 23,
+  '4': 10,
+  '\'': 5,
+  '5': 16,
+  '7': 7,
+  '=': 30,
+  '2': 19,
+  '/': 29,
+  '6': 21,
+  '+': 17,
+  ' ': 4,
+  '\r': 2,
+  '\n': 8,
+};
+final CCITT_ITA2_1931ToNumbers = switchMapKeyValue(NumbersToCCITT_ITA2_1931);
+
+
 final _NUMBERS_FOLLOW = {
   CCITTCodebook.BAUDOT_54123 : 8,
   CCITTCodebook.CCITT_ITA1_1926 : 8,
@@ -689,7 +888,6 @@ final _NUMBERS_FOLLOW = {
   CCITTCodebook.MURRAY : 27,
   CCITTCodebook.WESTERNUNION : 27,
 };
-
 final _LETTERS_FOLLOW = {
   CCITTCodebook.BAUDOT_54123 : 16,
   CCITTCodebook.CCITT_ITA1_1926 : 16,

@@ -26,7 +26,8 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
-  var _currentMode = GCWSwitchPosition.right;
+  var _currentMode = GCWSwitchPosition.right; // encrypt - decrypt
+  var _currentCodeMode = GCWSwitchPosition.right; // original - binary
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
   var _currentCode = CCITTCodebook.BAUDOT;
@@ -62,6 +63,16 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
               child: i18n(context, mode.value['title']),
               subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
+      ),
+      GCWTwoOptionsSwitch(
+        value: _currentCodeMode,
+        rightValue: i18n(context, 'punchtape_mode_original'),
+        leftValue: i18n(context, 'punchtape_mode_binary'),
+        onChanged: (value) {
+          setState(() {
+            _currentCodeMode = value;
+          });
+        },
       ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
@@ -204,7 +215,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePunchtape(_currentEncodeInput, _currentCode);
+      List<List<String>> segments = encodePunchtape(_currentEncodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -215,13 +226,13 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
       var segments;
       if (_currentDecodeMode == GCWSwitchPosition.left) {
         // text
-        segments = decodeTextPunchtape(_currentDecodeInput.toUpperCase(), _currentCode);
+        segments = decodeTextPunchtape(_currentDecodeInput.toUpperCase(), _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
       } else {
         // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualPunchtape(output, _currentCode);
+        segments = decodeVisualPunchtape(output, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
       }
       return Column(
         children: <Widget>[

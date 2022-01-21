@@ -72,7 +72,7 @@ String segments2decenary(List<String> segments) {
   return convertBase(result, 2, 10);
 }
 
-List<List<String>> encodePunchtape(String input, CCITTCodebook language) {
+List<List<String>> encodePunchtape(String input, CCITTCodebook language, bool original) {
   if (input == null) return [];
 
   List<List<String>> result = [];
@@ -88,7 +88,7 @@ List<List<String>> encodePunchtape(String input, CCITTCodebook language) {
   return result;
 }
 
-Map<String, dynamic> decodeTextPunchtape(String inputs, CCITTCodebook language) {
+Map<String, dynamic> decodeTextPunchtape(String inputs, CCITTCodebook language, bool original) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -108,7 +108,7 @@ Map<String, dynamic> decodeTextPunchtape(String inputs, CCITTCodebook language) 
   return {'displays': displays, 'text': text.join(' ')};
 }
 
-Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, CCITTCodebook language) {
+Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, CCITTCodebook language, bool original) {
   if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'text': ''};
 
   var displays = <List<String>>[];
