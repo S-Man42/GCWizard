@@ -65,7 +65,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Map<SubstitutionBreakerAlphabet, String> _breakerAlphabetItems ;
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
-  int _mergeDistance;
+  double _mergeDistance;
 
 
   @override
@@ -249,7 +249,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             onPressed: () {
               if (_symbolImage != null)
                 if (_mergeDistance != null) {
-                  _mergeDistance = _symbolImage.prevMergeDistance(_mergeDistance);
+                  _mergeDistance =  _symbolImage.prevMergeDistance(_mergeDistance); //(_mergeDistance ?? 0) -1; //
                   _replaceSymbols(false);
                 }
             },
