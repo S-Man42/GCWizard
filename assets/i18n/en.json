@@ -1557,7 +1557,7 @@
   "coords_intersection_anglea": "Angle A",
   "coords_intersection_angleb": "Angle B",
   "coords_equilateraltriangle_title": "Equilateral Triangle",
-  "coords_equilateraltriangle_description": "Calculates the point from 2 given ones with: All points have to same distance to each other",
+  "coords_equilateraltriangle_description": "Calculates the point from 2 given ones with: All points have the same distance to each other",
   "coords_equilateraltriangle_coorda": "Coordinate A",
   "coords_equilateraltriangle_coordb": "Coordinate B",
   "coords_ellipsoidtransform_title": "Ellipsoid/Date Converter",
