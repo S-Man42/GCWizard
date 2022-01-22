@@ -1,0 +1,61 @@
+GC Wizard je kolekce open-source nástrojů.
+
+Původně byl vytvořen k tomu, aby kačerům nabízel offline nástroj pro podporu s mystery kešemi a hádankami. GC wizard tedy obsahuje mnoho nástrojů pro jednoduchou kryptografii, geografické a vědecké výpočty a také stovky sad různých symbolů.
+
+Projekt se mezitím stal obrovským a mohl by být použitelný pro více než geocachingové problémy.
+
+Přeloženo do 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+
+<b>Přednosti</b>
+
+<b>Obecné</b>
+• Řešitel vzorců: Pro zpracování vícestupňových proměnných
+• Víceúčelové dekodéry: Zadejte neznámý kód a nechte si několik dekodérů a kalkulátorů vypsat v řadě
+• Více než 200 sad symbolů tabulek: Přímé dekódování symbolů na znaky; uložit vlastní kódování jako obrázek
+• Online Manual: Každý nástroj má svou vlastní manuální stránku, přeloženou do 🇬🇧 🇩🇪 🇫🇷
+
+<b>Kryptografie a kódování</b>
+• Hodnoty abecedy (A = 1, B = 2, ...): Nastavitelná abeceda s jazykem specifickým zacházením se speciálními znaky
+• Braillův grafický dekodér: zadejte body do grafického rozhraní; podporuje různé jazyky
+• Knižní cifry: Vyberte správný systém (např. řádek + písmeno číslo nebo oddíl + řádek s uvedením slov, . .), zpracovávat speciální znaky a prázdné řádky, ...
+• Enigma: Plně fungující Enigma simulátor včetně četného číselného nastavení
+• Esoterické jazyky: Generátory a interpreti pro několik esoterických programovacích jazyků, jako jsou Brainf**k, Ook, Malbolge a Chef
+• Morseovka
+• Číselná slova: Seznamy důležitých čísel v různých jazycích. Pro angličtinu + němčinu existují analyzátory pro identifikaci i komplexních číselných slov
+• Substituce a Vigenèrova šifra: Zkuste zlomit řešení bez znalosti klíčů
+• Klasické kódy: Playfairova šifra, Polybiův čtverec, cik-cak šifra, ...
+• Historické šifry: Caesar, Vigenènere telegrafní kódy, ...
+• Vojenské šifry: ADFGX, šifrovací disk, Tapir, ...
+• Technické šifry: BCD, CCITT, Hashe (včetně brute-force lamače), RSA, ...
+
+<b>Souřadnice</b>
+• algoritmy vysoce přesných souřadnic, které podporují přesné výpočty i s velmi dlouhými vzdálenostmi tím, že vždy zvažují tvar Země (elipsoid)
+• Podpora různých elipsoidů, dokonce i ostatních planet
+• Formáty souřadnic: Podpora UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Projekce trasového bodu: Zahrnuje přesnou reverzní projekci
+• Otevřená mapa: Nastavte vlastní body a řádky, změřte cesty, exportujte jako a importujte z GPX/KML; OpenStreetMap a satelitní zobrazení
+• Proměnná souřadnice: Interpolovat vzorce souřadnic, pokud nejsou některé části souřadnic zadány. Zobrazit výsledek na mapě
+• Projekce souřadnic, středový bod dvou a tří souřadnic, různé průsečíky čar a kruhů, ...
+
+<b>Věda a technologie</b>
+• Astronomie: Vypočítejte pozici slunce a měsíce na určitém místě a čase
+• Barevný převodník: Převádí hodnoty barev mezi RGB, HSL, hex, CMYK, ...
+• Země: ISO, volací kódy a registrační kódy vozidla, vlajky
+• Funkce Datumu a času: Týden, časové rozdíly, ...
+• Iracionální čísla: π, φ a e: Ukázat a hledat až > 1 Mio. číslice
+• Číselné řady: Factorial, Fibonacci a Co.
+• Číselné soustavy: Konvertor do binární, hexadecimální, ...
+• Periodická tabulka prvků: interaktivní zobrazení; seznamy, které seřadí prvky podle jakéhokoli kritéria
+• Klávesy telefonu: Převádí klasické telefonní tlačítka na písmena. Podporuje specifické chování modelu telefonu
+• Prvočísla: Najděte prvočísla až do milionu
+• Segmentový displej: Grafické rozhraní pro dekódování a kódování segmentových displejů (7, 9, 14, 15, 16)
+• Převodník jednotek: délka, objem, tlak, energie a mnoho dalších; konvertovat mezi běžnými jednotkami včetně předpon jako mikro a kilo
+• Zdánlivá teplota, Cross Sums (Kakuro), DTMF, rozložení klávesnice, projektily, resistorové kódy, ...
+
+<b>Obrázky a soubory</b>
+• Prohlížeč Hex
+• Prohlížeč EXIF metadat
+• Analyzujte snímky animovaných obrázků
+• Korekce barev: Nastavení kontrastu, nasycení, detekce hran, ...
+• Hledání skrytých dat nebo skrytých archivů
+• Čtení QR/BarCode z obrázků, vytvořte je z binárního vstupu

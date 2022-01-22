@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -16,25 +14,21 @@ class RomanNumbers extends StatefulWidget {
 }
 
 class RomanNumbersState extends State<RomanNumbers> {
-  var _encodeController;
   var _decodeController;
 
-  var _currentEncodeInput = defaultIntegerText;
+  var _currentEncodeInput = 1;
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
-  RomanNumberType _currentRomanNumbersTypeMode = RomanNumberType.USE_SUBTRACTION_RULE;
 
   @override
   void initState() {
     super.initState();
 
-    _encodeController = TextEditingController(text: _currentEncodeInput['text']);
     _decodeController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
-    _encodeController.dispose();
     _decodeController.dispose();
 
     super.dispose();
@@ -45,12 +39,13 @@ class RomanNumbersState extends State<RomanNumbers> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-            ? GCWIntegerTextField(
-                controller: _encodeController,
+            ? GCWIntegerSpinner(
+                min: 1,
                 max: 100000,
-                onChanged: (text) {
+                value: _currentEncodeInput,
+                onChanged: (value) {
                   setState(() {
-                    _currentEncodeInput = text;
+                    _currentEncodeInput = value;
                   });
                 },
               )
@@ -81,19 +76,25 @@ class RomanNumbersState extends State<RomanNumbers> {
     List<dynamic> output;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentEncodeInput == null || _currentEncodeInput['text'] == null || _currentEncodeInput['text'].isEmpty)
+      if (_currentEncodeInput == null)
         return GCWDefaultOutput();
 
       output = [
-        encodeRomanNumbers(_currentEncodeInput['value'], type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
-        encodeRomanNumbers(_currentEncodeInput['value'], type: RomanNumberType.ONLY_ADDITION) ?? ''
+        encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
+        encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.ONLY_ADDITION) ?? ''
       ];
     } else {
       if (_currentDecodeInput == null || _currentDecodeInput.isEmpty) return GCWDefaultOutput();
 
       output = [
-        decodeRomanNumbers(_currentDecodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
-        decodeRomanNumbers(_currentDecodeInput, type: RomanNumberType.ONLY_ADDITION) ?? ''
+        _currentDecodeInput.split(RegExp(r'\s+'))
+            .map((number) => decodeRomanNumbers(number, type: RomanNumberType.USE_SUBTRACTION_RULE))
+            .where((number) => number != null)
+            .join(' '),
+        _currentDecodeInput.split(RegExp(r'\s+'))
+            .map((number) => decodeRomanNumbers(number, type: RomanNumberType.ONLY_ADDITION))
+            .where((number) => number != null)
+            .join(' ')
       ];
     }
 
