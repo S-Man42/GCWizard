@@ -92,6 +92,7 @@ class SymbolImage {
 
   List<double> _mergeDistanceSteps = [];
   double _mergeDistance;
+  static int _mergeDistanceInit = 10; // %
 
   int _blackLevel;
   double _similarityLevel;
@@ -219,6 +220,9 @@ class SymbolImage {
     }
 
     if (symbolGroups.isEmpty && groupSymbols) {
+      if (_mergeDistance == null)
+        _mergeDistance = _mergeSymbolsDefault();
+
       if (_mergeDistance != null) {
         if (!symbolsCloned) _cloneSourceLines();
         _mergeSymbols(_mergeDistance);
@@ -539,6 +543,7 @@ class SymbolImage {
   /// </summary>
   double nextMergeDistance(double actMergeDistance) {
     double next;
+    actMergeDistance = actMergeDistance ?? _mergeDistance;
     if (actMergeDistance != null) {
       var nextl = _mergeDistanceSteps.where((value) => value > actMergeDistance);
       if (nextl.isNotEmpty) next = nextl.first;
@@ -565,11 +570,31 @@ class SymbolImage {
   /// </summary>
   double prevMergeDistance(double actMergeDistance) {
     double prev;
+    actMergeDistance = actMergeDistance ?? _mergeDistance;
     if (actMergeDistance != null) {
       var prevl = _mergeDistanceSteps.where((value) => value < actMergeDistance);
       if (prevl.isNotEmpty) prev = prevl.last;
     }
     return prev;
+  }
+
+  /// <summary>
+  /// calc init merge distance
+  /// </summary>
+  double _mergeSymbolsDefault() {
+    var referenceWidth = _referenceWidth(symbols);
+    if (referenceWidth != null) {
+      var mergeDistanceMin = referenceWidth * _mergeDistanceInit/ 100.0;
+      var _mergeDistance;
+      var _nextMergeDistance;
+
+      do {
+         _mergeDistance = _nextMergeDistance;
+        _nextMergeDistance = nextMergeDistance(_mergeDistance);
+      } while ((_nextMergeDistance != _mergeDistance) && (_nextMergeDistance < mergeDistanceMin));
+
+      return _mergeDistance;
+    }
   }
 
   /// <summary>

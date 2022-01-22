@@ -65,7 +65,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   Map<SubstitutionBreakerAlphabet, String> _breakerAlphabetItems ;
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
-  double _mergeDistance;
+  double _currentMergeDistance;
 
 
   @override
@@ -92,7 +92,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                   setState(() {
                     _platformFile = _file;
                     _symbolImage = null;
-                    _mergeDistance = null;
+                    _currentMergeDistance = null;
                     _replaceSymbols(true);
                   });
                 }
@@ -179,7 +179,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             symbolImage: _symbolImage,
             compareSymbols: _currentSymbolTableViewData?.data?.images,
             similarityCompareLevel: _similarityCompareLevel,
-            mergeDistance: _mergeDistance
+            mergeDistance: _currentMergeDistance
         )
     );
   }
@@ -247,11 +247,11 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             iconData: Icons.remove,
             iconColor: _symbolImage == null ? themeColors().inActive() : null,
             onPressed: () {
-              if (_symbolImage != null)
-                if (_mergeDistance != null) {
-                  _mergeDistance =  _symbolImage.prevMergeDistance(_mergeDistance); //(_mergeDistance ?? 0) -1; //
-                  _replaceSymbols(false);
-                }
+              if (_symbolImage != null) {
+                _currentMergeDistance =  _symbolImage.prevMergeDistance(_currentMergeDistance);
+                if (_currentMergeDistance != null)
+                    _replaceSymbols(false);
+              }
             },
           ),
           GCWIconButton(
@@ -259,7 +259,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             iconColor: _symbolImage == null ? themeColors().inActive() : null,
             onPressed: () {
               if (_symbolImage != null) {
-                _mergeDistance = _symbolImage.nextMergeDistance(_mergeDistance);
+                _currentMergeDistance = _symbolImage.nextMergeDistance(_currentMergeDistance);
                 _replaceSymbols(false);
               }
             },
