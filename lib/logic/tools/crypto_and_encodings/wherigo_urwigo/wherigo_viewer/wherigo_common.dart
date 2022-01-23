@@ -115,9 +115,12 @@ String getObfuscatorFunction(String source){
   String result = '';
   List<String> LUA = source.split('\n');
 
-  result = 'WWB_deobf';
+  result = 'gsub_wig';
 
-  if (RegExp(r'(_Urwigo)').hasMatch(source)) {
+  if (RegExp(r'(WWB_deobf)').hasMatch(source))
+    result = 'WWB_deobf';
+  else
+    if (RegExp(r'(_Urwigo)').hasMatch(source)) {
     for (int i = 0; i < LUA.length; i++){
       if (LUA[i].startsWith('function')) {
         result = LUA[i].substring(9);
@@ -131,6 +134,7 @@ String getObfuscatorFunction(String source){
       }
     }
   }
+
   return result;
 }
 

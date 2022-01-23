@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 
-final SUPPORTED_LOCALES = [
-  Locale('cz'),
-  Locale('da'),
-  Locale('de'),
-  Locale('el'),
-  Locale('en'),
-  Locale('es'),
-  Locale('fi'),
-  Locale('fr'),
-  Locale('it'),
-  Locale('ko'),
-  Locale('nl'),
-  Locale('pl'),
-  Locale('pt'),
-  Locale('ru'),
-  Locale('sk'),
-  Locale('tr'),
-];
-const String defaultLanguage = 'en';
+final Map<Locale, Map<String, dynamic>> SUPPORTED_LOCALES = {
+  Locale('cz'): {'name_native': '🇨🇿 Čeština', 'percent_translated': 5},
+  Locale('da'): {'name_native': '🇩🇰 Dansk', 'percent_translated': 2},
+  Locale('de'): {'name_native': '🇩🇪 Deutsch', 'percent_translated': 100},
+  Locale('el'): {'name_native': '🇬🇷 Ελληνικά', 'percent_translated': 5},
+  Locale('en'): {'name_native': '🇬🇧🇺🇸 English', 'percent_translated': 100},
+  Locale('es'): {'name_native': '🇪🇸 Español', 'percent_translated': 4},
+  Locale('fi'): {'name_native': '🇫🇮 Suomi', 'percent_translated': 21},
+  Locale('fr'): {'name_native': '🇫🇷 Français', 'percent_translated': 79},
+  Locale('it'): {'name_native': '🇮🇹 Italiano', 'percent_translated': 10},
+  Locale('ko'): {'name_native': '🇰🇷 한국어', 'percent_translated': 79},
+  Locale('nl'): {'name_native': '🇳🇱 Nederlands', 'percent_translated': 100},
+  Locale('pl'): {'name_native': '🇵🇱 Polski', 'percent_translated': 45},
+  Locale('pt'): {'name_native': '🇵🇹 Português', 'percent_translated': 13},
+  Locale('ru'): {'name_native': '🇷🇺 Ру́сский', 'percent_translated': 7},
+  Locale('sk'): {'name_native': '🇸🇰 Slovenský', 'percent_translated': 1},
+  Locale('sv'): {'name_native': '🇸🇪 Svenska', 'percent_translated': 34},
+  Locale('tr'): {'name_native': '🇹🇷 Türkçe', 'percent_translated': 14},
+};
+
+const Locale DEFAULT_LOCALE = Locale('en');
 
 final SUPPORTED_HELPLOCALES = ['en', 'de', 'fr'];
 
@@ -27,5 +29,5 @@ final SUPPORTED_HELPLOCALES = ['en', 'de', 'fr'];
 ///
 bool isLocaleSupported(Locale locale) {
   // Include all of your supported language codes here
-  return SUPPORTED_LOCALES.map((locale) => locale.languageCode).toList().contains(locale.languageCode);
+  return SUPPORTED_LOCALES.containsKey(locale);
 }

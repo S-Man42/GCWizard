@@ -1,0 +1,61 @@
+GC Wizard on avoimen lähdekoodin työkalukokoelma.
+
+Se luotiin alunperin geokätköilijöille offline-työkaluksi tukeakseen heitä kenttämysteerien ja mysteerien ratkomiseen. Joten, GC Wizard sisältää lukuisia työkaluja yksinkertaisiin salauksiin, geograafiset ja tieteelliset laskelmat sekä satoja eri symbolisarjoja.
+
+Samaan aikaan projektista tuli hyvin valtava ja se voi olla käytännöllinen monissa ei-geokätköilyä koskevissa kysymyksissä.
+
+Käännetty kielille 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+
+<b>Kohokohdat</b>
+
+<b>Yleistä</b>
+• Kaavaratkaisin: Monivaiheisten muuttujien käsittelyyn
+• Multidekooderi: Syötä tuntematon koodi ja anna useiden koodinpurkajien ja laskureiden tulkita se yhtä aikaa
+• Enemmän kuin 200 symbolitaulukkosarjaa: Suora symbolien dekoodaus merkeiksi; tallenna oma salaus kuvana
+• Online-manuaali: Jokaisella työkalulla on oma ohjesivunsa, käännettynä kielille 🇬🇧 🇩🇪 🇫🇷
+
+<b>Salaus ja koodaukset</b>
+• Aakkosten arvot (A = 1, B = 2, ...): Konfiguroitavissa olevat aakkoset, joissa on kielikohtainen erikoismerkkien käsittely
+• Pistekirjoituksen graafinen dekooderi: Kirjoita pisteet graafiseen käyttöliittymään; tukee eri kieliä
+• Kirjasalakirjoitus: Valitse oikea järjestelmä (esim. rivi + kirjaimen numero tai osio + rivi + sananumero, ...), käsittele erikoismerkkejä ja tyhjiä rivejä, ...
+• Enigma: Täysikäyttöinen Enigma-simulaattori, sis. lukuisia mahdollisia asetuksia
+• Esoteeriset kielet: Generaattorit ja tulkit useille esoteerisille ohjelmointikielille, kuten Brainf**k, Ook, Malbolge ja Chef
+• Morse
+• Numeral Words: Lists of important numbers in different languages. For English + German there are parsers to identify even complex numeral words
+• Substitution and Vigenère Code Breakers: Try to find the solution without knowing the keys
+• Classic Codes: Playfair, Polybios, Railfence, ...
+• Historic codes: Caesar, Vigenènere, telegraph codes, ...
+• Military codes: ADFGX, Cipher Wheel, Tapir, ...
+• Technical encodings: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
+
+<b>Koordinaatit</b>
+• High precision coordinate algorithms which support precise calculations even with very long distances by always considering the earth's shape (ellipsoid)
+• Support of different ellipsoids, even other planets
+• Coordinate Formats: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Waypoint Projection: Includes precise reverse projection
+• Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
+• Variable Coordinate: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map
+• Cross bearing, Center point of two and three coordinates, different intersections of lines and circles, ...
+
+<b>Science and Technology</b>
+• Astronomy: Calculate position of sun and moon at a certain place and time
+• Väriavaruuden muunnin: Muunna väriarvot välillä RGB, HSL, Hex, CMYK, ...
+• Maat: ISO, puhelu- ja ajoneuvorekisteritunnukset, liput
+• Päivämäärä ja aika -toiminnot: arkipäivä, aikaerot, ...
+• Irrationaaliset numerot: π, φ ja e: Näytä ja etsi jopa > 1 Mio. lukua
+• Numerosarjat: Factorial, Fibonacci ja Co.
+• Numerojärjestelmät: Muuntaa desimaalin binaariksi, heksadesimaaliksi, ...
+• Periodic Table of the Elements: Interactive view; lists which order the elements by any criterion
+• Phone Keys: Converts classic phone keys to letters. Supports phone model specific behaviours
+• Prime Numbers: Search prime numbers up to 1 Mio.
+• Segmenttinäyttö: Graafinen käyttöliittymä dekoodaukseen ja koodaukseen 7-16 segmentin näyttöjä varten
+• Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
+• Apparent Temperature, Cross Sums, DTMF, Keyboard layouts, Projectiles, Resistor codes, ...
+
+<b>Images and Files</b>
+• Hex-katseluohjelma
+• Exif/Metadata -katselin
+• Analysoi animoitujen kuvien kehyksiä
+• Värikorjaukset: Säädä kontrasti, värikylläisyys, reunan tunnistus, ...
+• Etsi piilotettuja tietoja tai piilotettuja arkistoja
+• Lue QR/viivakoodeja kuvista, luo ne binaarisesta syötteestä
