@@ -279,6 +279,7 @@ class WherigoCartridge{
   final String TypeOfCartridge;
   final String Player;
   final int PlayerID;
+  final String CartridgeLUAName;
   final String CartridgeName;
   final String CartridgeGUID;
   final String CartridgeDescription;
@@ -290,6 +291,7 @@ class WherigoCartridge{
   final int LengthOfCompletionCode;
   final String CompletionCode;
   final String ObfuscatorTable;
+  final String ObfuscatorFunction;
   final List<CharacterData> Characters;
   final List<ItemData> Items;
   final List<TaskData> Tasks;
@@ -312,11 +314,11 @@ class WherigoCartridge{
       this.Splashscreen, this.SplashscreenIcon,
       this.DateOfCreation, this.TypeOfCartridge,
       this.Player, this.PlayerID,
-      this.CartridgeName, this.CartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
+      this.CartridgeLUAName, this.CartridgeName, this.CartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
       this.Version, this.Author, this.Company,
       this.RecommendedDevice,
       this.LengthOfCompletionCode, this.CompletionCode,
-      this.ObfuscatorTable,
+      this.ObfuscatorTable, this.ObfuscatorFunction,
       this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media,
       this.Messages, this.Answers, this.Identifiers,
       this.NameToObject,
@@ -436,7 +438,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
+    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','', '', '','','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
     out.addAll({'EarwigoCartridge': EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
     return out;
   }
@@ -463,6 +465,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   String _Player = '';
   int _PlayerID = 0;
   String _CartridgeName = '';
+  String _CartridgeLUAName = '';
   String _CartridgeGUID = '';
   String _CartridgeDescription = '';
   String _StartingLocationDescription = '';
@@ -682,8 +685,10 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       print('got dtable');
       //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 8}); }
 
-      _obfuscatorFunction = getObfuscatorFunction(_LUAFile);
+      _obfuscatorFunction = _getObfuscatorFunction(_LUAFile);
       //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 1}); }
+      
+      _CartridgeLUAName = _getCartridgeLUAName(_LUAFile);
 
       try {
         _cartridgeData =
@@ -847,10 +852,10 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _DateOfCreation,
         _TypeOfCartridge,
         _Player, _PlayerID,
-        _CartridgeName, _CartridgeGUID, _CartridgeDescription, _StartingLocationDescription,
+        _CartridgeLUAName, _CartridgeName, _CartridgeGUID, _CartridgeDescription, _StartingLocationDescription,
         _Version, _Author, _Company, _RecommendedDevice,
         _LengthOfCompletionCode, _CompletionCode,
-        _obfuscatorTable,
+        _obfuscatorTable, _obfuscatorFunction,
         _Characters, _Items, _Tasks, _Inputs, _Zones, _Timers, _Media,
         _Messages, _Answers, _Identifiers, _NameToObject,
         _Status, _ResultsGWC, _ResultsLUA )});
@@ -1000,5 +1005,46 @@ String JASONStringToString(String JSON){
 
 String _normalizeLUAmultiLineText(String LUA) {
   return LUA.replaceAll('[[\n', '[[').replaceAll('<BR>\n', '<BR>');
+}
+
+String _getObfuscatorFunction(String source){
+  String result = '';
+  List<String> LUA = source.split('\n');
+
+  result = 'gsub_wig';
+
+  if (RegExp(r'(WWB_deobf)').hasMatch(source))
+    result = 'WWB_deobf';
+  else
+  if (RegExp(r'(_Urwigo)').hasMatch(source)) {
+    for (int i = 0; i < LUA.length; i++){
+      if (LUA[i].startsWith('function')) {
+        result = LUA[i].substring(9);
+        for (int j = result.length - 1; j > 0; j--) {
+          if (result[j] == '(') {
+            result = result.substring(0, j);
+            j = 0;
+          }
+        }
+        i = source.length;
+      }
+    }
+  }
+
+  return result;
+}
+
+String _getCartridgeLUAName(String source){
+  String result = '';
+  List<String> LUA = source.split('\n');
+
+  for (int i = 0; i < LUA.length; i++){
+      if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(LUA[i])) {
+        result = LUA[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '');
+        i = LUA.length;
+    }
+  }
+
+  return result;
 }
 

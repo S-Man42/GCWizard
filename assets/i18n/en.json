@@ -4876,6 +4876,7 @@
   "wherigo_data_loaded" : "Data loaded",
   "wherigo_data_nodata" : "No Data available",
   "wherigo_data_lua" : "LUA-File: Sourcecode",
+  "wherigo_data_lua_deobfuscate" : "De-Obfuscate",
   "wherigo_data_gwc" : "GWC-File: Cartridge",
   "wherigo_data_obfuscatortable" : "Obfuscation: dtable",
   "wherigo_data_character" : "Character Object",

@@ -4,9 +4,11 @@ import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
@@ -64,7 +66,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-  WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', 0, '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], []);
+  WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], []);
   EarwigoCartridge _EarwigoCartridge = EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '');
   
   Map<String, dynamic> _outData;
@@ -74,6 +76,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<List<dynamic>> _GWCStructure;
 
   var _outputHeader;
+
+  bool _currentDeObfuscate = false;
 
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
 
@@ -342,7 +346,24 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.HEADER:
         return Column(
           children: <Widget>[
-            GCWDefaultOutput(),
+            GCWDefaultOutput(
+              trailing: Row(
+                  children: <Widget>[
+                    GCWIconButton(
+                      iconData: Icons.my_location,
+                      size: IconButtonSize.SMALL,
+                      iconColor: themeColors().mainFont(),
+                      onPressed: () {
+                        _openInMap(
+                            _currentZonePoints(
+                              _WherigoCartridge.CartridgeName,
+                              ZonePoint(_WherigoCartridge.Latitude, _WherigoCartridge.Longitude, _WherigoCartridge.Altitude)),
+                            []);
+                      },
+                    ),
+                  ]
+              ),
+            ),
             Column(
               children: columnedMultiLineOutput(context, _outputHeader))
             ]);
@@ -493,32 +514,46 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.LUAFILE:
-        return GCWDefaultOutput(
-            child: GCWText(
-              text: _WherigoCartridge.LUAFile,
-              style: gcwMonotypeTextStyle(),
+        return Column(
+          children: <Widget>[
+            GCWOnOffSwitch(
+              title: i18n(context, 'wherigo_data_lua_deobfuscate'),
+              value: _currentDeObfuscate,
+              onChanged: (value) {
+                setState(() {
+                  _currentDeObfuscate = value;
+                  print(_currentDeObfuscate);
+                });
+              },
             ),
-            trailing: Row(
-              children: <Widget>[
-                GCWIconButton(
-                  iconColor: themeColors().mainFont(),
-                  size: IconButtonSize.SMALL,
-                  iconData: Icons.content_copy,
-                  onPressed: () {
-                    var copyText = _WherigoCartridge.LUAFile != null ? _WherigoCartridge.LUAFile : '';
-                    insertIntoGCWClipboard(context, copyText);
-                  },
-                ),
-                GCWIconButton(
-                  iconData: Icons.save,
-                  size: IconButtonSize.SMALL,
-                  iconColor: _WherigoCartridge.LUAFile == null ? themeColors().inActive() : null,
-                  onPressed: () {
-                    _WherigoCartridge.LUAFile == null ? null : _exportFile(context, _WherigoCartridge.LUAFile.codeUnits, 'LUAsourceCode');
-                  },
-                ),
-              ],
+            GCWDefaultOutput(
+              child: GCWText(
+                text: _normalizeLUA(_WherigoCartridge.LUAFile, _currentDeObfuscate),
+                style: gcwMonotypeTextStyle(),
+              ),
+              trailing: Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    iconColor: themeColors().mainFont(),
+                    size: IconButtonSize.SMALL,
+                    iconData: Icons.content_copy,
+                    onPressed: () {
+                      var copyText = _WherigoCartridge.LUAFile != null ? _WherigoCartridge.LUAFile : '';
+                      insertIntoGCWClipboard(context, copyText);
+                    },
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.save,
+                    size: IconButtonSize.SMALL,
+                    iconColor: _WherigoCartridge.LUAFile == null ? themeColors().inActive() : null,
+                    onPressed: () {
+                      _WherigoCartridge.LUAFile == null ? null : _exportFile(context, _WherigoCartridge.LUAFile.codeUnits, 'LUAsourceCode');
+                    },
+                  ),
+                ],
+              )
             )
+          ],
         );
         break;
 
@@ -598,7 +633,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         size: IconButtonSize.SMALL,
                         iconColor: themeColors().mainFont(),
                         onPressed: () {
-                          _openInMap();
+                          _openInMap(_points, _polylines);
                         },
                       ),
                     ]
@@ -623,6 +658,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     ),
                   ),
                   GCWIconButton(
+                    iconData: Icons.my_location,
+                    size: IconButtonSize.SMALL,
+                    iconColor: themeColors().mainFont(),
+                    onPressed: () {
+                      _openInMap(
+                          _currentZonePoints(
+                              _WherigoCartridge.Zones[_zoneIndex - 1].ZoneName,
+                              _WherigoCartridge.Zones[_zoneIndex - 1].ZoneOriginalPoint),
+                          _currentZonePolylines(
+                              _WherigoCartridge.Zones[_zoneIndex - 1].ZonePoints));
+                    },
+                  ),                  GCWIconButton(
                     iconData: Icons.arrow_forward_ios,
                     onPressed: () {
                       setState(() {
@@ -1039,8 +1086,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.ZoneName],
         [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
         [i18n(context, 'wherigo_output_visible'), data.ZoneVisible],
-        [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName],
-        [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName],
+        [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName + (NameToObject[data.ZoneMediaName] != null ? ' ⬌ ' + NameToObject[data.ZoneMediaName].ObjectName : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName + (NameToObject[data.ZoneIconName] != null ? ' ⬌ ' + NameToObject[data.ZoneIconName].ObjectName : '')],
         [i18n(context, 'wherigo_output_active'), data.ZoneActive],
         [i18n(context, 'wherigo_output_showobjects'), data.ZoneShowObjects],
         [i18n(context, 'wherigo_output_distancerange'), data.ZoneDistanceRange],
@@ -1078,8 +1125,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.ItemName],
         [i18n(context, 'wherigo_output_description'), data.ItemDescription],
         [i18n(context, 'wherigo_output_visible'), data.ItemVisible],
-        [i18n(context, 'wherigo_output_medianame'), data.ItemMedia],
-        [i18n(context, 'wherigo_output_iconname'), data.ItemIcon],
+        [i18n(context, 'wherigo_output_medianame'), data.ItemMedia + (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia].ObjectName : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.ItemIcon + (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon].ObjectName : '')],
       ];
     if (data.ItemLocation == 'ZonePoint')
       result.add([i18n(context, 'wherigo_output_location'), formatCoordOutput(
@@ -1121,19 +1168,25 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   List<List<dynamic>> _outputCharacter(CharacterData data){
-      return [
+    List<List<dynamic>> result = [
         [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
         [i18n(context, 'wherigo_output_id'), data.CharacterID],
         [i18n(context, 'wherigo_output_name'), data.CharacterName],
         [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
-        [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName],
-        [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName],
-        [i18n(context, 'wherigo_output_location'), data.CharacterLocation],
-        [i18n(context, 'wherigo_output_container'), data.CharacterContainer],
-        [i18n(context, 'wherigo_output_gender'), i18n(context, 'wherigo_output_gender_' + data.CharacterGender)],
-        [i18n(context, 'wherigo_output_type'), data.CharacterType],
-        [i18n(context, 'wherigo_output_visible'), data.CharacterVisible],
-      ];
+        [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName + (NameToObject[data.CharacterMediaName] != null ? ' ⬌ ' + NameToObject[data.CharacterMediaName].ObjectName : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName + (NameToObject[data.CharacterIconName] != null ? ' ⬌ ' + NameToObject[data.CharacterIconName].ObjectName : '')],
+    ];
+    if (data.CharacterLocation == 'ZonePoint')
+      result.add([i18n(context, 'wherigo_output_location'), formatCoordOutput(
+      LatLng(data.CharacterZonepoint.Latitude, data.CharacterZonepoint.Longitude), {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())]);
+    else
+      result.add([i18n(context, 'wherigo_output_location'), data.CharacterLocation]);
+
+    result.add([i18n(context, 'wherigo_output_container'), data.CharacterContainer + (NameToObject[data.CharacterContainer] != null ? ' ⬌ ' + NameToObject[data.CharacterContainer].ObjectName : '')]);
+    result.add([i18n(context, 'wherigo_output_gender'), i18n(context, 'wherigo_output_gender_' + data.CharacterGender)]);
+    result.add([i18n(context, 'wherigo_output_type'), data.CharacterType]);
+    result.add([i18n(context, 'wherigo_output_visible'), data.CharacterVisible]);
+    return result;
   }
 
   List<List<dynamic>> _outputInput(InputData data){
@@ -1224,92 +1277,88 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<List<dynamic>> _outputIdentifierDetails(IdentifierData data){
     List<List<dynamic>> result = [];
 
-    if (data.IdentifierName.startsWith('@mR')) {
+    if (NameToObject[data.IdentifierName] == null)
+      result = [[i18n(context, 'wherigo_output_identifier_no_detail'), '']];
+    else {
+      result = [[i18n(context, 'wherigo_output_identifier_detail_title'), NameToObject[data.IdentifierName].ObjectType.toString().split('.')[1]]];
 
-      String IdentifierDetail = data.IdentifierName.substring(5);
-
-      if (NameToObject[IdentifierDetail] == null)
-        result = [[i18n(context, 'wherigo_output_identifier_no_detail'), '']];
-      else {
-        result = [[i18n(context, 'wherigo_output_identifier_detail_title'), NameToObject[IdentifierDetail].ObjectType.toString().split('.')[1]]];
-
-        switch (NameToObject[IdentifierDetail].ObjectType) {
-          case OBJECT_TYPE.CHARACTER:
-            for (int i = 0; i < _WherigoCartridge.Characters.length; i++) {
-              if (_WherigoCartridge.Characters[i].CharacterLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Characters[i].CharacterID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Characters[i].CharacterName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Characters[i].CharacterDescription]);
-                result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Characters[i].CharacterMediaName]);
-              }
+      switch (NameToObject[data.IdentifierName].ObjectType) {
+        case OBJECT_TYPE.CHARACTER:
+          for (int i = 0; i < _WherigoCartridge.Characters.length; i++) {
+            if (_WherigoCartridge.Characters[i].CharacterLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Characters[i].CharacterID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Characters[i].CharacterName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Characters[i].CharacterDescription]);
+              result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Characters[i].CharacterMediaName]);
             }
-            break;
-          case OBJECT_TYPE.INPUT:
-            for (int i = 0; i < _WherigoCartridge.Inputs.length; i++) {
-              if (_WherigoCartridge.Inputs[i].InputLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Inputs[i].InputID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Inputs[i].InputName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Inputs[i].InputDescription]);
-                result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Inputs[i].InputMedia]);
-                result.add([i18n(context, 'wherigo_output_question'), _WherigoCartridge.Inputs[i].InputText]);
-              }
+          }
+          break;
+        case OBJECT_TYPE.INPUT:
+          for (int i = 0; i < _WherigoCartridge.Inputs.length; i++) {
+            if (_WherigoCartridge.Inputs[i].InputLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Inputs[i].InputID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Inputs[i].InputName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Inputs[i].InputDescription]);
+              result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Inputs[i].InputMedia]);
+              result.add([i18n(context, 'wherigo_output_question'), _WherigoCartridge.Inputs[i].InputText]);
             }
-            break;
-          case OBJECT_TYPE.ITEM:
-            for (int i = 0; i < _WherigoCartridge.Items.length; i++) {
-              if (_WherigoCartridge.Items[i].ItemLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Items[i].ItemID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Items[i].ItemName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Items[i].ItemDescription]);
-                result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Items[i].ItemMedia]);
-              }
+          }
+          break;
+        case OBJECT_TYPE.ITEM:
+          for (int i = 0; i < _WherigoCartridge.Items.length; i++) {
+            if (_WherigoCartridge.Items[i].ItemLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Items[i].ItemID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Items[i].ItemName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Items[i].ItemDescription]);
+              result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Items[i].ItemMedia]);
             }
-            break;
-          case OBJECT_TYPE.MEDIA:
-            for (int i = 0; i < _WherigoCartridge.Media.length; i++) {
-              if (_WherigoCartridge.Media[i].MediaLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Media[i].MediaID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Media[i].MediaName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Media[i].MediaDescription]);
-                result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Media[i].MediaFilename]);
-              }
+          }
+          break;
+        case OBJECT_TYPE.MEDIA:
+          for (int i = 0; i < _WherigoCartridge.Media.length; i++) {
+            if (_WherigoCartridge.Media[i].MediaLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Media[i].MediaID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Media[i].MediaName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Media[i].MediaDescription]);
+              result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Media[i].MediaFilename]);
             }
-            break;
-          case OBJECT_TYPE.TASK:
-            for (int i = 0; i < _WherigoCartridge.Tasks.length; i++) {
-              if (_WherigoCartridge.Tasks[i].TaskLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Tasks[i].TaskID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Tasks[i].TaskName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Tasks[i].TaskDescription]);
-                result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Tasks[i].TaskMedia]);
-              }
+          }
+          break;
+        case OBJECT_TYPE.TASK:
+          for (int i = 0; i < _WherigoCartridge.Tasks.length; i++) {
+            if (_WherigoCartridge.Tasks[i].TaskLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Tasks[i].TaskID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Tasks[i].TaskName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Tasks[i].TaskDescription]);
+              result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Tasks[i].TaskMedia]);
             }
-            break;
-          case OBJECT_TYPE.TIMER:
-            for (int i = 0; i < _WherigoCartridge.Timers.length; i++) {
-              if (_WherigoCartridge.Timers[i].TimerLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Timers[i].TimerID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Timers[i].TimerName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Timers[i].TimerDescription]);
-                result.add([i18n(context, 'wherigo_output_duration'), _WherigoCartridge.Timers[i].TimerDuration]);
-                result.add([i18n(context, 'wherigo_output_type'), _WherigoCartridge.Timers[i].TimerType]);
-                result.add([i18n(context, 'wherigo_output_visible'), _WherigoCartridge.Timers[i].TimerVisible]);
-              }
+          }
+          break;
+        case OBJECT_TYPE.TIMER:
+          for (int i = 0; i < _WherigoCartridge.Timers.length; i++) {
+            if (_WherigoCartridge.Timers[i].TimerLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Timers[i].TimerID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Timers[i].TimerName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Timers[i].TimerDescription]);
+              result.add([i18n(context, 'wherigo_output_duration'), _WherigoCartridge.Timers[i].TimerDuration]);
+              result.add([i18n(context, 'wherigo_output_type'), _WherigoCartridge.Timers[i].TimerType]);
+              result.add([i18n(context, 'wherigo_output_visible'), _WherigoCartridge.Timers[i].TimerVisible]);
             }
-            break;
-          case OBJECT_TYPE.ZONE:
-            for (int i = 0; i < _WherigoCartridge.Zones.length; i++) {
-              if (_WherigoCartridge.Zones[i].ZoneLUAName == IdentifierDetail) {
-                result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Zones[i].ZoneID]);
-                result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Zones[i].ZoneName]);
-                result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Zones[i].ZoneDescription]);
-                result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Zones[i].ZoneMediaName]);
-              }
+          }
+          break;
+        case OBJECT_TYPE.ZONE:
+          for (int i = 0; i < _WherigoCartridge.Zones.length; i++) {
+            if (_WherigoCartridge.Zones[i].ZoneLUAName == data.IdentifierName) {
+              result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Zones[i].ZoneID]);
+              result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Zones[i].ZoneName]);
+              result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Zones[i].ZoneDescription]);
+              result.add([i18n(context, 'wherigo_output_medianame'), _WherigoCartridge.Zones[i].ZoneMediaName]);
             }
-            break;
-        }
+          }
+          break;
       }
     }
+
     return result;
   }
 
@@ -1372,13 +1421,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             break;
           case ACTIONMESSAGETYPE.COMMAND:
             if (element.ActionContent.startsWith('Wherigo.PlayAudio')){
-              print(element.ActionContent);
               String LUAName = element.ActionContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
-              print(LUAName);
-              resultWidget.add(
+              if (_WherigoCartridge.MediaFilesContents.length > 0)
+                resultWidget.add(
                   GCWSoundPlayer(
                       file: PlatformFile(
-                             bytes:_WherigoCartridge.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
+                             bytes: _WherigoCartridge.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
                              name: NameToObject[LUAName].ObjectMedia),
                       showMetadata: true,
                   )
@@ -1474,14 +1522,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     showCoordinatesExportDialog(context, points, polylines);
   }
 
-  _openInMap() { 
+  _openInMap(List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => GCWTool(
                 tool: GCWMapView(
-                  points: List<GCWMapPoint>.from(_points),
-                  polylines: List<GCWMapPolyline>.from(_polylines),
+                  points: List<GCWMapPoint>.from(points),
+                  polylines: List<GCWMapPolyline>.from(polylines),
                   isEditable: false,
                 ),
                 i18nPrefix: 'coords_map_view',
@@ -1622,31 +1670,35 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildZonesForMapExport(){
-    // Build Zones for Export to OpenMap
+    // Clear data
+    _points.clear();
+    _polylines.clear();
+
+    // Build data
     _WherigoCartridge.Zones.forEach((zone) {
-      _points.add(
+      _points.add( // add originalpoint of zone
           GCWMapPoint(
               uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName].ObjectName,
               markerText: NameToObject[zone.ZoneLUAName].ObjectName,
               point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
-              color: Colors.black));
+              color: Colors.black87));
 
       List<GCWMapPoint> polyline = [];
       zone.ZonePoints.forEach((point) {
         polyline.add(
             GCWMapPoint(
                 point: LatLng(point.Latitude, point.Longitude),
-                color: COLOR_MAP_POINT));
+                color: Colors.black));
       });
-      polyline.add(
+      polyline.add( // close polyline
           GCWMapPoint(
               point: LatLng(zone.ZonePoints[0].Latitude, zone.ZonePoints[0].Longitude),
-              color: COLOR_MAP_POINT));
+              color: Colors.black));
       _polylines.add(
           GCWMapPolyline(
               uuid: zone.ZoneLUAName,
               points: polyline,
-              color: COLOR_MAP_POINT));
+              color: Colors.black));
     });
 
     if (_WherigoCartridge.Latitude != 0.0 && _WherigoCartridge.Longitude != 0.0)
@@ -1734,5 +1786,68 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
     }
 
+  }
+
+  String _normalizeLUA(String LUAFile, bool deObfuscate){
+    if (deObfuscate) {
+      LUAFile = LUAFile.replaceAll(_WherigoCartridge.ObfuscatorFunction, 'deObfuscate');
+      LUAFile = LUAFile.replaceAll(_WherigoCartridge.CartridgeLUAName, 'objCartridge_' + _WherigoCartridge.CartridgeName.replaceAll(' ', ''));
+      _WherigoCartridge.Characters.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.CharacterLUAName, 'objCharacter_' + element.CharacterName);
+      });
+      _WherigoCartridge.Items.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.ItemLUAName, 'objItem_' + element.ItemName);
+      });
+      _WherigoCartridge.Tasks.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.TaskLUAName, 'objTask_' + element.TaskName);
+      });
+      _WherigoCartridge.Inputs.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.InputLUAName, 'objInput_' + element.InputName);
+      });
+      _WherigoCartridge.Zones.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.ZoneLUAName, 'objZone_' + element.ZoneName);
+      });
+      _WherigoCartridge.Timers.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.TimerLUAName, 'objTimer_' + element.TimerName);
+      });
+      _WherigoCartridge.Media.forEach((element) {
+        LUAFile = LUAFile.replaceAll(element.MediaLUAName, 'objMedia_' + element.MediaName);
+      });
+      NameToObject.forEach((key, value) {
+        LUAFile = LUAFile.replaceAll(key, 'objVariable_' + key);
+      });
+    }
+    return LUAFile;
+  }
+
+  List<GCWMapPoint> _currentZonePoints(String text, ZonePoint point){
+    return [GCWMapPoint(
+        uuid: 'Zone OriginalPoint',
+        markerText: text,
+        point: LatLng(point.Latitude, point.Longitude),
+        color: Colors.redAccent)
+    ];
+  }
+
+  List<GCWMapPolyline> _currentZonePolylines(List<ZonePoint> points){
+    List<GCWMapPolyline> result = [];
+    List<GCWMapPoint> polyline = [];
+
+    points.forEach((point) {
+      polyline.add(
+            GCWMapPoint(
+                point: LatLng(point.Latitude, point.Longitude),
+                color: Colors.black));
+      });
+    polyline.add( // close polyline
+          GCWMapPoint(
+              point: LatLng(points[0].Latitude, points[0].Longitude),
+              color: Colors.black));
+
+    result.add(
+          GCWMapPolyline(
+              points: polyline,
+              color: Colors.black));
+    return result;
   }
 }

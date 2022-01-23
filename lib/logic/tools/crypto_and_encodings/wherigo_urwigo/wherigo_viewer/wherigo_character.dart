@@ -2,6 +2,7 @@
 import 'dart:isolate';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
 
 class CharacterData{
   final String CharacterLUAName;
@@ -12,6 +13,7 @@ class CharacterData{
   final String CharacterMediaName;
   final String CharacterIconName;
   final String CharacterLocation;
+  final ZonePoint CharacterZonepoint;
   final String CharacterContainer;
   final String CharacterGender;
   final String CharacterType;
@@ -25,6 +27,7 @@ class CharacterData{
       this.CharacterMediaName,
       this.CharacterIconName,
       this.CharacterLocation,
+      this.CharacterZonepoint,
       this.CharacterContainer,
       this.CharacterGender,
       this.CharacterType);
@@ -49,6 +52,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
   String media = '';
   String icon = '';
   String location = '';
+  ZonePoint zonePoint = ZonePoint(0.0, 0.0, 0.0);
   String gender = '';
   String type = '';
   String container = '';
@@ -114,9 +118,26 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
           icon = getLineData(
               lines[i], LUAname, 'Icon', obfuscator, dtable);
 
-        if (lines[i].startsWith(LUAname + '.ObjectLocation'))
-          location = getLineData(
-              lines[i], LUAname, 'ObjectLocation', obfuscator, dtable);
+        if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
+          location = lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
+          if (location.endsWith('INVALID_ZONEPOINT'))
+            location = '';
+          else if (location.startsWith('ZonePoint')) {
+            location = location
+                .replaceAll('ZonePoint(', '')
+                .replaceAll(')', '')
+                .replaceAll(' ', '');
+            print('location '+location);
+            zonePoint = ZonePoint(double.parse(location.split(',')[0]),
+                double.parse(location.split(',')[1]),
+                double.parse(location.split(',')[2]));
+            location = 'ZonePoint';
+          }
+          else
+            location = getLineData(
+                lines[i], LUAname, 'ObjectLocation', obfuscator,
+                dtable);
+        }
 
         if (lines[i].startsWith(LUAname + '.Gender'))
           gender = getLineData(
@@ -140,6 +161,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
            media,
            icon,
            location,
+           zonePoint,
            container,
            gender,
            type

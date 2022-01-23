@@ -129,7 +129,6 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
 
         if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
           location = lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
-          print('location '+location);
           if (location.endsWith('INVALID_ZONEPOINT'))
             location = '';
           else if (location.startsWith('ZonePoint')) {

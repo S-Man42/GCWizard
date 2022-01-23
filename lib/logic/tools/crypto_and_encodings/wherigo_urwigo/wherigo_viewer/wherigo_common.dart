@@ -111,33 +111,6 @@ String _getDetails(String line, String obfuscator, String dtable){
   return _normalizeText(result);
 }
 
-String getObfuscatorFunction(String source){
-  String result = '';
-  List<String> LUA = source.split('\n');
-
-  result = 'gsub_wig';
-
-  if (RegExp(r'(WWB_deobf)').hasMatch(source))
-    result = 'WWB_deobf';
-  else
-    if (RegExp(r'(_Urwigo)').hasMatch(source)) {
-    for (int i = 0; i < LUA.length; i++){
-      if (LUA[i].startsWith('function')) {
-        result = LUA[i].substring(9);
-        for (int j = result.length - 1; j > 0; j--) {
-          if (result[j] == '(') {
-            result = result.substring(0, j);
-            j = 0;
-          }
-        }
-        i = source.length;
-      }
-    }
-  }
-
-  return result;
-}
-
 List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obfuscator, String dtable){
   List<String> result = [];
   choicesLine.replaceAll(LUAname + '.Choices = {', '').replaceAll('"', '').replaceAll('}', '').split(',').forEach((element) {
