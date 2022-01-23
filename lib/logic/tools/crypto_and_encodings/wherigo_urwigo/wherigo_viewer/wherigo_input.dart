@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 
@@ -211,32 +213,10 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       i++;
       sectionAnalysed = false;
       do {
-        // if (lines[i].trimLeft().startsWith('Buttons = ')) {
-        //   do {
-        //     i++;
-        //     if (lines[i].trim() != '}' || lines[i].trim() != '{,') {
-        //       if (lines[i].trimLeft().startsWith(obfuscator))
-        //         answerActions.add(ActionData('btn', deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
-        //       else
-        //         answerActions.add(ActionData('btn', lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
-        //     }
-        //   } while (!lines[i].trim().startsWith('}'));
-        // } // end if buttons
-        // else {
-        //   action = _handleLine(lines[i].trimLeft(), dtable, obfuscator);
-        //   if (action != null)
-        //     answerActions.add(action);
-        // } // end if other line content
         i++;
         if (lines[i].trim() == 'end')
           sectionAnalysed = true;
       } while (!sectionAnalysed); // end of section
-
-      // result.add(AnswerData(
-      //   inputObject,
-      //   answerActions,
-      // ));
-      // answerActions = [];
     } // end of NIL
 
     else if (_SectionEnd(lines[i])) { //
@@ -307,6 +287,10 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   out.addAll({'content': resultInputs});
   out.addAll({'names': NameToObject});
+  resultInputs.forEach((element) {
+    element.InputAnswers.forEach((element) {
+    });
+  });
   return out;
 }
 
@@ -375,7 +359,7 @@ bool _SectionEnd(String line){
 }
 
 bool _FunctionEnd(String line1, String line2) {
-  return (line1.trim() == 'end' && line2.trimLeft().startsWith('function'));
+  return (line1.trim() == 'end' && (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
 }
 
 
