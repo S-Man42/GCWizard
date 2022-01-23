@@ -643,13 +643,20 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       try { // analysing GWC - reading Media-Files
         // read Objects
         for (int i = 1; i < _NumberOfObjects; i++) {
+          // check if valid
           _ValidMediaFile = readByte(byteListGWC, _offset);
           _offset = _offset + LENGTH_BYTE;
+
           if (_ValidMediaFile != 0) {
+            // read Filetype
             _MediaFileType = readInt(byteListGWC, _offset);
             _offset = _offset + LENGTH_INT;
+
+            // read Length
             _MediaFileLength = readInt(byteListGWC, _offset);
             _offset = _offset + LENGTH_INT;
+
+            // read bytes
             _MediaFilesContents.add(MediaFileContent(_MediaFileType,
                 Uint8List.sublistView(
                     byteListGWC, _offset, _offset + _MediaFileLength),
@@ -661,8 +668,10 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
         _ResultsGWC.add('wherigo_error_runtime');
         _ResultsGWC.add('wherigo_error_runtime_exception');
+        _ResultsGWC.add('wherigo_error_invalid_gwc');
+        _ResultsGWC.add('wherigo_error_gwc_luabytecode');
         _ResultsGWC.add('wherigo_error_gwc_mediafiles');
-        _ResultsGWC.add(exception);
+        _ResultsGWC.add(exception.toString());
       }
     }
 
@@ -985,6 +994,9 @@ String _decompileLUAfromGWC(Uint8List LUA) {
 }
 
 String _LUAUint8ListToString(Uint8List LUA) {
+  if (LUA == null || LUA == [])
+    return '';
+
   String result = '';
   for (int i = 0; i < LUA.length; i++){
     if (LUA[i] != 0)

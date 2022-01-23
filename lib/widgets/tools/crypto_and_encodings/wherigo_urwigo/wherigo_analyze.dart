@@ -75,7 +75,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _GWCStructure;
 
-  var _outputHeader;
+  var _outputHeader = [[]];
 
   bool _currentDeObfuscate = false;
 
@@ -365,7 +365,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ),
             Column(
-              children: columnedMultiLineOutput(context, _outputHeader))
+              children: _outputHeader == [[]] ? Container() : columnedMultiLineOutput(context, _outputHeader))
             ]);
         break;
 
@@ -450,21 +450,26 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           return Container();
 
         var _outputMedia;
-        String filename = MEDIACLASS[
-        _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileType] +
-            ' : ' +
-            MEDIATYPE[
-            _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileType];
+        String filename = '';
 
-        if (_WherigoCartridge.Media.length > 0) {
-          filename = _WherigoCartridge.Media[_mediaFileIndex - 1].MediaFilename;
-          _outputMedia = [
-            [i18n(context, 'wherigo_media_id'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaID],
-            [i18n(context, 'wherigo_media_luaname'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaLUAName],
-            [i18n(context, 'wherigo_media_name'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaName],
-            [i18n(context, 'wherigo_media_description'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaDescription],
-            [i18n(context, 'wherigo_media_alttext'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaAltText],
-          ];
+        if (_mediaFileIndex < _WherigoCartridge.MediaFilesContents.length) {
+          filename =
+              MEDIACLASS[
+              _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileType] +
+                  ' : ' +
+                  MEDIATYPE[
+                  _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileType];
+
+          if (_WherigoCartridge.Media.length > 0) {
+            filename = _WherigoCartridge.Media[_mediaFileIndex - 1].MediaFilename;
+            _outputMedia = [
+              [i18n(context, 'wherigo_media_id'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaID],
+              [i18n(context, 'wherigo_media_luaname'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaLUAName],
+              [i18n(context, 'wherigo_media_name'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaName],
+              [i18n(context, 'wherigo_media_description'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaDescription],
+              [i18n(context, 'wherigo_media_alttext'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaAltText],
+            ];
+          }
         }
 
         return Column(
@@ -499,13 +504,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   },
                 ),              ],
             ),
-            GCWFilesOutput(
-              files: [
-                PlatformFile(
-                    bytes:_WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
-                    name: filename),
-              ],
-            ),
+            _mediaFileIndex > _WherigoCartridge.MediaFilesContents.length - 1
+              ? GCWOutputText(
+                  text: i18n(context, 'wherigo_error_runtime') + '\n' +
+                        i18n(context, 'wherigo_error_runtime_exception') + '\n' +
+                        i18n(context, 'wherigo_error_invalid_gwc') + '\n' +
+                        i18n(context, 'wherigo_error_gwc_luabytecode') + '\n' +
+                        i18n(context, 'wherigo_error_gwc_mediafiles') + '\n\n' +
+                        i18n(context, 'wherigo_error_hint_2'),
+                )
+              : GCWFilesOutput(
+                  files: [
+                    PlatformFile(
+                        bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
+                        name: filename),
+                  ],
+                ),
 
             if (_outputMedia != null)
                 Column(children: columnedMultiLineOutput(context,  _outputMedia, flexValues: [1,3])),
@@ -708,6 +722,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     onPressed: () {
                       setState(() {
                         _inputIndex--;
+                        _answerIndex = 1;
                         if (_inputIndex < 1)
                           _inputIndex = _WherigoCartridge.Inputs.length;
                       });
@@ -724,6 +739,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     onPressed: () {
                       setState(() {
                         _inputIndex++;
+                        _answerIndex = 1;
                         if (_inputIndex > _WherigoCartridge.Inputs.length)
                           _inputIndex = 1;
                       });
@@ -1134,7 +1150,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     else
       result.add([i18n(context, 'wherigo_output_location'), data.ItemLocation]);
 
-    result.add([i18n(context, 'wherigo_output_container'), data.ItemContainer]);
+    result.add([i18n(context, 'wherigo_output_container'), data.ItemContainer + (NameToObject[data.ItemContainer] != null ? ' ⬌ ' + NameToObject[data.ItemContainer].ObjectName : '')]);
     result.add([i18n(context, 'wherigo_output_locked'), data.ItemLocked]);
     result.add([i18n(context, 'wherigo_output_opened'), data.ItemOpened]);
     return result;
@@ -1460,41 +1476,79 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       ['0009', bytes.sublist(9, 11).join('.') + ' ' + bytes.sublist(11, 15).join('.'), readShort(bytes, 9).toString() + ' ' + readInt(bytes, 11).toString()],
     ];
 
-    // id and offset of files
+    // id and offset of media files
+    // 2 Bytes ID
+    // 4 Bytes offset
     offset = 15;
     for (int i = 1; i < numberOfObjects; i++) {
       if (i == 1)
         result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'ID Offset'],);
 
-      result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 2).join('.') + ' ' + bytes.sublist(offset + 2 , offset + 6).join('.'), readShort(bytes, offset).toString() + ' ' + readInt(bytes, offset + 2).toString()]);
-      offset = offset + 6;
+      result.add([
+        offset.toString().padLeft(7, ' '),
+        bytes.sublist(offset, offset + 2).join('.') + ' ' + bytes.sublist(offset + 2 , offset + 2 + 4).join('.'),
+        readShort(bytes, offset).toString() + ' ' + readInt(bytes, offset + 2).toString()
+      ]);
+      offset = offset + 2 + 4;
     }
 
     // header
     result.add(['', i18n(context, 'wherigo_data_header'), '']);
     result.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
-    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
+    result.add([
+      offset.toString().padLeft(7, ' '),                     // offset begin of Header
+      bytes.sublist(offset, offset + LENGTH_INT).join('.'),  // 4 Bytes Size of Header
+      readInt(bytes, offset).toString()                      // size of Header
+    ]);
 
-    offset = offset + 4 + readInt(bytes, offset);
+    offset = offset + LENGTH_INT + readInt(bytes, offset);
 
-    // length of lua byte code
+    // LUA Bytecode
+    // 4 Bytes Size
+    // ? bytes LUA Bytecode
     result.add(['', i18n(context, 'wherigo_data_luabytecode'), 'Size']);
-    result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 4).join('.'), readInt(bytes, offset).toString()]);
+    result.add([
+      offset.toString().padLeft(7, ' '),                    // offset begin of LUABytecode
+      bytes.sublist(offset, offset + LENGTH_INT).join('.'), // 4 Bytes Size of LUABytecode
+      readInt(bytes, offset).toString()                     // size of LUABytecode
+    ]);
 
-    // type and length of files
-    offset = offset + 1 + readInt(bytes, offset);
+    offset = offset + LENGTH_INT + readInt(bytes, offset);
+
+    // Media files
+    // 1 Byte Valid Object (0 = nothing, else Object
+    // 4 Byte Object Type
+    // 4 Byte size
+    // ? bytes Object Data
     for (int i = 1; i < numberOfObjects; i++) {
       if (i == 1)
         result.add(['', i18n(context, 'wherigo_data_mediafiles'), 'valid type size'],);
-      if (readByte(bytes, offset) != 0) {
-        result.add([
-          offset.toString().padLeft(4, '0'),
-          bytes.sublist(offset, offset + 1).join('.') + ' ' + bytes.sublist(offset + 1, offset + 5).join('.') + ' ' + bytes.sublist(offset + 5, offset + 9).join('.'),
-          readByte(bytes, offset).toString() + ' ' + readInt(bytes, offset + 1).toString() + ' ' + readInt(bytes, offset + 5).toString()]);
-        offset = offset + 1 + 4 + 4 + readInt(bytes, offset+5);
-      } else {
-        result.add([offset.toString().padLeft(4, '0'), bytes.sublist(offset, offset + 1).join('.'), readByte(bytes, offset).toString()]);
-        offset = offset + 1;
+      try {
+        if (readByte(bytes, offset) != 0) {
+          result.add([
+            offset.toString().padLeft(7, ' '),
+            bytes.sublist(offset, offset + 1).join('.') + ' ' + bytes.sublist(offset + 1, offset + 5).join('.') + ' ' + bytes.sublist(offset + 5, offset + 9).join('.'),
+            readByte(bytes, offset).toString() + ' ' + readInt(bytes, offset + 1).toString() + ' ' + readInt(bytes, offset + 5).toString()
+          ]);
+          offset = offset + LENGTH_BYTE + LENGTH_INT + LENGTH_INT + readInt(bytes, offset+5);
+        } else {
+          result.add([
+            offset.toString().padLeft(7, ' '),
+            bytes.sublist(offset, offset + 1).join('.'),
+            readByte(bytes, offset).toString()
+          ]);
+          offset = offset + LENGTH_BYTE;
+        }
+      } catch (exception) {
+        i = numberOfObjects;
+        result.add(['',
+          i18n(context, 'wherigo_error_runtime') + '\n' +
+          i18n(context, 'wherigo_error_runtime_exception') + '\n' +
+          i18n(context, 'wherigo_error_invalid_gwc') + '\n' +
+          i18n(context, 'wherigo_error_gwc_luabytecode') + '\n' +
+          i18n(context, 'wherigo_error_gwc_mediafiles') + '\n' +
+          exception.toString(),
+          '']);
       }
     }
 
@@ -1620,21 +1674,25 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     String filename;
     int fileindex = 0;
 
-    if (_WherigoCartridge.MediaFilesContents.length > 1) {
-      _WherigoCartridge.Media.forEach((element) {
-        if (element.MediaLUAName == ressourceName) {
-          filename = element.MediaFilename;
-          filedata = _WherigoCartridge.MediaFilesContents[fileindex + 1].MediaFileBytes;
-        }
-        fileindex++;
-      });
+    try {
+      if (_WherigoCartridge.MediaFilesContents.length > 1) {
+        _WherigoCartridge.Media.forEach((element) {
+          if (element.MediaLUAName == ressourceName) {
+            filename = element.MediaFilename;
+            filedata = _WherigoCartridge.MediaFilesContents[fileindex + 1].MediaFileBytes;
+          }
+          fileindex++;
+        });
 
-      return PlatformFile(
-          bytes: filedata,
-          name: filename
-      );
-    } else
-      return null;
+        return PlatformFile(
+            bytes: filedata,
+            name: filename
+        );
+      } else
+        return null;
+    } catch (exception) {
+      showToast(exception.toString() + '\n\n' + i18n(context, 'wherigo_error_hint_2'));
+    }
 
   }
 

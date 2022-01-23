@@ -4999,7 +4999,7 @@
   "wherigo_error_runtime_lua": "while analysing LUA Sourcecode",
   "wherigo_error_runtime_exception": "EXCEPTION",
   "wherigo_error_hint_1": "Detail see Error section",
-  "wherigo_error_hint_2": "Please inform the GC Wizard\n- via E-Mail geocache.wizard@gmail.com\nand please provide with this E-Mail\n- the GC-Code of the Cache\n- the Wherigo-Cartridge\n- the LUA-Sourcecode\n  - if applicable\n- this Error Message",
+  "wherigo_error_hint_2": "Please inform the GC Wizard Team\n- via E-Mail geocache.wizard@gmail.com\nand please provide with this E-Mail\n- the GC-Code of the Cache\n- the Wherigo-Cartridge\n- the LUA-Sourcecode\n  - if applicable\n- this Error Message",
   "wherigo_error_empty_gwc": "no GWC File available",
   "wherigo_error_empty_lua": "no LUA Fila available",
   "wherigo_error_invalid_gwc": "Invalid Cartridge/GWC File",
