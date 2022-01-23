@@ -785,16 +785,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     },
                   ),              ],
               ),
-              Column(
-                  children: columnedMultiLineOutput(context, _outputAnswer(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
-              ),
-              GCWExpandableTextDivider(
-                text: i18n(context, 'wherigo_output_answeractions'),
-                child: Column(
-                    //children: columnedMultiLineOutput(context, _outputAnswerActions(_WherigoCartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
-                  children: _outputAnswerActionsWidgets(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])
-                ),
-              ),
+              (_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers.length > 0)
+              ? Column(
+                  children: <Widget>[
+                    Column(
+                      children: columnedMultiLineOutput(context, _outputAnswer(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+                    ),
+                    GCWExpandableTextDivider(
+                      text: i18n(context, 'wherigo_output_answeractions'),
+                      child: Column(
+                        //children: columnedMultiLineOutput(context, _outputAnswerActions(_WherigoCartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
+                          children: _outputAnswerActionsWidgets(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])
+                      ),
+                    ),
+                  ],
+                )
+              : Container()
             ]
         );
         break;
