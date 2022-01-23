@@ -1163,8 +1163,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.TaskName],
         [i18n(context, 'wherigo_output_description'), data.TaskDescription],
         [i18n(context, 'wherigo_output_visible'), data.TaskVisible],
-        [i18n(context, 'wherigo_output_medianame'), data.TaskMedia],
-        [i18n(context, 'wherigo_output_iconname'), data.TaskIcon],
+        [i18n(context, 'wherigo_output_medianame'), data.TaskMedia + (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia].ObjectName : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.TaskIcon + (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon].ObjectName : '')],
         [i18n(context, 'wherigo_output_active'), data.TaskActive],
         [i18n(context, 'wherigo_output_complete'), data.TaskComplete],
         [i18n(context, 'wherigo_output_correctstate'), data.TaskCorrectstate]
