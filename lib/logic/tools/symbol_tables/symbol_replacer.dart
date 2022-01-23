@@ -48,7 +48,6 @@ Future<SymbolImage> replaceSymbolsAsync(dynamic jobData) async {
   return output;
 }
 
-
 Future<SymbolImage> replaceSymbols(Uint8List image,
     int blackLevel,
     double similarityLevel,
@@ -90,9 +89,9 @@ class SymbolImage {
   List<Symbol> _sourceSymbols = [];
   List<SymbolGroup> symbolGroups = [];
 
-  List<double> _mergeDistanceSteps = [];
+  List<double> _mergeDistanceSteps;
   double _mergeDistance;
-  static int _mergeDistanceInit = 10; // %
+  static int _mergeDistanceInit = 5; // %
 
   int _blackLevel;
   double _similarityLevel;
@@ -221,12 +220,12 @@ class SymbolImage {
 
     if (symbolGroups.isEmpty && groupSymbols) {
       if (_mergeDistance == null)
-        _mergeDistance = _mergeSymbolsDefault();
+        _mergeDistance = _mergeSymbolsDefault(_mergeDistanceInit);
 
-      if (_mergeDistance != null) {
-        if (!symbolsCloned) _cloneSourceLines();
+      if (!symbolsCloned) _cloneSourceLines();
+      if (_mergeDistance != null && _mergeDistance > 0)
         _mergeSymbols(_mergeDistance);
-      }
+
       _groupSymbols();
     }
 
@@ -549,20 +548,22 @@ class SymbolImage {
       if (nextl.isNotEmpty) next = nextl.first;
     }
 
-    if (next == null) {
-      double minDist;
-      actMergeDistance = actMergeDistance ?? 0;
-      for (int x = 0; x < symbols.length; x++) {
-        for (int y = x+1; y < symbols.length; y++) {
-          var dist = symbols[x].distance(symbols[y]);
-          if (dist >= 2*actMergeDistance) minDist = min(minDist ?? 99999999, dist);
-        }
-      }
-      minDist = minDist ?? 0;
-      next = (minDist/2) + 0.0001;
-      if (!_mergeDistanceSteps.contains(next)) _mergeDistanceSteps.add(next);
-    }
-    return next;
+    // if (next == null) {
+    //   double minDist;
+    //   actMergeDistance = actMergeDistance ?? 0;
+    //   for (int x = 0; x < symbols.length; x++) {
+    //     for (int y = x+1; y < symbols.length; y++) {
+    //       var dist = symbols[x].distance(symbols[y]);
+    //       if (dist >= 2*actMergeDistance) minDist = min(minDist ?? 99999999, dist);
+    //     }
+    //   }
+    //   minDist = minDist ?? 0;
+    //   next = (minDist/2) + 0.0001; // +0.0001 fix round problem
+    //   if (!_mergeDistanceSteps.contains(next)) _mergeDistanceSteps.add(next);
+    // }
+    // return next;
+
+    return next ?? _mergeDistanceSteps.last;
   }
 
   /// <summary>
@@ -581,20 +582,50 @@ class SymbolImage {
   /// <summary>
   /// calc init merge distance
   /// </summary>
-  double _mergeSymbolsDefault() {
+  double _mergeSymbolsDefault(int mergeDistance) {
+    // calc possible steps
+    if (_mergeDistanceSteps == null) _mergeDistanceSteps = _calcMergeDistances();
+
+    var minLineDistance = null;
+
+    for (var i = 0; i < lines.length -1; i++) {
+      var dist = lines[i+1].size.top - lines[i].size.bottom;
+      if (dist > 0 && (minLineDistance == null || minLineDistance > dist ))
+        minLineDistance = dist;
+    };
+
+    var _mergeDistance = 0.0;
+    // calc init merge distance
     var referenceWidth = _referenceWidth(symbols);
-    if (referenceWidth != null) {
-      var mergeDistanceMin = referenceWidth * _mergeDistanceInit/ 100.0;
-      var _mergeDistance;
-      var _nextMergeDistance;
+    // value symbol width
+    if (referenceWidth != null)
+      _mergeDistance = referenceWidth * mergeDistance/ 100.0;
+    // and line distance
+    if (minLineDistance != null && minLineDistance > 0)
+      _mergeDistance = (_mergeDistance == 0.0) ? referenceWidth : min(_mergeDistance, (minLineDistance -1) / 2);
 
-      do {
-         _mergeDistance = _nextMergeDistance;
-        _nextMergeDistance = nextMergeDistance(_mergeDistance);
-      } while ((_nextMergeDistance != _mergeDistance) && (_nextMergeDistance < mergeDistanceMin));
+    if (_mergeDistance != null && _mergeDistance > 0)
+      return prevMergeDistance(_mergeDistance);
 
-      return _mergeDistance;
+    return null;
+  }
+
+  /// <summary>
+  /// calc possible merge distances steps
+  /// </summary>
+  List<double> _calcMergeDistances() {
+    var distances = <double>[0];
+    for (int x = 0; x < symbols.length; x++) {
+      for (int y = x+1; y < symbols.length; y++) {
+        var dist = symbols[x].distance(symbols[y]);
+        if (dist > 0) {
+          dist = (dist/2) + 0.0001; // +0.0001 fix round problem
+          if (!distances.contains(dist)) distances.add(dist);
+        }
+      }
     }
+    distances.sort();
+    return distances;
   }
 
   /// <summary>
@@ -609,7 +640,7 @@ class SymbolImage {
     var changed = false;
 
     symbolList.addAll(symbols);
-    // build regtangles vom oversize
+    // build rectangles with oversize
     symbolList.forEach((symbol) {
       rectList.add(symbol._borderRectangleWithOffset(maxDistance));
     });
