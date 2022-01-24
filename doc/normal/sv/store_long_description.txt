@@ -28,14 +28,14 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Military codes: ADFGX, Cipher Wheel, Tapir, ...
 • Technical encodings: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
 
-<b>Coordinates</b>
+<b>Koordinater</b>
 • High precision coordinate algorithms which support precise calculations even with very long distances by always considering the earth's shape (ellipsoid)
 • Support of different ellipsoids, even other planets
-• Coordinate Formats: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Koordinatformat: Stöd för UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
 • Waypoint Projection: Includes precise reverse projection
 • Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
-• Variable Coordinate: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map
-• Cross bearing, Center point of two and three coordinates, different intersections of lines and circles, ...
+• Variabel koordinat: Interpolera koordinatformler om vissa delar av koordinaten inte ges. Show result on map
+• Korsbäring, mitten av två och tre koordinater, olika skärningspunkter av linjer och cirklar, ...
 
 <b>Science and Technology</b>
 • Astronomy: Calculate position of sun and moon at a certain place and time
@@ -50,7 +50,7 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Prime Numbers: Search prime numbers up to 1 Mio.
 • Segment Display: Graphical interface for decoding and encoding 7 to 16 segment displays
 • Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
-• Apparent Temperature, Cross Sums, DTMF, Keyboard layouts, Projectiles, Resistor codes, ...
+• Skenbar temperatur, Siffersummor, DTMF, tangentbordslayouter, Projektiler, Resistor-koder, ...
 
 <b>Images and Files</b>
 • Hex Viewer
