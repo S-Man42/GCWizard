@@ -27,9 +27,9 @@ class MultiDecoderToolCcitt2 extends GCWMultiDecoderTool {
               if (options[MDT_CCITT2_OPTION_MODE] == MDT_CCITT2_OPTION_MODE_BINARY) {
                 return decodeCCITT(textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10));
-                }).toList(), CCITTCodebook.CCITT_ITA2);
+                }).toList(), CCITTCodebook.CCITT_ITA2_1931);
               } else
-                return decodeCCITT(textToIntList(input), CCITTCodebook.CCITT_ITA2);
+                return decodeCCITT(textToIntList(input), CCITTCodebook.CCITT_ITA2_1931);
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {

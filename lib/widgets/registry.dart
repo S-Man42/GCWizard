@@ -243,6 +243,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
@@ -719,6 +720,11 @@ initializeRegistry(BuildContext context) {
           'color',
           'image_colorcorrections',
         ]),
+    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'stegano',
+    ]),
     GCWTool(
         tool: IPCodes(),
         i18nPrefix: 'ipcodes',
@@ -1229,8 +1235,23 @@ initializeRegistry(BuildContext context) {
     ]),
 
     //CCITT*Selection **********************************************************************************************
-    GCWTool(tool: CCITT(), i18nPrefix: 'ccitt', searchKeys: ['ccitt']),
-    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'punchtape', searchKeys: ['ccitt', 'punchtape']),
+    GCWTool(tool: CCITT(), i18nPrefix: 'ccitt', searchKeys: [
+      'ccitt',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
+      'ccitt',
+      'punchtape',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
 
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', searchKeys: [
@@ -2589,6 +2610,9 @@ initializeRegistry(BuildContext context) {
       'symbol',
       'symboltablesexamples',
     ]),
+    GCWTool(tool: SymbolReplacer(), i18nPrefix: 'symbol_replacer',  isBeta: true, searchKeys: [
+      'symbol_replacer',
+    ]),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
       'symbol_adlam',
@@ -2654,14 +2678,12 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
+      'teletypewriter'
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_ita1', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: [
       'ccitt',
       'symbol_baudot',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_mis', symbolSearchStrings: [
-      'ccitt',
-      'symbol_baudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
       'symbol_birds_on_a_wire',
@@ -2897,8 +2919,8 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: [
       'symbol_gc_attributes',
     ]),
-    GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
-      'glagolitic',
+    GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: [
+      'symbol_gernreich',
     ]),
     GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: [
       'zelda',
@@ -2999,6 +3021,26 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
       'symbol_iokharic',
     ]),
+    GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: [
+      'ccitt',
+      'symbol_baudot',
+      'teletypewriter'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: [
+      'ccitt',
+      'symbol_baudot',
+      'teletypewriter'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: [
+      'ccitt',
+      'symbol_murray',
+      'teletypewriter'
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: [
+      'ccitt',
+      'symbol_murray',
+      'teletypewriter'
+    ]),
     GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
       'japanese_numerals',
     ]),
@@ -3081,10 +3123,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
       'ccitt',
       'symbol_murraybaudot',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'murraybaudot_miss', symbolSearchStrings: [
-      'ccitt',
-      'symbol_murraybaudot',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'symbol_musica',
@@ -3240,6 +3279,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
       'symbol_shoes',
     ]),
+    GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: [
+      'symbol_siemens',
+      'teletypewriter'
+    ]),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: ['symbol_signlanguage']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
       'symbol_skullz',
@@ -3345,6 +3388,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
       'symbol_webdings',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: [
+      'symbol_westernunion',
+      'teletypewriter'
     ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
       'beaufort',

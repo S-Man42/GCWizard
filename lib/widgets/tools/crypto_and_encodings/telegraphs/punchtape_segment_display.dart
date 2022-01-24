@@ -5,7 +5,7 @@ import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false};
+const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false, '6': false, '7': false};
 
 class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -31,7 +31,7 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
 
-              int _PUNCHTAPE_RELATIVE_DISPLAY_WIDTH = 180;//(punchHoles + 1) * 30;
+              int _PUNCHTAPE_RELATIVE_DISPLAY_WIDTH = (punchHoles + 1) * 30;  //5 holes. 180
               int _PUNCHTAPE_RELATIVE_DISPLAY_HEIGHT = 60; //60;
 
               const _PUNCHTAPE_RADIUS = 20.0;

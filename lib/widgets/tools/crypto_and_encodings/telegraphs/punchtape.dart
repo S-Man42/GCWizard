@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_punchtape_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -26,10 +28,12 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   var _currentDecodeInput = '';
 
   List<List<String>> _currentDisplays = [];
-  var _currentMode = GCWSwitchPosition.right;
+  var _currentMode = GCWSwitchPosition.right; // encrypt - decrypt
+  var _currentCodeMode = GCWSwitchPosition.right; // binary - original
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
+  var _currentDecodeTextMode = GCWSwitchPosition.right; // decimal - binary
 
-  var _currentCode = CCITTCodebook.CCITT_BAUDOT;
+  var _currentCode = CCITTCodebook.BAUDOT;
 
   @override
   void initState() {
@@ -62,6 +66,17 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
               child: i18n(context, mode.value['title']),
               subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
+      ),
+      if (!(_currentCode == CCITTCodebook.BAUDOT_54123 || _currentCode == CCITTCodebook.CCITT_IA5))
+      GCWTwoOptionsSwitch(
+        value: _currentCodeMode,
+        rightValue: i18n(context, 'punchtape_mode_original'),
+        leftValue: i18n(context, 'punchtape_mode_binary'),
+        onChanged: (value) {
+          setState(() {
+            _currentCodeMode = value;
+          });
+        },
       ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
@@ -97,17 +112,44 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
             if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
               _buildVisualDecryption()
             else // decode text
-              GCWTextField(
-                controller: _decodeInputController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),
-                ],
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                  });
-                },
-              )
+              Column(
+                children: <Widget>[
+                    GCWTwoOptionsSwitch(
+                      value: _currentDecodeTextMode,
+                      leftValue: i18n(context, 'telegraph_decode_textmodedecimal'),
+                      rightValue: i18n(context, 'telegraph_decode_textmodebinary'),
+                      onChanged: (value) {
+                        setState(() {
+                          _currentDecodeTextMode = value;
+                        });
+                      },
+                    ),
+                    if (_currentDecodeTextMode == GCWSwitchPosition.right)
+                      GCWTextField(
+                        controller: _decodeInputController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),
+                        ],
+                        onChanged: (text) {
+                          setState(() {
+                            _currentDecodeInput = text;
+                          });
+                        },
+                      )
+                  else
+                      GCWTextField(
+                        controller: _decodeInputController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[ 0123456789]')),
+                        ],
+                        onChanged: (text) {
+                          setState(() {
+                            _currentDecodeInput = text;
+                          });
+                        },
+                      )
+                  ]
+              ),
           ],
         ),
       _buildOutput()
@@ -201,32 +243,56 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
         codeBook: _currentCode);
   }
 
+  String _decimalToBinary(String decimal){
+    List<String> result = [];
+    decimal.split(' ').forEach((decimalNumber) {
+      result.add(convertBase(decimalNumber, 10, 2));
+    });
+    return result.join(' ');
+  }
+
   Widget _buildOutput() {
-    if (_currentMode == GCWSwitchPosition.left) {
-      //encode
-      List<List<String>> segments = encodePunchtape(_currentEncodeInput, _currentCode);
+    if (_currentMode == GCWSwitchPosition.left) { //encode
+      List<List<String>> segments = encodePunchtape(_currentEncodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
+      List<String> binaryList = [];
+      List<String> decimalList = [];
+      segments.forEach((segment) {
+        binaryList.add(segments2binary(segment, _currentCode));
+        decimalList.add(convertBase(segments2binary(segment, _currentCode), 2, 10));
+      });
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
+          GCWOutput(
+            title: i18n(context, 'telegraph_decode_textmodedecimal'),
+            child: decimalList.join(' '),
+          ),
+          GCWOutput(
+            title: i18n(context, 'telegraph_decode_textmodebinary'),
+              child: binaryList.join(' '),
+          )
         ],
       );
-    } else {
-      //decode
+    } else { //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left) {
-        // text
-        segments = decodeTextPunchtape(_currentDecodeInput.toUpperCase(), _currentCode);
-      } else {
-        // visual
+      if (_currentDecodeMode == GCWSwitchPosition.left) { // text
+        if (_currentDecodeTextMode == GCWSwitchPosition.left) { // decimal
+          segments = decodeTextPunchtape(_decimalToBinary(_currentDecodeInput), _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
+        } else { // binary
+          segments = decodeTextPunchtape(_currentDecodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
+        }
+      } else { // visual
         var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
+          if (character != null) return character.join('');
         }).toList();
-        segments = decodeVisualPunchtape(output, _currentCode);
+        segments = decodeVisualPunchtape(output, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
       }
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: segments['text']),
+          GCWDefaultOutput(
+              child: segments['text']
+          ),
         ],
       );
     }
