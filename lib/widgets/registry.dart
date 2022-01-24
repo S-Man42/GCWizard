@@ -2895,8 +2895,8 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'gc_attributes_meaning', symbolSearchStrings: [
       'symbol_gc_attributes',
     ]),
-    GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
-      'glagolitic',
+    GCWSymbolTableTool(symbolKey: 'gernreich', symbolSearchStrings: [
+      'symbol_gernreich',
     ]),
     GCWSymbolTableTool(symbolKey: 'gerudo', symbolSearchStrings: [
       'zelda',

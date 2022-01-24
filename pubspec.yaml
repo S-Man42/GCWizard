@@ -151,7 +151,7 @@ flutter:
     - assets/symbol_tables/gargish/
     - assets/symbol_tables/gc_attributes_ids/
     - assets/symbol_tables/gc_attributes_meaning/
-    - assets/symbol_tables/genreich/
+    - assets/symbol_tables/gernreich/
     - assets/symbol_tables/gerudo/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
