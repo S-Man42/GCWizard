@@ -365,7 +365,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ),
             Column(
-              children: _outputHeader == [[]] ? Container() : columnedMultiLineOutput(context, _outputHeader))
+              children: (_outputHeader == [[]] || _outputHeader == null || _outputHeader.isEmpty) ? Container() : columnedMultiLineOutput(context, _outputHeader))
             ]);
         break;
 
@@ -514,6 +514,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         i18n(context, 'wherigo_error_hint_2'),
                 )
               : GCWFilesOutput(
+                  suppressHiddenDataMessage: true,
                   files: [
                     PlatformFile(
                         bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
@@ -929,6 +930,21 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     align: Alignment.center,
                     text: i18n(context, 'wherigo_data_item') + ' ' + _itemIndex.toString() + ' / ' + (_WherigoCartridge.Items.length).toString(),
                   ),
+                ),
+                GCWIconButton(
+                  iconData: Icons.my_location,
+                  size: IconButtonSize.SMALL,
+                  iconColor: themeColors().mainFont(),
+                  onPressed: () {
+                    _openInMap(
+                        _currentZonePoints(
+                            _WherigoCartridge.Items[_itemIndex - 1].ItemName,
+                            ZonePoint(
+                                _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Latitude,
+                                _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Longitude,
+                                _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Altitude)),
+                        []);
+                  },
                 ),
                 GCWIconButton(
                   iconData: Icons.arrow_forward_ios,

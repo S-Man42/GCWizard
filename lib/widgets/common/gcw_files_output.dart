@@ -19,8 +19,9 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 class GCWFilesOutput extends StatefulWidget {
   final List<PlatformFile> files;
+  final bool suppressHiddenDataMessage;
 
-  const GCWFilesOutput({Key key, @required this.files}) : super(key: key);
+  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false}) : super(key: key);
 
   @override
   _GCWFilesOutputState createState() => _GCWFilesOutputState();
@@ -120,8 +121,9 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
               child: _buildFileTree(file.children, newParents, level: level + 1),
             ),
           if (level == 0 && isFirst) GCWDivider(),
-          if (files.length <= 1 && level == 0 && !hasChildren)
-            GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
+          if (!widget.suppressHiddenDataMessage)
+            if (files.length <= 1 && level == 0 && !hasChildren)
+              GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
         ],
       );
 
