@@ -452,7 +452,7 @@ Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'expectedOutput' : ['5']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : ['10']},
       {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : ['1010']},
       {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : ['2010']},
@@ -738,21 +738,21 @@ Pour contents of the mixing bowl into the baking dish.
 Serves.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_step','1 : Type.Verb','chef_error_runtime_ingredient_not_found']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Fold => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Add => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Remove => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_combine_with_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Combine => 1']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_divide_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Divide => 1']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','1 : Type.Verb','chef_error_runtime_ingredient_not_found']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Fold => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Add => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Remove => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_combine_with_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Combine => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_divide_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Divide => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testAddryNoIngredients,   'isValid' : true, 'expectedOutput' : ['0']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLiquefyEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_stir_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Stir => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_stir_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Stir => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testStirNoIngredient,   'isValid' : true, 'expectedOutput' : ['4351']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyIngredient,   'isValid' : true, 'expectedOutput' : ['5431']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_loop','1 : Type.Verb',]},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_loop','1 : Type.Verb',]},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongStart,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','1 : count',]},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_step','3 : Type.Verb']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_method_step','3 : Type.Verb']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoNumber,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_serves','chef_error_syntax_serves_without_number','serves.']},
     ];
 
@@ -1348,7 +1348,7 @@ Portionen: 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'DEU', 'input' : '5',  'recipe' : nehme, 'expectedOutput' : ['5']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : nehme, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : nehme, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'DEU', 'input' : '',   'recipe' : gebe,   'isValid' : true, 'expectedOutput' : ['10']},
       {'language' : 'DEU', 'input' : '',   'recipe' : unterhebe,   'isValid' : true, 'expectedOutput' : ['10']},
       {'language' : 'DEU', 'input' : '',   'recipe' : fuegehinzu,   'isValid' : true, 'expectedOutput' : ['2010']},
@@ -1941,8 +1941,8 @@ Refrigerate for 1 hour.''';
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : exp,   'isValid' : true, 'expectedOutput' : ['8']},
       {'language' : 'ENG', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['12624120720504040320362880362880039916800479001600']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['common_programming_error_runtime']},
       {'language' : 'ENG', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '',   'recipe' : japh,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : stdin,   'isValid' : true, 'expectedOutput' : ['5']},
@@ -2727,7 +2727,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['34678']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'expectedOutput' : ['479001600']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'expectedOutput' : ['1123581321345589144']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack Overflow']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['common_programming_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack Overflow']},
       {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'expectedOutput' : ['880']},
       {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'expectedOutput' : ['12']},
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorldSouchef, 'expectedOutput' : ['Hello world!']},

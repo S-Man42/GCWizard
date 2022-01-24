@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/hohoho.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class Cow extends StatefulWidget {
+class Hohoho extends StatefulWidget {
   @override
-  CowState createState() => CowState();
+  HohohoState createState() => HohohoState();
 }
 
-class CowState extends State<Cow> {
-  var _textController;
+class HohohoState extends State<Hohoho> {
+  var _textEncodeController;
+  var _textDecodeController;
   var _inputController;
 
-  var _currentText = '';
+  var _currentEncodeText = '';
+  var _currentDecodeText = '';
   var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController(text: _currentText);
+    _textEncodeController = TextEditingController(text: _currentEncodeText);
+    _textDecodeController = TextEditingController(text: _currentDecodeText);
     _inputController = TextEditingController(text: _currentInput);
   }
 
   @override
   void dispose() {
-    _textController.dispose();
+    _textEncodeController.dispose();
+    _textDecodeController.dispose();
     _inputController.dispose();
     super.dispose();
   }
@@ -47,25 +51,35 @@ class CowState extends State<Cow> {
             });
           },
         ),
-        GCWTextField(
-          controller: _textController,
-          hintText: _currentMode == GCWSwitchPosition.left ? i18n(context, 'common_programming_hint_sourcecode') : i18n(context, 'common_programming_hint_output'),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+          controller: _textDecodeController,
+          hintText: i18n(context, 'common_programming_hint_sourcecode'),
           onChanged: (text) {
             setState(() {
-              _currentText = text;
+              _currentDecodeText = text;
+            });
+          },
+        )
+        :  GCWTextField(
+          controller: _textEncodeController,
+          hintText: i18n(context, 'common_programming_hint_output'),
+          onChanged: (text) {
+            setState(() {
+              _currentEncodeText = text;
             });
           },
         ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-                controller: _inputController,
-                hintText: i18n(context, 'common_programming_hint_input'),
-                onChanged: (text) {
-                  setState(() {
-                    _currentInput = text;
-                  });
-                },
-              )
+          controller: _inputController,
+          hintText: i18n(context, 'common_programming_hint_input'),
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          },
+        )
             : Container(),
         GCWDefaultOutput(child: _calculateOutput())
       ],
@@ -75,7 +89,7 @@ class CowState extends State<Cow> {
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
-        CowOutput output = interpretCow(_currentText, STDIN: _currentInput);
+        HohohoOutput output = interpretHohoho(_currentDecodeText, STDIN: _currentInput);
         if (output.error == '')
           return output.output;
         else
@@ -84,7 +98,7 @@ class CowState extends State<Cow> {
         return printErrorMessage(context, e.message);
       }
     } else {
-      return generateCow(_currentText);
+      return generateHohoho(_currentEncodeText);
     }
   }
 }

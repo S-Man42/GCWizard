@@ -130,7 +130,7 @@ int last_A_val = 0; // last value of A register
 
 malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
   if (program.length < 2)
-    return malbolgeOutput(['malbolge_error_invalid_program', 'malbolge_error_program_to_short'], [], []);
+    return malbolgeOutput(['common_programming_error_invalid_program', 'common_programming_error_program_to_short'], [], []);
 
   if (instructionListNormalized(program)) program = reverseNormalize(program);
 
@@ -143,13 +143,13 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
     if (charCode < 127 && charCode > 32) {
       if (!validInstructions.contains(xlat1[(charCode - 33 + i) % 94]))
         return malbolgeOutput([
-          'malbolge_error_invalid_program',
-          'malbolge_error_invalid_character',
+          'common_programming_error_invalid_program',
+          'common_programming_error_invalid_character',
           'Position ' + i.toString() + ': ' + xlat1[(charCode - 33 + i) % 94]
         ], [], []);
     }
     if (i == 59049) {
-      return malbolgeOutput(['malbolge_error_invalid_program', 'malbolge_error_program_to_big'], [], []);
+      return malbolgeOutput(['common_programming_error_invalid_program', 'common_programming_error_program_to_big'], [], []);
     }
     memory[i] = charCode;
     i++;
@@ -177,10 +177,10 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
         output.addAll([
           STDOUT,
           '',
-          'malbolge_error_runtime',
-          'malbolge_error_invalid_opcode',
+          'common_programming_error_runtime',
+          'common_programming_error_invalid_opcode',
           'opCode: ' + memory[c].toString() + ' ' + String.fromCharCode(memory[c]),
-          'malbolge_error_infinite_loop',
+          'common_programming_error_infinite_loop',
           '',
           'STACK TRACE ----------',
           'c = ' + c.toString(),
@@ -222,7 +222,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
           a = STDIN.codeUnitAt(input);
           input++;
         } else {
-          output.addAll([STDOUT, '', 'malbolge_error_runtime', 'malbolge_error_no_input']);
+          output.addAll([STDOUT, '', 'common_programming_error_runtime', 'common_programming_error_no_input']);
           return malbolgeOutput(output, assembler, mnemonic);
         }
         break;
@@ -240,10 +240,10 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
         output.addAll([
           STDOUT,
           '',
-          'malbolge_error_runtime',
-          'malbolge_error_invalid_opcode',
+          'common_programming_error_runtime',
+          'common_programming_error_invalid_opcode',
           'opCode: ' + memory[c].toString() + ' ' + String.fromCharCode(memory[c]),
-          (opcode == 'i') ? 'malbolge_error_illegal_jump' : 'malbolge_error_illegal_write',
+          (opcode == 'i') ? 'common_programming_error_illegal_jump' : 'common_programming_error_illegal_write',
           '',
           'STACK TRACE ----------',
           'c = ' + c.toString(),

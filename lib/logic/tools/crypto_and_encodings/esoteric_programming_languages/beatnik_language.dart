@@ -291,7 +291,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             stack.push(assembler[pc]);
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_pc',
               'beatnik_error_runtime_push',
               'Step ' + pc.toString()
@@ -302,7 +302,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             stack.pop();
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_pop',
               'Step ' + pc.toString()
@@ -313,7 +313,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             stack.add();
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_add',
               'Step ' + pc.toString()
@@ -325,7 +325,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             inputindex++;
           } else {
             return BeatnikOutput(
-                ['beatnik_error_runtime', 'beatnik_error_runtime_invalid_input', 'Step ' + pc.toString()],
+                ['common_programming_error_runtime', 'common_programming_error_no_input', 'Step ' + pc.toString()],
                 scrabbleProgram,
                 assemblerProgram,
                 mnemonicProgram,
@@ -337,7 +337,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             output = output + String.fromCharCode(stack.pop());
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_pop_output',
               'Step ' + pc.toString()
@@ -348,7 +348,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             stack.sub();
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_sub',
               'Step ' + pc.toString()
@@ -359,7 +359,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             stack.swap();
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_swap',
               'Step ' + pc.toString()
@@ -370,7 +370,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
             stack.double();
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_double',
               'Step ' + pc.toString()
@@ -383,7 +383,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc = pc + assembler[pc];
             } else
               return BeatnikOutput([
-                'beatnik_error_runtime',
+                'common_programming_error_runtime',
                 'beatnik_error_runtime_pc',
                 'beatnik_error_runtime_jmpz_f',
                 'Step ' + pc.toString()
@@ -392,7 +392,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc++;
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_jmpz_f',
               'Step ' + pc.toString()
@@ -405,7 +405,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc = pc + assembler[pc];
             } else
               return BeatnikOutput([
-                'beatnik_error_runtime',
+                'common_programming_error_runtime',
                 'beatnik_error_runtime_pc',
                 'beatnik_error_runtime_jmpnz_f',
                 'Step ' + pc.toString()
@@ -414,7 +414,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc++;
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_jmpnz_f',
               'Step ' + pc.toString()
@@ -426,7 +426,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc = pc - assembler[pc + 1];
             } else
               return BeatnikOutput([
-                'beatnik_error_runtime',
+                'common_programming_error_runtime',
                 'beatnik_error_runtime_pc',
                 'beatnik_error_runtime_jmpz_b',
                 'Step ' + pc.toString()
@@ -435,7 +435,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc++;
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_jmpz_b',
               'Step ' + pc.toString()
@@ -447,7 +447,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc = pc - assembler[pc + 1];
             } else
               return BeatnikOutput([
-                'beatnik_error_runtime',
+                'common_programming_error_runtime',
                 'beatnik_error_runtime_pc' 'beatnik_error_runtime_jmpnz_b',
                 'Step ' + pc.toString()
               ], scrabbleProgram, assemblerProgram, mnemonicProgram, debugProgram);
@@ -455,7 +455,7 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
               pc++;
           } else
             return BeatnikOutput([
-              'beatnik_error_runtime',
+              'common_programming_error_runtime',
               'beatnik_error_runtime_stack',
               'beatnik_error_runtime_jmpnz_b',
               'Step ' + pc.toString()
@@ -467,12 +467,12 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input) {
       }
       pc++;
       if (pc < 0)
-        return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()],
+        return BeatnikOutput(['common_programming_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()],
             scrabbleProgram, assemblerProgram, mnemonicProgram, debugProgram);
     }
     return BeatnikOutput([output], scrabbleProgram, assemblerProgram, mnemonicProgram, debugProgram);
   } catch (e) {
-    return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()],
+    return BeatnikOutput(['common_programming_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()],
         scrabbleProgram, assemblerProgram, mnemonicProgram, debugProgram);
   }
 }
