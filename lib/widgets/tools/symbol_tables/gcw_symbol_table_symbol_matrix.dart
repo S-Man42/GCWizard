@@ -6,20 +6,25 @@ import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_zoom_buttons.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class GCWSymbolTableSymbolMatrix extends StatefulWidget {
   final int countColumns;
   final MediaQueryData mediaQueryData;
-  final List<Map<String, SymbolData>> imageData;
+  final Iterable<Map<String, SymbolData>> imageData;
   final bool selectable;
   final Function onChanged;
   final Function onSymbolTapped;
   final bool overlayOn;
+  final String symbolKey;
   final bool fixed;
 
   const GCWSymbolTableSymbolMatrix(
@@ -30,8 +35,9 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       this.onChanged,
       this.selectable: false,
       this.onSymbolTapped,
-      this.fixed: false,
-      this.overlayOn: true})
+	    this.fixed: false,
+      this.overlayOn: true,
+      this.symbolKey})
       : super(key: key);
 
   @override
@@ -40,7 +46,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
 
 class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> {
   var _currentShowOverlayedSymbols = true;
-  List<Map<String, SymbolData>> _imageData;
+  Iterable<Map<String, SymbolData>> _imageData;
 
   @override
   void initState() {
@@ -50,6 +56,10 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
 
   @override
   Widget build(BuildContext context) {
+    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40)/ 3;
+    var _decryptionSwitchWidth = (MediaQuery.of(context).size.width - 40 - 57 - 20);
+    var _decryptionSwitchPartWidth = (_symbolTableSwitchPartWidth / _decryptionSwitchWidth * 100).toInt();
+
     _imageData = widget.imageData;
 
     return Column(children: [
@@ -59,6 +69,9 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               child: GCWOnOffSwitch(
                 value: _currentShowOverlayedSymbols,
                 title: i18n(context, 'symboltables_showoverlay'),
+                flex: [_decryptionSwitchPartWidth,
+                _decryptionSwitchPartWidth,
+                max(100 - 2 * _decryptionSwitchPartWidth, 0)],
                 onChanged: (value) {
                   setState(() {
                     _currentShowOverlayedSymbols = value;
@@ -66,6 +79,14 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
                 },
               ),
               flex: 4),
+          widget.symbolKey == null
+              ? Container(width: 20)
+              : GCWIconButton(
+              iconData: Icons.app_registration,
+              onPressed: () {
+                openInSymbolReplacer(context, widget.symbolKey, widget.imageData);
+              }),
+          Container(width: 15),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
         ],
@@ -163,6 +184,17 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
 
     return Column(
       children: rows,
+    );
+  }
+
+  openInSymbolReplacer(BuildContext context, String symbolKey, List<Map<String, SymbolData>> imageData) {
+    Navigator.push(
+        context,
+        NoAnimationMaterialPageRoute(
+            builder: (context) => GCWTool(
+                tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey), toolName: i18n(context, 'symbol_replacer_title'), i18nPrefix: ''
+            )
+        )
     );
   }
 }
