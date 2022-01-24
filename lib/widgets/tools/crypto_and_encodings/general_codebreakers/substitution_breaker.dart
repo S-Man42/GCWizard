@@ -30,13 +30,13 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   SubstitutionBreakerResult _currentOutput = null;
 
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
-  var _isLoading = false;
+  var _isLoading = <bool>[false];
 
   @override
   void initState() {
     super.initState();
 
-    _loadQuadgramsAssets();
+    loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
   }
 
   @override
@@ -148,14 +148,20 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     );
   }
 
-  Future<void> _loadQuadgramsAssets() async {
-    while (_isLoading) {}
+  static Future<Quadgrams> loadQuadgramsAssets(
+      SubstitutionBreakerAlphabet alphabet,
+      BuildContext context,
+      Map<SubstitutionBreakerAlphabet,
+      Quadgrams> quadgramsMap,
+      List<bool> isLoading) async {
 
-    if (_quadgrams.containsKey(_currentAlphabet)) return;
+    while (isLoading[0]) {}
 
-    _isLoading = true;
+    if (quadgramsMap.containsKey(alphabet)) return quadgramsMap[alphabet];
 
-    Quadgrams quadgrams = getQuadgrams(_currentAlphabet);
+    isLoading[0] = true;
+
+    Quadgrams quadgrams = getQuadgrams(alphabet);
 
     String data = await DefaultAssetBundle.of(context).loadString(quadgrams.assetLocation);
     Map<String, dynamic> jsonData = jsonDecode(data);
@@ -164,9 +170,11 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
       quadgrams.quadgramsCompressed.putIfAbsent(int.tryParse(entry.key), () => List<int>.from(entry.value));
     });
 
-    _quadgrams.putIfAbsent(_currentAlphabet, () => quadgrams);
+    quadgramsMap.putIfAbsent(alphabet, () => quadgrams);
 
-    _isLoading = false;
+    isLoading[0] = false;
+
+    return quadgrams;
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
@@ -176,10 +184,10 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     });
     if (_currentInput == null || _currentInput.length == 0) return null;
 
-    await _loadQuadgramsAssets();
+    var quadgram = await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
 
     return GCWAsyncExecuterParameters(
-        SubstitutionBreakerJobData(input: _currentInput, quadgrams: _quadgrams[_currentAlphabet]));
+        SubstitutionBreakerJobData(input: _currentInput, quadgrams: quadgram));
   }
 
   _showOutput(SubstitutionBreakerResult output) {
