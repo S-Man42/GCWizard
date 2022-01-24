@@ -56,6 +56,9 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     coord = GaussKrueger.parse(text);
     if (coord != null) coords.add(coord);
 
+    coord = DutchGrid.parse(text);
+    if (coord != null) coords.add(coord);
+
     coord = Maidenhead.parse(text);
     if (coord != null) coords.add(coord);
 

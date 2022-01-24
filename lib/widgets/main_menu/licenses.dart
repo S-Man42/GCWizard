@@ -67,6 +67,7 @@ class LicensesState extends State<Licenses> {
           ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
           ['Cow Interpreter', 'Marco "Atomk" F.', 'MIT License'],
           ['Cow Generator', 'Frank Buss', null],
+          ['DutchGrid Code', '@djvanderlaan', 'MIT License'],
           ['Gauss-Krüger Code', 'moenk', null],
           ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
           ['Geodetics Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
@@ -88,6 +89,7 @@ class LicensesState extends State<Licenses> {
           [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
+          [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (Online Web Fonts) (CC BY-SA 3.0)'],
           [
             i18n(context, 'symboltables_gc_attributes_ids_title'),

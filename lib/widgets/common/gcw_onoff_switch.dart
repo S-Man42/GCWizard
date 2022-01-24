@@ -9,8 +9,10 @@ class GCWOnOffSwitch extends StatefulWidget {
   final String title;
   final value;
   final bool notitle;
+  final List<int> flex ;
+  static const _flex = [1, 1, 1];
 
-  const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false})
+  const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false, this.flex: _flex})
       : super(key: key);
 
   @override
@@ -25,12 +27,12 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
     return Row(
       children: <Widget>[
         if (!widget.notitle)
-          Expanded(child: GCWText(text: (widget.title ?? i18n(context, 'common_mode')) + ':'), flex: 1),
+          Expanded(child: GCWText(text: (widget.title ?? i18n(context, 'common_mode')) + ':'), flex: widget.flex[0]),
         Expanded(
             child: Container(
               child: Row(
                 children: <Widget>[
-                  Expanded(child: Container(), flex: 1),
+                  Expanded(child: Container(), flex: widget.flex[1]),
                   GCWSwitch(
                     value: widget.value ?? _currentValue,
                     onChanged: widget.onChanged,
@@ -39,11 +41,11 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
                     inactiveThumbColor: themeColors().switchThumb1(),
                     inactiveTrackColor: themeColors().switchTrack1(),
                   ),
-                  Expanded(child: Container(), flex: 1),
+                  Expanded(child: Container(), flex: widget.flex[2]),
                 ],
               ),
             ),
-            flex: 3)
+            flex: widget.flex[0]+widget.flex[1]+widget.flex[2])
       ],
     );
   }

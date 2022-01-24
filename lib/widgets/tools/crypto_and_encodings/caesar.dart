@@ -15,7 +15,7 @@ class CaesarState extends State<Caesar> {
   var _controller;
 
   String _currentInput = '';
-  int _currentKey = 1;
+  int _currentKey = 13;
 
   var _currentMode = GCWSwitchPosition.right;
 
@@ -45,6 +45,7 @@ class CaesarState extends State<Caesar> {
         ),
         GCWABCSpinner(
           title: i18n(context, 'common_key'),
+          value: _currentKey,
           onChanged: (value) {
             setState(() {
               _currentKey = value;

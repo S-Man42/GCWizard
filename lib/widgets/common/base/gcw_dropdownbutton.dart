@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GCWDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -10,8 +9,9 @@ class GCWDropDownButton extends StatefulWidget {
   final value;
   final DropdownButtonBuilder selectedItemBuilder;
   final String title;
+  final bool alternativeColor;
 
-  const GCWDropDownButton({Key key, this.value, this.items, this.onChanged, this.selectedItemBuilder, this.title})
+  const GCWDropDownButton({Key key, this.value, this.items, this.onChanged, this.selectedItemBuilder, this.title, this.alternativeColor: false})
       : super(key: key);
 
   @override
@@ -22,6 +22,9 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
   @override
   Widget build(BuildContext context) {
     ThemeColors colors = themeColors();
+
+    var textStyle = gcwTextStyle();
+    if (widget.alternativeColor) textStyle = textStyle.copyWith(color: colors.dialogText());
 
     return Row(
       children: [
@@ -38,7 +41,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
                 margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
-                  border: Border.all(color: colors.accent(), style: BorderStyle.solid, width: 1.0),
+                  border: Border.all(color: widget.alternativeColor ? colors.dialogText() : colors.accent(), style: BorderStyle.solid, width: 1.0),
                 ),
                 child: DropdownButtonHideUnderline(
                     child: DropdownButton(
@@ -46,7 +49,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
                   icon: Icon(
                     Icons.arrow_drop_down,
                     size: 30,
-                    color: colors.accent(),
+                    color: widget.alternativeColor ? colors.dialogText() : colors.accent(),
                   ),
                   value: widget.value ?? widget.items[0].value,
                   items: widget.items.map((item) {
@@ -54,7 +57,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
                         value: item.value, child: item.child is Widget ? item.child : _buildMenuItemChild(item));
                   }).toList(),
                   onChanged: widget.onChanged,
-                  style: TextStyle(fontSize: defaultFontSize()),
+                  style: textStyle,
                   selectedItemBuilder: widget.selectedItemBuilder ??
                       (context) {
                         return widget.items.map((item) {
@@ -63,7 +66,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
                                 ? item.child
                                 : Text(
                                     item.child.toString(),
-                                    style: gcwTextStyle(),
+                                    style: textStyle,
                                   ),
                             alignment: Alignment.centerLeft,
                           );
@@ -91,6 +94,8 @@ _buildMenuItemChild(GCWDropDownMenuItem item) {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           item.child.toString(),
+          maxLines: 1,
+          overflow: TextOverflow.clip,
           style: item.style ?? gcwTextStyle(),
         ),
         Container(
