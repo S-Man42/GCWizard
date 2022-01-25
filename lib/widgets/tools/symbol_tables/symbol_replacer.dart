@@ -54,7 +54,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   SymbolImage _symbolImage;
   local.PlatformFile _platformFile;
   double _blackLevel = 50.0;
-  double _similarityLevel = 90.0;
+  double _similarityLevel = 100.0;
   double _similarityCompareLevel = 80.0;
   var _currentSimpleMode = GCWSwitchPosition.left;
   List<GCWDropDownMenuItem> _compareSymbolItems;
@@ -197,7 +197,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       GCWSlider(
           title: i18n(context, 'symbol_replacer_similarity_level'),
           value: _similarityLevel,
-          min: 0,
+          min: 80,
           max: 100,
           onChanged: (value) {
             _similarityLevel = value;

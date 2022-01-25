@@ -321,14 +321,13 @@ class SymbolImage {
   /// return: Sum of percent match for all symbols
   /// </summary>
   double _useCompareSymbols(SymbolImage compareSymbolImage) {
-    var imageHashing = ImageHashing();
     var percentSum = 0.0;
 
     if (compareSymbolImage?.symbols == null) return percentSum;
 
     // build hash for compare
     for (int i = 0; i < compareSymbolImage.symbols.length; i++)
-      compareSymbolImage.symbols[i].hash = imageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
+      compareSymbolImage.symbols[i].hash = ImageHashing.AverageHash(compareSymbolImage.symbols[i].bmp);
 
     // found the best compare symbols
     for (int i = 0; i < symbolGroups.length; i++) {
@@ -339,7 +338,7 @@ class SymbolImage {
         Symbol symbol1 = symbolGroups[i].symbols.first;
 
         for (int x = 0; x < compareSymbolImage.symbols.length; x++) {
-          var similarity = imageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
+          var similarity = ImageHashing.Similarity(symbol1.hash, compareSymbolImage.symbols[x].hash);
           if (similarity > maxPercent) {
             maxPercent = similarity;
             maxPercentSymbol = compareSymbolImage.symbols[x];
@@ -469,10 +468,8 @@ class SymbolImage {
   /// Group symbols together
   /// </summary>
   _groupSymbols() {
-    var imageHashing = ImageHashing();
-
     for (int i = 0; i < symbols.length; i++)
-      symbols[i].hash = imageHashing.AverageHash(symbols[i].bmp);
+      symbols[i].hash = ImageHashing.AverageHash(symbols[i].bmp);
 
     for (int i = 0; i < symbols.length; i++) {
       double maxPercent = 0;
@@ -481,7 +478,7 @@ class SymbolImage {
       Symbol symbol1 = symbols[i];
 
       for (int x = 0; x < i; x++) {
-        var similarity = imageHashing.Similarity(symbol1.hash, symbols[x].hash);
+        var similarity = ImageHashing.Similarity(symbol1.hash, symbols[x].hash);
         if (similarity > maxPercent) {
           maxPercent = similarity;
           maxPercentSymbolIndex = x;
@@ -995,7 +992,7 @@ class ImageHashing {
   /// David Oftedal of the University of Oslo, Norway for this.
   /// http://folk.uio.no/davidjo/computing.php
   /// </summary>
-  final _bitCounts = Uint8List.fromList([
+  static final _bitCounts = Uint8List.fromList([
   0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,1,2,2,3,2,3,3,4,
   2,3,3,4,3,4,4,5,2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
   2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,3,4,4,5,4,5,5,6,
@@ -1011,22 +1008,23 @@ class ImageHashing {
   /// </summary>
   /// <param name="num">The hash we are counting.</param>
   /// <returns>The total bit count.</returns>
-  int _BitCount(int num) {
+  static int _BitCount(int num) {
     int count = 0;
     for (; num > 0; num >>= 8)
       count += _bitCounts[(num & 0xff)];
     return count;
   }
 
+  /// source: https://github.com/jforshee/ImageHashing/blob/master/ImageHashing/ImageHashing.cs
   /// <summary>
   /// Computes the average hash of an image according to the algorithm given by Dr. Neal Krawetz
   /// on his blog: http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html.
   /// </summary>
   /// <param name="image">The image to hash.</param>
   /// <returns>The hash of the image.</returns>
-  int AverageHash(Image.Image image) {
+  static int AverageHash(Image.Image image) {
     // Squeeze the image into an 8x8 canvas
-    Image.Image squeezed = Image.copyResize(image,width: 8, height: 8,interpolation: Image.Interpolation.nearest);  //,interpolation: Interpol (8, 8, PixelFormat.Format32bppRgb);
+    Image.Image squeezed = Image.copyResize(image,width: 8, height: 8,interpolation: Image.Interpolation.nearest); 
 
     // Reduce colors to 6-bit grayscale and calculate average color value
     var grayscale = Uint8List(64);
@@ -1063,7 +1061,7 @@ class ImageHashing {
   /// <param name="hash1">The first hash.</param>
   /// <param name="hash2">The second hash.</param>
   /// <returns>The similarity percentage.</returns>
-  double Similarity(int hash1, int hash2) {
+  static double Similarity(int hash1, int hash2) {
     return ((64 - _BitCount(hash1 ^ hash2)) * 100) / 64.0;
   }
 
@@ -1074,7 +1072,7 @@ class ImageHashing {
   /// <param name="image1">The first image.</param>
   /// <param name="image2">The second image.</param>
   /// <returns>The similarity percentage.</returns>
-  double SimilarityImage(Image.Image image1, Image.Image image2) {
+  static double SimilarityImage(Image.Image image1, Image.Image image2) {
     int hash1 = AverageHash(image1);
     int hash2 = AverageHash(image2);
     return Similarity(hash1, hash2);
