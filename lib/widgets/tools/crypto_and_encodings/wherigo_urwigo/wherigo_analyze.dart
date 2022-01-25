@@ -931,21 +931,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     text: i18n(context, 'wherigo_data_item') + ' ' + _itemIndex.toString() + ' / ' + (_WherigoCartridge.Items.length).toString(),
                   ),
                 ),
-                GCWIconButton(
-                  iconData: Icons.my_location,
-                  size: IconButtonSize.SMALL,
-                  iconColor: themeColors().mainFont(),
-                  onPressed: () {
-                    _openInMap(
-                        _currentZonePoints(
-                            _WherigoCartridge.Items[_itemIndex - 1].ItemName,
-                            ZonePoint(
-                                _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Latitude,
-                                _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Longitude,
-                                _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Altitude)),
-                        []);
-                  },
-                ),
+                if (_WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Latitude != 0.0 && _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Longitude != 0.0)
+                  GCWIconButton(
+                    iconData: Icons.my_location,
+                    size: IconButtonSize.SMALL,
+                    iconColor: themeColors().mainFont(),
+                    onPressed: () {
+                      _openInMap(
+                          _currentZonePoints(
+                              _WherigoCartridge.Items[_itemIndex - 1].ItemName,
+                              ZonePoint(
+                                  _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Latitude,
+                                  _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Longitude,
+                                  _WherigoCartridge.Items[_itemIndex - 1].ItemZonepoint.Altitude)),
+                          []);
+                    },
+                  ),
                 GCWIconButton(
                   iconData: Icons.arrow_forward_ios,
                   onPressed: () {
