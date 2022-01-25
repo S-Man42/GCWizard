@@ -37,8 +37,8 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
           },
         ),
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'whitespace_interpreter'),
-          rightValue: i18n(context, 'whitespace_generator'),
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -47,7 +47,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
           },
         ),
         GCWButton(
-          text: i18n(context, 'whitespace_language_start'),
+          text: i18n(context, 'common_start'),
           onPressed: () {
             setState(() {
               _calcOutput(context);

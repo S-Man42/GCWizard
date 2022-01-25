@@ -81,8 +81,8 @@ class BrainfkState extends State<Brainfk> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'brainfk_interpret'),
-          rightValue: i18n(context, 'brainfk_generate'),
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -197,7 +197,7 @@ class BrainfkState extends State<Brainfk> {
         GCWTextField(
           controller: _textController,
           hintText:
-              _currentMode == GCWSwitchPosition.left ? i18n(context, 'brainfk_code') : i18n(context, 'brainfk_text'),
+              _currentMode == GCWSwitchPosition.left ? i18n(context, 'common_programming_hint_sourcecode') : i18n(context, 'common_programming_hint_output'),
           onChanged: (text) {
             setState(() {
               _currentText = text;
@@ -207,7 +207,7 @@ class BrainfkState extends State<Brainfk> {
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _inputController,
-                hintText: i18n(context, 'brainfk_input'),
+                hintText: i18n(context, 'common_programming_hint_input'),
                 onChanged: (text) {
                   setState(() {
                     _currentInput = text;

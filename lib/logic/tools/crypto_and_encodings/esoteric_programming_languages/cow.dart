@@ -38,12 +38,12 @@
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
-final ERROR_COW_INVALIDCODE = 'cow_error_invalidcode';
+final ERROR_COW_INVALIDCODE = 'common_programming_error_invalid_opcode';
 final ERROR_COW_LOOPNOTOPEND = 'cow_error_nomatchingMOO';
 final ERROR_COW_LOOPNOTCLOSED = 'cow_error_nomatchingmoo';
-final ERROR_COW_MEMORYOUTOFBOUNDS = 'cow_error_memoryoutofbounds';
-final ERROR_COW_INFINITELOOP = 'cow_error_infiniteloop';
-final ERROR_COW_MAXITERATIONS = 'cow_error_maxiterations';
+final ERROR_COW_MEMORYOUTOFBOUNDS = 'common_programming_error_memoryoutofbounds';
+final ERROR_COW_INFINITELOOP = 'common_programming_error_infinite_loop';
+final ERROR_COW_MAXITERATIONS = 'common_programming_error_maxiterations';
 
 final commandsMooToInteger = {
   'moo': 0,
