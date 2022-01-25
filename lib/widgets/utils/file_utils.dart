@@ -501,11 +501,11 @@ Future<List<PlatformFile>> extractArchive(PlatformFile file) async {
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
       case FileType.BZIP2:
         var output = BZip2Decoder().decodeBuffer(input);
-        return {PlatformFile(name: changeExtension(file?.name, '.tar'), bytes: output)}.toList();
+        return {PlatformFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
-        return {PlatformFile(name: changeExtension(file?.name, '.xxx'), bytes: output?.getBytes())}.toList();
+        return {PlatformFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
         return await extractRarArchive(file);
         break;
