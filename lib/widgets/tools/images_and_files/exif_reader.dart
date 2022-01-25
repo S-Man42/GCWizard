@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
@@ -27,6 +26,7 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:prefs/prefs.dart';
 
 class ExifReader extends StatefulWidget {
   final local.PlatformFile file;
@@ -160,9 +160,8 @@ class _ExifReaderState extends State<ExifReader> {
     if (point == null) return;
 
     var _currentCoordsFormat = defaultCoordFormat();
-    // Map<String, String> _currentOutputFormat = {'format': keyCoordsDMM};
     List<String> _currentOutput = [
-      formatCoordOutput(point, {'format': keyCoordsDMM}, defaultEllipsoid()),
+      formatCoordOutput(point, {'format': Prefs.get('coord_default_format')}, defaultEllipsoid()),
     ];
 
     widgets.add(

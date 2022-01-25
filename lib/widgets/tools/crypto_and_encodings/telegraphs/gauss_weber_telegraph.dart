@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/gauss_webe
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -125,7 +124,7 @@ class GaussWeberTelegraphState extends State<GaussWeberTelegraph> {
           output = encodeGaussWeberTelegraph(_currentEncodeInput, widget.mode);
       } else {
         if (widget.mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_5)
-          output = decodeGaussWeberTelegraph(_currentEncodeInput, _currentNeedleNumber);
+          output = decodeGaussWeberTelegraph(_currentDecodeInput, _currentNeedleNumber);
         else
           output = decodeGaussWeberTelegraph(_currentDecodeInput, widget.mode);
         output = output

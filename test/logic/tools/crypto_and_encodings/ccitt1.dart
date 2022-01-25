@@ -38,7 +38,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeCCITT(elem['input'], CCITTCodebook.CCITT_BAUDOT_MISS);
+        var _actual = encodeCCITT(elem['input'], CCITTCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -69,7 +69,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeCCITT(elem['input'], CCITTCodebook.CCITT_BAUDOT_MISS);
+        var _actual = decodeCCITT(elem['input'], CCITTCodebook.BAUDOT_54123);
         expect(_actual, elem['expectedOutput']);
       });
     });

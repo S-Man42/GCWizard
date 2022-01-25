@@ -5,7 +5,7 @@ import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLanguage extends ChangeNotifier {
-  static const Locale _defaultAppLocale = Locale(defaultLanguage); // Locale('en', 'US');
+  static const Locale _defaultAppLocale = DEFAULT_LOCALE; // Locale('en', 'US');
   Locale _appLocale = _defaultAppLocale;
 
   Locale get appLocal => _appLocale ?? _defaultAppLocale;

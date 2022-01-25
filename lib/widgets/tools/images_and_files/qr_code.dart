@@ -33,6 +33,8 @@ class QrCodeState extends State<QrCode> {
   String _outDataDecrypt;
   TextEditingController _inputController;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  static int maxLength = 2952;
+  var lastCurrentInputLength = 0;
 
   @override
   void initState() {
@@ -74,7 +76,6 @@ class QrCodeState extends State<QrCode> {
               )
             : GCWTextField(
                 controller: _inputController,
-                maxLength: 999,
                 onChanged: (value) {
                   setState(() {
                     _currentInput = value;
@@ -135,7 +136,14 @@ class QrCodeState extends State<QrCode> {
   _updateOutput() {
     try {
       if (_currentMode == GCWSwitchPosition.left) {
-        generateBarCode(_currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize).then((qr_code) {
+        var currentInput = _currentInput;
+        if ((currentInput != null) && (currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength) ) {
+          currentInput = currentInput.substring(0, maxLength);
+          showToast(i18n(context, 'qr_code_length_limited', parameters: [maxLength.toString()]));
+        }
+        lastCurrentInputLength = _currentInput == null ? 0 : _currentInput.length;
+
+        generateBarCode(currentInput, moduleSize: _currentModulSize, border: 2 * _currentModulSize).then((qr_code) {
           setState(() {
             _outDataEncrypt = qr_code;
           });

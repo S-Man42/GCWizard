@@ -461,13 +461,13 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
 
     if (input.gamma != 1.0) pixel = gamma(pixel, input.gamma);
 
-    pixels[i] = pixel.red.round().clamp(0, 255);
-    pixels[i + 1] = pixel.green.round().clamp(0, 255);
-    pixels[i + 2] = pixel.blue.round().clamp(0, 255);
-
     if (input.invert) pixel = invert(pixel);
 
     if (input.grayscale) pixel = grayscale(pixel);
+
+    pixels[i] = pixel.red.round().clamp(0, 255);
+    pixels[i + 1] = pixel.green.round().clamp(0, 255);
+    pixels[i + 2] = pixel.blue.round().clamp(0, 255);
   }
 
   return image;
