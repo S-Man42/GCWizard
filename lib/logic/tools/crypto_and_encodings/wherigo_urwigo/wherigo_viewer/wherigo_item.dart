@@ -97,7 +97,7 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
           do {
             description = description + lines[i];
             i++;
-            if ((i) > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible')) {
+            if ((i) > lines.length - 1 || lines[i + 1].startsWith(LUAname + '.Visible')) {
               sectionDescription = false;
             }
           } while (sectionDescription);
