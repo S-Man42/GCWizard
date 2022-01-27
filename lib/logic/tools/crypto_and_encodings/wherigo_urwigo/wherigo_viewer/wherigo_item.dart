@@ -96,10 +96,10 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
           sectionDescription = true;
           do {
             description = description + lines[i];
-            i++;
-            if ((i) > lines.length - 1 || lines[i + 1].startsWith(LUAname + '.Visible')) {
+            if (i > lines.length - 2 || lines[i + 1].startsWith(LUAname + '.Visible')) {
               sectionDescription = false;
             }
+            i++;
           } while (sectionDescription);
           description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
           description = getLineData(description, LUAname, 'Description', obfuscator, dtable);

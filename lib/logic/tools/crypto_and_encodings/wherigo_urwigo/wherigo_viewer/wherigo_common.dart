@@ -60,7 +60,7 @@ String getStructData(String analyseLine, String type){
 
 
 String getTextData( String analyseLine, String obfuscator, String dtable){
-  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '');
+  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '').replaceAll('input)', 'input');
   if (result.startsWith('(' + obfuscator)) {
     result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll(')', ')');
     result = _getDetails(result, obfuscator, dtable);

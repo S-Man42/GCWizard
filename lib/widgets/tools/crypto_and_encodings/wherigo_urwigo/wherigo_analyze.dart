@@ -459,17 +459,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ' : ' +
                   MEDIATYPE[
                   _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileType];
-
-          if (_WherigoCartridge.Media.length > 0) {
-            filename = _WherigoCartridge.Media[_mediaFileIndex - 1].MediaFilename;
-            _outputMedia = [
-              [i18n(context, 'wherigo_media_id'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaID],
-              [i18n(context, 'wherigo_media_luaname'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaLUAName],
-              [i18n(context, 'wherigo_media_name'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaName],
-              [i18n(context, 'wherigo_media_description'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaDescription],
-              [i18n(context, 'wherigo_media_alttext'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaAltText],
-            ];
-          }
+        }
+        if (_WherigoCartridge.Media.length > 0) {
+          filename = _WherigoCartridge.Media[_mediaFileIndex - 1].MediaFilename;
+          _outputMedia = [
+            [i18n(context, 'wherigo_media_id'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaID],
+            [i18n(context, 'wherigo_media_luaname'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaLUAName],
+            [i18n(context, 'wherigo_media_name'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaName],
+            [i18n(context, 'wherigo_media_description'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaDescription],
+            [i18n(context, 'wherigo_media_alttext'), _WherigoCartridge.Media[_mediaFileIndex - 1].MediaAltText],
+          ];
         }
 
         return Column(
@@ -511,7 +510,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         i18n(context, 'wherigo_error_invalid_gwc') + '\n' +
                         i18n(context, 'wherigo_error_gwc_luabytecode') + '\n' +
                         i18n(context, 'wherigo_error_gwc_mediafiles') + '\n\n' +
-                        i18n(context, 'wherigo_error_hint_2'),
+                        '» ' + filename + ' «\n\n' +
+                        i18n(context, 'wherigo_error_hint_2')  + '\n\n',
                 )
               : GCWFilesOutput(
                   suppressHiddenDataMessage: true,

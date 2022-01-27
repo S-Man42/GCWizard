@@ -663,6 +663,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
                 _MediaFileLength));
             _offset = _offset + _MediaFileLength;
           }
+          //else
+          //  _NumberOfObjects--;
         }
       } catch (exception) {
         _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
