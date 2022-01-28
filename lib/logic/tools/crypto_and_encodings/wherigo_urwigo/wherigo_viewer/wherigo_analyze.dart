@@ -227,11 +227,13 @@ class MediaFileHeader{
 }
 
 class MediaFileContent{
+  final int MediaFileID;
   final int MediaFileType;
   final Uint8List MediaFileBytes;
   final int MediaFileLength;
 
   MediaFileContent(
+      this.MediaFileID,
       this.MediaFileType,
       this.MediaFileBytes,
       this.MediaFileLength);
@@ -625,10 +627,12 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
         _MediaFileLength = readInt(byteListGWC, _offset);
         _offset = _offset + LENGTH_INT;
-        _MediaFilesContents.add(MediaFileContent(0,
-            Uint8List.sublistView(
-                byteListGWC, _offset, _offset + _MediaFileLength),
-            _MediaFileLength));
+        _MediaFilesContents.add(
+            MediaFileContent(
+                0,
+                0,
+                Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength),
+                _MediaFileLength));
         _offset = _offset + _MediaFileLength;
 
         //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
@@ -641,30 +645,32 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       }
 
       try { // analysing GWC - reading Media-Files
-        // read Objects
-        for (int i = 1; i < _NumberOfObjects; i++) {
-          // check if valid
+        for (int i = 1; i < _MediaFilesHeaders.length; i++) {
+          _offset = _MediaFilesHeaders[i].MediaFileAddress;
           _ValidMediaFile = readByte(byteListGWC, _offset);
-          _offset = _offset + LENGTH_BYTE;
 
           if (_ValidMediaFile != 0) {
             // read Filetype
+            _offset = _offset + LENGTH_BYTE;
             _MediaFileType = readInt(byteListGWC, _offset);
-            _offset = _offset + LENGTH_INT;
 
             // read Length
-            _MediaFileLength = readInt(byteListGWC, _offset);
             _offset = _offset + LENGTH_INT;
+            _MediaFileLength = readInt(byteListGWC, _offset);
 
             // read bytes
-            _MediaFilesContents.add(MediaFileContent(_MediaFileType,
-                Uint8List.sublistView(
-                    byteListGWC, _offset, _offset + _MediaFileLength),
-                _MediaFileLength));
-            _offset = _offset + _MediaFileLength;
+            _offset = _offset + LENGTH_INT;
+            _MediaFilesContents.add(
+                MediaFileContent(
+                    _MediaFilesHeaders[i].MediaFileID,
+                    _MediaFileType,
+                    Uint8List.sublistView(
+                        byteListGWC, _offset, _offset + _MediaFileLength
+                    ),
+                    _MediaFileLength
+                )
+            );
           }
-          //else
-          //  _NumberOfObjects--;
         }
       } catch (exception) {
         _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
@@ -687,7 +693,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
 
     if (checksToDo == FILE_LOAD_STATE.LUA || checksToDo == FILE_LOAD_STATE.FULL) {
       print('check LUA');
-      _LUAFile = _LUAUint8ListToString(byteListLUA);
+      _LUAFile = String.fromCharCodes(byteListLUA);
 
       // normalize
       _LUAFile = _normalizeLUAmultiLineText(_LUAFile);

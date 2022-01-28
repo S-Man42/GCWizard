@@ -5054,6 +5054,8 @@
   "wherigo_error_empty_gwc": "no GWC File available",
   "wherigo_error_empty_lua": "no LUA Fila available",
   "wherigo_error_invalid_gwc": "Invalid Cartridge/GWC File",
+  "wherigo_error_invalid_mediafile": "Invalid Media File",
+  "wherigo_error_invalid_mediafile_2": "is not part of the cartridge",
   "wherigo_error_gwc_header": "arose while reading Cartridge Header",
   "wherigo_error_gwc_luabytecode": "arose while reading Cartridge LUA Byte Code",
   "wherigo_error_gwc_mediafiles": "arose while reading Cartridge Media Files",

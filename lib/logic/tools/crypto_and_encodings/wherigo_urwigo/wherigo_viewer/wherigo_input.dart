@@ -85,8 +85,8 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   var out = Map<String, dynamic>();
 
   for (int i = 0; i < lines.length - 1; i++) {
-    // get all ZInput-Objects
     if (re.hasMatch(lines[i])) {
+
       LUAname = '';
       id = '';
       name = '';
@@ -229,7 +229,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
               ));
         });
         answerActions = [];
-        answerList = _getAnswers(i, lines[i], lines[i - 1]);
+        answerList = _getAnswers(i, lines[i], lines[i - 1], obfuscator, dtable);
       }
     }
 
@@ -287,14 +287,10 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   out.addAll({'content': resultInputs});
   out.addAll({'names': NameToObject});
-  resultInputs.forEach((element) {
-    element.InputAnswers.forEach((element) {
-    });
-  });
   return out;
 }
 
-List<String> _getAnswers(int i, String line, String lineBefore){
+List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable){
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ')) {
     return line.trimLeft()
@@ -305,8 +301,7 @@ List<String> _getAnswers(int i, String line, String lineBefore){
         .replaceAll(' ', '')
         .split('or');
   }
-  else if (line.trim().startsWith('if _Urwigo.Hash(') ||
-      line.trim().startsWith('elseif _Urwigo.Hash(')) {
+  else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
     line.trim()
@@ -321,9 +316,10 @@ List<String> _getAnswers(int i, String line, String lineBefore){
         .replaceAll(')', '')
         .replaceAll('then', '')
         .replaceAll('else', '')
+        .replaceAll('true', '')
         .replaceAll(' ', '')
         .split('or').forEach((element) {
-      hashvalue = int.parse(element);
+      hashvalue = int.parse(element.replaceAll('\D+', ''));
       results.add(breakUrwigoHash(hashvalue).toString());
     });
     return results;
@@ -332,7 +328,7 @@ List<String> _getAnswers(int i, String line, String lineBefore){
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (lineBefore.endsWith('= input'))
       lineBefore = lineBefore.trim().replaceAll(' = input', '').replaceAll(' ', '');
-    return [line.trim()
+    line = line.trim()
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
         .replaceAll('Wherigo.NoCaseEquals', '')
@@ -342,7 +338,12 @@ List<String> _getAnswers(int i, String line, String lineBefore){
         .replaceAll('"', '')
         .replaceAll('then', '')
         .replaceAll('else', '')
-        .replaceAll(' ', '')];
+        .replaceAll('input,', '')
+        .replaceAll(' ', '');
+    if (RegExp(r'(' + obfuscator + ')').hasMatch(line))
+      return [deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable)];
+    else
+      return [line];
   }
 }
 
@@ -350,7 +351,9 @@ bool _SectionEnd(String line){
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('if _Urwigo.Hash(') ||
+      line.trim().startsWith('if (_Urwigo.Hash(') ||
       line.trim().startsWith('elseif _Urwigo.Hash(') ||
+      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
       line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals('))
     return true;
@@ -381,16 +384,16 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
       line.startsWith('}'))
     return null;
 
-  else if (line.startsWith('Text = '))
-      return ActionData(
-          ACTIONMESSAGETYPE.TEXT,
-          getTextData(line, obfuscator, dtable));
-
-  else if (line.startsWith('Media = '))
-      return ActionData(
-          ACTIONMESSAGETYPE.IMAGE,
-          line.trimLeft().replaceAll('Media = ', ''));
-
+  else if (line.startsWith('Text = ')) {
+    return ActionData(
+        ACTIONMESSAGETYPE.TEXT,
+        getTextData(line, obfuscator, dtable));
+  }
+  else if (line.startsWith('Media = ')) {
+    return ActionData(
+        ACTIONMESSAGETYPE.IMAGE,
+        line.trimLeft().replaceAll('Media = ', '').replaceAll(',', ''));
+  }
   else if (line.startsWith('if '))
       return ActionData(
           ACTIONMESSAGETYPE.CASE,
@@ -406,6 +409,34 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
           ACTIONMESSAGETYPE.CASE,
           line.trimLeft());
   else
+    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
+      List<String> actions = line.trim().split('=');
+      if (actions.length == 2) {
+        return ActionData(
+            ACTIONMESSAGETYPE.COMMAND,
+            actions[0].trim() + ' = ' + 
+                deobfuscateUrwigoText(
+                    (actions[1].indexOf('")') > 0)
+                        ? actions[1].substring(0, actions[1].indexOf('")'))
+                          .replaceAll(obfuscator, '')
+                          .replaceAll('("', '')
+                          .replaceAll('")', '')
+                          .trim()
+                        : actions[1]
+                          .replaceAll(obfuscator, '')
+                          .replaceAll('("', '')
+                          .replaceAll('")', '')
+                          .trim()
+                    , dtable)
+        );
+      } else {
+        return ActionData(
+            ACTIONMESSAGETYPE.COMMAND,
+            deobfuscateUrwigoText(actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable)
+        );
+      }
+    }
+    else
       return ActionData(
           ACTIONMESSAGETYPE.COMMAND,
           line.trimLeft());

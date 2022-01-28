@@ -505,19 +505,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             ),
             _mediaFileIndex > _WherigoCartridge.MediaFilesContents.length - 1
               ? GCWOutputText(
-                  text: i18n(context, 'wherigo_error_runtime') + '\n' +
-                        i18n(context, 'wherigo_error_runtime_exception') + '\n' +
-                        i18n(context, 'wherigo_error_invalid_gwc') + '\n' +
-                        i18n(context, 'wherigo_error_gwc_luabytecode') + '\n' +
-                        i18n(context, 'wherigo_error_gwc_mediafiles') + '\n\n' +
+                  text: i18n(context, 'wherigo_error_invalid_mediafile') + '\n' +
                         '» ' + filename + ' «\n\n' +
-                        i18n(context, 'wherigo_error_hint_2')  + '\n\n',
+                        i18n(context, 'wherigo_error_invalid_mediafile_2') + '\n'
                 )
               : GCWFilesOutput(
                   suppressHiddenDataMessage: true,
                   files: [
                     PlatformFile(
-                        bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
+                        //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
+                        bytes: _getBytes(_WherigoCartridge.MediaFilesContents, _mediaFileIndex),
                         name: filename),
                   ],
                 ),
@@ -537,7 +534,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               onChanged: (value) {
                 setState(() {
                   _currentDeObfuscate = value;
-                  print(_currentDeObfuscate);
                 });
               },
             ),
@@ -795,7 +791,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     GCWExpandableTextDivider(
                       text: i18n(context, 'wherigo_output_answeractions'),
                       child: Column(
-                        //children: columnedMultiLineOutput(context, _outputAnswerActions(_WherigoCartridge.Inputs[_inputIndex].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
                           children: _outputAnswerActionsWidgets(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])
                       ),
                     ),
@@ -1281,9 +1276,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case ACTIONMESSAGETYPE.COMMAND:
           if (element.MessageContent.startsWith('Wherigo.PlayAudio')){
-            print(element.MessageContent);
             String LUAName = element.MessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
-            print(LUAName);
             resultWidget.add(
                 GCWSoundPlayer(
                   file: PlatformFile(
@@ -1576,7 +1569,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
 
     return result;
-  }
+  } // end _outputBytecodeStructure
 
   String _getCreationDate(int duration) {
     // Date of creation   ; Seconds since 2004-02-10 01:00:00
@@ -1696,7 +1689,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     Uint8List filedata;
     String filename;
     int fileindex = 0;
-
     try {
       if (_WherigoCartridge.MediaFilesContents.length > 1) {
         _WherigoCartridge.Media.forEach((element) {
@@ -1930,5 +1922,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               points: polyline,
               color: Colors.black));
     return result;
+  }
+
+  Uint8List _getBytes(List<MediaFileContent> MediaFilesContents, int mediaFileIndex) {
+    for (int i = 0; i < MediaFilesContents.length; i++)
+      if (MediaFilesContents[i].MediaFileID == mediaFileIndex){
+        return MediaFilesContents[i].MediaFileBytes;
+      }
+    return Uint8List.fromList([]);
   }
 }
