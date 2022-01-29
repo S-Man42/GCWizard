@@ -10,8 +10,10 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   bool section = true;
   bool sectionChoices = true;
+  bool sectionText = true;
   String LUAname = '';
   String id = '';
+  String variableID = '';
   String name = '';
   String description = '';
   String visible = '';
@@ -37,11 +39,12 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
 
-  for (int i = 0; i < lines.length - 1; i++) {
+  for (int i = 0; i < lines.length - 2; i++) {
     if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i])) {
       currentObjectSection = OBJECT_TYPE.INPUT;
       LUAname = '';
       id = '';
+      variableID = '';
       name = '';
       description = '';
       visible = '';
@@ -94,9 +97,32 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
                 lines[i], LUAname, 'InputType', obfuscator, dtable);
           }
 
+          if (lines[i].startsWith(LUAname + '.InputVariableId')) {
+            variableID = getLineData(
+                lines[i], LUAname, 'InputVariableId', obfuscator, dtable);
+          }
+
           if (lines[i].startsWith(LUAname + '.Text')) {
-            text = getLineData(
-                lines[i], LUAname, 'Text', obfuscator, dtable);
+            if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+                lines[i + 1].startsWith(LUAname + '.Media') ||
+                RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]))
+              text = getLineData(
+                  lines[i], LUAname, 'Text', obfuscator, dtable);
+            else {
+              text = '';
+              sectionText = true;
+              do {
+                i++;
+                text = text + lines[i];
+                if (lines[i + 1].trim().startsWith('function'))
+                  sectionText = false;
+                if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+                    RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
+                    lines[i + 1].startsWith(LUAname + '.Media'))
+                  sectionText = false;
+              } while (sectionText);
+              text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
+            }
           }
 
           if (lines[i].startsWith(LUAname + '.Choices')) {
@@ -110,8 +136,10 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
               do {
                 if (lines[i].trimLeft().startsWith('"')) {
                   listChoices.add(
-                      lines[i ].trimLeft().replaceAll('"', '').replaceAll(
-                          ',', ''));
+                      lines[i ]
+                          .trimLeft()
+                          .replaceAll('",', '')
+                          .replaceAll('"', ''));
                   i++;
                 } else {
                   sectionChoices = false;
@@ -120,7 +148,8 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
             }
           }
 
-          if (lines[i].startsWith(LUAname + '.Text'))
+          if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+              RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]))
             section = false;
         }
         i++;
@@ -129,6 +158,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       Inputs.add(InputData(
         LUAname,
         id,
+        variableID,
         name,
         description,
         visible,
@@ -152,7 +182,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
       // getting name of function
       inputObject = lines[i].replaceAll('function ', '').replaceAll(
-          ':OnGetInput(input)', '');
+          ':OnGetInput(input)', '').trim();
       Answers[inputObject] = [];
     } // end if identify input function
 
@@ -224,8 +254,9 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   Inputs.forEach((inputObject) {
     resultInputs.add(
         InputData(
-            inputObject.InputLUAName,
+            inputObject.InputLUAName.trim(),
             inputObject.InputID,
+            inputObject.InputVariableID,
             inputObject.InputName,
             inputObject.InputDescription,
             inputObject.InputVisible,
@@ -234,7 +265,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
             inputObject.InputType,
             inputObject.InputText,
             inputObject.InputChoices,
-            Answers[inputObject.InputLUAName])
+            Answers[inputObject.InputLUAName.trim()])
     );
   });
 
@@ -279,7 +310,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
   }
   else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (lineBefore.endsWith('= input'))
+    if (lineBefore.trim().endsWith('= input'))
       lineBefore = lineBefore.trim().replaceAll(' = input', '').replaceAll(' ', '');
     line = line.trim()
         .replaceAll('if ', '')
@@ -292,7 +323,8 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
         .replaceAll('then', '')
         .replaceAll('else', '')
         .replaceAll('input,', '')
-        .replaceAll(' ', '');
+        .replaceAll('Answer,', '')
+        .trim();
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line))
       return [deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable)];
     else
@@ -361,36 +393,34 @@ ActionMessageElementData _handleLine(String line, String dtable, String obfuscat
       return ActionMessageElementData(
           ACTIONMESSAGETYPE.CASE,
           line.trimLeft());
-  else
+  else {
+    String actionLine = '';
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
       List<String> actions = line.trim().split('=');
       if (actions.length == 2) {
-        return ActionMessageElementData(
-            ACTIONMESSAGETYPE.COMMAND,
-            actions[0].trim() + ' = ' + 
-                deobfuscateUrwigoText(
-                    (actions[1].indexOf('")') > 0)
-                        ? actions[1].substring(0, actions[1].indexOf('")'))
-                          .replaceAll(obfuscator, '')
-                          .replaceAll('("', '')
-                          .replaceAll('")', '')
-                          .trim()
-                        : actions[1]
-                          .replaceAll(obfuscator, '')
-                          .replaceAll('("', '')
-                          .replaceAll('")', '')
-                          .trim()
-                    , dtable)
-        );
+        actionLine = actions[0].trim() + ' = ' +
+                      deobfuscateUrwigoText(
+                          (actions[1].indexOf('")') > 0)
+                              ? actions[1].substring(0, actions[1].indexOf('")'))
+                                .replaceAll(obfuscator, '')
+                                .replaceAll('("', '')
+                                .replaceAll('")', '')
+                                .trim()
+                              : actions[1]
+                                .replaceAll(obfuscator, '')
+                                .replaceAll('("', '')
+                                .replaceAll('")', '')
+                                .trim()
+                          , dtable);
       } else {
-        return ActionMessageElementData(
-            ACTIONMESSAGETYPE.COMMAND,
-            deobfuscateUrwigoText(actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable)
-        );
+        actionLine = deobfuscateUrwigoText(
+                        actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
+                        dtable);
       }
     }
     else
-      return ActionMessageElementData(
-          ACTIONMESSAGETYPE.COMMAND,
-          line.trimLeft());
+      actionLine = line.trimLeft();
+    actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
+    return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, actionLine);
+  }
 }

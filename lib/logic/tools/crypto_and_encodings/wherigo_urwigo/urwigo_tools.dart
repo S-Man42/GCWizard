@@ -19,7 +19,7 @@ String deobfuscateUrwigoText(String text, String dtable) {
   if (dtable == null || dtable.isEmpty) return '';
 
   if (dtable == 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~')
-    return WWW_deobf(text);
+    return gsub_wig(text);
   else
     return readustring(text, dtable) ?? '';
 }

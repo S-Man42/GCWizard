@@ -694,7 +694,10 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
 
     if (checksToDo == FILE_LOAD_STATE.LUA || checksToDo == FILE_LOAD_STATE.FULL) {
       print('check LUA');
-      _LUAFile = String.fromCharCodes(byteListLUA);
+      if (byteListLUA != null)
+        _LUAFile = String.fromCharCodes(byteListLUA);
+      else
+        _LUAFile = '';
 
       // normalize
       _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
@@ -911,7 +914,6 @@ EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscat
         _UpdateDate,
         _LastPlayedDate);
 
-  RegExp re = RegExp(r'(_Urwigo)');
   if (RegExp(r'(_Urwigo)').hasMatch(LUA))
     _builder = BUILDER.URWIGO;
   else if (RegExp(r'(WWB_deobf)').hasMatch(LUA))
@@ -919,10 +921,9 @@ EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscat
   else if (RegExp(r'(gsub_wig)').hasMatch(LUA))
     _builder = BUILDER.WHERIGOKIT;
 
-  re = RegExp(r'( = Wherigo.ZCartridge)');
   List<String> lines = LUA.split('\n');
   for (int i = 0; i < lines.length; i++) {
-    if (re.hasMatch(lines[i])) {
+    if (RegExp(r'( = Wherigo.ZCartridge)').hasMatch(lines[i])) {
       _cartridgeName = lines[i].replaceAll(' = Wherigo.ZCartridge()', '').trim();
     }
 
@@ -932,11 +933,11 @@ EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscat
     if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.TargetDeviceVersion'))
       _TargetDeviceVersion = lines[i].replaceAll(_cartridgeName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
 
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CountryID'))
-      _CountryID = lines[i].replaceAll(_cartridgeName + '.CountryID = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CountryId'))
+      _CountryID = lines[i].replaceAll(_cartridgeName + '.CountryId = ', '').replaceAll('"', '').trim();
 
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.StateID'))
-      _StateID = lines[i].replaceAll(_cartridgeName + '.StateID = ', '').replaceAll('"', '').trim();
+    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.StateId'))
+      _StateID = lines[i].replaceAll(_cartridgeName + '.StateId = ', '').replaceAll('"', '').trim();
 
     if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UseLogging'))
       _UseLogging = lines[i].replaceAll(_cartridgeName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
@@ -1025,17 +1026,31 @@ String JASONStringToString(String JSON){
 }
 
 String _normalizeLUAmultiLineText(String LUA) {
-  return LUA.replaceAll('[[\n', '[[').replaceAll('<BR>\n', '<BR>');
+  return LUA
+      .replaceAll('[[\n', '[[')
+      .replaceAll('<BR>\n', '<BR>')
+      .replaceAll('&nbsp;', ' ')
+      .replaceAll('&amp;', '&')
+      .replaceAll('\\195\\164', 'ä')
+      .replaceAll('\\195\\182', 'ö')
+      .replaceAll('\\195\\188', 'ü')
+      .replaceAll('\\195\\156', 'Ü')
+      .replaceAll('\\195\\159', 'ß')
+      .replaceAll('\\194\\176', '°')
+      .replaceAll('\n\n', '\n');
 }
 
 String _getObfuscatorFunction(String source){
   String result = '';
   List<String> LUA = source.split('\n');
 
-  result = 'gsub_wig';
+  result = '';
 
   if (RegExp(r'(WWB_deobf)').hasMatch(source))
     result = 'WWB_deobf';
+  else
+  if (RegExp(r'(gsub_wig)').hasMatch(source))
+    result = 'gsub_wig';
   else
   if (RegExp(r'(_Urwigo)').hasMatch(source)) {
     for (int i = 0; i < LUA.length; i++){

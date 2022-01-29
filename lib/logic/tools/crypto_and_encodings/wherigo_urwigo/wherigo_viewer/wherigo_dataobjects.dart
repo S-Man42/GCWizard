@@ -114,6 +114,7 @@ class CharacterData{
 class InputData{
   final String InputLUAName;
   final String InputID;
+  final String InputVariableID;
   final String InputName;
   final String InputDescription;
   final String InputVisible;
@@ -127,6 +128,7 @@ class InputData{
   InputData(
       this.InputLUAName,
       this.InputID,
+      this.InputVariableID,
       this.InputName,
       this.InputDescription,
       this.InputVisible,

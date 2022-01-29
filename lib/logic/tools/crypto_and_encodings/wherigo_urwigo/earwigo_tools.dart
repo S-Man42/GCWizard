@@ -3,6 +3,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.
 String deobfuscateEarwigoText(String text) {
   if (text == null || text.isEmpty) return '';
 
-  return WWW_deobf(text);
+  return gsub_wig(text);
 }
 

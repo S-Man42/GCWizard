@@ -366,7 +366,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ),
             Column(
-              children: (_outputHeader == [[]] || _outputHeader == null || _outputHeader.isEmpty) ? Container() : columnedMultiLineOutput(context, _outputHeader))
+              children: (_outputHeader.join('') == '[]') ? [Container()] : columnedMultiLineOutput(context, _outputHeader))
             ]);
         break;
 
@@ -1230,8 +1230,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_id'), data.InputID],
         [i18n(context, 'wherigo_output_name'), data.InputName],
         [i18n(context, 'wherigo_output_description'), data.InputDescription],
+        [i18n(context, 'wherigo_output_medianame'), data.InputMedia + (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia].ObjectName : '')],
         [i18n(context, 'wherigo_output_text'), data.InputText],
         [i18n(context, 'wherigo_output_type'), data.InputType],
+        [i18n(context, 'wherigo_output_variableid'), data.InputVariableID],
         [i18n(context, 'wherigo_output_choices'), data.InputChoices.join('\n')],
         [i18n(context, 'wherigo_output_visible'), data.InputVisible],
       ];
@@ -1788,63 +1790,39 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   _buildHeader(){
     _outputHeader = [
       [i18n(context, 'wherigo_header_signature'), _WherigoCartridge.Signature],
-      [
-        i18n(context, 'wherigo_header_numberofmediafiles'),
-        (_WherigoCartridge.NumberOfObjects - 1).toString()
-      ],
+      [i18n(context, 'wherigo_header_numberofmediafiles'), (_WherigoCartridge.NumberOfObjects - 1).toString()],
       [
         i18n(context, 'wherigo_output_location'),
         formatCoordOutput(LatLng(_WherigoCartridge.Latitude, _WherigoCartridge.Longitude), {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
       ],
-      [
-        i18n(context, 'wherigo_header_altitude'),
-        _WherigoCartridge.Altitude.toString()
-      ],
-      [
-        i18n(context, 'wherigo_header_typeofcartridge'),
-        _WherigoCartridge.TypeOfCartridge
-      ],
+      [i18n(context, 'wherigo_header_altitude'), _WherigoCartridge.Altitude.toString()],
+      [i18n(context, 'wherigo_header_typeofcartridge'), _WherigoCartridge.TypeOfCartridge],
       [i18n(context, 'wherigo_header_splashicon'), _WherigoCartridge.SplashscreenIcon],
       [i18n(context, 'wherigo_header_splashscreen'), _WherigoCartridge.Splashscreen],
       [i18n(context, 'wherigo_header_player'), _WherigoCartridge.Player],
-      [
-        i18n(context, 'wherigo_header_playerid'),
-        _WherigoCartridge.PlayerID.toString()
-      ],
-      [i18n(context, 'wherigo_header_WherigoCartridgename'), _WherigoCartridge.CartridgeName],
-      [i18n(context, 'wherigo_header_WherigoCartridgeguid'), _WherigoCartridge.CartridgeGUID],
-      [
-        i18n(context, 'wherigo_header_WherigoCartridgedescription'),
-        _WherigoCartridge.CartridgeDescription
-      ],
+      [i18n(context, 'wherigo_header_playerid'), _WherigoCartridge.PlayerID.toString()],
+      [i18n(context, 'wherigo_header_completion'), _WherigoCartridge.CompletionCode],
+      [i18n(context, 'wherigo_header_cartridgename'), _WherigoCartridge.CartridgeName],
+      [i18n(context, 'wherigo_header_cartridgeguid'), _WherigoCartridge.CartridgeGUID],
+      [i18n(context, 'wherigo_header_cartridgedescription'), _WherigoCartridge.CartridgeDescription],
+      [i18n(context, 'wherigo_header_startinglocation'), _WherigoCartridge.StartingLocationDescription],
+      [i18n(context, 'wherigo_header_state'), _EarwigoCartridge.StateID],
+      [i18n(context, 'wherigo_header_country'), _EarwigoCartridge.CountryID],
+      [i18n(context, 'wherigo_header_version'), _WherigoCartridge.Version],
+      [i18n(context, 'wherigo_header_creationdate'), _getCreationDate(_WherigoCartridge.DateOfCreation)],
+      [i18n(context, 'wherigo_header_publish'), _EarwigoCartridge.PublishDate],
+      [i18n(context, 'wherigo_header_update'), _EarwigoCartridge.UpdateDate],
+      [i18n(context, 'wherigo_header_lastplayed'), _EarwigoCartridge.LastPlayedDate],
+      [i18n(context, 'wherigo_header_author'), _WherigoCartridge.Author],
+      [i18n(context, 'wherigo_header_company'), _WherigoCartridge.Company],
+      [i18n(context, 'wherigo_header_device'), _WherigoCartridge.RecommendedDevice],
+      [i18n(context, 'wherigo_header_deviceversion'), _EarwigoCartridge.TargetDeviceVersion],
+      [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _EarwigoCartridge.UseLogging)]
     ];
-    _outputHeader.add([i18n(context, 'wherigo_header_startinglocation'), _WherigoCartridge.StartingLocationDescription]);
-    if (_EarwigoCartridge.Builder == BUILDER.EARWIGO) {
-      _outputHeader.add([i18n(context, 'wherigo_header_state'), _EarwigoCartridge.StateID]);
-      _outputHeader.add([i18n(context, 'wherigo_header_country'), _EarwigoCartridge.CountryID]);
-    }
-    _outputHeader.add([i18n(context, 'wherigo_header_version'), _WherigoCartridge.Version]);
-    _outputHeader.add([i18n(context, 'wherigo_header_creationdate'), _getCreationDate(_WherigoCartridge.DateOfCreation)]);
-    if (_EarwigoCartridge.Builder == BUILDER.EARWIGO) {
-      _outputHeader.add([i18n(context, 'wherigo_header_publish'), _EarwigoCartridge.PublishDate]);
-      _outputHeader.add([i18n(context, 'wherigo_header_update'), _EarwigoCartridge.UpdateDate]);
-      _outputHeader.add([i18n(context, 'wherigo_header_lastplayed'), _EarwigoCartridge.LastPlayedDate]);
-    }
-    _outputHeader.add([i18n(context, 'wherigo_header_author'), _WherigoCartridge.Author]);
-    _outputHeader.add([i18n(context, 'wherigo_header_company'), _WherigoCartridge.Company]);
-    _outputHeader.add([i18n(context, 'wherigo_header_device'), _WherigoCartridge.RecommendedDevice]);
-    _outputHeader.add([i18n(context, 'wherigo_header_completion'), _WherigoCartridge.CompletionCode]);
-    _outputHeader.add([i18n(context, 'wherigo_header_device'), _WherigoCartridge.RecommendedDevice]);
-    if (_EarwigoCartridge.Builder == BUILDER.EARWIGO) {
-      _outputHeader.add([i18n(context, 'wherigo_header_deviceversion'), _EarwigoCartridge.TargetDeviceVersion]);
-    }
-    if (_EarwigoCartridge.Builder == BUILDER.EARWIGO) {
-      _outputHeader.add([i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _EarwigoCartridge.UseLogging)]);
-    }
+
     switch(_EarwigoCartridge.Builder) {
       case BUILDER.EARWIGO:
         _outputHeader.add([i18n(context, 'wherigo_header_builder'), 'Earwigo Webbuilder']);
-        _outputHeader.add([i18n(context, 'wherigo_header_version'), _EarwigoCartridge.BuilderVersion]);
         break;
       case BUILDER.URWIGO:
         _outputHeader.add([i18n(context, 'wherigo_header_builder'), 'Urwigo']);
@@ -1859,7 +1837,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         _outputHeader.add([i18n(context, 'wherigo_header_builder'), 'Groundspeak']);
         break;
     }
-
+    _outputHeader.add([i18n(context, 'wherigo_header_version'), _EarwigoCartridge.BuilderVersion]);
   }
 
   String _normalizeLUA(String LUAFile, bool deObfuscate){
