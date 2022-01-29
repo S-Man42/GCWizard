@@ -47,12 +47,11 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
       LUAname = getLUAName(lines[i]);
       container = getContainer(lines[i]);
 
-      description = '';
       sectionCharacter = true;
 
       do {
         i++;
-        if (lines[i].trim().startsWith(LUAname + 'Container =')) {
+        if (lines[i].trim().startsWith(LUAname + '.Container =')) {
           container = getContainer(lines[i]);
         }
 
@@ -84,7 +83,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
 
         if (lines[i].startsWith(LUAname + '.Media'))
           media = getLineData(
-              lines[i], LUAname, 'Media', obfuscator, dtable);
+              lines[i], LUAname, 'Media', obfuscator, dtable).trim();
 
         if (lines[i].startsWith(LUAname + '.Icon'))
           icon = getLineData(
@@ -99,7 +98,6 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
                 .replaceAll('ZonePoint(', '')
                 .replaceAll(')', '')
                 .replaceAll(' ', '');
-            print('location '+location);
             zonePoint = ZonePoint(double.parse(location.split(',')[0]),
                 double.parse(location.split(',')[1]),
                 double.parse(location.split(',')[2]));
@@ -111,22 +109,19 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
                 dtable);
         }
 
-        if (lines[i].startsWith(LUAname + '.Gender'))
+        if (lines[i].startsWith(LUAname + '.Gender')) {
           gender = getLineData(
-              lines[i], LUAname, 'Gender', obfuscator, dtable);
+              lines[i], LUAname, 'Gender', obfuscator, dtable).toLowerCase().trim();
+        }
 
         if (lines[i].startsWith(LUAname + '.Type'))
           type = getLineData(
               lines[i], LUAname, 'Type', obfuscator, dtable);
 
-        if (lines[i].startsWith(LUAname + '.Type'))
+        if (RegExp(r'( = Wherigo.ZItem)').hasMatch(lines[i]) ||
+            RegExp(r'( = Wherigo.ZCharacter)').hasMatch(lines[i])) {
           sectionCharacter = false;
-
-        if (RegExp(r'( = Wherigo.ZItem)').hasMatch(lines[i])) {
-          sectionCharacter = false;
-          i = lines.length;
         }
-
       } while (sectionCharacter);
 
       Characters.add(CharacterData(
@@ -144,6 +139,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
            type
       ));
       NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.CHARACTER);
+      i--;
     } // end if
   }; // end for
 

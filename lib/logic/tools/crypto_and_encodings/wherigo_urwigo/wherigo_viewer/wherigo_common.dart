@@ -18,9 +18,13 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   if (result.startsWith(obfuscator)) {
     result = result.replaceAll(obfuscator + '("','').replaceAll('")', '');
     result = deobfuscateUrwigoText(result, dtable);
-  } else {
+  }
+  else if (result.startsWith('WWB_multi'))
+    result = result.replaceAll('WWB_multiplatform_string("','').replaceAll('")', '');
+  else {
     result = result.replaceAll('"', '');
   }
+
   return _normalizeText(result);
 }
 
@@ -32,6 +36,25 @@ String getStructData(String analyseLine, String type){
 
 String getTextData( String analyseLine, String obfuscator, String dtable){
   String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '').replaceAll('input)', 'input');
+
+  if (RegExp(r'(gsub_wig)').hasMatch(result)){
+    // deobfuscate/replace all Matches gsub_wig\("[\w\s@]+"\)
+    RegExp(r'gsub_wig\("[\w\s@\-.~]+"\)').allMatches(result).forEach((element) {
+      result = result.replaceAll(
+          element.group(0),
+          deobfuscateUrwigoText(
+              element.group(0).replaceAll('gsub_wig("', '').replaceAll('")', ''),
+              dtable));
+    });
+    result = result.replaceAll('..', '').replaceAll('<BR>\\n', '').replaceAll('"', '');
+    RegExp(r'ucode_wig\([\d]+\)').allMatches(result).forEach((element) {
+      result = result.replaceAll(
+          element.group(0),
+          String.fromCharCode(int.parse(element.group(0).replaceAll('ucode_wig(', '').replaceAll(')', ''))));
+    });
+    result = result.replaceAll('gsub_wig()', '');
+  }
+  else
   if (result.startsWith('(' + obfuscator)) {
     result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll(')', ')');
     result = _getDetails(result, obfuscator, dtable);
@@ -45,6 +68,9 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
       result = deobfuscateUrwigoText(result, dtable);
     }
   }
+
+  if (RegExp(r'(WWB_multi_pla)').hasMatch(result))
+    result = removeWWB(result);
 
   return _normalizeText(result);
 }
@@ -130,4 +156,10 @@ String getContainer(String line) {
     result = result.replaceAll('Container = ', '').replaceAll('}', '').replaceAll(')', '');
   }
   return result;
+}
+
+String removeWWB(String wwb){
+  String result = wwb.substring(0, wwb.length - 2);
+  return result.replaceAll('WWB_multiplatform_string(', '');
+
 }

@@ -325,9 +325,13 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
         .replaceAll('input,', '')
         .replaceAll('Answer,', '')
         .trim();
-    if (RegExp(r'(' + obfuscator + ')').hasMatch(line))
-      return [deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable)];
-    else
+    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
+      return [
+        deobfuscateUrwigoText(
+            line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll(
+                '")', ''), dtable)
+      ];
+    }else
       return [line];
   }
 }

@@ -39,14 +39,18 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
 
       LUAname = getLUAName(lines[i]);
 
-      i++; id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
-      i++; name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
-
       sectionTask = true;
 
       do {
+        i++;
 
-          if (lines[i].startsWith(LUAname + '.Description')) {
+        if (lines[i].startsWith(LUAname + '.Id'))
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Name'))
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Description')) {
             description = '';
             sectionDescription = true;
 
@@ -66,7 +70,7 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
 
           if (lines[i].startsWith(LUAname + '.Media'))
             media = getLineData(
-                lines[i], LUAname, 'Media', obfuscator, dtable);
+                lines[i], LUAname, 'Media', obfuscator, dtable).trim();
 
           if (lines[i].startsWith(LUAname + '.Icon'))
             icon = getLineData(
@@ -84,10 +88,10 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
             complete = getLineData(
                 lines[i], LUAname, 'Complete', obfuscator, dtable);
 
-          if (lines[i].startsWith(LUAname + '.CorrectState'))
+          if (RegExp(r'( = Wherigo.ZTask)').hasMatch(lines[i]) ||
+              RegExp(r'( = Wherigo.ZVariables)').hasMatch(lines[i]))
             sectionTask = false;
 
-          i++;
       } while (sectionTask && (i < lines.length - 1));
 
       i--;
@@ -107,8 +111,6 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
       NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.TASK);
 
     } // end if task
-
-
   }; // for
 
   out.addAll({'content': Tasks});

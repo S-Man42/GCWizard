@@ -336,11 +336,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return Container();
 
       case WHERIGO.OBFUSCATORTABLE:
-        return GCWDefaultOutput(
-          child: GCWOutputText(
-            text: _WherigoCartridge.ObfuscatorTable,
-            style: gcwMonotypeTextStyle(),
-          ),
+        return Column(
+          children: <Widget>[
+            GCWOutput(
+                title: i18n(context, 'wherigo_header_obfuscatorfunction'),
+                child: _WherigoCartridge.ObfuscatorFunction,
+                suppressCopyButton: (_WherigoCartridge.ObfuscatorFunction == 'NO_OBFUSCATOR'),
+            ),
+            if (_WherigoCartridge.ObfuscatorTable != '')
+              GCWOutput(
+                title: 'dTable',
+                child: GCWOutputText(
+                  text: _WherigoCartridge.ObfuscatorTable,
+                  style: gcwMonotypeTextStyle(),
+                ),
+              ),
+          ],
         );
         break;
 
@@ -393,6 +404,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             ),
             GCWExpandableTextDivider(
+              expanded: false,
               text: i18n(context, 'wherigo_bytecode'),
               child: Column(
                   children: columnedMultiLineOutput(context, _GWCStructure, flexValues: [1, 3, 2])
@@ -597,6 +609,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       text: i18n(context, 'wherigo_data_character') + ' ' + _characterIndex.toString() + ' / ' + (_WherigoCartridge.Characters.length).toString(),
                     ),
                   ),
+                  if (_WherigoCartridge.Characters[_characterIndex - 1].CharacterZonepoint.Latitude != 0.0 && _WherigoCartridge.Characters[_characterIndex - 1].CharacterZonepoint.Longitude != 0.0)
+                    GCWIconButton(
+                      iconData: Icons.my_location,
+                      size: IconButtonSize.SMALL,
+                      iconColor: themeColors().mainFont(),
+                      onPressed: () {
+                        _openInMap(
+                            _currentZonePoints(
+                                _WherigoCartridge.Characters[_characterIndex - 1].CharacterName,
+                                ZonePoint(
+                                    _WherigoCartridge.Characters[_characterIndex - 1].CharacterZonepoint.Latitude,
+                                    _WherigoCartridge.Characters[_characterIndex - 1].CharacterZonepoint.Longitude,
+                                    _WherigoCartridge.Characters[_characterIndex - 1].CharacterZonepoint.Altitude)),
+                            []);
+                      },
+                    ),
                   GCWIconButton(
                     iconData: Icons.arrow_forward_ios,
                     onPressed: () {
@@ -790,6 +818,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       children: columnedMultiLineOutput(context, _outputAnswer(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]), flexValues: [1,3])
                     ),
                     GCWExpandableTextDivider(
+                      expanded: false,
                       text: i18n(context, 'wherigo_output_answeractions'),
                       child: Column(
                           children: _outputAnswerActionsWidgets(_WherigoCartridge.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])
@@ -1102,6 +1131,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   children: columnedMultiLineOutput(context, _outputIdentifier(_WherigoCartridge.Identifiers[_identifierIndex - 1]))
               ),
               GCWExpandableTextDivider(
+                expanded: false,
                 text: i18n(context, 'wherigo_output_identifier_details'),
                 child: Column(
                     children: columnedMultiLineOutput(context, _outputIdentifierDetails(_WherigoCartridge.Identifiers[_identifierIndex - 1]))
@@ -1121,8 +1151,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.ZoneName],
         [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
         [i18n(context, 'wherigo_output_visible'), data.ZoneVisible],
-        [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName + (NameToObject[data.ZoneMediaName] != null ? ' ⬌ ' + NameToObject[data.ZoneMediaName].ObjectName : '')],
-        [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName + (NameToObject[data.ZoneIconName] != null ? ' ⬌ ' + NameToObject[data.ZoneIconName].ObjectName : '')],
+        [i18n(context, 'wherigo_output_medianame'), data.ZoneMediaName + (data.ZoneMediaName != '' ? (NameToObject[data.ZoneMediaName] != null ? ' ⬌ ' + NameToObject[data.ZoneMediaName].ObjectName : '') : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.ZoneIconName + (data.ZoneIconName != '' ? (NameToObject[data.ZoneIconName] != null ? ' ⬌ ' + NameToObject[data.ZoneIconName].ObjectName : '') : '')],
         [i18n(context, 'wherigo_output_active'), data.ZoneActive],
         [i18n(context, 'wherigo_output_showobjects'), data.ZoneShowObjects],
         [i18n(context, 'wherigo_output_distancerange'), data.ZoneDistanceRange],
@@ -1160,8 +1190,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.ItemName],
         [i18n(context, 'wherigo_output_description'), data.ItemDescription],
         [i18n(context, 'wherigo_output_visible'), data.ItemVisible],
-        [i18n(context, 'wherigo_output_medianame'), data.ItemMedia + (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia].ObjectName : '')],
-        [i18n(context, 'wherigo_output_iconname'), data.ItemIcon + (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon].ObjectName : '')],
+        [i18n(context, 'wherigo_output_medianame'), data.ItemMedia + (data.ItemMedia != '' ? (NameToObject[data.ItemMedia] != null ? ' ⬌ ' + NameToObject[data.ItemMedia].ObjectName : '') : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.ItemIcon + (data.ItemIcon != '' ? (NameToObject[data.ItemIcon] != null ? ' ⬌ ' + NameToObject[data.ItemIcon].ObjectName : '') : '')],
       ];
     if (data.ItemLocation == 'ZonePoint')
       result.add([i18n(context, 'wherigo_output_location'), formatCoordOutput(
@@ -1169,7 +1199,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     else
       result.add([i18n(context, 'wherigo_output_location'), data.ItemLocation]);
 
-    result.add([i18n(context, 'wherigo_output_container'), data.ItemContainer + (NameToObject[data.ItemContainer] != null ? ' ⬌ ' + NameToObject[data.ItemContainer].ObjectName : '')]);
+    result.add([i18n(context, 'wherigo_output_container'), data.ItemContainer + (data.ItemContainer != '' ? (NameToObject[data.ItemContainer] != null ? ' ⬌ ' + NameToObject[data.ItemContainer].ObjectName : '') : '')]);
     result.add([i18n(context, 'wherigo_output_locked'), data.ItemLocked]);
     result.add([i18n(context, 'wherigo_output_opened'), data.ItemOpened]);
     return result;
@@ -1182,8 +1212,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.TaskName],
         [i18n(context, 'wherigo_output_description'), data.TaskDescription],
         [i18n(context, 'wherigo_output_visible'), data.TaskVisible],
-        [i18n(context, 'wherigo_output_medianame'), data.TaskMedia + (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia].ObjectName : '')],
-        [i18n(context, 'wherigo_output_iconname'), data.TaskIcon + (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon].ObjectName : '')],
+        [i18n(context, 'wherigo_output_medianame'), data.TaskMedia + (data.TaskMedia != '' ? (NameToObject[data.TaskMedia] != null ? ' ⬌ ' + NameToObject[data.TaskMedia].ObjectName : '') : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.TaskIcon + (data.TaskIcon != '' ? (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon].ObjectName : '') : '')],
         [i18n(context, 'wherigo_output_active'), data.TaskActive],
         [i18n(context, 'wherigo_output_complete'), data.TaskComplete],
         [i18n(context, 'wherigo_output_correctstate'), data.TaskCorrectstate]
@@ -1208,8 +1238,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_id'), data.CharacterID],
         [i18n(context, 'wherigo_output_name'), data.CharacterName],
         [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
-        [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName + (NameToObject[data.CharacterMediaName] != null ? ' ⬌ ' + NameToObject[data.CharacterMediaName].ObjectName : '')],
-        [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName + (NameToObject[data.CharacterIconName] != null ? ' ⬌ ' + NameToObject[data.CharacterIconName].ObjectName : '')],
+        [i18n(context, 'wherigo_output_medianame'), data.CharacterMediaName + (data.CharacterMediaName != '' ? (NameToObject[data.CharacterMediaName] != null ? ' ⬌ ' + NameToObject[data.CharacterMediaName].ObjectName : '') : '')],
+        [i18n(context, 'wherigo_output_iconname'), data.CharacterIconName + (data.CharacterIconName != '' ? (NameToObject[data.CharacterIconName] != null ? ' ⬌ ' + NameToObject[data.CharacterIconName].ObjectName : '') : '')],
     ];
     if (data.CharacterLocation == 'ZonePoint')
       result.add([i18n(context, 'wherigo_output_location'), formatCoordOutput(
@@ -1230,7 +1260,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_id'), data.InputID],
         [i18n(context, 'wherigo_output_name'), data.InputName],
         [i18n(context, 'wherigo_output_description'), data.InputDescription],
-        [i18n(context, 'wherigo_output_medianame'), data.InputMedia + (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia].ObjectName : '')],
+        [i18n(context, 'wherigo_output_medianame'), data.InputMedia + (data.InputMedia != '' ? (NameToObject[data.InputMedia] != null ? ' ⬌ ' + NameToObject[data.InputMedia].ObjectName : '') : '')],
         [i18n(context, 'wherigo_output_text'), data.InputText],
         [i18n(context, 'wherigo_output_type'), data.InputType],
         [i18n(context, 'wherigo_output_variableid'), data.InputVariableID],

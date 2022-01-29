@@ -64,6 +64,8 @@ Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
               i++;
             } while (sectionInner);
           }
+          if (description.startsWith('WWB_multi'))
+            description = removeWWB(description);
         }
 
         else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {

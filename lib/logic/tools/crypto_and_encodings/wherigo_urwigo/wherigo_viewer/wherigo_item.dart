@@ -104,7 +104,7 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
             i++;
           } while (sectionDescription);
           description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-          description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+          description = getLineData(description, LUAname, 'Description', obfuscator, dtable).trim();
         }
 
         if (lines[i].trim().startsWith(LUAname + '.Visible'))
@@ -113,7 +113,7 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
 
         if (lines[i].trim().startsWith(LUAname + '.Media'))
           media = getLineData(
-              lines[i], LUAname, 'Media', obfuscator, dtable);
+              lines[i], LUAname, 'Media', obfuscator, dtable).trim();
 
         if (lines[i].trim().startsWith(LUAname + '.Icon'))
           icon = getLineData(
@@ -126,7 +126,6 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
         if (lines[i].trim().startsWith(LUAname + '.Opened')) {
           opened = getLineData(
               lines[i], LUAname, 'Opened', obfuscator, dtable);
-          sectionItem = false;
         }
 
         if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
@@ -138,7 +137,6 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
                 .replaceAll('ZonePoint(', '')
                 .replaceAll(')', '')
                 .replaceAll(' ', '');
-            print('location '+location);
             zonePoint = ZonePoint(double.parse(location.split(',')[0]),
                 double.parse(location.split(',')[1]),
                 double.parse(location.split(',')[2]));
@@ -149,6 +147,11 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
               lines[i], LUAname, 'ObjectLocation', obfuscator,
               dtable);
         }
+
+        if (RegExp(r'( = Wherigo.ZItem)').hasMatch(lines[i]) ||
+            RegExp(r'( = Wherigo.ZTask)').hasMatch(lines[i]))
+          sectionItem = false;
+
       } while (sectionItem);
 
       Items.add(ItemData(
@@ -166,6 +169,7 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
           opened));
 
       NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.ITEM);
+      i--;
     } // end if
   }; // end for
 

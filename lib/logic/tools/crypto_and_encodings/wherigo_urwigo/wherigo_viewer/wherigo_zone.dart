@@ -8,14 +8,13 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherig
 Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
 
   List<String> lines = LUA.split('\n');
-  String line = '';
+
   List<ZoneData> Zones = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
   List<ZonePoint> points = [];
-  bool section = true;
-  int j = 1;
-  int k = 1;
+  bool sectionZone = true;
+  bool sectionDescription = true;
   String LUAname = '';
   String id = '';
   String name = '';
@@ -35,8 +34,7 @@ Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
 
 
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (RegExp(r'( = Wherigo.Zone\()').hasMatch(line)) {
+    if (RegExp(r'( = Wherigo.Zone\()').hasMatch(lines[i])) {
       currentObjectSection = OBJECT_TYPE.ZONE;
       points = [];
       LUAname = '';
@@ -56,70 +54,91 @@ Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
       outOfRange = '';
       inRange = '';
 
-      LUAname = getLUAName(line);
-      id = getLineData(lines[i + 1], LUAname, 'Id', obfuscator, dtable);
-      name = getLineData(lines[i + 2], LUAname, 'Name', obfuscator, dtable);
+      LUAname = getLUAName(lines[i]);
 
-      description = '';
-      section = true;
-      j = 1;
+      sectionZone = true;
       do {
-        description = description + lines[i + 2 + j];
-        j = j + 1;
-        if ((i + 2 + j) > lines.length - 1 || lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-          section = false;
-      } while (section);
-      description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+        i++;
+        if (lines[i].startsWith(LUAname + '.Id'))
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
 
-      section = true;
-      do {
-        if ((i + 2 + j) < lines.length - 1) {
-          if (lines[i + 2 + j].startsWith(LUAname + '.Visible'))
-            visible = getLineData(lines[i + 2 + j], LUAname, 'Visible', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Media'))
-            media = getLineData(lines[i + 2 + j], LUAname, 'Media', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Icon'))
-            icon = getLineData(lines[i + 2 + j], LUAname, 'Icon', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.Active'))
-            active = getLineData(lines[i + 2 + j], LUAname, 'Active', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.DistanceRangeUOM ='))
-            distanceRangeUOM = getLineData(lines[i + 2 + j], LUAname, 'DistanceRangeUOM', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRangeUOM ='))
-            proximityRangeUOM = getLineData(lines[i + 2 + j], LUAname, 'ProximityRangeUOM', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.DistanceRange ='))
-            distanceRange = getLineData(lines[i + 2 + j], LUAname, 'DistanceRange', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ShowObjects'))
-            showObjects = getLineData(lines[i + 2 + j], LUAname, 'ShowObjects', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.ProximityRange ='))
-            proximityRange = getLineData(lines[i + 2 + j], LUAname, 'ProximityRange', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.OriginalPoint')) {
-            List<String> pointdata = getLineData(
-                lines[i + 2 + j], LUAname, 'OriginalPoint', obfuscator, dtable)
-                .replaceAll('ZonePoint(', '').replaceAll(')', '').replaceAll(' ', '').split(',');
-            originalPoint = ZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.OutOfRangeName'))
-            outOfRange = getLineData(lines[i + 2 + j], LUAname, 'OutOfRangeName', obfuscator, dtable);
-          if (lines[i + 2 + j].startsWith(LUAname + '.InRangeName'))
-            inRange = getLineData(lines[i + 2 + j], LUAname, 'InRangeName', obfuscator, dtable);
+        if (lines[i].startsWith(LUAname + '.Name'))
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
 
-
-          if (lines[i + 2 + j].startsWith(LUAname + '.Points = ')) {
-            k = 1;
-            do {
-              while (lines[i + 2 + j + k].trimLeft().startsWith('ZonePoint')) {
-                points.add(_getPoint(lines[i + 2 + j + k]));
-                k++;
-              }
-            } while (lines[i + 2 + j + k].trimLeft().startsWith('ZonePoint'));
-            j = j + k;
-          }
-          if (lines[i + 2 + j].startsWith(LUAname + '.InRangeName'))
-            section = false;
-          j = j + 1;
+        if (lines[i].startsWith(LUAname + '.Description')){
+          description = '';
+          sectionDescription = true;
+          do {
+            description = description + lines[i];
+            i++;
+            if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+              sectionDescription = false;
+          } while (sectionDescription);
+          description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+          description = getLineData(description, LUAname, 'Description', obfuscator, dtable).trim();
+          if (description.startsWith('WWB_multi'))
+            description = removeWWB(description);
         }
-      } while (section);
+
+        if (lines[i].startsWith(LUAname + '.Visible'))
+            visible = getLineData(lines[i], LUAname, 'Visible', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Media'))
+          media = getLineData(lines[i], LUAname, 'Media', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Icon'))
+          icon = getLineData(lines[i], LUAname, 'Icon', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Active'))
+          active = getLineData(lines[i], LUAname, 'Active', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.DistanceRangeUOM ='))
+          distanceRangeUOM = getLineData(lines[i], LUAname, 'DistanceRangeUOM', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.ProximityRangeUOM ='))
+          proximityRangeUOM = getLineData(lines[i], LUAname, 'ProximityRangeUOM', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.DistanceRange ='))
+          distanceRange = getLineData(lines[i], LUAname, 'DistanceRange', obfuscator, dtable);
+
+        if (lines[i ].startsWith(LUAname + '.ShowObjects'))
+          showObjects = getLineData(lines[i], LUAname, 'ShowObjects', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.ProximityRange ='))
+          proximityRange = getLineData(lines[i], LUAname, 'ProximityRange', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.OriginalPoint')) {
+          String point = getLineData(lines[i], LUAname, 'OriginalPoint', obfuscator, dtable);
+          List<String> pointdata = point
+              .replaceAll('ZonePoint(', '')
+              .replaceAll(')', '')
+              .replaceAll(' ', '')
+              .split(',');
+          originalPoint = ZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
+        }
+
+        if (lines[i].startsWith(LUAname + '.OutOfRangeName'))
+          outOfRange = getLineData(lines[i], LUAname, 'OutOfRangeName', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.InRangeName'))
+          inRange = getLineData(lines[i], LUAname, 'InRangeName', obfuscator, dtable);
+
+        if (lines[i].startsWith(LUAname + '.Points = ')) {
+          i++;
+          do {
+            while (lines[i].trimLeft().startsWith('ZonePoint')) {
+              points.add(_getPoint(lines[i]));
+              i++;
+            }
+          } while (lines[i].trimLeft().startsWith('ZonePoint'));
+        }
+
+        if (RegExp(r'( = Wherigo.Zone\()').hasMatch(lines[i]) ||
+           i > lines.length - 2) {
+          sectionZone = false;
+        }
+      } while (sectionZone);
+      i--;
 
       Zones.add(ZoneData(
           LUAname,
@@ -141,7 +160,6 @@ Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
           points,
       ));
       NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.ZONE);
-      i = i + 1 + j;
     }
   };
 

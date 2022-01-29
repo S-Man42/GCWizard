@@ -4975,6 +4975,7 @@
   "wherigo_header_logging": "Use logging",
   "wherigo_header_numberofobjects": "Number of Objects",
   "wherigo_header_numberofmediafiles" : "Number of Media Files",
+  "wherigo_header_obfuscatorfunction" : "Name of Obfuscator",
   "wherigo_header_signature": "Signature",
   "wherigo_header_splashscreen": "ID of Splashscreen Image",
   "wherigo_header_splashicon": "ID of Splashscreen Icon",

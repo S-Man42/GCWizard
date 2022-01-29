@@ -971,20 +971,17 @@ EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscat
 
 
 String _getObfuscatorTableFromCartridge(String LUA){
-  RegExp regExdtable = RegExp(r'(local dtable = ")');
-  RegExp regExrotPalette = RegExp(r'(local rot_palette = ")');
   List<String> lines = LUA.split('\n');
   String line = '';
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
-    if (regExdtable.hasMatch(line)) {
+    if (RegExp(r'(local dtable = ")').hasMatch(line)) {
       line = line.trimLeft().replaceAll('local dtable = "', '');
       line = line.substring(0, line.length - 1);
       return line;
     }
-    if (regExrotPalette.hasMatch(line)) {
-      line = line.trimLeft().replaceAll('local rot_palette = "', '');
-      line = line.substring(0, line.length - 1);
+    if (RegExp(r'(local rot_palette = ")').hasMatch(line)) {
+      line = line.trimLeft().replaceAll('local rot_palette = "', '').replaceAll('"', '').trim();
       return line;
     }
   };
@@ -1044,7 +1041,7 @@ String _getObfuscatorFunction(String source){
   String result = '';
   List<String> LUA = source.split('\n');
 
-  result = '';
+  result = 'NO_OBFUSCATOR';
 
   if (RegExp(r'(WWB_deobf)').hasMatch(source))
     result = 'WWB_deobf';
