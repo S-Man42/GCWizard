@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
@@ -17,7 +18,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_variable.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
@@ -1236,15 +1237,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       ];
   }
 
-  List<Widget> _outputMessageWidgets(List<MessageElementData> data){
+  List<Widget> _outputMessageWidgets(List<ActionMessageElementData> data){
     List<Widget> resultWidget = [];
     data.forEach((element) {
-      switch(element.MessageType) {
+      switch(element.ActionMessageType) {
         case ACTIONMESSAGETYPE.TEXT:
           resultWidget.add(
             Container(
               child: GCWOutput(
-                child: element.MessageContent,
+                child: element.ActionMessageContent,
                 suppressCopyButton: true,
               ),
               padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
@@ -1255,7 +1256,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           resultWidget.add(
             Container(
               child: GCWImageView(
-                         imageData: GCWImageViewData(_getFileFrom(element.MessageContent)),
+                         imageData: GCWImageViewData(_getFileFrom(element.ActionMessageContent)),
                          suppressedButtons: {GCWImageViewButtons.ALL},
                        ),
             )
@@ -1265,7 +1266,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           resultWidget.add(
               Container(
                   child: Text(
-                    '\n' + '« ' + element.MessageContent + ' »' +'\n',
+                    '\n' + '« ' + element.ActionMessageContent + ' »' +'\n',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold
@@ -1275,8 +1276,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           );
           break;
         case ACTIONMESSAGETYPE.COMMAND:
-          if (element.MessageContent.startsWith('Wherigo.PlayAudio')){
-            String LUAName = element.MessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
+          if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')){
+            String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
             resultWidget.add(
                 GCWSoundPlayer(
                   file: PlatformFile(
@@ -1289,7 +1290,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           else
             resultWidget.add(
                 GCWOutput(
-                  child: '\n' + resolveLUAName(element.MessageContent) + '\n',
+                  child: '\n' + resolveLUAName(element.ActionMessageContent) + '\n',
                   suppressCopyButton: true,
                 )
             );
@@ -1299,25 +1300,25 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return resultWidget;
   }
 
-  List<List<dynamic>> _outputIdentifier(IdentifierData data){
+  List<List<dynamic>> _outputIdentifier(VariableData data){
       return [
-        [i18n(context, 'wherigo_output_luaname'), data.IdentifierLUAName],
-        [i18n(context, 'wherigo_output_text'), data.IdentifierName],
+        [i18n(context, 'wherigo_output_luaname'), data.VariableLUAName],
+        [i18n(context, 'wherigo_output_text'), data.VariableName],
       ];
   }
 
-  List<List<dynamic>> _outputIdentifierDetails(IdentifierData data){
+  List<List<dynamic>> _outputIdentifierDetails(VariableData data){
     List<List<dynamic>> result = [];
 
-    if (NameToObject[data.IdentifierName] == null)
+    if (NameToObject[data.VariableName] == null)
       result = [[i18n(context, 'wherigo_output_identifier_no_detail'), '']];
     else {
-      result = [[i18n(context, 'wherigo_output_identifier_detail_title'), NameToObject[data.IdentifierName].ObjectType.toString().split('.')[1]]];
+      result = [[i18n(context, 'wherigo_output_identifier_detail_title'), NameToObject[data.VariableName].ObjectType.toString().split('.')[1]]];
 
-      switch (NameToObject[data.IdentifierName].ObjectType) {
+      switch (NameToObject[data.VariableName].ObjectType) {
         case OBJECT_TYPE.CHARACTER:
           for (int i = 0; i < _WherigoCartridge.Characters.length; i++) {
-            if (_WherigoCartridge.Characters[i].CharacterLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Characters[i].CharacterLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Characters[i].CharacterID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Characters[i].CharacterName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Characters[i].CharacterDescription]);
@@ -1327,7 +1328,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case OBJECT_TYPE.INPUT:
           for (int i = 0; i < _WherigoCartridge.Inputs.length; i++) {
-            if (_WherigoCartridge.Inputs[i].InputLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Inputs[i].InputLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Inputs[i].InputID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Inputs[i].InputName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Inputs[i].InputDescription]);
@@ -1338,7 +1339,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case OBJECT_TYPE.ITEM:
           for (int i = 0; i < _WherigoCartridge.Items.length; i++) {
-            if (_WherigoCartridge.Items[i].ItemLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Items[i].ItemLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Items[i].ItemID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Items[i].ItemName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Items[i].ItemDescription]);
@@ -1348,7 +1349,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case OBJECT_TYPE.MEDIA:
           for (int i = 0; i < _WherigoCartridge.Media.length; i++) {
-            if (_WherigoCartridge.Media[i].MediaLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Media[i].MediaLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Media[i].MediaID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Media[i].MediaName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Media[i].MediaDescription]);
@@ -1358,7 +1359,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case OBJECT_TYPE.TASK:
           for (int i = 0; i < _WherigoCartridge.Tasks.length; i++) {
-            if (_WherigoCartridge.Tasks[i].TaskLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Tasks[i].TaskLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Tasks[i].TaskID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Tasks[i].TaskName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Tasks[i].TaskDescription]);
@@ -1368,7 +1369,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case OBJECT_TYPE.TIMER:
           for (int i = 0; i < _WherigoCartridge.Timers.length; i++) {
-            if (_WherigoCartridge.Timers[i].TimerLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Timers[i].TimerLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Timers[i].TimerID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Timers[i].TimerName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Timers[i].TimerDescription]);
@@ -1380,7 +1381,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case OBJECT_TYPE.ZONE:
           for (int i = 0; i < _WherigoCartridge.Zones.length; i++) {
-            if (_WherigoCartridge.Zones[i].ZoneLUAName == data.IdentifierName) {
+            if (_WherigoCartridge.Zones[i].ZoneLUAName == data.VariableName) {
               result.add([i18n(context, 'wherigo_output_id'), _WherigoCartridge.Zones[i].ZoneID]);
               result.add([i18n(context, 'wherigo_output_name'), _WherigoCartridge.Zones[i].ZoneName]);
               result.add([i18n(context, 'wherigo_output_description'), _WherigoCartridge.Zones[i].ZoneDescription]);
@@ -1406,12 +1407,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     if (data.AnswerActions.length > 0){
       data.AnswerActions.forEach((element) {
-        switch(element.ActionType) {
+        switch(element.ActionMessageType) {
           case ACTIONMESSAGETYPE.TEXT:
             resultWidget.add(
                 Container(
                   child: GCWOutput(
-                    child: element.ActionContent,
+                    child: element.ActionMessageContent,
                     suppressCopyButton: true,
                   ),
                   padding: EdgeInsets.only(top: DOUBLE_DEFAULT_MARGIN, bottom: DOUBLE_DEFAULT_MARGIN),
@@ -1422,7 +1423,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             resultWidget.add(
                 Container(
                   child: GCWImageView(
-                    imageData: GCWImageViewData(_getFileFrom(element.ActionContent)),
+                    imageData: GCWImageViewData(_getFileFrom(element.ActionMessageContent)),
                     suppressedButtons: {GCWImageViewButtons.ALL},
                   ),
                 )
@@ -1432,7 +1433,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             resultWidget.add(
                 Container(
                     child: Text(
-                        '\n' + '« ' + element.ActionContent + ' »' +'\n',
+                        '\n' + '« ' + element.ActionMessageContent + ' »' +'\n',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold
@@ -1445,15 +1446,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             resultWidget.add(
                 Container(
                   child: Text(
-                    '\n' + (element.ActionContent.toUpperCase()) + '\n',
+                    '\n' + (element.ActionMessageContent.toUpperCase()) + '\n',
                     textAlign: TextAlign.center,
                 )
               )
             );
             break;
           case ACTIONMESSAGETYPE.COMMAND:
-            if (element.ActionContent.startsWith('Wherigo.PlayAudio')){
-              String LUAName = element.ActionContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
+            if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')){
+              String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
               if (_WherigoCartridge.MediaFilesContents.length > 0)
                 resultWidget.add(
                   GCWSoundPlayer(
@@ -1467,7 +1468,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             else
               resultWidget.add(
                 GCWOutput(
-                  child: '\n' + resolveLUAName(element.ActionContent) + '\n',
+                  child: '\n' + resolveLUAName(element.ActionMessageContent) + '\n',
                   suppressCopyButton: true,
                 )
             );

@@ -1,36 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
-class MediaData {
-  final String MediaLUAName;
-  final String MediaID;
-  final String MediaName;
-  final String MediaDescription;
-  final String MediaAltText;
-  final String MediaType;
-  final String MediaFilename;
-
-  MediaData(
-      this.MediaLUAName,
-      this.MediaID,
-      this.MediaName,
-      this.MediaDescription,
-      this.MediaAltText,
-      this.MediaType,
-      this.MediaFilename);
-}
 
 
 Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r'( = Wherigo.ZMedia)');
   List<String> lines = LUA.split('\n');
   List<MediaData> Medias = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
   bool sectionMedia = true;
   bool sectionInner = true;
-  int j = 1;
+
   String LUAname = '';
   String id = '';
   String name = '';
@@ -43,7 +25,8 @@ Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
 
 
   for (int i = 0; i < lines.length; i++){
-    if (re.hasMatch(lines[i])) {
+    if (RegExp(r'( = Wherigo.ZMedia)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.MEDIA;
       index++;
       LUAname = '';
       id = '';
@@ -106,7 +89,6 @@ Map<String, dynamic> getMediaFromCartridge(String LUA, dtable, obfuscator){
         }
 
       } while (sectionMedia && (i < lines.length - 1));
-      //i = i + j;
 
       Medias.add(MediaData(
           LUAname,

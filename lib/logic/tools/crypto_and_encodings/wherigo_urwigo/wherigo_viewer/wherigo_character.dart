@@ -2,42 +2,15 @@
 import 'dart:isolate';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
 
-class CharacterData{
-  final String CharacterLUAName;
-  final String CharacterID;
-  final String CharacterName;
-  final String CharacterDescription;
-  final String CharacterVisible;
-  final String CharacterMediaName;
-  final String CharacterIconName;
-  final String CharacterLocation;
-  final ZonePoint CharacterZonepoint;
-  final String CharacterContainer;
-  final String CharacterGender;
-  final String CharacterType;
-
-  CharacterData(
-      this.CharacterLUAName,
-      this.CharacterID,
-      this.CharacterName,
-      this.CharacterDescription,
-      this.CharacterVisible,
-      this.CharacterMediaName,
-      this.CharacterIconName,
-      this.CharacterLocation,
-      this.CharacterZonepoint,
-      this.CharacterContainer,
-      this.CharacterGender,
-      this.CharacterType);
-}
 
 
 Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r'( = Wherigo.ZCharacter)');
+
   List<String> lines = LUA.split('\n');
-  String line = '';
+
   List<CharacterData> Characters = [];
   Map<String, ObjectData> NameToObject = {};
   var out = Map<String, dynamic>();
@@ -58,11 +31,8 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
   String container = '';
 
   for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (RegExp(r'( = Wherigo.ZItem)').hasMatch(line))
-      i = lines.length;
-    else
-    if (RegExp(r'( = Wherigo.ZCharacter)').hasMatch(line)) { //RegExp(r'( = Wherigo.ZCharacter)')
+    if (RegExp(r'( = Wherigo.ZCharacter)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.CHARACTER;
       LUAname = '';
       id = '';
       name = '';
@@ -74,7 +44,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
       gender = '';
       type = '';
 
-      LUAname = getLUAName(line);
+      LUAname = getLUAName(lines[i]);
       container = getContainer(lines[i]);
 
       description = '';
@@ -152,7 +122,7 @@ Map<String, dynamic> getCharactersFromCartridge(String LUA, dtable, obfuscator){
         if (lines[i].startsWith(LUAname + '.Type'))
           sectionCharacter = false;
 
-        if (RegExp(r'( = Wherigo.ZItem)').hasMatch(line)) {
+        if (RegExp(r'( = Wherigo.ZItem)').hasMatch(lines[i])) {
           sectionCharacter = false;
           i = lines.length;
         }

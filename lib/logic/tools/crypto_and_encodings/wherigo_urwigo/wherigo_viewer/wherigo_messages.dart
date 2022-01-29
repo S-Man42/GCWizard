@@ -1,152 +1,126 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
-
-class MessageData{
-  final List<List<MessageElementData>> MessageElement;
-
-  MessageData(
-      this.MessageElement,
-      );
-}
-
-class MessageElementData{
-  final ACTIONMESSAGETYPE MessageType;
-  final String MessageContent;
-
-  MessageElementData(
-    this.MessageType,
-    this.MessageContent,
-  );
-}
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
 
 
-List<List<MessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfuscator){
+
+List<List<ActionMessageElementData>> getMessagesFromCartridge(String LUA, dtable, obfuscator){
   if (LUA == null || LUA == '')
     return [];
 
 
   List<String> lines = LUA.split('\n');
-  List<MessageElementData> singleMessageDialog = [];
-  List<List<MessageElementData>> Messages = [];
-  Map<String, ObjectData> NameToObject = {};
-  var out = Map<String, dynamic>();
+  List<ActionMessageElementData> singleMessageDialog = [];
+  List<List<ActionMessageElementData>> Messages = [];
   bool section = true;
-  int j = 1;
+
   String line = '';
-  bool urwigo = (lines[6].trim().startsWith('local dtable = "'));
 
   for (int i = 0; i < lines.length - 1; i++){
     line = lines[i];
 
     if (line.trimLeft().startsWith('_Urwigo.MessageBox(') || line.trimLeft().startsWith('Wherigo.MessageBox(')) {
-      if (urwigo && i <100)
-        i = 190;
-      else {
         singleMessageDialog = [];
-        j = 1;
+        i++;
         do {
-          if (lines[i + j].trimLeft().startsWith('Text')) {
+          if (lines[i].trimLeft().startsWith('Text')) {
             singleMessageDialog.add(
-                MessageElementData(
+                ActionMessageElementData(
                     ACTIONMESSAGETYPE.TEXT,
-                    getTextData(lines[i + j],obfuscator, dtable)));
+                    getTextData(lines[i],obfuscator, dtable)));
           }
 
-          else if (lines[i + j].trimLeft().startsWith('Media')) {
+          else if (lines[i].trimLeft().startsWith('Media')) {
             singleMessageDialog.add(
-                MessageElementData(
+                ActionMessageElementData(
                     ACTIONMESSAGETYPE.IMAGE,
-                    lines[i + j].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
+                    lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
           }
 
-          else if (lines[i + j].trimLeft().startsWith('Buttons')) {
-            j++;
+          else if (lines[i].trimLeft().startsWith('Buttons')) {
+            i++;
             do {
               singleMessageDialog.add(
-                  MessageElementData(
+                  ActionMessageElementData(
                       ACTIONMESSAGETYPE.BUTTON,
-                      getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
-              j++;
-            } while (!lines[i + j].trimLeft().startsWith('}'));
+                      getTextData('Text = ' + lines[i].trim(), obfuscator, dtable)));
+              i++;
+            } while (!lines[i].trimLeft().startsWith('}'));
           }
-          j++;
-        } while ((i + j < lines.length) && !lines[i + j].trimLeft().startsWith('})'));
-        i = i + j;
+          i++;
+        } while ((i < lines.length) && !lines[i].trimLeft().startsWith('})'));
         Messages.add(singleMessageDialog);
       }
-    }
 
     else if (line.trimLeft().startsWith('_Urwigo.Dialog(') || line.trimLeft().startsWith('Wherigo.Dialog(')) {
       section = true;
       singleMessageDialog = [];
-      j = 1;
+      i++;
       do {
-        if (lines[i + j].trimLeft().startsWith('Text = ') ||
-            lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
-            lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
+        if (lines[i].trimLeft().startsWith('Text = ') ||
+            lines[i].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
+            lines[i].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
           singleMessageDialog.add(
-              MessageElementData(
+              ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT,
-                  getTextData(lines[i + j], obfuscator, dtable)));
-        } else if (lines[i + j].trimLeft().startsWith('Media')) {
+                  getTextData(lines[i], obfuscator, dtable)));
+        } else if (lines[i].trimLeft().startsWith('Media')) {
           singleMessageDialog.add(
-              MessageElementData(
+              ActionMessageElementData(
                   ACTIONMESSAGETYPE.IMAGE,
-                  lines[i + j].trimLeft().replaceAll('Media = ', '')));
-        } else if (lines[i + j].trimLeft().startsWith('Buttons')) {
-          j++;
+                  lines[i].trimLeft().replaceAll('Media = ', '')));
+        } else if (lines[i].trimLeft().startsWith('Buttons')) {
+          i++;
           do {
             singleMessageDialog.add(
-                MessageElementData(
+                ActionMessageElementData(
                     ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
-            j++;
-          } while (lines[i + j].trimLeft() != '}');
+                    getTextData('Text = ' + lines[i].trim(), obfuscator, dtable)));
+            i++;
+          } while (lines[i].trimLeft() != '}');
         }
-        if (lines[i + j].trimLeft().startsWith('}, function(action)') ||
-            lines[i + j].trimLeft().startsWith('}, nil)') ||
-            lines[i + j].trimLeft().startsWith('})')) {
+        if (lines[i].trimLeft().startsWith('}, function(action)') ||
+            lines[i].trimLeft().startsWith('}, nil)') ||
+            lines[i].trimLeft().startsWith('})')) {
           section = false;
         }
-        j = j + 1;
-      } while (section && (i + j < lines.length));
-      i = i + j;
+        i++;
+      } while (section && (i < lines.length));
       Messages.add(singleMessageDialog);
     }
 
     else if (line.trimLeft().startsWith('_Urwigo.OldDialog(')) {
-      j = 1;
+      i++;
       section = true;
       singleMessageDialog = [];
       do {
-        if (lines[i + j].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
-            lines[i + j].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
+        if (lines[i].trimLeft().startsWith('Text = ' + obfuscator + '(') ||
+            lines[i].trimLeft().startsWith('Text = (' + obfuscator + '(')) {
           singleMessageDialog.add(
-              MessageElementData(
+              ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT,
-                  getTextData(lines[i + j], obfuscator, dtable)));
-        } else if (lines[i + j].trimLeft().startsWith('Media')) {
+                  getTextData(lines[i], obfuscator, dtable)));
+        } else if (lines[i].trimLeft().startsWith('Media')) {
           singleMessageDialog.add(
-              MessageElementData(
+              ActionMessageElementData(
                   ACTIONMESSAGETYPE.IMAGE,
-                  lines[i + j].trimLeft().replaceAll('Media = ', '')));
-        } else if (lines[i + j].trimLeft().startsWith('Buttons')) {
-          j++;
+                  lines[i].trimLeft().replaceAll('Media = ', '')));
+        } else if (lines[i].trimLeft().startsWith('Buttons')) {
+          i++;
           do {
             singleMessageDialog.add(
-                MessageElementData(
+                ActionMessageElementData(
                     ACTIONMESSAGETYPE.BUTTON,
-                    getTextData('Text = ' + lines[i + j].trim(), obfuscator, dtable)));
-            j++;
-          } while (lines[i + j].trimLeft() != '}');
+                    getTextData('Text = ' + lines[i].trim(), obfuscator, dtable)));
+            i++;
+          } while (lines[i].trimLeft() != '}');
         }
-        if (lines[i + j].trimLeft().startsWith('})')) {
+        if (lines[i].trimLeft().startsWith('})')) {
           section = false;
         }
-        j = j + 1;
+        i++;
       } while (section);
-      i = i + j;
       Messages.add(singleMessageDialog);
     }
   };

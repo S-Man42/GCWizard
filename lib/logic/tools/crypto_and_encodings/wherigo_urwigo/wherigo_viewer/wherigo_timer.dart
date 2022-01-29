@@ -1,5 +1,6 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
 class TimerData{
   final String TimerLUAName;
@@ -21,7 +22,7 @@ class TimerData{
 }
 
 Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r'( = Wherigo.ZTimer)');
+
   List<String> lines = LUA.split('\n');
 
   List<TimerData> Timers = [];
@@ -41,7 +42,8 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length; i++){
 
-    if (re.hasMatch(lines[i])) {
+    if (RegExp(r'( = Wherigo.ZTimer)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.TIMER;
       LUAname = '';
       id = '';
       name = '';

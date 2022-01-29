@@ -1,35 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum OBJECT_TYPE {CHARACTER, INPUT, ITEM, MEDIA, TASK, TIMER, ZONE}
-
-class ObjectData{
-  final String ObjectID;
-  final int ObjectIndex;
-  final String ObjectName;
-  final String ObjectMedia;
-  final OBJECT_TYPE ObjectType;
-
-  ObjectData(
-      this.ObjectID,
-      this.ObjectIndex,
-      this.ObjectName,
-      this.ObjectMedia,
-      this.ObjectType,
-  );
-}
-
-enum ACTIONMESSAGETYPE {TEXT, IMAGE, BUTTON, COMMAND, CASE}
-
-Map<ACTIONMESSAGETYPE, String> ACTIONMESSAGETYPE_TEXT = {
-  ACTIONMESSAGETYPE.TEXT: 'txt',
-  ACTIONMESSAGETYPE.IMAGE: 'img',
-  ACTIONMESSAGETYPE.BUTTON: 'btn',
-  ACTIONMESSAGETYPE.COMMAND: 'cmd',
-  ACTIONMESSAGETYPE.CASE: 'cse',
-};
-
-Map TEXT_ACTIONMESSAGETYPE = switchMapKeyValue(ACTIONMESSAGETYPE_TEXT);
 
 
 String getLUAName(String line) {

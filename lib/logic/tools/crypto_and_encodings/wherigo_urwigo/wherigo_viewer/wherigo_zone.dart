@@ -1,60 +1,12 @@
 import 'dart:ffi';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
-class ZonePoint{
-  final double Latitude;
-  final double Longitude;
-  final double Altitude;
-
-  ZonePoint(
-      this.Latitude,
-      this.Longitude,
-      this.Altitude);
-}
-
-class ZoneData{
-  final String ZoneLUAName;
-  final String ZoneID;
-  final String ZoneName;
-  final String ZoneDescription;
-  final String ZoneVisible;
-  final String ZoneMediaName;
-  final String ZoneIconName;
-  final String ZoneActive;
-  final String ZoneDistanceRange;
-  final String ZoneShowObjects;
-  final String ZoneProximityRange;
-  final ZonePoint ZoneOriginalPoint;
-  final String ZoneDistanceRangeUOM;
-  final String ZoneProximityRangeUOM;
-  final String ZoneOutOfRange;
-  final String ZoneInRange;
-  final List<ZonePoint> ZonePoints;
-
-  ZoneData(
-      this.ZoneLUAName,
-      this.ZoneID,
-      this.ZoneName,
-      this.ZoneDescription,
-      this.ZoneVisible,
-      this.ZoneMediaName,
-      this.ZoneIconName,
-      this.ZoneActive,
-      this.ZoneDistanceRange,
-      this.ZoneShowObjects,
-      this.ZoneProximityRange,
-      this.ZoneOriginalPoint,
-      this.ZoneDistanceRangeUOM,
-      this.ZoneProximityRangeUOM,
-      this.ZoneOutOfRange,
-      this.ZoneInRange,
-      this.ZonePoints);
-}
 
 
 Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r' = Wherigo.Zone\(');
+
   List<String> lines = LUA.split('\n');
   String line = '';
   List<ZoneData> Zones = [];
@@ -84,7 +36,8 @@ Map<String, dynamic> getZonesFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length; i++){
     line = lines[i];
-    if (re.hasMatch(line)) {
+    if (RegExp(r'( = Wherigo.Zone\()').hasMatch(line)) {
+      currentObjectSection = OBJECT_TYPE.ZONE;
       points = [];
       LUAname = '';
       id = '';

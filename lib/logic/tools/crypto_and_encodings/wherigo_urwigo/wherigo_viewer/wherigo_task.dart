@@ -1,35 +1,9 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
-
-class TaskData{
-  final String TaskLUAName;
-  final String TaskID;
-  final String TaskName;
-  final String TaskDescription;
-  final String TaskVisible;
-  final String TaskMedia;
-  final String TaskIcon;
-  final String TaskActive;
-  final String TaskComplete;
-  final String TaskCorrectstate;
-
-  TaskData(
-      this.TaskLUAName,
-      this.TaskID,
-      this.TaskName,
-      this.TaskDescription,
-      this.TaskVisible,
-      this.TaskMedia,
-      this.TaskIcon,
-      this.TaskActive,
-      this.TaskComplete,
-      this.TaskCorrectstate);
-}
-
-
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
 Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r'( = Wherigo.ZTask)');
+
   List<String> lines = LUA.split('\n');
   List<TaskData> Tasks = [];
   Map<String, ObjectData> NameToObject = {};
@@ -50,7 +24,8 @@ Map<String, dynamic> getTasksFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length; i++){
 
-    if (re.hasMatch(lines[i])) {
+    if (RegExp(r'( = Wherigo.ZTask)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.TASK;
       LUAname = '';
       id = '';
       name = '';

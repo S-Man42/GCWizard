@@ -1,58 +1,11 @@
 
-import 'dart:developer';
-
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
-class InputData{
-  final String InputLUAName;
-  final String InputID;
-  final String InputName;
-  final String InputDescription;
-  final String InputVisible;
-  final String InputMedia;
-  final String InputIcon;
-  final String InputType;
-  final String InputText;
-  final List<String> InputChoices;
-  final List<AnswerData> InputAnswers;
-
-  InputData(
-      this.InputLUAName,
-      this.InputID,
-      this.InputName,
-      this.InputDescription,
-      this.InputVisible,
-      this.InputMedia,
-      this.InputIcon,
-      this.InputType,
-      this.InputText,
-      this.InputChoices,
-      this.InputAnswers);
-}
-
-class AnswerData{
-  final String AnswerAnswer;
-  final List<ActionData> AnswerActions;
-
-  AnswerData(
-      this.AnswerAnswer,
-      this.AnswerActions,
-      );
-}
-
-class ActionData{
-  final ACTIONMESSAGETYPE ActionType;
-  final String ActionContent;
-
-  ActionData(
-      this.ActionType,
-      this.ActionContent
-      );
-}
 
 Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r'( = Wherigo.ZInput)');
+
   List<String> lines = LUA.split('\n');
 
   bool section = true;
@@ -73,8 +26,8 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   List<String> answerList = [];
   Map<String, List<AnswerData>> Answers = {};
 
-  ActionData action;
-  List<ActionData> answerActions = [];
+  ActionMessageElementData action;
+  List<ActionMessageElementData> answerActions = [];
 
   bool sectionAnalysed = false;
   bool insideInputFunction = false;
@@ -85,8 +38,8 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   var out = Map<String, dynamic>();
 
   for (int i = 0; i < lines.length - 1; i++) {
-    if (re.hasMatch(lines[i])) {
-
+    if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.INPUT;
       LUAname = '';
       id = '';
       name = '';
@@ -253,9 +206,9 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         i++;
         if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
           if (lines[i].trimLeft().startsWith(obfuscator))
-            answerActions.add(ActionData(ACTIONMESSAGETYPE.BUTTON, deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
+            answerActions.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON, deobfuscateUrwigoText(lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', ''), dtable)));
           else
-            answerActions.add(ActionData(ACTIONMESSAGETYPE.BUTTON, lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
+            answerActions.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON, lines[i].trim().replaceAll(obfuscator + '("', '').replaceAll('")', '')));
         }
       } while (!lines[i].trim().startsWith('}'));
     }
@@ -366,10 +319,10 @@ bool _FunctionEnd(String line1, String line2) {
 }
 
 
-ActionData _handleLine(String line, String dtable, String obfuscator) {
+ActionMessageElementData _handleLine(String line, String dtable, String obfuscator) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio'))
-    return ActionData(
+    return ActionMessageElementData(
         ACTIONMESSAGETYPE.COMMAND,
         line.trim());
 
@@ -385,34 +338,34 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
     return null;
 
   else if (line.startsWith('Text = ')) {
-    return ActionData(
+    return ActionMessageElementData(
         ACTIONMESSAGETYPE.TEXT,
         getTextData(line, obfuscator, dtable));
   }
   else if (line.startsWith('Media = ')) {
-    return ActionData(
+    return ActionMessageElementData(
         ACTIONMESSAGETYPE.IMAGE,
         line.trimLeft().replaceAll('Media = ', '').replaceAll(',', ''));
   }
   else if (line.startsWith('if '))
-      return ActionData(
+      return ActionMessageElementData(
           ACTIONMESSAGETYPE.CASE,
           line.trimLeft());
 
   else if (line.startsWith('elseif '))
-      return ActionData(
+      return ActionMessageElementData(
           ACTIONMESSAGETYPE.CASE,
           line.trimLeft());
 
   else if (line.startsWith('else'))
-      return ActionData(
+      return ActionMessageElementData(
           ACTIONMESSAGETYPE.CASE,
           line.trimLeft());
   else
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
       List<String> actions = line.trim().split('=');
       if (actions.length == 2) {
-        return ActionData(
+        return ActionMessageElementData(
             ACTIONMESSAGETYPE.COMMAND,
             actions[0].trim() + ' = ' + 
                 deobfuscateUrwigoText(
@@ -430,14 +383,14 @@ ActionData _handleLine(String line, String dtable, String obfuscator) {
                     , dtable)
         );
       } else {
-        return ActionData(
+        return ActionMessageElementData(
             ACTIONMESSAGETYPE.COMMAND,
             deobfuscateUrwigoText(actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(), dtable)
         );
       }
     }
     else
-      return ActionData(
+      return ActionMessageElementData(
           ACTIONMESSAGETYPE.COMMAND,
           line.trimLeft());
 }

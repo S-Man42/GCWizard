@@ -93,7 +93,8 @@ import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_identifier.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_variable.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_timer.dart';
@@ -301,9 +302,9 @@ class WherigoCartridge{
   final List<ZoneData> Zones;
   final List<TimerData> Timers;
   final List<MediaData> Media;
-  final List<List<MessageElementData>> Messages;
+  final List<List<ActionMessageElementData>> Messages;
   final List<AnswerData> Answers;
-  final List<IdentifierData> Identifiers;
+  final List<VariableData> Identifiers;
   final Map<String, ObjectData> NameToObject;
   final ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsGWC;
@@ -485,9 +486,9 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   List<ZoneData> _Zones = [];
   List<TimerData> _Timers = [];
   List<MediaData> _Media = [];
-  List<List<MessageElementData>> _Messages = [];
+  List<List<ActionMessageElementData>> _Messages = [];
   List<AnswerData> _Answers = [];
-  List<IdentifierData> _Identifiers = [];
+  List<VariableData> _Identifiers = [];
   Map<String, ObjectData> _NameToObject = {};
 
   int _Unknown3 = 0;

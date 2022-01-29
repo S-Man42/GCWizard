@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
@@ -37,7 +38,7 @@ class ItemData{
 
 
 Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
-  RegExp re = RegExp(r'( = Wherigo.ZItem)');
+
   List<String> lines = LUA.split('\n');
   List<ItemData> Items = [];
   Map<String, ObjectData> NameToObject = {};
@@ -58,7 +59,8 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
   String container = '';
 
   for (int i = 0; i < lines.length; i++){
-    if (re.hasMatch(lines[i])) {
+    if (RegExp(r'( = Wherigo.ZItem)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.ITEM;
       LUAname = '';
       container = '';
       id = '';
