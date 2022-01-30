@@ -3,6 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
+String _answerVariable = '';
 
 Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
@@ -11,6 +12,8 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   bool section = true;
   bool sectionChoices = true;
   bool sectionText = true;
+  bool sectionDescription = true;
+
   String LUAname = '';
   String id = '';
   String variableID = '';
@@ -27,6 +30,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   List<String> answerList = [];
   Map<String, List<AnswerData>> Answers = {};
+
 
   ActionMessageElementData action;
   List<ActionMessageElementData> answerActions = [];
@@ -56,105 +60,113 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
       LUAname = getLUAName(lines[i]);
 
-      i++;
-      id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
-
-      i++;
-      name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
-
-      description = '';
       section = true;
-      i++;
       do {
-        description = description + lines[i];
         i++;
-        if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
-          section = false;
-      } while (section);
-      description =
-          getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
-      section = true;
-      do {
-        if (i < lines.length - 1) {
-          if (lines[i].startsWith(LUAname + '.Visible')) {
-            visible = getLineData(
-                lines[i], LUAname, 'Visible', obfuscator, dtable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Media')) {
-            media = getLineData(
-                lines[i], LUAname, 'Media', obfuscator, dtable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Icon')) {
-            icon = getLineData(
-                lines[i], LUAname, 'Icon', obfuscator, dtable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.InputType')) {
-            inputType = getLineData(
-                lines[i], LUAname, 'InputType', obfuscator, dtable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.InputVariableId')) {
-            variableID = getLineData(
-                lines[i], LUAname, 'InputVariableId', obfuscator, dtable);
-          }
-
-          if (lines[i].startsWith(LUAname + '.Text')) {
-            if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
-                lines[i + 1].startsWith(LUAname + '.Media') ||
-                RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]))
-              text = getLineData(
-                  lines[i], LUAname, 'Text', obfuscator, dtable);
-            else {
-              text = '';
-              sectionText = true;
-              do {
-                i++;
-                text = text + lines[i];
-                if (lines[i + 1].trim().startsWith('function'))
-                  sectionText = false;
-                if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
-                    RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
-                    lines[i + 1].startsWith(LUAname + '.Media'))
-                  sectionText = false;
-              } while (sectionText);
-              text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
-            }
-          }
-
-          if (lines[i].startsWith(LUAname + '.Choices')) {
-            listChoices = [];
-            if (lines[i + 1].startsWith(LUAname + '.InputType')) {
-              listChoices.addAll(
-                  getChoicesSingleLine(lines[i], LUAname, obfuscator, dtable));
-            } else {
-              i++;
-              sectionChoices = true;
-              do {
-                if (lines[i].trimLeft().startsWith('"')) {
-                  listChoices.add(
-                      lines[i ]
-                          .trimLeft()
-                          .replaceAll('",', '')
-                          .replaceAll('"', ''));
-                  i++;
-                } else {
-                  sectionChoices = false;
-                }
-              } while (sectionChoices);
-            }
-          }
-
-          if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
-              RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]))
-            section = false;
+        if (lines[i].trim().startsWith(LUAname + '.Id')) {
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
         }
-        i++;
+
+        if (lines[i].trim().startsWith(LUAname + '.Name')) {
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Description')) {
+          description = '';
+          sectionDescription = true;
+          i++;
+          do {
+            description = description + lines[i];
+            i++;
+            if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+              sectionDescription = false;
+          } while (sectionDescription);
+          description =
+              getLineData(description, LUAname, 'Description', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Media')) {
+          media = getLineData(lines[i], LUAname, 'Media', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Visible')) {
+          visible = getLineData(
+              lines[i], LUAname, 'Visible', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Icon')) {
+          icon = getLineData(
+              lines[i], LUAname, 'Icon', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.InputType')) {
+          inputType = getLineData(
+              lines[i], LUAname, 'InputType', obfuscator, dtable);
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.InputVariableId')) {
+          variableID = getLineData(
+              lines[i], LUAname, 'InputVariableId', obfuscator, dtable);
+        }
+
+        if (lines[i].startsWith(LUAname + '.Text')) {
+          if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+              lines[i + 1].trim().startsWith(LUAname + '.Media') ||
+              lines[i + 1].trim().startsWith(LUAname + '.Visible') ||
+              RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]))
+            text = getLineData(
+                lines[i], LUAname, 'Text', obfuscator, dtable);
+          else {
+            text = '';
+            sectionText = true;
+            do {
+              i++;
+              text = text + lines[i];
+              if (lines[i + 1].trim().startsWith('function'))
+                sectionText = false;
+              if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+                  RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
+                  lines[i + 1].trim().startsWith(LUAname + '.Media') ||
+                  lines[i + 1].trim().startsWith(LUAname + '.Visible'))
+                sectionText = false;
+            } while (sectionText);
+            text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
+          }
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Choices')) {
+          listChoices = [];
+          if (lines[i + 1].trim().startsWith(LUAname + '.InputType') ||
+              lines[i + 1].trim().startsWith(LUAname + '.Text')) {
+            listChoices.addAll(
+                getChoicesSingleLine(lines[i], LUAname, obfuscator, dtable));
+          } else {
+            i++;
+            sectionChoices = true;
+            do {
+              if (lines[i].trimLeft().startsWith('"')) {
+                listChoices.add(
+                    lines[i ]
+                        .trimLeft()
+                        .replaceAll('",', '')
+                        .replaceAll('"', ''));
+                i++;
+              } else {
+                sectionChoices = false;
+              }
+            } while (sectionChoices);
+          }
+        }
+
+        if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+            RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
+            RegExp(r'(:OnStart)').hasMatch(lines[i + 1]))
+          section = false;
+
       } while (section);
       i--;
+
       Inputs.add(InputData(
         LUAname,
         id,
@@ -179,6 +191,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       insideInputFunction = true;
       inputObject = '';
       answerActions = [];
+      _answerVariable = '';
 
       // getting name of function
       inputObject = lines[i].replaceAll('function ', '').replaceAll(
@@ -228,6 +241,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         });
         answerActions = [];
         answerList = [];
+        _answerVariable = '';
       }
     }
 
@@ -272,6 +286,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
   out.addAll({'content': resultInputs});
   out.addAll({'names': NameToObject});
   return out;
+
 }
 
 List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable){
@@ -310,13 +325,13 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
   }
   else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
-    if (lineBefore.trim().endsWith('= input'))
-      lineBefore = lineBefore.trim().replaceAll(' = input', '').replaceAll(' ', '');
+    if (_answerVariable == '')
+      _answerVariable = _getVariable(lineBefore);
     line = line.trim()
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
         .replaceAll('Wherigo.NoCaseEquals', '')
-        .replaceAll(lineBefore + ',', '')
+        .replaceAll(_answerVariable + ',', '')
         .replaceAll('(', '')
         .replaceAll(')', '')
         .replaceAll('"', '')
@@ -331,7 +346,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
             line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll(
                 '")', ''), dtable)
       ];
-    }else
+    } else
       return [line];
   }
 }
@@ -358,6 +373,11 @@ bool _FunctionEnd(String line1, String line2) {
 ActionMessageElementData _handleLine(String line, String dtable, String obfuscator) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio'))
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.COMMAND,
+        line.trim());
+
+  else if (line.startsWith('Wherigo.GetInput'))
     return ActionMessageElementData(
         ACTIONMESSAGETYPE.COMMAND,
         line.trim());
@@ -427,4 +447,12 @@ ActionMessageElementData _handleLine(String line, String dtable, String obfuscat
     actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, actionLine);
   }
+}
+
+String _getVariable(String line){
+  if (line.trim().endsWith('= input'))
+    line = line.trim().replaceAll(' = input', '').replaceAll(' ', '');
+  if (line.trim().endsWith('~= nil then'))
+    line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
+  return line;
 }

@@ -54,37 +54,46 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
 
       LUAname = getLUAName(lines[i]);
 
-      i++; id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
-      i++; name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
-
-      description = '';
       sectionTimer = true;
-      sectionDescription = true;
-
       do {
         i++;
-        description = description + lines[i];
-        if (i + 1 > lines.length - 1 || lines[i + 1].startsWith(LUAname + '.Visible'))
-          sectionDescription = false;
-      } while (sectionDescription);
-      description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
 
-      do {
-          if (lines[i].startsWith(LUAname + '.Visible'))
-            visible = getLineData(
-                lines[i], LUAname, 'Visible', obfuscator, dtable);
+        if (lines[i].trim().startsWith(LUAname + '.Id'))
+          id = getLineData(lines[i], LUAname, 'Id', obfuscator, dtable);
 
-          if (lines[i].startsWith(LUAname + '.Duration'))
-            duration = getLineData(
-                lines[i], LUAname, 'Duration', obfuscator, dtable);
+        if (lines[i].trim().startsWith(LUAname + '.Name'))
+          name = getLineData(lines[i], LUAname, 'Name', obfuscator, dtable);
 
-          if (lines[i].startsWith(LUAname + '.Type')) {
-            type = getLineData(
-                lines[i], LUAname, 'Type', obfuscator, dtable);
-            sectionTimer = false;
-          }
+        if (lines[i].trim().startsWith(LUAname + '.Description')) {
+          description = '';
+          sectionDescription = true;
 
-          i++;
+          do {
+            i++;
+            description = description + lines[i];
+            if (i + 1 > lines.length - 1 || lines[i + 1].trim().startsWith(LUAname + '.Visible'))
+              sectionDescription = false;
+          } while (sectionDescription);
+          description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
+
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Duration'))
+          duration = getLineData(
+              lines[i], LUAname, 'Duration', obfuscator, dtable).trim();
+
+        if (lines[i].trim().startsWith(LUAname + '.Type')) {
+          type = getLineData(
+              lines[i], LUAname, 'Type', obfuscator, dtable).trim().toLowerCase();
+        }
+
+        if (lines[i].trim().startsWith(LUAname + '.Visible'))
+          visible = getLineData(lines[i], LUAname, 'Visible', obfuscator, dtable).trim().toLowerCase();
+
+        if (RegExp(r'( = Wherigo.ZTimer)').hasMatch(lines[i]) ||
+            RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i]))
+          sectionTimer = false;
+
       } while (sectionTimer && i < lines.length - 1);
 
       Timers.add(TimerData(

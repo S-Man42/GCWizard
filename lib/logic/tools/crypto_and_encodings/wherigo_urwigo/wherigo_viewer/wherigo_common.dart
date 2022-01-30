@@ -6,6 +6,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 String getLUAName(String line) {
   String result = '';
   int i = 0;
+  line = line.trim();
   while (line[i] != ' ') {
     result = result + line[i];
     i++;
@@ -25,7 +26,7 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
     result = result.replaceAll('"', '');
   }
 
-  return _normalizeText(result);
+  return _normalizeText(result).trim();
 }
 
 

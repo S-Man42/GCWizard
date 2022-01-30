@@ -5049,6 +5049,8 @@
   "wherigo_output_question": "Question",
   "wherigo_output_showobjects": "Show Objects",
   "wherigo_output_text": "Text",
+  "wherigo_output_timer_countdown": "Countdown",
+  "wherigo_output_timer_interval": "Interval",
   "wherigo_output_type": "Type",
   "wherigo_output_variableid": "Variable ID",
   "wherigo_output_visible": "Visible",
