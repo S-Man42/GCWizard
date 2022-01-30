@@ -69,15 +69,15 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'mime_types': ['image/tiff'],
     'file_class': FileClass.IMAGE
   },
-  FileType.WEBP: {
-    'extensions': ['webp'],
-    'magic_bytes': <List<int>>[
-      //[0x52, 0x49, 0x46, 0x46] // identically to WAV
-      []
-    ],
-    'mime_types': ['image/webp'],
-    'file_class': FileClass.IMAGE
-  },
+  // FileType.WEBP: {
+  //   'extensions': ['webp'],
+  //   'magic_bytes': <List<int>>[
+  //     //[0x52, 0x49, 0x46, 0x46] // identically to WAV
+  //     []
+  //   ],
+  //   'mime_types': ['image/webp'],
+  //   'file_class': FileClass.IMAGE
+  // },
   FileType.ZIP: {
     'extensions': ['zip'],
     'magic_bytes': <List<int>>[
@@ -396,7 +396,10 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
     for (var bytes in _magicBytes) {
       if (blobBytes != null &&
           (blobBytes.length >= (bytes.length + offset)) &&
-          ListEquality().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) return fileType;
+          ListEquality().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
+        print(fileType);
+        return fileType;
+      }
     }
   }
 
