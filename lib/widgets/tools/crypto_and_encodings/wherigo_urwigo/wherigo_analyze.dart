@@ -447,8 +447,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           .MediaFilesContents[0].MediaFileBytes == null ? themeColors().inActive() : null,
                       onPressed: () {
                         _WherigoCartridge
-                            .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(context, _WherigoCartridge
-                            .MediaFilesContents[0].MediaFileBytes, 'LUAByteCode');
+                            .MediaFilesContents[0].MediaFileBytes == null ? null : _exportFile(
+                                                                                      context,
+                                                                                      _WherigoCartridge.MediaFilesContents[0].MediaFileBytes,
+                                                                                      'LUAByteCode',
+                                                                                      FileType.LUAC);
                       },
                     )
                   ]
@@ -571,7 +574,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     size: IconButtonSize.SMALL,
                     iconColor: _WherigoCartridge.LUAFile == null ? themeColors().inActive() : null,
                     onPressed: () {
-                      _WherigoCartridge.LUAFile == null ? null : _exportFile(context, _WherigoCartridge.LUAFile.codeUnits, 'LUAsourceCode');
+                      _WherigoCartridge.LUAFile == null ? null : _exportFile(context, _WherigoCartridge.LUAFile.codeUnits, 'LUAsourceCode', FileType.LUA);
                     },
                   ),
                 ],
@@ -1612,8 +1615,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         .toString();
   }
 
-  _exportFile(BuildContext context, Uint8List data, String name) async {
-    var fileType = getFileType(data);
+  _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
     var value = await saveByteDataToFile(
         context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 

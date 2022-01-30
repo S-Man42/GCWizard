@@ -72,7 +72,8 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.WEBP: {
     'extensions': ['webp'],
     'magic_bytes': <List<int>>[
-      [0x52, 0x49, 0x46, 0x46]
+      //[0x52, 0x49, 0x46, 0x46] // identically to WAV
+      []
     ],
     'mime_types': ['image/webp'],
     'file_class': FileClass.IMAGE
@@ -166,7 +167,8 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.FDL: {
     'extensions': ['fdl'],
-    'magic_bytes': <List<int>>[[]],
+    'magic_bytes': <List<int>>[
+      [0x00, 0x00]],
     'mime_types': ['application/octet-stream'],
     'file_class': FileClass.SOUND
   },
@@ -215,7 +217,8 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.LUAC: {
     'extensions': ['luac'],
-    'magic_bytes': <List<int>>[[0x1B, 0x4C, 0x75, 0x61]],
+    'magic_bytes': <List<int>>[
+      [0x1B, 0x4C, 0x75, 0x61, 0x51, 0x00, 0x01, 0x04]],
     'mime_types': ['application/octet-stream'],
     'file_class': FileClass.BINARY
   },
@@ -229,7 +232,9 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   },
   FileType.LUA: {
     'extensions': ['lua'],
-    'magic_bytes': <List<int>>[],
+    'magic_bytes': <List<int>>[
+      [0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65]
+    ],
     'mime_types': ['text/plain'],
     'file_class': FileClass.TEXT
   },
