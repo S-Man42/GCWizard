@@ -45,6 +45,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length - 2; i++) {
     if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i])) {
+      print('ZInput '+i.toString()+' '+lines[i]);
       currentObjectSection = OBJECT_TYPE.INPUT;
       LUAname = '';
       id = '';
@@ -75,7 +76,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         if (lines[i].trim().startsWith(LUAname + '.Description')) {
           description = '';
           sectionDescription = true;
-          i++;
+          //i++;
           do {
             description = description + lines[i];
             i++;
@@ -111,27 +112,31 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         }
 
         if (lines[i].startsWith(LUAname + '.Text')) {
+          print('      .Text '+i.toString()+' '+lines[i]);
           if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
               lines[i + 1].trim().startsWith(LUAname + '.Media') ||
               lines[i + 1].trim().startsWith(LUAname + '.Visible') ||
-              RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]))
+              lines[i + 1].trim().startsWith('function') ||
+              RegExp(r'(:OnProximity)').hasMatch(lines[i + 1])) { // single Line
             text = getLineData(
                 lines[i], LUAname, 'Text', obfuscator, dtable);
-          else {
+            print('      single Line '+text);
+          }
+          else { // multi Lines of Text
             text = '';
             sectionText = true;
             do {
               i++;
               text = text + lines[i];
-              if (lines[i + 1].trim().startsWith('function'))
-                sectionText = false;
               if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
                   RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
                   lines[i + 1].trim().startsWith(LUAname + '.Media') ||
+                  lines[i + 1].trim().startsWith('function') ||
                   lines[i + 1].trim().startsWith(LUAname + '.Visible'))
                 sectionText = false;
             } while (sectionText);
             text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
+            print('      multi Line '+text);
           }
         }
 
@@ -160,6 +165,7 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         }
 
         if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+            RegExp(r'(function)').hasMatch(lines[i + 1]) ||
             RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
             RegExp(r'(:OnStart)').hasMatch(lines[i + 1]))
           section = false;
@@ -182,11 +188,12 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         [],
       ));
       NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.INPUT);
-    }
+    } // end if lines[i] hasMatch Wherigo.ZInput - Input-Object
 
     // get all Answers - these are part of the function <InputObjcet>:OnGetInput(input)
 
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
+      print('onget '+i.toString()+' '+lines[i]);
       // function for getting all inputs for an input object found
       insideInputFunction = true;
       inputObject = '';
