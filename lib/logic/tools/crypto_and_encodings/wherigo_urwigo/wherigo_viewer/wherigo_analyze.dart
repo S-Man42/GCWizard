@@ -727,6 +727,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_characters');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -744,6 +745,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_items');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -761,6 +763,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_tasks');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -778,6 +781,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_inputs');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -795,6 +799,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_zones');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -812,6 +817,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_timers');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -829,6 +835,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_timers');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -844,6 +851,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_messages');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
 
       try {
@@ -861,6 +869,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _ResultsLUA.add('wherigo_error_runtime_exception');
         _ResultsLUA.add('wherigo_error_lua_identifiers');
         _ResultsLUA.add(exception.toString());
+        _ResultsLUA.add('');
       }
     }
     print('output WherigoCartridge '+_CartridgeName);
@@ -1031,6 +1040,7 @@ String _normalizeLUAmultiLineText(String LUA) {
       .replaceAll('\\195\\164', 'ä')
       .replaceAll('\\195\\182', 'ö')
       .replaceAll('\\195\\188', 'ü')
+      .replaceAll('\\195\\132', 'Ä')
       .replaceAll('\\195\\156', 'Ü')
       .replaceAll('\\195\\159', 'ß')
       .replaceAll('\\194\\176', '°')

@@ -149,7 +149,12 @@ Map<String, dynamic> getItemsFromCartridge(String LUA, dtable, obfuscator){
         }
 
         if (RegExp(r'( = Wherigo.ZItem)').hasMatch(lines[i]) ||
-            RegExp(r'( = Wherigo.ZTask)').hasMatch(lines[i]))
+            RegExp(r'( = Wherigo.ZTask)').hasMatch(lines[i]) ||
+            RegExp(r'( = Wherigo.ZVariables)').hasMatch(lines[i]) ||
+            RegExp(r'( = Wherigo.ZTimer)').hasMatch(lines[i]) ||
+            RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i]) ||
+            RegExp(r'(function)').hasMatch(lines[i]) ||
+          i > lines.length - 2)
           sectionItem = false;
 
       } while (sectionItem);

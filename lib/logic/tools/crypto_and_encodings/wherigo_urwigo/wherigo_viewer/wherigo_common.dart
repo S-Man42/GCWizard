@@ -70,9 +70,6 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     }
   }
 
-  if (RegExp(r'(WWB_multi_pla)').hasMatch(result))
-    result = removeWWB(result);
-
   return _normalizeText(result);
 }
 
@@ -138,12 +135,19 @@ String _getCompositeText(String text, String obfuscator, String dtable){
 
 
 String _normalizeText(String text){
+  if (RegExp(r'(WWB_multiplatform_string)').hasMatch(text))
+    text = removeWWB(text);
   return text
       .replaceAll(String.fromCharCode(92) + '"', "'")
       .replaceAll('"', '')
+      .replaceAll('),', '')
       .replaceAll('&nbsp;', ' ')
+      .replaceAll('&amp;', '&')
       .replaceAll('<BR>', '\n')
-      .replaceAll(String.fromCharCode(92) + 'n', '\n');
+      .replaceAll(String.fromCharCode(92) + 'n', '\n')
+      .replaceAll('{PocketPC = 1}', '')
+      .replaceAll('{PocketPC = 1', '')
+      ;
 }
 
 String getContainer(String line) {
@@ -160,7 +164,10 @@ String getContainer(String line) {
 }
 
 String removeWWB(String wwb){
-  String result = wwb.substring(0, wwb.length - 2);
-  return result.replaceAll('WWB_multiplatform_string(', '');
+  if (wwb.endsWith(')'))
+    wwb = wwb.substring(0, wwb.length - 2);
+  if (wwb.endsWith('),'))
+    wwb = wwb.substring(0, wwb.length - 3);
+  return wwb.replaceAll('WWB_multiplatform_string(', '').replaceAll('WWB_multiplatform_string', '');
 
 }

@@ -199,8 +199,12 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
       Answers[inputObject] = [];
     } // end if identify input function
 
-    if (lines[i].trimLeft() == 'input = tonumber(input)') {
-      // do nothing;
+    if (lines[i].trim().endsWith('= tonumber(input)')) {
+      _answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
+    }
+
+    else if (lines[i].trim().endsWith(' = input')) {
+      _answerVariable = lines[i].trim().replaceAll(' = input', '');
     }
 
     else if (lines[i].trimLeft() == 'if input == nil then') {
@@ -290,16 +294,21 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 }
 
 List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable){
+  print('      getanswer '+i.toString()+' '+line);
   if (line.trim().startsWith('if input == ') ||
-      line.trim().startsWith('elseif input == ')) {
+      line.trim().startsWith('elseif input == ') ||
+      line.trim().startsWith('if ' + _answerVariable + ' == ')) {
     return line.trimLeft()
         .replaceAll('if', '')
         .replaceAll('else', '')
-        .replaceAll('input == ', '')
+        .replaceAll('input', '')
+        .replaceAll('==', '')
         .replaceAll('then', '')
+        .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .split('or');
   }
+
   else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
@@ -341,13 +350,12 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
         .replaceAll('Answer,', '')
         .trim();
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
-      return [
-        deobfuscateUrwigoText(
-            line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll(
-                '")', ''), dtable)
-      ];
-    } else
-      return [line];
+      line = deobfuscateUrwigoText(
+          line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll(
+              '")', ''), dtable);
+    }
+    line = line.split(' or ').join('\n');
+    return [removeWWB(line)];
   }
 }
 
@@ -359,7 +367,8 @@ bool _SectionEnd(String line){
       line.trim().startsWith('elseif _Urwigo.Hash(') ||
       line.trim().startsWith('elseif (_Urwigo.Hash(') ||
       line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('elseif Wherigo.NoCaseEquals('))
+      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
+      line.trim().startsWith('if ' + _answerVariable + ' == '))
     return true;
   else
     return false;
