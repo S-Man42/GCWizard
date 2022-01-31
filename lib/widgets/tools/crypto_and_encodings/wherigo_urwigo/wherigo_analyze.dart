@@ -527,6 +527,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 )
               : GCWFilesOutput(
                   suppressHiddenDataMessage: true,
+                  suppressedButtons: {GCWImageViewButtons.SAVE},
                   files: [
                     PlatformFile(
                         //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,

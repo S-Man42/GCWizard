@@ -69,15 +69,15 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'mime_types': ['image/tiff'],
     'file_class': FileClass.IMAGE
   },
-  // FileType.WEBP: {
-  //   'extensions': ['webp'],
-  //   'magic_bytes': <List<int>>[
-  //     //[0x52, 0x49, 0x46, 0x46] // identically to WAV
-  //     []
-  //   ],
-  //   'mime_types': ['image/webp'],
-  //   'file_class': FileClass.IMAGE
-  // },
+  FileType.WEBP: {
+    'extensions': ['webp'],
+    'magic_bytes': <List<int>>[
+       [0x52, 0x49, 0x46, 0x46] // identically to WAV - check details
+     ],
+    'magic_bytes_detail': <int>[0x57, 0x45, 0x42, 0x50],
+    'mime_types': ['image/webp'],
+    'file_class': FileClass.IMAGE
+  },
   FileType.ZIP: {
     'extensions': ['zip'],
     'magic_bytes': <List<int>>[
@@ -117,8 +117,9 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['wmv'],
     'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
     'magic_bytes': <List<int>>[
-      [0x30, 0x26, 0xB2, 0x75]
+      [0x30, 0x26, 0xB2, 0x75],
     ],
+    'magic_byte_detail': <int>[0x57, 0x41, 0x56, 0x45],
     'file_class': FileClass.SOUND
   },
   FileType.WAV: {
@@ -127,6 +128,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x52, 0x49, 0x46, 0x46],
       [0x57, 0x41, 0x56, 0x45]
     ],
+    'magic_bytes_detail': <int>[0x57, 0x41, 0x56, 0x45],
     'mime_types': ['audio/wav', 'audio/x-wav'],
     'file_class': FileClass.SOUND
   },
@@ -270,6 +272,10 @@ List<List<int>> magicBytes(FileType type) {
   return _FILE_TYPES[type]['magic_bytes'];
 }
 
+List<int> magicBytesDetail(FileType type) {
+  return _FILE_TYPES[type]['magic_bytes_detail'];
+}
+
 int magicBytesOffset(FileType type) {
   return _FILE_TYPES[type]['magic_bytes_offset'];
 }
@@ -389,6 +395,7 @@ bool isImage(Uint8List blobBytes) {
 }
 
 FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT}) {
+  Uint8List RIFF = Uint8List.fromList([0x52, 0x49, 0x46, 0x46]);
   for (var fileType in _FILE_TYPES.keys) {
     var _magicBytes = magicBytes(fileType);
     var offset = magicBytesOffset(fileType) ?? 0;
@@ -397,8 +404,16 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
       if (blobBytes != null &&
           (blobBytes.length >= (bytes.length + offset)) &&
           ListEquality().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
-        print(fileType);
-        return fileType;
+        // test if RIFF then test for details
+        if (ListEquality().equals(bytes, RIFF)) {
+          for (var fileTypeContainer in _FILE_TYPES.keys) {
+            var _magicBytesDetails = magicBytesDetail(fileTypeContainer);
+            if (ListEquality().equals(blobBytes.sublist(8, 12), _magicBytesDetails)) {
+              return fileTypeContainer;
+            }
+          }
+        } else
+          return fileType;
       }
     }
   }

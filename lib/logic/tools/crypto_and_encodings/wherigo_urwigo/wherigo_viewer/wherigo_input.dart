@@ -45,7 +45,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 
   for (int i = 0; i < lines.length - 2; i++) {
     if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i])) {
-      print('ZInput '+i.toString()+' '+lines[i]);
       currentObjectSection = OBJECT_TYPE.INPUT;
       LUAname = '';
       id = '';
@@ -112,7 +111,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
         }
 
         if (lines[i].startsWith(LUAname + '.Text')) {
-          print('      .Text '+i.toString()+' '+lines[i]);
           if (RegExp(r'( = Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
               lines[i + 1].trim().startsWith(LUAname + '.Media') ||
               lines[i + 1].trim().startsWith(LUAname + '.Visible') ||
@@ -120,7 +118,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
               RegExp(r'(:OnProximity)').hasMatch(lines[i + 1])) { // single Line
             text = getLineData(
                 lines[i], LUAname, 'Text', obfuscator, dtable);
-            print('      single Line '+text);
           }
           else { // multi Lines of Text
             text = '';
@@ -136,7 +133,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
                 sectionText = false;
             } while (sectionText);
             text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
-            print('      multi Line '+text);
           }
         }
 
@@ -193,7 +189,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
     // get all Answers - these are part of the function <InputObjcet>:OnGetInput(input)
 
     if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
-      print('onget '+i.toString()+' '+lines[i]);
       // function for getting all inputs for an input object found
       insideInputFunction = true;
       inputObject = '';
@@ -301,7 +296,6 @@ Map<String, dynamic> getInputsFromCartridge(String LUA, dtable, obfuscator){
 }
 
 List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable){
-  print('      getanswer '+i.toString()+' '+line);
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ')) {

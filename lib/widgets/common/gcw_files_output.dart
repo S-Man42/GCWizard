@@ -20,8 +20,9 @@ import 'package:gc_wizard/widgets/utils/platform_file.dart';
 class GCWFilesOutput extends StatefulWidget {
   final List<PlatformFile> files;
   final bool suppressHiddenDataMessage;
+  final Set<GCWImageViewButtons> suppressedButtons;
 
-  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false}) : super(key: key);
+  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons}) : super(key: key);
 
   @override
   _GCWFilesOutputState createState() => _GCWFilesOutputState();
@@ -111,7 +112,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
             ],
           ),
           if (file.fileClass == FileClass.IMAGE)
-            Container(child: GCWImageView(imageData: GCWImageViewData(file)), margin: EdgeInsets.only(left: 42)),
+            Container(child: GCWImageView(imageData: GCWImageViewData(file), suppressedButtons: widget.suppressedButtons,), margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.TEXT)
             Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.SOUND)
