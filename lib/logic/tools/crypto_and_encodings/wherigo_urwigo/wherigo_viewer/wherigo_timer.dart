@@ -69,9 +69,9 @@ Map<String, dynamic> getTimersFromCartridge(String LUA, dtable, obfuscator){
           sectionDescription = true;
 
           do {
-            i++;
             description = description + lines[i];
-            if (i + 1 > lines.length - 1 || lines[i + 1].trim().startsWith(LUAname + '.Visible'))
+            i++;
+            if (i > lines.length - 1 || lines[i].trim().startsWith(LUAname + '.Visible'))
               sectionDescription = false;
           } while (sectionDescription);
           description = getLineData(description, LUAname, 'Description', obfuscator, dtable);
