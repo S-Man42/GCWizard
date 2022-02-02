@@ -5070,6 +5070,7 @@
   "wherigo_error_gwc_header": "arose while reading Cartridge Header",
   "wherigo_error_gwc_luabytecode": "arose while reading Cartridge LUA Byte Code",
   "wherigo_error_gwc_mediafiles": "arose while reading Cartridge Media Files",
+  "wherigo_error_lua_line": "around Line number",
   "wherigo_error_lua_characters": "arose while reading Character Objects from LUA Sourcecode",
   "wherigo_error_lua_items": "arose while reading Item Objects from LUA Sourcecode",
   "wherigo_error_lua_tasks": "arose while reading Task Objects from LUA Sourcecode",

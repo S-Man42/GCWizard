@@ -702,14 +702,154 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       // normalize
       _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
 
-      _obfuscatorTable = _getObfuscatorTableFromCartridge(_LUAFile);
-      print('got dtable');
-      //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 8}); }
+      // get obfuscator data
+      _obfuscatorFunction = 'NO_OBFUSCATOR';
+      bool _obfuscatorFound = false;
+      if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
+        _obfuscatorFunction = 'WWB_deobf';
+        _obfuscatorFound = true;
+      }
+      else
+      if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
+        _obfuscatorFunction = 'gsub_wig';
+        _obfuscatorFound = true;
+      }
 
-      _obfuscatorFunction = _getObfuscatorFunction(_LUAFile);
-      //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 1}); }
-      
-      _CartridgeLUAName = _getCartridgeLUAName(_LUAFile);
+      // get all objects
+      bool sectionMedia = true;
+      bool sectionInner = true;
+
+      String LUAname = '';
+      String id = '';
+      String name = '';
+      String description = '';
+      String type = '';
+      String medianame = '';
+      String alttext = '';
+
+      int index = 0;
+      List<String> lines = _LUAFile.split('\n');
+      for (int i = 0; i < lines.length; i++) {
+        // get obfuscator function
+        if (lines[i].startsWith('function') && !_obfuscatorFound) {
+          _obfuscatorFunction = lines[i].substring(9);
+          for (int j = _obfuscatorFunction.length - 1; j > 0; j--) {
+            if (_obfuscatorFunction[j] == '(') {
+              _obfuscatorFunction = _obfuscatorFunction.substring(0, j);
+              j = 0;
+            }
+          }
+        }
+        if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
+          _obfuscatorTable = lines[i].trimLeft().replaceAll('local dtable = "', '');
+          _obfuscatorTable = lines[i].substring(0, lines[i].length - 1);
+        }
+
+        if (RegExp(r'(local rot_palette = ")').hasMatch(lines[i])) {
+          _obfuscatorTable = lines[i].trimLeft().replaceAll('local rot_palette = "', '').replaceAll('"', '').trim();
+        }
+
+        if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(lines[i])) {
+          _CartridgeLUAName = lines[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '');
+        }
+
+        try {
+          if (RegExp(r'( = Wherigo.ZMedia)').hasMatch(lines[i])) {
+            currentObjectSection = OBJECT_TYPE.MEDIA;
+            index++;
+            LUAname = '';
+            id = '';
+            name = '';
+            description = '';
+            type = '';
+            medianame = '';
+            alttext = '';
+
+            LUAname = getLUAName(lines[i]);
+
+            sectionMedia = true;
+            do {
+              i++;
+              if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Id')) {
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Name')) {
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Description')) {
+                if (lines[i + 1].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+                  description = getLineData(lines[i], LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+                } else {
+                  sectionInner = true;
+                  description = lines[i].trim().replaceAll(LUAname + '.', '');
+                  i++;
+                  do {
+                    if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText'))
+                      sectionInner = false;
+                    else
+                      description = description + lines[i];
+                    i++;
+                  } while (sectionInner);
+                }
+                if (description.startsWith('WWB_multi'))
+                  description = removeWWB(description);
+              }
+
+              else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('AltText')) {
+                alttext = getLineData(lines[i], LUAname, 'AltText', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              else if (lines[i].trim().replaceAll(LUAname + '.', '').startsWith('Resources')) {
+                i++;
+                sectionInner = true;
+                do {
+                  if (lines[i].trimLeft().startsWith('Filename = ')) {
+                    medianame = getStructData(lines[i], 'Filename');
+                  }
+                  else if (lines[i].trimLeft().startsWith('Type = ')) {
+                    type = getStructData(lines[i], 'Type');
+                  }
+                  else if (lines[i].trimLeft().startsWith('Directives = ')) {
+                    sectionInner = false;
+                    sectionMedia = false;
+                  }
+                  i++;
+                } while (sectionInner);
+              }
+
+            } while (sectionMedia && (i < lines.length - 1));
+
+
+            _Media.add(MediaData(
+              LUAname,
+              id,
+              name,
+              description,
+              alttext,
+              type,
+              medianame,
+            ));
+            _NameToObject[LUAname] = ObjectData(id, index, name, medianame, OBJECT_TYPE.MEDIA);
+          }
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_media');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+      }
+
+
 
       try {
         _cartridgeData =
@@ -808,24 +948,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _NameToObject.addAll(_cartridgeData['names']);
         print('got timers');
         //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 60}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_timers');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
-
-      try {
-        _cartridgeData = getMediaFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Media = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got media');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 70}); }
       } catch (exception) {
         if (_Status == ANALYSE_RESULT_STATUS.OK)
           _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -979,23 +1101,6 @@ EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscat
 }
 
 
-String _getObfuscatorTableFromCartridge(String LUA){
-  List<String> lines = LUA.split('\n');
-  String line = '';
-  for (int i = 0; i < lines.length; i++){
-    line = lines[i];
-    if (RegExp(r'(local dtable = ")').hasMatch(line)) {
-      line = line.trimLeft().replaceAll('local dtable = "', '');
-      line = line.substring(0, line.length - 1);
-      return line;
-    }
-    if (RegExp(r'(local rot_palette = ")').hasMatch(line)) {
-      line = line.trimLeft().replaceAll('local rot_palette = "', '').replaceAll('"', '').trim();
-      return line;
-    }
-  };
-  return '';
-}
 //String plainLUA = '';
 //_decompileLUA(Uint8List LUA) async {
 // online solution via REST-API
@@ -1045,49 +1150,5 @@ String _normalizeLUAmultiLineText(String LUA) {
       .replaceAll('\\195\\159', 'ß')
       .replaceAll('\\194\\176', '°')
       .replaceAll('\n\n', '\n');
-}
-
-String _getObfuscatorFunction(String source){
-  String result = '';
-  List<String> LUA = source.split('\n');
-
-  result = 'NO_OBFUSCATOR';
-
-  if (RegExp(r'(WWB_deobf)').hasMatch(source))
-    result = 'WWB_deobf';
-  else
-  if (RegExp(r'(gsub_wig)').hasMatch(source))
-    result = 'gsub_wig';
-  else
-  if (RegExp(r'(_Urwigo)').hasMatch(source)) {
-    for (int i = 0; i < LUA.length; i++){
-      if (LUA[i].startsWith('function')) {
-        result = LUA[i].substring(9);
-        for (int j = result.length - 1; j > 0; j--) {
-          if (result[j] == '(') {
-            result = result.substring(0, j);
-            j = 0;
-          }
-        }
-        i = source.length;
-      }
-    }
-  }
-
-  return result;
-}
-
-String _getCartridgeLUAName(String source){
-  String result = '';
-  List<String> LUA = source.split('\n');
-
-  for (int i = 0; i < LUA.length; i++){
-      if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(LUA[i])) {
-        result = LUA[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '');
-        i = LUA.length;
-    }
-  }
-
-  return result;
 }
 
