@@ -199,6 +199,7 @@ void main() {
       {'formula' : 'sindeg(90)\rsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
       {'formula' : 'sindeg(90)\n\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
 
+      {'formula' : '[ 48*I - 2]', 'values': {'I': '1'}, 'formulaId': 2, 'expectedOutput' : 'bbggbrrbbgb'},
     ];
 
     _inputsToExpected.forEach((elem) {
