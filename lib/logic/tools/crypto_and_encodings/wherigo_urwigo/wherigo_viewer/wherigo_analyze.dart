@@ -92,19 +92,13 @@ import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_variable.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_media.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_messages.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_timer.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_character.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_input.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_item.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_task.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_zone.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:http/http.dart' as http;
+
+import '../urwigo_tools.dart';
 
 
 enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, OBFUSCATORTABLE, MEDIAFILES, MESSAGES, IDENTIFIER, RESULTS_GWC, RESULTS_LUA}
@@ -160,6 +154,8 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
   WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
   WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
+
+String _answerVariable = '';
 
 StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
   String result = '';
@@ -435,8 +431,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     else
       checksToDo = FILE_LOAD_STATE.LUA;
 
-    print(checksToDo);
-
   if (checksToDo == FILE_LOAD_STATE.NULL) {
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
@@ -488,7 +482,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   List<MediaData> _Media = [];
   List<List<ActionMessageElementData>> _Messages = [];
   List<AnswerData> _Answers = [];
-  List<VariableData> _Identifiers = [];
+  List<VariableData> _Variables = [];
   Map<String, ObjectData> _NameToObject = {};
 
   int _Unknown3 = 0;
@@ -499,22 +493,90 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   int _ValidMediaFile = 0;
   int _MediaFileType = 0;
 
+  bool sectionMedia = true;
+  bool sectionInner = true;
+  bool sectionZone = true;
+  bool sectionDescription = true;
+  bool sectionCharacter = true;
+  bool sectionItem = true;
+  bool sectionTask = true;
+  bool sectionTimer = true;
+  bool sectionMessages = true;
+  bool sectionInput = true;
+  bool sectionChoices = true;
+  bool sectionText = true;
+  bool sectionAnalysed = false;
+  bool insideInputFunction = false;
+  bool sectionVariables = true;
+  bool beyondHeader = false;
+
+  String LUAname = '';
+  String id = '';
+  String name = '';
+  String description = '';
+  String type = '';
+  String medianame = '';
+  String alttext = '';
+  String _cartridgeName = '';
+  BUILDER _builder = BUILDER.UNKNOWN;
+  String _BuilderVersion = '';
+  String _TargetDeviceVersion = '';
+  String _CountryID = '';
+  String _StateID = '';
+  String _UseLogging = '';
+  String _CreateDate = '';
+  String _PublishDate = '';
+  String _UpdateDate = '';
+  String _LastPlayedDate = '';
+  List<ZonePoint> points = [];
+  String visible = '';
+  String media = '';
+  String icon = '';
+  String active = '';
+  String distanceRange = '';
+  String showObjects = '';
+  String proximityRange = '';
+  ZonePoint originalPoint;
+  String distanceRangeUOM = '';
+  String proximityRangeUOM = '';
+  String outOfRange = '';
+  String inRange = '';
+  String location = '';
+  ZonePoint zonePoint = ZonePoint(0.0, 0.0, 0.0);
+  String gender = '';
+  String container = '';
+  String locked = '';
+  String opened = '';
+  String complete = '';
+  String correctstate = '';
+  List<String> declaration = [];
+  String duration = '';
+  List<ActionMessageElementData> singleMessageDialog = [];
+  String variableID = '';
+  String inputType = '';
+  String text = '';
+  List<String> listChoices = [];
+  String inputObject = '';
+  List<InputData> resultInputs = [];
+  List<ActionMessageElementData> answerActions = [];
+  List<String> answerList = [];
+  ActionMessageElementData action;
+  Map<String, List<AnswerData>> Answers = {};
+
+
   var _cartridgeData = Map<String, dynamic>();
 
   String _obfuscatorFunction = '';
 
 
   if (checksToDo == FILE_LOAD_STATE.GWC || checksToDo == FILE_LOAD_STATE.FULL) {
-    print('check GWC if valid');
     if (isInvalidCartridge(byteListGWC)) {
-      print('GWC is invalid');
       _ResultsGWC.add('wherigo_error_runtime');
       _ResultsGWC.add('wherigo_error_invalid_gwc');
       _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
     }
 
     else { // analyse GWC-File
-      print('analyse GWC');
       try { // analysing GWC Header
         _Signature = _Signature + byteListGWC[0].toString();
         _Signature = _Signature + byteListGWC[1].toString();
@@ -693,7 +755,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     }
 
     if (checksToDo == FILE_LOAD_STATE.LUA || checksToDo == FILE_LOAD_STATE.FULL) {
-      print('check LUA');
       if (byteListLUA != null)
         _LUAFile = String.fromCharCodes(byteListLUA);
       else
@@ -702,37 +763,41 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       // normalize
       _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
 
+      // get cartridge details
+
       // get obfuscator data
       _obfuscatorFunction = 'NO_OBFUSCATOR';
       bool _obfuscatorFound = false;
-      if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
+      if (RegExp(r'(WWB_latin1_string)').hasMatch(_LUAFile)) {
         _obfuscatorFunction = 'WWB_deobf';
+        _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
         _obfuscatorFound = true;
       }
       else
       if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
         _obfuscatorFunction = 'gsub_wig';
+        _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
         _obfuscatorFound = true;
       }
 
+      // get builder
+      if (RegExp(r'(_Urwigo)').hasMatch(_LUAFile))
+        _builder = BUILDER.URWIGO;
+      else if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
+        _builder = BUILDER.EARWIGO;
+      } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
+        _builder = BUILDER.WHERIGOKIT;
+      }
+
       // get all objects
-      bool sectionMedia = true;
-      bool sectionInner = true;
-
-      String LUAname = '';
-      String id = '';
-      String name = '';
-      String description = '';
-      String type = '';
-      String medianame = '';
-      String alttext = '';
-
       int index = 0;
       List<String> lines = _LUAFile.split('\n');
       for (int i = 0; i < lines.length; i++) {
+
         // get obfuscator function
         if (lines[i].startsWith('function') && !_obfuscatorFound) {
           _obfuscatorFunction = lines[i].substring(9);
+          _obfuscatorFound = true;
           for (int j = _obfuscatorFunction.length - 1; j > 0; j--) {
             if (_obfuscatorFunction[j] == '(') {
               _obfuscatorFunction = _obfuscatorFunction.substring(0, j);
@@ -740,13 +805,10 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
             }
           }
         }
-        if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
-          _obfuscatorTable = lines[i].trimLeft().replaceAll('local dtable = "', '');
-          _obfuscatorTable = lines[i].substring(0, lines[i].length - 1);
-        }
 
-        if (RegExp(r'(local rot_palette = ")').hasMatch(lines[i])) {
-          _obfuscatorTable = lines[i].trimLeft().replaceAll('local rot_palette = "', '').replaceAll('"', '').trim();
+        if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
+          _obfuscatorTable = lines[i].substring(0, lines[i].length - 1);
+          _obfuscatorTable = _obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
         }
 
         if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(lines[i])) {
@@ -754,7 +816,9 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         }
 
         try {
-          if (RegExp(r'( = Wherigo.ZMedia)').hasMatch(lines[i])) {
+          if (RegExp(r'(Wherigo.ZMedia)').hasMatch(lines[i])) {
+            print('found ZMedia '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            beyondHeader = true;
             currentObjectSection = OBJECT_TYPE.MEDIA;
             index++;
             LUAname = '';
@@ -819,6 +883,19 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
                 } while (sectionInner);
               }
 
+              if (RegExp(r'(Wherigo.ZCharacter\()').hasMatch(lines[i]) ||
+                  RegExp(r'(Wherigo.ZMedia)').hasMatch(lines[i]) ||
+                  RegExp(r'(Wherigo.ZItem)').hasMatch(lines[i]) ||
+                  RegExp(r'(Wherigo.ZTask)').hasMatch(lines[i]) ||
+                  RegExp(r'(.ZVariables =)').hasMatch(lines[i]) ||
+                  RegExp(r'(Wherigo.ZTimer)').hasMatch(lines[i]) ||
+                  RegExp(r'(Wherigo.ZInput)').hasMatch(lines[i]) ||
+                  RegExp(r'(function)').hasMatch(lines[i]) ||
+                  RegExp(r'(Wherigo.Zone\()').hasMatch(lines[i]) ) {
+                sectionMedia = false;
+              }
+
+
             } while (sectionMedia && (i < lines.length - 1));
 
 
@@ -832,7 +909,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
               medianame,
             ));
             _NameToObject[LUAname] = ObjectData(id, index, name, medianame, OBJECT_TYPE.MEDIA);
-          }
+          } // end if line hasmatch zmedia
         } catch (exception) {
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
@@ -847,154 +924,1088 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           _ResultsLUA.add('');
         }
 
-      }
+          if (RegExp(r'( Wherigo.ZCartridge)').hasMatch(lines[i])) {
+            _cartridgeName = lines[i].replaceAll(' Wherigo.ZCartridge()', '').trim();
+            beyondHeader = true;
+          }
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.BuilderVersion'))
+            _BuilderVersion = lines[i].replaceAll(_cartridgeName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.TargetDeviceVersion'))
+            _TargetDeviceVersion = lines[i].replaceAll(_cartridgeName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CountryId'))
+            _CountryID = lines[i].replaceAll(_cartridgeName + '.CountryId = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.StateId'))
+            _StateID = lines[i].replaceAll(_cartridgeName + '.StateId = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UseLogging'))
+            _UseLogging = lines[i].replaceAll(_cartridgeName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CreateDate'))
+            _CreateDate = lines[i].replaceAll(_cartridgeName + '.CreateDate = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.PublishDate'))
+            _PublishDate = lines[i].replaceAll(_cartridgeName + '.PublishDate = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UpdateDate'))
+            _UpdateDate = lines[i].replaceAll(_cartridgeName + '.UpdateDate = ', '').replaceAll('"', '').trim();
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.LastPlayedDate'))
+            _LastPlayedDate = lines[i].replaceAll(_cartridgeName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
 
 
 
-      try {
-        _cartridgeData =
-            getCharactersFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Characters = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got characters');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 10}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_characters');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+        try {
+          if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
+            print('found Zone '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            beyondHeader = true;
 
-      try {
-        _cartridgeData = getItemsFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Items = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got items');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 20}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_items');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+            currentObjectSection = OBJECT_TYPE.ZONE;
+            points = [];
+            LUAname = '';
+            id = '';
+            name = '';
+            description = '';
+            visible = '';
+            media = '';
+            icon = '';
+            active = '';
+            distanceRange = '';
+            showObjects = '';
+            proximityRange = '';
+            originalPoint;
+            distanceRangeUOM = '';
+            proximityRangeUOM = '';
+            outOfRange = '';
+            inRange = '';
 
-      try {
-        _cartridgeData = getTasksFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Tasks = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got tasks');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 30}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_tasks');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+            LUAname = getLUAName(lines[i]);
 
-      try {
-        _cartridgeData = getInputsFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Inputs = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got inputs');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 40}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_inputs');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+            sectionZone = true;
+            do {
+              i++;
+              if (lines[i].startsWith(LUAname + '.Id'))
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
 
-      try {
-        _cartridgeData = getZonesFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Zones = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got zones');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 50}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_zones');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+              if (lines[i].startsWith(LUAname + '.Name'))
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
 
-      try {
-        _cartridgeData = getTimersFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Timers = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got timers');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 60}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_timers');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+              if (lines[i].startsWith(LUAname + '.Description')){
+                description = '';
+                sectionDescription = true;
+                do {
+                  description = description + lines[i];
+                  i++;
+                  if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+                    sectionDescription = false;
+                } while (sectionDescription);
+                description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+                description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
+                if (description.startsWith('WWB_multi'))
+                  description = removeWWB(description);
+              }
 
-      try {
-        _Messages = getMessagesFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        print('got messages');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 80}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_messages');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
+              if (lines[i].startsWith(LUAname + '.Visible'))
+                visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
 
-      try {
-        _cartridgeData = getIdentifiersFromCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction);
-        _Identifiers = _cartridgeData['content'];
-        _NameToObject.addAll(_cartridgeData['names']);
-        print('got identifiers');
-        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 100}); }
-      } catch (exception) {
-        if (_Status == ANALYSE_RESULT_STATUS.OK)
-          _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-        else
-          _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
-        _ResultsLUA.add('wherigo_error_runtime');
-        _ResultsLUA.add('wherigo_error_runtime_exception');
-        _ResultsLUA.add('wherigo_error_lua_identifiers');
-        _ResultsLUA.add(exception.toString());
-        _ResultsLUA.add('');
-      }
-    }
-    print('output WherigoCartridge '+_CartridgeName);
+              if (lines[i].startsWith(LUAname + '.Media'))
+                media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Icon'))
+                icon = getLineData(lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Active'))
+                active = getLineData(lines[i], LUAname, 'Active', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.DistanceRangeUOM ='))
+                distanceRangeUOM = getLineData(lines[i], LUAname, 'DistanceRangeUOM', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.ProximityRangeUOM ='))
+                proximityRangeUOM = getLineData(lines[i], LUAname, 'ProximityRangeUOM', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.DistanceRange ='))
+                distanceRange = getLineData(lines[i], LUAname, 'DistanceRange', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i ].startsWith(LUAname + '.ShowObjects'))
+                showObjects = getLineData(lines[i], LUAname, 'ShowObjects', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.ProximityRange ='))
+                proximityRange = getLineData(lines[i], LUAname, 'ProximityRange', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.OriginalPoint')) {
+                String point = getLineData(lines[i], LUAname, 'OriginalPoint', _obfuscatorFunction, _obfuscatorTable);
+                List<String> pointdata = point
+                    .replaceAll('ZonePoint(', '')
+                    .replaceAll(')', '')
+                    .replaceAll(' ', '')
+                    .split(',');
+                originalPoint = ZonePoint(double.parse(pointdata[0]), double.parse(pointdata[1]), double.parse(pointdata[2]));
+              }
+
+              if (lines[i].startsWith(LUAname + '.OutOfRangeName'))
+                outOfRange = getLineData(lines[i], LUAname, 'OutOfRangeName', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.InRangeName'))
+                inRange = getLineData(lines[i], LUAname, 'InRangeName', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Points = ')) {
+                i++;
+                do {
+                  while (lines[i].trimLeft().startsWith('ZonePoint')) {
+                    points.add(_getPoint(lines[i]));
+                    i++;
+                  }
+                } while (lines[i].trimLeft().startsWith('ZonePoint'));
+              }
+
+              if (RegExp(r'( Wherigo.ZCharacter\()').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZItem)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i]) ||
+                  RegExp(r'(.ZVariables =)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i]) ||
+                  RegExp(r'(function)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i]) ) {
+                sectionZone = false;
+              }
+            } while (sectionZone);
+            i--;
+
+            _Zones.add(ZoneData(
+              LUAname,
+              id,
+              name,
+              description,
+              visible,
+              media,
+              icon,
+              active,
+              distanceRange,
+              showObjects,
+              proximityRange,
+              originalPoint,
+              distanceRangeUOM,
+              proximityRangeUOM,
+              outOfRange,
+              inRange,
+              points,
+            ));
+            _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.ZONE);
+          }
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_zones');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        try {
+          if (RegExp(r'( Wherigo.ZCharacter)').hasMatch(lines[i])) {
+            print('found ZCharacter '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            beyondHeader = true;
+
+            currentObjectSection = OBJECT_TYPE.CHARACTER;
+            LUAname = '';
+            id = '';
+            name = '';
+            description = '';
+            visible = '';
+            media = '';
+            icon = '';
+            location = '';
+            gender = '';
+            type = '';
+
+            LUAname = getLUAName(lines[i]);
+            container = getContainer(lines[i]);
+
+            sectionCharacter = true;
+
+            do {
+              i++;
+              if (lines[i].trim().startsWith(LUAname + '.Container =')) {
+                container = getContainer(lines[i]);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Id')) {
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Name')) {
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Description')) {
+                description = '';
+                sectionDescription = true;
+                do {
+                  description = description + lines[i];
+                  if (i > lines.length - 2 || lines[i + 1].startsWith(LUAname + '.Visible')) {
+                    sectionDescription = false;
+                  }
+                  i++;
+                } while (sectionDescription);
+                description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+                description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].startsWith(LUAname + '.Visible'))
+                visible = getLineData(
+                    lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Media'))
+                media = getLineData(
+                    lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+
+              if (lines[i].startsWith(LUAname + '.Icon'))
+                icon = getLineData(
+                    lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
+                location = lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
+                if (location.endsWith('INVALID_ZONEPOINT'))
+                  location = '';
+                else if (location.startsWith('ZonePoint')) {
+                  location = location
+                      .replaceAll('ZonePoint(', '')
+                      .replaceAll(')', '')
+                      .replaceAll(' ', '');
+                  zonePoint = ZonePoint(double.parse(location.split(',')[0]),
+                      double.parse(location.split(',')[1]),
+                      double.parse(location.split(',')[2]));
+                  location = 'ZonePoint';
+                }
+                else
+                  location = getLineData(
+                      lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction,
+                      _obfuscatorTable);
+              }
+
+              if (lines[i].startsWith(LUAname + '.Gender')) {
+                gender = getLineData(
+                    lines[i], LUAname, 'Gender', _obfuscatorFunction, _obfuscatorTable).toLowerCase().trim();
+              }
+
+              if (lines[i].startsWith(LUAname + '.Type'))
+                type = getLineData(
+                    lines[i], LUAname, 'Type', _obfuscatorFunction, _obfuscatorTable);
+
+              if (RegExp(r'( Wherigo.ZItem)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i]) ||
+                  RegExp(r'(.ZVariables =)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZCharacter)').hasMatch(lines[i]) ||
+                  RegExp(r'(function)').hasMatch(lines[i])) {
+                sectionCharacter = false;
+              }
+            } while (sectionCharacter);
+
+            _Characters.add(CharacterData(
+                LUAname ,
+                id,
+                name,
+                description,
+                visible,
+                media,
+                icon,
+                location,
+                zonePoint,
+                container,
+                gender,
+                type
+            ));
+            _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.CHARACTER);
+            i--;
+          } // end if
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_characters');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        try {
+          if (RegExp(r'( Wherigo.ZItem)').hasMatch(lines[i])) {
+            print('found ZItem '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            beyondHeader = true;
+
+            currentObjectSection = OBJECT_TYPE.ITEM;
+            LUAname = '';
+            container = '';
+            id = '';
+            name = '';
+            description = '';
+            visible = '';
+            media = '';
+            icon = '';
+            location = '';
+            zonePoint = ZonePoint(0.0, 0.0, 0.0);
+            locked = '';
+            opened = '';
+            container = '';
+
+            LUAname = getLUAName(lines[i]);
+            container = getContainer(lines[i]);
+
+            sectionItem = true;
+            do {
+              i++;
+              if (lines[i].trim().startsWith(LUAname + 'Container =')) {
+                container = getContainer(lines[i]);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Id')) {
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Name')) {
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Description')) {
+                description = '';
+                sectionDescription = true;
+                do {
+                  description = description + lines[i];
+                  if (i > lines.length - 2 || lines[i + 1].startsWith(LUAname + '.Visible')) {
+                    sectionDescription = false;
+                  }
+                  i++;
+                } while (sectionDescription);
+                description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+                description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable).trim();
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Visible'))
+                visible = getLineData(
+                    lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].trim().startsWith(LUAname + '.Media'))
+                media = getLineData(
+                    lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+
+              if (lines[i].trim().startsWith(LUAname + '.Icon'))
+                icon = getLineData(
+                    lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].trim().startsWith(LUAname + '.Locked'))
+                locked = getLineData(
+                    lines[i], LUAname, 'Locked', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].trim().startsWith(LUAname + '.Opened')) {
+                opened = getLineData(
+                    lines[i], LUAname, 'Opened', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.ObjectLocation')) {
+                location = lines[i].trim().replaceAll(LUAname + '.ObjectLocation', '').replaceAll(' ', '').replaceAll('=', '');
+                if (location.endsWith('INVALID_ZONEPOINT'))
+                  location = '';
+                else if (location.startsWith('ZonePoint')) {
+                  location = location
+                      .replaceAll('ZonePoint(', '')
+                      .replaceAll(')', '')
+                      .replaceAll(' ', '');
+                  zonePoint = ZonePoint(double.parse(location.split(',')[0]),
+                      double.parse(location.split(',')[1]),
+                      double.parse(location.split(',')[2]));
+                  location = 'ZonePoint';
+                }
+                else
+                  location = getLineData(
+                      lines[i], LUAname, 'ObjectLocation', _obfuscatorFunction,
+                      _obfuscatorTable);
+              }
+
+              if (RegExp(r'( Wherigo.ZItem)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i]) ||
+                  RegExp(r'(.ZVariables =)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i]) ||
+                  RegExp(r'(function)').hasMatch(lines[i]) ||
+                  i > lines.length - 2)
+                sectionItem = false;
+
+            } while (sectionItem);
+
+            _Items.add(ItemData(
+                LUAname,
+                id,
+                name,
+                description,
+                visible,
+                media,
+                icon,
+                location,
+                zonePoint,
+                container,
+                locked,
+                opened));
+
+            _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.ITEM);
+            i--;
+          } // end if
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_items');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        try {
+          if (RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i])) {
+            print('found ZTask '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            beyondHeader = true;
+            currentObjectSection = OBJECT_TYPE.TASK;
+            LUAname = '';
+            id = '';
+            name = '';
+            description = '';
+            visible = '';
+            media = '';
+            icon = '';
+            complete = '';
+            correctstate = '';
+            active = '';
+
+            LUAname = getLUAName(lines[i]);
+
+            sectionTask = true;
+
+            do {
+              i++;
+
+              if (lines[i].startsWith(LUAname + '.Id'))
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Name'))
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Description')) {
+                description = '';
+                sectionDescription = true;
+
+                do {
+                  description = description + lines[i];
+                  if (i > lines.length - 2 || lines[i + 1].startsWith(LUAname + '.Visible'))
+                    sectionDescription = false;
+                  i++;
+                } while (sectionDescription);
+                description = description.replaceAll('[[', '').replaceAll(']]', '').replaceAll('<BR>', '\n');
+                description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].startsWith(LUAname + '.Visible'))
+                visible = getLineData(
+                    lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Media'))
+                media = getLineData(
+                    lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable).trim();
+
+              if (lines[i].startsWith(LUAname + '.Icon'))
+                icon = getLineData(
+                    lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Active'))
+                active = getLineData(
+                    lines[i], LUAname, 'Active', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.CorrectState'))
+                correctstate = getLineData(
+                    lines[i], LUAname, 'CorrectState', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].startsWith(LUAname + '.Complete'))
+                complete = getLineData(
+                    lines[i], LUAname, 'Complete', _obfuscatorFunction, _obfuscatorTable);
+
+              if (RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i]) ||
+                  RegExp(r'(.ZVariables =)').hasMatch(lines[i]))
+                sectionTask = false;
+
+            } while (sectionTask && (i < lines.length - 1));
+
+            i--;
+
+            _Tasks.add(TaskData(
+                LUAname,
+                id,
+                name,
+                description,
+                visible,
+                media,
+                icon,
+                active,
+                complete,
+                correctstate
+            ));
+            _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.TASK);
+          } // end if task
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_tasks');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        try {
+          if (RegExp(r'(.ZVariables =)').hasMatch(lines[i])) {
+            sectionVariables = true;
+            print('found ZVariables '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            beyondHeader = true;
+            currentObjectSection = OBJECT_TYPE.VARIABLES;
+            i++;
+            do {
+              declaration = lines[i].trim().replaceAll(',', '').replaceAll(' ', '').split('=');
+              if (declaration.length == 2) {
+                if (declaration[1].startsWith(_obfuscatorFunction)) { // content is obfuscated
+                  _Variables.add(
+                      VariableData(
+                          declaration[0].trim(),
+                          deobfuscateUrwigoText(
+                              declaration[1]
+                                  .replaceAll(_obfuscatorFunction, '')
+                                  .replaceAll('("', '')
+                                  .replaceAll('")', ''),
+                              _obfuscatorTable)));
+                }
+                else
+                  _Variables.add( // content not obfuscated
+                      VariableData(
+                          declaration[0].trim(),
+                          declaration[1].replaceAll('"', '')));
+              }
+              else // only one element
+                _Variables.add(
+                    VariableData(
+                        declaration[0].trim(),
+                        ''));
+
+              i++;
+              if (lines[i].trim() == '}')
+                sectionVariables = false;
+            } while ((i < lines.length - 1) && sectionVariables);
+          }
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_identifiers');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        try {
+          if (beyondHeader && RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i])) {
+            print('found ZTimer '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+            currentObjectSection = OBJECT_TYPE.TIMER;
+            LUAname = '';
+            id = '';
+            name = '';
+            description = '';
+            visible = '';
+            type = '';
+            duration = '';
+
+            LUAname = getLUAName(lines[i]);
+
+            sectionTimer = true;
+            do {
+              i++;
+
+              if (lines[i].trim().startsWith(LUAname + '.Id'))
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].trim().startsWith(LUAname + '.Name'))
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+
+              if (lines[i].trim().startsWith(LUAname + '.Description')) {
+                description = '';
+                sectionDescription = true;
+
+                do {
+                  description = description + lines[i];
+                  i++;
+                  if (i > lines.length - 1 || lines[i].trim().startsWith(LUAname + '.Visible'))
+                    sectionDescription = false;
+                } while (sectionDescription);
+                description = getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Duration'))
+                duration = getLineData(
+                    lines[i], LUAname, 'Duration', _obfuscatorFunction, _obfuscatorTable).trim();
+
+              if (lines[i].trim().startsWith(LUAname + '.Type')) {
+                type = getLineData(
+                    lines[i], LUAname, 'Type', _obfuscatorFunction, _obfuscatorTable).trim().toLowerCase();
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Visible'))
+                visible = getLineData(lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable).trim().toLowerCase();
+
+              if (RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i]) ||
+                  RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i]))
+                sectionTimer = false;
+
+            } while (sectionTimer && i < lines.length - 1);
+
+            _Timers.add(TimerData(
+              LUAname,
+              id,
+              name,
+              description,
+              visible,
+              duration,
+              type,
+            ));
+
+            _NameToObject[LUAname] = ObjectData(id, 0, name, '', OBJECT_TYPE.TIMER);
+            i--;
+          }
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_timers');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        try {
+          if (RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i])) {
+            currentObjectSection = OBJECT_TYPE.INPUT;
+            currentObjectSection = OBJECT_TYPE.MESSAGES;
+            LUAname = '';
+            id = '';
+            variableID = '';
+            name = '';
+            description = '';
+            visible = '';
+            media = '';
+            icon = '';
+            inputType = '';
+            text = '';
+            listChoices = [];
+
+            LUAname = getLUAName(lines[i]);
+
+            sectionInput = true;
+            do {
+              i++;
+
+              if (lines[i].trim().startsWith(LUAname + '.Id')) {
+                id = getLineData(lines[i], LUAname, 'Id', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Name')) {
+                name = getLineData(lines[i], LUAname, 'Name', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Description')) {
+                description = '';
+                sectionDescription = true;
+                //i++;
+                do {
+                  description = description + lines[i];
+                  i++;
+                  if (i > lines.length - 1 || lines[i].startsWith(LUAname + '.Visible'))
+                    sectionDescription = false;
+                } while (sectionDescription);
+                description =
+                    getLineData(description, LUAname, 'Description', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Media')) {
+                media = getLineData(lines[i], LUAname, 'Media', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Visible')) {
+                visible = getLineData(
+                    lines[i], LUAname, 'Visible', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Icon')) {
+                icon = getLineData(
+                    lines[i], LUAname, 'Icon', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.InputType')) {
+                inputType = getLineData(
+                    lines[i], LUAname, 'InputType', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.InputVariableId')) {
+                variableID = getLineData(
+                    lines[i], LUAname, 'InputVariableId', _obfuscatorFunction, _obfuscatorTable);
+              }
+
+              if (lines[i].startsWith(LUAname + '.Text')) {
+                if (RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+                    lines[i + 1].trim().startsWith(LUAname + '.Media') ||
+                    lines[i + 1].trim().startsWith(LUAname + '.Visible') ||
+                    lines[i + 1].trim().startsWith('function') ||
+                    RegExp(r'(:OnProximity)').hasMatch(lines[i + 1])) { // single Line
+                  text = getLineData(
+                      lines[i], LUAname, 'Text', _obfuscatorFunction, _obfuscatorTable);
+                }
+                else { // multi Lines of Text
+                  text = '';
+                  sectionText = true;
+                  do {
+                    i++;
+                    text = text + lines[i];
+                    if (RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+                        RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
+                        lines[i + 1].trim().startsWith(LUAname + '.Media') ||
+                        lines[i + 1].trim().startsWith('function') ||
+                        lines[i + 1].trim().startsWith(LUAname + '.Visible'))
+                      sectionText = false;
+                  } while (sectionText);
+                  text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
+                }
+              }
+
+              if (lines[i].trim().startsWith(LUAname + '.Choices')) {
+                listChoices = [];
+                if (lines[i + 1].trim().startsWith(LUAname + '.InputType') ||
+                    lines[i + 1].trim().startsWith(LUAname + '.Text')) {
+                  listChoices.addAll(
+                      getChoicesSingleLine(lines[i], LUAname, _obfuscatorFunction, _obfuscatorTable));
+                } else {
+                  i++;
+                  sectionChoices = true;
+                  do {
+                    if (lines[i].trimLeft().startsWith('"')) {
+                      listChoices.add(
+                          lines[i ]
+                              .trimLeft()
+                              .replaceAll('",', '')
+                              .replaceAll('"', ''));
+                      i++;
+                    } else {
+                      sectionChoices = false;
+                    }
+                  } while (sectionChoices);
+                }
+              }
+
+              if (RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i + 1]) ||
+                  RegExp(r'(function)').hasMatch(lines[i + 1]) ||
+                  RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
+                  RegExp(r'(:OnStart)').hasMatch(lines[i + 1]))
+                sectionInput = false;
+
+            } while (sectionInput);
+            i--;
+
+            _Inputs.add(InputData(
+              LUAname,
+              id,
+              variableID,
+              name,
+              description,
+              visible,
+              media,
+              icon,
+              inputType,
+              text,
+              listChoices,
+              [],
+            ));
+            _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.INPUT);
+          } // end if lines[i] hasMatch Wherigo.ZInput - Input-Object
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_inputs');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        // get all Answers - these are part of the function <InputObjcet>:OnGetInput(input)
+        try {
+          if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
+            // function for getting all inputs for an input object found
+            insideInputFunction = true;
+            inputObject = '';
+            answerActions = [];
+            _answerVariable = '';
+
+            // getting name of function
+            inputObject = lines[i].replaceAll('function ', '').replaceAll(
+                ':OnGetInput(input)', '').trim();
+            Answers[inputObject] = [];
+            print('found ongetinput '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
+          } // end if identify input function
+
+          if (lines[i].trim().endsWith('= tonumber(input)')) {
+            _answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
+          }
+
+          else if (lines[i].trim().endsWith(' = input')) {
+            _answerVariable = lines[i].trim().replaceAll(' = input', '');
+          }
+
+          else if (lines[i].trimLeft() == 'if input == nil then') {
+            // suppress this
+            //answer = 'NIL';
+            i++;
+            sectionAnalysed = false;
+            do {
+              i++;
+              if (lines[i].trim() == 'end')
+                sectionAnalysed = true;
+            } while (!sectionAnalysed); // end of section
+          } // end of NIL
+
+          else if (_SectionEnd(lines[i])) { //
+            if (insideInputFunction) {
+              answerList.forEach((answer) {
+                Answers[inputObject].add(
+                    AnswerData(
+                      answer,
+                      answerActions,
+                    ));
+              });
+              answerActions = [];
+              answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable);
+            }
+          }
+
+          else if ((i + 1 < lines.length - 1) && _FunctionEnd(lines[i], lines[i + 1])) {
+            if (insideInputFunction) {
+              insideInputFunction = false;
+              answerList.forEach((answer) {
+                Answers[inputObject].add(
+                    AnswerData(
+                      answer,
+                      answerActions,
+                    ));
+              });
+              answerActions = [];
+              answerList = [];
+              _answerVariable = '';
+            }
+          }
+
+          else if (lines[i].trimLeft().startsWith('Buttons')) {
+            do {
+              i++;
+              if (!(lines[i].trim() == '}' || lines[i].trim() == '},')) {
+                if (lines[i].trimLeft().startsWith(_obfuscatorFunction))
+                  answerActions.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON, deobfuscateUrwigoText(lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', ''), _obfuscatorTable)));
+                else
+                  answerActions.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON, lines[i].trim().replaceAll(_obfuscatorFunction + '("', '').replaceAll('")', '')));
+              }
+            } while (!lines[i].trim().startsWith('}'));
+          }
+
+          else {
+            action = _handleLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
+            if (action != null){
+              answerActions.add(action);
+              answerActions.forEach((element) {
+              });
+            }
+          } // end if other line content
+        } catch (exception) {
+          if (_Status == ANALYSE_RESULT_STATUS.OK)
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+          else
+            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+          _ResultsLUA.add('wherigo_error_runtime');
+          _ResultsLUA.add('wherigo_error_runtime_exception');
+          _ResultsLUA.add('wherigo_error_lua_answers');
+          _ResultsLUA.add('wherigo_error_lua_line');
+          _ResultsLUA.add('> ' + i.toString() + ' <');
+          _ResultsLUA.add(exception.toString());
+          _ResultsLUA.add('');
+        }
+
+        // get all messages and dialoges
+        if (currentObjectSection == OBJECT_TYPE.MESSAGES) {
+          if (lines[i].trimLeft().startsWith('_Urwigo.MessageBox(') || lines[i].trimLeft().startsWith('Wherigo.MessageBox(')) {
+            singleMessageDialog = [];
+            i++;
+            sectionMessages = true;
+            do {
+              if (lines[i].trimLeft().startsWith('Text')) {
+                singleMessageDialog.add(
+                    ActionMessageElementData(
+                        ACTIONMESSAGETYPE.TEXT,
+                        getTextData(lines[i],_obfuscatorFunction, _obfuscatorTable)));
+              }
+
+              else if (lines[i].trimLeft().startsWith('Media')) {
+                singleMessageDialog.add(
+                    ActionMessageElementData(
+                        ACTIONMESSAGETYPE.IMAGE,
+                        lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
+              }
+
+              else if (lines[i].trimLeft().startsWith('Buttons')) {
+                i++;
+                do {
+                  singleMessageDialog.add(
+                      ActionMessageElementData(
+                          ACTIONMESSAGETYPE.BUTTON,
+                          getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                  i++;
+                } while (!lines[i].trimLeft().startsWith('}'));
+              }
+
+              i++;
+              if (i > lines.length - 2 ||
+                  lines[i].trimLeft().startsWith('})'))
+                sectionMessages = false;
+            } while (sectionMessages);
+            _Messages.add(singleMessageDialog);
+          }
+
+          else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') || lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
+            sectionMessages = true;
+            singleMessageDialog = [];
+            i++;
+            do {
+              if (lines[i].trimLeft().startsWith('Text = ') ||
+                  lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
+                  lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
+                singleMessageDialog.add(
+                    ActionMessageElementData(
+                        ACTIONMESSAGETYPE.TEXT,
+                        getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+              } else if (lines[i].trimLeft().startsWith('Media')) {
+                singleMessageDialog.add(
+                    ActionMessageElementData(
+                        ACTIONMESSAGETYPE.IMAGE,
+                        lines[i].trimLeft().replaceAll('Media = ', '')));
+              } else if (lines[i].trimLeft().startsWith('Buttons')) {
+                i++;
+                do {
+                  singleMessageDialog.add(
+                      ActionMessageElementData(
+                          ACTIONMESSAGETYPE.BUTTON,
+                          getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                  i++;
+                } while (lines[i].trimLeft() != '}');
+              }
+              if (lines[i].trimLeft().startsWith('}, function(action)') ||
+                  lines[i].trimLeft().startsWith('}, nil)') ||
+                  lines[i].trimLeft().startsWith('})')) {
+                sectionMessages = false;
+              }
+              i++;
+            } while (sectionMessages && (i < lines.length));
+            _Messages.add(singleMessageDialog);
+          }
+
+          else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
+            i++;
+            sectionMessages = true;
+            singleMessageDialog = [];
+            do {
+              if (lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
+                  lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
+                singleMessageDialog.add(
+                    ActionMessageElementData(
+                        ACTIONMESSAGETYPE.TEXT,
+                        getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+              } else if (lines[i].trimLeft().startsWith('Media')) {
+                singleMessageDialog.add(
+                    ActionMessageElementData(
+                        ACTIONMESSAGETYPE.IMAGE,
+                        lines[i].trimLeft().replaceAll('Media = ', '')));
+              } else if (lines[i].trimLeft().startsWith('Buttons')) {
+                i++;
+                do {
+                  singleMessageDialog.add(
+                      ActionMessageElementData(
+                          ACTIONMESSAGETYPE.BUTTON,
+                          getTextData('Text = ' + lines[i].trim(), _obfuscatorFunction, _obfuscatorTable)));
+                  i++;
+                } while (lines[i].trimLeft() != '}');
+              }
+              if (lines[i].trimLeft().startsWith('})')) {
+                sectionMessages = false;
+              }
+              i++;
+            } while (sectionMessages);
+            _Messages.add(singleMessageDialog);
+          }
+
+        }
+      }  // end for i = 0 to lines.length
+
+      _Inputs.forEach((inputObject) {
+        resultInputs.add(
+            InputData(
+                inputObject.InputLUAName.trim(),
+                inputObject.InputID,
+                inputObject.InputVariableID,
+                inputObject.InputName,
+                inputObject.InputDescription,
+                inputObject.InputVisible,
+                inputObject.InputMedia,
+                inputObject.InputIcon,
+                inputObject.InputType,
+                inputObject.InputText,
+                inputObject.InputChoices,
+                Answers[inputObject.InputLUAName.trim()])
+        );
+      });
+      _Inputs = resultInputs;
+
+    } // if FULL or LUA
     out.addAll({'WherigoCartridge': WherigoCartridge(
         _Signature,
         _NumberOfObjects, _MediaFilesHeaders, _MediaFilesContents, _LUAFile,
@@ -1009,106 +2020,46 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _LengthOfCompletionCode, _CompletionCode,
         _obfuscatorTable, _obfuscatorFunction,
         _Characters, _Items, _Tasks, _Inputs, _Zones, _Timers, _Media,
-        _Messages, _Answers, _Identifiers, _NameToObject,
+        _Messages, _Answers, _Variables, _NameToObject,
         _Status, _ResultsGWC, _ResultsLUA )});
 
-    print('check and output Earwigo');
-    out.addAll({'EarwigoCartridge': _getEarwigoCartridge(_LUAFile, _obfuscatorTable, _obfuscatorFunction)});
+    out.addAll({'EarwigoCartridge': EarwigoCartridge(
+    _builder,
+    _BuilderVersion,
+    _TargetDeviceVersion,
+    _CountryID,
+    _StateID,
+    _UseLogging,
+    _CreateDate,
+    _PublishDate,
+    _UpdateDate,
+    _LastPlayedDate)});
     return out;
   } // if GWC || FULL
 
 }
 
-EarwigoCartridge _getEarwigoCartridge(String LUA, String dtable, String obfuscator){
-  String _cartridgeName = '';
-  BUILDER _builder = BUILDER.UNKNOWN;
-  String _BuilderVersion = '';
-  String _TargetDeviceVersion = '';
-  String _CountryID = '';
-  String _StateID = '';
-  String _UseLogging = '';
-  String _CreateDate = '';
-  String _PublishDate = '';
-  String _UpdateDate = '';
-  String _LastPlayedDate = '';
-
-  if (LUA == '' || LUA == null)
-    return EarwigoCartridge(
-        _builder,
-        _BuilderVersion,
-        _TargetDeviceVersion,
-        _CountryID,
-        _StateID,
-        _UseLogging,
-        _CreateDate,
-        _PublishDate,
-        _UpdateDate,
-        _LastPlayedDate);
-
-  if (RegExp(r'(_Urwigo)').hasMatch(LUA))
-    _builder = BUILDER.URWIGO;
-  else if (RegExp(r'(WWB_deobf)').hasMatch(LUA))
-    _builder = BUILDER.EARWIGO;
-  else if (RegExp(r'(gsub_wig)').hasMatch(LUA))
-    _builder = BUILDER.WHERIGOKIT;
-
-  List<String> lines = LUA.split('\n');
-  for (int i = 0; i < lines.length; i++) {
-    if (RegExp(r'( = Wherigo.ZCartridge)').hasMatch(lines[i])) {
-      _cartridgeName = lines[i].replaceAll(' = Wherigo.ZCartridge()', '').trim();
-    }
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.BuilderVersion'))
-      _BuilderVersion = lines[i].replaceAll(_cartridgeName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.TargetDeviceVersion'))
-      _TargetDeviceVersion = lines[i].replaceAll(_cartridgeName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CountryId'))
-      _CountryID = lines[i].replaceAll(_cartridgeName + '.CountryId = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.StateId'))
-      _StateID = lines[i].replaceAll(_cartridgeName + '.StateId = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UseLogging'))
-      _UseLogging = lines[i].replaceAll(_cartridgeName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CreateDate'))
-      _CreateDate = lines[i].replaceAll(_cartridgeName + '.CreateDate = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.PublishDate'))
-      _PublishDate = lines[i].replaceAll(_cartridgeName + '.PublishDate = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UpdateDate'))
-      _UpdateDate = lines[i].replaceAll(_cartridgeName + '.UpdateDate = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.LastPlayedDate'))
-      _LastPlayedDate = lines[i].replaceAll(_cartridgeName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
-
-
-  }
-  return EarwigoCartridge(
-      _builder,
-      _BuilderVersion,
-      _TargetDeviceVersion,
-      _CountryID,
-      _StateID,
-      _UseLogging,
-      _CreateDate,
-      _PublishDate,
-      _UpdateDate,
-      _LastPlayedDate);
-}
-
 
 //String plainLUA = '';
-//_decompileLUA(Uint8List LUA) async {
-// online solution via REST-API
-//  print('inside decompile');
-//  var result = await http.post(Uri.parse('https://lua-decompiler.ferib.dev/api/decompile/'), body: LUA);
-//  plainLUA = JASONStringToString(result.body);
+_decompileLUA(Uint8List LUA) async {
+//  online solution via REST-API
+//  https://pub.dev/documentation/http/latest/http/post.html
+//  https://github.com/flutterchina/dio
+  List<int> postData = new List.from(LUA);
+  var dio = Dio();
+
+  var response = await dio.post('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323',
+                            data: Stream.fromIterable(postData.map((e) => [e])), //create a Stream<List<int>>
+                            options: Options(headers: {Headers.contentLengthHeader: postData.length,
+                                                      Headers.contentTypeHeader: 'binary'}, // static final binary = ContentType("application", "octet-stream");
+                            ),
+                          );
+//  var result = await http.post(Uri.parse('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323'), body: LUA);
+  print(response.statusCode);
+  print(response.statusMessage);
+  String plainLUA = JASONStringToString(response.data);
 // {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
-//}
+}
 
 String _decompileLUAfromGWC(Uint8List LUA) {
   return '';
@@ -1152,3 +2103,179 @@ String _normalizeLUAmultiLineText(String LUA) {
       .replaceAll('\n\n', '\n');
 }
 
+ZonePoint _getPoint(String line){
+  List<String> data = line.trimLeft().replaceAll('ZonePoint(', '').replaceAll('),', '').replaceAll(')', '').replaceAll(' ', '').split(',');
+  return ZonePoint(double.parse(data[0]), double.parse(data[1]), double.parse(data[2]));
+}
+
+List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable){
+  if (line.trim().startsWith('if input == ') ||
+      line.trim().startsWith('elseif input == ') ||
+      line.trim().startsWith('if ' + _answerVariable + ' == ')) {
+    return line.trimLeft()
+        .replaceAll('if', '')
+        .replaceAll('else', '')
+        .replaceAll('input', '')
+        .replaceAll('==', '')
+        .replaceAll('then', '')
+        .replaceAll(_answerVariable, '')
+        .replaceAll(' ', '')
+        .split('or');
+  }
+
+  else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
+    List<String> results = [];
+    int hashvalue = 0;
+    line.trim()
+        .replaceAll('if ', '')
+        .replaceAll('elseif ', '')
+        .replaceAll('_Urwigo.Hash', '')
+        .replaceAll('input', '')
+        .replaceAll('=', '')
+        .replaceAll('string.lower', '')
+        .replaceAll('string.upper', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '')
+        .replaceAll('then', '')
+        .replaceAll('else', '')
+        .replaceAll('true', '')
+        .replaceAll(' ', '')
+        .split('or').forEach((element) {
+      hashvalue = int.parse(element.replaceAll('\D+', ''));
+      results.add(breakUrwigoHash(hashvalue).toString());
+    });
+    return results;
+  }
+  else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+      line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
+    if (_answerVariable == '')
+      _answerVariable = _getVariable(lineBefore);
+    line = line.trim()
+        .replaceAll('if ', '')
+        .replaceAll('elseif ', '')
+        .replaceAll('Wherigo.NoCaseEquals', '')
+        .replaceAll(_answerVariable + ',', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '')
+        .replaceAll('"', '')
+        .replaceAll('then', '')
+        .replaceAll('else', '')
+        .replaceAll('input,', '')
+        .replaceAll('Answer,', '')
+        .trim();
+    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
+      line = deobfuscateUrwigoText(
+          line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll(
+              '")', ''), dtable);
+    }
+    line = line.split(' or ').join('\n');
+    return [removeWWB(line)];
+  }
+}
+
+bool _SectionEnd(String line){
+  if (line.trim().startsWith('if input == ') ||
+      line.trim().startsWith('elseif input == ') ||
+      line.trim().startsWith('if _Urwigo.Hash(') ||
+      line.trim().startsWith('if (_Urwigo.Hash(') ||
+      line.trim().startsWith('elseif _Urwigo.Hash(') ||
+      line.trim().startsWith('elseif (_Urwigo.Hash(') ||
+      line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+      line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
+      line.trim().startsWith('if ' + _answerVariable + ' == '))
+    return true;
+  else
+    return false;
+}
+
+bool _FunctionEnd(String line1, String line2) {
+  return (line1.trim() == 'end' && (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
+}
+
+
+ActionMessageElementData _handleLine(String line, String dtable, String obfuscator) {
+  line = line.trim();
+  if (line.startsWith('Wherigo.PlayAudio'))
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.COMMAND,
+        line.trim());
+
+  else if (line.startsWith('Wherigo.GetInput'))
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.COMMAND,
+        line.trim());
+
+  else if (line.startsWith('_Urwigo') ||
+      line.startsWith('Callback') ||
+      line.startsWith('Wherigo') ||
+      line.startsWith('Buttons') ||
+      line.startsWith('end') ||
+      line == ']]' ||
+      line.startsWith('if action') ||
+      line.startsWith('{') ||
+      line.startsWith('}'))
+    return null;
+
+  else if (line.startsWith('Text = ')) {
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.TEXT,
+        getTextData(line, obfuscator, dtable));
+  }
+  else if (line.startsWith('Media = ')) {
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.IMAGE,
+        line.trimLeft().replaceAll('Media = ', '').replaceAll(',', ''));
+  }
+  else if (line.startsWith('if '))
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.CASE,
+        line.trimLeft());
+
+  else if (line.startsWith('elseif '))
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.CASE,
+        line.trimLeft());
+
+  else if (line.startsWith('else'))
+    return ActionMessageElementData(
+        ACTIONMESSAGETYPE.CASE,
+        line.trimLeft());
+  else {
+    String actionLine = '';
+    if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
+      List<String> actions = line.trim().split('=');
+      if (actions.length == 2) {
+        actionLine = actions[0].trim() + ' = ' +
+            deobfuscateUrwigoText(
+                (actions[1].indexOf('")') > 0)
+                    ? actions[1].substring(0, actions[1].indexOf('")'))
+                    .replaceAll(obfuscator, '')
+                    .replaceAll('("', '')
+                    .replaceAll('")', '')
+                    .trim()
+                    : actions[1]
+                    .replaceAll(obfuscator, '')
+                    .replaceAll('("', '')
+                    .replaceAll('")', '')
+                    .trim()
+                , dtable);
+      } else {
+        actionLine = deobfuscateUrwigoText(
+            actions[0].replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', '').trim(),
+            dtable);
+      }
+    }
+    else
+      actionLine = line.trimLeft();
+    actionLine = actionLine.replaceAll('<BR>', '\n').replaceAll(']],', '');
+    return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, actionLine);
+  }
+}
+
+String _getVariable(String line){
+  if (line.trim().endsWith('= input'))
+    line = line.trim().replaceAll(' = input', '').replaceAll(' ', '');
+  if (line.trim().endsWith('~= nil then'))
+    line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
+  return line;
+}

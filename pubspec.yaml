@@ -45,6 +45,7 @@ dependencies:
   uuid: ^3.0.4
   url_launcher: ^6.0.12
   audioplayers: ^0.20.1
+  dio: ^4.0.5-beta1
 
 dev_dependencies:
   flutter_test:

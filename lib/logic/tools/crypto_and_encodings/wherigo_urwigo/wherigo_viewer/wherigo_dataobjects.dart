@@ -1,7 +1,7 @@
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum OBJECT_TYPE {CHARACTER, INPUT, ITEM, MEDIA, TASK, TIMER, ZONE, VARIABLES}
+enum OBJECT_TYPE {MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES}
 OBJECT_TYPE currentObjectSection;
 
 class ObjectData{
@@ -220,6 +220,54 @@ class VariableData{
   VariableData(
       this.VariableLUAName,
       this.VariableName);
+}
+
+class ItemData{
+  final String ItemLUAName;
+  final String ItemID;
+  final String ItemName;
+  final String ItemDescription;
+  final String ItemVisible;
+  final String ItemMedia;
+  final String ItemIcon;
+  final String ItemLocation;
+  final ZonePoint ItemZonepoint;
+  final String ItemContainer;
+  final String ItemLocked;
+  final String ItemOpened;
+
+  ItemData(
+      this.ItemLUAName,
+      this.ItemID,
+      this.ItemName,
+      this.ItemDescription,
+      this.ItemVisible,
+      this.ItemMedia,
+      this.ItemIcon,
+      this.ItemLocation,
+      this.ItemZonepoint,
+      this.ItemContainer,
+      this.ItemLocked,
+      this.ItemOpened);
+}
+
+class TimerData{
+  final String TimerLUAName;
+  final String TimerID;
+  final String TimerName;
+  final String TimerDescription;
+  final String TimerVisible;
+  final String TimerDuration;
+  final String TimerType;
+
+  TimerData(
+      this.TimerLUAName,
+      this.TimerID,
+      this.TimerName,
+      this.TimerDescription,
+      this.TimerVisible,
+      this.TimerDuration,
+      this.TimerType);
 }
 
 
