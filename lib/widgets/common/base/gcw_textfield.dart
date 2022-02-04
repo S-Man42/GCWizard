@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textselectioncontrols.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -22,6 +23,7 @@ class GCWTextField extends StatefulWidget {
   final maxLength;
   final maxLines;
   final fontSize;
+  final String title;
 
   const GCWTextField(
       {Key key,
@@ -39,6 +41,7 @@ class GCWTextField extends StatefulWidget {
       this.filled: false,
       this.maxLength,
       this.maxLines,
+      this.title,
       this.fontSize})
       : super(key: key);
 
@@ -68,7 +71,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
   Widget build(BuildContext context) {
     ThemeColors colors = themeColors();
 
-    return Container(
+    var textField = Container(
         margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
         child: LayoutBuilder(builder: (context, constraints) {
           return TextFormField(
@@ -128,5 +131,23 @@ class _GCWTextFieldState extends State<GCWTextField> {
             selectionControls: GCWTextSelectionControls(),
           );
         }));
+
+    if ((widget.title ?? '').isEmpty)
+      return textField;
+
+    return Row(
+      children: [
+        Expanded(
+          child: GCWText(
+            text: widget.title + ':',
+          ),
+          flex: 1
+        ),
+        Expanded(
+          child: textField,
+          flex: 3
+        )
+      ],
+    );
   }
 }

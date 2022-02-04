@@ -3,6 +3,7 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -17,6 +18,12 @@ class SymbolTableSelection extends GCWSelection {
     }).toList();
 
     _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+
+    _toolList.insert(0, registeredTools.firstWhere((element) {
+      return [
+        className(SymbolReplacer()),
+      ].contains(className(element.tool));
+    }));
 
     _toolList.insert(0, registeredTools.firstWhere((element) {
       return [
