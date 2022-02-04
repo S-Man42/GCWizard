@@ -588,6 +588,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: ESelection(), i18nPrefix: 'e_selection', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'e',
       'irrationalnumbers',
     ]),
     GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
@@ -720,11 +721,6 @@ initializeRegistry(BuildContext context) {
           'color',
           'image_colorcorrections',
         ]),
-    GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: [
-      'stegano',
-    ]),
     GCWTool(
         tool: IPCodes(),
         i18nPrefix: 'ipcodes',
@@ -815,6 +811,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: PhiSelection(), i18nPrefix: 'phi_selection', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'phi',
       'irrationalnumbers',
     ]),
     GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
@@ -825,6 +822,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'pi',
       'irrationalnumbers',
     ]),
     GCWTool(tool: Playfair(), i18nPrefix: 'playfair', categories: [
@@ -936,6 +934,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: SilverRatioSelection(), i18nPrefix: 'silverratio_selection', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'silverratio',
       'irrationalnumbers',
     ]),
     GCWTool(tool: Skytale(), i18nPrefix: 'skytale', categories: [
@@ -1604,31 +1603,14 @@ initializeRegistry(BuildContext context) {
       'dnaamonoacidstable',
     ]),
 
-    //Silver Ratio Selection **********************************************************************************************
-    GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
-      'silverratio',
-      'silverratiodecimalrange',
-    ]),
-    GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
-      'silverratio',
-      'silverratiodecimalrange',
-    ]),
-    GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
-      'silverratio',
-      'silverratiosearch',
-    ]),
-
     //E Selection *************************************************************************************************
     GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
-      'e',
       'enthdecimal',
     ]),
     GCWTool(tool: EDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
-      'e',
       'edecimalrange',
     ]),
     GCWTool(tool: ESearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
-      'e',
       'esearch',
     ]),
 
@@ -1910,40 +1892,6 @@ initializeRegistry(BuildContext context) {
     //MayaNumbers Selection **************************************************************************************
     GCWTool(tool: MayaNumbers(), i18nPrefix: 'mayanumbers', searchKeys: [
       'mayanumbers',
-    ]),
-
-    //Phi Selection **********************************************************************************************
-    GCWTool(tool: PhiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
-      'irrationalnumbers',
-      'phi',
-      'phidecimalrange',
-    ]),
-    GCWTool(tool: PhiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
-      'irrationalnumbers',
-      'phi',
-      'phidecimalrange',
-    ]),
-    GCWTool(tool: PhiSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
-      'irrationalnumbers',
-      'phi',
-      'phisearch',
-    ]),
-
-    //Pi Selection **********************************************************************************************
-    GCWTool(tool: PiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
-      'irrationalnumbers',
-      'pi',
-      'pinthdecimal',
-    ]),
-    GCWTool(tool: PiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
-      'irrationalnumbers',
-      'pi',
-      'pidecimalrange',
-    ]),
-    GCWTool(tool: PiSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
-      'irrationalnumbers',
-      'pi',
-      'pisearch',
     ]),
 
     //NumberSequenceSelection ****************************************************************************************
@@ -2479,6 +2427,35 @@ initializeRegistry(BuildContext context) {
       'periodictable_atomicnumbers',
     ]),
 
+
+    //Phi Selection **********************************************************************************************
+    GCWTool(tool: PhiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'irrationalnumbers',
+      'phidecimalrange',
+    ]),
+    GCWTool(tool: PhiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'irrationalnumbers',
+      'phidecimalrange',
+    ]),
+    GCWTool(tool: PhiSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'irrationalnumbers',
+      'phisearch',
+    ]),
+
+    //Pi Selection **********************************************************************************************
+    GCWTool(tool: PiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'irrationalnumbers',
+      'pinthdecimal',
+    ]),
+    GCWTool(tool: PiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'irrationalnumbers',
+      'pidecimalrange',
+    ]),
+    GCWTool(tool: PiSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'irrationalnumbers',
+      'pisearch',
+    ]),
+
     //Predator Selection **************************************************************************************
     GCWTool(tool: Predator(), i18nPrefix: 'predator', searchKeys: [
       'predator',
@@ -2598,6 +2575,17 @@ initializeRegistry(BuildContext context) {
     //Shadoks Selection ******************************************************************************************
     GCWTool(tool: ShadoksNumbers(), i18nPrefix: 'shadoksnumbers', searchKeys: [
       'shadoksnumbers',
+    ]),
+
+    //Silver Ratio Selection **********************************************************************************************
+    GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      'silverratiodecimalrange',
+    ]),
+    GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      'silverratiodecimalrange',
+    ]),
+    GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      'silverratiosearch',
     ]),
 
     //Symbol Tables **********************************************************************************************
