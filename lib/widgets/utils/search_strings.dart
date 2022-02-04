@@ -59,12 +59,18 @@ void createIndexedSearchStrings() {
       if (localeStrings != null && localeStrings.isNotEmpty) searchStrings.add(localeStrings);
     }
 
+    var _toolName;
+    if (tool.toolName != null) {
+      _toolName = removeAccents(tool.toolName).toLowerCase().replaceAll(RegExp(r'\s+'), '');
+    }
     var _indexedSearchStrings = removeAccents(searchStrings.join(' ').toLowerCase());
     if (_indexedSearchStrings == null || _indexedSearchStrings.length == 0) {
+      if (_toolName != null)
+        tool.indexedSearchStrings = _toolName;
       continue;
     }
 
-    tool.indexedSearchStrings = _removeDuplicates(_indexedSearchStrings);
+    tool.indexedSearchStrings = _removeDuplicates(_indexedSearchStrings + ' ' + (_toolName ?? ''));
   }
 }
 

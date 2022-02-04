@@ -1,6 +1,21 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum GaussWeberTelegraphMode { GAUSS_WEBER_ORIGINAL, GAUSS_WEBER_ALTERNATIVE, SCHILLING_CANSTATT, WHEATSTONE_COOKE_5 }
+/*
+  Schilling Canstatt:
+
+  Volker Aschoff
+  "Paul Schilling von Canstatt und die Geschichte des elektromagnetischen Telegraphen"
+  ISBN 3-486-20691-5
+ */
+
+enum GaussWeberTelegraphMode {
+  GAUSS_WEBER_ORIGINAL,
+  GAUSS_WEBER_ALTERNATIVE,
+  SCHILLING_CANSTATT,
+  WHEATSTONE_COOKE_5,
+  WHEATSTONE_COOKE_2,
+  WHEATSTONE_COOKE_1
+}
 
 Map<String, String> _GAUSS_WEBER_ORIGINAL = {
   'A': '+',
@@ -131,6 +146,92 @@ Map<String, String> _WHEATSTONE_COOKE_5 = {
   'Y': '\\|||/',
 };
 
+Map<String, String> _WHEATSTONE_COOKE_2 = {
+  'A': '[\\\\  |]',
+  'B': '[\\\\\\ |]',
+  'C': '[\\/ |]',
+  'D': '[/\\ |]',
+  'E': '[/ |]',
+  'F': '[// |]',
+  'G': '[/// |]',
+  'H': '[| \\]',
+  'I': '[| \\\\]',
+  'K': '[| \\\\\\]',
+  'L': '[| /\\]',
+  'M': '[| \\/]',
+  'N': '[| /]',
+  'O': '[| //]',
+  'P': '[| ///]',
+  'R': '[\\ \\]',
+  'S': '[\\\\ \\\\]',
+  'T': '[\\\\\\ \\\\\\]',
+  'U': '[/\\ /\\]',
+  'V': '[\\/ \\/]',
+  'W': '[/ /]',
+  'X': '[// //]',
+  'Y': '[/// ///]',
+};
+
+Map<String, String> _WHEATSTONE_COOKE_1 = {
+  // https://www.flickr.com/photos/10983301@N06/2619001486/
+  'A': '\\\\',
+  'B': '\\\\\\',
+  'C': '\\\\\\\\',
+  'D': '/\\',
+  'E': '\\/\\',
+  'F': '\\\\/\\',
+  'G': '//\\',
+  'H': '\\//\\',
+  'I': '///\\',
+  'J': '/\\//',
+  'K': '/\\\\',
+  'L': '/\\/\\',
+  'M': '/',
+  'N': '//',
+  'O': '///',
+  'P': '////',
+  'Q': '//\\\\',
+  'R': '\\/',
+  'S': '\\//',
+  'T': '\\///',
+  'U': '\\\\/',
+  'V': '\\\\//',
+  'W': '\\\\\\/',
+  'X': '/\\/',
+  'Y': '\\/\\/',
+  'Z': '/\\\\/',
+  'LETTER' : '/\\/\\/\\',
+  'NUMERAL': '\\/\\/\\/',
+};
+Map<String, String> _WHEATSTONE_COOKE_LETTER_2_NUMERAL = {
+  'M': '1',
+  'N': '2',
+  'O': '3',
+  'D': '4',
+  'G': '5',
+  'E': '6',
+  'S': '7',
+  'U': '8',
+  'R': '9',
+  'X': '0',
+};
+final DIGITS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+
+Map<GaussWeberTelegraphMode, Map<String, String>> WHEATSTONECOOKENEEDLENUMBER = {
+  GaussWeberTelegraphMode.WHEATSTONE_COOKE_1: {
+    'title': 'telegraph_wheatstonecooke_1_needle_title',
+    'subtitle': 'telegraph_wheatstonecooke_1_needle_description'
+  },
+  GaussWeberTelegraphMode.WHEATSTONE_COOKE_2: {
+    'title': 'telegraph_wheatstonecooke_2_needle_title',
+    'subtitle': 'telegraph_wheatstonecooke_2_needle_description'
+  },
+  GaussWeberTelegraphMode.WHEATSTONE_COOKE_5: {
+    'title': 'telegraph_wheatstonecooke_5_needle_title',
+    'subtitle': 'telegraph_wheatstonecooke_5_needle_description'
+  },
+};
+
 String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
   if (input == null || input.isEmpty) return '';
 
@@ -148,18 +249,56 @@ String decodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5:
       map = switchMapKeyValue(_WHEATSTONE_COOKE_5);
       break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_2:
+      map = switchMapKeyValue(_WHEATSTONE_COOKE_2);
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_1:
+      map = switchMapKeyValue(_WHEATSTONE_COOKE_1);
+      break;
     default:
       return '';
   }
 
-  return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
-    if (code == null || code.isEmpty) return '';
+  if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_1) {
+    bool letter = true;
+    return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
+      if (code == null || code.isEmpty) return '';
 
-    var character = map[code];
-    if (character == null || character.isEmpty) return '';
+      var character = map[code];
 
-    return character;
-  }).join();
+      if (character == null || character.isEmpty) return '';
+      if (character == 'LETTER') {
+        letter = true;
+        return '';
+      } else if (character == 'NUMERAL') {
+        letter = false;
+        return '';
+      } else {
+        if (!letter)
+          character = _WHEATSTONE_COOKE_LETTER_2_NUMERAL[character];
+      }
+      return character;
+    }).join();
+         
+  } else
+  if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_2) {
+    input = input.replaceAll('  ', ' ').replaceAll('] [', ']] [[');
+    return input.toLowerCase().split('] [').map((code) {
+      if (code == null || code.isEmpty) return '';
+
+      var character = map[code];
+      
+      if (character == null || character.isEmpty) return '';
+      return character;
+    }).join();
+  } else
+      return input.toLowerCase().split(RegExp(r'\s+')).map((code) {
+        if (code == null || code.isEmpty) return '';
+
+        var character = map[code];
+        if (character == null || character.isEmpty) return '';
+        return character;
+      }).join();
 }
 
 String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
@@ -179,21 +318,74 @@ String encodeGaussWeberTelegraph(String input, GaussWeberTelegraphMode mode) {
     case GaussWeberTelegraphMode.WHEATSTONE_COOKE_5:
       map = _WHEATSTONE_COOKE_5;
       break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_2:
+      map = _WHEATSTONE_COOKE_2;
+      break;
+    case GaussWeberTelegraphMode.WHEATSTONE_COOKE_1:
+      map = _WHEATSTONE_COOKE_1;
+      break;
     default:
       return '';
   }
 
-  return input
-      .toUpperCase()
-      .split('')
-      .map((char) {
-        if (char == null || char.isEmpty) return '';
+  if (mode == GaussWeberTelegraphMode.WHEATSTONE_COOKE_1) {
 
-        var code = map[char];
-        if (code == null || code.isEmpty) return '';
+    bool letter = true;
+    List<String> result = [];
+    input.toUpperCase().split('').forEach((char) {
+      if (char == null || char.isEmpty) result.add('');
 
-        return code;
-      })
-      .join(' ')
-      .replaceAll(RegExp('\s+'), ' ');
+      if (letter) { // letter mode
+        if (DIGITS.contains(char)) { // letter mode and digit is coming
+          letter = false;
+          result.add(map['NUMERAL']);
+          var code = map[switchMapKeyValue(_WHEATSTONE_COOKE_LETTER_2_NUMERAL)[char]];
+          if (code == null || code.isEmpty)
+            result.add('');
+          else {
+            result.add(code);
+          }
+        } else { // letter mode and letter is coming
+          var code = map[char];
+          if (code == null || code.isEmpty)
+            result.add('');
+          else {
+            result.add(code);
+          }
+        }
+      } else { // digit mode
+        if (DIGITS.contains(char)) { // digit mode and digit is coming
+          var code = map[switchMapKeyValue(_WHEATSTONE_COOKE_LETTER_2_NUMERAL)[char]];
+          if (code == null || code.isEmpty)
+            result.add('');
+          else {
+            result.add(code);
+          }
+        } else { // digit mode and letter is coming
+          letter = true;
+          result.add(map['LETTER']);
+          var code = map[char];
+          if (code == null || code.isEmpty)
+            result.add('');
+          else {
+            result.add(map[char]);
+          }
+        }
+    }}
+    );
+    return result.join(' ');
+  } else
+    return input
+        .toUpperCase()
+        .split('')
+        .map((char) {
+          if (char == null || char.isEmpty) return '';
+
+          var code = map[char];
+          if (code == null || code.isEmpty) return '';
+
+          return code;
+        })
+        .join(' ')
+        .replaceAll(RegExp('\s+'), ' ');
 }

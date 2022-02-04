@@ -56,7 +56,8 @@ String decodeSearchWord(
       azOn: azOn,
       numbersOn: numbersOn);
 
-  var wordList = _wordList(input);
+  var splittedResult = _wordList(input);
+  var wordList = splittedResult.item1;
   word = word.toUpperCase();
 
   var out = wordList.where((e) => e.Text.toUpperCase() == word).map((e) {
@@ -118,13 +119,16 @@ String decodeFindWord(String input, String positions, searchFormat format,
       azOn: azOn,
       numbersOn: numbersOn);
 
-  var wordList = _wordList(input);
+  var splittedResult = _wordList(input);
+  var wordList = splittedResult.item1;
+  var rowList = splittedResult.item2;
+  var sectionList = splittedResult.item2;
 
   while (i < positionList.length) {
     switch (format) {
       case searchFormat.SectionRowWord:
         if (i + 2 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               section: positionList[i + 0],
               row: positionList[i + 1],
               word: positionList[i + 2],
@@ -134,27 +138,28 @@ String decodeFindWord(String input, String positions, searchFormat format,
 
       case searchFormat.SectionCharacter:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               section: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
         i += 2;
         break;
 
       case searchFormat.RowWord:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               row: positionList[i + 0], word: positionList[i + 1], onlyFirstWordLetter: onlyFirstWordLetter));
         i += 2;
         break;
 
       case searchFormat.Word:
         if (i + 0 < positionList.length)
-          out.add(_findWord(wordList, format, word: positionList[i + 0], onlyFirstWordLetter: onlyFirstWordLetter));
+          out.add(_findWord(wordList, rowList, sectionList, format,
+              word: positionList[i + 0], onlyFirstWordLetter: onlyFirstWordLetter));
         i += 1;
         break;
 
       case searchFormat.SectionRowWordCharacter:
         if (i + 3 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               section: positionList[i + 0],
               row: positionList[i + 1],
               word: positionList[i + 2],
@@ -165,7 +170,7 @@ String decodeFindWord(String input, String positions, searchFormat format,
 
       case searchFormat.RowWordCharacter:
         if (i + 2 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               row: positionList[i + 0],
               word: positionList[i + 1],
               character: positionList[i + 2],
@@ -175,21 +180,22 @@ String decodeFindWord(String input, String positions, searchFormat format,
 
       case searchFormat.RowCharacter:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               row: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
         i += 2;
         break;
 
       case searchFormat.WordCharacter:
         if (i + 1 < positionList.length)
-          out.add(_findWord(wordList, format,
+          out.add(_findWord(wordList, rowList, sectionList, format,
               word: positionList[i + 0], character: positionList[i + 1], onlyFirstWordLetter: false));
         i += 2;
         break;
 
       case searchFormat.Character:
         if (i + 0 < positionList.length)
-          out.add(_findWord(wordList, format, character: positionList[i + 0], onlyFirstWordLetter: false));
+          out.add(_findWord(wordList, rowList, sectionList, format,
+              character: positionList[i + 0], onlyFirstWordLetter: false));
         i += 1;
         break;
     }
@@ -220,7 +226,10 @@ String encodeText(String input, String text, encodeOutFormat format,
       numbersOn: numbersOn);
 
   var out = '';
-  var wordList = _wordList(input);
+  var splittedResult = _wordList(input);
+  var wordList = splittedResult.item1;
+  var rowList = splittedResult.item2;
+  var sectionList = splittedResult.item2;
   var positionList = <Tuple2<_wordClass, int>>[];
 
   if (onlyFirstWordLetter)
@@ -229,7 +238,10 @@ String encodeText(String input, String text, encodeOutFormat format,
     });
 
   text.split('').forEach((letter) {
-    positionList.add(_selectRandomLetterPosition(letter, wordList));
+    if (format == encodeOutFormat.Character)
+      positionList.add(_selectRandomLetterPosition(letter, sectionList));
+    else
+      positionList.add(_selectRandomLetterPosition(letter, wordList));
   });
 
   positionList.forEach((element) {
@@ -260,7 +272,7 @@ String encodeText(String input, String text, encodeOutFormat format,
         if (e == null)
           out += _createOutElement(true, 0, 0, 0, -1);
         else
-          out += _createOutElement(false, 0, 0, 0, _globalCharacterPosition(e, element.item2, wordList));
+          out += _createOutElement(false, 0, 0, 0, _globalCharacterPosition(e, element.item2, sectionList));
         break;
     }
   });
@@ -306,7 +318,6 @@ int _findRowIndex(_wordClass word, List<_wordClass> wordList) {
       break;
     }
   }
-  ;
 
   return rowIndex;
 }
@@ -315,7 +326,7 @@ int _findWordIndex(_wordClass word, List<_wordClass> wordList) {
   return wordList.indexOf(word) + 1;
 }
 
-String _findWord(List<_wordClass> wordList, searchFormat format,
+String _findWord(List<_wordClass> wordList, List<_wordClass> rowList, List<_wordClass> sectionList, searchFormat format,
     {int section: 0, int row: 0, int word: 0, int character: 0, bool onlyFirstWordLetter = false}) {
   List<_wordClass> list;
   _wordClass wordEntry;
@@ -327,7 +338,7 @@ String _findWord(List<_wordClass> wordList, searchFormat format,
       return _filterWord(word, list, onlyFirstWordLetter).Text;
 
     case searchFormat.SectionCharacter:
-      list = _filterSection(section, wordList);
+      list = _filterSection(section, sectionList);
       return _filterCharacter(character, list);
 
     case searchFormat.RowWord:
@@ -351,7 +362,7 @@ String _findWord(List<_wordClass> wordList, searchFormat format,
       return _filterCharacter(character, list);
 
     case searchFormat.RowCharacter:
-      list = _filterRow(row, wordList);
+      list = _filterRow(row, rowList);
       return _filterCharacter(character, list);
 
     case searchFormat.WordCharacter:
@@ -360,7 +371,7 @@ String _findWord(List<_wordClass> wordList, searchFormat format,
       return _filterCharacter(character, list);
 
     case searchFormat.Character:
-      return _filterCharacter(character, wordList);
+      return _filterCharacter(character, sectionList);
   }
 
   return "";
@@ -423,10 +434,10 @@ String _filterCharacter(int index, List<_wordClass> wordList) {
   return "";
 }
 
-int _globalCharacterPosition(_wordClass word, int characterPosition, List<_wordClass> wordList) {
+int _globalCharacterPosition(_wordClass word, int characterPosition, List<_wordClass> sectionList) {
   var text = "";
 
-  for (var item in wordList) {
+  for (var item in sectionList) {
     if (item == word) break;
     text += item.Text;
   }
@@ -473,8 +484,10 @@ Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordCla
   return Tuple2<_wordClass, int>(outWord, outLetterPosition);
 }
 
-List<_wordClass> _wordList(String input) {
-  var list = <_wordClass>[];
+Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>> _wordList(String input) {
+  var wordList = <_wordClass>[];
+  var rowList = <_wordClass>[];
+  var sectionList = <_wordClass>[];
   int sectionIndex = 0;
   int rowIndex = 0;
   int wordIndex = 0;
@@ -482,19 +495,24 @@ List<_wordClass> _wordList(String input) {
   input.split(RegExp(r"\n\s*\n|\r\n\s*\r\n]")).forEach((section) {
     sectionIndex += 1;
     rowIndex = 0;
+    wordIndex = 0;
+    sectionList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, section));
+
     section.split(RegExp(r"\n")).forEach((row) {
       rowIndex += 1;
       wordIndex = 0;
+      rowList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, row));
+
       row.split(RegExp(r"[\s]|[\.]|[,]|[!]|[\?]|[\\]")).forEach((word) {
         if (word.length > 0) {
           wordIndex += 1;
-          list.add(new _wordClass(sectionIndex, rowIndex, wordIndex, word));
+          wordList.add(new _wordClass(sectionIndex, rowIndex, wordIndex, word));
         }
       });
     });
   });
 
-  return list;
+  return Tuple3<List<_wordClass>, List<_wordClass>, List<_wordClass>>(wordList, rowList, sectionList);
 }
 
 String _filterInput(String input,

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gc_wizard/logic/tools/coords/converter/dutchgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
@@ -19,7 +20,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
@@ -33,6 +34,7 @@ const keyCoordsMGRS = 'coords_mgrs';
 const keyCoordsXYZ = 'coords_xyz';
 const keyCoordsSwissGrid = 'coords_swissgrid';
 const keyCoordsSwissGridPlus = 'coords_swissgridplus';
+const keyCoordsDutchGrid = 'coords_dutchgrid';
 const keyCoordsGaussKrueger = 'coords_gausskrueger';
 const keyCoordsGaussKruegerGK1 = 'coords_gausskrueger_gk1';
 const keyCoordsGaussKruegerGK2 = 'coords_gausskrueger_gk2';
@@ -48,7 +50,7 @@ const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
-const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
+const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister';
 
 class CoordinateFormat {
   final key;
@@ -66,8 +68,8 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsUTM, 'UTM', '10 N 546003.6 5015445.0'),
   CoordinateFormat(keyCoordsMGRS, 'MGRS', '10T ER 46003.6 15445.0'),
   CoordinateFormat(keyCoordsXYZ, 'XYZ (ECEF)', 'X: -2409244, Y: -3794410, Z: 4510158'),
-  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903/LV03)', 'Y: 4295317.7, X: 1202252.3'),
-  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+/LV95)', 'Y: 6295317.7, X: 2202252.3'),
+  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903/LV03)', 'Y: 720660.2, X: 167765.3'),
+  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+/LV95)', 'Y: 2720660.2, X: 1167765.3'),
   CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', 'R: 8837763.4, H: 5978799.1',
       subtypes: [
         CoordinateFormat(
@@ -81,12 +83,13 @@ List<CoordinateFormat> allCoordFormats = [
         CoordinateFormat(
             keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
       ]),
+  CoordinateFormat(keyCoordsDutchGrid, 'RD (Rijksdriehoeks, DutchGrid)', 'X: 221216.7, Y: 550826.2'),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
   CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
   CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
-  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', '042325, 436113, 935102'),
+  CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
@@ -506,6 +509,31 @@ class SwissGridPlus extends SwissGrid {
   }
 }
 
+class DutchGrid extends BaseCoordinates {
+  String get key => keyCoordsDutchGrid;
+  double x;
+  double y;
+
+  DutchGrid(this.x, this.y);
+
+  LatLng toLatLng() {
+    return dutchGridToLatLon(this);
+  }
+
+  static DutchGrid fromLatLon(LatLng coord) {
+    return latLonToDutchGrid(coord);
+  }
+
+  static DutchGrid parse(String input) {
+    return parseDutchGrid(input);
+  }
+
+  @override
+  String toString() {
+    return 'X: ${x}\nY: ${y}';
+  }
+}
+
 class GaussKrueger extends BaseCoordinates {
   String get key => keyCoordsGaussKrueger;
   int code;
@@ -611,7 +639,7 @@ class SlippyMap extends BaseCoordinates {
 }
 
 class Waldmeister extends BaseCoordinates {
-  String get key => keyCoordsReverseWhereIGoWaldmeister;
+  String get key => keyCoordsReverseWherigoWaldmeister;
   String a, b, c;
 
   Waldmeister(this.a, this.b, this.c);

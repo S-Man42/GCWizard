@@ -194,7 +194,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         {
             var offset = new PointF();
             var languagefile = File.ReadAllText(languageFileName(path));
-            var licenseEntries = getLicenseEntries(File.ReadAllText(licenseFileName(path)));
+            var licenseEntries = getLicenseEntries(File.ReadAllText(licenseFileName(path)), languagefile);
 
             ProjectPath = path;
             PdfPage page = null;
@@ -202,44 +202,11 @@ namespace GC_Wizard_SymbolTables_Pdf
             XGraphics gfx = null;
             Progress = 0;
 
-            CONFIG_Font = CONFIG_DefaultFont;
-            offset = createPage(document, ref page, ref gfx);
             // Create the root bookmark. You can set the style and the color.
-            var contentTableName = "";
-            switch (Language)
-            {
-                case "de":
-                    contentTableName = "Inhaltsverzeichnis";
-                    break;
-                case "fr":
-                    contentTableName = "Table des matières";
-                    break;
-                case "ko":
-                    contentTableName = "목차";
-                    CONFIG_Font = "Malgun Gothic";
-                    break;
-                case "it":
-                    contentTableName = "Sommario";
-                    break;
-                case "es":
-                    contentTableName = "Tabla de contenido";
-                    break;
-                case "nl":
-                    contentTableName = "Inhoudsopgave";
-                    break;
-                case "pl":
-                    contentTableName = "Spis treści";
-                    break;
-                case "ru":
-                    contentTableName = "Оглавление";
-                    break;
-                case "tr":
-                    contentTableName = "İçindekiler";
-                    break;
-                default:
-                    contentTableName = "Table of Contents";
-                    break;
-            }
+            var config = getcontentTableName();
+            var contentTableName = config.Item1;
+            CONFIG_Font = config.Item2;
+            offset = createPage(document, ref page, ref gfx);
 
             Outline = document.Outlines.Add(contentTableName, page, true, PdfOutlineStyle.Bold, XColors.Black);
 
@@ -247,6 +214,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             var progress_offset = directorys.Any() ? (100.0 / directorys.Count()) : 100;
             foreach (var entry in directorys)
             {
+                Debug.Print(entry.Value);
                 offset = drawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, licenseEntries);
 
                 offset.X = BorderWidthLeft;
@@ -254,6 +222,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
                 Progress = Progress + progress_offset;
             }
+
+            addLicenses(document, ref page, ref gfx, offset, languagefile, licenseEntries);
 
             Progress = 100;
         }
@@ -264,7 +234,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             foreach (var directory in Directory.GetDirectories(symbolTablesDirectory(path)))
             {
                 var folder = @directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-                var name = getEntryValue(languagefile, "symboltables_" + folder + "_title");
+                var name = getSymbolTableName(folder, languagefile);
 
                 if (name != null && directory != "backlog")
                     list.Add(folder, name);
@@ -276,25 +246,18 @@ namespace GC_Wizard_SymbolTables_Pdf
             return query;
         }
 
+        private String getSymbolTableName(String folder, String languagefile)
+        {
+            return getEntryValue(languagefile, "symboltables_" + folder + "_title");
+        }
+
         private PointF drawSymbolTable(String path, String name, String folder, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
         {
             var description = getEntryValue(languagefile, "symboltables_" + folder + "_description");
             var license = "";
             if (licenseEntries.ContainsKey(folder))
             {
-                var sourceLabel = "";
-                switch (Language)
-                {
-                    case "de":
-                        sourceLabel = "Quelle";
-                        break;
-                    case "fr":
-                        sourceLabel = "La source";
-                        break;
-                    default:
-                        sourceLabel = "Source";
-                        break;
-                }
+                var sourceLabel = getSourceLabel();
                 license = "(" + sourceLabel + ": " + licenseEntries[folder] + ")";
             }
 
@@ -694,7 +657,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
                     text = text.Substring(0, index) + subString;
 
-                    index = text.LastIndexOf("\n");
+                    index = text.LastIndexOf("\n")+1;
                     subString = text.Substring(index);
                     size = gfx.MeasureString(subString, font);
                 }
@@ -889,18 +852,33 @@ namespace GC_Wizard_SymbolTables_Pdf
         /// </summary>
         /// <param name="fileContent"></param>
         /// <returns></returns>
-        private Dictionary<String, String> getLicenseEntries(String fileContent)
+        private Dictionary<String, String> getLicenseEntries(String fileContent, String languagefile)
         {
             var start = false;
             var startChildren = false;
             var list = new Dictionary<String, String>();
+            var lines = fileContent.Split('\n');
 
-            foreach (string line in fileContent.Split('\n'))
+            for (var i = 0; i < lines.Length - 1; i++)
             {
+                var line = lines[i].Trim();
+                if (line.StartsWith("[") && startChildren)
+                {
+                    while (!(line.EndsWith("],") || line.EndsWith("]")))
+                    {
+                        i++;
+                        line += lines[i].Trim();
+                    };
+                }
+
                 if (!start && line.Contains(@"licenses_symboltablesources"))
                 {
                     start = true;
                 }
+                //else if (!start && line.Contains(@"licenses_telegraphs"))
+                //{
+                //    start = true;
+                //}
                 else if (start && !startChildren && line.Contains(@"children"))
                 {
                     startChildren = true;
@@ -912,6 +890,16 @@ namespace GC_Wizard_SymbolTables_Pdf
                     var entrys = lineTmp.Split(',');
                     if (entrys.Length >= 2)
                     {
+                        if (entrys[0].Trim() == "i18n(context")
+                        {
+                            entrys[1] = entrys[1].Trim();
+                            if (entrys[1].EndsWith(@")"))
+                                entrys[1] = entrys[1].Substring(0, entrys[1].Length - 1);
+
+                            entrys[1] = entrys[1].Replace("symboltables_", "");
+                            entrys[1] = entrys[1].Replace("_title", "");
+                            entrys[0] = entrys[2].Trim();
+                        }
                         entrys[0] = entrys[0].Trim();
                         entrys[1] = entrys[1].Trim().ToLower();
 
@@ -921,9 +909,10 @@ namespace GC_Wizard_SymbolTables_Pdf
                             list[entrys[1]] = entrys[0];
                     }
                 }
-                else if (startChildren && line.EndsWith(@"),"))
+                else if (startChildren && line.Trim() == (@"),"))
                 {
-                    break;
+                    start = false;
+                    startChildren = false;
                 }
             }
 
@@ -1150,6 +1139,143 @@ namespace GC_Wizard_SymbolTables_Pdf
 
                 return 0;
             }
+        }
+
+        private Tuple<String, String> getcontentTableName()
+        {
+
+            CONFIG_Font = CONFIG_DefaultFont;
+            String contentTableName;
+
+            switch (Language)
+            {
+                case "de":
+                    contentTableName = "Inhaltsverzeichnis";
+                    break;
+                case "fr":
+                    contentTableName = "Table des matières";
+                    break;
+                case "ko":
+                    contentTableName = "목차";
+                    CONFIG_Font = "Malgun Gothic";
+                    break;
+                case "it":
+                    contentTableName = "Sommario";
+                    break;
+                case "es":
+                    contentTableName = "Tabla de contenido";
+                    break;
+                case "nl":
+                    contentTableName = "Inhoudsopgave";
+                    break;
+                case "pl":
+                    contentTableName = "Spis treści";
+                    break;
+                case "ru":
+                    contentTableName = "Оглавление";
+                    break;
+                case "tr":
+                    contentTableName = "İçindekiler";
+                    break;
+                default:
+                    contentTableName = "Table of Contents";
+                    break;
+            }
+
+            return new Tuple<String, String>(contentTableName, CONFIG_Font);
+
+        }
+
+        private String getSourceLabel()
+        {
+            switch (Language)
+            {
+                case "de":
+                    return "Quelle";
+                case "fr":
+                    return "La source";
+                case "ko":
+                    return "원천";
+                case "nl":
+                    return "Bron";
+                default:
+                    return "Source";
+            }
+        }
+
+        private String getLicenseLabel(String languagefile)
+        {
+            return getEntryValue(languagefile, "licenses_symboltablesources");
+        }
+
+        private void addLicenses(PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
+        {
+            var licenseLabel = getLicenseLabel(languagefile);
+
+            // Create a font
+            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
+            offset = createPage(document, ref page, ref gfx);
+
+
+            gfx.DrawString(licenseLabel, font, XBrushes.Black,
+                new XRect(offset.X, offset.Y, page.Width, page.Height),
+                XStringFormats.TopLeft);
+            Outline = document.Outlines.Add(licenseLabel, page, true, PdfOutlineStyle.Bold, XColors.Black);
+
+            var name_offset = font.Height;
+            name_offset += 20;
+
+            offset.Y += name_offset;
+
+            // Create a font
+            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+
+            double maxSize = 0;
+
+            foreach (var entry in licenseEntries)
+            {
+                var name = getSymbolTableName(entry.Key, languagefile);
+                var size = gfx.MeasureString(name + ":", font);
+                if (maxSize < size.Width)
+                    maxSize = size.Width;
+            }
+            var valueOffsetX = offset.X + maxSize + 10;
+            var maxLength = (int)(page.Width - BorderWidthRight - valueOffsetX);
+
+            foreach (var entry in licenseEntries)
+            {
+                if (newPageNeeded(page, offset, font.Height + 1))
+                {
+                    offset = createPage(document, ref page, ref gfx);
+                }
+
+                var name = getSymbolTableName(entry.Key, languagefile);
+                if (name != null)
+                {
+                    gfx.DrawString(name + ":", font, XBrushes.Black,
+                        new XRect(offset.X, offset.Y, page.Width, page.Height),
+                        XStringFormats.TopLeft);
+
+                    var textValues = entry.Value.Replace("\\n", "\n").Split('\n');
+                    var text = new List<String>();
+                    foreach (var item in textValues)
+                    {
+                        var values = checkTextLength(item.Replace("\r", ""), maxLength, font, gfx);
+                        text.AddRange(values.Split('\n'));
+                    }
+
+                    for (int i = 0; i < text.Count; i++)
+                    {
+                        gfx.DrawString(text[i], font, XBrushes.Black,
+                            new XRect(valueOffsetX, offset.Y, page.Width, page.Height),
+                            XStringFormats.TopLeft);
+
+                        offset.Y += font.Height + ((i == text.Count - 1) ? 1 : 0);
+                    }
+                }
+
+            }
+
         }
     }
 }

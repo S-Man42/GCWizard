@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
@@ -162,15 +162,27 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                             '\'alantheandroid\' (IT)',
+                            '\'alexgonc\' (PT)',
                             'Cavit A. (TR)',
                             '\'crazedllama\' (KO)',
+                            '\'hakuchi\' (IT)',
                             '\'Henrike71\' (NL)',
+                            'Igor Č. (SK)',
                             '\'j_janus\' (PL)',
+                            'Joao F. (PT)',
                             '\'Johan-V\' (NL)',
+                            '\'MAJ\' (ES)',
+                            '\'n3oklan\' (CZ)',
                             'Paul Z. (NL)',
                             'Paweł B. (PL)',
+                            '\'QouiZ\' (EL)',
+                            '\'proXmiii\' (SK)',
+                            'Silvia O. (SK)',
+                            '\'tkemer\' (EL)',
+                            '\'Todclerc\' (NL)',
+                            '\'vike91\' (FI)',
                             '\'Xoyn\' (RU)',
-                          ].join('\n') +
+                          ].join(', ') +
                           '\n')
                 ], style: gcwTextStyle()),
               ),
@@ -187,8 +199,10 @@ class AboutState extends State<About> {
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
                     '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                    '\'Flosphor\'',
                     'Franz K.',
                     '\'Freakyfinder\'',
+                    '\'GrafZahl75\'',
                     'Johannes C.',
                     'Jonas M.',
                     '\'Klumpenkukuk\'',
@@ -210,7 +224,8 @@ class AboutState extends State<About> {
                     'Thomas B.',
                     '\'tebarius\'',
                     '\'tomcat06\'',
-                    '\'Vyrembi\''
+                    '\'Vyrembi\'',
+                    '\'WeinWalker\''
                   ].join(', '))
                 ], style: gcwTextStyle()),
               ),

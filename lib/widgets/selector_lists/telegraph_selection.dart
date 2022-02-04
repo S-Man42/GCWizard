@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ccitt.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
@@ -32,8 +29,7 @@ class TelegraphSelection extends GCWSelection {
         className(WigWagSemaphoreTelegraph()),
         className(GaussWeberTelegraph()),
         className(SchillingCanstattTelegraph()),
-        className(WheatstoneCooke5NeedleTelegraph()),
-        className(CCITTPunchTape()),
+        className(WheatstoneCookeNeedleTelegraph()),
       ].contains(className(element.tool));
     }).toList();
 

@@ -91,15 +91,5 @@ web
 howtocode/
 /crowdin.properties
 /external_helpers/crowdin/crowdin_token.sh
-/assets/i18n/el.json
-/assets/i18n/fi.json
-/assets/i18n/ja.json
-/assets/i18n/no.json
-/assets/i18n/pt.json
-/assets/i18n/sv.json
-/assets/i18n/zh.json
-/assets/i18n/cs.json
-/assets/i18n/hu.json
-/assets/i18n/sk.json
-/assets/i18n/sl.json
 /ios/build
+crowdin.yml

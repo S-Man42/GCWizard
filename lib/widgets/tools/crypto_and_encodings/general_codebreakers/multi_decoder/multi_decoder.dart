@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -24,6 +25,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:prefs/prefs.dart';
 
 class MultiDecoder extends StatefulWidget {
   @override
@@ -191,12 +193,7 @@ class MultiDecoderState extends State<MultiDecoder> {
         }
       } catch (e) {}
 
-      if ((result is String) && (result.toString().length != 0))
-        return GCWOutput(
-          title: _toolTitle(tool),
-          child: result,
-        );
-      else if ((result is Future<String>))
+      if (result is Future<String>) {
         return FutureBuilder(
             future: result,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -205,7 +202,7 @@ class MultiDecoderState extends State<MultiDecoder> {
               } else
                 return Container();
             });
-      else if ((result is Future<Uint8List>))
+      } else if (result is Future<Uint8List>) {
         return FutureBuilder(
             future: result,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -218,7 +215,12 @@ class MultiDecoderState extends State<MultiDecoder> {
               } else
                 return Container();
             });
-      else
+      } else if (result != null && result.toString().isNotEmpty) {
+        return GCWOutput(
+          title: _toolTitle(tool),
+          child: result.toString(),
+        );
+      } else
         return Container();
     }).toList();
 

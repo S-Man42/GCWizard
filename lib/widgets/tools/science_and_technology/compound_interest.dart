@@ -56,17 +56,17 @@ class CompoundInterestState extends State<CompoundInterest> {
           },
         ),
         _currentMode != _MODE_ORIGINALPRINCIPALSUM
-          ? GCWDoubleSpinner(
-              value: _currentOriginalPrincipalSum,
-              numberDecimalDigits: 3,
-              title: i18n(context, 'compoundinterest_modes_originalprincipalsum'),
-              onChanged: (value) {
-                setState(() {
-                  _currentOriginalPrincipalSum = value;
-                });
-              },
-            )
-          : Container(),
+            ? GCWDoubleSpinner(
+                value: _currentOriginalPrincipalSum,
+                numberDecimalDigits: 3,
+                title: i18n(context, 'compoundinterest_modes_originalprincipalsum'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentOriginalPrincipalSum = value;
+                  });
+                },
+              )
+            : Container(),
         _currentMode != _MODE_PRINCIPALSUM
             ? GCWDoubleSpinner(
                 value: _currentPrincipalSum,
@@ -78,7 +78,7 @@ class CompoundInterestState extends State<CompoundInterest> {
                   });
                 },
               )
-          : Container(),
+            : Container(),
         _currentMode != _MODE_ANNUALRATE
             ? GCWDoubleSpinner(
                 value: _currentAnnualRate,
@@ -113,22 +113,19 @@ class CompoundInterestState extends State<CompoundInterest> {
           },
         ),
         _currentCompoundInterest
-          ? GCWDropDownButton(
-              value: _currentCompoundFrequency,
-              title: i18n(context, 'compoundinterest_compoundfrequency'),
-              items: COMPOUND_FREQUENCY.values.map((freq) {
-                return GCWDropDownMenuItem(
-                  value: freq,
-                  child: i18n(context, _compoundFrequencyTitle(freq))
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _currentCompoundFrequency = value;
-                });
-              },
-            )
-          : Container(),
+            ? GCWDropDownButton(
+                value: _currentCompoundFrequency,
+                title: i18n(context, 'compoundinterest_compoundfrequency'),
+                items: COMPOUND_FREQUENCY.values.map((freq) {
+                  return GCWDropDownMenuItem(value: freq, child: i18n(context, _compoundFrequencyTitle(freq)));
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _currentCompoundFrequency = value;
+                  });
+                },
+              )
+            : Container(),
         GCWDefaultOutput(
           child: _buildOutput(),
         )
@@ -138,12 +135,18 @@ class CompoundInterestState extends State<CompoundInterest> {
 
   String _compoundFrequencyTitle(COMPOUND_FREQUENCY freq) {
     switch (freq) {
-      case COMPOUND_FREQUENCY.YEARLY: return 'compoundinterest_compoundfrequency_yearly';
-      case COMPOUND_FREQUENCY.MONTHLY: return 'compoundinterest_compoundfrequency_monthly';
-      case COMPOUND_FREQUENCY.QUARTERLY: return 'compoundinterest_compoundfrequency_quarterly';
-      case COMPOUND_FREQUENCY.WEEKLY: return 'compoundinterest_compoundfrequency_weekly';
-      case COMPOUND_FREQUENCY.DAILY_360: return 'compoundinterest_compoundfrequency_daily360';
-      case COMPOUND_FREQUENCY.DAILY_365: return 'compoundinterest_compoundfrequency_daily365';
+      case COMPOUND_FREQUENCY.YEARLY:
+        return 'compoundinterest_compoundfrequency_yearly';
+      case COMPOUND_FREQUENCY.MONTHLY:
+        return 'compoundinterest_compoundfrequency_monthly';
+      case COMPOUND_FREQUENCY.QUARTERLY:
+        return 'compoundinterest_compoundfrequency_quarterly';
+      case COMPOUND_FREQUENCY.WEEKLY:
+        return 'compoundinterest_compoundfrequency_weekly';
+      case COMPOUND_FREQUENCY.DAILY_360:
+        return 'compoundinterest_compoundfrequency_daily360';
+      case COMPOUND_FREQUENCY.DAILY_365:
+        return 'compoundinterest_compoundfrequency_daily365';
     }
   }
 
@@ -153,26 +156,54 @@ class CompoundInterestState extends State<CompoundInterest> {
 
     if (_currentCompoundInterest) {
       switch (_currentMode) {
-        case _MODE_PRINCIPALSUM: number = principalSumCompound(_currentOriginalPrincipalSum, _currentAnnualRate, _currentTotalYears, frequency); break;
-        case _MODE_ORIGINALPRINCIPALSUM: number =  originalPrincipalSumCompound(_currentPrincipalSum, _currentAnnualRate, _currentTotalYears, frequency); break;
-        case _MODE_ANNUALRATE: number = annualInterestRateCompound(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentTotalYears, frequency); break;
-        case _MODE_TOTALYEARS: number = totalYearsCompound(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentAnnualRate, frequency); break;
+        case _MODE_PRINCIPALSUM:
+          number =
+              principalSumCompound(_currentOriginalPrincipalSum, _currentAnnualRate, _currentTotalYears, frequency);
+          break;
+        case _MODE_ORIGINALPRINCIPALSUM:
+          number =
+              originalPrincipalSumCompound(_currentPrincipalSum, _currentAnnualRate, _currentTotalYears, frequency);
+          break;
+        case _MODE_ANNUALRATE:
+          number = annualInterestRateCompound(
+              _currentOriginalPrincipalSum, _currentPrincipalSum, _currentTotalYears, frequency);
+          break;
+        case _MODE_TOTALYEARS:
+          number =
+              totalYearsCompound(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentAnnualRate, frequency);
+          break;
       }
     } else {
       switch (_currentMode) {
-        case _MODE_PRINCIPALSUM: number = principalSum(_currentOriginalPrincipalSum, _currentAnnualRate, _currentTotalYears); break;
-        case _MODE_ORIGINALPRINCIPALSUM: number = originalPrincipalSum(_currentPrincipalSum, _currentAnnualRate, _currentTotalYears); break;
-        case _MODE_ANNUALRATE: number = annualInterestRate(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentTotalYears); break;
-        case _MODE_TOTALYEARS: number = totalYears(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentAnnualRate); break;
+        case _MODE_PRINCIPALSUM:
+          number = principalSum(_currentOriginalPrincipalSum, _currentAnnualRate, _currentTotalYears);
+          break;
+        case _MODE_ORIGINALPRINCIPALSUM:
+          number = originalPrincipalSum(_currentPrincipalSum, _currentAnnualRate, _currentTotalYears);
+          break;
+        case _MODE_ANNUALRATE:
+          number = annualInterestRate(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentTotalYears);
+          break;
+        case _MODE_TOTALYEARS:
+          number = totalYears(_currentOriginalPrincipalSum, _currentPrincipalSum, _currentAnnualRate);
+          break;
       }
     }
 
     var formatString;
     switch (_currentMode) {
-      case _MODE_PRINCIPALSUM: formatString = '0.000'; break;
-      case _MODE_ORIGINALPRINCIPALSUM:  formatString = '0.000'; break;
-      case _MODE_ANNUALRATE:  formatString = '0.000#####'; break;
-      case _MODE_TOTALYEARS:  formatString = '0.000#####'; break;
+      case _MODE_PRINCIPALSUM:
+        formatString = '0.000';
+        break;
+      case _MODE_ORIGINALPRINCIPALSUM:
+        formatString = '0.000';
+        break;
+      case _MODE_ANNUALRATE:
+        formatString = '0.000#####';
+        break;
+      case _MODE_TOTALYEARS:
+        formatString = '0.000#####';
+        break;
     }
 
     return NumberFormat(formatString).format(number) + (_currentMode == _MODE_ANNUALRATE ? ' %' : '');

@@ -1,21 +1,3 @@
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -70,12 +52,14 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return SwissGridPlus.fromLatLon(_coords, ells).toString();
     case keyCoordsGaussKrueger:
       return GaussKrueger.fromLatLon(_coords, _getGKCode(), ells).toString();
+    case keyCoordsDutchGrid:
+      return DutchGrid.fromLatLon(_coords).toString();
     case keyCoordsMaidenhead:
       return Maidenhead.fromLatLon(_coords).toString();
     case keyCoordsMercator:
       return Mercator.fromLatLon(_coords, ells).toString();
     case keyCoordsNaturalAreaCode:
-      return NaturalAreaCode.fromLatLon(_coords).toString();
+      return NaturalAreaCode.fromLatLon(_coords, precision: 8).toString();
     case keyCoordsSlippyMap:
       return SlippyMap.fromLatLon(_coords, double.tryParse(_outputFormat['subtype'])).toString();
     case keyCoordsGeohash:
@@ -87,8 +71,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsOpenLocationCode:
       return OpenLocationCode.fromLatLon(_coords, codeLength: 14).toString();
     case keyCoordsQuadtree:
-      return Quadtree.fromLatLon(_coords).toString();
-    case keyCoordsReverseWhereIGoWaldmeister:
+      return Quadtree.fromLatLon(_coords, precision: 40).toString();
+    case keyCoordsReverseWherigoWaldmeister:
       return Waldmeister.fromLatLon(_coords).toString();
     default:
       return DEC.fromLatLon(_coords).toString();

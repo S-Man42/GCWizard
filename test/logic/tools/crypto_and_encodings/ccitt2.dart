@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt2.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
 
 void main() {
   group("CCITT2.encodeCCITT2:", () {
@@ -30,7 +30,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeCCITT2(elem['input']);
+        var _actual = encodeCCITT(elem['input'], CCITTCodebook.CCITT_ITA2_1931);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeCCITT2(elem['input']);
+        var _actual = decodeCCITT(elem['input'], CCITTCodebook.CCITT_ITA2_1931);
         expect(_actual, elem['expectedOutput']);
       });
     });

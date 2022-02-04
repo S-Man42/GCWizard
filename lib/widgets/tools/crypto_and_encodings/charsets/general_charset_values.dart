@@ -6,7 +6,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -66,11 +65,11 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
                   });
                 },
               )
-            : GCWIntegerListTextField(
+            : GCWTextField(
                 controller: _decodeController,
                 onChanged: (value) {
                   setState(() {
-                    _currentDecodeInput = value['text'];
+                    _currentDecodeInput = value;
                   });
                 },
               ),
@@ -180,6 +179,13 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
     int blockSize = _getBlockSize();
 
     var decodeInput = _currentDecodeInput;
+    switch (radix) {
+      case 2: decodeInput = decodeInput.replaceAll(RegExp(r'[^01]+'), ' '); break;
+      case 10: decodeInput = decodeInput.replaceAll(RegExp(r'[^0-9]+'), ' '); break;
+      case 16: decodeInput = decodeInput.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]+'), ' '); break;
+      default: return {'text': '', 'values': []};
+    }
+
     if (blockSize != null) {
       decodeInput = insertSpaceEveryNthCharacter(decodeInput.replaceAll(RegExp(r'[\s]+'), ''), blockSize);
     }

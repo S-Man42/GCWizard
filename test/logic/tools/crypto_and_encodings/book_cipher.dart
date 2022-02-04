@@ -103,6 +103,24 @@ void main() {
   });
 
   group("book_cipher.decodeFindWord:", () {
+    var testText1 =
+    '''in den BV. Den Bezirksverwaltungen nachgeordnet wa-
+ren die örtlichen Kreisdienststellen, von denen es DDR-
+weit zuletzt 209 gab. Die Stasi-Offziere vor Ort führ-
+ten die Hälfte aller Informanten und leisteten einen
+Großteil der operativen Arbeit. Die Überwachung einer
+knapp 120 Kilometer langen Grenze zu West-Berlin,
+der Verlauf der Transitstrecken durch den Bezirk und
+die dort angesiedelten westlichen Militärmissionen er-
+klärten, dass Potsdam 1989 mit fast 4 000 Geheimpoli-
+zisten die personalstärkste Stasi-Bezirksverwaltung
+überhaupt war. Noch hinzu kamen etwas mehr als
+9 600 inoffzielle Mitarbeiter, die die hauptamtlichen
+Stasi-Offziere in ihrer Arbeit unterstützen sollten. Von
+1971 bis 1985 leitete Siegfried Leibholz (1925–2005)
+die Potsdamer Bezirksverwaltung. Ihm folgte bis 1990
+Helmut Schickart (1931–1993). ''';
+
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'positions' : null, 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
       {'input' : null, 'positions' : '', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : '', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
@@ -154,6 +172,10 @@ void main() {
       {'input' : 'TE1235ST', 'positions' : '1.3', 'searchFormat' : searchFormat.RowCharacter, 'expectedOutput' : 'S', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : false, 'onlyFirstWordLetter' : false},
 
       {'input' : 'TEILEN IST EINE SIEBEN TESTWEISE', 'positions' : '1.1 1.3´1.4 1.5', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : 'TEST', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : '.;+-:!?\'"‘&(){}[]/\\_', 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : true},
+
+      {'input' : testText1, 'positions' : '4,12; 1,3; 14,3; 1,7; 14,3; 12,1; 2,4; 3,14; 2,2; 4,4; 9,37; 8,4; 14,13; 15,4; 6,8; 7,11; 3,5; 14,4; 14,5; 16,21; 15,4; 14,3; 6,8; 6,6; 1,5', 'searchFormat' : searchFormat.RowCharacter, 'expectedOutput' : 'F 7 79 2E 4 5 2F 1 3 72 E', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : null, 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
+
+      {'input' : 'Helmut Schickart (1931–1993).', 'positions' : ' 1,21; ', 'searchFormat' : searchFormat.SectionCharacter, 'expectedOutput' : '3', 'spacesOn' : true, 'emptyLinesOn' : true, 'ignoreSymbols' : null, 'diacriticsOn' : true, 'azOn' : true, 'numbersOn' : true, 'onlyFirstWordLetter' : false},
 
     ];
 

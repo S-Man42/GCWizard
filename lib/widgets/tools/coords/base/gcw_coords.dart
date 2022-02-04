@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dutchgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geo3x3.dart';
@@ -20,7 +21,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.d
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewherigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgridplus.dart';
@@ -181,6 +182,17 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDutchGrid),
+        'widget': GCWCoordsDutchGrid(
+          coordinates: _pastedCoords,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsMaidenhead),
         'widget': GCWCoordsMaidenhead(
           coordinates: _pastedCoords,
@@ -281,8 +293,8 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
-        'widget': GCWCoordsReverseWhereIGoWaldmeister(
+        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoWaldmeister),
+        'widget': GCWCoordsReverseWherigoWaldmeister(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -417,9 +429,11 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsGaussKruegerGK5:
         _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK5});
         break;
+      case keyCoordsDutchGrid:
       case keyCoordsMaidenhead:
       case keyCoordsMercator:
       case keyCoordsNaturalAreaCode:
+        break;
       case keyCoordsSlippyMap:
         _currentCoordsFormat.addAll({'subtype': '10.0'});
         break;
@@ -428,7 +442,7 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsGeo3x3:
       case keyCoordsOpenLocationCode:
       case keyCoordsQuadtree:
-      case keyCoordsReverseWhereIGoWaldmeister:
+      case keyCoordsReverseWherigoWaldmeister:
         break;
       default:
         _currentCoordsFormat = {'format': keyCoordsDMM};

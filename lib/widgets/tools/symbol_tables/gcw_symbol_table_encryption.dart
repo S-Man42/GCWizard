@@ -78,14 +78,23 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           },
         ),
         if (widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false)
-          GCWOnOffSwitch(
-            value: _currentIgnoreUnknown,
-            title: i18n(context, 'symboltables_ignoreunknown'),
-            onChanged: (value) {
-              setState(() {
-                _currentIgnoreUnknown = value;
-              });
-            },
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: GCWOnOffSwitch(
+                    value: _currentIgnoreUnknown,
+                    title: i18n(context, 'symboltables_ignoreunknown'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentIgnoreUnknown = value;
+                      });
+                    },
+                  ),
+              ),
+              Container(
+                width: 2 * 40.0,
+              )
+            ],
           ),
         GCWTextDivider(
             text: i18n(context, 'common_output'),
