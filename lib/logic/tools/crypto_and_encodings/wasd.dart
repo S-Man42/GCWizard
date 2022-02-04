@@ -365,7 +365,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
   }); // forEach word
 
   // build bitmap
-  var binaryWorld = List.generate(maxSentenceX + 3, (y) => List(maxSentenceY - minSentenceY + 3), growable: false);
+  var binaryWorld = List.generate(maxSentenceX + 3, (y) => []..length = maxSentenceY - minSentenceY + 3, growable: false);
   sentence.forEach((key, value) {
     x = int.parse(key.split('|')[0]);
     y = int.parse(key.split('|')[1]);
@@ -374,7 +374,7 @@ String decodeWASDGraphic(String input, List<String> controlSet) {
 
   // build output
   String outputLine = '##';
-  List<String> output = new List();
+  List<String> output = <String>[];
   output.add(outputLine.padRight(maxSentenceX + 1, '#'));
   for (y = 0; y < maxSentenceY - minSentenceY + 1; y++) {
     outputLine = '##';

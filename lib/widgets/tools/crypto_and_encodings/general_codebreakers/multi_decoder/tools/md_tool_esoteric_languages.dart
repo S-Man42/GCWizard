@@ -8,6 +8,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/hohoho.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 
@@ -25,6 +26,7 @@ const MDT_ESOTERIC_LANGUAGES_OPTION_COW = 'cow_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT = 'karol_robot_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_MALBOLGE = 'malbolge_title';
 const MDT_ESOTERIC_LANGUAGES_OPTION_WHITESPACE = 'whitespace_language_title';
+const MDT_ESOTERIC_LANGUAGES_OPTION_HOHOHO = 'hohoho_title';
 
 const MDT_ESOTERIC_LANGUAGES_OPTION_ALPHK = 'Alph**k';
 const MDT_ESOTERIC_LANGUAGES_OPTION_BINARYFK = 'BinaryFuck';
@@ -119,6 +121,14 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                     // });
                   } catch (e) {}
                   return null;
+                case MDT_ESOTERIC_LANGUAGES_OPTION_HOHOHO:
+                  try {
+                    var output = interpretHohoho(input, STDIN: key);
+                    if (output != null) {
+                      return output.output;
+                    }
+                  } catch (e) {}
+                  return null;
                 case MDT_ESOTERIC_LANGUAGES_OPTION_ALPHK:
                 case MDT_ESOTERIC_LANGUAGES_OPTION_BINARYFK:
                 case MDT_ESOTERIC_LANGUAGES_OPTION_BLUB:
@@ -177,6 +187,7 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                         MDT_ESOTERIC_LANGUAGES_OPTION_FLUFFLEPUFF,
                         MDT_ESOTERIC_LANGUAGES_OPTION_FUCKBEES,
                         MDT_ESOTERIC_LANGUAGES_OPTION_GERMAN,
+                        MDT_ESOTERIC_LANGUAGES_OPTION_HOHOHO,
                         MDT_ESOTERIC_LANGUAGES_OPTION_KENNYSPEAK,
                         MDT_ESOTERIC_LANGUAGES_OPTION_KONFK,
                         MDT_ESOTERIC_LANGUAGES_OPTION_MORSEFK,
