@@ -4615,6 +4615,8 @@
   "telegraph_murray_mygeotools_description" : "Codetable according to myGeoTools",
   "telegraph_ohlsen_title" : "Ohlsen Telegraph (Norway)",
   "telegraph_ohlsen_description" : "Optical Telegraph with 6 shutters invented by Ole Ohlsen",
+  "telegraph_pasley_title" : "Pasley optical Telegraph (United Kingdom)",
+  "telegraph_pasley_description" : "Optical Telegraph with 2 indicator arms",
   "telegraph_prussia_title" : "Prussian optical Telegraph (Germany/Prussia)",
   "telegraph_prussia_description" : "Optical Telegraph with 6 indicator arms ",
   "telegraph_schillingcanstatt_title": "Schilling Canstatt Telegraph Code",
