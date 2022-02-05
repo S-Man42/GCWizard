@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -9,14 +9,14 @@ import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_segment_display.dart';
 
-class PasleyTelegraph extends StatefulWidget {
+class PophamTelegraph extends StatefulWidget {
   @override
-  PasleyTelegraphState createState() => PasleyTelegraphState();
+  PophamTelegraphState createState() => PophamTelegraphState();
 }
 
-class PasleyTelegraphState extends State<PasleyTelegraph> {
+class PophamTelegraphState extends State<PophamTelegraph> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
@@ -26,7 +26,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
-    @override
+  @override
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
@@ -53,7 +53,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
       if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
           controller: _encodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9a-zA-Z]')),],
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z]')),],
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -64,7 +64,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
         Column(
           // decrpyt: input segment => output number
           children: <Widget>[
-              _buildVisualDecryption()
+            _buildVisualDecryption()
           ],
         ),
       _buildOutput()
@@ -99,13 +99,13 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
     return Column(
       children: <Widget>[
         Container(
-          width: 300,
-          //height: 200,
+          width: 180,
+          //height: 250,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
-                child: PasleyTelegraphSegmentDisplay(
+                child: PophamTelegraphSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -146,7 +146,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          return PasleyTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return PophamTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);
@@ -155,7 +155,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodePasley(_currentEncodeInput);
+      List<List<String>> segments = encodePopham(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -164,11 +164,11 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
     } else {
       //decode
       var segments;
-        // decode visual mode
-        var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
-        }).toList();
-        segments = decodeVisualPasley(output);
+      // decode visual mode
+      var output = _currentDisplays.map((character) {
+        if (character != null) return character.join();
+      }).toList();
+      segments = decodeVisualPopham(output);
 
       return Column(
         children: <Widget>[

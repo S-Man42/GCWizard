@@ -1,10 +1,9 @@
+//Fred B. Wrixon, Geheimsprachen, Könemann-Verlag, ISBN 978-3-8331-2562-1, S. 450
 
-
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 final Map<String, List<String>> PASLEY = {
-  '0': ['2', '5'],
+  ' ': [],
   '1': ['7'],
   '2': ['1'],
   '3': ['2'],
@@ -14,6 +13,7 @@ final Map<String, List<String>> PASLEY = {
   '7': ['6'],
   '8': ['1', '7'],
   '9': ['2', '7'],
+  '0': ['3', '5'],
   'A': ['7'],
   'B': ['1'],
   'C': ['2'],
@@ -23,7 +23,7 @@ final Map<String, List<String>> PASLEY = {
   'G': ['6'],
   'H': ['1', '7'],
   'I': ['2', '7'],
-  'J': ['2', '7'],
+  'J': ['3', '5'],
   'K': ['3', '7'],
   'L': ['4', '7'],
   'M': ['5', '7'],
@@ -40,8 +40,6 @@ final Map<String, List<String>> PASLEY = {
   'X': ['4', '6'],
   'Y': ['2', '5'],
   'Z': ['5', '6'],
-  'LETTERFOLLOWS': ['3', '4'],
-  'NUMBERFOLLOWS': ['2', '6'],
 };
 
 
@@ -60,6 +58,8 @@ final Map<String, String> DigitToLetter= {
   '7' : 'G',
   '8' : 'H',
   '9' : 'I',
+  '0' : 'J',
+  ' ' : ' '
 };
 
 final Map<String, String> LetterToDigit= {
@@ -72,13 +72,15 @@ final Map<String, String> LetterToDigit= {
   'G' : '7',
   'H' : '8',
   'I' : '9',
+  'J' : '0',
+  ' ' : ' '
 };
 
-final List<String> LETTER = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
-final List<String> DIGIT = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ];
+final List<String> LETTER = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
+final List<String> DIGIT = [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ];
 
 List<List<String>> encodePasley(String input) {
-  if (input == null) return [];
+  if (input == null || input == '') return [];
 
   bool letter = true;
 
@@ -112,7 +114,7 @@ Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
-      'chars': [0]
+      'chars': ''
     };
 
   var displays = <List<String>>[];
@@ -124,15 +126,21 @@ Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
 
   bool letter = true;
 
+  Map<String, String> CODEBOOK = {};
+  PASLEY.forEach((key, value) {
+    CODEBOOK[value.join('')] = key;
+  });
+  CODEBOOK['26'] = 'NUMBERFOLLOWS';
+  CODEBOOK['34'] = 'LETTERFOLLOWS';
+  CODEBOOK[''] = ' ';
+
   List<String> text = inputs.where((input) => input != null).map((input) {
     var char = '';
     var charH = '';
-
-    var CODEBOOK = switchMapKeyValue(PASLEY);
-    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
+    if (CODEBOOK[input] == null) {
       char = char + UNKNOWN_ELEMENT;
     } else {
-      charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
+      charH = CODEBOOK[input];
       if (charH == 'LETTERFOLLOWS')
         letter = true;
       else if (charH == 'NUMBERFOLLOWS')
@@ -143,20 +151,15 @@ Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
 
     return char;
   }).toList();
-  return {'displays': displays, 'chars': text.join(' ')};
+  return {'displays': displays, 'chars': text.join('')};
 }
 
 List<String> _stringToSegment(String input) {
-  if (input.length % 2 == 0) {
-    List<String> result = [];
-    int j = 0;
-    for (int i = 0; i < input.length / 2; i++) {
-      result.add(input[j] + input[j + 1]);
-      j = j + 2;
-    }
-    return result;
-  } else
-    return [];
+  List<String> result = [];
+  for (int i = 0; i < input.length; i++)
+    result.add(input[i]);
+
+  return result;
 }
 
 String _decode(String code, bool letter){

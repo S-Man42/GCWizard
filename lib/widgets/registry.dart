@@ -208,7 +208,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
@@ -3305,11 +3306,7 @@ initializeRegistry(BuildContext context) {
       'telegraph',
       'symbol_pasley_telegraph',
     ]),
-    GCWSymbolTableTool(symbolKey: 'telegraph_popham_1', symbolSearchStrings: [
-      'telegraph',
-      'symbol_popham_telegraph',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'telegraph_popham_2', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'telegraph_popham', symbolSearchStrings: [
       'telegraph',
       'symbol_popham_telegraph',
     ]),
@@ -3455,6 +3452,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: PasleyTelegraph(), i18nPrefix: 'telegraph_pasley', searchKeys: [
       'telegraph',
       'telegraph_pasley',
+    ]),
+    GCWTool(tool: PophamTelegraph(), i18nPrefix: 'telegraph_popham', searchKeys: [
+      'telegraph',
+      'telegraph_popham',
     ]),
     GCWTool(tool: PrussiaTelegraph(), i18nPrefix: 'telegraph_prussia', searchKeys: [
       'telegraph',

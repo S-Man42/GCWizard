@@ -67,15 +67,13 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
         paint.color = currentSegments['1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path10 = Path();
         path10.moveTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 20, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 95);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 88);
         path10.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 90);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 88);
         path10.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 90);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 102);
         path10.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 80, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 100);
-        path10.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 100);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 30, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 102);
         path10.close();
         if (size.height < 180) if (currentSegments['1'])
           canvas.touchCanvas.drawPath(path10, paint, onTapDown: (tapDetail) {
@@ -91,8 +89,6 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
         paint.color = currentSegments['2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path20 = Path();
         path20.moveTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 40, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 40);
-        path20.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 40);
         path20.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 80);
@@ -115,15 +111,13 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
         paint.color = currentSegments['3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path30 = Path();
         path30.moveTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 95, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 20);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 102, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 30);
         path30.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 30);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 102, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 80);
         path30.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 100, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 80);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 88, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 80);
         path30.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 80);
-        path30.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 30);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 88, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 30);
         path30.close();
         if (size.height < 180) if (currentSegments['3'])
           canvas.touchCanvas.drawPath(path30, paint, onTapDown: (tapDetail) {
@@ -143,8 +137,6 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
         path40.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 140, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 40);
         path40.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 150, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 40);
-        path40.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 150, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 50);
         path40.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 110, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 90);
@@ -163,15 +155,13 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
         paint.color = currentSegments['5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         var path50 = Path();
         path50.moveTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 170, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 95);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 160, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 88);
         path50.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 160, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 90);
-        path50.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 110, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 90);
+            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 110, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 88);
         path50.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 110,
-            size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 100);
+            size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 102);
         path50.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 160,
-            size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 100);
+            size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 102);
         path50.close();
         if (size.height < 180) if (currentSegments['5'])
           canvas.touchCanvas.drawPath(path50, paint, onTapDown: (tapDetail) {
@@ -192,8 +182,6 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
             size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 100);
         path60.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 150,
             size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 140);
-        path60.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 150,
-            size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 150);
         path60.lineTo(size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 140,
             size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 150);
         path60.close();
@@ -216,8 +204,6 @@ class PasleyTelegraphSegmentDisplay extends NSegmentDisplay {
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 90, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 110);
         path70.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 50, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 150);
-        path70.lineTo(
-            size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 40, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 150);
         path70.lineTo(
             size.width / _PASLEY_RELATIVE_DISPLAY_WIDTH * 40, size.width / _PASLEY_RELATIVE_DISPLAY_HEIGHT * 140);
         path70.close();
