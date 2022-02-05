@@ -182,6 +182,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numer
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
@@ -829,6 +830,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'playfair',
+    ]),
+    GCWTool(tool: Pokemon(), i18nPrefix: 'pokemon', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'pokemon',
     ]),
     GCWTool(tool: Polybios(), i18nPrefix: 'polybios', categories: [
       ToolCategory.CRYPTOGRAPHY
