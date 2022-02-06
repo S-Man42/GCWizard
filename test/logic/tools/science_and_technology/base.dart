@@ -67,8 +67,8 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
-      {'input' : 'gc wizard', 'expectedOutput' : '3Xd\x07;%ta9\x19'}, // 3Xd;%ta9
-      {'input' : 'This is an encoded string', 'expectedOutput' : '*\x1A\x19\x01Rs\x10\x18-b\x03\x15ã7Y\fV!\x01ft9\x1A-f8'},
+      {'input' : 'GC Wizard', 'expectedOutput' : '#Pd;%ta9ހ'},
+      {'input' : 'cache bei nord 123 ost 567', 'expectedOutput' : '1X,6C\x14@b2Z\$\x06s=dd\x10\fң\x19\x01^s:\b\x06S1ߜ'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -83,8 +83,8 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
-      {'input' : '3Xd\x07;%ta9\x19', 'expectedOutput' : 'gc wizard'},
-      {'input' : '*\x1A\x19\x01Rs\x10\x18-b\x03\x15ã7Y\fV!\x01ft9\x1A-f8', 'expectedOutput' : 'This is an encoded string'},
+      {'input' : '#Pd;%ta9ހ', 'expectedOutput' : 'GC Wizard'},
+      {'input' : '1X,6C\x14@b2Z\$\x06s=dd\x10\fң\x19\x01^s:\b\x06S1ߜ', 'expectedOutput' : 'cache bei nord 123 ost 567'},
     ];
 
     _inputsToExpected.forEach((elem) {

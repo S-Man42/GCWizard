@@ -257,7 +257,7 @@ String decodeBase91(String d){
 
 
 
-// ---------- Base91
+// ---------- Base122
 //
 // Kevin Alberston
 // https://github.com/kevinAlbs/Base122/blob/master/base122.js
@@ -327,8 +327,7 @@ String encodeBase122(String rawData){
   sevenBits = next7Bit();
   while (sevenBits != _STOP_BYTE) {
     illegalIndex = isIllegalCharacter(sevenBits);
-    if (illegalIndex != -1) {
-      // Since this will be a two-byte character, get the next chunk of seven bits.
+    if (illegalIndex != -1) { // Since this will be a two-byte character, get the next chunk of seven bits.
       int nextSevenBits = next7Bit();
 
       int b1 = 194; // (byte) 0b11000010
@@ -375,7 +374,7 @@ String decodeBase122(String base122Data){
     }
   }
 
-  List<int> utf8Bytes  = utf8.encode(base122Data);
+  List<int> utf8Bytes  = base122Data.codeUnits;
 
   for (int i = 0; i < utf8Bytes.length; i++) {
     // Check if this is a two-byte character.
