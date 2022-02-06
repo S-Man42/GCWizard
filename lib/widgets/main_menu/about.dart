@@ -224,7 +224,8 @@ class AboutState extends State<About> {
                     'Thomas B.',
                     '\'tebarius\'',
                     '\'tomcat06\'',
-                    '\'Vyrembi\''
+                    '\'Vyrembi\'',
+                    '\'WeinWalker\''
                   ].join(', '))
                 ], style: gcwTextStyle()),
               ),

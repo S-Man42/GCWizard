@@ -59,7 +59,7 @@ class FormulaPainter {
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
     formula = formula.toUpperCase();
 
-    RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])'); //(r'(\[)(.+?)(\])');
+    RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])');
     var matches = regExp.allMatches(formula);
     if (matches.isNotEmpty) {
       // formel references
@@ -107,7 +107,6 @@ class FormulaPainter {
         result = _replaceRange(result, offset, null, subResult);
       }
     }
-    ;
 
     return result;
   }
@@ -245,6 +244,7 @@ class FormulaPainter {
         if (_parserResult != null) {
           result = _coloredSpaces(result, _parserResult);
           offset = _calcOffset(_parserResult);
+          isOperator = _operatorBevor;
         }
       }
 
