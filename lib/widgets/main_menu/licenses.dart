@@ -78,6 +78,7 @@ class LicensesState extends State<Licenses> {
           ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
           ['Vigenère Breaker', 'Jens Guballa (guballa.de)', null],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
+          ['Base91', 'Joachim Henke', 'BSD License'],
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),

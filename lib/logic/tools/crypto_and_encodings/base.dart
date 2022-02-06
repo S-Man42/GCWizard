@@ -7,7 +7,10 @@ final Map<String, Function> BASE_FUNCTIONS = {
   'base_base16': decodeBase16,
   'base_base32': decodeBase32,
   'base_base64': decodeBase64,
+  'base_base58': decodeBase58,
   'base_base85': decodeBase85,
+  'base_base91': decodeBase91,
+  'base_base122': decodeBase122,
 };
 
 String decodeBase16(String input) {
@@ -112,4 +115,147 @@ String decode(String input, Function function) {
   }
 
   return output;
+}
+
+String encodeBase58(String input){
+  // https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html
+  if (input == null || input == '' || int.tryParse(input) == null) return '';
+
+  int num = int.parse(input);
+  String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+  int base_count = alphabet.length;
+  int div = 0;
+  int mod = 0;
+  String encoded = '';
+
+  while(num >= base_count) {
+    div = num ~/ base_count;
+    mod = num % base_count;
+    encoded = encoded + alphabet[mod];
+    num = div;
+  }
+  if (num > 0)
+    encoded = encoded + alphabet[num];
+
+  return encoded.split('').reversed.join('');
+}
+
+String decodeBase58(String num){
+  // https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html
+  if (num == null || num == '') return '';
+
+  String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+  int len = num.toString().length;
+  int multi = 1;
+  int decoded = 0;
+
+  for (int i = len - 1; i >= 0; i--) {
+    decoded = decoded + multi * _strPos(alphabet, num.toString()[i]);
+    multi = multi * alphabet.length;
+  }
+  return decoded.toString();
+}
+
+List<String> b91_enctab = [
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '#', '\$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
+  '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~', '"'
+];
+
+String encodeBase91(String d){
+// Copyright (c) 2005-2006 Joachim Henke
+// http://base91.sourceforge.net/
+// This is an encoded string => nX,<:WRT%yV%!5:maref3+1RrUb64^M
+  if (d == null || d == '') return '';
+
+  int l = d.length;
+  String o = '';
+  int b = 0;
+  int n = 0;
+  int v = 0;
+
+  for (int i = 0; i < l; ++i) {
+    b = b | d.codeUnitAt(i) << n;
+    n = n + 8;
+    if (n > 13) {
+      v = b & 8191;
+      if (v > 88) {
+        b = b >> 13;
+        n = n - 13;
+      } else {
+        v = b & 16383;
+        b = b >> 14;
+        n = n - 14;
+      }
+      o = o + b91_enctab[v % 91] + b91_enctab[v ~/ 91];
+    }
+  }
+  if (n > 0) {
+    o = o + b91_enctab[b % 91];
+    if (n > 7 || b > 90)
+      o = o + b91_enctab[b ~/ 91];
+  }
+  return o;
+}
+
+String decodeBase91(String d){
+// Copyright (c) 2005-2006 Joachim Henke
+// http://base91.sourceforge.net/
+// nX,<:WRT%yV%!5:maref3+1RrUb64^M  => This is an encoded string
+
+  if (d == null || d == '') return '';
+
+  Map<int, int> b91_dectab = {};
+
+  for (int i = 0; i < 256; i++)
+    b91_dectab[i] = -1;
+
+  for (int i = 0; i < 91; ++i)
+    b91_dectab[b91_enctab[i].codeUnitAt(0)] = i;
+
+  int dbq = 0;
+  int dn = 0;
+  int dv = -1;
+  List<int> output = [];
+
+  for (int i = 0; i < d.length; ++i) {
+    if (b91_dectab[d[i].codeUnitAt(0)] != -1) {
+      if (dv == -1)
+        dv = b91_dectab[d[i].codeUnitAt(0)];
+      else {
+        dv = dv + b91_dectab[d[i].codeUnitAt(0)] * 91;
+        dbq |= dv << dn;
+        dn += (dv & 8191) > 88 ? 13 : 14;
+        do {
+          output.add(dbq % 256);
+          dbq >>= 8;
+          dn -= 8;
+        } while (dn > 7);
+        dv = -1;
+      }
+    }
+  }
+
+  if (dv != -1) {
+    output.add(dbq | dv << dn);
+  }
+
+  return String.fromCharCodes(output);
+}
+
+String encodeBase122(String input){
+  if (input == null || input == '') return '';
+
+}
+
+String decodeBase122(String input){
+  if (input == null || input == '') return '';
+
+}
+
+int _strPos(String text, String char){
+  for (int i = 0; i < text.length; i++)
+    if (text[i] == char)
+      return i;
 }
