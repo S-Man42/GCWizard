@@ -6,7 +6,10 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:prefs/prefs.dart';
 
 class NumeralWordsLists extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
 
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
+  var _valueFontsize;
 
   SplayTreeMap<String, NumeralWordsLanguage> _LANGUAGES;
 
@@ -25,10 +29,13 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
+    _valueFontsize = Prefs.getDouble('theme_font_size').floor();
   }
 
   @override
   void dispose() {
+    Prefs.setDouble('theme_font_size', _valueFontsize.toDouble());
+    AppBuilder.of(context).rebuild();
     _decodeController.dispose();
     super.dispose();
   }
@@ -42,7 +49,20 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
 
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
+        GCWIntegerSpinner(
+          title: i18n(context, 'settings_general_theme_font_size'),
+          value: _valueFontsize,
+          min: 10,
+          max: 30,
+          onChanged: (value) {
+            setState(() {
+              Prefs.setDouble('theme_font_size', value.toDouble());
+
+              // source: https://hillel.dev/2018/08/15/flutter-how-to-rebuild-the-entire-app-to-change-the-theme-or-locale/
+              AppBuilder.of(context).rebuild();
+            });
+          },
+        ),        GCWDropDownButton(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
