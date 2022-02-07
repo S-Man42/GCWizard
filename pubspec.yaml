@@ -273,6 +273,8 @@ flutter:
     - assets/symbol_tables/surf/
     - assets/symbol_tables/tae/
     - assets/symbol_tables/tamil_numerals/
+    - assets/symbol_tables/telegraph_pasley/
+    - assets/symbol_tables/telegraph_popham/
     - assets/symbol_tables/telegraph_prussia/
     - assets/symbol_tables/templers/
     - assets/symbol_tables/tenctonese/

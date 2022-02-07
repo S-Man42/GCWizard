@@ -5,6 +5,8 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
@@ -24,6 +26,8 @@ class TelegraphSelection extends GCWSelection {
         className(EdelcrantzTelegraph()),
         className(MurrayTelegraph()),
         className(OhlsenTelegraph()),
+        className(PasleyTelegraph()),
+        className(PophamTelegraph()),
         className(PrussiaTelegraph()),
         className(SemaphoreTelegraph()),
         className(WigWagSemaphoreTelegraph()),
