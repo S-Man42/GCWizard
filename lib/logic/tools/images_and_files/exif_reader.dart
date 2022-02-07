@@ -3,11 +3,20 @@ import 'dart:typed_data';
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
 import '../../../plugins/xmp/xmp.dart';
+
+const String TIFF_THUMBNAIL = 'TIFFThumbnail';
+const String JPEG_THUMBNAIL = 'JPEGThumbnail';
+const String GPS_LAT = 'GPS GPSLatitude';
+const String GPS_LNG = 'GPS GPSLongitude';
+const String GPS_LAT_REF = 'GPS GPSLatitudeRef';
+const String GPS_LNG_REF = 'GPS GPSLongitudeRef';
+const String RDF_LOCATION = 'Rdf Location';
 
 Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
   Map<String, IfdTag> data;
@@ -30,15 +39,15 @@ Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
 }
 
 GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
-  if (data.containsKey('JPEGThumbnail')) {
+  if (data.containsKey(JPEG_THUMBNAIL)) {
     // print('File has JPEG thumbnail');
-    var _jpgBytes = data['JPEGThumbnail'].values;
-    data.remove('JPEGThumbnail');
+    var _jpgBytes = data[JPEG_THUMBNAIL].values;
+    data.remove(JPEG_THUMBNAIL);
     return GCWImageViewData(local.PlatformFile(bytes: _jpgBytes.toList()));
-  } else if (data.containsKey('TIFFThumbnail')) {
+  } else if (data.containsKey(TIFF_THUMBNAIL)) {
     // print('File has TIFF thumbnail');
-    var _tiffBytes = data['TIFFThumbnail'].values;
-    data.remove('TIFFThumbnail');
+    var _tiffBytes = data[TIFF_THUMBNAIL].values;
+    data.remove(TIFF_THUMBNAIL);
     return GCWImageViewData(local.PlatformFile(bytes: _tiffBytes.toList()));
   }
   return null;
@@ -50,31 +59,51 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
 ///
 LatLng completeGPSData(Map<String, IfdTag> data) {
   try {
-    if (data.containsKey('GPS GPSLatitude') &&
-        data.containsKey('GPS GPSLongitude') &&
-        data.containsKey('GPS GPSLatitudeRef') &&
-        data.containsKey('GPS GPSLongitudeRef')) {
-      IfdTag latRef = data['GPS GPSLatitudeRef'];
-      IfdTag lat = data['GPS GPSLatitude'];
+    if (data.containsKey(GPS_LAT) &&
+        data.containsKey(GPS_LNG) &&
+        data.containsKey(GPS_LAT_REF) &&
+        data.containsKey(GPS_LNG_REF)) {
+      IfdTag latRef = data[GPS_LAT_REF];
+      IfdTag lat = data[GPS_LAT];
       double _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
       if (_lat.isNaN) return null;
 
-      IfdTag lngRef = data['GPS GPSLongitudeRef'];
-      IfdTag lng = data['GPS GPSLongitude'];
+      IfdTag lngRef = data[GPS_LNG_REF];
+      IfdTag lng = data[GPS_LNG];
       double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
       if (_lng.isNaN) return null;
 
-      // DEC should be the pivot format from EXIF
-      LatLng _point = decToLatLon(DEC(_lat, _lng));
+      if (_lat == 0 && _lng == 0) return null;
 
-      print("_point = ${_point}");
-      return _point;
+      // DEC should be the pivot format from EXIF
+      return decToLatLon(DEC(_lat, _lng));
     }
   } catch (error) {
     print("silent error: ${error}");
   }
 
   return null;
+}
+
+///
+///  Use location from XMP section
+///
+LatLng completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
+  LatLng point = null;
+  try {
+    if (xmpTags.containsKey(RDF_LOCATION)) {
+      String latlng = xmpTags[RDF_LOCATION];
+      print(latlng);
+      var pt = parseStandardFormats(latlng, wholeString: true);
+      if (pt != null) {
+        point = pt['coordinate'];
+      }
+    }
+  } catch (error) {
+    print("silent error: ${error}");
+  }
+
+  return point;
 }
 
 double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
@@ -93,11 +122,11 @@ double _getRatioValue(Ratio _ratio) {
   return _ratio.numerator / _ratio.denominator;
 }
 
-Map<String, List<List<dynamic>>> buildXmpTags(
-    local.PlatformFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
+Map<String, dynamic> buildXmpTags(local.PlatformFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
+  Map<String, dynamic> xmpTags;
   try {
     Uint8List data = platformFile.bytes;
-    Map<String, dynamic> xmpTags = XMP.extract(data);
+    xmpTags = XMP.extract(data);
     xmpTags.forEach((key, tag) {
       List<String> groupedKey = _parseKey(key);
       String section = groupedKey[0];
@@ -109,7 +138,7 @@ Map<String, List<List<dynamic>>> buildXmpTags(
   } catch (e) {
     // Fail silently, if XMP process crash
   }
-  return tableTags;
+  return xmpTags;
 }
 
 Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> ifdTags) {
