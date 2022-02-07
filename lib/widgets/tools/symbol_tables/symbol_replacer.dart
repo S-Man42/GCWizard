@@ -199,7 +199,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
           value: _similarityLevel,
           min: 80,
           max: 100,
-          onChanged: (value) {
+          onChangeEnd: (value) {
             _similarityLevel = value;
             _replaceSymbols(false);
           }
@@ -207,7 +207,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       GCWSlider(
           title: i18n(context, 'symbol_replacer_black_level'),
           value: _blackLevel,
-          min: 0,
+          min: 1,
           max: 100,
           onChangeEnd: (value) {
             _blackLevel = value;

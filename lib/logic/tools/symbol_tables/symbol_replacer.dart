@@ -198,6 +198,7 @@ class SymbolImage {
     _similarityLevel = similarityLevel;
     _similarityCompareLevel = similarityCompareLevel;
 
+    mergeDistance = mergeDistance ?? _mergeDistance;
     if (_mergeDistance != mergeDistance) {
       lines.clear();
       symbols.clear();
@@ -1024,7 +1025,7 @@ class ImageHashing {
   /// <returns>The hash of the image.</returns>
   static int AverageHash(Image.Image image) {
     // Squeeze the image into an 8x8 canvas
-    Image.Image squeezed = Image.copyResize(image,width: 8, height: 8,interpolation: Image.Interpolation.nearest); 
+    Image.Image squeezed = Image.copyResize(image,width: 8, height: 8,interpolation: Image.Interpolation.nearest);
 
     // Reduce colors to 6-bit grayscale and calculate average color value
     var grayscale = Uint8List(64);
