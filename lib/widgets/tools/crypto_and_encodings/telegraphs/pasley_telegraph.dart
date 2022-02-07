@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/chappe.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_segment_display.dart';
 
-class ChappeTelegraph extends StatefulWidget {
+class PasleyTelegraph extends StatefulWidget {
   @override
-  ChappeTelegraphState createState() => ChappeTelegraphState();
+  PasleyTelegraphState createState() => PasleyTelegraphState();
 }
 
-class ChappeTelegraphState extends State<ChappeTelegraph> {
+class PasleyTelegraphState extends State<PasleyTelegraph> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
@@ -26,21 +25,16 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
-  var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
 
-  var _currentLanguage = ChappeCodebook.ALPHABET;
-
-  @override
+    @override
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
-    _decodeInputController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
     _encodeController.dispose();
-    _decodeInputController.dispose();
 
     super.dispose();
   }
@@ -48,20 +42,6 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      GCWDropDownButton(
-        value: _currentLanguage,
-        onChanged: (value) {
-          setState(() {
-            _currentLanguage = value;
-          });
-        },
-        items: CHAPPE_CODEBOOK.entries.map((mode) {
-          return GCWDropDownMenuItem(
-              value: mode.key,
-              child: i18n(context, mode.value['title']),
-              subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
-        }).toList(),
-      ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -73,6 +53,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
       if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
           controller: _encodeController,
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z]')),],
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -83,30 +64,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
         Column(
           // decrpyt: input segment => output number
           children: <Widget>[
-            GCWTwoOptionsSwitch(
-              value: _currentDecodeMode,
-              leftValue: i18n(context, 'telegraph_decode_textmode'),
-              rightValue: i18n(context, 'telegraph_decode_visualmode'),
-              onChanged: (value) {
-                setState(() {
-                  _currentDecodeMode = value;
-                });
-              },
-            ),
-            if (_currentDecodeMode == GCWSwitchPosition.right) // decode visual mode
               _buildVisualDecryption()
-            else // decode text mode
-              GCWTextField(
-                controller: _decodeInputController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[ 0-9]')),
-                ],
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                  });
-                },
-              )
           ],
         ),
       _buildOutput()
@@ -147,7 +105,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: ChappeTelegraphSegmentDisplay(
+                child: PasleyTelegraphSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -188,7 +146,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
-          return ChappeTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
+          return PasleyTelegraphSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
         readOnly: true);
@@ -197,7 +155,7 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeChappe(_currentEncodeInput, _currentLanguage);
+      List<List<String>> segments = encodePasley(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -206,16 +164,12 @@ class ChappeTelegraphState extends State<ChappeTelegraph> {
     } else {
       //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left) {
-        // decode text mode
-        segments = decodeTextChappeTelegraph(_currentDecodeInput.toUpperCase(), _currentLanguage);
-      } else {
         // decode visual mode
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join();
         }).toList();
-        segments = decodeVisualChappe(output, _currentLanguage);
-      }
+        segments = decodeVisualPasley(output);
+
       return Column(
         children: <Widget>[
           GCWOutput(title: i18n(context, 'telegraph_text'), child: segments['chars']),

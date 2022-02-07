@@ -136,6 +136,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcran
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
@@ -546,6 +548,8 @@ void _initStaticToolList() {
       className(OhlsenTelegraph()),
       className(OneTimePad()),
       className(Ook()),
+      className(PasleyTelegraph()),
+      className(PophamTelegraph()),
       className(PeriodicTable()),
       className(PeriodicTableDataView()),
       className(Permutation()),
