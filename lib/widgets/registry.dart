@@ -1149,7 +1149,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: Base91(), i18nPrefix: 'base_base91', searchKeys: [
       'base',
-      'base122',
+      'base91',
     ]),
     GCWTool(tool: Base122(), i18nPrefix: 'base_base122', searchKeys: [
       'base',
