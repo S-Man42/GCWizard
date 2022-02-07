@@ -22,7 +22,6 @@ class LicensesState extends State<Licenses> {
           ['base32', 'MIT License'],
           ['cached_network_image', 'MIT License'],
           ['diacritic', 'BSD-3-Clause License'],
-          ['dio', 'MIT License'],
           ['file_picker', 'MIT License'],
           ['file_picker_writable', 'MIT License'],
           ['encrypt', 'BSD-3-Clause License'],

@@ -92,7 +92,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
-import 'package:dio/dio.dart';
+//import 'package:dio/dio.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -1486,6 +1486,25 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
             print('found ZVariables '+inputObject+' '+i.toString()+' '+lines[i]+' ##############################################################');
             beyondHeader = true;
             currentObjectSection = OBJECT_TYPE.VARIABLES;
+            if (lines[i + 1].trim().startsWith('buildervar')) {
+              declaration = lines[i].replaceAll(_cartridgeName + '.ZVariables', '').replaceAll('{', '').replaceAll('}', '').split('=');
+              if (declaration[1].startsWith(_obfuscatorFunction)) { // content is obfuscated
+                _Variables.add(
+                    VariableData(
+                        declaration[1].trim(),
+                        deobfuscateUrwigoText(
+                            declaration[2]
+                                .replaceAll(_obfuscatorFunction, '')
+                                .replaceAll('("', '')
+                                .replaceAll('")', ''),
+                            _obfuscatorTable)));
+              }
+              else
+                _Variables.add( // content not obfuscated
+                    VariableData(
+                        declaration[1].trim(),
+                        declaration[2].replaceAll('"', '')));
+            }
             i++;
             do {
               declaration = lines[i].trim().replaceAll(',', '').replaceAll(' ', '').split('=');
@@ -1514,7 +1533,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
                         ''));
 
               i++;
-              if (lines[i].trim() == '}')
+              if (lines[i].trim() == '}' ||
+                  lines[i].trim().startsWith('buildervar'))
                 sectionVariables = false;
             } while ((i < lines.length - 1) && sectionVariables);
           }
@@ -2041,25 +2061,25 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
 
 
 //String plainLUA = '';
-_decompileLUA(Uint8List LUA) async {
+//_decompileLUA(Uint8List LUA) async {
 //  online solution via REST-API
 //  https://pub.dev/documentation/http/latest/http/post.html
 //  https://github.com/flutterchina/dio
-  List<int> postData = new List.from(LUA);
-  var dio = Dio();
+//  List<int> postData = new List.from(LUA);
+//  var dio = Dio();
 
-  var response = await dio.post('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323',
-                            data: Stream.fromIterable(postData.map((e) => [e])), //create a Stream<List<int>>
-                            options: Options(headers: {Headers.contentLengthHeader: postData.length,
-                                                      Headers.contentTypeHeader: 'binary'}, // static final binary = ContentType("application", "octet-stream");
-                            ),
-                          );
+//  var response = await dio.post('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323',
+//                            data: Stream.fromIterable(postData.map((e) => [e])), //create a Stream<List<int>>
+//                            options: Options(headers: {Headers.contentLengthHeader: postData.length,
+//                                                      Headers.contentTypeHeader: 'binary'}, // static final binary = ContentType("application", "octet-stream");
+//                            ),
+//                          );
 //  var result = await http.post(Uri.parse('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323'), body: LUA);
-  print(response.statusCode);
-  print(response.statusMessage);
-  String plainLUA = JASONStringToString(response.data);
+//  print(response.statusCode);
+//  print(response.statusMessage);
+//  String plainLUA = JASONStringToString(response.data);
 // {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
-}
+//}
 
 String _decompileLUAfromGWC(Uint8List LUA) {
   return '';
