@@ -44,6 +44,8 @@ dependencies:
   universal_html: ^2.0.4
   uuid: ^3.0.4
   url_launcher: ^6.0.12
+  utility: ^1.0.1
+  #xmp: ^1.0.2 # xml:4  :(
 
 dev_dependencies:
   flutter_test:
