@@ -120,6 +120,14 @@ class LicensesState extends State<Licenses> {
           ],
           [i18n(context, 'telegraph_ohlsen_title'), 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
           [
+            i18n(context, 'telegraph_pasley_title'),
+            'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 450'
+          ],
+          [
+            i18n(context, 'telegraph_popham_title'),
+            'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 446'
+          ],
+          [
             i18n(context, 'telegraph_prussia_title'),
             'Bilddatenbank der Museumsstiftung Post und Telekommunikation (CC BY-SA)'
           ],
