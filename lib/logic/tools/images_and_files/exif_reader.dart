@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:exif/exif.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -5,13 +7,15 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
+import '../../../plugins/xmp/xmp.dart';
+
 Future<Map<String, IfdTag>> parseExif(local.PlatformFile file) async {
   Map<String, IfdTag> data;
 
   try {
     data = await readExifFromBytes(file.bytes,
         details: true,
-        // debug: true, //XMP (experimental)
+        //debug: true, //XMP (experimental)
         //strict: false,
         truncateTags: false);
   } on Exception catch (e) {
@@ -89,15 +93,34 @@ double _getRatioValue(Ratio _ratio) {
   return _ratio.numerator / _ratio.denominator;
 }
 
-Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> data) {
+Map<String, List<List<dynamic>>> buildXmpTags(
+    local.PlatformFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
+  try {
+    Uint8List data = platformFile.bytes;
+    Map<String, dynamic> xmpTags = XMP.extract(data);
+    xmpTags.forEach((key, tag) {
+      List<String> groupedKey = _parseKey(key);
+      String section = groupedKey[0];
+      String code = groupedKey[1];
+      // groupBy section
+      var value = tag;
+      (tableTags[section] ??= []).add([code, value]);
+    });
+  } catch (e) {
+    // Fail silently, if XMP process crash
+  }
+  return tableTags;
+}
+
+Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> ifdTags) {
   var map = <String, List<List>>{};
 
-  data.forEach((key, tag) {
+  ifdTags.forEach((key, ifdTag) {
     List<String> groupedKey = _parseKey(key);
     String section = groupedKey[0];
     String code = groupedKey[1];
     // groupBy section
-    (map[section] ??= []).add([code, _formatExifValue(tag)]);
+    (map[section] ??= []).add([code, _formatExifValue(ifdTag)]);
   });
   return map;
 }
