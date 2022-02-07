@@ -831,7 +831,7 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'playfair',
     ]),
-    GCWTool(tool: Pokemon(), i18nPrefix: 'pokemon', categories: [
+    GCWTool(tool: Pokemon(), i18nPrefix: 'pokemon_code', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'pokemon',
@@ -3185,6 +3185,7 @@ initializeRegistry(BuildContext context) {
       'symbol_planets',
     ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
+      'pokemon',
       'symbol_pokemon_unown',
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [

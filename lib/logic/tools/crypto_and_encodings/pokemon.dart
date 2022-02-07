@@ -1,6 +1,8 @@
 // https://www.geocaching.com/geocache/GC975GK_professor-birk
 // Piluffme luflorsasesa Florlusasa manpison sonsaflortu SesamkatuMansamsonsonpi lupi sakla arsaklatusa Regsammansasonsamtu seregflorsakarda lufftulu saflortusa Assaklamonflortululufftuar zuluffson Arsasamflapiflakasatu mosamkarkardasa Reglufftumanda
 
+import 'package:gc_wizard/utils/constants.dart';
+
 Map<String, String> _POKEMON = {
 // http://fbcs.bplaced.net/multi_encoder_decoder.html
   'g': 'ar',
@@ -114,13 +116,18 @@ String decodePokemon(String chiffreText){
 
 String _decode(String chiffre) {
   String result = '';
-  while(chiffre.length > 0) {
-    for (int j = 0; j < _DECODE_POKEMON.length; j++) {
+  if (chiffre.length == 1)
+    return UNKNOWN_ELEMENT;
+
+  while(chiffre.length > 1) {
+    int j = 0;
+    while ( j < _DECODE_POKEMON.length) {
       if (chiffre.startsWith(_DECODE_POKEMON[j].keys.toList()[0])) {
         chiffre = chiffre.replaceFirst(_DECODE_POKEMON[j].keys.toList()[0], '');
         result = result + _DECODE_POKEMON[j].values.toList()[0];
-        j = _DECODE_POKEMON.length - 1;
+        j = _DECODE_POKEMON.length;
       }
+      j++;
     }
   }
   return result;
