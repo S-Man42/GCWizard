@@ -1496,6 +1496,8 @@
   "coords_centroid_description": "Calculates the arithmetic mean/center point of n coordinates",
   "coords_centroid_centroid": "Centroid",
   "coords_centroid_count": "Number Coordinates",
+  "coords_centroid_centerofgravity_title": "Centroid (Center of Gravity)",
+  "coords_centroid_centerofgravity_description": "Calculates the center of gravity of n coordinates",
   "coords_segmentline_title": "Segment Line",
   "coords_segmentline_description": "Adds regularly spread points between two given points",
   "coords_segmentline_start": "Start Point",

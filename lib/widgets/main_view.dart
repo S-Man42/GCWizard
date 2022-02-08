@@ -47,6 +47,8 @@ import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -454,6 +456,8 @@ void _initStaticToolList() {
       className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
+      className(CentroidArithmeticMean()),
+      className(CentroidCenterOfGravity()),
       className(Chao()),
       className(ChappeTelegraph()),
       className(Chef()),

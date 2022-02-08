@@ -82,7 +82,8 @@ import 'package:gc_wizard/widgets/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
-import 'package:gc_wizard/widgets/tools/coords/centroid.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -1358,7 +1359,7 @@ initializeRegistry(BuildContext context) {
           'coordinates_centertwopoints',
         ]),
     GCWTool(
-        tool: Centroid(),
+        tool: CentroidArithmeticMean(),
         i18nPrefix: 'coords_centroid',
         iconPath: 'assets/icons/coords/icon_centroid.png',
         categories: [
@@ -1367,6 +1368,19 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
           'coordinates',
           'coordinates_centroid',
+          'coordinates_arithmeticmean',
+        ]),
+    GCWTool(
+        tool: CentroidCenterOfGravity(),
+        i18nPrefix: 'coords_centroid_centerofgravity',
+        iconPath: 'assets/icons/coords/icon_centroid.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_centroid',
+          'coordinates_centerofgravity',
         ]),
     GCWTool(
         tool: CenterThreePoints(),
