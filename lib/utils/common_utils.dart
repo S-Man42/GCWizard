@@ -193,7 +193,7 @@ Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
 
 String stringToSuperscript(String text) {
   return text.split('').map((character) {
-    var superscript = superscriptCharacters[character];
+    var superscript = SUPERSCRIPT_CHARACTERS[character];
     return superscript ?? character;
   }).join();
 }

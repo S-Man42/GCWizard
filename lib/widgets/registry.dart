@@ -82,7 +82,8 @@ import 'package:gc_wizard/widgets/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
-import 'package:gc_wizard/widgets/tools/coords/centroid.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -247,6 +248,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
@@ -829,6 +831,11 @@ initializeRegistry(BuildContext context) {
       'pi',
       'irrationalnumbers',
     ]),
+    GCWTool(tool: PhysicalConstants(), i18nPrefix: 'physical_constants', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'physical_constants',
+    ]),
     GCWTool(tool: Playfair(), i18nPrefix: 'playfair', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -1370,7 +1377,7 @@ initializeRegistry(BuildContext context) {
           'coordinates_centertwopoints',
         ]),
     GCWTool(
-        tool: Centroid(),
+        tool: CentroidArithmeticMean(),
         i18nPrefix: 'coords_centroid',
         iconPath: 'assets/icons/coords/icon_centroid.png',
         categories: [
@@ -1379,6 +1386,19 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
           'coordinates',
           'coordinates_centroid',
+          'coordinates_arithmeticmean',
+        ]),
+    GCWTool(
+        tool: CentroidCenterOfGravity(),
+        i18nPrefix: 'coords_centroid_centerofgravity',
+        iconPath: 'assets/icons/coords/icon_centroid.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_centroid',
+          'coordinates_centerofgravity',
         ]),
     GCWTool(
         tool: CenterThreePoints(),

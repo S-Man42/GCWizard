@@ -47,6 +47,8 @@ import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -166,6 +168,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
@@ -456,6 +459,8 @@ void _initStaticToolList() {
       className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
+      className(CentroidArithmeticMean()),
+      className(CentroidCenterOfGravity()),
       className(Chao()),
       className(ChappeTelegraph()),
       className(Chef()),
@@ -557,6 +562,7 @@ void _initStaticToolList() {
       className(PeriodicTableDataView()),
       className(Permutation()),
       className(PhiSelection()),
+      className(PhysicalConstants()),
       className(Piano()),
       className(PiSelection()),
       className(PigLatin()),
