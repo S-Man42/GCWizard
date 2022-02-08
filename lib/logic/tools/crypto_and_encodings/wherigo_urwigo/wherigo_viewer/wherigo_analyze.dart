@@ -279,8 +279,10 @@ class WherigoCartridge{
   final String Player;
   final int PlayerID;
   final String CartridgeLUAName;
-  final String CartridgeName;
-  final String CartridgeGUID;
+  final String GWCCartridgeName;
+  final String LUACartridgeName;
+  final String GWCCartridgeGUID;
+  final String LUACartridgeGUID;
   final String CartridgeDescription;
   final String StartingLocationDescription;
   final String Version;
@@ -313,7 +315,7 @@ class WherigoCartridge{
       this.Splashscreen, this.SplashscreenIcon,
       this.DateOfCreation, this.TypeOfCartridge,
       this.Player, this.PlayerID,
-      this.CartridgeLUAName, this.CartridgeName, this.CartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
+      this.CartridgeLUAName, this.GWCCartridgeName, this.LUACartridgeName, this.GWCCartridgeGUID, this.LUACartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
       this.Version, this.Author, this.Company,
       this.RecommendedDevice,
       this.LengthOfCompletionCode, this.CompletionCode,
@@ -435,14 +437,11 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','', '', '','','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
+    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
     out.addAll({'EarwigoCartridge': EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
     return out;
   }
 
-  int _progress = 0;
-  int _progressStep = 0;
-  int _progressMax = 0;
 
   String _Signature = '';
   int _NumberOfObjects = 0;
@@ -461,9 +460,11 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   String _TypeOfCartridge = '';
   String _Player = '';
   int _PlayerID = 0;
-  String _CartridgeName = '';
+  String _GWCCartridgeName = '';
+  String _LUACartridgeName = '';
   String _CartridgeLUAName = '';
-  String _CartridgeGUID = '';
+  String _GWCCartridgeGUID = '';
+  String _LUACartridgeGUID = '';
   String _CartridgeDescription = '';
   String _StartingLocationDescription = '';
   String _Version = '';
@@ -638,11 +639,11 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _offset = _offset + LENGTH_LONG;
 
         _ASCIIZ = readString(byteListGWC, _offset);
-        _CartridgeName = _ASCIIZ.ASCIIZ;
+        _GWCCartridgeName = _ASCIIZ.ASCIIZ;
         _offset = _ASCIIZ.offset;
 
         _ASCIIZ = readString(byteListGWC, _offset);
-        _CartridgeGUID = _ASCIIZ.ASCIIZ;
+        _GWCCartridgeGUID = _ASCIIZ.ASCIIZ;
         _offset = _ASCIIZ.offset;
 
         _ASCIIZ = readString(byteListGWC, _offset);
@@ -925,8 +926,20 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         }
 
           if (RegExp(r'( Wherigo.ZCartridge)').hasMatch(lines[i])) {
-            _cartridgeName = lines[i].replaceAll(' Wherigo.ZCartridge()', '').trim();
+            _cartridgeName = lines[i].replaceAll('= Wherigo.ZCartridge()', '').trim();
             beyondHeader = true;
+          }
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.Name')) {
+            _LUACartridgeName =
+                lines[i].replaceAll(_cartridgeName + '.Name = ', '').replaceAll(
+                    '"', '').trim();
+          }
+
+          if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.Id')) {
+            _LUACartridgeGUID =
+                lines[i].replaceAll(_cartridgeName + '.Id = ', '').replaceAll(
+                    '"', '').trim();
           }
 
           if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.BuilderVersion'))
@@ -2035,7 +2048,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _DateOfCreation,
         _TypeOfCartridge,
         _Player, _PlayerID,
-        _CartridgeLUAName, _CartridgeName, _CartridgeGUID, _CartridgeDescription, _StartingLocationDescription,
+        _CartridgeLUAName, _GWCCartridgeName, _LUACartridgeName, _GWCCartridgeGUID, _LUACartridgeGUID, _CartridgeDescription, _StartingLocationDescription,
         _Version, _Author, _Company, _RecommendedDevice,
         _LengthOfCompletionCode, _CompletionCode,
         _obfuscatorTable, _obfuscatorFunction,

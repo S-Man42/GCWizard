@@ -55,7 +55,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-  WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '','','','','','','','', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], []);
+  WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], []);
   EarwigoCartridge _EarwigoCartridge = EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '');
   
   Map<String, dynamic> _outData;
@@ -149,7 +149,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _identifierIndex = 1;
 
               _analyseCartridgeFileAsync('GWC-Cartridge');
-              //_WherigoCartridge = getCartridge(_GWCbytes, _LUAbytes);
+              if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID) {
+                showToast(
+                    i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' +
+                        i18n(context, 'wherigo_error_diff_gwc_lua_3'),
+                    duration: 30
+                );
+              }
 
               setState(() {
                 switch (_fileLoadedState) {
@@ -202,8 +208,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _messageIndex = 1;
               _answerIndex = 1;
               _identifierIndex = 1;
+
               _analyseCartridgeFileAsync('LUA-Sourcecode');
-              //_WherigoCartridge = getCartridge(_GWCbytes, _LUAbytes);
+              if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID) {
+                showToast(
+                    i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' +
+                        i18n(context, 'wherigo_error_diff_gwc_lua_2'),
+                    duration: 30
+                );
+              }
 
               setState(() {
                 switch (_fileLoadedState) {
@@ -356,7 +369,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       onPressed: () {
                         _openInMap(
                             _currentZonePoints(
-                              _WherigoCartridge.CartridgeName,
+                              _WherigoCartridge.GWCCartridgeName,
                               ZonePoint(_WherigoCartridge.Latitude, _WherigoCartridge.Longitude, _WherigoCartridge.Altitude)),
                             []);
                       },
@@ -1219,7 +1232,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_output_name'), data.TimerName],
         [i18n(context, 'wherigo_output_description'), data.TimerDescription],
         [i18n(context, 'wherigo_output_duration'), data.TimerDuration],
-        [i18n(context, 'wherigo_output_type'), i18n(context, 'wherigo_output_timer_' + data.TimerType)],
+        [i18n(context, 'wherigo_output_type'), i18n(context, 'wherigo_output_timer_' + data.TimerType + ' s')],
         [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TimerVisible)],
       ];
   }
@@ -1659,7 +1672,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   _showCartridgeOutput(Map<String, dynamic> output, String dataType) {
     _outData = output;
     String toastMessage = '';
-    int toastTime = 3;
+    int toastDuration = 3;
     // restore references (problem with sendPort, lose references)
     if (_outData == null) {
       toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
@@ -1683,14 +1696,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context,'wherigo_error_runtime') + '\n' +
               i18n(context,'wherigo_error_runtime_gwc') + '\n\n' +
               i18n(context,'wherigo_error_hint_1');
-          toastTime = 20;
+          toastDuration = 20;
           break;
         case ANALYSE_RESULT_STATUS.ERROR_LUA:
           toastMessage =
               i18n(context,'wherigo_error_runtime') + '\n' +
               i18n(context,'wherigo_error_runtime_lua') + '\n\n' +
               i18n(context,'wherigo_error_hint_1');
-          toastTime = 20;
+          toastDuration = 20;
           break;
         case ANALYSE_RESULT_STATUS.ERROR_FULL:
           toastMessage =
@@ -1698,10 +1711,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               i18n(context,'wherigo_error_runtime_gwc') + '\n' +
               i18n(context,'wherigo_error_runtime_lua') + '\n\n' +
               i18n(context,'wherigo_error_hint_1');
-          toastTime = 20;
+          toastDuration = 20;
           break;
       }
-    showToast(toastMessage, time: toastTime);
+    showToast(toastMessage, duration: toastDuration);
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1802,7 +1815,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       _points.add(
           GCWMapPoint(
               uuid: 'Cartridge Start',
-              markerText: 'Wherigo "' + _WherigoCartridge.CartridgeName + '"',
+              markerText: 'Wherigo "' + _WherigoCartridge.GWCCartridgeName + '"',
               point: LatLng(_WherigoCartridge.Latitude, _WherigoCartridge.Longitude),
               color: Colors.redAccent));
 
@@ -1823,8 +1836,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_header_player'), _WherigoCartridge.Player],
       [i18n(context, 'wherigo_header_playerid'), _WherigoCartridge.PlayerID.toString()],
       [i18n(context, 'wherigo_header_completion'), _WherigoCartridge.CompletionCode],
-      [i18n(context, 'wherigo_header_cartridgename'), _WherigoCartridge.CartridgeName],
-      [i18n(context, 'wherigo_header_cartridgeguid'), _WherigoCartridge.CartridgeGUID],
+      [i18n(context, 'wherigo_header_cartridgename'), _WherigoCartridge.GWCCartridgeName == '' ? _WherigoCartridge.LUACartridgeName : _WherigoCartridge.GWCCartridgeName],
+      [i18n(context, 'wherigo_header_cartridgeguid'), _WherigoCartridge.GWCCartridgeGUID == '' ? _WherigoCartridge.LUACartridgeGUID : _WherigoCartridge.GWCCartridgeGUID],
       [i18n(context, 'wherigo_header_cartridgedescription'), _WherigoCartridge.CartridgeDescription],
       [i18n(context, 'wherigo_header_startinglocation'), _WherigoCartridge.StartingLocationDescription],
       [i18n(context, 'wherigo_header_state'), _EarwigoCartridge.StateID],
@@ -1864,7 +1877,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   String _normalizeLUA(String LUAFile, bool deObfuscate){
     if (deObfuscate) {
       LUAFile = LUAFile.replaceAll(_WherigoCartridge.ObfuscatorFunction, 'deObfuscate');
-      LUAFile = LUAFile.replaceAll(_WherigoCartridge.CartridgeLUAName, 'objCartridge_' + _WherigoCartridge.CartridgeName.replaceAll(' ', ''));
+      LUAFile = LUAFile.replaceAll(_WherigoCartridge.CartridgeLUAName, 'objCartridge_' + _WherigoCartridge.LUACartridgeName.replaceAll(' ', ''));
       _WherigoCartridge.Characters.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.CharacterLUAName, 'objCharacter_' + element.CharacterName);
       });
@@ -1931,4 +1944,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       }
     return Uint8List.fromList([]);
   }
+
 }
+

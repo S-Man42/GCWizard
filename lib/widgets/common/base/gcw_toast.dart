@@ -2,12 +2,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-showToast(String text, {int time = 3}) {
+showToast(String text, {int duration = 3}) {
   const _MAX_LENGTH = 800;
 
   Fluttertoast.showToast(
       msg: text.length > _MAX_LENGTH ? text.substring(0, _MAX_LENGTH) + '...' : text,
-      timeInSecForIosWeb: time,
+      timeInSecForIosWeb: duration,
       toastLength: Toast.LENGTH_LONG,
       webShowClose: true,
       webPosition: 'center',
