@@ -11,6 +11,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
@@ -89,7 +90,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     );
   }
 
-  List<int> _getImages(bool isCaseSensitive) {
+  List<int> _getImageIndexes(bool isCaseSensitive) {
     var _text = widget.text;
     var imageIndexes = <int>[];
 
@@ -124,18 +125,32 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     return imageIndexes;
   }
 
-  _buildEncryptionOutput(countColumns) {
-    if (_data == null) return Container;
+  Widget _buildEncryptionOutput(countColumns) {
+    if (_data == null) return Container();
 
     var isCaseSensitive = _data.isCaseSensitive();
 
     var rows = <Widget>[];
 
-    var images = _getImages(isCaseSensitive);
-    _encryptionHasImages = images.length > 0;
+    var imageIndexes = _getImageIndexes(isCaseSensitive);
+    _encryptionHasImages = imageIndexes.length > 0;
     if (!_encryptionHasImages) return Container();
 
-    var countRows = (images.length / countColumns).floor();
+    var countRows = (imageIndexes.length / countColumns).floor();
+
+    if (_data.config[SymbolTableConstants.CONFIG_SPECIALENCRYPTION] != null &&_data.config[SymbolTableConstants.CONFIG_SPECIALENCRYPTION] == true) {
+      switch (_data.symbolKey) {
+        case 'puzzle':
+          return SymbolTableEncryptionPuzzleCode(
+            countColumns: countColumns,
+            countRows: countRows,
+            data: _data,
+            imageIndexes: imageIndexes,
+          );
+        default:
+          break;
+      }
+    }
 
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
@@ -144,12 +159,12 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         var widget;
         var imageIndex = i * countColumns + j;
 
-        if (imageIndex < images.length) {
+        if (imageIndex < imageIndexes.length) {
           var image;
-          if (images[imageIndex] == null) {
+          if (imageIndexes[imageIndex] == null) {
             image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
           } else {
-            image = Image.memory(_data.images[images[imageIndex]].values.first.bytes);
+            image = Image.memory(_data.images[imageIndexes[imageIndex]].values.first.bytes);
           }
 
           widget = GCWSymbolContainer(
@@ -190,7 +205,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
   }
 
   Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
-    var images = _getImages(isCaseSensitive);
+    var images = _getImageIndexes(isCaseSensitive);
 
     var countRows = (images.length / countColumns).floor();
     if (countRows * countColumns < images.length) countRows++;
