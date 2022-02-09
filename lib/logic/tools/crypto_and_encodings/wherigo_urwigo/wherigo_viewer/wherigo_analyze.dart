@@ -101,14 +101,6 @@ import 'package:http/http.dart' as http;
 import '../urwigo_tools.dart';
 
 
-enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, MEDIA, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, OBFUSCATORTABLE, MEDIAFILES, MESSAGES, IDENTIFIER, RESULTS_GWC, RESULTS_LUA}
-
-enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
-
-enum BUILDER {EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN}
-
-enum ANALYSE_RESULT_STATUS {OK, ERROR_GWC, ERROR_LUA, ERROR_FULL}
-
 Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.NULL: 'wherigo_data_nodata',
   WHERIGO.HEADER: 'wherigo_data_header',
@@ -117,7 +109,6 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.GWCFILE: 'wherigo_data_gwc',
   WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.MEDIA: 'wherigo_data_media_list',
   WHERIGO.ITEMS: 'wherigo_data_item_list',
   WHERIGO.CHARACTER: 'wherigo_data_character_list',
   WHERIGO.ZONES: 'wherigo_data_zone_list',
@@ -143,7 +134,7 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
   WHERIGO.NULL: 'wherigo_data_nodata',
   WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.MEDIA: 'wherigo_data_media_list',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
   WHERIGO.ITEMS: 'wherigo_data_item_list',
   WHERIGO.CHARACTER: 'wherigo_data_character_list',
   WHERIGO.ZONES: 'wherigo_data_zone_list',
@@ -203,127 +194,6 @@ int readUShort(Uint8List byteList, int offset){ // 2 Byte Little Endian
 
 int readByte(Uint8List byteList, int offset){ // 1 Byte
   return byteList[offset];
-}
-
-class StringOffset{
-  final String ASCIIZ;
-  final int offset;
-
-  StringOffset(
-      this.ASCIIZ,
-      this.offset);
-}
-
-class MediaFileHeader{
-  final int MediaFileID;
-  final int MediaFileAddress;
-
-  MediaFileHeader(
-      this.MediaFileID,
-      this.MediaFileAddress);
-}
-
-class MediaFileContent{
-  final int MediaFileID;
-  final int MediaFileType;
-  final Uint8List MediaFileBytes;
-  final int MediaFileLength;
-
-  MediaFileContent(
-      this.MediaFileID,
-      this.MediaFileType,
-      this.MediaFileBytes,
-      this.MediaFileLength);
-}
-
-class EarwigoCartridge{
-  final BUILDER Builder;
-  final String BuilderVersion;
-  final String TargetDeviceVersion;
-  final String StateID;
-  final String CountryID;
-  final String UseLogging;
-  final String CreateDate;
-  final String PublishDate;
-  final String UpdateDate;
-  final String LastPlayedDate;
-
-  EarwigoCartridge(
-      this.Builder,
-      this.BuilderVersion,
-      this.TargetDeviceVersion,
-      this.CountryID,
-      this.StateID,
-      this.UseLogging,
-      this.CreateDate,
-      this.PublishDate,
-      this.UpdateDate,
-      this.LastPlayedDate
-      );
-}
-
-class WherigoCartridge{
-  final String Signature;
-  final int NumberOfObjects;
-  final List<MediaFileHeader> MediaFilesHeaders;
-  final List<MediaFileContent> MediaFilesContents;
-  final String LUAFile;
-  final int HeaderLength;
-  final int Splashscreen;
-  final int SplashscreenIcon;
-  final double Latitude;
-  final double Longitude;
-  final double Altitude;
-  final int DateOfCreation;
-  final String TypeOfCartridge;
-  final String Player;
-  final int PlayerID;
-  final String CartridgeLUAName;
-  final String GWCCartridgeName;
-  final String LUACartridgeName;
-  final String GWCCartridgeGUID;
-  final String LUACartridgeGUID;
-  final String CartridgeDescription;
-  final String StartingLocationDescription;
-  final String Version;
-  final String Author;
-  final String Company;
-  final String RecommendedDevice;
-  final int LengthOfCompletionCode;
-  final String CompletionCode;
-  final String ObfuscatorTable;
-  final String ObfuscatorFunction;
-  final List<CharacterData> Characters;
-  final List<ItemData> Items;
-  final List<TaskData> Tasks;
-  final List<InputData> Inputs;
-  final List<ZoneData> Zones;
-  final List<TimerData> Timers;
-  final List<MediaData> Media;
-  final List<List<ActionMessageElementData>> Messages;
-  final List<AnswerData> Answers;
-  final List<VariableData> Identifiers;
-  final Map<String, ObjectData> NameToObject;
-  final ANALYSE_RESULT_STATUS ResultStatus;
-  final List<String> ResultsGWC;
-  final List<String> ResultsLUA;
-
-  WherigoCartridge(this.Signature,
-      this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUAFile,
-      this.HeaderLength,
-      this.Latitude, this.Longitude, this.Altitude,
-      this.Splashscreen, this.SplashscreenIcon,
-      this.DateOfCreation, this.TypeOfCartridge,
-      this.Player, this.PlayerID,
-      this.CartridgeLUAName, this.GWCCartridgeName, this.LUACartridgeName, this.GWCCartridgeGUID, this.LUACartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
-      this.Version, this.Author, this.Company,
-      this.RecommendedDevice,
-      this.LengthOfCompletionCode, this.CompletionCode,
-      this.ObfuscatorTable, this.ObfuscatorFunction,
-      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media,
-      this.Messages, this.Answers, this.Identifiers,
-      this.NameToObject,
-      this.ResultStatus, this.ResultsGWC, this.ResultsLUA);
 }
 
 int START_NUMBEROFOBJECTS = 7;
@@ -437,8 +307,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA)});
-    out.addAll({'EarwigoCartridge': EarwigoCartridge(BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
+    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA, BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
     return out;
   }
 
@@ -2054,19 +1923,18 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _obfuscatorTable, _obfuscatorFunction,
         _Characters, _Items, _Tasks, _Inputs, _Zones, _Timers, _Media,
         _Messages, _Answers, _Variables, _NameToObject,
-        _Status, _ResultsGWC, _ResultsLUA )});
+        _Status, _ResultsGWC, _ResultsLUA,
+        _builder,
+        _BuilderVersion,
+        _TargetDeviceVersion,
+        _CountryID,
+        _StateID,
+        _UseLogging,
+        _CreateDate,
+        _PublishDate,
+        _UpdateDate,
+        _LastPlayedDate    )});
 
-    out.addAll({'EarwigoCartridge': EarwigoCartridge(
-    _builder,
-    _BuilderVersion,
-    _TargetDeviceVersion,
-    _CountryID,
-    _StateID,
-    _UseLogging,
-    _CreateDate,
-    _PublishDate,
-    _UpdateDate,
-    _LastPlayedDate)});
     return out;
   } // if GWC || FULL
 
@@ -2096,18 +1964,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
 
 String _decompileLUAfromGWC(Uint8List LUA) {
   return '';
-}
-
-String _LUAUint8ListToString(Uint8List LUA) {
-  if (LUA == null || LUA == [])
-    return '';
-
-  String result = '';
-  for (int i = 0; i < LUA.length; i++){
-    if (LUA[i] != 0)
-      result = result + String.fromCharCode(LUA[i]);
-  }
-  return result;
 }
 
 
