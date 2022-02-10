@@ -114,21 +114,28 @@ String decodePokemon(String chiffreText){
   return result.join(' ').toUpperCase();
 }
 
-String _decode(String chiffre) {
+String _decode(String cypher) {
   String result = '';
-  if (chiffre.length == 1)
+  int iteration = cypher.length + 1;
+
+  if (cypher.length == 1)
     return UNKNOWN_ELEMENT;
 
-  while(chiffre.length > 1) {
+  while(cypher.length > 1 && iteration > 0) {
+    iteration--;
     int j = 0;
     while ( j < _DECODE_POKEMON.length) {
-      if (chiffre.startsWith(_DECODE_POKEMON[j].keys.toList()[0])) {
-        chiffre = chiffre.replaceFirst(_DECODE_POKEMON[j].keys.toList()[0], '');
+      if (cypher.startsWith(_DECODE_POKEMON[j].keys.toList()[0])) {
+        cypher = cypher.replaceFirst(_DECODE_POKEMON[j].keys.toList()[0], '');
         result = result + _DECODE_POKEMON[j].values.toList()[0];
         j = _DECODE_POKEMON.length;
+        iteration = cypher.length;
       }
       j++;
     }
   }
+  if (result == '')
+    result = UNKNOWN_ELEMENT;
+  
   return result;
 }
