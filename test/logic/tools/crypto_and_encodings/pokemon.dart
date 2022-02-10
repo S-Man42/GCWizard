@@ -12,7 +12,7 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
+      test('input: ${elem['input']}', () {
         var _actual = encodePokemon(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -24,11 +24,17 @@ void main() {
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
+      {'input' : 'se', 'expectedOutput' : 'S'},
+      {'input' : 'sew', 'expectedOutput' : '<?>'},
+      {'input' : 'x', 'expectedOutput' : '<?>'},
+      {'input' : 'x sa', 'expectedOutput' : '<?> E'},
+      {'input' : 'x sa y', 'expectedOutput' : '<?> E <?>'},
+
       {'input' : 'Piluffme luflorsasesa Florlusasa manpison sonsaflortu SesamkatuMansamsonsonpi lupi sakla arsaklatusa Regsammansasonsamtu seregflorsakarda lufftulu saflortusa Assaklamonflortululufftuar zuluffson Arsasamflapiflakasatu mosamkarkardasaReglufftumanda', 'expectedOutput' : 'AUF DIESE IDEE KAM MEIN SOHNKOMMA DA ER GERNE POKEMON SPIELT UND EINE VERBINDUNG ZUM GEOCACHEN WOLLTEPUNKT'},
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, replaceCharacter: ${elem['replaceCharacters']}', () {
+      test('input: ${elem['input']}}', () {
         var _actual = decodePokemon(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
