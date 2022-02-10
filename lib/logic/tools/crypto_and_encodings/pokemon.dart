@@ -114,14 +114,15 @@ String decodePokemon(String chiffreText){
   return result.join(' ').toUpperCase();
 }
 
-String _decode(String cypher) {
+String _decode(String input) {
+  String cypher = input;
   String result = '';
   int iteration = cypher.length + 1;
 
   if (cypher.length == 1)
     return UNKNOWN_ELEMENT;
 
-  while(cypher.length > 1 && iteration > 0) {
+  while(cypher.length > 0 && iteration > 0) {
     iteration--;
     int j = 0;
     while ( j < _DECODE_POKEMON.length) {
@@ -134,8 +135,8 @@ String _decode(String cypher) {
       j++;
     }
   }
-  if (result == '')
+  if (result == '' || cypher.length > 0)
     result = UNKNOWN_ELEMENT;
-  
+
   return result;
 }
