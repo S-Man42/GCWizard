@@ -5035,6 +5035,7 @@
   "wherigo_header_player": "Name of Player",
   "wherigo_header_playerid": "Player ID",
   "wherigo_header_update": "Date of update",
+  "wherigo_header_unknown": "Unknown",
   "wherigo_header_valid": "Valid Type Size",
   "wherigo_header_version": "Version",
   "wherigo_hint_openinhexviewer_1": "Due to performance reasons the Bytecode should be opened in the HexViewer-Tool for further investigations.",

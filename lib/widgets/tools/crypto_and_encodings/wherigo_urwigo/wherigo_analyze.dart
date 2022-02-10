@@ -1564,25 +1564,27 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       bytes.sublist(offset, offset + LENGTH_INT).join('.'),  // 4 Bytes Size of Header
       readInt(bytes, offset).toString()                      // size of Header
     ]);
-    content.add(['', i18n(context, 'wherigo_header_latitude'), '']);
-    content.add(['', i18n(context, 'wherigo_header_longitude'), '']);
-    content.add(['', i18n(context, 'wherigo_header_altitude'), '']);
-    content.add(['', i18n(context, 'wherigo_header_creationdate'), '']);
-    content.add(['', i18n(context, 'wherigo_header_splashscreen'), '']);
-    content.add(['', i18n(context, 'wherigo_header_splashicon'), '']);
-    content.add(['', i18n(context, 'wherigo_header_typeofcartridge'), '']);
-    content.add(['', i18n(context, 'wherigo_header_player'), '']);
-    content.add(['', i18n(context, 'wherigo_header_playerid'), '']);
-    content.add(['', i18n(context, 'wherigo_header_cartridgename'), '']);
-    content.add(['', i18n(context, 'wherigo_header_cartridgeguid'), '']);
-    content.add(['', i18n(context, 'wherigo_header_cartridgedescription'), '']);
-    content.add(['', i18n(context, 'wherigo_header_startinglocation'), '']);
-    content.add(['', i18n(context, 'wherigo_header_version'), '']);
-    content.add(['', i18n(context, 'wherigo_header_author'), '']);
-    content.add(['', i18n(context, 'wherigo_header_company'), '']);
-    content.add(['', i18n(context, 'wherigo_header_device'), '']);
-    content.add(['', i18n(context, 'wherigo_header_lengthcompletion'), '']);
-    content.add(['', i18n(context, 'wherigo_header_completion'), '']);
+
+    content.add(['', i18n(context, 'wherigo_header_latitude'), '8 byte']); // 8 byte double
+    content.add(['', i18n(context, 'wherigo_header_longitude'), '8 byte']); // 8 byte double
+    content.add(['', i18n(context, 'wherigo_header_altitude'), '8 byte']); // 8 byte double
+    content.add(['', i18n(context, 'wherigo_header_creationdate'), '8 byte']); // 8 byte long
+    content.add(['', i18n(context, 'wherigo_header_unknown'), '8 byte']); //8 byte long
+    content.add(['', i18n(context, 'wherigo_header_splashscreen'), '2 byte']); // 2 byte short
+    content.add(['', i18n(context, 'wherigo_header_splashicon'), '2 byte']); // 2 byte short
+    content.add(['', i18n(context, 'wherigo_header_typeofcartridge'), '']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_player'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_playerid'), '8 byte']); // 8 byte long
+    content.add(['', i18n(context, 'wherigo_header_cartridgename'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_cartridgeguid'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_cartridgedescription'), '']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_startinglocation'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_version'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_author'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_company'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_device'), 'ASCIIZ']); //ASCIIZ
+    content.add(['', i18n(context, 'wherigo_header_lengthcompletion'), '4 byte']); // 4 byte int
+    content.add(['', i18n(context, 'wherigo_header_completion'), 'ASCIIZ']); //ASCIIZ
     result.add(
         GCWExpandableTextDivider(
           text: i18n(context, 'wherigo_data_header'),
