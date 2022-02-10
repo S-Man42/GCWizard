@@ -18,9 +18,7 @@ class SymbolTableConstants {
   static final CONFIG_TRANSLATE = 'translate';
   static final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
   static final CONFIG_CASESENSITIVE = 'case_sensitive';
-  static final CONFIG_SPECIALSORT = 'special_sort';
   static final CONFIG_IGNORE = 'ignore';
-  static final CONFIG_SPECIALENCRYPTION = 'special_encryption';
 
   static final Map<String, String> CONFIG_SPECIAL_CHARS = {
     "ampersand": "&",
@@ -234,32 +232,28 @@ class SymbolTableData {
       config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
     });
 
-    if (config[SymbolTableConstants.CONFIG_SPECIALSORT] == null || config[SymbolTableConstants.CONFIG_SPECIALSORT] == false) {
-      _sort = defaultSymbolSort;
-    } else {
-      switch (symbolKey) {
-        case "notes_names_altoclef":
-          _sort = specialSortNoteNames;
-          break;
-        case "notes_names_bassclef":
-          _sort = specialSortNoteNames;
-          break;
-        case "notes_names_trebleclef":
-          _sort = specialSortNoteNames;
-          break;
-        case "notes_notevalues":
-          _sort = specialSortNoteValues;
-          break;
-        case "notes_restvalues":
-          _sort = specialSortNoteValues;
-          break;
-        case "trafficsigns_germany":
-          _sort = specialSortTrafficSignsGermany;
-          break;
-        default:
-          _sort = defaultSymbolSort;
-          break;
-      }
+    switch (symbolKey) {
+      case "notes_names_altoclef":
+        _sort = specialSortNoteNames;
+        break;
+      case "notes_names_bassclef":
+        _sort = specialSortNoteNames;
+        break;
+      case "notes_names_trebleclef":
+        _sort = specialSortNoteNames;
+        break;
+      case "notes_notevalues":
+        _sort = specialSortNoteValues;
+        break;
+      case "notes_restvalues":
+        _sort = specialSortNoteValues;
+        break;
+      case "trafficsigns_germany":
+        _sort = specialSortTrafficSignsGermany;
+        break;
+      default:
+        _sort = defaultSymbolSort;
+        break;
     }
   }
 

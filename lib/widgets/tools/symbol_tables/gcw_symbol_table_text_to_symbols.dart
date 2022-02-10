@@ -3,14 +3,14 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_default.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_paint_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -23,6 +23,8 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
   final SymbolTableData data;
   final bool showExportButton;
   final bool fixed;
+  final double borderWidth;
+  final bool specialEncryption;
 
   const GCWSymbolTableTextToSymbols(
       {Key key,
@@ -31,6 +33,8 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
       this.data,
       this.countColumns,
       this.showExportButton: true,
+      this.borderWidth,
+      this.specialEncryption,
       this.fixed: false})
       : super(key: key);
 
@@ -39,7 +43,6 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
 }
 
 class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
-  final _SYMBOL_NOT_FOUND_PATH = SYMBOLTABLES_ASSETPATH + '404.png';
   final _EXPORT_SYMBOL_SIZE = 150.0;
 
   var _alphabetMap = <String, int>{};
@@ -130,120 +133,70 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
 
     var isCaseSensitive = _data.isCaseSensitive();
 
-    var rows = <Widget>[];
-
     var imageIndexes = _getImageIndexes(isCaseSensitive);
     _encryptionHasImages = imageIndexes.length > 0;
     if (!_encryptionHasImages) return Container();
 
     var countRows = (imageIndexes.length / countColumns).floor();
+    if (countRows * countColumns < imageIndexes.length)
+      countRows++;
 
-    if (_data.config[SymbolTableConstants.CONFIG_SPECIALENCRYPTION] != null &&_data.config[SymbolTableConstants.CONFIG_SPECIALENCRYPTION] == true) {
-      switch (_data.symbolKey) {
-        case 'puzzle':
-          return SymbolTableEncryptionPuzzleCode(
+    var canvasWidth = MediaQuery.of(context).size.width * 0.95;
+    var canvasHeight = canvasWidth / countColumns * countRows;
+
+    return Container (
+      width: canvasWidth,
+      height: canvasHeight,
+      child: CustomPaint(
+        size: Size(canvasWidth, canvasHeight),
+        painter: SymbolTableEncryptionPainter(
+          paintData: SymbolTablePaintData(
             countColumns: countColumns,
-            countRows: countRows,
             data: _data,
             imageIndexes: imageIndexes,
-          );
-        default:
-          break;
-      }
-    }
-
-    for (var i = 0; i <= countRows; i++) {
-      var columns = <Widget>[];
-
-      for (var j = 0; j < countColumns; j++) {
-        var widget;
-        var imageIndex = i * countColumns + j;
-
-        if (imageIndex < imageIndexes.length) {
-          var image;
-          if (imageIndexes[imageIndex] == null) {
-            image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
-          } else {
-            image = Image.memory(_data.images[imageIndexes[imageIndex]].values.first.bytes);
-          }
-
-          widget = GCWSymbolContainer(
-            symbol: image,
-          );
-        } else {
-          widget = Container();
-        }
-
-        columns.add(Expanded(
-            child: Container(
-          child: widget,
-          padding: EdgeInsets.all(3),
-        )));
-      }
-
-      rows.add(Row(
-        children: columns,
-      ));
-    }
-
-    return Column(
-      children: rows,
+            borderWidth: widget.borderWidth
+          ),
+          paintFunction: _paintFunction()
+        )
+      ),
     );
   }
 
-  Future<ui.Image> _loadImage(String asset) async {
-    ByteData data = await rootBundle.load(asset);
+  Canvas Function(SymbolTablePaintData) _paintFunction() {
+    if (!widget.specialEncryption)
+      return paintSymbolTableEncryptionDefault;
 
-    return _buildImage(data.buffer.asUint8List());
-  }
-
-  Future<ui.Image> _buildImage(Uint8List bytes) async {
-    ui.Codec codec = await ui.instantiateImageCodec(bytes);
-    ui.FrameInfo fi = await codec.getNextFrame();
-
-    return fi.image;
+    switch (_data.symbolKey) {
+      case 'puzzle':
+        return paintSymbolTableEncryptionPuzzle;
+      default:
+        return paintSymbolTableEncryptionDefault;
+    }
   }
 
   Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
-    var images = _getImageIndexes(isCaseSensitive);
+    var imageIndexes = _getImageIndexes(isCaseSensitive);
 
-    var countRows = (images.length / countColumns).floor();
-    if (countRows * countColumns < images.length) countRows++;
+    var countRows = (imageIndexes.length / countColumns).floor();
+    if (countRows * countColumns < imageIndexes.length) countRows++;
 
     var width = countColumns * _EXPORT_SYMBOL_SIZE;
     var height = countRows * _EXPORT_SYMBOL_SIZE;
 
     final canvasRecorder = ui.PictureRecorder();
-    final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
+    var canvas = Canvas(canvasRecorder);
 
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
+    var paintData = SymbolTablePaintData(
+      canvas: canvas,
+      canvasSize: Size(width, height),
+      countColumns: countColumns,
+      data: _data,
+      imageIndexes: imageIndexes,
+      borderWidth: widget.borderWidth
+    );
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-
-    for (var i = 0; i <= countRows; i++) {
-      for (var j = 0; j < countColumns; j++) {
-        var imageIndex = i * countColumns + j;
-
-        if (imageIndex < images.length) {
-          ui.Image image;
-
-          if (images[imageIndex] == null) {
-            image = await _loadImage(_SYMBOL_NOT_FOUND_PATH);
-          } else {
-            image = await _buildImage(_data.images[images[imageIndex]].values.first.bytes);
-          }
-
-          paintImage(
-              canvas: canvas,
-              fit: BoxFit.contain,
-              rect: Rect.fromLTWH(
-                  j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE),
-              image: image);
-        }
-      }
-    }
+    var paintFunction = _paintFunction();
+    canvas = paintFunction(paintData);
 
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);

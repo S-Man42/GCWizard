@@ -3577,6 +3577,8 @@
   "symboltables_showoverlay": "Overlays",
   "symboltables_exportimage": "Export results",
   "symboltables_ignoreunknown": "Ignore unknown",
+  "symboltables_specialencryptionmode_original": "Original",
+  "symboltables_specialencryptionmode_standard": "Standard",
   "symboltables_adlam_title": "Adlam (Fulani)",
   "symboltables_albhed_title": "Al Bhed",
   "symboltables_albhed_description": "Script of Al Bhed from the role play game 'Final Fantasy'",

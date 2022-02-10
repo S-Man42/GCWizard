@@ -104,6 +104,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
           countColumns: countColumns,
           data: data[symbolKey],
           showExportButton: false,
+          specialEncryption: false,
           fixed: true);
 
       return Column(
