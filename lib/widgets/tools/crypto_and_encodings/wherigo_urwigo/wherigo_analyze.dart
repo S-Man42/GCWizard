@@ -98,7 +98,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   _setGWCData(Uint8List bytes) {
     _GWCbytes = bytes;
-    //_GWCStructure = _outputBytecodeStructure(_GWCbytes);
     _GWCFileStructure = _outputByteCodeStructure(_GWCbytes);
 
     if (_fileLoadedState == FILE_LOAD_STATE.NULL)
@@ -1565,6 +1564,25 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       bytes.sublist(offset, offset + LENGTH_INT).join('.'),  // 4 Bytes Size of Header
       readInt(bytes, offset).toString()                      // size of Header
     ]);
+    content.add(['', i18n(context, 'wherigo_header_latitude'), '']);
+    content.add(['', i18n(context, 'wherigo_header_longitude'), '']);
+    content.add(['', i18n(context, 'wherigo_header_altitude'), '']);
+    content.add(['', i18n(context, 'wherigo_header_creationdate'), '']);
+    content.add(['', i18n(context, 'wherigo_header_splashscreen'), '']);
+    content.add(['', i18n(context, 'wherigo_header_splashicon'), '']);
+    content.add(['', i18n(context, 'wherigo_header_typeofcartridge'), '']);
+    content.add(['', i18n(context, 'wherigo_header_player'), '']);
+    content.add(['', i18n(context, 'wherigo_header_playerid'), '']);
+    content.add(['', i18n(context, 'wherigo_header_cartridgename'), '']);
+    content.add(['', i18n(context, 'wherigo_header_cartridgeguid'), '']);
+    content.add(['', i18n(context, 'wherigo_header_cartridgedescription'), '']);
+    content.add(['', i18n(context, 'wherigo_header_startinglocation'), '']);
+    content.add(['', i18n(context, 'wherigo_header_version'), '']);
+    content.add(['', i18n(context, 'wherigo_header_author'), '']);
+    content.add(['', i18n(context, 'wherigo_header_company'), '']);
+    content.add(['', i18n(context, 'wherigo_header_device'), '']);
+    content.add(['', i18n(context, 'wherigo_header_lengthcompletion'), '']);
+    content.add(['', i18n(context, 'wherigo_header_completion'), '']);
     result.add(
         GCWExpandableTextDivider(
           text: i18n(context, 'wherigo_data_header'),
@@ -1579,7 +1597,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     // 4 Bytes Size
     // ? bytes LUA Bytecode
     content = [];
-    content.add(['', i18n(context, 'wherigo_data_luabytecode'), 'Size']);
+    content.add(['', i18n(context, 'wherigo_data_luabytecode'), i18n(context, 'wherigo_header_size')]);
     content.add([
       offset.toString().padLeft(7, ' '),                    // offset begin of LUABytecode
       bytes.sublist(offset, offset + LENGTH_INT).join('.'), // 4 Bytes Size of LUABytecode
@@ -1603,7 +1621,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     content = [];
     for (int i = 1; i < numberOfObjects; i++) {
       if (i == 1)
-        content.add(['', i18n(context, 'wherigo_data_mediafiles'), 'valid type size'],);
+        content.add(['', i18n(context, 'wherigo_data_mediafiles'), i18n(context, 'wherigo_header_valid')],);
       try {
         if (readByte(bytes, offset) != 0) {
           content.add([
