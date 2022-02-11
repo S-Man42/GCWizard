@@ -11,7 +11,7 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
-  final CCITTCodebook codeBook;
+  final TeletypewriterCodebook codeBook;
 
   PUNCHTAPESegmentDisplay(this.codeBook,{Key key, this.segments, this.readOnly: false, this.onChanged})
       : super(

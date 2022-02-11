@@ -15,7 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -137,7 +137,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ancient_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
@@ -210,7 +210,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt1.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt3.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt4.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt5.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
@@ -501,8 +506,8 @@ initializeRegistry(BuildContext context) {
       'catan',
     ]),
     GCWTool(
-        tool: CCITTSelection(),
-        i18nPrefix: 'ccitt_selection',
+        tool: TeletypewriterSelection(),
+        i18nPrefix: 'teletypewriter_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
     GCWTool(tool: Chao(), i18nPrefix: 'chao', categories: [
@@ -1226,15 +1231,61 @@ initializeRegistry(BuildContext context) {
     ]),
 
     //CCITT*Selection **********************************************************************************************
-    GCWTool(tool: CCITT(), i18nPrefix: 'ccitt', searchKeys: [
+    GCWTool(tool: AncientTeletypewriter(), i18nPrefix: 'ccitt_ancient', searchKeys: [
       'ccitt',
+      'ccitt_ancient',
       'teletypewriter',
       'symbol_siemens',
       'symbol_westernunion',
       'symbol_murraybaudot',
       'symbol_baudot'
     ]),
-    GCWTool(tool: CCITTPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
+    GCWTool(tool: CCITT1(), i18nPrefix: 'ccitt_1', searchKeys: [
+      'ccitt',
+      'ccitt_1',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITT2(), i18nPrefix: 'ccitt_2', searchKeys: [
+      'ccitt',
+      'ccitt_2',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITT3(), i18nPrefix: 'ccitt_3', searchKeys: [
+      'ccitt',
+      'ccitt_3',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITT4(), i18nPrefix: 'ccitt_4', searchKeys: [
+      'ccitt',
+      'ccitt_4',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITT5(), i18nPrefix: 'ccitt_5', searchKeys: [
+      'ccitt',
+      'ccitt_5',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: TeletypewriterPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
       'ccitt',
       'punchtape',
       'teletypewriter',

@@ -26,7 +26,7 @@ class Z22State extends State<Z22> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
-  var _currentCode = CCITTCodebook.CCITT_ITA2_1931;
+  var _currentCode = TeletypewriterCodebook.CCITT_ITA2_1931;
 
   @override
   void initState() {

@@ -16,7 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -139,7 +139,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_t
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
@@ -450,8 +450,6 @@ void _initStaticToolList() {
       className(Caesar()),
       className(Calendar()),
       className(Catan()),
-      className(CCITTSelection()),
-      className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
       className(Chao()),
@@ -604,6 +602,8 @@ void _initStaticToolList() {
       className(SymbolTableSelection()),
       className(TapCode()),
       className(Tapir()),
+      className(TeletypewriterSelection()),
+      className(TeletypewriterPunchTape()),
       className(TimeCalculator()),
       className(TomTomSelection()),
       className(Trifid()),

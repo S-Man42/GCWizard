@@ -16,11 +16,11 @@ import 'gcw_text_divider.dart';
 
 class GCWPunchtapeSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
-  final NSegmentDisplay Function(Map<String, bool>, bool, CCITTCodebook) segmentFunction;
+  final NSegmentDisplay Function(Map<String, bool>, bool, TeletypewriterCodebook) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
-  final CCITTCodebook codeBook;
+  final TeletypewriterCodebook codeBook;
 
   const GCWPunchtapeSegmentDisplayOutput(
       {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.codeBook})

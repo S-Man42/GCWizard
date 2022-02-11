@@ -1,30 +1,30 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-List<String> decenary2segments(String decenary, bool original, CCITTCodebook language) {
+List<String> decenary2segments(String decenary, bool original, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111
   String binary = convertBase(decenary, 10, 2);
   switch (language) {
-    case CCITTCodebook.BAUDOT:
-    case CCITTCodebook.MURRAY:
-    case CCITTCodebook.SIEMENS:
-    case CCITTCodebook.WESTERNUNION:
-    case CCITTCodebook.BAUDOT_54123:
-    case CCITTCodebook.CCITT_ITA1_1926:
-    case CCITTCodebook.CCITT_ITA1_1929:
-    case CCITTCodebook.CCITT_ITA1_EU:
-    case CCITTCodebook.CCITT_ITA1_UK:
-    case CCITTCodebook.CCITT_ITA2_1929:
-    case CCITTCodebook.CCITT_ITA2_1931:
-    case CCITTCodebook.CCITT_ITA2_MTK2:
-    case CCITTCodebook.CCITT_ITA2_USTTY:
+    case TeletypewriterCodebook.BAUDOT:
+    case TeletypewriterCodebook.MURRAY:
+    case TeletypewriterCodebook.SIEMENS:
+    case TeletypewriterCodebook.WESTERNUNION:
+    case TeletypewriterCodebook.BAUDOT_54123:
+    case TeletypewriterCodebook.CCITT_ITA1_1926:
+    case TeletypewriterCodebook.CCITT_ITA1_1929:
+    case TeletypewriterCodebook.CCITT_ITA1_EU:
+    case TeletypewriterCodebook.CCITT_ITA1_UK:
+    case TeletypewriterCodebook.CCITT_ITA2_1929:
+    case TeletypewriterCodebook.CCITT_ITA2_1931:
+    case TeletypewriterCodebook.CCITT_ITA2_MTK2:
+    case TeletypewriterCodebook.CCITT_ITA2_USTTY:
       binary = binary.padLeft(5, '0');
       break;
-    case CCITTCodebook.CCITT_ITA4:
+    case TeletypewriterCodebook.CCITT_ITA4:
       binary = binary.padLeft(6, '0');
       break;
-    case CCITTCodebook.CCITT_ITA3:
-    case CCITTCodebook.CCITT_IA5:
+    case TeletypewriterCodebook.CCITT_ITA3:
+    case TeletypewriterCodebook.CCITT_IA5:
       binary = binary.padLeft(7, '0');
       break;
   }
@@ -36,29 +36,29 @@ List<String> decenary2segments(String decenary, bool original, CCITTCodebook lan
   return result;
 }
 
-List<String> binary2segments(String binary, bool original, CCITTCodebook language) {
+List<String> binary2segments(String binary, bool original, TeletypewriterCodebook language) {
   // 00000 ... 11111 => [1,2,3,4,5]
   switch (language) {
-    case CCITTCodebook.BAUDOT:
-    case CCITTCodebook.MURRAY:
-    case CCITTCodebook.SIEMENS:
-    case CCITTCodebook.WESTERNUNION:
-    case CCITTCodebook.BAUDOT_54123:
-    case CCITTCodebook.CCITT_ITA1_1926:
-    case CCITTCodebook.CCITT_ITA1_1929:
-    case CCITTCodebook.CCITT_ITA1_EU:
-    case CCITTCodebook.CCITT_ITA1_UK:
-    case CCITTCodebook.CCITT_ITA2_1929:
-    case CCITTCodebook.CCITT_ITA2_1931:
-    case CCITTCodebook.CCITT_ITA2_MTK2:
-    case CCITTCodebook.CCITT_ITA2_USTTY:
+    case TeletypewriterCodebook.BAUDOT:
+    case TeletypewriterCodebook.MURRAY:
+    case TeletypewriterCodebook.SIEMENS:
+    case TeletypewriterCodebook.WESTERNUNION:
+    case TeletypewriterCodebook.BAUDOT_54123:
+    case TeletypewriterCodebook.CCITT_ITA1_1926:
+    case TeletypewriterCodebook.CCITT_ITA1_1929:
+    case TeletypewriterCodebook.CCITT_ITA1_EU:
+    case TeletypewriterCodebook.CCITT_ITA1_UK:
+    case TeletypewriterCodebook.CCITT_ITA2_1929:
+    case TeletypewriterCodebook.CCITT_ITA2_1931:
+    case TeletypewriterCodebook.CCITT_ITA2_MTK2:
+    case TeletypewriterCodebook.CCITT_ITA2_USTTY:
       binary = binary.padLeft(5, '0');
       break;
-    case CCITTCodebook.CCITT_ITA4:
+    case TeletypewriterCodebook.CCITT_ITA4:
       binary = binary.padLeft(6, '0');
       break;
-    case CCITTCodebook.CCITT_ITA3:
-    case CCITTCodebook.CCITT_IA5:
+    case TeletypewriterCodebook.CCITT_ITA3:
+    case TeletypewriterCodebook.CCITT_IA5:
       binary = binary.padLeft(7, '0');
       break;
   }
@@ -69,7 +69,7 @@ List<String> binary2segments(String binary, bool original, CCITTCodebook languag
   return result;
 }
 
-String segments2binary(List<String> segments, CCITTCodebook language) {
+String segments2binary(List<String> segments, TeletypewriterCodebook language) {
   // [1,2,3,4,5] => 00000 ... 11111
   String result = '';
 
@@ -98,7 +98,7 @@ String segments2binary(List<String> segments, CCITTCodebook language) {
   else
     result = result + '0';
 
-  if (language == CCITTCodebook.CCITT_ITA3 || language == CCITTCodebook.CCITT_IA5) {
+  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -110,7 +110,7 @@ String segments2binary(List<String> segments, CCITTCodebook language) {
       result = result + '0';
   }
 
-  if (language == CCITTCodebook.CCITT_ITA4) {
+  if (language == TeletypewriterCodebook.CCITT_ITA4) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -120,7 +120,7 @@ String segments2binary(List<String> segments, CCITTCodebook language) {
   return result;
 }
 
-String segments2decenary(List<String> segments, bool original, CCITTCodebook language) {
+String segments2decenary(List<String> segments, bool original, TeletypewriterCodebook language) {
   // [1,2,3,4,5] => 0 ... 31
   String result = '';
 
@@ -149,7 +149,7 @@ String segments2decenary(List<String> segments, bool original, CCITTCodebook lan
   else
     result = result + '0';
 
-  if (language == CCITTCodebook.CCITT_ITA3 || language == CCITTCodebook.CCITT_IA5) {
+  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -161,7 +161,7 @@ String segments2decenary(List<String> segments, bool original, CCITTCodebook lan
       result = result + '0';
   }
 
-  if (language == CCITTCodebook.CCITT_ITA4) {
+  if (language == TeletypewriterCodebook.CCITT_ITA4) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -173,7 +173,7 @@ String segments2decenary(List<String> segments, bool original, CCITTCodebook lan
   return convertBase(result, 2, 10);
 }
 
-List<List<String>> encodePunchtape(String input, CCITTCodebook language, bool original) {
+List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language, bool original) {
   if (input == null) return [];
 
   List<List<String>> result = [];
@@ -188,7 +188,7 @@ List<List<String>> encodePunchtape(String input, CCITTCodebook language, bool or
   return result;
 }
 
-Map<String, dynamic> decodeTextPunchtape(String inputs, CCITTCodebook language, bool original) {
+Map<String, dynamic> decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool original) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -208,7 +208,7 @@ Map<String, dynamic> decodeTextPunchtape(String inputs, CCITTCodebook language, 
   return {'displays': displays, 'text': text.join('')};
 }
 
-Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, CCITTCodebook language, bool original) {
+Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, TeletypewriterCodebook language, bool original) {
   if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'text': ''};
 
   var displays = <List<String>>[];
@@ -229,6 +229,6 @@ Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, CCITTCodebook la
     intList.add(int.parse(segments2decenary(element, original, language)));
   });
 
-  // convert list of decimal to character using String decodeCCITT(List<int> values, CCITTCodebook language)
+  // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
   return {'displays': displays, 'text': decodeCCITT(intList, language)};
 }
