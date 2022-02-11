@@ -35,9 +35,9 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   @override
   void dispose() {
     Prefs.setDouble('theme_font_size', _valueFontsize.toDouble());
+    AppBuilder.of(context).rebuild();
     _decodeController.dispose();
     super.dispose();
-    AppBuilder.of(context).rebuild();
   }
 
   @override
