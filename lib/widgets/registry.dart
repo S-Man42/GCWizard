@@ -111,10 +111,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base122.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base58.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base91.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
@@ -1147,6 +1150,10 @@ initializeRegistry(BuildContext context) {
       'base',
       'base32',
     ]),
+    GCWTool(tool: Base58(), i18nPrefix: 'base_base58', searchKeys: [
+      'base',
+      'base58',
+    ]),
     GCWTool(tool: Base64(), i18nPrefix: 'base_base64', searchKeys: [
       'base',
       'base64',
@@ -1154,6 +1161,14 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Base85(), i18nPrefix: 'base_base85', searchKeys: [
       'base',
       'base85',
+    ]),
+    GCWTool(tool: Base91(), i18nPrefix: 'base_base91', searchKeys: [
+      'base',
+      'base91',
+    ]),
+    GCWTool(tool: Base122(), i18nPrefix: 'base_base122', searchKeys: [
+      'base',
+      'base122',
     ]),
 
     //BCD selection **************************************************************************************************
