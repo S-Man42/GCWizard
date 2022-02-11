@@ -44,7 +44,8 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     int copyColumn,
     bool hasHeader: false,
     bool copyAll: false,
-    List<Function> tappables}) {
+    List<Function> tappables,
+    double fontsize}) {
   var odd = true;
   var isFirst = true;
 
@@ -55,7 +56,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     var columns = rowData
         .asMap()
         .map((index, column) {
-          var textStyle = gcwTextStyle();
+          var textStyle = gcwTextStyle(fontsize: fontsize);
           if (isFirst && hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
 
           var child;

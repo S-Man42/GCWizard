@@ -21,7 +21,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
 
   var _currentDecodeInput = '';
   var _currentLanguage = NumeralWordsLanguage.DEU;
-  var _valueFontsize;
+  int _valueFontsize = Prefs.getDouble('theme_font_size').floor();
 
   SplayTreeMap<String, NumeralWordsLanguage> _LANGUAGES;
 
@@ -29,13 +29,10 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
-    _valueFontsize = Prefs.getDouble('theme_font_size').floor();
   }
 
   @override
   void dispose() {
-    Prefs.setDouble('theme_font_size', _valueFontsize.toDouble());
-    AppBuilder.of(context).rebuild();
     _decodeController.dispose();
     super.dispose();
   }
@@ -56,10 +53,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
           max: 30,
           onChanged: (value) {
             setState(() {
-              Prefs.setDouble('theme_font_size', value.toDouble());
-
-              // source: https://hillel.dev/2018/08/15/flutter-how-to-rebuild-the-entire-app-to-change-the-theme-or-locale/
-              AppBuilder.of(context).rebuild();
+              _valueFontsize = value;
             });
           },
         ),        GCWDropDownButton(
@@ -92,7 +86,8 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
           numeralWordsOverview.entries.map((entry) {
             if (int.tryParse(entry.value) != null) return [entry.value, entry.key];
           }).toList(),
-          flexValues: [1, 3]),
+          flexValues: [1, 3],
+          fontsize: _valueFontsize * 1.0),
     ));
   }
 }
