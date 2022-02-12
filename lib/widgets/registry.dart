@@ -1243,50 +1243,36 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: CCITT1(), i18nPrefix: 'ccitt_1', searchKeys: [
       'ccitt',
       'ccitt_1',
-      'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
-      'symbol_murraybaudot',
       'symbol_baudot'
     ]),
     GCWTool(tool: CCITT2(), i18nPrefix: 'ccitt_2', searchKeys: [
       'ccitt',
       'ccitt_2',
       'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
       'symbol_murraybaudot',
-      'symbol_baudot'
     ]),
     GCWTool(tool: CCITT3(), i18nPrefix: 'ccitt_3', searchKeys: [
       'ccitt',
       'ccitt_3',
       'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
-      'symbol_murraybaudot',
-      'symbol_baudot'
     ]),
     GCWTool(tool: CCITT4(), i18nPrefix: 'ccitt_4', searchKeys: [
       'ccitt',
       'ccitt_4',
       'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
-      'symbol_murraybaudot',
-      'symbol_baudot'
     ]),
     GCWTool(tool: CCITT5(), i18nPrefix: 'ccitt_5', searchKeys: [
       'ccitt',
       'ccitt_5',
       'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
-      'symbol_murraybaudot',
-      'symbol_baudot'
     ]),
     GCWTool(tool: TeletypewriterPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
       'ccitt',
+      'ccitt1',
+      'ccitt2',
+      'ccitt3',
+      'ccitt4',
+      'ccitt5',
       'punchtape',
       'teletypewriter',
       'symbol_siemens',
