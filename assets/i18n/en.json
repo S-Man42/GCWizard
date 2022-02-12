@@ -4568,7 +4568,7 @@
   "symboltables_zodiac_z408_title": "Zodiac Killer Z408",
   "symboltables_zodiac_z408_description": "Without the letters JQZ, because they were not used in the message",
   "symbol_replacer_title": "Symbol Replacer",
-  "symbol_replacer_description": "Attempts to automatically identify Symbol Table for an image. Possibility of manual symbol replacement.crowi",
+  "symbol_replacer_description": "Attempts to automatically identify Symbol Table for an image. Possibility of manual symbol replacement.",
   "symbol_replacer_black_level": "Contrast",
   "symbol_replacer_similarity_level": "Similarity",
   "symbol_replacer_symbol_table": "Symbol Table",
