@@ -4970,6 +4970,8 @@
   "weathersymbols_ww_99": "Heavy thunderstorm with hail at time of observation",
   "wherigo_title" : "Wherigo Analyzer",
   "wherigo_description" : "Shows Cartridge Data, Media Files, etc. of a Wherigo Cartridge",
+  "wherigo_decompile_title": "IMPORTANT - How to decompile ...",
+  "wherigo_decompile_message": "For a complete analysis of a cartridge the LUA Sourcecode has to be decompiled. For the time beeing this has to be done Online or Offline by youself.\nOnline means, the GC Wizard sends your chosen cartridge - and only the cartridge - nothing else - to our server, which decompiles and sends back the LUA Sourcefile. Otherwise you have to decompile offline with UNLUAC.JAR from Sourceforge.net.\n\nPress OK\n...to agree for Online-Decompiling\nPress CANCEL\n... to decompile on your own",
   "wherigo_bytecode_decimal": "Decimal",
   "wherigo_bytecode_hexadecimal": "Hexadecimal",
   "wherigo_data_header" : "Header",

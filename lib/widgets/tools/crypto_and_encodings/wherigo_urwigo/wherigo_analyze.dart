@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
@@ -61,6 +62,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   var _displayedCartridgeData = WHERIGO.NULL;
 
+  bool _offline = true;
+
   //List<List<dynamic>> _GWCStructure;
   List<Widget> _GWCFileStructure;
 
@@ -89,7 +92,35 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
+
+    _askForOnlineDecompiling() {
+      showGCWDialog(
+          context,
+          i18n(context, 'wherigo_decompile_title'),
+          Container(
+            width: 250,
+            height: 500,
+            child: GCWText(
+              text: i18n(context, 'wherigo_decompile_message'),
+              style: gcwDialogTextStyle(),
+            ),
+          ),
+          [
+            GCWDialogButton(
+                text: i18n(context, 'common_ok'),
+                onPressed: () {
+                  setState(() {
+                    _offline = false;
+                  });
+                }),
+          ]);
+      }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _askForOnlineDecompiling();
+    });
   }
+
 
   @override
   void dispose() {
@@ -113,6 +144,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     else if (_fileLoadedState == FILE_LOAD_STATE.GWC)
       _fileLoadedState = FILE_LOAD_STATE.FULL;
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +206,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             }
           },
         ),
+        if (_offline)
         GCWOpenFile(
           //supportedFileTypes: [FileType.LUA],
           title: i18n(context, 'wherigo_open_lua'),
