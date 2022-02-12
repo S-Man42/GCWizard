@@ -3102,6 +3102,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
       'symbol_moon',
     ]),
+    GCWSymbolTableTool(symbolKey: 'moon_phases', symbolSearchStrings: [
+      'symbol_moon_phases',
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
     ]),
@@ -3334,6 +3337,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: [
       'symbol_terzi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'thai_numerals', symbolSearchStrings: [
+      'symbol_thai_numerals',
     ]),
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: [
       'symbol_theban',
