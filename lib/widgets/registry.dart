@@ -82,7 +82,8 @@ import 'package:gc_wizard/widgets/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
-import 'package:gc_wizard/widgets/tools/coords/centroid.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -111,10 +112,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base122.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base58.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base91.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
@@ -183,6 +187,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numer
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
@@ -253,6 +258,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
@@ -834,10 +840,20 @@ initializeRegistry(BuildContext context) {
       'pi',
       'irrationalnumbers',
     ]),
+    GCWTool(tool: PhysicalConstants(), i18nPrefix: 'physical_constants', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'physical_constants',
+    ]),
     GCWTool(tool: Playfair(), i18nPrefix: 'playfair', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'playfair',
+    ]),
+    GCWTool(tool: Pokemon(), i18nPrefix: 'pokemon_code', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'pokemon',
     ]),
     GCWTool(tool: Polybios(), i18nPrefix: 'polybios', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1146,6 +1162,10 @@ initializeRegistry(BuildContext context) {
       'base',
       'base32',
     ]),
+    GCWTool(tool: Base58(), i18nPrefix: 'base_base58', searchKeys: [
+      'base',
+      'base58',
+    ]),
     GCWTool(tool: Base64(), i18nPrefix: 'base_base64', searchKeys: [
       'base',
       'base64',
@@ -1153,6 +1173,14 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Base85(), i18nPrefix: 'base_base85', searchKeys: [
       'base',
       'base85',
+    ]),
+    GCWTool(tool: Base91(), i18nPrefix: 'base_base91', searchKeys: [
+      'base',
+      'base91',
+    ]),
+    GCWTool(tool: Base122(), i18nPrefix: 'base_base122', searchKeys: [
+      'base',
+      'base122',
     ]),
 
     //BCD selection **************************************************************************************************
@@ -1407,7 +1435,7 @@ initializeRegistry(BuildContext context) {
           'coordinates_centertwopoints',
         ]),
     GCWTool(
-        tool: Centroid(),
+        tool: CentroidArithmeticMean(),
         i18nPrefix: 'coords_centroid',
         iconPath: 'assets/icons/coords/icon_centroid.png',
         categories: [
@@ -1416,6 +1444,19 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
           'coordinates',
           'coordinates_centroid',
+          'coordinates_arithmeticmean',
+        ]),
+    GCWTool(
+        tool: CentroidCenterOfGravity(),
+        i18nPrefix: 'coords_centroid_centerofgravity',
+        iconPath: 'assets/icons/coords/icon_centroid.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_centroid',
+          'coordinates_centerofgravity',
         ]),
     GCWTool(
         tool: CenterThreePoints(),
@@ -3151,6 +3192,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
       'symbol_moon',
     ]),
+    GCWSymbolTableTool(symbolKey: 'moon_phases', symbolSearchStrings: [
+      'symbol_moon_phases',
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
     ]),
@@ -3230,6 +3274,7 @@ initializeRegistry(BuildContext context) {
       'symbol_planets',
     ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
+      'pokemon',
       'symbol_pokemon_unown',
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [
@@ -3383,6 +3428,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: [
       'symbol_terzi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'thai_numerals', symbolSearchStrings: [
+      'symbol_thai_numerals',
     ]),
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: [
       'symbol_theban',

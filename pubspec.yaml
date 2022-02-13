@@ -208,6 +208,7 @@ flutter:
     - assets/symbol_tables/maze/
     - assets/symbol_tables/minimoys/
     - assets/symbol_tables/moon/
+    - assets/symbol_tables/moon_phases/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/murray_v2_fischer_corrected/
     - assets/symbol_tables/murray_v3_navy_1796/
@@ -282,6 +283,7 @@ flutter:
     - assets/symbol_tables/tengwar_classic/
     - assets/symbol_tables/tengwar_general/
     - assets/symbol_tables/terzi/
+    - assets/symbol_tables/thai_numerals/
     - assets/symbol_tables/theban/
     - assets/symbol_tables/three_squares/
     - assets/symbol_tables/tines/

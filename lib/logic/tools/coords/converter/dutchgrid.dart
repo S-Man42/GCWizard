@@ -11,7 +11,6 @@ DutchGrid latLonToDutchGrid(LatLng coord) {
 
 LatLng dutchGridToLatLon(DutchGrid dutchGrid) {
   var latLon = rijksdriehoekInverse(dutchGrid.x, dutchGrid.y);
-  print(latLon);
   return LatLng(latLon[1], latLon[0]);
 }
 
