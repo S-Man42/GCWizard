@@ -11,12 +11,12 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class Z22 extends StatefulWidget {
+class ZC1 extends StatefulWidget {
   @override
-  Z22State createState() => Z22State();
+  ZC1State createState() => ZC1State();
 }
 
-class Z22State extends State<Z22> {
+class ZC1State extends State<ZC1> {
   var _encodeController;
   var _decodeController;
 
@@ -26,7 +26,7 @@ class Z22State extends State<Z22> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
-  var _currentCode = TeletypewriterCodebook.CCITT_ITA2_1931;
+  var _currentCode = TeletypewriterCodebook.ZC1;
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class Z22State extends State<Z22> {
       if (_currentRadix == GCWSwitchPosition.right) { // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
-          return out.padLeft(5, '0');
+          return out.padLeft(8, '0');
         }).join(' ');
       }
       return output; // decimal

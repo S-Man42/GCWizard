@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -60,7 +60,6 @@ class TeletypewriterState extends State<Teletypewriter> {
               _currentCode = value;
             });
           },
-          //items: CCITT_CODEBOOK.entries.map((mode) {
           items: widget.codebook.entries.map((mode) {
             return GCWDropDownMenuItem(
                 value: mode.key,
@@ -112,17 +111,17 @@ class TeletypewriterState extends State<Teletypewriter> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) { // encrypt
-      output = encodeCCITT(_currentEncodeInput, _currentCode);
+      output = encodeTeletypewriter(_currentEncodeInput, _currentCode);
       if (_currentRadix == GCWSwitchPosition.right) { // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
-          return out.padLeft(5, '0');
+          return out.padLeft(BINARY_LENGTH[_currentCode], '0');
         }).join(' ');
       }
       return output; // decimal
     } else { // decrypt
       if (_currentRadix == GCWSwitchPosition.right) { // binary
-        return decodeCCITT(
+        return decodeTeletypewriter(
             textToBinaryList(_currentDecodeInput['text'])
                 .map((value) {
                   return int.tryParse(convertBase(value, 2, 10));
@@ -130,7 +129,7 @@ class TeletypewriterState extends State<Teletypewriter> {
             _currentCode);
       }
 
-      return decodeCCITT(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
+      return decodeTeletypewriter(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
     }
   }
 }

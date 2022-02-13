@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ancient_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_ccir476.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt2.dart';
@@ -37,6 +38,7 @@ class TeletypewriterSelection extends GCWSelection {
         className(CCITT3()),
         className(CCITT4()),
         className(CCITT5()),
+        className(CCIR476()),
         className(TeletypewriterPunchTape()),
       ].contains(className(element.tool));
     }).toList();

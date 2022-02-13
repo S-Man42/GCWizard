@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false, '6': false, '7': false};
+const _INITIAL_SEGMENTS = <String, bool>{'1': false, '2': false, '3': false, '4': false, '5': false, '6': false, '7': false, '8': false};
 
 class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -24,8 +24,8 @@ class PUNCHTAPESegmentDisplay extends NSegmentDisplay {
             customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
                 Color segment_color_on, Color segment_color_off) {
 
-              int punchHoles = punchTapeDefinition[codeBook]['punchHoles'];
-              int sprocketHole = punchTapeDefinition[codeBook]['sprocketHole'];
+              int punchHoles = PUNCHTAPE_DEFINITION[codeBook]['punchHoles'];
+              int sprocketHole = PUNCHTAPE_DEFINITION[codeBook]['sprocketHole'];
 
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;

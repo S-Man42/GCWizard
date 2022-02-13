@@ -102,6 +102,7 @@ import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ZC1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
@@ -215,6 +216,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccit
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt3.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt5.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_ccir476.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
@@ -1065,6 +1067,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'symbol_zamonian',
     ]),
+    GCWTool(tool: ZC1(), i18nPrefix: 'zc1', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'zc1',
+    ]),
 
     //ApparentTemperatureSelection  ********************************************************************************************
     GCWTool(tool: HeatIndex(), i18nPrefix: 'heatindex', searchKeys: [
@@ -1266,13 +1273,18 @@ initializeRegistry(BuildContext context) {
       'ccitt_5',
       'teletypewriter',
     ]),
+    GCWTool(tool: CCIR476(), i18nPrefix: 'ccitt_ccir476', searchKeys: [
+      'ccitt',
+      'ccitt_ccir_476',
+      'teletypewriter',
+    ]),
     GCWTool(tool: TeletypewriterPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
       'ccitt',
-      'ccitt1',
-      'ccitt2',
-      'ccitt3',
-      'ccitt4',
-      'ccitt5',
+      'ccitt_1',
+      'ccitt_2',
+      'ccitt_3',
+      'ccitt_4',
+      'ccitt_5',
       'punchtape',
       'teletypewriter',
       'symbol_siemens',

@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 List<String> decenary2segments(String decenary, bool original, TeletypewriterCodebook language) {
@@ -25,7 +25,11 @@ List<String> decenary2segments(String decenary, bool original, TeletypewriterCod
       break;
     case TeletypewriterCodebook.CCITT_ITA3:
     case TeletypewriterCodebook.CCITT_IA5:
+    case TeletypewriterCodebook.CCIR476:
       binary = binary.padLeft(7, '0');
+      break;
+    case TeletypewriterCodebook.ZC1:
+      binary = binary.padLeft(8, '0');
       break;
   }
 
@@ -59,7 +63,11 @@ List<String> binary2segments(String binary, bool original, TeletypewriterCodeboo
       break;
     case TeletypewriterCodebook.CCITT_ITA3:
     case TeletypewriterCodebook.CCITT_IA5:
+    case TeletypewriterCodebook.CCIR476:
       binary = binary.padLeft(7, '0');
+      break;
+    case TeletypewriterCodebook.ZC1:
+      binary = binary.padLeft(8, '0');
       break;
   }
   List<String> result = [];
@@ -72,7 +80,6 @@ List<String> binary2segments(String binary, bool original, TeletypewriterCodeboo
 String segments2binary(List<String> segments, TeletypewriterCodebook language) {
   // [1,2,3,4,5] => 00000 ... 11111
   String result = '';
-
   if (segments.contains('1'))
     result = result + '1';
   else
@@ -98,7 +105,14 @@ String segments2binary(List<String> segments, TeletypewriterCodebook language) {
   else
     result = result + '0';
 
-  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5) {
+  if (language == TeletypewriterCodebook.CCITT_ITA4) {
+    if (segments.contains('6'))
+      result = result + '1';
+    else
+      result = result + '0';
+  }
+
+  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5 || language == TeletypewriterCodebook.CCIR476) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -110,8 +124,18 @@ String segments2binary(List<String> segments, TeletypewriterCodebook language) {
       result = result + '0';
   }
 
-  if (language == TeletypewriterCodebook.CCITT_ITA4) {
+  if (language == TeletypewriterCodebook.ZC1) {
     if (segments.contains('6'))
+      result = result + '1';
+    else
+      result = result + '0';
+
+    if (segments.contains('7'))
+      result = result + '1';
+    else
+      result = result + '0';
+
+    if (segments.contains('8'))
       result = result + '1';
     else
       result = result + '0';
@@ -149,7 +173,14 @@ String segments2decenary(List<String> segments, bool original, TeletypewriterCod
   else
     result = result + '0';
 
-  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5) {
+  if (language == TeletypewriterCodebook.CCITT_ITA4) {
+    if (segments.contains('6'))
+      result = result + '1';
+    else
+      result = result + '0';
+  }
+
+  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5 || language == TeletypewriterCodebook.CCIR476) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -161,8 +192,18 @@ String segments2decenary(List<String> segments, bool original, TeletypewriterCod
       result = result + '0';
   }
 
-  if (language == TeletypewriterCodebook.CCITT_ITA4) {
+  if (language == TeletypewriterCodebook.ZC1) {
     if (segments.contains('6'))
+      result = result + '1';
+    else
+      result = result + '0';
+
+    if (segments.contains('7'))
+      result = result + '1';
+    else
+      result = result + '0';
+
+    if (segments.contains('8'))
       result = result + '1';
     else
       result = result + '0';
@@ -179,8 +220,7 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
   List<List<String>> result = [];
   List<String> code = [];
 
-  code = encodeCCITT(input, language).split(' ');
-
+  code = encodeTeletypewriter(input, language).split(' ');
   code.forEach((element) {
     if (int.tryParse(element) != null)
     result.add(decenary2segments(element, original, language));
@@ -202,7 +242,7 @@ Map<String, dynamic> decodeTextPunchtape(String inputs, TeletypewriterCodebook l
     displays.add(binary2segments(element, original, language));
     if (int.tryParse(convertBase(element, 2, 10)) != null) {
       intList[0] = int.parse(convertBase(element, 2, 10));
-      text.add(decodeCCITT(intList, language));
+      text.add(decodeTeletypewriter(intList, language));
     }
   });
   return {'displays': displays, 'text': text.join('')};
@@ -230,5 +270,5 @@ Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, TeletypewriterCo
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)
-  return {'displays': displays, 'text': decodeCCITT(intList, language)};
+  return {'displays': displays, 'text': decodeTeletypewriter(intList, language)};
 }

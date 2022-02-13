@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -184,7 +184,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     return Column(
       children: <Widget>[
         Container(
-          width: 300,
+          width: 340,
           height: 70,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(

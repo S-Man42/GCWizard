@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -23,11 +23,11 @@ class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_CCITT1,
             onDecode: (String input, String key) {
               if (options[MDT_CCITT1_OPTION_MODE] == MDT_CCITT1_OPTION_MODE_BINARY) {
-                return decodeCCITT(textToBinaryList(input).map((value) {
+                return decodeTeletypewriter(textToBinaryList(input).map((value) {
                   return int.tryParse(convertBase(value, 2, 10));
                 }).toList(), TeletypewriterCodebook.CCITT_ITA1_EU);
               } else
-                return decodeCCITT(textToIntList(input), TeletypewriterCodebook.CCITT_ITA1_EU);
+                return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA1_EU);
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
