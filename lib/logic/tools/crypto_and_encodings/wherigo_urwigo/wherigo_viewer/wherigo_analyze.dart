@@ -622,7 +622,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
       // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
       // https://www.iana.org/assignments/media-types/media-types.xhtml
 
-      var uri = Uri.parse('http://192.168.178.93:8080/GCW_Unluac/UnluacServlet');
+      String address = 'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
+      var uri = Uri.parse(address);
       var request = http.MultipartRequest('POST', uri)
         ..files.add(await http.MultipartFile.fromBytes('file', _MediaFilesContents[0].MediaFileBytes,
             contentType: MediaType('application', 'octet-stream')));
@@ -1952,41 +1953,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
 
 }
 
-
-//String plainLUA = '';
-//_decompileLUA(Uint8List LUA) async {
-//  online solution via REST-API
-//  https://pub.dev/documentation/http/latest/http/post.html
-//  https://github.com/flutterchina/dio
-//  List<int> postData = new List.from(LUA);
-//  var dio = Dio();
-
-//  var response = await dio.post('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323',
-//                            data: Stream.fromIterable(postData.map((e) => [e])), //create a Stream<List<int>>
-//                            options: Options(headers: {Headers.contentLengthHeader: postData.length,
-//                                                      Headers.contentTypeHeader: 'binary'}, // static final binary = ContentType("application", "octet-stream");
-//                            ),
-//                          );
-//  var result = await http.post(Uri.parse('https://sdklmfoqdd5qrtha.myfritz.net/api/decompile/:7323'), body: LUA);
-//  print(response.statusCode);
-//  print(response.statusMessage);
-//  String plainLUA = JASONStringToString(response.data);
-// {"status":"Error","message":"Unknown error during decompilation!","data":{"decompiled":"-- Decompiled online using https://Lua-Decompiler.ferib.dev/ (luadec 2.0.2)\n"}}
-//}
-
-String _decompileLUAfromGWC(Uint8List LUA) {
-  return '';
-}
-
-
-String JASONStringToString(String JSON){
-  return JSON.replaceAll('{', '')
-             .replaceAll('}', '')
-             .replaceAll('"', '')
-             .replaceAll(':', ': ')
-             .split(',')
-             .join('\n');
-}
 
 String _normalizeLUAmultiLineText(String LUA) {
   return LUA
