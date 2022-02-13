@@ -275,7 +275,7 @@ bool isInvalidLUASourcecode(String header){
 }
 
 Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {
-  var output = await getCartridge(jobData.parameters["byteListGWC"], jobData.parameters["byteListLUA"], sendAsyncPort: jobData.sendAsyncPort);
+  var output = await getCartridge(jobData.parameters["byteListGWC"], jobData.parameters["byteListLUA"], jobData.parameters["offline"], sendAsyncPort: jobData.sendAsyncPort);
 
   if (jobData.sendAsyncPort != null) {
     jobData.sendAsyncPort.send(output);
@@ -283,7 +283,7 @@ Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteListLUA, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteListLUA, bool offline, {SendPort sendAsyncPort}) async {
   var out = Map<String, dynamic>();
   List<String> _ResultsGWC = [];
   List<String> _ResultsLUA = [];
@@ -430,8 +430,6 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   ActionMessageElementData action;
   Map<String, List<AnswerData>> Answers = {};
 
-
-  var _cartridgeData = Map<String, dynamic>();
 
   String _obfuscatorFunction = '';
 
@@ -616,27 +614,27 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
 // get LUA-Sourcecode-File
     // from byteListLUA
     // from MediaFilesContents[0].MediaFileBytes
-    if (byteListLUA == null || byteListLUA == []) {
-      print('starting to decompile');
-      print(_MediaFilesContents[0].MediaFileBytes);
-      // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
-      // https://www.iana.org/assignments/media-types/media-types.xhtml
+    if (!offline)
+      if (byteListLUA == null || byteListLUA == []) {
+        print('starting to decompile');
+        // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
+        // https://www.iana.org/assignments/media-types/media-types.xhtml
 
-      String address = 'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
-      var uri = Uri.parse(address);
-      var request = http.MultipartRequest('POST', uri)
-        ..files.add(await http.MultipartFile.fromBytes('file', _MediaFilesContents[0].MediaFileBytes,
-            contentType: MediaType('application', 'octet-stream')));
-      var response = await request.send();
+        String address = 'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
+        var uri = Uri.parse(address);
+        var request = http.MultipartRequest('POST', uri)
+          ..files.add(await http.MultipartFile.fromBytes('file', _MediaFilesContents[0].MediaFileBytes,
+              contentType: MediaType('application', 'octet-stream')));
+        var response = await request.send();
 
-      print('response.statuscode '+response.statusCode.toString());
-      if (response.statusCode == 200) {
-        var responseData = await http.Response.fromStream(response);
-        print('got LUA Sourcecode');
-        checksToDo = FILE_LOAD_STATE.LUA;
-        _LUAFile = responseData.body;
+        print('response.statuscode '+response.statusCode.toString());
+        if (response.statusCode == 200) {
+          var responseData = await http.Response.fromStream(response);
+          print('got LUA Sourcecode');
+          checksToDo = FILE_LOAD_STATE.LUA;
+          _LUAFile = responseData.body;
+        }
       }
-    }
     if (checksToDo == FILE_LOAD_STATE.LUA || checksToDo == FILE_LOAD_STATE.FULL) {
       if (byteListLUA != null)
         _LUAFile = String.fromCharCodes(byteListLUA);

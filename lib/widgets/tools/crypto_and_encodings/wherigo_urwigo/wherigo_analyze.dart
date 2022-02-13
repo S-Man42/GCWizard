@@ -485,7 +485,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.MEDIAFILES:
-        print('CASE WHERIGO.MEDIAFILES');
         if ((_WherigoCartridge.Media == [] || _WherigoCartridge.Media == null || _WherigoCartridge.Media.length == 0) &&
             (_WherigoCartridge.MediaFilesContents == [] || _WherigoCartridge.MediaFilesContents == null || _WherigoCartridge.MediaFilesContents.length == 0))
           return GCWDefaultOutput(
@@ -1755,7 +1754,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildGWCJobData() async {
-    return GCWAsyncExecuterParameters({'byteListGWC':_GWCbytes, 'byteListLUA':_LUAbytes});
+    return GCWAsyncExecuterParameters({'byteListGWC': _GWCbytes, 'byteListLUA': _LUAbytes, 'offline': _offline});
   }
 
   _showCartridgeOutput(Map<String, dynamic> output, String dataType) {
