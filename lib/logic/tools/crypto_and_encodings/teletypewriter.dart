@@ -70,6 +70,10 @@ Map<TeletypewriterCodebook, Map<String, String>> CCIR476_CODEBOOK = {
   TeletypewriterCodebook.CCIR476: {'title': 'punchtape_ccitt_ccir476_title', 'subtitle': 'punchtape_ccitt_ccir476_description'},
 };
 
+Map<TeletypewriterCodebook, Map<String, String>> ZC1_CODEBOOK = {
+  TeletypewriterCodebook.ZC1: {'title': 'punchtape_zc1_title', 'subtitle': 'punchtape_zc1_description'},
+};
+
 Map<TeletypewriterCodebook, Map<String, String>> CCITT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
   TeletypewriterCodebook.BAUDOT_54123: {'title': 'punchtape_baudot_54123_title', 'subtitle': 'punchtape_baudot_54123_description'},

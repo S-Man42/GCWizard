@@ -51,22 +51,26 @@ class TeletypewriterState extends State<Teletypewriter> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.codebook == null)
+      _currentCode = widget.defaultCodebook;
+
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
-          value: _currentCode,
-          onChanged: (value) {
-            setState(() {
-              _currentCode = value;
-            });
-          },
-          items: widget.codebook.entries.map((mode) {
-            return GCWDropDownMenuItem(
-                value: mode.key,
-                child: i18n(context, mode.value['title']),
-                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
-          }).toList(),
-        ),        _currentMode == GCWSwitchPosition.left
+        if (widget.codebook != null)
+          GCWDropDownButton(
+            value: _currentCode,
+            onChanged: (value) {
+              setState(() {
+                _currentCode = value;
+              });
+            },
+            items: widget.codebook.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: i18n(context, mode.value['title']),
+                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+            }).toList(),
+          ),        _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
                 onChanged: (text) {
