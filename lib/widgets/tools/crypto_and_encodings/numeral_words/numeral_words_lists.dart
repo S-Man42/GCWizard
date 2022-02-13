@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
@@ -10,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+
 
 class NumeralWordsLists extends StatefulWidget {
   @override
@@ -85,13 +85,13 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
           context,
           numeralWordsOverview.entries.map((entry) {
             if (int.tryParse(entry.value) != null) {
-              entry.key.runes.forEach((element) {
-              });
               return [entry.value, entry.key];
             };
           }).toList(),
           flexValues: [1, 3],
-          fontsize: _valueFontsize * 1.0),
+          fontSize: _valueFontsize * 1.0
+      ),
+
     ));
   }
 }

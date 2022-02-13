@@ -18,8 +18,8 @@ dynamic fontSizeSmall() {
   return defaultFontSize() - 4;
 }
 
-TextStyle gcwTextStyle({double fontsize = 0}) {
-  return TextStyle(color: themeColors().mainFont(), fontSize: fontsize == 0 ? defaultFontSize() : fontsize, fontFamily: 'Roboto Condensed');
+TextStyle gcwTextStyle({double fontSize = 0}) {
+  return TextStyle(color: themeColors().mainFont(), fontSize: fontSize == 0 ? defaultFontSize() : fontSize, fontFamily: 'Roboto Condensed');
 }
 
 TextStyle gcwBetaStyle() {

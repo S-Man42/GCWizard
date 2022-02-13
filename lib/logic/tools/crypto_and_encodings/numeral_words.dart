@@ -1915,7 +1915,7 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.VIE: 'numeralwords_language_vie',
   NumeralWordsLanguage.VIEHANTU: 'numeralwords_language_vie_hantu',
   NumeralWordsLanguage.VIESINO: 'numeralwords_language_vie_sino',
-  NumeralWordsLanguage.VIECHUNOM: 'numeralwords_language_vie_chunom',
+  //NumeralWordsLanguage.VIECHUNOM: 'numeralwords_language_vie_chunom',
   NumeralWordsLanguage.TUR: 'numeralwords_language_tur',
   NumeralWordsLanguage.MEG: 'numeralwords_language_meg',
   NumeralWordsLanguage.BRE: 'numeralwords_language_bre',
