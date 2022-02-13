@@ -8,6 +8,7 @@ abstract class GCWMultiDecoderTool {
   final Function onDecode;
   final GCWMultiDecoderToolConfiguration configurationWidget;
   final bool requiresKey;
+  final bool optionalKey;
   Map<String, dynamic> options = {};
 
   GCWMultiDecoderTool(
@@ -17,6 +18,7 @@ abstract class GCWMultiDecoderTool {
       this.internalToolName,
       this.onDecode,
       this.requiresKey: false,
+      this.optionalKey: false,
       this.configurationWidget,
       this.options});
 }

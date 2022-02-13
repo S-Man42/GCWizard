@@ -58,6 +58,7 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGES,
+            optionalKey: true,
             onDecode: (String input, String key) {
               switch (options[MDT_ESOTERIC_LANGUAGES_OPTION_MODE]) {
                 case MDT_ESOTERIC_LANGUAGES_OPTION_BRAINFK:

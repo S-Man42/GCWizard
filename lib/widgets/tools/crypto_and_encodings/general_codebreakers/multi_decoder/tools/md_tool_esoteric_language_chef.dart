@@ -20,6 +20,7 @@ class MultiDecoderToolEsotericLanguageChef extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
+            optionalKey: true,
             onDecode: (String input, String key) {
               try {
                 if (chef.isValid(input))

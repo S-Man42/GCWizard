@@ -18,6 +18,7 @@ class MultiDecoderToolEsotericLanguageBeatnik extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK,
+            optionalKey: true,
             onDecode: (String input, String key) {
               try {
                 var _output = interpretBeatnik(options[MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE], input, key);

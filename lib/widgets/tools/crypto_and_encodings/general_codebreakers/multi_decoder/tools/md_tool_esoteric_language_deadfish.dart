@@ -19,6 +19,7 @@ class MultiDecoderToolEsotericLanguageDeadfish extends GCWMultiDecoderTool {
             id: id,
             name: name,
             internalToolName: MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH,
+            optionalKey: true,
             onDecode: (String input, String key) {
               try {
                 var decodeable = input;

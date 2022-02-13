@@ -182,8 +182,9 @@ class MultiDecoderState extends State<MultiDecoder> {
       var result;
 
       try {
-        if (tool.requiresKey && (_currentKey ?? '').isEmpty ||
-            !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty)) {
+        if (!tool.optionalKey &&
+            ((tool.requiresKey && (_currentKey ?? '').isEmpty) ||
+            !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty))) {
           result = null;
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
