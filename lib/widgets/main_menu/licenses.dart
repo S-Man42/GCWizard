@@ -78,6 +78,9 @@ class LicensesState extends State<Licenses> {
           ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
           ['Vigenère Breaker', 'Jens Guballa (guballa.de)', null],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
+          ['Base58', 'Dark Launch\n', ''],
+          ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
+          ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),
@@ -102,7 +105,7 @@ class LicensesState extends State<Licenses> {
           [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
           [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
           [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
-          [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)']
+          [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_telegraphs')),
@@ -117,6 +120,14 @@ class LicensesState extends State<Licenses> {
             'Helmar Fischer,\nJohn Buckledee, Chairman, Dunstable and District Local History Society on behalf of Mrs Omer Roucoux'
           ],
           [i18n(context, 'telegraph_ohlsen_title'), 'Anne Solberg\nNorsk Teknisk Museum, Oslo'],
+          [
+            i18n(context, 'telegraph_pasley_title'),
+            'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 450'
+          ],
+          [
+            i18n(context, 'telegraph_popham_title'),
+            'Wrixon, Fred B.: Geheimsprachen. Könemann, 2006. ISBN 978-3-8331-2562-1. Seite 446'
+          ],
           [
             i18n(context, 'telegraph_prussia_title'),
             'Bilddatenbank der Museumsstiftung Post und Telekommunikation (CC BY-SA)'

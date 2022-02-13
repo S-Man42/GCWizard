@@ -47,6 +47,8 @@ import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -113,6 +115,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
@@ -136,6 +139,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcran
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
@@ -163,6 +168,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
@@ -452,6 +458,8 @@ void _initStaticToolList() {
       className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
+      className(CentroidArithmeticMean()),
+      className(CentroidCenterOfGravity()),
       className(Chao()),
       className(ChappeTelegraph()),
       className(Chef()),
@@ -546,14 +554,18 @@ void _initStaticToolList() {
       className(OhlsenTelegraph()),
       className(OneTimePad()),
       className(Ook()),
+      className(PasleyTelegraph()),
+      className(PophamTelegraph()),
       className(PeriodicTable()),
       className(PeriodicTableDataView()),
       className(Permutation()),
       className(PhiSelection()),
+      className(PhysicalConstants()),
       className(Piano()),
       className(PiSelection()),
       className(PigLatin()),
       className(Playfair()),
+      className(Pokemon()),
       className(Polybios()),
       className(PredatorSelection()),
       className(PrimeAlphabet()),

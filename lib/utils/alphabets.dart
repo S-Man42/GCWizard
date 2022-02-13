@@ -34,7 +34,7 @@ const alphabet_AZ = {
 final alphabet_AZIndexes = switchMapKeyValue(alphabet_AZ);
 final alphabet_AZString = alphabet_AZ.keys.join();
 
-final superscriptCharacters = {
+const SUPERSCRIPT_CHARACTERS = {
   '0': '\u2070',
   '1': '\u00B9',
   '2': '\u00B2',

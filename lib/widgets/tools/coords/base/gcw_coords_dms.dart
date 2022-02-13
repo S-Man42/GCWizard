@@ -101,13 +101,13 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
       _currentLatMinutes = lat['minutes'];
       _currentLatSeconds = lat['seconds'].split('.')[0];
       _currentLatMilliSeconds = lat['seconds'].split('.')[1];
-      _currentLatSign = lat['sign']['value'];
+      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : lat['sign']['value'];
 
       _currentLonDegrees = lon['degrees'];
       _currentLonMinutes = lon['minutes'];
       _currentLonSeconds = lon['seconds'].split('.')[0];
       _currentLonMilliSeconds = lon['seconds'].split('.')[1];
-      _currentLonSign = lon['sign']['value'];
+      _currentLonSign = widget.coordinates.isDefault() ? defaultHemiphereLongitude() : lon['sign']['value'];
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;
