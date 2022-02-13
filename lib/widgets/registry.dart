@@ -111,10 +111,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base122.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base58.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base91.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
@@ -183,6 +186,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numer
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/predator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
@@ -841,6 +845,11 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'playfair',
     ]),
+    GCWTool(tool: Pokemon(), i18nPrefix: 'pokemon_code', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'pokemon',
+    ]),
     GCWTool(tool: Polybios(), i18nPrefix: 'polybios', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -1153,6 +1162,10 @@ initializeRegistry(BuildContext context) {
       'base',
       'base32',
     ]),
+    GCWTool(tool: Base58(), i18nPrefix: 'base_base58', searchKeys: [
+      'base',
+      'base58',
+    ]),
     GCWTool(tool: Base64(), i18nPrefix: 'base_base64', searchKeys: [
       'base',
       'base64',
@@ -1160,6 +1173,14 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Base85(), i18nPrefix: 'base_base85', searchKeys: [
       'base',
       'base85',
+    ]),
+    GCWTool(tool: Base91(), i18nPrefix: 'base_base91', searchKeys: [
+      'base',
+      'base91',
+    ]),
+    GCWTool(tool: Base122(), i18nPrefix: 'base_base122', searchKeys: [
+      'base',
+      'base122',
     ]),
 
     //BCD selection **************************************************************************************************
@@ -3134,6 +3155,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
       'symbol_moon',
     ]),
+    GCWSymbolTableTool(symbolKey: 'moon_phases', symbolSearchStrings: [
+      'symbol_moon_phases',
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
     ]),
@@ -3213,6 +3237,7 @@ initializeRegistry(BuildContext context) {
       'symbol_planets',
     ]),
     GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
+      'pokemon',
       'symbol_pokemon_unown',
     ]),
     GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [
@@ -3366,6 +3391,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: [
       'symbol_terzi',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'thai_numerals', symbolSearchStrings: [
+      'symbol_thai_numerals',
     ]),
     GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: [
       'symbol_theban',

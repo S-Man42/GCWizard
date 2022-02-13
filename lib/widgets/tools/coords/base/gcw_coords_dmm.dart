@@ -79,6 +79,7 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
 
   @override
   Widget build(BuildContext context) {
+
     if (widget.coordinates != null) {
       var dmm = widget.coordinates is DMM ? widget.coordinates as DMM : DMM.fromLatLon(widget.coordinates.toLatLng());
       var lat = dmm.latitude.formatParts(10);
@@ -87,12 +88,12 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
       _currentLatDegrees = lat['degrees'];
       _currentLatMinutes = lat['minutes'].split('.')[0];
       _currentLatMilliMinutes = lat['minutes'].split('.')[1];
-      _currentLatSign = lat['sign']['value'];
+      _currentLatSign = widget.coordinates.isDefault() ? defaultHemiphereLatitude() : lat['sign']['value'];
 
       _currentLonDegrees = lon['degrees'];
       _currentLonMinutes = lon['minutes'].split('.')[0];
       _currentLonMilliMinutes = lon['minutes'].split('.')[1];
-      _currentLonSign = lon['sign']['value'];
+      _currentLonSign = widget.coordinates.isDefault() ? defaultHemiphereLongitude() : lon['sign']['value'];
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMinutesController.text = _currentLatMinutes;
@@ -102,6 +103,8 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
       _LonMinutesController.text = _currentLonMinutes;
       _LonMilliMinutesController.text = _currentLonMilliMinutes;
     }
+
+    print(_currentLatSign);
 
     return Column(children: <Widget>[
       Row(
