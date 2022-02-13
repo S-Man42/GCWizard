@@ -9,9 +9,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/hohoho.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
@@ -73,7 +70,7 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                   try {
                     CowOutput output = interpretCow(input, STDIN: key);
                     if (output.error == '')
-                      return output.output;
+                      return output.output?.isEmpty ? null : output.output;
                   } catch (e) {}
                   return null;
                 case MDT_ESOTERIC_LANGUAGES_OPTION_KAROL_ROBOT:
@@ -102,23 +99,8 @@ class MultiDecoderToolEsotericLanguages extends GCWMultiDecoderTool {
                   return null;
                 case MDT_ESOTERIC_LANGUAGES_OPTION_WHITESPACE:
                   try {
-                    WhitespaceState _continueState = null;
-                    return interpreterWhitespace(input, '', continueState: _continueState);
-                    //var currentOutputFuture = interpreterWhitespace(input, '', continueState: _continueState);
-                    // _continueState = null;
-                    //
-                    // currentOutputFuture.then((output) {
-                    //   if (output.finished) {
-                    //     return output;
-                    //     // _currentOutput = output;
-                    //     // _isStarted = false;
-                    //     // this.setState(() {});
-                    //   } else {
-                    //     _continueState = output.state;
-                    //     _currentInput = "";
-                    //     _showDialogBox(context, output.output);
-                    //   }
-                    // });
+                    var outputFuture = interpreterWhitespace(input, key, timeOut: 1000);
+                    return Future<String>.value(outputFuture.then((output) => output.error || output.output?.isEmpty ? null : output.output));
                   } catch (e) {}
                   return null;
                 case MDT_ESOTERIC_LANGUAGES_OPTION_HOHOHO:
