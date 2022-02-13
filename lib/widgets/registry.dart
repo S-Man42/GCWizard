@@ -3102,6 +3102,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
       'symbol_moon',
     ]),
+    GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: [
+      'morse',
+    ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
     ]),
