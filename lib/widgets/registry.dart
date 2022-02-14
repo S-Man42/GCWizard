@@ -103,6 +103,8 @@ import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
@@ -721,6 +723,11 @@ initializeRegistry(BuildContext context) {
       categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
       searchKeys: [],
     ),
+    GCWTool(tool: ILLIAC(), i18nPrefix: 'illiac', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'illiac',
+    ]),
     GCWTool(tool: ImagesAndFilesSelection(), i18nPrefix: 'imagesandfiles_selection', isBeta: true, searchKeys: [
       'images',
       'imagesandfilesselection',
@@ -1037,6 +1044,11 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'tomtom_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
+    GCWTool(tool: TTS(), i18nPrefix: 'tts', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'tts',
+    ]),
     GCWTool(tool: UnitConverter(), i18nPrefix: 'unitconverter', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [

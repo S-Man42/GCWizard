@@ -65,6 +65,8 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
@@ -523,6 +525,7 @@ void _initStaticToolList() {
       className(Humidex()),
       className(IATAICAOSearch()),
       className(IceCodesSelection()),
+      className(ILLIAC()),
       className(IntersectBearings()),
       className(IntersectFourPoints()),
       className(IntersectGeodeticAndCircle()),
@@ -617,6 +620,7 @@ void _initStaticToolList() {
       className(TomTomSelection()),
       className(Trifid()),
       className(Trithemius()),
+      className(TTS()),
       className(UnitConverter()),
       className(UrwigoHashBreaker()),
       className(UrwigoTextDeobfuscation()),

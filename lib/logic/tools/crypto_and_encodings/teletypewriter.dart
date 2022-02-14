@@ -29,7 +29,9 @@ enum TeletypewriterCodebook {
   CCITT_ITA4,
   CCITT_IA5,
   CCIR476,
-  ZC1
+  ZC1,
+  TTS,
+  ILLIAC
 }
 
 Map<TeletypewriterCodebook, Map<String, String>> ANCIENT_CODEBOOK = {
@@ -54,26 +56,6 @@ Map<TeletypewriterCodebook, Map<String, String>> CCITT2_CODEBOOK = {
   TeletypewriterCodebook.CCITT_ITA2_USTTY: {'title': 'punchtape_ccitt_ita2_ustty_title', 'subtitle': 'punchtape_ccitt_ita2_ustty_description'},
 };
 
-Map<TeletypewriterCodebook, Map<String, String>> CCITT3_CODEBOOK = {
-  TeletypewriterCodebook.CCITT_ITA3: {'title': 'punchtape_ccitt_ita3_title', 'subtitle': 'punchtape_ccitt_ita3_description'},
-};
-
-Map<TeletypewriterCodebook, Map<String, String>> CCITT4_CODEBOOK = {
-  TeletypewriterCodebook.CCITT_ITA4: {'title': 'punchtape_ccitt_ita4_title', 'subtitle': 'punchtape_ccitt_ita4_description'},
-};
-
-Map<TeletypewriterCodebook, Map<String, String>> CCITT5_CODEBOOK = {
-  TeletypewriterCodebook.CCITT_IA5: {'title': 'punchtape_ccitt_ia5_title', 'subtitle': 'punchtape_ccitt_ia5_description'},
-};
-
-Map<TeletypewriterCodebook, Map<String, String>> CCIR476_CODEBOOK = {
-  TeletypewriterCodebook.CCIR476: {'title': 'punchtape_ccitt_ccir476_title', 'subtitle': 'punchtape_ccitt_ccir476_description'},
-};
-
-Map<TeletypewriterCodebook, Map<String, String>> ZC1_CODEBOOK = {
-  TeletypewriterCodebook.ZC1: {'title': 'punchtape_zc1_title', 'subtitle': 'punchtape_zc1_description'},
-};
-
 Map<TeletypewriterCodebook, Map<String, String>> CCITT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
   TeletypewriterCodebook.BAUDOT_54123: {'title': 'punchtape_baudot_54123_title', 'subtitle': 'punchtape_baudot_54123_description'},
@@ -93,6 +75,8 @@ Map<TeletypewriterCodebook, Map<String, String>> CCITT_CODEBOOK = {
   TeletypewriterCodebook.CCITT_IA5: {'title': 'punchtape_ccitt_ia5_title', 'subtitle': 'punchtape_ccitt_ia5_description'},
   TeletypewriterCodebook.CCIR476: {'title': 'punchtape_ccitt_ccir476_title', 'subtitle': 'punchtape_ccitt_ccir476_description'},
   TeletypewriterCodebook.ZC1: {'title': 'punchtape_zc1_title', 'subtitle': 'punchtape_zc1_description'},
+  TeletypewriterCodebook.TTS: {'title': 'punchtape_tts_title', 'subtitle': 'punchtape_tts_description'},
+  TeletypewriterCodebook.ILLIAC: {'title': 'punchtape_illiac_title', 'subtitle': 'punchtape_illiac_description'},
 };
 
 Map<TeletypewriterCodebook, Map<String, int>> PUNCHTAPE_DEFINITION = {
@@ -114,6 +98,8 @@ Map<TeletypewriterCodebook, Map<String, int>> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.CCITT_IA5 : {'punchHoles' : 7, 'sprocketHole': 4},
   TeletypewriterCodebook.CCIR476 : {'punchHoles' : 7, 'sprocketHole': 4},
   TeletypewriterCodebook.ZC1 : {'punchHoles' : 8, 'sprocketHole': 4},
+  TeletypewriterCodebook.TTS : {'punchHoles' : 6, 'sprocketHole': 4},
+  TeletypewriterCodebook.ILLIAC : {'punchHoles' : 5, 'sprocketHole': 3},
 };
 
 Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
@@ -135,6 +121,8 @@ Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.CCITT_IA5 : 7,
   TeletypewriterCodebook.CCIR476: 7,
   TeletypewriterCodebook.ZC1: 8,
+  TeletypewriterCodebook.TTS: 6,
+  TeletypewriterCodebook.ILLIAC: 5,
 };
 
 final AZToCCITT_BAUDOT = {
@@ -1281,6 +1269,76 @@ final AZToZC1 = {
 };
 final ZC1ToAZ = switchMapKeyValue(AZToZC1);
 
+final AZToILLIAC = {
+  'A': 13,
+  'B': 25,
+  'C': 23,
+  'D': 17,
+  'E': 24,
+  'F': 14,
+  'G': 19,
+  'H': 7,
+  'I': 2,
+  'J': 22,
+  'K': 10,
+  'L': 30,
+  'M': 11,
+  'N': 6,
+  'O': 18,
+  'P': 0,
+  'Q': 16,
+  'R': 4,
+  'S': 26,
+  'T': 20,
+  'U': 28,
+  'V': 21,
+  'W': 8,
+  'X': 29,
+  'Y': 12,
+  'Z': 15,
+  ' ': 31,
+  '\n': 9,
+};
+final ILLIACToAZ = switchMapKeyValue(AZToILLIAC);
+
+final NumbersToILLIAC = {
+  ')': 13,
+  '(': 25,
+  ':': 23,
+  '\$': 17,
+  '3': 24,
+  'F': 14,
+  '=': 19,
+  '\'': 7,
+  '8': 2,
+  'J': 22,
+  '+': 10,
+  'L': 30,
+  '.': 11,
+  'N': 6,
+  '9': 18,
+  '0': 0,
+  '1': 16,
+  '4': 4,
+  '-': 26,
+  '5': 20,
+  '7': 28,
+  ',': 21,
+  '2': 8,
+  '/': 29,
+  '6': 12,
+  'X': 15,
+  ' ': 31,
+  '\n': 9, 
+};
+final ILLIACToNumbers  = switchMapKeyValue(NumbersToILLIAC);
+
+final AZToTTS = {};
+final TTSToAZ = switchMapKeyValue(AZToTTS);
+
+final NumbersToTTS = {};
+final TTSToNumbers = switchMapKeyValue(NumbersToTTS);
+
 final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123 : 2,  // 12345 8
   TeletypewriterCodebook.SIEMENS : 30,
@@ -1296,7 +1354,9 @@ final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.CCITT_ITA2_USTTY : 27,
   TeletypewriterCodebook.CCITT_ITA3 : 50,
   TeletypewriterCodebook.CCITT_ITA4 : 54,
-  TeletypewriterCodebook.CCIR476 : 54
+  TeletypewriterCodebook.CCIR476 : 54,
+  TeletypewriterCodebook.TTS : 54,
+  TeletypewriterCodebook.ILLIAC : 27,
 };
 final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123 : 1, //16,
@@ -1313,7 +1373,9 @@ final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.CCITT_ITA2_USTTY : 31,
   TeletypewriterCodebook.CCITT_ITA3 : 56,
   TeletypewriterCodebook.CCITT_ITA4 : 62,
-  TeletypewriterCodebook.CCIR476 : 127
+  TeletypewriterCodebook.CCIR476 : 127,
+  TeletypewriterCodebook.TTS : 54,
+  TeletypewriterCodebook.ILLIAC : 5,
 };
 
 
@@ -1335,6 +1397,8 @@ int _EncodeAZ(TeletypewriterCodebook language, String text){
     case TeletypewriterCodebook.CCITT_ITA3: return AZToCCITT_ITA3[text]; break;
     case TeletypewriterCodebook.CCITT_ITA4: return AZToCCITT_ITA4[text]; break;
     case TeletypewriterCodebook.CCIR476: return AZToCCIR476[text]; break;
+    case TeletypewriterCodebook.ILLIAC: return AZToILLIAC[text]; break;
+    case TeletypewriterCodebook.TTS: return AZToTTS[text]; break;
   }
 }
 
@@ -1356,6 +1420,8 @@ int _EncodeNumber(TeletypewriterCodebook language, String text){
     case TeletypewriterCodebook.CCITT_ITA3: return NumbersToCCITT_ITA3[text]; break;
     case TeletypewriterCodebook.CCITT_ITA4: return NumbersToCCITT_ITA4[text]; break;
     case TeletypewriterCodebook.CCIR476: return NumbersToCCIR476[text]; break;
+    case TeletypewriterCodebook.ILLIAC: return NumbersToILLIAC[text]; break;
+    case TeletypewriterCodebook.TTS: return NumbersToTTS[text]; break;
   }
 }
 
@@ -1377,6 +1443,8 @@ String _DecodeAZ(TeletypewriterCodebook language, int code){
     case TeletypewriterCodebook.CCITT_ITA3: return CCITT_ITA3ToAZ[code]; break;
     case TeletypewriterCodebook.CCITT_ITA4: return CCITT_ITA4ToAZ[code]; break;
     case TeletypewriterCodebook.CCIR476: return CCIR476ToAZ[code]; break;
+    case TeletypewriterCodebook.ILLIAC: return ILLIACToAZ[code]; break;
+    case TeletypewriterCodebook.TTS: return TTSToAZ[code]; break;
   }
 }
 
@@ -1398,6 +1466,8 @@ String _DecodeNumber(TeletypewriterCodebook language, int code){
     case TeletypewriterCodebook.CCITT_ITA3: return CCITT_ITA3ToNumbers[code]; break;
     case TeletypewriterCodebook.CCITT_ITA4: return CCITT_ITA4ToNumbers[code]; break;
     case TeletypewriterCodebook.CCIR476: return CCIR476ToNumbers[code]; break;
+    case TeletypewriterCodebook.ILLIAC: return ILLIACToNumbers[code]; break;
+    case TeletypewriterCodebook.TTS: return TTSToNumbers[code]; break;
   }
 }
 
@@ -1476,6 +1546,8 @@ String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCITT_ITA3:
     case TeletypewriterCodebook.CCITT_ITA4:
     case TeletypewriterCodebook.CCIR476:
+    case TeletypewriterCodebook.ILLIAC:
+    case TeletypewriterCodebook.TTS:
         removeAccents(input.toUpperCase()).split('').forEach((character) {
           if (isLetterMode) {
             var code = _EncodeAZ(language, character);
@@ -1583,6 +1655,8 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCITT_ITA3:
     case TeletypewriterCodebook.CCITT_ITA4:
     case TeletypewriterCodebook.CCIR476:
+    case TeletypewriterCodebook.ILLIAC:
+    case TeletypewriterCodebook.TTS:
       values.forEach((value) {
         if (value == _NUMBERS_FOLLOW[language]) {
           isLetterMode = false;
