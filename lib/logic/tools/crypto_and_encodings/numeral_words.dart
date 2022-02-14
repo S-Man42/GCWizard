@@ -1813,7 +1813,8 @@ final Map<String, String> BULWordToNum = {
   'zapad': 'numeralwords_w',
   'yug': 'numeralwords_s',
 };
-final Map<String, String> THAIWordToNum = {
+
+final Map<String, String> THAIRTGSWordToNum = {
   'sun' : '0',
   'nueng' : '1',
   'song' : '2',
@@ -1847,7 +1848,8 @@ final Map<String, String> THAIWordToNum = {
   'phan' : '1000',
   'muen' : '10000',
 };
-final Map<String, String> THAIRTGSWordToNum = {
+
+final Map<String, String> THAIWordToNum = {
   'ศูนย์' : '0',
   'หนึ่ง' : '1',
   'สอง' : '2',
@@ -1881,6 +1883,20 @@ final Map<String, String> THAIRTGSWordToNum = {
   'พันสิบ' : '1000',
   'หมื่นสิบ' : '10000',
 };
+
+List ZOOMABLE_LANGUAGE = [
+  NumeralWordsLanguage.JAPHIRAGANA,
+  NumeralWordsLanguage.HANGULKOR,
+  NumeralWordsLanguage.HANGULSINOKOR,
+  NumeralWordsLanguage.VIEHANTU,
+  NumeralWordsLanguage.VIESINO,
+  NumeralWordsLanguage.BULKYR,
+  NumeralWordsLanguage.KYR,
+  NumeralWordsLanguage.THAI,
+  NumeralWordsLanguage.CHISYMBOL,
+  NumeralWordsLanguage.CHIZHUYIN,
+  NumeralWordsLanguage.CHIFINANCE,
+];
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.DEU: 'common_language_german',
