@@ -209,6 +209,7 @@ flutter:
     - assets/symbol_tables/minimoys/
     - assets/symbol_tables/moon/
     - assets/symbol_tables/moon_phases/
+    - assets/symbol_tables/morse/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/murray_v2_fischer_corrected/
     - assets/symbol_tables/murray_v3_navy_1796/

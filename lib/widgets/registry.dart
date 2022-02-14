@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -462,7 +463,6 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'braille_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
-
     GCWTool(
         tool: BeaufortSelection(),
         i18nPrefix: 'beaufort_selection',
@@ -776,27 +776,34 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'mayanumbers_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
-    GCWTool(tool: MexicanArmyCipherWheel(), i18nPrefix: 'mexicanarmycipherwheel', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'cipherwheel',
-      'mexicanarmycipherwheel',
-    ]),
-    GCWTool(tool: Morse(), i18nPrefix: 'morse', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'morse',
-    ]),
-    GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', categories: [
-      ToolCategory.GENERAL_CODEBREAKERS
-    ], searchKeys: [
-      'multidecoder',
-    ]),
-    GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'navajo',
-    ]),
+    GCWTool(
+        tool: MexicanArmyCipherWheel(),
+        i18nPrefix: 'mexicanarmycipherwheel',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: [
+          'cipherwheel',
+          'mexicanarmycipherwheel',]
+    ),
+    GCWTool(
+        tool: MorseSelection(),
+        i18nPrefix: 'morse_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []
+    ),
+    GCWTool(
+        tool: MultiDecoder(),
+        i18nPrefix: 'multidecoder',
+        categories: [ToolCategory.GENERAL_CODEBREAKERS],
+        searchKeys: [
+          'multidecoder',]
+    ),
+    GCWTool(
+        tool: Navajo(),
+        i18nPrefix: 'navajo',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: [
+          'navajo',]
+    ),
     GCWTool(
         tool: NumberSequenceSelection(),
         i18nPrefix: 'numbersequence',
@@ -1265,7 +1272,7 @@ initializeRegistry(BuildContext context) {
       'braille',
     ]),
 
-    //CCITT*Selection **********************************************************************************************
+    //Teletypewriter Selection **********************************************************************************************
     GCWTool(tool: AncientTeletypewriter(), i18nPrefix: 'ccitt_ancient', searchKeys: [
       'ccitt',
       'ccitt_ancient',
@@ -1984,6 +1991,11 @@ initializeRegistry(BuildContext context) {
     //MayaNumbers Selection **************************************************************************************
     GCWTool(tool: MayaNumbers(), i18nPrefix: 'mayanumbers', searchKeys: [
       'mayanumbers',
+    ]),
+
+    //Morse Selection ****************************************************************
+    GCWTool(tool: Morse(), i18nPrefix: 'morse', searchKeys: [
+      'morse',
     ]),
 
     //NumberSequenceSelection ****************************************************************************************
@@ -3194,6 +3206,9 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'moon_phases', symbolSearchStrings: [
       'symbol_moon_phases',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'morse', symbolSearchStrings: [
+      'morse',
     ]),
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
