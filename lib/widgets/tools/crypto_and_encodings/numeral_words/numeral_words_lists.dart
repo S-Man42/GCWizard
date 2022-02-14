@@ -82,7 +82,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
             };
           }).toList(),
           flexValues: [1, 3],
-          fontSize: _valueFontsize * 1.0
+          fontSize: _valueFontsize.toDouble()
       ),
 
       ),
