@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -11,12 +10,17 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class CCITT extends StatefulWidget {
+class Teletypewriter extends StatefulWidget {
+  final TeletypewriterCodebook defaultCodebook;
+  final Map<TeletypewriterCodebook, Map<String, String>> codebook;
+
+  Teletypewriter({Key key, this.defaultCodebook, this.codebook}) : super(key: key);
+
   @override
-  CCITTState createState() => CCITTState();
+  TeletypewriterState createState() => TeletypewriterState();
 }
 
-class CCITTState extends State<CCITT> {
+class TeletypewriterState extends State<Teletypewriter> {
   var _encodeController;
   var _decodeController;
 
@@ -26,12 +30,13 @@ class CCITTState extends State<CCITT> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
-  var _currentCode = CCITTCodebook.BAUDOT;
+  var _currentCode;
 
   @override
   void initState() {
     super.initState();
 
+    _currentCode  = widget.defaultCodebook;
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
@@ -46,22 +51,26 @@ class CCITTState extends State<CCITT> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.codebook == null)
+      _currentCode = widget.defaultCodebook;
+
     return Column(
       children: <Widget>[
-        GCWDropDownButton(
-          value: _currentCode,
-          onChanged: (value) {
-            setState(() {
-              _currentCode = value;
-            });
-          },
-          items: CCITT_CODEBOOK.entries.map((mode) {
-            return GCWDropDownMenuItem(
-                value: mode.key,
-                child: i18n(context, mode.value['title']),
-                subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
-          }).toList(),
-        ),        _currentMode == GCWSwitchPosition.left
+        if (widget.codebook != null)
+          GCWDropDownButton(
+            value: _currentCode,
+            onChanged: (value) {
+              setState(() {
+                _currentCode = value;
+              });
+            },
+            items: widget.codebook.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: i18n(context, mode.value['title']),
+                  subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
+            }).toList(),
+          ),        _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
                 onChanged: (text) {
@@ -106,17 +115,17 @@ class CCITTState extends State<CCITT> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) { // encrypt
-      output = encodeCCITT(_currentEncodeInput, _currentCode);
+      output = encodeTeletypewriter(_currentEncodeInput, _currentCode);
       if (_currentRadix == GCWSwitchPosition.right) { // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
-          return out.padLeft(5, '0');
+          return out.padLeft(BINARY_LENGTH[_currentCode], '0');
         }).join(' ');
       }
       return output; // decimal
     } else { // decrypt
       if (_currentRadix == GCWSwitchPosition.right) { // binary
-        return decodeCCITT(
+        return decodeTeletypewriter(
             textToBinaryList(_currentDecodeInput['text'])
                 .map((value) {
                   return int.tryParse(convertBase(value, 2, 10));
@@ -124,7 +133,7 @@ class CCITTState extends State<CCITT> {
             _currentCode);
       }
 
-      return decodeCCITT(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
+      return decodeTeletypewriter(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
     }
   }
 }

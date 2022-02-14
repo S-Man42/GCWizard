@@ -106,6 +106,11 @@ abstract class BaseCoordinates {
   String get key;
 
   LatLng toLatLng();
+
+  bool isDefault() {
+    var latlon = toLatLng();
+    return latlon.latitude == 0.0 && latlon.longitude == 0.0;
+  }
 }
 
 String _dmmAndDMSNumberFormat([int precision = 6]) {

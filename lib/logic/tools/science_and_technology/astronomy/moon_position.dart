@@ -19,7 +19,7 @@ class MoonPosition {
   double azimuth;
   double altitude;
   double diameter;
-  double phase;
+  int phaseNumber;
   MoonPhase phaseName;
   double age;
   AstrologicalSign astrologicalSign;
@@ -57,6 +57,7 @@ class MoonPosition {
     astrologicalSign = moonPos.sign;
     illumination = moonPos.phase * 100;
     phaseName = moonPos.moonPhase;
+    phaseNumber = MoonPhase.values.indexOf(phaseName) + 1;
     age = moonPos.moonAge * LUNATION / (2 * pi);
   }
 }
