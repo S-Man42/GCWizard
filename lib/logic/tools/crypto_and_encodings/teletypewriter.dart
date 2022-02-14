@@ -1329,7 +1329,7 @@ final NumbersToILLIAC = {
   '6': 12,
   'X': 15,
   ' ': 31,
-  '\n': 9, 
+  '\n': 9,
 };
 final ILLIACToNumbers  = switchMapKeyValue(NumbersToILLIAC);
 
