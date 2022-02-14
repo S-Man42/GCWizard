@@ -2503,6 +2503,8 @@
   "mexicanarmycipherwheel_example": "TEST → 09580897",
   "morse_title": "Morse",
   "morse_example": "-- --- .-. ... .",
+  "morse_selection_title": "Morse Tool set",
+  "morse_selection_description": "Tools for en-/decoding Morse",
   "multidecoder_title": "Multi Decoder",
   "multidecoder_description": "Tries to decode one input with a set of pre-configured tools",
   "multidecoder_key": "Key",

@@ -16,6 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -112,7 +113,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
@@ -543,7 +543,7 @@ void _initStaticToolList() {
       className(MexicanArmyCipherWheel()),
       className(MoonPosition()),
       className(MoonRiseSet()),
-      className(Morse()),
+      className(MorseSelection()),
       className(MurrayTelegraph()),
       className(Navajo()),
       className(NumberSequenceSelection()),
