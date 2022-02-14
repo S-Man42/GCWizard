@@ -65,7 +65,14 @@
   "caesar": "caesar",
   "catan": "",
   "callforcontribution": "",
-  "ccitt": "ccitt itu ccif ccitt1 ccitt2 ita1 ita2 ita-1 ita-2 ccitt-1 ccitt-2 mtk2",
+  "ccitt": "ccitt itu ccif",
+  "ccitt_ancient": "",
+  "ccitt_1": "ccitt1 ccitt-1 ita1 ita-1",
+  "ccitt_2": "ccitt2 ccitt-2 ita2 ita-2 mtk2 ustty",
+  "ccitt_3": "ccitt3 ccitt-3 ita3 ita-3 moorearq-code rca",
+  "ccitt_4": "ccitt4 ccitt-4 ita4 ita-4",
+  "ccitt_5": "ccitt5 ccitt-5 ia5 ia-5",
+  "ccitt_ccir_476": "ccir476 ccir-476 amtor sitor navtex",
   "changelog": "changelog ",
   "chao": "chao john francis byrne",
   "christmas": "",
@@ -589,5 +596,6 @@
   "weather_ww": "ww",
   "window": "johannes balthasar friderici cryptographia",
   "z22": "konrad zuse z-22 z22",
+  "zc1" : "zc1 bs3 tns440 tr440 aegtelefunken 2N0812.511 centralcode1",
   "zelda": "hyrule thelegendofzelda link tri-force triforce farore crest nayru kokiri goron zora gerudo sheikah agahnim"
 }

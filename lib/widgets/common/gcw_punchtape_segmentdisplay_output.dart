@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
@@ -16,11 +16,11 @@ import 'gcw_text_divider.dart';
 
 class GCWPunchtapeSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;
-  final NSegmentDisplay Function(Map<String, bool>, bool, CCITTCodebook) segmentFunction;
+  final NSegmentDisplay Function(Map<String, bool>, bool, TeletypewriterCodebook) segmentFunction;
   final List<List<String>> segments;
   final bool readOnly;
   final Widget trailing;
-  final CCITTCodebook codeBook;
+  final TeletypewriterCodebook codeBook;
 
   const GCWPunchtapeSegmentDisplayOutput(
       {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.codeBook})
