@@ -40,6 +40,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_rot18.dart';
@@ -83,6 +84,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_CHRONOGRAM,
   MDT_INTERNALNAMES_PLAYFAIR,
   MDT_INTERNALNAMES_POLYBIOS,
+  MDT_INTERNALNAMES_POKEMON,
   MDT_INTERNALNAMES_TAPIR,
   MDT_INTERNALNAMES_ONETIMEPAD,
   MDT_INTERNALNAMES_VIGENERE,
@@ -246,6 +248,9 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_POLYBIOS:
       gcwTool = MultiDecoderToolPolybios(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
+    case MDT_INTERNALNAMES_POKEMON:
+      gcwTool = MultiDecoderToolPokemon(id: mdtTool.id, name: mdtTool.name, options: options);
+      break;
     case MDT_INTERNALNAMES_REVERSE:
       gcwTool = MultiDecoderToolReverse(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
@@ -341,6 +346,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POKEMON), MDT_INTERNALNAMES_POKEMON),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDNUMBERS), MDT_INTERNALNAMES_KEYBOARDNUMBERS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ENCLOSEDAREAS), MDT_INTERNALNAMES_ENCLOSEDAREAS),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_GCCODE), MDT_INTERNALNAMES_GCCODE,
