@@ -1781,6 +1781,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       if (_WherigoCartridge.httpCode != '') {
         showToast(
             i18n(context, 'wherigo_code_http') + _WherigoCartridge.httpCode + '\n\n' +
+                i18n(context, HTTP_STATUS[_WherigoCartridge.httpCode]) + '\n' +
                 i18n(context, _WherigoCartridge.httpMessage),
             duration: 30
         );

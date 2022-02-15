@@ -404,7 +404,10 @@ class TimerData{
       this.TimerType);
 }
 
-
+final Map<String, String> HTTP_STATUS = {
+  '200' : 'wherigo_code_http_200',
+  '5xx' : 'wherigo_code_http_5xx',
+};
 
 
 

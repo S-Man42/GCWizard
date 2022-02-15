@@ -639,8 +639,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         } catch (exception) {
           //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
           print(exception.toString());
-          _httpCode = '503';
-          _httpMessage = 'wherigo_code_http_503';
+          _httpCode = '5xx';
+          _httpMessage = exception.toString();
           out.addAll({'WherigoCartridge': WherigoCartridge(
               _Signature,
               _NumberOfObjects, _MediaFilesHeaders, _MediaFilesContents, _LUAFile,
