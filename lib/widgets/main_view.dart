@@ -16,7 +16,8 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -65,6 +66,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
@@ -111,7 +113,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
@@ -142,7 +143,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_t
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
@@ -456,8 +457,6 @@ void _initStaticToolList() {
       className(Caesar()),
       className(Calendar()),
       className(Catan()),
-      className(CCITTSelection()),
-      className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
       className(CentroidArithmeticMean()),
@@ -547,7 +546,7 @@ void _initStaticToolList() {
       className(MexicanArmyCipherWheel()),
       className(MoonPosition()),
       className(MoonRiseSet()),
-      className(Morse()),
+      className(MorseSelection()),
       className(MurrayTelegraph()),
       className(Navajo()),
       className(NumberSequenceSelection()),
@@ -615,6 +614,8 @@ void _initStaticToolList() {
       className(SymbolTableSelection()),
       className(TapCode()),
       className(Tapir()),
+      className(TeletypewriterSelection()),
+      className(TeletypewriterPunchTape()),
       className(TimeCalculator()),
       className(TomTomSelection()),
       className(Trifid()),
@@ -637,6 +638,7 @@ void _initStaticToolList() {
       className(Windchill()),
       className(Z22()),
       className(ZamonianNumbers()),
+      className(ZC1()),
       className(Zodiac()),
     ].contains(className(element.tool));
   }).toList();

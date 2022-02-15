@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/telegraphs/punchtape.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -13,14 +13,14 @@ import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_punchtape_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape_segment_display.dart';
 
-class CCITTPunchTape extends StatefulWidget {
+class TeletypewriterPunchTape extends StatefulWidget {
   @override
-  CCITTPunchTapeState createState() => CCITTPunchTapeState();
+  TeletypewriterPunchTapeState createState() => TeletypewriterPunchTapeState();
 }
 
-class CCITTPunchTapeState extends State<CCITTPunchTape> {
+class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
 
@@ -33,7 +33,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
   var _currentDecodeMode = GCWSwitchPosition.right; // text - visual
   var _currentDecodeTextMode = GCWSwitchPosition.right; // decimal - binary
 
-  var _currentCode = CCITTCodebook.BAUDOT;
+  var _currentCode = TeletypewriterCodebook.BAUDOT;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
               subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
         }).toList(),
       ),
-      if (!(_currentCode == CCITTCodebook.BAUDOT_54123 || _currentCode == CCITTCodebook.CCITT_IA5))
+      if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
       GCWTwoOptionsSwitch(
         value: _currentCodeMode,
         rightValue: i18n(context, 'punchtape_mode_original'),
@@ -184,7 +184,7 @@ class CCITTPunchTapeState extends State<CCITTPunchTape> {
     return Column(
       children: <Widget>[
         Container(
-          width: 300,
+          width: 340,
           height: 70,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
