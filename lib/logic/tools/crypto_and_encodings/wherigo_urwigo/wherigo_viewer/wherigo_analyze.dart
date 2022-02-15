@@ -630,6 +630,9 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           var response = await request.send();
 
           print('response.statuscode '+response.statusCode.toString());
+          _httpCode = response.statusCode.toString();
+          _httpMessage = response.reasonPhrase;
+
           if (response.statusCode == 200) {
             var responseData = await http.Response.fromStream(response);
             print('got LUA Sourcecode');
