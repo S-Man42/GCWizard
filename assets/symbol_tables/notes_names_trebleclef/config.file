@@ -1,6 +1,5 @@
 {
 	"ignore" : ["logo"],
-	"special_sort" : true,
 	"translate" : [
 		"1",
 		"1_b",
