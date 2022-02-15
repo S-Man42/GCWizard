@@ -56,7 +56,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-  WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '');
+  WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '');
 
   Map<String, dynamic> _outData;
 
@@ -1778,6 +1778,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       else
         NameToObject = {};
 
+      if (_WherigoCartridge.httpCode != '') {
+        showToast(
+            i18n(context, 'wherigo_code_http') + _WherigoCartridge.httpCode + '\n\n' +
+                i18n(context, _WherigoCartridge.httpMessage),
+            duration: 30
+        );
+      }
+
       switch (dataType){
         case DATA_TYPE_LUA:
           if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID && _WherigoCartridge.GWCCartridgeGUID != '') {
@@ -2063,10 +2071,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   WherigoCartridge _resetGWC(){
-    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', _WherigoCartridge.LUACartridgeName, '', _WherigoCartridge.LUACartridgeGUID, '', '', '', '', '', '', 0, '', _WherigoCartridge.ObfuscatorTable, _WherigoCartridge.ObfuscatorFunction, _WherigoCartridge.Characters, _WherigoCartridge.Items, _WherigoCartridge.Tasks, _WherigoCartridge.Inputs, _WherigoCartridge.Zones, _WherigoCartridge.Timers, _WherigoCartridge.Media, _WherigoCartridge.Messages, _WherigoCartridge.Answers, _WherigoCartridge.Identifiers, NameToObject, ANALYSE_RESULT_STATUS.OK, [], _WherigoCartridge.ResultsLUA, _WherigoCartridge.Builder, _WherigoCartridge.BuilderVersion, _WherigoCartridge.TargetDeviceVersion, _WherigoCartridge.CountryID, _WherigoCartridge.StateID, _WherigoCartridge.UseLogging, _WherigoCartridge.CreateDate, _WherigoCartridge.PublishDate, _WherigoCartridge.UpdateDate, _WherigoCartridge.LastPlayedDate);
+    return WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', _WherigoCartridge.LUACartridgeName, '', _WherigoCartridge.LUACartridgeGUID, '', '', '', '', '', '', 0, '', _WherigoCartridge.ObfuscatorTable, _WherigoCartridge.ObfuscatorFunction, _WherigoCartridge.Characters, _WherigoCartridge.Items, _WherigoCartridge.Tasks, _WherigoCartridge.Inputs, _WherigoCartridge.Zones, _WherigoCartridge.Timers, _WherigoCartridge.Media, _WherigoCartridge.Messages, _WherigoCartridge.Answers, _WherigoCartridge.Identifiers, NameToObject, ANALYSE_RESULT_STATUS.OK, [], _WherigoCartridge.ResultsLUA, _WherigoCartridge.Builder, _WherigoCartridge.BuilderVersion, _WherigoCartridge.TargetDeviceVersion, _WherigoCartridge.CountryID, _WherigoCartridge.StateID, _WherigoCartridge.UseLogging, _WherigoCartridge.CreateDate, _WherigoCartridge.PublishDate, _WherigoCartridge.UpdateDate, _WherigoCartridge.LastPlayedDate, '', '');
   }
 
   WherigoCartridge _resetLUA(){
-    return WherigoCartridge(_WherigoCartridge.Signature, _WherigoCartridge.NumberOfObjects, _WherigoCartridge.MediaFilesHeaders, _WherigoCartridge.MediaFilesContents, _WherigoCartridge.LUAFile, _WherigoCartridge.HeaderLength, _WherigoCartridge.Latitude, _WherigoCartridge.Longitude, _WherigoCartridge.Altitude, _WherigoCartridge.Splashscreen, _WherigoCartridge.SplashscreenIcon, _WherigoCartridge.DateOfCreation, _WherigoCartridge.TypeOfCartridge, _WherigoCartridge.Player, _WherigoCartridge.PlayerID, _WherigoCartridge.CartridgeLUAName, _WherigoCartridge.GWCCartridgeName, '', _WherigoCartridge.GWCCartridgeGUID, '', _WherigoCartridge.CartridgeDescription, _WherigoCartridge.StartingLocationDescription, _WherigoCartridge.Version, _WherigoCartridge.Author, _WherigoCartridge.Company, _WherigoCartridge.RecommendedDevice, _WherigoCartridge.LengthOfCompletionCode, _WherigoCartridge.CompletionCode, '', '', [], [], [], [], [], [], [], [], [], [], NameToObject, ANALYSE_RESULT_STATUS.OK, _WherigoCartridge.ResultsGWC, [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '');
+    return WherigoCartridge(_WherigoCartridge.Signature, _WherigoCartridge.NumberOfObjects, _WherigoCartridge.MediaFilesHeaders, _WherigoCartridge.MediaFilesContents, _WherigoCartridge.LUAFile, _WherigoCartridge.HeaderLength, _WherigoCartridge.Latitude, _WherigoCartridge.Longitude, _WherigoCartridge.Altitude, _WherigoCartridge.Splashscreen, _WherigoCartridge.SplashscreenIcon, _WherigoCartridge.DateOfCreation, _WherigoCartridge.TypeOfCartridge, _WherigoCartridge.Player, _WherigoCartridge.PlayerID, _WherigoCartridge.CartridgeLUAName, _WherigoCartridge.GWCCartridgeName, '', _WherigoCartridge.GWCCartridgeGUID, '', _WherigoCartridge.CartridgeDescription, _WherigoCartridge.StartingLocationDescription, _WherigoCartridge.Version, _WherigoCartridge.Author, _WherigoCartridge.Company, _WherigoCartridge.RecommendedDevice, _WherigoCartridge.LengthOfCompletionCode, _WherigoCartridge.CompletionCode, '', '', [], [], [], [], [], [], [], [], [], [], NameToObject, ANALYSE_RESULT_STATUS.OK, _WherigoCartridge.ResultsGWC, [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '');
   }
 }

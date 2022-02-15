@@ -104,6 +104,8 @@ class WherigoCartridge{
   final String PublishDate;
   final String UpdateDate;
   final String LastPlayedDate;
+  final String httpCode;
+  final String httpMessage;
 
   WherigoCartridge(this.Signature,
       this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUAFile,
@@ -130,7 +132,9 @@ class WherigoCartridge{
       this.CreateDate,
       this.PublishDate,
       this.UpdateDate,
-      this.LastPlayedDate
+      this.LastPlayedDate,
+      this.httpCode,
+      this.httpMessage
       );
 }
 

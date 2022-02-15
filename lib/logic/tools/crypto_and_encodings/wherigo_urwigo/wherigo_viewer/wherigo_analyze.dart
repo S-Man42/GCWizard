@@ -304,7 +304,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA, BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '')});
+    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA, BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '')});
     return out;
   }
 
@@ -429,7 +429,8 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
   List<String> answerList = [];
   ActionMessageElementData action;
   Map<String, List<AnswerData>> Answers = {};
-
+  String _httpCode = '';
+  String _httpMessage = '';
 
   String _obfuscatorFunction = '';
 
@@ -620,19 +621,56 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
         // https://www.iana.org/assignments/media-types/media-types.xhtml
 
-        String address = 'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
-        var uri = Uri.parse(address);
-        var request = http.MultipartRequest('POST', uri)
-          ..files.add(await http.MultipartFile.fromBytes('file', _MediaFilesContents[0].MediaFileBytes,
-              contentType: MediaType('application', 'octet-stream')));
-        var response = await request.send();
+        try {
+          String address = 'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
+          var uri = Uri.parse(address);
+          var request = http.MultipartRequest('POST', uri)
+            ..files.add(await http.MultipartFile.fromBytes('file', _MediaFilesContents[0].MediaFileBytes,
+                contentType: MediaType('application', 'octet-stream')));
+          var response = await request.send();
 
-        print('response.statuscode '+response.statusCode.toString());
-        if (response.statusCode == 200) {
-          var responseData = await http.Response.fromStream(response);
-          print('got LUA Sourcecode');
-          checksToDo = FILE_LOAD_STATE.LUA;
-          _LUAFile = responseData.body;
+          print('response.statuscode '+response.statusCode.toString());
+          if (response.statusCode == 200) {
+            var responseData = await http.Response.fromStream(response);
+            print('got LUA Sourcecode');
+            checksToDo = FILE_LOAD_STATE.LUA;
+            _LUAFile = responseData.body;
+          }
+        } catch (exception) {
+          //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
+          print(exception.toString());
+          _httpCode = '503';
+          _httpMessage = 'wherigo_code_http_503';
+          out.addAll({'WherigoCartridge': WherigoCartridge(
+              _Signature,
+              _NumberOfObjects, _MediaFilesHeaders, _MediaFilesContents, _LUAFile,
+              _HeaderLength,
+              _Latitude, _Longitude, _Altitude,
+              _Splashscreen, _SplashscreenIcon,
+              _DateOfCreation,
+              _TypeOfCartridge,
+              _Player, _PlayerID,
+              _CartridgeLUAName, _GWCCartridgeName, _LUACartridgeName, _GWCCartridgeGUID, _LUACartridgeGUID, _CartridgeDescription, _StartingLocationDescription,
+              _Version, _Author, _Company, _RecommendedDevice,
+              _LengthOfCompletionCode, _CompletionCode,
+              _obfuscatorTable, _obfuscatorFunction,
+              _Characters, _Items, _Tasks, _Inputs, _Zones, _Timers, _Media,
+              _Messages, _Answers, _Variables, _NameToObject,
+              _Status, _ResultsGWC, _ResultsLUA,
+              _builder,
+              _BuilderVersion,
+              _TargetDeviceVersion,
+              _CountryID,
+              _StateID,
+              _UseLogging,
+              _CreateDate,
+              _PublishDate,
+              _UpdateDate,
+              _LastPlayedDate,
+              _httpCode,
+              _httpMessage
+          )});
+
         }
       }
     if (checksToDo == FILE_LOAD_STATE.LUA || checksToDo == FILE_LOAD_STATE.FULL) {
@@ -1944,7 +1982,10 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
         _CreateDate,
         _PublishDate,
         _UpdateDate,
-        _LastPlayedDate    )});
+        _LastPlayedDate,
+        _httpCode,
+        _httpMessage
+    )});
 
     return out;
   } // if GWC || FULL
