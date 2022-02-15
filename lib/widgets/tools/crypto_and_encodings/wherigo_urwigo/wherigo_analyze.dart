@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
@@ -99,7 +100,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           i18n(context, 'wherigo_decompile_title'),
           Container(
             width: 250,
-            height: 500,
+            height: 330,
             child: GCWText(
               text: i18n(context, 'wherigo_decompile_message'),
               style: gcwDialogTextStyle(),
@@ -425,14 +426,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ]
               ),
             ),
-            GCWExpandableTextDivider(
-              expanded: false,
-              text: i18n(context, 'wherigo_bytecode'),
+            GCWOutput(
+              title: i18n(context, 'wherigo_bytecode'),
               child: Column(
-                  //children: columnedMultiLineOutput(context, _GWCStructure, flexValues: [1, 3, 2])
+                //children: columnedMultiLineOutput(context, _GWCStructure, flexValues: [1, 3, 2])
                   children: _GWCFileStructure
               ),
-            )
+            ),
           ],
         );
         break;
@@ -1557,6 +1557,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result.add(
       GCWExpandableTextDivider(
         text: i18n(context, 'wherigo_header_signature'),
+        expanded: false,
         child: Column(
           children: columnedMultiLineOutput(context, content, suppressCopyButtons: true, flexValues: [1, 3, 2], hasHeader: true),
         ),
@@ -1582,6 +1583,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result.add(
         GCWExpandableTextDivider(
           text: i18n(context, 'wherigo_data_mediafiles'),
+          expanded: false,
           child: Column(
             children: columnedMultiLineOutput(context, content, suppressCopyButtons: true, flexValues: [1, 3, 2], hasHeader: true),
           ),
@@ -1590,7 +1592,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     // header
     content = [];
-    content.add(['', i18n(context, 'wherigo_data_header'), '']);
     content.add(['', i18n(context, 'wherigo_header_headerlength'), 'Bytes']);
     content.add([
       offset.toString().padLeft(7, ' '),                     // offset begin of Header
@@ -1621,6 +1622,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result.add(
         GCWExpandableTextDivider(
           text: i18n(context, 'wherigo_data_header'),
+          expanded: false,
           child: Column(
             children: columnedMultiLineOutput(context, content, suppressCopyButtons: true, flexValues: [1, 3, 2], hasHeader: true),
           ),
@@ -1641,6 +1643,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result.add(
         GCWExpandableTextDivider(
           text: i18n(context, 'wherigo_data_luabytecode'),
+          expanded: false,
           child: Column(
             children: columnedMultiLineOutput(context, content, suppressCopyButtons: true, flexValues: [1, 3, 2], hasHeader: true),
           ),
@@ -1688,6 +1691,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result.add(
         GCWExpandableTextDivider(
           text: i18n(context, 'wherigo_data_mediafiles'),
+          expanded: false,
           child: Column(
             children: columnedMultiLineOutput(context, content, suppressCopyButtons: true, flexValues: [1, 3, 2], hasHeader: true),
           ),
@@ -1700,9 +1704,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   String _getCreationDate(int duration) {
     // Date of creation   ; Seconds since 2004-02-10 01:00:00
     if (duration == null)
-      return DateTime(2004, 2, 1, 1, 0, 0, 0).toString();
-    return (DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration)))
-        .toString();
+      return formatDate(DateTime(2004, 2, 1, 1, 0, 0, 0));
+    return formatDate((DateTime(2004, 2, 1, 1, 0, 0, 0).add(Duration(seconds: duration))));
+  }
+
+  String formatDate(DateTime datetime) {
+    String loc = Localizations.localeOf(context).toString();
+    return (datetime == null) ? '' : DateFormat.yMd(loc).add_jms().format(datetime);
   }
 
   _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
@@ -1773,7 +1781,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       switch (dataType){
         case DATA_TYPE_LUA:
-          if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID) {
+          if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID && _WherigoCartridge.GWCCartridgeGUID != '') {
             _WherigoCartridge = _resetGWC();
             showToast(
                 i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' +
@@ -1783,7 +1791,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           }
           break;
         case DATA_TYPE_GWC:
-          if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID) {
+          if (_WherigoCartridge.GWCCartridgeGUID != _WherigoCartridge.LUACartridgeGUID &&_WherigoCartridge.LUACartridgeGUID != '' ) {
             _WherigoCartridge = _resetLUA();
             showToast(
                 i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' +
@@ -2063,4 +2071,3 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return WherigoCartridge(_WherigoCartridge.Signature, _WherigoCartridge.NumberOfObjects, _WherigoCartridge.MediaFilesHeaders, _WherigoCartridge.MediaFilesContents, _WherigoCartridge.LUAFile, _WherigoCartridge.HeaderLength, _WherigoCartridge.Latitude, _WherigoCartridge.Longitude, _WherigoCartridge.Altitude, _WherigoCartridge.Splashscreen, _WherigoCartridge.SplashscreenIcon, _WherigoCartridge.DateOfCreation, _WherigoCartridge.TypeOfCartridge, _WherigoCartridge.Player, _WherigoCartridge.PlayerID, _WherigoCartridge.CartridgeLUAName, _WherigoCartridge.GWCCartridgeName, '', _WherigoCartridge.GWCCartridgeGUID, '', _WherigoCartridge.CartridgeDescription, _WherigoCartridge.StartingLocationDescription, _WherigoCartridge.Version, _WherigoCartridge.Author, _WherigoCartridge.Company, _WherigoCartridge.RecommendedDevice, _WherigoCartridge.LengthOfCompletionCode, _WherigoCartridge.CompletionCode, '', '', [], [], [], [], [], [], [], [], [], [], NameToObject, ANALYSE_RESULT_STATUS.OK, _WherigoCartridge.ResultsGWC, [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '');
   }
 }
-
