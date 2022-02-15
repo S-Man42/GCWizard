@@ -144,6 +144,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['mp3'],
     'magic_bytes': <List<int>>[
       [0x49, 0x44, 0x33],
+      [0xFF, 0xFA],
       [0xFF, 0xFB],
       [0xFF, 0xF3],
       [0xFF, 0xF2]
