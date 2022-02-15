@@ -46,7 +46,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     bool hasHeader: false,
     bool copyAll: false,
     List<Function> tappables,
-      double fontSize
+    double fontSize
     }) {
   var odd = true;
   var isFirst = true;
