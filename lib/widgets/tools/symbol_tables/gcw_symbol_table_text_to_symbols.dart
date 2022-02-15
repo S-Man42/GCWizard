@@ -9,9 +9,11 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_colorhoney.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_default.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_paint_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
@@ -137,40 +139,42 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     _encryptionHasImages = imageIndexes.length > 0;
     if (!_encryptionHasImages) return Container();
 
-    var countRows = (imageIndexes.length / countColumns).floor();
-    if (countRows * countColumns < imageIndexes.length)
-      countRows++;
-
-    var canvasWidth = MediaQuery.of(context).size.width * 0.95;
-    var canvasHeight = canvasWidth / countColumns * countRows;
+    var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
+      mode: SymbolTableEncryptionMode.FIXED_CANVASWIDTH,
+      countImages: imageIndexes.length,
+      countColumns: countColumns,
+      borderWidth: widget.borderWidth,
+      canvasWidth: MediaQuery.of(context).size.width * 0.95,
+    ));
 
     return Container (
-      width: canvasWidth,
-      height: canvasHeight,
+      width: sizes.canvasWidth,
+      height: sizes.canvasHeight,
       child: CustomPaint(
-        size: Size(canvasWidth, canvasHeight),
+        size: Size(sizes.canvasWidth, sizes.canvasHeight),
         painter: SymbolTableEncryptionPainter(
           paintData: SymbolTablePaintData(
-            countColumns: countColumns,
+            sizes: sizes,
             data: _data,
             imageIndexes: imageIndexes,
-            borderWidth: widget.borderWidth
           ),
-          paintFunction: _paintFunction()
+          encryption: _symbolTableEncryption()
         )
       ),
     );
   }
 
-  Canvas Function(SymbolTablePaintData) _paintFunction() {
+  SymbolTableEncryption _symbolTableEncryption() {
     if (!widget.specialEncryption)
-      return paintSymbolTableEncryptionDefault;
+      return SymbolTableEncryption();
 
     switch (_data.symbolKey) {
+      case 'color_honey':
+        return ColorHoneySymbolTableEncryption();
       case 'puzzle':
-        return paintSymbolTableEncryptionPuzzle;
+        return PuzzleSymbolTableEncryption();
       default:
-        return paintSymbolTableEncryptionDefault;
+        return SymbolTableEncryption();
     }
   }
 
@@ -180,25 +184,27 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     var countRows = (imageIndexes.length / countColumns).floor();
     if (countRows * countColumns < imageIndexes.length) countRows++;
 
-    var width = countColumns * _EXPORT_SYMBOL_SIZE;
-    var height = countRows * _EXPORT_SYMBOL_SIZE;
-
     final canvasRecorder = ui.PictureRecorder();
     var canvas = Canvas(canvasRecorder);
 
+    var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
+      mode: SymbolTableEncryptionMode.FIXED_SYMBOLSIZE,
+      symbolWidth: _EXPORT_SYMBOL_SIZE,
+      countImages: imageIndexes.length,
+      countColumns: countColumns,
+      borderWidth: widget.borderWidth
+    ));
+
     var paintData = SymbolTablePaintData(
       canvas: canvas,
-      canvasSize: Size(width, height),
-      countColumns: countColumns,
+      sizes: sizes,
       data: _data,
-      imageIndexes: imageIndexes,
-      borderWidth: widget.borderWidth
+      imageIndexes: imageIndexes
     );
 
-    var paintFunction = _paintFunction();
-    canvas = paintFunction(paintData);
+    canvas = _symbolTableEncryption().paint(paintData);
 
-    final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
+    final img = await canvasRecorder.endRecording().toImage(sizes.canvasWidth.floor(), sizes.canvasHeight.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return await saveByteDataToFile(context, trimNullBytes(data.buffer.asUint8List()),

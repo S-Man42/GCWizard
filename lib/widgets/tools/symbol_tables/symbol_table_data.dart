@@ -182,9 +182,10 @@ class SymbolData {
   bool primarySelected = false;
   bool secondarySelected = false;
   final String displayName;
-  final ui.Image drawableImage;
+  final ui.Image standardImage;
+  final ui.Image specialEncryptionImage;
 
-  SymbolData({this.path, this.bytes, this.displayName, this.drawableImage});
+  SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 }
 
 class SymbolTableData {
@@ -293,18 +294,30 @@ class SymbolTableData {
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
-    final imagePaths = manifestMap.keys
+    final imageArchivePaths = manifestMap.keys
         .where((String key) => key.contains(_pathKey()))
         .where((String key) => SymbolTableConstants.ARCHIVE_SUFFIX.hasMatch(key))
         .toList();
 
-    if (imagePaths.isEmpty) return;
+    if (imageArchivePaths.isEmpty) return;
 
     // Read the Zip file from disk.
-    final bytes = await DefaultAssetBundle.of(_context).load(imagePaths.first);
-    InputStream input = new InputStream(bytes.buffer.asByteData());
+    final bytes = await DefaultAssetBundle.of(_context).load(
+        imageArchivePaths
+            .firstWhere((path) => !path.contains('_encryption'))
+    );
+    InputStream input = InputStream(bytes.buffer.asByteData());
     // Decode the Zip file
-    final archive = ZipDecoder().decodeBuffer(input);
+    final Archive archive = ZipDecoder().decodeBuffer(input);
+
+    var encryptionBytes;
+    Archive encryptionArchive;
+    var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
+    if (encryptionImageArchivePaths.isNotEmpty) {
+      encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);
+      input = InputStream(encryptionBytes.buffer.asByteData());
+      encryptionArchive = ZipDecoder().decodeBuffer(input);
+    }
 
     images = [];
     for (ArchiveFile file in archive) {
@@ -317,19 +330,26 @@ class SymbolTableData {
       if (imagePath == null)
         continue;
 
-      var data = file.content;
-      var drawableImage = await _initializeDrawableImage(data);
+      var standardImage = await _initializeImage(file.content);
+      var specialEncryptionImage;
+      if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
+        specialEncryptionImage = await _initializeImage(
+            encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name).content
+        );
+      }
 
-      images.add({key: SymbolData(path: imagePath, bytes: data, drawableImage: drawableImage)});
+      images.add({key: SymbolData(
+          path: imagePath,
+          bytes: file.content,
+          standardImage: standardImage,
+          specialEncryptionImage: specialEncryptionImage
+      )});
     }
 
     images.sort(_sort);
   }
 
-  _initializeDrawableImage(List<int> bytes) async {
-    if (!true)
-      return null;
-
+  _initializeImage(List<int> bytes) async {
     return decodeImageFromList(bytes);
   }
 

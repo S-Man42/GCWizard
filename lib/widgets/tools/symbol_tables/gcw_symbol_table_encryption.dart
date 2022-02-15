@@ -1,3 +1,4 @@
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -71,6 +72,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
 
   _hasSpecialEncryption() {
     switch (_data.symbolKey) {
+      case 'color_honey':
       case 'puzzle':
         return true;
       default:
@@ -94,25 +96,6 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
             });
           },
         ),
-        if (widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false)
-          Row(
-            children: <Widget>[
-              Expanded(
-                  child: GCWOnOffSwitch(
-                    value: _currentIgnoreUnknown,
-                    title: i18n(context, 'symboltables_ignoreunknown'),
-                    onChanged: (value) {
-                      setState(() {
-                        _currentIgnoreUnknown = value;
-                      });
-                    },
-                  ),
-              ),
-              Container(
-                width: 2 * 40.0,
-              )
-            ],
-          ),
         if (_hasSpecialEncryption())
           Row(
             children: <Widget>[
@@ -127,6 +110,26 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                     });
                   },
                 ),
+              ),
+              Container(
+                width: 2 * 40.0,
+              )
+            ],
+          ),
+        if ((widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false)
+            && (!_hasSpecialEncryption() || _currentSpecialEncryption == GCWSwitchPosition.right))
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: GCWOnOffSwitch(
+                    value: _currentIgnoreUnknown,
+                    title: i18n(context, 'symboltables_ignoreunknown'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentIgnoreUnknown = value;
+                      });
+                    },
+                  ),
               ),
               Container(
                 width: 2 * 40.0,
@@ -218,7 +221,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
         Expanded(
             child: GCWSymbolTableTextToSymbols(
                 text: _currentEncryptionInput,
-                ignoreUnknown: _currentIgnoreUnknown,
+                ignoreUnknown: (_hasSpecialEncryption() &&  _currentSpecialEncryption == GCWSwitchPosition.left) || _currentIgnoreUnknown,
                 countColumns: widget.countColumns,
                 borderWidth: _currentBorderWidth,
                 specialEncryption: _hasSpecialEncryption() &&  _currentSpecialEncryption == GCWSwitchPosition.left,
