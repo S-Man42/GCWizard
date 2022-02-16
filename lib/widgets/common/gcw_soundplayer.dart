@@ -1,19 +1,16 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_html/html.dart' as html;
+
 import 'package:audioplayers/audioplayers.dart'; // https://pub.dev/packages/audioplayers
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
-
-import '../utils/file_utils.dart';
+import 'package:path_provider/path_provider.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -28,13 +25,27 @@ class GCWSoundPlayer extends StatefulWidget {
 }
 
 class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
-
   AudioCache audioCache = AudioCache();
   AudioPlayer advancedPlayer = AudioPlayer();
+
+  StreamSubscription<Duration> _onPositionChangedStream;
+  StreamSubscription<Duration> _onDurationChangedStream;
+  StreamSubscription _onCompletionStream;
+
+  File _audioFile;
+  var _loadedFileBytes;
+
+  var _currentPositionInMS;
+  var _totalDurationInMS;
+
+  var _isLoaded = false;
+
+  var _currentSliderPosition = 0.0;
 
   @override
   void initState() {
     super.initState();
+
     if (kIsWeb) {
       // Calls to Platform.isIOS fails on web
       return;
@@ -42,31 +53,98 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     if (Platform.isIOS) {
       audioCache.fixedPlayer?.notificationService.startHeadlessService();
     }
-    advancedPlayer.onPlayerCompletion.listen((event) {
+
+    _onDurationChangedStream = advancedPlayer.onDurationChanged.listen((Duration d) {
+      setState(() {
+        _totalDurationInMS = d.inMilliseconds;
+      });
+    });
+
+    _onPositionChangedStream = advancedPlayer.onAudioPositionChanged.listen((Duration  p) {
+      setState(() {
+        _currentPositionInMS = p.inMilliseconds;
+
+        if (_totalDurationInMS == null || _totalDurationInMS == 0.0) {
+          _currentSliderPosition = 0.0;
+        } else {
+          _currentSliderPosition = _currentPositionInMS / _totalDurationInMS;
+        }
+      });
+    });
+
+    _onCompletionStream = advancedPlayer.onPlayerCompletion.listen((event) {
       onComplete();
-      setState(() => playerState = PlayerState.stopped);
     });
   }
 
+  Future _initAudioFile() async {
+
+
+    await _audioPlayerStop();
+
+    // save byteData to File
+    String fileName = 'tempfile';
+
+    var byteData = widget.file.bytes;
+
+    if (kIsWeb) {
+      // var blob = new html.Blob([byteData], 'image/png');
+      // html.AnchorElement(
+      //   href: html.Url.createObjectUrl(blob),
+      // )
+      //   ..setAttribute("download", fileName)
+      //   ..click();
+      //
+      // int result = await advancedPlayer.playBytes(byteData);
+      //
+      // return Future.value(byteData);
+    } else {
+      _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
+    }
+
+    _loadedFileBytes = widget.file.bytes.length;
+    _isLoaded = true;
+
+    if (!mounted)  // prevents setState when currently disposing widget.
+      return;
+
+    setState((){});
+  }
+
   @override
-  void dispose() {
-    advancedPlayer.stop();
+  Future<void> dispose() async {
+    _onPositionChangedStream.cancel();
+    _onDurationChangedStream.cancel();
+    _onCompletionStream.cancel();
+
+    Future.delayed(Duration.zero, () async {
+      await advancedPlayer.stop();
+    });
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_loadedFileBytes == null || _loadedFileBytes != widget.file.bytes.length) {
+      _currentPositionInMS = null;
+      _totalDurationInMS = null;
+      _isLoaded = false;
+      _initAudioFile();
+    }
+
     return Row(
       children: [
         GCWIconButton(
-          iconData: Icons.play_arrow,
+          iconData: isPlaying ? Icons.pause : Icons.play_arrow,
+          iconColor: _isLoaded ? null : themeColors().inActive(),
           onPressed: isPlaying
-              ? null
-              : () => _AudioPlayerPlay(widget.file.bytes),
+              ? () => _audioPlayerPause()
+              : () => _audioPlayerPlay(),
         ),
         GCWIconButton(
           iconData: Icons.stop,
-          onPressed: isPlaying || isPaused ? () => _AudioPlayerStop() : null,
+          iconColor: _isLoaded ? null : themeColors().inActive(),
+          onPressed: isPlaying || isPaused ? () => _audioPlayerStop() : null,
         ),
         if (widget.showMetadata)
           Expanded(
@@ -88,10 +166,31 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
                 color: themeColors().accent(),
                 padding: EdgeInsets.all(DOUBLE_DEFAULT_MARGIN)),
           ),
-//        Expanded(
-//          child: GCWSlider(value: 0.0, min: 0.0, max: 100.0, suppressReset: true),
-//        ),
-//        GCWText(text: '0:42 / 10:00')
+        Expanded(
+          child: Slider(
+            value: _currentSliderPosition,
+            min: 0.0,
+            max: 1.0,
+            onChangeStart: (value) {
+              setState(() {
+                _audioPlayerPause();
+              });
+            },
+            onChanged: (value) {
+              setState(() {
+                _currentSliderPosition = value;
+              });
+            },
+            onChangeEnd: (value) {
+              setState(() {
+                _audioPlayerPlay(seek: true);
+              });
+            },
+            activeColor: themeColors().switchThumb2(),
+            inactiveColor: themeColors().switchTrack2(),
+          )
+        ),
+        GCWText(text: _durationText())
       ],
     );
   }
@@ -105,34 +204,45 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     setState(() => playerState = PlayerState.stopped);
   }
 
-  _AudioPlayerPlay(Uint8List byteData) async {
-    // save byteData to File
-    String fileName = 'tempfile';
-    File file;
+  _audioPlayerPause() async {
+    await advancedPlayer.pause();
+    setState(() => playerState = PlayerState.paused);
+  }
 
+  _audioPlayerPlay({bool seek: false}) async {
     if (kIsWeb) {
-      var blob = new html.Blob([byteData], 'image/png');
-      html.AnchorElement(
-        href: html.Url.createObjectUrl(blob),
-      )
-        ..setAttribute("download", fileName)
-        ..click();
-      int result = await advancedPlayer.playBytes(byteData);
+      // var blob = new html.Blob([byteData], 'image/png');
+      // html.AnchorElement(
+      //   href: html.Url.createObjectUrl(blob),
+      // )
+      //   ..setAttribute("download", fileName)
+      //   ..click();
+      //
+      // int result = await advancedPlayer.playBytes(byteData);
+      //
+      // return Future.value(byteData);
+    }
 
-      return Future.value(byteData);
+    if (playerState == PlayerState.paused) {
+      if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
+        var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
+        await advancedPlayer.seek(Duration(milliseconds: newPosition));
+      }
+
+      await advancedPlayer.resume();
     } else {
-        file = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
+      await advancedPlayer.play(_audioFile.path, isLocal: true);
     }
 
     setState(() => playerState = PlayerState.playing);
-
-    int result = await advancedPlayer.play(file.path, isLocal: true);
   }
 
-  Future _AudioPlayerStop() async {
+  Future _audioPlayerStop() async {
     await advancedPlayer.stop();
     setState(() {
       playerState = PlayerState.stopped;
+      _currentSliderPosition = 0.0;
+      _currentPositionInMS = 0.0;
     });
   }
 
@@ -143,5 +253,27 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     var filePath = tempPath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
     return new File(filePath).writeAsBytes(
         buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  }
+
+  _durationText() {
+    var total = '--:--';
+    if (_totalDurationInMS != null && _totalDurationInMS >= 0) {
+      var totalInS = (_totalDurationInMS / 1000).floor();
+
+      var min = (totalInS / 60).floor();
+      var sec = (totalInS % 60).floor();
+      total = min.toString().padLeft(2, '0') + ':' + sec.toString().padLeft(2, '0');
+    }
+
+    var position = '--:--';
+    if (_currentPositionInMS != null && _currentPositionInMS >= 0) {
+      var positionInS = (_currentPositionInMS / 1000).floor();
+
+      var min = (positionInS / 60).floor();
+      var sec = (positionInS % 60).floor();
+      position = min.toString().padLeft(2, '0') + ':' + sec.toString().padLeft(2, '0');
+    }
+
+    return '$position / $total';
   }
 }
