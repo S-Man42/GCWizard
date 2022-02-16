@@ -97,52 +97,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherig
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
-
-Map<WHERIGO, String> WHERIGO_DATA_FULL = {
-  WHERIGO.NULL: 'wherigo_data_nodata',
-  WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.GWCFILE: 'wherigo_data_gwc',
-  WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
-  WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.ITEMS: 'wherigo_data_item_list',
-  WHERIGO.CHARACTER: 'wherigo_data_character_list',
-  WHERIGO.ZONES: 'wherigo_data_zone_list',
-  WHERIGO.INPUTS: 'wherigo_data_input_list',
-  WHERIGO.TASKS: 'wherigo_data_task_list',
-  WHERIGO.TIMERS: 'wherigo_data_timer_list',
-  WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
-};
-
-Map<WHERIGO, String> WHERIGO_DATA_GWC = {
-  WHERIGO.NULL: 'wherigo_data_nodata',
-  WHERIGO.HEADER: 'wherigo_data_header',
-  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.GWCFILE: 'wherigo_data_gwc',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
-};
-
-Map<WHERIGO, String> WHERIGO_DATA_LUA = {
-  WHERIGO.NULL: 'wherigo_data_nodata',
-  WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
-  WHERIGO.LUAFILE: 'wherigo_data_lua',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.ITEMS: 'wherigo_data_item_list',
-  WHERIGO.CHARACTER: 'wherigo_data_character_list',
-  WHERIGO.ZONES: 'wherigo_data_zone_list',
-  WHERIGO.INPUTS: 'wherigo_data_input_list',
-  WHERIGO.TASKS: 'wherigo_data_task_list',
-  WHERIGO.TIMERS: 'wherigo_data_timer_list',
-  WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
-};
-
 String _answerVariable = '';
 
 StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
@@ -275,12 +229,343 @@ bool isInvalidLUASourcecode(String header){
 }
 
 Future<Map<String, dynamic>> getCartridgeAsync(dynamic jobData) async {
-  var output = await getCartridge(jobData.parameters["byteListGWC"], jobData.parameters["byteListLUA"], jobData.parameters["offline"], sendAsyncPort: jobData.sendAsyncPort);
+  var output;
+  switch (jobData.parameters['dataType']){
+    case DATA_TYPE_GWC:
+      output = await getCartridgeGWC(jobData.parameters["byteListGWC"], sendAsyncPort: jobData.sendAsyncPort);
+      break;
+    case DATA_TYPE_LUA:
+      output = await getCartridgeLUA(jobData.parameters["byteListLUA"], jobData.parameters["offline"], sendAsyncPort: jobData.sendAsyncPort);
+      break;
+  }
 
   if (jobData.sendAsyncPort != null) {
     jobData.sendAsyncPort.send(output);
   }
   return output;
+}
+
+Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, {SendPort sendAsyncPort}) async {
+  var out = Map<String, dynamic>();
+  List<String> _ResultsGWC = [];
+  List<String> _ResultsLUA = [];
+  ANALYSE_RESULT_STATUS _Status = ANALYSE_RESULT_STATUS.OK;
+
+  FILE_LOAD_STATE checksToDo = FILE_LOAD_STATE.NULL;
+
+  if ((byteListGWC != [] || byteListGWC != null))
+    checksToDo = FILE_LOAD_STATE.GWC;
+
+  if (checksToDo == FILE_LOAD_STATE.NULL) {
+    _ResultsGWC.add('wherigo_error_runtime');
+    _ResultsGWC.add('wherigo_error_empty_gwc');
+    out.addAll({'WherigoCartridgeGWC': WherigoCartridgeGWC()});
+    return out;
+  }
+
+  String _Signature = '';
+  int _NumberOfObjects = 0;
+  List<MediaFileHeader> _MediaFilesHeaders = [];
+  List<MediaFileContent> _MediaFilesContents = [];
+  int _MediaFileID = 0;
+  int _Address = 0;
+  int _HeaderLength = 0;
+  double _Latitude = 0.0;
+  double _Longitude = 0.0;
+  double _Altitude = 0.0;
+  int _Splashscreen = 0;
+  int _SplashscreenIcon = 0;
+  int _DateOfCreation;
+  String _TypeOfCartridge = '';
+  String _Player = '';
+  int _PlayerID = 0;
+  String _CartridgeName = '';
+  String _CartridgeLUAName = '';
+  String _CartridgeGUID = '';
+  String _CartridgeDescription = '';
+  String _StartingLocationDescription = '';
+  String _Version = '';
+  String _Author = '';
+  String _Company = '';
+  String _RecommendedDevice = '';
+  int _LengthOfCompletionCode = 0;
+  String _CompletionCode = '';
+
+  int _Unknown3 = 0;
+
+  int _offset = 0;
+  StringOffset _ASCIIZ;
+  int _MediaFileLength = 0;
+  int _ValidMediaFile = 0;
+  int _MediaFileType = 0;
+
+  if (checksToDo == FILE_LOAD_STATE.GWC) {
+    if (isInvalidCartridge(byteListGWC)) {
+      _ResultsGWC.add('wherigo_error_runtime');
+      _ResultsGWC.add('wherigo_error_invalid_gwc');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+    }
+    else { // analyse GWC-File
+      try { // analysing GWC Header
+        _Signature = _Signature + byteListGWC[0].toString();
+        _Signature = _Signature + byteListGWC[1].toString();
+        _Signature = _Signature + String.fromCharCode(byteListGWC[2]);
+        _Signature = _Signature + String.fromCharCode(byteListGWC[3]);
+        _Signature = _Signature + String.fromCharCode(byteListGWC[4]);
+        _Signature = _Signature + String.fromCharCode(byteListGWC[5]);
+        _NumberOfObjects = readUShort(byteListGWC, START_NUMBEROFOBJECTS);
+        _offset = START_OBJCETADRESS; // File Header LUA File
+        for (int i = 0; i < _NumberOfObjects; i++) {
+          _MediaFileID = readUShort(byteListGWC, _offset);
+          _offset = _offset + LENGTH_USHORT;
+          _Address = readInt(byteListGWC, _offset);
+          _offset = _offset + LENGTH_INT;
+          _MediaFilesHeaders.add(MediaFileHeader(_MediaFileID, _Address));
+        }
+
+        START_HEADER = START_OBJCETADRESS + _NumberOfObjects * 6;
+        _offset = START_HEADER;
+
+        _HeaderLength = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+        START_FILES = START_HEADER + _HeaderLength;
+
+        _Latitude = readDouble(byteListGWC, _offset);
+        if (_Latitude < -90.0 || _Latitude > 90.0)
+          _Latitude = 0.0;
+        _offset = _offset + LENGTH_DOUBLE;
+        _Longitude = readDouble(byteListGWC, _offset);
+        if (_Longitude < -180.0 || _Longitude > 180.0)
+          _Longitude = 0.0;
+        _offset = _offset + LENGTH_DOUBLE;
+        _Altitude = readDouble(byteListGWC, _offset);
+        _offset = _offset + LENGTH_DOUBLE;
+
+        _DateOfCreation = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+
+        _Unknown3 = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+        _Splashscreen = readShort(byteListGWC, _offset);
+        _offset = _offset + LENGTH_SHORT;
+
+        _SplashscreenIcon = readShort(byteListGWC, _offset);
+        _offset = _offset + LENGTH_SHORT;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _TypeOfCartridge = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Player = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _PlayerID = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+
+        _PlayerID = readLong(byteListGWC, _offset);
+        _offset = _offset + LENGTH_LONG;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CartridgeName = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CartridgeGUID = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CartridgeDescription = _ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _StartingLocationDescription = _ASCIIZ.ASCIIZ.replaceAll('<BR>', '\n');
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Version = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Author = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _Company = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _RecommendedDevice = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        _LengthOfCompletionCode = readInt(byteListGWC, _offset);
+        _offset = _offset + LENGTH_INT;
+
+        _ASCIIZ = readString(byteListGWC, _offset);
+        _CompletionCode = _ASCIIZ.ASCIIZ;
+        _offset = _ASCIIZ.offset;
+
+        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 5}); }
+
+      } catch (exception) {
+        _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+        _ResultsGWC.add('wherigo_error_runtime');
+        _ResultsGWC.add('wherigo_error_runtime_exception');
+        _ResultsGWC.add('wherigo_error_gwc_header');
+        _ResultsGWC.add(exception);
+      }
+
+      try { // analysing GWC - LUA Byte-Code
+        // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
+        _MediaFileLength = readInt(byteListGWC, _offset);
+        _offset = _offset + LENGTH_INT;
+        _MediaFilesContents.add(
+            MediaFileContent(
+                0,
+                0,
+                Uint8List.sublistView(
+                    byteListGWC, _offset, _offset + _MediaFileLength),
+                _MediaFileLength));
+        _offset = _offset + _MediaFileLength;
+
+        //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
+      } catch (exception) {
+        _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+        _ResultsGWC.add('wherigo_error_runtime');
+        _ResultsGWC.add('wherigo_error_runtime_exception');
+        _ResultsGWC.add('wherigo_error_gwc_luabytecode');
+        _ResultsGWC.add(exception);
+      }
+
+      try { // analysing GWC - reading Media-Files
+        for (int i = 1; i < _MediaFilesHeaders.length; i++) {
+          _offset = _MediaFilesHeaders[i].MediaFileAddress;
+          _ValidMediaFile = readByte(byteListGWC, _offset);
+
+          if (_ValidMediaFile != 0) {
+            // read Filetype
+            _offset = _offset + LENGTH_BYTE;
+            _MediaFileType = readInt(byteListGWC, _offset);
+
+            // read Length
+            _offset = _offset + LENGTH_INT;
+            _MediaFileLength = readInt(byteListGWC, _offset);
+
+            // read bytes
+            _offset = _offset + LENGTH_INT;
+            _MediaFilesContents.add(
+                MediaFileContent(
+                    _MediaFilesHeaders[i].MediaFileID,
+                    _MediaFileType,
+                    Uint8List.sublistView(
+                        byteListGWC, _offset, _offset + _MediaFileLength
+                    ),
+                    _MediaFileLength
+                )
+            );
+          }
+        }
+      } catch (exception) {
+        _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
+        _ResultsGWC.add('wherigo_error_runtime');
+        _ResultsGWC.add('wherigo_error_runtime_exception');
+        _ResultsGWC.add('wherigo_error_invalid_gwc');
+        _ResultsGWC.add('wherigo_error_gwc_luabytecode');
+        _ResultsGWC.add('wherigo_error_gwc_mediafiles');
+        _ResultsGWC.add(exception.toString());
+      } // catxh exception
+    }
+  } // if checks to do GWC
+  out.addAll({'WherigoCartridgeGWC': WherigoCartridgeGWC(
+      Signature: _Signature,
+      NumberOfObjects: _NumberOfObjects,
+      MediaFilesHeaders: _MediaFilesHeaders,
+      MediaFilesContents: _MediaFilesContents,
+      HeaderLength: _HeaderLength,
+      Latitude: _Latitude,
+      Longitude: _Longitude,
+      Altitude: _Altitude,
+      Splashscreen: _Splashscreen,
+      SplashscreenIcon: _SplashscreenIcon,
+      DateOfCreation: _DateOfCreation,
+      TypeOfCartridge: _TypeOfCartridge,
+      Player:  _Player,
+      PlayerID: _PlayerID,
+      CartridgeLUAName: _CartridgeLUAName,
+      CartridgeName: _CartridgeName,
+      CartridgeGUID: _CartridgeGUID,
+      CartridgeDescription: _CartridgeDescription,
+      StartingLocationDescription: _StartingLocationDescription,
+      Version: _Version,
+      Author: _Author,
+      Company: _Company,
+      RecommendedDevice: _RecommendedDevice,
+      LengthOfCompletionCode: _LengthOfCompletionCode,
+      CompletionCode: _CompletionCode,
+      ResultStatus: _Status,
+      ResultsGWC: _ResultsGWC,
+  )});
+}
+
+Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool offline, {SendPort sendAsyncPort}) async {
+// if offline == true byteListLUA is already the source code
+// if offline == false then byteListLUA has to be decompiled
+  var out = Map<String, dynamic>();
+
+  String _httpCode = '';
+  String _httpMessage = '';
+  String _LUAFile = '';
+
+  if (!offline) {
+    print('starting to decompile');
+    // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
+    // https://www.iana.org/assignments/media-types/media-types.xhtml
+
+    try {
+      String address = 'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
+      var uri = Uri.parse(address);
+      var request = http.MultipartRequest('POST', uri)
+        ..files.add(await http.MultipartFile.fromBytes('file', byteListLUA,
+            contentType: MediaType('application', 'octet-stream')));
+      var response = await request.send();
+
+      print('response.statuscode '+response.statusCode.toString());
+      _httpCode = response.statusCode.toString();
+      _httpMessage = response.reasonPhrase;
+
+      if (response.statusCode == 200) {
+        var responseData = await http.Response.fromStream(response);
+        print('got LUA Sourcecode');
+        _LUAFile = responseData.body;
+      }
+    } catch (exception) {
+      //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
+      print(exception.toString());
+      _httpCode = '5xx';
+      _httpMessage = exception.toString();
+      out.addAll({'WherigoCartridgeLUA': WherigoCartridgeLUA(
+          LUAFile: _LUAFile,
+          Characters: [],
+          Items: [],
+          Tasks: [],
+          Inputs: [],
+          Zones: [],
+          Timers: [],
+          Media: [],
+          Messages: [],
+          Answers: [],
+          Identifiers: [],
+          NameToObject: {},
+          ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
+          ResultsLUA: [],
+          httpCode: _httpCode,
+          httpMessage: _httpMessage
+      )});
+
+    }
+
+  }
+
 }
 
 Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteListLUA, bool offline, {SendPort sendAsyncPort}) async {
@@ -304,7 +589,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
     _ResultsGWC.add('wherigo_error_runtime');
     _ResultsGWC.add('wherigo_error_empty_gwc');
     _ResultsLUA.add('wherigo_error_empty_lua');
-    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, _ResultsGWC, _ResultsLUA, BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '')});
+    out.addAll({'WherigoCartridge': WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '','', '', '', '', '','','','', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_HTTP, _ResultsGWC, _ResultsLUA, BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '')});
     return out;
   }
 
@@ -836,7 +1121,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_media');
@@ -1033,7 +1318,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_zones');
@@ -1166,7 +1451,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_characters');
@@ -1301,7 +1586,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_items');
@@ -1404,7 +1689,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_tasks');
@@ -1476,7 +1761,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_identifiers');
@@ -1559,7 +1844,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_timers');
@@ -1716,7 +2001,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_inputs');
@@ -1816,7 +2101,7 @@ Future<Map<String, dynamic>> getCartridge(Uint8List byteListGWC, Uint8List byteL
           if (_Status == ANALYSE_RESULT_STATUS.OK)
             _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           else
-            _Status = ANALYSE_RESULT_STATUS.ERROR_FULL;
+            _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
           _ResultsLUA.add('wherigo_error_runtime');
           _ResultsLUA.add('wherigo_error_runtime_exception');
           _ResultsLUA.add('wherigo_error_lua_answers');

@@ -13,7 +13,7 @@ enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
 
 enum BUILDER {EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN}
 
-enum ANALYSE_RESULT_STATUS {OK, ERROR_GWC, ERROR_LUA, ERROR_FULL}
+enum ANALYSE_RESULT_STATUS {OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE}
 
 enum OBJECT_TYPE {MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES}
 OBJECT_TYPE currentObjectSection;
@@ -404,12 +404,183 @@ class TimerData{
       this.TimerType);
 }
 
+class WherigoCartridgeGWC{
+  final String Signature;
+  final int NumberOfObjects;
+  final List<MediaFileHeader> MediaFilesHeaders;
+  final List<MediaFileContent> MediaFilesContents;
+  final int HeaderLength;
+  final int Splashscreen;
+  final int SplashscreenIcon;
+  final double Latitude;
+  final double Longitude;
+  final double Altitude;
+  final int DateOfCreation;
+  final String TypeOfCartridge;
+  final String Player;
+  final int PlayerID;
+  final String CartridgeLUAName;
+  final String CartridgeName;
+  final String CartridgeGUID;
+  final String CartridgeDescription;
+  final String StartingLocationDescription;
+  final String Version;
+  final String Author;
+  final String Company;
+  final String RecommendedDevice;
+  final int LengthOfCompletionCode;
+  final String CompletionCode;
+  final ANALYSE_RESULT_STATUS ResultStatus;
+  final List<String> ResultsGWC;
+
+  WherigoCartridgeGWC({
+    this.Signature = '',
+    this.NumberOfObjects = 0,
+    this.MediaFilesHeaders,
+    this.MediaFilesContents,
+    this.HeaderLength = 0,
+    this.Splashscreen = 0,
+    this.SplashscreenIcon = 0,
+    this.Latitude = 0.0,
+    this.Longitude = 0.0,
+    this.Altitude = 0.0,
+    this.DateOfCreation = 0,
+    this.TypeOfCartridge = '',
+    this.Player = '',
+    this.PlayerID = 0,
+    this.CartridgeLUAName = '',
+    this.CartridgeName = '',
+    this.CartridgeGUID = '',
+    this.CartridgeDescription = '',
+    this.StartingLocationDescription = '',
+    this.Version = '',
+    this.Author = '',
+    this.Company = '',
+    this.RecommendedDevice = '',
+    this.LengthOfCompletionCode = 0,
+    this.CompletionCode = '',
+    this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
+    this.ResultsGWC,
+  });
+}
+
+class WherigoCartridgeLUA{
+  final String LUAFile;
+  final String CartridgeLUAName;
+  final String CartridgeName;
+  final String CartridgeGUID;
+  final String ObfuscatorTable;
+  final String ObfuscatorFunction;
+  final List<CharacterData> Characters;
+  final List<ItemData> Items;
+  final List<TaskData> Tasks;
+  final List<InputData> Inputs;
+  final List<ZoneData> Zones;
+  final List<TimerData> Timers;
+  final List<MediaData> Media;
+  final List<List<ActionMessageElementData>> Messages;
+  final List<AnswerData> Answers;
+  final List<VariableData> Identifiers;
+  final Map<String, ObjectData> NameToObject;
+  final ANALYSE_RESULT_STATUS ResultStatus;
+  final List<String> ResultsLUA;
+  final BUILDER Builder;
+  final String BuilderVersion;
+  final String TargetDeviceVersion;
+  final String StateID;
+  final String CountryID;
+  final String UseLogging;
+  final String CreateDate;
+  final String PublishDate;
+  final String UpdateDate;
+  final String LastPlayedDate;
+  final String httpCode;
+  final String httpMessage;
+
+  WherigoCartridgeLUA({
+    this.LUAFile = '',
+    this.CartridgeLUAName = '',
+    this.CartridgeName = '',
+    this.CartridgeGUID = '',
+    this.ObfuscatorTable = '',
+    this.ObfuscatorFunction = '',
+    this.Characters ,
+    this.Items,
+    this.Tasks,
+    this.Inputs,
+    this.Zones,
+    this.Timers,
+    this.Media,
+    this.Messages,
+    this.Answers,
+    this.Identifiers,
+    this.NameToObject,
+    this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
+    this.ResultsLUA,
+    this.Builder = BUILDER.UNKNOWN,
+    this.BuilderVersion = '',
+    this.TargetDeviceVersion = '',
+    this.CountryID = '',
+    this.StateID = '',
+    this.UseLogging = '',
+    this.CreateDate = '',
+    this.PublishDate = '',
+    this.UpdateDate = '',
+    this.LastPlayedDate = '',
+    this.httpCode = '',
+    this.httpMessage = ''
+  });
+}
+
+Map<WHERIGO, String> WHERIGO_DATA_FULL = {
+  WHERIGO.NULL: 'wherigo_data_nodata',
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.GWCFILE: 'wherigo_data_gwc',
+  WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
+  WHERIGO.LUAFILE: 'wherigo_data_lua',
+  WHERIGO.ITEMS: 'wherigo_data_item_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zone_list',
+  WHERIGO.INPUTS: 'wherigo_data_input_list',
+  WHERIGO.TASKS: 'wherigo_data_task_list',
+  WHERIGO.TIMERS: 'wherigo_data_timer_list',
+  WHERIGO.MESSAGES: 'wherigo_data_message_list',
+  WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
+  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_GWC = {
+  WHERIGO.NULL: 'wherigo_data_nodata',
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.GWCFILE: 'wherigo_data_gwc',
+  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_LUA = {
+  WHERIGO.NULL: 'wherigo_data_nodata',
+  WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
+  WHERIGO.LUAFILE: 'wherigo_data_lua',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.ITEMS: 'wherigo_data_item_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zone_list',
+  WHERIGO.INPUTS: 'wherigo_data_input_list',
+  WHERIGO.TASKS: 'wherigo_data_task_list',
+  WHERIGO.TIMERS: 'wherigo_data_timer_list',
+  WHERIGO.MESSAGES: 'wherigo_data_message_list',
+  WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+};
+
 final Map<String, String> HTTP_STATUS = {
   '200' : 'wherigo_code_http_200',
   '5xx' : 'wherigo_code_http_5xx',
 };
-
-
 
 
 
