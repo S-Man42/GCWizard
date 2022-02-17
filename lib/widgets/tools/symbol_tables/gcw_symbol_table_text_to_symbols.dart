@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_paint_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_stipplecode.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
@@ -45,8 +46,6 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
 }
 
 class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
-  final _EXPORT_SYMBOL_SIZE = 150.0;
-
   var _alphabetMap = <String, int>{};
 
   var _encryptionHasImages = false;
@@ -143,7 +142,9 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
       mode: SymbolTableEncryptionMode.FIXED_CANVASWIDTH,
       countImages: imageIndexes.length,
       countColumns: countColumns,
-      borderWidth: widget.borderWidth,
+      symbolWidth: _data.imageSize().width,
+      symbolHeight: _data.imageSize().height,
+      relativeBorderWidth: widget.borderWidth,
       canvasWidth: MediaQuery.of(context).size.width * 0.95,
     ));
 
@@ -173,6 +174,8 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         return ColorHoneySymbolTableEncryption();
       case 'puzzle':
         return PuzzleSymbolTableEncryption();
+      case 'stippelcode':
+        return StippleSymbolTableEncryption();
       default:
         return SymbolTableEncryption();
     }
@@ -189,10 +192,11 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
 
     var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
       mode: SymbolTableEncryptionMode.FIXED_SYMBOLSIZE,
-      symbolWidth: _EXPORT_SYMBOL_SIZE,
+      symbolWidth: _data.imageSize().width,
+      symbolHeight: _data.imageSize().height,
       countImages: imageIndexes.length,
       countColumns: countColumns,
-      borderWidth: widget.borderWidth
+      relativeBorderWidth: widget.borderWidth
     ));
 
     var paintData = SymbolTablePaintData(

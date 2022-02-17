@@ -17,19 +17,14 @@ class SymbolTableEncryption {
     var _sizes = paintData.sizes;
 
     var countRows = _sizes.countRows;
-    var absBorderWidth = _sizes.symbolWidth * _sizes.borderWidth;
 
     final paint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
 
-
     var maxRect = Rect.fromLTWH(0, 0, _sizes.canvasWidth, _sizes.canvasHeight);
     canvas.clipRect(maxRect);
     canvas.drawRect(maxRect, paint);
-
-    var tileSize = _sizes.tileWidth;
-    var symbolSize = _sizes.symbolWidth;
 
     for (var i = 0; i <= countRows; i++) {
       for (var j = 0; j < countColumns; j++) {
@@ -42,7 +37,12 @@ class SymbolTableEncryption {
             paintImage(
                 canvas: canvas,
                 fit: BoxFit.contain,
-                rect: Rect.fromLTWH(j * tileSize + absBorderWidth / 2, i * tileSize + absBorderWidth / 2, symbolSize, symbolSize),
+                rect: Rect.fromLTWH(
+                    j * _sizes.tileWidth + _sizes.absoluteBorderWidth / 2,
+                    i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2,
+                    _sizes.symbolWidth,
+                    _sizes.symbolHeight
+                ),
                 image: image);
           }
         }

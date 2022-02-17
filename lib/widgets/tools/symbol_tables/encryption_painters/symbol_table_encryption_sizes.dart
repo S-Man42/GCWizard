@@ -5,18 +5,25 @@ import 'package:flutter/material.dart';
 enum SymbolTableEncryptionMode{FIXED_SYMBOLSIZE, FIXED_CANVASWIDTH}
 
 class SymbolTableEncryptionSizes {
+  @required
   int countImages;
+  @required
   int countColumns;
   int countRows;
+  @required
   double symbolWidth;
+  @required
   double symbolHeight;
   double tileWidth;
   double tileHeight;
   double canvasWidth;
   double canvasHeight;
   // 0 - 1, percent of symbolsize
-  double borderWidth;
+  double relativeBorderWidth;
   SymbolTableEncryptionMode mode;
+
+  double absoluteBorderWidth;
+  double symbolAspectRatio;
 
   SymbolTableEncryptionSizes({
     @required
@@ -30,14 +37,13 @@ class SymbolTableEncryptionSizes {
     this.tileHeight,
     this.canvasWidth,
     this.canvasHeight,
-    this.borderWidth,
+    this.relativeBorderWidth,
     @required
     this.mode
   }) {
     _setCountRows();
     _setBorderWidth();
-    _setTileSize();
-    _setSymbolSize();
+    _setSymbolSizes();
     _setCanvasWidth();
     _setCanvasHeight();
   }
@@ -51,24 +57,25 @@ class SymbolTableEncryptionSizes {
   }
 
   _setBorderWidth() {
-    if (borderWidth == null)
-      borderWidth = 0.0;
+    if (relativeBorderWidth == null)
+      relativeBorderWidth = 0.0;
 
-    borderWidth = max(-0.9, borderWidth);
+    relativeBorderWidth = max(-0.9, relativeBorderWidth);
   }
 
-  _setTileSize() {
+  _setSymbolSizes() {
+    symbolAspectRatio = symbolWidth / symbolHeight;
+
     if (mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
       tileWidth = canvasWidth / countColumns;
+      symbolWidth = tileWidth / (1 + relativeBorderWidth);
+      absoluteBorderWidth = tileWidth - symbolWidth;
+      symbolHeight = symbolWidth / symbolAspectRatio;
+      tileHeight = symbolHeight + absoluteBorderWidth;
     } else {
-      tileWidth = symbolWidth * (1 + borderWidth);
-    }
-    tileHeight = tileWidth;
-  }
-
-  _setSymbolSize() {
-    if (mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
-      symbolWidth = tileWidth / (1 + borderWidth);
+      tileWidth = symbolWidth * (1 + relativeBorderWidth);
+      absoluteBorderWidth = tileWidth - symbolWidth;
+      tileHeight = symbolHeight + absoluteBorderWidth;
     }
   }
 

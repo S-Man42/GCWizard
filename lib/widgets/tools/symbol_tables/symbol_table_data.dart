@@ -186,6 +186,10 @@ class SymbolData {
   final ui.Image specialEncryptionImage;
 
   SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
+
+  Size imageSize() {
+    return Size(standardImage.width.toDouble(), standardImage.height.toDouble());
+  }
 }
 
 class SymbolTableData {
@@ -204,6 +208,10 @@ class SymbolTableData {
   initialize() async {
     await _loadConfig();
     await _initializeImages();
+  }
+
+  Size imageSize() {
+    return images.first.values.first.imageSize();
   }
 
   bool isCaseSensitive() {
