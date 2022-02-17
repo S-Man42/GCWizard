@@ -1402,10 +1402,82 @@ final NumbersToILLIAC = {
 };
 final ILLIACToNumbers  = switchMapKeyValue(NumbersToILLIAC);
 
-final AZToTTS = {};
+final AZToTTS = {
+  'T': 32,
+  'O': 48,
+  'N': 24,
+  'H': 40,
+  'M': 56,
+  'I': 12,
+  'R': 20,
+  'C': 28,
+  'L': 36,
+  'P': 44,
+  'G': 52,
+  'V': 60,
+  'E': 2,
+  'A': 6,
+  'S': 10,
+  'U': 14,
+  'D': 18,
+  'J': 22,
+  'F': 26,
+  'K': 30,
+  'Z': 34,
+  'W': 38,
+  'Y': 42,
+  'Q': 46,
+  'B': 50,
+  'X': 58,
+  '-': 13,
+  '⅞': 15,
+  '½': 21,
+  '5/8': 33,
+  '(': 35,
+  '1/4': 39,
+  '3/4': 43,
+  '?': 45,
+  '&': 49,
+};
 final TTSToAZ = switchMapKeyValue(AZToTTS);
 
-final NumbersToTTS = {};
+final NumbersToTTS = {
+  't': 32,
+  'o': 48,
+  'n': 24,
+  'h': 40,
+  'm': 56,
+  'i': 12,
+  'r': 20,
+  'c': 28,
+  'l': 36,
+  'p': 44,
+  'g': 52,
+  'v': 60,
+  'e': 2,
+  'a': 6,
+  's': 10,
+  'u': 14,
+  'd': 18,
+  'j': 22,
+  'f': 26,
+  'k': 30,
+  'z': 34,
+  'w': 38,
+  'y': 42,
+  'q': 46,
+  'b': 50,
+  'x': 58,
+  '8': 13,
+  '7': 15,
+  '4': 21,
+  '5': 33,
+  '(': 35,
+  '2': 39,
+  '6': 43,
+  '0': 45,
+  '9': 49,
+};
 final TTSToNumbers = switchMapKeyValue(NumbersToTTS);
 
 final _NUMBERS_FOLLOW = {
@@ -1426,7 +1498,7 @@ final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.CCIR476 : 54,
   TeletypewriterCodebook.TTS : 54,
   TeletypewriterCodebook.ILLIAC : 27,
-  TeletypewriterCodebook.ALGOL : 27,
+  TeletypewriterCodebook.ALGOL : 62,
 };
 final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123 : 1, //16,
@@ -1446,7 +1518,7 @@ final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.CCIR476 : 127,
   TeletypewriterCodebook.TTS : 54,
   TeletypewriterCodebook.ILLIAC : 5,
-  TeletypewriterCodebook.ALGOL : 31,
+  TeletypewriterCodebook.ALGOL : 54,
 };
 
 
