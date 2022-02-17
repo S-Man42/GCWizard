@@ -8,7 +8,6 @@ enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, CHARACTER, ITEMS, ZON
 const DATA_TYPE_LUA = 'LUA-Sourcecode';
 const DATA_TYPE_GWC = 'GWC-Cartridge';
 
-
 enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
 
 enum BUILDER {EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN}
@@ -17,6 +16,50 @@ enum ANALYSE_RESULT_STATUS {OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE}
 
 enum OBJECT_TYPE {MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES}
 OBJECT_TYPE currentObjectSection;
+
+const MEDIATYPE_UNK = 0;
+const MEDIATYPE_BMP = 1;
+const MEDIATYPE_PNG = 2;
+const MEDIATYPE_JPG = 3;
+const MEDIATYPE_GIF = 4;
+const MEDIATYPE_WAV = 17;
+const MEDIATYPE_MP3 = 18;
+const MEDIATYPE_FDL = 19;
+const MEDIATYPE_SND = 20;
+const MEDIATYPE_OGG = 21;
+const MEDIATYPE_SWF = 33;
+const MEDIATYPE_TXT = 49;
+
+Map MEDIATYPE = {
+  MEDIATYPE_UNK: '<?>',
+  MEDIATYPE_BMP:'bmp',
+  MEDIATYPE_PNG:'png',
+  MEDIATYPE_JPG:'jpg',
+  MEDIATYPE_GIF:'gif',
+  MEDIATYPE_WAV:'wav',
+  MEDIATYPE_MP3:'mp3',
+  MEDIATYPE_FDL:'fdl',
+  MEDIATYPE_SND:'snd',
+  MEDIATYPE_OGG:'ogg',
+  MEDIATYPE_SWF:'swf',
+  MEDIATYPE_TXT:'txt'
+};
+
+Map MEDIACLASS = {
+  MEDIATYPE_UNK: 'n/a',
+  MEDIATYPE_BMP:'Image',
+  MEDIATYPE_PNG:'Image',
+  MEDIATYPE_JPG:'Image',
+  MEDIATYPE_GIF:'Image',
+  MEDIATYPE_WAV:'Sound',
+  MEDIATYPE_MP3:'Sound',
+  MEDIATYPE_FDL:'Sound',
+  MEDIATYPE_SND:'Sound',
+  MEDIATYPE_OGG:'Sound',
+  MEDIATYPE_SWF:'Video',
+  MEDIATYPE_TXT:'Text'
+};
+
 
 class StringOffset{
   final String ASCIIZ;
@@ -480,7 +523,7 @@ class WherigoCartridgeLUA{
   final List<MediaData> Media;
   final List<List<ActionMessageElementData>> Messages;
   final List<AnswerData> Answers;
-  final List<VariableData> Identifiers;
+  final List<VariableData> Variables;
   final Map<String, ObjectData> NameToObject;
   final ANALYSE_RESULT_STATUS ResultStatus;
   final List<String> ResultsLUA;
@@ -513,7 +556,7 @@ class WherigoCartridgeLUA{
     this.Media,
     this.Messages,
     this.Answers,
-    this.Identifiers,
+    this.Variables,
     this.NameToObject,
     this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
     this.ResultsLUA,

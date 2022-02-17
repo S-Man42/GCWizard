@@ -2,6 +2,8 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_gwc.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
@@ -18,7 +20,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_lua.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -59,7 +61,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   //WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '');
   WherigoCartridgeGWC _WherigoCartridgeGWC = WherigoCartridgeGWC(MediaFilesHeaders: [], MediaFilesContents: [], ResultsGWC: []);
-  WherigoCartridgeLUA _WherigoCartridgeLUA = WherigoCartridgeLUA(Characters: [], Items: [], Tasks: [], Inputs: [], Zones: [], Timers: [], Media: [], Messages: [], Answers: [], Identifiers: [], NameToObject: {}, ResultsLUA: []);
+  WherigoCartridgeLUA _WherigoCartridgeLUA = WherigoCartridgeLUA(Characters: [], Items: [], Tasks: [], Inputs: [], Zones: [], Timers: [], Media: [], Messages: [], Answers: [], Variables: [], NameToObject: {}, ResultsLUA: []);
 
   Map<String, dynamic> _outData;
 
@@ -1116,7 +1118,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.IDENTIFIER:
-        if (_WherigoCartridgeLUA.Identifiers == [] || _WherigoCartridgeLUA.Identifiers == null || _WherigoCartridgeLUA.Identifiers.length == 0)
+        if (_WherigoCartridgeLUA.Variables == [] || _WherigoCartridgeLUA.Variables == null || _WherigoCartridgeLUA.Variables.length == 0)
           return GCWDefaultOutput(
             child: i18n(context, 'wherigo_data_nodata'),
             suppressCopyButton: true,
@@ -1133,14 +1135,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       setState(() {
                         _identifierIndex--;
                         if (_identifierIndex < 1)
-                          _identifierIndex = _WherigoCartridgeLUA.Identifiers.length;
+                          _identifierIndex = _WherigoCartridgeLUA.Variables.length;
                       });
                     },
                   ),
                   Expanded(
                     child: GCWText(
                       align: Alignment.center,
-                      text: _identifierIndex.toString() + ' / ' + (_WherigoCartridgeLUA.Identifiers.length).toString(),
+                      text: _identifierIndex.toString() + ' / ' + (_WherigoCartridgeLUA.Variables.length).toString(),
                     ),
                   ),
                   GCWIconButton(
@@ -1148,7 +1150,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     onPressed: () {
                       setState(() {
                         _identifierIndex++;
-                        if (_identifierIndex > _WherigoCartridgeLUA.Identifiers.length)
+                        if (_identifierIndex > _WherigoCartridgeLUA.Variables.length)
                           _identifierIndex = 1;
                       });
                     },
@@ -1156,13 +1158,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ],
               ),
               Column(
-                  children: columnedMultiLineOutput(context, _outputIdentifier(_WherigoCartridgeLUA.Identifiers[_identifierIndex - 1]))
+                  children: columnedMultiLineOutput(context, _outputIdentifier(_WherigoCartridgeLUA.Variables[_identifierIndex - 1]))
               ),
               GCWExpandableTextDivider(
                 expanded: false,
                 text: i18n(context, 'wherigo_output_identifier_details'),
                 child: Column(
-                    children: columnedMultiLineOutput(context, _outputIdentifierDetails(_WherigoCartridgeLUA.Identifiers[_identifierIndex - 1]))
+                    children: columnedMultiLineOutput(context, _outputIdentifierDetails(_WherigoCartridgeLUA.Variables[_identifierIndex - 1]))
                 ),
               ),
 
@@ -1784,14 +1786,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       switch (dataType){
         case DATA_TYPE_GWC:
           _WherigoCartridgeGWC = _outData['WherigoCartridgeGWC'];
-          if (_WherigoCartridgeLUA.httpCode != '200') {
-            showToast(
-                i18n(context, 'wherigo_code_http') + _WherigoCartridgeLUA.httpCode + '\n\n' +
-                    i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]) + '\n' +
-                    i18n(context, _WherigoCartridgeLUA.httpMessage),
-                duration: 30
-            );
-          }
+
           switch (_WherigoCartridgeGWC.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
               toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + dataType;
@@ -1804,6 +1799,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               toastDuration = 20;
               break;
           }
+
           if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&_WherigoCartridgeLUA.CartridgeGUID != '' ) {
             _WherigoCartridgeLUA = _resetLUA();
             showToast(
@@ -1819,6 +1815,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             NameToObject = _WherigoCartridgeLUA.NameToObject;
           else
             NameToObject = {};
+
+          if (!_showLUAOfflineLoader)
+            if (_WherigoCartridgeLUA.httpCode != '200') {
+              showToast(
+                  i18n(context, 'wherigo_code_http') + _WherigoCartridgeLUA.httpCode + '\n\n' +
+                      i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]) + '\n' +
+                      i18n(context, _WherigoCartridgeLUA.httpMessage),
+                  duration: 30
+              );
+            }
+
           switch (_WherigoCartridgeLUA.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
               toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + dataType;
@@ -1831,6 +1838,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               toastDuration = 20;
               break;
           }
+
           if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID && _WherigoCartridgeGWC.CartridgeGUID != '') {
             _WherigoCartridgeGWC = _resetGWC();
             showToast(
@@ -1911,45 +1919,47 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildZonesForMapExport(){
-    // Clear data
-    _points.clear();
-    _polylines.clear();
+    if (_WherigoCartridgeLUA.Zones != null) {
+      // Clear data
+      _points.clear();
+      _polylines.clear();
 
-    // Build data
-    _WherigoCartridgeLUA.Zones.forEach((zone) {
-      _points.add( // add originalpoint of zone
-          GCWMapPoint(
-              uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName].ObjectName,
-              markerText: NameToObject[zone.ZoneLUAName].ObjectName,
-              point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
-              color: Colors.black87));
-
-      List<GCWMapPoint> polyline = [];
-      zone.ZonePoints.forEach((point) {
-        polyline.add(
+      // Build data
+      _WherigoCartridgeLUA.Zones.forEach((zone) {
+        _points.add( // add originalpoint of zone
             GCWMapPoint(
-                point: LatLng(point.Latitude, point.Longitude),
+                uuid: 'Original Point ' + NameToObject[zone.ZoneLUAName].ObjectName,
+                markerText: NameToObject[zone.ZoneLUAName].ObjectName,
+                point: LatLng(zone.ZoneOriginalPoint.Latitude, zone.ZoneOriginalPoint.Longitude),
+                color: Colors.black87));
+
+        List<GCWMapPoint> polyline = [];
+        zone.ZonePoints.forEach((point) {
+          polyline.add(
+              GCWMapPoint(
+                  point: LatLng(point.Latitude, point.Longitude),
+                  color: Colors.black));
+        });
+        polyline.add( // close polyline
+            GCWMapPoint(
+                point: LatLng(zone.ZonePoints[0].Latitude, zone.ZonePoints[0].Longitude),
+                color: Colors.black));
+        _polylines.add(
+            GCWMapPolyline(
+                uuid: zone.ZoneLUAName,
+                points: polyline,
                 color: Colors.black));
       });
-      polyline.add( // close polyline
-          GCWMapPoint(
-              point: LatLng(zone.ZonePoints[0].Latitude, zone.ZonePoints[0].Longitude),
-              color: Colors.black));
-      _polylines.add(
-          GCWMapPolyline(
-              uuid: zone.ZoneLUAName,
-              points: polyline,
-              color: Colors.black));
-    });
 
-    if (_WherigoCartridgeGWC.Latitude != 0.0 && _WherigoCartridgeGWC.Longitude != 0.0)
-      _points.add(
-          GCWMapPoint(
-              uuid: 'Cartridge Start',
-              markerText: 'Wherigo "' + _WherigoCartridgeGWC.CartridgeName + '"',
-              point: LatLng(_WherigoCartridgeGWC.Latitude, _WherigoCartridgeGWC.Longitude),
-              color: Colors.redAccent));
+      if (_WherigoCartridgeGWC.Latitude != 0.0 && _WherigoCartridgeGWC.Longitude != 0.0)
+        _points.add(
+            GCWMapPoint(
+                uuid: 'Cartridge Start',
+                markerText: 'Wherigo "' + _WherigoCartridgeGWC.CartridgeName + '"',
+                point: LatLng(_WherigoCartridgeGWC.Latitude, _WherigoCartridgeGWC.Longitude),
+                color: Colors.redAccent));
 
+    }
   }
 
   _buildHeader(){

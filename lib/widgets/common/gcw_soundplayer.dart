@@ -83,7 +83,6 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     await _audioPlayerStop();
 
     // save byteData to File
-    String fileName = 'tempfile';
 
     var byteData = widget.file.bytes;
 
@@ -120,6 +119,8 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     Future.delayed(Duration.zero, () async {
       await advancedPlayer.stop();
     });
+
+    _audioFile.delete();
     super.dispose();
   }
 
@@ -248,9 +249,9 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
   Future<File> _writeToFile(ByteData data) async {
     final buffer = data.buffer;
-    Directory tempDir = await getTemporaryDirectory();
+    Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
-    var filePath = tempPath + '/file_01.tmp'; // file_01.tmp is dump file, can be anything
+    var filePath = tempPath + '/audiofile.tmp';
     return new File(filePath).writeAsBytes(
         buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
