@@ -31,7 +31,8 @@ enum TeletypewriterCodebook {
   CCIR476,
   ZC1,
   TTS,
-  ILLIAC
+  ILLIAC,
+  ALGOL
 }
 
 Map<TeletypewriterCodebook, Map<String, String>> ANCIENT_CODEBOOK = {
@@ -100,6 +101,7 @@ Map<TeletypewriterCodebook, Map<String, int>> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.ZC1 : {'punchHoles' : 8, 'sprocketHole': 4},
   TeletypewriterCodebook.TTS : {'punchHoles' : 6, 'sprocketHole': 4},
   TeletypewriterCodebook.ILLIAC : {'punchHoles' : 5, 'sprocketHole': 3},
+  TeletypewriterCodebook.ALGOL : {'punchHoles' : 6, 'sprocketHole': 4},
 };
 
 Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
@@ -123,6 +125,7 @@ Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.ZC1: 8,
   TeletypewriterCodebook.TTS: 6,
   TeletypewriterCodebook.ILLIAC: 5,
+  TeletypewriterCodebook.ALGOL: 5,
 };
 
 final AZToCCITT_BAUDOT = {
@@ -916,6 +919,39 @@ final AZToCCIR476 = {
 };
 final CCIR476ToAZ = switchMapKeyValue(AZToCCIR476);
 
+final AZToALGOL = {
+  'A': 3,
+  'B': 25,
+  'C': 14,
+  'D': 9,
+  'E': 1,
+  'F': 13,
+  'G': 26,
+  'H': 20,
+  'I': 6,
+  'J': 11,
+  'K': 15,
+  'L': 18,
+  'M': 28,
+  'N': 12,
+  'O': 24,
+  'P': 22,
+  'Q': 23,
+  'R': 10,
+  'S': 5,
+  'T': 16,
+  'U': 7,
+  'V': 30,
+  'W': 19,
+  'X': 29,
+  'Y': 21,
+  'Z': 17,
+  ' ': 4,
+  '\r': 2,
+  '\n': 8,
+};
+final ALGOLToAZ = switchMapKeyValue(AZToALGOL);
+
 final NumbersToCCITT_ITA1_1926 = {
   '1': 1,
   '8': 12,
@@ -1145,6 +1181,39 @@ final NumbersToCCIR476 = {
 };
 final CCIR476ToNumbers = switchMapKeyValue(NumbersToCCIR476);
 
+final NumbersToALGOL = {
+  '-': 3,
+  '*': 25,
+  ':': 14,
+  // national : 9
+  '3': 1,
+  '[' : 13,
+  ']' : 26,
+  // national : 20
+  '8': 6,
+  ';' : 11, // Bell
+  '(': 15,
+  ')': 18,
+  '.': 28,
+  ',': 12,
+  '9': 24,
+  '0': 22,
+  '1': 23,
+  '4': 10,
+  '\'': 5,
+  '5': 16,
+  '7': 7,
+  '=': 30,
+  '2': 19,
+  '/': 29,
+  '6': 21,
+  '+': 17,
+  ' ': 4,
+  '\r': 2,
+  '\n': 8,
+};
+final ALGOLToNumbers = switchMapKeyValue(NumbersToALGOL);
+
 final AZToZC1 = {
   '"': 96,
   '\'': 97,
@@ -1357,6 +1426,7 @@ final _NUMBERS_FOLLOW = {
   TeletypewriterCodebook.CCIR476 : 54,
   TeletypewriterCodebook.TTS : 54,
   TeletypewriterCodebook.ILLIAC : 27,
+  TeletypewriterCodebook.ALGOL : 27,
 };
 final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.BAUDOT_54123 : 1, //16,
@@ -1376,6 +1446,7 @@ final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.CCIR476 : 127,
   TeletypewriterCodebook.TTS : 54,
   TeletypewriterCodebook.ILLIAC : 5,
+  TeletypewriterCodebook.ALGOL : 31,
 };
 
 
@@ -1399,6 +1470,7 @@ int _EncodeAZ(TeletypewriterCodebook language, String text){
     case TeletypewriterCodebook.CCIR476: return AZToCCIR476[text]; break;
     case TeletypewriterCodebook.ILLIAC: return AZToILLIAC[text]; break;
     case TeletypewriterCodebook.TTS: return AZToTTS[text]; break;
+    case TeletypewriterCodebook.ALGOL: return AZToALGOL[text]; break;
   }
 }
 
@@ -1422,6 +1494,7 @@ int _EncodeNumber(TeletypewriterCodebook language, String text){
     case TeletypewriterCodebook.CCIR476: return NumbersToCCIR476[text]; break;
     case TeletypewriterCodebook.ILLIAC: return NumbersToILLIAC[text]; break;
     case TeletypewriterCodebook.TTS: return NumbersToTTS[text]; break;
+    case TeletypewriterCodebook.ALGOL: return NumbersToALGOL[text]; break;
   }
 }
 
@@ -1445,6 +1518,7 @@ String _DecodeAZ(TeletypewriterCodebook language, int code){
     case TeletypewriterCodebook.CCIR476: return CCIR476ToAZ[code]; break;
     case TeletypewriterCodebook.ILLIAC: return ILLIACToAZ[code]; break;
     case TeletypewriterCodebook.TTS: return TTSToAZ[code]; break;
+    case TeletypewriterCodebook.ALGOL: return ALGOLToAZ[code]; break;
   }
 }
 
@@ -1468,6 +1542,7 @@ String _DecodeNumber(TeletypewriterCodebook language, int code){
     case TeletypewriterCodebook.CCIR476: return CCIR476ToNumbers[code]; break;
     case TeletypewriterCodebook.ILLIAC: return ILLIACToNumbers[code]; break;
     case TeletypewriterCodebook.TTS: return TTSToNumbers[code]; break;
+    case TeletypewriterCodebook.ALGOL: return ALGOLToNumbers[code]; break;
   }
 }
 
@@ -1548,6 +1623,7 @@ String encodeTeletypewriter(String input, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCIR476:
     case TeletypewriterCodebook.ILLIAC:
     case TeletypewriterCodebook.TTS:
+    case TeletypewriterCodebook.ALGOL:
         removeAccents(input.toUpperCase()).split('').forEach((character) {
           if (isLetterMode) {
             var code = _EncodeAZ(language, character);
@@ -1657,6 +1733,7 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
     case TeletypewriterCodebook.CCIR476:
     case TeletypewriterCodebook.ILLIAC:
     case TeletypewriterCodebook.TTS:
+    case TeletypewriterCodebook.ALGOL:
       values.forEach((value) {
         if (value == _NUMBERS_FOLLOW[language]) {
           isLetterMode = false;

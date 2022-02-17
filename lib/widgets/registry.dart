@@ -103,6 +103,7 @@ import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
@@ -392,6 +393,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'alcoholmass',
+    ]),
+    GCWTool(tool: ALGOL(), i18nPrefix: 'algol', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'algol',
     ]),
     GCWTool(tool: AlphabetValues(), i18nPrefix: 'alphabetvalues', categories: [
       ToolCategory.CRYPTOGRAPHY

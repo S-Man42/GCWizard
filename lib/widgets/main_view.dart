@@ -65,6 +65,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
@@ -431,6 +432,7 @@ void _initStaticToolList() {
       className(ADFGVX()),
       className(Affine()),
       className(AlcoholMass()),
+      className(ALGOL()),
       className(AlphabetValues()),
       className(Amsco()),
       className(AnimatedImage()),

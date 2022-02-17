@@ -61,6 +61,8 @@
   "alcoholmass_alcoholmass": "Mass",
   "alcoholmass_volume": "Volume",
   "alcoholmass_alcoholbyvolume": "ABV (%)",
+  "algol_title": "ALGOL",
+  "algol_description": "Usage of an adapted CCITT-2 code",
   "alphabet_name_az": "Standard Alphabet",
   "alphabet_name_az_description": "A-Z → 1-26",
   "alphabet_name_german1": "German, Version 1",
