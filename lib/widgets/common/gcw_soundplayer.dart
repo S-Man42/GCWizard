@@ -78,25 +78,13 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   }
 
   Future _initAudioFile() async {
-
-
     await _audioPlayerStop();
 
     // save byteData to File
-
     var byteData = widget.file.bytes;
 
     if (kIsWeb) {
-      // var blob = new html.Blob([byteData], 'image/png');
-      // html.AnchorElement(
-      //   href: html.Url.createObjectUrl(blob),
-      // )
-      //   ..setAttribute("download", fileName)
-      //   ..click();
-      //
-      // int result = await advancedPlayer.playBytes(byteData);
-      //
-      // return Future.value(byteData);
+      // do nothing - web does not support local filö or byte array
     } else {
       _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
     }
@@ -212,30 +200,22 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
   _audioPlayerPlay({bool seek: false}) async {
     if (kIsWeb) {
-      // var blob = new html.Blob([byteData], 'image/png');
-      // html.AnchorElement(
-      //   href: html.Url.createObjectUrl(blob),
-      // )
-      //   ..setAttribute("download", fileName)
-      //   ..click();
-      //
-      // int result = await advancedPlayer.playBytes(byteData);
-      //
-      // return Future.value(byteData);
+      // do nothing - web does not support local filö or byte array
     }
+    else {
+      if (playerState == PlayerState.paused) {
+        if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
+          var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
+          await advancedPlayer.seek(Duration(milliseconds: newPosition));
+        }
 
-    if (playerState == PlayerState.paused) {
-      if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
-        var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
-        await advancedPlayer.seek(Duration(milliseconds: newPosition));
+        await advancedPlayer.resume();
+      } else {
+        await advancedPlayer.play(_audioFile.path, isLocal: true);
       }
 
-      await advancedPlayer.resume();
-    } else {
-      await advancedPlayer.play(_audioFile.path, isLocal: true);
+      setState(() => playerState = PlayerState.playing);
     }
-
-    setState(() => playerState = PlayerState.playing);
   }
 
   Future _audioPlayerStop() async {
