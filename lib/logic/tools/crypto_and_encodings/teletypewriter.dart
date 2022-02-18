@@ -35,6 +35,10 @@ enum TeletypewriterCodebook {
   ALGOL
 }
 
+final List<TeletypewriterCodebook> REVERSE_CODEBOOK = [
+  TeletypewriterCodebook.ILLIAC,
+];
+
 Map<TeletypewriterCodebook, Map<String, String>> ANCIENT_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
   TeletypewriterCodebook.BAUDOT_54123: {'title': 'punchtape_baudot_54123_title', 'subtitle': 'punchtape_baudot_54123_description'},
@@ -78,6 +82,7 @@ Map<TeletypewriterCodebook, Map<String, String>> CCITT_CODEBOOK = {
   TeletypewriterCodebook.ZC1: {'title': 'punchtape_zc1_title', 'subtitle': 'punchtape_zc1_description'},
   TeletypewriterCodebook.TTS: {'title': 'punchtape_tts_title', 'subtitle': 'punchtape_tts_description'},
   TeletypewriterCodebook.ILLIAC: {'title': 'punchtape_illiac_title', 'subtitle': 'punchtape_illiac_description'},
+  TeletypewriterCodebook.ALGOL: {'title': 'punchtape_algol_title', 'subtitle': 'punchtape_algol_description'},
 };
 
 Map<TeletypewriterCodebook, Map<String, int>> PUNCHTAPE_DEFINITION = {
@@ -100,8 +105,8 @@ Map<TeletypewriterCodebook, Map<String, int>> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.CCIR476 : {'punchHoles' : 7, 'sprocketHole': 4},
   TeletypewriterCodebook.ZC1 : {'punchHoles' : 8, 'sprocketHole': 4},
   TeletypewriterCodebook.TTS : {'punchHoles' : 6, 'sprocketHole': 4},
-  TeletypewriterCodebook.ILLIAC : {'punchHoles' : 5, 'sprocketHole': 3},
-  TeletypewriterCodebook.ALGOL : {'punchHoles' : 6, 'sprocketHole': 4},
+  TeletypewriterCodebook.ILLIAC : {'punchHoles' : 5, 'sprocketHole': 4},
+  TeletypewriterCodebook.ALGOL : {'punchHoles' : 5, 'sprocketHole': 4},
 };
 
 Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
@@ -1339,66 +1344,66 @@ final AZToZC1 = {
 final ZC1ToAZ = switchMapKeyValue(AZToZC1);
 
 final AZToILLIAC = {
-  'A': 13,
-  'B': 25,
-  'C': 23,
+  'A': 22,
+  'B': 19,
+  'C': 29,
   'D': 17,
-  'E': 24,
+  'E': 3,
   'F': 14,
-  'G': 19,
-  'H': 7,
-  'I': 2,
-  'J': 22,
+  'G': 25,
+  'H': 28,
+  'I': 8,
+  'J': 13,
   'K': 10,
-  'L': 30,
-  'M': 11,
-  'N': 6,
-  'O': 18,
+  'L': 15,
+  'M': 26,
+  'N': 12,
+  'O': 9,
   'P': 0,
-  'Q': 16,
+  'Q': 1,
   'R': 4,
-  'S': 26,
-  'T': 20,
-  'U': 28,
+  'S': 11,
+  'T': 5,
+  'U': 7,
   'V': 21,
-  'W': 8,
-  'X': 29,
-  'Y': 12,
-  'Z': 15,
+  'W': 2,
+  'X': 23,
+  'Y': 6,
+  'Z': 30,
   ' ': 31,
-  '\n': 9,
+  '\n': 18,
 };
 final ILLIACToAZ = switchMapKeyValue(AZToILLIAC);
 
 final NumbersToILLIAC = {
-  ')': 13,
-  '(': 25,
-  ':': 23,
+  ')': 22,
+  '(': 19,
+  ':': 29,
   '\$': 17,
-  '3': 24,
+  '3': 3,
   'F': 14,
-  '=': 19,
-  '\'': 7,
-  '8': 2,
-  'J': 22,
+  '=': 25,
+  '\'': 28,
+  '8': 8,
+  'J': 13,
   '+': 10,
-  'L': 30,
-  '.': 11,
-  'N': 6,
-  '9': 18,
+  'L': 15,
+  '.': 26,
+  'N': 12,
+  '9': 9,
   '0': 0,
-  '1': 16,
+  '1': 1,
   '4': 4,
-  '-': 26,
-  '5': 20,
-  '7': 28,
+  '-': 11,
+  '5': 5,
+  '7': 7,
   ',': 21,
-  '2': 8,
-  '/': 29,
-  '6': 12,
-  'X': 15,
+  '2': 2,
+  '/': 23,
+  '6': 6,
+  '*': 30,
   ' ': 31,
-  '\n': 9,
+  '\n': 18,
 };
 final ILLIACToNumbers  = switchMapKeyValue(NumbersToILLIAC);
 
@@ -1517,7 +1522,7 @@ final _LETTERS_FOLLOW = {
   TeletypewriterCodebook.CCITT_ITA4 : 62,
   TeletypewriterCodebook.CCIR476 : 127,
   TeletypewriterCodebook.TTS : 54,
-  TeletypewriterCodebook.ILLIAC : 5,
+  TeletypewriterCodebook.ILLIAC : 20,
   TeletypewriterCodebook.ALGOL : 54,
 };
 
