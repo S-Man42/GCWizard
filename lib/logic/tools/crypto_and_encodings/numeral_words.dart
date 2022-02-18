@@ -238,7 +238,7 @@ final Map<String, String> DNKWordToNum = {
 final Map<String, String> NLDWordToNum = {
   'nul': '0',
   'een': '1',
-  'zwee': '2',
+  'twee': '2',
   'drie': '3',
   'vier': '4',
   'vijf': '5',
