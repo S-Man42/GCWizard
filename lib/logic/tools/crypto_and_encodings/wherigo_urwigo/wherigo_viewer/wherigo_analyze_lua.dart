@@ -51,10 +51,32 @@ Future<Map<String, dynamic>> getCartridgeLUA(
         print('got LUA Sourcecode');
         _LUAFile = responseData.body;
       }
+      else {
+        out.addAll({
+          'WherigoCartridgeLUA': WherigoCartridgeLUA(
+              LUAFile: _LUAFile,
+              Characters: [],
+              Items: [],
+              Tasks: [],
+              Inputs: [],
+              Zones: [],
+              Timers: [],
+              Media: [],
+              Messages: [],
+              Answers: [],
+              Variables: [],
+              NameToObject: {},
+              ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
+              ResultsLUA: [HTTP_STATUS[_httpCode]],
+              httpCode: _httpCode,
+              httpMessage: _httpMessage)
+        });
+        return out;
+      }
     } catch (exception) {
       //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
       print(exception.toString());
-      _httpCode = '5xx';
+      _httpCode = '503';
       _httpMessage = exception.toString();
       out.addAll({
         'WherigoCartridgeLUA': WherigoCartridgeLUA(
@@ -71,10 +93,11 @@ Future<Map<String, dynamic>> getCartridgeLUA(
             Variables: [],
             NameToObject: {},
             ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
-            ResultsLUA: [],
+            ResultsLUA: ['wherigo_code_http_503'],
             httpCode: _httpCode,
             httpMessage: _httpMessage)
       });
+      return out;
     } // end catch exception
   } // end if not offline
   else

@@ -622,7 +622,9 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
 
 final Map<String, String> HTTP_STATUS = {
   '200' : 'wherigo_code_http_200',
-  '5xx' : 'wherigo_code_http_5xx',
+  '400' : 'wherigo_code_http_400',
+  '500' : 'wherigo_code_http_500',
+  '503' : 'wherigo_code_http_503',
 };
 
 
