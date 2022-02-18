@@ -73,6 +73,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   _hasSpecialEncryption() {
     switch (_data.symbolKey) {
       case 'color_honey':
+      case 'color_tokki':
       case 'puzzle':
       case 'stippelcode':
         return true;
