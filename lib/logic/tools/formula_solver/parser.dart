@@ -24,6 +24,8 @@ class FormulaParser {
   ContextModel _context;
   Parser parser;
 
+  bool unlimitedExpanded = false;
+
   static final Map<String, double> CONSTANTS = {
     'ln10': ln10,
     'ln2': ln2,
@@ -85,7 +87,9 @@ class FormulaParser {
     '*': '×',
   };
 
-  FormulaParser() {
+  FormulaParser({unlimitedExpanded: false}) {
+    this.unlimitedExpanded = unlimitedExpanded;
+
     _context = ContextModel();
 
     CONSTANTS.entries.forEach((constant) {
@@ -200,7 +204,7 @@ class FormulaParser {
       var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
         return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
-      } else if (count > _MAX_EXPANDED) {
+      } else if (!unlimitedExpanded && count > _MAX_EXPANDED) {
         return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': substitutedFormula};
       }
 

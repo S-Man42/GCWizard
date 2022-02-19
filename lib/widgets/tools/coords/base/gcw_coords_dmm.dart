@@ -104,8 +104,6 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
       _LonMilliMinutesController.text = _currentLonMilliMinutes;
     }
 
-    print(_currentLatSign);
-
     return Column(children: <Widget>[
       Row(
         children: <Widget>[

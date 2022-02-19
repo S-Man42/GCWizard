@@ -24,13 +24,9 @@ void main() {
         var actual = reverseProjection(elem['coord'], elem['bearing'], elem['distance'], getEllipsoidByName(ELLIPSOID_NAME_WGS84));
         var equals = false;
         for (LatLng l in actual) {
-          print(l);
-
           if (equalsLatLng(l, elem['expectedOutput']))
             equals = true;
         }
-        print(actual);
-
         expect(equals, true);
       });
     });

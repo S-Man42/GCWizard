@@ -62,7 +62,6 @@ flutter:
     - assets/quadgrams/
     - assets/tokens/
     - assets/searchstrings/
-    - assets/symbol_tables/
     - assets/symbol_tables/adlam/
     - assets/symbol_tables/albhed/
     - assets/symbol_tables/alchemy/

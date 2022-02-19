@@ -71,12 +71,86 @@ void main() {
         var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
 
         List<Map<String, dynamic>> _actualCoords = _actual['coordinates'];
+        expect(_actualCoords.length, 12);
+
         var _expectedCoords = elem['expectedOutput']['coordinates'];
         _actualCoords.asMap().forEach((index, actualCoord) {
           expect(true, equalsLatLng(actualCoord['coordinate'], _expectedCoords[index]['coordinate']));
           expect(actualCoord['variables'], _expectedCoords[index]['variables']);
         });
         expect(_actual['leftPadCoordinates'], elem['expectedOutput']['leftPadCoordinates']);
+      });
+    });
+  });
+  
+  group("Parser.variableLatLon.parseVariableLatLonWithoutVariables:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': 'N 50 54.216 E 011 35.215', 'values': null, 'expectedOutput': [{
+        'coordinate': LatLng(50.9036, 11.586917),
+        'variables': {}
+      }]},
+      {'text': 'N 50 54.216 E 011 35.215', 'values': {'Y': '1-3'}, 'expectedOutput': [{
+        'coordinate': LatLng(50.9036, 11.586917),
+        'variables': {'Y': '1'}
+      }]},
+      {'text': 'N 50 54.216 E 011 35.215', 'values': {'Y': '1-3'},
+        'projectionData': {
+          'bearing': '318',
+          'distance': '1100 - 13.45 * Y',
+          'lengthUnit': UNITCATEGORY_LENGTH.defaultUnit,
+          'ellipsoid': getEllipsoidByName('WGS84')
+        },
+        'expectedOutput':  [{
+          'coordinate': LatLng(50.910858, 11.576579),
+          'variables': {'Y': '1'}
+        },{
+          'coordinate': LatLng(50.910768, 11.576707),
+          'variables': {'Y': '2'}
+        },{
+          'coordinate': LatLng(50.910678, 11.576835),
+          'variables': {'Y': '3'}
+        }]
+      },
+      {'text': 'N 50 54.216 E 011 35.215', 'values': {'Y': '1-3'},
+        'projectionData': {
+          'bearing': '318',
+          'distance': '1100 - 13.45 × Y',
+          'lengthUnit': UNITCATEGORY_LENGTH.defaultUnit,
+          'ellipsoid': getEllipsoidByName('WGS84')
+        },
+        'expectedOutput':  [{
+          'coordinate': LatLng(50.910858, 11.576579),
+          'variables': {'Y': '1'}
+        },{
+          'coordinate': LatLng(50.910768, 11.576707),
+          'variables': {'Y': '2'}
+        },{
+          'coordinate': LatLng(50.910678, 11.576835),
+          'variables': {'Y': '3'}
+        }]
+      },
+      {'text': 'N 50 54.216 E 011 35.215', 'values': {'Y': '1-10'},
+        'projectionData': {
+          'bearing': '318',
+          'distance': '1100 - 13.45 × A',
+          'lengthUnit': UNITCATEGORY_LENGTH.defaultUnit,
+          'ellipsoid': getEllipsoidByName('WGS84')
+        },
+        'expectedOutput': []
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
+        var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
+
+        List<Map<String, dynamic>> _actualCoords = _actual['coordinates'];
+        expect(_actualCoords.length, elem['expectedOutput'].length);
+        _actualCoords.asMap().forEach((index, actualCoord) {
+          expect(true, equalsLatLng(actualCoord['coordinate'], elem['expectedOutput'][index]['coordinate']));
+          expect(actualCoord['variables'], elem['expectedOutput'][index]['variables']);
+        });
+        // expect(_actual['leftPadCoordinates'], elem['expectedOutput']['leftPadCoordinates']);
       });
     });
   });
@@ -108,6 +182,7 @@ void main() {
         var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
 
         List<Map<String, dynamic>> _actualCoords = _actual['coordinates'];
+        expect(_actualCoords.length, 1);
         var _expectedCoords = elem['expectedOutput']['coordinates'];
         _actualCoords.asMap().forEach((index, actualCoord) {
           expect(true, equalsLatLng(actualCoord['coordinate'], _expectedCoords[index]['coordinate']));
@@ -115,6 +190,7 @@ void main() {
         });
 
         List<Map<String, dynamic>> _actualLeftPadCoords = _actual['leftPadCoordinates'];
+        expect(_actualCoords.length, 1);
         var _expectedLeftPadCoords = elem['expectedOutput']['leftPadCoordinates'];
         _actualLeftPadCoords.asMap().forEach((index, actualCoord) {
           expect(true, equalsLatLng(actualCoord['coordinate'], _expectedLeftPadCoords[index]['coordinate']));

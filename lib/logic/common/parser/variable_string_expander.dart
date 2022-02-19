@@ -255,6 +255,9 @@ class VariableStringExpander {
 }
 
 int preCheckCombinations(Map<String, String> substitutions) {
+  if (substitutions == null || substitutions.isEmpty)
+    return 0;
+
   var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
   var count = expander.run(onlyPrecheck: true);
 

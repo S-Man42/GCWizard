@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
@@ -8,19 +9,18 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specials
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
-class _SymbolTableConstants {
-  final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
-  final ARCHIVE_SUFFIX = RegExp(r'\.(zip)', caseSensitive: false);
+class SymbolTableConstants {
+  static final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
+  static final ARCHIVE_SUFFIX = RegExp(r'\.(zip)', caseSensitive: false);
 
-  final CONFIG_FILENAME = 'config.file';
-  final CONFIG_SPECIALMAPPINGS = 'special_mappings';
-  final CONFIG_TRANSLATE = 'translate';
-  final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
-  final CONFIG_CASESENSITIVE = 'case_sensitive';
-  final CONFIG_SPECIALSORT = 'special_sort';
-  final CONFIG_IGNORE = 'ignore';
+  static final CONFIG_FILENAME = 'config.file';
+  static final CONFIG_SPECIALMAPPINGS = 'special_mappings';
+  static final CONFIG_TRANSLATE = 'translate';
+  static final CONFIG_TRANSLATION_PREFIX = 'translation_prefix';
+  static final CONFIG_CASESENSITIVE = 'case_sensitive';
+  static final CONFIG_IGNORE = 'ignore';
 
-  final Map<String, String> CONFIG_SPECIAL_CHARS = {
+  static final Map<String, String> CONFIG_SPECIAL_CHARS = {
     "ampersand": "&",
     "asterisk": "*",
     "apostrophe": "'",
@@ -182,14 +182,19 @@ class SymbolData {
   bool primarySelected = false;
   bool secondarySelected = false;
   final String displayName;
+  final ui.Image standardImage;
+  final ui.Image specialEncryptionImage;
 
-  SymbolData({this.path, this.bytes, this.displayName});
+  SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
+
+  Size imageSize() {
+    return Size(standardImage.width.toDouble(), standardImage.height.toDouble());
+  }
 }
 
 class SymbolTableData {
   final BuildContext _context;
   final String symbolKey;
-  final _SymbolTableConstants _constants = _SymbolTableConstants();
 
   SymbolTableData(this._context, this.symbolKey);
 
@@ -205,8 +210,12 @@ class SymbolTableData {
     await _initializeImages();
   }
 
+  Size imageSize() {
+    return images.first.values.first.imageSize();
+  }
+
   bool isCaseSensitive() {
-    return config[_constants.CONFIG_CASESENSITIVE] != null && config[_constants.CONFIG_CASESENSITIVE] == true;
+    return config[SymbolTableConstants.CONFIG_CASESENSITIVE] != null && config[SymbolTableConstants.CONFIG_CASESENSITIVE] == true;
   }
 
   String _pathKey() {
@@ -216,48 +225,44 @@ class SymbolTableData {
   _loadConfig() async {
     var file;
     try {
-      file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + _constants.CONFIG_FILENAME);
+      file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + SymbolTableConstants.CONFIG_FILENAME);
     } catch (e) {}
 
     if (file == null) file = '{}';
 
     config = json.decode(file);
 
-    if (config[_constants.CONFIG_IGNORE] == null) config.putIfAbsent(_constants.CONFIG_IGNORE, () => <String>[]);
+    if (config[SymbolTableConstants.CONFIG_IGNORE] == null) config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
 
-    if (config[_constants.CONFIG_SPECIALMAPPINGS] == null)
-      config.putIfAbsent(_constants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
+    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] == null)
+      config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
 
-    _constants.CONFIG_SPECIAL_CHARS.entries.forEach((element) {
-      config[_constants.CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
+    SymbolTableConstants.CONFIG_SPECIAL_CHARS.entries.forEach((element) {
+      config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
     });
 
-    if (config[_constants.CONFIG_SPECIALSORT] == null || config[_constants.CONFIG_SPECIALSORT] == false) {
-      _sort = defaultSymbolSort;
-    } else {
-      switch (symbolKey) {
-        case "notes_names_altoclef":
-          _sort = specialSortNoteNames;
-          break;
-        case "notes_names_bassclef":
-          _sort = specialSortNoteNames;
-          break;
-        case "notes_names_trebleclef":
-          _sort = specialSortNoteNames;
-          break;
-        case "notes_notevalues":
-          _sort = specialSortNoteValues;
-          break;
-        case "notes_restvalues":
-          _sort = specialSortNoteValues;
-          break;
-        case "trafficsigns_germany":
-          _sort = specialSortTrafficSignsGermany;
-          break;
-        default:
-          _sort = defaultSymbolSort;
-          break;
-      }
+    switch (symbolKey) {
+      case "notes_names_altoclef":
+        _sort = specialSortNoteNames;
+        break;
+      case "notes_names_bassclef":
+        _sort = specialSortNoteNames;
+        break;
+      case "notes_names_trebleclef":
+        _sort = specialSortNoteNames;
+        break;
+      case "notes_notevalues":
+        _sort = specialSortNoteValues;
+        break;
+      case "notes_restvalues":
+        _sort = specialSortNoteValues;
+        break;
+      case "trafficsigns_germany":
+        _sort = specialSortTrafficSignsGermany;
+        break;
+      default:
+        _sort = defaultSymbolSort;
+        break;
     }
   }
 
@@ -269,10 +274,10 @@ class SymbolTableData {
 
     String key;
 
-    if (config[_constants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
-      key = config[_constants.CONFIG_SPECIALMAPPINGS][imageKey];
-    } else if (config[_constants.CONFIG_TRANSLATE] != null && config[_constants.CONFIG_TRANSLATE].contains(imageKey)) {
-      var translationPrefix = config[_constants.CONFIG_TRANSLATION_PREFIX];
+    if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
+      key = config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS][imageKey];
+    } else if (config[SymbolTableConstants.CONFIG_TRANSLATE] != null && config[SymbolTableConstants.CONFIG_TRANSLATE].contains(imageKey)) {
+      var translationPrefix = config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX];
       if (translationPrefix != null && translationPrefix.length > 0) {
         key = i18n(_context, translationPrefix + imageKey);
       } else {
@@ -297,33 +302,63 @@ class SymbolTableData {
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
-    final imagePaths = manifestMap.keys
+    final imageArchivePaths = manifestMap.keys
         .where((String key) => key.contains(_pathKey()))
-        .where((String key) => _constants.ARCHIVE_SUFFIX.hasMatch(key))
+        .where((String key) => SymbolTableConstants.ARCHIVE_SUFFIX.hasMatch(key))
         .toList();
 
-    if (imagePaths.isEmpty) return;
+    if (imageArchivePaths.isEmpty) return;
 
     // Read the Zip file from disk.
-    final bytes = await DefaultAssetBundle.of(_context).load(imagePaths.first);
-    InputStream input = new InputStream(bytes.buffer.asByteData());
+    final bytes = await DefaultAssetBundle.of(_context).load(
+        imageArchivePaths
+            .firstWhere((path) => !path.contains('_encryption'))
+    );
+    InputStream input = InputStream(bytes.buffer.asByteData());
     // Decode the Zip file
-    final archive = ZipDecoder().decodeBuffer(input);
+    final Archive archive = ZipDecoder().decodeBuffer(input);
 
-    images = archive
-        .map((file) {
-          var key = _createKey(file.name);
-          var imagePath = (file.isFile && _constants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
-          var value = imagePath;
-          var data = file.content;
+    var encryptionBytes;
+    Archive encryptionArchive;
+    var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
+    if (encryptionImageArchivePaths.isNotEmpty) {
+      encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);
+      input = InputStream(encryptionBytes.buffer.asByteData());
+      encryptionArchive = ZipDecoder().decodeBuffer(input);
+    }
 
-          return {key: SymbolData(path: value, bytes: data)};
-        })
-        .where((element) => !config[_constants.CONFIG_IGNORE].contains(element.keys.first.toLowerCase()))
-        .where((element) => element.values.first.path != null)
-        .toList();
+    images = [];
+    for (ArchiveFile file in archive) {
+      var key = _createKey(file.name);
+
+      if (config[SymbolTableConstants.CONFIG_IGNORE].contains(key))
+        continue;
+
+      var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
+      if (imagePath == null)
+        continue;
+
+      var standardImage = await _initializeImage(file.content);
+      var specialEncryptionImage;
+      if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
+        specialEncryptionImage = await _initializeImage(
+            encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name).content
+        );
+      }
+
+      images.add({key: SymbolData(
+          path: imagePath,
+          bytes: file.content,
+          standardImage: standardImage,
+          specialEncryptionImage: specialEncryptionImage
+      )});
+    }
 
     images.sort(_sort);
+  }
+
+  _initializeImage(List<int> bytes) async {
+    return decodeImageFromList(bytes);
   }
 
   int defaultSymbolSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
