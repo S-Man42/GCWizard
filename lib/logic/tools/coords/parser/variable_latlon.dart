@@ -30,14 +30,21 @@ Map<String, LatLng> _parseCoordText(String text) {
 _sanitizeVariableDoubleText(String text) {
   if (text == null) return null;
 
-  return text.replaceAll(',', '.').replaceAll(RegExp(r'[^0-9\.\[\]]'), '');
+  return text.replaceAll(',', '.').replaceAll(RegExp(r'\s+'), '');
 }
 
-_sanitizeForFormula(String formula) {
+_addBrackets(String formula) {
   RegExp regExp = new RegExp(r'\[.+?\]');
   if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
+}
+
+_removeBrackets(String formula) {
+  RegExp regExp = new RegExp(r'\[.+?\]');
+  if (!regExp.hasMatch(formula)) return formula;
+
+  return formula.substring(1, formula.length - 1);
 }
 
 Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
@@ -53,7 +60,10 @@ Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
 
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions,
     {Map<String, dynamic> projectionData = const {}}) {
-  var textToExpand = _sanitizeForFormula(coordinate);
+  if (substitutions == null)
+    substitutions = {};
+
+  var textToExpand;
 
   var withProjection = false;
   if (projectionData != null) {
@@ -62,9 +72,13 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
         projectionData['distance'] != null &&
         projectionData['distance'].length > 0) {
       withProjection = true;
-      textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['bearing']);
-      textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['distance']);
+
+      textToExpand = _addBrackets(coordinate);
+      textToExpand += String.fromCharCode(1) + _addBrackets(projectionData['bearing']);
+      textToExpand += String.fromCharCode(1) + _addBrackets(projectionData['distance']);
     }
+  } else {
+    textToExpand = coordinate;
   }
 
   var calculated = FormulaParser().parse(textToExpand,
@@ -77,11 +91,11 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
     if (withProjection) {
       var evaluatedTexts = expandedText.result.split(String.fromCharCode(1));
 
-      var parsedCoord = _parseCoordText(evaluatedTexts[0]);
+      var parsedCoord = _parseCoordText(_removeBrackets(evaluatedTexts[0]));
       if (parsedCoord == null) continue;
 
-      var parsedBearing = double.tryParse(_sanitizeVariableDoubleText(evaluatedTexts[1]));
-      var parsedDistance = double.tryParse(_sanitizeVariableDoubleText(evaluatedTexts[2]));
+      var parsedBearing = double.tryParse(_sanitizeVariableDoubleText(_removeBrackets(evaluatedTexts[1])));
+      var parsedDistance = double.tryParse(_sanitizeVariableDoubleText(_removeBrackets(evaluatedTexts[2])));
 
       if (parsedBearing == null || parsedDistance == null) continue;
 
@@ -106,7 +120,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
           var projected = {
             'coordinate': projection(entry.value, parsedBearing, projectionData['lengthUnit'].toMeter(parsedDistance),
                 projectionData['ellipsoid']),
-            'variables': expandedText.variables
+            'variables': expandedText.variables ?? {}
           };
 
           if (entry.key == 'coordinate')
@@ -116,12 +130,12 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
         }
       });
     } else {
-      var parsedCoord = _parseCoordText(expandedText.result);
+      var parsedCoord = _parseCoordText(_removeBrackets(expandedText.result));
       if (parsedCoord == null) continue;
 
-      coords.add({'variables': expandedText.variables, 'coordinate': parsedCoord['coordinate']});
+      coords.add({'variables': expandedText.variables ?? {}, 'coordinate': parsedCoord['coordinate']});
       if (parsedCoord['leftPadCoordinate'] != null) {
-        leftPadCoords.add({'variables': expandedText.variables, 'coordinate': parsedCoord['leftPadCoordinate']});
+        leftPadCoords.add({'variables': expandedText.variables ?? {}, 'coordinate': parsedCoord['leftPadCoordinate']});
       }
     }
   }

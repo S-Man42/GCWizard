@@ -50,6 +50,7 @@ final List<Map<String, dynamic>> inputsToExpectedDMM = [
   {'text': '52 6 20 06', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.1, 20.1)}},
   {'text': '-52 6 -20 06', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.1, -20.1)}},
   {'text': '-052 6 -20 06', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.1, -20.1)}},
+  {'text': 'N 52° 30.123 5 12', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.50205, 5.2)}},
 
   {'text': '52 12.312S 20 12.312West SomeText', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.2052, -20.2052)}},
   {'text': '52° 12.312\' S 20° 12.312\' W SomeMoreText', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.2052, -20.2052)}},

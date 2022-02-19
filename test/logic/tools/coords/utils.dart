@@ -9,7 +9,7 @@ bool equalsLatLng(LatLng a, LatLng b) {
   if ((a.latitude - b.latitude).abs() <= TOLERANCE) {
     if ((a.longitude - b.longitude).abs() <= TOLERANCE) return true;
 
-    if ((a.longitude.abs() - 180.0) <= TOLERANCE && (b.longitude.abs() - 180.0) <= TOLERANCE) return true;
+    if ((a.longitude.abs() - 180.0).abs() <= TOLERANCE && (b.longitude.abs() - 180.0).abs() <= TOLERANCE) return true;
   }
 
   return false;
