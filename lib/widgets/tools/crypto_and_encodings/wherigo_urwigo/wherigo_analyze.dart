@@ -79,6 +79,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   var _displayedCartridgeData = WHERIGO.NULL;
 
   bool _showLUAOfflineLoader = false;
+  bool _askedshowLUAOfflineLoader = false;
 
   List<Widget> _GWCFileStructure;
 
@@ -107,41 +108,53 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
+
+    if (Prefs.get('wherigo_asked_get_lua') == '1') {
+      _askedshowLUAOfflineLoader = true;
+      _showLUAOfflineLoader = (Prefs.get('wherigo_get_lua') == 'offline');
+    }
   }
 
   _askForOnlineDecompiling() {
-    showGCWDialog(
-        context,
-        i18n(context, 'wherigo_decompile_title'),
-        Container(
-          width: 250,
-          height: 330,
-          child: GCWText(
-            text: i18n(context, 'wherigo_decompile_message'),
-            style: gcwDialogTextStyle(),
+    if (!_askedshowLUAOfflineLoader) {
+      showGCWDialog(
+          context,
+          i18n(context, 'wherigo_decompile_title'),
+          Container(
+            width: 250,
+            height: 330,
+            child: GCWText(
+              text: i18n(context, 'wherigo_decompile_message'),
+              style: gcwDialogTextStyle(),
+            ),
           ),
-        ),
-        [
-          GCWDialogButton(
-              text: i18n(context, 'common_ok'),
-              onPressed: () {
-                setState(() {
-                  _showLUAOfflineLoader = false;
-                  Prefs.setString('wherigo_get_lua', 'online');
-                  // do decompiling and analyzing
-                  _setLUAData(_WherigoCartridgeGWC.MediaFilesContents[0].MediaFileBytes);
-                  _analyseCartridgeFileAsync(DATA_TYPE_LUA);
-                });
-              }),
-          GCWDialogButton(
-              text: i18n(context, 'common_cancel'),
-              onPressed: () {
-                setState(() {
-                  _showLUAOfflineLoader = true;
-                });
-              }),
-        ],
-        cancelButton: false);
+          [
+            GCWDialogButton(
+                text: i18n(context, 'common_ok'),
+                onPressed: () {
+                  setState(() {
+                    _showLUAOfflineLoader = false;
+                    Prefs.setString('wherigo_get_lua', 'online');
+                    // do decompiling and analyzing
+                    _setLUAData(_WherigoCartridgeGWC.MediaFilesContents[0].MediaFileBytes);
+                    _analyseCartridgeFileAsync(DATA_TYPE_LUA);
+                  });
+                }),
+            GCWDialogButton(
+                text: i18n(context, 'common_cancel'),
+                onPressed: () {
+                  setState(() {
+                    _showLUAOfflineLoader = true;
+                  });
+                }),
+          ],
+          cancelButton: false);
+      Prefs.setString('wherigo_asked_get_lua', '1');
+      _askedshowLUAOfflineLoader = true;
+    } else {
+      _setLUAData(_WherigoCartridgeGWC.MediaFilesContents[0].MediaFileBytes);
+      _analyseCartridgeFileAsync(DATA_TYPE_LUA);
+    }
   }
 
   @override
@@ -1910,7 +1923,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _outData = output;
     String toastMessage = '';
     int toastDuration = 3;
-    // restore references (problem with sendPort, lose references)
+
     if (_outData == null) {
       toastMessage = i18n(context, 'common_loadfile_exception_notloaded');
     } else {
@@ -1940,6 +1953,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 duration: 30);
           }
           break;
+
         case DATA_TYPE_LUA:
           _WherigoCartridgeLUA = _outData['WherigoCartridgeLUA'];
           if (_WherigoCartridgeLUA != null)
@@ -1947,16 +1961,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           else
             NameToObject = {};
 
-          if (!_showLUAOfflineLoader) if (_WherigoCartridgeLUA.httpCode != '200') {
-            showToast(
-                i18n(context, 'wherigo_code_http') +
-                    _WherigoCartridgeLUA.httpCode +
-                    '\n\n' +
-                    i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]) +
-                    '\n' +
-                    i18n(context, _WherigoCartridgeLUA.httpMessage),
-                duration: 30);
-          }
+          if (!_showLUAOfflineLoader) // got LUA via decompiling
+            if (_WherigoCartridgeLUA.httpCode != '200') {
+              if (_WherigoCartridgeLUA.httpMessage.startsWith('wherigo'))
+                showToast(
+                    i18n(context, 'wherigo_http_code') + ' ' +
+                        _WherigoCartridgeLUA.httpCode +
+                        '\n\n' +
+                        i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]) +
+                        '\n' +
+                        i18n(context, _WherigoCartridgeLUA.httpMessage),
+                    duration: 30);
+              else
+                showToast(
+                    i18n(context, 'wherigo_http_code') + ' ' +
+                        _WherigoCartridgeLUA.httpCode +
+                        '\n\n' +
+                        i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]) +
+                        '\n' +
+                        _WherigoCartridgeLUA.httpMessage,
+                    duration: 30);
+              _showLUAOfflineLoader = true;
+            }
 
           switch (_WherigoCartridgeLUA.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
@@ -1971,13 +1997,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               toastDuration = 20;
               break;
           }
-
-          if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
+          if (_WherigoCartridgeLUA.httpCode == '200')
+            if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
               _WherigoCartridgeGWC.CartridgeGUID != '') {
-            _WherigoCartridgeGWC = _resetGWC();
-            showToast(
-                i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_3'),
-                duration: 30);
+              _WherigoCartridgeGWC = _resetGWC();
+              showToast(
+                  i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_3'),
+                  duration: 30);
           }
           break;
       }

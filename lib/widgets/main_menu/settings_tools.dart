@@ -20,7 +20,7 @@ class ToolSettingsState extends State<ToolSettings> {
 
     if (Prefs.get('wherigo_get_lua') == 'online')
       _WherigoMode = GCWSwitchPosition.left;
-    if (Prefs.get('wherigo_get_lua') == 'offline')
+    else
       _WherigoMode = GCWSwitchPosition.right;
 
     return Column(

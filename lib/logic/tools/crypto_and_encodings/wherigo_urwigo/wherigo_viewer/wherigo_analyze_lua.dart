@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherig
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:dart_ping/dart_ping.dart';
 
 String _answerVariable = '';
 
@@ -26,11 +27,11 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool offline
   if (!offline) {
     print('starting to decompile');
     // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
-    // https://www.iana.org/assignments/media-types/media-types.xhtml
 
     try {
-      String address =
-          'http://192.168.178.93:8080/GCW_Unluac/UnluacServlet'; // 'https://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/UnluacServlet'
+      String address = 'http://192.168.178.93:7323/GCW_Unluac/UnluacServlet';
+      //String address = 'https://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/UnluacServlet';
+
       var uri = Uri.parse(address);
       var request = http.MultipartRequest('POST', uri)
         ..files.add(await http.MultipartFile.fromBytes('file', byteListLUA,
