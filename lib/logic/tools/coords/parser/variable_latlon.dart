@@ -15,7 +15,7 @@ class ParseVariableLatLonJobData {
 }
 
 Map<String, LatLng> _parseCoordText(String text) {
-  var parsedCoord = parseCoordinates(text);
+  var parsedCoord = parseCoordinates(text, wholeString: true);
   if (parsedCoord == null || parsedCoord.length == 0) return null;
 
   var out = <String, LatLng>{'coordinate': parsedCoord.elementAt(0).toLatLng()};
@@ -81,7 +81,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
     textToExpand = coordinate;
   }
 
-  var calculated = FormulaParser().parse(textToExpand,
+  var calculated = FormulaParser(unlimitedExpanded: true).parse(textToExpand,
       substitutions.entries.map((e) => FormulaValue(e.key, e.value, type: FormulaValueType.INTERPOLATED)).toList());
 
   var coords = <Map<String, dynamic>>[];
