@@ -1,20 +1,37 @@
-
 import 'dart:typed_data';
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum WHERIGO {NULL, GWCFILE, HEADER, LUAFILE, LUABYTECODE, CHARACTER, ITEMS, ZONES, INPUTS, TASKS, TIMERS, OBFUSCATORTABLE, MEDIAFILES, MESSAGES, IDENTIFIER, RESULTS_GWC, RESULTS_LUA}
+enum WHERIGO {
+  NULL,
+  GWCFILE,
+  HEADER,
+  LUAFILE,
+  LUABYTECODE,
+  CHARACTER,
+  ITEMS,
+  ZONES,
+  INPUTS,
+  TASKS,
+  TIMERS,
+  OBFUSCATORTABLE,
+  MEDIAFILES,
+  MESSAGES,
+  IDENTIFIER,
+  RESULTS_GWC,
+  RESULTS_LUA
+}
 
 const DATA_TYPE_LUA = 'LUA-Sourcecode';
 const DATA_TYPE_GWC = 'GWC-Cartridge';
 
-enum FILE_LOAD_STATE {NULL, GWC, LUA, FULL}
+enum FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
 
-enum BUILDER {EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN}
+enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
 
-enum ANALYSE_RESULT_STATUS {OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE}
+enum ANALYSE_RESULT_STATUS { OK, ERROR_GWC, ERROR_LUA, ERROR_HTTP, NONE }
 
-enum OBJECT_TYPE {MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES}
+enum OBJECT_TYPE { MEDIA, CARTRIDGE, ZONE, CHARACTER, ITEM, TASK, VARIABLES, TIMER, INPUT, MESSAGES }
 OBJECT_TYPE currentObjectSection;
 
 const MEDIATYPE_UNK = 0;
@@ -32,67 +49,58 @@ const MEDIATYPE_TXT = 49;
 
 Map MEDIATYPE = {
   MEDIATYPE_UNK: '<?>',
-  MEDIATYPE_BMP:'bmp',
-  MEDIATYPE_PNG:'png',
-  MEDIATYPE_JPG:'jpg',
-  MEDIATYPE_GIF:'gif',
-  MEDIATYPE_WAV:'wav',
-  MEDIATYPE_MP3:'mp3',
-  MEDIATYPE_FDL:'fdl',
-  MEDIATYPE_SND:'snd',
-  MEDIATYPE_OGG:'ogg',
-  MEDIATYPE_SWF:'swf',
-  MEDIATYPE_TXT:'txt'
+  MEDIATYPE_BMP: 'bmp',
+  MEDIATYPE_PNG: 'png',
+  MEDIATYPE_JPG: 'jpg',
+  MEDIATYPE_GIF: 'gif',
+  MEDIATYPE_WAV: 'wav',
+  MEDIATYPE_MP3: 'mp3',
+  MEDIATYPE_FDL: 'fdl',
+  MEDIATYPE_SND: 'snd',
+  MEDIATYPE_OGG: 'ogg',
+  MEDIATYPE_SWF: 'swf',
+  MEDIATYPE_TXT: 'txt'
 };
 
 Map MEDIACLASS = {
   MEDIATYPE_UNK: 'n/a',
-  MEDIATYPE_BMP:'Image',
-  MEDIATYPE_PNG:'Image',
-  MEDIATYPE_JPG:'Image',
-  MEDIATYPE_GIF:'Image',
-  MEDIATYPE_WAV:'Sound',
-  MEDIATYPE_MP3:'Sound',
-  MEDIATYPE_FDL:'Sound',
-  MEDIATYPE_SND:'Sound',
-  MEDIATYPE_OGG:'Sound',
-  MEDIATYPE_SWF:'Video',
-  MEDIATYPE_TXT:'Text'
+  MEDIATYPE_BMP: 'Image',
+  MEDIATYPE_PNG: 'Image',
+  MEDIATYPE_JPG: 'Image',
+  MEDIATYPE_GIF: 'Image',
+  MEDIATYPE_WAV: 'Sound',
+  MEDIATYPE_MP3: 'Sound',
+  MEDIATYPE_FDL: 'Sound',
+  MEDIATYPE_SND: 'Sound',
+  MEDIATYPE_OGG: 'Sound',
+  MEDIATYPE_SWF: 'Video',
+  MEDIATYPE_TXT: 'Text'
 };
 
-
-class StringOffset{
+class StringOffset {
   final String ASCIIZ;
   final int offset;
 
-  StringOffset(
-      this.ASCIIZ,
-      this.offset);
+  StringOffset(this.ASCIIZ, this.offset);
 }
 
-class MediaFileHeader{
+class MediaFileHeader {
   final int MediaFileID;
   final int MediaFileAddress;
 
-  MediaFileHeader(
-      this.MediaFileID,
-      this.MediaFileAddress);
+  MediaFileHeader(this.MediaFileID, this.MediaFileAddress);
 }
 
-class MediaFileContent{
+class MediaFileContent {
   final int MediaFileID;
   final int MediaFileType;
   final Uint8List MediaFileBytes;
   final int MediaFileLength;
 
-  MediaFileContent(
-      this.MediaFileID,
-      this.MediaFileType,
-      this.MediaFileBytes,
-      this.MediaFileLength);
+  MediaFileContent(this.MediaFileID, this.MediaFileType, this.MediaFileBytes, this.MediaFileLength);
 }
 
-class WherigoCartridge{
+class WherigoCartridge {
   final String Signature;
   final int NumberOfObjects;
   final List<MediaFileHeader> MediaFilesHeaders;
@@ -150,22 +158,51 @@ class WherigoCartridge{
   final String httpCode;
   final String httpMessage;
 
-  WherigoCartridge(this.Signature,
-      this.NumberOfObjects, this.MediaFilesHeaders, this.MediaFilesContents, this.LUAFile,
+  WherigoCartridge(
+      this.Signature,
+      this.NumberOfObjects,
+      this.MediaFilesHeaders,
+      this.MediaFilesContents,
+      this.LUAFile,
       this.HeaderLength,
-      this.Latitude, this.Longitude, this.Altitude,
-      this.Splashscreen, this.SplashscreenIcon,
-      this.DateOfCreation, this.TypeOfCartridge,
-      this.Player, this.PlayerID,
-      this.CartridgeLUAName, this.GWCCartridgeName, this.LUACartridgeName, this.GWCCartridgeGUID, this.LUACartridgeGUID, this.CartridgeDescription, this.StartingLocationDescription,
-      this.Version, this.Author, this.Company,
+      this.Latitude,
+      this.Longitude,
+      this.Altitude,
+      this.Splashscreen,
+      this.SplashscreenIcon,
+      this.DateOfCreation,
+      this.TypeOfCartridge,
+      this.Player,
+      this.PlayerID,
+      this.CartridgeLUAName,
+      this.GWCCartridgeName,
+      this.LUACartridgeName,
+      this.GWCCartridgeGUID,
+      this.LUACartridgeGUID,
+      this.CartridgeDescription,
+      this.StartingLocationDescription,
+      this.Version,
+      this.Author,
+      this.Company,
       this.RecommendedDevice,
-      this.LengthOfCompletionCode, this.CompletionCode,
-      this.ObfuscatorTable, this.ObfuscatorFunction,
-      this.Characters, this.Items, this.Tasks, this.Inputs, this.Zones, this.Timers, this.Media,
-      this.Messages, this.Answers, this.Identifiers,
+      this.LengthOfCompletionCode,
+      this.CompletionCode,
+      this.ObfuscatorTable,
+      this.ObfuscatorFunction,
+      this.Characters,
+      this.Items,
+      this.Tasks,
+      this.Inputs,
+      this.Zones,
+      this.Timers,
+      this.Media,
+      this.Messages,
+      this.Answers,
+      this.Identifiers,
       this.NameToObject,
-      this.ResultStatus, this.ResultsGWC, this.ResultsLUA,
+      this.ResultStatus,
+      this.ResultsGWC,
+      this.ResultsLUA,
       this.Builder,
       this.BuilderVersion,
       this.TargetDeviceVersion,
@@ -177,11 +214,10 @@ class WherigoCartridge{
       this.UpdateDate,
       this.LastPlayedDate,
       this.httpCode,
-      this.httpMessage
-      );
+      this.httpMessage);
 }
 
-class ObjectData{
+class ObjectData {
   final String ObjectID;
   final int ObjectIndex;
   final String ObjectName;
@@ -189,15 +225,15 @@ class ObjectData{
   final OBJECT_TYPE ObjectType;
 
   ObjectData(
-      this.ObjectID,
-      this.ObjectIndex,
-      this.ObjectName,
-      this.ObjectMedia,
-      this.ObjectType,
-      );
+    this.ObjectID,
+    this.ObjectIndex,
+    this.ObjectName,
+    this.ObjectMedia,
+    this.ObjectType,
+  );
 }
 
-enum ACTIONMESSAGETYPE {TEXT, IMAGE, BUTTON, COMMAND, CASE}
+enum ACTIONMESSAGETYPE { TEXT, IMAGE, BUTTON, COMMAND, CASE }
 
 Map<ACTIONMESSAGETYPE, String> ACTIONMESSAGETYPE_TEXT = {
   ACTIONMESSAGETYPE.TEXT: 'txt',
@@ -209,18 +245,15 @@ Map<ACTIONMESSAGETYPE, String> ACTIONMESSAGETYPE_TEXT = {
 
 Map TEXT_ACTIONMESSAGETYPE = switchMapKeyValue(ACTIONMESSAGETYPE_TEXT);
 
-class ZonePoint{
+class ZonePoint {
   final double Latitude;
   final double Longitude;
   final double Altitude;
 
-  ZonePoint(
-      this.Latitude,
-      this.Longitude,
-      this.Altitude);
+  ZonePoint(this.Latitude, this.Longitude, this.Altitude);
 }
 
-class ZoneData{
+class ZoneData {
   final String ZoneLUAName;
   final String ZoneID;
   final String ZoneName;
@@ -259,7 +292,7 @@ class ZoneData{
       this.ZonePoints);
 }
 
-class CharacterData{
+class CharacterData {
   final String CharacterLUAName;
   final String CharacterID;
   final String CharacterName;
@@ -288,7 +321,7 @@ class CharacterData{
       this.CharacterType);
 }
 
-class InputData{
+class InputData {
   final String InputLUAName;
   final String InputID;
   final String InputVariableID;
@@ -317,36 +350,35 @@ class InputData{
       this.InputAnswers);
 }
 
-class AnswerData{
+class AnswerData {
   final String AnswerAnswer;
   final List<ActionMessageElementData> AnswerActions;
 
   AnswerData(
-      this.AnswerAnswer,
-      this.AnswerActions,
-      );
+    this.AnswerAnswer,
+    this.AnswerActions,
+  );
 }
 
-class MessageData{
+class MessageData {
   final List<List<ActionMessageElementData>> MessageElement;
 
   MessageData(
-      this.MessageElement,
-      );
+    this.MessageElement,
+  );
 }
 
-class ActionMessageElementData{
+class ActionMessageElementData {
   final ACTIONMESSAGETYPE ActionMessageType;
   final String ActionMessageContent;
 
   ActionMessageElementData(
-      this.ActionMessageType,
-      this.ActionMessageContent,
-      );
+    this.ActionMessageType,
+    this.ActionMessageContent,
+  );
 }
 
-
-class TaskData{
+class TaskData {
   final String TaskLUAName;
   final String TaskID;
   final String TaskName;
@@ -358,17 +390,8 @@ class TaskData{
   final String TaskComplete;
   final String TaskCorrectstate;
 
-  TaskData(
-      this.TaskLUAName,
-      this.TaskID,
-      this.TaskName,
-      this.TaskDescription,
-      this.TaskVisible,
-      this.TaskMedia,
-      this.TaskIcon,
-      this.TaskActive,
-      this.TaskComplete,
-      this.TaskCorrectstate);
+  TaskData(this.TaskLUAName, this.TaskID, this.TaskName, this.TaskDescription, this.TaskVisible, this.TaskMedia,
+      this.TaskIcon, this.TaskActive, this.TaskComplete, this.TaskCorrectstate);
 }
 
 class MediaData {
@@ -380,26 +403,18 @@ class MediaData {
   final String MediaType;
   final String MediaFilename;
 
-  MediaData(
-      this.MediaLUAName,
-      this.MediaID,
-      this.MediaName,
-      this.MediaDescription,
-      this.MediaAltText,
-      this.MediaType,
+  MediaData(this.MediaLUAName, this.MediaID, this.MediaName, this.MediaDescription, this.MediaAltText, this.MediaType,
       this.MediaFilename);
 }
 
-class VariableData{
+class VariableData {
   final String VariableLUAName;
   final String VariableName;
 
-  VariableData(
-      this.VariableLUAName,
-      this.VariableName);
+  VariableData(this.VariableLUAName, this.VariableName);
 }
 
-class ItemData{
+class ItemData {
   final String ItemLUAName;
   final String ItemID;
   final String ItemName;
@@ -413,22 +428,11 @@ class ItemData{
   final String ItemLocked;
   final String ItemOpened;
 
-  ItemData(
-      this.ItemLUAName,
-      this.ItemID,
-      this.ItemName,
-      this.ItemDescription,
-      this.ItemVisible,
-      this.ItemMedia,
-      this.ItemIcon,
-      this.ItemLocation,
-      this.ItemZonepoint,
-      this.ItemContainer,
-      this.ItemLocked,
-      this.ItemOpened);
+  ItemData(this.ItemLUAName, this.ItemID, this.ItemName, this.ItemDescription, this.ItemVisible, this.ItemMedia,
+      this.ItemIcon, this.ItemLocation, this.ItemZonepoint, this.ItemContainer, this.ItemLocked, this.ItemOpened);
 }
 
-class TimerData{
+class TimerData {
   final String TimerLUAName;
   final String TimerID;
   final String TimerName;
@@ -437,17 +441,11 @@ class TimerData{
   final String TimerDuration;
   final String TimerType;
 
-  TimerData(
-      this.TimerLUAName,
-      this.TimerID,
-      this.TimerName,
-      this.TimerDescription,
-      this.TimerVisible,
-      this.TimerDuration,
-      this.TimerType);
+  TimerData(this.TimerLUAName, this.TimerID, this.TimerName, this.TimerDescription, this.TimerVisible,
+      this.TimerDuration, this.TimerType);
 }
 
-class WherigoCartridgeGWC{
+class WherigoCartridgeGWC {
   final String Signature;
   final int NumberOfObjects;
   final List<MediaFileHeader> MediaFilesHeaders;
@@ -507,7 +505,7 @@ class WherigoCartridgeGWC{
   });
 }
 
-class WherigoCartridgeLUA{
+class WherigoCartridgeLUA {
   final String LUAFile;
   final String CartridgeLUAName;
   final String CartridgeName;
@@ -540,39 +538,38 @@ class WherigoCartridgeLUA{
   final String httpCode;
   final String httpMessage;
 
-  WherigoCartridgeLUA({
-    this.LUAFile = '',
-    this.CartridgeLUAName = '',
-    this.CartridgeName = '',
-    this.CartridgeGUID = '',
-    this.ObfuscatorTable = '',
-    this.ObfuscatorFunction = '',
-    this.Characters ,
-    this.Items,
-    this.Tasks,
-    this.Inputs,
-    this.Zones,
-    this.Timers,
-    this.Media,
-    this.Messages,
-    this.Answers,
-    this.Variables,
-    this.NameToObject,
-    this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
-    this.ResultsLUA,
-    this.Builder = BUILDER.UNKNOWN,
-    this.BuilderVersion = '',
-    this.TargetDeviceVersion = '',
-    this.CountryID = '',
-    this.StateID = '',
-    this.UseLogging = '',
-    this.CreateDate = '',
-    this.PublishDate = '',
-    this.UpdateDate = '',
-    this.LastPlayedDate = '',
-    this.httpCode = '',
-    this.httpMessage = ''
-  });
+  WherigoCartridgeLUA(
+      {this.LUAFile = '',
+      this.CartridgeLUAName = '',
+      this.CartridgeName = '',
+      this.CartridgeGUID = '',
+      this.ObfuscatorTable = '',
+      this.ObfuscatorFunction = '',
+      this.Characters,
+      this.Items,
+      this.Tasks,
+      this.Inputs,
+      this.Zones,
+      this.Timers,
+      this.Media,
+      this.Messages,
+      this.Answers,
+      this.Variables,
+      this.NameToObject,
+      this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
+      this.ResultsLUA,
+      this.Builder = BUILDER.UNKNOWN,
+      this.BuilderVersion = '',
+      this.TargetDeviceVersion = '',
+      this.CountryID = '',
+      this.StateID = '',
+      this.UseLogging = '',
+      this.CreateDate = '',
+      this.PublishDate = '',
+      this.UpdateDate = '',
+      this.LastPlayedDate = '',
+      this.httpCode = '',
+      this.httpMessage = ''});
 }
 
 Map<WHERIGO, String> WHERIGO_DATA_FULL = {
@@ -621,11 +618,9 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
 };
 
 final Map<String, String> HTTP_STATUS = {
-  '200' : 'wherigo_code_http_200',
-  '400' : 'wherigo_code_http_400',
-  '500' : 'wherigo_code_http_500',
-  '503' : 'wherigo_code_http_503',
+  '200': 'wherigo_http_code_200',
+  '400': 'wherigo_http_code_400',
+  '413': 'wherigo_http_code_413',
+  '500': 'wherigo_http_code_500',
+  '503': 'wherigo_http_code_503',
 };
-
-
-
