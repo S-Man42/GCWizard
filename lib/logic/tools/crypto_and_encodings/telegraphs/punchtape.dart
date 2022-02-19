@@ -3,73 +3,24 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 
 List<String> decenary2segments(String decenary, bool original, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111
-  String binary = convertBase(decenary, 10, 2);
-  switch (language) {
-    case TeletypewriterCodebook.BAUDOT:
-    case TeletypewriterCodebook.MURRAY:
-    case TeletypewriterCodebook.SIEMENS:
-    case TeletypewriterCodebook.WESTERNUNION:
-    case TeletypewriterCodebook.BAUDOT_54123:
-    case TeletypewriterCodebook.CCITT_ITA1_1926:
-    case TeletypewriterCodebook.CCITT_ITA1_1929:
-    case TeletypewriterCodebook.CCITT_ITA1_EU:
-    case TeletypewriterCodebook.CCITT_ITA1_UK:
-    case TeletypewriterCodebook.CCITT_ITA2_1929:
-    case TeletypewriterCodebook.CCITT_ITA2_1931:
-    case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-    case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      binary = binary.padLeft(5, '0');
-      break;
-    case TeletypewriterCodebook.CCITT_ITA4:
-      binary = binary.padLeft(6, '0');
-      break;
-    case TeletypewriterCodebook.CCITT_ITA3:
-    case TeletypewriterCodebook.CCITT_IA5:
-    case TeletypewriterCodebook.CCIR476:
-      binary = binary.padLeft(7, '0');
-      break;
-    case TeletypewriterCodebook.ZC1:
-      binary = binary.padLeft(8, '0');
-      break;
-  }
-
-  if (original)
-    binary = binary.split('').reversed.join('');
+  String binary = convertBase(decenary, 10, 2).padLeft(BINARY_LENGTH[language], '0');
   List<String> result = [];
+
+  if (REVERSE_CODEBOOK.contains(language)) {
+    binary = binary.split('').reversed.join('');
+  }
+  else {
+    if (original)
+      binary = binary.split('').reversed.join('');
+  }
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
 
 List<String> binary2segments(String binary, bool original, TeletypewriterCodebook language) {
   // 00000 ... 11111 => [1,2,3,4,5]
-  switch (language) {
-    case TeletypewriterCodebook.BAUDOT:
-    case TeletypewriterCodebook.MURRAY:
-    case TeletypewriterCodebook.SIEMENS:
-    case TeletypewriterCodebook.WESTERNUNION:
-    case TeletypewriterCodebook.BAUDOT_54123:
-    case TeletypewriterCodebook.CCITT_ITA1_1926:
-    case TeletypewriterCodebook.CCITT_ITA1_1929:
-    case TeletypewriterCodebook.CCITT_ITA1_EU:
-    case TeletypewriterCodebook.CCITT_ITA1_UK:
-    case TeletypewriterCodebook.CCITT_ITA2_1929:
-    case TeletypewriterCodebook.CCITT_ITA2_1931:
-    case TeletypewriterCodebook.CCITT_ITA2_MTK2:
-    case TeletypewriterCodebook.CCITT_ITA2_USTTY:
-      binary = binary.padLeft(5, '0');
-      break;
-    case TeletypewriterCodebook.CCITT_ITA4:
-      binary = binary.padLeft(6, '0');
-      break;
-    case TeletypewriterCodebook.CCITT_ITA3:
-    case TeletypewriterCodebook.CCITT_IA5:
-    case TeletypewriterCodebook.CCIR476:
-      binary = binary.padLeft(7, '0');
-      break;
-    case TeletypewriterCodebook.ZC1:
-      binary = binary.padLeft(8, '0');
-      break;
-  }
+  binary = binary.padLeft(BINARY_LENGTH[language], '0');
+
   List<String> result = [];
   if (original)
     binary = binary.split('').reversed.join('');
@@ -105,14 +56,14 @@ String segments2binary(List<String> segments, TeletypewriterCodebook language) {
   else
     result = result + '0';
 
-  if (language == TeletypewriterCodebook.CCITT_ITA4) {
+  if (BINARY_LENGTH[language] == 6) {
     if (segments.contains('6'))
       result = result + '1';
     else
       result = result + '0';
   }
 
-  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5 || language == TeletypewriterCodebook.CCIR476) {
+  if (BINARY_LENGTH[language] == 7) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -124,7 +75,7 @@ String segments2binary(List<String> segments, TeletypewriterCodebook language) {
       result = result + '0';
   }
 
-  if (language == TeletypewriterCodebook.ZC1) {
+  if (BINARY_LENGTH[language] == 8) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -173,14 +124,14 @@ String segments2decenary(List<String> segments, bool original, TeletypewriterCod
   else
     result = result + '0';
 
-  if (language == TeletypewriterCodebook.CCITT_ITA4) {
+  if (BINARY_LENGTH[language] == 6) {
     if (segments.contains('6'))
       result = result + '1';
     else
       result = result + '0';
   }
 
-  if (language == TeletypewriterCodebook.CCITT_ITA3 || language == TeletypewriterCodebook.CCITT_IA5 || language == TeletypewriterCodebook.CCIR476) {
+  if (BINARY_LENGTH[language] == 7) {
     if (segments.contains('6'))
       result = result + '1';
     else
@@ -192,7 +143,7 @@ String segments2decenary(List<String> segments, bool original, TeletypewriterCod
       result = result + '0';
   }
 
-  if (language == TeletypewriterCodebook.ZC1) {
+  if (BINARY_LENGTH[language] == 8) {
     if (segments.contains('6'))
       result = result + '1';
     else
