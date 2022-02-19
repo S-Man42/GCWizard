@@ -252,7 +252,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(
     _builder = BUILDER.WHERIGOKIT;
   }
 
-  // get all objects
+  // get all objects -----------------------------------------------------------
   int index = 0;
   List<String> lines = _LUAFile.split('\n');
   var progress = 0;

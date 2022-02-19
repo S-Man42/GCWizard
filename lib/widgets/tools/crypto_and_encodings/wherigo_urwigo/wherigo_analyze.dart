@@ -59,7 +59,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _points = [];
   List<GCWMapPolyline> _polylines = [];
 
-  //WherigoCartridge _WherigoCartridge = WherigoCartridge('', 0, [], [], '', 0, 0.0, 0.0, 0.0, 0, 0, 0, '', '', 0, '', '', '', '', '', '', '', '', '', '', '', 0, '', '', '', [], [], [], [], [], [], [], [], [], [], {}, ANALYSE_RESULT_STATUS.ERROR_FULL, [], [], BUILDER.UNKNOWN, '', '', '', '', '', '', '', '', '', '', '');
   WherigoCartridgeGWC _WherigoCartridgeGWC = WherigoCartridgeGWC(MediaFilesHeaders: [], MediaFilesContents: [], ResultsGWC: []);
   WherigoCartridgeLUA _WherigoCartridgeLUA = WherigoCartridgeLUA(Characters: [], Items: [], Tasks: [], Inputs: [], Zones: [], Timers: [], Media: [], Messages: [], Answers: [], Variables: [], NameToObject: {}, ResultsLUA: []);
 
@@ -116,6 +115,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           onPressed: () {
             setState(() {
               _showLUAOfflineLoader = false;
+              Prefs.setString('wherigo_get_lua', 'online');
               // do decompiling and analyzing
               _setLUAData(_WherigoCartridgeGWC.MediaFilesContents[0].MediaFileBytes);
               _analyseCartridgeFileAsync(DATA_TYPE_LUA);

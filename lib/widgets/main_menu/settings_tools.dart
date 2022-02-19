@@ -17,9 +17,10 @@ class ToolSettingsState extends State<ToolSettings> {
 
   @override
   Widget build(BuildContext context) {
-    if (Prefs.get('mayacalendar_correlation') == 'online')
+
+    if (Prefs.get('wherigo_get_lua') == 'online')
       _WherigoMode = GCWSwitchPosition.left;
-    if (Prefs.get('mayacalendar_correlation') == 'offline')
+    if (Prefs.get('wherigo_get_lua') == 'offline')
       _WherigoMode = GCWSwitchPosition.right;
 
     return Column(
@@ -35,6 +36,11 @@ class ToolSettingsState extends State<ToolSettings> {
             });
           },
           items: CORRELATION_SYSTEMS.entries.map((mode) {
+            // Map<String, String> CORRELATION_SYSTEMS = {
+            //   THOMPSON: 'Thompson (584283)',
+            //   SMILEY: 'Smiley (482699)',
+            //   WEITZEL: 'Weitzel (774078)',
+            // };
             return GCWDropDownMenuItem(
               value: mode.key,
               child: mode.value,
@@ -53,9 +59,9 @@ class ToolSettingsState extends State<ToolSettings> {
             setState(() {
               _WherigoMode = value;
               if (_WherigoMode == GCWSwitchPosition.left)
-                Prefs.setString('mayacalendar_correlation', 'online');
+                Prefs.setString('wherigo_get_lua', 'online');
               else
-                Prefs.setString('mayacalendar_correlation', 'offline');
+                Prefs.setString('wherigo_get_lua', 'offline');
             });
           },
         )
