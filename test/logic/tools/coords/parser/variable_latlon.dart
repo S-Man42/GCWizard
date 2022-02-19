@@ -82,34 +82,7 @@ void main() {
       });
     });
   });
-
-  group("Parser.variableLatLon.parseVariableLatLonBugReport:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'text': 'N 50° 28.[4de] E 013° 30.[8ij]', 'values': {
-        'd': '8,7,4,9',
-        'e': '8,7,4,9',
-        'i': '8,7,4,9',
-      }, 'expectedOutput': [{
-        'coordinate': LatLng(50.9036, 11.586917),
-        'variables': {}
-      }]}
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('text: ${elem['text']}, values: ${elem['values']}, projectionData: ${elem['projectionData']}', () {
-        var _actual = parseVariableLatLon(elem['text'], elem['values'], projectionData: elem['projectionData']);
-
-        List<Map<String, dynamic>> _actualCoords = _actual['coordinates'];
-        expect(_actualCoords.length, elem['expectedOutput'].length);
-        _actualCoords.asMap().forEach((index, actualCoord) {
-          expect(true, equalsLatLng(actualCoord['coordinate'], elem['expectedOutput'][index]['coordinate']));
-          expect(actualCoord['variables'], elem['expectedOutput'][index]['variables']);
-        });
-        // expect(_actual['leftPadCoordinates'], elem['expectedOutput']['leftPadCoordinates']);
-      });
-    });
-  });
-
+  
   group("Parser.variableLatLon.parseVariableLatLonWithoutVariables:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'text': 'N 50 54.216 E 011 35.215', 'values': null, 'expectedOutput': [{
