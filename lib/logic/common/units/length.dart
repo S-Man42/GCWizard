@@ -59,7 +59,7 @@ final LENGTH_ROD = Length(name: 'common_unit_length_rod_name', symbol: 'rd', inM
 
 final LENGTH_LINK = Length(name: 'common_unit_length_link_name', symbol: 'li', inMeters: 0.201168);
 
-// https://webmadness.net/blog/?post=knuth
+// https://webmadness.net/blog/?post=knuth: 1 potrzebie = 2.263348517438173216473 mm
 final LENGTH_POTRZEBIE = Length(name: 'common_unit_length_potrzebie_name', symbol: 'p', inMeters: 0.002263348517438173216473);
 
 final List<Unit> baseLengths = [
@@ -89,8 +89,8 @@ final List<Unit> baseLengths = [
 
 final LENGTH_KM = Length(name: 'common_unit_length_km_name', symbol: 'km', inMeters: 1000.0);
 final LENGTH_CM = Length(name: 'common_unit_length_cm_name', symbol: 'cm', inMeters: 0.01);
-final LENGTH_FARP = Length(name: 'common_unit_length_farshimmelt_name', symbol: 'fp', inMeters: 0.002263348517438173216473 * 0.000001);
-final LENGTH_FURP = Length(name: 'common_unit_length_furshlugginer_name', symbol: 'Fp', inMeters: 0.002263348517438173216473 * 1000 * 1000);
+final LENGTH_FARP = Length(name: 'common_unit_length_farshimmelt_name', symbol: 'fp', inMeters: 0.002263348517438173216473 * 0.000001); // 0.000001 p = 1 farshimmelt potrzebie
+final LENGTH_FURP = Length(name: 'common_unit_length_furshlugginer_name', symbol: 'Fp', inMeters: 0.002263348517438173216473 * 1000 * 1000); // 1000 Kp = 1 furshlugginer potrzebie
 
 List<Unit> allLengths() {
   var lengths = List<Unit>.from(baseLengths);
