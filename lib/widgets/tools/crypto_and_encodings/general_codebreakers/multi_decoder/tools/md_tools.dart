@@ -24,7 +24,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_beatnik.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_brainfk_derivate.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_chef.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_cow.dart';
@@ -89,7 +88,6 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_ONETIMEPAD,
   MDT_INTERNALNAMES_VIGENERE,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK,
-  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW,
@@ -108,7 +106,7 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_CCITT2: {MDT_CCITT2_OPTION_MODE: MDT_CCITT2_OPTION_MODE_BINARY},
   MDT_INTERNALNAMES_COORDINATEFORMATS: {MDT_COORDINATEFORMATS_OPTION_FORMAT: keyCoordsUTM},
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK: {MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE: scrabbleID_EN},
-  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE: {MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE: MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_ALPHK},
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE: {MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE: MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BRAINFK},
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF: {MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH},
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH: {MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO},
 
@@ -192,10 +190,6 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK:
       gcwTool =
           MultiDecoderToolEsotericLanguageBeatnik(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
-      break;
-    case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK:
-      gcwTool =
-          MultiDecoderToolEsotericLanguageBrainfk(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE:
       gcwTool =
@@ -375,7 +369,6 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW),

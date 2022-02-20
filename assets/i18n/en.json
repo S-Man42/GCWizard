@@ -2521,7 +2521,7 @@
   "multidecoder_tool_coordinateformats_title": "Coordinate Formats",
   "multidecoder_tool_coordinateformats_option_format": "Format",
   "multidecoder_tool_enclosedareas_title": "Enclosed Areas",
-  "multidecoder_tool_esotericlanguage_brainfk_derivate_title": "Brainf**k Derivate",
+  "multidecoder_tool_esotericlanguage_brainfk_derivate_title": "Brainf**k/ Derivate",
   "multidecoder_tool_gccode_title": "GC Code/Base 31",
   "multidecoder_tool_gccode_option_mode": "Mode",
   "multidecoder_tool_gccode_option_mode_id.to.gccode": "ID → Code",

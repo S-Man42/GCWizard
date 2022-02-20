@@ -13,6 +13,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 const MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE = 'multidecoder_tool_esotericlanguage_brainfk_derivate_title';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE = 'common_language';
 
+const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BRAINFK = 'brainfk_title';
+
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_HOHOHO = 'hohoho_title';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_ALPHK = 'Alph**k';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BINARYFK = 'BinaryFuck';
@@ -50,6 +52,12 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends GCWMultiDecoderToo
             optionalKey: true,
             onDecode: (String input, String key) {
               switch (options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE]) {
+                case MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BRAINFK:
+                  try {
+                    var result = interpretBrainfk(input, input: key);
+                    return result.replaceAll(String.fromCharCode(0), "").isEmpty ? null : result;
+                  } catch (e) {}
+                  return null;
                 case MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_HOHOHO:
                   try {
                     var output = interpretHohoho(input, STDIN: key);
@@ -102,7 +110,8 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends GCWMultiDecoderToo
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE] = newValue;
                 },
-                items: [MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_ALPHK,
+                items: [MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BRAINFK,
+                        MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_ALPHK,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BINARYFK,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BLUB,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BTJZXGQUARTFRQIFJLV,
