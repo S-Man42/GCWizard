@@ -65,6 +65,7 @@ class CalendarState extends State<Calendar> {
             _currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR ||
             _currentCalendarSystem == CalendarSystem.COPTICCALENDAR ||
             _currentCalendarSystem == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.POTRZEBIECALENDAR ||
             _currentCalendarSystem == CalendarSystem.HEBREWCALENDAR)
           GCWDatePicker(
             date: _currentDate,

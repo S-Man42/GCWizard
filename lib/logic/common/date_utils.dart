@@ -541,8 +541,8 @@ DateOutput JulianDateToPotrzebieCalendar(double jd){
   if (diff < 0)
     diff = diff * -1;
   int cow = diff ~/ 100;
-  int mingo = (diff % 100) ~/ 10;
-  int clarke = (diff % 100) % 10;
+  int mingo = 1 + (diff % 100) ~/ 10;
+  int clarke = 1 + (diff % 100) % 10;
   if (bm)
     return DateOutput(clarke.toString(), mingo.toString(), cow.toString() + ' B-M.');
   else
@@ -550,7 +550,15 @@ DateOutput JulianDateToPotrzebieCalendar(double jd){
 }
 
 double PotrzebieCalendarToJulianDate(DateTime date){
+  int p_d = date.day;
+  int p_m = date.month;
+  int p_y = date.year;
 
+  int days = p_y * 100 + p_m * 10 + p_d;
+
+  double jd_p_zero = GregorianCalendarToJulianDate(DateTime(1952, 10, 1)).floorToDouble() - 1;
+
+  return jd_p_zero + days;
 }
 
 double MayaCalendarToJulianDate(DateTime date){
