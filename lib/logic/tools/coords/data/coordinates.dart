@@ -50,7 +50,7 @@ const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
-const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister';
+const keyCoordsReverseWherigoWaldmeister = 'coords_reversewherigo_waldmeister';
 
 class CoordinateFormat {
   final key;

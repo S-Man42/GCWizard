@@ -8,8 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Chef extends StatefulWidget {
   @override
