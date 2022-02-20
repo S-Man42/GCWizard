@@ -1948,9 +1948,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
               _WherigoCartridgeLUA.CartridgeGUID != '') {
             _WherigoCartridgeLUA = _resetLUA();
+            _fileLoadedState = FILE_LOAD_STATE.GWC;
             showToast(
                 i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
                 duration: 30);
+          } else {
+            _fileLoadedState = FILE_LOAD_STATE.GWC;
+            _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_FULL)
+                .map((key, value) => MapEntry(i18n(context, key), value)));
+            _WHERIGO_DATA.removeWhere((k, v) => v == WHERIGO.NULL);
           }
           break;
 
@@ -1997,13 +2003,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               toastDuration = 20;
               break;
           }
-          if (_WherigoCartridgeLUA.httpCode == '200')
+          if (_WherigoCartridgeLUA.httpCode == '200'){ // LUA Sourcecode was loaded
+            // change state
+            _fileLoadedState = FILE_LOAD_STATE.FULL;
+            // show complete dropdown
+            _WHERIGO_DATA = SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA_FULL)
+                .map((key, value) => MapEntry(i18n(context, key), value)));
+            _WHERIGO_DATA.removeWhere((k, v) => v == WHERIGO.NULL);
+            _displayedCartridgeData = WHERIGO.HEADER;
+
             if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-              _WherigoCartridgeGWC.CartridgeGUID != '') {
+                _WherigoCartridgeGWC.CartridgeGUID != '') {
               _WherigoCartridgeGWC = _resetGWC();
               showToast(
                   i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_3'),
                   duration: 30);
+            }
           }
           break;
       }
