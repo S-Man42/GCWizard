@@ -7,7 +7,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherig
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:dart_ping/dart_ping.dart';
+
 
 String _answerVariable = '';
 
