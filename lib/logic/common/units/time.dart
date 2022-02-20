@@ -21,6 +21,7 @@ final TIME_MINUTE = Time(name: 'common_unit_time_min_name', symbol: 'min', inSec
 
 final TIME_SECOND = Time(name: 'common_unit_time_s_name', symbol: 's', isReference: true);
 
+// https://webmadness.net/blog/?post=knuth
 final TIME_WOLVERTON = Time(name: 'common_unit_time_wolverton_name', symbol: 'wl', inSeconds: 0.864);
 
 final TIME_KOVAC = Time(name: 'common_unit_time_kovac_name', symbol: 'kv', inSeconds: 0.864);

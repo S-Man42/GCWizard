@@ -51,6 +51,7 @@ final MASS_STONE = Mass(name: 'common_unit_mass_st_name', symbol: 'st', inGram: 
 
 final MASS_ELEPHANT = Mass(name: 'common_unit_mass_elephant_name', symbol: 'el', inGram: 5000000.0);
 
+// https://webmadness.net/blog/?post=knuth
 final MASS_BLINTZ = Mass(name: 'common_unit_mass_blintz_name', symbol: 'b', inGram: 36.42538631);
 
 final List<Unit> baseMasses = [

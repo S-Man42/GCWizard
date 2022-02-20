@@ -25,6 +25,7 @@ final FORCE_POND = Force(name: 'common_unit_force_p_name', symbol: 'p', inNewton
 
 final FORCE_DYNE = Force(name: 'common_unit_force_dyn_name', symbol: 'dyn', inNewton: 1e-5);
 
+// https://webmadness.net/blog/?post=knuth
 final FORCE_BLINTZAL = Force(name: 'common_unit_force_blintzal_name', symbol: 'b-al', inNewton: 1.104380691060943e-5);
 
 final List<Unit> forces = [

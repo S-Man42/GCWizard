@@ -54,6 +54,7 @@ final TEMPERATURE_NEWTON = Temperature(
     toKelvin: (e) => e * 100.0 / 33.0 + 273.15,
     fromKelvin: (e) => (e - 273.15) * 0.33);
 
+// https://webmadness.net/blog/?post=knuth
 final TEMPERATURE_SMURDLEY = Temperature(
     name: 'common_unit_temperature_smurdley_name',
     symbol: String.fromCharCode(176) + 'S',

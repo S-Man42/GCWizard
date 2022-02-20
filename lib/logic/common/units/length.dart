@@ -59,7 +59,8 @@ final LENGTH_ROD = Length(name: 'common_unit_length_rod_name', symbol: 'rd', inM
 
 final LENGTH_LINK = Length(name: 'common_unit_length_link_name', symbol: 'li', inMeters: 0.201168);
 
-final LENGTH_POTRZEBIE = Length(name: 'common_unit_length_potrzebie_name', symbol: 'p', inMeters: 0.0022633);
+// https://webmadness.net/blog/?post=knuth
+final LENGTH_POTRZEBIE = Length(name: 'common_unit_length_potrzebie_name', symbol: 'p', inMeters: 0.002263348517438173216473);
 
 final List<Unit> baseLengths = [
   LENGTH_METER,
