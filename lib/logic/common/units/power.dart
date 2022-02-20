@@ -24,4 +24,12 @@ final POWER_METRICHORSEPOWER = Power(name: 'common_unit_power_ps_name', symbol: 
 //According to Randall Munroe, What If? ISBN 978-1-84854-958-6
 final POWER_YODA = Power(name: 'common_unit_power_yoda_name', symbol: null, inWatt: 19200);
 
-final List<Unit> powers = [POWER_WATT, POWER_HORSEPOWER, POWER_METRICHORSEPOWER, POWER_YODA];
+final POWER_WHATMEWORRIES = Power(name: 'common_unit_power_whatmeworries_name', symbol: 'WMW', inWatt: 1.0 / 3.499651);
+
+final List<Unit> powers = [
+  POWER_WATT,
+  POWER_HORSEPOWER,
+  POWER_METRICHORSEPOWER,
+  POWER_YODA,
+  POWER_WHATMEWORRIES,
+];

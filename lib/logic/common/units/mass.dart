@@ -51,6 +51,8 @@ final MASS_STONE = Mass(name: 'common_unit_mass_st_name', symbol: 'st', inGram: 
 
 final MASS_ELEPHANT = Mass(name: 'common_unit_mass_elephant_name', symbol: 'el', inGram: 5000000.0);
 
+final MASS_BLINTZ = Mass(name: 'common_unit_mass_blintz_name', symbol: 'b', inGram: 36.42538631);
+
 final List<Unit> baseMasses = [
   MASS_GRAM,
   MASS_TON,
@@ -69,15 +71,20 @@ final List<Unit> baseMasses = [
   MASS_PFUND,
   MASS_ZENTNER,
   MASS_STONE,
-  MASS_ELEPHANT
+  MASS_ELEPHANT,
+  MASS_BLINTZ,
 ];
 
 final MASS_KILOGRAM = Mass(name: 'common_unit_mass_kg_name', symbol: 'kg', inGram: 1000.0);
+final MASS_FARBLINTZ = Mass(name: 'common_unit_mass_farb_name', symbol: 'kg', inGram: 0.001);
+final MASS_FURBLINTZ = Mass(name: 'common_unit_mass_furb_name', symbol: 'kg', inGram: 1000000000.0);
 
 List<Unit> allMasses() {
   var masses = List<Unit>.from(baseMasses);
   var indexKG = baseMasses.indexOf(MASS_GRAM);
   masses.insert(indexKG + 1, MASS_KILOGRAM);
+  masses.insert(indexKG + 3, MASS_FARBLINTZ);
+  masses.insert(indexKG + 2, MASS_FURBLINTZ);
 
   return masses;
 }
