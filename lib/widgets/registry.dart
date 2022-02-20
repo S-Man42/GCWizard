@@ -3250,6 +3250,9 @@ initializeRegistry(BuildContext context) {
       'symbol_signlanguage',
       'symbol_niessen',
     ]),
+    GCWSymbolTableTool(symbolKey: 'ninjagon', symbolSearchStrings: [
+      'symbol_ninjagon',
+    ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
       'symbol_notes_doremi',
     ]),
