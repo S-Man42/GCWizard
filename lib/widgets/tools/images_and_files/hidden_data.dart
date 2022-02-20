@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -172,13 +173,19 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _buildOutput() {
-    if (_unHideFile == null) return null;
+  Widget _buildOutput() {
+    if (_unHideFile == null) return Container();
 
     var _hiddenDataList = hiddenData(_unHideFile);
-    if (_hiddenDataList == null || _hiddenDataList.isEmpty) return i18n(context, 'hiddendata_nohiddendatafound');
-
-    return GCWFilesOutput(files: _hiddenDataList);
+    return FutureBuilder(
+        future: _hiddenDataList,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null || snapshot.data.isEmpty)
+            return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
+          else
+            return GCWFilesOutput(files: snapshot.data);
+        }
+    );
   }
 
   _exportFile(BuildContext context, PlatformFile file) async {

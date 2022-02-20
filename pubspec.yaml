@@ -42,6 +42,7 @@ dependencies:
   scrollable_positioned_list: ^0.2.3
   touchable: ^1.0.0
   universal_html: ^2.0.4
+  unrar_file: ^1.1.0
   uuid: ^3.0.4
   url_launcher: ^6.0.12
 
