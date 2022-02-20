@@ -29,8 +29,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool offline
     // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
     try {
-      String address = 'http://192.168.178.93:7323/GCW_Unluac/UnluacServlet';
-      //String address = 'https://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/UnluacServlet';
+      String address = 'http://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/';
 
       var uri = Uri.parse(address);
       var request = http.MultipartRequest('POST', uri)

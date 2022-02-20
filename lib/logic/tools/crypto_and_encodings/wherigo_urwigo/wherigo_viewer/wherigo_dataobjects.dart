@@ -620,6 +620,7 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
 final Map<String, String> HTTP_STATUS = {
   '200': 'wherigo_http_code_200',
   '400': 'wherigo_http_code_400',
+  '404': 'wherigo_http_code_404',
   '413': 'wherigo_http_code_413',
   '500': 'wherigo_http_code_500',
   '503': 'wherigo_http_code_503',
