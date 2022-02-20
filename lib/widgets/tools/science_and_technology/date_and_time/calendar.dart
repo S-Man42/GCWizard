@@ -142,6 +142,7 @@ class CalendarState extends State<Calendar> {
         _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
     output['dates_calendar_system_mayacalendar'] =
         _DateOutputToString(context, JulianDateToMayaCalendar(jd), CalendarSystem.MAYACALENDAR);
+    // reuse lib/widget/tools/science_and_technology/maya_calendar.dart
     output['dates_calendar_system_potrzebiecalendar'] =
         _DateOutputToString(context, JulianDateToPotrzebieCalendar(jd), CalendarSystem.POTRZEBIECALENDAR);
 

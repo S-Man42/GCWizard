@@ -562,9 +562,11 @@ double PotrzebieCalendarToJulianDate(DateTime date){
 }
 
 double MayaCalendarToJulianDate(DateTime date){
+// reuse lib/logic/tools/science_and_technology/maya_calendar.dart
 
 }
 
 DateOutput JulianDateToMayaCalendar(double jd){
+// reuse lib/logic/science_and_technology/maya_calendar.dart
 
 }
