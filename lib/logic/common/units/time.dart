@@ -21,4 +21,32 @@ final TIME_MINUTE = Time(name: 'common_unit_time_min_name', symbol: 'min', inSec
 
 final TIME_SECOND = Time(name: 'common_unit_time_s_name', symbol: 's', isReference: true);
 
-final List<Unit> times = [TIME_WEEK, TIME_DAY, TIME_HOUR, TIME_MINUTE, TIME_SECOND];
+// https://webmadness.net/blog/?post=knuth
+final TIME_WOLVERTON = Time(name: 'common_unit_time_wolverton_name', symbol: 'wl', inSeconds: 0.864);
+
+final TIME_KOVAC = Time(name: 'common_unit_time_kovac_name', symbol: 'kv', inSeconds: 0.864);
+
+final TIME_MARTIN = Time(name: 'common_unit_time_martin_name', symbol: 'mn', inSeconds: 86.4);
+
+final TIME_WOOD = Time(name: 'common_unit_time_wood_name', symbol: 'wd', inSeconds: 8640.0);
+
+final TIME_CLARKE = Time(name: 'common_unit_time_clarke_name', symbol: 'cl', inSeconds: 86400.0);
+
+final TIME_MINGO = Time(name: 'common_unit_time_mingo_name', symbol: 'mi', inSeconds: 864000.0);
+
+final TIME_COWZNOFSKI = Time(name: 'common_unit_time_cowznofski_name', symbol: 'cow', inSeconds: 8640000.0);
+
+final List<Unit> times = [
+  TIME_WEEK,
+  TIME_DAY,
+  TIME_HOUR,
+  TIME_MINUTE,
+  TIME_SECOND,
+  TIME_WOLVERTON,
+  TIME_KOVAC,
+  TIME_MARTIN,
+  TIME_WOOD,
+  TIME_CLARKE,
+  TIME_MINGO,
+  TIME_COWZNOFSKI,
+];
