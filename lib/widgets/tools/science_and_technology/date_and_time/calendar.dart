@@ -116,7 +116,16 @@ class CalendarState extends State<Calendar> {
         jd = CopticCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
+      case CalendarSystem.MAYACALENDAR:
+        jd = MayaCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
+        break;
+      case CalendarSystem.POTRZEBIECALENDAR:
+        jd = PotrzebieCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
+        break;
     }
+
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
     output['dates_calendar_system_juliancalendar'] =
         _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
@@ -130,6 +139,11 @@ class CalendarState extends State<Calendar> {
         _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
     output['dates_calendar_system_copticcalendar'] =
         _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
+    output['dates_calendar_system_mayacalendar'] =
+        _DateOutputToString(context, JulianDateToMayaCalendar(jd), CalendarSystem.MAYACALENDAR);
+    output['dates_calendar_system_potrzebiecalendar'] =
+        _DateOutputToString(context, JulianDateToPotrzebieCalendar(jd), CalendarSystem.POTRZEBIECALENDAR);
+
     return GCWDefaultOutput(
         child: Column(
       children: columnedMultiLineOutput(
@@ -175,7 +189,9 @@ class CalendarState extends State<Calendar> {
           default:
             return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
         }
+        break;
+      case CalendarSystem.POTRZEBIECALENDAR:
+        return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
     }
-    ;
   }
 }

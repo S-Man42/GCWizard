@@ -1786,6 +1786,8 @@
   "dates_calendar_system_hebrewcalendar" : "Hebrew Calendar",
   "dates_calendar_system_persiancalendar" : "Persian Calendar (Yazdegard)",
   "dates_calendar_system_copticcalendar" : "Coptic Calendar (Diokletian)",
+  "dates_calendar_system_potrzebiecalendar" : "Potrzebie Calendar (MAD, Donald E. Knuth)",
+  "dates_calendar_system_mayacalendar" : "Maya Calendar System",
   "dates_calendar_error" : "ERROR - negative years are not applicable",
   "deadfish_title": "Deadfish",
   "deadfish_description": "Esoteric Programming language with 4 characters (IDSO or XKCD)",
