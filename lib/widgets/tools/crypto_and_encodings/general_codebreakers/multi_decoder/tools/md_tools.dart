@@ -28,6 +28,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_chef.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_hohoho.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_whitespace.dart';
@@ -92,6 +93,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH,
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE,
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE,
@@ -205,6 +207,10 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH:
       gcwTool =
           MultiDecoderToolEsotericLanguageDeadfish(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
+    case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO:
+      gcwTool =
+          MultiDecoderToolEsotericLanguageHohoho(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT:
       gcwTool = MultiDecoderToolEsotericLanguageKarolRobot(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -373,6 +379,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE),
