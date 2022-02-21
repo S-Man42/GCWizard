@@ -257,9 +257,10 @@ int MayaDayCountToJulianDate(int mayaDayCount) {
 
 int JulianDateToMayaDayCount(double jd) {
   if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
-    return (jd.round() - _CORRELATION_NUMBER[THOMPSON]);
+    jd =  jd - _CORRELATION_NUMBER[THOMPSON];
   else
-    return (jd.round() - _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
+    jd = jd - _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')];
+  return jd.round();
 }
 
 List<int> MayaDayCountToMayaLongCount(int MayaDayCount) {
@@ -273,6 +274,6 @@ List<int> MayaDayCountToMayaLongCount(int MayaDayCount) {
 }
 
 int _toNumber(String digit){
-  Map<String, int> NUMBER = {'0': 0,'1': 1,'2': 2,'3': 3,'4': 4,'5': 5,'6': 6,'7': 7,'8': 8,'9': 9,'A': 10,'B': 11,'C': 12,'D': 13,'E': 14,'F': 15,};
+  Map<String, int> NUMBER = {'0': 0,'1': 1,'2': 2,'3': 3,'4': 4,'5': 5,'6': 6,'7': 7,'8': 8,'9': 9,'A': 10,'B': 11,'C': 12,'D': 13,'E': 14,'F': 15,'G': 16, 'H': 17, 'I': 18, 'J': 19,};
   return NUMBER[digit];
 }
