@@ -15,7 +15,7 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Online Manual: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
 
 <b>Cryptography & Encodings</b>
-• Alphabet Values (A = 1, B = 2, ...): Configurable alphabets with language specific special character handling
+• Alfabetsvärden (A = 1, B = 2, ...): Konfigurerbara alfabet med språkspecifik teckenbehandling
 • Braille graphical decoder: Type the points into a graphical interface; supports different languages
 • Book Cipher: Choose the correct system (e.g. Line + Letter Number or Section + Line + Word Number, ...), handle special characters and empty lines, ...
 • Enigma: A full working Enigma simulator incl. numerous possible settings
@@ -39,7 +39,7 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 
 <b>Science and Technology</b>
 • Astronomy: Calculate position of sun and moon at a certain place and time
-• Color Space Converter: Convert color values between RGB, HSL, Hex, CMYK, ...
+• Color Space Converter: Konvertera färgvärden mellan RGB, HSL, Hex, CMYK, ...
 • Countries: ISO, calling and vehicle registration codes, flags
 • Date and Time functions: Weekday, time differences, ...
 • Irrational Numbers: π, φ and e: Show and search up to > 1 Mio. digits

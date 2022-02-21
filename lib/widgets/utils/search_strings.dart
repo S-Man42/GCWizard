@@ -49,6 +49,11 @@ void createIndexedSearchStrings() {
 
   for (GCWTool tool in registeredTools) {
     List<String> searchStrings = [];
+    if (tool.searchKeys == null ||
+      tool.searchKeys.where((element) => element != null && element.isNotEmpty).isEmpty
+    )
+      continue;
+
     for (String searchKey in tool.searchKeys) {
       var commonStrings = _COMMON_SEARCHSTRINGS[searchKey];
       var enStrings = _EN_SEARCHSTRINGS[searchKey];
