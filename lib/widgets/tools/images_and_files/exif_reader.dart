@@ -95,12 +95,15 @@ class _ExifReaderState extends State<ExifReader> {
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
-
     try {
       if (tags != null) {
         _thumbnail = completeThumbnail(tags);
-        _point = completeGPSData(tags);
         _tableTags = buildTablesExif(tags);
+        Map<String, dynamic> xmpTags = buildXmpTags(_file, _tableTags);
+        _point = completeGPSData(tags);
+        if (_point == null) {
+          _point = completeGPSDataFromXmp(xmpTags);
+        }
       }
 
       _fileLoaded = true;
