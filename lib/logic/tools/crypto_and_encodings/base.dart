@@ -160,13 +160,18 @@ String decodeBase58(String input){
     if (BASE58_ALPHABET.contains(input[i]))
       num = num + input[i];
 
-  int len = num.toString().length;
+  int len = num.length;
   int multi = 1;
   int decoded = 0;
 
   for (int i = len - 1; i >= 0; i--) {
-    decoded = decoded + multi * _strPos(alphabet, num.toString()[i]);
-    multi = multi * alphabet.length;
+    if (BASE58_ALPHABET.contains(num[i])) {
+      decoded = decoded + multi * _strPos(alphabet, num[i]);
+      multi = multi * alphabet.length;
+    } else {
+      decoded = -1;
+      break;
+    }
   }
   return decoded.toString();
 }
