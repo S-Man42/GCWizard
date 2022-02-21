@@ -79,12 +79,25 @@ final Map<int, String> MONTH_HEBREW = {
   12: 'Av',
   13: 'Elul'
 };
+final Map<int, String> MONTH_POTRZEBIE = {
+  1: 'Tales',
+  2: 'Calculated',
+  3: 'To',
+  4: 'Drive',
+  5: 'You',
+  6: 'Humor',
+  7: 'In',
+  8: 'A',
+  9: 'Jugular',
+  10: 'Vein',
+};
 
 final Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
   CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
   CalendarSystem.PERSIANYAZDEGARDCALENDAR: MONTH_PERSIAN,
   CalendarSystem.HEBREWCALENDAR: MONTH_HEBREW,
-  CalendarSystem.COPTICCALENDAR: MONTH_COPTIC
+  CalendarSystem.COPTICCALENDAR: MONTH_COPTIC,
+  CalendarSystem.POTRZEBIECALENDAR: MONTH_POTRZEBIE,
 };
 
 final Map<int, String> WEEKDAY = {
@@ -518,3 +531,33 @@ double CopticCalendarToJulianDate(DateTime date) {
   int d = intPart((30 * cop_m_bar + 0) / 1);
   return (c + d + cop_d_bar - 124).toDouble();
 }
+
+DateOutput JulianDateToPotrzebieCalendar(double jd){
+// Day o in the Potrzebie-System is 01.10.1952
+// Before MAD - B.M.   -   zero   -   Cowzofski Madi C.M
+  double jd_p_zero = GregorianCalendarToJulianDate(DateTime(1952, 10, 1));
+  int diff = (jd - jd_p_zero).round();
+  bool bm = (diff < 0);
+  if (diff < 0)
+    diff = diff * -1;
+  int cow = diff ~/ 100;
+  int mingo = 1 + (diff % 100) ~/ 10;
+  int clarke = 1 + (diff % 100) % 10;
+  if (bm)
+    return DateOutput(clarke.toString(), mingo.toString(), cow.toString() + ' B-M.');
+  else
+    return DateOutput(clarke.toString(), mingo.toString(), cow.toString() + ' C.M.');
+}
+
+double PotrzebieCalendarToJulianDate(DateTime date){
+  int p_d = date.day;
+  int p_m = date.month;
+  int p_y = date.year;
+
+  int days = p_y * 100 + p_m * 10 + p_d;
+
+  double jd_p_zero = GregorianCalendarToJulianDate(DateTime(1952, 10, 1)).floorToDouble() - 1;
+
+  return jd_p_zero + days;
+}
+

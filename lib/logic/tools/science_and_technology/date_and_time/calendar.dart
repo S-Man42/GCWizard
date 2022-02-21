@@ -6,7 +6,9 @@ enum CalendarSystem {
   ISLAMICCALENDAR,
   PERSIANYAZDEGARDCALENDAR,
   HEBREWCALENDAR,
-  COPTICCALENDAR
+  COPTICCALENDAR,
+  POTRZEBIECALENDAR,
+  MAYACALENDAR,
 }
 
 Map<CalendarSystem, String> CALENDAR_SYSTEM = {
@@ -18,4 +20,5 @@ Map<CalendarSystem, String> CALENDAR_SYSTEM = {
   CalendarSystem.PERSIANYAZDEGARDCALENDAR: 'dates_calendar_system_persiancalendar',
   CalendarSystem.HEBREWCALENDAR: 'dates_calendar_system_hebrewcalendar',
   CalendarSystem.COPTICCALENDAR: 'dates_calendar_system_copticcalendar',
+  CalendarSystem.POTRZEBIECALENDAR: 'dates_calendar_system_potrzebiecalendar',
 };
