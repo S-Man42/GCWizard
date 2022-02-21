@@ -148,6 +148,7 @@ String decodeBase58(String num){
   if (num == null || num == '') return '';
 
   String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
+  num = num.replaceAll(' ', '');
   int len = num.toString().length;
   int multi = 1;
   int decoded = 0;
