@@ -3,7 +3,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/hohoho.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
@@ -15,7 +14,6 @@ const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE = 'common_language';
 
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BRAINFK = 'brainfk_title';
 
-const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_HOHOHO = 'hohoho_title';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_ALPHK = 'Alph**k';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BINARYFK = 'BinaryFuck';
 const MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_BLUB = 'Blub';
@@ -56,14 +54,6 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends GCWMultiDecoderToo
                   try {
                     var result = interpretBrainfk(input, input: key);
                     return result.replaceAll(String.fromCharCode(0), "").isEmpty ? null : result;
-                  } catch (e) {}
-                  return null;
-                case MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_HOHOHO:
-                  try {
-                    var output = interpretHohoho(input, STDIN: key);
-                    if (output != null) {
-                      return output.output;
-                    }
                   } catch (e) {}
                   return null;
                 case MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_ALPHK:
@@ -120,7 +110,6 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends GCWMultiDecoderToo
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_FLUFFLEPUFF,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_FUCKBEES,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_GERMAN,
-                        MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_HOHOHO,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_KENNYSPEAK,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_KONFK,
                         MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATE_OPTION_MORSEFK,
