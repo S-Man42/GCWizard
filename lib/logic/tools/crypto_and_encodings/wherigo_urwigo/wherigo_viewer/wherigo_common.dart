@@ -1,6 +1,4 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-
 
 
 String getLUAName(String line) {

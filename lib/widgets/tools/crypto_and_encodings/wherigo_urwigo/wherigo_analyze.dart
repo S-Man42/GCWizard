@@ -85,7 +85,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   bool _currentDeObfuscate = false;
   bool _WherigoShowLUASourcecodeDialog = true;
-  bool _getLUAOnline = false;
+  bool _getLUAOnline = true;
 
   SplayTreeMap<String, WHERIGO> _WHERIGO_DATA;
 
@@ -177,7 +177,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   Widget build(BuildContext context) {
-    print(_WherigoShowLUASourcecodeDialog);
     return Column(
       children: <Widget>[
         GCWOpenFile(
@@ -218,7 +217,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             }
           },
         ),
-        if (_fileLoadedState == FILE_LOAD_STATE.GWC && _WherigoShowLUASourcecodeDialog)
+
+        // Show Button if GWC File loaded
+        if (_fileLoadedState == FILE_LOAD_STATE.GWC)
           Row(
             children: [
               Expanded(
@@ -230,7 +231,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   ))
             ],
           ),
-        if (_fileLoadedState != FILE_LOAD_STATE.NULL && !_getLUAOnline && !_WherigoShowLUASourcecodeDialog)
+
+        // Show OpenFileDialog if GWC File loaded an get LUA offline
+        if (_fileLoadedState != FILE_LOAD_STATE.NULL && !_getLUAOnline)
           GCWOpenFile(
             title: i18n(context, 'wherigo_open_lua'),
             onLoaded: (_LUAfile) {
@@ -269,6 +272,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               }
             },
           ),
+
+        // show dropdown if files are loaded
         if (_fileLoadedState != FILE_LOAD_STATE.NULL)
           GCWDropDownButton(
             value: _displayedCartridgeData,
@@ -302,7 +307,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _buildOutput(BuildContext context) {
-    if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == [])) return Container();
+    if ((_GWCbytes == null || _GWCbytes == []) && (_LUAbytes == null || _LUAbytes == []))
+      return Container();
 
     if (_WherigoCartridgeGWC == null && _WherigoCartridgeLUA == null) {
       return Container();
@@ -1914,7 +1920,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
           if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
               _WherigoCartridgeLUA.CartridgeGUID != '') {
-            _WherigoCartridgeLUA = _resetLUA();
+            _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = FILE_LOAD_STATE.GWC;
             showToast(
                 i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
@@ -1979,7 +1985,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
             if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
                 _WherigoCartridgeGWC.CartridgeGUID != '') {
-              _WherigoCartridgeGWC = _resetGWC();
+              _WherigoCartridgeGWC = _resetGWC('wherigo_error_diff_gwc_lua_1');
               showToast(
                   i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_3'),
                   duration: 30);
@@ -2209,11 +2215,30 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return Uint8List.fromList([]);
   }
 
-  WherigoCartridgeGWC _resetGWC() {
-    return WherigoCartridgeGWC();
+  WherigoCartridgeGWC _resetGWC(String error) {
+    return WherigoCartridgeGWC(
+      ResultStatus: ANALYSE_RESULT_STATUS.ERROR_GWC,
+      ResultsGWC: [i18n(context, error)],
+      MediaFilesHeaders :[],
+      MediaFilesContents: [],
+    );
   }
 
-  WherigoCartridgeLUA _resetLUA() {
-    return WherigoCartridgeLUA();
+  WherigoCartridgeLUA _resetLUA(String error) {
+    return WherigoCartridgeLUA(
+      ResultStatus: ANALYSE_RESULT_STATUS.ERROR_LUA,
+      ResultsLUA: [i18n(context, error)],
+      Characters: [],
+      Items: [],
+      Tasks: [],
+      Inputs: [],
+      Zones: [],
+      Timers: [],
+      Media: [],
+      Messages: [],
+      Answers: [],
+      Variables: [],
+      NameToObject: {},
+    );
   }
 }

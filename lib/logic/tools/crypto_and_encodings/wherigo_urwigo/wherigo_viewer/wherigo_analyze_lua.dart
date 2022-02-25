@@ -24,13 +24,11 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   String _httpMessage = '';
   String _LUAFile = '';
 
-  print('getCartridgeLUA online'+online.toString());
   if (online) {
-    print('starting to decompile');
     // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
     try {
-      String address = 'http://sdklmfoqdd5qrtha.myfritz.net:8080/GCW_Unluac/';
+      String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
 
       var uri = Uri.parse(address);
       var request = http.MultipartRequest('POST', uri)
@@ -38,14 +36,11 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
             contentType: MediaType('application', 'octet-stream')));
       var response = await request.send();
 
-      print('response.statuscode ' + response.statusCode.toString());
-      print('response.reasonPhrase ' + response.reasonPhrase.toString());
       _httpCode = response.statusCode.toString();
       _httpMessage = response.reasonPhrase;
 
       if (response.statusCode == 200) {
         var responseData = await http.Response.fromStream(response);
-        print('got LUA Sourcecode');
         _LUAFile = responseData.body;
       } else {
         out.addAll({
@@ -71,7 +66,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
       }
     } catch (exception) {
       //SocketException: Connection timed out (OS Error: Connection timed out, errno = 110), address = 192.168.178.93, port = 57582
-      print(exception.toString());
       _httpCode = '503';
       _httpMessage = exception.toString();
       out.addAll({
@@ -279,13 +273,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
     try {
       if (RegExp(r'(Wherigo.ZMedia)').hasMatch(lines[i])) {
-        print('found ZMedia ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         beyondHeader = true;
         currentObjectSection = OBJECT_TYPE.MEDIA;
         index++;
@@ -421,13 +408,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
     try {
       if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
-        print('found Zone ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         beyondHeader = true;
 
         currentObjectSection = OBJECT_TYPE.ZONE;
@@ -577,13 +557,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
     try {
       if (RegExp(r'( Wherigo.ZCharacter)').hasMatch(lines[i])) {
-        print('found ZCharacter ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         beyondHeader = true;
 
         currentObjectSection = OBJECT_TYPE.CHARACTER;
@@ -694,13 +667,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
     try {
       if (RegExp(r'( Wherigo.ZItem)').hasMatch(lines[i])) {
-        print('found ZItem ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         beyondHeader = true;
 
         currentObjectSection = OBJECT_TYPE.ITEM;
@@ -812,13 +778,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
     try {
       if (RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i])) {
-        print('found ZTask ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         beyondHeader = true;
         currentObjectSection = OBJECT_TYPE.TASK;
         LUAname = '';
@@ -902,13 +861,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
     try {
       if (RegExp(r'(.ZVariables =)').hasMatch(lines[i])) {
         sectionVariables = true;
-        print('found ZVariables ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         beyondHeader = true;
         currentObjectSection = OBJECT_TYPE.VARIABLES;
         if (lines[i + 1].trim().startsWith('buildervar')) {
@@ -965,13 +917,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
     try {
       if (beyondHeader && RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i])) {
-        print('found ZTimer ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
         currentObjectSection = OBJECT_TYPE.TIMER;
         LUAname = '';
         id = '';
@@ -1202,13 +1147,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         // getting name of function
         inputObject = lines[i].replaceAll('function ', '').replaceAll(':OnGetInput(input)', '').trim();
         Answers[inputObject] = [];
-        print('found ongetinput ' +
-            inputObject +
-            ' ' +
-            i.toString() +
-            ' ' +
-            lines[i] +
-            ' ##############################################################');
       } // end if identify input function
 
       if (lines[i].trim().endsWith('= tonumber(input)')) {
