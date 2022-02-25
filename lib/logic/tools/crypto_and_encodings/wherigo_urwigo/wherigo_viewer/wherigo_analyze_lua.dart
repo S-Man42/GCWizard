@@ -15,7 +15,7 @@ bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool offline, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online, {SendPort sendAsyncPort}) async {
 // if offline == true byteListLUA is already the source code
 // if offline == false then byteListLUA has to be decompiled
   var out = Map<String, dynamic>();
@@ -24,7 +24,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool offline
   String _httpMessage = '';
   String _LUAFile = '';
 
-  if (!offline) {
+  print('getCartridgeLUA online'+online.toString());
+  if (online) {
     print('starting to decompile');
     // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
@@ -38,6 +39,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool offline
       var response = await request.send();
 
       print('response.statuscode ' + response.statusCode.toString());
+      print('response.reasonPhrase ' + response.reasonPhrase.toString());
       _httpCode = response.statusCode.toString();
       _httpMessage = response.reasonPhrase;
 

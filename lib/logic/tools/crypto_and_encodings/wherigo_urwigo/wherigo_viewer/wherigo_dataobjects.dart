@@ -571,9 +571,14 @@ class WherigoCartridgeLUA {
       this.httpCode = '',
       this.httpMessage = ''});
 }
+Map<FILE_LOAD_STATE, Map<WHERIGO, String>> WHERIGO_DATA = {
+  FILE_LOAD_STATE.NULL: {},
+  FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC,
+  FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA,
+  FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL,
+};
 
 Map<WHERIGO, String> WHERIGO_DATA_FULL = {
-  WHERIGO.NULL: 'wherigo_data_nodata',
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -593,7 +598,6 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL = {
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_GWC = {
-  WHERIGO.NULL: 'wherigo_data_nodata',
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -602,7 +606,6 @@ Map<WHERIGO, String> WHERIGO_DATA_GWC = {
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_LUA = {
-  WHERIGO.NULL: 'wherigo_data_nodata',
   WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
