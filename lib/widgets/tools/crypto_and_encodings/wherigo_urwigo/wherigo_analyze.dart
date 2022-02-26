@@ -204,6 +204,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _answerIndex = 1;
               _identifierIndex = 1;
 
+              _getLUAOnline = true;
+              _nohttpError = true;
+              _WherigoShowLUASourcecodeDialog = true;
+
               _analyseCartridgeFileAsync(DATA_TYPE_GWC);
 
               setState(() {
@@ -309,7 +313,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
     var _errorMsg = [];
     if (_WherigoCartridgeGWC.ResultStatus == ANALYSE_RESULT_STATUS.OK) {
-      _errorMsg.add(i18n(context, 'wherigo_error_loading_gwc'));
+      _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
+      _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
       _errorMsg.add('');
     } else {
       _errorMsg.add(i18n(context, 'wherigo_error_runtime_gwc'));
@@ -319,10 +324,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         else
           _errorMsg.add(_WherigoCartridgeGWC.ResultsGWC[i]);
     }
-
+    _errorMsg.add('');
     if (_WherigoCartridgeLUA.ResultStatus == ANALYSE_RESULT_STATUS.OK){
       _errorMsg.add(i18n(context, 'wherigo_error_loading_lua'));
-      _errorMsg.add('');
+      _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
     } else {
       _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
       for (int i = 0; i < _WherigoCartridgeLUA.ResultsLUA.length; i++)
@@ -1917,16 +1922,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _WherigoCartridgeLUA.CartridgeGUID != '') {
             _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = FILE_LOAD_STATE.GWC;
+            _displayedCartridgeData = WHERIGO.HEADER;
+            _getLUAOnline = true;
+            _nohttpError = true;
+            _WherigoShowLUASourcecodeDialog = true;
             showToast(
                 i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
                 duration: 30);
+            print(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'));
           } else {
             _fileLoadedState = FILE_LOAD_STATE.GWC;
+            _displayedCartridgeData = WHERIGO.HEADER;
           }
           break;
 
         case DATA_TYPE_LUA: // GWC File should be loaded
           _WherigoCartridgeLUA = _outData['WherigoCartridgeLUA'];
+
           if (_WherigoCartridgeLUA != null)
             NameToObject = _WherigoCartridgeLUA.NameToObject;
           else
@@ -1935,20 +1947,21 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           switch (_WherigoCartridgeLUA.ResultStatus) {
             case ANALYSE_RESULT_STATUS.OK:
               toastMessage = i18n(context, 'wherigo_data_loaded') + ': ' + dataType;
+              toastDuration= 5;
               _nohttpError = false;
 
               // check if GWC and LUA are from the same cartridge
               if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
                   _WherigoCartridgeGWC.CartridgeGUID != '') {
-                _WherigoCartridgeGWC = _resetGWC('wherigo_error_diff_gwc_lua_1');
-                _fileLoadedState = FILE_LOAD_STATE.LUA;
-                _displayedCartridgeData = WHERIGO.ZONES;
-                showToast(
-                    i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_3'),
-                    duration: 30);
+                // files belong to different cartridges
+                _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
+                _fileLoadedState = FILE_LOAD_STATE.GWC;
+                _displayedCartridgeData = WHERIGO.HEADER;
+                toastMessage =
+                    i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2');
+                toastDuration= 30;
               } else {
                 _fileLoadedState = FILE_LOAD_STATE.FULL;
-                // show complete dropdown
                 _displayedCartridgeData = WHERIGO.HEADER;
               }
               break;
@@ -1977,56 +1990,61 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 toastMessage = toastMessage + i18n(context, _WherigoCartridgeLUA.httpMessage);
               else
                 toastMessage = toastMessage + _WherigoCartridgeLUA.httpMessage;
-
-              showToast(toastMessage, duration: 30);
               _getLUAOnline = false;
-              _WherigoCartridgeGWC = WherigoCartridgeGWC(
-                Signature: _WherigoCartridgeGWC.Signature,
-                NumberOfObjects: _WherigoCartridgeGWC.NumberOfObjects,
-                MediaFilesHeaders: _WherigoCartridgeGWC.MediaFilesHeaders,
-                MediaFilesContents: _WherigoCartridgeGWC.MediaFilesContents,
-                HeaderLength: _WherigoCartridgeGWC.HeaderLength,
-                Splashscreen: _WherigoCartridgeGWC.Splashscreen,
-                SplashscreenIcon: _WherigoCartridgeGWC.SplashscreenIcon,
-                Latitude: _WherigoCartridgeGWC.Latitude,
-                Longitude: _WherigoCartridgeGWC.Longitude,
-                Altitude: _WherigoCartridgeGWC.Altitude,
-                DateOfCreation: _WherigoCartridgeGWC.DateOfCreation,
-                TypeOfCartridge: _WherigoCartridgeGWC.TypeOfCartridge,
-                Player: _WherigoCartridgeGWC.Player,
-                PlayerID: _WherigoCartridgeGWC.PlayerID,
-                CartridgeLUAName: _WherigoCartridgeGWC.CartridgeLUAName,
-                CartridgeName: _WherigoCartridgeGWC.CartridgeName,
-                CartridgeGUID: _WherigoCartridgeGWC.CartridgeGUID,
-                CartridgeDescription: _WherigoCartridgeGWC.CartridgeDescription,
-                StartingLocationDescription: _WherigoCartridgeGWC.StartingLocationDescription,
-                Version: _WherigoCartridgeGWC.Version,
-                Author: _WherigoCartridgeGWC.Author,
-                Company: _WherigoCartridgeGWC.Company,
-                RecommendedDevice: _WherigoCartridgeGWC.RecommendedDevice,
-                LengthOfCompletionCode: _WherigoCartridgeGWC.LengthOfCompletionCode,
-                CompletionCode: _WherigoCartridgeGWC.CompletionCode,
+              _WherigoCartridgeLUA = WherigoCartridgeLUA(
+                LUAFile: '',
+                CartridgeLUAName: '',
+                CartridgeName: '',
+                CartridgeGUID: '',
+                ObfuscatorTable: '',
+                ObfuscatorFunction: '',
+                Characters: [],
+                Items: [],
+                Tasks: [],
+                Inputs: [],
+                Zones: [],
+                Timers: [],
+                Media: [],
+                Messages: [],
+                Answers: [],
+                Variables: [],
+                NameToObject: {},
+                Builder: BUILDER.UNKNOWN,
+                BuilderVersion: '',
+                TargetDeviceVersion: '',
+                CountryID: '',
+                StateID: '',
+                UseLogging: '',
+                CreateDate: '',
+                PublishDate: '',
+                UpdateDate: '',
+                LastPlayedDate: '',
+                httpCode:  _WherigoCartridgeLUA.httpCode,
+                httpMessage: _WherigoCartridgeLUA.httpMessage,
                 ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
-                ResultsGWC: [
+                ResultsLUA: [
+                  i18n(context, 'wherigo_error_runtime'),
                   i18n(context, 'wherigo_error_decompile_gwc'),
                   i18n(context, 'wherigo_http_code') + ' ' + _WherigoCartridgeLUA.httpCode + '\n',
                   i18n(context, HTTP_STATUS[_WherigoCartridgeLUA.httpCode]),
-                  _WherigoCartridgeLUA.httpMessage.startsWith('wherigo') ? i18n(context, _WherigoCartridgeLUA.httpMessage) : _WherigoCartridgeLUA.httpMessage
-                ]
+                  _WherigoCartridgeLUA.httpMessage.startsWith('wherigo') ? i18n(context, _WherigoCartridgeLUA.httpMessage) : _WherigoCartridgeLUA.httpMessage,
+                  '',
+                  i18n(context, 'wherigo_error_hint_2'),
+                ],
               );
-              print('results with httpError');
-              print(_WherigoCartridgeGWC.ResultsGWC);
+              toastDuration= 30;
+
               break;
           }
 
           break;
       } // end switch DATA_TYPE
+      showToast(toastMessage, duration: toastDuration);
 
       _buildZonesForMapExport();
       _buildHeader();
 
-      showToast(toastMessage, duration: toastDuration);
-    }
+    } // outData != null
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
