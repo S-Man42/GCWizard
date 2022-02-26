@@ -37,8 +37,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
       _httpCode = response.statusCode.toString();
       _httpMessage = response.reasonPhrase;
-      print('_httpCode'+_httpCode);
-      print('_httpMessage'+_httpMessage);
       if (response.statusCode == 200) {
         var responseData = await http.Response.fromStream(response);
         _LUAFile = responseData.body;
