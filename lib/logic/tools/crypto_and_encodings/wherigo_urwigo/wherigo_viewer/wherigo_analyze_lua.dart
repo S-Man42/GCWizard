@@ -27,9 +27,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   if (online) {
     // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
+    String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7324/GCW_Unluac/';
     try {
-      String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
-
       var uri = Uri.parse(address);
       var request = http.MultipartRequest('POST', uri)
         ..files.add(await http.MultipartFile.fromBytes('file', byteListLUA,
@@ -38,7 +37,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
       _httpCode = response.statusCode.toString();
       _httpMessage = response.reasonPhrase;
-
+      print('_httpCode'+_httpCode);
+      print('_httpMessage'+_httpMessage);
       if (response.statusCode == 200) {
         var responseData = await http.Response.fromStream(response);
         _LUAFile = responseData.body;
@@ -83,7 +83,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
             Variables: [],
             NameToObject: {},
             ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
-            ResultsLUA: ['wherigo_code_http_503'],
+            ResultsLUA: ['wherigo_code_http_503', _httpMessage],
             httpCode: _httpCode,
             httpMessage: _httpMessage)
       });

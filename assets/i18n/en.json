@@ -5177,6 +5177,7 @@
   "wherigo_error_loading_gwc": "No error occured while loading GWC",
   "wherigo_error_loading_lua": "No errors occured while loading LUA",
   "wherigo_error_no_error": "No errors occured",
+  "wherigo_error_decompile_gwc": "while decompiling GWC Cartridge",
   "wherigo_error_runtime": "RUNTIME ERROR",
   "wherigo_error_runtime_gwc": "while analysing GWC Cartridge",
   "wherigo_error_runtime_lua": "while analysing LUA Sourcecode",
