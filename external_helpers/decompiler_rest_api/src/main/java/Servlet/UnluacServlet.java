@@ -212,8 +212,7 @@ public class UnluacServlet extends HttpServlet {
 			res.sendRedirect("https://gcwizard.net/#/");
 		} catch (IOException e) {
 			System.err.printf("IOException:: %s\n", e.getMessage());
-			System.err.println("IOExcpetion:: Could not redirect to 'https://gcwizard.net/#/'");
-			buildErrorResponse("w", 5, res);
+			buildErrorResponse("Could not redirect to Could not redirect to 'https://gcwizard.net/#/", 500, res);
 		}
 	}
 	
