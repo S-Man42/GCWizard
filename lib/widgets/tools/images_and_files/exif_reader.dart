@@ -95,12 +95,15 @@ class _ExifReaderState extends State<ExifReader> {
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
-
     try {
       if (tags != null) {
         _thumbnail = completeThumbnail(tags);
-        _point = completeGPSData(tags);
         _tableTags = buildTablesExif(tags);
+        Map<String, dynamic> xmpTags = buildXmpTags(_file, _tableTags);
+        _point = completeGPSData(tags);
+        if (_point == null) {
+          _point = completeGPSDataFromXmp(xmpTags);
+        }
       }
 
       _fileLoaded = true;
@@ -309,9 +312,9 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section extra data
   ///
-  void _decorateHiddenData(List<Widget> widgets) {
+  Future<void> _decorateHiddenData(List<Widget> widgets) async {
     if (file == null) return;
-    var _hiddenData = hiddenData(file);
+    var _hiddenData = await hiddenData(file);
 
     if (_hiddenData == null || _hiddenData.length <= 1) return;
 

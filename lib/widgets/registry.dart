@@ -2729,7 +2729,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: SymbolReplacer(), i18nPrefix: 'symbol_replacer',  isBeta: true, searchKeys: [
       'symbol_replacer',
-    ]),
+    ], categories: [ToolCategory.GENERAL_CODEBREAKERS],),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
       'symbol_adlam',

@@ -144,17 +144,29 @@ String encodeBase58(String input){
   return encoded.split('').reversed.join('');
 }
 
-String decodeBase58(String num){
-  if (num == null || num == '') return '';
+final List<String> BASE58_ALPHABET = [
+  '1','2','3','4','5','6','7','8','9',
+  'a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+  'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z'
+];
+
+String decodeBase58(String input){
+  if (input == null || input == '') return '';
 
   String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
-  int len = num.toString().length;
+  String num = '';
+
+  for (int i = 0; i < input.length; i++)
+    if (BASE58_ALPHABET.contains(input[i]))
+      num = num + input[i];
+
+  int len = num.length;
   int multi = 1;
   int decoded = 0;
 
   for (int i = len - 1; i >= 0; i--) {
-    decoded = decoded + multi * _strPos(alphabet, num.toString()[i]);
-    multi = multi * alphabet.length;
+      decoded = decoded + multi * _strPos(alphabet, num[i]);
+      multi = multi * alphabet.length;
   }
   return decoded.toString();
 }

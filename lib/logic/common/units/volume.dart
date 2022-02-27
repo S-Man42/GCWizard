@@ -170,6 +170,10 @@ final VOLUME_STERE = Volume(name: 'common_unit_volume_stere_name', symbol: 'st',
 final VOLUME_WASHINGMACHINE =
     Volume(name: 'common_unit_volume_washingmachine_name', symbol: 'wm', inCubicMeters: 0.85 * 0.60 * 0.60);
 
+// https://webmadness.net/blog/?post=knuth
+final VOLUME_NGOGN =
+  Volume(name: 'common_unit_volume_ngogn_name', symbol: 'n', inCubicMeters: 0.022633 * 0.022633 * 0.022633);
+
 final List<Unit> volumes = [
   VOLUME_CUBICMILLIMETER,
   VOLUME_CUBICCENTIMETER,
@@ -224,5 +228,6 @@ final List<Unit> volumes = [
   VOLUME_USDASH,
   VOLUME_STERE,
   VOLUME_WOODKLAFTER,
-  VOLUME_WASHINGMACHINE
+  VOLUME_WASHINGMACHINE,
+  VOLUME_NGOGN,
 ];

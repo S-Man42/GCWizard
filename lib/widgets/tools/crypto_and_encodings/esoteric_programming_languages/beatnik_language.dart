@@ -125,7 +125,7 @@ class BeatnikState extends State<Beatnik> {
   Widget _buildOutput(BuildContext context) {
     BeatnikOutput _output = BeatnikOutput([''], [''], [''], [''], []);
     String _outputData = '';
-    List<List<String>> _columnData = new List<List<String>>();
+    List<List<String>> _columnData = <List<String>>[];
 
     if (_currentMode == GCWSwitchPosition.right) {
       // generate beatnik
