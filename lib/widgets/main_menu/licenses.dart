@@ -100,6 +100,7 @@ class LicensesState extends State<Licenses> {
           ],
           [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_kabouter_abc_title'), 'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'],
+          [i18n(context, 'symboltables_matoran_title'), 'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'],
           [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
           [i18n(context, 'symboltables_ninjargon_title'), 'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'],
           [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
