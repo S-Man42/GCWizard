@@ -17,6 +17,7 @@ class LicensesState extends State<Licenses> {
       Column(
         children: columnedMultiLineOutput(null, [
           ['archive', 'Apache 2.0 License'],
+          ['audioplayers', 'MIT License'],
           ['auto_size_text', 'MIT License'],
           ['base32', 'MIT License'],
           ['cached_network_image', 'MIT License'],
@@ -78,6 +79,7 @@ class LicensesState extends State<Licenses> {
           ['Urwigo Tools', '@Krevo (WherigoTools)', 'MIT License'],
           ['Vigenère Breaker', 'Jens Guballa (guballa.de)', null],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
+          ['Wherigo Analyzer', 'WFoundation\nhttps://github.com/WFoundation', ''],
           ['Base58', 'Dark Launch\n', ''],
           ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
           ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],

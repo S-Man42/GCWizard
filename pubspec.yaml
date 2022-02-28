@@ -24,6 +24,7 @@ dependencies:
   flutter_map_tappable_polyline: ^3.0.0
   fluttertoast: ^8.0.8
   http: ^0.13.4
+  http_parser: ^4.0.0
   image: ^3.1.1
   intl: ^0.17.0
   location: ^4.3.0
@@ -45,6 +46,7 @@ dependencies:
   unrar_file: ^1.1.0
   uuid: ^3.0.4
   url_launcher: ^6.0.12
+  audioplayers: ^0.20.1
   utility: ^1.0.1
   #xmp: ^1.0.2 # xml:4  :(
 

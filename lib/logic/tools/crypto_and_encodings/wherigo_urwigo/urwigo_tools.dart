@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readestring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readustring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 
@@ -17,5 +18,8 @@ String deobfuscateUrwigoText(String text, String dtable) {
 
   if (dtable == null || dtable.isEmpty) return '';
 
-  return readustring(text, dtable) ?? '';
+  if (dtable == 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~')
+    return gsub_wig(text);
+  else
+    return readustring(text, dtable) ?? '';
 }

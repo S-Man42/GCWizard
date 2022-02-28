@@ -17,10 +17,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:unrar_file/unrar_file.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, GZIP, BZIP2, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, OGG, MIDI, PDF, EXE, BMP, TXT, GPX, KML, KMZ }
-enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT }
+enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, GZIP, BZIP2, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, OGG, SND, FDL, MIDI, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC, LUA }
+enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
+  // https://en.wikipedia.org/wiki/List_of_file_signatures
+  // https://wiki.selfhtml.org/wiki/MIME-Type/%C3%9Cbersicht   oder   https://www.iana.org/assignments/media-types/media-types.xhtml
   FileType.JPEG: {
     'extensions': ['jpg', 'jpeg'],
     'magic_bytes': <List<int>>[
@@ -68,8 +70,9 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.WEBP: {
     'extensions': ['webp'],
     'magic_bytes': <List<int>>[
-      [0x52, 0x49, 0x46, 0x46]
-    ],
+       [0x52, 0x49, 0x46, 0x46] // identically to WAV - check details
+     ],
+    'magic_bytes_detail': <int>[0x57, 0x45, 0x42, 0x50],
     'mime_types': ['image/webp'],
     'file_class': FileClass.IMAGE
   },
@@ -128,8 +131,9 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['wmv'],
     'mime_types': ['audio/x-ms-wmv', 'audio/wmv'],
     'magic_bytes': <List<int>>[
-      [0x30, 0x26, 0xB2, 0x75]
+      [0x30, 0x26, 0xB2, 0x75],
     ],
+    'magic_byte_detail': <int>[0x57, 0x41, 0x56, 0x45],
     'file_class': FileClass.SOUND
   },
   FileType.WAV: {
@@ -138,6 +142,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
       [0x52, 0x49, 0x46, 0x46],
       [0x57, 0x41, 0x56, 0x45]
     ],
+    'magic_bytes_detail': <int>[0x57, 0x41, 0x56, 0x45],
     'mime_types': ['audio/wav', 'audio/x-wav'],
     'file_class': FileClass.SOUND
   },
@@ -153,6 +158,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['mp3'],
     'magic_bytes': <List<int>>[
       [0x49, 0x44, 0x33],
+      [0xFF, 0xFA],
       [0xFF, 0xFB],
       [0xFF, 0xF3],
       [0xFF, 0xF2]
@@ -163,15 +169,30 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.OGG: {
     'extensions': ['ogg', 'oga'],
     'magic_bytes': <List<int>>[
-      [0x4F, 0x67, 0x67, 0x53]
+    [0x4F, 0x67, 0x67, 0x53]
     ],
     'mime_types': ['audio/ogg', 'application/ogg'],
+    'file_class': FileClass.SOUND
+  },
+  FileType.SND: {
+    'extensions': ['snd'],
+    'magic_bytes': <List<int>>[
+      [0x46, 0x4F, 0x52, 0x4D],
+      [0x38, 0x53, 0x56, 0x58]],
+    'mime_types': ['audio/snd'],
+    'file_class': FileClass.SOUND
+  },
+  FileType.FDL: {
+    'extensions': ['fdl'],
+    'magic_bytes': <List<int>>[
+      [0x00, 0x00]],
+    'mime_types': ['application/octet-stream'],
     'file_class': FileClass.SOUND
   },
   FileType.TXT: {
     'extensions': ['txt'],
     'magic_bytes': <List<int>>[],
-    'mime_types': ['audio/mpeg', 'audio/mp3'],
+    'mime_types': ['text/plain'],
     'file_class': FileClass.TEXT
   },
   FileType.PDF: {
@@ -211,6 +232,29 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'file_class': FileClass.DATA,
     'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml', 'application/vnd.google-earth.kmz']
   },
+  FileType.LUAC: {
+    'extensions': ['luac'],
+    'magic_bytes': <List<int>>[
+      [0x1B, 0x4C, 0x75, 0x61, 0x51, 0x00, 0x01, 0x04]],
+    'mime_types': ['application/octet-stream'],
+    'file_class': FileClass.BINARY
+  },
+  FileType.GWC: {
+    'extensions': ['gwc'],
+    'magic_bytes': <List<int>>[
+      [0x02, 0x0A, 0x43, 0x41, 0x52, 0x54, 0x00],
+      [0x02, 0x0B, 0x43, 0x41, 0x52, 0x54, 0x00]],
+    'mime_types': ['application/octet-stream'],
+    'file_class': FileClass.BINARY
+  },
+  FileType.LUA: {
+    'extensions': ['lua'],
+    'magic_bytes': <List<int>>[
+      [0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65]
+    ],
+    'mime_types': ['text/plain'],
+    'file_class': FileClass.TEXT
+  },
 };
 
 FileType fileTypeByFilename(String fileName) {
@@ -219,6 +263,7 @@ FileType fileTypeByFilename(String fileName) {
 }
 
 String fileExtension(FileType type) {
+  print(_FILE_TYPES[type]['extensions'].first);
   return _FILE_TYPES[type]['extensions'].first;
 }
 
@@ -240,6 +285,10 @@ FileClass fileClass(FileType type) {
 
 List<List<int>> magicBytes(FileType type) {
   return _FILE_TYPES[type]['magic_bytes'];
+}
+
+List<int> magicBytesDetail(FileType type) {
+  return _FILE_TYPES[type]['magic_bytes_detail'];
 }
 
 int magicBytesOffset(FileType type) {
@@ -361,6 +410,7 @@ bool isImage(Uint8List blobBytes) {
 }
 
 FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT}) {
+  Uint8List RIFF = Uint8List.fromList([0x52, 0x49, 0x46, 0x46]);
   for (var fileType in _FILE_TYPES.keys) {
     var _magicBytes = magicBytes(fileType);
     var offset = magicBytesOffset(fileType) ?? 0;
@@ -368,7 +418,18 @@ FileType getFileType(Uint8List blobBytes, {FileType defaultType = FileType.TXT})
     for (var bytes in _magicBytes) {
       if (blobBytes != null &&
           (blobBytes.length >= (bytes.length + offset)) &&
-          ListEquality().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) return fileType;
+          ListEquality().equals(blobBytes.sublist(offset, offset + bytes.length), bytes)) {
+        // test if RIFF then test for details
+        if (ListEquality().equals(bytes, RIFF)) {
+          for (var fileTypeContainer in _FILE_TYPES.keys) {
+            var _magicBytesDetails = magicBytesDetail(fileTypeContainer);
+            if (ListEquality().equals(blobBytes.sublist(8, 12), _magicBytesDetails)) {
+              return fileTypeContainer;
+            }
+          }
+        } else
+          return fileType;
+      }
     }
   }
 

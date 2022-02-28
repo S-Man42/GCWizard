@@ -155,6 +155,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
@@ -175,6 +176,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
@@ -498,6 +500,7 @@ void _initStaticToolList() {
       className(SilverRatioSelection()),
       className(DuckSpeak()),
       className(EasterSelection()),
+      className(EarwigoTextDeobfuscation()),
       className(EdelcrantzTelegraph()),
       className(EllipsoidTransform()),
       className(EnclosedAreas()),
@@ -634,6 +637,7 @@ void _initStaticToolList() {
       className(WASD()),
       className(WaypointProjection()),
       className(Weekday()),
+      className(WherigoAnalyze()),
       className(WheatstoneCookeNeedleTelegraph()),
       className(WhitespaceLanguage()),
       className(WigWagSemaphoreTelegraph()),

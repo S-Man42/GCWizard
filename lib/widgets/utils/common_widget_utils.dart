@@ -39,18 +39,15 @@ defaultFontSize() {
   return fontSize;
 }
 
-List<Widget> columnedMultiLineOutput(
-    BuildContext context,
-    List<List<dynamic>> data,
-    {
-      List<int> flexValues = const [],
-      int copyColumn,
-      bool hasHeader: false,
-      bool copyAll: false,
-      List<Function> tappables,
-      double fontSize
-    }
-    ) {
+List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
+    {List<int> flexValues = const [],
+    int copyColumn,
+    bool suppressCopyButtons: false,
+    bool hasHeader: false,
+    bool copyAll: false,
+    List<Function> tappables,
+    double fontSize
+    }) {
   var odd = true;
   var isFirst = true;
 
@@ -99,7 +96,7 @@ List<Widget> columnedMultiLineOutput(
           context == null
               ? Container()
               : Container(
-                  child: ((isFirst && hasHeader) & !copyAll)
+                  child: (((isFirst && hasHeader) & !copyAll) || suppressCopyButtons)
                       ? Container()
                       : GCWIconButton(
                           iconData: Icons.content_copy,
