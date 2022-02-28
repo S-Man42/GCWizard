@@ -110,7 +110,7 @@ void main() {
           {'text': '11', 'variables': {'A': '1'}},
         ]
       },
-      {'input': 'A', 'substitutions': {'A': '5-1#2,10-12,23,30-40#5,50-47,100'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+      {'input': 'A', 'substitutions': {'A': '  5    - 1#   2, 10    -12,   23, 30-40  #5,50-  47   ,100'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
         'expectedOutput': [
           {'text': '5', 'variables': {'A': '5'}},
           {'text': '3', 'variables': {'A': '3'}},
@@ -153,6 +153,21 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
         var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition'], orderAndUnique: false).run();
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("VariableStringExpander.runOnlyPrecheckWithSpaces:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input': 'N 51.[A][A+1] E [B][B^A].[4]23', 'substitutions': {'A': '1- 3', 'B': '4 -0#  2,  1', 'C': '12  ,34,  10'}, 'onAfterExpandedText' : (e) => e, 'breakCondition' : VariableStringExpanderBreakCondition.RUN_ALL,
+        'expectedOutput': [{'count' : 36}]
+      }
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, substitutions: ${elem['substitutions']}', () {
+        var _actual = VariableStringExpander(elem['input'], elem['substitutions'], onAfterExpandedText: elem['onAfterExpandedText'], breakCondition: elem['breakCondition']).run(onlyPrecheck: true);
         expect(_actual, elem['expectedOutput']);
       });
     });

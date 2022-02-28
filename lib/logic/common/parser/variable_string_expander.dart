@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
 
-final RegExp VARIABLESTRING = RegExp(r'^((\d+(\-(\d*|\d+#\d*))?),)*(\d*|(\d+\-(\d*|\d+#\d*)))$');
+final RegExp VARIABLESTRING = RegExp(r'^((\s*\d+(\s*\-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*\-\s*(\d*|\d+\s*#\s*\d*)))\s*$');
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
