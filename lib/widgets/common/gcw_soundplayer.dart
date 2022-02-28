@@ -106,9 +106,9 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
     Future.delayed(Duration.zero, () async {
       await advancedPlayer.stop();
+      await _audioFile.delete();
     });
 
-    _audioFile.delete();
     super.dispose();
   }
 
