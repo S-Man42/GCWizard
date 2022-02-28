@@ -35,6 +35,8 @@ String getStructData(String analyseLine, String type){
 
 String getTextData( String analyseLine, String obfuscator, String dtable){
   String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '').replaceAll('input)', 'input');
+  if (result.endsWith(','))
+    result = result.substring(0, result.length - 1);
 
   if (RegExp(r'(gsub_wig)').hasMatch(result)){
     // deobfuscate/replace all Matches gsub_wig\("[\w\s@]+"\)

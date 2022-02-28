@@ -354,7 +354,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       case WHERIGO.OBFUSCATORTABLE:
         return Column(
           children: <Widget>[
-            GCWOutput(
+            if (_WherigoCartridgeLUA.ObfuscatorTable == '')
+              GCWOutput(
+                  child: i18n(context, 'wherigo_data_nodata'),
+                suppressCopyButton: true,
+              ),
+            if (_WherigoCartridgeLUA.ObfuscatorTable != '')
+              GCWOutput(
               title: i18n(context, 'wherigo_header_obfuscatorfunction'),
               child: _WherigoCartridgeLUA.ObfuscatorFunction,
               suppressCopyButton: (_WherigoCartridgeLUA.ObfuscatorFunction == 'NO_OBFUSCATOR'),
@@ -1337,7 +1343,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_id'), data.TimerID],
       [i18n(context, 'wherigo_output_name'), data.TimerName],
       [i18n(context, 'wherigo_output_description'), data.TimerDescription],
-      [i18n(context, 'wherigo_output_duration'), data.TimerDuration],
+      [i18n(context, 'wherigo_output_duration'), data.TimerDuration + ' ' + i18n(context, 'dates_daycalculator_seconds')],
       [i18n(context, 'wherigo_output_type'), i18n(context, 'wherigo_output_timer_' + data.TimerType + ' s')],
       [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TimerVisible)],
     ];
@@ -1435,7 +1441,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           break;
         case ACTIONMESSAGETYPE.BUTTON:
           resultWidget.add(Container(
-              child: Text('\n' + '« ' + element.ActionMessageContent + ' »' + '\n',
+              child: Text('\n' + i18n(context, 'wherigo_output_action_btn') + ' « ' + element.ActionMessageContent + ' »' + '\n',
                   textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold))));
           break;
         case ACTIONMESSAGETYPE.COMMAND:
