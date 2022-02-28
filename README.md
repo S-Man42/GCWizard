@@ -69,6 +69,7 @@ Based on **Flutter/Dart**.
 ### Images and Files
 * **Hex Viewer**
 * **Exif/Metadata Viewer** for images
+* **Wherigo Analyzer** to show content of WIG cartridges
 * Analyse frames of **Animated Images**
 * **Color corrections**: Adjust contrast, saturation, gamma, edge detection, ...
 * Search for **Hidden Data** or hidden archives
