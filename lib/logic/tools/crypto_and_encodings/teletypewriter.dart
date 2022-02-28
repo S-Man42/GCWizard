@@ -1408,6 +1408,8 @@ final NumbersToILLIAC = {
 final ILLIACToNumbers  = switchMapKeyValue(NumbersToILLIAC);
 
 final AZToTTS = {
+  // https://druck-mediengeschichte.org/2020/08/06/zwischen-morsecode-und-digitaler-fonttechnologie-2/
+  // Wilfried Kusterka
   'T': 32,
   'O': 48,
   'N': 24,
