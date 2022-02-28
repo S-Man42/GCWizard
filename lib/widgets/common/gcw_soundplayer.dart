@@ -132,7 +132,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
         ),
         GCWIconButton(
           iconData: Icons.stop,
-          iconColor: _isLoaded ? null : themeColors().inActive(),
+          iconColor: _isLoaded && !isStopped ? null : themeColors().inActive(),
           onPressed: isPlaying || isPaused ? () => _audioPlayerStop() : null,
         ),
         if (widget.showMetadata)
@@ -188,6 +188,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
   get isPlaying => playerState == PlayerState.playing;
   get isPaused => playerState == PlayerState.paused;
+  get isStopped => playerState == PlayerState.stopped;
 
   void onComplete() {
     setState(() => playerState = PlayerState.stopped);
