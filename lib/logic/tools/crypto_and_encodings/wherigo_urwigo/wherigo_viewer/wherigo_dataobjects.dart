@@ -352,10 +352,12 @@ class InputData {
 
 class AnswerData {
   final String AnswerAnswer;
+  final String AnswerHash;
   final List<ActionMessageElementData> AnswerActions;
 
   AnswerData(
     this.AnswerAnswer,
+    this.AnswerHash,
     this.AnswerActions,
   );
 }

@@ -116,7 +116,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           i18n(context, 'wherigo_decompile_title'),
           Container(
             width: 250,
-            height: 330,
+            height: 380,
             child: GCWText(
               text: i18n(context, 'wherigo_decompile_message'),
               style: gcwDialogTextStyle(),
@@ -653,7 +653,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         _WherigoCartridgeLUA.LUAFile == null
                             ? null
                             : _exportFile(
-                                context, _WherigoCartridgeLUA.LUAFile.codeUnits, 'LUAsourceCode', FileType.LUA);
+                                context, Uint8List.fromList(_WherigoCartridgeLUA.LUAFile.codeUnits), 'LUAsourceCode', FileType.LUA);
                       },
                     ),
                   ],
@@ -830,105 +830,114 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             suppressCopyButton: true,
           );
 
-        return Column(children: <Widget>[
-          GCWDefaultOutput(),
-          Row(
-            children: <Widget>[
-              GCWIconButton(
-                iconData: Icons.arrow_back_ios,
-                onPressed: () {
-                  setState(() {
-                    _inputIndex--;
-                    _answerIndex = 1;
-                    if (_inputIndex < 1) _inputIndex = _WherigoCartridgeLUA.Inputs.length;
-                  });
-                },
-              ),
-              Expanded(
-                child: GCWText(
-                  align: Alignment.center,
-                  text: i18n(context, 'wherigo_data_input') +
-                      ' ' +
-                      _inputIndex.toString() +
-                      ' / ' +
-                      (_WherigoCartridgeLUA.Inputs.length).toString(),
-                ),
-              ),
-              GCWIconButton(
-                iconData: Icons.arrow_forward_ios,
-                onPressed: () {
-                  setState(() {
-                    _inputIndex++;
-                    _answerIndex = 1;
-                    if (_inputIndex > _WherigoCartridgeLUA.Inputs.length) _inputIndex = 1;
-                  });
-                },
-              ),
-            ],
-          ),
-
-          // Widget for Answer-Details
-          if (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia != '' &&
-              _WherigoCartridgeGWC.MediaFilesContents.length > 1)
-            GCWImageView(
-              imageData: GCWImageViewData(_getFileFrom(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia)),
-              suppressedButtons: {GCWImageViewButtons.ALL},
-            ),
-          Column(
-              children: columnedMultiLineOutput(context, _outputInput(_WherigoCartridgeLUA.Inputs[_inputIndex - 1]),
-                  flexValues: [1, 3])),
-          Row(
-            children: <Widget>[
-              GCWIconButton(
-                iconData: Icons.arrow_back_ios,
-                onPressed: () {
-                  setState(() {
-                    _answerIndex--;
-                    if (_answerIndex < 1)
-                      _answerIndex = _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length;
-                  });
-                },
-              ),
-              Expanded(
-                child: GCWText(
-                  align: Alignment.center,
-                  text: i18n(context, 'wherigo_data_answer') +
-                      ' ' +
-                      _answerIndex.toString() +
-                      ' / ' +
-                      (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length).toString(),
-                ),
-              ),
-              GCWIconButton(
-                iconData: Icons.arrow_forward_ios,
-                onPressed: () {
-                  setState(() {
-                    _answerIndex++;
-                    if (_answerIndex > _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length)
+          return Column(children: <Widget>[
+            GCWDefaultOutput(),
+            Row(
+              children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _inputIndex--;
                       _answerIndex = 1;
-                  });
-                },
+                      if (_inputIndex < 1) _inputIndex = _WherigoCartridgeLUA.Inputs.length;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                    align: Alignment.center,
+                    text: i18n(context, 'wherigo_data_input') +
+                        ' ' +
+                        _inputIndex.toString() +
+                        ' / ' +
+                        (_WherigoCartridgeLUA.Inputs.length).toString(),
+                  ),
+                ),
+                GCWIconButton(
+                  iconData: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _inputIndex++;
+                      _answerIndex = 1;
+                      if (_inputIndex > _WherigoCartridgeLUA.Inputs.length) _inputIndex = 1;
+                    });
+                  },
+                ),
+              ],
+            ),
+
+            // Widget for Answer-Details
+            if (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia != '' &&
+                _WherigoCartridgeGWC.MediaFilesContents.length > 1)
+              GCWImageView(
+                imageData: GCWImageViewData(_getFileFrom(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputMedia)),
+                suppressedButtons: {GCWImageViewButtons.ALL},
               ),
-            ],
-          ),
-          (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length > 0)
-              ? Column(
-                  children: <Widget>[
-                    Column(
-                        children: columnedMultiLineOutput(context,
-                            _outputAnswer(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
-                            flexValues: [1, 3])),
-                    GCWExpandableTextDivider(
-                      expanded: false,
-                      text: i18n(context, 'wherigo_output_answeractions'),
-                      child: Column(
-                          children: _outputAnswerActionsWidgets(
-                              _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
-                    ),
-                  ],
-                )
-              : Container()
-        ]);
+            Column(
+                children: columnedMultiLineOutput(context, _outputInput(_WherigoCartridgeLUA.Inputs[_inputIndex - 1]),
+                    flexValues: [1, 3])),
+            (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers != null)
+            ? Row(
+              children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.arrow_back_ios,
+                  onPressed: () {
+                    setState(() {
+                      _answerIndex--;
+                      if (_answerIndex < 1)
+                        _answerIndex = _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: GCWText(
+                    align: Alignment.center,
+                    text: i18n(context, 'wherigo_data_answer') +
+                        ' ' +
+                        _answerIndex.toString() +
+                        ' / ' +
+                        (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length).toString(),
+                  ),
+                ),
+                GCWIconButton(
+                  iconData: Icons.arrow_forward_ios,
+                  onPressed: () {
+                    setState(() {
+                      _answerIndex++;
+                      if (_answerIndex > _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length)
+                        _answerIndex = 1;
+                    });
+                  },
+                ),
+              ],
+            )
+            : Container(),
+            (_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers != null && _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers.length > 0)
+            ? Column(
+              children: <Widget>[
+                Column(
+                    children: columnedMultiLineOutput(context,
+                        _outputAnswer(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
+                        flexValues: [1, 3])),
+                GCWExpandableTextDivider(
+                  expanded: false,
+                  text: i18n(context, 'wherigo_output_answeractions'),
+                  child: Column(
+                      children: _outputAnswerActionsWidgets(
+                          _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
+                ),
+              ],
+            )
+             : GCWOutput(
+                 title: i18n(context, 'wherigo_error_runtime_exception'),
+                 child: i18n(context, 'wherigo_error_runtime_exception_no_answers_1')+ '\n' +
+                        _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputLUAName + '\n' +
+                        i18n(context, 'wherigo_error_runtime_exception_no_answers_2')+ '\n' +
+                        '\n' +
+                        i18n(context, 'wherigo_error_hint_2'),
+            )
+          ]);
         break;
 
       case WHERIGO.TASKS:
@@ -1836,6 +1845,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
+    print(name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
     var value = await saveByteDataToFile(
         context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 

@@ -55,14 +55,18 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     });
     result = result.replaceAll('gsub_wig()', '');
   }
-  else
-  if (result.startsWith('(' + obfuscator)) {
-    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll(')', ')');
+
+  else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
+    while (result.startsWith(RegExp(r'(\()+' + obfuscator)))
+      result = result.substring(1);
+    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll('))', ')');
     result = _getDetails(result, obfuscator, dtable);
   }
 
   else if (result.startsWith(obfuscator)) {
-    if (_compositeText(result)) {
+    if (_compositeObfuscatedText(result, obfuscator))
+      result = _getDetails(result, obfuscator, dtable);
+    else if (_compositeText(result)) {
       result = _getCompositeText(result, obfuscator, dtable);
     } else {
       result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '').replaceAll('")', '');
@@ -91,13 +95,15 @@ String _getDetails(String line, String obfuscator, String dtable){
     line = line.substring(i + 2);
 
     i = 0;
+    section = true;
     if (line.length != 0) {
       do {// get something else in between
         if (line.substring(i).startsWith(obfuscator))
           section = false;
         i = i + 1;
       } while(section);
-      result = result + line.substring(0, i - 1);
+      i--;
+      result = result + line.substring(0, i).replaceAll(')', '');
       line = line.substring(i);
     }
 
@@ -117,6 +123,10 @@ List<String> getChoicesSingleLine(String choicesLine, String LUAname, String obf
 bool _compositeText(String text){
    RegExp expr = RegExp(r'"\) .. ');
    return (expr.hasMatch(text));
+}
+
+bool _compositeObfuscatedText(String text, String obfuscator){
+  return (RegExp(r'' + obfuscator).allMatches(text).length > 1);
 }
 
 String _getCompositeText(String text, String obfuscator, String dtable){
