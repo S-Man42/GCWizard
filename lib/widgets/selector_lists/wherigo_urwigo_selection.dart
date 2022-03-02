@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwi
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class WherigoUrwigoSelection extends GCWSelection {
+class WherigoSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {

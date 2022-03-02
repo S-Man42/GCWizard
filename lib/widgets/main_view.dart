@@ -45,6 +45,7 @@ import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
@@ -637,7 +638,7 @@ void _initStaticToolList() {
       className(WASD()),
       className(WaypointProjection()),
       className(Weekday()),
-      className(WherigoAnalyze()),
+      className(WherigoSelection()),
       className(WheatstoneCookeNeedleTelegraph()),
       className(WhitespaceLanguage()),
       className(WigWagSemaphoreTelegraph()),

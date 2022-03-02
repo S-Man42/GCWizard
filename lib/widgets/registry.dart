@@ -1069,16 +1069,6 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'unitconverter',
     ]),
-    GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'wasd',
-    ]),
-    GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
-    ], searchKeys: [
-      'wherigourwigo',
-    ]),
     GCWTool(
         tool: VanitySelection(),
         i18nPrefix: 'vanity_selection',
@@ -1101,7 +1091,7 @@ initializeRegistry(BuildContext context) {
       'wasd',
     ]),
     GCWTool(
-        tool: WherigoUrwigoSelection(),
+        tool: WherigoSelection(),
         i18nPrefix: 'wherigourwigo_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
@@ -3675,6 +3665,11 @@ initializeRegistry(BuildContext context) {
     ]),
 
     //WherigoUrwigoSelection **************************************************************************************
+    GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', isBeta: true, categories: [
+      ToolCategory.IMAGES_AND_FILES
+    ], searchKeys: [
+      'wherigourwigo',
+    ]),
     //UrwigoHashBreaker already inserted in section "Hashes"
     GCWTool(
         tool: UrwigoTextDeobfuscation(),
