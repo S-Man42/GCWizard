@@ -1203,6 +1203,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
       }
 
       else if (lines[i].trimLeft() == 'if input == nil then') {
+        _answerVariable = 'input';
         // suppress this
         //answer = 'NIL';
         i++;
@@ -1224,7 +1225,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
             ));
           });
           answerActions = [];
-          answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable);
+          answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
         }
       }
 
@@ -1490,7 +1491,7 @@ ZonePoint _getPoint(String line) {
   return ZonePoint(double.parse(data[0]), double.parse(data[1]), double.parse(data[2]));
 }
 
-List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable) {
+List<String> _getAnswers(int i, String line, String lineBefore, String obfuscator, String dtable, List<VariableData> variables) {
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ')) {
@@ -1540,20 +1541,29 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
         .replaceAll('Wherigo.NoCaseEquals', '')
-        .replaceAll(_answerVariable + ',', '')
+        .replaceAll(_answerVariable, '')
         .replaceAll('(', '')
         .replaceAll(')', '')
         .replaceAll('"', '')
+        .replaceAll(',', '')
         .replaceAll('then', '')
         .replaceAll('else', '')
-        .replaceAll('input,', '')
+        .replaceAll('input', '')
         .replaceAll('Answer,', '')
         .trim();
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
       line = deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable);
     }
     line = line.split(' or ').join('\n');
-    return [removeWWB(line)];
+    line = removeWWB(line);
+    // check if variable then provide information
+    for (int i = 0; i < variables.length; i++) {
+      if (line == variables[i].VariableLUAName) {
+        line = '« ' + line + ' » → ' + variables[i].VariableName;
+        i = variables.length;
+      }
+    }
+    return [line];
   }
 }
 

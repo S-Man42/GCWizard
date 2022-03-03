@@ -51,7 +51,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       return;
     }
     if (Platform.isIOS) {
-    //  audioCache.fixedPlayer?.notificationService.startHeadlessService();
+      //audioCache.fixedPlayer?.notificationService.startHeadlessService();
     }
 
     _onDurationChangedStream = advancedPlayer.onDurationChanged.listen((Duration d) {
