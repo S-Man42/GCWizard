@@ -193,6 +193,7 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                     '\'4-Everus\'',
+                    '\'83_Seth\''
                     'Andreas E.',
                     '\'Cycle73\'',
                     '\'Don Rodolphos\'',
