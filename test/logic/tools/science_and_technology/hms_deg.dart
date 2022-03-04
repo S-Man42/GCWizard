@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/hms_deg.dart';
 void main() {
   group("hms_deg.decDeg2Hms:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
+      {'input' : null, 'expectedOutput' : null.toString()},
       {'input' : 24.622590, 'expectedOutput' : '24:37:21.32399999999592'},
       {'input' : -24.622590, 'expectedOutput' : '-24:37:21.32399999999592'},
     ];
@@ -19,14 +19,14 @@ void main() {
 
   group("hms_deg.decHms2Deg:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : ''},
-      {'input' : Equatorial.parse('24:37:21.324'), 'expectedOutput' : 24.62259},
-      {'input' : Equatorial.parse('-24:37:21.324'), 'expectedOutput' : -24.62259},
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '24:37:21.324', 'expectedOutput' : 24.62259},
+      {'input' : '-24:37:21.324', 'expectedOutput' : -24.62259},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decHms2Deg(elem['input']);
+        var _actual = decHms2Deg(Equatorial.parse(elem['input']));
         expect(_actual, elem['expectedOutput']);
       });
     });

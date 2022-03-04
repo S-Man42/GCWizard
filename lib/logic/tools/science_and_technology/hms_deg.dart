@@ -3,15 +3,13 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 class Equatorial {
   bool neg;
-  int days;
   int hours;
   int min;
   int sec;
-  int msec;
+  double msec;
 
-  Equatorial(bool neg, int days , int hours , int min, int sec, int msec ) {
+  Equatorial(bool neg, int hours , int min, int sec, double msec ) {
     this.neg = neg;
-    this.days = days;
     this.hours = hours;
     this.min = min;
     this.sec = sec;
@@ -19,25 +17,30 @@ class Equatorial {
   }
 
   static Equatorial parse (String input) {
-    var regex = new RegExp(r"([+|-]?)([\d]*)([d|D]*)(\s*)([+|-]?)([\d]*):([0-5]?[0-9]):([0-5]?[0-9])(\.\d*)*");
+    if (input == null) return null;
+    var regex = new RegExp(r"([+|-]?)([\d]*):([0-5]?[0-9]):([0-5]?[0-9])(\.\d*)*");
 
     var matches = regex.allMatches(input);
 
     if (matches.length > 0) {
-      for (var i = 0; i < matches.first.groupCount; i++) {
-        print(matches.first.group(i));
-      };
       return new Equatorial(
-          (matches.first.group(1) == "-") | (matches.first.group(5) == "-"),
+          (matches.first.group(1) == "-"),
           int.parse(matches.first.group(2)),
-          int.parse(matches.first.group(6)),
-          int.parse(matches.first.group(7)),
-          int.parse(matches.first.group(8)),
-          int.parse(matches.first.group(9))
+          int.parse(matches.first.group(3)),
+          int.parse(matches.first.group(4)),
+          matches.first.group(5).isEmpty ? 0 : double.parse('0' + matches.first.group(5))
       );
     }
     else
       return null;
+  }
+
+  @override
+  String toString() {
+    return (neg ? '-' : '') +
+      hours.toString() + ":" +
+      min.toString() + ":" +
+      (sec + msec).toString();
   }
 }
 
@@ -53,15 +56,16 @@ Equatorial raDeg2Hms(double ra) {
   var hour = (deg / 15.0).floor();
   var min = (((deg / 15.0) - hour) * 60).floor();
   var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
-  var msec = ((sec - sec.truncate()).toInt() * 1000);
+  var msec = sec - sec.truncate();
 
-  return Equatorial(prefix < 0, 0, hour, min, sec.truncate(), msec);
+  return Equatorial(prefix < 0, hour, min, sec.truncate(), msec);
 }
 
 Equatorial decDeg2Hms(double dec) {
   var prefix = 1;
   var deg = dec;
 
+  if (dec == null) return null;
   if (deg < 0) {
     prefix = -1;
     deg = deg.abs();
@@ -69,9 +73,9 @@ Equatorial decDeg2Hms(double dec) {
   var hour = deg.floor();
   var min = ((deg - hour) * 60).floor().abs();
   var sec = (((deg - hour).abs() * 60) - min) * 60;
-  var msec = ((sec - sec.truncate()) * 1000).toInt();
+  var msec = sec - sec.truncate();
 
-  return Equatorial(prefix < 0, 0, prefix * hour, min, sec.truncate(), msec);
+  return Equatorial(prefix < 0, hour, min, sec.truncate(), msec);
 }
 
 // module.exports.decHms2Deg = function(dec, round) {
@@ -91,9 +95,11 @@ Equatorial decDeg2Hms(double dec) {
 // }
 
 double decHms2Deg(Equatorial equatorial) {
-  var d = equatorial.hours + equatorial.days * 24;
+  if (equatorial == null) return null;
+
+  var d = equatorial.hours;
   var m = equatorial.min;
-  var s = equatorial.sec + equatorial.msec / 1000.0;
+  var s = equatorial.sec + equatorial.msec;
 
   var sDeg = (s / 3600.0);
   var deg = d + (m / 60.0) + sDeg;
@@ -103,6 +109,8 @@ double decHms2Deg(Equatorial equatorial) {
 
 
 DMSPart toLatLon(Equatorial equatorial) {
+  if (equatorial == null) return null;
+
   var result = _calcModuloRest(equatorial.sec, 60);
   equatorial.min += result.item1;
   equatorial.sec = result.item2;
@@ -145,7 +153,7 @@ Equatorial fromLatLon(int dmsGrad, int dmsMin, int dmsSec) {
   var min = (dmsMin / 15.0).ceil();
   var sec = (dmsSec / 15.0).ceil();
 
-  return Equatorial(false, 0, h, min, sec, 0);
+  return Equatorial(false, h, min, sec, 0);
 }
 
 Tuple2<int, double> _calcTransfer(int value) {
