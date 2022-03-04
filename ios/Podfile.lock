@@ -1,4 +1,7 @@
 PODS:
+  - ATBarSDK (1.4.1)
+  - audioplayers (0.0.1):
+    - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -33,6 +36,8 @@ PODS:
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
+  - file_picker_writable (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
@@ -42,98 +47,121 @@ PODS:
   - FMDB/standard (2.7.5)
   - location (0.0.1):
     - Flutter
-  - open_file (0.0.1):
+  - package_info_plus (0.4.5):
     - Flutter
-  - package_info (0.0.1):
-    - Flutter
-  - path_provider (0.0.1):
+  - path_provider_ios (0.0.1):
     - Flutter
   - "permission_handler (5.1.0+2)":
     - Flutter
+  - r_scan (0.0.1):
+    - ATBarSDK (~> 1.4.1)
+    - Flutter
+    - ZXingObjC (~> 3.6.5)
   - SDWebImage (5.11.0):
     - SDWebImage/Core (= 5.11.0)
   - SDWebImage/Core (5.11.0)
-  - share_extend (0.0.1):
-    - Flutter
-  - shared_preferences (0.0.1):
+  - shared_preferences_ios (0.0.1):
     - Flutter
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.0)
   - Toast (4.0.0)
-  - url_launcher (0.0.1):
+  - unrar_file (0.0.1):
     - Flutter
+    - UnrarKit
+  - UnrarKit (2.9):
+    - UnrarKit/unrar-lib (= 2.9)
+  - UnrarKit/unrar-lib (2.9)
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - ZXingObjC (3.6.5):
+    - ZXingObjC/All (= 3.6.5)
+  - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
+  - file_picker_writable (from `.symlinks/plugins/file_picker_writable/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - location (from `.symlinks/plugins/location/ios`)
-  - open_file (from `.symlinks/plugins/open_file/ios`)
-  - package_info (from `.symlinks/plugins/package_info/ios`)
-  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
-  - share_extend (from `.symlinks/plugins/share_extend/ios`)
-  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - r_scan (from `.symlinks/plugins/r_scan/ios`)
+  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - unrar_file (from `.symlinks/plugins/unrar_file/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
+    - ATBarSDK
     - DKImagePickerController
     - DKPhotoGallery
     - FMDB
     - SDWebImage
     - SwiftyGif
     - Toast
+    - UnrarKit
+    - ZXingObjC
 
 EXTERNAL SOURCES:
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
+  file_picker_writable:
+    :path: ".symlinks/plugins/file_picker_writable/ios"
   Flutter:
     :path: Flutter
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
-  open_file:
-    :path: ".symlinks/plugins/open_file/ios"
-  package_info:
-    :path: ".symlinks/plugins/package_info/ios"
-  path_provider:
-    :path: ".symlinks/plugins/path_provider/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
-  share_extend:
-    :path: ".symlinks/plugins/share_extend/ios"
-  shared_preferences:
-    :path: ".symlinks/plugins/shared_preferences/ios"
+  r_scan:
+    :path: ".symlinks/plugins/r_scan/ios"
+  shared_preferences_ios:
+    :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  url_launcher:
-    :path: ".symlinks/plugins/url_launcher/ios"
+  unrar_file:
+    :path: ".symlinks/plugins/unrar_file/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  ATBarSDK: b6aa2b6a120ac7d6b1ff041bd60b9edde6bb17c4
+  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
+  file_picker_writable: 67959f5c516feb5121693a14eda63fcbe6cbb6dc
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
-  open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
-  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  r_scan: 5672d9b68f8cece3835895a6aaab12047acf65bd
   SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
-  share_extend: b6748dc53695587891126a89533b862b92548c7b
-  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  unrar_file: ead248ffb2e777cb67f083bc1bb1fb45d4157dbd
+  UnrarKit: 99e3f0222a98a212188e1a6975dcf5aa798d26dd
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 0d5b8252a4a9aa4c86ba7f5c817a82a8aee27f23
+PODFILE CHECKSUM: f2ca4c201b8acb7bcb90bbc43e4b43eb34db7f31
 
 COCOAPODS: 1.10.1
