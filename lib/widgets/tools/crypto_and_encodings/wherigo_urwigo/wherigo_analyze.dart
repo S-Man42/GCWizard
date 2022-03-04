@@ -1845,7 +1845,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   }
 
   _exportFile(BuildContext context, Uint8List data, String name, FileType fileType) async {
-    print(name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
     var value = await saveByteDataToFile(
         context, data, name + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.' + fileExtension(fileType));
 
@@ -1945,7 +1944,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             showToast(
                 i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'),
                 duration: 30);
-            print(i18n(context, 'wherigo_error_diff_gwc_lua_1') + '\n' + i18n(context, 'wherigo_error_diff_gwc_lua_2'));
           } else {
             _fileLoadedState = FILE_LOAD_STATE.GWC;
             _displayedCartridgeData = WHERIGO.HEADER;
