@@ -267,7 +267,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                             children: [
                               Container(child: GCWText(text: (index + 1).toString() + '.'), width: 35),
                               Flexible(
-                                child: _buildFormulaText(formula.formula, widget.group.values, formula.id),
+                                child: _buildFormulaText(formula.formula, widget.group.values, index + 1),
                               )
                             ],
                           ),
