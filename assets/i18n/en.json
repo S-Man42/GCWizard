@@ -4830,7 +4830,7 @@
   "urwigo_hashbreaker_example": "23180 → cvyz",
   "urwigo_hashbreaker_input": "Hash Value",
   "urwigo_textdeobfuscation_title": "Urwigo Text Deobfuscator",
-  "urwigo_textdeobfuscation_description": "Fetch the Urwigo 'dtable' value and required encrypted text from the LUA code of the Wherigo cartridge and the tool tried to decrypt it.",
+  "urwigo_textdeobfuscation_description": "Fetch the Urwigo 'dtable' value and required encrypted text from the LUA code of the Wherigo cartridge and the tool tries to decrypt it.",
   "urwigo_textdeobfuscation_text": "Encrypted Text",
   "urwigo_textdeobfuscation_dtable": "dtable",
   "vanity_selection_title": "Phone Keys - Vanity",
