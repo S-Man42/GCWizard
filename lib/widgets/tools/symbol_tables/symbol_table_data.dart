@@ -182,8 +182,8 @@ class SymbolData {
   bool primarySelected = false;
   bool secondarySelected = false;
   final String displayName;
-  final ui.Image standardImage;
-  final ui.Image specialEncryptionImage;
+   ui.Image standardImage;
+   ui.Image specialEncryptionImage;
 
   SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 

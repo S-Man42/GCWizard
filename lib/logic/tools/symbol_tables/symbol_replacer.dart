@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
@@ -13,8 +14,8 @@ class ReplaceSymbolsInput {
   final int blackLevel;
   final double similarityLevel;
   final int gap;
-  final SymbolImage symbolImage;
-  final List<Map<String, SymbolData>> compareSymbols;
+  final SymbolReplacerImage symbolImage;
+  final List<Map<String, SymbolReplacerSymbolData>> compareSymbols;
   final double similarityCompareLevel;
   final double mergeDistance;
 
@@ -29,7 +30,7 @@ class ReplaceSymbolsInput {
   }) {}
 }
 
-Future<SymbolImage> replaceSymbolsAsync(dynamic jobData) async {
+Future<SymbolReplacerImage> replaceSymbolsAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
   var output = await replaceSymbols(
@@ -48,19 +49,19 @@ Future<SymbolImage> replaceSymbolsAsync(dynamic jobData) async {
   return output;
 }
 
-Future<SymbolImage> replaceSymbols(Uint8List image,
+Future<SymbolReplacerImage> replaceSymbols(Uint8List image,
     int blackLevel,
     double similarityLevel,
     {int gap = 1,
-      SymbolImage symbolImage,
-      List<Map<String, SymbolData>> compareSymbols,
+      SymbolReplacerImage symbolImage,
+      List<Map<String, SymbolReplacerSymbolData>> compareSymbols,
       double similarityCompareLevel,
       double mergeDistance
     }) async {
 
   if ((image == null) && (symbolImage == null)) return null;
   if (symbolImage == null)
-    symbolImage = SymbolImage(image);
+    symbolImage = SymbolReplacerImage(image);
 
   symbolImage.splitAndGroupSymbols(
       (blackLevel * 255/100).toInt(),
@@ -75,12 +76,12 @@ Future<SymbolImage> replaceSymbols(Uint8List image,
 }
 
 
-class SymbolImage {
+class SymbolReplacerImage {
   Uint8List _image;
   Image.Image _bmp;
   Uint8List _outputImageBytes;
-  List<Map<String, SymbolData>> _compareSymbols;
-  SymbolImage _compareImage;
+  List<Map<String, SymbolReplacerSymbolData>> _compareSymbols;
+  SymbolReplacerImage _compareImage;
   double _similarityCompareLevel;
 
   List<_SymbolRow> lines = [];
@@ -97,7 +98,7 @@ class SymbolImage {
   double _similarityLevel;
   int _gap;
 
-  SymbolImage(Uint8List image) {
+  SymbolReplacerImage(Uint8List image) {
     _image = image;
     _outputImageBytes = image;
   }
@@ -134,7 +135,7 @@ class SymbolImage {
   /// <summary>
   /// SymbolImage with compary symbols (symbol table)
   /// </summary>
-  SymbolImage getCompareImage() {
+  SymbolReplacerImage getCompareImage() {
     return _compareImage;
   }
 
@@ -163,7 +164,7 @@ class SymbolImage {
   splitAndGroupSymbols(int blackLevel,
       double similarityLevel,
       {int gap = 1,
-      List<Map<String, SymbolData>> compareSymbols,
+      List<Map<String, SymbolReplacerSymbolData>> compareSymbols,
       double similarityCompareLevel = 80,
       bool groupSymbols = true,
       double mergeDistance = null
@@ -283,14 +284,14 @@ class SymbolImage {
   /// <summary>
   /// extract symbols from the compare symbol table 
   /// </summary>
-  SymbolImage _buildCompareSymbols(List<Map<String, SymbolData>> compareSymbols) {
-    var compareSymbolImage = SymbolImage(compareSymbols?.first?.values?.first?.bytes);
+  SymbolReplacerImage _buildCompareSymbols(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
+    var compareSymbolImage = SymbolReplacerImage(compareSymbols?.first?.values?.first?.bytes);
     if (compareSymbols == null) return null;
 
     compareSymbols.forEach((element) {
       element.forEach((text, symbolData) {
         if (symbolData != null && symbolData.bytes != null) {
-          var symbolImage = SymbolImage(symbolData.bytes);
+          var symbolImage = SymbolReplacerImage(symbolData.bytes);
           symbolImage.splitAndGroupSymbols(_blackLevel, _similarityLevel, gap: _gap, groupSymbols: false);
           if (symbolImage.symbols != null) {
             // merge all symbols parts
@@ -321,7 +322,7 @@ class SymbolImage {
   /// then assign the text to the groups
   /// return: Sum of percent match for all symbols
   /// </summary>
-  double _useCompareSymbols(SymbolImage compareSymbolImage) {
+  double _useCompareSymbols(SymbolReplacerImage compareSymbolImage) {
     var percentSum = 0.0;
 
     if (compareSymbolImage?.symbols == null) return percentSum;
@@ -744,7 +745,7 @@ class _SymbolRow {
       for (int y = 0; y < bmp.height; y++) {
         var pixel = bmp.getPixel(x, y);
 
-        if (SymbolImage._blackPixel(pixel, blackLevel)) {
+        if (SymbolReplacerImage._blackPixel(pixel, blackLevel)) {
           emptyColumn = false;
           break;
         }
@@ -832,14 +833,14 @@ class _SymbolRow {
     var endRow = rect.bottom.toInt() - 1;
 
     for (int y = rect.top.toInt(); y <= rect.bottom - 1; y++) {
-      if (!SymbolImage._emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
+      if (!SymbolReplacerImage._emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
         startRow = y;
         break;
       }
     }
 
     for (int y = rect.bottom.toInt() - 1; y >= rect.top; y--) {
-      if (!SymbolImage._emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
+      if (!SymbolReplacerImage._emptyRow(bmp, rect.left.toInt(), rect.right.toInt(), y, blackLevel)) {
         endRow = y + 1;
         break;
       }
@@ -928,7 +929,7 @@ class SymbolGroup {
 }
 
 
-Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) async {
+Future<List<Map<String, SymbolReplacerSymbolData>>> searchSymbolTableAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
   var output = await searchSymbolTable(
@@ -942,9 +943,9 @@ Future<List<Map<String, SymbolData>>> searchSymbolTableAsync(dynamic jobData) as
   return output;
 }
 
-List<Map<String, SymbolData>> searchSymbolTable (
-    SymbolImage image,
-    List<List<Map<String, SymbolData>>> compareSymbols,
+List<Map<String, SymbolReplacerSymbolData>> searchSymbolTable (
+    SymbolReplacerImage image,
+    List<List<Map<String, SymbolReplacerSymbolData>>> compareSymbols,
     {SendPort sendAsyncPort}) {
 
   if (image == null) return null;
@@ -952,8 +953,8 @@ List<Map<String, SymbolData>> searchSymbolTable (
   var progress = 0;
 
   double maxPercentSum = 0.0;
-  List<Map<String, SymbolData>> maxPercentSymbolTable;
-  var imageTmp = SymbolImage(image._image);
+  List<Map<String, SymbolReplacerSymbolData>> maxPercentSymbolTable;
+  var imageTmp = SymbolReplacerImage(image._image);
   imageTmp.symbols = image.symbols;
   imageTmp.symbolGroups = image.symbolGroups;
   imageTmp._blackLevel = image._blackLevel;
@@ -971,6 +972,7 @@ List<Map<String, SymbolData>> searchSymbolTable (
       maxPercentSum = percent;
       maxPercentSymbolTable = symbolTable;
     }
+
     progress++;
     if (sendAsyncPort != null) {
       sendAsyncPort.send({'progress': progress / compareSymbols.length});
