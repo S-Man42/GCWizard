@@ -10,16 +10,16 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 
 
-class SymbolReplacer1 extends StatefulWidget {
-  final SymbolImage symbolImage;
+class SymbolReplacerManualSetter extends StatefulWidget {
+  final SymbolReplacerImage symbolImage;
 
-  const SymbolReplacer1({Key key, this.symbolImage}) : super(key: key);
+  const SymbolReplacerManualSetter({Key key, this.symbolImage}) : super(key: key);
 
   @override
   SymbolReplacerState1 createState() => SymbolReplacerState1();
 }
 
-class SymbolReplacerState1 extends State<SymbolReplacer1> {
+class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
   SymbolData _selectedSymbolData;
   var _removeActiv = false;
@@ -56,7 +56,7 @@ class SymbolReplacerState1 extends State<SymbolReplacer1> {
     );
   }
 
-  Widget _buildMatrix(SymbolImage symbolImage, int countColumns, MediaQueryData mediaQueryData) {
+  Widget _buildMatrix(SymbolReplacerImage symbolImage, int countColumns, MediaQueryData mediaQueryData) {
     if (symbolImage?.symbols == null)
       return Container();
 
