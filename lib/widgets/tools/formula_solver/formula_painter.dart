@@ -6,6 +6,7 @@ class FormulaPainter {
   static final _bracket = {'[': ']', '(': ')', '{': '}'};
   static final numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
   static final _allCharacters = allCharacters();
+  Map<String, String> _values;
   var _variables = <String>[];
   var _functions = <String>[];
   var _specialFunctions = {
@@ -53,6 +54,7 @@ class FormulaPainter {
     } else
       _variables.clear();
 
+    _values = values;
     _variables = _toUpperCaseAndSort(_variables);
     _variablesRegEx = _variables.map((variable) => variable).join('|');
 
@@ -182,7 +184,7 @@ class FormulaPainter {
       if (offset == 0) {
         _parserResult = _isVariable(formula);
         if (_parserResult != null) {
-          result = _coloredVariable(result, _parserResult, false);
+          result = _coloredVariable(result, _parserResult, _isEmptyVariable(formula));
           offset = _calcOffset(_parserResult);
         }
       }
@@ -421,6 +423,18 @@ class FormulaPainter {
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
+  }
+
+  bool _isEmptyVariable(String formula) {
+    if (_variablesRegEx.isEmpty) return null;
+    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
+    var match = regex.firstMatch(formula);
+    if (match == null) return true;
+
+    return ((_values != null) &&
+        (_values.containsKey(match.group(1))) &&
+        ((_values[match.group(1)] == null) ||
+        (_values[match.group(1)].isEmpty)));
   }
 
   List<String> _isInvalidVariable(String formula) {
