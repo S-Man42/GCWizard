@@ -20,8 +20,8 @@ void main() {
   group("hms_deg.decHms2Deg:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
-      {'input' : DateTime.parse('24:37:21.324'), 'expectedOutput' : 24.62259},
-      {'input' : DateTime.parse('-24:37:21.324'), 'expectedOutput' : -24.62259},
+      {'input' : Equatorial.parse('24:37:21.324'), 'expectedOutput' : 24.62259},
+      {'input' : Equatorial.parse('-24:37:21.324'), 'expectedOutput' : -24.62259},
     ];
 
     _inputsToExpected.forEach((elem) {
