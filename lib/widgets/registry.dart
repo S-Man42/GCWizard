@@ -3666,7 +3666,7 @@ initializeRegistry(BuildContext context) {
 
     //WherigoUrwigoSelection **************************************************************************************
     GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
+      ToolCategory.IMAGES_AND_FILES, ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
       'wherigourwigo',
     ]),
