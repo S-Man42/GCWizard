@@ -674,26 +674,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           );
 
         return Column(children: <Widget>[
-          GCWDefaultOutput(
-            trailing: Row(children: <Widget>[
-              GCWIconButton(
-                iconData: Icons.save,
-                size: IconButtonSize.SMALL,
-                iconColor: themeColors().mainFont(),
-                onPressed: () {
-                  _exportCoordinates(context, _CharacterPoints, []);
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.my_location,
-                size: IconButtonSize.SMALL,
-                iconColor: themeColors().mainFont(),
-                onPressed: () {
-                  _openInMap(_CharacterPoints, []);
-                },
-              ),
-            ]),
-          ),
+          (_CharacterPoints.length != 0)
+          ? GCWDefaultOutput(
+              trailing: Row(children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  iconColor: themeColors().mainFont(),
+                  onPressed: () {
+                    _exportCoordinates(context, _CharacterPoints, []);
+                  },
+                ),
+                GCWIconButton(
+                  iconData: Icons.my_location,
+                  size: IconButtonSize.SMALL,
+                  iconColor: themeColors().mainFont(),
+                  onPressed: () {
+                    _openInMap(_CharacterPoints, []);
+                  },
+                ),
+              ]),
+            )
+          : GCWDefaultOutput(),
           Row(
             children: <Widget>[
               GCWIconButton(
@@ -1075,26 +1077,28 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           );
 
         return Column(children: <Widget>[
-          GCWDefaultOutput(
-            trailing: Row(children: <Widget>[
-              GCWIconButton(
-                iconData: Icons.save,
-                size: IconButtonSize.SMALL,
-                iconColor: themeColors().mainFont(),
-                onPressed: () {
-                  _exportCoordinates(context, _ItemPoints, []);
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.my_location,
-                size: IconButtonSize.SMALL,
-                iconColor: themeColors().mainFont(),
-                onPressed: () {
-                  _openInMap(_ItemPoints, []);
-                },
-              ),
-            ]),
-          ),
+          (_ItemPoints.length != 0)
+          ? GCWDefaultOutput(
+              trailing: Row(children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.save,
+                  size: IconButtonSize.SMALL,
+                  iconColor: themeColors().mainFont(),
+                  onPressed: () {
+                    _exportCoordinates(context, _ItemPoints, []);
+                  },
+                ),
+                GCWIconButton(
+                  iconData: Icons.my_location,
+                  size: IconButtonSize.SMALL,
+                  iconColor: themeColors().mainFont(),
+                  onPressed: () {
+                    _openInMap(_ItemPoints, []);
+                  },
+                ),
+              ]),
+            )
+          : GCWDefaultOutput(),
           Row(
             children: <Widget>[
               GCWIconButton(
