@@ -191,7 +191,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -473,7 +473,7 @@ void _initStaticToolList() {
       className(Chronogram()),
       className(CipherWheel()),
       className(CistercianNumbersSelection()),
-      className(ColorPicker()),
+      className(ColorTool()),
       className(Combination()),
       className(CombinationPermutation()),
       className(ComplexNumbers()),

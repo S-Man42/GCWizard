@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_only01andspace_textinputformatter.dart';
@@ -78,7 +78,6 @@ class RALColorCodesState extends State<RALColorCodes> {
       margin: EdgeInsets.only(top: 10 * DEFAULT_MARGIN),
       height: 200,
       width: 400,
-      // color: Color.fromRGBO(rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round(), 1.0),
       decoration: BoxDecoration(
         border: Border.all(color: themeColors().mainFont(), width: 2),
         shape: BoxShape.rectangle,
@@ -96,6 +95,6 @@ class RALColorCodesState extends State<RALColorCodes> {
 
   _showElement(RGB color) {
     Navigator.of(context).push(NoAnimationMaterialPageRoute(
-        builder: (context) => GCWTool(tool: ColorPicker(color: color), i18nPrefix: 'colors')));
+        builder: (context) => GCWTool(tool: ColorTool(color: color), i18nPrefix: 'colors')));
   }
 }
