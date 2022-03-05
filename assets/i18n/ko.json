@@ -1884,7 +1884,7 @@
   "e_selection_title": "Euler's Number (e = 2.7182818...)",
   "e_selection_description": "수학 상수: 오일러의 수",
   "earwigo_textdeobfuscation_title": "Earwigo Text Deobfuscator",
-  "earwigo_textdeobfuscation_description": "Fetch the encrypted text from the LUA code of the Wherigo cartridge and the tool tried to decrypt it.",
+  "earwigo_textdeobfuscation_description": "Fetch the encrypted text from the LUA code of the Wherigo cartridge and the tool tries to decrypt it.",
   "earwigo_textdeobfuscation_text": "Encrypted Text",
   "enclosedareas_title": "동봉한 지역",
   "enclosedareas_description": "문자와 숫자의 구멍 수",

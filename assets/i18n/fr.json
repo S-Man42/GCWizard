@@ -1884,7 +1884,7 @@
   "e_selection_title": "Euler's Number (e = 2.7182818...)",
   "e_selection_description": "Constante mathématique: Nombre d'Euler",
   "earwigo_textdeobfuscation_title": "Earwigo Text Deobfuscator",
-  "earwigo_textdeobfuscation_description": "Fetch the encrypted text from the LUA code of the Wherigo cartridge and the tool tried to decrypt it.",
+  "earwigo_textdeobfuscation_description": "Fetch the encrypted text from the LUA code of the Wherigo cartridge and the tool tries to decrypt it.",
   "earwigo_textdeobfuscation_text": "Encrypted Text",
   "enclosedareas_title": "Aires fermées",
   "enclosedareas_description": "Nombre de trous dans les lettres et les nombres",
