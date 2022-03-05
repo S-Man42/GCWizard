@@ -248,12 +248,12 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   int index = 0;
   List<String> lines = _LUAFile.split('\n');
   var progress = 0;
-  int progressStep = max(lines.length ~/ 100, 1); // 100 steps
+  int progressStep = max(lines.length ~/ 200, 1); // 2 * 100 steps
 
   for (int i = 0; i < lines.length; i++) {
     progress++;
     if (sendAsyncPort != null && (progress % progressStep == 0)) {
-      sendAsyncPort.send({'progress': progress / lines.length});
+      sendAsyncPort.send({'progress': progress / lines.length / 2});
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -1297,9 +1297,22 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
       _ResultsLUA.add('');
     }
 
-    // ----------------------------------------------------------------------------------------------------------------
-    // get all messages and dialogs
-    //
+  } // end for i = 0 to lines.length
+
+
+  // ----------------------------------------------------------------------------------------------------------------
+  // second run
+  // get all messages and dialogs
+  //
+
+  for (int i = 0; i < lines.length; i++) {
+    progress++;
+    if (sendAsyncPort != null && (progress % progressStep == 0)) {
+      sendAsyncPort.send({'progress': progress / lines.length / 2});
+    }
+    if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(lines[i])) {
+      currentObjectSection = OBJECT_TYPE.MESSAGES;
+    }
     if (currentObjectSection == OBJECT_TYPE.MESSAGES) {
       if (lines[i].trimLeft().startsWith('_Urwigo.MessageBox(') ||
           lines[i].trimLeft().startsWith('Wherigo.MessageBox(')) {
@@ -1417,7 +1430,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         _Messages.add(singleMessageDialog);
       }
     }
-  } // end for i = 0 to lines.length
+  } // end for i = 0 to lines.length - getting Messages/Dialogs
+
 
   // ------------------------------------------------------------------------------------------------------------------
   // Answers to Input Objects
