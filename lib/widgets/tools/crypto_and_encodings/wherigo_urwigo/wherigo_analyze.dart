@@ -1495,7 +1495,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               file: PlatformFile(
                   bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
                   name: NameToObject[LUAName].ObjectMedia),
-              showMetadata: true,
             ));
           } else
             resultWidget.add(GCWOutput(

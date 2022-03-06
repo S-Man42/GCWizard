@@ -27,11 +27,9 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   return _normalizeText(result).trim();
 }
 
-
 String getStructData(String analyseLine, String type){
   return analyseLine.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '').replaceAll(',', '');
 }
-
 
 String getTextData( String analyseLine, String obfuscator, String dtable){
   String result = analyseLine
@@ -97,7 +95,6 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
   return _normalizeText(result);
 }
 
-
 String _getDetails(String line, String obfuscator, String dtable){
   String element = '';
   String result = '';
@@ -162,7 +159,6 @@ String _getCompositeText(String text, String obfuscator, String dtable){
   result = result + deobfuscateUrwigoText(hashText, dtable) + text;
   return _normalizeText(result);
 }
-
 
 String _normalizeText(String text){
   if (RegExp(r'(WWB_multiplatform_string)').hasMatch(text))

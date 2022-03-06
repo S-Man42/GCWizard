@@ -1672,8 +1672,9 @@ bool _FunctionEnd(String line1, String line2) {
 
 ActionMessageElementData _handleLine(String line, String dtable, String obfuscator) {
   line = line.trim();
-  if (line.startsWith('Wherigo.PlayAudio'))
+  if (line.startsWith('Wherigo.PlayAudio')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
+  }
 
   else if (line.startsWith('Wherigo.GetInput'))
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
