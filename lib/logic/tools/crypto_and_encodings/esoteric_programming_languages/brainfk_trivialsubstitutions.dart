@@ -34,6 +34,16 @@ enum BrainfkTrivial {
 
 Map brainfkTrivialSubstitutions = {
 //  '' : {'>' : '', '<' : '', '+' : '', '-' : '', '.' : '', ',' : '', '[' : '', ']' : ''},
+  'Hohoho!' :{
+    '>': 'HoHoho',
+    '<': 'hoHoHo',
+    '+': 'HoHoHo',
+    '-': 'hohoho',
+    '.': 'hoHoho',
+    ',': 'HohoHo',
+    '[': 'Hohoho',
+    ']': 'hohoHo'
+  },
   'Omam': {
     '>': 'hold your horses now',
     '<': 'sleep until the sun goes down',
