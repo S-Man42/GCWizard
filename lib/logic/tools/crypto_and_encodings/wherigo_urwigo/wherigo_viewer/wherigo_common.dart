@@ -74,6 +74,19 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     }
   }
 
+  else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
+    result = result.replaceAll('Player.Name .. ', '');
+    if (_compositeObfuscatedText(result, obfuscator))
+      result = _getDetails(result, obfuscator, dtable);
+    else if (_compositeText(result)) {
+      result = _getCompositeText(result, obfuscator, dtable);
+    } else {
+      result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '').replaceAll('")', '');
+      result = deobfuscateUrwigoText(result, dtable);
+    }
+    result = 'Player.Name .. ' + result;
+  }
+
   return _normalizeText(result);
 }
 
