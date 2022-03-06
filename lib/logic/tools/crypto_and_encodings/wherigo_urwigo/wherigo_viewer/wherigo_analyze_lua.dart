@@ -1450,14 +1450,21 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         sectionMessages = true;
         singleMessageDialog = [];
         do {
-          if (lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
-              lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
+          if (lines[i].trimLeft().startsWith('})')) {
+            sectionMessages = false;
+          }
+
+          else if (lines[i].trimLeft().startsWith('Text = ')){
             singleMessageDialog.add(ActionMessageElementData(
                 ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-          } else if (lines[i].trimLeft().startsWith('Media')) {
+          }
+
+          else if (lines[i].trimLeft().startsWith('Media')) {
             singleMessageDialog
                 .add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-          } else if (lines[i].trimLeft().startsWith('Buttons')) {
+          }
+
+          else if (lines[i].trimLeft().startsWith('Buttons')) {
             i++;
             do {
               singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON,
@@ -1465,9 +1472,11 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
               i++;
             } while (lines[i].trimLeft() != '}');
           }
-          if (lines[i].trimLeft().startsWith('})')) {
-            sectionMessages = false;
-          }
+
+          else
+            singleMessageDialog.add(ActionMessageElementData(
+                ACTIONMESSAGETYPE.TEXT, lines[i].replaceAll('{', '').replaceAll('}', '')));
+
           i++;
         } while (sectionMessages);
         _Messages.add(singleMessageDialog);

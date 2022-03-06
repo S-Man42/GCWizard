@@ -34,7 +34,14 @@ String getStructData(String analyseLine, String type){
 
 
 String getTextData( String analyseLine, String obfuscator, String dtable){
-  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '').replaceAll('input)', 'input');
+  String result = analyseLine
+      .trimLeft().replaceAll('Text = ', '')
+      .replaceAll('tostring(', '')
+      .replaceAll('[[', '')
+      .replaceAll(']]', '')
+      .replaceAll('input)', 'input')
+      .replaceAll('string.sub(Player.CompletionCode, 1, 15)', 'Player.CompletionCode');
+
   if (result.endsWith(','))
     result = result.substring(0, result.length - 1);
 

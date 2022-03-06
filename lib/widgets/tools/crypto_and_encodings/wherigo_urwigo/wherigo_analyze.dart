@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_gwc.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
@@ -643,7 +644,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       size: IconButtonSize.SMALL,
                       iconData: Icons.content_copy,
                       onPressed: () {
-                        var copyText = _WherigoCartridgeLUA.LUAFile != null ? _WherigoCartridgeLUA.LUAFile : '';
+                        var copyText = _WherigoCartridgeLUA.LUAFile != null ? _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate) : '';
                         insertIntoGCWClipboard(context, copyText);
                       },
                     ),
@@ -655,7 +656,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         _WherigoCartridgeLUA.LUAFile == null
                             ? null
                             : _exportFile(
-                                context, Uint8List.fromList(_WherigoCartridgeLUA.LUAFile.codeUnits), 'LUAsourceCode', FileType.LUA);
+                                context,
+                                //Uint8List.fromList(_WherigoCartridgeLUA.LUAFile.codeUnits), 'LUAsourceCode', FileType.LUA);
+                                Uint8List.fromList(_normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits), 'LUAsourceCode', FileType.LUA);
                       },
                     ),
                   ],
@@ -2327,8 +2330,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       NameToObject.forEach((key, value) {
         LUAFile = LUAFile.replaceAll(key, 'objVariable_' + key);
       });
+
+      RegExp(r'deObfuscate\(".*?"\)').allMatches(LUAFile).forEach((obfuscatedText) {
+        LUAFile = LUAFile.replaceAll(obfuscatedText.group(0), _deObfuscate(obfuscatedText.group(0)));
+      });
     }
     return LUAFile;
+  }
+
+  String _deObfuscate(String obfuscatedText){
+    obfuscatedText = obfuscatedText.replaceAll('deObfuscate("', '').replaceAll('")', '');
+    return '"' + deobfuscateUrwigoText(obfuscatedText, _WherigoCartridgeLUA.ObfuscatorTable) + '"';
   }
 
   List<GCWMapPoint> _currentZonePoints(String text, ZonePoint point) {
