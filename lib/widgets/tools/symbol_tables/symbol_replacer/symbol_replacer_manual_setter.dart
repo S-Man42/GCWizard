@@ -1,29 +1,37 @@
 import 'package:prefs/prefs.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_symboldata.dart';
 
 
 class SymbolReplacerManualSetter extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
+  final List<SymbolGroup> viewGroups;
 
-  const SymbolReplacerManualSetter({Key key, this.symbolImage}) : super(key: key);
+  const SymbolReplacerManualSetter({Key key, this.symbolImage, this.viewGroups}) : super(key: key);
 
   @override
-  SymbolReplacerState1 createState() => SymbolReplacerState1();
+  SymbolReplacerManualSetterState createState() => SymbolReplacerManualSetterState();
 }
 
-class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
+class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
+  List<GCWDropDownMenuItem> _compareSymbolTable;
   SymbolData _selectedSymbolData;
   var _removeActiv = false;
   var _addActiv = false;
+  var _gcwTextStyle = gcwTextStyle();
+  var _currentMode = GCWSwitchPosition.right;
+  SymbolReplacerSymbolData _currentSymbolData;
 
   TextEditingController _editValueController;
 
@@ -51,16 +59,16 @@ class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           widget.symbolImage != null ? _buildEditRow() : Container(),
-          _buildMatrix(widget.symbolImage, countColumns, mediaQueryData),
+          _buildMatrix(widget.symbolImage, widget.viewGroups, countColumns, mediaQueryData),
         ]
     );
   }
 
-  Widget _buildMatrix(SymbolReplacerImage symbolImage, int countColumns, MediaQueryData mediaQueryData) {
-    if (symbolImage?.symbols == null)
+  Widget _buildMatrix(SymbolReplacerImage symbolImage, List<SymbolGroup> viewGroups, int countColumns, MediaQueryData mediaQueryData) {
+    if ((symbolImage?.symbols == null) || (viewGroups == null))
       return Container();
 
-    symbolImage.symbols.forEach((symbol) {
+    symbolImage.symbols.where((sym) => viewGroups.contains(sym.symbolGroup)).forEach((symbol) {
       if (_symbolMap.containsKey(symbol)) {
         var _symbolData = _symbolMap[symbol];
         var _displayText = symbol?.symbolGroup?.text ?? '';
@@ -160,6 +168,87 @@ class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
   }
 
   Widget _buildEditRow() {
+    return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        leftValue: 'Aus Symboltabelle',
+        rightValue: 'Eigener Text',
+        value: _currentMode,
+        notitle: true,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+          });
+        },
+      ),
+      _currentMode == GCWSwitchPosition.right
+      ? _buildTextEditRow()
+      : _buildSymbolEditRow()
+    ],
+    );
+  }
+
+  Widget _buildTextEditRow() {
+    return Row (children: <Widget>[
+        Expanded(child:
+          Padding( child:
+            _currentMode == GCWSwitchPosition.right
+              ? GCWTextField(
+                controller: _editValueController,
+                autofocus: true,
+              )
+            : GCWDropDownButton(
+                value: _currentSymbolData,
+                onChanged: (value) {
+                  setState(() {
+                    _currentSymbolData = value;
+                  });
+                },
+                items: _compareSymbolTable,
+                selectedItemBuilder: (BuildContext context) {
+                  var _compareSymbols = widget.symbolImage.getCompareSymbols();
+                  if (_compareSymbols == null) return null;
+                  return widget.symbolImage.getCompareSymbols().map((item) {
+                    return _buildDropDownMenuItem(item.values.first.bytes, item.values.first.displayName);
+                  }).toList();
+                },
+              ),
+            padding: EdgeInsets.only(right: 2),
+          ),
+          flex: 2,
+        ),
+        Expanded(child:
+          Padding( child:
+            GCWIconButton(
+              iconData: Icons.alt_route,
+              iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
+              onPressed: () {
+                setState(() {
+                  _setGroupText(_selectedSymbolData, _editValueController.text, false);
+                });
+              },
+            ),
+            padding: EdgeInsets.only(right: 2),
+          ),
+        ),
+        Expanded(child:
+          Padding( child:
+            GCWIconButton(
+              iconData: Icons.arrow_upward,
+              iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
+              onPressed: () {
+                setState(() {
+                  _setGroupText(_selectedSymbolData, _editValueController.text, true);
+                });
+              },
+            ),
+            padding: EdgeInsets.only(right: 2),
+          ),
+        ),
+        ],
+    );
+  }
+
+  Widget _buildSymbolEditRow() {
     return GCWToolBar(children: <Widget>[
       GCWTextField(
         controller: _editValueController,
@@ -207,4 +296,19 @@ class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
     );
   }
 
+  Widget _buildDropDownMenuItem(List<int> iconBytes, String toolName) {
+    return Row( children: [
+      Container(
+        child: (iconBytes != null) ? Image.memory(iconBytes, width: 50) : Container(width: 50),
+        margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
+      ),
+      Expanded(child:
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(toolName, style: _gcwTextStyle),
+          ])
+      )
+    ]);
+  }
 }

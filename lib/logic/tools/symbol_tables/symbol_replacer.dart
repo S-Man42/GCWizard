@@ -3,8 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
@@ -77,17 +76,27 @@ Future<SymbolReplacerImage> replaceSymbols(Uint8List image,
 
 
 class SymbolReplacerImage {
+  /// source image
   Uint8List _image;
+  /// converted  source image
   Image.Image _bmp;
+  /// source image with symbol borders
   Uint8List _outputImageBytes;
+  /// assigned symbol table (original)
   List<Map<String, SymbolReplacerSymbolData>> _compareSymbols;
+  /// image with groups from  cropped _compareSymbols
   SymbolReplacerImage _compareImage;
   double _similarityCompareLevel;
 
+  /// detected lines from _image (after symbol merge)
   List<_SymbolRow> lines = [];
+  /// detected lines from _image
   List<_SymbolRow> _sourceLines = [];
+  /// detected symbols (after symbol merge)
   List<Symbol> symbols = [];
+  /// detected symbols
   List<Symbol> _sourceSymbols = [];
+  /// symbol groups (same symbol/ text)
   List<SymbolGroup> symbolGroups = [];
 
   List<double> _mergeDistanceSteps;
@@ -137,6 +146,13 @@ class SymbolReplacerImage {
   /// </summary>
   SymbolReplacerImage getCompareImage() {
     return _compareImage;
+  }
+
+  /// <summary>
+  /// assigned symbol table (original)
+  /// <summary>
+  List<Map<String, SymbolReplacerSymbolData>> getCompareSymbols() {
+    return _compareSymbols;
   }
 
   /// <summary>
