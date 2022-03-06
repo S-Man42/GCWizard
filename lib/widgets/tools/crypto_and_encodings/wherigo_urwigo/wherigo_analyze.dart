@@ -1311,18 +1311,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputMedia(MediaData data) {
-    return [
-      [i18n(context, 'wherigo_output_luaname'), data.MediaLUAName],
-      [i18n(context, 'wherigo_output_id'), data.MediaID],
-      [i18n(context, 'wherigo_output_name'), data.MediaName],
-      [i18n(context, 'wherigo_output_description'), data.MediaDescription],
-      [i18n(context, 'wherigo_output_alttext'), data.MediaAltText],
-      [i18n(context, 'wherigo_output_medianame'), data.MediaFilename],
-      [i18n(context, 'wherigo_output_type'), data.MediaType],
-    ];
-  }
-
   List<List<dynamic>> _outputItem(ItemData data) {
     List<List<dynamic>> result = [
       [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
@@ -1675,12 +1663,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
               String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
               if (_WherigoCartridgeGWC.MediaFilesContents.length > 0)
-                resultWidget.add(GCWSoundPlayer(
-                  file: PlatformFile(
-                      bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
-                      name: NameToObject[LUAName].ObjectMedia),
-                  showMetadata: true,
-                ));
+                resultWidget.add(
+                    GCWFilesOutput(
+                      suppressHiddenDataMessage: true,
+                      suppressedButtons: {GCWImageViewButtons.SAVE},
+                      files: [
+                        PlatformFile(
+                          //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
+                            bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
+                            name: NameToObject[LUAName].ObjectMedia),
+                      ],
+                    )
+                );
             } else
               resultWidget.add(GCWOutput(
                 child: '\n' + resolveLUAName(element.ActionMessageContent) + '\n',
@@ -1911,11 +1905,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(points),
                   polylines: List<GCWMapPolyline>.from(polylines),
-                  isEditable: false,
+                  isEditable: false,  // false: open in Map
+                                      // true:  open in FreeMap
                 ),
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
-                suppressToolMargin: true)));
+                suppressToolMargin: true)
+        )
+    );
   }
 
   _analyseCartridgeFileAsync(String dataType) async {
@@ -2373,15 +2370,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return MediaFilesContents[i].MediaFileBytes;
       }
     return Uint8List.fromList([]);
-  }
-
-  WherigoCartridgeGWC _resetGWC(String error) {
-    return WherigoCartridgeGWC(
-      ResultStatus: ANALYSE_RESULT_STATUS.ERROR_GWC,
-      ResultsGWC: [i18n(context, error)],
-      MediaFilesHeaders :[],
-      MediaFilesContents: [],
-    );
   }
 
   WherigoCartridgeLUA _resetLUA(String error) {
