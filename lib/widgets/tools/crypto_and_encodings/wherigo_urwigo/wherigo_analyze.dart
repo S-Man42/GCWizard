@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_gwc.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
@@ -643,7 +644,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       size: IconButtonSize.SMALL,
                       iconData: Icons.content_copy,
                       onPressed: () {
-                        var copyText = _WherigoCartridgeLUA.LUAFile != null ? _WherigoCartridgeLUA.LUAFile : '';
+                        var copyText = _WherigoCartridgeLUA.LUAFile != null ? _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate) : '';
                         insertIntoGCWClipboard(context, copyText);
                       },
                     ),
@@ -655,7 +656,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         _WherigoCartridgeLUA.LUAFile == null
                             ? null
                             : _exportFile(
-                                context, Uint8List.fromList(_WherigoCartridgeLUA.LUAFile.codeUnits), 'LUAsourceCode', FileType.LUA);
+                                context,
+                                //Uint8List.fromList(_WherigoCartridgeLUA.LUAFile.codeUnits), 'LUAsourceCode', FileType.LUA);
+                                Uint8List.fromList(_normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits), 'LUAsourceCode', FileType.LUA);
                       },
                     ),
                   ],
@@ -1308,18 +1311,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputMedia(MediaData data) {
-    return [
-      [i18n(context, 'wherigo_output_luaname'), data.MediaLUAName],
-      [i18n(context, 'wherigo_output_id'), data.MediaID],
-      [i18n(context, 'wherigo_output_name'), data.MediaName],
-      [i18n(context, 'wherigo_output_description'), data.MediaDescription],
-      [i18n(context, 'wherigo_output_alttext'), data.MediaAltText],
-      [i18n(context, 'wherigo_output_medianame'), data.MediaFilename],
-      [i18n(context, 'wherigo_output_type'), data.MediaType],
-    ];
-  }
-
   List<List<dynamic>> _outputItem(ItemData data) {
     List<List<dynamic>> result = [
       [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
@@ -1504,7 +1495,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               file: PlatformFile(
                   bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
                   name: NameToObject[LUAName].ObjectMedia),
-              showMetadata: true,
             ));
           } else
             resultWidget.add(GCWOutput(
@@ -1672,12 +1662,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
             if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
               String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
               if (_WherigoCartridgeGWC.MediaFilesContents.length > 0)
-                resultWidget.add(GCWSoundPlayer(
-                  file: PlatformFile(
-                      bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
-                      name: NameToObject[LUAName].ObjectMedia),
-                  showMetadata: true,
-                ));
+                resultWidget.add(
+                    GCWFilesOutput(
+                      suppressHiddenDataMessage: true,
+                      suppressedButtons: {GCWImageViewButtons.SAVE},
+                      files: [
+                        PlatformFile(
+                          //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
+                            bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
+                            name: NameToObject[LUAName].ObjectMedia),
+                      ],
+                    )
+                );
             } else
               resultWidget.add(GCWOutput(
                 child: '\n' + resolveLUAName(element.ActionMessageContent) + '\n',
@@ -1908,11 +1904,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 tool: GCWMapView(
                   points: List<GCWMapPoint>.from(points),
                   polylines: List<GCWMapPolyline>.from(polylines),
-                  isEditable: false,
+                  isEditable: false,  // false: open in Map
+                                      // true:  open in FreeMap
                 ),
                 i18nPrefix: 'coords_map_view',
                 autoScroll: false,
-                suppressToolMargin: true)));
+                suppressToolMargin: true)
+        )
+    );
   }
 
   _analyseCartridgeFileAsync(String dataType) async {
@@ -1977,8 +1976,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           }
 
           // check if GWC and LUA are from the same cartridge
-          if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-              _WherigoCartridgeLUA.CartridgeGUID != '') {
+          if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
+              _WherigoCartridgeLUA.CartridgeGUID != '') &&
+              (_WherigoCartridgeGWC.CartridgeName != _WherigoCartridgeLUA.CartridgeName &&
+                  _WherigoCartridgeLUA.CartridgeName != '')          ) {
+            // files belong to different cartridges
             _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = FILE_LOAD_STATE.GWC;
             _displayedCartridgeData = WHERIGO.HEADER;
@@ -2009,8 +2011,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _nohttpError = false;
 
               // check if GWC and LUA are from the same cartridge
-              if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-                  _WherigoCartridgeGWC.CartridgeGUID != '') {
+              if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
+                  _WherigoCartridgeLUA.CartridgeGUID != '') &&
+                  (_WherigoCartridgeGWC.CartridgeName != _WherigoCartridgeLUA.CartridgeName &&
+                      _WherigoCartridgeLUA.CartridgeName != '')          ) {
                 // files belong to different cartridges
                 _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
                 _fileLoadedState = FILE_LOAD_STATE.GWC;
@@ -2322,8 +2326,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       NameToObject.forEach((key, value) {
         LUAFile = LUAFile.replaceAll(key, 'objVariable_' + key);
       });
+
+      RegExp(r'deObfuscate\(".*?"\)').allMatches(LUAFile).forEach((obfuscatedText) {
+        LUAFile = LUAFile.replaceAll(obfuscatedText.group(0), _deObfuscate(obfuscatedText.group(0)));
+      });
     }
     return LUAFile;
+  }
+
+  String _deObfuscate(String obfuscatedText){
+    obfuscatedText = obfuscatedText.replaceAll('deObfuscate("', '').replaceAll('")', '');
+    return '"' + deobfuscateUrwigoText(obfuscatedText, _WherigoCartridgeLUA.ObfuscatorTable) + '"';
   }
 
   List<GCWMapPoint> _currentZonePoints(String text, ZonePoint point) {
@@ -2356,15 +2369,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         return MediaFilesContents[i].MediaFileBytes;
       }
     return Uint8List.fromList([]);
-  }
-
-  WherigoCartridgeGWC _resetGWC(String error) {
-    return WherigoCartridgeGWC(
-      ResultStatus: ANALYSE_RESULT_STATUS.ERROR_GWC,
-      ResultsGWC: [i18n(context, error)],
-      MediaFilesHeaders :[],
-      MediaFilesContents: [],
-    );
   }
 
   WherigoCartridgeLUA _resetLUA(String error) {

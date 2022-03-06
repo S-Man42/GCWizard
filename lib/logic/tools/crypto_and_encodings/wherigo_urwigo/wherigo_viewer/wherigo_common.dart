@@ -27,14 +27,19 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   return _normalizeText(result).trim();
 }
 
-
 String getStructData(String analyseLine, String type){
   return analyseLine.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '').replaceAll(',', '');
 }
 
-
 String getTextData( String analyseLine, String obfuscator, String dtable){
-  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '').replaceAll('input)', 'input');
+  String result = analyseLine
+      .trimLeft().replaceAll('Text = ', '')
+      .replaceAll('tostring(', '')
+      .replaceAll('[[', '')
+      .replaceAll(']]', '')
+      .replaceAll('input)', 'input')
+      .replaceAll('string.sub(Player.CompletionCode, 1, 15)', 'Player.CompletionCode');
+
   if (result.endsWith(','))
     result = result.substring(0, result.length - 1);
 
@@ -74,9 +79,21 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     }
   }
 
+  else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
+    result = result.replaceAll('Player.Name .. ', '');
+    if (_compositeObfuscatedText(result, obfuscator))
+      result = _getDetails(result, obfuscator, dtable);
+    else if (_compositeText(result)) {
+      result = _getCompositeText(result, obfuscator, dtable);
+    } else {
+      result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '').replaceAll('")', '');
+      result = deobfuscateUrwigoText(result, dtable);
+    }
+    result = 'Player.Name .. ' + result;
+  }
+
   return _normalizeText(result);
 }
-
 
 String _getDetails(String line, String obfuscator, String dtable){
   String element = '';
@@ -142,7 +159,6 @@ String _getCompositeText(String text, String obfuscator, String dtable){
   result = result + deobfuscateUrwigoText(hashText, dtable) + text;
   return _normalizeText(result);
 }
-
 
 String _normalizeText(String text){
   if (RegExp(r'(WWB_multiplatform_string)').hasMatch(text))
