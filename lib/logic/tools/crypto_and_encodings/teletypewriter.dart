@@ -30,6 +30,7 @@ enum TeletypewriterCodebook {
   CCITT_IA5,
   CCIR476,
   ZC1,
+  Z22,
   TTS,
   ILLIAC,
   ALGOL
@@ -62,6 +63,29 @@ Map<TeletypewriterCodebook, Map<String, String>> CCITT2_CODEBOOK = {
 };
 
 Map<TeletypewriterCodebook, Map<String, String>> CCITT_CODEBOOK = {
+  TeletypewriterCodebook.CCITT_ITA1_1926: {'title': 'punchtape_ccitt_ita1_1926_title', 'subtitle': 'punchtape_ccitt_ita1_1926_description'},
+  TeletypewriterCodebook.CCITT_ITA1_1929: {'title': 'punchtape_ccitt_ita1_1929_title', 'subtitle': 'punchtape_ccitt_ita1_1929_description'},
+  TeletypewriterCodebook.CCITT_ITA1_EU: {'title': 'punchtape_ccitt_ita1_eu_title', 'subtitle': 'punchtape_ccitt_ita1_eu_description'},
+  TeletypewriterCodebook.CCITT_ITA1_UK: {'title': 'punchtape_ccitt_ita1_uk_title', 'subtitle': 'punchtape_ccitt_ita1_uk_description'},
+  TeletypewriterCodebook.CCITT_ITA2_1929: {'title': 'punchtape_ccitt_ita2_1929_title', 'subtitle': 'punchtape_ccitt_ita2_1929_description'},
+  TeletypewriterCodebook.CCITT_ITA2_1931: {'title': 'punchtape_ccitt_ita2_1931_title', 'subtitle': 'punchtape_ccitt_ita2_1931_description'},
+  TeletypewriterCodebook.CCITT_ITA2_MTK2: {'title': 'punchtape_ccitt_ita2_mtk2_title', 'subtitle': 'punchtape_ccitt_ita2_mtk2_description'},
+  TeletypewriterCodebook.CCITT_ITA2_USTTY: {'title': 'punchtape_ccitt_ita2_ustty_title', 'subtitle': 'punchtape_ccitt_ita2_ustty_description'},
+  TeletypewriterCodebook.CCITT_ITA3: {'title': 'punchtape_ccitt_ita3_title', 'subtitle': 'punchtape_ccitt_ita3_description'},
+  TeletypewriterCodebook.CCITT_ITA4: {'title': 'punchtape_ccitt_ita4_title', 'subtitle': 'punchtape_ccitt_ita4_description'},
+  TeletypewriterCodebook.CCITT_IA5: {'title': 'punchtape_ccitt_ia5_title', 'subtitle': 'punchtape_ccitt_ia5_description'},
+  TeletypewriterCodebook.CCIR476: {'title': 'punchtape_ccitt_ccir476_title', 'subtitle': 'punchtape_ccitt_ccir476_description'},
+};
+
+Map<TeletypewriterCodebook, Map<String, String>> OTHER_CODEBOOK = {
+  TeletypewriterCodebook.ZC1: {'title': 'punchtape_zc1_title', 'subtitle': 'punchtape_zc1_description'},
+  TeletypewriterCodebook.Z22: {'title': 'punchtape_z22_title', 'subtitle': 'punchtape_z22_description'},
+  TeletypewriterCodebook.TTS: {'title': 'punchtape_tts_title', 'subtitle': 'punchtape_tts_description'},
+  TeletypewriterCodebook.ILLIAC: {'title': 'punchtape_illiac_title', 'subtitle': 'punchtape_illiac_description'},
+  TeletypewriterCodebook.ALGOL: {'title': 'punchtape_algol_title', 'subtitle': 'punchtape_algol_description'},
+};
+
+Map<TeletypewriterCodebook, Map<String, String>> ALL_CODES_CODEBOOK = {
   TeletypewriterCodebook.BAUDOT: {'title': 'punchtape_baudot_title', 'subtitle': 'punchtape_baudot_description'},
   TeletypewriterCodebook.BAUDOT_54123: {'title': 'punchtape_baudot_54123_title', 'subtitle': 'punchtape_baudot_54123_description'},
   TeletypewriterCodebook.MURRAY: {'title': 'punchtape_murray_title', 'subtitle': 'punchtape_murray_description'},
@@ -80,6 +104,7 @@ Map<TeletypewriterCodebook, Map<String, String>> CCITT_CODEBOOK = {
   TeletypewriterCodebook.CCITT_IA5: {'title': 'punchtape_ccitt_ia5_title', 'subtitle': 'punchtape_ccitt_ia5_description'},
   TeletypewriterCodebook.CCIR476: {'title': 'punchtape_ccitt_ccir476_title', 'subtitle': 'punchtape_ccitt_ccir476_description'},
   TeletypewriterCodebook.ZC1: {'title': 'punchtape_zc1_title', 'subtitle': 'punchtape_zc1_description'},
+  TeletypewriterCodebook.Z22: {'title': 'punchtape_z22_title', 'subtitle': 'punchtape_z22_description'},
   TeletypewriterCodebook.TTS: {'title': 'punchtape_tts_title', 'subtitle': 'punchtape_tts_description'},
   TeletypewriterCodebook.ILLIAC: {'title': 'punchtape_illiac_title', 'subtitle': 'punchtape_illiac_description'},
   TeletypewriterCodebook.ALGOL: {'title': 'punchtape_algol_title', 'subtitle': 'punchtape_algol_description'},
@@ -104,6 +129,7 @@ Map<TeletypewriterCodebook, Map<String, int>> PUNCHTAPE_DEFINITION = {
   TeletypewriterCodebook.CCITT_IA5 : {'punchHoles' : 7, 'sprocketHole': 4},
   TeletypewriterCodebook.CCIR476 : {'punchHoles' : 7, 'sprocketHole': 4},
   TeletypewriterCodebook.ZC1 : {'punchHoles' : 8, 'sprocketHole': 4},
+  TeletypewriterCodebook.Z22 : {'punchHoles' : 5, 'sprocketHole': 4},
   TeletypewriterCodebook.TTS : {'punchHoles' : 6, 'sprocketHole': 4},
   TeletypewriterCodebook.ILLIAC : {'punchHoles' : 5, 'sprocketHole': 4},
   TeletypewriterCodebook.ALGOL : {'punchHoles' : 5, 'sprocketHole': 4},
@@ -128,6 +154,7 @@ Map<TeletypewriterCodebook, int> BINARY_LENGTH = {
   TeletypewriterCodebook.CCITT_IA5 : 7,
   TeletypewriterCodebook.CCIR476: 7,
   TeletypewriterCodebook.ZC1: 8,
+  TeletypewriterCodebook.Z22: 5,
   TeletypewriterCodebook.TTS: 6,
   TeletypewriterCodebook.ILLIAC: 5,
   TeletypewriterCodebook.ALGOL: 5,
