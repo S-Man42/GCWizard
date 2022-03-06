@@ -243,7 +243,20 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   }
 
   // ----------------------------------------------------------------------------------------------------------------
-  // get all objects
+  // get all objects - Messages and Dialogs will be analyzed in a second parse
+  // - obfuscator function
+  // - dtabe
+  // - name of cartridge
+  // - Media Objects
+  // - cartridge meta data
+  // - Zones
+  // - Characters
+  // - Items
+  // - Tasks
+  // - Variables
+  // - Timer
+  // - Inputs
+  // - Answers
   //
   int index = 0;
   List<String> lines = _LUAFile.split('\n');
@@ -251,9 +264,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   int progressStep = max(lines.length ~/ 200, 1); // 2 * 100 steps
 
   for (int i = 0; i < lines.length; i++) {
-    progress++;
-    if (sendAsyncPort != null && (progress % progressStep == 0)) {
-      sendAsyncPort.send({'progress': progress / lines.length / 2});
+    if (sendAsyncPort != null && (i % progressStep == 0)) {
+      sendAsyncPort.send({'progress': i / lines.length / 2});
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -355,6 +367,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
               RegExp(r'(function)').hasMatch(lines[i]) ||
               RegExp(r'(Wherigo.Zone\()').hasMatch(lines[i])) {
             sectionMedia = false;
+          }
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
           }
         } while (sectionMedia && (i < lines.length - 1));
 
@@ -541,6 +557,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
               RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
             sectionZone = false;
           }
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionZone);
         i--;
 
@@ -671,6 +691,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
               RegExp(r'(function)').hasMatch(lines[i])) {
             sectionCharacter = false;
           }
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionCharacter);
 
         _Characters.add(CharacterData(
@@ -784,6 +808,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
               RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i]) ||
               RegExp(r'(function)').hasMatch(lines[i]) ||
               i > lines.length - 2) sectionItem = false;
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionItem);
 
         _Items.add(ItemData(
@@ -870,6 +898,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
           if (RegExp(r'( Wherigo.ZTask)').hasMatch(lines[i]) || RegExp(r'(.ZVariables =)').hasMatch(lines[i]))
             sectionTask = false;
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionTask && (i < lines.length - 1));
 
         i--;
@@ -1002,6 +1034,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
 
           if (RegExp(r'( Wherigo.ZTimer)').hasMatch(lines[i]) || RegExp(r'( Wherigo.ZInput)').hasMatch(lines[i]))
             sectionTimer = false;
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionTimer && i < lines.length - 1);
 
         _Timers.add(TimerData(
@@ -1144,6 +1180,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
               RegExp(r'(function)').hasMatch(lines[i + 1]) ||
               RegExp(r'(:OnProximity)').hasMatch(lines[i + 1]) ||
               RegExp(r'(:OnStart)').hasMatch(lines[i + 1])) sectionInput = false;
+
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionInput);
         i--;
 
@@ -1280,6 +1320,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
             sectionInput = false;
           }
 
+          if (sendAsyncPort != null && (i % progressStep == 0)) {
+            sendAsyncPort.send({'progress': i / lines.length / 2});
+          }
         } while (sectionInput);
       } // end if identify input function
 
@@ -1304,7 +1347,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   // second run
   // get all messages and dialogs
   //
-
+  progress = lines.length;
   for (int i = 0; i < lines.length; i++) {
     progress++;
     if (sendAsyncPort != null && (progress % progressStep == 0)) {

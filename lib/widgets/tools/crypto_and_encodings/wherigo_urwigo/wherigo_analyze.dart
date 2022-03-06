@@ -1977,8 +1977,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           }
 
           // check if GWC and LUA are from the same cartridge
-          if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-              _WherigoCartridgeLUA.CartridgeGUID != '') {
+          if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
+              _WherigoCartridgeLUA.CartridgeGUID != '') &&
+              (_WherigoCartridgeGWC.CartridgeName != _WherigoCartridgeLUA.CartridgeName &&
+                  _WherigoCartridgeLUA.CartridgeName != '')          ) {
+            // files belong to different cartridges
             _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = FILE_LOAD_STATE.GWC;
             _displayedCartridgeData = WHERIGO.HEADER;
@@ -2009,8 +2012,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _nohttpError = false;
 
               // check if GWC and LUA are from the same cartridge
-              if (_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
-                  _WherigoCartridgeGWC.CartridgeGUID != '') {
+              if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
+                  _WherigoCartridgeLUA.CartridgeGUID != '') &&
+                  (_WherigoCartridgeGWC.CartridgeName != _WherigoCartridgeLUA.CartridgeName &&
+                      _WherigoCartridgeLUA.CartridgeName != '')          ) {
                 // files belong to different cartridges
                 _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
                 _fileLoadedState = FILE_LOAD_STATE.GWC;
