@@ -1293,11 +1293,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_proximityrangeuom'), data.ZoneProximityRangeUOM],
       [i18n(context, 'wherigo_output_outofrange'), data.ZoneOutOfRange],
       [i18n(context, 'wherigo_output_inrange'), data.ZoneInRange],
+      data.ZoneOriginalPoint != null ?
       [
         i18n(context, 'wherigo_output_originalpoint'),
         formatCoordOutput(LatLng(data.ZoneOriginalPoint.Latitude, data.ZoneOriginalPoint.Longitude),
             {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
-      ],
+      ] : ['', ''],
       [i18n(context, 'wherigo_output_zonepoints'), ''],
     ];
     data.ZonePoints.forEach((point) {
