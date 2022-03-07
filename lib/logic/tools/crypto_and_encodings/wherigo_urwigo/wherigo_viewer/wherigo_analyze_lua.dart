@@ -645,7 +645,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
             sectionDescription = true;
             do {
               description = description + lines[i];
-              if (i > lines.length - 2 || lines[i + 1].startsWith(LUAname + '.Visible')) {
+              if (i > lines.length - 2 || lines[i + 1].trim().startsWith(LUAname + '.Visible')) {
                 sectionDescription = false;
               }
               i++; lines[i] = lines[i].trim();
