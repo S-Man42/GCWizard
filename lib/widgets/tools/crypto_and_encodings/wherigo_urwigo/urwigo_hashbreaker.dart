@@ -87,8 +87,6 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var output = '';
-
     if (_currentMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(child: _currentOutput);
     } else {
