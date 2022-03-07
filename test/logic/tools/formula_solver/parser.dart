@@ -170,6 +170,27 @@ void main() {
         FormulaValue('D', 'cs(12)', type: FormulaValueType.FIXED),
         FormulaValue('C', '1', type: FormulaValueType.FIXED),
       ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'D', 'values': [
+        FormulaValue('A', '12', type: FormulaValueType.FIXED),
+        FormulaValue('C', '1', type: FormulaValueType.FIXED),
+        FormulaValue('D', 'cs(A)', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'cs(D) + sqrt(a)', 'values': [
+        FormulaValue('A', '400', type: FormulaValueType.FIXED),
+        FormulaValue('D', 'sqrt(A)', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '22', 'state': 'ok'}]}},
+      {'formula' : 'sqrt(D)', 'values': [
+        FormulaValue('A', '400', type: FormulaValueType.FIXED),
+        FormulaValue('D', 'sqrt(cs(A))', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.414213562373', 'state': 'ok'}]}},
+      {'formula' : 'sqrt(D)', 'values': [
+        FormulaValue('A', 'ABC', type: FormulaValueType.TEXT),
+        FormulaValue('D', 'cs(bww(A))', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2.449489742783', 'state': 'ok'}]}},
+      {'formula' : 'sqrt(D)', 'values': [
+        FormulaValue('A', 'sqrt(121)', type: FormulaValueType.FIXED),
+        FormulaValue('D', 'cs(A)', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.414213562373', 'state': 'ok'}]}},
     ];
 
     _inputsToExpected.forEach((elem) {
