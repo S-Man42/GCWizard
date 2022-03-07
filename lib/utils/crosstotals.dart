@@ -222,6 +222,12 @@ int countCharacters(List<int> list) {
   return list.length;
 }
 
+int countDistinctCharacters(List<int> list) {
+  if (list == null) return 0;
+
+  return list.toSet().length;
+}
+
 int countLetters(String text) {
   if (text == null) return 0;
 

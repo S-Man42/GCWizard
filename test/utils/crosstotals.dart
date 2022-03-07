@@ -346,7 +346,7 @@ void main() {
       {'list' : [null].cast<int>(), 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
       {'list' : [null, 666, null], 'expectedOutput' : 6},
-      {'list' : [891,589,1,2336,784], 'expectedOutput' : 3},
+      {'list' : [891,589,1,2336,784], 'expectedOutput' : -3},
       {'list' : [191,9191,9,19,1919,1], 'expectedOutput' : 0},
       {'list' : [91,9191,9,19,19191,9], 'expectedOutput' : -2},
       {'list' : [1, 0, -1], 'expectedOutput' : null},
@@ -408,13 +408,28 @@ void main() {
   group("Crosstotals.countCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'list' : [-20, -10, -1, 891, 589, 1, 2, 336, 784], 'expectedOutput' : 9},
-      {'list' : '', 'expectedOutput' : 0},
+      {'list' : <int>[], 'expectedOutput' : 0},
       {'list' : null, 'expectedOutput' : 0},
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('text: ${elem['text']}', () {
+      test('list: ${elem['list']?.join()}', () {
         var _actual = countCharacters(elem['list']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Crosstotals.countDistinctCharacters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'list' : [-20, -10, -1, 891, 589, 1, 2, 336, 784, -10, -1, 891, -1], 'expectedOutput' : 9},
+      {'list' : <int>[], 'expectedOutput' : 0},
+      {'list' : null, 'expectedOutput' : 0},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('list: ${elem['list']?.join()}', () {
+        var _actual = countDistinctCharacters(elem['list']);
         expect(_actual, elem['expectedOutput']);
       });
     });
