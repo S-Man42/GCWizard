@@ -4840,6 +4840,8 @@
   "urwigo_hashbreaker_description": "Fetch the Urwigo hash value from the LUA code of the Wherigo cartridge and the tool calculates a valid random text for the answer field.",
   "urwigo_hashbreaker_example": "23180 → cvyz",
   "urwigo_hashbreaker_input": "Hash Value",
+  "urwigo_hashbreaker_mode_hash": "Get Hash Value",
+  "urwigo_hashbreaker_mode_break_hash": "Break Hash Value",
   "urwigo_textdeobfuscation_title": "Urwigo Text Deobfuscator",
   "urwigo_textdeobfuscation_description": "Fetch the Urwigo 'dtable' value and required encrypted text from the LUA code of the Wherigo cartridge and the tool tries to decrypt it.",
   "urwigo_textdeobfuscation_text": "Encrypted Text",
