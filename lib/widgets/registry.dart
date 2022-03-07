@@ -3006,7 +3006,7 @@ initializeRegistry(BuildContext context) {
       'symbol_freemason',
     ]),
     GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: [
-      'symbol_freemason_v2',
+      'symbol_freemason'
     ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: [
       'symbol_futurama',
@@ -3177,6 +3177,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: [
       'symbol_krypton',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: [
+      'symbol_freemason',
+      'symbol_la_buse',
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: [
       'symbol_signlanguage',
