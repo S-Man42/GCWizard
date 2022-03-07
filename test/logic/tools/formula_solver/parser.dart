@@ -139,6 +139,8 @@ void main() {
       {'formula' : 'round(1.257, 2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1.26', 'state': 'ok'}]}},
       {'formula' : 'csi(99,88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '7', 'state': 'ok'}]}},
       {'formula' : 'csi(99) + csi(88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '16', 'state': 'ok'}]}},
+      {'formula' : 'cs(cs(455))', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '5', 'state': 'ok'}]}},
+      {'formula' : 'round(round(4.555, 2), 3)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '4.56', 'state': 'ok'}]}},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -147,6 +149,39 @@ void main() {
         elem['values'].entries.forEach((value) {
           values.add(FormulaValue(value.key, value.value));
         });
+        var _actual = FormulaParser().parse(elem['formula'], values);
+        expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("FormulaParser.parse - Variables contain Functions:", () {
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'formula' : 'A', 'values': {'A': '1 + 2'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'B', 'values': {'A': '1', 'B': 'A + 1'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
+      {'formula' : 'B', 'values': {'B': 'A + 1', 'A': '1'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
+      {'formula' : 'A', 'values': {'A': 'cs(12)'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'D', 'values': [
+          FormulaValue('C', '1', type: FormulaValueType.FIXED),
+          FormulaValue('D', 'cs(12)', type: FormulaValueType.FIXED),
+        ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+      {'formula' : 'D', 'values': [
+        FormulaValue('D', 'cs(12)', type: FormulaValueType.FIXED),
+        FormulaValue('C', '1', type: FormulaValueType.FIXED),
+      ], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('formula: ${elem['formula']}, values: ${elem['values']}', () {
+        var values = <FormulaValue>[];
+        if (elem['values'] is List<FormulaValue>)
+          values = elem['values'];
+        else {
+          elem['values'].entries.forEach((value) {
+            values.add(FormulaValue(value.key, value.value));
+          });
+        }
         var _actual = FormulaParser().parse(elem['formula'], values);
         expect(_formulaSolverOutputToMap(_actual), elem['expectedOutput']);
       });

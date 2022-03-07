@@ -25,6 +25,7 @@ class FormulaParser {
   Parser parser;
 
   bool unlimitedExpanded = false;
+  Map<String, String> safedFormulasMap = {};
 
   static final Map<String, double> CONSTANTS = {
     'ln10': ln10,
@@ -56,8 +57,8 @@ class FormulaParser {
   ];
 
   static final Map<String, Function> _CUSTOM_FUNCTIONS = {
-    'cs': (List<double> numbers) => sumCrossSum(numbers.map((number) => number.toInt()).toList()).toInt(),
-    'csi': (List<double> numbers) => sumCrossSumIterated(numbers.map((number) => number.toInt()).toList()).toInt(),
+    'cs': (List<double> numbers) => sumCrossSum(numbers.map((number) => number.toInt()).toList()).toDouble(),
+    'csi': (List<double> numbers) => sumCrossSumIterated(numbers.map((number) => number.toInt()).toList()).toDouble(),
     'min': (List<double> numbers) => numbers.reduce(min),
     'max': (List<double> numbers) => numbers.reduce(max),
     'round': (List<double> numbers) {
@@ -116,24 +117,21 @@ class FormulaParser {
 
   // If, for example, the sin() function is used, but there's a variable i, you have to avoid
   // replace the i from sin with the variable value
-  Map<String, dynamic> _safeFunctionsAndConstants(String formula) {
+  String _safeFunctionsAndConstants(String formula) {
     var list = CONSTANTS.keys
         .where((constant) => constant != 'e') //special case: If you remove e, you could never use this as variable name
         .toList();
 
     list.addAll(availableParserFunctions().map((functionName) => functionName + '\\s*\\(').toList());
-
-    Map<String, String> substitutions = {};
-    int j = 0;
     for (int i = 0; i < list.length; i++) {
       var matches = RegExp(list[i], caseSensitive: false).allMatches(formula);
       for (Match m in matches) {
-        substitutions.putIfAbsent(m.group(0), () => '\x01${j++}\x01');
+        safedFormulasMap.putIfAbsent(m.group(0), () => '\x01${safedFormulasMap.length}\x01');
       }
-      formula = substitution(formula, substitutions);
+      formula = substitution(formula, safedFormulasMap);
     }
 
-    return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
+    return formula;
   }
 
   static String normalizeMathematicalSymbols(formula) {
@@ -153,6 +151,7 @@ class FormulaParser {
 
   Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
     formula = normalizeMathematicalSymbols(formula);
+    safedFormulasMap = {};
 
     List<FormulaValue> preparedValues = _prepareValues(values);
 
@@ -183,7 +182,7 @@ class FormulaParser {
 
     //replace fixed values recursively
     int i = pow(values.length, 2);
-    var substitutedFormula = safedFormulaNames['formula'];
+    var substitutedFormula = safedFormulaNames;
     var fullySubstituted = false;
     while (i > 0 && !fullySubstituted) {
       var tempSubstitutedFormula = substitution(substitutedFormula, fixedValues, caseSensitive: false);
@@ -217,7 +216,7 @@ class FormulaParser {
       var results = <Map<String, dynamic>>[];
       var hasError = false;
       for (var expandedFormula in expandedFormulas) {
-        substitutedFormula = substitution(expandedFormula['text'], safedFormulaNames['map']);
+        substitutedFormula = substitution(expandedFormula['text'], switchMapKeyValue(safedFormulasMap));
 
         try {
           var result = _evaluateFormula(substitutedFormula);
@@ -238,7 +237,7 @@ class FormulaParser {
         'result': results
       };
     } else {
-      substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
+      substitutedFormula = substitution(substitutedFormula, switchMapKeyValue(safedFormulasMap));
 
       try {
         var result = _evaluateFormula(substitutedFormula);
@@ -297,6 +296,12 @@ class FormulaParser {
         value = key;
       } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
         value = '($value)';
+      }
+
+      var safedFormulas;
+      if (element.type == FormulaValueType.FIXED) {
+        safedFormulas = _safeFunctionsAndConstants(value);
+        value = safedFormulas;
       }
 
       val.add(FormulaValue(key, value, type: element.type));
@@ -419,7 +424,9 @@ class FormulaParser {
             break;
         }
       });
-    } catch (e, s) {}
+    } catch (e) {
+      print(e);
+    }
 
     // Here the magic happens, which was decribed above
     // Variable sets with independent matchStrings will be substituted dependently here
