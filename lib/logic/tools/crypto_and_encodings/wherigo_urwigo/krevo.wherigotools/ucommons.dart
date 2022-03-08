@@ -9,7 +9,7 @@ import 'dart:math';
 /*
 * Urwhigo.Hash() is in fact a variant of the Robert Sedgewick's Hash Algorithm
 */
-int _RSHash(String string) {
+int RSHash(String string) {
   var a = 63689;
   var b = 378551;
   var hash = 0;
@@ -48,7 +48,7 @@ String findHash(int hashToFind, {int len: 4}) {
   for (var i = 0; i < max; i++) {
     var s = _convBase(i, '0123456789', 'abcdefghijklmnopqrstuvwxyz').padLeft(len, 'a');
 
-    if (_RSHash(s) == hashToFind) {
+    if (RSHash(s) == hashToFind) {
       return s;
     }
   }
