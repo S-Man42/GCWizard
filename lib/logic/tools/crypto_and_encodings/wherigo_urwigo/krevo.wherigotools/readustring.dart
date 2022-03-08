@@ -19,7 +19,7 @@ String _udecrypt(String str, String dtable) {
   return res;
 }
 
-String _luaStringToString(String luaStr) {
+String luaStringToString(String luaStr) {
   var res = RegExp("\\\\[0-9]{3}").allMatches(luaStr);
 
   var searchReplace = {
@@ -49,5 +49,5 @@ String _luaStringToString(String luaStr) {
 }
 
 String readustring(String input, String dtable) {
-  return _udecrypt(_luaStringToString(input), _luaStringToString(dtable));
+  return _udecrypt(luaStringToString(input), luaStringToString(dtable));
 }

@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class UrwigoTextDeobfuscation extends StatefulWidget {
   @override
@@ -12,21 +13,27 @@ class UrwigoTextDeobfuscation extends StatefulWidget {
 
 class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
   var _inputController;
+  var _inputObfuscateController;
   var _dtableController;
 
   var _currentInput = '';
   var _currentDTable = '';
+  var _currentObfuscateInput = '';
+
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
     super.initState();
     _inputController = TextEditingController(text: _currentInput);
+    _inputObfuscateController = TextEditingController(text: _currentObfuscateInput);
     _dtableController = TextEditingController(text: _currentDTable);
   }
 
   @override
   void dispose() {
     _inputController.dispose();
+    _inputObfuscateController.dispose();
     _dtableController.dispose();
     super.dispose();
   }
@@ -35,23 +42,15 @@ class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          children: [
-            Expanded(
-              child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_text')),
-              flex: 1,
-            ),
-            Expanded(
-                child: GCWTextField(
-                  controller: _inputController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentInput = text;
-                    });
-                  },
-                ),
-                flex: 3)
-          ],
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          leftValue: i18n(context, 'urwigo_textdeobfuscation_mode_obfuscate'),
+          rightValue: i18n(context, 'urwigo_textdeobfuscation_mode_de_obfuscate'),
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
         ),
         Row(
           children: [
@@ -71,8 +70,54 @@ class UrwigoTextDeobfuscationState extends State<UrwigoTextDeobfuscation> {
                 flex: 3)
           ],
         ),
-        GCWDefaultOutput(child: deobfuscateUrwigoText(_currentInput, _currentDTable))
+        _currentMode == GCWSwitchPosition.right
+        ? Row(
+          children: [
+            Expanded(
+              child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_text')),
+              flex: 1,
+            ),
+            Expanded(
+                child: GCWTextField(
+                  controller: _inputController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentInput = text;
+                    });
+                  },
+                ),
+                flex: 3)
+          ],
+        )
+        : Row(
+          children: [
+            Expanded(
+              child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_obfuscate_text')),
+              flex: 1,
+            ),
+            Expanded(
+                child: GCWTextField(
+                  controller: _inputObfuscateController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentObfuscateInput = text;
+                    });
+                  },
+                ),
+                flex: 3)
+          ],
+        ),
+        _buildOutput(context)
       ],
     );
   }
+
+  Widget _buildOutput(BuildContext context) {
+    if (_currentMode == GCWSwitchPosition.right) {
+      return GCWDefaultOutput(child: deobfuscateUrwigoText(_currentInput, _currentDTable));
+    } else {
+      return GCWDefaultOutput(child: obfuscateUrwigoText(_currentObfuscateInput, _currentDTable));
+    }
+  }
+
 }
