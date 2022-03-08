@@ -1619,7 +1619,7 @@ List<String> _getAnswers(int i, String line, String lineBefore, String obfuscato
         .split('or')
         .forEach((element) {
       hashvalue = int.parse(element.replaceAll('\D+', ''));
-      results.add('« ' + hashvalue.toString() + ' » → ' + breakUrwigoHash(hashvalue).toString());
+      results.add(breakUrwigoHash(hashvalue).toString() + ' → « ' + hashvalue.toString() + ' »');
     });
     return results;
   }
