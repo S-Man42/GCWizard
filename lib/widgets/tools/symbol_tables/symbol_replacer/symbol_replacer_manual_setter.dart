@@ -56,22 +56,23 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         ? Prefs.get('symboltables_countcolumns_portrait')
         : Prefs.get('symboltables_countcolumns_landscape');
 
-    if (widget.symbolImage?.compareSymbols == null)
-      _currentMode = GCWSwitchPosition.right;
-    if (_init) _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
+    if (widget.symbolImage?.compareSymbols == null) _currentMode = GCWSwitchPosition.right;
+    if (_init) {
+      _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
+      _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
+    }
 
     return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          widget.symbolImage != null ? _buildEditRow() : Container(),
-          _buildMatrix(widget.symbolImage, widget.viewSymbols, countColumns, mediaQueryData),
-        ]
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        widget.symbolImage != null ? _buildEditRow() : Container(),
+        _buildMatrix(widget.symbolImage, widget.viewSymbols, countColumns, mediaQueryData),
+      ]
     );
   }
 
-  Widget _buildMatrix(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
-    if ((symbolImage?.symbols == null) || (viewSymbols == null))
-      return Container();
+  _fillSymbolMap(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols) {
+    if ((symbolImage?.symbols == null) || (viewSymbols == null)) return;
 
     symbolImage.symbols.where((sym) => viewSymbols.contains(sym)).forEach((symbol) {
       if (_symbolMap.containsKey(symbol)) {
@@ -91,8 +92,18 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       if ((_symbolMap.values != null) && _symbolMap.values.isNotEmpty) {
         _selectedSymbolData = _symbolMap.values?.first?.values?.first;
         _selectGroupSymbols(_selectedSymbolData, true);
-       }
+        setState(() {
+
+        });
+      }
     }
+  }
+
+  Widget _buildMatrix(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
+    if ((symbolImage?.symbols == null) || (viewSymbols == null))
+      return Container();
+
+    _fillSymbolMap(symbolImage, viewSymbols);
 
     return
       Expanded(
