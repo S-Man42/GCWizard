@@ -1892,7 +1892,7 @@
   "e_selection_description": "Mathematical constant: Euler's Number",
   "earwigo_textdeobfuscation_title": "Earwigo Text Deobfuscator",
   "earwigo_textdeobfuscation_description": "Fetch the encrypted text from the LUA code of the Wherigo cartridge and the tool tries to decrypt it.",
-  "earwigo_textdeobfuscation_text": "Encrypted Text",
+  "earwigo_textdeobfuscation_text": "Obfuscated Text",
   "enclosedareas_title": "Enclosed Areas",
   "enclosedareas_description": "Number of holes in letters and numbers",
   "enclosedareas_with4": "Closed 4",
