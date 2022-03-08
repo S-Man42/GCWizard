@@ -279,6 +279,16 @@ class SymbolReplacerState extends State<SymbolReplacer> {
               setState(() {
                 _currentSymbolTableViewData = value;
               });
+              if (_symbolImage != null) {
+                if (_currentSymbolTableViewData?.data == null) {
+                   (_currentSymbolTableViewData.initialize(context).then((value) {
+                     _symbolImage.compareSymbols = _currentSymbolTableViewData?.data?.images;
+                   }));
+                }
+                else
+                  _symbolImage.compareSymbols = _currentSymbolTableViewData?.data?.images;
+              }
+
             },
             items: _compareSymbolItems,
             selectedItemBuilder: (BuildContext context) {

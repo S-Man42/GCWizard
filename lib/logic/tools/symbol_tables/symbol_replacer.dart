@@ -83,9 +83,11 @@ class SymbolReplacerImage {
   /// source image with symbol borders
   Uint8List _outputImageBytes;
   /// assigned symbol table (original)
-  List<Map<String, SymbolReplacerSymbolData>> _compareSymbols;
-  /// image with groups from  cropped _compareSymbols
-  SymbolReplacerImage _compareImage;
+  List<Map<String, SymbolReplacerSymbolData>> compareSymbols;
+  /// used symbol table (original)
+  List<Map<String, SymbolReplacerSymbolData>> _usedCompareSymbols;
+  /// image with groups from  cropped _usedCompareSymbols
+  SymbolReplacerImage _usedCompareSymbolsImage;
   double _similarityCompareLevel;
 
   /// detected lines from _image (after symbol merge)
@@ -145,14 +147,7 @@ class SymbolReplacerImage {
   /// SymbolImage with compary symbols (symbol table)
   /// </summary>
   SymbolReplacerImage getCompareImage() {
-    return _compareImage;
-  }
-
-  /// <summary>
-  /// assigned symbol table (original)
-  /// <summary>
-  List<Map<String, SymbolReplacerSymbolData>> getCompareSymbols() {
-    return _compareSymbols;
+    return _usedCompareSymbolsImage;
   }
 
   /// <summary>
@@ -248,15 +243,16 @@ class SymbolReplacerImage {
     }
 
 
-    if (_compareSymbols != compareSymbols)
-      _compareImage = null;
+    if (this.compareSymbols != compareSymbols)
+      _usedCompareSymbolsImage = null;
 
     if (groupSymbols & (compareSymbols != null) & (_similarityCompareLevel != null)) {
-      if (_compareSymbols != compareSymbols || _compareImage == null) {
-        _compareImage = _buildCompareSymbols(compareSymbols);
+      if (this.compareSymbols != _usedCompareSymbols || _usedCompareSymbolsImage == null) {
+        _usedCompareSymbolsImage = _buildCompareSymbols(compareSymbols);
       }
-      _useCompareSymbols(_compareImage);
-      _compareSymbols = compareSymbols;
+      _useCompareSymbols(_usedCompareSymbolsImage);
+      _usedCompareSymbols = compareSymbols;
+      this.compareSymbols = compareSymbols;
     }
 
     // rebuild image
@@ -294,7 +290,10 @@ class SymbolReplacerImage {
   /// reset all SymbolGroup text
   /// </summary>
   resetGroupText() {
-    symbolGroups.forEach((group) {group.text= null; });
+    symbolGroups.forEach((group) {
+      group.text= null;
+      group.compareSymbol = null;
+    });
   }
 
   /// <summary>
@@ -321,6 +320,7 @@ class SymbolReplacerImage {
             symbolGroup.symbols = symbolImage.symbols;
             symbolGroup.text = text;
             symbolGroup.symbols.forEach((symbol) {symbol.symbolGroup = symbolGroup; });
+            symbolGroup.compareSymbol = symbolData;
 
             compareSymbolImage.symbols.addAll(symbolGroup.symbols);
             compareSymbolImage.symbolGroups.add(symbolGroup);
@@ -364,6 +364,7 @@ class SymbolReplacerImage {
         }
         if (maxPercent >= _similarityCompareLevel && (maxPercentSymbol?.symbolGroup != null)) {
           symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
+          symbolGroups[i].compareSymbol = maxPercentSymbol.symbolGroup.compareSymbol;
         }
         percentSum += maxPercent;
       }
@@ -936,11 +937,16 @@ class SymbolGroup {
   String text;
   bool viewGroupImage = false;
   var symbols = <Symbol>[];
+  SymbolReplacerSymbolData compareSymbol;
 
   Uint8List getImage() {
     if (symbols.isNotEmpty)
       return symbols.first.getImage();
     return null;
+  }
+
+  SymbolReplacerSymbolData getCompareSymbol() {
+    return compareSymbol;
   }
 }
 

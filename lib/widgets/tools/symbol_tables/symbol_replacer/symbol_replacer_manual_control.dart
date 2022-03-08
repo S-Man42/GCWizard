@@ -1,3 +1,4 @@
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:prefs/prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -125,15 +126,16 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       if (_selectedSymbolData == imageData) {
         var symbolGroup = _getSymbol(_selectedSymbolData)?.symbolGroup;
         widget.symbolImage.removeFromGroup(_symbol);
-        _selectedSymbolData =
-        symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
+        _selectedSymbolData = symbolGroup.symbols.isEmpty
+            ? null
+            : _symbolMap[symbolGroup.symbols.first]?.values?.first;
       } else
         widget.symbolImage.removeFromGroup(_symbol);
       _symbol = _getSymbol(_selectedSymbolData);
     }
 
     if (selected)
-      // reset all sections
+      // reset all selections
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = false;
         image.values.first.secondarySelected = false;
@@ -152,14 +154,9 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
     }
   }
 
-  _setGroupText(SymbolData imageData, String text, bool single) {
+  _getGroupSymbol(SymbolData imageData) {
     Symbol _symbol = _getSymbol(imageData);
-    if (single) {
-      widget.symbolImage.removeFromGroup(_symbol);
-      // reset all secondary sections
-      _symbolMap.values.forEach((image) {image.values.first.secondarySelected = false;});
-    }
-    if (_symbol?.symbolGroup != null) _symbol.symbolGroup.text = text;
+    if (_symbol?.symbolGroup != null) return _symbol.symbolGroup.compareSymbol;
   }
 
   Widget _buildEditRow() {
@@ -202,55 +199,13 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       ),
       Expanded(child:
         Container(
-          // width: 150,
            height: 80,
-            child: _selectedSymbolData == null ? Container() : Image.memory(_selectedSymbolData.bytes)
+            child: _getGroupSymbol(_selectedSymbolData) == null
+                ? Container()
+                : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData).bytes))
         ),
         flex: 1,
       )
-
-      // GCWTextField(
-      //   controller: _editValueController,
-      //   autofocus: true,
-      // ),
-      // GCWIconButton(
-      //   iconData: Icons.alt_route,
-      //   iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
-      //   onPressed: () {
-      //     setState(() {
-      //       _setGroupText(_selectedSymbolData, _editValueController.text, false);
-      //     });
-      //   },
-      // ),
-      // GCWIconButton(
-      //   iconData: Icons.arrow_upward,
-      //   iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
-      //   onPressed: () {
-      //     setState(() {
-      //       _setGroupText(_selectedSymbolData, _editValueController.text, true);
-      //     });
-      //   },
-      // ),
-      // GCWIconButton(
-      //   iconData: Icons.add_circle,
-      //   iconColor: _selectedSymbolData == null ? themeColors().inActive() : _addActiv ? Colors.red : null,
-      //   onPressed: () {
-      //     setState(() {
-      //       _addActiv = !_addActiv;
-      //       if (_addActiv) _removeActiv = false;
-      //     });
-      //   },
-      // ),
-      // GCWIconButton(
-      //   iconData: Icons.remove_circle,
-      //   iconColor: _selectedSymbolData == null ? themeColors().inActive() : _removeActiv ? Colors.red : null,
-      //   onPressed: () {
-      //     setState(() {
-      //       _removeActiv = !_removeActiv;
-      //       if (_removeActiv) _addActiv = false;
-      //     });
-      //   },
-      // )
     ],
     );
   }
@@ -259,7 +214,12 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
 
     var subPageTool = GCWTool(
         autoScroll: false,
-        tool: SymbolReplacerManualSetter(symbolImage: widget.symbolImage, viewGroups: widget.symbolImage.symbolGroups.take(2).toList()),
+        tool: SymbolReplacerManualSetter(
+            symbolImage: widget.symbolImage,
+            viewSymbols: _getSymbol(_selectedSymbolData)?.symbolGroup == null
+                ? <Symbol>[]
+                : _getSymbol(_selectedSymbolData).symbolGroup.symbols.toList()
+        ),
         i18nPrefix: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);
 
