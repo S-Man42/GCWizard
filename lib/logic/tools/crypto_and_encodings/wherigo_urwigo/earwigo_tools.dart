@@ -12,14 +12,12 @@ String obfuscateEarwigoText(String text) {
   String result = '';
   String rot_palette = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~";
   int plen = rot_palette.length;
-
   for (int i = 0; i < text.length; i++) {
     String c = text[i];
     int p = find(rot_palette, c);
     int jump = (i % 8) + 9;
-    print(c+' '+p.toString());
     if (p != -1) {
-      if (p < jump) {
+      if ((p - 1) < jump) {
         p = p + plen;
       }
       p = p - jump;
