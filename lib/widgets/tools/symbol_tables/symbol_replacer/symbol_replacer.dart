@@ -491,6 +491,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       ),
       Expanded(child:
         Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(toolName, style: _gcwTextStyle),

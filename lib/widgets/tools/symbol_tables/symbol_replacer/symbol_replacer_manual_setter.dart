@@ -1,5 +1,7 @@
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:prefs/prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -57,11 +59,22 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         ? Prefs.get('symboltables_countcolumns_portrait')
         : Prefs.get('symboltables_countcolumns_landscape');
 
-    if (widget.symbolImage?.compareSymbols == null) _currentMode = GCWSwitchPosition.right;
     if (_init) {
+
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
       _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
+      _selectSymbolDataItem(_selectedSymbolData);
+      // select all
+      _symbolMap.values.forEach((image) {
+        image.values.first.primarySelected = true;
+        image.values.first.secondarySelected = false;
+      });
+
+      if ((widget.symbolImage?.compareSymbols == null) ||
+          _selectedSymbolData != null && _getSymbol(_selectedSymbolData)?.symbolGroup?.compareSymbol == null)
+        _currentMode = GCWSwitchPosition.right;
+
       _init = false;
     }
 
@@ -135,7 +148,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text ?? '');
     symbolData.primarySelected = image.values.first.primarySelected;
     symbolData.secondarySelected = image.values.first.secondarySelected;
-    _selectSymbolDataItem(_selectedSymbolData);
     return {null: symbolData};
   }
 
@@ -153,8 +165,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (_addActiv && !selected) {
       widget.symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
-      imageData.primarySelected = false;
-      imageData.secondarySelected = true;
+      // imageData.primarySelected = false;
+      // imageData.secondarySelected = true;
       _symbol = _getSymbol(_selectedSymbolData);
       selected = true;
     }
@@ -164,7 +176,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         var symbolGroup = _getSymbol(_selectedSymbolData)?.symbolGroup;
         widget.symbolImage.removeFromGroup(_symbol);
         _selectedSymbolData =
-        symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
+          symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
       } else
         widget.symbolImage.removeFromGroup(_symbol);
       _symbol = _getSymbol(_selectedSymbolData);
@@ -173,8 +185,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     if (selected)
       // reset all selections
       _symbolMap.values.forEach((image) {
-        image.values.first.primarySelected = false;
-        image.values.first.secondarySelected = false;
+        // image.values.first.primarySelected = false;
+        // image.values.first.secondarySelected = false;
       });
 
     if (_symbol?.symbolGroup?.symbols != null) {
@@ -185,7 +197,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
           image.values.first.primarySelected = selected;
           _editValueController.text = image.values.first.displayName;
         } else
-          image.values.first.secondarySelected = selected;
+          ;// image.values.first.secondarySelected = selected;
       });
     }
   }
@@ -224,9 +236,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   }
 
   Widget _buildTextEditRow() {
-    return Row (children: <Widget>[
-        Expanded(child:
-          Padding( child:
+    return Column( children: [
+        GCWToolBar (children: <Widget>[
             _currentMode == GCWSwitchPosition.right
               ? GCWTextField(
                 controller: _editValueController,
@@ -241,12 +252,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                 },
                 items: _symbolDataItems
               ),
-            padding: EdgeInsets.only(right: 2),
-          ),
-          flex: 2,
-        ),
-        Expanded(child:
-          Padding( child:
             GCWIconButton(
               iconData: Icons.alt_route,
               iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
@@ -262,31 +267,66 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                 });
               },
             ),
-            padding: EdgeInsets.only(right: 2),
-          ),
-        ),
-        Expanded(child:
-          Padding( child:
-            GCWIconButton(
-              iconData: Icons.arrow_upward,
-              iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
-              onPressed: () {
-                setState(() {
-                  if (_currentMode == GCWSwitchPosition.left)
-                    _setGroupText(_selectedSymbolData,
-                        _currentSymbolData?.keys?.first,
-                        true,
-                        symbolData: _currentSymbolData?.values?.first);
-                  else
-                    _setGroupText(_selectedSymbolData, _editValueController.text, true);
-                });
-              },
-            ),
-            padding: EdgeInsets.only(right: 2),
-          ),
-        ),
+            // GCWIconButton(
+            //   iconData: Icons.arrow_upward,
+            //   iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
+            //   onPressed: () {
+            //     setState(() {
+            //       if (_currentMode == GCWSwitchPosition.left)
+            //         _setGroupText(_selectedSymbolData,
+            //             _currentSymbolData?.keys?.first,
+            //             true,
+            //             symbolData: _currentSymbolData?.values?.first);
+            //       else
+            //         _setGroupText(_selectedSymbolData, _editValueController.text, true);
+            //     });
+            //   },
+            // ),
         ],
-    );
+        flex: [3, 1],
+      ),
+      Row(
+        children: [
+          Expanded(
+              child: GCWButton(
+                text: i18n(context, 'symboltablesexamples_selectall'),
+                margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                onPressed: () {
+                  setState(() {
+                    _symbolMap.values.forEach((image) {
+                      image.values.first.primarySelected = true;
+                      image.values.first.secondarySelected = false;
+                    });
+                    // images.forEach((image) {
+                    //   var data = image.values.first;
+                    //   data.primarySelected = true;
+                    //   selectedSymbolTables.add(_symbolKey(data.path));
+                    // });
+                  });
+                },
+              )),
+          Container(width: DOUBLE_DEFAULT_MARGIN),
+          Expanded(
+              child: GCWButton(
+                text: i18n(context, 'symboltablesexamples_deselectall'),
+                margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                onPressed: () {
+                  setState(() {
+                    _symbolMap.values.forEach((image) {
+                      image.values.first.primarySelected = false;
+                      image.values.first.secondarySelected = false;
+                    });
+                    // images.forEach((image) {
+                    //   var data = image.values.first;
+                    //   data.primarySelected = false;
+                    //   selectedSymbolTables = <String>[];
+                    // });
+                  });
+                },
+              )),
+        ],
+      ),
+    ]);
   }
 
   _selectSymbolDataItem(SymbolData symbolData) {

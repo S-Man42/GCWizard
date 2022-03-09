@@ -1,4 +1,7 @@
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -164,7 +167,6 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       Expanded(
         child: Column(
           children: [
-            //Expanded(child:
               GCWToolBar( children: <Widget>[
                 GCWIconButton(
                   iconData: Icons.add_circle,
@@ -187,7 +189,6 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
                   },
                 )
               ]),
-            //),
             GCWButton(
                 text: i18n(context, 'symbol_replacer_letters_manually'),
                 onPressed: () {_navigateToSubPage();}
@@ -198,12 +199,23 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         flex: 1,
       ),
       Expanded(child:
-        Container(
-           height: 80,
-            child: _getGroupSymbol(_selectedSymbolData) == null
-                ? Container()
-                : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData).bytes))
-        ),
+        Column(children: [
+          GCWText(
+              text :"Source",
+              align: Alignment.topCenter,
+              style: gcwTextStyle().copyWith(fontSize: defaultFontSize() -2)
+          ),
+          Row( children: [
+            Expanded(child:Container(), flex: 1),
+            Container(
+                height: 80,
+                child: _getGroupSymbol(_selectedSymbolData) == null
+                    ? Container(width: 80, color: Colors.white)
+                    : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData).bytes))
+            ),
+            Expanded(child:Container(), flex: 1),
+          ])
+        ]),
         flex: 1,
       )
     ],
@@ -224,7 +236,15 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         searchKeys: ['symbol_replacer']);
 
     Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {
-      setState(() {});
+      setState(() {
+        var _addActivTmp = _addActiv;
+        var _removeActivTmp = _removeActiv;
+        _addActiv = false;
+        _removeActiv = false;
+        _selectGroupSymbols(_selectedSymbolData, true);
+        _addActiv = _addActivTmp;
+        _removeActiv = _removeActivTmp;
+      });
     });
   }
 }
