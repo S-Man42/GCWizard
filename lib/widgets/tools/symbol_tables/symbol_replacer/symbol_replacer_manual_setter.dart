@@ -59,9 +59,9 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
 
     if (widget.symbolImage?.compareSymbols == null) _currentMode = GCWSwitchPosition.right;
     if (_init) {
+      _fillSymbolDataItems(widget.symbolImage.compareSymbols);
       _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
-      _fiilSymbolDataItems(widget.symbolImage.compareSymbols);
       _init = false;
     }
 
@@ -98,7 +98,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     }
   }
 
-  _fiilSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
+  _fillSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
     _symbolDataItems = (compareSymbols == null)
         ? <GCWDropDownMenuItem>[].toList()
         : compareSymbols.map((symbolData) {
@@ -188,7 +188,6 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
           image.values.first.secondarySelected = selected;
       });
     }
-    _selectSymbolDataItem(_selectedSymbolData);
   }
 
   _setGroupText(SymbolData imageData, String text, bool single, {SymbolReplacerSymbolData symbolData}) {
