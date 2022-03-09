@@ -84,6 +84,10 @@ class BrainfkDerivate {
 
     return substitution(brainfk, switchMapKeyValue(substitutions));
   }
+
+  bool isBrainfkDerivat(String code) {
+    return _sanitizeCode(code) != code;
+  }
 }
 
 // https://esolangs.org/wiki/Trivial_brainfuck_substitution
