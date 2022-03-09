@@ -50,14 +50,9 @@ class MultiDecoderToolEsotericLanguageBrainfkDerivate extends GCWMultiDecoderToo
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_BRAINFK_DERVIATE_OPTION_MODE] = newValue;
                 },
-                items: BRAINFK_DERIVATES.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              )
-            }));
+                items: _buildGCWDropDownMenuItems(context)
+
+            )}));
 }
 
 BrainfkDerivate getLanguageByName(String name) {
