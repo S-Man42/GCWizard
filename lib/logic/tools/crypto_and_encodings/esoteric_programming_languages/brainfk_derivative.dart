@@ -333,6 +333,8 @@ final BrainfkDerivatives BRAINFKDERIVATIVE___FK = BrainfkDerivatives(pointerShif
 
 final BrainfkDerivatives BRAINFKDERIVATIVE_CUSTOM = BrainfkDerivatives(pointerShiftRightInstruction: '', pointerShiftLeftInstruction: '', increaseValueInstruction: '', decreaseValueInstruction: '', outputInstruction: '', inputInstruction: '', startLoopInstruction: '', endLoopInstruction: '');
 
+// NEVER EVER CHANGE THE NAMES! (the value strings of the map);
+// They are used as keys in the multi decoder
 final Map<BrainfkDerivatives, String> BRAINFK_DERIVATIVES = {
   BRAINFKDERIVATIVE___FK: '!!F**k',
   BRAINFKDERIVATIVE_ALPHK: 'Alph**k',
