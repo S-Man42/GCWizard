@@ -26,6 +26,7 @@ class SymbolReplacerManualSetter extends StatefulWidget {
 
 class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
+  List<GCWDropDownMenuItem> _symbolDataItems;
   SymbolData _selectedSymbolData;
   var _removeActiv = false;
   var _addActiv = false;
@@ -60,6 +61,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     if (_init) {
       _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
+      _fiilSymbolDataItems(widget.symbolImage.compareSymbols);
+      _init = false;
     }
 
     return Column(
@@ -88,15 +91,19 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     });
 
     if (_init) {
-      _init = false;
       if ((_symbolMap.values != null) && _symbolMap.values.isNotEmpty) {
         _selectedSymbolData = _symbolMap.values?.first?.values?.first;
         _selectGroupSymbols(_selectedSymbolData, true);
-        setState(() {
-
-        });
       }
     }
+  }
+
+  _fiilSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
+    _symbolDataItems = (compareSymbols == null)
+        ? <GCWDropDownMenuItem>[].toList()
+        : compareSymbols.map((symbolData) {
+          return _buildDropDownMenuItem(symbolData);
+        }).toList();
   }
 
   Widget _buildMatrix(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
@@ -128,6 +135,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     var symbolData = SymbolData(bytes: image.values.first.bytes, displayName: text ?? '');
     symbolData.primarySelected = image.values.first.primarySelected;
     symbolData.secondarySelected = image.values.first.secondarySelected;
+    _selectSymbolDataItem(_selectedSymbolData);
     return {null: symbolData};
   }
 
@@ -180,6 +188,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
           image.values.first.secondarySelected = selected;
       });
     }
+    _selectSymbolDataItem(_selectedSymbolData);
   }
 
   _setGroupText(SymbolData imageData, String text, bool single, {SymbolReplacerSymbolData symbolData}) {
@@ -231,11 +240,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                     _currentSymbolData = value;
                   });
                 },
-                items: (widget.symbolImage?.compareSymbols == null)
-                    ? <GCWDropDownMenuItem>[].toList()
-                    : widget.symbolImage.compareSymbols.map((symbolData) {
-                      return _buildDropDownMenuItem(symbolData);
-                    }).toList()
+                items: _symbolDataItems
               ),
             padding: EdgeInsets.only(right: 2),
           ),
@@ -285,6 +290,18 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     );
   }
 
+  _selectSymbolDataItem(SymbolData symbolData) {
+    var compareSymbol = _getSymbol(symbolData)?.symbolGroup?.compareSymbol;
+    if ((widget.symbolImage?.compareSymbols != null) && (compareSymbol != null)) {
+      for (GCWDropDownMenuItem item in _symbolDataItems)
+        if (( item.value is Map<String, SymbolReplacerSymbolData>) &&
+            ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
+
+          _currentSymbolData = item.value;
+          break;
+        }
+    }
+  }
 
   GCWDropDownMenuItem _buildDropDownMenuItem(Map<String, SymbolReplacerSymbolData> symbolData) {
     var iconBytes = symbolData.values.first.bytes;

@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
@@ -69,7 +68,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   @override
   Widget build(BuildContext context) {
     _initDropDownLists();
-    _selectSymbolDataItem(widget.symbolKey, widget.imageData);
+    _selectSymbolTableDataItem(widget.symbolKey, widget.imageData);
 
     if (widget.platformFile != null) {
       _platformFile = widget.platformFile;
@@ -466,7 +465,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   }
 
-  _selectSymbolDataItem(String symbolKey, List<Map<String, SymbolData>> imageData) {
+  _selectSymbolTableDataItem(String symbolKey, List<Map<String, SymbolData>> imageData) {
     if ((widget.imageData != null) && (_compareSymbolItems != null) && (_currentSymbolTableViewData == null)) {
       for (GCWDropDownMenuItem item in _compareSymbolItems)
         if (( item.value is SymbolReplacerSymbolTableViewData) &&
