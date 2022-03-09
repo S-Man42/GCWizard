@@ -4,9 +4,10 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.
 
 String breakUrwigoHash(int input) {
   if (input == null) return '';
+  if (input < 0 || input >= 65535) return '';
 
-  for (int i = 4; i <= 7; i++) {
-    var out = findHash(input, len: i);
+  for (int i = 1; i <= 5; i++) {
+    var out = findHash(input, i);
     if (out != null && out.isNotEmpty) return out;
   }
 

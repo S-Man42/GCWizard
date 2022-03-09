@@ -56,7 +56,7 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
               title: i18n(context, 'urwigo_hashbreaker_input'),
               value: _currentInput,
               min: 0,
-              max: 65535,
+              max: 65534,
               onChanged: (value) {
                 setState(() {
                   _currentInput = value;

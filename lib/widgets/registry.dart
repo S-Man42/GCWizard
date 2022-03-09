@@ -3703,6 +3703,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES, ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
+      'wherigo',
       'wherigourwigo',
     ]),
     //UrwigoHashBreaker already inserted in section "Hashes"

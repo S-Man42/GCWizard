@@ -263,7 +263,6 @@ FileType fileTypeByFilename(String fileName) {
 }
 
 String fileExtension(FileType type) {
-  print(_FILE_TYPES[type]['extensions'].first);
   return _FILE_TYPES[type]['extensions'].first;
 }
 
