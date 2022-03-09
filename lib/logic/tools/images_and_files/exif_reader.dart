@@ -93,7 +93,6 @@ LatLng completeGPSDataFromXmp(Map<String, dynamic> xmpTags) {
   try {
     if (xmpTags.containsKey(RDF_LOCATION)) {
       String latlng = xmpTags[RDF_LOCATION];
-      print(latlng);
       var pt = parseStandardFormats(latlng, wholeString: true);
       if (pt != null) {
         point = pt['coordinate'];

@@ -1,4 +1,4 @@
-int _find(String palette, String char) {
+int find(String palette, String char) {
   for (int i = 0; i < palette.length; i++)
     if (palette[i] == char)
       return (i + 1);
@@ -16,7 +16,7 @@ String gsub_wig(String str){
 
   for (int i = 0; i < str.length; i++) {
     String c = str[i];
-    int p = _find(rot_palette, c);
+    int p = find(rot_palette, c);
     if (p != -1) {
       int jump = (i % 8) + 9;
       p = p + jump;

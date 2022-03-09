@@ -27,14 +27,21 @@ String getLineData(String analyseLine, String LUAname, String type, String obfus
   return _normalizeText(result).trim();
 }
 
-
 String getStructData(String analyseLine, String type){
   return analyseLine.trimLeft().replaceAll(type + ' = ', '').replaceAll('"', '').replaceAll(',', '');
 }
 
-
 String getTextData( String analyseLine, String obfuscator, String dtable){
-  String result = analyseLine.trimLeft().replaceAll('Text = ', '').replaceAll('tostring(', '').replaceAll('[[', '').replaceAll(']]', '').replaceAll('input)', 'input');
+  String result = analyseLine
+      .trimLeft().replaceAll('Text = ', '')
+      .replaceAll('tostring(', '')
+      .replaceAll('[[', '')
+      .replaceAll(']]', '')
+      .replaceAll('input)', 'input')
+      .replaceAll('string.sub(Player.CompletionCode, 1, 15)', 'Player.CompletionCode');
+
+  if (result.endsWith(','))
+    result = result.substring(0, result.length - 1);
 
   if (RegExp(r'(gsub_wig)').hasMatch(result)){
     // deobfuscate/replace all Matches gsub_wig\("[\w\s@]+"\)
@@ -53,14 +60,18 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     });
     result = result.replaceAll('gsub_wig()', '');
   }
-  else
-  if (result.startsWith('(' + obfuscator)) {
-    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll(')', ')');
+
+  else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
+    while (result.startsWith(RegExp(r'(\()+' + obfuscator)))
+      result = result.substring(1);
+    result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll('))', ')');
     result = _getDetails(result, obfuscator, dtable);
   }
 
   else if (result.startsWith(obfuscator)) {
-    if (_compositeText(result)) {
+    if (_compositeObfuscatedText(result, obfuscator))
+      result = _getDetails(result, obfuscator, dtable);
+    else if (_compositeText(result)) {
       result = _getCompositeText(result, obfuscator, dtable);
     } else {
       result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '').replaceAll('")', '');
@@ -68,9 +79,21 @@ String getTextData( String analyseLine, String obfuscator, String dtable){
     }
   }
 
+  else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
+    result = result.replaceAll('Player.Name .. ', '');
+    if (_compositeObfuscatedText(result, obfuscator))
+      result = _getDetails(result, obfuscator, dtable);
+    else if (_compositeText(result)) {
+      result = _getCompositeText(result, obfuscator, dtable);
+    } else {
+      result = result.replaceAll(obfuscator + '("','').replaceAll('"),', '').replaceAll('")', '');
+      result = deobfuscateUrwigoText(result, dtable);
+    }
+    result = 'Player.Name .. ' + result;
+  }
+
   return _normalizeText(result);
 }
-
 
 String _getDetails(String line, String obfuscator, String dtable){
   String element = '';
@@ -89,13 +112,15 @@ String _getDetails(String line, String obfuscator, String dtable){
     line = line.substring(i + 2);
 
     i = 0;
+    section = true;
     if (line.length != 0) {
       do {// get something else in between
         if (line.substring(i).startsWith(obfuscator))
           section = false;
         i = i + 1;
       } while(section);
-      result = result + line.substring(0, i - 1);
+      i--;
+      result = result + line.substring(0, i).replaceAll(')', '');
       line = line.substring(i);
     }
 
@@ -117,6 +142,10 @@ bool _compositeText(String text){
    return (expr.hasMatch(text));
 }
 
+bool _compositeObfuscatedText(String text, String obfuscator){
+  return (RegExp(r'' + obfuscator).allMatches(text).length > 1);
+}
+
 String _getCompositeText(String text, String obfuscator, String dtable){
   String hashText = '';
   String result = '';
@@ -130,7 +159,6 @@ String _getCompositeText(String text, String obfuscator, String dtable){
   result = result + deobfuscateUrwigoText(hashText, dtable) + text;
   return _normalizeText(result);
 }
-
 
 String _normalizeText(String text){
   if (RegExp(r'(WWB_multiplatform_string)').hasMatch(text))

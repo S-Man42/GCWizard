@@ -60,7 +60,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             _currentCode = value;
           });
         },
-        items: CCITT_CODEBOOK.entries.map((mode) {
+        items: ALL_CODES_CODEBOOK.entries.map((mode) {
           return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value['title']),

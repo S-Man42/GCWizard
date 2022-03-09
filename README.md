@@ -78,7 +78,7 @@ Based on **Flutter/Dart**.
 
 ## Links
 
-* [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪 🇫🇷
+* [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪
 * [Web View](http://gcwizard.net)
 
 ### Development

@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.2.0+136
+version: 2.2.0+142
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -35,7 +35,7 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.9
   permission_handler: ^8.1.6
-  photo_view: ^0.13.0
+  #photo_view: ^0.13.0
   pointycastle: ^3.5.1
   prefs: ^3.3.0
   provider: ^6.0.1
@@ -49,6 +49,16 @@ dependencies:
   url_launcher: ^6.0.20
   utility: ^1.0.1
   #xmp: ^1.0.2 # xml:4  :(
+
+dependency_overrides:
+  # https://stackoverflow.com/questions/70404718/error-with-photoview-looking-up-a-deactivated-widgets-ancestor-is-unsafe/71010204#71010204
+  # avoids error "Looking up a deactivated widget's ancestor is unsafe"
+  # The problem is coming from photo_view package.
+  # should be removed as soon the plugin is updated
+  photo_view:
+    git:
+      url: https://github.com/bluefireteam/photo_view
+      ref: master
 
 dev_dependencies:
   flutter_test:
@@ -197,6 +207,7 @@ flutter:
     - assets/symbol_tables/klingon_klinzhai/
     - assets/symbol_tables/krempel/
     - assets/symbol_tables/krypton/
+    - assets/symbol_tables/la_buse/
     - assets/symbol_tables/lorm/
     - assets/symbol_tables/magicode/
     - assets/symbol_tables/mandalorian/

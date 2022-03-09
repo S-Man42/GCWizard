@@ -8,9 +8,19 @@
 //
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
 
 const HOHOHO_ERROR_INVALID_PROGRAM = 'hohoho_error_syntax_invalidprogram';
+
+final _HOHOHO_SUBSTITUTIONS = {
+  '>': 'HoHoho',
+  '<': 'hoHoHo',
+  '+': 'HoHoHo',
+  '-': 'hohoho',
+  '.': 'hoHoho',
+  ',': 'HohoHo',
+  '[': 'Hohoho',
+  ']': 'hohoHo'
+};
 
 class HohohoOutput {
   String output = '';
@@ -18,7 +28,6 @@ class HohohoOutput {
 
   HohohoOutput(this.output, this.error);
 }
-
 
 HohohoOutput interpretHohoho(String plainText, {String STDIN}){
   if (plainText == '' || plainText == null)
@@ -41,7 +50,7 @@ HohohoOutput interpretHohoho(String plainText, {String STDIN}){
   }
 
   // convert to Brainfck
-  Map BRAINF_CK = switchMapKeyValue(brainfkTrivialSubstitutions['Hohoho!']);
+  Map BRAINF_CK = switchMapKeyValue(_HOHOHO_SUBSTITUTIONS);
   result = '';
   test.split(' ').forEach((element) {
     if (BRAINF_CK[element] != null)
@@ -65,7 +74,7 @@ String generateHohoho(String OutputText){
 
   // transfer to hohoho
   code.split('').forEach((element) {
-    result = result + brainfkTrivialSubstitutions['Hohoho!'][element];
+    result = result + _HOHOHO_SUBSTITUTIONS[element];
   });
 
   // normalize
