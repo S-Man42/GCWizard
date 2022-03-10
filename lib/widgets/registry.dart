@@ -2021,6 +2021,22 @@ initializeRegistry(BuildContext context) {
       'morse',
     ]),
 
+    //NumeralWordsSelection ****************************************************************************************
+    GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', searchKeys: [
+      'numeralwords',
+      'numeralwords_lang',
+      'numeralwordstextsearch',
+    ]),
+    GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', searchKeys: [
+      'numeralwords',
+      'numeralwords_lang',
+      'numeralwordslists',
+    ]),
+    GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', searchKeys: [
+      'numeralwords',
+      'numeralwordsconverter',
+    ]),
+
     //NumberSequenceSelection ****************************************************************************************
     GCWTool(tool: NumberSequenceFactorialSelection(), i18nPrefix: 'numbersequence_factorial', searchKeys: [
       'numbersequence',
@@ -2525,20 +2541,6 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: NumberSequenceLychrelContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
       'numbersequence_lychrelselection',
-    ]),
-
-    //NumeralWordsSelection ****************************************************************************************
-    GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', searchKeys: [
-      'numeralwords',
-      'numeralwordstextsearch',
-    ]),
-    GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', searchKeys: [
-      'numeralwords',
-      'numeralwordslists',
-    ]),
-    GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', searchKeys: [
-      'numeralwords',
-      'numeralwordsconverter',
     ]),
 
     //PeriodicTableSelection ***************************************************************************************
@@ -3338,6 +3340,9 @@ initializeRegistry(BuildContext context) {
       'symbol_prosyl',
     ]),
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
+      'symbol_puzzle',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: [
       'symbol_puzzle',
     ]),
     GCWSymbolTableTool(symbolKey: 'prussian_colors_artillery', symbolSearchStrings: [

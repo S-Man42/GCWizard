@@ -1960,8 +1960,8 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES_CONVERTER = {
   NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
   NumeralWordsLanguage.MIN: 'numeralwords_language_min',
-  NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
   NumeralWordsLanguage.NAVI: 'numeralwords_language_navi',
+  NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
 };
 
 Map<NumeralWordsLanguage, List<int>> MIN_MAX_NUMBER = {

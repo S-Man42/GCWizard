@@ -50,7 +50,7 @@ class KeyboardNumbersState extends State<KeyboardNumbers> {
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9 .]*$'))],
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9 ]'))],
                 onChanged: (text) {
                   setState(() {
                     _currentEncodeInput = text;
@@ -59,7 +59,6 @@ class KeyboardNumbersState extends State<KeyboardNumbers> {
               )
             : GCWTextField(
                 controller: _decodeController,
-                //inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[!"§$%&/()={[]}²³{[]}@^]*$'))],
                 onChanged: (text) {
                   setState(() {
                     _currentDecodeInput = text;
