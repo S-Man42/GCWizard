@@ -270,20 +270,37 @@ class SymbolReplacerImage {
     }
     if (symbolGroup.symbols == null) symbolGroup.symbols = <Symbol>[];
 
-    symbolGroup.symbols.add(symbol);
-    symbol.symbolGroup = symbolGroup;
+    _addSymbolToGroup(symbol, symbolGroup);
   }
 
   /// <summary>
-  /// remove Symbol from SymbolGroup
+  /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
   removeFromGroup(Symbol symbol) {
     if (symbol == null) return;
     if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols?.remove(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);
+
+    _addSymbolToGroup(symbol, symbolGroup);
+  }
+
+  _addSymbolToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     symbolGroup.symbols.add(symbol);
+    if ((symbol?.symbolGroup?.symbols != null) && (symbol?.symbolGroup?.symbols.isEmpty))
+      symbolGroups.remove(symbol.symbolGroup);
     symbol.symbolGroup = symbolGroup;
+  }
+
+  /// <summary>
+  /// SymbolGroup for these symbols together
+  /// </summary>
+  buildSymbolGroup(List<Symbol> symbols) {
+    if ((symbols == null) || symbols.isEmpty) return;
+
+    removeFromGroup(symbols.first);
+    for (var i=1; i< symbols.length; i++)
+      addToGroup(symbols[i], symbols.first.symbolGroup);
   }
 
   /// <summary>

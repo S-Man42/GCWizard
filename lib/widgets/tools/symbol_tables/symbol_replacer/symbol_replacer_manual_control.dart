@@ -119,8 +119,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
 
     if (_addActiv && !selected) {
       widget.symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
-      imageData.primarySelected = false;
-      imageData.secondarySelected = true;
+      imageData.primarySelected = true;
       _symbol = _getSymbol(_selectedSymbolData);
       selected = true;
     }
@@ -141,18 +140,13 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
       // reset all selections
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = false;
-        image.values.first.secondarySelected = false;
       });
 
     if (_symbol?.symbolGroup?.symbols != null) {
       _symbol.symbolGroup.symbols.forEach((symbol) {
         var image = _symbolMap[symbol];
-        // primary ?
-        if (symbol == _symbol) {
-          image.values.first.primarySelected = selected;
-          _editValueController.text = image.values.first.displayName;
-        } else
-          image.values.first.secondarySelected = selected;
+        image.values.first.primarySelected = selected;
+        _editValueController.text = image.values.first.displayName;
       });
     }
   }
@@ -223,14 +217,18 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   }
 
   _navigateToSubPage() {
+    var selectedSymbols = <Symbol>[];
+    _symbolMap.forEach((symbol, image) {
+      var symbolData = image.values.first;
+      if (symbolData.primarySelected || symbolData.secondarySelected)
+        selectedSymbols.add(symbol);
+    });
 
     var subPageTool = GCWTool(
         autoScroll: false,
         tool: SymbolReplacerManualSetter(
             symbolImage: widget.symbolImage,
-            viewSymbols: _getSymbol(_selectedSymbolData)?.symbolGroup == null
-                ? <Symbol>[]
-                : _getSymbol(_selectedSymbolData).symbolGroup.symbols.toList()
+            viewSymbols: selectedSymbols
         ),
         i18nPrefix: 'symbol_replacer',
         searchKeys: ['symbol_replacer']);

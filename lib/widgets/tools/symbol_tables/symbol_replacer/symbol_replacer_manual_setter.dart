@@ -29,9 +29,6 @@ class SymbolReplacerManualSetter extends StatefulWidget {
 class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> {
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
   List<GCWDropDownMenuItem> _symbolDataItems;
-  SymbolData _selectedSymbolData;
-  var _removeActiv = false;
-  var _addActiv = false;
   var _gcwTextStyle = gcwTextStyle();
   var _currentMode = GCWSwitchPosition.left;
   Map<String, SymbolReplacerSymbolData> _currentSymbolData;
@@ -60,19 +57,20 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         : Prefs.get('symboltables_countcolumns_landscape');
 
     if (_init) {
-
       _fillSymbolDataItems(widget.symbolImage.compareSymbols);
       _currentSymbolData = widget.symbolImage?.compareSymbols?.first;
       _fillSymbolMap(widget.symbolImage, widget.viewSymbols);
-      _selectSymbolDataItem(_selectedSymbolData);
+
       // select all
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = true;
-        image.values.first.secondarySelected = false;
       });
+      if ((_symbolMap.values != null) && _symbolMap.values.isNotEmpty)
+        _selectSymbol(_symbolMap.values.first.values.first);
 
       if ((widget.symbolImage?.compareSymbols == null) ||
-          _selectedSymbolData != null && _getSymbol(_selectedSymbolData)?.symbolGroup?.compareSymbol == null)
+          ((widget.viewSymbols == null) || (widget.viewSymbols.isEmpty) ||
+          widget.viewSymbols?.first?.symbolGroup?.compareSymbol == null))
         _currentMode = GCWSwitchPosition.right;
 
       _init = false;
@@ -94,21 +92,12 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       if (_symbolMap.containsKey(symbol)) {
         var _symbolData = _symbolMap[symbol];
         var _displayText = symbol?.symbolGroup?.text ?? '';
-        if (_symbolData?.values?.first?.displayName != _displayText) {
+        if (_symbolData?.values?.first?.displayName != _displayText)
           _symbolMap[symbol] = _cloneSymbolData(_symbolData, _displayText);
-          if (_selectedSymbolData == _symbolData) _selectedSymbolData = _symbolMap[symbol]?.values?.first;
-        }
       } else
         _symbolMap.addAll(
             {symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}});
     });
-
-    if (_init) {
-      if ((_symbolMap.values != null) && _symbolMap.values.isNotEmpty) {
-        _selectedSymbolData = _symbolMap.values?.first?.values?.first;
-        _selectGroupSymbols(_selectedSymbolData, true);
-      }
-    }
   }
 
   _fillSymbolDataItems(List<Map<String, SymbolReplacerSymbolData>> compareSymbols) {
@@ -135,13 +124,17 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
           onChanged: () => setState((){}),
           selectable: true,
           overlayOn: true,
-          onSymbolTapped: (String tappedText, SymbolData imageData) {
+          onSymbolTapped: (String tappedText, SymbolData symbolData) {
             setState(() {
-              _selectGroupSymbols(imageData, (imageData.primarySelected || imageData.secondarySelected));
-            });
-          },
+              _selectSymbol(symbolData);
+            });},
         )
       );
+  }
+
+  _selectSymbol(SymbolData symbolData) {
+    _selectSymbolDataItem(symbolData);
+    _editValueController.text = symbolData.displayName;
   }
 
   Map<String, SymbolData> _cloneSymbolData(Map<String, SymbolData> image, String text) {
@@ -155,63 +148,20 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     return _symbolMap.entries.firstWhere((entry) => entry.value.values.first == imageData, orElse: () => null)?.key;
   }
 
-  _selectGroupSymbols(SymbolData imageData, bool selected) {
-    Symbol _symbol = _getSymbol(imageData);
-
-    if (!(_addActiv || _removeActiv))
-      _selectedSymbolData = selected ? imageData : null;
-    else
-      selected = _symbol?.symbolGroup == _getSymbol(_selectedSymbolData)?.symbolGroup;
-
-    if (_addActiv && !selected) {
-      widget.symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
-      // imageData.primarySelected = false;
-      // imageData.secondarySelected = true;
-      _symbol = _getSymbol(_selectedSymbolData);
-      selected = true;
-    }
-
-    if (_removeActiv && selected) {
-      if (_selectedSymbolData == imageData) {
-        var symbolGroup = _getSymbol(_selectedSymbolData)?.symbolGroup;
-        widget.symbolImage.removeFromGroup(_symbol);
-        _selectedSymbolData =
-          symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
-      } else
-        widget.symbolImage.removeFromGroup(_symbol);
-      _symbol = _getSymbol(_selectedSymbolData);
-    }
-
-    if (selected)
-      // reset all selections
-      _symbolMap.values.forEach((image) {
-        // image.values.first.primarySelected = false;
-        // image.values.first.secondarySelected = false;
+  _setSelectedSymbolsText(String text, {SymbolReplacerSymbolData symbolData}) {
+    if (_symbolMap != null) {
+      var selectedSymbols = <Symbol>[];
+      _symbolMap.forEach((symbol, image) {
+        var symbolData = image.values.first;
+        if (symbolData.primarySelected || symbolData.secondarySelected)
+          selectedSymbols.add(symbol);
       });
-
-    if (_symbol?.symbolGroup?.symbols != null) {
-      _symbol.symbolGroup.symbols.forEach((symbol) {
-        var image = _symbolMap[symbol];
-        // primary ?
-        if (symbol == _symbol) {
-          image.values.first.primarySelected = selected;
-          _editValueController.text = image.values.first.displayName;
-        } else
-          ;// image.values.first.secondarySelected = selected;
-      });
-    }
-  }
-
-  _setGroupText(SymbolData imageData, String text, bool single, {SymbolReplacerSymbolData symbolData}) {
-    Symbol _symbol = _getSymbol(imageData);
-    if (single) {
-      widget.symbolImage.removeFromGroup(_symbol);
-      // reset all secondary selections
-      _symbolMap.values.forEach((image) {image.values.first.secondarySelected = false;});
-    }
-    if (_symbol?.symbolGroup != null) {
-      _symbol.symbolGroup.text = text;
-      _symbol.symbolGroup.compareSymbol = symbolData;
+      widget.symbolImage.buildSymbolGroup(selectedSymbols);
+      if ((selectedSymbols != null) && selectedSymbols.isNotEmpty &&
+        (selectedSymbols?.first?.symbolGroup != null)) {
+        selectedSymbols.first.symbolGroup.text = text;
+        selectedSymbols.first.symbolGroup.compareSymbol = symbolData;
+      }
     }
   }
 
@@ -254,34 +204,17 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
               ),
             GCWIconButton(
               iconData: Icons.alt_route,
-              iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
+              iconColor: _symbolMap.values.any((symbol) => symbol.values.first.primarySelected) ? null :themeColors().inActive(),
               onPressed: () {
                 setState(() {
                   if (_currentMode == GCWSwitchPosition.left)
-                    _setGroupText(_selectedSymbolData,
-                        _currentSymbolData?.keys?.first,
-                        false,
+                    _setSelectedSymbolsText(_currentSymbolData?.keys?.first,
                         symbolData: _currentSymbolData?.values?.first);
                   else
-                    _setGroupText(_selectedSymbolData, _editValueController.text, false);
+                    _setSelectedSymbolsText(_editValueController.text);
                 });
               },
             ),
-            // GCWIconButton(
-            //   iconData: Icons.arrow_upward,
-            //   iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
-            //   onPressed: () {
-            //     setState(() {
-            //       if (_currentMode == GCWSwitchPosition.left)
-            //         _setGroupText(_selectedSymbolData,
-            //             _currentSymbolData?.keys?.first,
-            //             true,
-            //             symbolData: _currentSymbolData?.values?.first);
-            //       else
-            //         _setGroupText(_selectedSymbolData, _editValueController.text, true);
-            //     });
-            //   },
-            // ),
         ],
         flex: [3, 1],
       ),
@@ -295,13 +228,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                   setState(() {
                     _symbolMap.values.forEach((image) {
                       image.values.first.primarySelected = true;
-                      image.values.first.secondarySelected = false;
                     });
-                    // images.forEach((image) {
-                    //   var data = image.values.first;
-                    //   data.primarySelected = true;
-                    //   selectedSymbolTables.add(_symbolKey(data.path));
-                    // });
                   });
                 },
               )),
@@ -314,13 +241,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
                   setState(() {
                     _symbolMap.values.forEach((image) {
                       image.values.first.primarySelected = false;
-                      image.values.first.secondarySelected = false;
                     });
-                    // images.forEach((image) {
-                    //   var data = image.values.first;
-                    //   data.primarySelected = false;
-                    //   selectedSymbolTables = <String>[];
-                    // });
                   });
                 },
               )),
