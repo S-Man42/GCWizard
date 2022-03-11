@@ -1157,7 +1157,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
                     lines[i + 1].trim().startsWith('function') ||
                     lines[i + 1].trim().startsWith(LUAname + '.Visible')) sectionText = false;
               } while (sectionText);
-              text = text.replaceAll(']]', '').replaceAll('<BR>', '\n');
+              text = normalizeText(text.replaceAll(']]', '').replaceAll('<BR>', '\n'));
             }
           }
 
@@ -1395,15 +1395,15 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
             }
             else { // multi line
               i++; lines[i] = lines[i].trim();
-              String buttonText = '';
+              List<String> buttonText = [];
               do {
-                buttonText = buttonText + lines[i];
+                buttonText.add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable));
                 i++; lines[i] = lines[i].trim();
               } while (!lines[i].trimLeft().startsWith('}'));
               singleMessageDialog.add(
                   ActionMessageElementData(
                       ACTIONMESSAGETYPE.BUTTON,
-                      getTextData(buttonText.replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable)
+                      buttonText.join(' » « ')
                   )
               );
             } // end else multiline
@@ -1558,6 +1558,8 @@ String _normalizeLUAmultiLineText(String LUA) {
   return LUA
       .replaceAll('[[\n', '[[')
       .replaceAll('<BR>\n', '<BR>')
+      .replaceAll('&gt;', '>')
+      .replaceAll('&lt;', '<')
       .replaceAll('&nbsp;', ' ')
       .replaceAll('&amp;', '&')
       .replaceAll('\\195\\164', 'ä')

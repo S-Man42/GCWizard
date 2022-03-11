@@ -61,6 +61,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<GCWMapPoint> _ItemPoints = [];
   List<GCWMapPoint> _CharacterPoints = [];
 
+  var _errorMsg_MediaFiles = [];
+
   WherigoCartridgeGWC _WherigoCartridgeGWC =
       WherigoCartridgeGWC(MediaFilesHeaders: [], MediaFilesContents: [], ResultsGWC: []);
 
@@ -329,7 +331,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
     _errorMsg.add('');
     if (_WherigoCartridgeLUA.ResultStatus == ANALYSE_RESULT_STATUS.OK){
-      _errorMsg.add(i18n(context, 'wherigo_error_loading_lua'));
+      _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
       _errorMsg.add(i18n(context, 'wherigo_error_no_error'));
     } else {
       _errorMsg.add(i18n(context, 'wherigo_error_runtime_lua'));
@@ -343,6 +345,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     switch (_displayedCartridgeData) {
       case WHERIGO.RESULTS_GWC:
       case WHERIGO.RESULTS_LUA:
+      _errorMsg.addAll(_errorMsg_MediaFiles);
         return GCWDefaultOutput(
           child: GCWOutputText(
             text: _errorMsg.join('\n'),
@@ -594,16 +597,17 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ),
               ],
             ),
-            _mediaFileIndex > _WherigoCartridgeGWC.MediaFilesContents.length - 1
-                ? GCWOutputText(
+            if (_mediaFileIndex > _WherigoCartridgeGWC.MediaFilesContents.length - 1)
+                GCWOutputText(
                     text: i18n(context, 'wherigo_error_invalid_mediafile') +
                         '\n' +
                         '» ' +
                         filename +
                         ' «\n\n' +
                         i18n(context, 'wherigo_error_invalid_mediafile_2') +
-                        '\n')
-                : GCWFilesOutput(
+                        '\n'),
+            _WherigoCartridgeGWC.MediaFilesContents[_mediaFileIndex].MediaFileBytes.isNotEmpty
+                ? GCWFilesOutput(
                     suppressHiddenDataMessage: true,
                     suppressedButtons: {GCWImageViewButtons.SAVE},
                     files: [
@@ -612,6 +616,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           bytes: _getBytes(_WherigoCartridgeGWC.MediaFilesContents, _mediaFileIndex),
                           name: filename),
                     ],
+                  )
+                : GCWOutputText(
+                    text: i18n(context, 'wherigo_error_invalid_gwc') + '\n' +
+                        i18n(context, 'wherigo_error_invalid_mediafile') + '\n' +
+                        i18n(context, 'wherigo_error_invalid_mediafile_2') + '\n'
                   ),
             if (_outputMedia != null)
               Column(children: columnedMultiLineOutput(context, _outputMedia, flexValues: [1, 3])),
@@ -2140,7 +2149,23 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       } else
         return null;
     } catch (exception) {
-      showToast(exception.toString() + '\n\n' + i18n(context, 'wherigo_error_hint_2'));
+      _errorMsg_MediaFiles = [];
+      _errorMsg_MediaFiles.add('');
+      _errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime_widget'));
+      _errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime'));
+      _errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_runtime_exception'));
+      _errorMsg_MediaFiles.add(exception.toString());
+      _errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_gwc_mediafiles'));
+      _errorMsg_MediaFiles.add(i18n(context, 'wherigo_error_hint_2'));
+      showToast(
+          i18n(context, 'wherigo_error_runtime') +
+          '\n' +
+          i18n(context, 'wherigo_error_runtime_exception') +
+          '\n' +
+          i18n(context, 'wherigo_error_gwc_mediafiles') +
+          '\n' +
+          exception.toString() + '\n\n' + i18n(context, 'wherigo_error_hint_2'),
+        duration: 45);
     }
   }
 
@@ -2255,7 +2280,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_header_splashscreen'), _WherigoCartridgeGWC.Splashscreen],
       [i18n(context, 'wherigo_header_player'), _WherigoCartridgeGWC.Player],
       [i18n(context, 'wherigo_header_playerid'), _WherigoCartridgeGWC.PlayerID.toString()],
-      [i18n(context, 'wherigo_header_completion'), _WherigoCartridgeGWC.CompletionCode],
+      [i18n(context, 'wherigo_header_completion'), _WherigoCartridgeGWC.CompletionCode.substring(0, 15)],
+      [i18n(context, 'wherigo_header_lengthcompletion'), _WherigoCartridgeGWC.LengthOfCompletionCode.toString()],
       [
         i18n(context, 'wherigo_header_cartridgename'),
         _WherigoCartridgeGWC.CartridgeName == ''
