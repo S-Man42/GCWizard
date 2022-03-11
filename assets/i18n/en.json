@@ -4678,6 +4678,8 @@
   "symbol_replacer_symbol_size": "Symbol Size",
   "symbol_replacer_no_symbol_table": "no Symbol Table",
   "symbol_replacer_letters_manually": "Set letters manually",
+  "symbol_replacer_from_symboltable": "From symbol table",
+  "symbol_replacer_own_text": "Own text",
   "symbol_replacer_start": "Start",
   "symbol_replacer_automatic_groups": "Too many different symbols",
   "symbol_replacer_automatic_header": "Try text replacement\n(quick, but inaccurate)",
