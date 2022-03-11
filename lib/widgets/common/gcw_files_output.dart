@@ -15,10 +15,10 @@ import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 
 class GCWFilesOutput extends StatefulWidget {
-  final List<PlatformFile> files;
+  final List<GWCFile> files;
   final bool suppressHiddenDataMessage;
   final Set<GCWImageViewButtons> suppressedButtons;
 
@@ -34,9 +34,9 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     return Column(children: <Widget>[_buildFileTree(widget.files, [])]);
   }
 
-  Widget _buildFileTree(List<PlatformFile> files, List<String> parents, {level: 0}) {
+  Widget _buildFileTree(List<GWCFile> files, List<String> parents, {level: 0}) {
     var isFirst = true;
-    var children = files.map((PlatformFile file) {
+    var children = files.map((GWCFile file) {
       var hasChildren = file.children != null && file.children.isNotEmpty;
 
       var actionButton = _buildActionButton(file);
@@ -138,7 +138,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  _buildActionButton(PlatformFile file) {
+  _buildActionButton(GWCFile file) {
     var actions = <GCWPopupMenuItem>[
       GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.save, 'hiddendata_savefile'),
@@ -176,7 +176,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  _exportFile(BuildContext context, PlatformFile file) async {
+  _exportFile(BuildContext context, GWCFile file) async {
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;

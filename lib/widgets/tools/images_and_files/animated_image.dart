@@ -18,11 +18,11 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gwc_file.dart' as local;
 import 'package:intl/intl.dart';
 
 class AnimatedImage extends StatefulWidget {
-  final local.PlatformFile platformFile;
+  final local.GWCFile platformFile;
 
   const AnimatedImage({Key key, this.platformFile}) : super(key: key);
 
@@ -32,7 +32,7 @@ class AnimatedImage extends StatefulWidget {
 
 class AnimatedImageState extends State<AnimatedImage> {
   Map<String, dynamic> _outData;
-  local.PlatformFile _platformFile;
+  local.GWCFile _platformFile;
   bool _play = false;
   static var allowedExtensions = [FileType.GIF, FileType.PNG, FileType.WEBP];
 
@@ -143,7 +143,7 @@ class AnimatedImageState extends State<AnimatedImage> {
         if ((durations != null) && (i < durations.length)) {
           description += ': ' + durations[i].toString() + ' ms';
         }
-        list.add(GCWImageViewData(local.PlatformFile(bytes: images[i]), description: description));
+        list.add(GCWImageViewData(local.GWCFile(bytes: images[i]), description: description));
       }
       ;
     }
@@ -207,7 +207,7 @@ class AnimatedImageState extends State<AnimatedImage> {
   }
 }
 
-openInAnimatedImage(BuildContext context, local.PlatformFile file) {
+openInAnimatedImage(BuildContext context, local.GWCFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

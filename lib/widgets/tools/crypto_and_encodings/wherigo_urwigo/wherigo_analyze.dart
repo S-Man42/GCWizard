@@ -39,7 +39,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
@@ -406,7 +406,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.GWCFILE:
-        PlatformFile file = PlatformFile(bytes: _GWCbytes);
+        GWCFile file = GWCFile(bytes: _GWCbytes);
 
         return Column(
           children: <Widget>[
@@ -440,7 +440,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.LUABYTECODE:
-        PlatformFile file = PlatformFile(bytes: _WherigoCartridgeGWC.MediaFilesContents[0].MediaFileBytes);
+        GWCFile file = GWCFile(bytes: _WherigoCartridgeGWC.MediaFilesContents[0].MediaFileBytes);
 
         return Column(
           children: <Widget>[
@@ -607,7 +607,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     suppressHiddenDataMessage: true,
                     suppressedButtons: {GCWImageViewButtons.SAVE},
                     files: [
-                      PlatformFile(
+                      GWCFile(
                           //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
                           bytes: _getBytes(_WherigoCartridgeGWC.MediaFilesContents, _mediaFileIndex),
                           name: filename),
@@ -1494,7 +1494,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           if (element.ActionMessageContent.startsWith('Wherigo.PlayAudio')) {
             String LUAName = element.ActionMessageContent.replaceAll('Wherigo.PlayAudio(', '').replaceAll(')', '');
             resultWidget.add(GCWSoundPlayer(
-              file: PlatformFile(
+              file: GWCFile(
                   bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
                   name: NameToObject[LUAName].ObjectMedia),
             ));
@@ -1674,7 +1674,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       suppressHiddenDataMessage: true,
                       suppressedButtons: {GCWImageViewButtons.SAVE},
                       files: [
-                        PlatformFile(
+                        GWCFile(
                           //bytes: _WherigoCartridge.MediaFilesContents[_mediaFileIndex].MediaFileBytes,
                             bytes: _WherigoCartridgeGWC.MediaFilesContents[NameToObject[LUAName].ObjectIndex].MediaFileBytes,
                             name: NameToObject[LUAName].ObjectMedia),
@@ -2122,7 +2122,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     });
   }
 
-  PlatformFile _getFileFrom(String resourceName) {
+  GWCFile _getFileFrom(String resourceName) {
     Uint8List filedata;
     String filename;
     int fileindex = 0;
@@ -2136,7 +2136,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           fileindex++;
         });
 
-        return PlatformFile(bytes: filedata, name: filename);
+        return GWCFile(bytes: filedata, name: filename);
       } else
         return null;
     } catch (exception) {

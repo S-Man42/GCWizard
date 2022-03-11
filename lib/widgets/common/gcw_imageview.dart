@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
@@ -21,7 +21,7 @@ enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
 enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA }
 
 class GCWImageViewData {
-  final PlatformFile file;
+  final GWCFile file;
   final String description;
   final bool marked;
 

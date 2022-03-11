@@ -11,7 +11,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
+import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
@@ -70,18 +73,22 @@ class HexString2FileState extends State<HexString2File> {
 Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
   if (outData == null) return Container();
 
-  var children = outData.map((_outData) {
+  var children = outData.map((Uint8List _outData) {
     var _class = fileClass(getFileType(_outData));
+    var file = GWCFile(bytes: _outData);
 
     switch (_class) {
       case FileClass.IMAGE:
         try {
-          return Image.memory(_outData);
+          return GCWImageView(imageData: GCWImageViewData(file));
         } catch (e) {}
         return _fileWidget(context, getFileType(_outData));
 
       case FileClass.TEXT:
         return GCWOutputText(text: String.fromCharCodes(_outData));
+
+      case FileClass.SOUND:
+        return GCWSoundPlayer(file: file);
 
       case FileClass.ARCHIVE:
         FileType fileType = getFileType(_outData);

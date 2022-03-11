@@ -16,7 +16,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
@@ -29,10 +29,10 @@ class VisualCryptography extends StatefulWidget {
 class VisualCryptographyState extends State<VisualCryptography> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  PlatformFile _decodeImage1;
-  PlatformFile _decodeImage2;
+  GWCFile _decodeImage1;
+  GWCFile _decodeImage2;
   Uint8List _outData;
-  PlatformFile _encodeImage;
+  GWCFile _encodeImage;
   int _encodeScale = 100;
   String _encodeImageSize;
   var _decodeOffsetsX = 0;
@@ -130,7 +130,7 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
     return Column(children: <Widget>[
       GCWImageView(
-        imageData: GCWImageViewData(PlatformFile(bytes: _outData)),
+        imageData: GCWImageViewData(GWCFile(bytes: _outData)),
         toolBarRight: false,
         fileName: 'img_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
@@ -261,13 +261,13 @@ class VisualCryptographyState extends State<VisualCryptography> {
 
     return Column(children: <Widget>[
       GCWImageView(
-        imageData: GCWImageViewData(PlatformFile(bytes: _encodeOutputImages.item1)),
+        imageData: GCWImageViewData(GWCFile(bytes: _encodeOutputImages.item1)),
         toolBarRight: true,
         fileName: 'img1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
       Container(height: 5),
       GCWImageView(
-        imageData: GCWImageViewData(PlatformFile(bytes: _encodeOutputImages.item2)),
+        imageData: GCWImageViewData(GWCFile(bytes: _encodeOutputImages.item2)),
         toolBarRight: true,
         fileName: 'img2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),

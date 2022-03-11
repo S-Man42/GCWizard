@@ -22,7 +22,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 
 class MultiDecoder extends StatefulWidget {
   @override
@@ -210,7 +210,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                     title: _toolTitle(tool),
                     child: GCWImageView(
                         imageData: GCWImageViewData(
-                            PlatformFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
+                            GWCFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
               } else
                 return Container();
             });

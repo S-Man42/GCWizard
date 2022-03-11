@@ -699,7 +699,7 @@ initializeRegistry(BuildContext context) {
       'hexadecimal',
       'hexstring2file',
     ]),
-    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
+    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'hexadecimal',

@@ -6,15 +6,15 @@ import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gwc_file.dart';
 
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
-Future<List<PlatformFile>> hiddenData(PlatformFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
+Future<List<GWCFile>> hiddenData(GWCFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
   if (data == null) return [];
 
-  var resultList = <PlatformFile>[];
+  var resultList = <GWCFile>[];
   var bytes = data.bytes;
 
   while (bytes != null && bytes.length > 0) {
@@ -61,13 +61,13 @@ Future<List<PlatformFile>> hiddenData(PlatformFile data, {bool calledFromSearchM
       bytes = null;
     }
 
-    List<PlatformFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE) children = await extractArchive(PlatformFile(bytes: resultBytes));
+    List<GWCFile> children;
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE) children = await extractArchive(GWCFile(bytes: resultBytes));
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
-      var result = PlatformFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
+      var result = GWCFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
 
       resultList.add(result);
     }
@@ -92,7 +92,7 @@ Future<List<PlatformFile>> hiddenData(PlatformFile data, {bool calledFromSearchM
   return resultList;
 }
 
-_searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
+_searchMagicBytes(GWCFile data, List<FileType> fileTypeList) {
   fileTypeList.forEach((fileType) {
     var magicBytesList = magicBytes(fileType);
     magicBytesList.forEach((magicBytes) async {
@@ -112,7 +112,7 @@ _searchMagicBytes(PlatformFile data, List<FileType> fileTypeList) {
           if (validMagicBytes) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             if (i - bytesOffset >= 0) {
-              var children = await hiddenData(PlatformFile(bytes: bytes.sublist(i - bytesOffset)),
+              var children = await hiddenData(GWCFile(bytes: bytes.sublist(i - bytesOffset)),
                   calledFromSearchMagicBytes: true, fileIndex: data.children.length + 1);
               if ((children != null) && (children.length > 0)) {
                 if (data.children != null) data.children.addAll(children);
