@@ -368,7 +368,6 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         for (int i = 1; i < _MediaFilesHeaders.length; i++) {
           _offset = _MediaFilesHeaders[i].MediaFileAddress;
           _ValidMediaFile = readByte(byteListGWC, _offset);
-
           if (_ValidMediaFile != 0) {
             // read Filetype
             _offset = _offset + LENGTH_BYTE;
@@ -389,6 +388,14 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
                     ),
                     _MediaFileLength
                 )
+            );
+          } else { // despite the medioObject exists in the LUA Sourcecode, the file is not part of the cartridge
+            _MediaFilesContents.add(
+              MediaFileContent(
+                  _MediaFilesHeaders[i].MediaFileID,
+                  MEDIATYPE_UNK,
+                  Uint8List.fromList([]),
+                  0)
             );
           }
         }
