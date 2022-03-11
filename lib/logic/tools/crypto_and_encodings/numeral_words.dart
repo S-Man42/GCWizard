@@ -2486,8 +2486,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 
     // build map to identify numeral words
     Map searchLanguages = new Map();
-    if (language == NumeralWordsLanguage.ALL) // search element in all languages
-      NumWords.forEach((key, value) {
+    if (language == NumeralWordsLanguage.ALL) {// search element in all languages
+        NumWords.forEach((key, value) {
         // key: language  value: map
         var sKey = key;
         Map sValue = new Map();
@@ -2496,6 +2496,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         });
         searchLanguages[sKey] = sValue;
       });
+    }
     else {
       // search only in one language
       Map sValue = new Map();
@@ -2508,7 +2509,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // check degree ° and dot .
     inputToDecode = inputToDecode.replaceAll('°', ' ° ').replaceAll('.', ' . ').replaceAll('  ', ' ');
     // start decoding
-    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
+    //decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
+    decodeText = inputToDecode.split(RegExp(r'[ ]'));
     decodeText.forEach((element) {
       _alreadyFound = false;
       if (element != '') {
