@@ -128,6 +128,22 @@ namespace GC_Wizard_SymbolTables_Pdf
         private Dictionary<String, String> CONFIG_SPECIAL_CHARS = null;
 
 
+        private XImage _GcwIcon;
+        // GC Wicard Icon
+        private XImage GcwIcon
+        {
+            get
+            {
+                if (_GcwIcon == null)
+                {
+                    MemoryStream memoryStream = new MemoryStream();
+                    Properties.Resources.circle_border_128.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                    _GcwIcon = XImage.FromGdiPlusImage(Image.FromStream(memoryStream));
+                }
+                return _GcwIcon;
+            }
+        }
+
         public enum LanguageEnum
         {
             de,
@@ -189,7 +205,11 @@ namespace GC_Wizard_SymbolTables_Pdf
             return true;
         }
 
-
+        /// <summary>
+        /// draw all symbol tables
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="document"></param>
         private void drawSymbolTables(String path, PdfDocument document)
         {
             var offset = new PointF();
@@ -203,7 +223,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             Progress = 0;
 
             // Create the root bookmark. You can set the style and the color.
-            var config = getcontentTableName();
+            var config = getContentTableName();
             var contentTableName = config.Item1;
             CONFIG_Font = config.Item2;
             offset = createPage(document, ref page, ref gfx);
@@ -214,43 +234,35 @@ namespace GC_Wizard_SymbolTables_Pdf
             var progress_offset = directorys.Any() ? (100.0 / directorys.Count()) : 100;
             foreach (var entry in directorys)
             {
-                Debug.Print(entry.Value);
+                //Debug.Print(entry.Value);
                 offset = drawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, licenseEntries);
 
                 offset.X = BorderWidthLeft;
                 offset.Y += ImageSize + 20;
 
-                Progress = Progress + progress_offset;
+                Progress += progress_offset;
             }
 
-            addLicenses(document, ref page, ref gfx, offset, languagefile, licenseEntries);
+            drawLicenses(document, ref page, ref gfx, offset, languagefile, licenseEntries);
 
             Progress = 100;
         }
 
-        private IEnumerable<KeyValuePair<String, String>> createDirectoryList(String path, String languagefile)
-        {
-            var list = new Dictionary<String, String>();
-            foreach (var directory in Directory.GetDirectories(symbolTablesDirectory(path)))
-            {
-                var folder = @directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-                var name = getSymbolTableName(folder, languagefile);
+        #region symbol table
 
-                if (name != null && directory != "backlog")
-                    list.Add(folder, name);
-            }
-
-            var query = list.OrderBy(entry => entry.Value);
-            if (testPage) return query.Take(1);
-
-            return query;
-        }
-
-        private String getSymbolTableName(String folder, String languagefile)
-        {
-            return getEntryValue(languagefile, "symboltables_" + folder + "_title");
-        }
-
+        /// <summary>
+        /// draw complete symbol table
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="name"></param>
+        /// <param name="folder"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <param name="languagefile"></param>
+        /// <param name="licenseEntries"></param>
+        /// <returns></returns>
         private PointF drawSymbolTable(String path, String name, String folder, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
         {
             var description = getEntryValue(languagefile, "symboltables_" + folder + "_description");
@@ -272,11 +284,19 @@ namespace GC_Wizard_SymbolTables_Pdf
             {
                 offset = drawImage(symbol.Value.Stream, document, ref page, ref gfx, offset, symbol.Value.Overlay);
                 SymbolImagesCount += 1;
+                symbol.Value.Stream.Dispose();
             }
 
             return offset;
         }
 
+        /// <summary>
+        /// create list with symbols and overlay
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="_symbolKey"></param>
+        /// <param name="languagefile"></param>
+        /// <returns></returns>
         private IEnumerable<KeyValuePair<String, SymbolInfo>> createSymbolList(String path, String _symbolKey, String languagefile)
         {
             var list = new Dictionary<String, SymbolInfo>();
@@ -325,8 +345,8 @@ namespace GC_Wizard_SymbolTables_Pdf
                         }
                     }
                 }
+                break; // first zip-file
             }
-
 
             Comparer<object> _sort;
             if (specialSort == false)
@@ -356,180 +376,22 @@ namespace GC_Wizard_SymbolTables_Pdf
             return listSorted;
         }
 
-        private List<String> parseTranslateConfig(String fileContent)
-        {
-            var regex = new Regex(@"(" + CONFIG_TRANSLATE + @")(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-            var regex2 = new Regex(@"\""(.*?)\""");
-            var list = new List<String>();
+        #endregion
 
-            if (fileContent != null)
-            {
-                var match = regex.Match(fileContent);
-                if (match.Success)
-                {
-                    var matches = regex2.Matches(match.Groups[4].Value);
-                    foreach (Match match2 in matches)
-                        list.Add(match2.Groups[1].Value);
-                }
-            }
-            return list;
-        }
+        #region draw pdf pages
 
-        private Dictionary<String, String> parseMappingConfig(String fileContent)
-        {
-            var regex = new Regex(@"(" + CONFIG_SPECIALMAPPINGS + @")(.*?)(\{)(.*?)(\})", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-            var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
-            var list = defaultMappingList();
-
-            if (fileContent != null)
-            {
-                var match = regex.Match(fileContent);
-                if (match.Success)
-                {
-                    foreach (string line in match.Groups[4].Value.Split('\n'))
-                    {
-                        var match2 = regex2.Match(line);
-                        if (match2.Success)
-                        {
-                            list.Add(match2.Groups[1].Value, match2.Groups[3].Value);
-                        }
-                    }
-                }
-            }
-
-            return list;
-        }
-
-        private List<String> parseIgnoreConfig(String fileContent)
-        {
-            var regex = new Regex(@"(" + CONFIG_IGNORE + @")(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-            var regex2 = new Regex(@"\""(.*?)\""");
-            var list = new List<String>();
-
-            if (fileContent != null)
-            {
-                var match = regex.Match(fileContent);
-                if (match.Success)
-                {
-                    var matches = regex2.Matches(match.Groups[4].Value);
-                    foreach (Match match2 in matches)
-                        list.Add(match2.Groups[1].Value);
-                }
-            }
-            return list;
-        }
-
-        private Dictionary<String, String> defaultMappingList()
-        {
-            if (CONFIG_SPECIAL_CHARS == null)
-            {
-                CONFIG_SPECIAL_CHARS = new Dictionary<String, String>();
-
-                var path = Path.Combine(ProjectPath, @"lib\widgets\tools\symbol_tables\symbol_table_data.dart");
-                if (File.Exists(path))
-                {
-
-                    try
-                    {
-                        var fileContent = File.ReadAllText(path);
-                        var regex = new Regex(@"(CONFIG_SPECIAL_CHARS)(.*?)(\{)(.*?)(\};)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
-                        var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
-                        var regex3 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""{2}");
-
-                        var match = regex.Match(fileContent);
-                        if (match.Success)
-                        {
-                            foreach (string line in match.Groups[4].Value.Split('\n'))
-                            {
-                                var match2 = regex2.Match(line);
-                                var match3 = regex3.Match(line);
-                                if (match2.Success)
-                                {
-                                    var value = match2.Groups[3].Value;
-                                    if (match3.Success)
-                                    {
-                                        value += "\"";
-                                        if (value.StartsWith("\\"))
-                                            value = value.Substring(1);
-                                    }
-
-                                    if (value.StartsWith("\\\\") || value.StartsWith("\\$"))
-                                        //if (value == "\"")
-                                        //    value = "\"";
-                                        //else
-                                        value = value.Substring(1);
-
-                                    CONFIG_SPECIAL_CHARS.Add(match2.Groups[1].Value, value);
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-            }
-
-            return new Dictionary<String, String>(CONFIG_SPECIAL_CHARS);
-        }
-
-        private bool parseCaseSensitiveConfig(String fileContent)
-        {
-            var regex = new Regex(@"(\""" + CONFIG_CASESENSITIVE + @"\""\s *:)\s(true)");
-            bool value = false;
-
-            if (fileContent != null)
-            {
-                var match = regex.Match(fileContent);
-                value = match.Success;
-            }
-            return value;
-        }
-
-        private bool parseSpecialSortConfig(String fileContent)
-        {
-            var regex = new Regex(@"(\""" + CONFIG_SPECIALSORT + @"\""\s *:)\s(true)");
-            bool value = false;
-
-            if (fileContent != null)
-            {
-                var match = regex.Match(fileContent);
-                value = match.Success;
-            }
-            return value;
-        }
-
-        private String parseTranslationPrefixConfig(String fileContent)
-        {
-            return getEntryValue(fileContent, CONFIG_TRANSLATIONPREFIX);
-        }
-
-
-        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
-        {
-            var fileName = Path.GetFileNameWithoutExtension(symbolPath);
-            var overlay = fileName;
-
-            overlay = new Regex("(^_*|_*$)").Replace(overlay, "");
-
-
-            if (mappingList != null && mappingList.ContainsKey(overlay))
-                overlay = mappingList[overlay];
-            else if (translateList != null && translateList.Contains(overlay))
-            {
-                if (String.IsNullOrEmpty(translationPrefix))
-                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
-                else
-                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
-                translateables.Add(overlay);
-            }
-
-            if (!caseSensitive)
-                overlay = overlay.ToUpper();
-
-            return overlay;
-        }
-
+        /// <summary>
+        /// draw symbol table header
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="license"></param>
+        /// <param name="count"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         private PointF drawName(String name, string description, string license, int count, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
@@ -595,12 +457,17 @@ namespace GC_Wizard_SymbolTables_Pdf
             return offset;
         }
 
-        private bool newPageNeeded(PdfPage page, PointF offset, int name_offset)
-        {
-            // min. 2 image rows
-            return (offset.Y + name_offset + HeadingDistance + 2 * ImageSize + RowDistance > page.Height - BorderWidthBottom);
-        }
 
+        /// <summary>
+        /// draw symbol overlay text
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         private PointF drawOverlay(String name, int maxLength, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
@@ -629,6 +496,13 @@ namespace GC_Wizard_SymbolTables_Pdf
             return offset;
         }
 
+        /// <summary>
+        /// draw space symbol
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="color"></param>
+        /// <param name="font"></param>
+        /// <param name="gfx"></param>
         private void drawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
         {
             var size = gfx.MeasureString("M", font);
@@ -640,12 +514,202 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         }
 
-        private string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
+        /// <summary>
+        /// draw symbol image
+        /// </summary>
+        /// <param name="symbolStream"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <param name="overlay"></param>
+        /// <returns></returns>
+        private PointF drawImage(Stream symbolStream, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String overlay)
+        {
+            XImage image = XImage.FromGdiPlusImage(Image.FromStream(symbolStream));
+            XSize size = image.Size;
+            var ImageScale = ImageSize / size.Height;
+            size.Width *= ImageScale;
+            size.Height *= ImageScale;
+
+            if (page == null)
+                offset = createPage(document, ref page, ref gfx);
+            else if (offset.X + size.Width > page.Width - BorderWidthRight)
+            {
+                // new Row
+                offset.X = BorderWidthLeft;
+                offset.Y += (Single)size.Height + RowDistance;
+            }
+
+            if (offset.Y + size.Height > page.Height - BorderWidthBottom)
+                offset = createPage(document, ref page, ref gfx);
+
+            gfx.DrawImage(image, offset.X, offset.Y, size.Width, size.Height);
+            image.Dispose();
+
+            // Border
+            gfx.DrawRectangle(new XPen(XColor.FromArgb(Color.Gray.ToArgb()), 0.2), offset.X, offset.Y, size.Width, size.Height);
+
+            // Draw the overlay
+            drawOverlay(overlay, (int)(size.Width + ColumnDistance - 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
+
+            offset.X += (Single)size.Width + ColumnDistance;
+
+            return offset;
+        }
+
+        /// <summary>
+        /// draw licenses text
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <param name="languagefile"></param>
+        /// <param name="licenseEntries"></param>
+        private void drawLicenses(PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
+        {
+            var licenseLabel = getLicenseLabel(languagefile);
+
+            // Create a font
+            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
+            offset = createPage(document, ref page, ref gfx);
+
+
+            gfx.DrawString(licenseLabel, font, XBrushes.Black,
+                new XRect(offset.X, offset.Y, page.Width, page.Height),
+                XStringFormats.TopLeft);
+            Outline = document.Outlines.Add(licenseLabel, page, true, PdfOutlineStyle.Bold, XColors.Black);
+
+            var name_offset = font.Height;
+            name_offset += 20;
+
+            offset.Y += name_offset;
+
+            // Create a font
+            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+
+            double maxSize = 0;
+
+            foreach (var entry in licenseEntries)
+            {
+                var name = getSymbolTableName(entry.Key, languagefile);
+                var size = gfx.MeasureString(name + ":", font);
+                if (maxSize < size.Width)
+                    maxSize = size.Width;
+            }
+            var valueOffsetX = offset.X + maxSize + 10;
+            var maxLength = (int)(page.Width - BorderWidthRight - valueOffsetX);
+
+            foreach (var entry in licenseEntries)
+            {
+                if (newPageNeeded(page, offset, font.Height + 1))
+                {
+                    offset = createPage(document, ref page, ref gfx);
+                }
+
+                var name = getSymbolTableName(entry.Key, languagefile);
+                if (name != null)
+                {
+                    gfx.DrawString(name + ":", font, XBrushes.Black,
+                        new XRect(offset.X, offset.Y, page.Width, page.Height),
+                        XStringFormats.TopLeft);
+
+                    var textValues = entry.Value.Replace("\\n", "\n").Split('\n');
+                    var text = new List<String>();
+                    foreach (var item in textValues)
+                    {
+                        var values = checkTextLength(item.Replace("\r", ""), maxLength, font, gfx);
+                        text.AddRange(values.Split('\n'));
+                    }
+
+                    for (int i = 0; i < text.Count; i++)
+                    {
+                        gfx.DrawString(text[i], font, XBrushes.Black,
+                            new XRect(valueOffsetX, offset.Y, page.Width, page.Height),
+                            XStringFormats.TopLeft);
+
+                        offset.Y += font.Height + ((i == text.Count - 1) ? 1 : 0);
+                    }
+                }
+
+            }
+
+        }
+
+        #endregion
+
+        #region methods
+
+        /// <summary>
+        /// new page needed ?
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="offset"></param>
+        /// <param name="name_offset"></param>
+        /// <returns></returns>
+        private bool newPageNeeded(PdfPage page, PointF offset, int name_offset)
+        {
+            // min. 2 image rows
+            return (offset.Y + name_offset + HeadingDistance + 2 * ImageSize + RowDistance > page.Height - BorderWidthBottom);
+        }
+
+        /// <summary>
+        /// create a new pdf page (draw header)
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <returns></returns>
+        private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
+        {
+            // Create a font
+            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
+            XSize textSize;
+            String text;
+
+            page = document.AddPage();
+            page.Orientation = Orientation;
+            gfx = XGraphics.FromPdfPage(page);
+
+            if (document.PageCount == 1)
+            {
+                text = File.ReadAllText(versionFileName(ProjectPath));
+                versionText = getVersionEntryValue(text, "version");
+            }
+
+            textSize = gfx.MeasureString(versionText, font);
+            // draw the version text
+            gfx.DrawString(versionText, font, XBrushes.Black,
+                    new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
+                    XStringFormats.TopLeft);
+
+            // GC Wicard Icon
+            gfx.DrawImage(GcwIcon, 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
+
+            // Draw GC Wizard Text
+            // Create a font
+            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+
+            gfx.DrawString("GC Wizard", font, XBrushes.Black,
+                new XRect(BorderWidthTop + 3, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+            return new PointF(BorderWidthLeft, BorderWidthTop);
+        }
+
+        /// <summary>
+        /// wrap text if too long 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="font"></param>
+        /// <param name="gfx"></param>
+        /// <returns></returns>
+        private static string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
         {
             text = checkPartTextLength(text, maxLength, font, gfx);
-
             var index = text.LastIndexOf("\n");
-
 
             if (index >= 0)
             {
@@ -657,17 +721,23 @@ namespace GC_Wizard_SymbolTables_Pdf
 
                     text = text.Substring(0, index) + subString;
 
-                    index = text.LastIndexOf("\n")+1;
+                    index = text.LastIndexOf("\n") + 1;
                     subString = text.Substring(index);
                     size = gfx.MeasureString(subString, font);
                 }
-
             }
-
             return text;
         }
 
-        private string checkPartTextLength(string text, int maxLength, XFont font, XGraphics gfx)
+        /// <summary>
+        /// wrap text if too long
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="font"></param>
+        /// <param name="gfx"></param>
+        /// <returns></returns>
+        private static string checkPartTextLength(string text, int maxLength, XFont font, XGraphics gfx)
         {
             var size = gfx.MeasureString(text, font);
 
@@ -693,7 +763,6 @@ namespace GC_Wizard_SymbolTables_Pdf
                         } while (_index > 0 & size.Width >= maxLength);
                     }
                 }
-
                 return _index;
             };
 
@@ -718,87 +787,174 @@ namespace GC_Wizard_SymbolTables_Pdf
                 size = gfx.MeasureString(text.Substring(0, index), font);
                 if (size.Width <= maxLength)
                     return text.Substring(0, index) + Environment.NewLine + text.Substring(index);
-
             }
 
             return text;
         }
 
-        private PointF drawImage(Stream symbolStream, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String overlay)
+        /// <summary>
+        /// calc images per row 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        int rowImageCount(ref PdfPage page)
         {
-            XImage image = XImage.FromStream(symbolStream);
-            XSize size = image.Size;
-            var ImageScale = ImageSize / size.Height;
-            size.Width *= ImageScale;
-            size.Height *= ImageScale;
-
-            if (page == null)
-                offset = createPage(document, ref page, ref gfx);
-            else if (offset.X + size.Width > page.Width - BorderWidthRight)
-            {
-                // new Row
-                offset.X = BorderWidthLeft;
-                offset.Y += (Single)size.Height + RowDistance;
-            }
-
-            if (offset.Y + size.Height > page.Height - BorderWidthBottom)
-                offset = createPage(document, ref page, ref gfx);
-
-            gfx.DrawImage(image, offset.X, offset.Y, size.Width, size.Height);
-
-            // Border
-            gfx.DrawRectangle(new XPen(XColor.FromArgb(Color.Gray.ToArgb()), 0.2), offset.X, offset.Y, size.Width, size.Height);
-
-            // Draw the overlay
-            drawOverlay(overlay, (int)(size.Width + ColumnDistance - 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
-
-            offset.X += (Single)size.Width + ColumnDistance;
-
-            return offset;
+            return (int)Math.Floor((page.Width - BorderWidthLeft - BorderWidthRight) / (ImageSize + ColumnDistance));
         }
 
-        private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
+        #endregion
+
+        #region parse config file
+
+        private List<String> parseTranslateConfig(String fileContent)
         {
-            // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
-            XSize textSize;
-            String text;
+            var regex = new Regex(@"(" + CONFIG_TRANSLATE + @")(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""");
+            var list = new List<String>();
 
-            page = document.AddPage();
-            page.Orientation = Orientation;
-            gfx = XGraphics.FromPdfPage(page);
-
-            if (document.PageCount == 1)
+            if (fileContent != null)
             {
-                text = File.ReadAllText(versionFileName(ProjectPath));
-                versionText = getVersionEntryValue(text, "version");
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    var matches = regex2.Matches(match.Groups[4].Value);
+                    foreach (Match match2 in matches)
+                        list.Add(match2.Groups[1].Value);
+                }
             }
-
-            textSize = gfx.MeasureString(versionText, font);
-            // Draw the version text
-            gfx.DrawString(versionText, font, XBrushes.Black,
-                    new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
-                    XStringFormats.TopLeft);
-
-
-            // GC Wicard Icon
-            MemoryStream memoryStream = new MemoryStream();
-            Properties.Resources.circle_border_128.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
-            gfx.DrawImage(XImage.FromStream(memoryStream), 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
-
-            // Draw GC Wizard Text
-            // Create a font
-            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
-            text = "GC Wizard";
-            textSize = gfx.MeasureString(text, font);
-
-            gfx.DrawString("GC Wizard", font, XBrushes.Black,
-                new XRect(BorderWidthTop + 3, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
-                XStringFormats.TopLeft);
-
-            return new PointF(BorderWidthLeft, BorderWidthTop);
+            return list;
         }
 
+        private Dictionary<String, String> parseMappingConfig(String fileContent)
+        {
+            var regex = new Regex(@"(" + CONFIG_SPECIALMAPPINGS + @")(.*?)(\{)(.*?)(\})", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
+            var list = defaultMappingList();
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    foreach (string line in match.Groups[4].Value.Split('\n'))
+                    {
+                        var match2 = regex2.Match(line);
+                        if (match2.Success)
+                        {
+                            list.Add(match2.Groups[1].Value, match2.Groups[3].Value);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<String> parseIgnoreConfig(String fileContent)
+        {
+            var regex = new Regex(@"(" + CONFIG_IGNORE + @")(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""");
+            var list = new List<String>();
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    var matches = regex2.Matches(match.Groups[4].Value);
+                    foreach (Match match2 in matches)
+                        list.Add(match2.Groups[1].Value);
+                }
+            }
+            return list;
+        }
+
+        private Dictionary<String, String> defaultMappingList()
+        {
+            if (CONFIG_SPECIAL_CHARS == null)
+            {
+                CONFIG_SPECIAL_CHARS = new Dictionary<String, String>();
+
+                var path = Path.Combine(ProjectPath, @"lib\widgets\tools\symbol_tables\symbol_table_data.dart");
+                if (File.Exists(path))
+                {
+                    try
+                    {
+                        var fileContent = File.ReadAllText(path);
+                        var regex = new Regex(@"(CONFIG_SPECIAL_CHARS)(.*?)(\{)(.*?)(\};)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+                        var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
+                        var regex3 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""{2}");
+
+                        var match = regex.Match(fileContent);
+                        if (match.Success)
+                        {
+                            foreach (string line in match.Groups[4].Value.Split('\n'))
+                            {
+                                var match2 = regex2.Match(line);
+                                var match3 = regex3.Match(line);
+                                if (match2.Success)
+                                {
+                                    var value = match2.Groups[3].Value;
+                                    if (match3.Success)
+                                    {
+                                        value += "\"";
+                                        if (value.StartsWith("\\"))
+                                            value = value.Substring(1);
+                                    }
+
+                                    if (value.StartsWith("\\\\") || value.StartsWith("\\$"))
+                                        //if (value == "\"")
+                                        //    value = "\"";
+                                        //else
+                                        value = value.Substring(1);
+
+                                    CONFIG_SPECIAL_CHARS.Add(match2.Groups[1].Value, value);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            return new Dictionary<String, String>(CONFIG_SPECIAL_CHARS);
+        }
+
+        private bool parseCaseSensitiveConfig(String fileContent)
+        {
+            var regex = new Regex(@"(\""" + CONFIG_CASESENSITIVE + @"\""\s *:)\s(true)");
+            bool value = false;
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                value = match.Success;
+            }
+            return value;
+        }
+
+        private bool parseSpecialSortConfig(String fileContent)
+        {
+            var regex = new Regex(@"(\""" + CONFIG_SPECIALSORT + @"\""\s *:)\s(true)");
+            bool value = false;
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                value = match.Success;
+            }
+            return value;
+        }
+
+        private String parseTranslationPrefixConfig(String fileContent)
+        {
+            return getEntryValue(fileContent, CONFIG_TRANSLATIONPREFIX);
+        }
+
+        #endregion
+
+        #region parse source files
+        
         /// <summary>
         /// get text from language-file
         /// </summary>
@@ -919,11 +1075,40 @@ namespace GC_Wizard_SymbolTables_Pdf
             return list;
         }
 
-        int rowImageCount(ref PdfPage page)
+        #endregion
+
+        #region folder
+
+        /// <summary>
+        ///  list of symbol-tables directorys
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="languagefile"></param>
+        /// <returns></returns>
+        private IEnumerable<KeyValuePair<String, String>> createDirectoryList(String path, String languagefile)
         {
-            return (int)Math.Floor((page.Width - BorderWidthLeft - BorderWidthRight) / (ImageSize + ColumnDistance));
+            var list = new Dictionary<String, String>();
+            foreach (var directory in Directory.GetDirectories(symbolTablesDirectory(path)))
+            {
+                var folder = @directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+                var name = getSymbolTableName(folder, languagefile);
+
+                if (name != null && directory != "backlog")
+                    list.Add(folder, name);
+            }
+
+            var query = list.OrderBy(entry => entry.Value);
+            if (testPage) return query.Take(1);
+
+            return query;
         }
 
+
+        /// <summary>
+        /// language file exists ?
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public bool validFolder(String path)
         {
             if (!Directory.Exists(languageFileDirectory(path)))
@@ -963,6 +1148,65 @@ namespace GC_Wizard_SymbolTables_Pdf
             return Path.Combine(path, @"assets\symbol_tables");
         }
 
+        #endregion
+
+
+        #region get translations
+
+        /// <summary>
+        /// Determine symbol overlay
+        /// </summary>
+        /// <param name="symbolPath"></param>
+        /// <param name="folder"></param>
+        /// <param name="languagefile"></param>
+        /// <param name="translateList"></param>
+        /// <param name="mappingList"></param>
+        /// <param name="caseSensitive"></param>
+        /// <param name="translateables"></param>
+        /// <param name="translationPrefix"></param>
+        /// <returns></returns>
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(symbolPath);
+            var overlay = fileName;
+
+            overlay = new Regex("(^_*|_*$)").Replace(overlay, "");
+
+            if (mappingList != null && mappingList.ContainsKey(overlay))
+                overlay = mappingList[overlay];
+            else if (translateList != null && translateList.Contains(overlay))
+            {
+                if (String.IsNullOrEmpty(translationPrefix))
+                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                else
+                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
+                translateables.Add(overlay);
+            }
+
+            if (!caseSensitive)
+                overlay = overlay.ToUpper();
+
+            return overlay;
+        }
+
+
+        private String getSymbolTableName(String folder, String languagefile)
+        {
+            return getEntryValue(languagefile, "symboltables_" + folder + "_title");
+        }
+
+        private String getLicenseLabel(String languagefile)
+        {
+            return getEntryValue(languagefile, "licenses_symboltablesources");
+        }
+
+        #endregion
+
+        #region special sorts
+
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class NameSort : Comparer<Object>
         {
             List<String> translateables;
@@ -1015,6 +1259,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class specialSortNoteNames : Comparer<Object>
         {
             List<String> translateables;
@@ -1051,6 +1298,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class specialSortNoteValues : Comparer<Object>
         {
             List<String> translateables;
@@ -1088,6 +1338,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class specialSortTrafficSignsGermany : Comparer<Object>
         {
             List<String> translateables;
@@ -1141,9 +1394,16 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
-        private Tuple<String, String> getcontentTableName()
-        {
+        #endregion
 
+        #region own translations 
+
+        /// <summary>
+        /// config content (label, font)
+        /// </summary>
+        /// <returns></returns>
+        private Tuple<String, String> getContentTableName()
+        {
             CONFIG_Font = CONFIG_DefaultFont;
             String contentTableName;
 
@@ -1196,86 +1456,25 @@ namespace GC_Wizard_SymbolTables_Pdf
                     return "La source";
                 case "ko":
                     return "원천";
+                case "it":
+                    return "Fonte";
+                case "es":
+                    return "origen";
                 case "nl":
                     return "Bron";
+                case "pl":
+                    return "Źródło";
+                case "ru":
+                    return "Источник";
+                case "tr":
+                    return "Kaynak";
                 default:
                     return "Source";
             }
         }
 
-        private String getLicenseLabel(String languagefile)
-        {
-            return getEntryValue(languagefile, "licenses_symboltablesources");
-        }
-
-        private void addLicenses(PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
-        {
-            var licenseLabel = getLicenseLabel(languagefile);
-
-            // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
-            offset = createPage(document, ref page, ref gfx);
+        #endregion
 
 
-            gfx.DrawString(licenseLabel, font, XBrushes.Black,
-                new XRect(offset.X, offset.Y, page.Width, page.Height),
-                XStringFormats.TopLeft);
-            Outline = document.Outlines.Add(licenseLabel, page, true, PdfOutlineStyle.Bold, XColors.Black);
-
-            var name_offset = font.Height;
-            name_offset += 20;
-
-            offset.Y += name_offset;
-
-            // Create a font
-            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
-
-            double maxSize = 0;
-
-            foreach (var entry in licenseEntries)
-            {
-                var name = getSymbolTableName(entry.Key, languagefile);
-                var size = gfx.MeasureString(name + ":", font);
-                if (maxSize < size.Width)
-                    maxSize = size.Width;
-            }
-            var valueOffsetX = offset.X + maxSize + 10;
-            var maxLength = (int)(page.Width - BorderWidthRight - valueOffsetX);
-
-            foreach (var entry in licenseEntries)
-            {
-                if (newPageNeeded(page, offset, font.Height + 1))
-                {
-                    offset = createPage(document, ref page, ref gfx);
-                }
-
-                var name = getSymbolTableName(entry.Key, languagefile);
-                if (name != null)
-                {
-                    gfx.DrawString(name + ":", font, XBrushes.Black,
-                        new XRect(offset.X, offset.Y, page.Width, page.Height),
-                        XStringFormats.TopLeft);
-
-                    var textValues = entry.Value.Replace("\\n", "\n").Split('\n');
-                    var text = new List<String>();
-                    foreach (var item in textValues)
-                    {
-                        var values = checkTextLength(item.Replace("\r", ""), maxLength, font, gfx);
-                        text.AddRange(values.Split('\n'));
-                    }
-
-                    for (int i = 0; i < text.Count; i++)
-                    {
-                        gfx.DrawString(text[i], font, XBrushes.Black,
-                            new XRect(valueOffsetX, offset.Y, page.Width, page.Height),
-                            XStringFormats.TopLeft);
-
-                        offset.Y += font.Height + ((i == text.Count - 1) ? 1 : 0);
-                    }
-                }
-
-            }
-
-        }
     }
 }
