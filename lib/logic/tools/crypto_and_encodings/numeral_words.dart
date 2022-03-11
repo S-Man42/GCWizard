@@ -1052,23 +1052,23 @@ final Map<String, String> CHISymbolWordToNum = {
   '八': '8',
   '九': '9',
   '十': '10',
-  '十 一': '11',
-  '十 二': '12',
-  '十 三': '13',
-  '十 四': '14',
-  '十 五': '15',
-  '十 六': '16',
-  '十 七': '17',
-  '十 八': '18',
-  '十 九': '19',
-  '二 十': '20',
-  '三 十': '30',
-  '四 十': '40',
-  '五 十': '50',
-  '六 十': '60',
-  '七 十': '70',
-  '八 十': '80',
-  '九 十': '90',
+  '十一': '11',
+  '十二': '12',
+  '十三': '13',
+  '十四': '14',
+  '十五': '15',
+  '十六': '16',
+  '十七': '17',
+  '十八': '18',
+  '十九': '19',
+  '二十': '20',
+  '三十': '30',
+  '四十': '40',
+  '五十': '50',
+  '六十': '60',
+  '七十': '70',
+  '八十': '80',
+  '九十': '90',
   '百': '100',
   '千': '1000',
   '万': '10000',
@@ -1091,23 +1091,23 @@ final Map<String, String> CHIFinanceWordToNum = {
   '捌': '8',
   '玖': '9',
   '拾': '10',
-  '拾 壹': '11',
-  '拾 貳': '12',
-  '拾 弎': '13',
-  '拾 sì': '14',
-  '拾 wǔ': '15',
-  '拾 陸': '16',
-  '拾 qī': '17',
-  '拾 bā': '18',
-  '拾 jiǔ': '19',
-  '貳 拾': '20',
-  '弎 拾': '30',
-  '肆 拾': '40',
-  '伍 拾': '50',
-  '陸 拾': '60',
-  '柒 拾': '70',
-  '捌 拾': '80',
-  '玖 拾': '90',
+  '拾壹': '11',
+  '拾貳': '12',
+  '拾弎': '13',
+  '拾sì': '14',
+  '拾wǔ': '15',
+  '拾陸': '16',
+  '拾qī': '17',
+  '拾bā': '18',
+  '拾jiǔ': '19',
+  '貳拾': '20',
+  '弎拾': '30',
+  '肆拾': '40',
+  '伍拾': '50',
+  '陸拾': '60',
+  '柒拾': '70',
+  '捌拾': '80',
+  '玖拾': '90',
   '佰': '100',
   '仟': '1000',
   '萬': '10000'
@@ -2486,8 +2486,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 
     // build map to identify numeral words
     Map searchLanguages = new Map();
-    if (language == NumeralWordsLanguage.ALL) // search element in all languages
-      NumWords.forEach((key, value) {
+    if (language == NumeralWordsLanguage.ALL) {// search element in all languages
+        NumWords.forEach((key, value) {
         // key: language  value: map
         var sKey = key;
         Map sValue = new Map();
@@ -2496,6 +2496,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         });
         searchLanguages[sKey] = sValue;
       });
+    }
     else {
       // search only in one language
       Map sValue = new Map();
@@ -2508,7 +2509,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // check degree ° and dot .
     inputToDecode = inputToDecode.replaceAll('°', ' ° ').replaceAll('.', ' . ').replaceAll('  ', ' ');
     // start decoding
-    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
+    //decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
+    decodeText = inputToDecode.split(RegExp(r'[ ]'));
     decodeText.forEach((element) {
       _alreadyFound = false;
       if (element != '') {
