@@ -4,11 +4,11 @@ import 'package:gc_wizard/plugins/flutter_steganography/decoder.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/encoder.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/decode_request.dart';
 import 'package:gc_wizard/plugins/flutter_steganography/requests/encode_request.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 
 const int MAX_LENGTH = 5000;
 
-Future<Uint8List> encodeStegano(local.GWCFile file, String message, String key, String filename) async {
+Future<Uint8List> encodeStegano(local.GCWFile file, String message, String key, String filename) async {
   Uint8List data = file.bytes;
   // the key is use to encrypt your message with AES256 algorithm
   EncodeRequest request = EncodeRequest(data, message, key: key, filename: filename);
@@ -16,7 +16,7 @@ Future<Uint8List> encodeStegano(local.GWCFile file, String message, String key, 
   return response;
 }
 
-Future<String> decodeStegano(local.GWCFile file, String key) async {
+Future<String> decodeStegano(local.GCWFile file, String key) async {
   Uint8List data = file.bytes;
   // the key is use to decrypt your encrypted message with AES256 algorithm
   DecodeRequest request = DecodeRequest(data, key: key);

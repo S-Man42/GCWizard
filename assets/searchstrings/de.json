@@ -210,6 +210,7 @@
   "iataicao": "flughafencodes flugplatzcodes landeplatz landeplaetze landeflaechen flugzeuge internationalezivilluftfahrtorganisation",
   "icecodes": "ostsee eiscodes gewaesser schnee schnelzen eisberg",
   "image_colorcorrections": "farbkorrekturen anpassen invertieren gammawert saettigung rgb helligkeit",
+  "image_fliprotate": "spiegeln spiegelbild horizontales vertikales rotieren umdrehen rotationen umkehren",
   "images": "bilder dateien bildbearbeitungen ",
   "imagesandfilesselection": "analysieren analysen",
   "stegano": "lsb steganographie steganografie",

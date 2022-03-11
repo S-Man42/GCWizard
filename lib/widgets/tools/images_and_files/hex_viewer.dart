@@ -15,10 +15,10 @@ import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
 class HexViewer extends StatefulWidget {
-  final GWCFile platformFile;
+  final GCWFile platformFile;
 
   const HexViewer({Key key, this.platformFile}) : super(key: key);
 
@@ -251,7 +251,7 @@ class HexViewerState extends State<HexViewer> {
   }
 }
 
-openInHexViewer(BuildContext context, GWCFile file) {
+openInHexViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

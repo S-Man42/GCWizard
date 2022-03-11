@@ -32,12 +32,12 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 import 'package:tuple/tuple.dart';
 
 
 class SymbolReplacer extends StatefulWidget {
-  final local.GWCFile platformFile;
+  final local.GCWFile platformFile;
   final String symbolKey;
   final List<Map<String, SymbolData>> imageData;
 
@@ -49,7 +49,7 @@ class SymbolReplacer extends StatefulWidget {
 
 class SymbolReplacerState extends State<SymbolReplacer> {
   SymbolReplacerImage _symbolImage;
-  local.GWCFile _platformFile;
+  local.GCWFile _platformFile;
   double _blackLevel = 50.0;
   double _similarityLevel = 100.0;
   double _similarityCompareLevel = 80.0;
@@ -113,7 +113,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
             _symbolImage != null
               ? GCWImageView(
                   imageData: GCWImageViewData(
-                    local.GWCFile(bytes: _symbolImage.getBorderImage())
+                    local.GCWFile(bytes: _symbolImage.getBorderImage())
                   ),
                   suppressedButtons: {GCWImageViewButtons.SAVE},
                   suppressOpenInTool: {GCWImageViewOpenInTools.HIDDENDATA},

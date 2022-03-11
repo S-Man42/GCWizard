@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -533,7 +533,7 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
   }
 }
 
-List<GWCFile> _archiveToPlatformFileList(Archive archive) {
+List<GCWFile> _archiveToPlatformFileList(Archive archive) {
   return archive.files
       .map((ArchiveFile file) {
         if (!file.isFile) return null;
@@ -543,13 +543,13 @@ List<GWCFile> _archiveToPlatformFileList(Archive archive) {
           content = file.content;
         } catch (e) {}
 
-        return GWCFile(name: file.name, bytes: content);
+        return GCWFile(name: file.name, bytes: content);
       })
       .where((file) => file != null)
       .toList();
 }
 
-Future<List<GWCFile>> extractArchive(GWCFile file) async {
+Future<List<GCWFile>> extractArchive(GCWFile file) async {
   if (fileClass(file.fileType) != FileClass.ARCHIVE) return null;
 
   try {
@@ -561,11 +561,11 @@ Future<List<GWCFile>> extractArchive(GWCFile file) async {
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
       case FileType.BZIP2:
         var output = BZip2Decoder().decodeBuffer(input);
-        return {GWCFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
+        return {GCWFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
-        return {GWCFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
+        return {GCWFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
         return await extractRarArchive(file);
         break;
@@ -577,8 +577,8 @@ Future<List<GWCFile>> extractArchive(GWCFile file) async {
   }
 }
 
-Future<List<GWCFile>> extractRarArchive(GWCFile file, {String password}) async {
-  var fileList = <GWCFile>[];
+Future<List<GCWFile>> extractRarArchive(GCWFile file, {String password}) async {
+  var fileList = <GCWFile>[];
   var tmpFile = await createTmpFile('rar', file.bytes);
   var directory = changeExtension(tmpFile.path, '');
 
@@ -587,7 +587,7 @@ Future<List<GWCFile>> extractRarArchive(GWCFile file, {String password}) async {
     var result = await UnrarFile.extract_rar( tmpFile.path, directory + '/', password: password);
 
     await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
-      fileList.add(GWCFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
+      fileList.add(GCWFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
     }).toList();
   } catch (e) {}
 
@@ -597,7 +597,7 @@ Future<List<GWCFile>> extractRarArchive(GWCFile file, {String password}) async {
   return fileList;
 }
 
-List<GWCFile> extractRarArchive1(GWCFile file) {
+List<GCWFile> extractRarArchive1(GCWFile file) {
   extractRarArchive(file).then((value) {
     return value;
   });

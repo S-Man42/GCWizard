@@ -15,11 +15,11 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 
 class HiddenData extends StatefulWidget {
-  final GWCFile platformFile;
+  final GCWFile platformFile;
 
   const HiddenData({Key key, this.platformFile}) : super(key: key);
 
@@ -30,10 +30,10 @@ class HiddenData extends StatefulWidget {
 class HiddenDataState extends State<HiddenData> {
   TextEditingController _hideController;
 
-  GWCFile _unHideFile;
+  GCWFile _unHideFile;
 
-  GWCFile _publicFile;
-  GWCFile _secretFile;
+  GCWFile _publicFile;
+  GCWFile _secretFile;
 
   var _currentMode = GCWSwitchPosition.right;
   var _currentHideMode = GCWSwitchPosition.left;
@@ -140,7 +140,7 @@ class HiddenDataState extends State<HiddenData> {
             }
 
             _exportFile(context,
-                GWCFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
+                GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
           },
         )
       ],
@@ -188,7 +188,7 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _exportFile(BuildContext context, GWCFile file) async {
+  _exportFile(BuildContext context, GCWFile file) async {
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -204,7 +204,7 @@ class HiddenDataState extends State<HiddenData> {
   }
 }
 
-openInHiddenData(BuildContext context, GWCFile file) {
+openInHiddenData(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

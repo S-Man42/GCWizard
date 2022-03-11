@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
 import '../../../plugins/xmp/xmp.dart';
@@ -18,7 +18,7 @@ const String GPS_LAT_REF = 'GPS GPSLatitudeRef';
 const String GPS_LNG_REF = 'GPS GPSLongitudeRef';
 const String RDF_LOCATION = 'Rdf Location';
 
-Future<Map<String, IfdTag>> parseExif(local.GWCFile file) async {
+Future<Map<String, IfdTag>> parseExif(local.GCWFile file) async {
   Map<String, IfdTag> data;
 
   try {
@@ -43,12 +43,12 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
     // print('File has JPEG thumbnail');
     var _jpgBytes = data[JPEG_THUMBNAIL].values;
     data.remove(JPEG_THUMBNAIL);
-    return GCWImageViewData(local.GWCFile(bytes: _jpgBytes.toList()));
+    return GCWImageViewData(local.GCWFile(bytes: _jpgBytes.toList()));
   } else if (data.containsKey(TIFF_THUMBNAIL)) {
     // print('File has TIFF thumbnail');
     var _tiffBytes = data[TIFF_THUMBNAIL].values;
     data.remove(TIFF_THUMBNAIL);
-    return GCWImageViewData(local.GWCFile(bytes: _tiffBytes.toList()));
+    return GCWImageViewData(local.GCWFile(bytes: _tiffBytes.toList()));
   }
   return null;
 }
@@ -121,7 +121,7 @@ double _getRatioValue(Ratio _ratio) {
   return _ratio.numerator / _ratio.denominator;
 }
 
-Map<String, dynamic> buildXmpTags(local.GWCFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
+Map<String, dynamic> buildXmpTags(local.GCWFile platformFile, Map<String, List<List<dynamic>>> tableTags) {
   Map<String, dynamic> xmpTags;
   try {
     Uint8List data = platformFile.bytes;

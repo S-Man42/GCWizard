@@ -172,6 +172,8 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
@@ -532,6 +534,8 @@ void _initStaticToolList() {
       className(IATAICAOSearch()),
       className(IceCodesSelection()),
       className(ILLIAC()),
+      className(ImageColorCorrections()),
+      className(ImageFlipRotate()),
       className(IntersectBearings()),
       className(IntersectFourPoints()),
       className(IntersectGeodeticAndCircle()),

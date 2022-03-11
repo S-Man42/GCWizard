@@ -47,6 +47,7 @@ class LicensesState extends State<Licenses> {
           ['r_scan', 'BSD-3-Clause License'],
           ['scrollable_positioned_list', 'BSD-3-Clause License'],
           ['touchable', 'GPL 3.0 License'],
+          ['tuple', 'BSD-2-Clause License'],
           ['universal_html', 'Apache 2.0 License'],
           ['uuid', 'MIT License'],
           ['url_launcher', 'BSD-3-Clause License'],
@@ -56,6 +57,9 @@ class LicensesState extends State<Licenses> {
       Column(
         children: columnedMultiLineOutput(null, [
           ['Astronomy Functions', 'astronomie.info, jgiesen.de', null],
+          ['Base58', 'Dark Launch', ''],
+          ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
+          ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
           ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
           ['Calendar conversions', 'Johannes Thomann, University of Zurich Asia-Orient-Institute', null],
           ['Centroid Code', 'Andy Eschbacher (carto.com)', null],
@@ -80,9 +84,6 @@ class LicensesState extends State<Licenses> {
           ['Vigenère Breaker', 'Jens Guballa (guballa.de)', null],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
           ['Wherigo Analyzer', 'WFoundation\nhttps://github.com/WFoundation', ''],
-          ['Base58', 'Dark Launch\n', ''],
-          ['Base91', 'Joachim Henke', 'BSD-3-Clause License'],
-          ['Base122', 'Kevin Alberston\nPatrick Favre-Bulle', 'MIT License\nApache License, Version 2.0'],
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_symboltablesources')),
@@ -95,10 +96,10 @@ class LicensesState extends State<Licenses> {
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_eurythmy_title'), 'www.steinerverlag.de (Non-Commercial Use)'],
           [i18n(context, 'symboltables_face_it_title'), '(Personal Use)'],
-          [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (Online Web Fonts) (CC BY-SA 3.0)'],
+          [i18n(context, 'symboltables_futurama_2_title'), 'Leandor Pardini (onlinewebfonts.com) (CC BY-SA 3.0)'],
           [
             i18n(context, 'symboltables_gc_attributes_ids_title'),
-            'game-icons.net (CC BY 3.0)\npixabay.com\nwww.clker.com (CC-0)'
+            'game-icons.net (CC BY 3.0)\npixabay.com\nclker.com (CC-0)'
           ],
           [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_kabouter_abc_title'), 'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'],
@@ -106,11 +107,12 @@ class LicensesState extends State<Licenses> {
           [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
           [i18n(context, 'symboltables_ninjargon_title'), 'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'],
           [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
+          [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
           [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
           [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
           [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
           [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
-        ]),
+        ], flexValues: [1, 2]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_telegraphs')),
       Column(

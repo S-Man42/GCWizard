@@ -22,12 +22,12 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
 class AnimatedImageMorseCode extends StatefulWidget {
-  final local.GWCFile platformFile;
+  final local.GCWFile platformFile;
 
   const AnimatedImageMorseCode({Key key, this.platformFile}) : super(key: key);
 
@@ -39,7 +39,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Map<String, dynamic> _outData;
   var _marked = <bool>[];
   Map<String, dynamic> _outText;
-  local.GWCFile _platformFile;
+  local.GCWFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _play = false;
   bool _filtered = true;
@@ -328,7 +328,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         String description = imagesFiltered[i].length.toString() + '/$imageCount';
 
         var image = images[imagesFiltered[i].first];
-        list.add(GCWImageViewData(local.GWCFile(bytes: image),
+        list.add(GCWImageViewData(local.GCWFile(bytes: image),
             description: description, marked: _marked[imagesFiltered[i].first]));
       }
       _outText = decodeMorseCode(durations, _marked);
@@ -349,7 +349,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
         if ((durations != null) && (i < durations.length)) {
           description += ': ' + durations[i].toString() + ' ms';
         }
-        list.add(GCWImageViewData(local.GWCFile(bytes: images[i]), description: description, marked: _marked[i]));
+        list.add(GCWImageViewData(local.GCWFile(bytes: images[i]), description: description, marked: _marked[i]));
       }
       _outText = decodeMorseCode(durations, _marked);
     }

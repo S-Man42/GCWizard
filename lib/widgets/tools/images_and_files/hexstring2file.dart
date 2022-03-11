@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/gwc_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
@@ -75,7 +75,7 @@ Widget hexDataOutput(BuildContext context, List<Uint8List> outData) {
 
   var children = outData.map((Uint8List _outData) {
     var _class = fileClass(getFileType(_outData));
-    var file = GWCFile(bytes: _outData);
+    var file = GCWFile(bytes: _outData);
 
     switch (_class) {
       case FileClass.IMAGE:

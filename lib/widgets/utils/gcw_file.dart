@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:gc_wizard/widgets/utils/file_utils.dart' as utils;
 
-class GWCFile {
-  GWCFile({this.path, this.name, this.bytes, this.children}) {
+class GCWFile {
+  GCWFile({this.path, this.name, this.bytes, this.children}) {
     if (this.children == null) this.children = [];
   }
 
@@ -18,7 +18,7 @@ class GWCFile {
   final String name;
 
   /// Option to save extracted files if file is archive
-  List<GWCFile> children;
+  List<GCWFile> children;
 
   /// Byte data for this file. Particurlarly useful if you want to manipulate its data
   /// or easily upload to somewhere else.
