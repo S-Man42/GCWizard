@@ -9,7 +9,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-
 class NumeralWordsLists extends StatefulWidget {
   @override
   NumeralWordsListsState createState() => NumeralWordsListsState();
@@ -70,45 +69,42 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
     numeralWordsOverview = NumWords[_currentLanguage];
 
     return GCWDefaultOutput(
-        child: Column(
-      children: columnedMultiLineOutput(
-          context,
-          numeralWordsOverview.entries.map((entry) {
-            if (int.tryParse(entry.value) != null) {
-              return [entry.value, entry.key];
-            };
-          }).toList(),
-          flexValues: [1, 3],
-          fontSize: defaultFontSize() + _valueFontsizeOffset
+      child: Column(
+        children: columnedMultiLineOutput(
+            context,
+            numeralWordsOverview.entries.map((entry) {
+              if (int.tryParse(entry.value) != null) {
+                return [entry.value, entry.key];
+              }
+              ;
+            }).toList(),
+            flexValues: [1, 3],
+            fontSize: defaultFontSize() + _valueFontsizeOffset),
       ),
+      trailing: ZOOMABLE_LANGUAGE.contains(_currentLanguage)
+          ? Row(
+              children: <Widget>[
+                GCWIconButton(
+                  size: IconButtonSize.SMALL,
+                  icon: Icons.zoom_in,
+                  onPressed: () {
+                    if (_valueFontsizeOffset < 30) _valueFontsizeOffset++;
 
-      ),
-      trailing:  ZOOMABLE_LANGUAGE.contains(_currentLanguage)
-        ? Row(
-            children: <Widget>[
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_in,
-                onPressed: () {
-                  if (_valueFontsizeOffset < 30)
-                    _valueFontsizeOffset++;
+                    setState(() {});
+                  },
+                ),
+                GCWIconButton(
+                  size: IconButtonSize.SMALL,
+                  icon: Icons.zoom_out,
+                  onPressed: () {
+                    if (_valueFontsizeOffset > 0) _valueFontsizeOffset--;
 
-                  setState(() {});
-                },
-              ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_out,
-                onPressed: () {
-                  if (_valueFontsizeOffset > 0)
-                    _valueFontsizeOffset--;
-
-                  setState(() {});
-                },
-              ),
-            ],
-          )
-        : null,
+                    setState(() {});
+                  },
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

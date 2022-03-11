@@ -31,14 +31,14 @@ String obfuscateUrwigoText(String text, String dtable) {
   if (dtable == null || dtable.isEmpty) return '';
 
   var searchReplace = {
-    8 : "\\b",      // x08   backspace
-    11 : "\\v",     // x0B   vertical tab
-    7 : "\\a",      // x07   alarm beep
-    9 : "\\t",      // \t    tab
-    13 : "\\r",     // \r    carriage return
-    10 : "\\n",     // \n    line feed
-    12 : "\\f",     // \f    form feed
-    92 : "\\\\",    // \\    backslash
+    8: "\\b", // x08   backspace
+    11: "\\v", // x0B   vertical tab
+    7: "\\a", // x07   alarm beep
+    9: "\\t", // \t    tab
+    13: "\\r", // \r    carriage return
+    10: "\\n", // \n    line feed
+    12: "\\f", // \f    form feed
+    92: "\\\\", // \\    backslash
 //    "\"" : "\\\"",  // \
   };
 
@@ -53,12 +53,10 @@ String obfuscateUrwigoText(String text, String dtable) {
     } else {
       codeUnit = 1 + char.codeUnitAt(0);
     }
-    if (searchReplace[codeUnit] == null)
-      if (32 <= codeUnit && codeUnit <= 127)
-        result = result + String.fromCharCode(codeUnit);
-      else
-        result = result + '\\' + codeUnit.toString().padLeft(3, '0');
-
+    if (searchReplace[codeUnit] == null) if (32 <= codeUnit && codeUnit <= 127)
+      result = result + String.fromCharCode(codeUnit);
+    else
+      result = result + '\\' + codeUnit.toString().padLeft(3, '0');
     else
       result = result + searchReplace[codeUnit];
   });

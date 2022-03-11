@@ -30,7 +30,14 @@ class GCWOpenFile extends StatefulWidget {
   final GCWFile file;
   final suppressHeader;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.file, this.suppressHeader: false})
+  const GCWOpenFile(
+      {Key key,
+      this.onLoaded,
+      this.supportedFileTypes,
+      this.title,
+      this.isDialog: false,
+      this.file,
+      this.suppressHeader: false})
       : super(key: key);
 
   @override
@@ -167,8 +174,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _saveDownload(dynamic data) {
     if (data is Uint8List) {
-      _loadedFile = GCWFile(
-          name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
+      _loadedFile =
+          GCWFile(name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
     } else if (data is String) showToast(i18n(context, data));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

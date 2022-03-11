@@ -344,8 +344,7 @@ List<String> decodeChef(String language, recipe, additionalIngredients) {
           result.add('» Schüssel in eine Servierschale stürzen. «');
       }
       return result;
-    }
-    else // runtime error
+    } else // runtime error
       return interpreter.error;
   } else {
     // invalid recipe

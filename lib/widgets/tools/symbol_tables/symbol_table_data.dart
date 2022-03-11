@@ -182,8 +182,8 @@ class SymbolData {
   bool primarySelected = false;
   bool secondarySelected = false;
   final String displayName;
-   ui.Image standardImage;
-   ui.Image specialEncryptionImage;
+  ui.Image standardImage;
+  ui.Image specialEncryptionImage;
 
   SymbolData({this.path, this.bytes, this.displayName, this.standardImage, this.specialEncryptionImage});
 
@@ -215,7 +215,8 @@ class SymbolTableData {
   }
 
   bool isCaseSensitive() {
-    return config[SymbolTableConstants.CONFIG_CASESENSITIVE] != null && config[SymbolTableConstants.CONFIG_CASESENSITIVE] == true;
+    return config[SymbolTableConstants.CONFIG_CASESENSITIVE] != null &&
+        config[SymbolTableConstants.CONFIG_CASESENSITIVE] == true;
   }
 
   String _pathKey() {
@@ -232,7 +233,8 @@ class SymbolTableData {
 
     config = json.decode(file);
 
-    if (config[SymbolTableConstants.CONFIG_IGNORE] == null) config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
+    if (config[SymbolTableConstants.CONFIG_IGNORE] == null)
+      config.putIfAbsent(SymbolTableConstants.CONFIG_IGNORE, () => <String>[]);
 
     if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS] == null)
       config.putIfAbsent(SymbolTableConstants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
@@ -276,7 +278,8 @@ class SymbolTableData {
 
     if (config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
       key = config[SymbolTableConstants.CONFIG_SPECIALMAPPINGS][imageKey];
-    } else if (config[SymbolTableConstants.CONFIG_TRANSLATE] != null && config[SymbolTableConstants.CONFIG_TRANSLATE].contains(imageKey)) {
+    } else if (config[SymbolTableConstants.CONFIG_TRANSLATE] != null &&
+        config[SymbolTableConstants.CONFIG_TRANSLATE].contains(imageKey)) {
       var translationPrefix = config[SymbolTableConstants.CONFIG_TRANSLATION_PREFIX];
       if (translationPrefix != null && translationPrefix.length > 0) {
         key = i18n(_context, translationPrefix + imageKey);
@@ -310,10 +313,8 @@ class SymbolTableData {
     if (imageArchivePaths.isEmpty) return;
 
     // Read the Zip file from disk.
-    final bytes = await DefaultAssetBundle.of(_context).load(
-        imageArchivePaths
-            .firstWhere((path) => !path.contains('_encryption'))
-    );
+    final bytes = await DefaultAssetBundle.of(_context)
+        .load(imageArchivePaths.firstWhere((path) => !path.contains('_encryption')));
     InputStream input = InputStream(bytes.buffer.asByteData());
     // Decode the Zip file
     final Archive archive = ZipDecoder().decodeBuffer(input);
@@ -331,27 +332,25 @@ class SymbolTableData {
     for (ArchiveFile file in archive) {
       var key = _createKey(file.name);
 
-      if (config[SymbolTableConstants.CONFIG_IGNORE].contains(key))
-        continue;
+      if (config[SymbolTableConstants.CONFIG_IGNORE].contains(key)) continue;
 
       var imagePath = (file.isFile && SymbolTableConstants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
-      if (imagePath == null)
-        continue;
+      if (imagePath == null) continue;
 
       var standardImage = await _initializeImage(file.content);
       var specialEncryptionImage;
       if (encryptionArchive != null && encryptionArchive.isNotEmpty) {
         specialEncryptionImage = await _initializeImage(
-            encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name).content
-        );
+            encryptionArchive.firstWhere((encryptionFile) => encryptionFile.name == file.name).content);
       }
 
-      images.add({key: SymbolData(
-          path: imagePath,
-          bytes: file.content,
-          standardImage: standardImage,
-          specialEncryptionImage: specialEncryptionImage
-      )});
+      images.add({
+        key: SymbolData(
+            path: imagePath,
+            bytes: file.content,
+            standardImage: standardImage,
+            specialEncryptionImage: specialEncryptionImage)
+      });
     }
 
     images.sort(_sort);

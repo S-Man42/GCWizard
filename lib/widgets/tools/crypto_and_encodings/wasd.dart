@@ -220,7 +220,7 @@ class WASDState extends State<WASD> {
               Column(
                 children: [
                   GCWIconButton(
-                    iconData: Icons.space_bar,
+                    icon: Icons.space_bar,
                     onPressed: () {
                       setState(() {
                         _addInput(' ');
@@ -228,7 +228,7 @@ class WASDState extends State<WASD> {
                     },
                   ),
                   GCWIconButton(
-                    iconData: Icons.backspace,
+                    icon: Icons.backspace,
                     onPressed: () {
                       setState(() {
                         _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
@@ -287,7 +287,7 @@ class WASDState extends State<WASD> {
           GCWDefaultOutput(
               child: _buildGraphicDecodeOutput(),
               trailing: GCWIconButton(
-                iconData: Icons.save,
+                icon: Icons.save,
                 size: IconButtonSize.SMALL,
                 iconColor: _outDecodeData == null ? themeColors().inActive() : null,
                 onPressed: () {
@@ -298,7 +298,7 @@ class WASDState extends State<WASD> {
           GCWDefaultOutput(
               child: _buildGraphicEncodeOutput(),
               trailing: GCWIconButton(
-                iconData: Icons.save,
+                icon: Icons.save,
                 size: IconButtonSize.SMALL,
                 iconColor: _outEncodeData == null ? themeColors().inActive() : null,
                 onPressed: () {

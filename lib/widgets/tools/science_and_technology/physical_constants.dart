@@ -41,10 +41,7 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
             });
           },
           items: _constants.map((constant) {
-            return GCWDropDownMenuItem(
-              value: constant,
-              child: i18n(context, constant)
-            );
+            return GCWDropDownMenuItem(value: constant, child: i18n(context, constant));
           }).toList(),
         ),
         GCWDefaultOutput(child: _buildOutput())
@@ -57,21 +54,29 @@ class PhysicalConstantsState extends State<PhysicalConstants> {
 
     var data = [
       constantData['symbol'] != null ? [i18n(context, 'physical_constants_symbol'), constantData['symbol']] : null,
-      constantData['value'] != null ? [i18n(context, 'physical_constants_value'), constantData['value'] + (
-          constantData['exponent'] != null ? ' × 10' + stringToSuperscript(constantData['exponent'].toString()) : ''
-      )] : null,
-      constantData['standard_uncertainty'] != null ? [i18n(context, 'physical_constants_standard_uncertainty'), constantData['standard_uncertainty'] + (
-          constantData['exponent'] != null ? ' × 10' + stringToSuperscript(constantData['exponent'].toString()) : ''
-      )] : null,
+      constantData['value'] != null
+          ? [
+              i18n(context, 'physical_constants_value'),
+              constantData['value'] +
+                  (constantData['exponent'] != null
+                      ? ' × 10' + stringToSuperscript(constantData['exponent'].toString())
+                      : '')
+            ]
+          : null,
+      constantData['standard_uncertainty'] != null
+          ? [
+              i18n(context, 'physical_constants_standard_uncertainty'),
+              constantData['standard_uncertainty'] +
+                  (constantData['exponent'] != null
+                      ? ' × 10' + stringToSuperscript(constantData['exponent'].toString())
+                      : '')
+            ]
+          : null,
       constantData['unit'] != null ? [i18n(context, 'physical_constants_unit'), constantData['unit']] : null
     ];
 
     return Column(
-      children: columnedMultiLineOutput(
-        context,
-        data,
-        flexValues: [1, 2]
-      ),
+      children: columnedMultiLineOutput(context, data, flexValues: [1, 2]),
     );
   }
 }

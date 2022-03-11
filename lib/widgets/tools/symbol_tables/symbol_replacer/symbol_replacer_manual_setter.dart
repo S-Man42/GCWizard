@@ -15,7 +15,6 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_ma
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_symboldata.dart';
 
-
 class SymbolReplacerManualSetter extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
   final List<Symbol> viewSymbols;
@@ -69,20 +68,17 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         _selectSymbol(_symbolMap.values.first.values.first);
 
       if ((widget.symbolImage?.compareSymbols == null) ||
-          ((widget.viewSymbols == null) || (widget.viewSymbols.isEmpty) ||
-          widget.viewSymbols?.first?.symbolGroup?.compareSymbol == null))
-        _currentMode = GCWSwitchPosition.right;
+          ((widget.viewSymbols == null) ||
+              (widget.viewSymbols.isEmpty) ||
+              widget.viewSymbols?.first?.symbolGroup?.compareSymbol == null)) _currentMode = GCWSwitchPosition.right;
 
       _init = false;
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        widget.symbolImage != null ? _buildEditRow() : Container(),
-        _buildMatrix(widget.symbolImage, widget.viewSymbols, countColumns, mediaQueryData),
-      ]
-    );
+    return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      widget.symbolImage != null ? _buildEditRow() : Container(),
+      _buildMatrix(widget.symbolImage, widget.viewSymbols, countColumns, mediaQueryData),
+    ]);
   }
 
   _fillSymbolMap(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols) {
@@ -95,8 +91,9 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         if (_symbolData?.values?.first?.displayName != _displayText)
           _symbolMap[symbol] = _cloneSymbolData(_symbolData, _displayText);
       } else
-        _symbolMap.addAll(
-            {symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}});
+        _symbolMap.addAll({
+          symbol: {null: SymbolData(bytes: symbol.getImage(), displayName: symbol?.symbolGroup?.text ?? '')}
+        });
     });
   }
 
@@ -104,32 +101,31 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     _symbolDataItems = (compareSymbols == null)
         ? <GCWDropDownMenuItem>[].toList()
         : compareSymbols.map((symbolData) {
-          return _buildDropDownMenuItem(symbolData);
-        }).toList();
+            return _buildDropDownMenuItem(symbolData);
+          }).toList();
   }
 
-  Widget _buildMatrix(SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
-    if ((symbolImage?.symbols == null) || (viewSymbols == null))
-      return Container();
+  Widget _buildMatrix(
+      SymbolReplacerImage symbolImage, List<Symbol> viewSymbols, int countColumns, MediaQueryData mediaQueryData) {
+    if ((symbolImage?.symbols == null) || (viewSymbols == null)) return Container();
 
     _fillSymbolMap(symbolImage, viewSymbols);
 
-    return
-      Expanded(
+    return Expanded(
         child: GCWSymbolTableSymbolMatrix(
-          fixed: false,
-          imageData: _symbolMap.values,
-          countColumns: countColumns,
-          mediaQueryData: mediaQueryData,
-          onChanged: () => setState((){}),
-          selectable: true,
-          overlayOn: true,
-          onSymbolTapped: (String tappedText, SymbolData symbolData) {
-            setState(() {
-              _selectSymbol(symbolData);
-            });},
-        )
-      );
+      fixed: false,
+      imageData: _symbolMap.values,
+      countColumns: countColumns,
+      mediaQueryData: mediaQueryData,
+      onChanged: () => setState(() {}),
+      selectable: true,
+      overlayOn: true,
+      onSymbolTapped: (String tappedText, SymbolData symbolData) {
+        setState(() {
+          _selectSymbol(symbolData);
+        });
+      },
+    ));
   }
 
   _selectSymbol(SymbolData symbolData) {
@@ -153,12 +149,10 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
       var selectedSymbols = <Symbol>[];
       _symbolMap.forEach((symbol, image) {
         var symbolData = image.values.first;
-        if (symbolData.primarySelected || symbolData.secondarySelected)
-          selectedSymbols.add(symbol);
+        if (symbolData.primarySelected || symbolData.secondarySelected) selectedSymbols.add(symbol);
       });
       widget.symbolImage.buildSymbolGroup(selectedSymbols);
-      if ((selectedSymbols != null) && selectedSymbols.isNotEmpty &&
-        (selectedSymbols?.first?.symbolGroup != null)) {
+      if ((selectedSymbols != null) && selectedSymbols.isNotEmpty && (selectedSymbols?.first?.symbolGroup != null)) {
         selectedSymbols.first.symbolGroup.text = text;
         selectedSymbols.first.symbolGroup.compareSymbol = symbolData;
       }
@@ -166,55 +160,58 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
   }
 
   Widget _buildEditRow() {
-    return Column(children: <Widget>[
-      (widget.symbolImage?.compareSymbols == null)
-        ? Container()
-        : GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'symbol_replacer_from_symboltable'),
-          rightValue: i18n(context, 'symbol_replacer_own_text'),
-          value: _currentMode,
-          notitle: true,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
-      _buildTextEditRow()
-    ],
+    return Column(
+      children: <Widget>[
+        (widget.symbolImage?.compareSymbols == null)
+            ? Container()
+            : GCWTwoOptionsSwitch(
+                leftValue: i18n(context, 'symbol_replacer_from_symboltable'),
+                rightValue: i18n(context, 'symbol_replacer_own_text'),
+                value: _currentMode,
+                notitle: true,
+                onChanged: (value) {
+                  setState(() {
+                    _currentMode = value;
+                  });
+                },
+              ),
+        _buildTextEditRow()
+      ],
     );
   }
 
   Widget _buildTextEditRow() {
-    return Column( children: [
-        GCWToolBar (children: <Widget>[
-            _currentMode == GCWSwitchPosition.right
+    return Column(children: [
+      GCWToolBar(
+        children: <Widget>[
+          _currentMode == GCWSwitchPosition.right
               ? GCWTextField(
-                controller: _editValueController,
-                autofocus: true,
-              )
-            : GCWDropDownButton(
-                value: _currentSymbolData,
-                onChanged: (value) {
-                  setState(() {
-                    _currentSymbolData = value;
-                  });
-                },
-                items: _symbolDataItems
-              ),
-            GCWIconButton(
-              iconData: Icons.alt_route,
-              iconColor: _symbolMap.values.any((symbol) => symbol.values.first.primarySelected) ? null :themeColors().inActive(),
-              onPressed: () {
-                setState(() {
-                  if (_currentMode == GCWSwitchPosition.left)
-                    _setSelectedSymbolsText(_currentSymbolData?.keys?.first,
-                        symbolData: _currentSymbolData?.values?.first);
-                  else
-                    _setSelectedSymbolsText(_editValueController.text);
-                });
-              },
-            ),
+                  controller: _editValueController,
+                  autofocus: true,
+                )
+              : GCWDropDownButton(
+                  value: _currentSymbolData,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentSymbolData = value;
+                    });
+                  },
+                  items: _symbolDataItems),
+          GCWIconButton(
+            icon: Icons.alt_route,
+            iconColor: _symbolMap.values.any((symbol) => symbol.values.first.primarySelected)
+                ? null
+                : themeColors().inActive(),
+            onPressed: () {
+              setState(() {
+                if (_currentMode == GCWSwitchPosition.left)
+                  _setSelectedSymbolsText(_currentSymbolData?.keys?.first,
+                      symbolData: _currentSymbolData?.values?.first);
+                else
+                  _setSelectedSymbolsText(_editValueController.text);
+              });
+            },
+          ),
         ],
         flex: [3, 1],
       ),
@@ -222,29 +219,29 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
         children: [
           Expanded(
               child: GCWButton(
-                text: i18n(context, 'symboltablesexamples_selectall'),
-                margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                onPressed: () {
-                  setState(() {
-                    _symbolMap.values.forEach((image) {
-                      image.values.first.primarySelected = true;
-                    });
-                  });
-                },
-              )),
+            text: i18n(context, 'symboltablesexamples_selectall'),
+            margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+            onPressed: () {
+              setState(() {
+                _symbolMap.values.forEach((image) {
+                  image.values.first.primarySelected = true;
+                });
+              });
+            },
+          )),
           Container(width: DOUBLE_DEFAULT_MARGIN),
           Expanded(
               child: GCWButton(
-                text: i18n(context, 'symboltablesexamples_deselectall'),
-                margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
-                onPressed: () {
-                  setState(() {
-                    _symbolMap.values.forEach((image) {
-                      image.values.first.primarySelected = false;
-                    });
-                  });
-                },
-              )),
+            text: i18n(context, 'symboltablesexamples_deselectall'),
+            margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+            onPressed: () {
+              setState(() {
+                _symbolMap.values.forEach((image) {
+                  image.values.first.primarySelected = false;
+                });
+              });
+            },
+          )),
         ],
       ),
     ]);
@@ -254,9 +251,8 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     var compareSymbol = _getSymbol(symbolData)?.symbolGroup?.compareSymbol;
     if ((widget.symbolImage?.compareSymbols != null) && (compareSymbol != null)) {
       for (GCWDropDownMenuItem item in _symbolDataItems)
-        if (( item.value is Map<String, SymbolReplacerSymbolData>) &&
+        if ((item.value is Map<String, SymbolReplacerSymbolData>) &&
             ((item.value as Map<String, SymbolReplacerSymbolData>).values.first == compareSymbol)) {
-
           _currentSymbolData = item.value;
           break;
         }
@@ -267,25 +263,21 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
     var iconBytes = symbolData.values.first.bytes;
     var displayText = symbolData.keys.first;
     return GCWDropDownMenuItem(
-      value: symbolData,
-      child: Row( children: [
-        Container(
-          child: (iconBytes != null)
-              ? GCWSymbolContainer(symbol: Image.memory(iconBytes))
-              : Container(width: DEFAULT_LISTITEM_SIZE),
-          margin: EdgeInsets.only(left: 2, top:2, bottom: 2, right: 10),
-        ),
-        Expanded(child:
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              (displayText == null)
-                  ? Container()
-                  : Text(displayText, style: _gcwTextStyle),
-            ])
-        )
-      ])
-    );
+        value: symbolData,
+        child: Row(children: [
+          Container(
+            child: (iconBytes != null)
+                ? GCWSymbolContainer(symbol: Image.memory(iconBytes))
+                : Container(width: DEFAULT_LISTITEM_SIZE),
+            margin: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
+          ),
+          Expanded(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                (displayText == null) ? Container() : Text(displayText, style: _gcwTextStyle),
+              ]))
+        ]));
   }
 }

@@ -8,10 +8,8 @@ List<String> decenary2segments(String decenary, bool original, TeletypewriterCod
 
   if (REVERSE_CODEBOOK.contains(language)) {
     binary = binary.split('').reversed.join('');
-  }
-  else {
-    if (original)
-      binary = binary.split('').reversed.join('');
+  } else {
+    if (original) binary = binary.split('').reversed.join('');
   }
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
@@ -22,8 +20,7 @@ List<String> binary2segments(String binary, bool original, TeletypewriterCodeboo
   binary = binary.padLeft(BINARY_LENGTH[language], '0');
 
   List<String> result = [];
-  if (original)
-    binary = binary.split('').reversed.join('');
+  if (original) binary = binary.split('').reversed.join('');
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
@@ -160,8 +157,7 @@ String segments2decenary(List<String> segments, bool original, TeletypewriterCod
       result = result + '0';
   }
 
-  if (original)
-    result = result.split('').reversed.join('');
+  if (original) result = result.split('').reversed.join('');
   return convertBase(result, 2, 10);
 }
 
@@ -173,8 +169,7 @@ List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language
 
   code = encodeTeletypewriter(input, language).split(' ');
   code.forEach((element) {
-    if (int.tryParse(element) != null)
-    result.add(decenary2segments(element, original, language));
+    if (int.tryParse(element) != null) result.add(decenary2segments(element, original, language));
   });
   return result;
 }
@@ -211,7 +206,6 @@ Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, TeletypewriterCo
       display.add(element);
     });
     displays.add(display);
-
   }).toList();
 
   // convert list of displays to list of decimal using String segments2decenary(List<String> segments)

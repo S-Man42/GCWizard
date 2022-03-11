@@ -7,15 +7,13 @@ class GCWColorPicker extends StatefulWidget {
   final Function onChanged;
   final HSVColor hsvColor;
 
-  const GCWColorPicker({Key key, @required this.hsvColor,  @required this.onChanged})
-      : super(key: key);
+  const GCWColorPicker({Key key, @required this.hsvColor, @required this.onChanged}) : super(key: key);
 
   @override
   GCWColorPickerState createState() => GCWColorPickerState();
 }
 
 class GCWColorPickerState extends State<GCWColorPicker> {
-
   HSVColor _currentColor;
 
   @override
@@ -33,16 +31,13 @@ class GCWColorPickerState extends State<GCWColorPicker> {
             borderRadius: BorderRadius.all(Radius.circular(3 * ROUNDED_BORDER_RADIUS)),
             color: _currentColor.toColor(),
           ),
-          margin: EdgeInsets.only(
-              right: 7 * DEFAULT_MARGIN
-          ),
+          margin: EdgeInsets.only(right: 7 * DEFAULT_MARGIN),
         ),
         Expanded(
             child: HSVPicker(
-              color: _currentColor,
-              onChanged: widget.onChanged,
-            )
-        ),
+          color: _currentColor,
+          onChanged: widget.onChanged,
+        )),
       ],
     );
   }

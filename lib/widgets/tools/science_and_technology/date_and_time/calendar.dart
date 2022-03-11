@@ -138,8 +138,7 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_copticcalendar'] =
         _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
     // reuse lib/widget/tools/science_and_technology/maya_calendar.dart
-    output['dates_calendar_system_mayacalendar_daycount'] =
-        JulianDateToMayaDayCount(jd).toString();
+    output['dates_calendar_system_mayacalendar_daycount'] = JulianDateToMayaDayCount(jd).toString();
     output['dates_calendar_system_mayacalendar_longcount'] =
         MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)).join('.');
     output['dates_calendar_system_mayacalendar_haab'] =

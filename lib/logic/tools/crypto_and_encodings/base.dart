@@ -122,7 +122,7 @@ String decode(String input, Function function) {
 //
 // https://www.darklaunch.com/base58-encode-and-decode-using-php-with-example-base58-encode-base58-decode.html
 //
-String encodeBase58(String input){
+String encodeBase58(String input) {
   if (input == null || input == '' || int.tryParse(input) == null) return '';
 
   int num = int.parse(input);
@@ -132,52 +132,100 @@ String encodeBase58(String input){
   int mod = 0;
   String encoded = '';
 
-  while(num >= base_count) {
+  while (num >= base_count) {
     div = num ~/ base_count;
     mod = num % base_count;
     encoded = encoded + alphabet[mod];
     num = div;
   }
-  if (num > 0)
-    encoded = encoded + alphabet[num];
+  if (num > 0) encoded = encoded + alphabet[num];
 
   return encoded.split('').reversed.join('');
 }
 
 final List<String> BASE58_ALPHABET = [
-  '1','2','3','4','5','6','7','8','9',
-  'a','b','c','d','e','f','g','h','i','j','k','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-  'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z'
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z'
 ];
 
-String decodeBase58(String input){
+String decodeBase58(String input) {
   if (input == null || input == '') return '';
 
   String alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
   String num = '';
 
-  for (int i = 0; i < input.length; i++)
-    if (BASE58_ALPHABET.contains(input[i]))
-      num = num + input[i];
+  for (int i = 0; i < input.length; i++) if (BASE58_ALPHABET.contains(input[i])) num = num + input[i];
 
   int len = num.length;
   int multi = 1;
   int decoded = 0;
 
   for (int i = len - 1; i >= 0; i--) {
-      decoded = decoded + multi * _strPos(alphabet, num[i]);
-      multi = multi * alphabet.length;
+    decoded = decoded + multi * _strPos(alphabet, num[i]);
+    multi = multi * alphabet.length;
   }
   return decoded.toString();
 }
 
-int _strPos(String text, String char){
-  for (int i = 0; i < text.length; i++)
-    if (text[i] == char)
-      return i;
+int _strPos(String text, String char) {
+  for (int i = 0; i < text.length; i++) if (text[i] == char) return i;
 }
-
-
 
 // ---------- Base91
 //
@@ -187,13 +235,100 @@ int _strPos(String text, String char){
 // nX,<:WRT%yV%!5:maref3+1RrUb64^M  => This is an encoded string
 
 List<String> _b91_enctab = [
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '#', '\$', '%', '&', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
-  '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~', '"'
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '!',
+  '#',
+  '\$',
+  '%',
+  '&',
+  '(',
+  ')',
+  '*',
+  '+',
+  ',',
+  '.',
+  '/',
+  ':',
+  ';',
+  '<',
+  '=',
+  '>',
+  '?',
+  '@',
+  '[',
+  ']',
+  '^',
+  '_',
+  '`',
+  '{',
+  '|',
+  '}',
+  '~',
+  '"'
 ];
 
-String encodeBase91(String d){
+String encodeBase91(String d) {
   if (d == null || d == '') return '';
 
   int l = d.length;
@@ -220,22 +355,19 @@ String encodeBase91(String d){
   }
   if (n > 0) {
     o = o + _b91_enctab[b % 91];
-    if (n > 7 || b > 90)
-      o = o + _b91_enctab[b ~/ 91];
+    if (n > 7 || b > 90) o = o + _b91_enctab[b ~/ 91];
   }
   return o;
 }
 
-String decodeBase91(String d){
+String decodeBase91(String d) {
   if (d == null || d == '') return '';
 
   Map<int, int> b91_dectab = {};
 
-  for (int i = 0; i < 256; i++)
-    b91_dectab[i] = -1;
+  for (int i = 0; i < 256; i++) b91_dectab[i] = -1;
 
-  for (int i = 0; i < 91; ++i)
-    b91_dectab[_b91_enctab[i].codeUnitAt(0)] = i;
+  for (int i = 0; i < 91; ++i) b91_dectab[_b91_enctab[i].codeUnitAt(0)] = i;
 
   int dbq = 0;
   int dn = 0;
@@ -267,8 +399,6 @@ String decodeBase91(String d){
   return String.fromCharCodes(output);
 }
 
-
-
 // ---------- Base122
 //
 // Kevin Alberston
@@ -279,17 +409,22 @@ String decodeBase91(String d){
 // https://github.com/patrickfav/base122-java/blob/master/src/main/java/at/favre/lib/encoding/Base122.java
 
 List<int> _ILLEGAL_BYTES = [
-               0 // null
-            , 10 // newline
-            , 13 // carriage return
-            , 34 // double quote
-            , 38 // ampersand
-            , 92 // backslash
-          ];
+  0 // null
+  ,
+  10 // newline
+  ,
+  13 // carriage return
+  ,
+  34 // double quote
+  ,
+  38 // ampersand
+  ,
+  92 // backslash
+];
 int _kShortened = 7; // 0b111
 int _STOP_BYTE = 128; // (byte) 0b1000_0000
 
-String encodeBase122(String rawData){
+String encodeBase122(String rawData) {
   if (rawData == null || rawData == '') return '';
 
   int curIndex = 0;
@@ -302,12 +437,12 @@ String encodeBase122(String rawData){
 
     // Shift, mask, unshift to get first part.
     int firstByte = rawData.codeUnitAt(curIndex);
-    int firstPart = ((254  >> curBit) & firstByte) << curBit;
+    int firstPart = ((254 >> curBit) & firstByte) << curBit;
 
     // Align it to a seven bit chunk.
     firstPart >>= 1;
 
-  // Check if we need to go to the next byte for more bits.
+    // Check if we need to go to the next byte for more bits.
     curBit += 7;
     if (curBit < 8) return firstPart; // (byte) firstPart  - Do not need next byte.
 
@@ -339,13 +474,14 @@ String encodeBase122(String rawData){
   sevenBits = next7Bit();
   while (sevenBits != _STOP_BYTE) {
     illegalIndex = isIllegalCharacter(sevenBits);
-    if (illegalIndex != -1) { // Since this will be a two-byte character, get the next chunk of seven bits.
+    if (illegalIndex != -1) {
+      // Since this will be a two-byte character, get the next chunk of seven bits.
       int nextSevenBits = next7Bit();
 
       int b1 = 194; // (byte) 0b11000010
       int b2 = 128; // (byte) 0b10000000
       if (nextSevenBits == _STOP_BYTE) {
-        b1 |= (7 & _kShortened) << 2;  // (0b111 & _kShortened) << 2;
+        b1 |= (7 & _kShortened) << 2; // (0b111 & _kShortened) << 2;
         nextSevenBits = sevenBits; // Encode these bits after the shortened signifier.
       } else {
         b1 |= (7 & illegalIndex) << 2; // (0b111 & illegalIndex) << 2;
@@ -354,7 +490,7 @@ String encodeBase122(String rawData){
       // Push first bit onto first byte, remaining 6 onto second.
       int firstBit = ((nextSevenBits & 64) > 0 ? 1 : 0) % 256; // (byte) ((nextSevenBits & 0b01000000) > 0 ? 1 : 0);
       b1 |= firstBit;
-      b2 |= nextSevenBits & 63;    // nextSevenBits & 0b00111111;
+      b2 |= nextSevenBits & 63; // nextSevenBits & 0b00111111;
       outputStream.add(b1 % 256);
       outputStream.add(b2 % 256);
     } else {
@@ -365,8 +501,7 @@ String encodeBase122(String rawData){
   return utf8.decode(outputStream);
 }
 
-
-String decodeBase122(String base122Data){
+String decodeBase122(String base122Data) {
   if (base122Data == null || base122Data == '') return '';
 
   List<int> outputStream = [];
@@ -386,7 +521,7 @@ String decodeBase122(String base122Data){
     }
   }
 
-  List<int> utf8Bytes  = base122Data.codeUnits;
+  List<int> utf8Bytes = base122Data.codeUnits;
 
   for (int i = 0; i < utf8Bytes.length; i++) {
     // Check if this is a two-byte character.
@@ -406,5 +541,3 @@ String decodeBase122(String base122Data){
   }
   return String.fromCharCodes(outputStream);
 }
-
-

@@ -169,7 +169,6 @@ class VisualCryptographyState extends State<VisualCryptography> {
           });
         },
       ),
-
       _encodeImage != null
           ? Container(
               child:
@@ -177,7 +176,6 @@ class VisualCryptographyState extends State<VisualCryptography> {
               padding: EdgeInsets.symmetric(vertical: 25),
             )
           : Container(),
-
       GCWOnOffSwitch(
         value: _currentEncryptionWithKeyMode,
         title: i18n(context, 'visual_cryptography_keyimage'),
@@ -187,7 +185,6 @@ class VisualCryptographyState extends State<VisualCryptography> {
           });
         },
       ),
-
       _currentEncryptionWithKeyMode
           ? Column(
               children: [
@@ -211,7 +208,6 @@ class VisualCryptographyState extends State<VisualCryptography> {
               ],
             )
           : Container(),
-
       GCWTwoOptionsSwitch(
         value: _currentEncryptionAdvancedMode,
         leftValue: i18n(context, 'visual_cryptography_simple'),
@@ -222,73 +218,71 @@ class VisualCryptographyState extends State<VisualCryptography> {
           });
         },
       ),
-
-      _currentEncryptionAdvancedMode == GCWSwitchPosition.left ? Container() :
-          Column(
-            children: [
-              GCWIntegerSpinner(
-                title: i18n(context, 'visual_cryptography_offset') + ' X',
-                value: _encodeOffsetsX,
-                onChanged: (value) {
-                  setState(() {
-                    _encodeOffsetsX = value;
-                    _updateEncodeImageSize();
-                  });
-                },
-              ),
-              GCWIntegerSpinner(
-                title: i18n(context, 'visual_cryptography_offset') + ' Y',
-                value: _encodeOffsetsY,
-                onChanged: (value) {
-                  setState(() {
-                    _encodeOffsetsY = value;
-                    _updateEncodeImageSize();
-                  });
-                },
-              ),
-
-              _currentEncryptionWithKeyMode ? Container() :
-                Column(
-                  children: [
-                    GCWTextDivider(
-                      text: i18n(context, 'visual_cryptography_outputsize'),
-                    ),
-
-                    GCWIntegerSpinner(
-                      title: i18n(context, 'visual_cryptography_scale'),
-                      value: _encodeScale,
-                      min: 1,
-                      max: 1000,
-                      onChanged: (value) {
-                        setState(() {
-                          _encodeScale = value;
-                          _updateEncodeImageSize();
-                        });
-                      },
-                    ),
-
-                    Container(), // For some reasons, this fixes a bug: Without this, the encode scale input affects the decode offset y input...
-
-                    if (_encodeImageSize != null)
-                      Row(
+      _currentEncryptionAdvancedMode == GCWSwitchPosition.left
+          ? Container()
+          : Column(
+              children: [
+                GCWIntegerSpinner(
+                  title: i18n(context, 'visual_cryptography_offset') + ' X',
+                  value: _encodeOffsetsX,
+                  onChanged: (value) {
+                    setState(() {
+                      _encodeOffsetsX = value;
+                      _updateEncodeImageSize();
+                    });
+                  },
+                ),
+                GCWIntegerSpinner(
+                  title: i18n(context, 'visual_cryptography_offset') + ' Y',
+                  value: _encodeOffsetsY,
+                  onChanged: (value) {
+                    setState(() {
+                      _encodeOffsetsY = value;
+                      _updateEncodeImageSize();
+                    });
+                  },
+                ),
+                _currentEncryptionWithKeyMode
+                    ? Container()
+                    : Column(
                         children: [
-                          Expanded(child: Container(), flex: 1),
-                          Expanded(
-                              child: GCWText(
-                                align: Alignment.bottomCenter,
-                                text: _encodeImageSize,
-                                style: gcwDescriptionTextStyle(),
-                              ),
-                              flex: 3)
+                          GCWTextDivider(
+                            text: i18n(context, 'visual_cryptography_outputsize'),
+                          ),
+
+                          GCWIntegerSpinner(
+                            title: i18n(context, 'visual_cryptography_scale'),
+                            value: _encodeScale,
+                            min: 1,
+                            max: 1000,
+                            onChanged: (value) {
+                              setState(() {
+                                _encodeScale = value;
+                                _updateEncodeImageSize();
+                              });
+                            },
+                          ),
+
+                          Container(), // For some reasons, this fixes a bug: Without this, the encode scale input affects the decode offset y input...
+
+                          if (_encodeImageSize != null)
+                            Row(
+                              children: [
+                                Expanded(child: Container(), flex: 1),
+                                Expanded(
+                                    child: GCWText(
+                                      align: Alignment.bottomCenter,
+                                      text: _encodeImageSize,
+                                      style: gcwDescriptionTextStyle(),
+                                    ),
+                                    flex: 3)
+                              ],
+                            ),
                         ],
-                      ),
-                  ],
-                )
-            ],
-          ),
-
+                      )
+              ],
+            ),
       _buildEncodeSubmitButton(),
-
       GCWDefaultOutput(child: _buildOutputEncode())
     ]);
   }
@@ -329,16 +323,18 @@ class VisualCryptographyState extends State<VisualCryptography> {
         toolBarRight: true,
         fileName: 'img1_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
       ),
-      _currentEncryptionWithKeyMode ? Container() : Column(
-        children: [
-          Container(height: 5),
-          GCWImageView(
-            imageData: GCWImageViewData(GCWFile(bytes: _encodeOutputImages.item2)),
-            toolBarRight: true,
-            fileName: 'img2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
-          ),
-        ],
-      )
+      _currentEncryptionWithKeyMode
+          ? Container()
+          : Column(
+              children: [
+                Container(height: 5),
+                GCWImageView(
+                  imageData: GCWImageViewData(GCWFile(bytes: _encodeOutputImages.item2)),
+                  toolBarRight: true,
+                  fileName: 'img2_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()),
+                ),
+              ],
+            )
     ]);
   }
 
@@ -468,14 +464,8 @@ class VisualCryptographyState extends State<VisualCryptography> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
-    return GCWAsyncExecuterParameters(
-        Tuple5<Uint8List, Uint8List, int, int, int>(
-            _encodeImage.bytes,
-            _currentEncryptionWithKeyMode ? _encodeKeyImage.bytes : null,
-            _encodeOffsetsX,
-            _encodeOffsetsY,
-            _encodeScale)
-        );
+    return GCWAsyncExecuterParameters(Tuple5<Uint8List, Uint8List, int, int, int>(_encodeImage.bytes,
+        _currentEncryptionWithKeyMode ? _encodeKeyImage.bytes : null, _encodeOffsetsX, _encodeOffsetsY, _encodeScale));
   }
 
   _saveOutputEncode(Tuple2<Uint8List, Uint8List> output) {

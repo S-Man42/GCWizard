@@ -50,45 +50,45 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-        ? Row(
-          children: [
-            Expanded(
-              child: GCWText(text: i18n(context, 'earwigo_textdeobfuscation_text')),
-              flex: 1,
-            ),
-            Expanded(
-                child: GCWTextField(
-                  controller: _inputController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentInput = text;
-                    });
-                  },
-                ),
-                flex: 3)
-          ],
-        )
-        : Row(
-          children: [
-            Expanded(
-              child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_obfuscate_text')),
-              flex: 1,
-            ),
-            Expanded(
-                child: GCWTextField(
-                  controller: _inputObfuscateController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z 0-9.-~]')),
-                  ],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentObfuscateInput = text;
-                    });
-                  },
-                ),
-                flex: 3)
-          ],
-        ),
+            ? Row(
+                children: [
+                  Expanded(
+                    child: GCWText(text: i18n(context, 'earwigo_textdeobfuscation_text')),
+                    flex: 1,
+                  ),
+                  Expanded(
+                      child: GCWTextField(
+                        controller: _inputController,
+                        onChanged: (text) {
+                          setState(() {
+                            _currentInput = text;
+                          });
+                        },
+                      ),
+                      flex: 3)
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_obfuscate_text')),
+                    flex: 1,
+                  ),
+                  Expanded(
+                      child: GCWTextField(
+                        controller: _inputObfuscateController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[a-zA-Z 0-9.-~]')),
+                        ],
+                        onChanged: (text) {
+                          setState(() {
+                            _currentObfuscateInput = text;
+                          });
+                        },
+                      ),
+                      flex: 3)
+                ],
+              ),
         _buildOutput(context)
       ],
     );

@@ -108,10 +108,15 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_CCITT2: {MDT_CCITT2_OPTION_MODE: MDT_CCITT2_OPTION_MODE_BINARY},
   MDT_INTERNALNAMES_COORDINATEFORMATS: {MDT_COORDINATEFORMATS_OPTION_FORMAT: keyCoordsUTM},
   MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK: {MDT_ESOTERIC_LANGUAGE_BEATNIK_OPTION_MODE: scrabbleID_EN},
-  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE: {MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK},
-  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF: {MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH},
-  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH: {MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO},
-
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE: {
+    MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_MODE: MDT_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE_OPTION_BRAINFK
+  },
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF: {
+    MDT_ESOTERIC_LANGUAGE_CHEF_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_CHEF_OPTION_ENGLISH
+  },
+  MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH: {
+    MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE: MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO
+  },
   MDT_INTERNALNAMES_GCCODE: {MDT_GCCODE_OPTION_MODE: MDT_GCCODE_OPTION_MODE_IDTOGCCODE},
   MDT_INTERNALNAMES_ENCLOSEDAREAS: {MDT_ENCLOSEDAREAS_OPTION_MODE: 'enclosedareas_with4'},
   MDT_INTERNALNAMES_KEYBOARDLAYOUT: {
@@ -190,12 +195,12 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
           MultiDecoderToolCoordinateFormats(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK:
-      gcwTool =
-          MultiDecoderToolEsotericLanguageBeatnik(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolEsotericLanguageBeatnik(
+          id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE:
-      gcwTool =
-          MultiDecoderToolEsotericLanguageBrainfkDerivate(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolEsotericLanguageBrainfkDerivate(
+          id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF:
       gcwTool =
@@ -205,12 +210,11 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
       gcwTool = MultiDecoderToolEsotericLanguageCow(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH:
-      gcwTool =
-          MultiDecoderToolEsotericLanguageDeadfish(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      gcwTool = MultiDecoderToolEsotericLanguageDeadfish(
+          id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO:
-      gcwTool =
-          MultiDecoderToolEsotericLanguageHohoho(id: mdtTool.id, name: mdtTool.name, options: options);
+      gcwTool = MultiDecoderToolEsotericLanguageHohoho(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT:
       gcwTool = MultiDecoderToolEsotericLanguageKarolRobot(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -374,15 +378,22 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT1), MDT_INTERNALNAMES_CCITT1),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_CCITT2), MDT_INTERNALNAMES_CCITT2),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KEYBOARDLAYOUT), MDT_INTERNALNAMES_KEYBOARDLAYOUT),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE),
+    MultiDecoderTool(
+        i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BEATNIK),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE),
+        MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_BRAINFK_DERIVATIVE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_CHEF),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_COW),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE),
-    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE),
+    MultiDecoderTool(
+        i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH),
+    MultiDecoderTool(
+        i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT),
+        MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_KAROL_ROBOT),
+    MultiDecoderTool(
+        i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE),
+    MultiDecoderTool(
+        i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE),
   ];
 
   for (int i = 25; i >= 1; i--) {

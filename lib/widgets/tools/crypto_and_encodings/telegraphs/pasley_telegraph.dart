@@ -26,7 +26,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
-    @override
+  @override
   void initState() {
     super.initState();
     _encodeController = TextEditingController(text: _currentEncodeInput);
@@ -53,7 +53,9 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
       if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
           controller: _encodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z]')),],
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z]')),
+          ],
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -63,9 +65,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
       else
         Column(
           // decrpyt: input segment => output number
-          children: <Widget>[
-              _buildVisualDecryption()
-          ],
+          children: <Widget>[_buildVisualDecryption()],
         ),
       _buildOutput()
     ]);
@@ -115,7 +115,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add([]);
@@ -123,7 +123,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -131,7 +131,7 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [];
@@ -164,11 +164,11 @@ class PasleyTelegraphState extends State<PasleyTelegraph> {
     } else {
       //decode
       var segments;
-        // decode visual mode
-        var output = _currentDisplays.map((character) {
-          if (character != null) return character.join();
-        }).toList();
-        segments = decodeVisualPasley(output);
+      // decode visual mode
+      var output = _currentDisplays.map((character) {
+        if (character != null) return character.join();
+      }).toList();
+      segments = decodeVisualPasley(output);
 
       return Column(
         children: <Widget>[

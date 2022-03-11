@@ -49,9 +49,7 @@ void createIndexedSearchStrings() {
 
   for (GCWTool tool in registeredTools) {
     List<String> searchStrings = [];
-    if (tool.searchKeys == null ||
-      tool.searchKeys.where((element) => element != null && element.isNotEmpty).isEmpty
-    )
+    if (tool.searchKeys == null || tool.searchKeys.where((element) => element != null && element.isNotEmpty).isEmpty)
       continue;
 
     for (String searchKey in tool.searchKeys) {
@@ -70,8 +68,7 @@ void createIndexedSearchStrings() {
     }
     var _indexedSearchStrings = removeAccents(searchStrings.join(' ').toLowerCase());
     if (_indexedSearchStrings == null || _indexedSearchStrings.length == 0) {
-      if (_toolName != null)
-        tool.indexedSearchStrings = _toolName;
+      if (_toolName != null) tool.indexedSearchStrings = _toolName;
       continue;
     }
 

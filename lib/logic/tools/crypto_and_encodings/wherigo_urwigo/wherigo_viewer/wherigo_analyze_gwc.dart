@@ -91,7 +91,8 @@ import 'dart:isolate';
 import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
-StringOffset readString(Uint8List byteList, int offset){ // zero-terminated string - 0x00
+StringOffset readString(Uint8List byteList, int offset) {
+  // zero-terminated string - 0x00
   String result = '';
   while (byteList[offset] != 0) {
     result = result + String.fromCharCode(byteList[offset]);
@@ -100,7 +101,8 @@ StringOffset readString(Uint8List byteList, int offset){ // zero-terminated stri
   return StringOffset(result, offset + 1);
 }
 
-double readDouble(Uint8List byteList, int offset){ // 8 Byte
+double readDouble(Uint8List byteList, int offset) {
+  // 8 Byte
   Uint8List bytes = Uint8List(8);
   bytes[7] = byteList[offset];
   bytes[6] = byteList[offset + 1];
@@ -113,29 +115,34 @@ double readDouble(Uint8List byteList, int offset){ // 8 Byte
   return ByteData.sublistView(bytes).getFloat64(0);
 }
 
-int readLong(Uint8List byteList, int offset){ // 8 Byte
-  return (byteList[offset])
-      + byteList[offset + 1] * 256
-      + byteList[offset + 2] * 256 * 256
-      + byteList[offset + 3] * 256 * 256 * 256;
+int readLong(Uint8List byteList, int offset) {
+  // 8 Byte
+  return (byteList[offset]) +
+      byteList[offset + 1] * 256 +
+      byteList[offset + 2] * 256 * 256 +
+      byteList[offset + 3] * 256 * 256 * 256;
 }
 
-int readInt(Uint8List byteList, int offset){ // 4 Byte
-  return (byteList[offset])
-      + byteList[offset + 1] * 256
-      + byteList[offset + 2] * 256 * 256
-      + byteList[offset + 3] * 256 * 256 * 256;
+int readInt(Uint8List byteList, int offset) {
+  // 4 Byte
+  return (byteList[offset]) +
+      byteList[offset + 1] * 256 +
+      byteList[offset + 2] * 256 * 256 +
+      byteList[offset + 3] * 256 * 256 * 256;
 }
 
-int readShort(Uint8List byteList, int offset){ // 2 Byte
+int readShort(Uint8List byteList, int offset) {
+  // 2 Byte
   return byteList[offset] + 256 * byteList[offset + 1];
 }
 
-int readUShort(Uint8List byteList, int offset){ // 2 Byte Little Endian
+int readUShort(Uint8List byteList, int offset) {
+  // 2 Byte Little Endian
   return byteList[offset] + 256 * byteList[offset + 1];
 }
 
-int readByte(Uint8List byteList, int offset){ // 1 Byte
+int readByte(Uint8List byteList, int offset) {
+  // 1 Byte
   return byteList[offset];
 }
 
@@ -151,22 +158,21 @@ const LENGTH_INT = 4;
 const LENGTH_LONG = 4;
 const LENGTH_DOUBLE = 8;
 
-bool isInvalidCartridge(Uint8List byteList){
-  if (byteList == [] || byteList == null)
-    return true;
+bool isInvalidCartridge(Uint8List byteList) {
+  if (byteList == [] || byteList == null) return true;
   // @0000:                      ; Signature
   //        BYTE     0x02        ; Version Major 2
   //        BYTE     0x0a        ;         Minor 10 11
   //        BYTE     "CART"
   //        BYTE     0x00
   String Signature = '';
-  Signature = Signature + byteList[0].toString();           // 2
-  Signature = Signature + byteList[1].toString();           // 10 or 11
+  Signature = Signature + byteList[0].toString(); // 2
+  Signature = Signature + byteList[1].toString(); // 10 or 11
   Signature = Signature + String.fromCharCode(byteList[2]); // C
   Signature = Signature + String.fromCharCode(byteList[3]); // A
   Signature = Signature + String.fromCharCode(byteList[4]); // R
   Signature = Signature + String.fromCharCode(byteList[5]); // T
-  if (Signature == '210CART' || Signature == '211CART'){
+  if (Signature == '210CART' || Signature == '211CART') {
     return false;
   } else {
     return true;
@@ -180,8 +186,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
 
   FILE_LOAD_STATE checksToDo = FILE_LOAD_STATE.NULL;
 
-  if ((byteListGWC != [] || byteListGWC != null))
-    checksToDo = FILE_LOAD_STATE.GWC;
+  if ((byteListGWC != [] || byteListGWC != null)) checksToDo = FILE_LOAD_STATE.GWC;
 
   if (checksToDo == FILE_LOAD_STATE.NULL) {
     _ResultsGWC.add('wherigo_error_runtime');
@@ -231,9 +236,10 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
       _ResultsGWC.add('wherigo_error_runtime');
       _ResultsGWC.add('wherigo_error_invalid_gwc');
       _Status = ANALYSE_RESULT_STATUS.ERROR_GWC;
-    }
-    else { // analyse GWC-File
-      try { // analysing GWC Header
+    } else {
+      // analyse GWC-File
+      try {
+        // analysing GWC Header
         _Signature = _Signature + byteListGWC[0].toString();
         _Signature = _Signature + byteListGWC[1].toString();
         _Signature = _Signature + String.fromCharCode(byteListGWC[2]);
@@ -258,12 +264,10 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         START_FILES = START_HEADER + _HeaderLength;
 
         _Latitude = readDouble(byteListGWC, _offset);
-        if (_Latitude < -90.0 || _Latitude > 90.0)
-          _Latitude = 0.0;
+        if (_Latitude < -90.0 || _Latitude > 90.0) _Latitude = 0.0;
         _offset = _offset + LENGTH_DOUBLE;
         _Longitude = readDouble(byteListGWC, _offset);
-        if (_Longitude < -180.0 || _Longitude > 180.0)
-          _Longitude = 0.0;
+        if (_Longitude < -180.0 || _Longitude > 180.0) _Longitude = 0.0;
         _offset = _offset + LENGTH_DOUBLE;
         _Altitude = readDouble(byteListGWC, _offset);
         _offset = _offset + LENGTH_DOUBLE;
@@ -342,17 +346,13 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _ResultsGWC.add(exception);
       }
 
-      try { // analysing GWC - LUA Byte-Code
+      try {
+        // analysing GWC - LUA Byte-Code
         // read LUA Byte-Code Object(this.ObjectID, this.Address, this.Type, this.Bytes);
         _MediaFileLength = readInt(byteListGWC, _offset);
         _offset = _offset + LENGTH_INT;
-        _MediaFilesContents.add(
-            MediaFileContent(
-                0,
-                0,
-                Uint8List.sublistView(
-                    byteListGWC, _offset, _offset + _MediaFileLength),
-                _MediaFileLength));
+        _MediaFilesContents.add(MediaFileContent(
+            0, 0, Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength), _MediaFileLength));
         _offset = _offset + _MediaFileLength;
 
         //if (sendAsyncPort != null) { sendAsyncPort.send({'progress': 7}); }
@@ -364,7 +364,8 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _ResultsGWC.add(exception);
       }
 
-      try { // analysing GWC - reading Media-Files
+      try {
+        // analysing GWC - reading Media-Files
         for (int i = 1; i < _MediaFilesHeaders.length; i++) {
           _offset = _MediaFilesHeaders[i].MediaFileAddress;
           _ValidMediaFile = readByte(byteListGWC, _offset);
@@ -379,24 +380,12 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
 
             // read bytes
             _offset = _offset + LENGTH_INT;
+            _MediaFilesContents.add(MediaFileContent(_MediaFilesHeaders[i].MediaFileID, _MediaFileType,
+                Uint8List.sublistView(byteListGWC, _offset, _offset + _MediaFileLength), _MediaFileLength));
+          } else {
+            // despite the medioObject exists in the LUA Sourcecode, the file is not part of the cartridge
             _MediaFilesContents.add(
-                MediaFileContent(
-                    _MediaFilesHeaders[i].MediaFileID,
-                    _MediaFileType,
-                    Uint8List.sublistView(
-                        byteListGWC, _offset, _offset + _MediaFileLength
-                    ),
-                    _MediaFileLength
-                )
-            );
-          } else { // despite the medioObject exists in the LUA Sourcecode, the file is not part of the cartridge
-            _MediaFilesContents.add(
-              MediaFileContent(
-                  _MediaFilesHeaders[i].MediaFileID,
-                  MEDIATYPE_UNK,
-                  Uint8List.fromList([]),
-                  0)
-            );
+                MediaFileContent(_MediaFilesHeaders[i].MediaFileID, MEDIATYPE_UNK, Uint8List.fromList([]), 0));
           }
         }
       } catch (exception) {
@@ -410,34 +399,36 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
       } // catxh exception
     }
   } // if checks to do GWC
-  out.addAll({'WherigoCartridgeGWC': WherigoCartridgeGWC(
-    Signature: _Signature,
-    NumberOfObjects: _NumberOfObjects,
-    MediaFilesHeaders: _MediaFilesHeaders,
-    MediaFilesContents: _MediaFilesContents,
-    HeaderLength: _HeaderLength,
-    Latitude: _Latitude,
-    Longitude: _Longitude,
-    Altitude: _Altitude,
-    Splashscreen: _Splashscreen,
-    SplashscreenIcon: _SplashscreenIcon,
-    DateOfCreation: _DateOfCreation,
-    TypeOfCartridge: _TypeOfCartridge,
-    Player:  _Player,
-    PlayerID: _PlayerID,
-    CartridgeLUAName: _CartridgeLUAName,
-    CartridgeName: _CartridgeName,
-    CartridgeGUID: _CartridgeGUID,
-    CartridgeDescription: _CartridgeDescription,
-    StartingLocationDescription: _StartingLocationDescription,
-    Version: _Version,
-    Author: _Author,
-    Company: _Company,
-    RecommendedDevice: _RecommendedDevice,
-    LengthOfCompletionCode: _LengthOfCompletionCode,
-    CompletionCode: _CompletionCode,
-    ResultStatus: _Status,
-    ResultsGWC: _ResultsGWC,
-  )});
+  out.addAll({
+    'WherigoCartridgeGWC': WherigoCartridgeGWC(
+      Signature: _Signature,
+      NumberOfObjects: _NumberOfObjects,
+      MediaFilesHeaders: _MediaFilesHeaders,
+      MediaFilesContents: _MediaFilesContents,
+      HeaderLength: _HeaderLength,
+      Latitude: _Latitude,
+      Longitude: _Longitude,
+      Altitude: _Altitude,
+      Splashscreen: _Splashscreen,
+      SplashscreenIcon: _SplashscreenIcon,
+      DateOfCreation: _DateOfCreation,
+      TypeOfCartridge: _TypeOfCartridge,
+      Player: _Player,
+      PlayerID: _PlayerID,
+      CartridgeLUAName: _CartridgeLUAName,
+      CartridgeName: _CartridgeName,
+      CartridgeGUID: _CartridgeGUID,
+      CartridgeDescription: _CartridgeDescription,
+      StartingLocationDescription: _StartingLocationDescription,
+      Version: _Version,
+      Author: _Author,
+      Company: _Company,
+      RecommendedDevice: _RecommendedDevice,
+      LengthOfCompletionCode: _LengthOfCompletionCode,
+      CompletionCode: _CompletionCode,
+      ResultStatus: _Status,
+      ResultsGWC: _ResultsGWC,
+    )
+  });
   return out;
 }

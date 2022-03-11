@@ -46,8 +46,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     bool hasHeader: false,
     bool copyAll: false,
     List<Function> tappables,
-    double fontSize
-    }) {
+    double fontSize}) {
   var odd = true;
   var isFirst = true;
 
@@ -99,7 +98,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
                   child: (((isFirst && hasHeader) & !copyAll) || suppressCopyButtons)
                       ? Container()
                       : GCWIconButton(
-                          iconData: Icons.content_copy,
+                          icon: Icons.content_copy,
                           size: IconButtonSize.TINY,
                           onPressed: () {
                             insertIntoGCWClipboard(context, copyText);

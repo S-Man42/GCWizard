@@ -207,8 +207,11 @@ class ChefState extends State<Chef> {
           output = buildOutputText(
               interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
         } catch (e) {
-          output = buildOutputText(
-              ['common_programming_error_runtime', 'chef_error_runtime_exception', 'chef_error_structure_recipe_missing_title']);
+          output = buildOutputText([
+            'common_programming_error_runtime',
+            'chef_error_runtime_exception',
+            'chef_error_structure_recipe_missing_title'
+          ]);
         }
       } else
         output = buildOutputText(['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);

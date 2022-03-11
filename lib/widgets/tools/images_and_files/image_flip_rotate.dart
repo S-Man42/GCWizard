@@ -93,7 +93,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
             child: GCWToolBar(
               children: [
                 GCWIconButton(
-                  iconData: Icons.flip,
+                  icon: Icons.flip,
                   onPressed: () {
                     setState(() {
                       if (_currentRotate == 0 || _currentRotate == 180)
@@ -104,7 +104,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   },
                 ),
                 GCWIconButton(
-                  iconData: Icons.flip,
+                  icon: Icons.flip,
                   rotateDegrees: 90.0,
                   onPressed: () {
                     setState(() {
@@ -116,7 +116,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   },
                 ),
                 GCWIconButton(
-                  iconData: Icons.rotate_left,
+                  icon: Icons.rotate_left,
                   onPressed: () {
                     setState(() {
                       _currentRotate = modulo(_currentRotate - 90, 360);
@@ -124,7 +124,7 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
                   },
                 ),
                 GCWIconButton(
-                  iconData: Icons.rotate_right,
+                  icon: Icons.rotate_right,
                   onPressed: () {
                     setState(() {
                       _currentRotate = modulo(_currentRotate + 90, 360);
@@ -147,10 +147,10 @@ class ImageFlipRotateState extends State<ImageFlipRotate> {
 
   img.Image _flipRotate(img.Image image) {
     return _doFlipRotate(_FlipRotateInput(
-        image: _currentImage,
-        flipHorizontally: _currentFlipHorizontally,
-        flipVertically: _currentFlipVertically,
-        rotate: _currentRotate.toDouble(),
+      image: _currentImage,
+      flipHorizontally: _currentFlipHorizontally,
+      flipVertically: _currentFlipVertically,
+      rotate: _currentRotate.toDouble(),
     ));
   }
 
@@ -165,19 +165,13 @@ class _FlipRotateInput {
   final bool flipVertically;
   final double rotate;
 
-  _FlipRotateInput(
-      {this.image,
-      this.flipHorizontally: false,
-      this.flipVertically: false,
-      this.rotate: 0.0});
+  _FlipRotateInput({this.image, this.flipHorizontally: false, this.flipVertically: false, this.rotate: 0.0});
 }
 
 img.Image _doFlipRotate(_FlipRotateInput input) {
   img.Image image = img.Image.from(input.image);
-  if (input.flipHorizontally)
-    image = img.flipHorizontal(image);
-  if (input.flipVertically)
-    image = img.flipVertical(image);
+  if (input.flipHorizontally) image = img.flipHorizontal(image);
+  if (input.flipVertically) image = img.flipVertical(image);
 
   var rotate = modulo(input.rotate, 360.0);
   if (rotate > 0) {
@@ -192,7 +186,5 @@ openInFlipRotate(BuildContext context, GCWFile file) {
       context,
       NoAnimationMaterialPageRoute(
           builder: (context) => GCWTool(
-              tool: ImageFlipRotate(file: file),
-              toolName: i18n(context, 'image_fliprotate_title'),
-              i18nPrefix: '')));
+              tool: ImageFlipRotate(file: file), toolName: i18n(context, 'image_fliprotate_title'), i18nPrefix: '')));
 }

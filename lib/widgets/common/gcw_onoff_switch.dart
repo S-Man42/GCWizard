@@ -12,7 +12,8 @@ class GCWOnOffSwitch extends StatefulWidget {
   final List<int> flex;
   static const _flex = [1, 1, 1];
 
-  const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false, this.flex: _flex})
+  const GCWOnOffSwitch(
+      {Key key, @required this.value, this.onChanged, this.title, this.notitle: false, this.flex: _flex})
       : super(key: key);
 
   @override
@@ -45,7 +46,7 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
                 ],
               ),
             ),
-            flex: widget.flex[0]+widget.flex[1]+widget.flex[2])
+            flex: widget.flex[0] + widget.flex[1] + widget.flex[2])
       ],
     );
   }

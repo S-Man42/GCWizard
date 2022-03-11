@@ -22,7 +22,8 @@ class GCWFilesOutput extends StatefulWidget {
   final bool suppressHiddenDataMessage;
   final Set<GCWImageViewButtons> suppressedButtons;
 
-  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons}) : super(key: key);
+  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
+      : super(key: key);
 
   @override
   _GCWFilesOutputState createState() => _GCWFilesOutputState();
@@ -50,9 +51,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       var fileName = file.name;
       if (fileName != null) {
         if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
-          var index = fileName
-              .split('_')
-              .last;
+          var index = fileName.split('_').last;
           var prefix;
           if (index == '0') {
             prefix = i18n(context, 'hiddendata_source');
@@ -60,13 +59,9 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
             prefix = i18n(context, 'hiddendata_hidden') + ' $index';
           }
 
-          fileName = '$prefix: ' + file.fileType
-              .toString()
-              .split('.')
-              .last;
+          fileName = '$prefix: ' + file.fileType.toString().split('.').last;
         }
-      }
-      else
+      } else
         fileName = '';
 
       var parentsString = parents.join(' → ');
@@ -112,11 +107,16 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
             ],
           ),
           if (file.fileClass == FileClass.IMAGE)
-            Container(child: GCWImageView(imageData: GCWImageViewData(file), suppressedButtons: widget.suppressedButtons,), margin: EdgeInsets.only(left: 42)),
+            Container(
+                child: GCWImageView(
+                  imageData: GCWImageViewData(file),
+                  suppressedButtons: widget.suppressedButtons,
+                ),
+                margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.TEXT)
             Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.SOUND)
-             Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
+            Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
           if (hasChildren)
             Container(
               child: _buildFileTree(file.children, newParents, level: level + 1),

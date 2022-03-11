@@ -149,26 +149,23 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
       canvasWidth: MediaQuery.of(context).size.width * 0.95,
     ));
 
-    return Container (
+    return Container(
       width: sizes.canvasWidth,
       height: sizes.canvasHeight,
       child: CustomPaint(
-        size: Size(sizes.canvasWidth, sizes.canvasHeight),
-        painter: SymbolTableEncryptionPainter(
-          paintData: SymbolTablePaintData(
-            sizes: sizes,
-            data: _data,
-            imageIndexes: imageIndexes,
-          ),
-          encryption: _symbolTableEncryption()
-        )
-      ),
+          size: Size(sizes.canvasWidth, sizes.canvasHeight),
+          painter: SymbolTableEncryptionPainter(
+              paintData: SymbolTablePaintData(
+                sizes: sizes,
+                data: _data,
+                imageIndexes: imageIndexes,
+              ),
+              encryption: _symbolTableEncryption())),
     );
   }
 
   SymbolTableEncryption _symbolTableEncryption() {
-    if (!widget.specialEncryption)
-      return SymbolTableEncryption();
+    if (!widget.specialEncryption) return SymbolTableEncryption();
 
     switch (_data.symbolKey) {
       case 'color_honey':
@@ -194,20 +191,14 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     var canvas = Canvas(canvasRecorder);
 
     var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
-      mode: SymbolTableEncryptionMode.FIXED_SYMBOLSIZE,
-      symbolWidth: _data.imageSize().width,
-      symbolHeight: _data.imageSize().height,
-      countImages: imageIndexes.length,
-      countColumns: countColumns,
-      relativeBorderWidth: widget.borderWidth
-    ));
+        mode: SymbolTableEncryptionMode.FIXED_SYMBOLSIZE,
+        symbolWidth: _data.imageSize().width,
+        symbolHeight: _data.imageSize().height,
+        countImages: imageIndexes.length,
+        countColumns: countColumns,
+        relativeBorderWidth: widget.borderWidth));
 
-    var paintData = SymbolTablePaintData(
-      canvas: canvas,
-      sizes: sizes,
-      data: _data,
-      imageIndexes: imageIndexes
-    );
+    var paintData = SymbolTablePaintData(canvas: canvas, sizes: sizes, data: _data, imageIndexes: imageIndexes);
 
     canvas = _symbolTableEncryption().paint(paintData);
 

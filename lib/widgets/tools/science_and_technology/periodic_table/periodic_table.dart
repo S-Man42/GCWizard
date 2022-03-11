@@ -261,8 +261,7 @@ class PeriodicTableState extends State<PeriodicTable> {
       text1 = i18n(context, 'periodictable_attribute_isradioactive_true');
     }
 
-    if (color1 == null && color2 == null)
-      return null;
+    if (color1 == null && color2 == null) return null;
 
     return Column(
       children: [
@@ -270,16 +269,15 @@ class PeriodicTableState extends State<PeriodicTable> {
         [color2, text2]
       ].map((e) {
         return Container(
-          height: min<double>(defaultFontSize() * 2.5, _maxCellHeight) / 2.0,
-          color: e[0],
-          width: _cellWidth * _legendWidth(period),
-          child: AutoSizeText(
-            e[1] ?? '',
-            style: gcwTextStyle().copyWith(color: Colors.black),
-            minFontSize: AUTO_FONT_SIZE_MIN,
-            maxLines: 1,
-          )
-        );
+            height: min<double>(defaultFontSize() * 2.5, _maxCellHeight) / 2.0,
+            color: e[0],
+            width: _cellWidth * _legendWidth(period),
+            child: AutoSizeText(
+              e[1] ?? '',
+              style: gcwTextStyle().copyWith(color: Colors.black),
+              minFontSize: AUTO_FONT_SIZE_MIN,
+              maxLines: 1,
+            ));
       }).toList(),
     );
   }

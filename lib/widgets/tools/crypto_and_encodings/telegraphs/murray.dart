@@ -125,7 +125,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add([]);
@@ -133,7 +133,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -141,7 +141,7 @@ class MurrayTelegraphState extends State<MurrayTelegraph> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [];

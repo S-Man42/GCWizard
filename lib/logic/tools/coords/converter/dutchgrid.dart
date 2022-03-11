@@ -1,4 +1,3 @@
-
 import 'package:gc_wizard/logic/tools/coords/converter/djvanderlaan/rijksdriehoek/rijksdriehoek_js.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/utils/common_utils.dart';

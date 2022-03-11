@@ -153,7 +153,7 @@ class TomTomState extends State<TomTom> {
         },
       ),
       GCWIconButton(
-        iconData: Icons.space_bar,
+        icon: Icons.space_bar,
         onPressed: () {
           setState(() {
             _addCharacter(' ');
@@ -161,7 +161,7 @@ class TomTomState extends State<TomTom> {
         },
       ),
       GCWIconButton(
-        iconData: Icons.backspace,
+        icon: Icons.backspace,
         onPressed: () {
           setState(() {
             _currentInputDecrypt = textControllerDoBackSpace(_currentInputDecrypt, _inputDecryptController);

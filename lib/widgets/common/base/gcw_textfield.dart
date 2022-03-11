@@ -132,21 +132,16 @@ class _GCWTextFieldState extends State<GCWTextField> {
           );
         }));
 
-    if ((widget.title ?? '').isEmpty)
-      return textField;
+    if ((widget.title ?? '').isEmpty) return textField;
 
     return Row(
       children: [
         Expanded(
-          child: GCWText(
-            text: widget.title + ':',
-          ),
-          flex: 1
-        ),
-        Expanded(
-          child: textField,
-          flex: 3
-        )
+            child: GCWText(
+              text: widget.title + ':',
+            ),
+            flex: 1),
+        Expanded(child: textField, flex: 3)
       ],
     );
   }

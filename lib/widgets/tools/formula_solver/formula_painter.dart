@@ -433,8 +433,7 @@ class FormulaPainter {
 
     return ((_values != null) &&
         (_values.containsKey(match.group(1))) &&
-        ((_values[match.group(1)] == null) ||
-        (_values[match.group(1)].isEmpty)));
+        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
   }
 
   List<String> _isInvalidVariable(String formula) {

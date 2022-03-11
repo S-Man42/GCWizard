@@ -103,16 +103,25 @@ class LicensesState extends State<Licenses> {
           ],
           [i18n(context, 'symboltables_iokharic_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_kabouter_abc_title'), 'Pascalvanboxel, Egel (scoutpedia.nl) (CC BY-NC-SA 4.0)'],
-          [i18n(context, 'symboltables_matoran_title'), 'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'],
+          [
+            i18n(context, 'symboltables_matoran_title'),
+            'Matoran is part of the Bionicle™ world. Bionicle™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
+          ],
           [i18n(context, 'symboltables_murray_title'), 'Japiejo (geocachingtoolbox.com)'],
-          [i18n(context, 'symboltables_ninjargon_title'), 'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'],
+          [
+            i18n(context, 'symboltables_ninjargon_title'),
+            'Ninjago™ is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this tool. (Personal Use)'
+          ],
           [i18n(context, 'symboltables_prosyl_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_puzzle_2_title'), 'Roci (fontspace.com) (Personal Use)'],
           [i18n(context, 'telegraph_prussia_title'), 'Museumsstiftung Post und Telekommunikation (CC BY-SA)'],
           [i18n(context, 'symboltables_sanluca_title'), 'Leadermassimo (wikimafia.it) (CC BY-SA 4.0)'],
           [i18n(context, 'symboltables_solmisation_title'), 'www.breitkopf.de (Personal Use)'],
           [i18n(context, 'symboltables_vulcanian_title'), '(Personal Use)'],
-        ], flexValues: [1, 2]),
+        ], flexValues: [
+          1,
+          2
+        ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_telegraphs')),
       Column(

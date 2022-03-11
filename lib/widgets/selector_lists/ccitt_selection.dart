@@ -17,12 +17,11 @@ class CCITTSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
-      if (className(element.tool) == className(SymbolTable()) )
-        if ((element.tool as SymbolTable).symbolKey == 'ita1_1926' ||
-            (element.tool as SymbolTable).symbolKey == 'ita1_1929' ||
-            (element.tool as SymbolTable).symbolKey == 'ita2_1929' ||
-            (element.tool as SymbolTable).symbolKey == 'ita3_1931')
-          return true;
+      if (className(element.tool) == className(SymbolTable())) if ((element.tool as SymbolTable).symbolKey ==
+              'ita1_1926' ||
+          (element.tool as SymbolTable).symbolKey == 'ita1_1929' ||
+          (element.tool as SymbolTable).symbolKey == 'ita2_1929' ||
+          (element.tool as SymbolTable).symbolKey == 'ita3_1931') return true;
 
       return [
         className(CCITT1()),

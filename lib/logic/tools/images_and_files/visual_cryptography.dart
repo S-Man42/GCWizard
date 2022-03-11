@@ -150,20 +150,16 @@ Uint8List cleanImage(Uint8List image1, Uint8List image2, int offsetX, int offset
 Future<Tuple2<Uint8List, Uint8List>> encodeImagesAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var output = await encodeImage(
-      jobData.parameters.item1,
-      jobData.parameters.item2,
-      jobData.parameters.item3,
-      jobData.parameters.item4,
-      jobData.parameters.item5
-  );
+  var output = await encodeImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3,
+      jobData.parameters.item4, jobData.parameters.item5);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, Uint8List keyImage, int offsetX, int offsetY, int scale) {
+Future<Tuple2<Uint8List, Uint8List>> encodeImage(
+    Uint8List image, Uint8List keyImage, int offsetX, int offsetY, int scale) {
   if (image == null) return null;
 
   var _image = Image.decodeImage(image);
@@ -175,11 +171,10 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, Uint8List keyI
     _keyImage = Image.decodeImage(keyImage);
     if (_keyImage == null) return null;
 
-    scale = (min<double>(_keyImage.width / 2 /_image.width, _keyImage.height / 2 /_image.height) * 100).toInt();
+    scale = (min<double>(_keyImage.width / 2 / _image.width, _keyImage.height / 2 / _image.height) * 100).toInt();
   }
 
-  if (scale > 0 && scale != 100)
-    _image = Image.copyResize(_image, height: (_image.height * scale / 100).toInt());
+  if (scale > 0 && scale != 100) _image = Image.copyResize(_image, height: (_image.height * scale / 100).toInt());
 
   if (hasKeyImage) {
     var _dstImage = Image.Image(_keyImage.width ~/ 2, _keyImage.height ~/ 2);
@@ -188,7 +183,8 @@ Future<Tuple2<Uint8List, Uint8List>> encodeImage(Uint8List image, Uint8List keyI
     var _dstXOffset = (_dstImage.width - _image.width) ~/ 2;
     var _dstYOffset = (_dstImage.height - _image.height) ~/ 2;
 
-    _dstImage = Image.drawImage(_dstImage, _image, dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
+    _dstImage = Image.drawImage(_dstImage, _image,
+        dstX: _dstXOffset, dstY: _dstYOffset, dstW: _image.width, dstH: _image.height);
 
     return _encodeWithKeyImage(offsetX, offsetY, _dstImage, _keyImage);
   } else {
@@ -205,7 +201,8 @@ List<bool> _keyPixels(Image.Image _keyImage, int x, int y) {
   ];
 }
 
-Future<Tuple2<Uint8List, Uint8List>> _encodeWithKeyImage(int offsetX, int offsetY, Image.Image _image, Image.Image _keyImage) {
+Future<Tuple2<Uint8List, Uint8List>> _encodeWithKeyImage(
+    int offsetX, int offsetY, Image.Image _image, Image.Image _keyImage) {
   var image1 = Image.Image(_image.width * 2, _image.height * 2);
 
   for (var x = 0; x < _image.width; x++) {
@@ -246,7 +243,8 @@ Future<Tuple2<Uint8List, Uint8List>> _encodeWithoutKeyImage(int offsetX, int off
   var image1OffsetY = max(offsetY, 0).abs();
   var image2OffsetX = min(offsetX, 0).abs();
   var image2OffsetY = min(offsetY, 0).abs();
-  var image1 = Image.Image(_image.width * 2 + image1OffsetX + image2OffsetX, _image.height * 2 + image1OffsetY + image2OffsetY);
+  var image1 =
+      Image.Image(_image.width * 2 + image1OffsetX + image2OffsetX, _image.height * 2 + image1OffsetY + image2OffsetY);
   var image2 = Image.Image(image1.width, image1.height);
 
   for (var x = -(image1OffsetX + image2OffsetX); x < image1OffsetX + image2OffsetX + _image.width; x++) {

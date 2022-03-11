@@ -64,7 +64,7 @@ class AnimatedImageState extends State<AnimatedImage> {
           child: _buildOutput(),
           trailing: Row(children: <Widget>[
             GCWIconButton(
-              iconData: Icons.play_arrow,
+              icon: Icons.play_arrow,
               size: IconButtonSize.SMALL,
               iconColor: _outData != null && !_play ? null : themeColors().inActive(),
               onPressed: () {
@@ -74,7 +74,7 @@ class AnimatedImageState extends State<AnimatedImage> {
               },
             ),
             GCWIconButton(
-              iconData: Icons.stop,
+              icon: Icons.stop,
               size: IconButtonSize.SMALL,
               iconColor: _play ? null : themeColors().inActive(),
               onPressed: () {
@@ -84,7 +84,7 @@ class AnimatedImageState extends State<AnimatedImage> {
               },
             ),
             GCWIconButton(
-              iconData: Icons.save,
+              icon: Icons.save,
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {

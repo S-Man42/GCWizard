@@ -12,8 +12,15 @@ class GCWSlider extends StatefulWidget {
   final double max;
   final bool suppressReset;
 
-  const GCWSlider
-      ({Key key, this.title, this.value, this.onChanged, this.onChangeEnd, this.min, this.max, this.suppressReset: false})
+  const GCWSlider(
+      {Key key,
+      this.title,
+      this.value,
+      this.onChanged,
+      this.onChangeEnd,
+      this.min,
+      this.max,
+      this.suppressReset: false})
       : super(key: key);
 
   @override
@@ -60,7 +67,7 @@ class _GCWSliderState extends State<GCWSlider> {
         ),
         if (!widget.suppressReset)
           GCWIconButton(
-            iconData: Icons.refresh,
+            icon: Icons.refresh,
             size: IconButtonSize.SMALL,
             onPressed: () {
               setState(() {

@@ -195,7 +195,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
             suppressTopSpace: true,
             text: i18n(context, 'image_colorcorrections_options'),
             trailing: GCWIconButton(
-              iconData: Icons.refresh,
+              icon: Icons.refresh,
               size: IconButtonSize.SMALL,
               onPressed: () {
                 _resetInputs();

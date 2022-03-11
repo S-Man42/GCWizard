@@ -76,8 +76,7 @@ class RomanNumbersState extends State<RomanNumbers> {
     List<dynamic> output;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentEncodeInput == null)
-        return GCWDefaultOutput();
+      if (_currentEncodeInput == null) return GCWDefaultOutput();
 
       output = [
         encodeRomanNumbers(_currentEncodeInput, type: RomanNumberType.USE_SUBTRACTION_RULE) ?? '',
@@ -87,11 +86,13 @@ class RomanNumbersState extends State<RomanNumbers> {
       if (_currentDecodeInput == null || _currentDecodeInput.isEmpty) return GCWDefaultOutput();
 
       output = [
-        _currentDecodeInput.split(RegExp(r'\s+'))
+        _currentDecodeInput
+            .split(RegExp(r'\s+'))
             .map((number) => decodeRomanNumbers(number, type: RomanNumberType.USE_SUBTRACTION_RULE))
             .where((number) => number != null)
             .join(' '),
-        _currentDecodeInput.split(RegExp(r'\s+'))
+        _currentDecodeInput
+            .split(RegExp(r'\s+'))
             .map((number) => decodeRomanNumbers(number, type: RomanNumberType.ONLY_ADDITION))
             .where((number) => number != null)
             .join(' ')

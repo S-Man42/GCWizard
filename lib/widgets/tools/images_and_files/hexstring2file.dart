@@ -42,7 +42,7 @@ class HexString2FileState extends State<HexString2File> {
         GCWDefaultOutput(
             child: _buildOutput(),
             trailing: GCWIconButton(
-              iconData: Icons.save,
+              icon: Icons.save,
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {

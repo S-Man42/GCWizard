@@ -61,7 +61,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
             widget.upsideDownButton
                 ? Container(
                     child: GCWIconButton(
-                      iconData: Icons.rotate_left,
+                      icon: Icons.rotate_left,
                       size: IconButtonSize.SMALL,
                       onPressed: () {
                         setState(() {
@@ -74,7 +74,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
             Container(
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
-                iconData: Icons.save,
+                icon: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await buildSegmentDisplayImage(countColumns, _displays, _currentUpsideDown).then((image) {
@@ -90,7 +90,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
             if (widget.showZoomButtons)
               GCWIconButton(
                 size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_in,
+                icon: Icons.zoom_in,
                 onPressed: () {
                   setState(() {
                     int newCountColumn = max(countColumns - 1, 1);
@@ -103,7 +103,7 @@ class _GCWSegmentDisplayOutputState extends State<GCWSegmentDisplayOutput> {
             if (widget.showZoomButtons)
               GCWIconButton(
                 size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_out,
+                icon: Icons.zoom_out,
                 onPressed: () {
                   setState(() {
                     int newCountColumn = countColumns + 1;

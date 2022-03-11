@@ -35,7 +35,7 @@ class GCWSymbolTableSymbolMatrix extends StatefulWidget {
       this.onChanged,
       this.selectable: false,
       this.onSymbolTapped,
-	    this.fixed: false,
+      this.fixed: false,
       this.overlayOn: true,
       this.symbolKey})
       : super(key: key);
@@ -56,7 +56,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
 
   @override
   Widget build(BuildContext context) {
-    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40)/ 3;
+    var _symbolTableSwitchPartWidth = (MediaQuery.of(context).size.width - 40) / 3;
     var _decryptionSwitchWidth = (MediaQuery.of(context).size.width - 40 - 57 - 20);
     var _decryptionSwitchPartWidth = (_symbolTableSwitchPartWidth / _decryptionSwitchWidth * 100).toInt();
 
@@ -69,9 +69,11 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               child: GCWOnOffSwitch(
                 value: _currentShowOverlayedSymbols,
                 title: i18n(context, 'symboltables_showoverlay'),
-                flex: [_decryptionSwitchPartWidth,
-                _decryptionSwitchPartWidth,
-                max(100 - 2 * _decryptionSwitchPartWidth, 0)],
+                flex: [
+                  _decryptionSwitchPartWidth,
+                  _decryptionSwitchPartWidth,
+                  max(100 - 2 * _decryptionSwitchPartWidth, 0)
+                ],
                 onChanged: (value) {
                   setState(() {
                     _currentShowOverlayedSymbols = value;
@@ -82,10 +84,10 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
           widget.symbolKey == null
               ? Container(width: 20)
               : GCWIconButton(
-              iconData: Icons.app_registration,
-              onPressed: () {
-                openInSymbolReplacer(context, widget.symbolKey, widget.imageData);
-              }),
+                  icon: Icons.app_registration,
+                  onPressed: () {
+                    openInSymbolReplacer(context, widget.symbolKey, widget.imageData);
+                  }),
           Container(width: 15),
           GCWSymbolTableZoomButtons(
               countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
@@ -192,9 +194,8 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
         context,
         NoAnimationMaterialPageRoute(
             builder: (context) => GCWTool(
-                tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey), toolName: i18n(context, 'symbol_replacer_title'), i18nPrefix: ''
-            )
-        )
-    );
+                tool: SymbolReplacer(imageData: imageData, symbolKey: symbolKey),
+                toolName: i18n(context, 'symbol_replacer_title'),
+                i18nPrefix: '')));
   }
 }

@@ -1815,73 +1815,73 @@ final Map<String, String> BULWordToNum = {
 };
 
 final Map<String, String> THAIRTGSWordToNum = {
-  'sun' : '0',
-  'nueng' : '1',
-  'song' : '2',
-  'yi' : '2',
-  'sam' : '3',
-  'si' : '4',
-  'ha' : '5',
-  'hok' : '6',
-  'chet' : '7',
-  'paet' : '8',
-  'kao' : '9',
-  'sip' : '10',
-  'sip et' : '11',
-  'sip song' : '12',
-  'sip sam' : '13',
-  'sip si' : '14',
-  'sip ha' : '15',
-  'sip hok' : '16',
-  'sip chet' : '17',
-  'sip paet' : '18',
-  'sip kao' : '19',
-  'yi sip' : '20',
-  'sam sip' : '30',
-  'si sip' : '40',
-  'ha sip' : '50',
-  'hok sip' : '60',
-  'chet sip' : '70',
-  'paet sip' : '80',
-  'kao sip' : '90',
-  'roi' : '100',
-  'phan' : '1000',
-  'muen' : '10000',
+  'sun': '0',
+  'nueng': '1',
+  'song': '2',
+  'yi': '2',
+  'sam': '3',
+  'si': '4',
+  'ha': '5',
+  'hok': '6',
+  'chet': '7',
+  'paet': '8',
+  'kao': '9',
+  'sip': '10',
+  'sip et': '11',
+  'sip song': '12',
+  'sip sam': '13',
+  'sip si': '14',
+  'sip ha': '15',
+  'sip hok': '16',
+  'sip chet': '17',
+  'sip paet': '18',
+  'sip kao': '19',
+  'yi sip': '20',
+  'sam sip': '30',
+  'si sip': '40',
+  'ha sip': '50',
+  'hok sip': '60',
+  'chet sip': '70',
+  'paet sip': '80',
+  'kao sip': '90',
+  'roi': '100',
+  'phan': '1000',
+  'muen': '10000',
 };
 
 final Map<String, String> THAIWordToNum = {
-  'ศูนย์' : '0',
-  'หนึ่ง' : '1',
-  'สอง' : '2',
-  'ยี่' : '2',
-  'สาม' : '3',
-  'สี่' : '4',
-  'ห้า' : '5',
-  'หก' : '6',
-  'เจ็ด' : '7',
-  'แปด' : '8',
-  'เก้า' : '9',
-  'สิบ' : '10',
-  'สิบหนึ่ง' : '11',
-  'สิบสอง' : '12',
-  'สิบสาม' : '13',
-  'สิบสี่' : '14',
-  'สิบห้า' : '15',
-  'สิบหก' : '16',
-  'สิบเจ็ด' : '17',
-  'สิบแปด' : '18',
-  'สิบเก้า' : '19',
-  'ยี่สิบสิบ' : '20',
-  'สามสิบ' : '30',
-  'สี่สิบ' : '40',
-  'ห้าสิบ' : '50',
-  'หกสิบ' : '60',
-  'เจ็ดสิบ' : '70',
-  'แปดสิบ' : '80',
-  'เก้าสิบ' : '90',
-  'ร้อยสิบ' : '100',
-  'พันสิบ' : '1000',
-  'หมื่นสิบ' : '10000',
+  'ศูนย์': '0',
+  'หนึ่ง': '1',
+  'สอง': '2',
+  'ยี่': '2',
+  'สาม': '3',
+  'สี่': '4',
+  'ห้า': '5',
+  'หก': '6',
+  'เจ็ด': '7',
+  'แปด': '8',
+  'เก้า': '9',
+  'สิบ': '10',
+  'สิบหนึ่ง': '11',
+  'สิบสอง': '12',
+  'สิบสาม': '13',
+  'สิบสี่': '14',
+  'สิบห้า': '15',
+  'สิบหก': '16',
+  'สิบเจ็ด': '17',
+  'สิบแปด': '18',
+  'สิบเก้า': '19',
+  'ยี่สิบสิบ': '20',
+  'สามสิบ': '30',
+  'สี่สิบ': '40',
+  'ห้าสิบ': '50',
+  'หกสิบ': '60',
+  'เจ็ดสิบ': '70',
+  'แปดสิบ': '80',
+  'เก้าสิบ': '90',
+  'ร้อยสิบ': '100',
+  'พันสิบ': '1000',
+  'หมื่นสิบ': '10000',
 };
 
 List ZOOMABLE_LANGUAGE = [
@@ -2018,7 +2018,7 @@ Map NumWords = {
   NumeralWordsLanguage.VIE: VIEWordToNum,
   NumeralWordsLanguage.VIEHANTU: VIEHANTUWordToNum,
   NumeralWordsLanguage.VIESINO: VIESINOWordToNum,
-  NumeralWordsLanguage.VIECHUNOM:VIECHUNOMWordToNum,
+  NumeralWordsLanguage.VIECHUNOM: VIECHUNOMWordToNum,
   NumeralWordsLanguage.TUR: TURWordToNum,
   NumeralWordsLanguage.MEG: MEGWordToNum,
   NumeralWordsLanguage.IND: INDWordToNum,
@@ -2486,8 +2486,9 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 
     // build map to identify numeral words
     Map searchLanguages = new Map();
-    if (language == NumeralWordsLanguage.ALL) {// search element in all languages
-        NumWords.forEach((key, value) {
+    if (language == NumeralWordsLanguage.ALL) {
+      // search element in all languages
+      NumWords.forEach((key, value) {
         // key: language  value: map
         var sKey = key;
         Map sValue = new Map();
@@ -2496,8 +2497,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         });
         searchLanguages[sKey] = sValue;
       });
-    }
-    else {
+    } else {
       // search only in one language
       Map sValue = new Map();
       NumWords[language].forEach((key, value) {

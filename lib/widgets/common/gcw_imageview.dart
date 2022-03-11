@@ -164,7 +164,7 @@ class _GCWImageViewState extends State<GCWImageView> {
 
     return [
       GCWIconButton(
-          iconData: Icons.zoom_out_map,
+          icon: Icons.zoom_out_map,
           size: iconSize,
           onPressed: () {
             if (widget.onBeforeLoadBigImage != null) {
@@ -176,7 +176,7 @@ class _GCWImageViewState extends State<GCWImageView> {
             }
           }),
       GCWIconButton(
-          iconData: Icons.fit_screen,
+          icon: Icons.fit_screen,
           size: iconSize,
           onPressed: () {
             _scaleStateController.scaleState = PhotoViewScaleState.initial;
@@ -189,7 +189,7 @@ class _GCWImageViewState extends State<GCWImageView> {
               ),
       if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.SAVE))
         GCWIconButton(
-            iconData: Icons.save,
+            icon: Icons.save,
             size: iconSize,
             onPressed: () {
               var imgData;
@@ -266,17 +266,16 @@ class _GCWImageViewState extends State<GCWImageView> {
                   if (widget.suppressOpenInTool == null ||
                       !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.FLIPROTATE))
                     GCWPopupMenuItem(
-                        child: iconedGCWPopupMenuItem(
-                            context, Icons.brush, 'image_fliprotate_openinfliprotate'),
+                        child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_fliprotate_openinfliprotate'),
                         action: (index) => setState(() {
-                          if (widget.onBeforeLoadBigImage != null) {
-                            widget.onBeforeLoadBigImage().then((imgData) {
-                              openInFlipRotate(context, imgData);
-                            });
-                          } else {
-                            openInFlipRotate(context, widget.imageData.file);
-                          }
-                        })),
+                              if (widget.onBeforeLoadBigImage != null) {
+                                widget.onBeforeLoadBigImage().then((imgData) {
+                                  openInFlipRotate(context, imgData);
+                                });
+                              } else {
+                                openInFlipRotate(context, widget.imageData.file);
+                              }
+                            })),
                 ])
     ];
   }

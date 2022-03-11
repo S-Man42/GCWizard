@@ -24,8 +24,8 @@ String obfuscateEarwigoText(String text) {
       c = rot_palette[p - 1];
     }
     result = result + c;
-  };
+  }
+  ;
 
   return result;
 }
-

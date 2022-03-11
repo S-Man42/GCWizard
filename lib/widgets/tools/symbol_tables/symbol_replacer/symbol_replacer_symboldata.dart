@@ -34,7 +34,6 @@ class _SymbolReplacerSymbolTableData {
       return _tempMap;
     }).toList();
   }
-
 }
 
 class SymbolReplacerSymbolData {

@@ -52,7 +52,7 @@ class _GCWGalleryState extends State<GCWGallery> {
           Positioned(
             top: 145,
             child: GCWIconButton(
-              iconData: Icons.arrow_back_ios,
+              icon: Icons.arrow_back_ios,
               size: IconButtonSize.SMALL,
               onPressed: () {
                 setState(() {
@@ -75,7 +75,7 @@ class _GCWGalleryState extends State<GCWGallery> {
               top: 145,
               right: 0,
               child: GCWIconButton(
-                iconData: Icons.arrow_forward_ios,
+                icon: Icons.arrow_forward_ios,
                 size: IconButtonSize.SMALL,
                 onPressed: () {
                   setState(() {

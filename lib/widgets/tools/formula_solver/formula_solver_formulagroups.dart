@@ -60,11 +60,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       children: <Widget>[
         GCWTextDivider(
             text: i18n(context, 'formulasolver_groups_newgroup'),
-            trailing: GCWPasteButton(
-              iconSize: IconButtonSize.SMALL,
-              onSelected: _importFromClipboard
-            )
-        ),
+            trailing: GCWPasteButton(iconSize: IconButtonSize.SMALL, onSelected: _importFromClipboard)),
         Row(
           children: <Widget>[
             Expanded(
@@ -84,7 +80,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
               ),
             ),
             GCWIconButton(
-              iconData: Icons.add,
+              icon: Icons.add,
               onPressed: () {
                 _addNewGroup();
                 setState(() {});
@@ -224,7 +220,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
               ),
               _currentEditId == group.id
                   ? GCWIconButton(
-                      iconData: Icons.check,
+                      icon: Icons.check,
                       onPressed: () {
                         group.name = _currentEditedName;
                         _updateGroup();

@@ -11,7 +11,14 @@ class GCWDropDownButton extends StatefulWidget {
   final String title;
   final bool alternativeColor;
 
-  const GCWDropDownButton({Key key, this.value, this.items, this.onChanged, this.selectedItemBuilder, this.title, this.alternativeColor: false})
+  const GCWDropDownButton(
+      {Key key,
+      this.value,
+      this.items,
+      this.onChanged,
+      this.selectedItemBuilder,
+      this.title,
+      this.alternativeColor: false})
       : super(key: key);
 
   @override
@@ -41,7 +48,10 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
                 margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(ROUNDED_BORDER_RADIUS),
-                  border: Border.all(color: widget.alternativeColor ? colors.dialogText() : colors.accent(), style: BorderStyle.solid, width: 1.0),
+                  border: Border.all(
+                      color: widget.alternativeColor ? colors.dialogText() : colors.accent(),
+                      style: BorderStyle.solid,
+                      width: 1.0),
                 ),
                 child: DropdownButtonHideUnderline(
                     child: DropdownButton(

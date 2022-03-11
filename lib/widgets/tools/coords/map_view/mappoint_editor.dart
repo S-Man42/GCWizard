@@ -83,8 +83,8 @@ class MapPointEditorState extends State<MapPointEditor> {
           hsvColor: _currentMarkerColorPickerColor,
           onChanged: (color) {
             setState(() {
-             _currentMarkerColorPickerColor = color;
-             widget.mapPoint.color = _currentMarkerColorPickerColor.toColor();
+              _currentMarkerColorPickerColor = color;
+              widget.mapPoint.color = _currentMarkerColorPickerColor.toColor();
             });
           },
         ),

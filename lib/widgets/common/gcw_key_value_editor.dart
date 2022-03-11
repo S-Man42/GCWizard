@@ -223,7 +223,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             widget.alphabetInstertButtonLabel != null
                 ? _alphabetAddLetterButton()
                 : GCWIconButton(
-                    iconData: Icons.add,
+                    icon: Icons.add,
                     onPressed: () {
                       if (_currentFormulaValueTypeInput == FormulaValueType.INTERPOLATED) {
                         if (!VARIABLESTRING.hasMatch(_currentValueInput.toLowerCase())) {
@@ -339,7 +339,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             ),
             GCWIconButton(
               size: IconButtonSize.SMALL,
-              iconData: Icons.content_copy,
+              icon: Icons.content_copy,
               onPressed: () {
                 var copyText = _toJson();
                 if (copyText == null) return;
@@ -435,7 +435,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             : Container(),
         _editButton(entry),
         GCWIconButton(
-          iconData: Icons.remove,
+          icon: Icons.remove,
           onPressed: () {
             setState(() {
               if (widget.onRemoveEntry != null) widget.onRemoveEntry(_getEntryId(entry), context);
@@ -470,7 +470,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     return _currentEditId == _getEntryId(entry)
         ? GCWIconButton(
-            iconData: Icons.check,
+            icon: Icons.check,
             onPressed: () {
               if (widget.onUpdateEntry != null) {
                 if (widget.formulaValueList == null) {
@@ -495,7 +495,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             },
           )
         : GCWIconButton(
-            iconData: Icons.edit,
+            icon: Icons.edit,
             onPressed: () {
               setState(() {
                 FocusScope.of(context).requestFocus(_focusNodeEditValue);

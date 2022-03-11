@@ -8,7 +8,6 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
-
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 
 Future<List<GCWFile>> hiddenData(GCWFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
@@ -197,13 +196,13 @@ int pngImageSize(Uint8List data) {
     for (int i = startIndex; i < data.length - 7; i++) {
       // IEND ??
       if ((data[i] == 0x49) &
-      (data[i + 1] == 0x45) &
-      (data[i + 2] == 0x4E) &
-      (data[i + 3] == 0x44) &
-      (data[i + 4] == 0xAE) &
-      (data[i + 5] == 0x42) &
-      (data[i + 6] == 0x60) &
-      (data[i + 7] == 0x82)) {
+          (data[i + 1] == 0x45) &
+          (data[i + 2] == 0x4E) &
+          (data[i + 3] == 0x44) &
+          (data[i + 4] == 0xAE) &
+          (data[i + 5] == 0x42) &
+          (data[i + 6] == 0x60) &
+          (data[i + 7] == 0x82)) {
         endIndex = i + 4 + 4;
         break;
       }
@@ -290,7 +289,7 @@ int zipFileSize(Uint8List data) {
 
   // ZIP Signature file header
   while (
-  (data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x03) & (data[offset + 3] == 0x04)) {
+      (data[offset] == 0x50) & (data[offset + 1] == 0x4B) & (data[offset + 2] == 0x03) & (data[offset + 3] == 0x04)) {
     offset += 30;
 
     var fileNameLength = data.buffer.asByteData(offset - 4, 2).getInt16(0, Endian.little);
@@ -320,9 +319,9 @@ int zipFileSize(Uint8List data) {
 
     // header end central directory
     else if ((data[offset] == 0x50) &
-    (data[offset + 1] == 0x4B) &
-    (data[offset + 2] == 0x05) &
-    (data[offset + 3] == 0x06)) {
+        (data[offset + 1] == 0x4B) &
+        (data[offset + 2] == 0x05) &
+        (data[offset + 3] == 0x06)) {
       if (offset + 22 > data.length) return null;
 
       offset += 22;
@@ -353,13 +352,13 @@ int rarFileSize(Uint8List data) {
 
   // header RAR 5.0
   if ((data[offset] == 0x52) &
-  (data[offset + 1] == 0x61) &
-  (data[offset + 2] == 0x72) &
-  (data[offset + 3] == 0x21) &
-  (data[offset + 4] == 0x1A) &
-  (data[offset + 5] == 0x07) &
-  (data[offset + 6] == 0x01) &
-  (data[offset + 7] == 0x00)) {
+      (data[offset + 1] == 0x61) &
+      (data[offset + 2] == 0x72) &
+      (data[offset + 3] == 0x21) &
+      (data[offset + 4] == 0x1A) &
+      (data[offset + 5] == 0x07) &
+      (data[offset + 6] == 0x01) &
+      (data[offset + 7] == 0x00)) {
     offset += 8;
   } else
     return null;
@@ -503,7 +502,7 @@ int mp3FileSize(Uint8List data) {
 
     } else if ((offset + 3 < data.length) &&
         (((data[offset] == 0x49) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x33)) | //  ID3v2
-        ((data[offset] == 0x33) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x49)))) {
+            ((data[offset] == 0x33) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x49)))) {
       //  ID3v2 Footer
 
       var footer = (data[offset] == 0x33) & (data[offset + 1] == 0x44) & (data[offset + 2] == 0x49); //  ID3v2 Footer
@@ -547,10 +546,10 @@ int tarFileSize(Uint8List data) {
   while (offset + headerSize < data.length) {
     // ustar
     if ((data[offset + magicByteOffset] == 0x75) &
-    (data[offset + magicByteOffset + 1] == 0x73) &
-    (data[offset + magicByteOffset + 2] == 0x74) &
-    (data[offset + magicByteOffset + 3] == 0x61) &
-    (data[offset + magicByteOffset + 4] == 0x72)) {
+        (data[offset + magicByteOffset + 1] == 0x73) &
+        (data[offset + magicByteOffset + 2] == 0x74) &
+        (data[offset + magicByteOffset + 3] == 0x61) &
+        (data[offset + magicByteOffset + 4] == 0x72)) {
       //0       100 File name
       //100     8   File mode(octal)
       //108     8   Owner's numeric user ID (octal)
@@ -562,7 +561,7 @@ int tarFileSize(Uint8List data) {
       //157     100     Name of linked file
 
       var fileSizeString =
-      convertBase(utf8.decode(trimNullBytes(Uint8List.fromList(data.skip(offset + 124).take(12).toList()))), 8, 10);
+          convertBase(utf8.decode(trimNullBytes(Uint8List.fromList(data.skip(offset + 124).take(12).toList()))), 8, 10);
       if ((fileSizeString == null) || (fileSizeString == '')) return null;
       var fileSize = int.parse(fileSizeString);
       var usedSize = (fileSize / blockSize.toDouble()).ceil() * blockSize + headerSize;
@@ -580,6 +579,3 @@ int tarFileSize(Uint8List data) {
 
   return offset;
 }
-
-
-

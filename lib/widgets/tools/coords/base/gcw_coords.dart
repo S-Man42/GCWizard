@@ -369,7 +369,7 @@ class GCWCoordsState extends State<GCWCoords> {
       children: [
         Container(
           child: GCWIconButton(
-            iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+            icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
             size: size,
             onPressed: () {
               _setUserLocationCoords();

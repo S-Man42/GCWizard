@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
 
 class ColorHoneySymbolTableEncryption extends SymbolTableEncryption {
-
   @override
   SymbolTableEncryptionSizes sizes(SymbolTableEncryptionSizes sizes) {
     if (sizes.mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
@@ -54,8 +52,7 @@ class ColorHoneySymbolTableEncryption extends SymbolTableEncryption {
 
     var counter = 0;
     for (var index = 0; index < imageIndexes.length; index++) {
-      if (imageIndexes[index] == null)
-        continue;
+      if (imageIndexes[index] == null) continue;
 
       var image = data.images[imageIndexes[index]].values.first.standardImage;
 
@@ -104,9 +101,7 @@ class ColorHoneySymbolTableEncryption extends SymbolTableEncryption {
       paintImage(
           canvas: canvas,
           fit: BoxFit.contain,
-          rect: Rect.fromCenter(
-            center: Offset(height, height), width: 2 * height, height: 2 * height
-          ),
+          rect: Rect.fromCenter(center: Offset(height, height), width: 2 * height, height: 2 * height),
           image: image);
 
       canvas.restore();

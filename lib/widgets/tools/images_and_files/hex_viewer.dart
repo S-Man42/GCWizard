@@ -89,26 +89,24 @@ class HexViewerState extends State<HexViewer> {
         ),
         GCWDefaultOutput(
             child: _buildOutput(),
-            trailing:
-              Row(
-                children: [
-                  GCWIconButton(
-                    iconData: Icons.copy,
-                    size: IconButtonSize.SMALL,
-                    onPressed: () {
-                      insertIntoGCWClipboard(context, _hexData);
-                    },
-                  ),
-                  GCWIconButton(
-                    iconData: Icons.text_snippet_outlined,
-                    size: IconButtonSize.SMALL,
-                    onPressed: () {
-                      openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
-                    },
-                  )
-                ],
-              )
-        )
+            trailing: Row(
+              children: [
+                GCWIconButton(
+                  icon: Icons.copy,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    insertIntoGCWClipboard(context, _hexData);
+                  },
+                ),
+                GCWIconButton(
+                  icon: Icons.text_snippet_outlined,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
+                  },
+                )
+              ],
+            ))
       ],
     );
   }
@@ -146,7 +144,7 @@ class HexViewerState extends State<HexViewer> {
             child: Row(
               children: [
                 GCWIconButton(
-                  iconData: Icons.arrow_back_ios,
+                  icon: Icons.arrow_back_ios,
                   onPressed: () {
                     setState(() {
                       _currentLines -= _MAX_LINES;
@@ -166,7 +164,7 @@ class HexViewerState extends State<HexViewer> {
                   ),
                 ),
                 GCWIconButton(
-                  iconData: Icons.arrow_forward_ios,
+                  icon: Icons.arrow_forward_ios,
                   onPressed: () {
                     setState(() {
                       _currentLines += _MAX_LINES;

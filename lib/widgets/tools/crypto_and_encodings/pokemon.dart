@@ -50,37 +50,34 @@ class PokemonState extends State<Pokemon> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-        ? GCWTextField(
-          controller: _decodeController,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),
-          ],
-          onChanged: (text) {
-            setState(() {
-              _currentDecode = text;
-            });
-          },
-        )
-        : GCWTextField(
-          controller: _encodeController,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),
-          ],
-          onChanged: (text) {
-            setState(() {
-              _currentEncode = text;
-            });
-          },
-        ),
-        GCWDefaultOutput(child: _buildOutput()
-        )
+            ? GCWTextField(
+                controller: _decodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecode = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _encodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncode = text;
+                  });
+                },
+              ),
+        GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
-    _buildOutput() {
-    return _currentMode == GCWSwitchPosition.left
-        ? encodePokemon(_currentEncode)
-        : decodePokemon(_currentDecode);
+  _buildOutput() {
+    return _currentMode == GCWSwitchPosition.left ? encodePokemon(_currentEncode) : decodePokemon(_currentDecode);
   }
 }

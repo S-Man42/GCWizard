@@ -139,8 +139,8 @@ class HiddenDataState extends State<HiddenData> {
               data = mergeFiles([_publicFile.bytes, _secretFile.bytes]);
             }
 
-            _exportFile(context,
-                GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
+            _exportFile(
+                context, GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
           },
         )
       ],
@@ -184,8 +184,7 @@ class HiddenDataState extends State<HiddenData> {
             return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
           else
             return GCWFilesOutput(files: snapshot.data);
-        }
-    );
+        });
   }
 
   _exportFile(BuildContext context, GCWFile file) async {

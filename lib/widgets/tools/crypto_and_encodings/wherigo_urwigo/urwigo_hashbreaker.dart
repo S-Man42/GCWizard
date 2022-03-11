@@ -50,37 +50,37 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-        ? Column(
-          children: <Widget>[
-            GCWIntegerSpinner(
-              title: i18n(context, 'urwigo_hashbreaker_input'),
-              value: _currentInput,
-              min: 0,
-              max: 65534,
-              onChanged: (value) {
-                setState(() {
-                  _currentInput = value;
-                });
-              },
-            ),
-            GCWButton(
-              text: i18n(context, 'common_submit_button_text'),
-              onPressed: () {
-                setState(() {
-                  _currentOutput = breakUrwigoHash(_currentInput);
-                });
-              },
-            ),
-          ],
-        )
-        : GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
-            setState(() {
-              _currentTextInput = text;
-            });
-          },
-        ),
+            ? Column(
+                children: <Widget>[
+                  GCWIntegerSpinner(
+                    title: i18n(context, 'urwigo_hashbreaker_input'),
+                    value: _currentInput,
+                    min: 0,
+                    max: 65534,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentInput = value;
+                      });
+                    },
+                  ),
+                  GCWButton(
+                    text: i18n(context, 'common_submit_button_text'),
+                    onPressed: () {
+                      setState(() {
+                        _currentOutput = breakUrwigoHash(_currentInput);
+                      });
+                    },
+                  ),
+                ],
+              )
+            : GCWTextField(
+                controller: _inputController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentTextInput = text;
+                  });
+                },
+              ),
         _buildOutput(context)
       ],
     );
@@ -93,5 +93,4 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
       return GCWDefaultOutput(child: RSHash(_currentTextInput).toString());
     }
   }
-
 }

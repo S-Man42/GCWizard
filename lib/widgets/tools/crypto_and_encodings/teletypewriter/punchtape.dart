@@ -68,17 +68,19 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         }).toList(),
       ),
       if (!(_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5))
-      GCWTwoOptionsSwitch( // 54321 - 12345
-        value: _currentCodeMode,
-        leftValue: i18n(context, 'punchtape_mode_binary'),
-        rightValue: i18n(context, 'punchtape_mode_original'),
-        onChanged: (value) {
-          setState(() {
-            _currentCodeMode = value;
-          });
-        },
-      ),
-      GCWTwoOptionsSwitch( // encrypt - decrypt
+        GCWTwoOptionsSwitch(
+          // 54321 - 12345
+          value: _currentCodeMode,
+          leftValue: i18n(context, 'punchtape_mode_binary'),
+          rightValue: i18n(context, 'punchtape_mode_original'),
+          onChanged: (value) {
+            setState(() {
+              _currentCodeMode = value;
+            });
+          },
+        ),
+      GCWTwoOptionsSwitch(
+        // encrypt - decrypt
         value: _currentMode,
         onChanged: (value) {
           setState(() {
@@ -112,44 +114,42 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             if (_currentDecodeMode == GCWSwitchPosition.right) // visual mode
               _buildVisualDecryption()
             else // decode text
-              Column(
-                children: <Widget>[
-                    GCWTwoOptionsSwitch(
-                      value: _currentDecodeTextMode,
-                      leftValue: i18n(context, 'telegraph_decode_textmodedecimal'),
-                      rightValue: i18n(context, 'telegraph_decode_textmodebinary'),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentDecodeTextMode = value;
-                        });
-                      },
-                    ),
-                    if (_currentDecodeTextMode == GCWSwitchPosition.right)
-                      GCWTextField(
-                        controller: _decodeInputController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),
-                        ],
-                        onChanged: (text) {
-                          setState(() {
-                            _currentDecodeInput = text;
-                          });
-                        },
-                      )
-                  else
-                      GCWTextField(
-                        controller: _decodeInputController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[ 0123456789]')),
-                        ],
-                        onChanged: (text) {
-                          setState(() {
-                            _currentDecodeInput = text;
-                          });
-                        },
-                      )
-                  ]
-              ),
+              Column(children: <Widget>[
+                GCWTwoOptionsSwitch(
+                  value: _currentDecodeTextMode,
+                  leftValue: i18n(context, 'telegraph_decode_textmodedecimal'),
+                  rightValue: i18n(context, 'telegraph_decode_textmodebinary'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentDecodeTextMode = value;
+                    });
+                  },
+                ),
+                if (_currentDecodeTextMode == GCWSwitchPosition.right)
+                  GCWTextField(
+                    controller: _decodeInputController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[ 01]')),
+                    ],
+                    onChanged: (text) {
+                      setState(() {
+                        _currentDecodeInput = text;
+                      });
+                    },
+                  )
+                else
+                  GCWTextField(
+                    controller: _decodeInputController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[ 0123456789]')),
+                    ],
+                    onChanged: (text) {
+                      setState(() {
+                        _currentDecodeInput = text;
+                      });
+                    },
+                  )
+              ]),
           ],
         ),
       _buildOutput()
@@ -201,7 +201,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add([]);
@@ -209,7 +209,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -217,7 +217,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [];
@@ -233,17 +233,17 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
     return GCWPunchtapeSegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly, codeBook) {
           return PUNCHTAPESegmentDisplay(
-              _currentCode,
-              segments: displayedSegments,
-              readOnly: readOnly,
-              );
+            _currentCode,
+            segments: displayedSegments,
+            readOnly: readOnly,
+          );
         },
         segments: segments,
         readOnly: true,
         codeBook: _currentCode);
   }
 
-  String _decimalToBinary(String decimal){
+  String _decimalToBinary(String decimal) {
     List<String> result = [];
     decimal.split(' ').forEach((decimalNumber) {
       result.add(convertBase(decimalNumber, 10, 2));
@@ -252,9 +252,10 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   }
 
   Widget _buildOutput() {
-
-    if (_currentMode == GCWSwitchPosition.left) { //encode
-      List<List<String>> segments = encodePunchtape(_currentEncodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
+      List<List<String>> segments =
+          encodePunchtape(_currentEncodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
       List<String> binaryList = [];
       List<String> decimalList = [];
       segments.forEach((segment) {
@@ -270,19 +271,26 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
           ),
           GCWOutput(
             title: i18n(context, 'telegraph_decode_textmodebinary'),
-              child: binaryList.join(' '),
+            child: binaryList.join(' '),
           )
         ],
       );
-    } else { //decode
+    } else {
+      //decode
       var segments;
-      if (_currentDecodeMode == GCWSwitchPosition.left) { // text
-        if (_currentDecodeTextMode == GCWSwitchPosition.left) { // decimal
-          segments = decodeTextPunchtape(_decimalToBinary(_currentDecodeInput), _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
-        } else { // binary
-          segments = decodeTextPunchtape(_currentDecodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
+      if (_currentDecodeMode == GCWSwitchPosition.left) {
+        // text
+        if (_currentDecodeTextMode == GCWSwitchPosition.left) {
+          // decimal
+          segments = decodeTextPunchtape(
+              _decimalToBinary(_currentDecodeInput), _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
+        } else {
+          // binary
+          segments =
+              decodeTextPunchtape(_currentDecodeInput, _currentCode, (_currentCodeMode == GCWSwitchPosition.right));
         }
-      } else { // visual
+      } else {
+        // visual
         var output = _currentDisplays.map((character) {
           if (character != null) return character.join('');
         }).toList();
@@ -291,9 +299,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(
-              child: segments['text']
-          ),
+          GCWDefaultOutput(child: segments['text']),
         ],
       );
     }

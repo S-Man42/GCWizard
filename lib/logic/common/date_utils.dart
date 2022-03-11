@@ -532,14 +532,13 @@ double CopticCalendarToJulianDate(DateTime date) {
   return (c + d + cop_d_bar - 124).toDouble();
 }
 
-DateOutput JulianDateToPotrzebieCalendar(double jd){
+DateOutput JulianDateToPotrzebieCalendar(double jd) {
 // Day o in the Potrzebie-System is 01.10.1952
 // Before MAD - B.M.   -   zero   -   Cowzofski Madi C.M
   double jd_p_zero = GregorianCalendarToJulianDate(DateTime(1952, 10, 1));
   int diff = (jd - jd_p_zero).round();
   bool bm = (diff < 0);
-  if (diff < 0)
-    diff = diff * -1;
+  if (diff < 0) diff = diff * -1;
   int cow = diff ~/ 100;
   int mingo = 1 + (diff % 100) ~/ 10;
   int clarke = 1 + (diff % 100) % 10;
@@ -549,7 +548,7 @@ DateOutput JulianDateToPotrzebieCalendar(double jd){
     return DateOutput(clarke.toString(), mingo.toString(), cow.toString() + ' C.M.');
 }
 
-double PotrzebieCalendarToJulianDate(DateTime date){
+double PotrzebieCalendarToJulianDate(DateTime date) {
   int p_d = date.day;
   int p_m = date.month;
   int p_y = date.year;
@@ -560,4 +559,3 @@ double PotrzebieCalendarToJulianDate(DateTime date){
 
   return jd_p_zero + days;
 }
-

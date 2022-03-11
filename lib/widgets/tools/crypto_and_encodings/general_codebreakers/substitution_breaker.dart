@@ -148,13 +148,8 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     );
   }
 
-  static Future<Quadgrams> loadQuadgramsAssets(
-      SubstitutionBreakerAlphabet alphabet,
-      BuildContext context,
-      Map<SubstitutionBreakerAlphabet,
-      Quadgrams> quadgramsMap,
-      List<bool> isLoading) async {
-
+  static Future<Quadgrams> loadQuadgramsAssets(SubstitutionBreakerAlphabet alphabet, BuildContext context,
+      Map<SubstitutionBreakerAlphabet, Quadgrams> quadgramsMap, List<bool> isLoading) async {
     while (isLoading[0]) {}
 
     if (quadgramsMap.containsKey(alphabet)) return quadgramsMap[alphabet];
@@ -186,8 +181,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
     var quadgram = await loadQuadgramsAssets(_currentAlphabet, context, _quadgrams, _isLoading);
 
-    return GCWAsyncExecuterParameters(
-        SubstitutionBreakerJobData(input: _currentInput, quadgrams: quadgram));
+    return GCWAsyncExecuterParameters(SubstitutionBreakerJobData(input: _currentInput, quadgrams: quadgram));
   }
 
   _showOutput(SubstitutionBreakerResult output) {

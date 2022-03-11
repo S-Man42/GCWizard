@@ -114,7 +114,7 @@ class QrCodeState extends State<QrCode> {
             trailing: (_currentMode == GCWSwitchPosition.right)
                 ? null
                 : GCWIconButton(
-                    iconData: Icons.save,
+                    icon: Icons.save,
                     size: IconButtonSize.SMALL,
                     iconColor: _outDataEncrypt == null ? themeColors().inActive() : null,
                     onPressed: () {
@@ -137,7 +137,7 @@ class QrCodeState extends State<QrCode> {
     try {
       if (_currentMode == GCWSwitchPosition.left) {
         var currentInput = _currentInput;
-        if ((currentInput != null) && (currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength) ) {
+        if ((currentInput != null) && (currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength)) {
           currentInput = currentInput.substring(0, maxLength);
           showToast(i18n(context, 'qr_code_length_limited', parameters: [maxLength.toString()]));
         }

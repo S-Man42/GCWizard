@@ -52,7 +52,7 @@ class SudokuSolverState extends State<SudokuSolver> {
             child: Row(
               children: [
                 GCWIconButton(
-                  iconData: Icons.arrow_back_ios,
+                  icon: Icons.arrow_back_ios,
                   onPressed: () {
                     setState(() {
                       _currentSolution = (_currentSolution - 1 + _currentSolutions.length) % _currentSolutions.length;
@@ -68,7 +68,7 @@ class SudokuSolverState extends State<SudokuSolver> {
                   ),
                 ),
                 GCWIconButton(
-                  iconData: Icons.arrow_forward_ios,
+                  icon: Icons.arrow_forward_ios,
                   onPressed: () {
                     setState(() {
                       _currentSolution = (_currentSolution + 1) % _currentSolutions.length;

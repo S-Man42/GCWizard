@@ -49,7 +49,9 @@ class CowState extends State<Cow> {
         ),
         GCWTextField(
           controller: _textController,
-          hintText: _currentMode == GCWSwitchPosition.left ? i18n(context, 'common_programming_hint_sourcecode') : i18n(context, 'common_programming_hint_output'),
+          hintText: _currentMode == GCWSwitchPosition.left
+              ? i18n(context, 'common_programming_hint_sourcecode')
+              : i18n(context, 'common_programming_hint_output'),
           onChanged: (text) {
             setState(() {
               _currentText = text;

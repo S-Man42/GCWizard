@@ -15,8 +15,7 @@ class MultiDecoderToolEsotericLanguageCow extends GCWMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 CowOutput output = interpretCow(input, STDIN: key);
-                if (output.error == '')
-                  return output.output?.isEmpty ? null : output.output;
+                if (output.error == '') return output.output?.isEmpty ? null : output.output;
               } catch (e) {}
               return null;
             },

@@ -372,7 +372,7 @@ class GCWMapViewState extends State<GCWMapView> {
     if (widget.isEditable) {
       dialogButtons.addAll([
         GCWIconButton(
-            iconData: Icons.edit,
+            icon: Icons.edit,
             iconColor: themeColors().dialogText(),
             onPressed: () {
               if (child is GCWMapLine) {
@@ -405,7 +405,7 @@ class GCWMapViewState extends State<GCWMapView> {
               }
             }),
         GCWIconButton(
-            iconData: Icons.delete,
+            icon: Icons.delete,
             iconColor: themeColors().dialogText(),
             onPressed: () {
               Navigator.pop(context);
@@ -798,7 +798,7 @@ class GCWMapViewState extends State<GCWMapView> {
                               });
                             }),
                     GCWIconButton(
-                        iconData: Icons.edit,
+                        icon: Icons.edit,
                         iconColor: colors.dialogText(),
                         onPressed: () {
                           Navigator.push(
@@ -815,7 +815,7 @@ class GCWMapViewState extends State<GCWMapView> {
                           });
                         }),
                     GCWIconButton(
-                      iconData: Icons.delete,
+                      icon: Icons.delete,
                       iconColor: colors.dialogText(),
                       onPressed: () {
                         setState(() {

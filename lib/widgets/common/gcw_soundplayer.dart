@@ -63,7 +63,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       });
     });
 
-    _onPositionChangedStream = advancedPlayer.onAudioPositionChanged.listen((Duration  p) {
+    _onPositionChangedStream = advancedPlayer.onAudioPositionChanged.listen((Duration p) {
       setState(() {
         _currentPositionInMS = p.inMilliseconds;
 
@@ -95,10 +95,10 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     _loadedFileBytes = widget.file.bytes.length;
     _isLoaded = true;
 
-    if (!mounted)  // prevents setState when currently disposing widget.
+    if (!mounted) // prevents setState when currently disposing widget.
       return;
 
-    setState((){});
+    setState(() {});
   }
 
   @override
@@ -127,41 +127,38 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     return Row(
       children: [
         GCWIconButton(
-          iconData: isPlaying ? Icons.pause : Icons.play_arrow,
+          icon: isPlaying ? Icons.pause : Icons.play_arrow,
           iconColor: _isLoaded ? null : themeColors().inActive(),
-          onPressed: isPlaying
-              ? () => _audioPlayerPause()
-              : () => _audioPlayerPlay(),
+          onPressed: isPlaying ? () => _audioPlayerPause() : () => _audioPlayerPlay(),
         ),
         GCWIconButton(
-          iconData: Icons.stop,
+          icon: Icons.stop,
           iconColor: _isLoaded && !isStopped ? null : themeColors().inActive(),
           onPressed: isPlaying || isPaused ? () => _audioPlayerStop() : null,
         ),
         Expanded(
-          child: Slider(
-            value: _currentSliderPosition,
-            min: 0.0,
-            max: 1.0,
-            onChangeStart: (value) {
-              setState(() {
-                _audioPlayerPause();
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                _currentSliderPosition = value;
-              });
-            },
-            onChangeEnd: (value) {
-              setState(() {
-                _audioPlayerPlay(seek: true);
-              });
-            },
-            activeColor: themeColors().switchThumb2(),
-            inactiveColor: themeColors().switchTrack2(),
-          )
-        ),
+            child: Slider(
+          value: _currentSliderPosition,
+          min: 0.0,
+          max: 1.0,
+          onChangeStart: (value) {
+            setState(() {
+              _audioPlayerPause();
+            });
+          },
+          onChanged: (value) {
+            setState(() {
+              _currentSliderPosition = value;
+            });
+          },
+          onChangeEnd: (value) {
+            setState(() {
+              _audioPlayerPlay(seek: true);
+            });
+          },
+          activeColor: themeColors().switchThumb2(),
+          inactiveColor: themeColors().switchTrack2(),
+        )),
         GCWText(text: _durationText())
       ],
     );
@@ -188,8 +185,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   _audioPlayerPlay({bool seek: false}) async {
     if (kIsWeb) {
       // do nothing - web does not support local filö or byte array
-    }
-    else {
+    } else {
       if (playerState == PlayerState.paused) {
         if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
           var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
@@ -219,8 +215,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
     var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
-    return new File(filePath).writeAsBytes(
-        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+    return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
   _durationText() {

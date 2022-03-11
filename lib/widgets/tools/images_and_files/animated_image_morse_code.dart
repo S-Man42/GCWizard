@@ -110,7 +110,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: _buildOutputDecode(),
           trailing: Row(children: <Widget>[
             GCWIconButton(
-              iconData: _filtered ? Icons.filter_alt : Icons.filter_alt_outlined,
+              icon: _filtered ? Icons.filter_alt : Icons.filter_alt_outlined,
               size: IconButtonSize.SMALL,
               iconColor: _outData != null ? null : themeColors().inActive(),
               onPressed: () {
@@ -120,7 +120,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               },
             ),
             GCWIconButton(
-              iconData: Icons.play_arrow,
+              icon: Icons.play_arrow,
               size: IconButtonSize.SMALL,
               iconColor: _outData != null && !_play ? null : themeColors().inActive(),
               onPressed: () {
@@ -130,7 +130,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               },
             ),
             GCWIconButton(
-              iconData: Icons.stop,
+              icon: Icons.stop,
               size: IconButtonSize.SMALL,
               iconColor: _play ? null : themeColors().inActive(),
               onPressed: () {
@@ -140,7 +140,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               },
             ),
             GCWIconButton(
-              iconData: Icons.save,
+              icon: Icons.save,
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {
@@ -259,7 +259,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           child: _buildOutputEncode(),
           trailing: Row(children: <Widget>[
             GCWIconButton(
-              iconData: Icons.save,
+              icon: Icons.save,
               size: IconButtonSize.SMALL,
               iconColor: _encodeOutputImage == null ? themeColors().inActive() : null,
               onPressed: () {

@@ -50,7 +50,9 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     else
       crosstotalValuesOthers = [
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(values)],
-        widget.suppressSums ? null : [i18n(context, 'crosstotal_count_distinct_characters'), countDistinctCharacters(values)],
+        widget.suppressSums
+            ? null
+            : [i18n(context, 'crosstotal_count_distinct_characters'), countDistinctCharacters(values)],
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_letters'), countLetters(text)],
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)]
       ];

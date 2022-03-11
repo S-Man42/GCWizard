@@ -285,8 +285,7 @@ class BeatnikState extends State<Beatnik> {
   String buildOutputText(List<String> outputList) {
     String output = '';
     outputList.forEach((element) {
-      if (element.startsWith('beatnik_') ||
-          element.startsWith('common_programming_')) {
+      if (element.startsWith('beatnik_') || element.startsWith('common_programming_')) {
         output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';

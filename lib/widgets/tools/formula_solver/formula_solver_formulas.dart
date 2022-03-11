@@ -119,7 +119,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
               ),
             ),
             GCWIconButton(
-              iconData: Icons.add,
+              icon: Icons.add,
               onPressed: () {
                 _addNewFormula().whenComplete(() => setState(() {}));
               },
@@ -296,7 +296,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 ),
                 _currentEditId == formula.id
                     ? GCWIconButton(
-                        iconData: Icons.check,
+                        icon: Icons.check,
                         onPressed: () {
                           formula.formula = _currentEditedFormula;
                           _updateFormula(formula);
@@ -415,7 +415,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
               text: i18n(context, 'formulasolver_formulas_currentformulas'),
               trailing: Row(children: [
                 GCWIconButton(
-                  iconData: Icons.color_lens,
+                  icon: Icons.color_lens,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
                     setState(() {

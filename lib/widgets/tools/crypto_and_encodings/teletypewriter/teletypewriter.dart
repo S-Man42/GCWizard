@@ -36,7 +36,7 @@ class TeletypewriterState extends State<Teletypewriter> {
   void initState() {
     super.initState();
 
-    _currentCode  = widget.defaultCodebook;
+    _currentCode = widget.defaultCodebook;
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
@@ -51,8 +51,7 @@ class TeletypewriterState extends State<Teletypewriter> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.codebook == null)
-      _currentCode = widget.defaultCodebook;
+    if (widget.codebook == null) _currentCode = widget.defaultCodebook;
 
     return Column(
       children: <Widget>[
@@ -70,7 +69,8 @@ class TeletypewriterState extends State<Teletypewriter> {
                   child: i18n(context, mode.value['title']),
                   subtitle: mode.value['subtitle'] != null ? i18n(context, mode.value['subtitle']) : null);
             }).toList(),
-          ),        _currentMode == GCWSwitchPosition.left
+          ),
+        _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _encodeController,
                 onChanged: (text) {
@@ -114,22 +114,25 @@ class TeletypewriterState extends State<Teletypewriter> {
   _buildOutput() {
     var output = '';
 
-    if (_currentMode == GCWSwitchPosition.left) { // encrypt
+    if (_currentMode == GCWSwitchPosition.left) {
+      // encrypt
       output = encodeTeletypewriter(_currentEncodeInput, _currentCode);
-      if (_currentRadix == GCWSwitchPosition.right) { // binary
+      if (_currentRadix == GCWSwitchPosition.right) {
+        // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
           return out.padLeft(BINARY_LENGTH[_currentCode], '0');
         }).join(' ');
       }
       return output; // decimal
-    } else { // decrypt
-      if (_currentRadix == GCWSwitchPosition.right) { // binary
+    } else {
+      // decrypt
+      if (_currentRadix == GCWSwitchPosition.right) {
+        // binary
         return decodeTeletypewriter(
-            textToBinaryList(_currentDecodeInput['text'])
-                .map((value) {
-                  return int.tryParse(convertBase(value, 2, 10));
-                }).toList(),
+            textToBinaryList(_currentDecodeInput['text']).map((value) {
+              return int.tryParse(convertBase(value, 2, 10));
+            }).toList(),
             _currentCode);
       }
 

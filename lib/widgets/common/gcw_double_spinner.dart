@@ -146,12 +146,12 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    child: GCWIconButton(iconData: Icons.remove, onPressed: _decreaseValue),
+                    child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
                     margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   Expanded(child: _buildTextField()),
                   Container(
-                    child: GCWIconButton(iconData: Icons.add, onPressed: _increaseValue),
+                    child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
                     margin: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                   )
                 ],
@@ -167,9 +167,9 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  GCWIconButton(iconData: Icons.arrow_drop_up, onPressed: _increaseValue),
+                  GCWIconButton(icon: Icons.arrow_drop_up, onPressed: _increaseValue),
                   _buildTextField(),
-                  GCWIconButton(iconData: Icons.arrow_drop_down, onPressed: _decreaseValue),
+                  GCWIconButton(icon: Icons.arrow_drop_down, onPressed: _decreaseValue),
                 ],
               ),
               flex: 3),
