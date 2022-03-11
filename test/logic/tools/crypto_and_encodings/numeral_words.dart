@@ -1122,4 +1122,41 @@ void main(){
       });
     });
   });
+
+  group("NumeralWords.unicode languages:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {
+        'input': 'шестнадцать 十八 じゅうしち 이십 열다섯 百 единайсет สามสิบ',
+        'language': NumeralWordsLanguage.ALL,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput('16', 'шестнадцать', 'numeralwords_language_kyr'),
+          NumeralWordsDecodeOutput('18', '十八', 'numeralwords_language_chi_symbol'),
+          NumeralWordsDecodeOutput('', '', 'common_language_hanja'),
+          NumeralWordsDecodeOutput('17', 'じゅうしち', 'numeralwords_language_jap_hiragana'),
+          NumeralWordsDecodeOutput('20', '이십', 'common_language_hangul_sino_korean'),
+          NumeralWordsDecodeOutput('15', '열다섯', 'common_language_hangul_korean'),
+          NumeralWordsDecodeOutput('100', '百', 'numeralwords_language_chi_symbol'),
+          NumeralWordsDecodeOutput('', '', 'common_language_hanja'),
+          NumeralWordsDecodeOutput('11', 'единайсет', 'numeralwords_language_bul_kyr'),
+          NumeralWordsDecodeOutput('30', 'สามสิบ', 'common_language_thai'),
+        ]
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test(
+          'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(
+            removeAccents(elem['input'].toString().toLowerCase()),
+            elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
 }
