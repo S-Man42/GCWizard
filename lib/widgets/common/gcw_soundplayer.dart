@@ -10,14 +10,14 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 enum PlayerState { stopped, playing, paused }
 
 class GCWSoundPlayer extends StatefulWidget {
-  final PlatformFile file;
+  final GCWFile file;
 
   const GCWSoundPlayer({Key key, @required this.file}) : super(key: key);
 
@@ -174,7 +174,10 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   get isStopped => playerState == PlayerState.stopped;
 
   void onComplete() {
-    setState(() => playerState = PlayerState.stopped);
+    setState(() {
+      playerState = PlayerState.stopped;
+      _currentSliderPosition = 0.0;
+    });
   }
 
   _audioPlayerPause() async {

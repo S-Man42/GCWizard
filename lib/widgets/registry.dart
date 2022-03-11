@@ -264,10 +264,11 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
@@ -699,7 +700,7 @@ initializeRegistry(BuildContext context) {
       'hexadecimal',
       'hexstring2file',
     ]),
-    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
+    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'hexadecimal',
@@ -753,6 +754,14 @@ initializeRegistry(BuildContext context) {
           'images',
           'color',
           'image_colorcorrections',
+        ]),
+    GCWTool(
+        tool: ImageFlipRotate(),
+        categories: [ToolCategory.IMAGES_AND_FILES],
+        i18nPrefix: 'image_fliprotate',
+        searchKeys: [
+          'images',
+          'image_fliprotate',
         ]),
     GCWTool(
         tool: IPCodes(),

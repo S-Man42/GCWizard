@@ -9,7 +9,7 @@ class GCWOnOffSwitch extends StatefulWidget {
   final String title;
   final value;
   final bool notitle;
-  final List<int> flex ;
+  final List<int> flex;
   static const _flex = [1, 1, 1];
 
   const GCWOnOffSwitch({Key key, @required this.value, this.onChanged, this.title, this.notitle: false, this.flex: _flex})

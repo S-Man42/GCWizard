@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_export.dart';
@@ -59,13 +60,11 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       children: <Widget>[
         GCWTextDivider(
             text: i18n(context, 'formulasolver_groups_newgroup'),
-            trailing: GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.content_paste,
-              onPressed: () {
-                _importFromClipboard();
-              },
-            )),
+            trailing: GCWPasteButton(
+              iconSize: IconButtonSize.SMALL,
+              onSelected: _importFromClipboard
+            )
+        ),
         Row(
           children: <Widget>[
             Expanded(
@@ -110,20 +109,18 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     return name;
   }
 
-  _importFromClipboard() {
-    Clipboard.getData('text/plain').then((data) {
-      try {
-        var group = FormulaGroup.fromJson(jsonDecode(data.text));
-        group.name = _createImportGroupName(group.name);
+  _importFromClipboard(String data) {
+    try {
+      var group = FormulaGroup.fromJson(jsonDecode(data));
+      group.name = _createImportGroupName(group.name);
 
-        setState(() {
-          insertGroup(group);
-        });
-        showToast(i18n(context, 'formulasolver_groups_imported'));
-      } catch (e) {
-        showToast(i18n(context, 'formulasolver_groups_importerror'));
-      }
-    });
+      setState(() {
+        insertGroup(group);
+      });
+      showToast(i18n(context, 'formulasolver_groups_imported'));
+    } catch (e) {
+      showToast(i18n(context, 'formulasolver_groups_importerror'));
+    }
   }
 
   _addNewGroup() {

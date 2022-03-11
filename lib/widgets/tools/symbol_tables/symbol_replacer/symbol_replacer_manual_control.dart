@@ -1,25 +1,32 @@
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_manual_setter.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_symbol_matrix.dart';
 
 
-class SymbolReplacerManualSetter extends StatefulWidget {
+class SymbolReplacerManualControl extends StatefulWidget {
   final SymbolReplacerImage symbolImage;
 
-  const SymbolReplacerManualSetter({Key key, this.symbolImage}) : super(key: key);
+  const SymbolReplacerManualControl({Key key, this.symbolImage}) : super(key: key);
 
   @override
-  SymbolReplacerState1 createState() => SymbolReplacerState1();
+  SymbolReplacerManualControlState createState() => SymbolReplacerManualControlState();
 }
 
-class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
+class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl> {
   var _symbolMap = Map<Symbol, Map<String, SymbolData>>();
   SymbolData _selectedSymbolData;
   var _removeActiv = false;
@@ -112,8 +119,7 @@ class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
 
     if (_addActiv && !selected) {
       widget.symbolImage.addToGroup(_symbol, _getSymbol(_selectedSymbolData)?.symbolGroup);
-      imageData.primarySelected = false;
-      imageData.secondarySelected = true;
+      imageData.primarySelected = true;
       _symbol = _getSymbol(_selectedSymbolData);
       selected = true;
     }
@@ -122,89 +128,121 @@ class SymbolReplacerState1 extends State<SymbolReplacerManualSetter> {
       if (_selectedSymbolData == imageData) {
         var symbolGroup = _getSymbol(_selectedSymbolData)?.symbolGroup;
         widget.symbolImage.removeFromGroup(_symbol);
-        _selectedSymbolData =
-        symbolGroup.symbols.isEmpty ? null : _symbolMap[symbolGroup.symbols.first]?.values?.first;
+        _selectedSymbolData = symbolGroup.symbols.isEmpty
+            ? null
+            : _symbolMap[symbolGroup.symbols.first]?.values?.first;
       } else
         widget.symbolImage.removeFromGroup(_symbol);
       _symbol = _getSymbol(_selectedSymbolData);
     }
 
     if (selected)
-      // reset all sections
+      // reset all selections
       _symbolMap.values.forEach((image) {
         image.values.first.primarySelected = false;
-        image.values.first.secondarySelected = false;
       });
 
     if (_symbol?.symbolGroup?.symbols != null) {
       _symbol.symbolGroup.symbols.forEach((symbol) {
         var image = _symbolMap[symbol];
-        // primary ?
-        if (symbol == _symbol) {
-          image.values.first.primarySelected = selected;
-          _editValueController.text = image.values.first.displayName;
-        } else
-          image.values.first.secondarySelected = selected;
+        image.values.first.primarySelected = selected;
+        _editValueController.text = image.values.first.displayName;
       });
     }
   }
 
-  _setGroupText(SymbolData imageData, String text, bool single) {
+  _getGroupSymbol(SymbolData imageData) {
     Symbol _symbol = _getSymbol(imageData);
-    if (single) {
-      widget.symbolImage.removeFromGroup(_symbol);
-      // reset all secondary sections
-      _symbolMap.values.forEach((image) {image.values.first.secondarySelected = false;});
-    }
-    if (_symbol?.symbolGroup != null) _symbol.symbolGroup.text = text;
+    if (_symbol?.symbolGroup != null) return _symbol.symbolGroup.compareSymbol;
   }
 
   Widget _buildEditRow() {
-    return GCWToolBar(children: <Widget>[
-      GCWTextField(
-        controller: _editValueController,
-        autofocus: true,
+    return Row(children: <Widget>[
+      Expanded(
+        child: Column(
+          children: [
+              GCWToolBar( children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.add_circle,
+                  iconColor: _selectedSymbolData == null ? themeColors().inActive() : _addActiv ? Colors.red : null,
+                  onPressed: () {
+                    setState(() {
+                      _addActiv = !_addActiv;
+                      if (_addActiv) _removeActiv = false;
+                    });
+                  },
+                ),
+                GCWIconButton(
+                  iconData: Icons.remove_circle,
+                  iconColor: _selectedSymbolData == null ? themeColors().inActive() : _removeActiv ? Colors.red : null,
+                  onPressed: () {
+                    setState(() {
+                      _removeActiv = !_removeActiv;
+                      if (_removeActiv) _addActiv = false;
+                    });
+                  },
+                )
+              ]),
+            GCWButton(
+                text: i18n(context, 'symbol_replacer_letters_manually'),
+                onPressed: () {_navigateToSubPage();}
+            )
+          ],
+
+        ),
+        flex: 1,
       ),
-      GCWIconButton(
-        iconData: Icons.alt_route,
-        iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
-        onPressed: () {
-          setState(() {
-            _setGroupText(_selectedSymbolData, _editValueController.text, false);
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.arrow_upward,
-        iconColor: _selectedSymbolData == null ? themeColors().inActive() : null,
-        onPressed: () {
-          setState(() {
-            _setGroupText(_selectedSymbolData, _editValueController.text, true);
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.add_circle,
-        iconColor: _selectedSymbolData == null ? themeColors().inActive() : _addActiv ? Colors.red : null,
-        onPressed: () {
-          setState(() {
-            _addActiv = !_addActiv;
-            if (_addActiv) _removeActiv = false;
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.remove_circle,
-        iconColor: _selectedSymbolData == null ? themeColors().inActive() : _removeActiv ? Colors.red : null,
-        onPressed: () {
-          setState(() {
-            _removeActiv = !_removeActiv;
-            if (_removeActiv) _addActiv = false;
-          });
-        },
+      Expanded(child:
+        Column(children: [
+          GCWText(
+              text :"Source",
+              align: Alignment.topCenter,
+              style: gcwTextStyle().copyWith(fontSize: defaultFontSize() -2)
+          ),
+          Row( children: [
+            Expanded(child:Container(), flex: 1),
+            Container(
+                height: 80,
+                child: _getGroupSymbol(_selectedSymbolData) == null
+                    ? Container(width: 80, color: Colors.white)
+                    : GCWSymbolContainer(symbol: Image.memory(_getGroupSymbol(_selectedSymbolData).bytes))
+            ),
+            Expanded(child:Container(), flex: 1),
+          ])
+        ]),
+        flex: 1,
       )
     ],
     );
   }
 
+  _navigateToSubPage() {
+    var selectedSymbols = <Symbol>[];
+    _symbolMap.forEach((symbol, image) {
+      var symbolData = image.values.first;
+      if (symbolData.primarySelected || symbolData.secondarySelected)
+        selectedSymbols.add(symbol);
+    });
+
+    var subPageTool = GCWTool(
+        autoScroll: false,
+        tool: SymbolReplacerManualSetter(
+            symbolImage: widget.symbolImage,
+            viewSymbols: selectedSymbols
+        ),
+        i18nPrefix: 'symbol_replacer',
+        searchKeys: ['symbol_replacer']);
+
+    Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => subPageTool)).whenComplete(() {
+      setState(() {
+        var _addActivTmp = _addActiv;
+        var _removeActivTmp = _removeActiv;
+        _addActiv = false;
+        _removeActiv = false;
+        _selectGroupSymbols(_selectedSymbolData, true);
+        _addActiv = _addActivTmp;
+        _removeActiv = _removeActivTmp;
+      });
+    });
+  }
 }

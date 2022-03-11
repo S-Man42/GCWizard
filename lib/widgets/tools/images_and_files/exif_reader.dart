@@ -22,14 +22,14 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:prefs/prefs.dart';
 
 class ExifReader extends StatefulWidget {
-  final local.PlatformFile file;
+  final local.GCWFile file;
 
   ExifReader({Key key, this.file}) : super(key: key);
 
@@ -39,7 +39,7 @@ class ExifReader extends StatefulWidget {
 
 class _ExifReaderState extends State<ExifReader> {
   Map<String, List<List<dynamic>>> tableTags;
-  local.PlatformFile file;
+  local.GCWFile file;
   LatLng point;
   GCWImageViewData thumbnail;
   Image.Image image;
@@ -79,7 +79,7 @@ class _ExifReaderState extends State<ExifReader> {
     );
   }
 
-  Future<void> _readFile(local.PlatformFile _file) async {
+  Future<void> _readFile(local.GCWFile _file) async {
     Image.Image _image;
 
     if (_file != null) _image = await _completeImageMetadata(_file);
@@ -199,7 +199,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section file type specific
   ///
-  void _decorateFileTypeSpecific(List<Widget> widgets, local.PlatformFile platformFile) {
+  void _decorateFileTypeSpecific(List<Widget> widgets, local.GCWFile platformFile) {
     if (platformFile == null) return;
 
     var data = <List<dynamic>>[];
@@ -236,7 +236,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section file
   ///
-  void _decorateFile(List<Widget> widgets, local.PlatformFile platformFile) {
+  void _decorateFile(List<Widget> widgets, local.GCWFile platformFile) {
     if (platformFile != null) {
       File _file;
       if (platformFile.path != null) {
@@ -293,7 +293,7 @@ class _ExifReaderState extends State<ExifReader> {
     }
   }
 
-  Future<Image.Image> _completeImageMetadata(local.PlatformFile platformFile) async {
+  Future<Image.Image> _completeImageMetadata(local.GCWFile platformFile) async {
     Uint8List data = platformFile.bytes;
     Image.Image image;
     try {
@@ -329,7 +329,7 @@ class _ExifReaderState extends State<ExifReader> {
   }
 }
 
-openInMetadataViewer(BuildContext context, local.PlatformFile file) {
+openInMetadataViewer(BuildContext context, local.GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

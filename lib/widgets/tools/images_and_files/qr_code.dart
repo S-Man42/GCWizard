@@ -13,11 +13,11 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 
 class QrCode extends StatefulWidget {
-  final PlatformFile platformFile;
+  final GCWFile platformFile;
 
   const QrCode({Key key, this.platformFile}) : super(key: key);
 

@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:xml/xml.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
 
-Future<MapViewDAO> importCoordinatesFile(PlatformFile file) async {
+Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
   var type = fileTypeByFilename(file.name);
 
   switch (type) {

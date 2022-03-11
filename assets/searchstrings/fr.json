@@ -210,6 +210,7 @@
   "iataicao": "organisationdelaviationcivileinternationale associationdutransportaerieninternational codesdaerodrome codesdaeroport codesdaeronefs avions airesdatterrissage lieuxdatterrissage aviation aerospatiale",
   "icecodes": "mer baltique codes glace eau neige fonte",
   "image_colorcorrections": "couleurscorrections teinte saturation luminosite rgb",
+  "image_fliprotate": "flip mirror reverse horizontally vertically rotate rotations",
   "images": "images peintures fichiers ",
   "imagesandfilesselection": "analyser",
   "stegano": "steganographie",

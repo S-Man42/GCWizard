@@ -13,11 +13,12 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
 class HexViewer extends StatefulWidget {
-  final PlatformFile platformFile;
+  final GCWFile platformFile;
 
   const HexViewer({Key key, this.platformFile}) : super(key: key);
 
@@ -88,13 +89,26 @@ class HexViewerState extends State<HexViewer> {
         ),
         GCWDefaultOutput(
             child: _buildOutput(),
-            trailing: GCWIconButton(
-              iconData: Icons.text_snippet_outlined,
-              size: IconButtonSize.SMALL,
-              onPressed: () {
-                openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
-              },
-            ))
+            trailing:
+              Row(
+                children: [
+                  GCWIconButton(
+                    iconData: Icons.copy,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      insertIntoGCWClipboard(context, _hexData);
+                    },
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.text_snippet_outlined,
+                    size: IconButtonSize.SMALL,
+                    onPressed: () {
+                      openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
+                    },
+                  )
+                ],
+              )
+        )
       ],
     );
   }
@@ -237,7 +251,7 @@ class HexViewerState extends State<HexViewer> {
   }
 }
 
-openInHexViewer(BuildContext context, PlatformFile file) {
+openInHexViewer(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

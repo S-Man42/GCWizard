@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart' as filePicker;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 
 const UNSUPPORTED_MOBILE_TYPES = [FileType.GPX];
 final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
@@ -15,7 +15,7 @@ final SUPPORTED_IMAGE_TYPES = fileTypesByFileClass(FileClass.IMAGE);
 /// Returns null if nothing was selected.
 ///
 /// * [allowedFileTypes] specifies a list of file extensions that will be displayed for selection, if empty - files with any extension are displayed. Example: `['jpg', 'jpeg']`
-Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) async {
+Future<local.GCWFile> openFileExplorer({List<FileType> allowedFileTypes}) async {
   try {
     if (_hasUnsupportedTypes(allowedFileTypes)) allowedFileTypes = null;
 
@@ -33,7 +33,7 @@ Future<local.PlatformFile> openFileExplorer({List<FileType> allowedFileTypes}) a
     var bytes = await _getFileData(files.first);
     var path = kIsWeb ? null : files.first.path;
 
-    return local.PlatformFile(path: path, name: files.first.name, bytes: bytes);
+    return local.GCWFile(path: path, name: files.first.name, bytes: bytes);
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }

@@ -3,8 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer_symboldata.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 
@@ -77,17 +76,29 @@ Future<SymbolReplacerImage> replaceSymbols(Uint8List image,
 
 
 class SymbolReplacerImage {
+  /// source image
   Uint8List _image;
+  /// converted  source image
   Image.Image _bmp;
+  /// source image with symbol borders
   Uint8List _outputImageBytes;
-  List<Map<String, SymbolReplacerSymbolData>> _compareSymbols;
-  SymbolReplacerImage _compareImage;
+  /// assigned symbol table (original)
+  List<Map<String, SymbolReplacerSymbolData>> compareSymbols;
+  /// used symbol table (original)
+  List<Map<String, SymbolReplacerSymbolData>> _usedCompareSymbols;
+  /// image with groups from  cropped _usedCompareSymbols
+  SymbolReplacerImage _usedCompareSymbolsImage;
   double _similarityCompareLevel;
 
+  /// detected lines from _image (after symbol merge)
   List<_SymbolRow> lines = [];
+  /// detected lines from _image
   List<_SymbolRow> _sourceLines = [];
+  /// detected symbols (after symbol merge)
   List<Symbol> symbols = [];
+  /// detected symbols
   List<Symbol> _sourceSymbols = [];
+  /// symbol groups (same symbol/ text)
   List<SymbolGroup> symbolGroups = [];
 
   List<double> _mergeDistanceSteps;
@@ -136,7 +147,7 @@ class SymbolReplacerImage {
   /// SymbolImage with compary symbols (symbol table)
   /// </summary>
   SymbolReplacerImage getCompareImage() {
-    return _compareImage;
+    return _usedCompareSymbolsImage;
   }
 
   /// <summary>
@@ -232,15 +243,16 @@ class SymbolReplacerImage {
     }
 
 
-    if (_compareSymbols != compareSymbols)
-      _compareImage = null;
+    if (this.compareSymbols != compareSymbols)
+      _usedCompareSymbolsImage = null;
 
     if (groupSymbols & (compareSymbols != null) & (_similarityCompareLevel != null)) {
-      if (_compareSymbols != compareSymbols || _compareImage == null) {
-        _compareImage = _buildCompareSymbols(compareSymbols);
+      if (this.compareSymbols != _usedCompareSymbols || _usedCompareSymbolsImage == null) {
+        _usedCompareSymbolsImage = _buildCompareSymbols(compareSymbols);
       }
-      _useCompareSymbols(_compareImage);
-      _compareSymbols = compareSymbols;
+      _useCompareSymbols(_usedCompareSymbolsImage);
+      _usedCompareSymbols = compareSymbols;
+      this.compareSymbols = compareSymbols;
     }
 
     // rebuild image
@@ -258,27 +270,47 @@ class SymbolReplacerImage {
     }
     if (symbolGroup.symbols == null) symbolGroup.symbols = <Symbol>[];
 
-    symbolGroup.symbols.add(symbol);
-    symbol.symbolGroup = symbolGroup;
+    _addSymbolToGroup(symbol, symbolGroup);
   }
 
   /// <summary>
-  /// remove Symbol from SymbolGroup
+  /// remove Symbol from SymbolGroup (create new SymbolGroup)
   /// </summary>
   removeFromGroup(Symbol symbol) {
     if (symbol == null) return;
     if (symbol.symbolGroup != null) symbol.symbolGroup?.symbols?.remove(symbol);
     var symbolGroup = SymbolGroup();
     symbolGroups.add(symbolGroup);
+
+    _addSymbolToGroup(symbol, symbolGroup);
+  }
+
+  _addSymbolToGroup(Symbol symbol, SymbolGroup symbolGroup) {
     symbolGroup.symbols.add(symbol);
+    if ((symbol?.symbolGroup?.symbols != null) && (symbol?.symbolGroup?.symbols.isEmpty))
+      symbolGroups.remove(symbol.symbolGroup);
     symbol.symbolGroup = symbolGroup;
+  }
+
+  /// <summary>
+  /// SymbolGroup for these symbols together
+  /// </summary>
+  buildSymbolGroup(List<Symbol> symbols) {
+    if ((symbols == null) || symbols.isEmpty) return;
+
+    removeFromGroup(symbols.first);
+    for (var i=1; i< symbols.length; i++)
+      addToGroup(symbols[i], symbols.first.symbolGroup);
   }
 
   /// <summary>
   /// reset all SymbolGroup text
   /// </summary>
   resetGroupText() {
-    symbolGroups.forEach((group) {group.text= null; });
+    symbolGroups.forEach((group) {
+      group.text= null;
+      group.compareSymbol = null;
+    });
   }
 
   /// <summary>
@@ -305,6 +337,7 @@ class SymbolReplacerImage {
             symbolGroup.symbols = symbolImage.symbols;
             symbolGroup.text = text;
             symbolGroup.symbols.forEach((symbol) {symbol.symbolGroup = symbolGroup; });
+            symbolGroup.compareSymbol = symbolData;
 
             compareSymbolImage.symbols.addAll(symbolGroup.symbols);
             compareSymbolImage.symbolGroups.add(symbolGroup);
@@ -348,6 +381,7 @@ class SymbolReplacerImage {
         }
         if (maxPercent >= _similarityCompareLevel && (maxPercentSymbol?.symbolGroup != null)) {
           symbolGroups[i].text = maxPercentSymbol.symbolGroup.text;
+          symbolGroups[i].compareSymbol = maxPercentSymbol.symbolGroup.compareSymbol;
         }
         percentSum += maxPercent;
       }
@@ -920,11 +954,16 @@ class SymbolGroup {
   String text;
   bool viewGroupImage = false;
   var symbols = <Symbol>[];
+  SymbolReplacerSymbolData compareSymbol;
 
   Uint8List getImage() {
     if (symbols.isNotEmpty)
       return symbols.first.getImage();
     return null;
+  }
+
+  SymbolReplacerSymbolData getCompareSymbol() {
+    return compareSymbol;
   }
 }
 
