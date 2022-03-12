@@ -1648,6 +1648,7 @@ List<String> _getAnswers(
         .replaceAll('"', '')
         .replaceAll(',', '')
         .replaceAll('then', '')
+        .replaceAll('tostring', '')
         .replaceAll('else', '')
         .replaceAll('input', '')
         .replaceAll('Answer,', '')

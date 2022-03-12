@@ -2161,7 +2161,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           }
           fileindex++;
         });
-
         return GCWFile(bytes: filedata, name: filename);
       } else
         return null;
