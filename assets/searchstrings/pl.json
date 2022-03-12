@@ -210,7 +210,7 @@
   "iataicao": "airfieldcodes airportcodes aerodromecodes aircrafts planes landingareas landingplaces aviation aerospace",
   "icecodes": "balticsea ice floe melting snow iceberg icecodes",
   "image_colorcorrections": "colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green",
-  "image_fliprotate": "flip mirror reverse horizontally vertically rotate rotations",
+  "image_fliprotate": "odwróć lustro odwróć poziomo pionowo obróć obroty",
   "images": "pictures images paintings files ",
   "imagesandfilesselection": "analyze analyse analysis",
   "stegano": "steganography",
