@@ -1598,10 +1598,12 @@ List<String> _getAnswers(
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .split('or');
-  } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
+  }
+
+  else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
-    line
+    line = line
         .trim()
         .replaceAll('if ', '')
         .replaceAll('elseif ', '')
@@ -1615,14 +1617,24 @@ List<String> _getAnswers(
         .replaceAll('then', '')
         .replaceAll('else', '')
         .replaceAll('true', '')
+        .replaceAll('and', '')
+        .replaceAll('Contains', '')
+        .replaceAll('Player', '')
+        .replaceAll(':', '')
         .replaceAll(' ', '')
-        .split('or')
-        .forEach((element) {
+        .replaceAll(RegExp(r'[^or0-9]'), '+')
+        .replaceAll('o+', '+')
+        .replaceAll('+r', '+')
+        .replaceAll('+', '')
+    ;
+    line.split('or').forEach((element) {
       hashvalue = int.parse(element.replaceAll('\D+', ''));
       results.add(breakUrwigoHash(hashvalue).toString() + '\x01' + hashvalue.toString());
     });
     return results;
-  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+  }
+
+  else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
     line = line
