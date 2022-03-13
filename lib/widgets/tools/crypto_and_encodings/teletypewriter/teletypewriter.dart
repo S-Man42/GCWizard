@@ -120,8 +120,10 @@ class TeletypewriterState extends State<Teletypewriter> {
       if (_currentRadix == GCWSwitchPosition.right) {
         // binary
         output = output.split(' ').map((value) {
-          var out = convertBase(value, 10, 2);
-          return out.padLeft(BINARY_LENGTH[_currentCode], '0');
+          var out = convertBase(value, 10, 2).padLeft(BINARY_LENGTH[_currentCode], '0');
+          if (_currentCode == TeletypewriterCodebook.BAUDOT_54123)
+            out = out.split('').reversed.join('');
+          return out;
         }).join(' ');
       }
       return output; // decimal

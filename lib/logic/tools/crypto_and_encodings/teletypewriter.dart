@@ -2061,6 +2061,11 @@ String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language) {
   String out = '';
   var isLetterMode = true;
 
+  if (language == TeletypewriterCodebook.BAUDOT_54123)
+    values = values.map((decimal) {
+      return int.parse(convertBase(convertBase(decimal.toString(), 10, 2).padLeft(BINARY_LENGTH[language], '0').split('').reversed.join(''), 2, 10));
+    }).toList();
+
   switch (language) {
     // CCITT1
     case TeletypewriterCodebook.BAUDOT:
