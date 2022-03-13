@@ -53,11 +53,15 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
           String.fromCharCode(int.parse(element.group(0).replaceAll('ucode_wig(', '').replaceAll(')', ''))));
     });
     result = result.replaceAll('gsub_wig()', '');
-  } else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
+  }
+
+  else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
     while (result.startsWith(RegExp(r'(\()+' + obfuscator))) result = result.substring(1);
     result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll('))', ')');
     result = _getDetails(result, obfuscator, dtable);
-  } else if (result.startsWith(obfuscator)) {
+  }
+
+  else if (result.startsWith(obfuscator)) {
     if (_compositeObfuscatedText(result, obfuscator))
       result = _getDetails(result, obfuscator, dtable);
     else if (_compositeText(result)) {
@@ -66,7 +70,9 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
       result = result.replaceAll(obfuscator + '("', '').replaceAll('"),', '').replaceAll('")', '');
       result = deobfuscateUrwigoText(result, dtable);
     }
-  } else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
+  }
+
+  else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
     result = result.replaceAll('Player.Name .. ', '');
     if (_compositeObfuscatedText(result, obfuscator))
       result = _getDetails(result, obfuscator, dtable);
@@ -83,6 +89,7 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
 }
 
 String _getDetails(String line, String obfuscator, String dtable) {
+  // line is a concatination of several obfuscated strings
   String element = '';
   String result = '';
   int i = 0;
@@ -104,10 +111,12 @@ String _getDetails(String line, String obfuscator, String dtable) {
     if (line.length != 0) {
       do {
         // get something else in between
-        if (line.substring(i).startsWith(obfuscator)) section = false;
+        if (line.substring(i).startsWith(obfuscator))
+          section = false;
+        else
         i = i + 1;
-      } while (section);
-      i--;
+      } while (section && i < line.length);
+      //i--;
       result = result + line.substring(0, i).replaceAll(')', '');
       line = line.substring(i);
     }
