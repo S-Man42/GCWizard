@@ -92,19 +92,19 @@ class HexViewerState extends State<HexViewer> {
             trailing: Row(
               children: [
                 GCWIconButton(
+                  icon: Icons.text_snippet_outlined,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
+                  },
+                ),
+                GCWIconButton(
                   icon: Icons.copy,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
                     insertIntoGCWClipboard(context, _hexData);
                   },
                 ),
-                GCWIconButton(
-                  icon: Icons.text_snippet_outlined,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    openInTextViewer(context, String.fromCharCodes(_bytes ?? []));
-                  },
-                )
               ],
             ))
       ],
