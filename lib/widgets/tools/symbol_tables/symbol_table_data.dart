@@ -205,9 +205,9 @@ class SymbolTableData {
   var _translateables = [];
   var _sort;
 
-  initialize() async {
+  initialize({bool importEncryption = true}) async {
     await _loadConfig();
-    await _initializeImages();
+    await _initializeImages(importEncryption);
   }
 
   Size imageSize() {
@@ -300,7 +300,7 @@ class SymbolTableData {
     return key;
   }
 
-  _initializeImages() async {
+  _initializeImages(bool importEncryption) async {
     //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
@@ -319,13 +319,15 @@ class SymbolTableData {
     // Decode the Zip file
     final Archive archive = ZipDecoder().decodeBuffer(input);
 
-    var encryptionBytes;
     Archive encryptionArchive;
-    var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
-    if (encryptionImageArchivePaths.isNotEmpty) {
-      encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);
-      input = InputStream(encryptionBytes.buffer.asByteData());
-      encryptionArchive = ZipDecoder().decodeBuffer(input);
+    if (importEncryption) {
+      var encryptionBytes;
+      var encryptionImageArchivePaths = imageArchivePaths.where((path) => path.contains('_encryption')).toList();
+      if (encryptionImageArchivePaths.isNotEmpty) {
+        encryptionBytes = await DefaultAssetBundle.of(_context).load(encryptionImageArchivePaths.first);
+        input = InputStream(encryptionBytes.buffer.asByteData());
+        encryptionArchive = ZipDecoder().decodeBuffer(input);
+      }
     }
 
     images = [];
