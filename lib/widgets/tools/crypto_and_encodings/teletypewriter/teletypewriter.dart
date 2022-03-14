@@ -113,15 +113,22 @@ class TeletypewriterState extends State<Teletypewriter> {
 
   _buildOutput() {
     var output = '';
+    bool mirrorBinary = false;
+    if (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
+        _currentCode == TeletypewriterCodebook.BAUDOT ||
+        _currentCode == TeletypewriterCodebook.MURRAY ||
+        _currentCode == TeletypewriterCodebook.SIEMENS ||
+        _currentCode == TeletypewriterCodebook.WESTERNUNION)
+      mirrorBinary = true;
 
-    if (_currentMode == GCWSwitchPosition.left) {
+      if (_currentMode == GCWSwitchPosition.left) {
       // encrypt
       output = encodeTeletypewriter(_currentEncodeInput, _currentCode);
       if (_currentRadix == GCWSwitchPosition.right) {
         // binary
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2).padLeft(BINARY_LENGTH[_currentCode], '0');
-          if (_currentCode == TeletypewriterCodebook.BAUDOT_54123)
+          if (mirrorBinary)
             out = out.split('').reversed.join('');
           return out;
         }).join(' ');
@@ -135,10 +142,11 @@ class TeletypewriterState extends State<Teletypewriter> {
             textToBinaryList(_currentDecodeInput['text']).map((value) {
               return int.tryParse(convertBase(value, 2, 10));
             }).toList(),
-            _currentCode);
+            _currentCode,
+            mirrorBinary: mirrorBinary);
       }
 
-      return decodeTeletypewriter(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
+      return decodeTeletypewriter(List<int>.from(_currentDecodeInput['values']), _currentCode, mirrorBinary: mirrorBinary); // decimal
     }
   }
 }
