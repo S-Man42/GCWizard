@@ -243,10 +243,10 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         codeBook: _currentCode);
   }
 
-  String _decimalToBinary(String decimal) {
+  String _decimalToBinary(String decimal, TeletypewriterCodebook language) {
     List<String> result = [];
     decimal.split(' ').forEach((decimalNumber) {
-      result.add(convertBase(decimalNumber, 10, 2));
+      result.add(convertBase(decimalNumber, 10, 2).padLeft(BINARY_LENGTH[language], '0'));
     });
     return result.join(' ');
   }
@@ -258,23 +258,36 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
           encodePunchtape(
               _currentEncodeInput,
               _currentCode,
-              (_currentOrderMode == GCWSwitchPosition.right));
+              (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? false : (_currentOrderMode == GCWSwitchPosition.left));
       List<String> binaryList = [];
       List<String> decimalList = [];
       segments.forEach((segment) {
-        binaryList.add(segments2binary(segment, _currentCode));
-        decimalList.add(convertBase(segments2binary(segment, _currentCode), 2, 10));
+        binaryList.add(
+            segments2binary(
+                segment,
+                _currentCode,
+                (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? false : (_currentOrderMode == GCWSwitchPosition.left)));
+        decimalList.add(
+            convertBase(
+                segments2binary(
+                    segment,
+                    _currentCode,
+                    (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? false : (_currentOrderMode == GCWSwitchPosition.left)),
+                2,
+                10));
       });
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
           GCWOutput(
             title: i18n(context, 'telegraph_decode_textmodedecimal'),
-            child: REVERSE_CODEBOOK.contains(_currentCode) ? _mirrorListOfBinary(binaryList) : decimalList.join(' '),
+            child: REVERSE_CODEBOOK.contains(_currentCode) ? _mirrorListOfBinaryToDecimal(binaryList) : decimalList.join(' '),
           ),
           GCWOutput(
             title: i18n(context, 'telegraph_decode_textmodebinary'),
-            child: binaryList.join(' '),
+            child: (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5)
+                ? binaryList.join(' ')
+                : (_currentOrderMode == GCWSwitchPosition.left) ? binaryList.join(' ') : _mirrorListOfBinary(binaryList),
           )
         ],
       );
@@ -286,14 +299,14 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         if (_currentDecodeTextMode == GCWSwitchPosition.left) {
           // input decimal
           segments = decodeTextPunchtape(
-              _decimalToBinary(_currentDecodeInput),
+              _decimalToBinary(_currentDecodeInput, _currentCode),
               _currentCode,
               (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? false : (_currentOrderMode == GCWSwitchPosition.left));
         } else {
           // input binary
           segments =
               decodeTextPunchtape(
-                  _currentDecodeInput,
+                  _mirrorListOfBinary(_currentDecodeInput.split(' ')),
                   _currentCode,
                   (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? false : (_currentOrderMode == GCWSwitchPosition.left));
         }
@@ -305,7 +318,7 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
         segments = decodeVisualPunchtape(
             output,
             _currentCode,
-            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? true : (_currentOrderMode == GCWSwitchPosition.right));
+            (_currentCode == TeletypewriterCodebook.BAUDOT_54123 || _currentCode == TeletypewriterCodebook.CCITT_IA5) ? false : (_currentOrderMode == GCWSwitchPosition.right));
       }
       return Column(
         children: <Widget>[
@@ -317,10 +330,17 @@ class TeletypewriterPunchTapeState extends State<TeletypewriterPunchTape> {
   }
 }
 
-String _mirrorListOfBinary(List<String> binaryList) {
+String _mirrorListOfBinaryToDecimal(List<String> binaryList) {
   List<String> result = [];
   binaryList.forEach((element) {
     result.add(convertBase(element.split('').reversed.join(''), 2, 10));
   });
   return result.join(' ');
+}
+
+String _mirrorListOfBinary(List<String> binaryList) {
+  List<String> result = [];
+  binaryList.forEach((element) {
+    result.add(element.split('').reversed.join(''));
+  });  return result.join(' ');
 }
