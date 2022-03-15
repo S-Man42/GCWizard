@@ -218,6 +218,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/hms_deg.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
@@ -525,6 +526,7 @@ void _initStaticToolList() {
       className(HexString2File()),
       className(HexViewer()),
       className(HiddenData()),
+      className(HmsDeg()),
       className(Hohoho()),
       className(Homophone()),
       className(Houdini()),

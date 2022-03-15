@@ -310,6 +310,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/hms_deg.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
@@ -706,6 +707,12 @@ initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'hiddendata',
+    ]),
+    GCWTool(tool: HmsDeg(), i18nPrefix: 'hms_deg', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'hms_deg',
+      'coordinates',
     ]),
     GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
       ToolCategory.CRYPTOGRAPHY
