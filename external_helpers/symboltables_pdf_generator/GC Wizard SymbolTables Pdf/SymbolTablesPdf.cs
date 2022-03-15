@@ -144,6 +144,10 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        private bool FontEmbeded { get; set; }
+        private List<XFont> FontList { get; set; } = new List<XFont>();
+
+
         public enum LanguageEnum
         {
             de,
@@ -395,7 +399,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF drawName(String name, string description, string license, int count, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
+            XFont font = CreateXFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
 
             var name_offset = font.Height;
             if (!string.IsNullOrEmpty(description))
@@ -428,7 +432,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             // description
             if (!string.IsNullOrEmpty(description))
             {
-                font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+                font = CreateXFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
 
                 // Draw the description
                 gfx.DrawString(description, font, XBrushes.Black,
@@ -441,7 +445,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             // license
             if (!string.IsNullOrEmpty(license))
             {
-                font = new XFont(CONFIG_Font, FontSizeName / 4, XFontStyle.Regular);
+                font = CreateXFont(CONFIG_Font, FontSizeName / 4, XFontStyle.Regular);
 
                 // Draw the license
                 gfx.DrawString(license, font, XBrushes.Black,
@@ -471,7 +475,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF drawOverlay(String name, int maxLength, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
         {
             // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
+            XFont font = CreateXFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
             if (name == " ")
             {
                 drawSpaceSymbol(offset, XColors.Blue, font, gfx);
@@ -572,7 +576,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             var licenseLabel = getLicenseLabel(languagefile);
 
             // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
+            XFont font = CreateXFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
             offset = createPage(document, ref page, ref gfx);
 
 
@@ -587,7 +591,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             offset.Y += name_offset;
 
             // Create a font
-            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+            font = CreateXFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
 
             double maxSize = 0;
 
@@ -664,7 +668,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
         {
             // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
+            XFont font = CreateXFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
             XSize textSize;
             String text;
 
@@ -689,7 +693,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             // Draw GC Wizard Text
             // Create a font
-            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+            font = CreateXFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
 
             gfx.DrawString("GC Wizard", font, XBrushes.Black,
                 new XRect(BorderWidthTop + 3, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
@@ -800,6 +804,21 @@ namespace GC_Wizard_SymbolTables_Pdf
         int rowImageCount(ref PdfPage page)
         {
             return (int)Math.Floor((page.Width - BorderWidthLeft - BorderWidthRight) / (ImageSize + ColumnDistance));
+        }
+
+        private XFont CreateXFont(String familyName, double emSize, XFontStyle style)
+        {
+            var xFont = FontList.Where(font => (font.Name == familyName) & (font.Size == emSize) & (font.Style == style)).FirstOrDefault();
+
+            if (xFont != null) return xFont;
+
+            // Set font encoding to unicode always
+            XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always);
+
+            xFont =  new XFont(familyName, emSize, style, FontEmbeded ? options : null);
+
+            FontList.Add(xFont);
+            return xFont;
         }
 
         #endregion
@@ -954,7 +973,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         #endregion
 
         #region parse source files
-        
+
         /// <summary>
         /// get text from language-file
         /// </summary>
@@ -1418,6 +1437,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 case "ko":
                     contentTableName = "목차";
                     CONFIG_Font = "Malgun Gothic";
+                    FontEmbeded = true;
                     break;
                 case "it":
                     contentTableName = "Sommario";
