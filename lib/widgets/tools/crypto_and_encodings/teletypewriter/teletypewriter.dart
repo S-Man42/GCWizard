@@ -113,6 +113,9 @@ class TeletypewriterState extends State<Teletypewriter> {
 
   _buildOutput() {
     var output = '';
+    // these ancient codes are build from a picture showing the code in Bitorder 12345
+    // all other codes are usually shown in Bitorder 54321
+    // hence the binary representation should be mirrored
     bool mirrorBinary = false;
     if (_currentCode == TeletypewriterCodebook.BAUDOT_54123 ||
         _currentCode == TeletypewriterCodebook.BAUDOT ||
@@ -143,10 +146,10 @@ class TeletypewriterState extends State<Teletypewriter> {
               return int.tryParse(convertBase(value, 2, 10));
             }).toList(),
             _currentCode,
-            mirrorBinary: mirrorBinary);
+        );
       }
 
-      return decodeTeletypewriter(List<int>.from(_currentDecodeInput['values']), _currentCode, mirrorBinary: mirrorBinary); // decimal
+      return decodeTeletypewriter(List<int>.from(_currentDecodeInput['values']), _currentCode); // decimal
     }
   }
 }

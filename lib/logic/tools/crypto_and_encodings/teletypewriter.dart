@@ -2055,17 +2055,8 @@ String encodeZC1(String input) {
   return out.join(' ');
 }
 
-String decodeTeletypewriter(List<int> valuesToConvert, TeletypewriterCodebook language, {mirrorBinary: false}) {
-  if (valuesToConvert == null || valuesToConvert.length == 0) return '';
-
-  List<int> values = [];
-
-  if (mirrorBinary) {
-    valuesToConvert.forEach((element) {
-      values.add(int.parse(convertBase(convertBase(element.toString(), 10, 2).padLeft(BINARY_LENGTH[language], '0').split('').reversed.join(''), 2, 10)));
-    });
-  } else
-    values.addAll(valuesToConvert);
+String decodeTeletypewriter(List<int> values, TeletypewriterCodebook language, ) {
+  if (values == null || values.length == 0) return '';
 
   String out = '';
   var isLetterMode = true;
