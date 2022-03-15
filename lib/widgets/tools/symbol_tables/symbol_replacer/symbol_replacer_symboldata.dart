@@ -13,7 +13,7 @@ class SymbolReplacerSymbolTableViewData {
 
   Future<_SymbolReplacerSymbolTableData> initialize(BuildContext context) async {
     var originalData = SymbolTableData(context, symbolKey);
-    await originalData.initialize();
+    await originalData.initialize(importEncryption: false);
 
     data = _SymbolReplacerSymbolTableData(originalData);
     return data;
