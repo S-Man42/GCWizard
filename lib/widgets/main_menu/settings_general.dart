@@ -59,12 +59,11 @@ class GeneralSettingsState extends State<GeneralSettings> {
                               }
 
                               return GCWDropDownMenuItem(
-                                value: locale.key.languageCode,
-                                child: languageName,
-                                subtitle: subtitle
-                              );
+                                  value: locale.key.languageCode, child: languageName, subtitle: subtitle);
                             }).toList(),
-                            value: isLocaleSupported(currentLocale) ? currentLocale.languageCode : DEFAULT_LOCALE.languageCode,
+                            value: isLocaleSupported(currentLocale)
+                                ? currentLocale.languageCode
+                                : DEFAULT_LOCALE.languageCode,
                             onChanged: (newValue) {
                               appLanguage.changeLanguage(newValue);
                             });

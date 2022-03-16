@@ -146,7 +146,7 @@ class AbaddonState extends State<Abaddon> {
         },
       ),
       GCWIconButton(
-        iconData: Icons.backspace,
+        icon: Icons.backspace,
         onPressed: () {
           setState(() {
             _currentInput = textControllerDoBackSpace(_currentInput, _inputController);

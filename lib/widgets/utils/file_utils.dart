@@ -10,14 +10,43 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:unrar_file/unrar_file.dart';
 
-enum FileType { ZIP, RAR, TAR, SEVEN_ZIP, GZIP, BZIP2, JPEG, PNG, GIF, TIFF, WEBP, WMV, WAV, MP3, OGG, SND, FDL, MIDI, PDF, EXE, BMP, TXT, GPX, KML, KMZ, LUAC, GWC, LUA }
+enum FileType {
+  ZIP,
+  RAR,
+  TAR,
+  SEVEN_ZIP,
+  GZIP,
+  BZIP2,
+  JPEG,
+  PNG,
+  GIF,
+  TIFF,
+  WEBP,
+  WMV,
+  WAV,
+  MP3,
+  OGG,
+  SND,
+  FDL,
+  MIDI,
+  PDF,
+  EXE,
+  BMP,
+  TXT,
+  GPX,
+  KML,
+  KMZ,
+  LUAC,
+  GWC,
+  LUA
+}
 enum FileClass { IMAGE, ARCHIVE, SOUND, DATA, TEXT, BINARY }
 
 const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
@@ -70,8 +99,8 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.WEBP: {
     'extensions': ['webp'],
     'magic_bytes': <List<int>>[
-       [0x52, 0x49, 0x46, 0x46] // identically to WAV - check details
-     ],
+      [0x52, 0x49, 0x46, 0x46] // identically to WAV - check details
+    ],
     'magic_bytes_detail': <int>[0x57, 0x45, 0x42, 0x50],
     'mime_types': ['image/webp'],
     'file_class': FileClass.IMAGE
@@ -169,7 +198,7 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
   FileType.OGG: {
     'extensions': ['ogg', 'oga'],
     'magic_bytes': <List<int>>[
-    [0x4F, 0x67, 0x67, 0x53]
+      [0x4F, 0x67, 0x67, 0x53]
     ],
     'mime_types': ['audio/ogg', 'application/ogg'],
     'file_class': FileClass.SOUND
@@ -178,14 +207,16 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['snd'],
     'magic_bytes': <List<int>>[
       [0x46, 0x4F, 0x52, 0x4D],
-      [0x38, 0x53, 0x56, 0x58]],
+      [0x38, 0x53, 0x56, 0x58]
+    ],
     'mime_types': ['audio/snd'],
     'file_class': FileClass.SOUND
   },
   FileType.FDL: {
     'extensions': ['fdl'],
     'magic_bytes': <List<int>>[
-      [0x00, 0x00]],
+      [0x00, 0x00]
+    ],
     'mime_types': ['application/octet-stream'],
     'file_class': FileClass.SOUND
   },
@@ -223,19 +254,32 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['kml'],
     'magic_bytes': <List<int>>[],
     'file_class': FileClass.DATA,
-    'mime_types': ['application/kml', 'application/kml+xml', 'application/xml', 'application/vnd.google-earth.kml+xml', 'application/vnd.google-earth.kml'],
+    'mime_types': [
+      'application/kml',
+      'application/kml+xml',
+      'application/xml',
+      'application/vnd.google-earth.kml+xml',
+      'application/vnd.google-earth.kml'
+    ],
     'uniform_type_identifier': 'com.google.earth.kml'
   },
   FileType.KMZ: {
     'extensions': ['kmz'],
     'magic_bytes': <List<int>>[],
     'file_class': FileClass.DATA,
-    'mime_types': ['application/kmz', 'application/kmz+xml', 'application/xml', 'application/vnd.google-earth.kmz+xml', 'application/vnd.google-earth.kmz']
+    'mime_types': [
+      'application/kmz',
+      'application/kmz+xml',
+      'application/xml',
+      'application/vnd.google-earth.kmz+xml',
+      'application/vnd.google-earth.kmz'
+    ]
   },
   FileType.LUAC: {
     'extensions': ['luac'],
     'magic_bytes': <List<int>>[
-      [0x1B, 0x4C, 0x75, 0x61, 0x51, 0x00, 0x01, 0x04]],
+      [0x1B, 0x4C, 0x75, 0x61, 0x51, 0x00, 0x01, 0x04]
+    ],
     'mime_types': ['application/octet-stream'],
     'file_class': FileClass.BINARY
   },
@@ -243,7 +287,8 @@ const Map<FileType, Map<String, dynamic>> _FILE_TYPES = {
     'extensions': ['gwc'],
     'magic_bytes': <List<int>>[
       [0x02, 0x0A, 0x43, 0x41, 0x52, 0x54, 0x00],
-      [0x02, 0x0B, 0x43, 0x41, 0x52, 0x54, 0x00]],
+      [0x02, 0x0B, 0x43, 0x41, 0x52, 0x54, 0x00]
+    ],
     'mime_types': ['application/octet-stream'],
     'file_class': FileClass.BINARY
   },
@@ -263,7 +308,6 @@ FileType fileTypeByFilename(String fileName) {
 }
 
 String fileExtension(FileType type) {
-  print(_FILE_TYPES[type]['extensions'].first);
   return _FILE_TYPES[type]['extensions'].first;
 }
 
@@ -534,7 +578,7 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
   }
 }
 
-List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
+List<GCWFile> _archiveToPlatformFileList(Archive archive) {
   return archive.files
       .map((ArchiveFile file) {
         if (!file.isFile) return null;
@@ -544,13 +588,13 @@ List<PlatformFile> _archiveToPlatformFileList(Archive archive) {
           content = file.content;
         } catch (e) {}
 
-        return PlatformFile(name: file.name, bytes: content);
+        return GCWFile(name: file.name, bytes: content);
       })
       .where((file) => file != null)
       .toList();
 }
 
-Future<List<PlatformFile>> extractArchive(PlatformFile file) async {
+Future<List<GCWFile>> extractArchive(GCWFile file) async {
   if (fileClass(file.fileType) != FileClass.ARCHIVE) return null;
 
   try {
@@ -562,11 +606,11 @@ Future<List<PlatformFile>> extractArchive(PlatformFile file) async {
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
       case FileType.BZIP2:
         var output = BZip2Decoder().decodeBuffer(input);
-        return {PlatformFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
+        return {GCWFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
-        return {PlatformFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
+        return {GCWFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
         return await extractRarArchive(file);
         break;
@@ -578,17 +622,18 @@ Future<List<PlatformFile>> extractArchive(PlatformFile file) async {
   }
 }
 
-Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password}) async {
-  var fileList = <PlatformFile>[];
+Future<List<GCWFile>> extractRarArchive(GCWFile file, {String password}) async {
+  var fileList = <GCWFile>[];
   var tmpFile = await createTmpFile('rar', file.bytes);
   var directory = changeExtension(tmpFile.path, '');
 
   try {
     await createDirectory(directory);
-    var result = await UnrarFile.extract_rar( tmpFile.path, directory + '/', password: password);
+    var result = await UnrarFile.extract_rar(tmpFile.path, directory + '/', password: password);
 
     await Directory(directory).listSync(recursive: true).whereType<File>().map((entity) async {
-      fileList.add(PlatformFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
+      fileList.add(
+          GCWFile(name: getFileBaseNameWithExtension(entity.path), bytes: await readByteDataFromFile(entity.path)));
     }).toList();
   } catch (e) {}
 
@@ -598,7 +643,7 @@ Future<List<PlatformFile>> extractRarArchive(PlatformFile file, {String password
   return fileList;
 }
 
-List<PlatformFile> extractRarArchive1(PlatformFile file) {
+List<GCWFile> extractRarArchive1(GCWFile file) {
   extractRarArchive(file).then((value) {
     return value;
   });

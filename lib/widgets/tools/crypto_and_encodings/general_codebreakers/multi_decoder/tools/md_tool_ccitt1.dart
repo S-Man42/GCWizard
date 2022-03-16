@@ -23,9 +23,11 @@ class MultiDecoderToolCcitt1 extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_CCITT1,
             onDecode: (String input, String key) {
               if (options[MDT_CCITT1_OPTION_MODE] == MDT_CCITT1_OPTION_MODE_BINARY) {
-                return decodeTeletypewriter(textToBinaryList(input).map((value) {
-                  return int.tryParse(convertBase(value, 2, 10));
-                }).toList(), TeletypewriterCodebook.CCITT_ITA1_EU);
+                return decodeTeletypewriter(
+                    textToBinaryList(input).map((value) {
+                      return int.tryParse(convertBase(value, 2, 10));
+                    }).toList(),
+                    TeletypewriterCodebook.CCITT_ITA1_EU);
               } else
                 return decodeTeletypewriter(textToIntList(input), TeletypewriterCodebook.CCITT_ITA1_EU);
             },

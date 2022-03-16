@@ -1,35 +1,75 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-List<String> decenary2segments(String decenary, bool original, TeletypewriterCodebook language) {
+List<String> decenary2segments(String decenary, bool order12345, TeletypewriterCodebook language) {
   // 0 ... 31 => 00000 ... 11111
   String binary = convertBase(decenary, 10, 2).padLeft(BINARY_LENGTH[language], '0');
   List<String> result = [];
+  if (!order12345) {
+    binary = binary.split('').reversed.join('');
+  }
 
   if (REVERSE_CODEBOOK.contains(language)) {
     binary = binary.split('').reversed.join('');
   }
-  else {
-    if (original)
-      binary = binary.split('').reversed.join('');
-  }
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
 
-List<String> binary2segments(String binary, bool original, TeletypewriterCodebook language) {
+List<String> binary2segments(String binary, TeletypewriterCodebook language) {
   // 00000 ... 11111 => [1,2,3,4,5]
   binary = binary.padLeft(BINARY_LENGTH[language], '0');
 
   List<String> result = [];
-  if (original)
-    binary = binary.split('').reversed.join('');
+
   for (int i = 0; i < binary.length; i++) if (binary[i] == '1') result.add((i + 1).toString());
   return result;
 }
 
-String segments2binary(List<String> segments, TeletypewriterCodebook language) {
+String segments2binary(List<String> segments2convert, TeletypewriterCodebook language, bool order12345) {
   // [1,2,3,4,5] => 00000 ... 11111
+  List<String> segments = [];
+  if (order12345) {
+    segments.addAll(segments2convert);
+  }
+  else {
+    switch (BINARY_LENGTH[language]) {
+      case 5:
+        if (segments2convert.contains('1')) segments.add('5');
+        if (segments2convert.contains('2')) segments.add('4');
+        if (segments2convert.contains('3')) segments.add('3');
+        if (segments2convert.contains('4')) segments.add('2');
+        if (segments2convert.contains('5')) segments.add('1');
+        break;
+      case 6:
+        if (segments2convert.contains('1')) segments.add('6');
+        if (segments2convert.contains('2')) segments.add('5');
+        if (segments2convert.contains('3')) segments.add('4');
+        if (segments2convert.contains('4')) segments.add('3');
+        if (segments2convert.contains('5')) segments.add('2');
+        if (segments2convert.contains('6')) segments.add('1');
+        break;
+      case 7:
+        if (segments2convert.contains('1')) segments.add('7');
+        if (segments2convert.contains('2')) segments.add('6');
+        if (segments2convert.contains('3')) segments.add('5');
+        if (segments2convert.contains('4')) segments.add('4');
+        if (segments2convert.contains('5')) segments.add('3');
+        if (segments2convert.contains('6')) segments.add('2');
+        if (segments2convert.contains('7')) segments.add('1');
+        break;
+      case 8:
+        if (segments2convert.contains('1')) segments.add('8');
+        if (segments2convert.contains('2')) segments.add('7');
+        if (segments2convert.contains('3')) segments.add('6');
+        if (segments2convert.contains('4')) segments.add('5');
+        if (segments2convert.contains('5')) segments.add('4');
+        if (segments2convert.contains('6')) segments.add('3');
+        if (segments2convert.contains('7')) segments.add('2');
+        if (segments2convert.contains('8')) segments.add('1');
+        break;
+    }
+  }
   String result = '';
   if (segments.contains('1'))
     result = result + '1';
@@ -91,11 +131,10 @@ String segments2binary(List<String> segments, TeletypewriterCodebook language) {
     else
       result = result + '0';
   }
-
   return result;
 }
 
-String segments2decenary(List<String> segments, bool original, TeletypewriterCodebook language) {
+String segments2decenary(List<String> segments, bool order54321, TeletypewriterCodebook language) {
   // [1,2,3,4,5] => 0 ... 31
   String result = '';
 
@@ -160,26 +199,23 @@ String segments2decenary(List<String> segments, bool original, TeletypewriterCod
       result = result + '0';
   }
 
-  if (original)
-    result = result.split('').reversed.join('');
+  if (order54321) result = result.split('').reversed.join('');
   return convertBase(result, 2, 10);
 }
 
-List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language, bool original) {
+List<List<String>> encodePunchtape(String input, TeletypewriterCodebook language, bool order12345) {
   if (input == null) return [];
 
   List<List<String>> result = [];
   List<String> code = [];
-
   code = encodeTeletypewriter(input, language).split(' ');
   code.forEach((element) {
-    if (int.tryParse(element) != null)
-    result.add(decenary2segments(element, original, language));
+    if (int.tryParse(element) != null) result.add(decenary2segments(element, order12345, language));
   });
   return result;
 }
 
-Map<String, dynamic> decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool original) {
+Map<String, dynamic> decodeTextPunchtape(String inputs, TeletypewriterCodebook language, bool order12345) {
   if (inputs == null || inputs.length == 0)
     return {
       'displays': <List<String>>[],
@@ -190,16 +226,20 @@ Map<String, dynamic> decodeTextPunchtape(String inputs, TeletypewriterCodebook l
   List<int> intList = List<int>(1);
 
   inputs.split(' ').forEach((element) {
-    displays.add(binary2segments(element, original, language));
     if (int.tryParse(convertBase(element, 2, 10)) != null) {
       intList[0] = int.parse(convertBase(element, 2, 10));
       text.add(decodeTeletypewriter(intList, language));
     }
+    if (!order12345)
+      element = element.split('').reversed.join('');
+
+    displays.add(binary2segments(element, language));
+
   });
   return {'displays': displays, 'text': text.join('')};
 }
 
-Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, TeletypewriterCodebook language, bool original) {
+Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, TeletypewriterCodebook language, bool order12345) {
   if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'text': ''};
 
   var displays = <List<String>>[];
@@ -211,13 +251,12 @@ Map<String, dynamic> decodeVisualPunchtape(List<String> inputs, TeletypewriterCo
       display.add(element);
     });
     displays.add(display);
-
   }).toList();
 
   // convert list of displays to list of decimal using String segments2decenary(List<String> segments)
   List<int> intList = [];
   displays.forEach((element) {
-    intList.add(int.parse(segments2decenary(element, original, language)));
+    intList.add(int.parse(segments2decenary(element, order12345, language)));
   });
 
   // convert list of decimal to character using String decodeCCITT(List<int> values, TeletypewriterCodebook language)

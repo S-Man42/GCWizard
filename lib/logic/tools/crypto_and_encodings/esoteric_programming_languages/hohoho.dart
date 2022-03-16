@@ -8,9 +8,19 @@
 //
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_trivialsubstitutions.dart';
 
 const HOHOHO_ERROR_INVALID_PROGRAM = 'hohoho_error_syntax_invalidprogram';
+
+final _HOHOHO_SUBSTITUTIONS = {
+  '>': 'HoHoho',
+  '<': 'hoHoHo',
+  '+': 'HoHoHo',
+  '-': 'hohoho',
+  '.': 'hoHoho',
+  ',': 'HohoHo',
+  '[': 'Hohoho',
+  ']': 'hohoHo'
+};
 
 class HohohoOutput {
   String output = '';
@@ -19,33 +29,28 @@ class HohohoOutput {
   HohohoOutput(this.output, this.error);
 }
 
-
-HohohoOutput interpretHohoho(String plainText, {String STDIN}){
-  if (plainText == '' || plainText == null)
-    return HohohoOutput('', '');
+HohohoOutput interpretHohoho(String plainText, {String STDIN}) {
+  if (plainText == '' || plainText == null) return HohohoOutput('', '');
 
   plainText = plainText.trim();
   String result = plainText.replaceAll('!', '').replaceAll(' ', '');
   String test = plainText.replaceAll('Ho', '').replaceAll('ho', '').replaceAll('!', '').replaceAll(' ', '');
   String error = '';
   // test if correct syntax
-  if (test != '' || result.length % 6 != 0)
-    error = HOHOHO_ERROR_INVALID_PROGRAM;
+  if (test != '' || result.length % 6 != 0) error = HOHOHO_ERROR_INVALID_PROGRAM;
 
   // convert to hohoho
   test = '';
   for (int i = 1; i < result.length + 1; i++) {
     test = test + result[i - 1];
-    if (i % 6 == 0)
-      test = test + ' ';
+    if (i % 6 == 0) test = test + ' ';
   }
 
   // convert to Brainfck
-  Map BRAINF_CK = switchMapKeyValue(brainfkTrivialSubstitutions['Hohoho!']);
+  Map BRAINF_CK = switchMapKeyValue(_HOHOHO_SUBSTITUTIONS);
   result = '';
   test.split(' ').forEach((element) {
-    if (BRAINF_CK[element] != null)
-      result = result + BRAINF_CK[element];
+    if (BRAINF_CK[element] != null) result = result + BRAINF_CK[element];
   });
 
   // interpret
@@ -55,9 +60,8 @@ HohohoOutput interpretHohoho(String plainText, {String STDIN}){
   return HohohoOutput(result, error);
 }
 
-String generateHohoho(String OutputText){
-  if (OutputText == '' || OutputText == null)
-    return '';
+String generateHohoho(String OutputText) {
+  if (OutputText == '' || OutputText == null) return '';
 
   // generate Brainfck
   String code = generateBrainfk(OutputText);
@@ -65,7 +69,7 @@ String generateHohoho(String OutputText){
 
   // transfer to hohoho
   code.split('').forEach((element) {
-    result = result + brainfkTrivialSubstitutions['Hohoho!'][element];
+    result = result + _HOHOHO_SUBSTITUTIONS[element];
   });
 
   // normalize

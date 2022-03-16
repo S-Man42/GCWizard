@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -118,27 +117,26 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
               )
             ],
           ),
-        if ((widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false)
-            && (!_hasSpecialEncryption() || _currentSpecialEncryption == GCWSwitchPosition.right))
+        if ((widget.alwaysIgnoreUnknown == null || widget.alwaysIgnoreUnknown == false) &&
+            (!_hasSpecialEncryption() || _currentSpecialEncryption == GCWSwitchPosition.right))
           Row(
             children: <Widget>[
               Expanded(
-                  child: GCWOnOffSwitch(
-                    value: _currentIgnoreUnknown,
-                    title: i18n(context, 'symboltables_ignoreunknown'),
-                    onChanged: (value) {
-                      setState(() {
-                        _currentIgnoreUnknown = value;
-                      });
-                    },
-                  ),
+                child: GCWOnOffSwitch(
+                  value: _currentIgnoreUnknown,
+                  title: i18n(context, 'symboltables_ignoreunknown'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentIgnoreUnknown = value;
+                    });
+                  },
+                ),
               ),
               Container(
                 width: 2 * 40.0,
               )
             ],
           ),
-
         GCWTextDivider(
             text: i18n(context, 'common_output'),
             suppressTopSpace: true,
@@ -151,23 +149,12 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                         customIcon: Stack(
                           alignment: Alignment.bottomRight,
                           children: [
-                            Icon(
-                                Icons.fit_screen,
-                                color: themeColors().mainFont()
-                            ),
+                            Icon(Icons.fit_screen, color: themeColors().mainFont()),
                             Stack(
                               alignment: Alignment.center,
                               children: [
-                                Icon(
-                                    Icons.circle,
-                                    size: 17.0,
-                                    color: themeColors().primaryBackground()
-                                ),
-                                Icon(
-                                    Icons.add,
-                                    size: 14.0,
-                                    color: themeColors().mainFont()
-                                )
+                                Icon(Icons.circle, size: 17.0, color: themeColors().primaryBackground()),
+                                Icon(Icons.add, size: 14.0, color: themeColors().mainFont())
                               ],
                             ),
                           ],
@@ -182,23 +169,12 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                         customIcon: Stack(
                           alignment: Alignment.bottomRight,
                           children: [
-                            Icon(
-                                Icons.fit_screen,
-                                color: themeColors().mainFont()
-                            ),
+                            Icon(Icons.fit_screen, color: themeColors().mainFont()),
                             Stack(
                               alignment: Alignment.center,
                               children: [
-                                Icon(
-                                    Icons.circle,
-                                    size: 17.0,
-                                    color: themeColors().primaryBackground()
-                                ),
-                                Icon(
-                                    Icons.remove,
-                                    size: 14.0,
-                                    color: themeColors().mainFont()
-                                )
+                                Icon(Icons.circle, size: 17.0, color: themeColors().primaryBackground()),
+                                Icon(Icons.remove, size: 14.0, color: themeColors().mainFont())
                               ],
                             ),
                           ],
@@ -218,15 +194,15 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                   onChanged: widget.onChanged,
                 ),
               ],
-            )
-        ),
+            )),
         Expanded(
             child: GCWSymbolTableTextToSymbols(
                 text: _currentEncryptionInput,
-                ignoreUnknown: (_hasSpecialEncryption() &&  _currentSpecialEncryption == GCWSwitchPosition.left) || _currentIgnoreUnknown,
+                ignoreUnknown: (_hasSpecialEncryption() && _currentSpecialEncryption == GCWSwitchPosition.left) ||
+                    _currentIgnoreUnknown,
                 countColumns: widget.countColumns,
                 borderWidth: _currentBorderWidth,
-                specialEncryption: _hasSpecialEncryption() &&  _currentSpecialEncryption == GCWSwitchPosition.left,
+                specialEncryption: _hasSpecialEncryption() && _currentSpecialEncryption == GCWSwitchPosition.left,
                 data: widget.data)),
       ],
     );

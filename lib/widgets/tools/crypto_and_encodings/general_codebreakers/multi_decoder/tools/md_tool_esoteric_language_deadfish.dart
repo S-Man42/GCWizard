@@ -13,7 +13,8 @@ const MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO = 'deadfish_mode_left';
 const MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD = 'deadfish_mode_right';
 
 class MultiDecoderToolEsotericLanguageDeadfish extends GCWMultiDecoderTool {
-  MultiDecoderToolEsotericLanguageDeadfish({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
+  MultiDecoderToolEsotericLanguageDeadfish(
+      {Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
       : super(
             key: key,
             id: id,
@@ -23,7 +24,8 @@ class MultiDecoderToolEsotericLanguageDeadfish extends GCWMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 var decodeable = input;
-                if (options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] == MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD) //XKCD
+                if (options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] ==
+                    MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD) //XKCD
                   decodeable = decodeable
                       .toLowerCase()
                       .replaceAll(RegExp(r'[iso]'), '')
@@ -43,7 +45,8 @@ class MultiDecoderToolEsotericLanguageDeadfish extends GCWMultiDecoderTool {
                 onChanged: (newValue) {
                   options[MDT_ESOTERIC_LANGUAGE_DEADFISH_OPTION_MODE] = newValue;
                 },
-                items: [MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO, MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD].map((mode) {
+                items: [MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_IDSO, MDT_ESOTERIC_LANGUAGES_DEADFISH_OPTION_XKCD]
+                    .map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode,
                     child: i18n(context, mode),

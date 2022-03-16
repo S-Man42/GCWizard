@@ -10,10 +10,9 @@ class GameOfLifeRules {
     var inverseBirths = <int>{};
 
     var deaths = <int>{};
-    
+
     for (int i = 0; i <= 8; i++) {
-      if (survivals.contains(i))
-        continue;
+      if (survivals.contains(i)) continue;
 
       deaths.add(i);
     }
@@ -22,8 +21,7 @@ class GameOfLifeRules {
     inverseBirths = deaths.map((e) => 8 - e).toSet();
 
     for (int i = 0; i <= 8; i++) {
-      if (inverseDeaths.contains(i))
-        continue;
+      if (inverseDeaths.contains(i)) continue;
 
       inverseSurvivals.add(i);
     }
@@ -52,15 +50,12 @@ int _countNeighbors(List<List<bool>> _currentBoard, int i, int j, {isOpenWorld})
   var size = _currentBoard.length;
 
   for (int k = i - 1; k <= i + 1; k++) {
-    if (!isOpenWorld && (k < 0 || k == size))
-      continue;
+    if (!isOpenWorld && (k < 0 || k == size)) continue;
 
     for (int l = j - 1; l <= j + 1; l++) {
-      if (!isOpenWorld && (l < 0 || l == size))
-        continue;
+      if (!isOpenWorld && (l < 0 || l == size)) continue;
 
-      if (k == i && l == j)
-        continue;
+      if (k == i && l == j) continue;
 
       if (_currentBoard[k % size][l % size]) {
         counter++;
@@ -96,8 +91,3 @@ List<List<bool>> calculateGameOfLifeStep(List<List<bool>> _currentBoard, GameOfL
 
   return _newStepBoard;
 }
-
-
-
-
-

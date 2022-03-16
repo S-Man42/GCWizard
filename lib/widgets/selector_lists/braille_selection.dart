@@ -8,8 +8,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-
-
 class BrailleSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_derivate.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_derivative.dart';
 
 void main() {
   group("Ook.interpretOok:", () {
@@ -10,6 +10,7 @@ void main() {
       {'code' : '.', 'input': 'ABC123', 'expectedOutput' : ''}, // error case: no fitting subsitution
       //Input copy
       {'code' : 'Ook. Ook! Ook! Ook? Ook! Ook. Ook. Ook! Ook? Ook!', 'input': 'ABC123', 'expectedOutput' : 'ABC123'},
+      {'code' : 'ook.Ook!Ook!OOK? Ook!Ook. Ook. ook!pok? Ook!', 'input': 'ABC123', 'expectedOutput' : 'ABC123'},
       {'code' : 'Ook. Ook! Ook! Ook? Ook! Ook. Ook. Ook! Ook?', 'input': 'ABC123', 'expectedOutput' : 'A'}, // error case: no fitting subsitution
 
       {'code' : 'Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip. Yip.'
@@ -50,7 +51,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATE_SHORTOOK.interpretBrainfkDerivat(elem['code'], input: elem['input']);
+        var _actual = BRAINFKDERIVATIVE_SHORTOOK.interpretBrainfkDerivatives(elem['code'], input: elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -67,7 +68,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = BRAINFKDERIVATE_OOK.generateBrainfkDerivat(elem['text']);
+        var _actual = BRAINFKDERIVATIVE_OOK.generateBrainfkDerivative(elem['text']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -141,7 +142,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
-        var _actual = BRAINFKDERIVATE_DETAILEDFK.interpretBrainfkDerivat(elem['code'], input: elem['input']);
+        var _actual = BRAINFKDERIVATIVE_DETAILEDFK.interpretBrainfkDerivatives(elem['code'], input: elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });

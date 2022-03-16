@@ -193,6 +193,9 @@ void main() {
       {'formula' : 'AB[A+B]{2}', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'ttbRbRbbBb'},  // IF: formula id <= 2
       {'formula' : '[AB]{2}[A+B]', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bRRbbBbbRbRb'},  // IF: formula id <= 2
 
+      // empty variable value
+      {'formula' : '[A]', 'values': {'A':''}, 'expectedOutput' : 'bRb'},
+
       // new line
       {'formula' : 'sindeg(90)\r\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
       {'formula' : 'sindeg(90)\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},

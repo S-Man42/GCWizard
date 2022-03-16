@@ -100,123 +100,6 @@ class MediaFileContent {
   MediaFileContent(this.MediaFileID, this.MediaFileType, this.MediaFileBytes, this.MediaFileLength);
 }
 
-class WherigoCartridge {
-  final String Signature;
-  final int NumberOfObjects;
-  final List<MediaFileHeader> MediaFilesHeaders;
-  final List<MediaFileContent> MediaFilesContents;
-  final String LUAFile;
-  final int HeaderLength;
-  final int Splashscreen;
-  final int SplashscreenIcon;
-  final double Latitude;
-  final double Longitude;
-  final double Altitude;
-  final int DateOfCreation;
-  final String TypeOfCartridge;
-  final String Player;
-  final int PlayerID;
-  final String CartridgeLUAName;
-  final String GWCCartridgeName;
-  final String LUACartridgeName;
-  final String GWCCartridgeGUID;
-  final String LUACartridgeGUID;
-  final String CartridgeDescription;
-  final String StartingLocationDescription;
-  final String Version;
-  final String Author;
-  final String Company;
-  final String RecommendedDevice;
-  final int LengthOfCompletionCode;
-  final String CompletionCode;
-  final String ObfuscatorTable;
-  final String ObfuscatorFunction;
-  final List<CharacterData> Characters;
-  final List<ItemData> Items;
-  final List<TaskData> Tasks;
-  final List<InputData> Inputs;
-  final List<ZoneData> Zones;
-  final List<TimerData> Timers;
-  final List<MediaData> Media;
-  final List<List<ActionMessageElementData>> Messages;
-  final List<AnswerData> Answers;
-  final List<VariableData> Identifiers;
-  final Map<String, ObjectData> NameToObject;
-  final ANALYSE_RESULT_STATUS ResultStatus;
-  final List<String> ResultsGWC;
-  final List<String> ResultsLUA;
-  final BUILDER Builder;
-  final String BuilderVersion;
-  final String TargetDeviceVersion;
-  final String StateID;
-  final String CountryID;
-  final String UseLogging;
-  final String CreateDate;
-  final String PublishDate;
-  final String UpdateDate;
-  final String LastPlayedDate;
-  final String httpCode;
-  final String httpMessage;
-
-  WherigoCartridge(
-      this.Signature,
-      this.NumberOfObjects,
-      this.MediaFilesHeaders,
-      this.MediaFilesContents,
-      this.LUAFile,
-      this.HeaderLength,
-      this.Latitude,
-      this.Longitude,
-      this.Altitude,
-      this.Splashscreen,
-      this.SplashscreenIcon,
-      this.DateOfCreation,
-      this.TypeOfCartridge,
-      this.Player,
-      this.PlayerID,
-      this.CartridgeLUAName,
-      this.GWCCartridgeName,
-      this.LUACartridgeName,
-      this.GWCCartridgeGUID,
-      this.LUACartridgeGUID,
-      this.CartridgeDescription,
-      this.StartingLocationDescription,
-      this.Version,
-      this.Author,
-      this.Company,
-      this.RecommendedDevice,
-      this.LengthOfCompletionCode,
-      this.CompletionCode,
-      this.ObfuscatorTable,
-      this.ObfuscatorFunction,
-      this.Characters,
-      this.Items,
-      this.Tasks,
-      this.Inputs,
-      this.Zones,
-      this.Timers,
-      this.Media,
-      this.Messages,
-      this.Answers,
-      this.Identifiers,
-      this.NameToObject,
-      this.ResultStatus,
-      this.ResultsGWC,
-      this.ResultsLUA,
-      this.Builder,
-      this.BuilderVersion,
-      this.TargetDeviceVersion,
-      this.CountryID,
-      this.StateID,
-      this.UseLogging,
-      this.CreateDate,
-      this.PublishDate,
-      this.UpdateDate,
-      this.LastPlayedDate,
-      this.httpCode,
-      this.httpMessage);
-}
-
 class ObjectData {
   final String ObjectID;
   final int ObjectIndex;
@@ -352,10 +235,12 @@ class InputData {
 
 class AnswerData {
   final String AnswerAnswer;
+  final String AnswerHash;
   final List<ActionMessageElementData> AnswerActions;
 
   AnswerData(
     this.AnswerAnswer,
+    this.AnswerHash,
     this.AnswerActions,
   );
 }
@@ -538,39 +423,40 @@ class WherigoCartridgeLUA {
   final String httpCode;
   final String httpMessage;
 
-  WherigoCartridgeLUA({
-    this.LUAFile = '',
-    this.CartridgeLUAName = '',
-    this.CartridgeName = '',
-    this.CartridgeGUID = '',
-    this.ObfuscatorTable = '',
-    this.ObfuscatorFunction = '',
-    this.Characters,
-    this.Items,
-    this.Tasks,
-    this.Inputs,
-    this.Zones,
-    this.Timers,
-    this.Media,
-    this.Messages,
-    this.Answers,
-    this.Variables,
-    this.NameToObject,
-    this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
-    this.ResultsLUA,
-    this.Builder = BUILDER.UNKNOWN,
-    this.BuilderVersion = '',
-    this.TargetDeviceVersion = '',
-    this.CountryID = '',
-    this.StateID = '',
-    this.UseLogging = '',
-    this.CreateDate = '',
-    this.PublishDate = '',
-    this.UpdateDate = '',
-    this.LastPlayedDate = '',
-    this.httpCode = '',
-    this.httpMessage = ''});
+  WherigoCartridgeLUA(
+      {this.LUAFile = '',
+      this.CartridgeLUAName = '',
+      this.CartridgeName = '',
+      this.CartridgeGUID = '',
+      this.ObfuscatorTable = '',
+      this.ObfuscatorFunction = '',
+      this.Characters,
+      this.Items,
+      this.Tasks,
+      this.Inputs,
+      this.Zones,
+      this.Timers,
+      this.Media,
+      this.Messages,
+      this.Answers,
+      this.Variables,
+      this.NameToObject,
+      this.ResultStatus = ANALYSE_RESULT_STATUS.NONE,
+      this.ResultsLUA,
+      this.Builder = BUILDER.UNKNOWN,
+      this.BuilderVersion = '',
+      this.TargetDeviceVersion = '',
+      this.CountryID = '',
+      this.StateID = '',
+      this.UseLogging = '',
+      this.CreateDate = '',
+      this.PublishDate = '',
+      this.UpdateDate = '',
+      this.LastPlayedDate = '',
+      this.httpCode = '',
+      this.httpMessage = ''});
 }
+
 Map<FILE_LOAD_STATE, Map<WHERIGO, String>> WHERIGO_DATA = {
   FILE_LOAD_STATE.NULL: {},
   FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC,

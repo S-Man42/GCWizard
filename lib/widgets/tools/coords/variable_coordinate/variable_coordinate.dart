@@ -155,7 +155,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               ),
             ),
             GCWIconButton(
-              iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+              icon: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
               onPressed: () {
                 _setUserLocationCoords();
               },
@@ -322,8 +322,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   Map<String, String> _getSubstitutions() {
     Map<String, String> _substitutions = {};
-    if (widget.formula.values == null || widget.formula.values.isEmpty)
-      return _substitutions;
+    if (widget.formula.values == null || widget.formula.values.isEmpty) return _substitutions;
 
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
@@ -361,8 +360,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _formatVariables(variables) {
-    if (variables == null || variables.isEmpty)
-      return '';
+    if (variables == null || variables.isEmpty) return '';
 
     return variables.entries
         .map((variable) => variable.key.toUpperCase() + ': ' + variable.value.toString())

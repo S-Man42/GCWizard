@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart'; // https://pub.dev/packages/audioplayers
@@ -9,16 +10,16 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 enum PlayerState { stopped, playing, paused }
 
 class GCWSoundPlayer extends StatefulWidget {
-  final PlatformFile file;
-  final bool showMetadata;
+  final GCWFile file;
 
-  const GCWSoundPlayer({Key key, @required this.file, this.showMetadata: false}) : super(key: key);
+  const GCWSoundPlayer({Key key, @required this.file}) : super(key: key);
 
   @override
   _GCWSoundPlayerState createState() => _GCWSoundPlayerState();
@@ -26,7 +27,7 @@ class GCWSoundPlayer extends StatefulWidget {
 
 class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   AudioCache audioCache = AudioCache();
-  AudioPlayer advancedPlayer = AudioPlayer();
+  AudioPlayer advancedPlayer;
 
   StreamSubscription<Duration> _onPositionChangedStream;
   StreamSubscription<Duration> _onDurationChangedStream;
@@ -46,12 +47,14 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   void initState() {
     super.initState();
 
+    advancedPlayer = AudioPlayer(playerId: Uuid().v4());
+
     if (kIsWeb) {
       // Calls to Platform.isIOS fails on web
       return;
     }
     if (Platform.isIOS) {
-      audioCache.fixedPlayer?.notificationService.startHeadlessService();
+      //audioCache.fixedPlayer?.notificationService.startHeadlessService();
     }
 
     _onDurationChangedStream = advancedPlayer.onDurationChanged.listen((Duration d) {
@@ -60,14 +63,14 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       });
     });
 
-    _onPositionChangedStream = advancedPlayer.onAudioPositionChanged.listen((Duration  p) {
+    _onPositionChangedStream = advancedPlayer.onAudioPositionChanged.listen((Duration p) {
       setState(() {
         _currentPositionInMS = p.inMilliseconds;
 
         if (_totalDurationInMS == null || _totalDurationInMS == 0.0) {
           _currentSliderPosition = 0.0;
         } else {
-          _currentSliderPosition = _currentPositionInMS / _totalDurationInMS;
+          _currentSliderPosition = min(1.0, _currentPositionInMS / _totalDurationInMS);
         }
       });
     });
@@ -92,10 +95,10 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     _loadedFileBytes = widget.file.bytes.length;
     _isLoaded = true;
 
-    if (!mounted)  // prevents setState when currently disposing widget.
+    if (!mounted) // prevents setState when currently disposing widget.
       return;
 
-    setState((){});
+    setState(() {});
   }
 
   @override
@@ -124,61 +127,38 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     return Row(
       children: [
         GCWIconButton(
-          iconData: isPlaying ? Icons.pause : Icons.play_arrow,
+          icon: isPlaying ? Icons.pause : Icons.play_arrow,
           iconColor: _isLoaded ? null : themeColors().inActive(),
-          onPressed: isPlaying
-              ? () => _audioPlayerPause()
-              : () => _audioPlayerPlay(),
+          onPressed: isPlaying ? () => _audioPlayerPause() : () => _audioPlayerPlay(),
         ),
         GCWIconButton(
-          iconData: Icons.stop,
+          icon: Icons.stop,
           iconColor: _isLoaded && !isStopped ? null : themeColors().inActive(),
           onPressed: isPlaying || isPaused ? () => _audioPlayerStop() : null,
         ),
-        if (widget.showMetadata)
-          Expanded(
-            child: Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: GCWText(
-                              text: widget.file.name,
-                              style: gcwTextStyle()
-                                  .copyWith(fontWeight: FontWeight.bold, color: themeColors().dialogText())),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                color: themeColors().accent(),
-                padding: EdgeInsets.all(DOUBLE_DEFAULT_MARGIN)),
-          ),
         Expanded(
-          child: Slider(
-            value: _currentSliderPosition,
-            min: 0.0,
-            max: 1.0,
-            onChangeStart: (value) {
-              setState(() {
-                _audioPlayerPause();
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                _currentSliderPosition = value;
-              });
-            },
-            onChangeEnd: (value) {
-              setState(() {
-                _audioPlayerPlay(seek: true);
-              });
-            },
-            activeColor: themeColors().switchThumb2(),
-            inactiveColor: themeColors().switchTrack2(),
-          )
-        ),
+            child: Slider(
+          value: _currentSliderPosition,
+          min: 0.0,
+          max: 1.0,
+          onChangeStart: (value) {
+            setState(() {
+              _audioPlayerPause();
+            });
+          },
+          onChanged: (value) {
+            setState(() {
+              _currentSliderPosition = value;
+            });
+          },
+          onChangeEnd: (value) {
+            setState(() {
+              _audioPlayerPlay(seek: true);
+            });
+          },
+          activeColor: themeColors().switchThumb2(),
+          inactiveColor: themeColors().switchTrack2(),
+        )),
         GCWText(text: _durationText())
       ],
     );
@@ -191,7 +171,10 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   get isStopped => playerState == PlayerState.stopped;
 
   void onComplete() {
-    setState(() => playerState = PlayerState.stopped);
+    setState(() {
+      playerState = PlayerState.stopped;
+      _currentSliderPosition = 0.0;
+    });
   }
 
   _audioPlayerPause() async {
@@ -202,8 +185,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   _audioPlayerPlay({bool seek: false}) async {
     if (kIsWeb) {
       // do nothing - web does not support local filö or byte array
-    }
-    else {
+    } else {
       if (playerState == PlayerState.paused) {
         if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
           var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
@@ -232,9 +214,8 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     final buffer = data.buffer;
     Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
-    var filePath = tempPath + '/audiofile.tmp';
-    return new File(filePath).writeAsBytes(
-        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+    var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
+    return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
   }
 
   _durationText() {

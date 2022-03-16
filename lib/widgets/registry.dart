@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
@@ -106,6 +107,8 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -261,10 +264,11 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
@@ -283,7 +287,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_ris
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -525,10 +529,7 @@ initializeRegistry(BuildContext context) {
       'catan',
     ]),
     GCWTool(
-        tool: TeletypewriterSelection(),
-        i18nPrefix: 'teletypewriter_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: []),
+        tool: CCITTSelection(), i18nPrefix: 'ccitt_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
     GCWTool(tool: Chao(), i18nPrefix: 'chao', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -544,7 +545,7 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'cistercian_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
-    GCWTool(tool: ColorPicker(), i18nPrefix: 'colors', categories: [
+    GCWTool(tool: ColorTool(), i18nPrefix: 'colors', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
       'color',
@@ -697,7 +698,7 @@ initializeRegistry(BuildContext context) {
       'hexadecimal',
       'hexstring2file',
     ]),
-    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', isBeta: true, categories: [
+    GCWTool(tool: HexViewer(), i18nPrefix: 'hexviewer', categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'hexadecimal',
@@ -759,6 +760,14 @@ initializeRegistry(BuildContext context) {
           'image_colorcorrections',
         ]),
     GCWTool(
+        tool: ImageFlipRotate(),
+        categories: [ToolCategory.IMAGES_AND_FILES],
+        i18nPrefix: 'image_fliprotate',
+        searchKeys: [
+          'images',
+          'image_fliprotate',
+        ]),
+    GCWTool(
         tool: IPCodes(),
         i18nPrefix: 'ipcodes',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
@@ -798,34 +807,24 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'mayanumbers_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
+    GCWTool(tool: MexicanArmyCipherWheel(), i18nPrefix: 'mexicanarmycipherwheel', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'cipherwheel',
+      'mexicanarmycipherwheel',
+    ]),
     GCWTool(
-        tool: MexicanArmyCipherWheel(),
-        i18nPrefix: 'mexicanarmycipherwheel',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: [
-          'cipherwheel',
-          'mexicanarmycipherwheel',]
-    ),
-    GCWTool(
-        tool: MorseSelection(),
-        i18nPrefix: 'morse_selection',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: []
-    ),
-    GCWTool(
-        tool: MultiDecoder(),
-        i18nPrefix: 'multidecoder',
-        categories: [ToolCategory.GENERAL_CODEBREAKERS],
-        searchKeys: [
-          'multidecoder',]
-    ),
-    GCWTool(
-        tool: Navajo(),
-        i18nPrefix: 'navajo',
-        categories: [ToolCategory.CRYPTOGRAPHY],
-        searchKeys: [
-          'navajo',]
-    ),
+        tool: MorseSelection(), i18nPrefix: 'morse_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
+    GCWTool(tool: MultiDecoder(), i18nPrefix: 'multidecoder', categories: [
+      ToolCategory.GENERAL_CODEBREAKERS
+    ], searchKeys: [
+      'multidecoder',
+    ]),
+    GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'navajo',
+    ]),
     GCWTool(
         tool: NumberSequenceSelection(),
         i18nPrefix: 'numbersequence',
@@ -1056,6 +1055,27 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'telegraph_selection',
         categories: [ToolCategory.SCIENCE_AND_TECHNOLOGY],
         searchKeys: []),
+    GCWTool(
+        tool: TeletypewriterSelection(),
+        i18nPrefix: 'teletypewriter_selection',
+        categories: [ToolCategory.CRYPTOGRAPHY],
+        searchKeys: []),
+    GCWTool(tool: TeletypewriterPunchTape(), i18nPrefix: 'punchtape', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'ccitt',
+      'ccitt_1',
+      'ccitt_2',
+      'ccitt_3',
+      'ccitt_4',
+      'ccitt_5',
+      'punchtape',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -1299,21 +1319,8 @@ initializeRegistry(BuildContext context) {
       'braille',
     ]),
 
-    //Teletypewriter Selection **********************************************************************************************
-    GCWTool(tool: AncientTeletypewriter(), i18nPrefix: 'ccitt_ancient', searchKeys: [
-      'ccitt',
-      'ccitt_ancient',
-      'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
-      'symbol_murraybaudot',
-      'symbol_baudot'
-    ]),
-    GCWTool(tool: CCITT1(), i18nPrefix: 'ccitt_1', searchKeys: [
-      'ccitt',
-      'ccitt_1',
-      'symbol_baudot'
-    ]),
+    //CCITT Selection **********************************************************************************************
+    GCWTool(tool: CCITT1(), i18nPrefix: 'ccitt_1', searchKeys: ['ccitt', 'ccitt_1', 'symbol_baudot']),
     GCWTool(tool: CCITT2(), i18nPrefix: 'ccitt_2', searchKeys: [
       'ccitt',
       'ccitt_2',
@@ -1339,20 +1346,6 @@ initializeRegistry(BuildContext context) {
       'ccitt',
       'ccitt_ccir_476',
       'teletypewriter',
-    ]),
-    GCWTool(tool: TeletypewriterPunchTape(), i18nPrefix: 'punchtape', searchKeys: [
-      'ccitt',
-      'ccitt_1',
-      'ccitt_2',
-      'ccitt_3',
-      'ccitt_4',
-      'ccitt_5',
-      'punchtape',
-      'teletypewriter',
-      'symbol_siemens',
-      'symbol_westernunion',
-      'symbol_murraybaudot',
-      'symbol_baudot'
     ]),
 
     //Cistercian Selection *****************************************************************************************
@@ -1770,11 +1763,10 @@ initializeRegistry(BuildContext context) {
       'esotericprogramminglanguage',
       'esoteric_deadfish',
     ]),
-    GCWTool(tool: Hohoho(), i18nPrefix: 'hohoho', searchKeys: [
-      'esotericprogramminglanguage',
-      'esoteric_hohoho',
-      'christmas'
-    ]),
+    GCWTool(
+        tool: Hohoho(),
+        i18nPrefix: 'hohoho',
+        searchKeys: ['esotericprogramminglanguage', 'esoteric_hohoho', 'christmas']),
     GCWTool(tool: KarolRobot(), i18nPrefix: 'karol_robot', searchKeys: [
       'esoteric_karol_robot',
     ]),
@@ -2023,6 +2015,22 @@ initializeRegistry(BuildContext context) {
     //Morse Selection ****************************************************************
     GCWTool(tool: Morse(), i18nPrefix: 'morse', searchKeys: [
       'morse',
+    ]),
+
+    //NumeralWordsSelection ****************************************************************************************
+    GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', searchKeys: [
+      'numeralwords',
+      'numeralwords_lang',
+      'numeralwordstextsearch',
+    ]),
+    GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', searchKeys: [
+      'numeralwords',
+      'numeralwords_lang',
+      'numeralwordslists',
+    ]),
+    GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', searchKeys: [
+      'numeralwords',
+      'numeralwordsconverter',
     ]),
 
     //NumberSequenceSelection ****************************************************************************************
@@ -2531,33 +2539,14 @@ initializeRegistry(BuildContext context) {
       'numbersequence_lychrelselection',
     ]),
 
-    //NumeralWordsSelection ****************************************************************************************
-    GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', searchKeys: [
-      'numeralwords',
-      'numeralwordstextsearch',
-    ]),
-    GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', searchKeys: [
-      'numeralwords',
-      'numeralwordslists',
-    ]),
-    GCWTool(tool: NumeralWordsConverter(), i18nPrefix: 'numeralwords_converter', searchKeys: [
-      'numeralwords',
-      'numeralwordsconverter',
-    ]),
-
     //PeriodicTableSelection ***************************************************************************************
-    GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', searchKeys: [
-      'periodictable',
-    ]),
+    GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', searchKeys: []),
     GCWTool(tool: PeriodicTableDataView(), i18nPrefix: 'periodictable_dataview', searchKeys: [
-      'periodictable',
       'periodictabledataview',
     ]),
     GCWTool(tool: AtomicNumbersToText(), i18nPrefix: 'atomicnumberstotext', searchKeys: [
-      'periodictable',
       'periodictable_atomicnumbers',
     ]),
-
 
     //Phi Selection **********************************************************************************************
     GCWTool(tool: PhiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
@@ -2724,9 +2713,15 @@ initializeRegistry(BuildContext context) {
       'symbol',
       'symboltablesexamples',
     ]),
-    GCWTool(tool: SymbolReplacer(), i18nPrefix: 'symbol_replacer',  isBeta: true, searchKeys: [
-      'symbol_replacer',
-    ], categories: [ToolCategory.GENERAL_CODEBREAKERS],),
+    GCWTool(
+      tool: SymbolReplacer(),
+      i18nPrefix: 'symbol_replacer',
+      isBeta: true,
+      searchKeys: [
+        'symbol_replacer',
+      ],
+      categories: [ToolCategory.GENERAL_CODEBREAKERS],
+    ),
 
     GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
       'symbol_adlam',
@@ -2789,16 +2784,8 @@ initializeRegistry(BuildContext context) {
       'barcodes',
       'barcode39',
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: [
-      'ccitt',
-      'symbol_baudot',
-      'teletypewriter'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: [
-      'ccitt',
-      'symbol_baudot',
-      'teletypewriter'
-    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
       'symbol_birds_on_a_wire',
     ]),
@@ -2964,7 +2951,7 @@ initializeRegistry(BuildContext context) {
       'symbol_eurythmy',
     ]),
     GCWSymbolTableTool(symbolKey: 'face_it', symbolSearchStrings: [
-    'symbol_face_it',
+      'symbol_face_it',
     ]),
     GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: [
       'symbol_fakoo',
@@ -3012,9 +2999,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'freemason', symbolSearchStrings: [
       'symbol_freemason',
     ]),
-    GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: [
-      'symbol_freemason_v2',
-    ]),
+    GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: ['symbol_freemason']),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: [
       'symbol_futurama',
     ]),
@@ -3097,9 +3082,7 @@ initializeRegistry(BuildContext context) {
       'zelda',
       'symbol_hylian_skywardsword',
     ]),
-    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: [
-      'zelda'
-    ]),
+    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: ['zelda']),
     GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
       'zelda',
       'symbol_hylian_twilightprincess_gcn',
@@ -3135,26 +3118,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
       'symbol_iokharic',
     ]),
-    GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: [
-      'ccitt',
-      'symbol_baudot',
-      'teletypewriter'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: [
-      'ccitt',
-      'symbol_baudot',
-      'teletypewriter'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: [
-      'ccitt',
-      'symbol_murray',
-      'teletypewriter'
-    ]),
-    GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: [
-      'ccitt',
-      'symbol_murray',
-      'teletypewriter'
-    ]),
+    GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: ['ccitt', 'symbol_murray', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: ['ccitt', 'symbol_murray', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
       'japanese_numerals',
     ]),
@@ -3184,6 +3151,10 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: [
       'symbol_krypton',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'la_buse', symbolSearchStrings: [
+      'symbol_freemason',
+      'symbol_la_buse',
     ]),
     GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: [
       'symbol_signlanguage',
@@ -3240,11 +3211,8 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
     ]),
-    GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
-      'ccitt',
-      'symbol_murraybaudot',
-      'teletypewriter'
-    ]),
+    GCWSymbolTableTool(
+        symbolKey: 'murraybaudot', symbolSearchStrings: ['ccitt', 'symbol_murraybaudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'symbol_musica',
     ]),
@@ -3343,6 +3311,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
       'symbol_puzzle',
     ]),
+    GCWSymbolTableTool(symbolKey: 'puzzle_2', symbolSearchStrings: [
+      'symbol_puzzle',
+    ]),
     GCWSymbolTableTool(symbolKey: 'prussian_colors_artillery', symbolSearchStrings: [
       'symbol_prussian_colors_artillery',
     ]),
@@ -3403,10 +3374,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
       'symbol_shoes',
     ]),
-    GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: [
-      'symbol_siemens',
-      'teletypewriter'
-    ]),
+    GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: ['symbol_siemens', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: ['symbol_signlanguage']),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
       'symbol_skullz',
@@ -3524,10 +3492,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
       'symbol_webdings',
     ]),
-    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: [
-      'symbol_westernunion',
-      'teletypewriter'
-    ]),
+    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: ['symbol_westernunion', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
       'beaufort',
       'symbol_windforce_beaufort',
@@ -3624,6 +3589,33 @@ initializeRegistry(BuildContext context) {
       'telegraph_wheatstonecooke_needle',
     ]),
 
+    //Teletypewriter Selection **********************************************************************************************
+    GCWTool(tool: AncientTeletypewriter(), i18nPrefix: 'ccitt_ancient', searchKeys: [
+      'ccitt',
+      'ccitt_ancient',
+      'teletypewriter',
+      'symbol_siemens',
+      'symbol_westernunion',
+      'symbol_murraybaudot',
+      'symbol_baudot'
+    ]),
+    GCWTool(tool: CCITTTeletypewriter(), i18nPrefix: 'ccitt', searchKeys: [
+      'ccitt',
+      'ccitt_1',
+      'ccitt_2',
+      'ccitt_3',
+      'ccitt_4',
+      'ccitt_5',
+      'ccitt_ccir_476',
+      'teletypewriter',
+      'symbol_baudot'
+          'symbol_murraybaudot',
+    ]),
+    GCWTool(
+        tool: OtherTeletypewriter(),
+        i18nPrefix: 'ccitt_other',
+        searchKeys: ['teletypewriter', 'z22', 'zc1', 'illiac', 'algol', 'tts']),
+
     // TomTomSelection *********************************************************************************************
     GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', searchKeys: [
       'tomtom',
@@ -3673,8 +3665,10 @@ initializeRegistry(BuildContext context) {
 
     //WherigoUrwigoSelection **************************************************************************************
     GCWTool(tool: WherigoAnalyze(), i18nPrefix: 'wherigo', isBeta: true, categories: [
-      ToolCategory.IMAGES_AND_FILES
+      ToolCategory.IMAGES_AND_FILES,
+      ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
+      'wherigo',
       'wherigourwigo',
     ]),
     //UrwigoHashBreaker already inserted in section "Hashes"

@@ -35,9 +35,7 @@ class GameOfLifeState extends State<GameOfLife> {
   TextEditingController _currentCustomBirthController;
   var _currentCustomInverse = false;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: '*********',
-      filter: {"*": RegExp(r'[012345678]')});
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '*********', filter: {"*": RegExp(r'[012345678]')});
 
   @override
   void initState() {
@@ -52,7 +50,6 @@ class GameOfLifeState extends State<GameOfLife> {
     _allRules.putIfAbsent(_KEY_CUSTOM_RULES, () => null);
   }
 
-
   @override
   void dispose() {
     _currentCustomSurviveController.dispose();
@@ -62,7 +59,8 @@ class GameOfLifeState extends State<GameOfLife> {
   }
 
   _generateBoard() {
-    var _newBoard = List<List<bool>>.generate(_currentSize, (index) => List<bool>.generate(_currentSize, (index) => false));
+    var _newBoard =
+        List<List<bool>>.generate(_currentSize, (index) => List<bool>.generate(_currentSize, (index) => false));
 
     if (_currentBoard != null) {
       var limit = min(_currentSize, _currentBoard.length);
@@ -108,17 +106,13 @@ class GameOfLifeState extends State<GameOfLife> {
           title: i18n(context, 'gameoflife_rules'),
           value: _currentRules,
           items: _allRules.keys.map((rules) {
-            if (rules == _KEY_CUSTOM_RULES)
-              return GCWDropDownMenuItem(
-                value: rules,
-                child: i18n(context, rules)
-              );
+            if (rules == _KEY_CUSTOM_RULES) return GCWDropDownMenuItem(value: rules, child: i18n(context, rules));
 
             return GCWDropDownMenuItem(
-              value: rules,
-              child: i18n(context, rules),
-              subtitle: '${i18n(context, 'gameoflife_survive')}: ${_getSurvive(_allRules[rules])} / ${i18n(context, 'gameoflife_birth')}: ${_getBirth(_allRules[rules])}'
-            );
+                value: rules,
+                child: i18n(context, rules),
+                subtitle:
+                    '${i18n(context, 'gameoflife_survive')}: ${_getSurvive(_allRules[rules])} / ${i18n(context, 'gameoflife_birth')}: ${_getBirth(_allRules[rules])}');
           }).toList(),
           onChanged: (value) {
             setState(() {
@@ -133,43 +127,43 @@ class GameOfLifeState extends State<GameOfLife> {
           },
         ),
         _currentRules == _KEY_CUSTOM_RULES
-          ? Column(
-              children: [
-                GCWTextField(
-                  title: i18n(context, 'gameoflife_survive'),
-                  controller: _currentCustomSurviveController,
-                  inputFormatters: [_maskInputFormatter],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentCustomSurvive = text;
-                      _reset();
-                    });
-                  },
-                ),
-                GCWTextField(
-                  title: i18n(context, 'gameoflife_birth'),
-                  controller: _currentCustomBirthController,
-                  inputFormatters: [_maskInputFormatter],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentCustomBirth = text;
-                      _reset();
-                    });
-                  },
-                ),
-                GCWOnOffSwitch(
-                  title: i18n(context, 'gameoflife_inverse'),
-                  value: _currentCustomInverse,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentCustomInverse = value;
-                      _reset();
-                    });
-                  },
-                )
-              ],
-            )
-          : Container(),
+            ? Column(
+                children: [
+                  GCWTextField(
+                    title: i18n(context, 'gameoflife_survive'),
+                    controller: _currentCustomSurviveController,
+                    inputFormatters: [_maskInputFormatter],
+                    onChanged: (text) {
+                      setState(() {
+                        _currentCustomSurvive = text;
+                        _reset();
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    title: i18n(context, 'gameoflife_birth'),
+                    controller: _currentCustomBirthController,
+                    inputFormatters: [_maskInputFormatter],
+                    onChanged: (text) {
+                      setState(() {
+                        _currentCustomBirth = text;
+                        _reset();
+                      });
+                    },
+                  ),
+                  GCWOnOffSwitch(
+                    title: i18n(context, 'gameoflife_inverse'),
+                    value: _currentCustomInverse,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentCustomInverse = value;
+                        _reset();
+                      });
+                    },
+                  )
+                ],
+              )
+            : Container(),
         GCWOnOffSwitch(
           title: i18n(context, 'gameoflife_wrapworld'),
           value: _currentWrapWorld,
@@ -196,17 +190,16 @@ class GameOfLifeState extends State<GameOfLife> {
         Row(
           children: [
             GCWIconButton(
-              iconData: Icons.double_arrow,
+              icon: Icons.double_arrow,
               rotateDegrees: 180.0,
               onPressed: () {
                 setState(() {
-                  for (int i = 0; i < 10; i++)
-                    _backwards();
+                  for (int i = 0; i < 10; i++) _backwards();
                 });
               },
             ),
             GCWIconButton(
-              iconData: Icons.arrow_back_ios,
+              icon: Icons.arrow_back_ios,
               onPressed: () {
                 setState(() {
                   _backwards();
@@ -215,12 +208,14 @@ class GameOfLifeState extends State<GameOfLife> {
             ),
             Expanded(
               child: GCWText(
-                align: Alignment.center,
-                text: '${i18n(context, 'gameoflife_step')}: $_currentStep\n${i18n(context, 'gameoflife_livingcells', parameters: [_countCells()])}'
-              ),
+                  align: Alignment.center,
+                  text:
+                      '${i18n(context, 'gameoflife_step')}: $_currentStep\n${i18n(context, 'gameoflife_livingcells', parameters: [
+                        _countCells()
+                      ])}'),
             ),
             GCWIconButton(
-              iconData: Icons.arrow_forward_ios,
+              icon: Icons.arrow_forward_ios,
               onPressed: () {
                 setState(() {
                   _forward();
@@ -228,7 +223,7 @@ class GameOfLifeState extends State<GameOfLife> {
               },
             ),
             GCWIconButton(
-              iconData: Icons.double_arrow,
+              icon: Icons.double_arrow,
               onPressed: () {
                 setState(() {
                   for (int i = 0; i < 10; i++) {
@@ -242,11 +237,15 @@ class GameOfLifeState extends State<GameOfLife> {
         GCWButton(
           text: _currentRules == _KEY_CUSTOM_RULES
               ? (_currentCustomInverse ? i18n(context, 'gameoflife_fillall') : i18n(context, 'gameoflife_clearall'))
-              : (_allRules[_currentRules].isInverse ? i18n(context, 'gameoflife_fillall') : i18n(context, 'gameoflife_clearall')),
+              : (_allRules[_currentRules].isInverse
+                  ? i18n(context, 'gameoflife_fillall')
+                  : i18n(context, 'gameoflife_clearall')),
           onPressed: () {
             setState(() {
-              var isInverse = (_currentRules == _KEY_CUSTOM_RULES && _currentCustomInverse) || (_currentRules != _KEY_CUSTOM_RULES && _allRules[_currentRules].isInverse);
-              _currentBoard = List<List<bool>>.generate(_currentSize, (index) => List<bool>.generate(_currentSize, (index) => isInverse));
+              var isInverse = (_currentRules == _KEY_CUSTOM_RULES && _currentCustomInverse) ||
+                  (_currentRules != _KEY_CUSTOM_RULES && _allRules[_currentRules].isInverse);
+              _currentBoard = List<List<bool>>.generate(
+                  _currentSize, (index) => List<bool>.generate(_currentSize, (index) => isInverse));
 
               _reset();
             });
@@ -263,8 +262,7 @@ class GameOfLifeState extends State<GameOfLife> {
   }
 
   _backwards() {
-    if (_currentStep > 0)
-      _currentStep--;
+    if (_currentStep > 0) _currentStep--;
 
     _calculateStep();
   }
@@ -281,8 +279,7 @@ class GameOfLifeState extends State<GameOfLife> {
     survivals.sort();
 
     var out = survivals.join(',');
-    if (out.isEmpty)
-      return '-';
+    if (out.isEmpty) return '-';
     return out;
   }
 
@@ -298,8 +295,7 @@ class GameOfLifeState extends State<GameOfLife> {
     births.sort();
 
     var out = births.join(',');
-    if (out.isEmpty)
-      return '-';
+    if (out.isEmpty) return '-';
     return out;
   }
 
@@ -307,8 +303,7 @@ class GameOfLifeState extends State<GameOfLife> {
     var counter = 0;
     for (int i = 0; i < _currentSize; i++) {
       for (int j = 0; j < _currentSize; j++) {
-        if (_currentBoard[i][j])
-          counter++;
+        if (_currentBoard[i][j]) counter++;
       }
     }
 
@@ -328,7 +323,10 @@ class GameOfLifeState extends State<GameOfLife> {
 
     var rules;
     if (_currentRules == _KEY_CUSTOM_RULES) {
-      rules = GameOfLifeRules(survivals: _toSet(_currentCustomSurvive), births: _toSet(_currentCustomBirth), isInverse: _currentCustomInverse);
+      rules = GameOfLifeRules(
+          survivals: _toSet(_currentCustomSurvive),
+          births: _toSet(_currentCustomBirth),
+          isInverse: _currentCustomInverse);
     } else {
       rules = _allRules[_currentRules];
     }

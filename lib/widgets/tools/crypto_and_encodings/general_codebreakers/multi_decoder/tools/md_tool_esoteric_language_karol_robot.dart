@@ -16,11 +16,9 @@ class MultiDecoderToolEsotericLanguageKarolRobot extends GCWMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 var output = KarolRobotOutputDecode(input);
-                if ((output != null) && (output != "####\n#####\n#####\n#####"))
-                  return byteColor2image(output);
+                if ((output != null) && (output != "####\n#####\n#####\n#####")) return byteColor2image(output);
               } catch (e) {}
               return null;
             },
             options: options);
 }
-

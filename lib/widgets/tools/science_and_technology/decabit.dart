@@ -131,7 +131,7 @@ class DecabitState extends State<Decabit> {
         },
       ),
       GCWIconButton(
-        iconData: Icons.backspace,
+        icon: Icons.backspace,
         onPressed: () {
           setState(() {
             _currentInput = textControllerDoBackSpace(_currentInput, _inputController);

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-enum SymbolTableEncryptionMode{FIXED_SYMBOLSIZE, FIXED_CANVASWIDTH}
+enum SymbolTableEncryptionMode { FIXED_SYMBOLSIZE, FIXED_CANVASWIDTH }
 
 class SymbolTableEncryptionSizes {
   @required
@@ -25,22 +25,18 @@ class SymbolTableEncryptionSizes {
   double absoluteBorderWidth;
   double symbolAspectRatio;
 
-  SymbolTableEncryptionSizes({
-    @required
-    this.countImages,
-    @required
-    this.countColumns,
-    this.countRows,
-    this.symbolWidth,
-    this.symbolHeight,
-    this.tileWidth,
-    this.tileHeight,
-    this.canvasWidth,
-    this.canvasHeight,
-    this.relativeBorderWidth,
-    @required
-    this.mode
-  }) {
+  SymbolTableEncryptionSizes(
+      {@required this.countImages,
+      @required this.countColumns,
+      this.countRows,
+      this.symbolWidth,
+      this.symbolHeight,
+      this.tileWidth,
+      this.tileHeight,
+      this.canvasWidth,
+      this.canvasHeight,
+      this.relativeBorderWidth,
+      @required this.mode}) {
     _setCountRows();
     _setBorderWidth();
     _setSymbolSizes();
@@ -51,14 +47,12 @@ class SymbolTableEncryptionSizes {
   _setCountRows() {
     if (this.countColumns != null && this.countImages != null) {
       countRows = (countImages / countColumns).floor();
-      if (countRows * countColumns < countImages)
-        countRows++;
+      if (countRows * countColumns < countImages) countRows++;
     }
   }
 
   _setBorderWidth() {
-    if (relativeBorderWidth == null)
-      relativeBorderWidth = 0.0;
+    if (relativeBorderWidth == null) relativeBorderWidth = 0.0;
 
     relativeBorderWidth = max(-0.9, relativeBorderWidth);
   }

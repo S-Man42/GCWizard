@@ -172,10 +172,12 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
@@ -191,7 +193,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -474,7 +476,7 @@ void _initStaticToolList() {
       className(Chronogram()),
       className(CipherWheel()),
       className(CistercianNumbersSelection()),
-      className(ColorPicker()),
+      className(ColorTool()),
       className(Combination()),
       className(CombinationPermutation()),
       className(ComplexNumbers()),
@@ -534,6 +536,8 @@ void _initStaticToolList() {
       className(IATAICAOSearch()),
       className(IceCodesSelection()),
       className(ILLIAC()),
+      className(ImageColorCorrections()),
+      className(ImageFlipRotate()),
       className(IntersectBearings()),
       className(IntersectFourPoints()),
       className(IntersectGeodeticAndCircle()),

@@ -126,8 +126,11 @@ class Kitchen {
             ingredientIndex++;
           } else {
             valid = false;
-            error.addAll(
-                [Messages[language]['common_programming_error_runtime'], Messages[language]['chef_error_runtime_missing_input'], '']);
+            error.addAll([
+              Messages[language]['common_programming_error_runtime'],
+              Messages[language]['chef_error_runtime_missing_input'],
+              ''
+            ]);
             return null;
           }
           break;

@@ -23,7 +23,13 @@ class GCWPunchtapeSegmentDisplayOutput extends StatefulWidget {
   final TeletypewriterCodebook codeBook;
 
   const GCWPunchtapeSegmentDisplayOutput(
-      {Key key, this.upsideDownButton: false, this.segmentFunction, this.segments, this.readOnly, this.trailing, this.codeBook})
+      {Key key,
+      this.upsideDownButton: false,
+      this.segmentFunction,
+      this.segments,
+      this.readOnly,
+      this.trailing,
+      this.codeBook})
       : super(key: key);
 
   @override
@@ -52,7 +58,7 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
             widget.upsideDownButton
                 ? Container(
                     child: GCWIconButton(
-                      iconData: Icons.rotate_left,
+                      icon: Icons.rotate_left,
                       size: IconButtonSize.SMALL,
                       onPressed: () {
                         setState(() {
@@ -65,7 +71,7 @@ class _GCWPunchtapeSegmentDisplayOutputState extends State<GCWPunchtapeSegmentDi
             Container(
               child: GCWIconButton(
                 size: IconButtonSize.SMALL,
-                iconData: Icons.save,
+                icon: Icons.save,
                 iconColor: (widget.segments == null) || (widget.segments.length == 0) ? themeColors().inActive() : null,
                 onPressed: () async {
                   await buildPunchtapeSegmentDisplayImage(_displays, _currentUpsideDown).then((image) {

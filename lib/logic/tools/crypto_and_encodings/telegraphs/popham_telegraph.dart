@@ -54,43 +54,38 @@ List<List<String>> encodePopham(String input) {
   return result;
 }
 
-  Map<String, dynamic> decodeVisualPopham(List<String> inputs) {
-    if (inputs == null || inputs.length == 0)
-      return {
-        'displays': <List<String>>[],
-        'chars': ''
-      };
+Map<String, dynamic> decodeVisualPopham(List<String> inputs) {
+  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'chars': ''};
 
-    var displays = <List<String>>[];
-    var segment = <String>[];
-    inputs.forEach((element) {
-      segment = _stringToSegment(element);
-      displays.add(segment);
-    });
+  var displays = <List<String>>[];
+  var segment = <String>[];
+  inputs.forEach((element) {
+    segment = _stringToSegment(element);
+    displays.add(segment);
+  });
 
-    Map<String, String> CODEBOOK = {};
-    POPHAM.forEach((key, value) {
-      CODEBOOK[value.join('')] = key;
-    });
-    CODEBOOK[''] = ' ';
+  Map<String, String> CODEBOOK = {};
+  POPHAM.forEach((key, value) {
+    CODEBOOK[value.join('')] = key;
+  });
+  CODEBOOK[''] = ' ';
 
-    List<String> text = inputs.where((input) => input != null).map((input) {
-      var char = '';
-      if (CODEBOOK[input] == null) {
-        char = char + UNKNOWN_ELEMENT;
-      } else {
-        char = char + CODEBOOK[input];
-      }
+  List<String> text = inputs.where((input) => input != null).map((input) {
+    var char = '';
+    if (CODEBOOK[input] == null) {
+      char = char + UNKNOWN_ELEMENT;
+    } else {
+      char = char + CODEBOOK[input];
+    }
 
-      return char;
-    }).toList();
-    return {'displays': displays, 'chars': text.join('')};
-  }
+    return char;
+  }).toList();
+  return {'displays': displays, 'chars': text.join('')};
+}
 
-  List<String> _stringToSegment(String input) {
-    List<String> result = [];
-    for (int i = 0; i < input.length; i++)
-      result.add(input[i]);
+List<String> _stringToSegment(String input) {
+  List<String> result = [];
+  for (int i = 0; i < input.length; i++) result.add(input[i]);
 
-    return result;
-  }
+  return result;
+}

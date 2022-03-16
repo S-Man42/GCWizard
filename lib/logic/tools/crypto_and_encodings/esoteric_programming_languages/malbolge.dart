@@ -130,7 +130,8 @@ int last_A_val = 0; // last value of A register
 
 malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
   if (program.length < 2)
-    return malbolgeOutput(['common_programming_error_invalid_program', 'common_programming_error_program_to_short'], [], []);
+    return malbolgeOutput(
+        ['common_programming_error_invalid_program', 'common_programming_error_program_to_short'], [], []);
 
   if (instructionListNormalized(program)) program = reverseNormalize(program);
 
@@ -149,7 +150,8 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict) {
         ], [], []);
     }
     if (i == 59049) {
-      return malbolgeOutput(['common_programming_error_invalid_program', 'common_programming_error_program_to_big'], [], []);
+      return malbolgeOutput(
+          ['common_programming_error_invalid_program', 'common_programming_error_program_to_big'], [], []);
     }
     memory[i] = charCode;
     i++;

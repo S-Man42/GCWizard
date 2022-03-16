@@ -55,7 +55,7 @@ class Binary2ImageState extends State<Binary2Image> {
         GCWDefaultOutput(
             child: _buildOutput(),
             trailing: GCWIconButton(
-              iconData: Icons.save,
+              icon: Icons.save,
               size: IconButtonSize.SMALL,
               iconColor: _outData == null ? themeColors().inActive() : null,
               onPressed: () {

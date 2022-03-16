@@ -52,34 +52,34 @@ class HohohoState extends State<Hohoho> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-          controller: _textDecodeController,
-          hintText: i18n(context, 'common_programming_hint_sourcecode'),
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeText = text;
-            });
-          },
-        )
-        :  GCWTextField(
-          controller: _textEncodeController,
-          hintText: i18n(context, 'common_programming_hint_output'),
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeText = text;
-            });
-          },
-        ),
+            ? GCWTextField(
+                controller: _textDecodeController,
+                hintText: i18n(context, 'common_programming_hint_sourcecode'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeText = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _textEncodeController,
+                hintText: i18n(context, 'common_programming_hint_output'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeText = text;
+                  });
+                },
+              ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _inputController,
-          hintText: i18n(context, 'common_programming_hint_input'),
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        )
+                controller: _inputController,
+                hintText: i18n(context, 'common_programming_hint_input'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = text;
+                  });
+                },
+              )
             : Container(),
         GCWDefaultOutput(child: _calculateOutput())
       ],

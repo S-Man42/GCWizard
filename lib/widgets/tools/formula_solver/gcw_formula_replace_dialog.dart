@@ -78,7 +78,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
                 : Row(
                     children: [
                       GCWIconButton(
-                        iconData: Icons.arrow_back_ios,
+                        icon: Icons.arrow_back_ios,
                         size: IconButtonSize.SMALL,
                         iconColor: gcwDialogTextStyle().color,
                         onPressed: () {
@@ -88,7 +88,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
                         },
                       ),
                       GCWIconButton(
-                        iconData: Icons.arrow_forward_ios,
+                        icon: Icons.arrow_forward_ios,
                         size: IconButtonSize.SMALL,
                         iconColor: gcwDialogTextStyle().color,
                         onPressed: () {

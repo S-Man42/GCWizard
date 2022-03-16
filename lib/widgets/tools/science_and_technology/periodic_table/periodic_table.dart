@@ -11,6 +11,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/pe
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
+const _LEGEND_WIDTH = 2;
+const _LEGEND_START_IUPAC_GROUP = 6;
+
 class PeriodicTable extends StatefulWidget {
   @override
   PeriodicTableState createState() => PeriodicTableState();
@@ -59,7 +62,7 @@ class PeriodicTableState extends State<PeriodicTable> {
             child: Container(
               height: min(defaultFontSize() * 2.5, _maxCellHeight),
               decoration: BoxDecoration(
-                color: _getColorByStateOfMatter(element.stateOfMatter),
+                color: _getColor(element.stateOfMatter, element.isRadioactive),
                 border: Border(
                     top: _border,
                     left: _border,
@@ -163,6 +166,13 @@ class PeriodicTableState extends State<PeriodicTable> {
           continue;
         }
 
+        var legendEntry = _getLegendElement(iupacGroup, period);
+        if (legendEntry != null) {
+          periodRow.add(legendEntry);
+          iupacGroup += _legendWidth(period) - 1;
+          continue;
+        }
+
         PeriodicTableElement element = _getElementAtPSECoordinate(iupacGroup, period);
         periodRow.add(_buildElement(element));
       }
@@ -214,6 +224,62 @@ class PeriodicTableState extends State<PeriodicTable> {
     ));
 
     return periods;
+  }
+
+  _getColor(StateOfMatter stateOfMatter, bool isRadioactive) {
+    var color = HSVColor.fromColor(_getColorByStateOfMatter(stateOfMatter));
+    var saturation = color.saturation;
+    color = color.withSaturation(saturation * (isRadioactive ? 1.8 : 1.0));
+
+    return color.toColor();
+  }
+
+  _legendWidth(period) {
+    return _LEGEND_WIDTH * (period == 2 ? 2 : 1);
+  }
+
+  _getLegendElement(int iupacGroup, int period) {
+    var color1;
+    var text1;
+    var color2;
+    var text2;
+
+    if (iupacGroup == _LEGEND_START_IUPAC_GROUP && period == 0) {
+      color2 = _getColor(StateOfMatter.SOLID, false);
+      text2 = i18n(context, 'periodictable_attribute_stateofmatter_solid');
+    } else if (iupacGroup == _LEGEND_START_IUPAC_GROUP && period == 1) {
+      color1 = _getColor(StateOfMatter.LIQUID, false);
+      text1 = i18n(context, 'periodictable_attribute_stateofmatter_liquid');
+    } else if (iupacGroup == _LEGEND_START_IUPAC_GROUP + _LEGEND_WIDTH && period == 0) {
+      color2 = _getColor(StateOfMatter.GAS, false);
+      text2 = i18n(context, 'periodictable_attribute_stateofmatter_gas');
+    } else if (iupacGroup == _LEGEND_START_IUPAC_GROUP + _LEGEND_WIDTH && period == 1) {
+      color1 = _getColor(StateOfMatter.UNKNOWN, false);
+      text1 = i18n(context, 'common_unknown');
+    } else if (iupacGroup == _LEGEND_START_IUPAC_GROUP && period == 2) {
+      color1 = _getColor(StateOfMatter.SOLID, true);
+      text1 = i18n(context, 'periodictable_attribute_isradioactive_true');
+    }
+
+    if (color1 == null && color2 == null) return null;
+
+    return Column(
+      children: [
+        [color1, text1],
+        [color2, text2]
+      ].map((e) {
+        return Container(
+            height: min<double>(defaultFontSize() * 2.5, _maxCellHeight) / 2.0,
+            color: e[0],
+            width: _cellWidth * _legendWidth(period),
+            child: AutoSizeText(
+              e[1] ?? '',
+              style: gcwTextStyle().copyWith(color: Colors.black),
+              minFontSize: AUTO_FONT_SIZE_MIN,
+              maxLines: 1,
+            ));
+      }).toList(),
+    );
   }
 
   _getElementAtPSECoordinate(int iupacGroup, int period) {

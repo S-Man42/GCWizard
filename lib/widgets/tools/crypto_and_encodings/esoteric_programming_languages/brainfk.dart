@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_derivate.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/brainfk_derivative.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -30,7 +30,7 @@ class BrainfkState extends State<Brainfk> {
   var _inputController_startLoop;
   var _inputController_endLoop;
 
-  var _currentDerivate = BRAINFKDERIVATE_OOK;
+  var _currentDerivate = BRAINFKDERIVATIVE_OOK;
 
   var _currentText = '';
   var _currentInput = '';
@@ -110,14 +110,14 @@ class BrainfkState extends State<Brainfk> {
                       _currentDerivate = value;
                     });
                   },
-                  items: BRAINFK_DERIVATES.entries.map((mode) {
+                  items: BRAINFK_DERIVATIVES.entries.map((mode) {
                     return GCWDropDownMenuItem(
                       value: mode.key,
                       child: mode.value,
                     );
                   }).toList(),
                 ),
-                _currentDerivate == BRAINFKDERIVATE_CUSTOM
+                _currentDerivate == BRAINFKDERIVATIVE_CUSTOM
                     ? Column(children: [
                         GCWTextField(
                           controller: _inputController_shiftRight,
@@ -196,8 +196,9 @@ class BrainfkState extends State<Brainfk> {
               ]),
         GCWTextField(
           controller: _textController,
-          hintText:
-              _currentMode == GCWSwitchPosition.left ? i18n(context, 'common_programming_hint_sourcecode') : i18n(context, 'common_programming_hint_output'),
+          hintText: _currentMode == GCWSwitchPosition.left
+              ? i18n(context, 'common_programming_hint_sourcecode')
+              : i18n(context, 'common_programming_hint_output'),
           onChanged: (text) {
             setState(() {
               _currentText = text;
@@ -231,45 +232,45 @@ class BrainfkState extends State<Brainfk> {
           return printErrorMessage(context, e.message);
         }
       else {
-        if (_currentDerivate == BRAINFKDERIVATE_CUSTOM)
+        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
           try {
-            return BrainfkDerivate(
-              pointerShiftRightInstruction: _currentInput_shiftRight,
-              pointerShiftLeftInstruction: _currentInput_shiftLeft,
-              increaseValueInstruction: _currentInput_increaseValue,
-              decreaseValueInstruction: _currentInput_decreaseValue,
-              outputInstruction: _currentInput_output,
-              inputInstruction: _currentInput_input,
-              startLoopInstruction: _currentInput_startLoop,
-              endLoopInstruction: _currentInput_endLoop
-            ).interpretBrainfkDerivat(_currentText, input: _currentInput);
+            return BrainfkDerivatives(
+                    pointerShiftRightInstruction: _currentInput_shiftRight,
+                    pointerShiftLeftInstruction: _currentInput_shiftLeft,
+                    increaseValueInstruction: _currentInput_increaseValue,
+                    decreaseValueInstruction: _currentInput_decreaseValue,
+                    outputInstruction: _currentInput_output,
+                    inputInstruction: _currentInput_input,
+                    startLoopInstruction: _currentInput_startLoop,
+                    endLoopInstruction: _currentInput_endLoop)
+                .interpretBrainfkDerivatives(_currentText, input: _currentInput);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
         else
-          return _currentDerivate.interpretBrainfkDerivat(_currentText, input: _currentInput);
+          return _currentDerivate.interpretBrainfkDerivatives(_currentText, input: _currentInput);
       }
     } else {
       if (_currentOriginal == GCWSwitchPosition.left)
         return widget.generate == null ? generateBrainfk(_currentText) : widget.generate(_currentText);
       else {
-        if (_currentDerivate == BRAINFKDERIVATE_CUSTOM)
+        if (_currentDerivate == BRAINFKDERIVATIVE_CUSTOM)
           try {
-            return BrainfkDerivate(
-                pointerShiftRightInstruction: _currentInput_shiftRight,
-                pointerShiftLeftInstruction: _currentInput_shiftLeft,
-                increaseValueInstruction: _currentInput_increaseValue,
-                decreaseValueInstruction: _currentInput_decreaseValue,
-                outputInstruction: _currentInput_output,
-                inputInstruction: _currentInput_input,
-                startLoopInstruction: _currentInput_startLoop,
-                endLoopInstruction: _currentInput_endLoop
-            ).generateBrainfkDerivat(_currentText);
+            return BrainfkDerivatives(
+                    pointerShiftRightInstruction: _currentInput_shiftRight,
+                    pointerShiftLeftInstruction: _currentInput_shiftLeft,
+                    increaseValueInstruction: _currentInput_increaseValue,
+                    decreaseValueInstruction: _currentInput_decreaseValue,
+                    outputInstruction: _currentInput_output,
+                    inputInstruction: _currentInput_input,
+                    startLoopInstruction: _currentInput_startLoop,
+                    endLoopInstruction: _currentInput_endLoop)
+                .generateBrainfkDerivative(_currentText);
           } catch (e) {
             return printErrorMessage(context, 'brainfk_error_customundefined');
           }
         else
-          return _currentDerivate.generateBrainfkDerivat(_currentText);
+          return _currentDerivate.generateBrainfkDerivative(_currentText);
       }
     }
   }

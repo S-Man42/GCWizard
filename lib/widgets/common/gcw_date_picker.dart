@@ -74,19 +74,19 @@ class GCWDatePickerState extends State<GCWDatePicker> {
               ),
               padding: EdgeInsets.only(right: 2)),
         ),
-        Expanded(
-            child: Padding(child: _buildMonthSpinner(widget.type), padding: EdgeInsets.only(left: 2, right: 2))),
+        Expanded(child: Padding(child: _buildMonthSpinner(widget.type), padding: EdgeInsets.only(left: 2, right: 2))),
         Expanded(
             child: Padding(
-              child: _buildDaySpinner(widget.type),  padding: EdgeInsets.only(left: 2), ))
+          child: _buildDaySpinner(widget.type),
+          padding: EdgeInsets.only(left: 2),
+        ))
       ],
     );
   }
 
   Widget _buildDaySpinner(var type) {
     int maxDays = 31;
-    if (type == CalendarSystem.POTRZEBIECALENDAR)
-      maxDays = 10;
+    if (type == CalendarSystem.POTRZEBIECALENDAR) maxDays = 10;
 
     return GCWIntegerSpinner(
       focusNode: _dayFocusNode,

@@ -7,7 +7,7 @@ enum IconButtonSize { NORMAL, SMALL, TINY }
 
 class GCWIconButton extends StatelessWidget {
   final Function onPressed;
-  final IconData iconData;
+  final IconData icon;
   final Widget customIcon;
   IconButtonSize size;
   final Color iconColor;
@@ -17,7 +17,7 @@ class GCWIconButton extends StatelessWidget {
   GCWIconButton(
       {Key key,
       this.onPressed,
-      this.iconData,
+      this.icon,
       this.customIcon,
       this.size,
       this.iconColor,
@@ -61,8 +61,8 @@ class GCWIconButton extends StatelessWidget {
           color: backgroundColor,
           padding: EdgeInsets.zero,
           child: Transform.rotate(
-            child: this.customIcon ??
-                Icon(this.iconData, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+            child:
+                this.customIcon ?? Icon(this.icon, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
             angle: degreesToRadian(this.rotateDegrees ?? 0.0),
           ),
           onPressed: this.onPressed,

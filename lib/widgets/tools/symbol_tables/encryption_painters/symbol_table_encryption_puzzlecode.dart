@@ -51,12 +51,7 @@ class PuzzleSymbolTableEncryption extends SymbolTableEncryption {
             paintImage(
                 canvas: canvas,
                 fit: BoxFit.contain,
-                rect: Rect.fromLTWH(
-                    j * symbolSize + TILE_OFFSET,
-                    i * symbolSize + TILE_OFFSET,
-                    symbolSize,
-                    symbolSize
-                ),
+                rect: Rect.fromLTWH(j * symbolSize + TILE_OFFSET, i * symbolSize + TILE_OFFSET, symbolSize, symbolSize),
                 image: image);
           }
         }
@@ -72,34 +67,21 @@ class PuzzleSymbolTableEncryption extends SymbolTableEncryption {
 
     // draw left and top border
 
-    canvas.drawLine(
-        Offset(LINE_WIDTH / 2, 0),
-        Offset(LINE_WIDTH / 2, countRows * symbolSize),
-        paint
-    );
+    canvas.drawLine(Offset(LINE_WIDTH / 2, 0), Offset(LINE_WIDTH / 2, countRows * symbolSize), paint);
 
-    canvas.drawLine(
-        Offset(0, LINE_WIDTH / 2),
-        Offset(countRows > 1 ? countColumns * symbolSize : imageIndexes.length * symbolSize, LINE_WIDTH / 2),
-        paint
-    );
+    canvas.drawLine(Offset(0, LINE_WIDTH / 2),
+        Offset(countRows > 1 ? countColumns * symbolSize : imageIndexes.length * symbolSize, LINE_WIDTH / 2), paint);
 
     // draw stub lines at the beginning
 
     for (var i = 0; i <= countRows; i++) {
       canvas.drawLine(
-          Offset(0, i * symbolSize - LINE_WIDTH / 2),
-          Offset(TILE_OFFSET, i * symbolSize - LINE_WIDTH / 2),
-          paint
-      );
+          Offset(0, i * symbolSize - LINE_WIDTH / 2), Offset(TILE_OFFSET, i * symbolSize - LINE_WIDTH / 2), paint);
     }
 
-    for (var j = 0;j <= countColumns; j++) {
+    for (var j = 0; j <= countColumns; j++) {
       canvas.drawLine(
-          Offset(j * symbolSize - LINE_WIDTH / 2, 0),
-          Offset(j * symbolSize - LINE_WIDTH / 2, TILE_OFFSET),
-          paint
-      );
+          Offset(j * symbolSize - LINE_WIDTH / 2, 0), Offset(j * symbolSize - LINE_WIDTH / 2, TILE_OFFSET), paint);
     }
 
     // remove stub line endings
@@ -112,33 +94,26 @@ class PuzzleSymbolTableEncryption extends SymbolTableEncryption {
 
     var maxWidth = countColumns * symbolSize;
     for (var i = 0; i <= countRows; i++) {
-      canvas.drawRect(
-          Rect.fromLTWH(maxWidth, i * symbolSize - 2 * LINE_WIDTH, TILE_OFFSET, LINE_WIDTH * 4),
-          paint
-      );
+      canvas.drawRect(Rect.fromLTWH(maxWidth, i * symbolSize - 2 * LINE_WIDTH, TILE_OFFSET, LINE_WIDTH * 4), paint);
     }
 
     if (imageOffset > 0) {
       canvas.drawRect(
-          Rect.fromLTWH((countColumns - imageOffset) * symbolSize, countRows * symbolSize - 2 * LINE_WIDTH, TILE_OFFSET, LINE_WIDTH * 4),
-          paint
-      );
+          Rect.fromLTWH((countColumns - imageOffset) * symbolSize, countRows * symbolSize - 2 * LINE_WIDTH, TILE_OFFSET,
+              LINE_WIDTH * 4),
+          paint);
     }
 
     var maxHeight = countRows * symbolSize;
     for (var j = 0; j <= countColumns; j++) {
-      canvas.drawRect(
-          Rect.fromLTWH(j * symbolSize - 2 * LINE_WIDTH, maxHeight, LINE_WIDTH * 4, TILE_OFFSET),
-          paint
-      );
+      canvas.drawRect(Rect.fromLTWH(j * symbolSize - 2 * LINE_WIDTH, maxHeight, LINE_WIDTH * 4, TILE_OFFSET), paint);
     }
 
     if (imageOffset > 0) {
       for (var j = (countColumns - imageOffset + 1); j <= countColumns; j++) {
         canvas.drawRect(
             Rect.fromLTWH(j * symbolSize - 2 * LINE_WIDTH, (countRows - 1) * symbolSize, LINE_WIDTH * 4, TILE_OFFSET),
-            paint
-        );
+            paint);
       }
     }
 

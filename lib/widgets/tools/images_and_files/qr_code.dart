@@ -13,11 +13,11 @@ import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 
 class QrCode extends StatefulWidget {
-  final PlatformFile platformFile;
+  final GCWFile platformFile;
 
   const QrCode({Key key, this.platformFile}) : super(key: key);
 
@@ -114,7 +114,7 @@ class QrCodeState extends State<QrCode> {
             trailing: (_currentMode == GCWSwitchPosition.right)
                 ? null
                 : GCWIconButton(
-                    iconData: Icons.save,
+                    icon: Icons.save,
                     size: IconButtonSize.SMALL,
                     iconColor: _outDataEncrypt == null ? themeColors().inActive() : null,
                     onPressed: () {
@@ -137,7 +137,7 @@ class QrCodeState extends State<QrCode> {
     try {
       if (_currentMode == GCWSwitchPosition.left) {
         var currentInput = _currentInput;
-        if ((currentInput != null) && (currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength) ) {
+        if ((currentInput != null) && (currentInput.length > maxLength) && (lastCurrentInputLength <= maxLength)) {
           currentInput = currentInput.substring(0, maxLength);
           showToast(i18n(context, 'qr_code_length_limited', parameters: [maxLength.toString()]));
         }

@@ -1078,7 +1078,7 @@ bool _isNumberLetter(String s) {
   return _NumberLetters.contains(s);
 }
 
-bool _isLetter(String s){
+bool _isLetter(String s) {
   return (_isCapital(s) || _isSmallLetter(s));
 }
 

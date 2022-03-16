@@ -93,21 +93,18 @@ List<Map<String, String>> _DECODE_POKEMON = [
   {'ge': 'x'},
 ];
 
-String encodePokemon(String plainText){
-  if (plainText == null || plainText == '')
-    return '';
+String encodePokemon(String plainText) {
+  if (plainText == null || plainText == '') return '';
   String result = '';
-  for (int i = 0; i < plainText.length; i++)
-    result = result + _POKEMON[plainText[i].toLowerCase()];
+  for (int i = 0; i < plainText.length; i++) result = result + _POKEMON[plainText[i].toLowerCase()];
   return result.toUpperCase();
 }
 
-String decodePokemon(String chiffreText){
-  if (chiffreText == null || chiffreText == '')
-    return '';
+String decodePokemon(String chiffreText) {
+  if (chiffreText == null || chiffreText == '') return '';
 
   List<String> result = [];
-  chiffreText =  chiffreText.toLowerCase();
+  chiffreText = chiffreText.toLowerCase();
   chiffreText.split(' ').forEach((element) {
     result.add(_decode(element));
   });
@@ -119,13 +116,12 @@ String _decode(String input) {
   String result = '';
   int iteration = cypher.length + 1;
 
-  if (cypher.length == 1)
-    return UNKNOWN_ELEMENT;
+  if (cypher.length == 1) return UNKNOWN_ELEMENT;
 
-  while(cypher.length > 0 && iteration > 0) {
+  while (cypher.length > 0 && iteration > 0) {
     iteration--;
     int j = 0;
-    while ( j < _DECODE_POKEMON.length) {
+    while (j < _DECODE_POKEMON.length) {
       if (cypher.startsWith(_DECODE_POKEMON[j].keys.toList()[0])) {
         cypher = cypher.replaceFirst(_DECODE_POKEMON[j].keys.toList()[0], '');
         result = result + _DECODE_POKEMON[j].values.toList()[0];
@@ -135,8 +131,7 @@ String _decode(String input) {
       j++;
     }
   }
-  if (result == '' || cypher.length > 0)
-    result = UNKNOWN_ELEMENT;
+  if (result == '' || cypher.length > 0) result = UNKNOWN_ELEMENT;
 
   return result;
 }

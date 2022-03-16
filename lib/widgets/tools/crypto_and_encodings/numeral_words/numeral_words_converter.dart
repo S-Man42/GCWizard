@@ -22,7 +22,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
 
   var _currentDecodeInput = '';
 
-  var _currentLanguage = NumeralWordsLanguage.NAVI;
+  var _currentLanguage = NumeralWordsLanguage.KLI;
 
   int _currentNumber = 0;
 

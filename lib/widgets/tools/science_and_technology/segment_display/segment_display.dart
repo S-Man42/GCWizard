@@ -168,7 +168,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add([]);
@@ -176,7 +176,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -184,7 +184,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [];

@@ -17,8 +17,8 @@ class WherigoSelection extends GCWSelection {
         className(UrwigoHashBreaker()),
         className(UrwigoTextDeobfuscation()),
         className(EarwigoTextDeobfuscation()),
-        className(WherigoAnalyze()), ]
-          .contains(className(element.tool));
+        className(WherigoAnalyze()),
+      ].contains(className(element.tool));
     }).toList();
 
     return Container(child: GCWToolList(toolList: _toolList));

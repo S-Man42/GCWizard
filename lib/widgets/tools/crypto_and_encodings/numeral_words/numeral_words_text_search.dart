@@ -92,18 +92,13 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   Widget _buildOutput(BuildContext context) {
     List<NumeralWordsDecodeOutput> detailedOutput;
     String output = '';
-    if (_currentLanguage != NumeralWordsLanguage.KYR) {
-      detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
-          (_currentDecodeMode == GCWSwitchPosition.left));
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
-          output = output + ' ' + i18n(context, detailedOutput[i].number);
-        else
-          output = output + detailedOutput[i].number;
-      }
-    } else {
-      output = i18n(context, 'numeralwords_language_not_implemented');
-      detailedOutput = null;
+    detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
+        (_currentDecodeMode == GCWSwitchPosition.left));
+    for (int i = 0; i < detailedOutput.length; i++) {
+      if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
+        output = output + ' ' + i18n(context, detailedOutput[i].number);
+      else
+        output = output + detailedOutput[i].number;
     }
 
     List<List<String>> columnData = new List<List<String>>();

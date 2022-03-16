@@ -21,7 +21,7 @@ final VOLUME_CUBICCENTIMETER =
     Volume(name: 'common_unit_volume_cm3_name', symbol: 'cm\u00B3', inCubicMeters: 0.01 * 0.01 * 0.01);
 
 final VOLUME_CUBICDECIMETER =
-    Volume(name: 'common_unit_volume_dm3_name', symbol: 'cm\u00B3', inCubicMeters: 0.1 * 0.1 * 0.1);
+    Volume(name: 'common_unit_volume_dm3_name', symbol: 'dm\u00B3', inCubicMeters: 0.1 * 0.1 * 0.1);
 
 final VOLUME_CUBICMILLIMETER =
     Volume(name: 'common_unit_volume_mm3_name', symbol: 'mm\u00B3', inCubicMeters: 0.001 * 0.001 * 0.001);
@@ -172,7 +172,7 @@ final VOLUME_WASHINGMACHINE =
 
 // https://webmadness.net/blog/?post=knuth
 final VOLUME_NGOGN =
-  Volume(name: 'common_unit_volume_ngogn_name', symbol: 'n', inCubicMeters: 0.022633 * 0.022633 * 0.022633);
+    Volume(name: 'common_unit_volume_ngogn_name', symbol: 'n', inCubicMeters: 0.022633 * 0.022633 * 0.022633);
 
 final List<Unit> volumes = [
   VOLUME_CUBICMILLIMETER,

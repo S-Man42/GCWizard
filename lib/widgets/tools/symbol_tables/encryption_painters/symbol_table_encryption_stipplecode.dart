@@ -4,7 +4,6 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
 
 class StippleSymbolTableEncryption extends SymbolTableEncryption {
-
   //measurements from original Inkscape SVG files
   final _OFFSET_VERTICAL = 131.691 / 950.639;
   final _OFFSET_HORIZONTAL = 11.789 / 579.173;
@@ -12,8 +11,7 @@ class StippleSymbolTableEncryption extends SymbolTableEncryption {
   @override
   SymbolTableEncryptionSizes sizes(SymbolTableEncryptionSizes sizes) {
     var cols = sizes.countColumns.toDouble();
-    if (cols > 1)
-      cols -= (sizes.countColumns - 1) * _OFFSET_HORIZONTAL;
+    if (cols > 1) cols -= (sizes.countColumns - 1) * _OFFSET_HORIZONTAL;
 
     if (sizes.mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
       sizes.symbolWidth = sizes.canvasWidth / cols;
@@ -64,14 +62,11 @@ class StippleSymbolTableEncryption extends SymbolTableEncryption {
               x += j * _sizes.symbolWidth * _OFFSET_HORIZONTAL;
             } else {
               x = j * _sizes.symbolWidth;
-              if (j > 0)
-                x -= _sizes.symbolWidth * _OFFSET_HORIZONTAL * j;
+              if (j > 0) x -= _sizes.symbolWidth * _OFFSET_HORIZONTAL * j;
             }
 
-
-            var y =  i * _sizes.symbolHeight;
-            if (i > 0)
-              y -= _sizes.symbolHeight * _OFFSET_VERTICAL * i;
+            var y = i * _sizes.symbolHeight;
+            if (i > 0) y -= _sizes.symbolHeight * _OFFSET_VERTICAL * i;
 
             if (i % 2 == 1) {
               canvas.save();
@@ -86,12 +81,7 @@ class StippleSymbolTableEncryption extends SymbolTableEncryption {
             paintImage(
                 canvas: canvas,
                 fit: BoxFit.contain,
-                rect: Rect.fromLTWH(
-                    reverse ? 0 : x,
-                    reverse ? 0 : y,
-                    _sizes.symbolWidth,
-                    _sizes.symbolHeight
-                ),
+                rect: Rect.fromLTWH(reverse ? 0 : x, reverse ? 0 : y, _sizes.symbolWidth, _sizes.symbolHeight),
                 image: image);
 
             if (reverse) {

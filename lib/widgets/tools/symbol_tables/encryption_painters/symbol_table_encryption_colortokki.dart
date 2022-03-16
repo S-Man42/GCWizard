@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_default.dart';
@@ -7,7 +5,6 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
 
 class ColorTokkiSymbolTableEncryption extends SymbolTableEncryption {
-
   @override
   SymbolTableEncryptionSizes sizes(SymbolTableEncryptionSizes sizes) {
     if (sizes.mode == SymbolTableEncryptionMode.FIXED_CANVASWIDTH) {
@@ -46,8 +43,7 @@ class ColorTokkiSymbolTableEncryption extends SymbolTableEncryption {
 
     var counter = 0;
     for (var index = 0; index < imageIndexes.length; index++) {
-      if (imageIndexes[index] == null)
-        continue;
+      if (imageIndexes[index] == null) continue;
 
       var image = data.images[imageIndexes[index]].values.first.specialEncryptionImage;
 
@@ -97,9 +93,7 @@ class ColorTokkiSymbolTableEncryption extends SymbolTableEncryption {
       paintImage(
           canvas: canvas,
           fit: BoxFit.contain,
-          rect: Rect.fromCenter(
-            center: Offset(symbolSize / 2, symbolSize / 2), width: symbolSize, height: symbolSize
-          ),
+          rect: Rect.fromCenter(center: Offset(symbolSize / 2, symbolSize / 2), width: symbolSize, height: symbolSize),
           image: image);
 
       canvas.restore();

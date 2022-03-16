@@ -18,12 +18,11 @@ class MultiDecoderToolEsotericLanguageMalbolge extends GCWMultiDecoderTool {
                 if (outputList != null) {
                   String output = '';
                   for (var element in outputList.output) {
-                    if (element != null)
-                      if (element == 'common_programming_error_invalid_program')
-                        return null;
-                      else if (!element.startsWith('malbolge_'))
-                        output = output + element + '\n';
-                  };
+                    if (element != null) if (element == 'common_programming_error_invalid_program')
+                      return null;
+                    else if (!element.startsWith('malbolge_')) output = output + element + '\n';
+                  }
+                  ;
                   output = output.trim();
                   return output?.isEmpty ? null : output;
                 }
@@ -31,4 +30,4 @@ class MultiDecoderToolEsotericLanguageMalbolge extends GCWMultiDecoderTool {
               return null;
             },
             options: options);
-  }
+}

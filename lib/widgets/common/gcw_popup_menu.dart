@@ -68,7 +68,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
     }
 
     return GCWIconButton(
-        iconData: widget.iconData,
+        icon: widget.iconData,
         customIcon: widget.customIcon,
         rotateDegrees: widget.rotateDegrees,
         size: widget.size,

@@ -65,7 +65,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
               ),
             ),
             GCWIconButton(
-              iconData: Icons.add,
+              icon: Icons.add,
               onPressed: () {
                 _addNewFormula();
                 setState(() {});
@@ -138,7 +138,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
               ),
               _currentEditId == formula.id
                   ? GCWIconButton(
-                      iconData: Icons.check,
+                      icon: Icons.check,
                       onPressed: () {
                         formula.name = _currentEditedName;
                         _updateFormula();
@@ -150,7 +150,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
                       },
                     )
                   : GCWIconButton(
-                      iconData: Icons.edit,
+                      icon: Icons.edit,
                       onPressed: () {
                         setState(() {
                           _currentEditId = formula.id;
@@ -160,7 +160,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
                       },
                     ),
               GCWIconButton(
-                iconData: Icons.remove,
+                icon: Icons.remove,
                 onPressed: () {
                   showDeleteAlertDialog(context, formula.name, () {
                     _removeFormula(formula);

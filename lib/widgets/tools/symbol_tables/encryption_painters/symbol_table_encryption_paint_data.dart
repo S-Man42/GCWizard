@@ -10,13 +10,7 @@ class SymbolTablePaintData {
   List<int> imageIndexes;
   Function onCanvasChanged;
 
-  SymbolTablePaintData({
-    this.canvas,
-    this.sizes,
-    this.data,
-    this.imageIndexes,
-    this.onCanvasChanged
-  });
+  SymbolTablePaintData({this.canvas, this.sizes, this.data, this.imageIndexes, this.onCanvasChanged});
 }
 
 class SymbolTableEncryptionPainter extends CustomPainter {

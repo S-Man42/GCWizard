@@ -12,10 +12,10 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 
 class Stegano extends StatefulWidget {
-  final local.PlatformFile file;
+  final local.GCWFile file;
 
   Stegano({Key key, this.file}) : super(key: key);
 
@@ -24,7 +24,7 @@ class Stegano extends StatefulWidget {
 }
 
 class _SteganoState extends State<Stegano> {
-  local.PlatformFile _file;
+  local.GCWFile _file;
   Uint8List _bytesSource;
   String _currentInput = '';
   String _currentKey = '';
@@ -187,7 +187,7 @@ class _SteganoState extends State<Stegano> {
 
     setState(() {
       _encoding = false;
-      _encodedPictureData = (bytes != null) ? GCWImageViewData(local.PlatformFile(bytes: bytes)) : null;
+      _encodedPictureData = (bytes != null) ? GCWImageViewData(local.GCWFile(bytes: bytes)) : null;
       _encodingErrorText = _error;
       _error2Text = _error2;
       _filenameTarget = (_file != null) ? changeExtension(_file.name, _extensionTarget) : null;

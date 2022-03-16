@@ -110,7 +110,7 @@ class DTMFState extends State<DTMF> {
                     padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                   )),
                   GCWIconButton(
-                    iconData: Icons.add,
+                    icon: Icons.add,
                     onPressed: () {
                       setState(() {
                         var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';

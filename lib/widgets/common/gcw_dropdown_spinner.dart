@@ -47,12 +47,12 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
               child: Row(
                 children: <Widget>[
                   Container(
-                    child: GCWIconButton(iconData: Icons.remove, onPressed: _decreaseValue),
+                    child: GCWIconButton(icon: Icons.remove, onPressed: _decreaseValue),
                     margin: EdgeInsets.only(right: DEFAULT_MARGIN),
                   ),
                   Expanded(child: _buildDropDownButton()),
                   Container(
-                    child: GCWIconButton(iconData: Icons.add, onPressed: _increaseValue),
+                    child: GCWIconButton(icon: Icons.add, onPressed: _increaseValue),
                     margin: EdgeInsets.only(left: DEFAULT_MARGIN),
                   )
                 ],
@@ -68,9 +68,9 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                GCWIconButton(iconData: Icons.arrow_drop_up, onPressed: _increaseValue),
+                GCWIconButton(icon: Icons.arrow_drop_up, onPressed: _increaseValue),
                 _buildDropDownButton(),
-                GCWIconButton(iconData: Icons.arrow_drop_down, onPressed: _decreaseValue),
+                GCWIconButton(icon: Icons.arrow_drop_down, onPressed: _decreaseValue),
               ],
             ),
           )

@@ -180,10 +180,17 @@ class GeneralCharsetValuesState extends State<GeneralCharsetValues> {
 
     var decodeInput = _currentDecodeInput;
     switch (radix) {
-      case 2: decodeInput = decodeInput.replaceAll(RegExp(r'[^01]+'), ' '); break;
-      case 10: decodeInput = decodeInput.replaceAll(RegExp(r'[^0-9]+'), ' '); break;
-      case 16: decodeInput = decodeInput.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]+'), ' '); break;
-      default: return {'text': '', 'values': []};
+      case 2:
+        decodeInput = decodeInput.replaceAll(RegExp(r'[^01]+'), ' ');
+        break;
+      case 10:
+        decodeInput = decodeInput.replaceAll(RegExp(r'[^0-9]+'), ' ');
+        break;
+      case 16:
+        decodeInput = decodeInput.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]+'), ' ');
+        break;
+      default:
+        return {'text': '', 'values': []};
     }
 
     if (blockSize != null) {

@@ -13,13 +13,10 @@ class ToolSettings extends StatefulWidget {
 }
 
 class ToolSettingsState extends State<ToolSettings> {
-
   bool _WherigoShowLUASourcecodeDialog;
 
   @override
   Widget build(BuildContext context) {
-
-
     return Column(
       children: <Widget>[
         GCWTextDivider(

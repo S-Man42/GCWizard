@@ -42,42 +42,81 @@ final Map<String, List<String>> PASLEY = {
   'Z': ['5', '6'],
 };
 
-
 final Map<String, List<String>> PASLEY_MODIFIER = {
   'LETTERFOLLOWS': ['3', '4'],
   'NUMBERFOLLOWS': ['2', '6'],
 };
 
-final Map<String, String> DigitToLetter= {
-  '1' : 'A',
-  '2' : 'B',
-  '3' : 'C',
-  '4' : 'D',
-  '5' : 'E',
-  '6' : 'F',
-  '7' : 'G',
-  '8' : 'H',
-  '9' : 'I',
-  '0' : 'J',
-  ' ' : ' '
+final Map<String, String> DigitToLetter = {
+  '1': 'A',
+  '2': 'B',
+  '3': 'C',
+  '4': 'D',
+  '5': 'E',
+  '6': 'F',
+  '7': 'G',
+  '8': 'H',
+  '9': 'I',
+  '0': 'J',
+  ' ': ' '
 };
 
-final Map<String, String> LetterToDigit= {
-  'A' : '1',
-  'B' : '2',
-  'C' : '3',
-  'D' : '4',
-  'E' : '5',
-  'F' : '6',
-  'G' : '7',
-  'H' : '8',
-  'I' : '9',
-  'J' : '0',
-  ' ' : ' '
+final Map<String, String> LetterToDigit = {
+  'A': '1',
+  'B': '2',
+  'C': '3',
+  'D': '4',
+  'E': '5',
+  'F': '6',
+  'G': '7',
+  'H': '8',
+  'I': '9',
+  'J': '0',
+  ' ': ' '
 };
 
-final List<String> LETTER = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
-final List<String> DIGIT = [' ', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ];
+final List<String> LETTER = [
+  ' ',
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+];
+final List<String> DIGIT = [
+  ' ',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '0',
+];
 
 List<List<String>> encodePasley(String input) {
   if (input == null || input == '') return [];
@@ -88,34 +127,26 @@ List<List<String>> encodePasley(String input) {
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (letter)
-      if (LETTER.contains(inputs[i])) {
-          result.add(PASLEY[inputs[i].toUpperCase()]);
-      }
-      else {
-        result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']);
-        result.add(PASLEY[inputs[i]]);
-        letter = false;
-      }
-    else
-      if (LETTER.contains(inputs[i])) {
-        result.add(PASLEY_MODIFIER['LETTERFOLLOWS']);
-        result.add(PASLEY[inputs[i].toUpperCase()]);
-        letter = true;
-      }
-      else {
-        result.add(PASLEY[inputs[i]]);
-      }
+    if (letter) if (LETTER.contains(inputs[i])) {
+      result.add(PASLEY[inputs[i].toUpperCase()]);
+    } else {
+      result.add(PASLEY_MODIFIER['NUMBERFOLLOWS']);
+      result.add(PASLEY[inputs[i]]);
+      letter = false;
+    }
+    else if (LETTER.contains(inputs[i])) {
+      result.add(PASLEY_MODIFIER['LETTERFOLLOWS']);
+      result.add(PASLEY[inputs[i].toUpperCase()]);
+      letter = true;
+    } else {
+      result.add(PASLEY[inputs[i]]);
+    }
   }
   return result;
 }
 
 Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
-  if (inputs == null || inputs.length == 0)
-    return {
-      'displays': <List<String>>[],
-      'chars': ''
-    };
+  if (inputs == null || inputs.length == 0) return {'displays': <List<String>>[], 'chars': ''};
 
   var displays = <List<String>>[];
   var segment = <String>[];
@@ -156,16 +187,14 @@ Map<String, dynamic> decodeVisualPasley(List<String> inputs) {
 
 List<String> _stringToSegment(String input) {
   List<String> result = [];
-  for (int i = 0; i < input.length; i++)
-    result.add(input[i]);
+  for (int i = 0; i < input.length; i++) result.add(input[i]);
 
   return result;
 }
 
-String _decode(String code, bool letter){
+String _decode(String code, bool letter) {
   if (letter)
     return code;
   else
     return LetterToDigit[code];
-
 }

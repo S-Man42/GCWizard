@@ -53,7 +53,9 @@ class PophamTelegraphState extends State<PophamTelegraph> {
       if (_currentMode == GCWSwitchPosition.left) // encrypt: input number => output segment
         GCWTextField(
           controller: _encodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z]')),],
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[0-9 a-zA-Z]')),
+          ],
           onChanged: (text) {
             setState(() {
               _currentEncodeInput = text;
@@ -63,9 +65,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
       else
         Column(
           // decrpyt: input segment => output number
-          children: <Widget>[
-            _buildVisualDecryption()
-          ],
+          children: <Widget>[_buildVisualDecryption()],
         ),
       _buildOutput()
     ]);
@@ -115,7 +115,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add([]);
@@ -123,7 +123,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -131,7 +131,7 @@ class PophamTelegraphState extends State<PophamTelegraph> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [];

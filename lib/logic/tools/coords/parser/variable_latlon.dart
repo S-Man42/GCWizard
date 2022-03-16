@@ -60,8 +60,7 @@ Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
 
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions,
     {Map<String, dynamic> projectionData = const {}}) {
-  if (substitutions == null)
-    substitutions = {};
+  if (substitutions == null) substitutions = {};
 
   var textToExpand;
 

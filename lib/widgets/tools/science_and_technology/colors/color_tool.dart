@@ -5,23 +5,26 @@ import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_cmyk.
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_hue.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_yuv.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_colorpicker.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
-class ColorPicker extends StatefulWidget {
+class ColorTool extends StatefulWidget {
   final RGB color;
 
-  const ColorPicker({Key key, this.color}) : super(key: key);
+  const ColorTool({Key key, this.color}) : super(key: key);
 
   @override
-  ColorPickerState createState() => ColorPickerState();
+  ColorToolState createState() => ColorToolState();
 }
 
-class ColorPickerState extends State<ColorPicker> {
+class ColorToolState extends State<ColorTool> {
   dynamic _currentColor = defaultColor;
   HSVColor _currentColorPickerColor;
   String _currentColorSpace = keyColorSpaceRGB;
@@ -42,8 +45,8 @@ class ColorPickerState extends State<ColorPicker> {
     return Column(
       children: <Widget>[
         Container(
-          child: HSVPicker(
-            color: _currentColorPickerColor,
+          child: GCWColorPicker(
+            hsvColor: _currentColorPickerColor,
             onChanged: (color) {
               setState(() {
                 _currentColorPickerColor = color;

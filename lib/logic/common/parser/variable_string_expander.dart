@@ -2,7 +2,8 @@ import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
 
-final RegExp VARIABLESTRING = RegExp(r'^((\s*\d+(\s*\-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*\-\s*(\d*|\d+\s*#\s*\d*)))\s*$');
+final RegExp VARIABLESTRING =
+    RegExp(r'^((\s*\d+(\s*\-\s*(\d*|\d+\s*#\s*\d*))?)\s*,)*(\s*\d*|(\s*\d+\s*\-\s*(\d*|\d+\s*#\s*\d*)))\s*$');
 
 enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
@@ -255,8 +256,7 @@ class VariableStringExpander {
 }
 
 int preCheckCombinations(Map<String, String> substitutions) {
-  if (substitutions == null || substitutions.isEmpty)
-    return 0;
+  if (substitutions == null || substitutions.isEmpty) return 0;
 
   var expander = VariableStringExpander('DUMMY', substitutions, onAfterExpandedText: (e) => false);
   var count = expander.run(onlyPrecheck: true);

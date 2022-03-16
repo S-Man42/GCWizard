@@ -15,9 +15,10 @@ class MultiDecoderToolEsotericLanguageWhitespace extends GCWMultiDecoderTool {
             onDecode: (String input, String key) {
               try {
                 var outputFuture = interpreterWhitespace(input, key, timeOut: 1000);
-                return Future<String>.value(outputFuture.then((output) => output.error || output.output?.isEmpty ? null : output.output));
+                return Future<String>.value(
+                    outputFuture.then((output) => output.error || output.output?.isEmpty ? null : output.output));
               } catch (e) {}
               return null;
             },
-      options: options);
+            options: options);
 }
