@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart' as coord;
 import 'package:gc_wizard/logic/tools/science_and_technology/hms_deg.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_minutesseconds_textinputformatter.dart';
-
-import '../coords/base/gcw_coords_sign_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 
 class HmsDeg extends StatefulWidget {
   @override
@@ -24,19 +28,18 @@ class HmsDegState extends State<HmsDeg> {
   FocusNode _secondsFocusNode;
   FocusNode _mSecondsFocusNode;
 
-  FocusNode _latMinutesFocusNode;
-  FocusNode _latSecondsFocusNode;
-  FocusNode _latMilliSecondsFocusNode;
+  FocusNode _dmmMinutesFocusNode;
+  FocusNode _dmmSecondsFocusNode;
+  FocusNode _dmmMilliMinutesFocusNode;
 
   TextEditingController _hoursController;
   TextEditingController _minutesController;
   TextEditingController _secondsController;
   TextEditingController _mSecondsController;
 
-  TextEditingController _LatDegreesController;
-  TextEditingController _LatMinutesController;
-  TextEditingController _LatSecondsController;
-  TextEditingController _LatMilliSecondsController;
+  TextEditingController _dmmDegreesController;
+  TextEditingController _dmmMinutesController;
+  TextEditingController _dmmMilliMinutesController;
 
   var _currentSign = 1;
   var _currentHours = '';
@@ -44,11 +47,10 @@ class HmsDegState extends State<HmsDeg> {
   var _currentSeconds = '';
   var _currentMilliSeconds = '';
 
-  var _currentDmsSign = 1;
-  String _currentLatDegrees = '';
-  String _currentLatMinutes = '';
-  String _currentLatSeconds = '';
-  String _currentLatMilliSeconds = '';
+  var _currentDmmSign = 1;
+  String _currentDmmDegrees = '';
+  String _currentDmmMinutes = '';
+  String _currentDmmMilliMinutes = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -60,17 +62,30 @@ class HmsDegState extends State<HmsDeg> {
     _secondsController = TextEditingController(text: _currentSeconds);
     _mSecondsController = TextEditingController(text: _currentMilliSeconds);
 
-    _LatDegreesController = TextEditingController(text: _currentLatDegrees);
-    _LatMinutesController = TextEditingController(text: _currentLatMinutes);
-    _LatSecondsController = TextEditingController(text: _currentLatSeconds);
-    _LatMilliSecondsController = TextEditingController(text: _currentLatMilliSeconds);
-
+    _dmmDegreesController = TextEditingController(text: _currentDmmDegrees);
+    _dmmMinutesController = TextEditingController(text: _currentDmmMinutes);
+    _dmmMilliMinutesController = TextEditingController(text: _currentDmmMilliMinutes);
   }
 
   @override
   void dispose() {
     _hoursController.dispose();
     _minutesController.dispose();
+    _secondsController.dispose();
+    _mSecondsController.dispose();
+
+    _dmmDegreesController.dispose();
+    _dmmMinutesController.dispose();
+    _dmmMilliMinutesController.dispose();
+
+    _hoursFocusNode.dispose();
+    _minutesFocusNode.dispose();
+    _secondsFocusNode.dispose();
+    _mSecondsFocusNode.dispose();
+
+    _dmmMinutesFocusNode.dispose();
+    _dmmSecondsFocusNode.dispose();
+    _dmmMilliMinutesFocusNode.dispose();
     super.dispose();
   }
 
@@ -86,9 +101,20 @@ class HmsDegState extends State<HmsDeg> {
             });
           },
         ),
-        _buildHmsRow(),
+        GCWTextDivider(
+            trailing: GCWPasteButton(
+              iconSize: IconButtonSize.SMALL,
+              onSelected: (text) {
+                setState(() {
+                  _parse(text);
+                });
+              },
+            )),
+        _currentMode == GCWSwitchPosition.left
+          ? _buildDegRow()
+          : _buildHmsRow(),
 
-        GCWDefaultOutput(child: _buildOutput())
+        GCWMultipleOutput(children: _buildOutput())
       ],
     );
   }
@@ -96,12 +122,17 @@ class HmsDegState extends State<HmsDeg> {
   Widget _buildHmsRow() {
     return Column(children: [
         GCWToolBar( children:[
-          GCWText(text: '+/-'),
-          GCWText(text: 'h'),
-          GCWText(text: 'min'),
-          GCWText(text: 'sec'),
-          GCWText(text: 'msec')
-        ]),
+          GCWText(text: '+/-', align: Alignment.center),
+          GCWText(text: 'h', align: Alignment.center),
+          GCWText(text: ''),
+          GCWText(text: 'min', align: Alignment.center),
+          GCWText(text: ''),
+          GCWText(text: 'sec', align: Alignment.center),
+          GCWText(text: ''),
+          GCWText(text: 'msec', align: Alignment.center)
+        ],
+          flexValues: [5,5,1,5,1,5,1,8],
+        ),
         GCWToolBar( children:[
           GCWCoordsSignDropDownButton(
             itemList: ['+', '-'],
@@ -123,6 +154,7 @@ class HmsDegState extends State<HmsDeg> {
               });
             }
           ),
+          GCWText(text: ':', align: Alignment.center),
           GCWIntegerTextField(
             hintText: 'min',
             controller: _minutesController,
@@ -134,6 +166,7 @@ class HmsDegState extends State<HmsDeg> {
               });
             }
           ),
+          GCWText(text: ':', align: Alignment.center),
           GCWIntegerTextField(
             hintText: 'sec',
             controller: _secondsController,
@@ -145,6 +178,7 @@ class HmsDegState extends State<HmsDeg> {
               });
             }
           ),
+          GCWText(text: '.', align: Alignment.center),
           GCWIntegerTextField(
             hintText: 'msec',
             controller: _mSecondsController,
@@ -155,120 +189,142 @@ class HmsDegState extends State<HmsDeg> {
               });
             }
           ),
-        ]),
+        ],
+          flexValues: [5,5,1,5,1,5,1,8],
+        ),
       ]);
   }
 
   Widget _buildDegRow() {
-    return Row(children: <Widget>[
-        Expanded(
-          flex: 6,
-          child: GCWCoordsSignDropDownButton(
-            itemList: ['N', 'S'],
-            value: _currentDmsSign,
-            onChanged: (value) {
-              setState(() {
-                _currentDmsSign = value;
-                //_setCurrentValueAndEmitOnChange();
-              });
-            }),
-        ),
-        Expanded(
-          flex: 6,
-          child: Container(
+    return Column(children: <Widget>[
+      Row(
+        children: <Widget>[
+          Expanded(
+            flex: 6,
+            child: GCWCoordsSignDropDownButton(
+                itemList: ['+', '-'],
+                value: _currentDmmSign,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDmmSign = value;
+                    //_setCurrentValueAndEmitOnChange();
+                  });
+                }),
+          ),
+          Expanded(
+              flex: 6,
+              child: Container(
+                child: GCWIntegerTextField(
+                    hintText: 'DD',
+                    textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
+                    controller: _dmmDegreesController,
+                    onChanged: (ret) {
+                      setState(() {
+                        _currentDmmDegrees = ret['text'];
+                        //_setCurrentValueAndEmitOnChange();
+
+                        if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
+                      });
+                    }),
+                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+              )),
+          Expanded(
+            flex: 1,
+            child: GCWText(align: Alignment.center, text: '°'),
+          ),
+          Expanded(
+            flex: 6,
             child: GCWIntegerTextField(
-              hintText: 'DD',
-              textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(),
-              controller: _LatDegreesController,
-              onChanged: (ret) {
-              setState(() {
-                _currentLatDegrees = ret['text'];
-                // _setCurrentValueAndEmitOnChange();
+                hintText: 'MM',
+                textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
+                controller: _dmmMinutesController,
+                focusNode: _dmmMinutesFocusNode,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentDmmMinutes = ret['text'];
+                    //_setCurrentValueAndEmitOnChange();
 
-                if (_currentLatDegrees.length == 2) FocusScope.of(context).requestFocus(_latMinutesFocusNode);
-              });
-            }),
-            padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-          )
-        ),
-        Expanded(
-          flex: 1,
-          child: GCWText(align: Alignment.center, text: '°'),
-        ),
-        Expanded(
-          flex: 6,
-          child: GCWIntegerTextField(
-          hintText: 'MM',
-          textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
-          controller: _LatMinutesController,
-          focusNode: _latMinutesFocusNode,
-          onChanged: (ret) {
-            setState(() {
-              _currentLatMinutes = ret['text'];
-              // _setCurrentValueAndEmitOnChange();
-
-              if (_currentLatMinutes.length == 2) FocusScope.of(context).requestFocus(_latSecondsFocusNode);
-            });
-          }),
-        ),
-        Expanded(
-          flex: 1,
-          child: GCWText(align: Alignment.center, text: '\''),
-        ),
-        Expanded(
-          flex: 6,
-          child: GCWIntegerTextField(
-          hintText: 'SS',
-          textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
-          controller: _LatSecondsController,
-          focusNode: _latSecondsFocusNode,
-          onChanged: (ret) {
-          setState(() {
-            _currentLatSeconds = ret['text'];
-            // _setCurrentValueAndEmitOnChange();
-
-            if (_currentLatSeconds.length == 2) FocusScope.of(context).requestFocus(_latMilliSecondsFocusNode);
-            });
-          }),
-        ),
-        Expanded(
-          flex: 1,
-          child: GCWText(align: Alignment.center, text: '.'),
-        ),
-        Expanded(
-          flex: 6,
-          child: GCWIntegerTextField(
-          hintText: 'SSS',
-          min: 0,
-          controller: _LatMilliSecondsController,
-          focusNode: _latMilliSecondsFocusNode,
-          onChanged: (ret) {
-          setState(() {
-            _currentLatMilliSeconds = ret['text'];
-            // _setCurrentValueAndEmitOnChange();
-          });
-          }),
-        ),
-        Expanded(
-          flex: 1,
-          child: GCWText(align: Alignment.center, text: '"'),
-        ),
-      ],
-    );
+                    if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
+                  });
+                }),
+          ),
+          Expanded(
+            flex: 1,
+            child: GCWText(align: Alignment.center, text: '.'),
+          ),
+          Expanded(
+            flex: 13,
+            child: GCWIntegerTextField(
+                hintText: 'MMM',
+                min: 0,
+                controller: _dmmMilliMinutesController,
+                focusNode: _dmmMilliMinutesFocusNode,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentDmmMilliMinutes = ret['text'];
+                    //_setCurrentValueAndEmitOnChange();
+                  });
+                }),
+          ),
+          Expanded(
+            flex: 1,
+            child: GCWText(align: Alignment.center, text: '\''),
+          ),
+        ],
+      ),
+    ]);
   }
 
   _buildOutput() {
-    int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
-    int _minutes = ['', '-'].contains(_currentMinutes) ? 0 : int.parse(_currentMinutes);
-    int _seconds = (['', '-'].contains(_currentSeconds) ? 0 : int.parse(_currentSeconds));
-     double _mseconds = double.parse('0.$_currentMilliSeconds');
-    // var _currentLat = DMSLatitude(_currentLatSign, _degrees, _minutes, _secondsD);
 
-    var _equatorial =Equatorial(_currentSign, _hours, _minutes, _seconds, _mseconds);
+    var output = <List<String>>[];
     if (_currentMode == GCWSwitchPosition.left) {
-      return raHms2Deg(_equatorial).toString();
+      int _degrees = ['', '-'].contains(_currentDmmDegrees) ? 0 : int.parse(_currentDmmDegrees);
+      int _minutes = ['', '-'].contains(_currentDmmMinutes) ? 0 : int.parse(_currentDmmMinutes);
+      double _minutesD = double.parse('$_minutes.$_currentDmmMilliMinutes');
+
+      var _currentLat = DMMPart(_currentDmmSign, _degrees, _minutesD);
+
+      var entry = <String>['Right ascension', dmmPart2Hms(_currentLat).toString()];
+      output.add(entry);
     } else {
-      return raHms2Deg(_equatorial).toString();
+      int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
+      int _minutes = ['', '-'].contains(_currentMinutes) ? 0 : int.parse(_currentMinutes);
+      int _seconds = (['', '-'].contains(_currentSeconds) ? 0 : int.parse(_currentSeconds));
+      double _secondsD = double.parse('$_seconds.$_currentMilliSeconds');
+
+      var _equatorial =Equatorial(_currentSign, _hours, _minutes, _secondsD);
+
+      var deg = raHms2Deg(_equatorial);
+      var dmm = DMMPart.fromDeg(deg);
+      var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), deg.toString()];
+      output.add(entry);
+      entry = <String>[coord.getCoordinateFormatByKey(coord.keyCoordsDMM).name, dmm.toString()];
+      output.add(entry);
+    }
+    return columnedMultiLineOutput(context, output, flexValues: [3, 2]);
+  }
+
+  _parse(String input) {
+    if(_currentMode == GCWSwitchPosition.left) {
+      var dmmPart = DMMPart.parse(input);
+      if (dmmPart == null) return;
+
+      _currentDmmSign = dmmPart.sign;
+      _dmmDegreesController.text = dmmPart.degrees.toString();
+      _dmmMinutesController.text = dmmPart.minutes.truncate().toString();
+      var minutes =  dmmPart.minutes.toString().split('.');
+      _dmmMilliMinutesController.text = minutes.length < 2 ? 0 : minutes[1];
+    } else {
+      var equatorial = Equatorial.parse(input);
+      if (equatorial == null) return;
+
+      _currentSign = equatorial.sign;
+      _hoursController.text = equatorial.hours.toString();
+      _minutesController.text = equatorial.minutes.toString();
+      _secondsController.text = equatorial.seconds.truncate().toString();
+      var seconds =  equatorial.seconds.toString().split('.');
+      _mSecondsController.text = seconds.length < 2 ? 0 : seconds[1];
     }
   }
 }

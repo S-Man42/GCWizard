@@ -1,20 +1,60 @@
-import 'package:tuple/tuple.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart' as coord;
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+
+
+
+Equatorial dmmPart2Hms(DMMPart dmmPart) {
+  var dmm = coord.DMM(coord.DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes),
+      coord.DMMLongitude(1, 0, 0.0) );//
+  return raDeg2Hms(dmm.toLatLng().latitude);
+}
+
+/// Right ascension to equatorial coordinate system
+Equatorial raDeg2Hms(double ra) {
+  if (ra == null) return null;
+  var deg = ra.abs();
+
+  var hour = (deg / 15.0).floor();
+  var min = (((deg / 15.0) - hour) * 60).floor();
+  var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
+
+  return Equatorial(_sign(ra), hour, min, sec);
+}
+
+/// right ascension hms to degrees
+double raHms2Deg(Equatorial equatorial) {
+  if (equatorial == null) return null;
+
+  var h = equatorial.hours;
+  var m = equatorial.minutes;
+  var s = equatorial.seconds;
+
+  var sDeg = (s / 240.0);
+  var deg = (h * 15.0) + (m / 4.0) + sDeg;
+
+  return equatorial.sign * deg;
+}
+
+int _sign(num) {
+  return num < 0 ? -1 : 1;
+}
 
 /// equatorial coordinate system
 class Equatorial {
   int sign;
   int hours;
   int minutes;
-  int seconds;
-  double mSeconds;
+  double seconds;
 
-  Equatorial(int neg, int hours , int min, int sec, double msec ) {
+  Equatorial(int neg, int hours , int min, double sec) {
     this.sign = neg;
     this.hours = hours.abs();
     this.minutes = min.abs();
     this.seconds = sec.abs();
-    this.mSeconds = msec.abs();
   }
 
   static Equatorial parse (String input) {
@@ -28,8 +68,9 @@ class Equatorial {
           (matches.first.group(1) == "-") ? -1 : 1,
           int.parse(matches.first.group(2)),
           int.parse(matches.first.group(3)),
-          int.parse(matches.first.group(4)),
-          matches.first.group(5).isEmpty ? 0 : double.parse('0' + matches.first.group(5))
+          matches.first.group(5).isEmpty
+              ? matches.first.group(4)
+              : double.parse(matches.first.group(4) + matches.first.group(5))
       );
     }
     else
@@ -39,143 +80,140 @@ class Equatorial {
   @override
   String toString() {
     return (sign < 0 ? '-' : '') +
-      hours.toString() + ":" +
-      minutes.toString() + ":" +
-      (seconds + mSeconds).toString();
+        hours.toString() + ":" +
+        minutes.toString() + ":" +
+        seconds.toString();
   }
 }
 
-/// Right ascension to equatorial coordinate system
-Equatorial raDeg2Hms(double ra) {
-  if (ra == null) return null;
-  var deg = ra.abs();
+class DMMPart extends coord.DMMPart {
 
-  var hour = (deg / 15.0).floor();
-  var min = (((deg / 15.0) - hour) * 60).floor();
-  var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
-  var msec = sec - sec.truncate();
+  static DMMPart fromDeg(double deg) {
+    var lat = latLonToDMM(LatLng(deg, 0)).latitude;
+    return DMMPart(lat.sign, lat.degrees, lat.minutes);
+  }
 
-  return Equatorial(_sign(ra), hour, min, sec.truncate(), msec);
-}
+  DMMPart(sign, degrees, minutes) : super(sign, degrees, minutes);
 
-/// declination degrees to equatorial coordinate system
-Equatorial decDeg2Hms(double dec) {
-  if (dec == null) return null;
+  String _dmmPartNumberFormat([int precision = 6]) {
+    var formatString = '00.';
+    if (precision == null) precision = 6;
+    if (precision < 0) precision = 0;
 
-  var deg = dec.abs();
+    if (precision <= 3) formatString += '0' * precision;
+    if (precision > 3) formatString += '000' + '#' * (precision - 3);
 
-  var hour = deg.floor();
-  var min = ((deg - hour) * 60).floor().abs();
-  var sec = (((deg - hour).abs() * 60) - min) * 60;
-  var msec = sec - sec.truncate();
+    return formatString;
+  }
 
-  return Equatorial(_sign(dec), hour, min, sec.truncate(), msec);
-}
+  Map<String, dynamic> _formatParts([int precision]) {
+    var _minutesStr = NumberFormat(_dmmPartNumberFormat(precision)).format(minutes);
+    var _degrees = degrees;
+    var _sign = (sign < 0) ? '-' : '';
 
-// module.exports.decHms2Deg = function(dec, round) {
-//   var parts = dec.split(':')
-//   var sign = 1
-//   var d = parseFloat(parts[0])
-//   var m = parseFloat(parts[1])
-//   var s = parseFloat(parts[2])
-//   if (d.toString()[0] === '-') {
-//     sign = -1
-//     d = Math.abs(d)
-//   }
-//   var sDeg = (s / 3600)
-//   if (round) sDeg = Math.floor(sDeg)
-//   var deg = d + (m / 60) + sDeg
-//   return deg * sign
-// }
+    //Values like 59.999999999' may be rounded to 60.0. So in that case,
+    //the degree has to be increased while minutes should be set to 0.0
+    if (_minutesStr.startsWith('60')) {
+      _minutesStr = '00.000';
+      _degrees += 1;
+    }
 
-/// declination hms to degrees
-double decHms2Deg(Equatorial equatorial) {
-  if (equatorial == null) return null;
+    var _degreesStr = _degrees.toString();
 
-  var d = equatorial.hours;
-  var m = equatorial.minutes;
-  var s = equatorial.seconds + equatorial.mSeconds;
+    return {
+      'sign': {'value': sign, 'formatted': _sign},
+      'degrees': _degreesStr,
+      'minutes': _minutesStr
+    };
+  }
 
-  var sDeg = (s / 3600.0);
-  var deg = d + (m / 60.0) + sDeg;
+  String _format([int precision]) {
+    var formattedParts = _formatParts(precision);
 
-  return equatorial.sign * deg;
-}
+    return formattedParts['sign']['formatted'] +
+        formattedParts['degrees'] +
+        '° ' +
+        formattedParts['minutes'] +
+        '\'';
+  }
 
-/// right ascension hms to degrees
-double raHms2Deg(Equatorial equatorial) {
-  if (equatorial == null) return null;
+  @override
+  String toString([int precision]) {
+    return '${_format(precision)}';
+  }
 
-  var h = equatorial.hours;
-  var m = equatorial.minutes;
-  var s = equatorial.seconds + equatorial.mSeconds;
+  static DMMPart parse(String input, {leftPadMilliMinutes: false, wholeString: false}) {
+    input = dec.prepareInput(input, wholeString: wholeString);
+    if (input == null) return null;
 
-  var sDeg = (s / 240.0);
-  var deg = (h * 15.0) + (m / 4.0) + sDeg;
+    var parsedTrailingSigns = _parseDMMTrailingSigns(input, leftPadMilliMinutes);
+    if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
-  return equatorial.sign * deg;
-}
+    RegExp regex = RegExp(PATTERN_DMM, caseSensitive: false);
+    if (regex.hasMatch(input)) {
+      var matches = regex.firstMatch(input);
+
+      var latSign = dec.sign(matches.group(1));
+      var latDegrees = int.tryParse(matches.group(2));
+      var latMinutes = 0.0;
+      if (matches.group(4) != null) {
+        if (leftPadMilliMinutes && (matches.group(4).length) < 3)
+          latMinutes = _leftPadDMMMilliMinutes(matches.group(3), matches.group(4));
+        else
+          latMinutes = double.parse('${matches.group(3)}.${matches.group(4)}');
+      } else {
+        latMinutes = double.parse('${matches.group(3)}.0');
+      }
+      return DMMPart(latSign, latDegrees, latMinutes);
+    }
+
+    return null;
+  }
+
+  static double _leftPadDMMMilliMinutes(String minutes, String milliMinutes) {
+    if (milliMinutes.length <= 3) return double.tryParse('$minutes.${milliMinutes.padLeft(3, '0')}');
+
+    int milliMinuteValue = int.tryParse(milliMinutes);
+    int minuteValue = int.tryParse(minutes) + (milliMinuteValue / 1000).floor();
+
+    return double.tryParse('$minuteValue.${milliMinuteValue % 1000}');
+  }
+
+  static DMMPart _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
+    RegExp regex = RegExp(PATTERN_DMM_TRAILINGSIGN, caseSensitive: false);
+
+    if (regex.hasMatch(text)) {
+      var matches = regex.firstMatch(text);
+
+      var latSign = dec.sign(matches.group(4));
+      var latDegrees = int.tryParse(matches.group(1));
+      var latMinutes = 0.0;
+      if (matches.group(3) != null) {
+        if (leftPadMilliMinutes)
+          latMinutes = _leftPadDMMMilliMinutes(matches.group(2), matches.group(3));
+        else
+          latMinutes = double.parse('${matches.group(2)}.${matches.group(3)}');
+      } else {
+        latMinutes = double.parse('${matches.group(2)}.0');
+      }
+      return DMMPart(latSign, latDegrees, latMinutes);
+    }
+
+    return null;
+  }
+
+  static final PATTERN_DMM_TRAILINGSIGN = '^\\s*?'
+      '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
+      '([0-5]?\\d)\\s*?' //lat minutes
+      '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
+      '[\\s\'´′`]?\\s*?' //lat minute symbol
+      '([NSEWO]|[\\+\\-])\\s*?'; //lat sign
 
 
-DMSPart toLatLon(Equatorial equatorial) {
-  if (equatorial == null) return null;
-
-  var result = _calcModuloRest(equatorial.seconds, 60);
-  equatorial.minutes += result.item1;
-  equatorial.seconds = result.item2;
-
-  result = _calcModuloRest(equatorial.minutes, 60);
-  equatorial.hours += result.item1;
-  equatorial.minutes = result.item2;
-
-  equatorial.hours %= 24;
-
-  var dmsGrad = (equatorial.hours * 360.0 / 24).toInt();
-  var result1 = _calcTransfer(equatorial.minutes);
-  dmsGrad += result1.item1;
-  var dmsMin = result1.item2.toInt();
-  result1 = _calcTransfer(equatorial.seconds);
-  dmsMin += result1.item1;
-  var dmsSec = result1.item2;
-
-  return DMSPart(equatorial.sign, dmsGrad, dmsMin, dmsSec);
-}
-
-Equatorial fromLatLon(int dmsGrad, int dmsMin, int dmsSec) {
-  var sign = _sign(dmsGrad);
-  dmsGrad = dmsGrad.abs();
-  dmsMin = dmsMin.abs();
-  dmsSec = dmsSec.abs();
-
-  var result = _calcModuloRest(dmsGrad, 15);
-  dmsGrad = result.item1 * 15;
-  dmsMin += result.item2 * 15;
-
-  result = _calcModuloRest(dmsMin, 4);
-  dmsGrad += result.item1 * 15;
-  dmsMin = result.item2;
-
-  result = _calcModuloRest(dmsSec, 4);
-  dmsMin += result.item1 * 15;
-  dmsSec = result.item2;
-
-  var h = (dmsGrad % 360 / 15.0).ceil();
-  var min = (dmsMin / 15.0).ceil();
-  var sec = (dmsSec / 15.0).ceil();
-
-  return Equatorial(sign, h, min, sec, 0);
-}
-
-Tuple2<int, double> _calcTransfer(int value) {
-  var rest = value % 4;
-  return new Tuple2<int, double>(((value - rest) / 4).toInt(), (rest * 15).toDouble());
-}
-
-Tuple2<int, int> _calcModuloRest(int value, int divider) {
-  var transfer = (value - (value % divider)) / divider;
-  return new Tuple2<int, int>(transfer.toInt(), value % divider);
-}
-
-int _sign(num) {
-  return num < 0 ? -1 : 1;
+  static final PATTERN_DMM = '^\\s*?'
+      '([NSEWO]$LETTER*?|[\\+\\-])?\\s*?' //lat sign
+      '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
+      '([0-5]?\\d)\\s*?' //lat minutes
+      '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
+      '[\\s\'´′`]?\\s*?'; //lat minute symbol
 }

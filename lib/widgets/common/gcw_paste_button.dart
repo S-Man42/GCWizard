@@ -10,11 +10,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
-import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/navigation_service.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 

@@ -213,7 +213,7 @@ class SymbolReplacerManualSetterState extends State<SymbolReplacerManualSetter> 
             },
           ),
         ],
-        flex: [3, 1],
+        flexValues: [3, 1],
       ),
       Row(
         children: [

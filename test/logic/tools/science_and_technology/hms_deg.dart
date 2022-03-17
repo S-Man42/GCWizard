@@ -2,38 +2,6 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/science_and_technology/hms_deg.dart';
 
 void main() {
-  group("hms_deg.decDeg2Hms:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null.toString()},
-      {'input' : 24.622590, 'expectedOutput' : '24:37:21.32399999999592'},
-      {'input' : -24.622590, 'expectedOutput' : '-24:37:21.32399999999592'},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () {
-        var _actual = decDeg2Hms(elem['input']);
-        expect(_actual.toString(), elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("hms_deg.decHms2Deg:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '24:37:21.324', 'expectedOutput' : 24.62259},
-      {'input' : '-24:37:21.324', 'expectedOutput' : -24.62259},
-      {'input' : '48:44:34.523618244', 'expectedOutput' : 48.74292322729},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () {
-        var _actual = decHms2Deg(Equatorial.parse(elem['input']));
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
-
 
   group("hms_deg.raDeg2Hms:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
@@ -63,6 +31,48 @@ void main() {
       test('input: ${elem['input']}', () {
         var _actual = raHms2Deg(Equatorial.parse(elem['input']));
         expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("DMMPart.parse:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : 'N 52° 12.312', 'expectedOutput' : '52° 12.312\''},
+      {'input' : 'E 52° 12.312', 'expectedOutput' : '52° 12.312\''},
+      {'input' : '52° 12.312', 'expectedOutput' : '52° 12.312\''},
+      {'input' : '+52° 12.312', 'expectedOutput' : '52° 12.312\''},
+      {'input' : 'W 52° 12.312', 'expectedOutput' : '-52° 12.312\''},
+      {'input' : 'S 52° 12.312', 'expectedOutput' : '-52° 12.312\''},
+      {'input' : '-52° 12.312', 'expectedOutput' : '-52° 12.312\''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = DMMPart.parse(elem['input']);
+        if (_actual == null)
+          expect(_actual, elem['expectedOutput']);
+        else
+          expect(_actual.toString(), elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Equatorial.parse:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '4:27:40.386', 'expectedOutput' : '4:27:40.386'},
+      {'input' : '-4:27:40.386', 'expectedOutput' : '-4:27:40.386'},
+      {'input' : '0:38:28.39', 'expectedOutput' : '0:38:28.39'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = Equatorial.parse(elem['input']);
+        if (_actual == null)
+          expect(_actual, elem['expectedOutput']);
+        else
+          expect(_actual.toString(), elem['expectedOutput']);
       });
     });
   });
