@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.2.0+145
+version: 2.2.0+146
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -297,7 +297,8 @@ flutter:
     - assets/symbol_tables/telegraph_popham/
     - assets/symbol_tables/telegraph_prussia/
     - assets/symbol_tables/templers/
-    - assets/symbol_tables/tenctonese/
+    - assets/symbol_tables/tenctonese_cursive/
+    - assets/symbol_tables/tenctonese_printed/
     - assets/symbol_tables/tengwar_beleriand/
     - assets/symbol_tables/tengwar_classic/
     - assets/symbol_tables/tengwar_general/
