@@ -50,13 +50,10 @@ class Rot123State extends State<Rot123> {
 
     return Column(
       children: [
-        GCWDefaultOutput(
-          child: encryptVigenere(_currentInput, alphabet_AZ.keys.join(), false, aValue: 1)
-        ),
+        GCWDefaultOutput(child: encryptVigenere(_currentInput, alphabet_AZ.keys.join(), false, aValue: 1)),
         GCWOutput(
-          title: i18n(context, 'rotation_general_reverse'),
-          child: decryptVigenere(_currentInput, alphabet_AZ.keys.join(), false, aValue: 1)
-        ),
+            title: i18n(context, 'rotation_general_reverse'),
+            child: decryptVigenere(_currentInput, alphabet_AZ.keys.join(), false, aValue: 1)),
       ],
     );
   }

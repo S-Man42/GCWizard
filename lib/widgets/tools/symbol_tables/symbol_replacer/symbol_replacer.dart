@@ -522,7 +522,8 @@ class SymbolReplacerState extends State<SymbolReplacer> {
         if (symbolTableViewData.data == null) await symbolTableViewData.initialize(context);
 
         return symbolTableViewData.data.images;
-      };
+      }
+      ;
     }).toList());
 
     return GCWAsyncExecuterParameters(

@@ -31,8 +31,7 @@ String segments2binary(List<String> segments2convert, TeletypewriterCodebook lan
   List<String> segments = [];
   if (order12345) {
     segments.addAll(segments2convert);
-  }
-  else {
+  } else {
     switch (BINARY_LENGTH[language]) {
       case 5:
         if (segments2convert.contains('1')) segments.add('5');
@@ -230,11 +229,9 @@ Map<String, dynamic> decodeTextPunchtape(String inputs, TeletypewriterCodebook l
       intList[0] = int.parse(convertBase(element, 2, 10));
       text.add(decodeTeletypewriter(intList, language));
     }
-    if (!order12345)
-      element = element.split('').reversed.join('');
+    if (!order12345) element = element.split('').reversed.join('');
 
     displays.add(binary2segments(element, language));
-
   });
   return {'displays': displays, 'text': text.join('')};
 }

@@ -1,1 +1,1 @@
-Multitool for solving Geocaching Mysteries, Geodetic and Scientific Problems
+Narzędzie do rozwiązywania zagadek z geocachingu, geodezji i nauki.

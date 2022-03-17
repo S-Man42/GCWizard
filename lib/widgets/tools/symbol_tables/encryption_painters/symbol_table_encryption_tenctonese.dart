@@ -50,11 +50,8 @@ class TenctoneseSymbolTableEncryption extends SymbolTableEncryption {
             paintImage(
                 canvas: canvas,
                 fit: BoxFit.contain,
-                rect: Rect.fromLTWH(rowPosition,
-                    (i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2) * _SCALE,
-                    width,
-                    _sizes.symbolHeight * _SCALE
-                ),
+                rect: Rect.fromLTWH(rowPosition, (i * _sizes.tileHeight + _sizes.absoluteBorderWidth / 2) * _SCALE,
+                    width, _sizes.symbolHeight * _SCALE),
                 image: image);
 
             rowPosition += width;
