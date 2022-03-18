@@ -9,6 +9,9 @@ void main() {
       {'input' : 66.918277, 'expectedOutput' : '4:27:40.386480000000375'},
       {'input' : -66.918277, 'expectedOutput' : '-4:27:40.386480000000375'},
       {'input' : 9.618291666666666, 'expectedOutput' : '0:38:28.389999999999844'},
+
+      {'input' : 460.0, 'expectedOutput' : '30:40:4.26'},
+
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -25,6 +28,10 @@ void main() {
       {'input' : '4:27:40.386', 'expectedOutput' : 66.918275},
       {'input' : '-4:27:40.386', 'expectedOutput' : -66.918275},
       {'input' : '0:38:28.39', 'expectedOutput' : 9.618291666666666},
+
+      {'input' : '-44:27:40.386', 'expectedOutput' : -666.918275},
+      {'input' : '50:38:28.39', 'expectedOutput' : 759.618291666666666},
+
     ];
 
     _inputsToExpected.forEach((elem) {
