@@ -11,12 +11,11 @@ void main() {
       {'input' : 9.618291666666666, 'expectedOutput' : '0:38:28.389999999999844'},
 
       {'input' : 460.0, 'expectedOutput' : '30:40:4.26'},
-
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raDeg2Hms(elem['input']);
+        var _actual = raDeg2Hms(DEG(elem['input']));
         expect(_actual.toString(), elem['expectedOutput']);
       });
     });
@@ -25,38 +24,39 @@ void main() {
   group("hms_deg.raHms2Deg:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
-      {'input' : '4:27:40.386', 'expectedOutput' : 66.918275},
-      {'input' : '-4:27:40.386', 'expectedOutput' : -66.918275},
-      {'input' : '0:38:28.39', 'expectedOutput' : 9.618291666666666},
+      {'input' : '4:27:40.386', 'expectedOutput' : '66.918275'},
+      {'input' : '-4:27:40.386', 'expectedOutput' : '-66.918275'},
+      {'input' : '0:38:28.39', 'expectedOutput' : "9.6182916667"},
 
-      {'input' : '-44:27:40.386', 'expectedOutput' : -666.918275},
-      {'input' : '50:38:28.39', 'expectedOutput' : 759.618291666666666},
+      {'input' : '-44:27:40.386', 'expectedOutput' : '-666.918275'},
+      {'input' : '50:38:28.39', 'expectedOutput' : '759.6182916667'},
 
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var _actual = raHms2Deg(Equatorial.parse(elem['input']));
-        expect(_actual, elem['expectedOutput']);
+        if (_actual == null)
+          expect(_actual, elem['expectedOutput']);
+        else
+          expect(_actual.toString(), elem['expectedOutput']);
       });
     });
   });
 
-  group("DMMPart.parse:", () {
+  group("DEG.parse:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
-      {'input' : 'N 52° 12.312', 'expectedOutput' : '52° 12.312\''},
-      {'input' : 'E 52° 12.312', 'expectedOutput' : '52° 12.312\''},
-      {'input' : '52° 12.312', 'expectedOutput' : '52° 12.312\''},
-      {'input' : '+52° 12.312', 'expectedOutput' : '52° 12.312\''},
-      {'input' : 'W 52° 12.312', 'expectedOutput' : '-52° 12.312\''},
-      {'input' : 'S 52° 12.312', 'expectedOutput' : '-52° 12.312\''},
-      {'input' : '-52° 12.312', 'expectedOutput' : '-52° 12.312\''},
+      {'input' : '66.918277', 'expectedOutput' : '66.918277'},
+      {'input' : '-66.918277', 'expectedOutput' : '-66.918277'},
+      {'input' : '9.618291666666666', 'expectedOutput' : '9.6182916667'},
+
+      {'input' : '460.0', 'expectedOutput' : '460.000'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = DMMPart.parse(elem['input']);
+        var _actual = DEG.parse(elem['input']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else

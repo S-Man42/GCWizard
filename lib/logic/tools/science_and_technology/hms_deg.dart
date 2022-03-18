@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:intl/intl.dart';
@@ -7,16 +9,17 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 
 
 
-Equatorial dmmPart2Hms(DMMPart dmmPart) {
-  var dmm = coord.DMM(coord.DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes),
-      coord.DMMLongitude(1, 0, 0.0) );//
-  return raDeg2Hms(dmm.toLatLng().latitude);
-}
+// Equatorial dmmPart2Hms(DMMPart dmmPart) {
+//   var dmm = coord.DMM(coord.DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes),
+//       coord.DMMLongitude(1, 0, 0.0) );//
+//   return raDeg2Hms(dmm.toLatLng().latitude);
+// }
+
 
 /// Right ascension to equatorial coordinate system
-Equatorial raDeg2Hms(double ra) {
-  if (ra == null) return null;
-  var deg = ra.abs();
+Equatorial raDeg2Hms(DEG ra) {
+  if ((ra == null) || (ra.degress == null)) return null;
+  var deg = ra.degress.abs();
 
   var hour = (deg / 15.0).floor();
   var min = (((deg / 15.0) - hour) * 60).floor();
@@ -26,7 +29,7 @@ Equatorial raDeg2Hms(double ra) {
 }
 
 /// right ascension hms to degrees
-double raHms2Deg(Equatorial equatorial) {
+DEG raHms2Deg(Equatorial equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;
@@ -36,7 +39,7 @@ double raHms2Deg(Equatorial equatorial) {
   var sDeg = (s / 240.0);
   var deg = (h * 15.0) + (m / 4.0) + sDeg;
 
-  return equatorial.sign * deg;
+  return DEG(equatorial.sign * deg);
 }
 
 int _sign(num) {
@@ -79,141 +82,65 @@ class Equatorial {
 
   @override
   String toString() {
+    var _seconds = '';
+      var __seconds =  seconds.toString().split('.');
+      if ((__seconds.length < 2) || (__seconds[1].length <= 10))
+        _seconds = seconds.toString();
+      else
+        _seconds = NumberFormat('0.' + '0' * 10).format(seconds);
+
+
     return (sign < 0 ? '-' : '') +
         hours.toString() + ":" +
         minutes.toString() + ":" +
-        seconds.toString();
+        _seconds;
   }
 }
 
-class DMMPart extends coord.DMMPart {
+class DEG {
+  double degress;
 
-  static DMMPart fromDeg(double deg) {
-    var lat = latLonToDMM(LatLng(deg, 0)).latitude;
-    return DMMPart(lat.sign, lat.degrees, lat.minutes);
+  DEG(double degress) {
+    this.degress = degress;
   }
 
-  DMMPart(sign, degrees, minutes) : super(sign, degrees, minutes);
-
-  String _dmmPartNumberFormat([int precision = 6]) {
-    var formatString = '00.';
-    if (precision == null) precision = 6;
-    if (precision < 0) precision = 0;
-
-    if (precision <= 3) formatString += '0' * precision;
-    if (precision > 3) formatString += '000' + '#' * (precision - 3);
-
-    return formatString;
-  }
-
-  Map<String, dynamic> _formatParts([int precision]) {
-    var _minutesStr = NumberFormat(_dmmPartNumberFormat(precision)).format(minutes);
-    var _degrees = degrees;
-    var _sign = (sign < 0) ? '-' : '';
-
-    //Values like 59.999999999' may be rounded to 60.0. So in that case,
-    //the degree has to be increased while minutes should be set to 0.0
-    if (_minutesStr.startsWith('60')) {
-      _minutesStr = '00.000';
-      _degrees += 1;
-    }
-
-    var _degreesStr = _degrees.toString();
-
-    return {
-      'sign': {'value': sign, 'formatted': _sign},
-      'degrees': _degreesStr,
-      'minutes': _minutesStr
-    };
-  }
-
-  String _format([int precision]) {
-    var formattedParts = _formatParts(precision);
-
-    return formattedParts['sign']['formatted'] +
-        formattedParts['degrees'] +
-        '° ' +
-        formattedParts['minutes'] +
-        '\'';
-  }
-
-  @override
-  String toString([int precision]) {
-    return '${_format(precision)}';
-  }
-
-  static DMMPart parse(String input, {leftPadMilliMinutes: false, wholeString: false}) {
+  static DEG parse(String input, {wholeString = false}) {
     input = dec.prepareInput(input, wholeString: wholeString);
     if (input == null) return null;
 
-    var parsedTrailingSigns = _parseDMMTrailingSigns(input, leftPadMilliMinutes);
-    if (parsedTrailingSigns != null) return parsedTrailingSigns;
+    RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
 
-    RegExp regex = RegExp(PATTERN_DMM, caseSensitive: false);
     if (regex.hasMatch(input)) {
       var matches = regex.firstMatch(input);
 
       var latSign = dec.sign(matches.group(1));
-      var latDegrees = int.tryParse(matches.group(2));
-      var latMinutes = 0.0;
-      if (matches.group(4) != null) {
-        if (leftPadMilliMinutes && (matches.group(4).length) < 3)
-          latMinutes = _leftPadDMMMilliMinutes(matches.group(3), matches.group(4));
-        else
-          latMinutes = double.parse('${matches.group(3)}.${matches.group(4)}');
-      } else {
-        latMinutes = double.parse('${matches.group(3)}.0');
-      }
-      return DMMPart(latSign, latDegrees, latMinutes);
-    }
-
-    return null;
-  }
-
-  static double _leftPadDMMMilliMinutes(String minutes, String milliMinutes) {
-    if (milliMinutes.length <= 3) return double.tryParse('$minutes.${milliMinutes.padLeft(3, '0')}');
-
-    int milliMinuteValue = int.tryParse(milliMinutes);
-    int minuteValue = int.tryParse(minutes) + (milliMinuteValue / 1000).floor();
-
-    return double.tryParse('$minuteValue.${milliMinuteValue % 1000}');
-  }
-
-  static DMMPart _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
-    RegExp regex = RegExp(PATTERN_DMM_TRAILINGSIGN, caseSensitive: false);
-
-    if (regex.hasMatch(text)) {
-      var matches = regex.firstMatch(text);
-
-      var latSign = dec.sign(matches.group(4));
-      var latDegrees = int.tryParse(matches.group(1));
-      var latMinutes = 0.0;
+      var latDegrees = 0.0;
       if (matches.group(3) != null) {
-        if (leftPadMilliMinutes)
-          latMinutes = _leftPadDMMMilliMinutes(matches.group(2), matches.group(3));
-        else
-          latMinutes = double.parse('${matches.group(2)}.${matches.group(3)}');
+        latDegrees = latSign * double.parse('${matches.group(2)}.${matches.group(3)}');
       } else {
-        latMinutes = double.parse('${matches.group(2)}.0');
+        latDegrees = latSign * double.parse('${matches.group(2)}.0');
       }
-      return DMMPart(latSign, latDegrees, latMinutes);
+
+      return DEG(latDegrees);
     }
 
     return null;
   }
 
-  static final PATTERN_DMM_TRAILINGSIGN = '^\\s*?'
-      '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
-      '([0-5]?\\d)\\s*?' //lat minutes
-      '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
-      '[\\s\'´′`]?\\s*?' //lat minute symbol
-      '([NSEWO]|[\\+\\-])\\s*?'; //lat sign
+  @override
+  String toString([int precision]) {
+    if (precision == null) precision = 10;
+    if (precision < 1) precision = 1;
 
+    String fixedDigits = '0' * min(precision, 3);
+    String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
 
-  static final PATTERN_DMM = '^\\s*?'
-      '([NSEWO]$LETTER*?|[\\+\\-])?\\s*?' //lat sign
-      '(\\d{1,3})\\s*?[\\s°]\\s*?' //lat degrees + symbol
-      '([0-5]?\\d)\\s*?' //lat minutes
-      '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat milliminutes
-      '[\\s\'´′`]?\\s*?'; //lat minute symbol
+    return '${NumberFormat('0.' + fixedDigits + variableDigits).format(degress)}';
+  }
+
+  static final PATTERN_DEC = '^\\s*?'
+      '([\\+\\-])?\\s*?' //sign
+      '(\\d{1,3})\\s*?' //degrees
+      '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //millidegrees
+      '[\\s°]?\\s*?'; //degree symbol
 }

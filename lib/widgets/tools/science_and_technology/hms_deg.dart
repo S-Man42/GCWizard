@@ -30,16 +30,16 @@ class HmsDegState extends State<HmsDeg> {
 
   FocusNode _dmmMinutesFocusNode;
   FocusNode _dmmSecondsFocusNode;
-  FocusNode _dmmMilliMinutesFocusNode;
+  FocusNode _decMilliDegreesFocusNode;
 
   TextEditingController _hoursController;
   TextEditingController _minutesController;
   TextEditingController _secondsController;
   TextEditingController _mSecondsController;
 
-  TextEditingController _dmmDegreesController;
+  TextEditingController _decDegreesController;
   TextEditingController _dmmMinutesController;
-  TextEditingController _dmmMilliMinutesController;
+  TextEditingController _decMilliDegreesController;
 
   var _currentSign = 1;
   var _currentHours = '';
@@ -47,10 +47,9 @@ class HmsDegState extends State<HmsDeg> {
   var _currentSeconds = '';
   var _currentMilliSeconds = '';
 
-  var _currentDmmSign = 1;
-  String _currentDmmDegrees = '';
-  String _currentDmmMinutes = '';
-  String _currentDmmMilliMinutes = '';
+  var _currentDecSign = 1;
+  String _currentDecDegrees = '';
+  String _currentDecMilliDegrees = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
@@ -62,9 +61,8 @@ class HmsDegState extends State<HmsDeg> {
     _secondsController = TextEditingController(text: _currentSeconds);
     _mSecondsController = TextEditingController(text: _currentMilliSeconds);
 
-    _dmmDegreesController = TextEditingController(text: _currentDmmDegrees);
-    _dmmMinutesController = TextEditingController(text: _currentDmmMinutes);
-    _dmmMilliMinutesController = TextEditingController(text: _currentDmmMilliMinutes);
+    _decDegreesController = TextEditingController(text: _currentDecDegrees);
+    _decMilliDegreesController = TextEditingController(text: _currentDecMilliDegrees);
   }
 
   @override
@@ -74,9 +72,9 @@ class HmsDegState extends State<HmsDeg> {
     _secondsController.dispose();
     _mSecondsController.dispose();
 
-    _dmmDegreesController.dispose();
+    _decDegreesController.dispose();
     _dmmMinutesController.dispose();
-    _dmmMilliMinutesController.dispose();
+    _decMilliDegreesController.dispose();
 
     _hoursFocusNode.dispose();
     _minutesFocusNode.dispose();
@@ -85,7 +83,7 @@ class HmsDegState extends State<HmsDeg> {
 
     _dmmMinutesFocusNode.dispose();
     _dmmSecondsFocusNode.dispose();
-    _dmmMilliMinutesFocusNode.dispose();
+    _decMilliDegreesFocusNode.dispose();
     super.dispose();
   }
 
@@ -203,10 +201,10 @@ class HmsDegState extends State<HmsDeg> {
             flex: 6,
             child: GCWCoordsSignDropDownButton(
                 itemList: ['+', '-'],
-                value: _currentDmmSign,
+                value: _currentDecSign,
                 onChanged: (value) {
                   setState(() {
-                    _currentDmmSign = value;
+                    _currentDecSign = value;
                     //_setCurrentValueAndEmitOnChange();
                   });
                 }),
@@ -217,58 +215,39 @@ class HmsDegState extends State<HmsDeg> {
                 child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
-                    controller: _dmmDegreesController,
+                    controller: _decDegreesController,
                     onChanged: (ret) {
                       setState(() {
-                        _currentDmmDegrees = ret['text'];
+                        _currentDecDegrees = ret['text'];
                         //_setCurrentValueAndEmitOnChange();
 
-                        if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
+                        if (_currentDecDegrees.length == 2)
+                          FocusScope.of(context).requestFocus(_decMilliDegreesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )),
           Expanded(
             flex: 1,
-            child: GCWText(align: Alignment.center, text: '°'),
-          ),
-          Expanded(
-            flex: 6,
-            child: GCWIntegerTextField(
-                hintText: 'MM',
-                textInputFormatter: IntegerMinutesSecondsTextInputFormatter(),
-                controller: _dmmMinutesController,
-                focusNode: _dmmMinutesFocusNode,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentDmmMinutes = ret['text'];
-                    //_setCurrentValueAndEmitOnChange();
-
-                    if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
-                  });
-                }),
-          ),
-          Expanded(
-            flex: 1,
             child: GCWText(align: Alignment.center, text: '.'),
           ),
           Expanded(
-            flex: 13,
+            flex: 20,
             child: GCWIntegerTextField(
-                hintText: 'MMM',
+                hintText: 'DDD',
                 min: 0,
-                controller: _dmmMilliMinutesController,
-                focusNode: _dmmMilliMinutesFocusNode,
+                controller: _decMilliDegreesController,
+                focusNode: _decMilliDegreesFocusNode,
                 onChanged: (ret) {
                   setState(() {
-                    _currentDmmMilliMinutes = ret['text'];
+                    _currentDecMilliDegrees = ret['text'];
                     //_setCurrentValueAndEmitOnChange();
                   });
                 }),
           ),
           Expanded(
             flex: 1,
-            child: GCWText(align: Alignment.center, text: '\''),
+            child: GCWText(align: Alignment.center, text: '°'),
           ),
         ],
       ),
@@ -279,13 +258,11 @@ class HmsDegState extends State<HmsDeg> {
 
     var output = <List<String>>[];
     if (_currentMode == GCWSwitchPosition.left) {
-      int _degrees = ['', '-'].contains(_currentDmmDegrees) ? 0 : int.parse(_currentDmmDegrees);
-      int _minutes = ['', '-'].contains(_currentDmmMinutes) ? 0 : int.parse(_currentDmmMinutes);
-      double _minutesD = double.parse('$_minutes.$_currentDmmMilliMinutes');
+      int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
+      double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
+      var _currentDeg = DEG(_currentDecSign * _degreesD);
 
-      var _currentLat = DMMPart(_currentDmmSign, _degrees, _minutesD);
-
-      var entry = <String>['Right ascension', dmmPart2Hms(_currentLat).toString()];
+      var entry = <String>['Right ascension', raDeg2Hms(_currentDeg).toString()];
       output.add(entry);
     } else {
       int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
@@ -296,25 +273,25 @@ class HmsDegState extends State<HmsDeg> {
       var _equatorial =Equatorial(_currentSign, _hours, _minutes, _secondsD);
 
       var deg = raHms2Deg(_equatorial);
-      var dmm = DMMPart.fromDeg(deg);
+      //var dmm = DMMPart.fromDeg(deg);
       var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), deg.toString()];
       output.add(entry);
-      entry = <String>[coord.getCoordinateFormatByKey(coord.keyCoordsDMM).name, dmm.toString()];
-      output.add(entry);
+      // entry = <String>[coord.getCoordinateFormatByKey(coord.keyCoordsDMM).name, dmm.toString()];
+      // output.add(entry);
     }
-    return columnedMultiLineOutput(context, output, flexValues: [3, 2]);
+    return columnedMultiLineOutput(context, output, flexValues: [1, 1]);
   }
 
   _parse(String input) {
     if(_currentMode == GCWSwitchPosition.left) {
-      var dmmPart = DMMPart.parse(input);
-      if (dmmPart == null) return;
-
-      _currentDmmSign = dmmPart.sign;
-      _dmmDegreesController.text = dmmPart.degrees.toString();
-      _dmmMinutesController.text = dmmPart.minutes.truncate().toString();
-      var minutes =  dmmPart.minutes.toString().split('.');
-      _dmmMilliMinutesController.text = minutes.length < 2 ? 0 : minutes[1];
+      // var dmmPart = DMMPart.parse(input);
+      // if (dmmPart == null) return;
+      //
+      // _currentDecSign = dmmPart.sign;
+      // _decDegreesController.text = dmmPart.degrees.toString();
+      // _dmmMinutesController.text = dmmPart.minutes.truncate().toString();
+      // var minutes =  dmmPart.minutes.toString().split('.');
+      // _decMilliDegreesController.text = minutes.length < 2 ? 0 : minutes[1];
     } else {
       var equatorial = Equatorial.parse(input);
       if (equatorial == null) return;
