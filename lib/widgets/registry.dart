@@ -106,6 +106,7 @@ import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/befunge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
@@ -1740,6 +1741,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Beatnik(), i18nPrefix: 'beatnik', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_beatnik',
+    ]),
+    GCWTool(tool: Befunge(), i18nPrefix: 'befunge', searchKeys: [
+      'esotericprogramminglanguage',
+      'befunge',
     ]),
     GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', searchKeys: [
       'esotericprogramminglanguage',
