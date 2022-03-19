@@ -206,8 +206,8 @@ class GCWMapViewState extends State<GCWMapView> {
                   maxZoom: 18.0,
                   interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
                   plugins: [TappablePolylineMapPlugin()],
-                  onTap: (_) => _popupLayerController.hidePopup(),
-                  onLongPress: widget.isEditable
+                  onTap: (_, __) => _popupLayerController.hidePopup(),
+                  onLongPress: (_, __)  => widget.isEditable
                       ? (LatLng coordinate) {
                           setState(() {
                             var newPoint = _persistanceAdapter.addMapPoint(coordinate);
@@ -294,7 +294,7 @@ class GCWMapViewState extends State<GCWMapView> {
           options: PopupMarkerLayerOptions(
               markers: _markers,
               popupSnap: PopupSnap.markerTop,
-              popupController: _popupLayerController,
+              popupController: _popupLayerController.popupController,
               popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker))),
     ]);
 
@@ -925,13 +925,33 @@ class _GCWTappablePolyline extends TaggedPolyline {
         );
 }
 
-class _GCWMapPopupController extends PopupController {
+class _GCWMapPopupController {
   MapController mapController;
+  PopupController popupController;
 
-  @override
+  _GCWMapPopupController() {
+    popupController = PopupController();
+  }
+
   void togglePopup(Marker marker) {
     if (mapController != null) mapController.move(marker.point, mapController.zoom);
-    super.togglePopup(marker);
+    popupController.togglePopup(marker);
+  }
+
+  void showPopupsAlsoFor(List<Marker> markers, {bool disableAnimation = false}){
+    popupController.showPopupsAlsoFor(markers, disableAnimation: disableAnimation);
+  }
+
+  void showPopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}){
+    popupController.showPopupsOnlyFor(markers, disableAnimation: disableAnimation);
+  }
+
+  void hidePopup({bool disableAnimation = false}) {
+    popupController.hideAllPopups(disableAnimation: disableAnimation);
+  }
+
+  void hidePopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}){
+    popupController.hidePopupsOnlyFor(markers, disableAnimation: disableAnimation);
   }
 }
 

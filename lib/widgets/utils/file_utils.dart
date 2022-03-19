@@ -569,8 +569,8 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
 
     encoder.close();
 
-    var bytes = File(encoder.zip_path).readAsBytesSync();
-    await File(encoder.zip_path).delete();
+    var bytes = File(encoder.zipPath).readAsBytesSync();
+    await File(encoder.zipPath).delete();
 
     return bytes;
   } on Exception {
