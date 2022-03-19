@@ -6,11 +6,12 @@ void main() {
   group("hms_deg.raDeg2Hms:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null.toString()},
-      {'input' : 66.918277, 'expectedOutput' : '4:27:40.386480000000375'},
-      {'input' : -66.918277, 'expectedOutput' : '-4:27:40.386480000000375'},
-      {'input' : 9.618291666666666, 'expectedOutput' : '0:38:28.389999999999844'},
+      {'input' : 66.918277, 'expectedOutput' : '4:27:40.3864800000'},
+      {'input' : -66.918277, 'expectedOutput' : '-4:27:40.3864800000'},
+      {'input' : 9.618291666666666, 'expectedOutput' : '0:38:28.3900000000'},
 
-      {'input' : 460.0, 'expectedOutput' : '30:40:4.26'},
+      {'input' : 90.0, 'expectedOutput' : '6:0:0.0'},
+      {'input' : 460.0, 'expectedOutput' : '30:40:0.0000000000'},
     ];
 
     _inputsToExpected.forEach((elem) {

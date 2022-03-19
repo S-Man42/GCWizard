@@ -148,7 +148,7 @@ class HmsDegState extends State<HmsDeg> {
             onChanged: (ret) {
               setState(() {
                 _currentHours = ret['text'];
-                if (ret['text'].length == 2) FocusScope.of(context).requestFocus(_minutesFocusNode);
+                //if (ret['text'].length == 2) FocusScope.of(context).requestFocus(_minutesFocusNode);
               });
             }
           ),
@@ -221,8 +221,7 @@ class HmsDegState extends State<HmsDeg> {
                         _currentDecDegrees = ret['text'];
                         //_setCurrentValueAndEmitOnChange();
 
-                        if (_currentDecDegrees.length == 2)
-                          FocusScope.of(context).requestFocus(_decMilliDegreesFocusNode);
+                        //if (_currentDecDegrees.length == 2) FocusScope.of(context).requestFocus(_decMilliDegreesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),

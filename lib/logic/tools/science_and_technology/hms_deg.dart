@@ -25,7 +25,7 @@ Equatorial raDeg2Hms(DEG ra) {
   var min = (((deg / 15.0) - hour) * 60).floor();
   var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
 
-  return Equatorial(_sign(ra), hour, min, sec);
+  return Equatorial(_sign(ra.degress), hour, min, sec);
 }
 
 /// right ascension hms to degrees
@@ -42,7 +42,7 @@ DEG raHms2Deg(Equatorial equatorial) {
   return DEG(equatorial.sign * deg);
 }
 
-int _sign(num) {
+int _sign(double num) {
   return num < 0 ? -1 : 1;
 }
 
@@ -83,11 +83,12 @@ class Equatorial {
   @override
   String toString() {
     var _seconds = '';
-      var __seconds =  seconds.toString().split('.');
+      var __seconds =  seconds.round().toString().split('.');
       if ((__seconds.length < 2) || (__seconds[1].length <= 10))
         _seconds = seconds.toString();
-      else
-        _seconds = NumberFormat('0.' + '0' * 10).format(seconds);
+      else {
+        _seconds = NumberFormat('0.0' + '#' * 9).format(seconds);
+      }
 
 
     return (sign < 0 ? '-' : '') +
