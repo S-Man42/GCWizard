@@ -21,348 +21,358 @@ enum DIRECTIONS {LEFT, RIGHT, UP, DOWN, RANDOM}
 final List<String> commandSet = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '%', '!', '\'', '<', '>', '^', 'v', '?', '_', '|', '”', ':', '\\', '\$', '.', ',', '#', 'g', 'p', '&', '~', '@', ' ',];
 
 class BefungeOutput{
-String output = '';
-String error = '';
+  String output = '';
+  String error = '';
 
-BefungeOutput(this.output, this.error);
+  BefungeOutput(this.output, this.error);
 }
 
 
 class Stack{
-List<int> content;
+  List<int> content;
 
-push(int element) {
-content.add(element);
-}
+  push(int element) {
+    content.add(element);
+  }
 
-int pop() {
-if (isEmpty())
-return 0;
-else {
-int element = content[content.length - 1];
-content.removeAt(content.length - 1);
-return element;
-};
-}
+  int pop() {
+    if (isEmpty())
+      return 0;
+    else {
+      int element = content[content.length - 1];
+      content.removeAt(content.length - 1);
+      return element;
+    };
+  }
 
-bool isEmpty(){
-return (content.length == 0);
-}
+  bool isEmpty(){
+    return (content.length == 0);
+  }
 
-Stack(this.content);
+  Stack(this.content);
 }
 
 
 BefungeOutput interpretBefunge(String program, {String input}) {
-if (program == '' || program == null) return BefungeOutput('', '');
+  if (program == '' || program == null) return BefungeOutput('', '');
 
-if (_correctBefungeProgram(program)) {
+  if (_correctBefungeProgram(program)) {
 
-Random random = new Random();
-Stack stack = Stack([]);
-int pcX = 0;
-int pcY = 0;
-int a = 0;
-int b = 0;
-int v = 0;
-int iterations = 0;
-int inputCounter = 0;
-List<String> STDIN = input.split(' ');
-List<String> STDOUT = [];
-String command = '';
-Map<int, List<String>> torus = _fillTorus(program);
-bool notEnd = true;
-bool stringMode = false;
-DIRECTIONS direction = DIRECTIONS.RIGHT;
+    Random random = new Random();
+    Stack stack = Stack([]);
+    int pcX = 0;
+    int pcY = 0;
+    int a = 0;
+    int b = 0;
+    int v = 0;
+    int iterations = 0;
+    int inputCounter = 0;
+    List<String> STDIN = input.split(' ');
+    List<String> STDOUT = [];
+    String command = '';
+    Map<int, List<String>> torus = new Map<int, List<String>>();
+    bool notEnd = true;
+    bool stringMode = false;
+    DIRECTIONS direction = DIRECTIONS.RIGHT;
 
-while (notEnd) {
-if (iterations > MAX_ITERATIONS)
-return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INFINITE_LOOP);
+    torus = _fillTorus(program);
+    print(torus);
+    while (notEnd) {
+      if (iterations > MAX_ITERATIONS)
+        return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INFINITE_LOOP);
 
-command = torus[pcX][pcY];
-switch (command) {
-case ' ':
-break;
+      command = torus[pcY][pcX];
 
-case '0':
-stack.push(0);
-break;
+      switch (command) {
+      case ' ':
+      break;
 
-case '1':
-stack.push(1);
-break;
+      case '0':
+      stack.push(0);
+      break;
 
-case '2':
-stack.push(2);
-break;
+      case '1':
+      stack.push(1);
+      break;
 
-case '3':
-stack.push(3);
-break;
+      case '2':
+      stack.push(2);
+      break;
 
-case '4':
-stack.push(4);
-break;
+      case '3':
+      stack.push(3);
+      break;
 
-case '5':
-stack.push(5);
-break;
+      case '4':
+      stack.push(4);
+      break;
 
-case '6':
-stack.push(6);
-break;
+      case '5':
+      stack.push(5);
+      break;
 
-case '7':
-stack.push(7);
-break;
+      case '6':
+      stack.push(6);
+      break;
 
-case '8':
-stack.push(8);
-break;
+      case '7':
+      stack.push(7);
+      break;
 
-case '9':
-stack.push(9);
-break;
+      case '8':
+      stack.push(8);
+      break;
 
-case '+': // add
-a = stack.pop();
-b = stack.pop();
-stack.push(a + b);
-break;
+      case '9':
+      stack.push(9);
+      break;
 
-case '-': // sub
-a = stack.pop();
-b = stack.pop();
-stack.push(b - a);
-break;
+      case '+': // add
+      a = stack.pop();
+      b = stack.pop();
+      stack.push(a + b);
+      break;
 
-case '*': // mult
-a = stack.pop();
-b = stack.pop();
-stack.push(a * b);
-break;
+      case '-': // sub
+      a = stack.pop();
+      b = stack.pop();
+      stack.push(b - a);
+      break;
 
-case '/': // integer division
-a = stack.pop();
-b = stack.pop();
-if (a == 0) {
-if (inputCounter >= input.length)
-return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
-if (int.tryParse(input[inputCounter]) == null)
-return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT);
-a = int.parse(input[inputCounter]);
-}
-inputCounter++;
-stack.push(b ~/ a);
-break;
+      case '*': // mult
+      a = stack.pop();
+      b = stack.pop();
+      stack.push(a * b);
+      break;
 
-case '%': // modulo
-a = stack.pop();
-b = stack.pop();
-stack.push(a % b);
-break;
+      case '/': // integer division
+      a = stack.pop();
+      b = stack.pop();
+      if (a == 0) {
+      if (inputCounter >= input.length)
+      return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
+      if (int.tryParse(input[inputCounter]) == null)
+      return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT);
+      a = int.parse(input[inputCounter]);
+      }
+      inputCounter++;
+      stack.push(b ~/ a);
+      break;
 
-case '! ': //logical not
-if (stack.pop() == 0)
-stack.push(1);
-else
-stack.push(0);
-break;
+      case '%': // modulo
+      a = stack.pop();
+      b = stack.pop();
+      stack.push(a % b);
+      break;
 
-case '\'': // greater than
-a = stack.pop();
-b = stack.pop();
-if (b > a)
-stack.push(1);
-else
-stack.push(0);
-break;
+      case '! ': //logical not
+      if (stack.pop() == 0)
+      stack.push(1);
+      else
+      stack.push(0);
+      break;
 
-case '>': // move left
-direction = DIRECTIONS.LEFT;
-break;
+      case '\'': // greater than
+      a = stack.pop();
+      b = stack.pop();
+      if (b > a)
+      stack.push(1);
+      else
+      stack.push(0);
+      break;
 
-case '<': // move right
-direction = DIRECTIONS.RIGHT;
-break;
+      case '>': // move left
+      direction = DIRECTIONS.RIGHT;
+      break;
 
-case '^': // move up
-direction = DIRECTIONS.UP;
-break;
+      case '<': // move right
+      direction = DIRECTIONS.LEFT;
+      break;
 
-case 'v': // move down
-direction = DIRECTIONS.DOWN;
-break;
+      case '^': // move up
+      direction = DIRECTIONS.UP;
+      break;
 
-case '?': // move random
-direction = DIRECTIONS.RANDOM;
-break;
+      case 'v': // move down
+      direction = DIRECTIONS.DOWN;
+      break;
 
-case '_': // branch horizontal
-if (stack.pop() == 0) {
-pcX--;
-if (pcX == 0) pcX = MAX_LENGTH_LINE;
-} else {
-pcX++;
-if (pcX == MAX_LENGTH_LINE) pcX = 0;
-}
-break;
+      case '?': // move random
+      direction = DIRECTIONS.RANDOM;
+      break;
 
-case '|': // branch vertical
-if (stack.pop() == 0) {
-pcY--;
-if (pcY == 0) pcY = MAX_LINES;
-} else {
-pcY++;
-if (pcY == MAX_LINES) pcY = 0;
-}
-break;
+      case '_': // branch horizontal
+      if (stack.pop() == 0) {
+      pcX--;
+      if (pcX == 0) pcX = MAX_LENGTH_LINE;
+      } else {
+      pcX++;
+      if (pcX == MAX_LENGTH_LINE) pcX = 0;
+      }
+      break;
 
-case '”': // string mode on/off
-stringMode = !stringMode;
-break;
+      case '|': // branch vertical
+      if (stack.pop() == 0) {
+      pcY--;
+      if (pcY == 0) pcY = MAX_LINES;
+      } else {
+      pcY++;
+      if (pcY == MAX_LINES) pcY = 0;
+      }
+      break;
 
-case ':': // dublication
-a = stack.pop();
-stack.push(a);
-stack.push(a);
-break;
+      case '”': // string mode on/off
+      stringMode = !stringMode;
+      break;
 
-case '\\': // swap
-a = stack.pop();
-b = stack.pop();
-stack.push(a);
-stack.push(b);
-break;
+      case ':': // dublication
+      a = stack.pop();
+      stack.push(a);
+      stack.push(a);
+      break;
 
-case '\$': // pop
-a = stack.pop();
-break;
+      case '\\': // swap
+      a = stack.pop();
+      b = stack.pop();
+      stack.push(a);
+      stack.push(b);
+      break;
 
-case '.': // output decimal
-a = stack.pop();
-STDOUT.add(a.toString());
-STDOUT.add(' ');
-break;
+      case '\$': // pop
+      a = stack.pop();
+      break;
 
-case ',': // output char
-a = stack.pop();
-STDOUT.add(String.fromCharCode(a));
-break;
+      case '.': // output decimal
+      a = stack.pop();
+      STDOUT.add(a.toString());
+      STDOUT.add(' ');
+      break;
 
-case '#': // skip - do nothing
-break;
+      case ',': // output char
+      a = stack.pop();
+      STDOUT.add(String.fromCharCode(a));
+      break;
 
-case 'g': // self modify - push
-a = stack.pop(); // pcY
-b = stack.pop(); // pcX
-if (commandSet.contains(torus[b][a]))
-stack.push(torus[b][a].codeUnitAt(0));
-else
-if (int.tryParse(torus[b][a]) == null)
-stack.push(torus[b][a].codeUnitAt(0));
-else
-stack.push(int.parse(torus[b][a]));
-break;
+      case '#': // skip - do nothing
+      break;
 
-case 'p': // self modify - pop
-a = stack.pop(); // pcY
-b = stack.pop(); // pcX
-v = stack.pop();
-if (commandSet.contains(String.fromCharCode(v)))
-torus[b][a] = String.fromCharCode(v);
-else
-torus[b][a] = stack.pop().toString();
-break;
+      case 'g': // self modify - push
+      a = stack.pop(); // pcY
+      b = stack.pop(); // pcX
+      if (commandSet.contains(torus[b][a]))
+      stack.push(torus[b][a].codeUnitAt(0));
+      else
+      if (int.tryParse(torus[b][a]) == null)
+      stack.push(torus[b][a].codeUnitAt(0));
+      else
+      stack.push(int.parse(torus[b][a]));
+      break;
 
-case '&': // input decimal
-if (inputCounter >= input.length)
-return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
-if (int.tryParse(input[inputCounter]) == null)
-return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT);
-stack.push(int.parse(input[inputCounter]));
-inputCounter++;
-break;
+      case 'p': // self modify - pop
+      a = stack.pop(); // pcY
+      b = stack.pop(); // pcX
+      v = stack.pop();
+      if (commandSet.contains(String.fromCharCode(v)))
+      torus[b][a] = String.fromCharCode(v);
+      else
+      torus[b][a] = stack.pop().toString();
+      break;
 
-case '~': // input char
-if (inputCounter >= input.length)
-return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
-stack.push(int.parse(input[inputCounter][0]));
-inputCounter++;
-break;
+      case '&': // input decimal
+      if (inputCounter >= input.length)
+      return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
+      if (int.tryParse(input[inputCounter]) == null)
+      return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT);
+      stack.push(int.parse(input[inputCounter]));
+      inputCounter++;
+      break;
 
-case '@':
-notEnd = false;
-break;
+      case '~': // input char
+      if (inputCounter >= input.length)
+      return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
+      stack.push(int.parse(input[inputCounter][0]));
+      inputCounter++;
+      break;
 
-default:
-if (stringMode)
-stack.push(command.codeUnitAt(0));
-} // switch command
+      case '@':
+      notEnd = false;
+      break;
 
-switch (direction) {
-case DIRECTIONS.LEFT: // move left
-pcX++;
-if (pcX == MAX_LENGTH_LINE) pcX = 0;
-break;
+      default:
+      if (stringMode)
+      stack.push(command.codeUnitAt(0));
+      } // switch command
 
-case DIRECTIONS.RIGHT: // move right
-pcX--;
-if (pcX == 0) pcX = MAX_LENGTH_LINE;
-break;
+      switch (direction) {
+      case DIRECTIONS.RIGHT:
+      pcX++;
+      if (pcX == MAX_LENGTH_LINE) pcX = 0;
+      break;
 
-case DIRECTIONS.UP: // move up
-pcY++;
-if (pcY == MAX_LINES) pcY = 0;
-break;
+      case DIRECTIONS.LEFT:
+      pcX--;
+      if (pcX == 0) pcX = MAX_LENGTH_LINE;
+      break;
 
-case DIRECTIONS.DOWN: // move down
-pcY--;
-if (pcY== 0) pcY = MAX_LINES;
-break;
+      case DIRECTIONS.UP: // move up
+      pcY++;
+      if (pcY == MAX_LINES) pcY = 0;
+      break;
 
-case DIRECTIONS.RANDOM: // move random
-if (random.nextInt(100) > 50)
-if (random.nextInt(100) > 50) {
-pcX++;
-if (pcX == MAX_LENGTH_LINE) pcX = 0;
-} else {
-pcX--;
-if (pcX == 0) pcX = MAX_LENGTH_LINE;
-}
-else
-if (random.nextInt(100) > 50) {
-pcY++;
-if (pcY == MAX_LINES) pcY = 0;
-} else {
-pcY--;
-if (pcY== 0) pcY = MAX_LINES;
-}
-break;
-} // switch direction
-iterations++;
-} // while
-return BefungeOutput(STDOUT.join(''), '');
-} else {
-return BefungeOutput('', BEFUNGE_ERROR_INVALID_PROGRAM);
-}
+      case DIRECTIONS.DOWN: // move down
+      pcY--;
+      if (pcY== 0) pcY = MAX_LINES;
+      break;
+
+      case DIRECTIONS.RANDOM: // move random
+      if (random.nextInt(100) > 50)
+      if (random.nextInt(100) > 50) {
+      pcX++;
+      if (pcX == MAX_LENGTH_LINE) pcX = 0;
+      } else {
+      pcX--;
+      if (pcX == 0) pcX = MAX_LENGTH_LINE;
+      }
+      else
+      if (random.nextInt(100) > 50) {
+      pcY++;
+      if (pcY == MAX_LINES) pcY = 0;
+      } else {
+      pcY--;
+      if (pcY== 0) pcY = MAX_LINES;
+      }
+      break;
+      } // switch direction
+
+    iterations++;
+
+    } // while
+
+    return BefungeOutput(STDOUT.join(''), '');
+  } else {
+    return BefungeOutput('', BEFUNGE_ERROR_INVALID_PROGRAM);
+  }
 
 }
 
 Map<int, List<String>> _fillTorus(String program){
-  Map<int, List<String>> torus;
+  Map<int, List<String>> torus = new Map<int, List<String>>();
   List<String> torusLine = [];
   int index = 0;
 
   program.split('\n').forEach((line) {
     line.split('').forEach((cell) {
-    torusLine.add(cell);
+      torusLine.add(cell);
     });
+    torus[index] = torusLine;
+    index++;
     while(torusLine.length < MAX_LENGTH_LINE)
       torusLine.add(' ');
+    torus[index] = torusLine;
+    index++;
   });
-  torus[index] = torusLine;
-  index++;
+
+
   while(torus.length < MAX_LINES) {
     torus[index] = BEFUNGE_EMPTY_LINE.split('');
     index++;
