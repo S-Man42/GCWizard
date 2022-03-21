@@ -42,6 +42,9 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
+import 'package:code_text_field/code_text_field.dart';
+import 'package:highlight/languages/lua.dart';
+import 'package:flutter_highlight/themes/atom-one-dark.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -94,6 +97,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _nohttpError = true;
 
   var _currentByteCodeMode = GCWSwitchPosition.left;
+  var _codeController;
+  var _source = '';
 
   int _mediaFileIndex = 1;
   int _zoneIndex = 1;
@@ -112,6 +117,18 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
+    _codeController = CodeController(
+      text: _source,
+      language: lua,
+      theme: atomOneDarkTheme,
+      stringMap: {
+    "Wherigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+    "Urwigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+    "Dialog": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
+    "Messagebox": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
+    // Name Text Description Media, Button, ID, ZTimer, ZTask, ZMedia, ZCharacter, Zone, ...
+    },
+    );
   }
 
   _askForOnlineDecompiling() {
@@ -158,6 +175,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   void dispose() {
+    _codeController.dispose();
     super.dispose();
   }
 
@@ -631,6 +649,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.LUAFILE:
+        _codeController.text = _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate);
         return Column(
           children: <Widget>[
             GCWOnOffSwitch(
@@ -642,6 +661,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 });
               },
             ),
+            CodeField(
+              controller: _codeController,
+              textStyle: TextStyle(fontFamily: 'SourceCode'),
+            ),
+
             GCWDefaultOutput(
                 child: GCWText(
                   text: _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate),
