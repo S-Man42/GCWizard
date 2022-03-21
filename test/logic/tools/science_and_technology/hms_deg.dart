@@ -27,11 +27,11 @@ void main() {
       {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '66.918275'},
       {'input' : '-4:27:40.386', 'expectedOutput' : '-66.918275'},
-      {'input' : '0:38:28.39', 'expectedOutput' : "9.6182916667"},
+      {'input' : '0:38:28.39', 'expectedOutput' : '9.6182916667'},
 
       {'input' : '-44:27:40.386', 'expectedOutput' : '-666.918275'},
       {'input' : '50:38:28.39', 'expectedOutput' : '759.6182916667'},
-
+      {'input' : '-3:8:0', 'expectedOutput' : '759.6182916667'},
     ];
 
     _inputsToExpected.forEach((elem) {

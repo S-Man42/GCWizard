@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart' as coord;
 import 'package:gc_wizard/logic/tools/science_and_technology/hms_deg.dart';
@@ -28,8 +29,6 @@ class HmsDegState extends State<HmsDeg> {
   FocusNode _secondsFocusNode;
   FocusNode _mSecondsFocusNode;
 
-  FocusNode _dmmMinutesFocusNode;
-  FocusNode _dmmSecondsFocusNode;
   FocusNode _decMilliDegreesFocusNode;
 
   TextEditingController _hoursController;
@@ -38,7 +37,6 @@ class HmsDegState extends State<HmsDeg> {
   TextEditingController _mSecondsController;
 
   TextEditingController _decDegreesController;
-  TextEditingController _dmmMinutesController;
   TextEditingController _decMilliDegreesController;
 
   var _currentSign = 1;
@@ -73,7 +71,6 @@ class HmsDegState extends State<HmsDeg> {
     _mSecondsController.dispose();
 
     _decDegreesController.dispose();
-    _dmmMinutesController.dispose();
     _decMilliDegreesController.dispose();
 
     _hoursFocusNode.dispose();
@@ -81,8 +78,6 @@ class HmsDegState extends State<HmsDeg> {
     _secondsFocusNode.dispose();
     _mSecondsFocusNode.dispose();
 
-    _dmmMinutesFocusNode.dispose();
-    _dmmSecondsFocusNode.dispose();
     _decMilliDegreesFocusNode.dispose();
     super.dispose();
   }
@@ -272,35 +267,38 @@ class HmsDegState extends State<HmsDeg> {
       var _equatorial =Equatorial(_currentSign, _hours, _minutes, _secondsD);
 
       var deg = raHms2Deg(_equatorial);
-      //var dmm = DMMPart.fromDeg(deg);
       var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), deg.toString()];
       output.add(entry);
-      // entry = <String>[coord.getCoordinateFormatByKey(coord.keyCoordsDMM).name, dmm.toString()];
-      // output.add(entry);
     }
     return columnedMultiLineOutput(context, output, flexValues: [1, 1]);
   }
 
   _parse(String input) {
     if(_currentMode == GCWSwitchPosition.left) {
-      // var dmmPart = DMMPart.parse(input);
-      // if (dmmPart == null) return;
-      //
-      // _currentDecSign = dmmPart.sign;
-      // _decDegreesController.text = dmmPart.degrees.toString();
-      // _dmmMinutesController.text = dmmPart.minutes.truncate().toString();
-      // var minutes =  dmmPart.minutes.toString().split('.');
-      // _decMilliDegreesController.text = minutes.length < 2 ? 0 : minutes[1];
+      var deg = DEG.parse(input);
+      if (deg == null) return;
+
+      _currentDecDegrees = deg.degress.abs().floor().toString();
+      _currentDecMilliDegrees = deg.degress.toString().split('.')[1];
+
+      _currentDecSign = coordinateSign(deg.degress);
+      _decDegreesController.text = _currentDecDegrees.toString();
+      _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
     } else {
       var equatorial = Equatorial.parse(input);
       if (equatorial == null) return;
 
       _currentSign = equatorial.sign;
-      _hoursController.text = equatorial.hours.toString();
-      _minutesController.text = equatorial.minutes.toString();
-      _secondsController.text = equatorial.seconds.truncate().toString();
-      var seconds =  equatorial.seconds.toString().split('.');
-      _mSecondsController.text = seconds.length < 2 ? 0 : seconds[1];
+      _currentHours = equatorial.hours.toString();
+      _currentMinutes = equatorial.minutes.toString();
+      _currentSeconds = equatorial.seconds.truncate().toString();
+      var seconds =  _currentSeconds.split('.');
+      _currentMilliSeconds = seconds.length < 2 ? '0' : seconds[1];
+
+      _hoursController.text = _currentHours;
+      _minutesController.text = _currentMinutes;
+      _secondsController.text = _currentSeconds;
+      _mSecondsController.text = _currentMilliSeconds;
     }
   }
 }

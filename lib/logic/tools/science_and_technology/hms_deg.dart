@@ -1,19 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
-import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart' as coord;
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-
-
-
-// Equatorial dmmPart2Hms(DMMPart dmmPart) {
-//   var dmm = coord.DMM(coord.DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes),
-//       coord.DMMLongitude(1, 0, 0.0) );//
-//   return raDeg2Hms(dmm.toLatLng().latitude);
-// }
 
 
 /// Right ascension to equatorial coordinate system
@@ -28,7 +17,7 @@ Equatorial raDeg2Hms(DEG ra) {
   return Equatorial(_sign(ra.degress), hour, min, sec);
 }
 
-/// right ascension hms to degrees
+/// Right ascension hms to degrees
 DEG raHms2Deg(Equatorial equatorial) {
   if (equatorial == null) return null;
 
@@ -71,8 +60,8 @@ class Equatorial {
           (matches.first.group(1) == "-") ? -1 : 1,
           int.parse(matches.first.group(2)),
           int.parse(matches.first.group(3)),
-          matches.first.group(5).isEmpty
-              ? matches.first.group(4)
+          ((matches.first.group(5) == null) || matches.first.group(5).isEmpty)
+              ? double.parse(matches.first.group(4))
               : double.parse(matches.first.group(4) + matches.first.group(5))
       );
     }
@@ -82,19 +71,31 @@ class Equatorial {
 
   @override
   String toString() {
-    var _seconds = '';
-      var __seconds =  seconds.round().toString().split('.');
-      if ((__seconds.length < 2) || (__seconds[1].length <= 10))
-        _seconds = seconds.toString();
-      else {
-        _seconds = NumberFormat('0.0' + '#' * 9).format(seconds);
-      }
+    var _hours = hours;
+    var _minutes = minutes;
+    var _secondsStr = '';
+    var _secondsSplitted =  seconds.toString().split('.');
 
+    if ((_secondsSplitted.length < 2) || (_secondsSplitted[1].length <= 10))
+      _secondsStr = seconds.toString();
+    else
+      _secondsStr = NumberFormat('0.0' + '#' * 9).format(seconds);
+
+    //Values like 59.999999999' may be rounded to 60.0. So in that case,
+    //the degree has to be increased while minutes should be set to 0.0
+    if (_secondsStr.startsWith('60')) {
+      _secondsStr = '0';
+      _minutes += 1;
+    }
+    if (_minutes == 60) {
+      _minutes = 0;
+      _hours += 1;
+    }
 
     return (sign < 0 ? '-' : '') +
-        hours.toString() + ":" +
-        minutes.toString() + ":" +
-        _seconds;
+        _hours.toString() + ":" +
+        _minutes.toString() + ":" +
+        _secondsStr;
   }
 }
 
@@ -109,22 +110,20 @@ class DEG {
     input = dec.prepareInput(input, wholeString: wholeString);
     if (input == null) return null;
 
-    RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
+    RegExp regex = RegExp(_PATTERN_DEG + regexEnd, caseSensitive: false);
 
     if (regex.hasMatch(input)) {
       var matches = regex.firstMatch(input);
 
       var latSign = dec.sign(matches.group(1));
       var latDegrees = 0.0;
-      if (matches.group(3) != null) {
+      if (matches.group(3) != null)
         latDegrees = latSign * double.parse('${matches.group(2)}.${matches.group(3)}');
-      } else {
+      else
         latDegrees = latSign * double.parse('${matches.group(2)}.0');
-      }
 
       return DEG(latDegrees);
     }
-
     return null;
   }
 
@@ -139,7 +138,7 @@ class DEG {
     return '${NumberFormat('0.' + fixedDigits + variableDigits).format(degress)}';
   }
 
-  static final PATTERN_DEC = '^\\s*?'
+  static final _PATTERN_DEG = '^\\s*?'
       '([\\+\\-])?\\s*?' //sign
       '(\\d{1,3})\\s*?' //degrees
       '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //millidegrees
