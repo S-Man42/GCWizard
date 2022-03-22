@@ -45,6 +45,7 @@ import 'package:prefs/prefs.dart';
 import 'package:code_text_field/code_text_field.dart';
 import 'package:highlight/languages/lua.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
+import 'package:flutter_highlight/themes/atom-one-light.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -116,18 +117,20 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   void initState() {
-    super.initState();
+     super.initState();
     _codeController = CodeController(
       text: _source,
       language: lua,
-      theme: atomOneDarkTheme,
+      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
+              ? atomOneDarkTheme
+              : atomOneLightTheme,
       stringMap: {
-    "Wherigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-    "Urwigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-    "Dialog": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
-    "Messagebox": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
-    // Name Text Description Media, Button, ID, ZTimer, ZTask, ZMedia, ZCharacter, Zone, ...
-    },
+          "Wherigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+          "Urwigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+          "Dialog": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
+          "Messagebox": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
+          // Name Text Description Media, Button, ID, ZTimer, ZTask, ZMedia, ZCharacter, Zone, ...
+          },
     );
   }
 
