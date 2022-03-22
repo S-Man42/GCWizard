@@ -49,6 +49,7 @@ dependencies:
   uuid: ^3.0.6
   url_launcher: ^6.0.20
   utility: ^1.0.1
+  code_text_field: ^1.0.2
   #xmp: ^1.0.2 # xml:4  :(
 
 dependency_overrides:
