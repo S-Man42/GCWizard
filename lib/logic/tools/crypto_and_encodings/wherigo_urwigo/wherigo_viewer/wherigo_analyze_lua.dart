@@ -1598,6 +1598,7 @@ List<String> _getAnswers(
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .split('or');
+
   } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
@@ -1629,6 +1630,7 @@ List<String> _getAnswers(
       results.add(breakUrwigoHash(hashvalue).toString() + '\x01' + hashvalue.toString());
     });
     return results;
+
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
@@ -1656,7 +1658,7 @@ List<String> _getAnswers(
     // check if variable then provide information
     for (int i = 0; i < variables.length; i++) {
       if (line == variables[i].VariableLUAName) {
-        line = '« ' + line + ' » → ' + variables[i].VariableName;
+        line = variables[i].VariableName + '\x01' + line;
         i = variables.length;
       }
     }

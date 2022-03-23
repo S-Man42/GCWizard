@@ -208,13 +208,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 contentTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
                 backgroundColor: themeColors().dialog(),
                 actions: [
-                  ElevatedButton(
+                  TextButton(
                       onPressed: () {
                         willLeave = true;
                         Navigator.of(context).pop();
                       },
                       child: Text(i18n(context, 'common_yes'))),
-                  TextButton(
+                  ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: Text(i18n(context, 'common_no')))
                 ],
@@ -1334,7 +1334,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_id'), data.ZoneID],
       [i18n(context, 'wherigo_output_name'), data.ZoneName],
       [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
-      [i18n(context, 'wherigo_output_visible'), data.ZoneVisible],
+      [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.ZoneVisible)],
       [
         i18n(context, 'wherigo_output_medianame'),
         data.ZoneMediaName +
@@ -1349,7 +1349,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ? (NameToObject[data.ZoneIconName] != null ? ' ⬌ ' + NameToObject[data.ZoneIconName].ObjectName : '')
                 : '')
       ],
-      [i18n(context, 'wherigo_output_active'), data.ZoneActive],
+      [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.ZoneActive)],
       [i18n(context, 'wherigo_output_showobjects'), data.ZoneShowObjects],
       [i18n(context, 'wherigo_output_distancerange'), data.ZoneDistanceRange],
       [i18n(context, 'wherigo_output_distancerangeuom'), data.ZoneDistanceRangeUOM],
@@ -1426,7 +1426,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_id'), data.TaskID],
       [i18n(context, 'wherigo_output_name'), data.TaskName],
       [i18n(context, 'wherigo_output_description'), data.TaskDescription],
-      [i18n(context, 'wherigo_output_visible'), data.TaskVisible],
+      [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.TaskVisible)],
       [
         i18n(context, 'wherigo_output_medianame'),
         data.TaskMedia +
@@ -1441,8 +1441,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 ? (NameToObject[data.TaskIcon] != null ? ' ⬌ ' + NameToObject[data.TaskIcon].ObjectName : '')
                 : '')
       ],
-      [i18n(context, 'wherigo_output_active'), data.TaskActive],
-      [i18n(context, 'wherigo_output_complete'), data.TaskComplete],
+      [i18n(context, 'wherigo_output_active'), i18n(context, 'common_' + data.TaskActive)],
+      [i18n(context, 'wherigo_output_complete'), i18n(context, 'common_' + data.TaskComplete)],
       [i18n(context, 'wherigo_output_correctstate'), data.TaskCorrectstate]
     ];
   }
