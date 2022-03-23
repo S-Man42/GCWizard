@@ -53,7 +53,6 @@ String luaStringToString(String pString) {
 
     tOffset += 1;
   }
-  print('luaStringToString '+pString+' => '+tNewString);
   return tNewString;
 }
 
