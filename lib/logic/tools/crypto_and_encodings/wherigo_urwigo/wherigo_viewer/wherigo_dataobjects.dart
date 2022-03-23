@@ -1,5 +1,7 @@
 import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 enum WHERIGO {
@@ -513,4 +515,29 @@ final Map<String, String> HTTP_STATUS = {
   '413': 'wherigo_http_code_413',
   '500': 'wherigo_http_code_500',
   '503': 'wherigo_http_code_503',
+};
+
+final Map<String, TextStyle> WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP = {
+  // fontWeight: FontWeight.bold
+  // fontStyle: FontStyle.italic
+  "Wherigo": TextStyle(color: Colors.red),
+  "Urwigo": TextStyle(color: Colors.red),
+  "Dialog": TextStyle(color: Colors.red),
+  "Messagebox": TextStyle(color: Colors.red),
+  ".ZMedia": TextStyle(color: Colors.red),
+  ".ZCharacter": TextStyle(color: Colors.red),
+  ".Zone": TextStyle(color: Colors.red),
+  ".ZItem": TextStyle(color: Colors.red),
+  ".ZTask": TextStyle(color: Colors.red),
+  ".ZTimer": TextStyle(color: Colors.red),
+  ".ZVariable": TextStyle(color: Colors.red),
+  ".ZCartridge": TextStyle(color: Colors.red),
+  "OnEnter": TextStyle(color: Colors.blue),
+  "OnExit": TextStyle(color: Colors.blue),
+  "OnGetInput": TextStyle(color: Colors.blue),
+  "Text": TextStyle(color: Colors.orange),
+  "Media": TextStyle(color: Colors.orange),
+  "Name": TextStyle(color: Colors.orange),
+  "Description": TextStyle(color: Colors.orange),
+  "Choices": TextStyle(color: Colors.orange),
 };

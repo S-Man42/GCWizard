@@ -124,13 +124,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
               ? atomOneDarkTheme
               : atomOneLightTheme,
-      stringMap: {
-          "Wherigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-          "Urwigo": TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-          "Dialog": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
-          "Messagebox": TextStyle(fontStyle: FontStyle.italic, color: Colors.green),
-          // Name Text Description Media, Button, ID, ZTimer, ZTask, ZMedia, ZCharacter, Zone, ...
-          },
+      stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
     );
   }
 
@@ -664,15 +658,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 });
               },
             ),
-            CodeField(
-              controller: _codeController,
-              textStyle: TextStyle(fontFamily: 'SourceCode'),
-            ),
-
-            GCWDefaultOutput(
-                child: GCWText(
-                  text: _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate),
-                  style: gcwMonotypeTextStyle(),
+             GCWDefaultOutput(
+                child: CodeField(
+                  controller: _codeController,
+                  textStyle: TextStyle(fontFamily: 'SourceCode'),
+                  lineNumberStyle: LineNumberStyle(width: 80.0),
                 ),
                 trailing: Row(
                   children: <Widget>[
@@ -682,7 +672,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       icon: Icons.content_copy,
                       onPressed: () {
                         var copyText = _WherigoCartridgeLUA.LUAFile != null
-                            ? _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate)
+                            //? _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate)
+                            ? _codeController.text
                             : '';
                         insertIntoGCWClipboard(context, copyText);
                       },
@@ -696,9 +687,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                             ? null
                             : _exportFile(
                                 context,
-                                //Uint8List.fromList(_WherigoCartridgeLUA.LUAFile.codeUnits), 'LUAsourceCode', FileType.LUA);
-                                Uint8List.fromList(
-                                    _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits),
+                                Uint8List.fromList(_codeController.text.codeUnits),
+                                    //_normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits),
                                 'LUAsourceCode',
                                 FileType.LUA);
                       },
