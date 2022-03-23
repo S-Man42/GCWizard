@@ -202,8 +202,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           await showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                title: Text(i18n(context, 'wherigo_exit_message')),
-                titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+                title: Text(i18n(context, 'wherigo_exit_title')),
+                titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+                content: Text(i18n(context, 'wherigo_exit_message')),
+                contentTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
                 backgroundColor: themeColors().dialog(),
                 actions: [
                   ElevatedButton(
@@ -1504,7 +1506,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     result
         .add([i18n(context, 'wherigo_output_gender'), i18n(context, 'wherigo_output_gender_' + data.CharacterGender)]);
     result.add([i18n(context, 'wherigo_output_type'), data.CharacterType]);
-    result.add([i18n(context, 'wherigo_output_visible'), data.CharacterVisible]);
+    result.add([i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.CharacterVisible)]);
     return result;
   }
 
@@ -1525,7 +1527,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_output_type'), data.InputType],
       [i18n(context, 'wherigo_output_variableid'), data.InputVariableID],
       [i18n(context, 'wherigo_output_choices'), data.InputChoices.join('\n')],
-      [i18n(context, 'wherigo_output_visible'), data.InputVisible],
+      [i18n(context, 'wherigo_output_visible'), i18n(context, 'common_' + data.InputVisible)],
     ];
   }
 
