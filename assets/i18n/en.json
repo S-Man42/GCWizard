@@ -5266,6 +5266,8 @@
   "wherigo_error_lua_media": "raised while reading Media Objects from LUA Sourcecode",
   "wherigo_error_lua_messages": "raised while reading Message Object from LUA Sourcecode",
   "wherigo_error_lua_identifiers": "raised while reading Identifier Object from LUA Sourcecode",
+  "wherigo_exit_title": "Leaving the Wherigo Analyzer",
+  "wherigo_exit_message": "Do you really want to leave the Wherigo Analyzer?",
   "wherigo_http_code": "HTTP Status code",
   "wherigo_http_code_200": "OK",
   "wherigo_http_code_400": "CLIENT ERROR - BAD REQUEST",

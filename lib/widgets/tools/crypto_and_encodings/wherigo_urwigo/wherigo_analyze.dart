@@ -97,7 +97,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _getLUAOnline = true;
   bool _nohttpError = true;
 
-  var _currentByteCodeMode = GCWSwitchPosition.left;
   var _codeController;
   var _source = '';
 
@@ -170,6 +169,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
+
   @override
   void dispose() {
     _codeController.dispose();
@@ -194,132 +194,158 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        GCWOpenFile(
-          title: i18n(context, 'wherigo_open_gwc'),
-          onLoaded: (_GWCfile) {
-            if (_GWCfile == null) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-              return;
-            }
+    // https://www.kindacode.com/article/flutter-ask-for-confirmation-when-back-button-pressed/
+    return WillPopScope(
+        onWillPop: () async {
+          bool willLeave = false;
+          // show the confirm dialog
+          await showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: Text(i18n(context, 'wherigo_exit_message')),
+                titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+                backgroundColor: themeColors().dialog(),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        willLeave = true;
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(i18n(context, 'common_yes'))),
+                  TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(i18n(context, 'common_no')))
+                ],
+              ));
+          return willLeave;
+        },
+        child: Column(
+          children: <Widget>[
+            GCWOpenFile(
+              title: i18n(context, 'wherigo_open_gwc'),
+              onLoaded: (_GWCfile) {
+                if (_GWCfile == null) {
+                  showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                  return;
+                }
 
-            if (isInvalidCartridge(_GWCfile.bytes)) {
-              showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
-              return;
-            }
+                if (isInvalidCartridge(_GWCfile.bytes)) {
+                  showToast(i18n(context, 'common_loadfile_exception_wrongtype_gwc'));
+                  return;
+                }
 
-            if (_GWCfile != null) {
-              _setGWCData(_GWCfile.bytes);
+                if (_GWCfile != null) {
+                  _setGWCData(_GWCfile.bytes);
 
-              _mediaFileIndex = 1;
-              _zoneIndex = 1;
-              _inputIndex = 1;
-              _characterIndex = 1;
-              _timerIndex = 1;
-              _taskIndex = 1;
-              _itemIndex = 1;
-              _mediaIndex = 1;
-              _messageIndex = 1;
-              _answerIndex = 1;
-              _identifierIndex = 1;
+                  _mediaFileIndex = 1;
+                  _zoneIndex = 1;
+                  _inputIndex = 1;
+                  _characterIndex = 1;
+                  _timerIndex = 1;
+                  _taskIndex = 1;
+                  _itemIndex = 1;
+                  _mediaIndex = 1;
+                  _messageIndex = 1;
+                  _answerIndex = 1;
+                  _identifierIndex = 1;
 
-              _getLUAOnline = true;
-              _nohttpError = true;
-              _WherigoShowLUASourcecodeDialog = true;
+                  _getLUAOnline = true;
+                  _nohttpError = true;
+                  _WherigoShowLUASourcecodeDialog = true;
 
-              _analyseCartridgeFileAsync(DATA_TYPE_GWC);
+                  _analyseCartridgeFileAsync(DATA_TYPE_GWC);
 
-              setState(() {
-                _displayedCartridgeData = WHERIGO.HEADER;
-              });
-            }
-          },
-        ),
+                  setState(() {
+                    _displayedCartridgeData = WHERIGO.HEADER;
+                  });
+                }
+              },
+            ),
 
-        // Show Button if GWC File loaded and not httpError
-        if (_fileLoadedState == FILE_LOAD_STATE.GWC && _nohttpError)
-          Row(
-            children: [
-              Expanded(
-                  child: GCWButton(
-                text: i18n(context, 'wherigo_decompile_button'),
-                onPressed: () {
-                  _askForOnlineDecompiling();
+            // Show Button if GWC File loaded and not httpError
+            if (_fileLoadedState == FILE_LOAD_STATE.GWC && _nohttpError)
+              Row(
+                children: [
+                  Expanded(
+                      child: GCWButton(
+                        text: i18n(context, 'wherigo_decompile_button'),
+                        onPressed: () {
+                          _askForOnlineDecompiling();
+                        },
+                      ))
+                ],
+              ),
+
+            // Show OpenFileDialog if GWC File loaded an get LUA offline
+            if (_fileLoadedState != FILE_LOAD_STATE.NULL && !_getLUAOnline)
+              GCWOpenFile(
+                title: i18n(context, 'wherigo_open_lua'),
+                onLoaded: (_LUAfile) {
+                  if (_LUAfile == null) {
+                    showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                    return;
+                  }
+
+                  if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
+                    showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
+                    return;
+                  }
+
+                  if (_LUAfile != null) {
+                    _setLUAData(_LUAfile.bytes);
+
+                    _mediaFileIndex = 1;
+                    _zoneIndex = 1;
+                    _inputIndex = 1;
+                    _characterIndex = 1;
+                    _timerIndex = 1;
+                    _taskIndex = 1;
+                    _itemIndex = 1;
+                    _mediaIndex = 1;
+                    _messageIndex = 1;
+                    _answerIndex = 1;
+                    _identifierIndex = 1;
+
+                    _analyseCartridgeFileAsync(DATA_TYPE_LUA);
+
+                    setState(() {
+                      _displayedCartridgeData = WHERIGO.HEADER;
+                    });
+                  }
                 },
-              ))
-            ],
-          ),
+              ),
 
-        // Show OpenFileDialog if GWC File loaded an get LUA offline
-        if (_fileLoadedState != FILE_LOAD_STATE.NULL && !_getLUAOnline)
-          GCWOpenFile(
-            title: i18n(context, 'wherigo_open_lua'),
-            onLoaded: (_LUAfile) {
-              if (_LUAfile == null) {
-                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-                return;
-              }
-
-              if (isInvalidLUASourcecode(String.fromCharCodes(_LUAfile.bytes.sublist(0, 18)))) {
-                showToast(i18n(context, 'common_loadfile_exception_wrongtype_lua'));
-                return;
-              }
-
-              if (_LUAfile != null) {
-                _setLUAData(_LUAfile.bytes);
-
-                _mediaFileIndex = 1;
-                _zoneIndex = 1;
-                _inputIndex = 1;
-                _characterIndex = 1;
-                _timerIndex = 1;
-                _taskIndex = 1;
-                _itemIndex = 1;
-                _mediaIndex = 1;
-                _messageIndex = 1;
-                _answerIndex = 1;
-                _identifierIndex = 1;
-
-                _analyseCartridgeFileAsync(DATA_TYPE_LUA);
-
-                setState(() {
-                  _displayedCartridgeData = WHERIGO.HEADER;
-                });
-              }
-            },
-          ),
-
-        // show dropdown if files are loaded
-        if (_fileLoadedState != FILE_LOAD_STATE.NULL)
-          GCWDropDownButton(
-            value: _displayedCartridgeData,
-            onChanged: (value) {
-              setState(() {
-                _displayedCartridgeData = value;
-                _mediaFileIndex = 1;
-                _zoneIndex = 1;
-                _inputIndex = 1;
-                _characterIndex = 1;
-                _timerIndex = 1;
-                _taskIndex = 1;
-                _itemIndex = 1;
-                _mediaIndex = 1;
-                _messageIndex = 1;
-                _answerIndex = 1;
-                _identifierIndex = 1;
-              });
-            },
-            items: SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA[_fileLoadedState])
-                .map((key, value) => MapEntry(i18n(context, key), value))).entries.map((mode) {
-              return GCWDropDownMenuItem(
-                value: mode.value,
-                child: mode.key,
-              );
-            }).toList(),
-          ),
-        _buildOutput(context)
-      ],
+            // show dropdown if files are loaded
+            if (_fileLoadedState != FILE_LOAD_STATE.NULL)
+              GCWDropDownButton(
+                value: _displayedCartridgeData,
+                onChanged: (value) {
+                  setState(() {
+                    _displayedCartridgeData = value;
+                    _mediaFileIndex = 1;
+                    _zoneIndex = 1;
+                    _inputIndex = 1;
+                    _characterIndex = 1;
+                    _timerIndex = 1;
+                    _taskIndex = 1;
+                    _itemIndex = 1;
+                    _mediaIndex = 1;
+                    _messageIndex = 1;
+                    _answerIndex = 1;
+                    _identifierIndex = 1;
+                  });
+                },
+                items: SplayTreeMap.from(switchMapKeyValue(WHERIGO_DATA[_fileLoadedState])
+                    .map((key, value) => MapEntry(i18n(context, key), value))).entries.map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode.value,
+                    child: mode.key,
+                  );
+                }).toList(),
+              ),
+            _buildOutput(context)
+          ],
+        )
     );
   }
 
