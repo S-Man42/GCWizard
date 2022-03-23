@@ -42,6 +42,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:code_text_field/code_text_field.dart';
 import 'package:highlight/languages/lua.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
@@ -93,12 +94,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   var _outputHeader = [[]];
 
   bool _currentDeObfuscate = false;
+  bool _currentSyntaxHighlighting = false;
   bool _WherigoShowLUASourcecodeDialog = true;
   bool _getLUAOnline = true;
   bool _nohttpError = true;
 
   var _codeController;
-  var _source = '';
+  var _LUA_SourceCode = '';
 
   int _mediaFileIndex = 1;
   int _zoneIndex = 1;
@@ -118,7 +120,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   void initState() {
      super.initState();
     _codeController = CodeController(
-      text: _source,
+      text: _LUA_SourceCode,
       language: lua,
       theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
               ? atomOneDarkTheme
@@ -674,9 +676,19 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         break;
 
       case WHERIGO.LUAFILE:
-        _codeController.text = _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate);
+        _LUA_SourceCode = _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate);
+        _codeController.text = _LUA_SourceCode;
         return Column(
           children: <Widget>[
+            GCWOnOffSwitch(
+              title: i18n(context, 'wherigo_data_lua_syntax_highlighting'),
+              value: _currentSyntaxHighlighting,
+              onChanged: (value) {
+                setState(() {
+                  _currentSyntaxHighlighting = value;
+                });
+              },
+            ),
             GCWOnOffSwitch(
               title: i18n(context, 'wherigo_data_lua_deobfuscate'),
               value: _currentDeObfuscate,
@@ -687,11 +699,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               },
             ),
              GCWDefaultOutput(
-                child: CodeField(
-                  controller: _codeController,
-                  textStyle: TextStyle(fontFamily: 'SourceCode'),
-                  lineNumberStyle: LineNumberStyle(width: 80.0),
-                ),
+                 child: (_currentSyntaxHighlighting == true)
+                  ? CodeField(
+                      controller: _codeController,
+                      textStyle: TextStyle(fontFamily: 'SourceCode'),
+                      lineNumberStyle: LineNumberStyle(width: 80.0),
+                    )
+                  : GCWOutputText(
+                      text: _LUA_SourceCode,
+                    ),
                 trailing: Row(
                   children: <Widget>[
                     GCWIconButton(
@@ -700,8 +716,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       icon: Icons.content_copy,
                       onPressed: () {
                         var copyText = _WherigoCartridgeLUA.LUAFile != null
-                            //? _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate)
-                            ? _codeController.text
+                            ? _LUA_SourceCode
+                            //? _codeController.text
                             : '';
                         insertIntoGCWClipboard(context, copyText);
                       },
@@ -715,7 +731,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                             ? null
                             : _exportFile(
                                 context,
-                                Uint8List.fromList(_codeController.text.codeUnits),
+                                Uint8List.fromList(_LUA_SourceCode.codeUnits),
                                     //_normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits),
                                 'LUAsourceCode',
                                 FileType.LUA);
