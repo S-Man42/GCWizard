@@ -677,7 +677,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO.LUAFILE:
         _LUA_SourceCode = _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate);
-        _codeController.text = _LUA_SourceCode;
+        _codeController = CodeController(
+          text: _LUA_SourceCode,
+          //language: lua,
+          theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
+              ? atomOneDarkTheme
+              : atomOneLightTheme,
+          stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
+          patternMap: WHERIGO_SYNTAX_HIGHLIGHT_PATTERNMAP,
+        );
         return Column(
           children: <Widget>[
             GCWOnOffSwitch(
