@@ -37,8 +37,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PdfSharp">
-      <HintPath>..\..\..\..\..\Downloads\PDFsharp-MigraDocFoundation-1_50-beta5\PDFsharp\src\PdfSharp\bin\Debug\PdfSharp.dll</HintPath>
+    <Reference Include="PdfSharp, Version=1.32.2608.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\PdfSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

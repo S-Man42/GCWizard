@@ -48,4 +48,29 @@ void main() {
     });
   });
 
+  group("Obfuscation.Urwigo:", () {
+    // ytrohs_und_der Folterknecht aus Bayern
+    var dtable = '`:\\024G\\bj\\f\\003IOY\'dAWfC&VbD X\\017eJ\\0159]\\020E}\\nLBil^7TP=\\vw2!Q\\"~1?rs\\025\\r{-(zF\\027kHv\\tR.3)N\\022\\\\a;c\\014u\\002yt>+\\026\\004K\\0304\\018\\028q[6</\\0198_%o\\023*\\000#\\031\\005S\$\\029\\001@m\\016|n\\021x50UhpZ\\a,\\006Mg';
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null,  'dtable' : '', 'expectedOutput' : ''},
+      {'input' : '',    'dtable' : '', 'expectedOutput' : ''},
+      {'input' : null,  'dtable' : dtable, 'expectedOutput' : ''},
+      {'input' : '',    'dtable' : dtable, 'expectedOutput' : ''},
+
+      {'input' : 'Miraculix',
+        'dtable' : dtable,
+        'expectedOutput' : '~\$4IKM%\$t'},
+      {'input' : 'Huette von Papa Schlumpf',
+        'dtable' : dtable,
+        'expectedOutput' : '?M\\025PP\\025\\022@cr\\022)IyI\\022jKx%Moy\\016'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']} dtable: ${elem['dtable']}', () {
+        var _actual = obfuscateUrwigoText(elem['input'], elem['dtable']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
 }

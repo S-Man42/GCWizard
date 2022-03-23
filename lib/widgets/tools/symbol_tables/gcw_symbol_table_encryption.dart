@@ -75,6 +75,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
       case 'color_tokki':
       case 'puzzle':
       case 'stippelcode':
+      case 'tenctonese_cursive':
         return true;
       default:
         return false;

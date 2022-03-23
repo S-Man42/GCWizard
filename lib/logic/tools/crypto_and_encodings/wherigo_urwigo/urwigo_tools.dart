@@ -39,7 +39,7 @@ String obfuscateUrwigoText(String text, String dtable) {
     10: "\\n", // \n    line feed
     12: "\\f", // \f    form feed
     92: "\\\\", // \\    backslash
-//    "\"" : "\\\"",  // \
+    34: '\\"', // \"    Guillemets
   };
 
   String result = '';
@@ -53,7 +53,7 @@ String obfuscateUrwigoText(String text, String dtable) {
     } else {
       codeUnit = 1 + char.codeUnitAt(0);
     }
-    if (searchReplace[codeUnit] == null) if (32 <= codeUnit && codeUnit <= 127)
+    if (searchReplace[codeUnit] == null) if (32 <= codeUnit && codeUnit < 127)
       result = result + String.fromCharCode(codeUnit);
     else
       result = result + '\\' + codeUnit.toString().padLeft(3, '0');

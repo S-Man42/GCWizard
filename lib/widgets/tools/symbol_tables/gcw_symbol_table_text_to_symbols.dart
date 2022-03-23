@@ -16,6 +16,7 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_stipplecode.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_tenctonese.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
@@ -176,6 +177,8 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
         return PuzzleSymbolTableEncryption();
       case 'stippelcode':
         return StippleSymbolTableEncryption();
+      case 'tenctonese_cursive':
+        return TenctoneseSymbolTableEncryption();
       default:
         return SymbolTableEncryption();
     }

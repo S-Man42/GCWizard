@@ -37,6 +37,10 @@ class SymbolTableEncryptionSizes {
       this.canvasHeight,
       this.relativeBorderWidth,
       @required this.mode}) {
+    initialize();
+  }
+
+  initialize() {
     _setCountRows();
     _setBorderWidth();
     _setSymbolSizes();
