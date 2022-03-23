@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/earwig
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 
 void main() {
-  group("Obfuscation.Earwigo:", () {
+  group("Obfuscation.Earwigo_GSUB_WIG:", () {
     // GC5K2GK „Stets gern für Sie beschäftigt,…"
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
@@ -18,7 +18,27 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = obfuscateEarwigoText(elem['input']);
+        var _actual = obfuscateEarwigoText(elem['input'], EARWIGO_DEOBFUSCATION.GSUB_WIG);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Obfuscation.Earwigo_WWB_DEOBF:", () {
+    // GC27GWW Das Geheimnis des Klosters
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : 'Bruder Malusvisus, der beste Angler des Klosters Bebenhausen.', 'expectedOutput' : 'K15pr5 cjv548w7@1, pr5 rn24q O2wuo2 qs7 Tvz46s68 Lpnr1wq32pzK'},
+      {'input' : 'Schrein zu Ehren des Hl. Hubertus.', 'expectedOutput' : 'bms3rw2 84 Qu5t3 np4 V0N R5nr58@1H'},
+      {'input' : 'Entschuldigung! Bitte kommen Sie dem Versuchsgelände nicht zu nahe.', 'expectedOutput' : 'Nx44pv91msr60u! Ks45r z4vwpz gxu npy jt714nt5ut1äypr 2ylr4 -8 3jrpJ'},
+      {'input' : 'Doppelmuffelofen', 'expectedOutput' : 'Qo, fwt! Rtq4 x82 üos6quv e2s67ko2qvqwN eyp o2wnpl457 -n1oq0 sq0p tvs6 n135 5tsq3 zvqw91H<\\001\\002>\\n\\003\\003\\003\\003Xrut3 ctq o01n Rqts282äzqs -rooq4 p3 ss3r1 fuk4. 82t 5p3yo78nx evs tj2 SrzäwnpJ'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = obfuscateEarwigoText(elem['input'], EARWIGO_DEOBFUSCATION.WWB_DEOBF);
         expect(_actual, elem['expectedOutput']);
       });
     });
