@@ -74,6 +74,8 @@ class BefungeState extends State< Befunge > {
         ? GCWTextField(
             controller: _textDecodeController,
             hintText: i18n(context, 'common_programming_hint_sourcecode'),
+            maxLines: 5,
+            maxLength: MAX_LENGTH_PROGRAM,
             onChanged: (text) {
               setState(() {
                 _currentDecodeText = text;

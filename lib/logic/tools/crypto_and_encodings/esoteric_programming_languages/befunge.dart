@@ -69,7 +69,8 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     int v = 0;
     int iterations = 0;
     int inputCounter = 0;
-    List<String> STDIN = input.split(' ');
+    int distance = 1;
+    List<String> STDIN = input == null ? [] : input.split(' ');
     List<String> STDOUT = [];
     String command = '';
     Map<int, List<String>> torus = new Map<int, List<String>>();
@@ -78,26 +79,16 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     DIRECTIONS direction = DIRECTIONS.RIGHT;
 
     torus = _fillTorus(program);
-print(torus[0].join(''));
-print(torus[1].join(''));
-print(torus[2].join(''));
-    print(torus[3].join(''));
-    print(torus[4].join(''));
-    print(torus[5].join(''));
-    print(torus[6].join(''));
-
-
 
     while (notEnd) {
       if (iterations > MAX_ITERATIONS)
         return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INFINITE_LOOP);
-print('Stack: '+stack.content.toString());
-print('['+pcY.toString().padLeft(2)+'.'+pcX.toString().padLeft(2)+']   '+torus[pcY][pcX].toString());
       command = torus[pcY][pcX];
-
       switch (command) {
         case ' ':
-        break;
+          if (stringMode)
+            stack.push(command.codeUnitAt(0));
+          break;
 
       case '0':
         stack.push(0);
@@ -164,10 +155,10 @@ print('['+pcY.toString().padLeft(2)+'.'+pcX.toString().padLeft(2)+']   '+torus[p
         b = stack.pop();
         if (a == 0) {
           if (inputCounter >= input.length)
-            return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
+            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_NO_INPUT);
 
           if (int.tryParse(input[inputCounter]) == null)
-            return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT);
+            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_INPUT);
 
         a = int.parse(input[inputCounter]);
         }
@@ -239,8 +230,9 @@ print('['+pcY.toString().padLeft(2)+'.'+pcX.toString().padLeft(2)+']   '+torus[p
 
         break;
 
-      case '”': // string mode on/off
+      case '"': // string mode on/off
         stringMode = !stringMode;
+        print(stringMode);
         break;
 
       case ':': // dublication
@@ -268,15 +260,15 @@ print('['+pcY.toString().padLeft(2)+'.'+pcX.toString().padLeft(2)+']   '+torus[p
 
       case ',': // output char
         a = stack.pop();
-        print('print '+a.toString());
         if (_invalidChar(a))
-          return BefungeOutput('', BEFUNGE_ERROR_INVALID_CHARCODE);
+          return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_CHARCODE);
         else
           STDOUT.add(String.fromCharCode(a));
 
         break;
 
       case '#': // skip - do nothing
+        distance = 2;
         break;
 
       case 'g': // self modify - push
@@ -335,45 +327,45 @@ print('['+pcY.toString().padLeft(2)+'.'+pcX.toString().padLeft(2)+']   '+torus[p
 
       switch (direction) {
         case DIRECTIONS.RIGHT:
-          pcX++;
+          pcX = pcX + distance;
           if (pcX == MAX_LENGTH_LINE) pcX = 0;
           break;
 
         case DIRECTIONS.LEFT:
-          pcX--;
+          pcX = pcX - distance;
           if (pcX < 0) pcX = MAX_LENGTH_LINE - 1;
           break;
 
         case DIRECTIONS.UP: // move up
-          pcY--;
+          pcY = pcY - distance;
           if (pcY < 0) pcY = MAX_LINES;
           break;
 
         case DIRECTIONS.DOWN: // move down
-          pcY++;
+          pcY = pcY + distance;
           if (pcY== MAX_LINES) pcY = 0;
           break;
 
         case DIRECTIONS.RANDOM: // move random
           if (random.nextInt(100) > 50)
             if (random.nextInt(100) > 50) {
-              pcX++;
+              pcX = pcX + distance;
               if (pcX == MAX_LENGTH_LINE) pcX = 0;
             } else {
-              pcX--;
+              pcX = pcX - distance;
               if (pcX == 0) pcX = MAX_LENGTH_LINE;
             }
           else
             if (random.nextInt(100) > 50) {
-              pcY++;
+              pcY = pcY + distance;
               if (pcY == MAX_LINES) pcY = 0;
             } else {
-              pcY--;
+              pcY = pcY - distance;
               if (pcY== 0) pcY = MAX_LINES;
             }
           break;
       } // switch direction
-
+    distance = 1;
     iterations++;
 
     } // while
