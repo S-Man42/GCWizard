@@ -12,7 +12,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
@@ -125,6 +124,37 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               : atomOneLightTheme,
       stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
     );
+  }
+
+  _askFoSyntaxHighlighting(){
+    showGCWDialog(
+        context,
+        i18n(context, 'wherigo_syntaxhighlighting_title'),
+        Container(
+          width: 250,
+          height: 150,
+          child: GCWText(
+            text: i18n(context, 'wherigo_syntaxhighlighting_message'),
+            style: gcwDialogTextStyle(),
+          ),
+        ),
+        [
+          GCWDialogButton(
+              text: i18n(context, 'common_ok'),
+              onPressed: () {
+                setState(() {
+                  _currentSyntaxHighlighting = true;
+                });
+              }),
+          GCWDialogButton(
+              text: i18n(context, 'common_cancel'),
+              onPressed: () {
+                setState(() {
+                  _currentSyntaxHighlighting = false;
+                });
+              }),
+        ],
+        cancelButton: false);
   }
 
   _askForOnlineDecompiling() {
@@ -703,8 +733,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       icon: Icons.color_lens,
                       size: IconButtonSize.SMALL,
                       onPressed: () {
-                        setState(() {
+                        if (!_currentSyntaxHighlighting && _LUA_SourceCode.split('\n').length > 2000)
+                          _askFoSyntaxHighlighting();
+                        else
                           _currentSyntaxHighlighting = !_currentSyntaxHighlighting;
+                        setState(() {
                         });
                       },
                     ),
