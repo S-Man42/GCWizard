@@ -53,10 +53,11 @@ String obfuscateUrwigoText(String text, String dtable) {
     } else {
       codeUnit = 1 + char.codeUnitAt(0);
     }
-    if (searchReplace[codeUnit] == null) if (32 <= codeUnit && codeUnit < 127)
-      result = result + String.fromCharCode(codeUnit);
-    else
-      result = result + '\\' + codeUnit.toString().padLeft(3, '0');
+    if (searchReplace[codeUnit] == null)
+      if (32 <= codeUnit && codeUnit < 127)
+        result = result + String.fromCharCode(codeUnit);
+      else
+        result = result + '\\' + codeUnit.toString().padLeft(3, '0');
     else
       result = result + searchReplace[codeUnit];
   });

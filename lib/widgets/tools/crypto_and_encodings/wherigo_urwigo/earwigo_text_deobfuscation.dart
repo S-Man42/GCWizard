@@ -18,8 +18,10 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
 
   var _currentInput = '';
   var _currentObfuscateInput = '';
+  var _currentObfuscationTool = EARWIGO_DEOBFUSCATION.GSUB_WIG;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentTool = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -40,6 +42,21 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          value: _currentTool,
+          title: i18n(context, 'earwigo_textdeobfuscation_tool'),
+          leftValue: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
+          rightValue: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
+          onChanged: (value) {
+            setState(() {
+              _currentTool = value;
+              switch (_currentTool) {
+                case GCWSwitchPosition.left: _currentObfuscationTool = EARWIGO_DEOBFUSCATION.GSUB_WIG; break;
+                case GCWSwitchPosition.right: _currentObfuscationTool = EARWIGO_DEOBFUSCATION.WWB_DEOBF; break;
+              }
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
           value: _currentMode,
           leftValue: i18n(context, 'urwigo_textdeobfuscation_mode_obfuscate'),
           rightValue: i18n(context, 'urwigo_textdeobfuscation_mode_de_obfuscate'),
@@ -50,7 +67,7 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-            ? Row(
+            ? Row( // de-obfuscate
                 children: [
                   Expanded(
                     child: GCWText(text: i18n(context, 'earwigo_textdeobfuscation_text')),
@@ -68,7 +85,7 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
                       flex: 3)
                 ],
               )
-            : Row(
+            : Row( // obfuscate
                 children: [
                   Expanded(
                     child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_obfuscate_text')),
@@ -77,9 +94,6 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
                   Expanded(
                       child: GCWTextField(
                         controller: _inputObfuscateController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[a-zA-Z 0-9.-~]')),
-                        ],
                         onChanged: (text) {
                           setState(() {
                             _currentObfuscateInput = text;
@@ -96,9 +110,9 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
-      return GCWDefaultOutput(child: deobfuscateEarwigoText(_currentInput));
+      return GCWDefaultOutput(child: deobfuscateEarwigoText(_currentInput, _currentObfuscationTool));
     } else {
-      return GCWDefaultOutput(child: obfuscateEarwigoText(_currentObfuscateInput));
+      return GCWDefaultOutput(child: obfuscateEarwigoText(_currentObfuscateInput, _currentObfuscationTool));
     }
   }
 }
