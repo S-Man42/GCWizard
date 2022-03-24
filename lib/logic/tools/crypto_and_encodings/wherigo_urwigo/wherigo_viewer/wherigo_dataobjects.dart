@@ -546,10 +546,3 @@ final Map<String, TextStyle> WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP = {
   "Description": TextStyle(color: Colors.orange),
   "Choices": TextStyle(color: Colors.orange),
 };
-
-final Map<String, TextStyle> WHERIGO_SYNTAX_HIGHLIGHT_PATTERNMAP = {
-  r"== [0-9]+":TextStyle(color: Colors.green),
-  r"[(.)0-9]+":TextStyle(color: Colors.green),
-  r'\".*\"':TextStyle(color: Colors.green),
-
-};

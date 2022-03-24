@@ -34,7 +34,6 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -42,7 +41,6 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
-import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:code_text_field/code_text_field.dart';
 import 'package:highlight/languages/lua.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
@@ -677,35 +675,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO.LUAFILE:
         _LUA_SourceCode = _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate);
-        _codeController = CodeController(
-          text: _LUA_SourceCode,
-          //language: lua,
-          theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
-              ? atomOneDarkTheme
-              : atomOneLightTheme,
-          stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
-          patternMap: WHERIGO_SYNTAX_HIGHLIGHT_PATTERNMAP,
-        );
+        _codeController.text = _LUA_SourceCode;
         return Column(
           children: <Widget>[
-            GCWOnOffSwitch(
-              title: i18n(context, 'wherigo_data_lua_syntax_highlighting'),
-              value: _currentSyntaxHighlighting,
-              onChanged: (value) {
-                setState(() {
-                  _currentSyntaxHighlighting = value;
-                });
-              },
-            ),
-            GCWOnOffSwitch(
-              title: i18n(context, 'wherigo_data_lua_deobfuscate'),
-              value: _currentDeObfuscate,
-              onChanged: (value) {
-                setState(() {
-                  _currentDeObfuscate = value;
-                });
-              },
-            ),
              GCWDefaultOutput(
                  child: (_currentSyntaxHighlighting == true)
                   ? CodeField(
@@ -719,13 +691,30 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 trailing: Row(
                   children: <Widget>[
                     GCWIconButton(
+                      icon: (_currentDeObfuscate == true) ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                      size: IconButtonSize.SMALL,
+                      onPressed: () {
+                        setState(() {
+                          _currentDeObfuscate = !_currentDeObfuscate;
+                        });
+                      },
+                    ),
+                    GCWIconButton(
+                      icon: Icons.color_lens,
+                      size: IconButtonSize.SMALL,
+                      onPressed: () {
+                        setState(() {
+                          _currentSyntaxHighlighting = !_currentSyntaxHighlighting;
+                        });
+                      },
+                    ),
+                    GCWIconButton(
                       iconColor: themeColors().mainFont(),
                       size: IconButtonSize.SMALL,
                       icon: Icons.content_copy,
                       onPressed: () {
                         var copyText = _WherigoCartridgeLUA.LUAFile != null
                             ? _LUA_SourceCode
-                            //? _codeController.text
                             : '';
                         insertIntoGCWClipboard(context, copyText);
                       },
