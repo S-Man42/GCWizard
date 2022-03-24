@@ -96,7 +96,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   bool _getLUAOnline = true;
   bool _nohttpError = true;
 
-  var _codeController;
+  var _codeControllerHighlightedLUA;
   var _LUA_SourceCode = '';
 
   int _mediaFileIndex = 1;
@@ -116,14 +116,14 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
      super.initState();
-    _codeController = CodeController(
-      text: _LUA_SourceCode,
-      language: lua,
-      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
-              ? atomOneDarkTheme
-              : atomOneLightTheme,
-      stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
-    );
+     _codeControllerHighlightedLUA = CodeController(
+        text: _LUA_SourceCode,
+        language: lua,
+        theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
+                ? atomOneDarkTheme
+                : atomOneLightTheme,
+        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
+      );
   }
 
   _askFoSyntaxHighlighting(){
@@ -202,7 +202,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   void dispose() {
-    _codeController.dispose();
+    _codeControllerHighlightedLUA.dispose();
     super.dispose();
   }
 
@@ -705,13 +705,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
       case WHERIGO.LUAFILE:
         _LUA_SourceCode = _normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate);
-        _codeController.text = _LUA_SourceCode;
+        _codeControllerHighlightedLUA.text = _LUA_SourceCode;
         return Column(
           children: <Widget>[
              GCWDefaultOutput(
                  child: (_currentSyntaxHighlighting == true)
                   ? CodeField(
-                      controller: _codeController,
+                      controller: _codeControllerHighlightedLUA,
                       textStyle: TextStyle(fontFamily: 'SourceCode'),
                       lineNumberStyle: LineNumberStyle(width: 80.0),
                     )
