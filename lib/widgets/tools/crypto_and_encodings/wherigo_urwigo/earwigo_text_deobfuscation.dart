@@ -94,9 +94,6 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
                   Expanded(
                       child: GCWTextField(
                         controller: _inputObfuscateController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[a-zA-Z 0-9,.-~]')),
-                        ],
                         onChanged: (text) {
                           setState(() {
                             _currentObfuscateInput = text;

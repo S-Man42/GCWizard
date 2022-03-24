@@ -45,6 +45,10 @@ String gsub_wig_obfuscation(String text) {
 }
 
 String wwb_deobf_obfuscation(String str) {
+  // actual  Qo, fwt! Rtq4 x82 üos6quv e2s67ko2qvqwN eyp o2wnpl457 -n1oq0 sq0p tvs6 n135 5tsq3 zvqw91H<\001\002>\n\003\003\003\003Xrut3 ctq o01n Rqts282äzqs -rooq4 p3 ss3r1 fuk4. 82t 5p3yo78nx evs tj2 SrzäwnpJ
+  // expect  Qo, fwt! Rtq4 x82 üos6quv e2s67ko2qvqwN eyp o2wnpl457 -n1oq0 sq0p tvs6 n135 5tsq3 zvqw91H<\001\002>\n\003\003\003\003Xrut3 ctq o01n Rqts282äzqs -rooq4 p3 ss3r1 fuk4. 82t 5p3yo78nx evs tj2 SrzäwnpJ
+  // plain   He, Sie! Hier ist überall Sperrbereich. Und angefasst werden darf hier erst recht nichts.
+  // Legen Sie alle Gegenstände wieder an ihren Platz und verlassen Sie das Gelände.
   if (str == null || str.isEmpty) return '';
 
   String result = '';
@@ -56,17 +60,17 @@ String wwb_deobf_obfuscation(String str) {
     ["\x02"]: "R",
     ["\x03"]: ""
   };
+
+  str = str.replaceAll(String.fromCharCode(4), '<').replaceAll(String.fromCharCode(5), '>').replaceAll(String.fromCharCode(6), '&');
+
   String x = '';
   int d = 0;
-
-  str = str.replaceAll('\\001', '\x01').replaceAll('\\002', '\x02').replaceAll('\\003', '\x03');
-  str = str.replaceAll('<', '\\004').replaceAll('>', '\\005').replaceAll('&', '\\006');
 
   for (int i = 0; i < str.length; i++) {
     String c = str[i];
     int p = find(rot_palette, c);
     if (p != -1) {
-      int jump = (i % 8) + 9;
+      int jump = (d % 8) + 9;
       p = p + jump;
       if (p > plen) p = p - plen;
       if (p - 1 >= 0)
@@ -77,10 +81,17 @@ String wwb_deobf_obfuscation(String str) {
         c = x;
     }
     d++;
-    if (c.codeUnitAt(0) > 127)
+    if (c.codeUnitAt(0) > 127) {
       d++;
+    }
     result = result + c;
   }
-  result = result.replaceAll('\\004', '<').replaceAll('\\005', '>').replaceAll('\\006', '&');
+  result = result.replaceAll(String.fromCharCode(4), '<')
+      .replaceAll(String.fromCharCode(5), '>')
+      .replaceAll(String.fromCharCode(6), '&')
+      .replaceAll(String.fromCharCode(10), '\\n')
+      .replaceAll(String.fromCharCode(3), '\\003')
+      .replaceAll(String.fromCharCode(2), '\\002')
+      .replaceAll(String.fromCharCode(1), '\\001');
   return result;
 }

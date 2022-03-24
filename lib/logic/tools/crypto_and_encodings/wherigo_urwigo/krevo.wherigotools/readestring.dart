@@ -1,3 +1,5 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readustring.dart';
+
 int find(String palette, String char) {
   for (int i = 0; i < palette.length; i++) if (palette[i] == char) return (i + 1);
   return -1;
@@ -43,21 +45,22 @@ String wwb_deobf(String str) {
   String rot_palette = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~";
   int plen = rot_palette.length;
   var magic = {
-    ["\x01"]: "B",
-    ["\x02"]: "R",
-    ["\x03"]: ""
+    ["\\001"]: "B",
+    ["\\002"]: "R",
+    ["\\003"]: ""
   };
   String x = '';
   int d = 0;
+  int jump = 0;
 
-  str = str.replaceAll('\\001', '\x01').replaceAll('\\002', '\x02').replaceAll('\\003', '\x03');
   str = str.replaceAll('<', '\\004').replaceAll('>', '\\005').replaceAll('&', '\\006');
+  str = luaStringToString(str);
 
   for (int i = 0; i < str.length; i++) {
     String c = str[i];
     int p = find(rot_palette, c);
     if (p != -1) {
-      int jump = (d % 8) + 9;
+      jump = (d % 8) + 9;
       p = p - jump;
       if (p < 1) p = p + plen;
       c = rot_palette[p - 1];

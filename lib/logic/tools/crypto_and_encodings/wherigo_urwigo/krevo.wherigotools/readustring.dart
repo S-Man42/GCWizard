@@ -1,6 +1,6 @@
 /**
  * Port from https://github.com/Krevo/WherigoTools/blob/master/readustring.php
- * Port from Dennis Treya
+ * Port from Dennis Treysa
  *
  * MIT License
  */
