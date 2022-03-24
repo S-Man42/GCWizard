@@ -348,7 +348,6 @@ class WherigoCartridgeGWC {
   final String Player;
   final int PlayerID;
   final String CartridgeLUAName;
-  final String CartridgeName;
   final String CartridgeGUID;
   final String CartridgeDescription;
   final String StartingLocationDescription;
@@ -377,7 +376,6 @@ class WherigoCartridgeGWC {
     this.Player = '',
     this.PlayerID = 0,
     this.CartridgeLUAName = '',
-    this.CartridgeName = '',
     this.CartridgeGUID = '',
     this.CartridgeDescription = '',
     this.StartingLocationDescription = '',
@@ -395,7 +393,6 @@ class WherigoCartridgeGWC {
 class WherigoCartridgeLUA {
   final String LUAFile;
   final String CartridgeLUAName;
-  final String CartridgeName;
   final String CartridgeGUID;
   final String ObfuscatorTable;
   final String ObfuscatorFunction;
@@ -428,7 +425,6 @@ class WherigoCartridgeLUA {
   WherigoCartridgeLUA(
       {this.LUAFile = '',
       this.CartridgeLUAName = '',
-      this.CartridgeName = '',
       this.CartridgeGUID = '',
       this.ObfuscatorTable = '',
       this.ObfuscatorFunction = '',

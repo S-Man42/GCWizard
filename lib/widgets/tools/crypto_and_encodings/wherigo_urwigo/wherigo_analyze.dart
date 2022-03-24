@@ -438,7 +438,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 onPressed: () {
                   _openInMap(
                       _currentZonePoints(
-                          _WherigoCartridgeGWC.CartridgeName,
+                          _WherigoCartridgeGWC.CartridgeLUAName,
                           ZonePoint(_WherigoCartridgeGWC.Latitude, _WherigoCartridgeGWC.Longitude,
                               _WherigoCartridgeGWC.Altitude)),
                       []);
@@ -2078,8 +2078,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           // check if GWC and LUA are from the same cartridge
           if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
                   _WherigoCartridgeLUA.CartridgeGUID != '') &&
-              (_WherigoCartridgeGWC.CartridgeName != _WherigoCartridgeLUA.CartridgeName &&
-                  _WherigoCartridgeLUA.CartridgeName != '')) {
+              (_WherigoCartridgeGWC.CartridgeLUAName != _WherigoCartridgeLUA.CartridgeLUAName &&
+                  _WherigoCartridgeLUA.CartridgeLUAName != '')) {
             // files belong to different cartridges
             _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
             _fileLoadedState = FILE_LOAD_STATE.GWC;
@@ -2113,8 +2113,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               // check if GWC and LUA are from the same cartridge
               if ((_WherigoCartridgeGWC.CartridgeGUID != _WherigoCartridgeLUA.CartridgeGUID &&
                       _WherigoCartridgeLUA.CartridgeGUID != '') &&
-                  (_WherigoCartridgeGWC.CartridgeName != _WherigoCartridgeLUA.CartridgeName &&
-                      _WherigoCartridgeLUA.CartridgeName != '')) {
+                  (_WherigoCartridgeGWC.CartridgeLUAName != _WherigoCartridgeLUA.CartridgeLUAName &&
+                      _WherigoCartridgeLUA.CartridgeLUAName != '')) {
                 // files belong to different cartridges
                 _WherigoCartridgeLUA = _resetLUA('wherigo_error_diff_gwc_lua_1');
                 _fileLoadedState = FILE_LOAD_STATE.GWC;
@@ -2157,7 +2157,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               _WherigoCartridgeLUA = WherigoCartridgeLUA(
                 LUAFile: '',
                 CartridgeLUAName: '',
-                CartridgeName: '',
                 CartridgeGUID: '',
                 ObfuscatorTable: '',
                 ObfuscatorFunction: '',
@@ -2345,7 +2344,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       if (_WherigoCartridgeGWC.Latitude != 0.0 && _WherigoCartridgeGWC.Longitude != 0.0)
         _ZonePoints.add(GCWMapPoint(
             uuid: 'Cartridge Start',
-            markerText: 'Wherigo "' + _WherigoCartridgeGWC.CartridgeName + '"',
+            markerText: 'Wherigo "' + _WherigoCartridgeGWC.CartridgeLUAName + '"',
             point: LatLng(_WherigoCartridgeGWC.Latitude, _WherigoCartridgeGWC.Longitude),
             color: Colors.redAccent));
     }
@@ -2370,9 +2369,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [i18n(context, 'wherigo_header_lengthcompletion'), _WherigoCartridgeGWC.LengthOfCompletionCode.toString()],
       [
         i18n(context, 'wherigo_header_cartridgename'),
-        _WherigoCartridgeGWC.CartridgeName == ''
-            ? _WherigoCartridgeLUA.CartridgeName
-            : _WherigoCartridgeGWC.CartridgeName
+        _WherigoCartridgeGWC.CartridgeLUAName == ''
+            ? _WherigoCartridgeLUA.CartridgeLUAName
+            : _WherigoCartridgeGWC.CartridgeLUAName
       ],
       [
         i18n(context, 'wherigo_header_cartridgeguid'),
@@ -2420,7 +2419,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     if (deObfuscate) {
       LUAFile = LUAFile.replaceAll(_WherigoCartridgeLUA.ObfuscatorFunction, 'deObfuscate');
       LUAFile = LUAFile.replaceAll(_WherigoCartridgeLUA.CartridgeLUAName,
-          'objCartridge_' + _WherigoCartridgeLUA.CartridgeName.replaceAll(' ', ''));
+          'objCartridge_' + _WherigoCartridgeLUA.CartridgeLUAName.replaceAll(' ', ''));
       _WherigoCartridgeLUA.Characters.forEach((element) {
         LUAFile = LUAFile.replaceAll(element.CharacterLUAName, 'objCharacter_' + element.CharacterName);
       });

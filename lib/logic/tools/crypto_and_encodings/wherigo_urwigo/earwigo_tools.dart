@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readestring.dart';
 
-enum EARWIGO_DEOBFUSCATION {WWB_DEOBF, GSUB_WIG}
+enum EARWIGO_DEOBFUSCATION {WWB_DEOBF, GSUB_WIG, URWIGO}
 
 String deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   if (text == null || text.isEmpty) return '';
