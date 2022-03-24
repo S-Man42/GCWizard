@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/earwig
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class EarwigoTextDeobfuscation extends StatefulWidget {
@@ -18,10 +19,8 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
 
   var _currentInput = '';
   var _currentObfuscateInput = '';
-  var _currentObfuscationTool = EARWIGO_DEOBFUSCATION.GSUB_WIG;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
-  GCWSwitchPosition _currentTool = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -41,21 +40,6 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
-          value: _currentTool,
-          title: i18n(context, 'earwigo_textdeobfuscation_tool'),
-          leftValue: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
-          rightValue: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
-          onChanged: (value) {
-            setState(() {
-              _currentTool = value;
-              switch (_currentTool) {
-                case GCWSwitchPosition.left: _currentObfuscationTool = EARWIGO_DEOBFUSCATION.GSUB_WIG; break;
-                case GCWSwitchPosition.right: _currentObfuscationTool = EARWIGO_DEOBFUSCATION.WWB_DEOBF; break;
-              }
-            });
-          },
-        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           leftValue: i18n(context, 'urwigo_textdeobfuscation_mode_obfuscate'),
@@ -109,10 +93,31 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentMode == GCWSwitchPosition.right) {
-      return GCWDefaultOutput(child: deobfuscateEarwigoText(_currentInput, _currentObfuscationTool));
-    } else {
-      return GCWDefaultOutput(child: obfuscateEarwigoText(_currentObfuscateInput, _currentObfuscationTool));
-    }
+    if (_currentMode == GCWSwitchPosition.right)
+      return Column(
+        children: <Widget>[
+          GCWOutput(
+              title: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
+              child: deobfuscateEarwigoText(_currentInput, EARWIGO_DEOBFUSCATION.GSUB_WIG)
+          ),
+          GCWOutput(
+              title: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
+              child: deobfuscateEarwigoText(_currentInput, EARWIGO_DEOBFUSCATION.WWB_DEOBF)
+          ),
+        ]
+      );
+    else
+      return Column(
+          children: <Widget>[
+            GCWOutput(
+                title: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
+                child: obfuscateEarwigoText(_currentObfuscateInput, EARWIGO_DEOBFUSCATION.GSUB_WIG)
+            ),
+            GCWOutput(
+                title: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
+                child: obfuscateEarwigoText(_currentObfuscateInput, EARWIGO_DEOBFUSCATION.WWB_DEOBF)
+            ),
+          ]
+      );
   }
 }
