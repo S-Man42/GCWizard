@@ -25,7 +25,7 @@ Based on **Flutter/Dart**.
 * **Formula Solver**: For handling variables in multi stage caches
 * **Multi Decoder**: Enter an unknown code and let several decoders and calculators interpret it in a row
 * More than **200 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
-* **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+* **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪
 
 ### Cryptography & Encodings
 * **Alphabet Values** (A = 1, B = 2, ...): Completely configurable alphabets with language specific special character handling
