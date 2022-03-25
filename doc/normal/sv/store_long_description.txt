@@ -1,14 +1,14 @@
-The GC Wizard is an open-source tool collection.
+GC Wizard är en samling verktyg med öppen källkod.
 
-It was originally created to offer Geocachers as an offline tool to support them with in-field mysteries and riddles. So, the GC Wizard contains numerous tools for simple cryptography, geographic and scientific calculations as well as hundreds of sets of various symbols.
+Den skapades ursprungligen för att ge Geocachers ett offline-verktyg för att hjälpa dem med mysterier och gåtor. GC-guiden innehåller därför många verktyg för enkel kryptografi, geografiska och vetenskapliga beräkningar och hundratals uppsättningar av olika symboler eller alfabet.
 
-Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
+Under tiden har projektet blivit mycket stort och kan användas för många andra problem än Geocaching.
 
-Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+Översatt till 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 
-<b>Highlights</b>
+<b>Höjdpunkter</b>
 
-<b>General</b>
+<b>Allmän</b>
 • Formula Solver: For handling multi stage variables
 • Multi Decoder: Enter an unknown code and let several decoders and calculators interpret it in a row
 • More than 200 sets of Symbol Tables: Direct decoding symbols to characters; save own encoding as an image
@@ -34,10 +34,10 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Koordinatformat: Stöd för UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
 • Waypoint Projection: Includes precise reverse projection
 • Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
-• Variabel koordinat: Interpolera koordinatformler om vissa delar av koordinaten inte ges. Show result on map
+• Variabel koordinat: Interpolera koordinatformler om vissa delar av koordinaten inte ges. Visa resultatet på kartan
 • Korsbäring, mitten av två och tre koordinater, olika skärningspunkter av linjer och cirklar, ...
 
-<b>Science and Technology</b>
+<b>Vetenskap och teknik</b>
 • Astronomy: Calculate position of sun and moon at a certain place and time
 • Color Space Converter: Konvertera färgvärden mellan RGB, HSL, Hex, CMYK, ...
 • Countries: ISO, calling and vehicle registration codes, flags

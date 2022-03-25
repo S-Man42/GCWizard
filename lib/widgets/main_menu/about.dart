@@ -214,6 +214,7 @@ class AboutState extends State<About> {
                     '\'Klumpenkukuk\'',
                     '\'LupiMus\'',
                     '\'mahoplus\'',
+                    'Markus M.',
                     'Martin Sch.',
                     '\'mgo\'',
                     '\'MrDosinger\'',

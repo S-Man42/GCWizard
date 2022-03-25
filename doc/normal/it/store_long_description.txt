@@ -4,7 +4,7 @@ It was originally created to offer Geocachers as an offline tool to support them
 
 Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
 
-Tradotto in 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇮🇹
+Tradotto in 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 
 <b>Evidenzia</b>
 
