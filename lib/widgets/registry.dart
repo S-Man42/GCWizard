@@ -314,7 +314,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/hms_deg.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
@@ -366,6 +365,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/time_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.dart';
@@ -708,12 +708,6 @@ initializeRegistry(BuildContext context) {
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
       'hiddendata',
-    ]),
-    GCWTool(tool: HmsDeg(), i18nPrefix: 'hms_deg', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'hms_deg',
-      'coordinates',
     ]),
     GCWTool(tool: Homophone(), i18nPrefix: 'homophone', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1075,6 +1069,12 @@ initializeRegistry(BuildContext context) {
       'symbol_westernunion',
       'symbol_murraybaudot',
       'symbol_baudot'
+    ]),
+    GCWTool(tool: TimeDegree(), i18nPrefix: 'time_degree', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'time_degree',
+      'coordinates',
     ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY

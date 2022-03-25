@@ -6,7 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 
 
 /// Right ascension to equatorial coordinate system
-Equatorial raDeg2Hms(DEG ra) {
+Equatorial raDegree2Time(DEG ra) {
   if ((ra == null) || (ra.degress == null)) return null;
   var deg = ra.degress.abs();
 
@@ -18,7 +18,7 @@ Equatorial raDeg2Hms(DEG ra) {
 }
 
 /// Right ascension hms to degrees
-DEG raHms2Deg(Equatorial equatorial) {
+DEG raTime2Degree(Equatorial equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;

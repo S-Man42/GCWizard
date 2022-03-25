@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart' as coord;
-import 'package:gc_wizard/logic/tools/science_and_technology/hms_deg.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/time_degree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
@@ -11,19 +10,17 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/integer_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 
-class HmsDeg extends StatefulWidget {
+class TimeDegree extends StatefulWidget {
   @override
-  HmsDegState createState() => HmsDegState();
+  TimeDegreeState createState() => TimeDegreeState();
 }
 
-class HmsDegState extends State<HmsDeg> {
+class TimeDegreeState extends State<TimeDegree> {
   FocusNode _hoursFocusNode;
   FocusNode _minutesFocusNode;
   FocusNode _secondsFocusNode;
@@ -256,7 +253,7 @@ class HmsDegState extends State<HmsDeg> {
       double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
       var _currentDeg = DEG(_currentDecSign * _degreesD);
 
-      var entry = <String>['Right ascension', raDeg2Hms(_currentDeg).toString()];
+      var entry = <String>['Right ascension', raDegree2Time(_currentDeg).toString()];
       output.add(entry);
     } else {
       int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
@@ -266,7 +263,7 @@ class HmsDegState extends State<HmsDeg> {
 
       var _equatorial =Equatorial(_currentSign, _hours, _minutes, _secondsD);
 
-      var deg = raHms2Deg(_equatorial);
+      var deg = raTime2Degree(_equatorial);
       var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), deg.toString()];
       output.add(entry);
     }

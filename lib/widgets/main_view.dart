@@ -220,7 +220,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/hms_deg.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
@@ -235,6 +234,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/time_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -528,7 +528,6 @@ void _initStaticToolList() {
       className(HexString2File()),
       className(HexViewer()),
       className(HiddenData()),
-      className(HmsDeg()),
       className(Hohoho()),
       className(Homophone()),
       className(Houdini()),
@@ -629,6 +628,7 @@ void _initStaticToolList() {
       className(TeletypewriterSelection()),
       className(TeletypewriterPunchTape()),
       className(TimeCalculator()),
+      className(TimeDegree()),
       className(TomTomSelection()),
       className(Trifid()),
       className(Trithemius()),
