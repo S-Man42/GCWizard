@@ -1,5 +1,7 @@
 import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 enum WHERIGO {
@@ -346,7 +348,6 @@ class WherigoCartridgeGWC {
   final String Player;
   final int PlayerID;
   final String CartridgeLUAName;
-  final String CartridgeName;
   final String CartridgeGUID;
   final String CartridgeDescription;
   final String StartingLocationDescription;
@@ -375,7 +376,6 @@ class WherigoCartridgeGWC {
     this.Player = '',
     this.PlayerID = 0,
     this.CartridgeLUAName = '',
-    this.CartridgeName = '',
     this.CartridgeGUID = '',
     this.CartridgeDescription = '',
     this.StartingLocationDescription = '',
@@ -393,7 +393,6 @@ class WherigoCartridgeGWC {
 class WherigoCartridgeLUA {
   final String LUAFile;
   final String CartridgeLUAName;
-  final String CartridgeName;
   final String CartridgeGUID;
   final String ObfuscatorTable;
   final String ObfuscatorFunction;
@@ -426,7 +425,6 @@ class WherigoCartridgeLUA {
   WherigoCartridgeLUA(
       {this.LUAFile = '',
       this.CartridgeLUAName = '',
-      this.CartridgeName = '',
       this.CartridgeGUID = '',
       this.ObfuscatorTable = '',
       this.ObfuscatorFunction = '',
@@ -513,4 +511,38 @@ final Map<String, String> HTTP_STATUS = {
   '413': 'wherigo_http_code_413',
   '500': 'wherigo_http_code_500',
   '503': 'wherigo_http_code_503',
+};
+
+final Map<String, TextStyle> WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP = {
+  // fontWeight: FontWeight.bold
+  // fontStyle: FontStyle.italic
+  "function": TextStyle(color: Colors.purple),
+  "if": TextStyle(color: Colors.purple),
+  "then": TextStyle(color: Colors.purple),
+  "else": TextStyle(color: Colors.purple),
+  "end": TextStyle(color: Colors.purple),
+  "return": TextStyle(color: Colors.purple),
+  "Dialog": TextStyle(color: Colors.red),
+  "MessageBox": TextStyle(color: Colors.red),
+  "Wherigo.ZMedia": TextStyle(color: Colors.red),
+  "Wherigo.ZCharacter": TextStyle(color: Colors.red),
+  "Wherigo.Zone": TextStyle(color: Colors.red),
+  "Wherigo.ZItem": TextStyle(color: Colors.red),
+  "Wherigo.ZTask": TextStyle(color: Colors.red),
+  "Wherigo.ZTimer": TextStyle(color: Colors.red),
+  ".ZVariables": TextStyle(color: Colors.red),
+  "Wherigo.ZCartridge": TextStyle(color: Colors.red),
+  "OnEnter": TextStyle(color: Colors.blue),
+  "OnExit": TextStyle(color: Colors.blue),
+  "OnGetInput": TextStyle(color: Colors.blue),
+  "MoveTo": TextStyle(color: Colors.blue),
+  "Id": TextStyle(color: Colors.orange),
+  "Type": TextStyle(color: Colors.orange),
+  "ZonePoint": TextStyle(color: Colors.orange),
+  "Filename": TextStyle(color: Colors.orange),
+  "Text": TextStyle(color: Colors.orange),
+  "Media": TextStyle(color: Colors.orange),
+  "Name": TextStyle(color: Colors.orange),
+  "Description": TextStyle(color: Colors.orange),
+  "Choices": TextStyle(color: Colors.orange),
 };
