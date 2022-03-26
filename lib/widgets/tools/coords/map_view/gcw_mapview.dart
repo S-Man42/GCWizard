@@ -200,6 +200,7 @@ class GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
+                  allowPanningOnScrollingParent: false, /// IMPORTANT for dragging
                   bounds: _getBounds(),
                   boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
                   minZoom: 1.0,
