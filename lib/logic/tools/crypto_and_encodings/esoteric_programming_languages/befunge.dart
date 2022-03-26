@@ -63,12 +63,12 @@ final Map<String, String> MNEMONIC = {
 class BefungeOutput{
   String Output = '';
   String Error = '';
-  List<String> Stack;
+  List<String> BefungeStack;
   List<String> PC;
   List<String> Command;
   List<String> Mnemonic;
 
-  BefungeOutput(this.Output, this.Error, this.Stack, this.PC);
+  BefungeOutput({this.Output, this.Error, this.BefungeStack, this.PC, this.Command, this.Mnemonic});
 }
 
 
@@ -98,7 +98,12 @@ class Stack{
 
 
 BefungeOutput interpretBefunge(String program, {String input}) {
-  if (program == '' || program == null) return BefungeOutput('', '', [], []);
+  List<String> BefungeStack = [];
+  List<String> PC = [];
+  List<String> Command = [];
+  List<String> Mnemonic = [];
+
+  if (program == '' || program == null) return BefungeOutput(Output: '', Error: '', BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
   if (_correctBefungeProgram(program)) {
 
@@ -124,7 +129,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
     while (notEnd) {
       if (iterations > MAX_ITERATIONS)
-        return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INFINITE_LOOP, [], []);
+        return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_INFINITE_LOOP, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
       command = torus[pcY][pcX];
       switch (command) {
         case ' ':
@@ -197,10 +202,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
         b = stack.pop();
         if (a == 0) {
           if (inputCounter >= input.length)
-            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_NO_INPUT, [], []);
+            return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_NO_INPUT, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
           if (int.tryParse(input[inputCounter]) == null)
-            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_INPUT, [], []);
+            return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_INVALID_INPUT, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
         a = int.parse(input[inputCounter]);
         }
@@ -303,7 +308,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
       case ',': // output char
         a = stack.pop();
         if (_invalidChar(a))
-          return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_CHARCODE, [], []);
+          return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_INVALID_CHARCODE, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
         else
           STDOUT.add(String.fromCharCode(a));
 
@@ -341,10 +346,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       case '&': // input decimal
         if (inputCounter >= input.length)
-          return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT, [], []);
+          return BefungeOutput(Output: '', Error: BEFUNGE_ERROR_NO_INPUT, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
         if (int.tryParse(input[inputCounter]) == null)
-          return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT, [], []);
+          return BefungeOutput(Output: '', Error: BEFUNGE_ERROR_INVALID_INPUT, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
         stack.push(int.parse(input[inputCounter]));
         inputCounter++;
@@ -352,7 +357,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       case '~': // input char
         if (inputCounter >= input.length)
-          return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT, [], []);
+          return BefungeOutput(Output: '', Error: BEFUNGE_ERROR_NO_INPUT, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
         stack.push(int.parse(input[inputCounter][0]));
         inputCounter++;
@@ -412,9 +417,9 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
     } // while
 
-    return BefungeOutput(STDOUT.join(''), '', [], []);
+    return BefungeOutput(Output: STDOUT.join(''), Error: '', BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
   } else {
-    return BefungeOutput('', BEFUNGE_ERROR_INVALID_PROGRAM, [], []);
+    return BefungeOutput(Output: '', Error: BEFUNGE_ERROR_INVALID_PROGRAM, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
   }
 
 }
