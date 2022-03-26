@@ -10,6 +10,26 @@ void main() {
       {'code' : 'ABC123;', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: BEFUNGE_ERROR_INFINITE_LOOP, BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
       // https://de.wikipedia.org/wiki/Befunge
+      {'code' : '>:# 0# \\# g# ,# 1# +# :# 5# 9# *# -# _@ Quine', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '>:# 0# \\# g# ,# 1# +# :# 5# 9# *# -# _@ Quine', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+      {'code' : '>              v\n' +
+                'v  ,,,,,"Hello"<\n' +
+                '>48*,          v\n' +
+                'v,,,,,,"World!"<\n' +
+                '>25*,@', 'input' : null, 'expectedOutput' : BefungeOutput(Output: 'Hello World!\n', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+      {'code' : ' >25*"!dlrow ,olleH":v\n' +
+                '                  v:,_@\n' +
+                '                  >  ^\n', 'input' : '', 'expectedOutput' : BefungeOutput(Output: ' Helloworld!\n', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+      // random number generator - does not work as a test
+      //  {'code' : ' v>>>>>v\n' +
+      //            '  12345\n' +
+      //            '  ^?^\n' +
+      //            ' > ? ?^\n' +
+      //            '  v?v\n' +
+      //            '  6789\n' +
+      //            '  >>>> v\n' +
+      //            ' ^    .<\n', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+
+      // https://de.wikipedia.org/wiki/Befunge
       {'code' : '0.1>:#\.#g:#00#00#+p# <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '0.1> #<:#<.#<:#<0#<0#<p#<+#<0#<0#<g#<\\# <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '0.1>:.:00p+00g\\v\n' +

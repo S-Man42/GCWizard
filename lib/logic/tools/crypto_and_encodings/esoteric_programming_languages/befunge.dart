@@ -10,12 +10,13 @@ const BEFUNGE_ERROR_NO_INPUT = 'befunge_error_no_input';
 const BEFUNGE_ERROR_INVALID_INPUT = 'befunge_error_invalid_input';
 const BEFUNGE_ERROR_INFINITE_LOOP = 'befunge_error_infinite_loop';
 const BEFUNGE_ERROR_INVALID_CHARCODE = 'befunge_error_invalid_charcode';
+const BEFUNGE_ERROR_NULL_COMMAND = 'befunge_error_null_command';
 
 const MAX_LENGTH_PROGRAM = 80 * 25;
 const MAX_LENGTH_LINE = 80;
 const MAX_LINES = 25;
 const BEFUNGE_EMPTY_LINE = '                                                                                ';
-const MAX_ITERATIONS = 1000;
+const MAX_ITERATIONS = 5000;
 const MAX_OUTPUT_LENGTH = 160;
 
 enum DIRECTIONS {LEFT, RIGHT, UP, DOWN, RANDOM}
@@ -46,6 +47,7 @@ final Map<String, String> MNEMONIC = {
   '?': 'move random',
   '_': 'move right if zero',
   '|': 'move up down if zero',
+  '"': 'string mode',
   '”': 'string mode',
   ':': 'dublicate',
   '\\': 'swap',
@@ -53,8 +55,8 @@ final Map<String, String> MNEMONIC = {
   '.': 'pop out int',
   ',': 'pop out char',
   '#': 'skip cell',
-  'g': 'get and modify',
-  'p': 'put ',
+  'g': 'push (get y,x)',
+  'p': 'put v → y,x,',
   '&': 'input int',
   '~': 'input char',
   '@': 'end',
@@ -135,11 +137,21 @@ BefungeOutput interpretBefunge(String program, {String input}) {
       if (iterations > MAX_ITERATIONS)
         return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_INFINITE_LOOP, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
 
-      command = torus[pcY][pcX];
+      if (pcY > 24 || pcX > 79)
+        return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_NULL_COMMAND, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
+      else
+        command = torus[pcY][pcX];
 
       PC.add('(' + pcY.toString().padLeft(2) + '|' + pcX.toString().padLeft(2) + ')');
       Command.add(command);
-      Mnemonic.add(MNEMONIC[command]);
+
+      if ((command == '"' || command == '”'))
+        Mnemonic.add(MNEMONIC[command]);
+      else
+        if (stringMode)
+          Mnemonic.add('push ' + command.codeUnitAt(0).toString());
+        else
+          Mnemonic.add(MNEMONIC[command]);
 
       switch (command) {
         case ' ':
@@ -288,8 +300,8 @@ BefungeOutput interpretBefunge(String program, {String input}) {
         break;
 
       case '"': // string mode on/off
+      case '”':
         stringMode = !stringMode;
-        print(stringMode);
         break;
 
       case ':': // dublication
@@ -317,10 +329,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       case ',': // output char
         a = stack.pop();
-        if (_invalidChar(a))
-          return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_INVALID_CHARCODE, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
-        else
-          STDOUT.add(String.fromCharCode(a));
+        STDOUT.add(String.fromCharCode(a));
 
         break;
 
@@ -345,12 +354,12 @@ BefungeOutput interpretBefunge(String program, {String input}) {
       case 'p': // self modify - pop
         a = stack.pop(); // pcY
         b = stack.pop(); // pcX
-        v = stack.pop();
+        v = stack.pop(); // value
 
         if (commandSet.contains(String.fromCharCode(v)))
           torus[b][a] = String.fromCharCode(v);
         else
-          torus[b][a] = stack.pop().toString();
+          torus[b][a] = v.toString();
 
         break;
 
@@ -385,7 +394,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
       switch (direction) {
         case DIRECTIONS.RIGHT:
           pcX = pcX + distance;
-          if (pcX == MAX_LENGTH_LINE) pcX = 0;
+          if (pcX >= MAX_LENGTH_LINE) pcX = 0;
           break;
 
         case DIRECTIONS.LEFT:
@@ -395,30 +404,30 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
         case DIRECTIONS.UP: // move up
           pcY = pcY - distance;
-          if (pcY < 0) pcY = MAX_LINES;
+          if (pcY < 0) pcY = MAX_LINES - 1;
           break;
 
         case DIRECTIONS.DOWN: // move down
           pcY = pcY + distance;
-          if (pcY== MAX_LINES) pcY = 0;
+          if (pcY >= MAX_LINES) pcY = 0;
           break;
 
         case DIRECTIONS.RANDOM: // move random
           if (random.nextInt(100) > 50)
             if (random.nextInt(100) > 50) {
               pcX = pcX + distance;
-              if (pcX == MAX_LENGTH_LINE) pcX = 0;
+              if (pcX >= MAX_LENGTH_LINE) pcX = 0;
             } else {
               pcX = pcX - distance;
-              if (pcX == 0) pcX = MAX_LENGTH_LINE;
+              if (pcX <= 0) pcX = MAX_LENGTH_LINE - 1;
             }
           else
             if (random.nextInt(100) > 50) {
               pcY = pcY + distance;
-              if (pcY == MAX_LINES) pcY = 0;
+              if (pcY >= MAX_LINES) pcY = 0;
             } else {
               pcY = pcY - distance;
-              if (pcY== 0) pcY = MAX_LINES;
+              if (pcY <= 0) pcY = MAX_LINES - 1;
             }
           break;
       } // switch direction
@@ -609,7 +618,3 @@ final Map<int, String> convertCharCode = {
   95: '6653**1-+', // _
   96: '35*99*+',   // ‘
 };
-
-bool _invalidChar(int charCode){
-  return (charCode < 32 || 127 < charCode);
-}

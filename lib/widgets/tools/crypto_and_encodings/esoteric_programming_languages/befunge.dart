@@ -73,6 +73,7 @@ class BefungeState extends State< Befunge > {
         _currentMode == GCWSwitchPosition.left
         ? GCWTextField(
             controller: _textDecodeController,
+            style: gcwMonotypeTextStyle(),
             hintText: i18n(context, 'common_programming_hint_sourcecode'),
             maxLines: 5,
             maxLength: MAX_LENGTH_PROGRAM,
@@ -121,7 +122,7 @@ class BefungeState extends State< Befunge > {
       columnData.add(['PC', 'Cmd', 'Mnemonic', 'Stack']);
       for (int i = 0; i < output.PC.length; i++) {
         columnData
-            .add([output.PC[i], output.Command[i], output.Mnemonic[i], output.BefungeStack[i]]);
+            .add([output.PC[i], output.Command[i], output.Mnemonic[i], i < output.BefungeStack.length ? output.BefungeStack[i] : '']);
       }
 
       return Column(
