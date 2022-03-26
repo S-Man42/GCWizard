@@ -6,7 +6,7 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  archive: ^3.2.1
+  archive: ^3.2.2
   audioplayers: ^0.20.1
   auto_size_text: ^3.0.0
   base32: ^2.0.0
