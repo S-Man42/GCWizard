@@ -117,14 +117,29 @@ class BefungeState extends State< Befunge > {
       else
        outputText = output.Output + '\n' + i18n(context, output.Error);
 
+      List<List<String>> columnData = <List<String>>[];
+      columnData.add(['PC', 'Cmd', 'Mnemonic', 'Stack']);
+      for (int i = 0; i < output.PC.length; i++) {
+        columnData
+            .add([output.PC[i], output.Command[i], output.Mnemonic[i], output.BefungeStack[i]]);
+      }
+
       return Column(
         children: <Widget>[
           GCWDefaultOutput(
             child: outputText,
           ),
           GCWExpandableTextDivider(
+            expanded: false,
             text: i18n(context, 'common_programming_debug'),
-            child: Container(),
+            child: Column(
+                children: columnedMultiLineOutput(
+                    context,
+                    columnData,
+                    flexValues: [2, 2, 3, 5],
+                    suppressCopyButtons: true,
+                    hasHeader: true,
+                )),
           )
         ],
       );

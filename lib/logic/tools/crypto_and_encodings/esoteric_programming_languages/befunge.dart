@@ -93,6 +93,10 @@ class Stack{
     return (content.length == 0);
   }
 
+  String toString() {
+    return content.join(' ');
+  }
+
   Stack(this.content);
 }
 
@@ -130,7 +134,13 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     while (notEnd) {
       if (iterations > MAX_ITERATIONS)
         return BefungeOutput(Output: STDOUT.join(''), Error: BEFUNGE_ERROR_INFINITE_LOOP, BefungeStack: BefungeStack, PC: PC, Command: Command, Mnemonic: Mnemonic);
+
       command = torus[pcY][pcX];
+
+      PC.add('(' + pcY.toString().padLeft(2) + '|' + pcX.toString().padLeft(2) + ')');
+      Command.add(command);
+      Mnemonic.add(MNEMONIC[command]);
+
       switch (command) {
         case ' ':
           if (stringMode)
@@ -412,8 +422,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
             }
           break;
       } // switch direction
-    distance = 1;
-    iterations++;
+      BefungeStack.add(stack.toString());
+
+      distance = 1;
+      iterations++;
 
     } // while
 
