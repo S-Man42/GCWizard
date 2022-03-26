@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/befunge.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -7,6 +6,7 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:code_text_field/code_text_field.dart';
@@ -103,40 +103,57 @@ class BefungeState extends State< Befunge > {
           },
         )
         : Container(),
-        _currentMode == GCWSwitchPosition.left
-        ? GCWDefaultOutput(
-            child: _interpretBefunge())
-        : GCWDefaultOutput(
-            child:CodeField(
-              controller: _codeController,
-              textStyle: gcwMonotypeTextStyle(),
-              //textStyle: TextStyle(fontFamily: 'SourceCode'),
-            ),
-            trailing: Row(
-              children: <Widget>[
-                GCWIconButton(
-                  iconColor: themeColors().mainFont(),
-                  size: IconButtonSize.SMALL,
-                  icon: Icons.content_copy,
-                  onPressed: () {
-                    var copyText = _codeController.text != null
-                      ? _codeController.text
-                      : '';
-                    insertIntoGCWClipboard(context, copyText);
-                  },
-                ),
-              ],
-            ),
-        )
+        _buildOutput(),
       ]
     );
   }
 
-  _interpretBefunge() {
-    BefungeOutput output = interpretBefunge(_currentDecodeText, input: _currentInput);
-    if (output.error == '')
-      return output.output;
+  _buildOutput() {
+    if (_currentMode == GCWSwitchPosition.left) {
+      BefungeOutput output = interpretBefunge(_currentDecodeText, input: _currentInput);
+      String outputText = '';
+      if (output.Error == '')
+        outputText = output.Output;
+      else
+       outputText = output.Output + '\n' + i18n(context, output.Error);
+
+      return Column(
+        children: <Widget>[
+          GCWDefaultOutput(
+            child: outputText,
+          ),
+          GCWExpandableTextDivider(
+            text: i18n(context, 'common_programming_debug'),
+            child: Container(),
+          )
+        ],
+      );
+    }
+
     else
-      return output.output + '\n' + i18n(context, output.error);
+      return GCWDefaultOutput(
+                child:CodeField(
+                  controller: _codeController,
+                  textStyle: gcwMonotypeTextStyle(),
+                  //textStyle: TextStyle(fontFamily: 'SourceCode'),
+                ),
+                trailing: Row(
+                  children: <Widget>[
+                    GCWIconButton(
+                      iconColor: themeColors().mainFont(),
+                      size: IconButtonSize.SMALL,
+                      icon: Icons.content_copy,
+                      onPressed: () {
+                        var copyText = _codeController.text != null
+                            ? _codeController.text
+                            : '';
+                        insertIntoGCWClipboard(context, copyText);
+                      },
+                    ),
+                  ],
+                ),
+            );
   }
+
+
 }

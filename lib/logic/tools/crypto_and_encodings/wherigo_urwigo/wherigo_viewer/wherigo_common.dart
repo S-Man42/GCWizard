@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/earwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 
 String getLUAName(String line) {
@@ -188,4 +189,30 @@ String removeWWB(String wwb) {
   if (wwb.endsWith(')')) wwb = wwb.substring(0, wwb.length - 2);
   if (wwb.endsWith('),')) wwb = wwb.substring(0, wwb.length - 3);
   return wwb.replaceAll('WWB_multiplatform_string(', '').replaceAll('WWB_multiplatform_string', '');
+}
+
+String deObfuscateText(String text, String obfuscatorFunction, String obfuscatorTable){
+  text = text.replaceAll(obfuscatorFunction + '("', '').replaceAll('")', '');
+
+  if (obfuscatorFunction == 'WWB_deobf') {
+    return deobfuscateEarwigoText(text, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
+  }
+  else if (obfuscatorFunction == 'gsub_wig') {
+    return deobfuscateEarwigoText(text, EARWIGO_DEOBFUSCATION.GSUB_WIG);
+  }
+  else {
+    return deobfuscateUrwigoText(text, obfuscatorTable);
+  }
+
+}
+
+List<String> addExceptionErrorMessage(int lineNumber, String section, var exception){
+  return ['wherigo_error_runtime',
+          'wherigo_error_runtime_exception',
+          section,
+          'wherigo_error_lua_line',
+          '> ' + lineNumber.toString() + ' <',
+          exception.toString(),
+          '',
+         ];
 }

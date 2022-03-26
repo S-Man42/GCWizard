@@ -21,12 +21,54 @@ const MAX_OUTPUT_LENGTH = 160;
 enum DIRECTIONS {LEFT, RIGHT, UP, DOWN, RANDOM}
 
 final List<String> commandSet = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '%', '!', '\'', '<', '>', '^', 'v', '?', '_', '|', '”', ':', '\\', '\$', '.', ',', '#', 'g', 'p', '&', '~', '@', ' ',];
-
+final Map<String, String> MNEMONIC = {
+  '0': 'push 0',
+  '1': 'push 1',
+  '2': 'push 2',
+  '3': 'push 3',
+  '4': 'push 4',
+  '5': 'push 5',
+  '6': 'push 6',
+  '7': 'push 7',
+  '8': 'push 8',
+  '9': 'push 9',
+  '+': 'add',
+  '-': 'sub',
+  '*': 'mult',
+  '/': 'div',
+  '%': 'mod',
+  '!': 'not',
+  '\'': 'greater',
+  '<': 'move left',
+  '>': 'move right',
+  '^': 'move up',
+  'v': 'move down',
+  '?': 'move random',
+  '_': 'move right if zero',
+  '|': 'move up down if zero',
+  '”': 'string mode',
+  ':': 'dublicate',
+  '\\': 'swap',
+  '\$': 'pop discard',
+  '.': 'pop out int',
+  ',': 'pop out char',
+  '#': 'skip cell',
+  'g': 'get and modify',
+  'p': 'put ',
+  '&': 'input int',
+  '~': 'input char',
+  '@': 'end',
+  ' ': 'nop',
+};
 class BefungeOutput{
-  String output = '';
-  String error = '';
+  String Output = '';
+  String Error = '';
+  List<String> Stack;
+  List<String> PC;
+  List<String> Command;
+  List<String> Mnemonic;
 
-  BefungeOutput(this.output, this.error);
+  BefungeOutput(this.Output, this.Error, this.Stack, this.PC);
 }
 
 
@@ -56,7 +98,7 @@ class Stack{
 
 
 BefungeOutput interpretBefunge(String program, {String input}) {
-  if (program == '' || program == null) return BefungeOutput('', '');
+  if (program == '' || program == null) return BefungeOutput('', '', [], []);
 
   if (_correctBefungeProgram(program)) {
 
@@ -82,7 +124,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
     while (notEnd) {
       if (iterations > MAX_ITERATIONS)
-        return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INFINITE_LOOP);
+        return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INFINITE_LOOP, [], []);
       command = torus[pcY][pcX];
       switch (command) {
         case ' ':
@@ -155,10 +197,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
         b = stack.pop();
         if (a == 0) {
           if (inputCounter >= input.length)
-            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_NO_INPUT);
+            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_NO_INPUT, [], []);
 
           if (int.tryParse(input[inputCounter]) == null)
-            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_INPUT);
+            return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_INPUT, [], []);
 
         a = int.parse(input[inputCounter]);
         }
@@ -261,7 +303,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
       case ',': // output char
         a = stack.pop();
         if (_invalidChar(a))
-          return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_CHARCODE);
+          return BefungeOutput(STDOUT.join(''), BEFUNGE_ERROR_INVALID_CHARCODE, [], []);
         else
           STDOUT.add(String.fromCharCode(a));
 
@@ -299,10 +341,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       case '&': // input decimal
         if (inputCounter >= input.length)
-          return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
+          return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT, [], []);
 
         if (int.tryParse(input[inputCounter]) == null)
-          return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT);
+          return BefungeOutput('', BEFUNGE_ERROR_INVALID_INPUT, [], []);
 
         stack.push(int.parse(input[inputCounter]));
         inputCounter++;
@@ -310,7 +352,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       case '~': // input char
         if (inputCounter >= input.length)
-          return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT);
+          return BefungeOutput('', BEFUNGE_ERROR_NO_INPUT, [], []);
 
         stack.push(int.parse(input[inputCounter][0]));
         inputCounter++;
@@ -370,9 +412,9 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
     } // while
 
-    return BefungeOutput(STDOUT.join(''), '');
+    return BefungeOutput(STDOUT.join(''), '', [], []);
   } else {
-    return BefungeOutput('', BEFUNGE_ERROR_INVALID_PROGRAM);
+    return BefungeOutput('', BEFUNGE_ERROR_INVALID_PROGRAM, [], []);
   }
 
 }

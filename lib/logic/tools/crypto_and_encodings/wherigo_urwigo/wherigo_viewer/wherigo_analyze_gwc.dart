@@ -211,7 +211,6 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
   String _TypeOfCartridge = '';
   String _Player = '';
   int _PlayerID = 0;
-  String _CartridgeName = '';
   String _CartridgeLUAName = '';
   String _CartridgeGUID = '';
   String _CartridgeDescription = '';
@@ -298,7 +297,7 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
         _offset = _offset + LENGTH_LONG;
 
         _ASCIIZ = readString(byteListGWC, _offset);
-        _CartridgeName = _ASCIIZ.ASCIIZ;
+        _CartridgeLUAName = _ASCIIZ.ASCIIZ;
         _offset = _ASCIIZ.offset;
 
         _ASCIIZ = readString(byteListGWC, _offset);
@@ -416,7 +415,6 @@ Future<Map<String, dynamic>> getCartridgeGWC(Uint8List byteListGWC, bool offline
       Player: _Player,
       PlayerID: _PlayerID,
       CartridgeLUAName: _CartridgeLUAName,
-      CartridgeName: _CartridgeName,
       CartridgeGUID: _CartridgeGUID,
       CartridgeDescription: _CartridgeDescription,
       StartingLocationDescription: _StartingLocationDescription,

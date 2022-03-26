@@ -1,3 +1,7 @@
+// Code snippet for accessing REST API
+// https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
+
+
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -15,17 +19,14 @@ bool isInvalidLUASourcecode(String header) {
   return (!header.replaceAll('(', ' ').replaceAll(')', '').startsWith('require "Wherigo"'));
 }
 
-Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online, {SendPort sendAsyncPort}) async {
-// if offline == true byteListLUA is already the source code
-// if offline == false then byteListLUA has to be decompiled
+Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAonline, {SendPort sendAsyncPort}) async {
   var out = Map<String, dynamic>();
 
   String _httpCode = '';
   String _httpMessage = '';
   String _LUAFile = '';
 
-  if (online) {
-    // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
+  if (getLUAonline) {
 
     String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
     try {
@@ -91,7 +92,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   else
     _LUAFile = String.fromCharCodes(byteListLUA);
 
-  // normalize LUA File
   _LUAFile = _normalizeLUAmultiLineText(_LUAFile);
 
   List<String> _ResultsLUA = [];
@@ -165,7 +165,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   String type = '';
   String medianame = '';
   String alttext = '';
-  String _cartridgeName = '';
   BUILDER _builder = BUILDER.UNKNOWN;
   String _BuilderVersion = '';
   String _TargetDeviceVersion = '';
@@ -216,21 +215,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   // get cartridge details
 
   // ----------------------------------------------------------------------------------------------------------------
-  // get obfuscator data
-  //
-  _obfuscatorFunction = 'NO_OBFUSCATOR';
-  bool _obfuscatorFound = false;
-  if (RegExp(r'(WWB_latin1_string)').hasMatch(_LUAFile)) {
-    _obfuscatorFunction = 'WWB_deobf';
-    _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
-    _obfuscatorFound = true;
-  } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
-    _obfuscatorFunction = 'gsub_wig';
-    _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
-    _obfuscatorFound = true;
-  }
-
-  // ----------------------------------------------------------------------------------------------------------------
   // get builder
   //
   if (RegExp(r'(_Urwigo)').hasMatch(_LUAFile))
@@ -242,9 +226,61 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   }
 
   // ----------------------------------------------------------------------------------------------------------------
+  // get obfuscator data - obfuscator function and obfusctaor table
+  //
+  _obfuscatorFunction = 'NO_OBFUSCATOR';
+  bool _obfuscatorFound = false;
+
+  if (RegExp(r'(WWB_deobf)').hasMatch(_LUAFile)) {
+    _obfuscatorFunction = 'WWB_deobf';
+    _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
+    _obfuscatorFound = true;
+    RegExp(r'WWB_deobf\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
+      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0), '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+    });
+  }
+
+  else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
+    _obfuscatorFunction = 'gsub_wig';
+    _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
+    _obfuscatorFound = true;
+    RegExp(r'gsub_wig\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
+      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0), '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+    });
+  }
+
+  List<String> lines = _LUAFile.split('\n');
+
+  if (!_obfuscatorFound) {
+    for (int i = 0; i < lines.length; i++) {
+      lines[i] = lines[i].trim();
+
+      if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
+
+        _obfuscatorFunction = lines[i - 2].trim().substring(9);
+        for (int j = _obfuscatorFunction.length - 1; j > 0; j--) {
+          if (_obfuscatorFunction[j] == '(') {
+            _obfuscatorFunction = _obfuscatorFunction.substring(0, j);
+            j = 0;
+          }
+        }
+        _obfuscatorFound = true;
+
+        _obfuscatorTable = lines[i].trim().substring(0, lines[i].length - 1);
+        _obfuscatorTable = _obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
+
+        // deObfuscate all texts
+        RegExp(r'' + _obfuscatorFunction + '\\(".*?"\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
+          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0), '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+        });
+        i = lines.length;
+      }
+    }
+  } // if !obfuscatorFound
+
+
+  // ----------------------------------------------------------------------------------------------------------------
   // get all objects - Messages and Dialogs will be analyzed in a second parse
-  // - obfuscator function
-  // - dtabe
   // - name of cartridge
   // - Media Objects
   // - cartridge meta data
@@ -258,48 +294,66 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   // - Answers
   //
   int index = 0;
-  List<String> lines = _LUAFile.split('\n');
   var progress = 0;
   int progressStep = max(lines.length ~/ 200, 1); // 2 * 100 steps
 
+  lines = _LUAFile.split('\n');
+
   for (int i = 0; i < lines.length; i++) {
+
+    lines[i] = lines[i].trim();
+
     if (sendAsyncPort != null && (i % progressStep == 0)) {
       sendAsyncPort.send({'progress': i / lines.length / 2});
     }
 
-    lines[i] = lines[i].trim();
-
     // ----------------------------------------------------------------------------------------------------------------
-    // get obfuscator function
-    //
-    if (lines[i].startsWith('function') && !_obfuscatorFound && lines[i - 1].trim().endsWith('Player')) {
-      _obfuscatorFunction = lines[i].trim().substring(9);
-      _obfuscatorFound = true;
-      for (int j = _obfuscatorFunction.length - 1; j > 0; j--) {
-        if (_obfuscatorFunction[j] == '(') {
-          _obfuscatorFunction = _obfuscatorFunction.substring(0, j);
-          j = 0;
-        }
-      }
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // get dTable
-    //
-    if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
-      _obfuscatorTable = lines[i].trim().substring(0, lines[i].length - 1);
-      _obfuscatorTable = _obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // get Name of Cartridge
+    // search and get Name of Cartridge and Cartridge Meta Data
     //
     if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(lines[i])) {
-      _CartridgeLUAName = lines[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '');
+      _CartridgeLUAName = lines[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '').trim();
+      beyondHeader = true;
     }
 
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.Name')) {
+      _LUACartridgeName = lines[i].replaceAll(_CartridgeLUAName + '.Name = ', '').replaceAll('"', '').trim();
+    }
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.Id')) {
+      _LUACartridgeGUID = lines[i].replaceAll(_CartridgeLUAName + '.Id = ', '').replaceAll('"', '').trim();
+    }
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.BuilderVersion'))
+      _BuilderVersion = lines[i].replaceAll(_CartridgeLUAName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.TargetDeviceVersion'))
+      _TargetDeviceVersion =
+          lines[i].replaceAll(_CartridgeLUAName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CountryId'))
+      _CountryID = lines[i].replaceAll(_CartridgeLUAName + '.CountryId = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.StateId'))
+      _StateID = lines[i].replaceAll(_CartridgeLUAName + '.StateId = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UseLogging'))
+      _UseLogging = lines[i].replaceAll(_CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CreateDate'))
+      _CreateDate = lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.PublishDate'))
+      _PublishDate = lines[i].replaceAll(_CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UpdateDate'))
+      _UpdateDate = lines[i].replaceAll(_CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim();
+
+    if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.LastPlayedDate'))
+      _LastPlayedDate = lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
+
+
     // ----------------------------------------------------------------------------------------------------------------
-    // get Media Object
+    // search and get Media Object
     //
     try {
       if (RegExp(r'(Wherigo.ZMedia\()').hasMatch(lines[i])) {
@@ -391,68 +445,17 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         _NameToObject[LUAname] = ObjectData(id, index, name, medianame, OBJECT_TYPE.MEDIA);
       } // end if line hasmatch zmedia
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_media');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_media', exception));
     }
 
-    // ----------------------------------------------------------------------------------------------------------------
-    // get Cartridge Meta Data
-    //
-    if (RegExp(r'( Wherigo.ZCartridge\()').hasMatch(lines[i])) {
-      _cartridgeName = lines[i].replaceAll('= Wherigo.ZCartridge()', '').trim();
-      beyondHeader = true;
-    }
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.Name')) {
-      _LUACartridgeName = lines[i].replaceAll(_cartridgeName + '.Name = ', '').replaceAll('"', '').trim();
-    }
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.Id')) {
-      _LUACartridgeGUID = lines[i].replaceAll(_cartridgeName + '.Id = ', '').replaceAll('"', '').trim();
-    }
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.BuilderVersion'))
-      _BuilderVersion = lines[i].replaceAll(_cartridgeName + '.BuilderVersion = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.TargetDeviceVersion'))
-      _TargetDeviceVersion =
-          lines[i].replaceAll(_cartridgeName + '.TargetDeviceVersion = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CountryId'))
-      _CountryID = lines[i].replaceAll(_cartridgeName + '.CountryId = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.StateId'))
-      _StateID = lines[i].replaceAll(_cartridgeName + '.StateId = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UseLogging'))
-      _UseLogging = lines[i].replaceAll(_cartridgeName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.CreateDate'))
-      _CreateDate = lines[i].replaceAll(_cartridgeName + '.CreateDate = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.PublishDate'))
-      _PublishDate = lines[i].replaceAll(_cartridgeName + '.PublishDate = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.UpdateDate'))
-      _UpdateDate = lines[i].replaceAll(_cartridgeName + '.UpdateDate = ', '').replaceAll('"', '').trim();
-
-    if (lines[i].replaceAll(_cartridgeName, '').trim().startsWith('.LastPlayedDate'))
-      _LastPlayedDate = lines[i].replaceAll(_cartridgeName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
 
     // ----------------------------------------------------------------------------------------------------------------
     // get Zone Object
     //
     try {
       if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
+
         beyondHeader = true;
 
         currentObjectSection = OBJECT_TYPE.ZONE;
@@ -596,17 +599,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.ZONE);
       }
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_zones');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_zones', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -715,17 +709,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         i--;
       } // end if
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_characters');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_characters', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -836,17 +821,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         i--;
       } // end if
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_items');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_items', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -928,17 +904,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.TASK);
       } // end if task
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_tasks');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_tasks', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -951,7 +918,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         currentObjectSection = OBJECT_TYPE.VARIABLES;
         if (lines[i + 1].trim().startsWith('buildervar')) {
           declaration = lines[i]
-              .replaceAll(_cartridgeName + '.ZVariables', '')
+              .replaceAll(_CartridgeLUAName + '.ZVariables', '')
               .replaceAll('{', '')
               .replaceAll('}', '')
               .split('=');
@@ -990,17 +957,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         } while ((i < lines.length - 1) && sectionVariables);
       }
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_identifiers');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_identifiers', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -1076,17 +1034,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         i--;
       }
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_timers');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_timers', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -1231,21 +1180,12 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         _NameToObject[LUAname] = ObjectData(id, 0, name, media, OBJECT_TYPE.INPUT);
       } // end if lines[i] hasMatch Wherigo.ZInput - Input-Object
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_inputs');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_inputs', exception));
     }
 
     // ----------------------------------------------------------------------------------------------------------------
-    // get all Answers - these are part of the function <InputObjcet>:OnGetInput(input)
+    // get all Answers - these are part of the function <InputObject>:OnGetInput(input)
     //
     try {
       if (lines[i].trimRight().endsWith(':OnGetInput(input)')) {
@@ -1348,22 +1288,13 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
       } // end if identify input function
 
     } catch (exception) {
-      if (_Status == ANALYSE_RESULT_STATUS.OK)
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      else
-        _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.add('wherigo_error_runtime');
-      _ResultsLUA.add('wherigo_error_runtime_exception');
-      _ResultsLUA.add('wherigo_error_lua_answers');
-      _ResultsLUA.add('wherigo_error_lua_line');
-      _ResultsLUA.add('> ' + i.toString() + ' <');
-      _ResultsLUA.add(exception.toString());
-      _ResultsLUA.add('');
+      _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_answers', exception));
     }
-  } // end for i = 0 to lines.length
+  } // end of first parse - for i = 0 to lines.length
 
   // ----------------------------------------------------------------------------------------------------------------
-  // second run
+  // second parse
   // get all messages and dialogs
   //
   progress = lines.length;
@@ -1489,10 +1420,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
         _Messages.add(singleMessageDialog);
       }
     }
-  } // end for i = 0 to lines.length - getting Messages/Dialogs
+  } // end of second parse for i = 0 to lines.length - getting Messages/Dialogs
 
   // ------------------------------------------------------------------------------------------------------------------
-  // Answers to Input Objects
+  // Save Answers to Input Objects
   //
   _Inputs.forEach((inputObject) {
     resultInputs.add(InputData(
@@ -1512,13 +1443,12 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool online,
   _Inputs = resultInputs;
 
   // ------------------------------------------------------------------------------------------------------------------
-  // create Cartridge
+  // return Cartridge
   //
   out.addAll({
     'WherigoCartridgeLUA': WherigoCartridgeLUA(
       LUAFile: _LUAFile,
-      CartridgeLUAName: _CartridgeLUAName,
-      CartridgeName: _LUACartridgeName,
+      CartridgeLUAName: _LUACartridgeName,
       CartridgeGUID: _LUACartridgeGUID,
       ObfuscatorTable: _obfuscatorTable,
       ObfuscatorFunction: _obfuscatorFunction,
@@ -1598,6 +1528,7 @@ List<String> _getAnswers(
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .split('or');
+
   } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
@@ -1629,6 +1560,7 @@ List<String> _getAnswers(
       results.add(breakUrwigoHash(hashvalue).toString() + '\x01' + hashvalue.toString());
     });
     return results;
+
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
@@ -1656,7 +1588,7 @@ List<String> _getAnswers(
     // check if variable then provide information
     for (int i = 0; i < variables.length; i++) {
       if (line == variables[i].VariableLUAName) {
-        line = '« ' + line + ' » → ' + variables[i].VariableName;
+        line = variables[i].VariableName + '\x01' + line;
         i = variables.length;
       }
     }
