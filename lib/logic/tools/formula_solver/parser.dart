@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -73,6 +74,28 @@ class FormulaParser {
     'arcsindeg': (List<double> numbers) => asin(degreesToRadian(numbers.first)),
     'arccosdeg': (List<double> numbers) => acos(degreesToRadian(numbers.first)),
     'arctandeg': (List<double> numbers) => atan(degreesToRadian(numbers.first)),
+    'nth': (List<double> numbers) {
+      if (numbers.length == 1) return numbers.first;
+
+      String numStr;
+      if (numbers.first == numbers.first.toInt()) {
+        numStr = numbers.first.toInt().toString();
+      } else {
+        numStr = numbers.first.toString();
+      }
+
+      var subNumStart = max(min(numbers[1].toInt() - 1, numStr.length - 1), 0);
+      var subNumEnd =
+          (numbers.length > 2 && numbers[2] > numbers[1]) ? min(numbers[2].toInt(), numStr.length) : subNumStart + 1;
+
+      numStr = numStr.substring(subNumStart, subNumEnd);
+
+      if (numStr.startsWith('.')) numStr = '0' + numStr;
+
+      if (numStr.endsWith('.')) numStr = numStr.substring(0, numStr.length - 1);
+
+      return double.parse(numStr);
+    },
   };
 
   static final Map<String, Function> _CUSTOM_TEXT_FUNCTIONS = {

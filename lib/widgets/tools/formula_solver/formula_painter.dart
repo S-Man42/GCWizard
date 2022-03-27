@@ -11,6 +11,7 @@ class FormulaPainter {
   var _functions = <String>[];
   var _specialFunctions = {
     'LOG', // 1 comma
+    'NTH', // 0 - 2 commas
     'ROUND', // 0 or 1 comma
     'MIN', // comma 0 or more times
     'MAX', // comma 0 or more times
@@ -340,28 +341,31 @@ class FormulaPainter {
     var wordFunction = false;
 
     var result = <String>[];
-    var splited = formula.split(',');
+    var split = formula.split(',');
     var valid = true;
     switch (functionName) {
       case 'LOG':
-        valid = splited.length == 2;
+        valid = split.length == 2;
+        break;
+      case 'NTH':
+        valid = split.length >= 1;
         break;
       case 'ROUND':
-        valid = splited.length <= 2;
+        valid = split.length <= 2;
         break;
       case 'BWW':
       case 'AV':
       case 'LEN':
-        valid = splited.length == 1;
+        valid = split.length == 1;
         wordFunction = true;
         break;
     }
     if (!valid) return null;
 
-    for (var i = 0; i < splited.length; i++) {
+    for (var i = 0; i < split.length; i++) {
       if (result.isNotEmpty) result.add('b');
       _operatorBevor = true;
-      var subresult = _paintSubFormula(splited[i], 0);
+      var subresult = _paintSubFormula(split[i], 0);
       if (wordFunction) subresult = subresult.replaceAll('R', 'g');
       result.add(subresult);
     }

@@ -1,7 +1,6 @@
 // Code snippet for accessing REST API
 // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
-
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -27,7 +26,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   String _LUAFile = '';
 
   if (getLUAonline) {
-
     String address = 'http://sdklmfoqdd5qrtha.myfritz.net:7323/GCW_Unluac/';
     try {
       var uri = Uri.parse(address);
@@ -236,16 +234,16 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
     _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
     _obfuscatorFound = true;
     RegExp(r'WWB_deobf\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0), '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
+          '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
     });
-  }
-
-  else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
+  } else if (RegExp(r'(gsub_wig)').hasMatch(_LUAFile)) {
     _obfuscatorFunction = 'gsub_wig';
     _obfuscatorTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~';
     _obfuscatorFound = true;
     RegExp(r'gsub_wig\(".*?"\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0), '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+      _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
+          '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
     });
   }
 
@@ -256,7 +254,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       lines[i] = lines[i].trim();
 
       if (RegExp(r'(local dtable = ")').hasMatch(lines[i])) {
-
         _obfuscatorFunction = lines[i - 2].trim().substring(9);
         for (int j = _obfuscatorFunction.length - 1; j > 0; j--) {
           if (_obfuscatorFunction[j] == '(') {
@@ -271,13 +268,13 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
         // deObfuscate all texts
         RegExp(r'' + _obfuscatorFunction + '\\(".*?"\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
-          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0), '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
+              '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
         });
         i = lines.length;
       }
     }
   } // if !obfuscatorFound
-
 
   // ----------------------------------------------------------------------------------------------------------------
   // get all objects - Messages and Dialogs will be analyzed in a second parse
@@ -300,7 +297,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   lines = _LUAFile.split('\n');
 
   for (int i = 0; i < lines.length; i++) {
-
     lines[i] = lines[i].trim();
 
     if (sendAsyncPort != null && (i % progressStep == 0)) {
@@ -311,7 +307,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
     // search and get Name of Cartridge and Cartridge Meta Data
     //
     if (RegExp(r'(Wherigo.ZCartridge)').hasMatch(lines[i])) {
-      _CartridgeLUAName = lines[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '').trim();
+      _CartridgeLUAName =
+          lines[i].replaceAll('=', '').replaceAll(' ', '').replaceAll('Wherigo.ZCartridge()', '').trim();
       beyondHeader = true;
     }
 
@@ -337,7 +334,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       _StateID = lines[i].replaceAll(_CartridgeLUAName + '.StateId = ', '').replaceAll('"', '').trim();
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UseLogging'))
-      _UseLogging = lines[i].replaceAll(_CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
+      _UseLogging =
+          lines[i].replaceAll(_CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CreateDate'))
       _CreateDate = lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim();
@@ -350,7 +348,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.LastPlayedDate'))
       _LastPlayedDate = lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
-
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Media Object
@@ -449,13 +446,11 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_media', exception));
     }
 
-
     // ----------------------------------------------------------------------------------------------------------------
     // get Zone Object
     //
     try {
       if (RegExp(r'( Wherigo.Zone\()').hasMatch(lines[i])) {
-
         beyondHeader = true;
 
         currentObjectSection = OBJECT_TYPE.ZONE;
@@ -1528,7 +1523,6 @@ List<String> _getAnswers(
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
         .split('or');
-
   } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
@@ -1560,7 +1554,6 @@ List<String> _getAnswers(
       results.add(breakUrwigoHash(hashvalue).toString() + '\x01' + hashvalue.toString());
     });
     return results;
-
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);

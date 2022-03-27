@@ -141,6 +141,19 @@ void main() {
       {'formula' : 'csi(99) + csi(88)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '16', 'state': 'ok'}]}},
       {'formula' : 'cs(cs(455))', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '5', 'state': 'ok'}]}},
       {'formula' : 'round(round(4.555, 2), 3)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '4.56', 'state': 'ok'}]}},
+      {'formula' : 'nth(42,2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234,2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234,2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234,2,3)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '23', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.,2)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.,2,6)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '234', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.1,2,6)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '234.1', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.1,5,6)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0.1', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.1,5)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.1,5,5)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '0', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.1,-1,5)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '1234', 'state': 'ok'}]}},
+      {'formula' : 'nth(1234.1, 4, -1)', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '4', 'state': 'ok'}]}},
+      {'formula' : 'A + nth  (1234.  , cs (  11  ))', 'values': <String, String>{'a': '2000'}, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '2002', 'state': 'ok'}]}},
     ];
 
     _inputsToExpected.forEach((elem) {
