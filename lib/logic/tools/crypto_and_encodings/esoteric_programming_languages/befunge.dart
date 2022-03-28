@@ -1,10 +1,16 @@
-// https://github.com/catseye/Befunge-93
-// https://de.wikipedia.org/wiki/Befunge
+// Ressources
+//   https://github.com/catseye/Befunge-93
+//   https://de.wikipedia.org/wiki/Befunge
+//   https://en.wikipedia.org/wiki/Befunge
 //
-// https://www.bedroomlan.org/tools/befunge-playground/#prog=hello,mode=run
+// Online Interpreter
+//   https://www.bedroomlan.org/tools/befunge-playground/#prog=hello,mode=run
+//   https://www.tutorialspoint.com/compile_befunge_online.php
+//   http://qiao.github.io/javascript-playground/visual-befunge93-interpreter/
+//   https://befunge.flogisoft.com/
 //
 // Reference Implementation
-// https://github.com/catseye/Befunge-93/blob/master/src/bef.c
+//   https://github.com/catseye/Befunge-93/blob/master/src/bef.c
 
 import 'dart:math';
 
@@ -19,15 +25,13 @@ const BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS = 'befunge_error_access_out_of_bounds';
 
 const BEFUNGE_EMPTY_LINE = '                                                                                ';
 
-const MAX_INT = 9007199254740992;
-
 const MAX_LENGTH_PROGRAM = 80 * 25;
 const LINEWIDTH = 80;
 const PAGEHEIGHT = 25;
 const SCREENWIDTH = LINEWIDTH - 1;
 const SCREENHEIGHT = PAGEHEIGHT - 1;
 
-const MAX_ITERATIONS = 5000;
+const MAX_ITERATIONS = 50000;
 const MAX_OUTPUT_LENGTH = 160;
 
 final Map<String, String> MNEMONIC = {
@@ -120,6 +124,7 @@ List<String> _PC = [];
 List<String> _Command = [];
 List<String> _Mnemonic = [];
 
+
 String _cur() {
   int opCode = _pg[_y * LINEWIDTH + _x];
   if (0 < opCode && opCode < 256)
@@ -127,6 +132,7 @@ String _cur() {
   else
     return opCode.toString();
 }
+
 
 void _addDebugInformation(bool stringMode){
   _PC.add('(' + _y.toString().padLeft(2) + '|' + _x.toString().padLeft(2) + ')');
@@ -142,9 +148,11 @@ void _addDebugInformation(bool stringMode){
     _Mnemonic.add(MNEMONIC[_cur()]);
 }
 
+
 bool _isDigit(String char){
   return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ].contains(char);
 }
+
 
 BefungeOutput interpretBefunge(String program, {String input}) {
 
@@ -429,6 +437,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       _BefungeStack.add(stack.toString());
 
+//print(_y.toString().padLeft(2)+_x.toString().padLeft(3)+_cur().toString().padLeft(6)+'   ['+stack.toString().padRight(50)+']   '+STDOUT.join(''));
       _x = _x + dx;
       if (_x < 0) _x = SCREENWIDTH;
       if (_x == LINEWIDTH) _x = 0;
@@ -481,7 +490,7 @@ List<int> _fillProgram(String program) {
     });
   });
 
-  while (pg.length < PAGEHEIGHT) {
+  while (pg.length < MAX_LENGTH_PROGRAM) {
     BEFUNGE_EMPTY_LINE.split('').forEach((element) {
       pg.add(element.codeUnitAt(0));
     });
@@ -511,17 +520,10 @@ String generateBefunge(String OutputText) {
 
   if (OutputText.length > MAX_OUTPUT_LENGTH) return BEFUNGE_ERROR_INVALID_PROGRAM;
 
-  // add curs to push charcodes on the stack
   OutputText.toUpperCase().split('').reversed.toList().forEach((char) {
-    code = code + convertCharCode[char.codeUnitAt(0)];
+    code = code + _convertCharCode[char.codeUnitAt(0)];
   });
 
-  // add cur for output
-  //for (int i = 0; i < OutputText.length; i++)
-  //  code = code + ',';
-
-  // add cur to end the program
-  //code = code + '@';
   code = code + 'v';
 
   // refactor program into the correct pg format
@@ -572,26 +574,26 @@ String generateBefunge(String OutputText) {
   return befunge.join('\n');
 }
 
-final Map<int, String> convertCharCode = {
-  32: '44*2*',
+final Map<int, String> _convertCharCode = {
+  32: '4:*2*',
   33: '47+3*', // !
   34: '298+*', // “
   35: '57*', // #
   36: '94*4+', // $
-  37: '66*1+', // %
+  37: '6:*1+', // %
   38: '357*+', // &
   39: '376+*', // ‘
   40: '58*', // (
   41: '294+3*+', // )
   42: '67*', // *
   43: '358*+', // +
-  44: '447+*', // ,
-  45: '33*5*', // -
-  46: '2447+*+', // .
-  47: '233*5*+', // /
+  44: '4:7+*', // ,
+  45: '3:*5*', // -
+  46: '24:7+*+', // .
+  47: '23:*5*+', // /
   48: '86*', // 0
-  49: '77*', // 1
-  50: '55+5*', // 2
+  49: '7:*', // 1
+  50: '5:+5*', // 2
   51: '98+3*', // 3
   52: '94+2*2*', // 4
   53: '68*5+', // 5
@@ -601,41 +603,41 @@ final Map<int, String> convertCharCode = {
   57: '43*7+3*', // 9
   58: '287*+', // :
   59: '569*+', // ;
-  60: '88*4-', // <
+  60: '8:*4-', // <
   61: '37*3*2-', // =
-  62: '288*-', // >
+  62: '28:*-', // >
   63: '37*3*', // ?
-  64: '88*', // @
+  64: '8:*', // @
   65: '67+5*', // A
   66: '43*7+3*9+', // B
   67: '67+5*2+', // C
-  68: '88*4+', // D
+  68: '8:*4+', // D
   69: '64*1-3*', // E
   70: '75*2*', // F
   71: '64*1-3*2+', // G
   72: '38*3*', // H
   73: '375*2*+', // I
   74: '75*2*4+', // J
-  75: '355**', // K
+  75: '35:**', // K
   76: '47+7*1-', // L
-  77: '774+*', // M
-  78: '99*3-', // N
-  79: '355**4+', // O
-  80: '544**', // P
-  81: '99*', // Q
+  77: '7:4+*', // M
+  78: '9:*3-', // N
+  79: '35:**4+', // O
+  80: '54:**', // P
+  81: '9:*', // Q
   82: '254*4*+', // R
-  83: '1553**9+-', // S
+  83: '15:3**9+-', // S
   84: '9535**+', // T
-  85: '99*4+', // U
+  85: '9:*4+', // U
   86: '672**2+', // V
-  87: '23*99*+', // W
+  87: '23*9:*+', // W
   88: '83+8*', // X
   89: '653**1-', // Y
-  90: '2533**+', // Z
+  90: '253:**+', // Z
   91: '383+8*+', // [
   92: '653**1-3+', // \
-  93: '35*99*+3-', // ]
+  93: '35*9:*+3-', // ]
   94: '83+8*6+', // ^
   95: '6653**1-+', // _
-  96: '35*99*+', // ‘
+  96: '35*9:*+', // ‘
 };

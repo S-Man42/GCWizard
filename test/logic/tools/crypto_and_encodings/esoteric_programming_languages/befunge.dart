@@ -46,10 +46,21 @@ void main() {
       {'code' : '"!dlroW olleH"v\n' +
                 '@,,,,,,,,,,,,<', 'input' : '', 'expectedOutput' : BefungeOutput(Output: 'Hello World', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '"!dlrow olleH">:#,_@', 'input' : '', 'expectedOutput' : BefungeOutput(Output: 'Hello World', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-      {'code' : '', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-      {'code' : '', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
       // http://quadium.net/funge/downloads/bef93src/
+
+      // https://github.com/catseye/Befunge-93/tree/master/eg
+      // https://github.com/catseye/Befunge-93/blob/master/eg/befunge2.bf
+      {'code' : '<>: #+1 #:+ 3 : *6+ \$#2 9v#\n' +
+                'v 7 :   +   8 \\ + + 5   <\n' +
+                '>-  :2  -:  " " 1 + \\ v ^<\n' +
+                '2 + :   7   + : 7 + v > :\n' +
+                ':1- :3- >   :#, _ @ >:3 5*-', 'input' : '', 'expectedOutput' : BefungeOutput(Output: 'BEFUNGE!EGNUFEB', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+
+      // https://github.com/catseye/Befunge-93/blob/master/eg/chars.bf
+      {'code' : '25*3*4+>:."=",:,25*,1+:88*2*-#v_@\n' +
+                '^                      <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+
 
       // self generated
     {'code' : '>43*7+3*87*83+5*69*68*5+94+2*2*98+3*55+5*77*86*v\n' +
