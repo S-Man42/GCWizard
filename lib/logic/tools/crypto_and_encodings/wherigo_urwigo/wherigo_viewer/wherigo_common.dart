@@ -191,28 +191,26 @@ String removeWWB(String wwb) {
   return wwb.replaceAll('WWB_multiplatform_string(', '').replaceAll('WWB_multiplatform_string', '');
 }
 
-String deObfuscateText(String text, String obfuscatorFunction, String obfuscatorTable){
+String deObfuscateText(String text, String obfuscatorFunction, String obfuscatorTable) {
   text = text.replaceAll(obfuscatorFunction + '("', '').replaceAll('")', '');
 
   if (obfuscatorFunction == 'WWB_deobf') {
     return deobfuscateEarwigoText(text, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
-  }
-  else if (obfuscatorFunction == 'gsub_wig') {
+  } else if (obfuscatorFunction == 'gsub_wig') {
     return deobfuscateEarwigoText(text, EARWIGO_DEOBFUSCATION.GSUB_WIG);
-  }
-  else {
+  } else {
     return deobfuscateUrwigoText(text, obfuscatorTable);
   }
-
 }
 
-List<String> addExceptionErrorMessage(int lineNumber, String section, var exception){
-  return ['wherigo_error_runtime',
-          'wherigo_error_runtime_exception',
-          section,
-          'wherigo_error_lua_line',
-          '> ' + lineNumber.toString() + ' <',
-          exception.toString(),
-          '',
-         ];
+List<String> addExceptionErrorMessage(int lineNumber, String section, var exception) {
+  return [
+    'wherigo_error_runtime',
+    'wherigo_error_runtime_exception',
+    section,
+    'wherigo_error_lua_line',
+    '> ' + lineNumber.toString() + ' <',
+    exception.toString(),
+    '',
+  ];
 }

@@ -31,24 +31,17 @@ String luaStringToString(String pString) {
   while (tOffset < tStrLen) {
     if (pString[tOffset] == '\\') {
       tOffset += 1;
-      if (tOffset < tStrLen) if (int.tryParse(pString[tOffset]) != null)
-        tOffset += 1;
+      if (tOffset < tStrLen) if (int.tryParse(pString[tOffset]) != null) tOffset += 1;
 
-      if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null))
-        tOffset += 1;
+      if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null)) tOffset += 1;
 
       if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null)) {
-        tOrd =  int.parse(pString[tOffset - 2]) * 100 +
-                int.parse(pString[tOffset - 1]) * 10 +
-                int.parse(pString[tOffset]);
+        tOrd =
+            int.parse(pString[tOffset - 2]) * 100 + int.parse(pString[tOffset - 1]) * 10 + int.parse(pString[tOffset]);
         tNewString += String.fromCharCode(tOrd);
-      }
-
-      else
-        if (tOffset < tStrLen && tEscapeMapping[pString[tOffset]] != null)
-          tNewString += String.fromCharCode(tEscapeMapping[pString[tOffset]]);
-    }
-    else
+      } else if (tOffset < tStrLen && tEscapeMapping[pString[tOffset]] != null)
+        tNewString += String.fromCharCode(tEscapeMapping[pString[tOffset]]);
+    } else
       tNewString += pString[tOffset];
 
     tOffset += 1;

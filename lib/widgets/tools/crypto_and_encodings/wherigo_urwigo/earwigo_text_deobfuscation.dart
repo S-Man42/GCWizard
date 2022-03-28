@@ -51,7 +51,8 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-            ? Row( // de-obfuscate
+            ? Row(
+                // de-obfuscate
                 children: [
                   Expanded(
                     child: GCWText(text: i18n(context, 'earwigo_textdeobfuscation_text')),
@@ -69,7 +70,8 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
                       flex: 3)
                 ],
               )
-            : Row( // obfuscate
+            : Row(
+                // obfuscate
                 children: [
                   Expanded(
                     child: GCWText(text: i18n(context, 'urwigo_textdeobfuscation_obfuscate_text')),
@@ -94,30 +96,22 @@ class EarwigoTextDeobfuscationState extends State<EarwigoTextDeobfuscation> {
 
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right)
-      return Column(
-        children: <Widget>[
-          GCWOutput(
-              title: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
-              child: deobfuscateEarwigoText(_currentInput, EARWIGO_DEOBFUSCATION.GSUB_WIG)
-          ),
-          GCWOutput(
-              title: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
-              child: deobfuscateEarwigoText(_currentInput, EARWIGO_DEOBFUSCATION.WWB_DEOBF)
-          ),
-        ]
-      );
+      return Column(children: <Widget>[
+        GCWOutput(
+            title: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
+            child: deobfuscateEarwigoText(_currentInput, EARWIGO_DEOBFUSCATION.GSUB_WIG)),
+        GCWOutput(
+            title: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
+            child: deobfuscateEarwigoText(_currentInput, EARWIGO_DEOBFUSCATION.WWB_DEOBF)),
+      ]);
     else
-      return Column(
-          children: <Widget>[
-            GCWOutput(
-                title: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
-                child: obfuscateEarwigoText(_currentObfuscateInput, EARWIGO_DEOBFUSCATION.GSUB_WIG)
-            ),
-            GCWOutput(
-                title: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
-                child: obfuscateEarwigoText(_currentObfuscateInput, EARWIGO_DEOBFUSCATION.WWB_DEOBF)
-            ),
-          ]
-      );
+      return Column(children: <Widget>[
+        GCWOutput(
+            title: i18n(context, 'earwigo_textdeobfuscation_tool_gsub'),
+            child: obfuscateEarwigoText(_currentObfuscateInput, EARWIGO_DEOBFUSCATION.GSUB_WIG)),
+        GCWOutput(
+            title: i18n(context, 'earwigo_textdeobfuscation_tool_wwb'),
+            child: obfuscateEarwigoText(_currentObfuscateInput, EARWIGO_DEOBFUSCATION.WWB_DEOBF)),
+      ]);
   }
 }

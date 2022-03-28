@@ -1,20 +1,24 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readestring.dart';
 
-enum EARWIGO_DEOBFUSCATION {WWB_DEOBF, GSUB_WIG, URWIGO}
+enum EARWIGO_DEOBFUSCATION { WWB_DEOBF, GSUB_WIG, URWIGO }
 
 String deobfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   if (text == null || text.isEmpty) return '';
 
   switch (tool) {
-    case EARWIGO_DEOBFUSCATION.GSUB_WIG: return gsub_wig(text);
-    case EARWIGO_DEOBFUSCATION.WWB_DEOBF: return wwb_deobf(text);
+    case EARWIGO_DEOBFUSCATION.GSUB_WIG:
+      return gsub_wig(text);
+    case EARWIGO_DEOBFUSCATION.WWB_DEOBF:
+      return wwb_deobf(text);
   }
 }
 
 String obfuscateEarwigoText(String text, EARWIGO_DEOBFUSCATION tool) {
   switch (tool) {
-    case EARWIGO_DEOBFUSCATION.GSUB_WIG: return gsub_wig_obfuscation(text);
-    case EARWIGO_DEOBFUSCATION.WWB_DEOBF: return wwb_deobf_obfuscation(text);
+    case EARWIGO_DEOBFUSCATION.GSUB_WIG:
+      return gsub_wig_obfuscation(text);
+    case EARWIGO_DEOBFUSCATION.WWB_DEOBF:
+      return wwb_deobf_obfuscation(text);
   }
 }
 
@@ -24,7 +28,6 @@ String gsub_wig_obfuscation(String text) {
   String result = '';
   String rot_palette = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.-~";
   int plen = rot_palette.length;
-
 
   for (int i = 0; i < text.length; i++) {
     String c = text[i];
@@ -61,7 +64,10 @@ String wwb_deobf_obfuscation(String str) {
     ["\x03"]: ""
   };
 
-  str = str.replaceAll(String.fromCharCode(4), '<').replaceAll(String.fromCharCode(5), '>').replaceAll(String.fromCharCode(6), '&');
+  str = str
+      .replaceAll(String.fromCharCode(4), '<')
+      .replaceAll(String.fromCharCode(5), '>')
+      .replaceAll(String.fromCharCode(6), '&');
 
   String x = '';
   int d = 0;
@@ -73,12 +79,10 @@ String wwb_deobf_obfuscation(String str) {
       int jump = (d % 8) + 9;
       p = p + jump;
       if (p > plen) p = p - plen;
-      if (p - 1 >= 0)
-        c = rot_palette[p - 1];
+      if (p - 1 >= 0) c = rot_palette[p - 1];
     } else {
       x = magic[c];
-      if (x != null)
-        c = x;
+      if (x != null) c = x;
     }
     d++;
     if (c.codeUnitAt(0) > 127) {
@@ -86,7 +90,8 @@ String wwb_deobf_obfuscation(String str) {
     }
     result = result + c;
   }
-  result = result.replaceAll(String.fromCharCode(4), '<')
+  result = result
+      .replaceAll(String.fromCharCode(4), '<')
       .replaceAll(String.fromCharCode(5), '>')
       .replaceAll(String.fromCharCode(6), '&')
       .replaceAll(String.fromCharCode(10), '\\n')

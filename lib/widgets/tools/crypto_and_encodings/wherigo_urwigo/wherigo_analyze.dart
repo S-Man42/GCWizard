@@ -115,18 +115,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   @override
   void initState() {
-     super.initState();
-     _codeControllerHighlightedLUA = CodeController(
-        text: _LUA_SourceCode,
-        language: lua,
-        theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
-                ? atomOneDarkTheme
-                : atomOneLightTheme,
-        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
-      );
+    super.initState();
+    _codeControllerHighlightedLUA = CodeController(
+      text: _LUA_SourceCode,
+      language: lua,
+      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
+      stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
+    );
   }
 
-  _askFoSyntaxHighlighting(){
+  _askFoSyntaxHighlighting() {
     showGCWDialog(
         context,
         i18n(context, 'wherigo_syntaxhighlighting_title'),
@@ -199,7 +197,6 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     }
   }
 
-
   @override
   void dispose() {
     _codeControllerHighlightedLUA.dispose();
@@ -232,23 +229,22 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           await showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                title: Text(i18n(context, 'wherigo_exit_title')),
-                titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
-                content: Text(i18n(context, 'wherigo_exit_message')),
-                contentTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
-                backgroundColor: themeColors().dialog(),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        willLeave = true;
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(i18n(context, 'common_yes'))),
-                  ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(i18n(context, 'common_no')))
-                ],
-              ));
+                    title: Text(i18n(context, 'wherigo_exit_title')),
+                    titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
+                    content: Text(i18n(context, 'wherigo_exit_message')),
+                    contentTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+                    backgroundColor: themeColors().dialog(),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            willLeave = true;
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(i18n(context, 'common_yes'))),
+                      ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(), child: Text(i18n(context, 'common_no')))
+                    ],
+                  ));
           return willLeave;
         },
         child: Column(
@@ -300,11 +296,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 children: [
                   Expanded(
                       child: GCWButton(
-                        text: i18n(context, 'wherigo_decompile_button'),
-                        onPressed: () {
-                          _askForOnlineDecompiling();
-                        },
-                      ))
+                    text: i18n(context, 'wherigo_decompile_button'),
+                    onPressed: () {
+                      _askForOnlineDecompiling();
+                    },
+                  ))
                 ],
               ),
 
@@ -377,8 +373,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               ),
             _buildOutput(context)
           ],
-        )
-    );
+        ));
   }
 
   _buildOutput(BuildContext context) {
@@ -708,16 +703,16 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         _codeControllerHighlightedLUA.text = _LUA_SourceCode;
         return Column(
           children: <Widget>[
-             GCWDefaultOutput(
-                 child: (_currentSyntaxHighlighting == true)
-                  ? CodeField(
-                      controller: _codeControllerHighlightedLUA,
-                      textStyle: TextStyle(fontFamily: 'SourceCode'),
-                      lineNumberStyle: LineNumberStyle(width: 80.0),
-                    )
-                  : GCWOutputText(
-                      text: _LUA_SourceCode,
-                    ),
+            GCWDefaultOutput(
+                child: (_currentSyntaxHighlighting == true)
+                    ? CodeField(
+                        controller: _codeControllerHighlightedLUA,
+                        textStyle: TextStyle(fontFamily: 'SourceCode'),
+                        lineNumberStyle: LineNumberStyle(width: 80.0),
+                      )
+                    : GCWOutputText(
+                        text: _LUA_SourceCode,
+                      ),
                 trailing: Row(
                   children: <Widget>[
                     GCWIconButton(
@@ -737,8 +732,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                           _askFoSyntaxHighlighting();
                         else
                           _currentSyntaxHighlighting = !_currentSyntaxHighlighting;
-                        setState(() {
-                        });
+                        setState(() {});
                       },
                     ),
                     GCWIconButton(
@@ -746,9 +740,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                       size: IconButtonSize.SMALL,
                       icon: Icons.content_copy,
                       onPressed: () {
-                        var copyText = _WherigoCartridgeLUA.LUAFile != null
-                            ? _LUA_SourceCode
-                            : '';
+                        var copyText = _WherigoCartridgeLUA.LUAFile != null ? _LUA_SourceCode : '';
                         insertIntoGCWClipboard(context, copyText);
                       },
                     ),
@@ -762,7 +754,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                             : _exportFile(
                                 context,
                                 Uint8List.fromList(_LUA_SourceCode.codeUnits),
-                                    //_normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits),
+                                //_normalizeLUA(_WherigoCartridgeLUA.LUAFile, _currentDeObfuscate).codeUnits),
                                 'LUAsourceCode',
                                 FileType.LUA);
                       },

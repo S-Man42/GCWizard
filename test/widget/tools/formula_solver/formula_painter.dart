@@ -86,6 +86,13 @@ void main() {
       {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'}, // any number of commas
       {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
       {'formula' : 'MAX(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
+      {'formula' : 'nth(1234)', 'expectedOutput' : 'bbbbggggb'},
+      {'formula' : 'nth(1234.)', 'expectedOutput' : 'bbbbgggggb'},
+      {'formula' : 'nth(1234.1)', 'expectedOutput' : 'bbbbggggggb'},
+      {'formula' : 'nth(1234,2)', 'expectedOutput' : 'bbbbggggbgb'},
+      {'formula' : 'nth(1234,2,3)', 'expectedOutput' : 'bbbbggggbgbgb'},
+      {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
+      {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
 
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
@@ -96,8 +103,6 @@ void main() {
       {'formula' : 'av(xyz)', 'expectedOutput' : 'bbbgggb'},
       {'formula' : 'av(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbgrgb'},
       {'formula' : 'len(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgb'},
-
-
 
       {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'RRBG'},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
