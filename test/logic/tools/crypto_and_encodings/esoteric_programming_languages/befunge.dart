@@ -9,7 +9,7 @@ void main() {
       {'code' : '', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : 'ABC123;', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: BEFUNGE_ERROR_INFINITE_LOOP, BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
-      // https://de.wikipedia.org/wiki/Befunge
+      // https://en.wikipedia.org/wiki/Befunge
       {'code' : '>:# 0# \\# g# ,# 1# +# :# 5# 9# *# -# _@ Quine', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '>:# 0# \\# g# ,# 1# +# :# 5# 9# *# -# _@ Quine', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '>              v\n' +
                 'v  ,,,,,"Hello"<\n' +
