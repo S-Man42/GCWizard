@@ -162,7 +162,6 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     int v;
     int iterations = 0;
     List<String> STDIN = input == null ? [] : input.split(' ');
-    print(STDIN);
     List<String> STDOUT = [];
     bool stringMode = false;
     
@@ -171,7 +170,6 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     _y = 0;
 
     while (_cur() != '@') {
-      print(_y.toString().padLeft(2)+' '+_x.toString().padLeft(2)+' '+_cur()+'  out '+STDOUT.join('')+'   stack '+stack.toString());
 
       if (_infiniteLoop(iterations))
         return BefungeOutput(
@@ -309,7 +307,6 @@ BefungeOutput interpretBefunge(String program, {String input}) {
           case '"': // string mode on/off
           case '”':
             stringMode = !stringMode;
-            print('change stringmode to '+stringMode.toString());
             break;
 
           case ':': // dublication
@@ -356,8 +353,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
             break;
 
           case '&': // input decimal
-          print(STDIN.toString());
-            if (STDIN.length == 0)
+            if (STDIN.length == 0  || STDIN.join('') == '')
               return BefungeOutput(
                   Output: STDOUT.join(''),
                   Error: BEFUNGE_ERROR_NO_INPUT,
@@ -380,7 +376,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
             break;
 
           case '~': // input char
-            if (STDIN.length == 0)
+            if (STDIN.length == 0 || STDIN.join('') == '')
               return BefungeOutput(
                   Output: STDOUT.join(''),
                   Error: BEFUNGE_ERROR_NO_INPUT,
@@ -388,14 +384,12 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                   PC: _PC,
                   Command: _Command,
                   Mnemonic: _Mnemonic);
-
             stack.push((STDIN.last[0].codeUnitAt(0)));
             break;
 
           case 'g': // self modify - get value from memory
             a = stack.pop(); // y
             b = stack.pop(); // x
-print('get ' + _pg[a * SCREENWIDTH + b].toString() +' from (' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')');
             if (_outOfBoundsAccess(a, b))
               return BefungeOutput(
                   Output: STDOUT.join('') + '\n\nget(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
@@ -412,7 +406,7 @@ print('get ' + _pg[a * SCREENWIDTH + b].toString() +' from (' + a.toString().pad
             a = stack.pop(); // y
             b = stack.pop(); // x
             v = stack.pop(); // value
-print('put ' + v.toString() +' into (' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')');
+
             if (_outOfBoundsAccess(a, b))
               return BefungeOutput(
                   Output: STDOUT.join('') + '\n\nput(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
