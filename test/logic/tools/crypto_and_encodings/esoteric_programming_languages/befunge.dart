@@ -61,6 +61,26 @@ void main() {
       {'code' : '25*3*4+>:."=",:,25*,1+:88*2*-#v_@\n' +
                 '^                      <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
+      // https://github.com/catseye/Befunge-93/blob/master/eg/fact2.bf
+      {'code' : 'vv    <>v *<\n' +
+                '&>:1-:|\$>\\:|\n' +
+                '>^    >^@.\$<', 'input' : '7', 'expectedOutput' : BefungeOutput(Output: '5040', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+
+      // https://github.com/catseye/Befunge-93/blob/master/eg/ea.bf
+      {'code' : '100p            v\n' +
+               ' v"love"0     <\n' +
+               ' v"power"0   <\n' +
+               ' v"strength"0?^#<            <\n' +
+               ' v"success"0 ?v\n' +
+               ' v"agony"0   <\n' +
+               ' >v"beauty"0   <>025*"." 1v v_^\n' +
+               ' ,:      >00g2- |        v< #:\n' +
+               ' ^_,00g1-|      >0" fo "3>00p^<\n' +
+               ' >0" eht si "2   ^  >,^', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+
+      {'code' : '', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+
+
 
       // self generated
     {'code' : '>43*7+3*87*83+5*69*68*5+94+2*2*98+3*55+5*77*86*v\n' +

@@ -8,6 +8,7 @@
 //   https://www.tutorialspoint.com/compile_befunge_online.php
 //   http://qiao.github.io/javascript-playground/visual-befunge93-interpreter/
 //   https://befunge.flogisoft.com/
+//   http://www.quirkster.com/iano/js/befunge.html
 //
 // Reference Implementation
 //   https://github.com/catseye/Befunge-93/blob/master/src/bef.c
@@ -31,7 +32,7 @@ const PAGEHEIGHT = 25;
 const SCREENWIDTH = LINEWIDTH - 1;
 const SCREENHEIGHT = PAGEHEIGHT - 1;
 
-const MAX_ITERATIONS = 50000;
+const MAX_ITERATIONS = 5000;
 const MAX_OUTPUT_LENGTH = 160;
 
 final Map<String, String> MNEMONIC = {
@@ -575,7 +576,39 @@ String generateBefunge(String OutputText) {
 }
 
 final Map<int, String> _convertCharCode = {
-  32: '4:*2*',
+  0: '0', // NUL
+  1: '1', // SOH
+  2: '2', // STX
+  3: '3', // ETX
+  4: '4', // EOT
+  5: '5', // ENQ
+  6: '6', // ACK
+  7: '7', // BEL
+  8: '8', // BS
+  9: '9', // Horizontal TAB
+  10: '52*', // LF
+  11: '3:*2+', // Vertical TAB
+  12: '34*', // FF
+  13: '35*2-', // CR
+  14: '72*', // SO
+  15: '35*', // SI
+  16: '4:*', // DLE
+  17: '14:*+', // DC1
+  18: '23:**', // DC2
+  19: '123:**+', // DC3
+  20: '4:*5*', // DC4
+  21: '37*', // NAK
+  22: '256+*', // SYN
+  23: '57+2*1-', // ETB
+  24: '2:*6*', // CAN
+  25: '55*', // EM
+  26: '155*+', // SUB
+  27: '3::**', // ESC
+  28: '355*+', // FS
+  29: '23*5*1-', // GS
+  30: '23*5*', // RS
+  31: '4:*2*1-', // US
+  32: '4:*2*', //  space
   33: '47+3*', // !
   34: '298+*', // “
   35: '57*', // #
@@ -640,4 +673,35 @@ final Map<int, String> _convertCharCode = {
   94: '83+8*6+', // ^
   95: '6653**1-+', // _
   96: '35*9:*+', // ‘
+  97: '253:**+7+', // a
+  98: '483+8*6++', // b
+  99: '', // c
+  100: '35*9:*+4+', // d
+  101: '',// e
+  102: '',// f
+  103: '',// g
+  104: '',// h
+  105: '',// i
+  106: '',// j
+  107: '',// k
+  108: '',// l
+  109: '',// m
+  110: '',// n
+  111: '',// o
+  112: '',// p
+  113: '',// q
+  114: '',// r
+  115: '',// s
+  116: '',// t
+  117: '',// u
+  118: '',// v
+  119: '',// w
+  120: '',// x
+  121: '',// y
+  122: '',// z
+  123: '',// {
+  124: '',// |
+  125: '',// }
+  126: '',// ~
+  127: '',// del
 };
