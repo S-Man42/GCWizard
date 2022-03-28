@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/earwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 
 String getLUAName(String line) {
@@ -53,15 +54,11 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
           String.fromCharCode(int.parse(element.group(0).replaceAll('ucode_wig(', '').replaceAll(')', ''))));
     });
     result = result.replaceAll('gsub_wig()', '');
-  }
-
-  else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
+  } else if (result.startsWith(RegExp(r'(\()+' + obfuscator))) {
     while (result.startsWith(RegExp(r'(\()+' + obfuscator))) result = result.substring(1);
     result = result.replaceAll('(' + obfuscator, obfuscator).replaceAll('),', ')').replaceAll('))', ')');
     result = _getDetails(result, obfuscator, dtable);
-  }
-
-  else if (result.startsWith(obfuscator)) {
+  } else if (result.startsWith(obfuscator)) {
     if (_compositeObfuscatedText(result, obfuscator))
       result = _getDetails(result, obfuscator, dtable);
     else if (_compositeText(result)) {
@@ -70,9 +67,7 @@ String getTextData(String analyseLine, String obfuscator, String dtable) {
       result = result.replaceAll(obfuscator + '("', '').replaceAll('"),', '').replaceAll('")', '');
       result = deobfuscateUrwigoText(result, dtable);
     }
-  }
-
-  else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
+  } else if (result.replaceAll('Player.Name .. ', '').startsWith(obfuscator)) {
     result = result.replaceAll('Player.Name .. ', '');
     if (_compositeObfuscatedText(result, obfuscator))
       result = _getDetails(result, obfuscator, dtable);
@@ -114,7 +109,7 @@ String _getDetails(String line, String obfuscator, String dtable) {
         if (line.substring(i).startsWith(obfuscator))
           section = false;
         else
-        i = i + 1;
+          i = i + 1;
       } while (section && i < line.length);
       //i--;
       result = result + line.substring(0, i).replaceAll(')', '');
@@ -194,4 +189,28 @@ String removeWWB(String wwb) {
   if (wwb.endsWith(')')) wwb = wwb.substring(0, wwb.length - 2);
   if (wwb.endsWith('),')) wwb = wwb.substring(0, wwb.length - 3);
   return wwb.replaceAll('WWB_multiplatform_string(', '').replaceAll('WWB_multiplatform_string', '');
+}
+
+String deObfuscateText(String text, String obfuscatorFunction, String obfuscatorTable) {
+  text = text.replaceAll(obfuscatorFunction + '("', '').replaceAll('")', '');
+
+  if (obfuscatorFunction == 'WWB_deobf') {
+    return deobfuscateEarwigoText(text, EARWIGO_DEOBFUSCATION.WWB_DEOBF);
+  } else if (obfuscatorFunction == 'gsub_wig') {
+    return deobfuscateEarwigoText(text, EARWIGO_DEOBFUSCATION.GSUB_WIG);
+  } else {
+    return deobfuscateUrwigoText(text, obfuscatorTable);
+  }
+}
+
+List<String> addExceptionErrorMessage(int lineNumber, String section, var exception) {
+  return [
+    'wherigo_error_runtime',
+    'wherigo_error_runtime_exception',
+    section,
+    'wherigo_error_lua_line',
+    '> ' + lineNumber.toString() + ' <',
+    exception.toString(),
+    '',
+  ];
 }

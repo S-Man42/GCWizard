@@ -31,15 +31,15 @@ String obfuscateUrwigoText(String text, String dtable) {
   if (dtable == null || dtable.isEmpty) return '';
 
   var searchReplace = {
-    8: "\\b",   // x08   backspace
-    11: "\\v",  // x0B   vertical tab
-    7: "\\a",   // x07   alarm beep
-    9: "\\t",   // \t    tab
-    13: "\\r",  // \r    carriage return
-    10: "\\n",  // \n    line feed
-    12: "\\f",  // \f    form feed
+    8: "\\b", // x08   backspace
+    11: "\\v", // x0B   vertical tab
+    7: "\\a", // x07   alarm beep
+    9: "\\t", // \t    tab
+    13: "\\r", // \r    carriage return
+    10: "\\n", // \n    line feed
+    12: "\\f", // \f    form feed
     92: "\\\\", // \\    backslash
-    34: '\\"',  // \"    Guillemets
+    34: '\\"', // \"    Guillemets
   };
 
   String result = '';

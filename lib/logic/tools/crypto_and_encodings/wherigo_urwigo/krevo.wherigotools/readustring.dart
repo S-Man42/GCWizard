@@ -1,6 +1,6 @@
 /**
  * Port from https://github.com/Krevo/WherigoTools/blob/master/readustring.php
- * Port from Dennis Treya
+ * Port from Dennis Treysa
  *
  * MIT License
  */
@@ -26,41 +26,27 @@ String luaStringToString(String pString) {
   int tOrd = 0;
   int tStrLen = pString.length;
 
-  var  tEscapeMapping = {
-    "t": 9,
-    "n": 10,
-    "r": 13,
-    "a": 7,
-    "f": 12,
-    "v": 11,
-    "b": 8,
-    "e": 27,
-    "\\": 92,
-    "\"": 34
-  };
+  var tEscapeMapping = {"t": 9, "n": 10, "r": 13, "a": 7, "f": 12, "v": 11, "b": 8, "e": 27, "\\": 92, "\"": 34};
 
   while (tOffset < tStrLen) {
-    if (pString[tOffset] == '\\'){
+    if (pString[tOffset] == '\\') {
       tOffset += 1;
-      if (tOffset < tStrLen)
-        if (int.tryParse(pString[tOffset]) != null)
-          tOffset += 1;
-          if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null))
-          tOffset += 1;
-          if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null)) {
-            tOrd = int.parse(pString[tOffset - 2]) * 100 + int.parse(pString[tOffset - 1]) * 10 + int.parse(pString[tOffset]);
-            tNewString += String.fromCharCode(tOrd);
-          } else
-            if (tEscapeMapping[pString[tOffset]] != null)
-              tNewString += String.fromCharCode(tEscapeMapping[pString[tOffset]]);
-    }
-    else
+      if (tOffset < tStrLen) if (int.tryParse(pString[tOffset]) != null) tOffset += 1;
+
+      if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null)) tOffset += 1;
+
+      if (tOffset < tStrLen && (int.tryParse(pString[tOffset]) != null)) {
+        tOrd =
+            int.parse(pString[tOffset - 2]) * 100 + int.parse(pString[tOffset - 1]) * 10 + int.parse(pString[tOffset]);
+        tNewString += String.fromCharCode(tOrd);
+      } else if (tOffset < tStrLen && tEscapeMapping[pString[tOffset]] != null)
+        tNewString += String.fromCharCode(tEscapeMapping[pString[tOffset]]);
+    } else
       tNewString += pString[tOffset];
 
-  tOffset += 1;
+    tOffset += 1;
   }
   return tNewString;
-
 }
 
 String readustring(String input, String dtable) {

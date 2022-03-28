@@ -107,6 +107,7 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
@@ -2640,6 +2641,10 @@ initializeRegistry(BuildContext context) {
       'rotation',
       'rotation_rot47',
     ]),
+    GCWTool(tool: Rot123(), i18nPrefix: 'rotation_rot123', searchKeys: [
+      'rotation',
+      'rotation_rot123',
+    ]),
     GCWTool(tool: RotationGeneral(), i18nPrefix: 'rotation_general', searchKeys: [
       'rotation',
     ]),
@@ -3424,7 +3429,10 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
       'symbol_templers',
     ]),
-    GCWSymbolTableTool(symbolKey: 'tenctonese', symbolSearchStrings: [
+    GCWSymbolTableTool(symbolKey: 'tenctonese_cursive', symbolSearchStrings: [
+      'symbol_tenctonese',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'tenctonese_printed', symbolSearchStrings: [
       'symbol_tenctonese',
     ]),
     GCWSymbolTableTool(symbolKey: 'tengwar_beleriand', symbolSearchStrings: [

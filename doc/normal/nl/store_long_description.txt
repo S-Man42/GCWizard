@@ -2,7 +2,7 @@ De GC Wizard is een open-source tool collectie.
 
 Het werd oorspronkelijk gemaakt om Geocachers een offline tool aan te bieden om hen te ondersteunen met mysteries en raadsels. De GC Wizard bevat dus talloze hulpmiddelen voor eenvoudige cryptografie, geografische en wetenschappelijke berekeningen en honderden sets van verschillende symbolen.
 
-Ondertussen is het project zeer groot geworden en kan het uitvoerbaar zijn voor veel niet-Geocaching problemen.
+Ondertussen is het project zeer groot geworden en kan het bruikbaar zijn voor veel niet-Geocaching problemen.
 
 Vertaald naar 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 

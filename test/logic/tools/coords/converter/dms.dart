@@ -19,6 +19,7 @@ final List<Map<String, dynamic>> inputsToExpectedDMS = [
   {'text': '52°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
   {'text': '052°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
   {'text': '52° 12\′ 30\″ N, 20°12\′ 31\″ O', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
+  {'text': '52° 12\′ 30“ N, 20°12\′ 31” O', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
 
   {'text': 'N 52° 12\' 30.15" E 20° 12\' 30.15"', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
   {'text': 'N 52° 12\′ 30\″,O 20°12\′ 31\″', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
