@@ -113,7 +113,7 @@ class Stack {
 
 int _x = 0;
 int _y = 0;
-String _pg = '';
+List<int> _pg = [];
 
 List<String> _BefungeStack = [];
 List<String> _PC = [];
@@ -121,7 +121,11 @@ List<String> _Command = [];
 List<String> _Mnemonic = [];
 
 String _cur() {
-  return _pg[_y * LINEWIDTH + _x];
+  int opCode = _pg[_y * LINEWIDTH + _x];
+  if (0 < opCode && opCode < 256)
+    return String.fromCharCode(opCode);
+  else
+    return opCode.toString();
 }
 
 void _addDebugInformation(bool stringMode){
@@ -391,7 +395,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
           case 'g': // self modify - get value from memory
             a = stack.pop(); // y
             b = stack.pop(); // x
-
+print('get ' + _pg[a * SCREENWIDTH + b].toString() +' from (' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')');
             if (_outOfBoundsAccess(a, b))
               return BefungeOutput(
                   Output: STDOUT.join('') + '\n\nget(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
@@ -401,14 +405,14 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                   Command: _Command,
                   Mnemonic: _Mnemonic);
             else
-              stack.push(_pg[a * SCREENWIDTH + b].codeUnitAt(0));
+              stack.push(_pg[a * SCREENWIDTH + b]);
             break;
 
           case 'p': // self modify - put value into memory
             a = stack.pop(); // y
             b = stack.pop(); // x
             v = stack.pop(); // value
-
+print('put ' + v.toString() +' into (' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')');
             if (_outOfBoundsAccess(a, b))
               return BefungeOutput(
                   Output: STDOUT.join('') + '\n\nput(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
@@ -471,23 +475,25 @@ bool _outOfBoundsAccess(int y, int x){
 }
 
 void _put(int y, int x, int v){
-  List<String> result = _pg.split('');
-  result[y * SCREENWIDTH + x] = String.fromCharCode(v);
-  _pg = result.join('');
+  _pg[y * SCREENWIDTH + x] = v;
 }
 
-String _fillProgram(String program) {
-  List<String> pg = [];
+List<int> _fillProgram(String program) {
+  List<int> pg = [];
 
   program.split('\n').forEach((line) {
-    pg.add(line.padRight(LINEWIDTH, ' '));
+    line.padRight(LINEWIDTH, ' ').split('').forEach((element) {
+      pg.add(element.codeUnitAt(0));
+    });
   });
 
   while (pg.length < PAGEHEIGHT) {
-    pg.add(BEFUNGE_EMPTY_LINE);
+    BEFUNGE_EMPTY_LINE.split('').forEach((element) {
+      pg.add(element.codeUnitAt(0));
+    });
   }
 
-  return pg.join('');
+  return pg;
 }
 
 bool _correctBefungeProgramLength(String program) {
