@@ -1,7 +1,7 @@
 import 'dart:math';
 
-final ERROR_BRAINFK_LOOPNOTCLOSED = 'brainfk_error_loopnotclosed';
-final ERROR_BRAINFK_LOOPNOTOPENED = 'brainfk_error_loopnotopened';
+final ERROR_BRAINFK_LOOPNOTCLOSED = 'common_programming_error_loopnotclosed';
+final ERROR_BRAINFK_LOOPNOTOPENED = 'common_programming_error_loopnotopened';
 
 final MAX_MEMORY = 32768;
 
@@ -77,9 +77,8 @@ String interpretBrainfk(String code, {String input}) {
 
     i++;
   }
-  ;
 
-  return out;
+  return out.replaceAll('\x00', '');
 }
 
 // Dart port/fork of https://github.com/anars/BrainJuck/blob/master/source/com/anars/brainjuck/Generator.java

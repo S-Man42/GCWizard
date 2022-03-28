@@ -39,8 +39,10 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
     int maxLetterIndex = 0;
     widget.group.values.forEach((value) {
       if (value.key.length != 1) return;
+      var alphabetIndex = alphabet_AZ[value.key.toUpperCase()];
+      if (alphabetIndex == null) return;
 
-      maxLetterIndex = max(maxLetterIndex, alphabet_AZ[value.key.toUpperCase()]);
+      maxLetterIndex = max(maxLetterIndex, alphabetIndex);
     });
 
     if (maxLetterIndex < 26) {
@@ -69,7 +71,9 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
     entry.key = key;
     entry.value = value;
     entry.type = type;
-    _updateValue(entry);
+    setState(() {
+      _updateValue(entry);
+    });
   }
 
   _removeEntry(dynamic id, BuildContext context) {

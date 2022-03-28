@@ -1,0 +1,1 @@
+Narzędzie do rozwiązywania zagadek z geocachingu, geodezji i nauki.

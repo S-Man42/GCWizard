@@ -1,20 +1,21 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.1.0+134
+version: 2.2.0+149
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  archive: ^3.1.2
+  archive: ^3.2.1
+  audioplayers: ^0.20.1
   auto_size_text: ^3.0.0
   base32: ^2.0.0
   cached_network_image: ^3.1.0
   diacritic: ^0.1.1
-  file_picker: ^4.1.0
+  file_picker: ^4.5.0
   file_picker_writable: ^2.0.1
   encrypt: ^5.0.0
-  exif: ^3.0.0
+  exif: ^3.1.1
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -22,28 +23,44 @@ dependencies:
   flutter_map: ^0.13.1
   flutter_map_marker_popup: ^1.0.1
   flutter_map_tappable_polyline: ^3.0.0
-  fluttertoast: ^8.0.8
-  http: ^0.13.3
-  image: ^3.0.5
+  fluttertoast: ^8.0.9
+  http: ^0.13.4
+  http_parser: ^4.0.0
+  image: ^3.1.3
   intl: ^0.17.0
   location: ^4.3.0
   mask_text_input_formatter: ^2.0.0
-  math_expressions: ^2.2.0
-  package_info: ^2.0.0
+  math_expressions: ^2.3.0
+  package_info_plus: ^1.4.0
   path: ^1.8.0
-  path_provider: ^2.0.5
+  path_provider: ^2.0.9
   permission_handler: ^8.1.6
-  photo_view: ^0.13.0
-  pointycastle: ^3.3.3
+  #photo_view: ^0.13.0
+  pointycastle: ^3.5.1
   prefs: ^3.3.0
   provider: ^6.0.1
   qr: ^3.0.0
   r_scan: ^0.1.6+1
   scrollable_positioned_list: ^0.2.3
   touchable: ^1.0.0
+  tuple: ^2.0.0
   universal_html: ^2.0.4
-  uuid: ^3.0.4
-  url_launcher: ^6.0.12
+  unrar_file: ^1.1.0
+  uuid: ^3.0.6
+  url_launcher: ^6.0.20
+  utility: ^1.0.1
+  code_text_field: ^1.0.2
+  #xmp: ^1.0.2 # xml:4  :(
+
+dependency_overrides:
+  # https://stackoverflow.com/questions/70404718/error-with-photoview-looking-up-a-deactivated-widgets-ancestor-is-unsafe/71010204#71010204
+  # avoids error "Looking up a deactivated widget's ancestor is unsafe"
+  # The problem is coming from photo_view package.
+  # should be removed as soon the plugin is updated
+  photo_view:
+    git:
+      url: https://github.com/bluefireteam/photo_view
+      ref: master
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +77,6 @@ flutter:
     - assets/quadgrams/
     - assets/tokens/
     - assets/searchstrings/
-    - assets/symbol_tables/
     - assets/symbol_tables/adlam/
     - assets/symbol_tables/albhed/
     - assets/symbol_tables/alchemy/
@@ -81,8 +97,7 @@ flutter:
     - assets/symbol_tables/barbier/
     - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot_1888/
-    - assets/symbol_tables/baudot_ita1/
-    - assets/symbol_tables/baudot_mis/
+    - assets/symbol_tables/baudot_54123/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
@@ -130,7 +145,9 @@ flutter:
     - assets/symbol_tables/elia/
     - assets/symbol_tables/enochian/
     - assets/symbol_tables/eurythmy/
+    - assets/symbol_tables/face_it/
     - assets/symbol_tables/fakoo/
+    - assets/symbol_tables/fez/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/finger_numbers/
     - assets/symbol_tables/flags/
@@ -149,7 +166,8 @@ flutter:
     - assets/symbol_tables/gargish/
     - assets/symbol_tables/gc_attributes_ids/
     - assets/symbol_tables/gc_attributes_meaning/
-    - assets/symbol_tables/genreich/
+    - assets/symbol_tables/gernreich/
+    - assets/symbol_tables/gerudo/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/greek_numerals/
@@ -164,7 +182,10 @@ flutter:
     - assets/symbol_tables/hieroglyphs/
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
+    - assets/symbol_tables/hylian_64/
+    - assets/symbol_tables/hylian_albw_botw/
     - assets/symbol_tables/hylian_skyward_sword/
+    - assets/symbol_tables/hylian_symbols/
     - assets/symbol_tables/hylian_twilight_princess_gcn/
     - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
@@ -175,6 +196,10 @@ flutter:
     - assets/symbol_tables/illuminati_v2/
     - assets/symbol_tables/intergalactic/
     - assets/symbol_tables/iokharic/
+    - assets/symbol_tables/ita1_1926/
+    - assets/symbol_tables/ita1_1929/
+    - assets/symbol_tables/ita2_1929/
+    - assets/symbol_tables/ita2_1931/
     - assets/symbol_tables/japanese_numerals/
     - assets/symbol_tables/kabouter_abc/
     - assets/symbol_tables/kabouter_abc_1947/
@@ -184,6 +209,7 @@ flutter:
     - assets/symbol_tables/klingon_klinzhai/
     - assets/symbol_tables/krempel/
     - assets/symbol_tables/krypton/
+    - assets/symbol_tables/la_buse/
     - assets/symbol_tables/lorm/
     - assets/symbol_tables/magicode/
     - assets/symbol_tables/mandalorian/
@@ -199,16 +225,18 @@ flutter:
     - assets/symbol_tables/maze/
     - assets/symbol_tables/minimoys/
     - assets/symbol_tables/moon/
+    - assets/symbol_tables/moon_phases/
+    - assets/symbol_tables/morse/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/murray_v2_fischer_corrected/
     - assets/symbol_tables/murray_v3_navy_1796/
     - assets/symbol_tables/murray_v4_roucoux/
     - assets/symbol_tables/murraybaudot/
-    - assets/symbol_tables/murraybaudot_miss/
     - assets/symbol_tables/musica/
     - assets/symbol_tables/nazcaan/
     - assets/symbol_tables/new_zealand_sign_language/
     - assets/symbol_tables/niessen/
+    - assets/symbol_tables/ninjargon/
     - assets/symbol_tables/notes_doremi/
     - assets/symbol_tables/notes_notevalues/
     - assets/symbol_tables/notes_names_altoclef/
@@ -235,6 +263,7 @@ flutter:
     - assets/symbol_tables/prussian_colors_artillery/
     - assets/symbol_tables/prussian_colors_infantery/
     - assets/symbol_tables/puzzle/
+    - assets/symbol_tables/puzzle_2/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/
     - assets/symbol_tables/red_herring/
@@ -250,8 +279,10 @@ flutter:
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/shadoks/
+    - assets/symbol_tables/sheikah/
     - assets/symbol_tables/shoes/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/siemens/
     - assets/symbol_tables/skullz/
     - assets/symbol_tables/slash_and_pipe/
     - assets/symbol_tables/solmisation/
@@ -263,13 +294,17 @@ flutter:
     - assets/symbol_tables/surf/
     - assets/symbol_tables/tae/
     - assets/symbol_tables/tamil_numerals/
+    - assets/symbol_tables/telegraph_pasley/
+    - assets/symbol_tables/telegraph_popham/
     - assets/symbol_tables/telegraph_prussia/
     - assets/symbol_tables/templers/
-    - assets/symbol_tables/tenctonese/
+    - assets/symbol_tables/tenctonese_cursive/
+    - assets/symbol_tables/tenctonese_printed/
     - assets/symbol_tables/tengwar_beleriand/
     - assets/symbol_tables/tengwar_classic/
     - assets/symbol_tables/tengwar_general/
     - assets/symbol_tables/terzi/
+    - assets/symbol_tables/thai_numerals/
     - assets/symbol_tables/theban/
     - assets/symbol_tables/three_squares/
     - assets/symbol_tables/tines/
@@ -291,6 +326,7 @@ flutter:
     - assets/symbol_tables/weather_w/
     - assets/symbol_tables/weather_ww/
     - assets/symbol_tables/webdings/
+    - assets/symbol_tables/westernunion/
     - assets/symbol_tables/windforce_beaufort/
     - assets/symbol_tables/windforce_knots/
     - assets/symbol_tables/window/

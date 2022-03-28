@@ -40,7 +40,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
             style: widget.style,
             bottom: 0.0,
             trailing: GCWIconButton(
-              iconData: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+              icon: _currentExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
               size: IconButtonSize.TINY,
               onPressed: () => _toggleExpand(),
             ),

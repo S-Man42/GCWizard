@@ -265,7 +265,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                   ),
                 ),
                 GCWIconButton(
-                  iconData: _currentIsEditingAlphabet ? Icons.check : Icons.edit,
+                  icon: _currentIsEditingAlphabet ? Icons.check : Icons.edit,
                   onPressed: () {
                     setState(() {
                       _currentIsEditingAlphabet = !_currentIsEditingAlphabet;

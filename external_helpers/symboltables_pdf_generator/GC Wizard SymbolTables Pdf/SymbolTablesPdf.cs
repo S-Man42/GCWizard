@@ -128,6 +128,26 @@ namespace GC_Wizard_SymbolTables_Pdf
         private Dictionary<String, String> CONFIG_SPECIAL_CHARS = null;
 
 
+        private XImage _GcwIcon;
+        // GC Wicard Icon
+        private XImage GcwIcon
+        {
+            get
+            {
+                if (_GcwIcon == null)
+                {
+                    MemoryStream memoryStream = new MemoryStream();
+                    Properties.Resources.circle_border_128.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                    _GcwIcon = XImage.FromGdiPlusImage(Image.FromStream(memoryStream));
+                }
+                return _GcwIcon;
+            }
+        }
+
+        private bool FontEmbeded { get; set; }
+        private List<XFont> FontList { get; set; } = new List<XFont>();
+
+
         public enum LanguageEnum
         {
             de,
@@ -189,7 +209,11 @@ namespace GC_Wizard_SymbolTables_Pdf
             return true;
         }
 
-
+        /// <summary>
+        /// draw all symbol tables
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="document"></param>
         private void drawSymbolTables(String path, PdfDocument document)
         {
             var offset = new PointF();
@@ -203,7 +227,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             Progress = 0;
 
             // Create the root bookmark. You can set the style and the color.
-            var config = getcontentTableName();
+            var config = getContentTableName();
             var contentTableName = config.Item1;
             CONFIG_Font = config.Item2;
             offset = createPage(document, ref page, ref gfx);
@@ -214,43 +238,35 @@ namespace GC_Wizard_SymbolTables_Pdf
             var progress_offset = directorys.Any() ? (100.0 / directorys.Count()) : 100;
             foreach (var entry in directorys)
             {
-                Debug.Print(entry.Value);
+                //Debug.Print(entry.Value);
                 offset = drawSymbolTable(path, entry.Value, entry.Key, document, ref page, ref gfx, offset, languagefile, licenseEntries);
 
                 offset.X = BorderWidthLeft;
                 offset.Y += ImageSize + 20;
 
-                Progress = Progress + progress_offset;
+                Progress += progress_offset;
             }
 
-            addLicenses(document, ref page, ref gfx, offset, languagefile, licenseEntries);
+            drawLicenses(document, ref page, ref gfx, offset, languagefile, licenseEntries);
 
             Progress = 100;
         }
 
-        private IEnumerable<KeyValuePair<String, String>> createDirectoryList(String path, String languagefile)
-        {
-            var list = new Dictionary<String, String>();
-            foreach (var directory in Directory.GetDirectories(symbolTablesDirectory(path)))
-            {
-                var folder = @directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-                var name = getSymbolTableName(folder, languagefile);
+        #region symbol table
 
-                if (name != null && directory != "backlog")
-                    list.Add(folder, name);
-            }
-
-            var query = list.OrderBy(entry => entry.Value);
-            if (testPage) return query.Take(1);
-
-            return query;
-        }
-
-        private String getSymbolTableName(String folder, String languagefile)
-        {
-            return getEntryValue(languagefile, "symboltables_" + folder + "_title");
-        }
-
+        /// <summary>
+        /// draw complete symbol table
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="name"></param>
+        /// <param name="folder"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <param name="languagefile"></param>
+        /// <param name="licenseEntries"></param>
+        /// <returns></returns>
         private PointF drawSymbolTable(String path, String name, String folder, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
         {
             var description = getEntryValue(languagefile, "symboltables_" + folder + "_description");
@@ -272,11 +288,19 @@ namespace GC_Wizard_SymbolTables_Pdf
             {
                 offset = drawImage(symbol.Value.Stream, document, ref page, ref gfx, offset, symbol.Value.Overlay);
                 SymbolImagesCount += 1;
+                symbol.Value.Stream.Dispose();
             }
 
             return offset;
         }
 
+        /// <summary>
+        /// create list with symbols and overlay
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="_symbolKey"></param>
+        /// <param name="languagefile"></param>
+        /// <returns></returns>
         private IEnumerable<KeyValuePair<String, SymbolInfo>> createSymbolList(String path, String _symbolKey, String languagefile)
         {
             var list = new Dictionary<String, SymbolInfo>();
@@ -325,8 +349,8 @@ namespace GC_Wizard_SymbolTables_Pdf
                         }
                     }
                 }
+                break; // first zip-file
             }
-
 
             Comparer<object> _sort;
             if (specialSort == false)
@@ -355,6 +379,451 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             return listSorted;
         }
+
+        #endregion
+
+        #region draw pdf pages
+
+        /// <summary>
+        /// draw symbol table header
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="license"></param>
+        /// <param name="count"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        private PointF drawName(String name, string description, string license, int count, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
+        {
+            // Create a font
+            XFont font = CreateXFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
+
+            var name_offset = font.Height;
+            if (!string.IsNullOrEmpty(description))
+                name_offset += font.Height / 2;
+            if (!string.IsNullOrEmpty(license))
+                name_offset += font.Height / 4;
+
+            name_offset += 20;
+
+            if (page == null || NewPage)
+                offset = createPage(document, ref page, ref gfx);
+            else if (offset.Y + name_offset + (ImageSize + RowDistance) > page.Height - BorderWidthBottom)
+            {
+                if (count > rowImageCount(ref page))
+                    offset = createPage(document, ref page, ref gfx);
+            }
+            else if (offset.Y + name_offset + 2 * (ImageSize + RowDistance) > page.Height - BorderWidthBottom)
+            {
+                if (count > 2 * rowImageCount(ref page))
+                    offset = createPage(document, ref page, ref gfx);
+            }
+
+            // Draw the name
+            gfx.DrawString(name, font, XBrushes.Black,
+            new XRect(offset.X, offset.Y, page.Width, page.Height),
+            XStringFormats.TopLeft);
+
+            offset.Y += font.Height;
+
+            // description
+            if (!string.IsNullOrEmpty(description))
+            {
+                font = CreateXFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+
+                // Draw the description
+                gfx.DrawString(description, font, XBrushes.Black,
+                new XRect(offset.X, offset.Y, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+                offset.Y += font.Height;
+            }
+
+            // license
+            if (!string.IsNullOrEmpty(license))
+            {
+                font = CreateXFont(CONFIG_Font, FontSizeName / 4, XFontStyle.Regular);
+
+                // Draw the license
+                gfx.DrawString(license, font, XBrushes.Black,
+                new XRect(offset.X, offset.Y, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+                offset.Y += font.Height;
+            }
+            offset.Y += HeadingDistance;
+
+            Outline.Outlines.Add(name, page, true);
+
+            return offset;
+        }
+
+
+        /// <summary>
+        /// draw symbol overlay text
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        private PointF drawOverlay(String name, int maxLength, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
+        {
+            // Create a font
+            XFont font = CreateXFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
+            if (name == " ")
+            {
+                drawSpaceSymbol(offset, XColors.Blue, font, gfx);
+                return offset;
+            }
+
+            // Draw the name
+            name = checkTextLength(name, maxLength, font, gfx);
+            if (!name.Contains(Environment.NewLine))
+                gfx.DrawString(name, font, XBrushes.Blue, new XRect(offset.X, offset.Y, ImageSize, 2 * FontSizeOverlay), XStringFormats.TopLeft);
+            else
+            {
+                var text = name.Split('\n');
+
+                for (int i = 0; i < text.Length; i++)
+                {
+                    text[i] = text[i].Replace("\r", "");
+                    gfx.DrawString(text[i], font, XBrushes.Blue, new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance), XStringFormats.TopLeft);
+                }
+            }
+
+            return offset;
+        }
+
+        /// <summary>
+        /// draw space symbol
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="color"></param>
+        /// <param name="font"></param>
+        /// <param name="gfx"></param>
+        private void drawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
+        {
+            var size = gfx.MeasureString("M", font);
+            var pen = new XPen(color, 1);
+
+            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height));
+            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X, position.Y + size.Height * 0.8));
+            gfx.DrawLine(pen, new XPoint(position.X + size.Width, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height * 0.8));
+
+        }
+
+        /// <summary>
+        /// draw symbol image
+        /// </summary>
+        /// <param name="symbolStream"></param>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <param name="overlay"></param>
+        /// <returns></returns>
+        private PointF drawImage(Stream symbolStream, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String overlay)
+        {
+            XImage image = XImage.FromGdiPlusImage(Image.FromStream(symbolStream));
+            XSize size = image.Size;
+            var ImageScale = ImageSize / size.Height;
+            size.Width *= ImageScale;
+            size.Height *= ImageScale;
+
+            if (page == null)
+                offset = createPage(document, ref page, ref gfx);
+            else if (offset.X + size.Width > page.Width - BorderWidthRight)
+            {
+                // new Row
+                offset.X = BorderWidthLeft;
+                offset.Y += (Single)size.Height + RowDistance;
+            }
+
+            if (offset.Y + size.Height > page.Height - BorderWidthBottom)
+                offset = createPage(document, ref page, ref gfx);
+
+            gfx.DrawImage(image, offset.X, offset.Y, size.Width, size.Height);
+            image.Dispose();
+
+            // Border
+            gfx.DrawRectangle(new XPen(XColor.FromArgb(Color.Gray.ToArgb()), 0.2), offset.X, offset.Y, size.Width, size.Height);
+
+            // Draw the overlay
+            drawOverlay(overlay, (int)(size.Width + ColumnDistance - 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
+
+            offset.X += (Single)size.Width + ColumnDistance;
+
+            return offset;
+        }
+
+        /// <summary>
+        /// draw licenses text
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <param name="offset"></param>
+        /// <param name="languagefile"></param>
+        /// <param name="licenseEntries"></param>
+        private void drawLicenses(PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
+        {
+            var licenseLabel = getLicenseLabel(languagefile);
+
+            // Create a font
+            XFont font = CreateXFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
+            offset = createPage(document, ref page, ref gfx);
+
+
+            gfx.DrawString(licenseLabel, font, XBrushes.Black,
+                new XRect(offset.X, offset.Y, page.Width, page.Height),
+                XStringFormats.TopLeft);
+            Outline = document.Outlines.Add(licenseLabel, page, true, PdfOutlineStyle.Bold, XColors.Black);
+
+            var name_offset = font.Height;
+            name_offset += 20;
+
+            offset.Y += name_offset;
+
+            // Create a font
+            font = CreateXFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+
+            double maxSize = 0;
+
+            foreach (var entry in licenseEntries)
+            {
+                var name = getSymbolTableName(entry.Key, languagefile);
+                var size = gfx.MeasureString(name + ":", font);
+                if (maxSize < size.Width)
+                    maxSize = size.Width;
+            }
+            var valueOffsetX = offset.X + maxSize + 10;
+            var maxLength = (int)(page.Width - BorderWidthRight - valueOffsetX);
+
+            foreach (var entry in licenseEntries)
+            {
+                if (newPageNeeded(page, offset, font.Height + 1))
+                {
+                    offset = createPage(document, ref page, ref gfx);
+                }
+
+                var name = getSymbolTableName(entry.Key, languagefile);
+                if (name != null)
+                {
+                    gfx.DrawString(name + ":", font, XBrushes.Black,
+                        new XRect(offset.X, offset.Y, page.Width, page.Height),
+                        XStringFormats.TopLeft);
+
+                    var textValues = entry.Value.Replace("\\n", "\n").Split('\n');
+                    var text = new List<String>();
+                    foreach (var item in textValues)
+                    {
+                        var values = checkTextLength(item.Replace("\r", ""), maxLength, font, gfx);
+                        text.AddRange(values.Split('\n'));
+                    }
+
+                    for (int i = 0; i < text.Count; i++)
+                    {
+                        gfx.DrawString(text[i], font, XBrushes.Black,
+                            new XRect(valueOffsetX, offset.Y, page.Width, page.Height),
+                            XStringFormats.TopLeft);
+
+                        offset.Y += font.Height + ((i == text.Count - 1) ? 1 : 0);
+                    }
+                }
+
+            }
+
+        }
+
+        #endregion
+
+        #region methods
+
+        /// <summary>
+        /// new page needed ?
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="offset"></param>
+        /// <param name="name_offset"></param>
+        /// <returns></returns>
+        private bool newPageNeeded(PdfPage page, PointF offset, int name_offset)
+        {
+            // min. 2 image rows
+            return (offset.Y + name_offset + HeadingDistance + 2 * ImageSize + RowDistance > page.Height - BorderWidthBottom);
+        }
+
+        /// <summary>
+        /// create a new pdf page (draw header)
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="page"></param>
+        /// <param name="gfx"></param>
+        /// <returns></returns>
+        private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
+        {
+            // Create a font
+            XFont font = CreateXFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
+            XSize textSize;
+            String text;
+
+            page = document.AddPage();
+            page.Orientation = Orientation;
+            gfx = XGraphics.FromPdfPage(page);
+
+            if (document.PageCount == 1)
+            {
+                text = File.ReadAllText(versionFileName(ProjectPath));
+                versionText = getVersionEntryValue(text, "version");
+            }
+
+            textSize = gfx.MeasureString(versionText, font);
+            // draw the version text
+            gfx.DrawString(versionText, font, XBrushes.Black,
+                    new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
+                    XStringFormats.TopLeft);
+
+            // GC Wicard Icon
+            gfx.DrawImage(GcwIcon, 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
+
+            // Draw GC Wizard Text
+            // Create a font
+            font = CreateXFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
+
+            gfx.DrawString("GC Wizard", font, XBrushes.Black,
+                new XRect(BorderWidthTop + 3, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
+                XStringFormats.TopLeft);
+
+            return new PointF(BorderWidthLeft, BorderWidthTop);
+        }
+
+        /// <summary>
+        /// wrap text if too long 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="font"></param>
+        /// <param name="gfx"></param>
+        /// <returns></returns>
+        private static string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
+        {
+            text = checkPartTextLength(text, maxLength, font, gfx);
+            var index = text.LastIndexOf("\n");
+
+            if (index >= 0)
+            {
+                var subString = text.Substring(index);
+                var size = gfx.MeasureString(subString, font);
+                while (size.Width > maxLength)
+                {
+                    subString = checkPartTextLength(subString, maxLength, font, gfx);
+
+                    text = text.Substring(0, index) + subString;
+
+                    index = text.LastIndexOf("\n") + 1;
+                    subString = text.Substring(index);
+                    size = gfx.MeasureString(subString, font);
+                }
+            }
+            return text;
+        }
+
+        /// <summary>
+        /// wrap text if too long
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="maxLength"></param>
+        /// <param name="font"></param>
+        /// <param name="gfx"></param>
+        /// <returns></returns>
+        private static string checkPartTextLength(string text, int maxLength, XFont font, XGraphics gfx)
+        {
+            var size = gfx.MeasureString(text, font);
+
+            if (size.Width <= maxLength)
+                return text;
+
+            Func<string, Char, int> textSplit = (_text, _char) =>
+            {
+                var _index = text.LastIndexOf(_char);
+                while (_index > 0)
+                {
+                    size = gfx.MeasureString(text.Substring(0, _index), font);
+                    if (size.Width <= maxLength)
+                        return _index;
+                    else
+                    {
+                        do
+                        {
+                            _index = text.LastIndexOf(_char, _index - 1, _index - 1);
+                            if (_index > 0)
+                                size = gfx.MeasureString(text.Substring(0, _index), font);
+
+                        } while (_index > 0 & size.Width >= maxLength);
+                    }
+                }
+                return _index;
+            };
+
+            var index = textSplit(text, ' ');
+            if (index > 1)
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
+
+            index = textSplit(text, '/');
+            if (index > 0)
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
+
+            index = textSplit(text, ',');
+            if (index > 0)
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
+
+            index = textSplit(text, ')');
+            if (index > 0)
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
+
+            for (index = text.Length - 1; index >= 0; index--)
+            {
+                size = gfx.MeasureString(text.Substring(0, index), font);
+                if (size.Width <= maxLength)
+                    return text.Substring(0, index) + Environment.NewLine + text.Substring(index);
+            }
+
+            return text;
+        }
+
+        /// <summary>
+        /// calc images per row 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        int rowImageCount(ref PdfPage page)
+        {
+            return (int)Math.Floor((page.Width - BorderWidthLeft - BorderWidthRight) / (ImageSize + ColumnDistance));
+        }
+
+        private XFont CreateXFont(String familyName, double emSize, XFontStyle style)
+        {
+            var xFont = FontList.Where(font => (font.Name == familyName) & (font.Size == emSize) & (font.Style == style)).FirstOrDefault();
+
+            if (xFont != null) return xFont;
+
+            // Set font encoding to unicode always
+            XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always);
+
+            xFont =  new XFont(familyName, emSize, style, FontEmbeded ? options : null);
+
+            FontList.Add(xFont);
+            return xFont;
+        }
+
+        #endregion
+
+        #region parse config file
 
         private List<String> parseTranslateConfig(String fileContent)
         {
@@ -396,7 +865,6 @@ namespace GC_Wizard_SymbolTables_Pdf
                     }
                 }
             }
-
             return list;
         }
 
@@ -428,7 +896,6 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var path = Path.Combine(ProjectPath, @"lib\widgets\tools\symbol_tables\symbol_table_data.dart");
                 if (File.Exists(path))
                 {
-
                     try
                     {
                         var fileContent = File.ReadAllText(path);
@@ -469,7 +936,6 @@ namespace GC_Wizard_SymbolTables_Pdf
                     }
                 }
             }
-
             return new Dictionary<String, String>(CONFIG_SPECIAL_CHARS);
         }
 
@@ -504,300 +970,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             return getEntryValue(fileContent, CONFIG_TRANSLATIONPREFIX);
         }
 
+        #endregion
 
-        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
-        {
-            var fileName = Path.GetFileNameWithoutExtension(symbolPath);
-            var overlay = fileName;
-
-            overlay = new Regex("(^_*|_*$)").Replace(overlay, "");
-
-
-            if (mappingList != null && mappingList.ContainsKey(overlay))
-                overlay = mappingList[overlay];
-            else if (translateList != null && translateList.Contains(overlay))
-            {
-                if (String.IsNullOrEmpty(translationPrefix))
-                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
-                else
-                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
-                translateables.Add(overlay);
-            }
-
-            if (!caseSensitive)
-                overlay = overlay.ToUpper();
-
-            return overlay;
-        }
-
-        private PointF drawName(String name, string description, string license, int count, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
-        {
-            // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
-
-            var name_offset = font.Height;
-            if (!string.IsNullOrEmpty(description))
-                name_offset += font.Height / 2;
-            if (!string.IsNullOrEmpty(license))
-                name_offset += font.Height / 4;
-
-            name_offset += 20;
-
-            if (page == null || NewPage)
-                offset = createPage(document, ref page, ref gfx);
-            else if (offset.Y + name_offset + (ImageSize + RowDistance) > page.Height - BorderWidthBottom)
-            {
-                if (count > rowImageCount(ref page))
-                    offset = createPage(document, ref page, ref gfx);
-            }
-            else if (offset.Y + name_offset + 2 * (ImageSize + RowDistance) > page.Height - BorderWidthBottom)
-            {
-                if (count > 2 * rowImageCount(ref page))
-                    offset = createPage(document, ref page, ref gfx);
-            }
-
-            // Draw the name
-            gfx.DrawString(name, font, XBrushes.Black,
-            new XRect(offset.X, offset.Y, page.Width, page.Height),
-            XStringFormats.TopLeft);
-
-            offset.Y += font.Height;
-
-            // description
-            if (!string.IsNullOrEmpty(description))
-            {
-                font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
-
-                // Draw the description
-                gfx.DrawString(description, font, XBrushes.Black,
-                new XRect(offset.X, offset.Y, page.Width, page.Height),
-                XStringFormats.TopLeft);
-
-                offset.Y += font.Height;
-            }
-
-            // license
-            if (!string.IsNullOrEmpty(license))
-            {
-                font = new XFont(CONFIG_Font, FontSizeName / 4, XFontStyle.Regular);
-
-                // Draw the license
-                gfx.DrawString(license, font, XBrushes.Black,
-                new XRect(offset.X, offset.Y, page.Width, page.Height),
-                XStringFormats.TopLeft);
-
-                offset.Y += font.Height;
-            }
-            offset.Y += HeadingDistance;
-
-            Outline.Outlines.Add(name, page, true);
-
-            return offset;
-        }
-
-        private bool newPageNeeded(PdfPage page, PointF offset, int name_offset)
-        {
-            // min. 2 image rows
-            return (offset.Y + name_offset + HeadingDistance + 2 * ImageSize + RowDistance > page.Height - BorderWidthBottom);
-        }
-
-        private PointF drawOverlay(String name, int maxLength, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset)
-        {
-            // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
-            if (name == " ")
-            {
-                drawSpaceSymbol(offset, XColors.Blue, font, gfx);
-                return offset;
-            }
-
-            // Draw the name
-            name = checkTextLength(name, maxLength, font, gfx);
-            if (!name.Contains(Environment.NewLine))
-                gfx.DrawString(name, font, XBrushes.Blue, new XRect(offset.X, offset.Y, ImageSize, 2 * FontSizeOverlay), XStringFormats.TopLeft);
-            else
-            {
-                var text = name.Split('\n');
-
-                for (int i = 0; i < text.Length; i++)
-                {
-                    text[i] = text[i].Replace("\r", "");
-                    gfx.DrawString(text[i], font, XBrushes.Blue, new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance), XStringFormats.TopLeft);
-                }
-            }
-
-            return offset;
-        }
-
-        private void drawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
-        {
-            var size = gfx.MeasureString("M", font);
-            var pen = new XPen(color, 1);
-
-            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height));
-            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X, position.Y + size.Height * 0.8));
-            gfx.DrawLine(pen, new XPoint(position.X + size.Width, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height * 0.8));
-
-        }
-
-        private string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
-        {
-            text = checkPartTextLength(text, maxLength, font, gfx);
-
-            var index = text.LastIndexOf("\n");
-
-
-            if (index >= 0)
-            {
-                var subString = text.Substring(index);
-                var size = gfx.MeasureString(subString, font);
-                while (size.Width > maxLength)
-                {
-                    subString = checkPartTextLength(subString, maxLength, font, gfx);
-
-                    text = text.Substring(0, index) + subString;
-
-                    index = text.LastIndexOf("\n")+1;
-                    subString = text.Substring(index);
-                    size = gfx.MeasureString(subString, font);
-                }
-
-            }
-
-            return text;
-        }
-
-        private string checkPartTextLength(string text, int maxLength, XFont font, XGraphics gfx)
-        {
-            var size = gfx.MeasureString(text, font);
-
-            if (size.Width <= maxLength)
-                return text;
-
-            Func<string, Char, int> textSplit = (_text, _char) =>
-            {
-                var _index = text.LastIndexOf(_char);
-                while (_index > 0)
-                {
-                    size = gfx.MeasureString(text.Substring(0, _index), font);
-                    if (size.Width <= maxLength)
-                        return _index;
-                    else
-                    {
-                        do
-                        {
-                            _index = text.LastIndexOf(_char, _index - 1, _index - 1);
-                            if (_index > 0)
-                                size = gfx.MeasureString(text.Substring(0, _index), font);
-
-                        } while (_index > 0 & size.Width >= maxLength);
-                    }
-                }
-
-                return _index;
-            };
-
-            var index = textSplit(text, ' ');
-            if (index > 1)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
-
-            index = textSplit(text, '/');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
-
-            index = textSplit(text, ',');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
-
-            index = textSplit(text, ')');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
-
-            for (index = text.Length - 1; index >= 0; index--)
-            {
-                size = gfx.MeasureString(text.Substring(0, index), font);
-                if (size.Width <= maxLength)
-                    return text.Substring(0, index) + Environment.NewLine + text.Substring(index);
-
-            }
-
-            return text;
-        }
-
-        private PointF drawImage(Stream symbolStream, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String overlay)
-        {
-            XImage image = XImage.FromStream(symbolStream);
-            XSize size = image.Size;
-            var ImageScale = ImageSize / size.Height;
-            size.Width *= ImageScale;
-            size.Height *= ImageScale;
-
-            if (page == null)
-                offset = createPage(document, ref page, ref gfx);
-            else if (offset.X + size.Width > page.Width - BorderWidthRight)
-            {
-                // new Row
-                offset.X = BorderWidthLeft;
-                offset.Y += (Single)size.Height + RowDistance;
-            }
-
-            if (offset.Y + size.Height > page.Height - BorderWidthBottom)
-                offset = createPage(document, ref page, ref gfx);
-
-            gfx.DrawImage(image, offset.X, offset.Y, size.Width, size.Height);
-
-            // Border
-            gfx.DrawRectangle(new XPen(XColor.FromArgb(Color.Gray.ToArgb()), 0.2), offset.X, offset.Y, size.Width, size.Height);
-
-            // Draw the overlay
-            drawOverlay(overlay, (int)(size.Width + ColumnDistance - 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
-
-            offset.X += (Single)size.Width + ColumnDistance;
-
-            return offset;
-        }
-
-        private PointF createPage(PdfDocument document, ref PdfPage page, ref XGraphics gfx)
-        {
-            // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeOverlay, XFontStyle.Regular);
-            XSize textSize;
-            String text;
-
-            page = document.AddPage();
-            page.Orientation = Orientation;
-            gfx = XGraphics.FromPdfPage(page);
-
-            if (document.PageCount == 1)
-            {
-                text = File.ReadAllText(versionFileName(ProjectPath));
-                versionText = getVersionEntryValue(text, "version");
-            }
-
-            textSize = gfx.MeasureString(versionText, font);
-            // Draw the version text
-            gfx.DrawString(versionText, font, XBrushes.Black,
-                    new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
-                    XStringFormats.TopLeft);
-
-
-            // GC Wicard Icon
-            MemoryStream memoryStream = new MemoryStream();
-            Properties.Resources.circle_border_128.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
-            gfx.DrawImage(XImage.FromStream(memoryStream), 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
-
-            // Draw GC Wizard Text
-            // Create a font
-            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
-            text = "GC Wizard";
-            textSize = gfx.MeasureString(text, font);
-
-            gfx.DrawString("GC Wizard", font, XBrushes.Black,
-                new XRect(BorderWidthTop + 3, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
-                XStringFormats.TopLeft);
-
-            return new PointF(BorderWidthLeft, BorderWidthTop);
-        }
+        #region parse source files
 
         /// <summary>
         /// get text from language-file
@@ -919,11 +1094,40 @@ namespace GC_Wizard_SymbolTables_Pdf
             return list;
         }
 
-        int rowImageCount(ref PdfPage page)
+        #endregion
+
+        #region folder
+
+        /// <summary>
+        ///  list of symbol-tables directorys
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="languagefile"></param>
+        /// <returns></returns>
+        private IEnumerable<KeyValuePair<String, String>> createDirectoryList(String path, String languagefile)
         {
-            return (int)Math.Floor((page.Width - BorderWidthLeft - BorderWidthRight) / (ImageSize + ColumnDistance));
+            var list = new Dictionary<String, String>();
+            foreach (var directory in Directory.GetDirectories(symbolTablesDirectory(path)))
+            {
+                var folder = @directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+                var name = getSymbolTableName(folder, languagefile);
+
+                if (name != null && directory != "backlog")
+                    list.Add(folder, name);
+            }
+
+            var query = list.OrderBy(entry => entry.Value);
+            if (testPage) return query.Take(1);
+
+            return query;
         }
 
+
+        /// <summary>
+        /// language file exists ?
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public bool validFolder(String path)
         {
             if (!Directory.Exists(languageFileDirectory(path)))
@@ -963,6 +1167,65 @@ namespace GC_Wizard_SymbolTables_Pdf
             return Path.Combine(path, @"assets\symbol_tables");
         }
 
+        #endregion
+
+
+        #region get translations
+
+        /// <summary>
+        /// Determine symbol overlay
+        /// </summary>
+        /// <param name="symbolPath"></param>
+        /// <param name="folder"></param>
+        /// <param name="languagefile"></param>
+        /// <param name="translateList"></param>
+        /// <param name="mappingList"></param>
+        /// <param name="caseSensitive"></param>
+        /// <param name="translateables"></param>
+        /// <param name="translationPrefix"></param>
+        /// <returns></returns>
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables, String translationPrefix)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(symbolPath);
+            var overlay = fileName;
+
+            overlay = new Regex("(^_*|_*$)").Replace(overlay, "");
+
+            if (mappingList != null && mappingList.ContainsKey(overlay))
+                overlay = mappingList[overlay];
+            else if (translateList != null && translateList.Contains(overlay))
+            {
+                if (String.IsNullOrEmpty(translationPrefix))
+                    overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                else
+                    overlay = getEntryValue(languagefile, translationPrefix + overlay);
+                translateables.Add(overlay);
+            }
+
+            if (!caseSensitive)
+                overlay = overlay.ToUpper();
+
+            return overlay;
+        }
+
+
+        private String getSymbolTableName(String folder, String languagefile)
+        {
+            return getEntryValue(languagefile, "symboltables_" + folder + "_title");
+        }
+
+        private String getLicenseLabel(String languagefile)
+        {
+            return getEntryValue(languagefile, "licenses_symboltablesources");
+        }
+
+        #endregion
+
+        #region special sorts
+
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class NameSort : Comparer<Object>
         {
             List<String> translateables;
@@ -1015,6 +1278,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class specialSortNoteNames : Comparer<Object>
         {
             List<String> translateables;
@@ -1051,6 +1317,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class specialSortNoteValues : Comparer<Object>
         {
             List<String> translateables;
@@ -1088,6 +1357,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        /// <summary>
+        /// special sort
+        /// </summary>
         public class specialSortTrafficSignsGermany : Comparer<Object>
         {
             List<String> translateables;
@@ -1141,9 +1413,16 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
-        private Tuple<String, String> getcontentTableName()
-        {
+        #endregion
 
+        #region own translations 
+
+        /// <summary>
+        /// config content (label, font)
+        /// </summary>
+        /// <returns></returns>
+        private Tuple<String, String> getContentTableName()
+        {
             CONFIG_Font = CONFIG_DefaultFont;
             String contentTableName;
 
@@ -1158,6 +1437,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 case "ko":
                     contentTableName = "목차";
                     CONFIG_Font = "Malgun Gothic";
+                    FontEmbeded = true;
                     break;
                 case "it":
                     contentTableName = "Sommario";
@@ -1196,86 +1476,25 @@ namespace GC_Wizard_SymbolTables_Pdf
                     return "La source";
                 case "ko":
                     return "원천";
+                case "it":
+                    return "Fonte";
+                case "es":
+                    return "origen";
                 case "nl":
                     return "Bron";
+                case "pl":
+                    return "Źródło";
+                case "ru":
+                    return "Источник";
+                case "tr":
+                    return "Kaynak";
                 default:
                     return "Source";
             }
         }
 
-        private String getLicenseLabel(String languagefile)
-        {
-            return getEntryValue(languagefile, "licenses_symboltablesources");
-        }
-
-        private void addLicenses(PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String languagefile, Dictionary<string, string> licenseEntries)
-        {
-            var licenseLabel = getLicenseLabel(languagefile);
-
-            // Create a font
-            XFont font = new XFont(CONFIG_Font, FontSizeName, XFontStyle.BoldItalic);
-            offset = createPage(document, ref page, ref gfx);
+        #endregion
 
 
-            gfx.DrawString(licenseLabel, font, XBrushes.Black,
-                new XRect(offset.X, offset.Y, page.Width, page.Height),
-                XStringFormats.TopLeft);
-            Outline = document.Outlines.Add(licenseLabel, page, true, PdfOutlineStyle.Bold, XColors.Black);
-
-            var name_offset = font.Height;
-            name_offset += 20;
-
-            offset.Y += name_offset;
-
-            // Create a font
-            font = new XFont(CONFIG_Font, FontSizeName / 2, XFontStyle.Regular);
-
-            double maxSize = 0;
-
-            foreach (var entry in licenseEntries)
-            {
-                var name = getSymbolTableName(entry.Key, languagefile);
-                var size = gfx.MeasureString(name + ":", font);
-                if (maxSize < size.Width)
-                    maxSize = size.Width;
-            }
-            var valueOffsetX = offset.X + maxSize + 10;
-            var maxLength = (int)(page.Width - BorderWidthRight - valueOffsetX);
-
-            foreach (var entry in licenseEntries)
-            {
-                if (newPageNeeded(page, offset, font.Height + 1))
-                {
-                    offset = createPage(document, ref page, ref gfx);
-                }
-
-                var name = getSymbolTableName(entry.Key, languagefile);
-                if (name != null)
-                {
-                    gfx.DrawString(name + ":", font, XBrushes.Black,
-                        new XRect(offset.X, offset.Y, page.Width, page.Height),
-                        XStringFormats.TopLeft);
-
-                    var textValues = entry.Value.Replace("\\n", "\n").Split('\n');
-                    var text = new List<String>();
-                    foreach (var item in textValues)
-                    {
-                        var values = checkTextLength(item.Replace("\r", ""), maxLength, font, gfx);
-                        text.AddRange(values.Split('\n'));
-                    }
-
-                    for (int i = 0; i < text.Count; i++)
-                    {
-                        gfx.DrawString(text[i], font, XBrushes.Black,
-                            new XRect(valueOffsetX, offset.Y, page.Width, page.Height),
-                            XStringFormats.TopLeft);
-
-                        offset.Y += font.Height + ((i == text.Count - 1) ? 1 : 0);
-                    }
-                }
-
-            }
-
-        }
     }
 }

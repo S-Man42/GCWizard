@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
@@ -23,6 +24,9 @@ const _MAX_EXPANDED = 100;
 class FormulaParser {
   ContextModel _context;
   Parser parser;
+
+  bool unlimitedExpanded = false;
+  Map<String, String> safedFormulasMap = {};
 
   static final Map<String, double> CONSTANTS = {
     'ln10': ln10,
@@ -54,8 +58,8 @@ class FormulaParser {
   ];
 
   static final Map<String, Function> _CUSTOM_FUNCTIONS = {
-    'cs': (List<double> numbers) => sumCrossSum(numbers.map((number) => number.toInt()).toList()).toInt(),
-    'csi': (List<double> numbers) => sumCrossSumIterated(numbers.map((number) => number.toInt()).toList()).toInt(),
+    'cs': (List<double> numbers) => sumCrossSum(numbers.map((number) => number.toInt()).toList()).toDouble(),
+    'csi': (List<double> numbers) => sumCrossSumIterated(numbers.map((number) => number.toInt()).toList()).toDouble(),
     'min': (List<double> numbers) => numbers.reduce(min),
     'max': (List<double> numbers) => numbers.reduce(max),
     'round': (List<double> numbers) {
@@ -70,6 +74,28 @@ class FormulaParser {
     'arcsindeg': (List<double> numbers) => asin(degreesToRadian(numbers.first)),
     'arccosdeg': (List<double> numbers) => acos(degreesToRadian(numbers.first)),
     'arctandeg': (List<double> numbers) => atan(degreesToRadian(numbers.first)),
+    'nth': (List<double> numbers) {
+      if (numbers.length == 1) return numbers.first;
+
+      String numStr;
+      if (numbers.first == numbers.first.toInt()) {
+        numStr = numbers.first.toInt().toString();
+      } else {
+        numStr = numbers.first.toString();
+      }
+
+      var subNumStart = max(min(numbers[1].toInt() - 1, numStr.length - 1), 0);
+      var subNumEnd =
+          (numbers.length > 2 && numbers[2] > numbers[1]) ? min(numbers[2].toInt(), numStr.length) : subNumStart + 1;
+
+      numStr = numStr.substring(subNumStart, subNumEnd);
+
+      if (numStr.startsWith('.')) numStr = '0' + numStr;
+
+      if (numStr.endsWith('.')) numStr = numStr.substring(0, numStr.length - 1);
+
+      return double.parse(numStr);
+    },
   };
 
   static final Map<String, Function> _CUSTOM_TEXT_FUNCTIONS = {
@@ -85,7 +111,9 @@ class FormulaParser {
     '*': '×',
   };
 
-  FormulaParser() {
+  FormulaParser({unlimitedExpanded: false}) {
+    this.unlimitedExpanded = unlimitedExpanded;
+
     _context = ContextModel();
 
     CONSTANTS.entries.forEach((constant) {
@@ -112,24 +140,21 @@ class FormulaParser {
 
   // If, for example, the sin() function is used, but there's a variable i, you have to avoid
   // replace the i from sin with the variable value
-  Map<String, dynamic> _safeFunctionsAndConstants(String formula) {
+  String _safeFunctionsAndConstants(String formula) {
     var list = CONSTANTS.keys
         .where((constant) => constant != 'e') //special case: If you remove e, you could never use this as variable name
         .toList();
 
     list.addAll(availableParserFunctions().map((functionName) => functionName + '\\s*\\(').toList());
-
-    Map<String, String> substitutions = {};
-    int j = 0;
     for (int i = 0; i < list.length; i++) {
       var matches = RegExp(list[i], caseSensitive: false).allMatches(formula);
       for (Match m in matches) {
-        substitutions.putIfAbsent(m.group(0), () => '\x01${j++}\x01');
+        safedFormulasMap.putIfAbsent(m.group(0), () => '\x01${safedFormulasMap.length}\x01');
       }
-      formula = substitution(formula, substitutions);
+      formula = substitution(formula, safedFormulasMap);
     }
 
-    return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
+    return formula;
   }
 
   static String normalizeMathematicalSymbols(formula) {
@@ -140,7 +165,7 @@ class FormulaParser {
     formula = formula.replaceAllMapped(RegExp('[\u2070\u00B9\u00B2\u00B3\u2074\u2075\u2076\u2077\u2078\u2079]+'),
         (Match match) {
       var group = match.group(0);
-      group = substitution(group, switchMapKeyValue(superscriptCharacters));
+      group = substitution(group, switchMapKeyValue(SUPERSCRIPT_CHARACTERS));
       return '^$group';
     });
 
@@ -149,6 +174,7 @@ class FormulaParser {
 
   Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
     formula = normalizeMathematicalSymbols(formula);
+    safedFormulasMap = {};
 
     List<FormulaValue> preparedValues = _prepareValues(values);
 
@@ -179,7 +205,7 @@ class FormulaParser {
 
     //replace fixed values recursively
     int i = pow(values.length, 2);
-    var substitutedFormula = safedFormulaNames['formula'];
+    var substitutedFormula = safedFormulaNames;
     var fullySubstituted = false;
     while (i > 0 && !fullySubstituted) {
       var tempSubstitutedFormula = substitution(substitutedFormula, fixedValues, caseSensitive: false);
@@ -200,7 +226,7 @@ class FormulaParser {
       var count = VariableStringExpander(substitutedFormula, interpolatedValues).run(onlyPrecheck: true).first['count'];
       if (count == null) {
         return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
-      } else if (count > _MAX_EXPANDED) {
+      } else if (!unlimitedExpanded && count > _MAX_EXPANDED) {
         return {'state': FormulaState.STATE_EXPANDED_ERROR_EXCEEDEDRANGE, 'result': substitutedFormula};
       }
 
@@ -213,7 +239,7 @@ class FormulaParser {
       var results = <Map<String, dynamic>>[];
       var hasError = false;
       for (var expandedFormula in expandedFormulas) {
-        substitutedFormula = substitution(expandedFormula['text'], safedFormulaNames['map']);
+        substitutedFormula = substitution(expandedFormula['text'], switchMapKeyValue(safedFormulasMap));
 
         try {
           var result = _evaluateFormula(substitutedFormula);
@@ -234,7 +260,7 @@ class FormulaParser {
         'result': results
       };
     } else {
-      substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
+      substitutedFormula = substitution(substitutedFormula, switchMapKeyValue(safedFormulasMap));
 
       try {
         var result = _evaluateFormula(substitutedFormula);
@@ -293,6 +319,12 @@ class FormulaParser {
         value = key;
       } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
         value = '($value)';
+      }
+
+      var safedFormulas;
+      if (element.type == FormulaValueType.FIXED) {
+        safedFormulas = _safeFunctionsAndConstants(value);
+        value = safedFormulas;
       }
 
       val.add(FormulaValue(key, value, type: element.type));
@@ -415,7 +447,7 @@ class FormulaParser {
             break;
         }
       });
-    } catch (e, s) {}
+    } catch (e) {}
 
     // Here the magic happens, which was decribed above
     // Variable sets with independent matchStrings will be substituted dependently here

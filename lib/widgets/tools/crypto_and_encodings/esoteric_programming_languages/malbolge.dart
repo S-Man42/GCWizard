@@ -51,8 +51,8 @@ class MalbolgeState extends State<Malbolge> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'malbolge_mode_interpret'),
-          rightValue: i18n(context, 'malbolge_mode_generate'),
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -65,7 +65,7 @@ class MalbolgeState extends State<Malbolge> {
                 children: <Widget>[
                   GCWTextField(
                     controller: _outputController,
-                    hintText: i18n(context, 'malbolge_hint_output'),
+                    hintText: i18n(context, 'common_programming_hint_output'),
                     onChanged: (text) {
                       setState(() {
                         _currentOutput = text;
@@ -88,7 +88,7 @@ class MalbolgeState extends State<Malbolge> {
                   ),
                   GCWTextField(
                     controller: _programmController,
-                    hintText: i18n(context, 'malbolge_hint_code'),
+                    hintText: i18n(context, 'common_programming_hint_sourcecode'),
                     onChanged: (text) {
                       setState(() {
                         _currentProgramm = text;
@@ -97,7 +97,7 @@ class MalbolgeState extends State<Malbolge> {
                   ),
                   GCWTextField(
                     controller: _inputController,
-                    hintText: i18n(context, 'malbolge_hint_input'),
+                    hintText: i18n(context, 'common_programming_hint_input'),
                     onChanged: (text) {
                       setState(() {
                         _currentInput = text;
@@ -143,7 +143,7 @@ class MalbolgeState extends State<Malbolge> {
             : Column(
                 children: <Widget>[
                   GCWOnOffSwitch(
-                    title: i18n(context, 'malbolge_debug'),
+                    title: i18n(context, 'common_programming_code_debug'),
                     value: _currentDebug,
                     onChanged: (value) {
                       setState(() {
@@ -161,7 +161,7 @@ class MalbolgeState extends State<Malbolge> {
                               child: Container(
                                 child: Column(
                                   children: <Widget>[
-                                    GCWTextDivider(text: i18n(context, 'malbolge_hint_code_assembler')),
+                                    GCWTextDivider(text: i18n(context, 'common_programming_code_assembler')),
                                     GCWOutputText(
                                       text: output.assembler.join('\n'),
                                       isMonotype: true,
@@ -178,7 +178,7 @@ class MalbolgeState extends State<Malbolge> {
                               child: Container(
                                 child: Column(
                                   children: <Widget>[
-                                    GCWTextDivider(text: i18n(context, 'malbolge_hint_code_mnemonic')),
+                                    GCWTextDivider(text: i18n(context, 'common_programming_code_mnemonic')),
                                     GCWOutputText(
                                       text: output.mnemonic.join('\n'),
                                       isMonotype: true,
@@ -199,7 +199,7 @@ class MalbolgeState extends State<Malbolge> {
   String buildOutputText(malbolgeOutput outputList) {
     String output = '';
     outputList.output.forEach((element) {
-      if (element != null) if (element.startsWith('malbolge_')) {
+      if (element != null) if (element.startsWith('malbolge_') || element.startsWith('common_programming_')) {
         output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';

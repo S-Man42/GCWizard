@@ -1,0 +1,61 @@
+GC Wizard är en samling verktyg med öppen källkod.
+
+Den skapades ursprungligen för att ge Geocachers ett offline-verktyg för att hjälpa dem med mysterier och gåtor. GC-guiden innehåller därför många verktyg för enkel kryptografi, geografiska och vetenskapliga beräkningar och hundratals uppsättningar av olika symboler eller alfabet.
+
+Under tiden har projektet blivit mycket stort och kan användas för många andra problem än Geocaching.
+
+Översatt till 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+
+<b>Höjdpunkter</b>
+
+<b>Allmän</b>
+• Formula Solver: For handling multi stage variables
+• Multi Decoder: Enter an unknown code and let several decoders and calculators interpret it in a row
+• More than 200 sets of Symbol Tables: Direct decoding symbols to characters; save own encoding as an image
+• Online Manual: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+
+<b>Cryptography & Encodings</b>
+• Alfabetsvärden (A = 1, B = 2, ...): Konfigurerbara alfabet med språkspecifik teckenbehandling
+• Braille graphical decoder: Type the points into a graphical interface; supports different languages
+• Book Cipher: Choose the correct system (e.g. Line + Letter Number or Section + Line + Word Number, ...), handle special characters and empty lines, ...
+• Enigma: A full working Enigma simulator incl. numerous possible settings
+• Esoteric Languages: Generators and interpretors for several esoteric programming languages like Brainf**k, Ook, Malbolge and Chef
+• Morse
+• Grundtal: Listor över viktiga tal på olika språk. For English + German there are parsers to identify even complex numeral words
+• Substitution and Vigenère Code Breakers: Try to find the solution without knowing the keys
+• Classic Codes: Playfair, Polybios, Railfence, ...
+• Historic codes: Caesar, Vigenènere, telegraph codes, ...
+• Military codes: ADFGX, Cipher Wheel, Tapir, ...
+• Technical encodings: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
+
+<b>Koordinater</b>
+• High precision coordinate algorithms which support precise calculations even with very long distances by always considering the earth's shape (ellipsoid)
+• Support of different ellipsoids, even other planets
+• Koordinatformat: Stöd för UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Waypoint Projection: Includes precise reverse projection
+• Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
+• Variabel koordinat: Interpolera koordinatformler om vissa delar av koordinaten inte ges. Visa resultatet på kartan
+• Korsbäring, mitten av två och tre koordinater, olika skärningspunkter av linjer och cirklar, ...
+
+<b>Vetenskap och teknik</b>
+• Astronomy: Calculate position of sun and moon at a certain place and time
+• Color Space Converter: Konvertera färgvärden mellan RGB, HSL, Hex, CMYK, ...
+• Countries: ISO, calling and vehicle registration codes, flags
+• Date and Time functions: Weekday, time differences, ...
+• Irrational Numbers: π, φ and e: Show and search up to > 1 Mio. digits
+• Number sequences: Factorial, Fibonacci and Co.
+• Numeral Systems: Converts decimal to binary, hexadecimal, ...
+• Periodic Table of the Elements: Interactive view; lists which order the elements by any criterion
+• Phone Keys: Converts classic phone keys to letters. Supports phone model specific behaviours
+• Prime Numbers: Search prime numbers up to 1 Mio.
+• Segmentsdisplay: Grafiskt gränssnitt för avkodning och kodning 7- till 16-segmentsdisplayer
+• Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
+• Skenbar temperatur, Siffersummor, DTMF, tangentbordslayouter, Projektiler, Resistor-koder, ...
+
+<b>Images and Files</b>
+• Hex Viewer
+• Exif/Metadata Viewer
+• Analyse frames of Animated Images
+• Color corrections: Adjust contrast, saturation, edge detection, ...
+• Search for Hidden Data or hidden archives
+• Read QR/Barcodes from images, create them from binary input

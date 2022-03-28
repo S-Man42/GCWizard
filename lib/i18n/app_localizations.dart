@@ -25,7 +25,7 @@ class AppLocalizations {
   Map<String, String> _defaultLocalizedStrings;
 
   Future<bool> load() async {
-    _defaultLocalizedStrings = await loadLang(defaultLanguage);
+    _defaultLocalizedStrings = await loadLang(DEFAULT_LOCALE);
     Map<String, String> _localStrings = await loadLang(locale.languageCode);
 
     // Remove new added keays with empty values (urls for manual)

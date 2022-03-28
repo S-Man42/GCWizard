@@ -77,22 +77,29 @@ class GCWDatePickerState extends State<GCWDatePicker> {
         Expanded(child: Padding(child: _buildMonthSpinner(widget.type), padding: EdgeInsets.only(left: 2, right: 2))),
         Expanded(
             child: Padding(
-          child: GCWIntegerSpinner(
-            focusNode: _dayFocusNode,
-            layout: SpinnerLayout.VERTICAL,
-            value: _currentDay,
-            min: 1,
-            max: 31,
-            onChanged: (value) {
-              setState(() {
-                _currentDay = value;
-                _setCurrentValueAndEmitOnChange();
-              });
-            },
-          ),
+          child: _buildDaySpinner(widget.type),
           padding: EdgeInsets.only(left: 2),
         ))
       ],
+    );
+  }
+
+  Widget _buildDaySpinner(var type) {
+    int maxDays = 31;
+    if (type == CalendarSystem.POTRZEBIECALENDAR) maxDays = 10;
+
+    return GCWIntegerSpinner(
+      focusNode: _dayFocusNode,
+      layout: SpinnerLayout.VERTICAL,
+      value: _currentDay,
+      min: 1,
+      max: maxDays,
+      onChanged: (value) {
+        setState(() {
+          _currentDay = value;
+          _setCurrentValueAndEmitOnChange();
+        });
+      },
     );
   }
 
@@ -100,6 +107,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
     if (type == CalendarSystem.ISLAMICCALENDAR ||
         type == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
         type == CalendarSystem.HEBREWCALENDAR ||
+        type == CalendarSystem.POTRZEBIECALENDAR ||
         type == CalendarSystem.COPTICCALENDAR)
       return GCWDropDownSpinner(
         index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,

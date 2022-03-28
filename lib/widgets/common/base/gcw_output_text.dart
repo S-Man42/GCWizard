@@ -49,7 +49,7 @@ class _GCWOutputTextState extends State<GCWOutputText> {
             ? GCWIconButton(
                 iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
                 size: IconButtonSize.SMALL,
-                iconData: Icons.content_copy,
+                icon: Icons.content_copy,
                 onPressed: () {
                   var copyText = widget.copyText != null ? widget.copyText.toString() : widget.text;
                   insertIntoGCWClipboard(context, copyText);

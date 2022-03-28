@@ -25,7 +25,7 @@ Based on **Flutter/Dart**.
 * **Formula Solver**: For handling variables in multi stage caches
 * **Multi Decoder**: Enter an unknown code and let several decoders and calculators interpret it in a row
 * More than **200 sets of Symbol Tables**: Direct decoding symbols to characters; save own encoding as an image
-* **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+* **[Online Manual](https://blog.gcwizard.net/manual/en/)**: Every tool has its own manual page, translated into 🇬🇧 🇩🇪
 
 ### Cryptography & Encodings
 * **Alphabet Values** (A = 1, B = 2, ...): Completely configurable alphabets with language specific special character handling
@@ -37,7 +37,7 @@ Based on **Flutter/Dart**.
 * **Numeral Words**: Lists of important numbers in different languages. For English and German there are parsers to identify even complex numeral words like "onethousandthreehundredfourty-two"
 * **Substitution** and **Vigenère Code Breakers**: Try to find the solution without knowing the keys
 * **Classic Codes**: Playfair, Polybios, Railfence, ...
-* **Historic codes**: Caesar, Vigenènere, old telegraph codes, ...
+* **Historic codes**: Caesar, Vigenère, old telegraph codes, ...
 * **Military codes**: ADFGX, Cipher Wheel, Tapir, ...
 * **Technical encodings**: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
 * ...
@@ -69,6 +69,7 @@ Based on **Flutter/Dart**.
 ### Images and Files
 * **Hex Viewer**
 * **Exif/Metadata Viewer** for images
+* **Wherigo Analyzer** to show content of WIG cartridges
 * Analyse frames of **Animated Images**
 * **Color corrections**: Adjust contrast, saturation, gamma, edge detection, ...
 * Search for **Hidden Data** or hidden archives
@@ -77,7 +78,7 @@ Based on **Flutter/Dart**.
 
 ## Links
 
-* [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪 🇫🇷
+* [Manual](https://blog.gcwizard.net/manual/en/) 🇬🇧 🇩🇪
 * [Web View](http://gcwizard.net)
 
 ### Development

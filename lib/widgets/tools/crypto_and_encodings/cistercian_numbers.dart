@@ -114,7 +114,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add(_DEFAULT_SEGMENT);
@@ -122,7 +122,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -130,7 +130,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [_DEFAULT_SEGMENT];

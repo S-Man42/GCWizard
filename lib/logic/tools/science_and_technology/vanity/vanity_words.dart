@@ -5,7 +5,6 @@
 //
 // 678068550685506386047230386303863 07865807432360386308437
 
-
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
@@ -30,13 +29,13 @@ final VanityToDEU = {
   '743236': 'SIEBEN',
   '2248': 'ACHT',
   '6386': 'NEUN',
-  '6673' : 'NORD',
-  '678' : 'OST',
-  '9378' : 'WEST',
-  '7833' : 'SUED',
-  '783' : 'SÜD',
-  '4723' : 'GRAD',
-  '78658' : 'PUNKT',
+  '6673': 'NORD',
+  '678': 'OST',
+  '9378': 'WEST',
+  '7833': 'SUED',
+  '783': 'SÜD',
+  '4723': 'GRAD',
+  '78658': 'PUNKT',
 };
 final VanityToENG = {
   '9376': 'ZERO',
@@ -49,12 +48,12 @@ final VanityToENG = {
   '73836': 'SEVEN',
   '34448': 'EIGHT',
   '6386': 'NINE',
-  '66784' : 'NORTH',
-  '3278' : 'EAST',
-  '9378' : 'WEST',
-  '76884' : 'SOUTH',
-  '334733' : 'DEGREE',
-  '76468' : 'POINT',
+  '66784': 'NORTH',
+  '3278': 'EAST',
+  '9378': 'WEST',
+  '76884': 'SOUTH',
+  '334733': 'DEGREE',
+  '76468': 'POINT',
 };
 final VanityToFRA = {
   '9376': 'ZÉRO',
@@ -67,12 +66,12 @@ final VanityToFRA = {
   '7378': 'SEPT',
   '4848': 'HUIT',
   '6386': 'NEUF',
-  '6673' : 'NORD',
-  '378' : 'EST',
-  '68378' : 'OUEST',
-  '783' : 'SUD',
-  '33473' : 'DEGRÉ',
-  '76468' : 'POINT',
+  '6673': 'NORD',
+  '378': 'EST',
+  '68378': 'OUEST',
+  '783': 'SUD',
+  '33473': 'DEGRÉ',
+  '76468': 'POINT',
 };
 final VanityToITA = {
   '9376': 'ZERO',
@@ -85,12 +84,12 @@ final VanityToITA = {
   '73883': 'SETTE',
   '6886': 'OTTO',
   '6683': 'NOVE',
-  '6673' : 'NORD',
-  '378' : 'EST',
-  '68378' : 'OVEST',
-  '783' : 'SUD',
-  '47236' : 'GRADO',
-  '78686' : 'PUNTO',
+  '6673': 'NORD',
+  '378': 'EST',
+  '68378': 'OVEST',
+  '783': 'SUD',
+  '47236': 'GRADO',
+  '78686': 'PUNTO',
 };
 final VanityToDNK = {
   '685': 'NUL',
@@ -103,12 +102,12 @@ final VanityToDNK = {
   '7983': 'SYVE',
   '6883': 'OTTE',
   '64': 'NI',
-  '6673' : 'NORD',
-  '678' : 'ØST',
-  '8378' : 'VEST',
-  '793' : 'SYD',
-  '4723' : 'GRAD',
-  '78658' : 'PUNKT',
+  '6673': 'NORD',
+  '678': 'ØST',
+  '8378': 'VEST',
+  '793': 'SYD',
+  '4723': 'GRAD',
+  '78658': 'PUNKT',
 };
 final VanityToESP = {
   '2376': 'CERO',
@@ -122,12 +121,12 @@ final VanityToESP = {
   '74383': 'SIETE',
   '6246': 'OCHO',
   '68383': 'NUEVE',
-  '66783' : 'NORTE',
-  '3783' : 'ESTE',
-  '63783' : 'OESTE',
-  '787' : 'SUR',
-  '47236' : 'GRADO',
-  '78686' : 'PUNTO',
+  '66783': 'NORTE',
+  '3783': 'ESTE',
+  '63783': 'OESTE',
+  '787': 'SUR',
+  '47236': 'GRADO',
+  '78686': 'PUNTO',
 };
 final VanityToNLD = {
   '685': 'NUL',
@@ -140,12 +139,12 @@ final VanityToNLD = {
   '93836': 'ZEVEN',
   '2248': 'ACHT',
   '6343': 'NEGEN',
-  '66673' : 'NOORD',
-  '6678' : 'OOST',
-  '9378' : 'WEST',
-  '9843' : 'ZUID',
-  '47223' : 'GRAAD',
-  '7868' : 'PUNT',
+  '66673': 'NOORD',
+  '6678': 'OOST',
+  '9378': 'WEST',
+  '9843': 'ZUID',
+  '47223': 'GRAAD',
+  '7868': 'PUNT',
 };
 final VanityToNOR = {
   '685': 'NUL',
@@ -160,12 +159,12 @@ final VanityToNOR = {
   '798': 'SYV',
   '2883': 'ÅTTE',
   '64': 'NI',
-  '6673' : 'NORD',
-  '678' : 'ØST',
-  '8378' : 'VEST',
-  '767' : 'SØR',
-  '4723' : 'GRAD',
-  '78658' : 'PUNKT',
+  '6673': 'NORD',
+  '678': 'ØST',
+  '8378': 'VEST',
+  '767': 'SØR',
+  '4723': 'GRAD',
+  '78658': 'PUNKT',
 };
 final VanityToPOL = {
   '9376': 'ZERO',
@@ -181,12 +180,12 @@ final VanityToPOL = {
   '743336': 'SIEDEM',
   '67436': 'OSIEM',
   '39439432': 'DZIEWIĘĆ',
-  '76566269' : 'PÓŁNOC',
-  '972463' : 'WSCHÓD',
-  '922463' : 'ZACHÓD',
-  '76583643' : 'POŁUDNIE',
-  '7867436' : 'STOPIEŃ',
-  '78658' : 'PUNKT',
+  '76566269': 'PÓŁNOC',
+  '972463': 'WSCHÓD',
+  '922463': 'ZACHÓD',
+  '76583643': 'POŁUDNIE',
+  '7867436': 'STOPIEŃ',
+  '78658': 'PUNKT',
 };
 final VanityToPOR = {
   '9376': 'ZERO',
@@ -200,12 +199,12 @@ final VanityToPOR = {
   '7393': 'SETE',
   '6886': 'OITO',
   '6683': 'NOVE',
-  '66783' : 'NORTE',
-  '53783' : 'LESTE',
-  '63783' : 'OESTE',
-  '785' : 'SUL',
-  '4728' : 'GRAU',
-  '76686' : 'PONTO',
+  '66783': 'NORTE',
+  '53783': 'LESTE',
+  '63783': 'OESTE',
+  '785': 'SUL',
+  '4728': 'GRAU',
+  '76686': 'PONTO',
 };
 final VanityToSWE = {
   '8655': 'NOLL',
@@ -219,12 +218,12 @@ final VanityToSWE = {
   '758': 'SJU',
   '2882': 'ÅTTA',
   '646': 'NIO',
-  '6677' : 'NORR',
-  '678' : 'OST',
-  '8378' : 'VÄST',
-  '793' : 'SYD',
-  '4723' : 'GRAD',
-  '78658' : 'PUNKT',
+  '6677': 'NORR',
+  '678': 'OST',
+  '8378': 'VÄST',
+  '793': 'SYD',
+  '4723': 'GRAD',
+  '78658': 'PUNKT',
 };
 final VanityToRUS = {
   '665': 'NOL',
@@ -241,12 +240,12 @@ final VanityToRUS = {
   '736': 'SEM',
   '86736': 'VOSEM',
   '3538528': 'DJÈVJAT',
-  '73837' : 'SEVER',
-  '867865' : 'VOSTOK',
-  '92723' : 'ZAPAD',
-  '984' : 'YUG',
-  '4723' : 'GRAD',
-  '862454' : 'TOCHKI',
+  '73837': 'SEVER',
+  '867865': 'VOSTOK',
+  '92723': 'ZAPAD',
+  '984': 'YUG',
+  '4723': 'GRAD',
+  '862454': 'TOCHKI',
 };
 final VanityToVOL = {
   '737': 'SER',
@@ -357,11 +356,7 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
   bool ambigous = false;
   String hDigits = '';
   String hWord = '';
-  text = text
-      .replaceAll('\n', '')
-      .replaceAll('0', '')
-      .replaceAll('1', '')
-      .replaceAll(' ', '');
+  text = text.replaceAll('\n', '').replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '');
   while (text.length > 0) {
     found = false;
     ambigous = false;
@@ -376,7 +371,14 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
         } else {
           // already found
           ambigous = true;
-          print('ambiguous '+hDigits.toString()+' '+hWord.toString()+' '+digits.toString()+' '+word.toString());
+          print('ambiguous ' +
+              hDigits.toString() +
+              ' ' +
+              hWord.toString() +
+              ' ' +
+              digits.toString() +
+              ' ' +
+              word.toString());
           output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], true));
           output.add(VanityWordsDecodeOutput(digits, word, NumWords[language][word.toString().toLowerCase()], true));
         }

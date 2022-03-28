@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/ccitt.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/teletypewriter.dart';
 
 void main() {
   group("CCITT2.encodeCCITT2:", () {
@@ -30,7 +30,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeCCITT(elem['input'], CCITTCodebook.CCITT_ITA2);
+        var _actual = encodeTeletypewriter(elem['input'], TeletypewriterCodebook.CCITT_ITA2_1931);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeCCITT(elem['input'], CCITTCodebook.CCITT_ITA2);
+        var _actual = decodeTeletypewriter(elem['input'], TeletypewriterCodebook.CCITT_ITA2_1931);
         expect(_actual, elem['expectedOutput']);
       });
     });

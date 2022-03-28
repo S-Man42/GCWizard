@@ -25,4 +25,14 @@ final ENERGY_ERG = Energy(name: 'common_unit_energy_erg_name', symbol: 'erg', in
 
 final ENERGY_FTLB = Energy(name: 'common_unit_energy_ftlb_name', symbol: 'ft-lb', inJoule: 1.35581795);
 
-final List<Unit> energies = [ENERGY_JOULE, ENERGY_CALORIE, ENERGY_BRITISHTHERMALUNIT, ENERGY_ERG, ENERGY_FTLB];
+// https://webmadness.net/blog/?post=knuth
+final ENERGY_VREEBLE = Energy(name: 'common_unit_energy_vreeble_name', symbol: 'v', inJoule: 34.33 * 4.1868);
+
+final List<Unit> energies = [
+  ENERGY_JOULE,
+  ENERGY_CALORIE,
+  ENERGY_BRITISHTHERMALUNIT,
+  ENERGY_ERG,
+  ENERGY_FTLB,
+  ENERGY_VREEBLE,
+];

@@ -8,8 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Chef extends StatefulWidget {
   @override
@@ -83,8 +81,8 @@ class ChefState extends State<Chef> {
           },
         ),
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'chef_interpret'),
-          rightValue: i18n(context, 'chef_generate'),
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -97,7 +95,7 @@ class ChefState extends State<Chef> {
                 children: <Widget>[
                   GCWTextField(
                     controller: _outputController,
-                    hintText: i18n(context, 'chef_output'),
+                    hintText: i18n(context, 'common_programming_hint_output'),
                     onChanged: (text) {
                       setState(() {
                         _currentOutput = text;
@@ -153,14 +151,14 @@ class ChefState extends State<Chef> {
                       });
                     },
                   ),
-                  GCWTextDivider(text: i18n(context, 'chef_sourcecode')),
+                  GCWTextDivider(text: i18n(context, 'common_programming_hint_sourcecode')),
                 ],
               )
             : Column(
                 children: <Widget>[
                   GCWTextField(
                     controller: _recipeController,
-                    hintText: i18n(context, 'chef_code'),
+                    hintText: i18n(context, 'common_programming_hint_sourcecode'),
                     onChanged: (text) {
                       setState(() {
                         _currentRecipe = text;
@@ -173,14 +171,14 @@ class ChefState extends State<Chef> {
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),
                     ],
-                    hintText: i18n(context, 'chef_input'),
+                    hintText: i18n(context, 'common_programming_hint_input'),
                     onChanged: (text) {
                       setState(() {
                         _currentInput = text;
                       });
                     },
                   ),
-                  GCWTextDivider(text: i18n(context, 'chef_output')),
+                  GCWTextDivider(text: i18n(context, 'common_programming_hint_output')),
                 ],
               ),
         _buildOutput(context)
@@ -209,11 +207,14 @@ class ChefState extends State<Chef> {
           output = buildOutputText(
               interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
         } catch (e) {
-          output = buildOutputText(
-              ['chef_error_runtime', 'chef_error_runtime_exception', 'chef_error_structure_recipe_missing_title']);
+          output = buildOutputText([
+            'common_programming_error_runtime',
+            'chef_error_runtime_exception',
+            'chef_error_structure_recipe_missing_title'
+          ]);
         }
       } else
-        output = buildOutputText(['chef_error_runtime', 'chef_error_runtime_invalid_input']);
+        output = buildOutputText(['common_programming_error_runtime', 'chef_error_runtime_invalid_input']);
     }
     return GCWOutputText(
       text: output.trim(),

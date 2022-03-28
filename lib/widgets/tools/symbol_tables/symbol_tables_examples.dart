@@ -104,6 +104,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
           countColumns: countColumns,
           data: data[symbolKey],
           showExportButton: false,
+          specialEncryption: false,
           fixed: true);
 
       return Column(
@@ -111,7 +112,7 @@ class SymbolTableExamplesState extends State<SymbolTableExamples> {
           GCWTextDivider(
               text: i18n(context, 'symboltables_${symbolKey}_title'),
               trailing: GCWIconButton(
-                iconData: Icons.open_in_new,
+                icon: Icons.open_in_new,
                 size: IconButtonSize.SMALL,
                 onPressed: () {
                   Navigator.push(

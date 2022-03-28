@@ -21,7 +21,7 @@ class GCWSymbolTableZoomButtonsState extends State<GCWSymbolTableZoomButtons> {
     return Row(
       children: [
         GCWIconButton(
-          iconData: Icons.zoom_in,
+          icon: Icons.zoom_in,
           onPressed: () {
             setState(() {
               int newCountColumn = max(widget.countColumns - 1, 1);
@@ -35,7 +35,7 @@ class GCWSymbolTableZoomButtonsState extends State<GCWSymbolTableZoomButtons> {
           },
         ),
         GCWIconButton(
-          iconData: Icons.zoom_out,
+          icon: Icons.zoom_out,
           onPressed: () {
             setState(() {
               int newCountColumn = widget.countColumns + 1;

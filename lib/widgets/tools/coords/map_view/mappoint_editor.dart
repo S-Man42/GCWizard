@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_colorpicker.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 
 double _DEFAULT_RADIUS = 161.0;
 
@@ -79,8 +79,8 @@ class MapPointEditorState extends State<MapPointEditor> {
       ),
       GCWTextDivider(text: i18n(context, 'coords_openmap_pointeditor_point_color')),
       Container(
-        child: HSVPicker(
-          color: _currentMarkerColorPickerColor,
+        child: GCWColorPicker(
+          hsvColor: _currentMarkerColorPickerColor,
           onChanged: (color) {
             setState(() {
               _currentMarkerColorPickerColor = color;
@@ -133,8 +133,8 @@ class MapPointEditorState extends State<MapPointEditor> {
                 widget.mapPoint.circleColorSameAsPointColor
                     ? Container()
                     : Container(
-                        child: HSVPicker(
-                          color: _currentCircleColorPickerColor,
+                        child: GCWColorPicker(
+                          hsvColor: _currentCircleColorPickerColor,
                           onChanged: (color) {
                             setState(() {
                               _currentCircleColorPickerColor = color;

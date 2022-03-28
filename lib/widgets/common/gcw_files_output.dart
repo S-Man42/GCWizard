@@ -10,16 +10,20 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
+import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
 import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
 class GCWFilesOutput extends StatefulWidget {
-  final List<PlatformFile> files;
+  final List<GCWFile> files;
+  final bool suppressHiddenDataMessage;
+  final Set<GCWImageViewButtons> suppressedButtons;
 
-  const GCWFilesOutput({Key key, @required this.files}) : super(key: key);
+  const GCWFilesOutput({Key key, @required this.files, this.suppressHiddenDataMessage = false, this.suppressedButtons})
+      : super(key: key);
 
   @override
   _GCWFilesOutputState createState() => _GCWFilesOutputState();
@@ -31,9 +35,9 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     return Column(children: <Widget>[_buildFileTree(widget.files, [])]);
   }
 
-  Widget _buildFileTree(List<PlatformFile> files, List<String> parents, {level: 0}) {
+  Widget _buildFileTree(List<GCWFile> files, List<String> parents, {level: 0}) {
     var isFirst = true;
-    var children = files.map((PlatformFile file) {
+    var children = files.map((GCWFile file) {
       var hasChildren = file.children != null && file.children.isNotEmpty;
 
       var actionButton = _buildActionButton(file);
@@ -45,17 +49,20 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
       }
 
       var fileName = file.name;
-      if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
-        var index = fileName.split('_').last;
-        var prefix;
-        if (index == '0') {
-          prefix = i18n(context, 'hiddendata_source');
-        } else {
-          prefix = i18n(context, 'hiddendata_hidden') + ' $index';
-        }
+      if (fileName != null) {
+        if (fileName.startsWith(HIDDEN_FILE_IDENTIFIER)) {
+          var index = fileName.split('_').last;
+          var prefix;
+          if (index == '0') {
+            prefix = i18n(context, 'hiddendata_source');
+          } else {
+            prefix = i18n(context, 'hiddendata_hidden') + ' $index';
+          }
 
-        fileName = '$prefix: ' + file.fileType.toString().split('.').last;
-      }
+          fileName = '$prefix: ' + file.fileType.toString().split('.').last;
+        }
+      } else
+        fileName = '';
 
       var parentsString = parents.join(' → ');
       var newParents = List<String>.from(parents);
@@ -100,18 +107,24 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
             ],
           ),
           if (file.fileClass == FileClass.IMAGE)
-            Container(child: GCWImageView(imageData: GCWImageViewData(file)), margin: EdgeInsets.only(left: 42)),
+            Container(
+                child: GCWImageView(
+                  imageData: GCWImageViewData(file),
+                  suppressedButtons: widget.suppressedButtons,
+                ),
+                margin: EdgeInsets.only(left: 42)),
           if (file.fileClass == FileClass.TEXT)
             Container(child: GCWText(style: gcwMonotypeTextStyle(), text: text), margin: EdgeInsets.only(left: 42)),
-          // if (file.fileClass == FileClass.SOUND)
-          //   Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
+          if (file.fileClass == FileClass.SOUND)
+            Container(child: GCWSoundPlayer(file: file), margin: EdgeInsets.only(left: 42)),
           if (hasChildren)
             Container(
               child: _buildFileTree(file.children, newParents, level: level + 1),
             ),
           if (level == 0 && isFirst) GCWDivider(),
-          if (files.length <= 1 && level == 0 && !hasChildren)
-            GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
+          if (!widget.suppressHiddenDataMessage)
+            if (files.length <= 1 && level == 0 && !hasChildren)
+              GCWText(text: i18n(context, 'hiddendata_nohiddendatafound'))
         ],
       );
 
@@ -125,7 +138,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  _buildActionButton(PlatformFile file) {
+  _buildActionButton(GCWFile file) {
     var actions = <GCWPopupMenuItem>[
       GCWPopupMenuItem(
         child: iconedGCWPopupMenuItem(context, Icons.save, 'hiddendata_savefile'),
@@ -163,7 +176,7 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
     );
   }
 
-  _exportFile(BuildContext context, PlatformFile file) async {
+  _exportFile(BuildContext context, GCWFile file) async {
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;

@@ -79,7 +79,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         title: widget.title,
         children: _children,
         trailing: GCWIconButton(
-          iconData: Icons.save,
+          icon: Icons.save,
           size: IconButtonSize.SMALL,
           iconColor: _isNoOutput ? themeColors().inActive() : null,
           onPressed: () {

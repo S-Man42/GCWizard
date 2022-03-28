@@ -105,7 +105,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
               )),
               Container(width: 10),
               GCWIconButton(
-                iconData: Icons.check,
+                icon: Icons.check,
                 onPressed: () {
                   setState(() {
                     if (_currentEditText != null && _currentEditText.isNotEmpty) {
@@ -127,7 +127,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
               Expanded(child: GCWText(text: item['text'])),
               Container(width: 10),
               GCWIconButton(
-                iconData: Icons.edit,
+                icon: Icons.edit,
                 onPressed: () {
                   setState(() {
                     _currentEditId = index;
@@ -136,7 +136,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
                 },
               ),
               GCWIconButton(
-                iconData: Icons.remove,
+                icon: Icons.remove,
                 onPressed: () {
                   var text = item['text'];
                   if (text.length > 50) text = item['text'].substring(0, 47) + '...';

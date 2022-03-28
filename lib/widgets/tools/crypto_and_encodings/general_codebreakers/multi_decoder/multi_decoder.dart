@@ -6,7 +6,6 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -21,11 +20,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
-import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
 class MultiDecoder extends StatefulWidget {
   @override
@@ -61,7 +58,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
-    mdtTools.remove(null);
+    mdtTools.removeWhere((mdtTool) => mdtTool == null);
   }
 
   @override
@@ -94,7 +91,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                     ),
                     padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
             GCWIconButton(
-              iconData: Icons.settings,
+              icon: Icons.settings,
               onPressed: () {
                 Navigator.push(
                         context,
@@ -185,11 +182,13 @@ class MultiDecoderState extends State<MultiDecoder> {
       var result;
 
       try {
-        if (tool.requiresKey && (_currentKey ?? '').isEmpty ||
-            !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty)) {
+        if (!tool.optionalKey &&
+            ((tool.requiresKey && (_currentKey ?? '').isEmpty) ||
+                !tool.requiresKey && (_currentKey != null && _currentKey.isNotEmpty))) {
           result = null;
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
+          print('${tool.name}:${result.toString().codeUnits}');
         }
       } catch (e) {}
 
@@ -210,8 +209,8 @@ class MultiDecoderState extends State<MultiDecoder> {
                 return GCWOutput(
                     title: _toolTitle(tool),
                     child: GCWImageView(
-                        imageData: GCWImageViewData(
-                            PlatformFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
+                        imageData:
+                            GCWImageViewData(GCWFile(bytes: (snapshot.data as Uint8List), name: _toolTitle(tool)))));
               } else
                 return Container();
             });

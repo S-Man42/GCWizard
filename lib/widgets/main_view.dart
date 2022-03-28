@@ -16,7 +16,8 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -44,9 +45,12 @@ import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/wherigo_urwigo_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_arithmetic_mean.dart';
+import 'package:gc_wizard/widgets/tools/coords/centroid_center_of_gravity.dart';
 import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
@@ -63,6 +67,11 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
@@ -85,6 +94,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/hohoho.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
@@ -108,10 +118,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
@@ -135,8 +145,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcran
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
@@ -145,6 +157,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
@@ -160,9 +173,14 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
@@ -176,7 +194,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -420,6 +438,7 @@ void _initStaticToolList() {
       className(ADFGVX()),
       className(Affine()),
       className(AlcoholMass()),
+      className(ALGOL()),
       className(AlphabetValues()),
       className(Amsco()),
       className(AnimatedImage()),
@@ -446,10 +465,10 @@ void _initStaticToolList() {
       className(Caesar()),
       className(Calendar()),
       className(Catan()),
-      className(CCITTSelection()),
-      className(CCITTPunchTape()),
       className(CenterThreePoints()),
       className(CenterTwoPoints()),
+      className(CentroidArithmeticMean()),
+      className(CentroidCenterOfGravity()),
       className(Chao()),
       className(ChappeTelegraph()),
       className(Chef()),
@@ -457,7 +476,7 @@ void _initStaticToolList() {
       className(Chronogram()),
       className(CipherWheel()),
       className(CistercianNumbersSelection()),
-      className(ColorPicker()),
+      className(ColorTool()),
       className(Combination()),
       className(CombinationPermutation()),
       className(ComplexNumbers()),
@@ -485,6 +504,7 @@ void _initStaticToolList() {
       className(SilverRatioSelection()),
       className(DuckSpeak()),
       className(EasterSelection()),
+      className(EarwigoTextDeobfuscation()),
       className(EdelcrantzTelegraph()),
       className(EllipsoidTransform()),
       className(EnclosedAreas()),
@@ -508,11 +528,15 @@ void _initStaticToolList() {
       className(HexString2File()),
       className(HexViewer()),
       className(HiddenData()),
+      className(Hohoho()),
       className(Homophone()),
       className(Houdini()),
       className(Humidex()),
       className(IATAICAOSearch()),
       className(IceCodesSelection()),
+      className(ILLIAC()),
+      className(ImageColorCorrections()),
+      className(ImageFlipRotate()),
       className(IntersectBearings()),
       className(IntersectFourPoints()),
       className(IntersectGeodeticAndCircle()),
@@ -533,7 +557,7 @@ void _initStaticToolList() {
       className(MexicanArmyCipherWheel()),
       className(MoonPosition()),
       className(MoonRiseSet()),
-      className(Morse()),
+      className(MorseSelection()),
       className(MurrayTelegraph()),
       className(Navajo()),
       className(NumberSequenceSelection()),
@@ -543,14 +567,18 @@ void _initStaticToolList() {
       className(OhlsenTelegraph()),
       className(OneTimePad()),
       className(Ook()),
+      className(PasleyTelegraph()),
+      className(PophamTelegraph()),
       className(PeriodicTable()),
       className(PeriodicTableDataView()),
       className(Permutation()),
       className(PhiSelection()),
+      className(PhysicalConstants()),
       className(Piano()),
       className(PiSelection()),
       className(PigLatin()),
       className(Playfair()),
+      className(Pokemon()),
       className(Polybios()),
       className(PredatorSelection()),
       className(PrimeAlphabet()),
@@ -568,6 +596,7 @@ void _initStaticToolList() {
       className(Reverse()),
       className(RobberLanguage()),
       className(RomanNumbers()),
+      className(Rot123()),
       className(Rot13()),
       className(Rot18()),
       className(Rot5()),
@@ -593,13 +622,17 @@ void _initStaticToolList() {
       className(SummerSimmerIndex()),
       className(SunPosition()),
       className(SunRiseSet()),
+      className(SymbolReplacer()),
       className(SymbolTableSelection()),
       className(TapCode()),
       className(Tapir()),
+      className(TeletypewriterSelection()),
+      className(TeletypewriterPunchTape()),
       className(TimeCalculator()),
       className(TomTomSelection()),
       className(Trifid()),
       className(Trithemius()),
+      className(TTS()),
       className(UnitConverter()),
       className(UrwigoHashBreaker()),
       className(UrwigoTextDeobfuscation()),
@@ -611,12 +644,14 @@ void _initStaticToolList() {
       className(WASD()),
       className(WaypointProjection()),
       className(Weekday()),
+      className(WherigoSelection()),
       className(WheatstoneCookeNeedleTelegraph()),
       className(WhitespaceLanguage()),
       className(WigWagSemaphoreTelegraph()),
       className(Windchill()),
       className(Z22()),
       className(ZamonianNumbers()),
+      className(ZC1()),
       className(Zodiac()),
     ].contains(className(element.tool));
   }).toList();

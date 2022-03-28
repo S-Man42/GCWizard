@@ -115,7 +115,7 @@ class MorseState extends State<Morse> {
           children: [
             Expanded(
               child: GCWIconButton(
-                iconData: Icons.double_arrow,
+                icon: Icons.double_arrow,
                 onPressed: () {
                   setState(() {
                     _addCharacter(' ');
@@ -125,7 +125,7 @@ class MorseState extends State<Morse> {
             ),
             Expanded(
               child: GCWIconButton(
-                iconData: Icons.space_bar,
+                icon: Icons.space_bar,
                 onPressed: () {
                   setState(() {
                     _addCharacter(' | ');
@@ -139,7 +139,7 @@ class MorseState extends State<Morse> {
       ),
       Container(
         child: GCWIconButton(
-          iconData: Icons.backspace,
+          icon: Icons.backspace,
           onPressed: () {
             setState(() {
               _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);

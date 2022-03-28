@@ -24,12 +24,12 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Not used but required by internal dependency 'r_scan'</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Used by coordinate functions as location input and by MapView for showing current position</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Used for loading images into image editor</string>
-	<key>NSCameraUsageDescription</key>
-    <string>Not used but required by internal dependency 'r_scan'</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

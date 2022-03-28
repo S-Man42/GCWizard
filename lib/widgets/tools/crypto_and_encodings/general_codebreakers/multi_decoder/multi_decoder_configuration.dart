@@ -115,7 +115,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
-    mdtTools.remove(null);
+    mdtTools.removeWhere((mdtTool) => mdtTool == null);
   }
 
   _moveUp(int id) {
@@ -190,7 +190,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                 padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)),
           ),
           GCWIconButton(
-            iconData: Icons.add,
+            icon: Icons.add,
             iconColor: _currentEditId == null ? null : themeColors().inActive(),
             onPressed: _currentEditId == null
                 ? () {
@@ -261,7 +261,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
             children: [
               _currentEditId == tool.id
                   ? GCWIconButton(
-                      iconData: Icons.check,
+                      icon: Icons.check,
                       onPressed: () {
                         if (_editingToolName.length > 0) {
                           tool.name = _editingToolName;
@@ -276,7 +276,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       },
                     )
                   : GCWIconButton(
-                      iconData: Icons.edit,
+                      icon: Icons.edit,
                       onPressed: () {
                         setState(() {
                           _currentEditId = tool.id;
@@ -286,7 +286,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       },
                     ),
               GCWIconButton(
-                iconData: Icons.remove,
+                icon: Icons.remove,
                 onPressed: () {
                   setState(() {
                     showDeleteAlertDialog(context, tool.name, () {
@@ -303,7 +303,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
           Column(
             children: [
               GCWIconButton(
-                iconData: Icons.arrow_drop_up,
+                icon: Icons.arrow_drop_up,
                 onPressed: () {
                   setState(() {
                     _moveUp(tool.id);
@@ -311,7 +311,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                 },
               ),
               GCWIconButton(
-                iconData: Icons.arrow_drop_down,
+                icon: Icons.arrow_drop_down,
                 onPressed: () {
                   setState(() {
                     _moveDown(tool.id);

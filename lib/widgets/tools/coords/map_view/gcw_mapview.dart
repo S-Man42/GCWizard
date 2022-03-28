@@ -39,7 +39,7 @@ import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
@@ -372,7 +372,7 @@ class GCWMapViewState extends State<GCWMapView> {
     if (widget.isEditable) {
       dialogButtons.addAll([
         GCWIconButton(
-            iconData: Icons.edit,
+            icon: Icons.edit,
             iconColor: themeColors().dialogText(),
             onPressed: () {
               if (child is GCWMapLine) {
@@ -405,7 +405,7 @@ class GCWMapViewState extends State<GCWMapView> {
               }
             }),
         GCWIconButton(
-            iconData: Icons.delete,
+            icon: Icons.delete,
             iconColor: themeColors().dialogText(),
             onPressed: () {
               Navigator.pop(context);
@@ -798,7 +798,7 @@ class GCWMapViewState extends State<GCWMapView> {
                               });
                             }),
                     GCWIconButton(
-                        iconData: Icons.edit,
+                        icon: Icons.edit,
                         iconColor: colors.dialogText(),
                         onPressed: () {
                           Navigator.push(
@@ -815,7 +815,7 @@ class GCWMapViewState extends State<GCWMapView> {
                           });
                         }),
                     GCWIconButton(
-                      iconData: Icons.delete,
+                      icon: Icons.delete,
                       iconColor: colors.dialogText(),
                       onPressed: () {
                         setState(() {
@@ -879,7 +879,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return (viewData != null);
   }
 
-  Future<bool> _loadCoordinatesFile(PlatformFile file) async {
+  Future<bool> _loadCoordinatesFile(GCWFile file) async {
     if (file == null) return false;
 
     try {

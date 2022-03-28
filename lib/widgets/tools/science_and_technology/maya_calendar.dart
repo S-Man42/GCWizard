@@ -108,7 +108,7 @@ class MayaCalendarState extends State<MayaCalendar> {
         ),
         GCWToolBar(children: [
           GCWIconButton(
-            iconData: Icons.space_bar,
+            icon: Icons.space_bar,
             onPressed: () {
               setState(() {
                 _currentDisplays.add([]);
@@ -116,7 +116,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.backspace,
+            icon: Icons.backspace,
             onPressed: () {
               setState(() {
                 if (_currentDisplays.length > 0) _currentDisplays.removeLast();
@@ -124,7 +124,7 @@ class MayaCalendarState extends State<MayaCalendar> {
             },
           ),
           GCWIconButton(
-            iconData: Icons.clear,
+            icon: Icons.clear,
             onPressed: () {
               setState(() {
                 _currentDisplays = [];
@@ -156,9 +156,9 @@ class MayaCalendarState extends State<MayaCalendar> {
 
       outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
           '\n' +
-          MayaDayCountToTzolkin(segments['numbers']) +
+          MayaLongCountToTzolkin(segments['numbers']) +
           '   ' +
-          MayaDayCountToHaab(segments['numbers']);
+          MayaLongCountToHaab(segments['numbers']);
       outputDates[i18n(context, 'mayacalendar_juliandate')] =
           MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
       outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] =
@@ -191,9 +191,9 @@ class MayaCalendarState extends State<MayaCalendar> {
       outputDates[i18n(context, 'mayacalendar_daycount')] = segments['vigesimal'];
       outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
           '\n' +
-          MayaDayCountToTzolkin(segments['numbers']) +
+          MayaLongCountToTzolkin(segments['numbers']) +
           '   ' +
-          MayaDayCountToHaab(segments['numbers']);
+          MayaLongCountToHaab(segments['numbers']);
       outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(segments['vigesimal']);
       outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = _DateOutputToString(context, gregorian);
       outputDates[i18n(context, 'mayacalendar_juliancalendar')] = _DateOutputToString(context, julian);

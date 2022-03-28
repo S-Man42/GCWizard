@@ -78,7 +78,10 @@ class MoonPositionState extends State<MoonPosition> {
       [i18n(context, 'astronomy_position_distancetoobserver'), format.format(moonPosition.distanceToObserver) + ' km'],
       [i18n(context, 'astronomy_position_moonage'), format.format(moonPosition.age) + ' d'],
       [i18n(context, 'astronomy_position_illumination'), format.format(moonPosition.illumination) + '%'],
-      [i18n(context, 'astronomy_position_moonphase'), i18n(context, getMoonPhase(moonPosition.phaseName))],
+      [
+        i18n(context, 'astronomy_position_moonphase'),
+        i18n(context, getMoonPhase(moonPosition.phaseName)) + ' (${moonPosition.phaseNumber})'
+      ],
       [
         i18n(context, 'astronomy_position_astrologicalsign'),
         i18n(context, getAstrologicalSign(moonPosition.astrologicalSign))

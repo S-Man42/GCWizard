@@ -6,10 +6,12 @@ class FormulaPainter {
   static final _bracket = {'[': ']', '(': ')', '{': '}'};
   static final numberRegEx = r'(\s*(\d+.\d*|\d*\.\d|\d+)\s*)';
   static final _allCharacters = allCharacters();
+  Map<String, String> _values;
   var _variables = <String>[];
   var _functions = <String>[];
   var _specialFunctions = {
     'LOG', // 1 comma
+    'NTH', // 0 - 2 commas
     'ROUND', // 0 or 1 comma
     'MIN', // comma 0 or more times
     'MAX', // comma 0 or more times
@@ -53,13 +55,14 @@ class FormulaPainter {
     } else
       _variables.clear();
 
+    _values = values;
     _variables = _toUpperCaseAndSort(_variables);
     _variablesRegEx = _variables.map((variable) => variable).join('|');
 
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
     formula = formula.toUpperCase();
 
-    RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])'); //(r'(\[)(.+?)(\])');
+    RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])');
     var matches = regExp.allMatches(formula);
     if (matches.isNotEmpty) {
       // formel references
@@ -107,7 +110,6 @@ class FormulaPainter {
         result = _replaceRange(result, offset, null, subResult);
       }
     }
-    ;
 
     return result;
   }
@@ -183,7 +185,7 @@ class FormulaPainter {
       if (offset == 0) {
         _parserResult = _isVariable(formula);
         if (_parserResult != null) {
-          result = _coloredVariable(result, _parserResult, false);
+          result = _coloredVariable(result, _parserResult, _isEmptyVariable(formula));
           offset = _calcOffset(_parserResult);
         }
       }
@@ -245,6 +247,7 @@ class FormulaPainter {
         if (_parserResult != null) {
           result = _coloredSpaces(result, _parserResult);
           offset = _calcOffset(_parserResult);
+          isOperator = _operatorBevor;
         }
       }
 
@@ -338,28 +341,31 @@ class FormulaPainter {
     var wordFunction = false;
 
     var result = <String>[];
-    var splited = formula.split(',');
+    var split = formula.split(',');
     var valid = true;
     switch (functionName) {
       case 'LOG':
-        valid = splited.length == 2;
+        valid = split.length == 2;
+        break;
+      case 'NTH':
+        valid = split.length >= 1;
         break;
       case 'ROUND':
-        valid = splited.length <= 2;
+        valid = split.length <= 2;
         break;
       case 'BWW':
       case 'AV':
       case 'LEN':
-        valid = splited.length == 1;
+        valid = split.length == 1;
         wordFunction = true;
         break;
     }
     if (!valid) return null;
 
-    for (var i = 0; i < splited.length; i++) {
+    for (var i = 0; i < split.length; i++) {
       if (result.isNotEmpty) result.add('b');
       _operatorBevor = true;
-      var subresult = _paintSubFormula(splited[i], 0);
+      var subresult = _paintSubFormula(split[i], 0);
       if (wordFunction) subresult = subresult.replaceAll('R', 'g');
       result.add(subresult);
     }
@@ -421,6 +427,17 @@ class FormulaPainter {
     var match = regex.firstMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
+  }
+
+  bool _isEmptyVariable(String formula) {
+    if (_variablesRegEx.isEmpty) return null;
+    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
+    var match = regex.firstMatch(formula);
+    if (match == null) return true;
+
+    return ((_values != null) &&
+        (_values.containsKey(match.group(1))) &&
+        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
   }
 
   List<String> _isInvalidVariable(String formula) {

@@ -38,8 +38,8 @@ class CowState extends State<Cow> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'cow_interpret'),
-          rightValue: i18n(context, 'cow_generate'),
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -49,7 +49,9 @@ class CowState extends State<Cow> {
         ),
         GCWTextField(
           controller: _textController,
-          hintText: _currentMode == GCWSwitchPosition.left ? i18n(context, 'cow_code') : i18n(context, 'cow_text'),
+          hintText: _currentMode == GCWSwitchPosition.left
+              ? i18n(context, 'common_programming_hint_sourcecode')
+              : i18n(context, 'common_programming_hint_output'),
           onChanged: (text) {
             setState(() {
               _currentText = text;
@@ -59,7 +61,7 @@ class CowState extends State<Cow> {
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _inputController,
-                hintText: i18n(context, 'cow_input'),
+                hintText: i18n(context, 'common_programming_hint_input'),
                 onChanged: (text) {
                   setState(() {
                     _currentInput = text;

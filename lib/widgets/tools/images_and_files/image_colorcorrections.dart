@@ -18,12 +18,12 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:prefs/prefs.dart';
 
 class ImageColorCorrections extends StatefulWidget {
-  final PlatformFile file;
+  final GCWFile file;
 
   const ImageColorCorrections({this.file});
 
@@ -32,7 +32,7 @@ class ImageColorCorrections extends StatefulWidget {
 }
 
 class ImageColorCorrectionsState extends State<ImageColorCorrections> {
-  PlatformFile _originalData;
+  GCWFile _originalData;
   Uint8List _convertedOutputImage;
 
   img.Image _currentPreview;
@@ -128,7 +128,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       children: <Widget>[
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          onLoaded: (PlatformFile value) {
+          onLoaded: (GCWFile value) {
             if (value == null || !_validateData(value.bytes)) {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
@@ -186,7 +186,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                       .toList())),
         if (_currentPreview != null)
           GCWImageView(
-            imageData: _originalData == null ? null : GCWImageViewData(PlatformFile(bytes: _imageBytes())),
+            imageData: _originalData == null ? null : GCWImageViewData(GCWFile(bytes: _imageBytes())),
             onBeforeLoadBigImage: _adjustToFullPicture,
             suppressOpenInTool: {GCWImageViewOpenInTools.COLORCORRECTIONS},
           ),
@@ -195,7 +195,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
             suppressTopSpace: true,
             text: i18n(context, 'image_colorcorrections_options'),
             trailing: GCWIconButton(
-              iconData: Icons.refresh,
+              icon: Icons.refresh,
               size: IconButtonSize.SMALL,
               onPressed: () {
                 _resetInputs();
@@ -350,7 +350,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
       },
     );
 
-    return PlatformFile(bytes: _convertedOutputImage);
+    return GCWFile(bytes: _convertedOutputImage);
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobDataAdjustColor() async {
@@ -461,19 +461,19 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
 
     if (input.gamma != 1.0) pixel = gamma(pixel, input.gamma);
 
-    pixels[i] = pixel.red.round().clamp(0, 255);
-    pixels[i + 1] = pixel.green.round().clamp(0, 255);
-    pixels[i + 2] = pixel.blue.round().clamp(0, 255);
-
     if (input.invert) pixel = invert(pixel);
 
     if (input.grayscale) pixel = grayscale(pixel);
+
+    pixels[i] = pixel.red.round().clamp(0, 255);
+    pixels[i + 1] = pixel.green.round().clamp(0, 255);
+    pixels[i + 2] = pixel.blue.round().clamp(0, 255);
   }
 
   return image;
 }
 
-openInColorCorrections(BuildContext context, PlatformFile file) {
+openInColorCorrections(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(

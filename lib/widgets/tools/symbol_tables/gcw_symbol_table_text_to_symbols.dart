@@ -3,14 +3,20 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_colorhoney.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_colortokki.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_default.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_paint_data.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_puzzlecode.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_sizes.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_stipplecode.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/encryption_painters/symbol_table_encryption_tenctonese.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +28,8 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
   final SymbolTableData data;
   final bool showExportButton;
   final bool fixed;
+  final double borderWidth;
+  final bool specialEncryption;
 
   const GCWSymbolTableTextToSymbols(
       {Key key,
@@ -30,6 +38,8 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
       this.data,
       this.countColumns,
       this.showExportButton: true,
+      this.borderWidth,
+      this.specialEncryption,
       this.fixed: false})
       : super(key: key);
 
@@ -38,9 +48,6 @@ class GCWSymbolTableTextToSymbols extends StatefulWidget {
 }
 
 class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols> {
-  final _SYMBOL_NOT_FOUND_PATH = SYMBOLTABLES_ASSETPATH + '404.png';
-  final _EXPORT_SYMBOL_SIZE = 150.0;
-
   var _alphabetMap = <String, int>{};
 
   var _encryptionHasImages = false;
@@ -89,7 +96,7 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     );
   }
 
-  List<int> _getImages(bool isCaseSensitive) {
+  List<int> _getImageIndexes(bool isCaseSensitive) {
     var _text = widget.text;
     var imageIndexes = <int>[];
 
@@ -124,113 +131,81 @@ class GCWSymbolTableTextToSymbolsState extends State<GCWSymbolTableTextToSymbols
     return imageIndexes;
   }
 
-  _buildEncryptionOutput(countColumns) {
-    if (_data == null) return Container;
+  Widget _buildEncryptionOutput(countColumns) {
+    if (_data == null) return Container();
 
     var isCaseSensitive = _data.isCaseSensitive();
 
-    var rows = <Widget>[];
-
-    var images = _getImages(isCaseSensitive);
-    _encryptionHasImages = images.length > 0;
+    var imageIndexes = _getImageIndexes(isCaseSensitive);
+    _encryptionHasImages = imageIndexes.length > 0;
     if (!_encryptionHasImages) return Container();
 
-    var countRows = (images.length / countColumns).floor();
+    var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
+      mode: SymbolTableEncryptionMode.FIXED_CANVASWIDTH,
+      countImages: imageIndexes.length,
+      countColumns: countColumns,
+      symbolWidth: _data.imageSize().width,
+      symbolHeight: _data.imageSize().height,
+      relativeBorderWidth: widget.borderWidth,
+      canvasWidth: MediaQuery.of(context).size.width * 0.95,
+    ));
 
-    for (var i = 0; i <= countRows; i++) {
-      var columns = <Widget>[];
-
-      for (var j = 0; j < countColumns; j++) {
-        var widget;
-        var imageIndex = i * countColumns + j;
-
-        if (imageIndex < images.length) {
-          var image;
-          if (images[imageIndex] == null) {
-            image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
-          } else {
-            image = Image.memory(_data.images[images[imageIndex]].values.first.bytes);
-          }
-
-          widget = GCWSymbolContainer(
-            symbol: image,
-          );
-        } else {
-          widget = Container();
-        }
-
-        columns.add(Expanded(
-            child: Container(
-          child: widget,
-          padding: EdgeInsets.all(3),
-        )));
-      }
-
-      rows.add(Row(
-        children: columns,
-      ));
-    }
-
-    return Column(
-      children: rows,
+    return Container(
+      width: sizes.canvasWidth,
+      height: sizes.canvasHeight,
+      child: CustomPaint(
+          size: Size(sizes.canvasWidth, sizes.canvasHeight),
+          painter: SymbolTableEncryptionPainter(
+              paintData: SymbolTablePaintData(
+                sizes: sizes,
+                data: _data,
+                imageIndexes: imageIndexes,
+              ),
+              encryption: _symbolTableEncryption())),
     );
   }
 
-  Future<ui.Image> _loadImage(String asset) async {
-    ByteData data = await rootBundle.load(asset);
+  SymbolTableEncryption _symbolTableEncryption() {
+    if (!widget.specialEncryption) return SymbolTableEncryption();
 
-    return _buildImage(data.buffer.asUint8List());
-  }
-
-  Future<ui.Image> _buildImage(Uint8List bytes) async {
-    ui.Codec codec = await ui.instantiateImageCodec(bytes);
-    ui.FrameInfo fi = await codec.getNextFrame();
-
-    return fi.image;
+    switch (_data.symbolKey) {
+      case 'color_honey':
+        return ColorHoneySymbolTableEncryption();
+      case 'color_tokki':
+        return ColorTokkiSymbolTableEncryption();
+      case 'puzzle':
+        return PuzzleSymbolTableEncryption();
+      case 'stippelcode':
+        return StippleSymbolTableEncryption();
+      case 'tenctonese_cursive':
+        return TenctoneseSymbolTableEncryption();
+      default:
+        return SymbolTableEncryption();
+    }
   }
 
   Future<Uint8List> _exportEncryption(int countColumns, isCaseSensitive) async {
-    var images = _getImages(isCaseSensitive);
+    var imageIndexes = _getImageIndexes(isCaseSensitive);
 
-    var countRows = (images.length / countColumns).floor();
-    if (countRows * countColumns < images.length) countRows++;
-
-    var width = countColumns * _EXPORT_SYMBOL_SIZE;
-    var height = countRows * _EXPORT_SYMBOL_SIZE;
+    var countRows = (imageIndexes.length / countColumns).floor();
+    if (countRows * countColumns < imageIndexes.length) countRows++;
 
     final canvasRecorder = ui.PictureRecorder();
-    final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
+    var canvas = Canvas(canvasRecorder);
 
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
+    var sizes = _symbolTableEncryption().sizes(SymbolTableEncryptionSizes(
+        mode: SymbolTableEncryptionMode.FIXED_SYMBOLSIZE,
+        symbolWidth: _data.imageSize().width,
+        symbolHeight: _data.imageSize().height,
+        countImages: imageIndexes.length,
+        countColumns: countColumns,
+        relativeBorderWidth: widget.borderWidth));
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+    var paintData = SymbolTablePaintData(canvas: canvas, sizes: sizes, data: _data, imageIndexes: imageIndexes);
 
-    for (var i = 0; i <= countRows; i++) {
-      for (var j = 0; j < countColumns; j++) {
-        var imageIndex = i * countColumns + j;
+    canvas = _symbolTableEncryption().paint(paintData);
 
-        if (imageIndex < images.length) {
-          ui.Image image;
-
-          if (images[imageIndex] == null) {
-            image = await _loadImage(_SYMBOL_NOT_FOUND_PATH);
-          } else {
-            image = await _buildImage(_data.images[images[imageIndex]].values.first.bytes);
-          }
-
-          paintImage(
-              canvas: canvas,
-              fit: BoxFit.contain,
-              rect: Rect.fromLTWH(
-                  j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE, _EXPORT_SYMBOL_SIZE),
-              image: image);
-        }
-      }
-    }
-
-    final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
+    final img = await canvasRecorder.endRecording().toImage(sizes.canvasWidth.floor(), sizes.canvasHeight.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return await saveByteDataToFile(context, trimNullBytes(data.buffer.asUint8List()),

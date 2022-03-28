@@ -11,17 +11,18 @@ import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 
 enum GCWImageViewButtons { ALL, SAVE, VIEW_IN_TOOLS }
-enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA }
+enum GCWImageViewOpenInTools { METADATA, HEXVIEW, COLORCORRECTIONS, HIDDENDATA, FLIPROTATE }
 
 class GCWImageViewData {
-  final PlatformFile file;
+  final GCWFile file;
   final String description;
   final bool marked;
 
@@ -163,7 +164,7 @@ class _GCWImageViewState extends State<GCWImageView> {
 
     return [
       GCWIconButton(
-          iconData: Icons.zoom_out_map,
+          icon: Icons.zoom_out_map,
           size: iconSize,
           onPressed: () {
             if (widget.onBeforeLoadBigImage != null) {
@@ -175,7 +176,7 @@ class _GCWImageViewState extends State<GCWImageView> {
             }
           }),
       GCWIconButton(
-          iconData: Icons.fit_screen,
+          icon: Icons.fit_screen,
           size: iconSize,
           onPressed: () {
             _scaleStateController.scaleState = PhotoViewScaleState.initial;
@@ -188,7 +189,7 @@ class _GCWImageViewState extends State<GCWImageView> {
               ),
       if (widget.suppressedButtons == null || !widget.suppressedButtons.contains(GCWImageViewButtons.SAVE))
         GCWIconButton(
-            iconData: Icons.save,
+            icon: Icons.save,
             size: iconSize,
             onPressed: () {
               var imgData;
@@ -256,10 +257,23 @@ class _GCWImageViewState extends State<GCWImageView> {
                         action: (index) => setState(() {
                               if (widget.onBeforeLoadBigImage != null) {
                                 widget.onBeforeLoadBigImage().then((imgData) {
-                                  openInHiddenData(context, imgData);
+                                  openInColorCorrections(context, imgData);
                                 });
                               } else {
                                 openInColorCorrections(context, widget.imageData.file);
+                              }
+                            })),
+                  if (widget.suppressOpenInTool == null ||
+                      !widget.suppressOpenInTool.contains(GCWImageViewOpenInTools.FLIPROTATE))
+                    GCWPopupMenuItem(
+                        child: iconedGCWPopupMenuItem(context, Icons.brush, 'image_fliprotate_openinfliprotate'),
+                        action: (index) => setState(() {
+                              if (widget.onBeforeLoadBigImage != null) {
+                                widget.onBeforeLoadBigImage().then((imgData) {
+                                  openInFlipRotate(context, imgData);
+                                });
+                              } else {
+                                openInFlipRotate(context, widget.imageData.file);
                               }
                             })),
                 ])

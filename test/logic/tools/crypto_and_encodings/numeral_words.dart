@@ -22,7 +22,7 @@ void main(){
                             NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
                             NumeralWordsDecodeOutput('5', 'kvin', 'common_language_esperanto'),
                             NumeralWordsDecodeOutput('5', 'cinq', 'common_language_french'),
-//                            NumeralWordsDecodeOutput('5', 'пять', '  common_language_kyr'),
+                            NumeralWordsDecodeOutput('5', 'пять', 'numeralwords_language_kyr'),
                             NumeralWordsDecodeOutput('5', 'lul', 'common_language_volapuek'),
                             NumeralWordsDecodeOutput('5', 'five', 'common_language_english'),
                             NumeralWordsDecodeOutput('', '', 'numeralwords_language_sco'),
@@ -31,6 +31,7 @@ void main(){
                             NumeralWordsDecodeOutput('', '', 'common_language_italian'),
                             NumeralWordsDecodeOutput('', '', 'common_language_portuguese'),
                             NumeralWordsDecodeOutput('', '', 'common_language_polish'),
+                            NumeralWordsDecodeOutput('', '', 'numeralwords_language_jap'),
                             NumeralWordsDecodeOutput('', '', 'numeralwords_language_meg'),
         ]},
     ];
@@ -123,7 +124,7 @@ void main(){
           NumeralWordsDecodeOutput('5', 'fuenf', 'common_language_german'),
           NumeralWordsDecodeOutput('5', 'kvin', 'common_language_esperanto'),
           NumeralWordsDecodeOutput('5', 'cinq', 'common_language_french'),
-//                            NumeralWordsDecodeOutput('5', 'пять', '  common_language_kyr'),
+          NumeralWordsDecodeOutput('5', 'пять', 'numeralwords_language_kyr'),
           NumeralWordsDecodeOutput('5', 'lul', 'common_language_volapuek'),
           NumeralWordsDecodeOutput('5', 'five', 'common_language_english'),
           NumeralWordsDecodeOutput('', '', 'numeralwords_language_sco'),
@@ -132,6 +133,7 @@ void main(){
           NumeralWordsDecodeOutput('', '', 'common_language_italian'),
           NumeralWordsDecodeOutput('', '', 'common_language_portuguese'),
           NumeralWordsDecodeOutput('', '', 'common_language_polish'),
+          NumeralWordsDecodeOutput('', '', 'numeralwords_language_jap'),
           NumeralWordsDecodeOutput('', '', 'numeralwords_language_meg'),
         ]},
     ];
@@ -471,6 +473,7 @@ void main(){
                             NumeralWordsDecodeOutput('6', 'zes', 'common_language_dutch'),
                             NumeralWordsDecodeOutput('7', 'ze', 'numeralwords_language_loj'),
                             NumeralWordsDecodeOutput('4', 'si', 'numeralwords_language_chi'),
+                            NumeralWordsDecodeOutput('', 'si', 'common_language_thai_rtgs'),
                             NumeralWordsDecodeOutput('2', 'i', 'common_language_sino_korean'),
                             NumeralWordsDecodeOutput('9', 'so', 'numeralwords_language_loj'),
                             NumeralWordsDecodeOutput('1', 'one', 'common_language_english'),
@@ -521,6 +524,7 @@ void main(){
           NumeralWordsDecodeOutput('8', 'ba', 'numeralwords_language_chi'),
           NumeralWordsDecodeOutput('1', 'bal', 'common_language_volapuek'),
           NumeralWordsDecodeOutput('3', 'ba', 'numeralwords_language_vie'),
+          NumeralWordsDecodeOutput('5', 'ha', 'common_language_thai_rtgs'),
           NumeralWordsDecodeOutput('4', 'sa', 'common_language_sino_korean'),
           NumeralWordsDecodeOutput('0', 'null', 'common_language_german'),
           NumeralWordsDecodeOutput('', 'nul', 'common_language_dutch'),
@@ -574,6 +578,7 @@ void main(){
           NumeralWordsDecodeOutput('', 'dwa', 'common_language_bulgarian'),
           NumeralWordsDecodeOutput('2', 'i', 'common_language_sino_korean'),
           NumeralWordsDecodeOutput('4', 'si', 'numeralwords_language_chi'),
+          NumeralWordsDecodeOutput('', 'si', 'common_language_thai_rtgs'),
           NumeralWordsDecodeOutput('2', 'i', 'common_language_sino_korean'),
           NumeralWordsDecodeOutput('100', 'sto', 'common_language_polish'),
           NumeralWordsDecodeOutput('', 'sto', 'common_language_russian'),
@@ -1098,6 +1103,43 @@ void main(){
         'decodeMode': true,
         'expectedOutput': [
           NumeralWordsDecodeOutput("1968", "pxevozampuzampuvol", 'numeralwords_language_navi'),
+        ]
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test(
+          'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(
+            removeAccents(elem['input'].toString().toLowerCase()),
+            elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
+
+  group("NumeralWords.unicode languages:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {
+        'input': 'шестнадцать 十八 じゅうしち 이십 열다섯 百 единайсет สามสิบ',
+        'language': NumeralWordsLanguage.ALL,
+        'decodeMode': true,
+        'expectedOutput': [
+          NumeralWordsDecodeOutput('16', 'шестнадцать', 'numeralwords_language_kyr'),
+          NumeralWordsDecodeOutput('18', '十八', 'numeralwords_language_chi_symbol'),
+          NumeralWordsDecodeOutput('', '', 'common_language_hanja'),
+          NumeralWordsDecodeOutput('17', 'じゅうしち', 'numeralwords_language_jap_hiragana'),
+          NumeralWordsDecodeOutput('20', '이십', 'common_language_hangul_sino_korean'),
+          NumeralWordsDecodeOutput('15', '열다섯', 'common_language_hangul_korean'),
+          NumeralWordsDecodeOutput('100', '百', 'numeralwords_language_chi_symbol'),
+          NumeralWordsDecodeOutput('', '', 'common_language_hanja'),
+          NumeralWordsDecodeOutput('11', 'единайсет', 'numeralwords_language_bul_kyr'),
+          NumeralWordsDecodeOutput('30', 'สามสิบ', 'common_language_thai'),
         ]
       },
     ];

@@ -42,9 +42,11 @@ defaultFontSize() {
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
     {List<int> flexValues = const [],
     int copyColumn,
+    bool suppressCopyButtons: false,
     bool hasHeader: false,
     bool copyAll: false,
-    List<Function> tappables}) {
+    List<Function> tappables,
+    double fontSize}) {
   var odd = true;
   var isFirst = true;
 
@@ -55,7 +57,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     var columns = rowData
         .asMap()
         .map((index, column) {
-          var textStyle = gcwTextStyle();
+          var textStyle = gcwTextStyle(fontSize: fontSize);
           if (isFirst && hasHeader) textStyle = textStyle.copyWith(fontWeight: FontWeight.bold);
 
           var child;
@@ -93,10 +95,10 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           context == null
               ? Container()
               : Container(
-                  child: ((isFirst && hasHeader) & !copyAll)
+                  child: (((isFirst && hasHeader) & !copyAll) || suppressCopyButtons)
                       ? Container()
                       : GCWIconButton(
-                          iconData: Icons.content_copy,
+                          icon: Icons.content_copy,
                           size: IconButtonSize.TINY,
                           onPressed: () {
                             insertIntoGCWClipboard(context, copyText);

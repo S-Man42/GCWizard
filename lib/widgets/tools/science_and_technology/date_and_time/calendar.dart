@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/gcw_date_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:intl/intl.dart';
 
 class Calendar extends StatefulWidget {
@@ -65,6 +66,7 @@ class CalendarState extends State<Calendar> {
             _currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR ||
             _currentCalendarSystem == CalendarSystem.COPTICCALENDAR ||
             _currentCalendarSystem == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.POTRZEBIECALENDAR ||
             _currentCalendarSystem == CalendarSystem.HEBREWCALENDAR)
           GCWDatePicker(
             date: _currentDate,
@@ -116,7 +118,12 @@ class CalendarState extends State<Calendar> {
         jd = CopticCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
+      case CalendarSystem.POTRZEBIECALENDAR:
+        jd = PotrzebieCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
+        break;
     }
+
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
     output['dates_calendar_system_juliancalendar'] =
         _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
@@ -130,6 +137,17 @@ class CalendarState extends State<Calendar> {
         _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
     output['dates_calendar_system_copticcalendar'] =
         _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
+    // reuse lib/widget/tools/science_and_technology/maya_calendar.dart
+    output['dates_calendar_system_mayacalendar_daycount'] = JulianDateToMayaDayCount(jd).toString();
+    output['dates_calendar_system_mayacalendar_longcount'] =
+        MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)).join('.');
+    output['dates_calendar_system_mayacalendar_haab'] =
+        MayaLongCountToHaab(MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)));
+    output['dates_calendar_system_mayacalendar_tzolkin'] =
+        MayaLongCountToTzolkin(MayaDayCountToMayaLongCount(JulianDateToMayaDayCount(jd)));
+    output['dates_calendar_system_potrzebiecalendar'] =
+        _DateOutputToString(context, JulianDateToPotrzebieCalendar(jd), CalendarSystem.POTRZEBIECALENDAR);
+
     return GCWDefaultOutput(
         child: Column(
       children: columnedMultiLineOutput(
@@ -175,7 +193,9 @@ class CalendarState extends State<Calendar> {
           default:
             return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
         }
+        break;
+      case CalendarSystem.POTRZEBIECALENDAR:
+        return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
     }
-    ;
   }
 }

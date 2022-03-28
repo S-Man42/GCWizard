@@ -67,8 +67,8 @@ class VanityWordsListState extends State<VanityWordsList> {
               entry.key,
               entry.value,
               NumWords[_currentLanguage][(entry.value).toLowerCase()].toString().startsWith('numeralwords_')
-                ? i18n(context, NumWords[_currentLanguage][(entry.value).toLowerCase()]) + ' '
-                : NumWords[_currentLanguage][entry.value.toLowerCase()]
+                  ? i18n(context, NumWords[_currentLanguage][(entry.value).toLowerCase()]) + ' '
+                  : NumWords[_currentLanguage][entry.value.toLowerCase()]
             ];
           }).toList(),
           flexValues: [2, 2, 1]),

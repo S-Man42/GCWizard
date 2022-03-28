@@ -17,7 +17,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:http/http.dart' as http;
 
 import 'gcw_async_executer.dart';
@@ -27,9 +27,17 @@ class GCWOpenFile extends StatefulWidget {
   final List<FileType> supportedFileTypes;
   final bool isDialog;
   final String title;
-  final PlatformFile file;
+  final GCWFile file;
+  final suppressHeader;
 
-  const GCWOpenFile({Key key, this.onLoaded, this.supportedFileTypes, this.title, this.isDialog: false, this.file})
+  const GCWOpenFile(
+      {Key key,
+      this.onLoaded,
+      this.supportedFileTypes,
+      this.title,
+      this.isDialog: false,
+      this.file,
+      this.suppressHeader: false})
       : super(key: key);
 
   @override
@@ -44,7 +52,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   var _currentMode = GCWSwitchPosition.left;
   var _currentExpanded = true;
 
-  PlatformFile _loadedFile;
+  GCWFile _loadedFile;
 
   @override
   void initState() {
@@ -65,7 +73,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
       text: i18n(context, 'common_loadfile_open'),
       onPressed: () {
         _currentExpanded = true;
-        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((PlatformFile file) {
+        openFileExplorer(allowedFileTypes: widget.supportedFileTypes).then((GCWFile file) {
           if (file != null && file.bytes != null) {
             setState(() {
               _loadedFile = file;
@@ -166,8 +174,8 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
   _saveDownload(dynamic data) {
     if (data is Uint8List) {
-      _loadedFile = PlatformFile(
-          name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
+      _loadedFile =
+          GCWFile(name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
     } else if (data is String) showToast(i18n(context, data));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -200,7 +208,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
 
     return Column(
       children: [
-        widget.isDialog
+        widget.isDialog || widget.suppressHeader
             ? content
             : GCWExpandableTextDivider(
                 text:

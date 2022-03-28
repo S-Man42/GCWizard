@@ -84,7 +84,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
             suppressTopSpace: true,
             style: gcwDialogTextStyle(),
             trailing: GCWIconButton(
-              iconData: Icons.settings,
+              icon: Icons.settings,
               size: IconButtonSize.SMALL,
               iconColor: themeColors().dialogText(),
             ),

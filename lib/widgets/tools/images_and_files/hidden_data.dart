@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_files_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
-import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_textviewer.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 
 class HiddenData extends StatefulWidget {
-  final PlatformFile platformFile;
+  final GCWFile platformFile;
 
   const HiddenData({Key key, this.platformFile}) : super(key: key);
 
@@ -38,10 +30,10 @@ class HiddenData extends StatefulWidget {
 class HiddenDataState extends State<HiddenData> {
   TextEditingController _hideController;
 
-  PlatformFile _unHideFile;
+  GCWFile _unHideFile;
 
-  PlatformFile _publicFile;
-  PlatformFile _secretFile;
+  GCWFile _publicFile;
+  GCWFile _secretFile;
 
   var _currentMode = GCWSwitchPosition.right;
   var _currentHideMode = GCWSwitchPosition.left;
@@ -147,8 +139,8 @@ class HiddenDataState extends State<HiddenData> {
               data = mergeFiles([_publicFile.bytes, _secretFile.bytes]);
             }
 
-            _exportFile(context,
-                PlatformFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
+            _exportFile(
+                context, GCWFile(name: 'hidden_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), bytes: data));
           },
         )
       ],
@@ -181,16 +173,21 @@ class HiddenDataState extends State<HiddenData> {
     );
   }
 
-  _buildOutput() {
-    if (_unHideFile == null) return null;
+  Widget _buildOutput() {
+    if (_unHideFile == null) return Container();
 
     var _hiddenDataList = hiddenData(_unHideFile);
-    if (_hiddenDataList == null || _hiddenDataList.isEmpty) return i18n(context, 'hiddendata_nohiddendatafound');
-
-    return GCWFilesOutput(files: _hiddenDataList);
+    return FutureBuilder(
+        future: _hiddenDataList,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null || snapshot.data.isEmpty)
+            return GCWOutputText(text: i18n(context, 'hiddendata_nohiddendatafound'), suppressCopyButton: true);
+          else
+            return GCWFilesOutput(files: snapshot.data);
+        });
   }
 
-  _exportFile(BuildContext context, PlatformFile file) async {
+  _exportFile(BuildContext context, GCWFile file) async {
     if (file.bytes == null) {
       showToast(i18n(context, 'hiddendata_datanotreadable'));
       return;
@@ -206,7 +203,7 @@ class HiddenDataState extends State<HiddenData> {
   }
 }
 
-openInHiddenData(BuildContext context, PlatformFile file) {
+openInHiddenData(BuildContext context, GCWFile file) {
   Navigator.push(
       context,
       NoAnimationMaterialPageRoute(
