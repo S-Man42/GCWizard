@@ -305,7 +305,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterat
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/equatorial_time_to_degree.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
@@ -633,12 +633,6 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
           'esotericprogramminglanguage',
         ]),
-    GCWTool(tool: EquatorialTimeToDegree(), i18nPrefix: 'time_degree', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'time_degree',
-      'coordinates',
-    ]),
     GCWTool(tool: ExifReader(), i18nPrefix: 'exif', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
@@ -950,6 +944,12 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'reverse',
+    ]),
+    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'time_degree', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'time_degree',
+      'coordinates',
     ]),
     GCWTool(
         tool: RomanNumbersSelection(),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/equatorial_time_to_degree.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
@@ -15,12 +15,12 @@ import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degree
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 
-class EquatorialTimeToDegree extends StatefulWidget {
+class RightAscensionTimeToDegree extends StatefulWidget {
   @override
-  EquatorialTimeToDegreeState createState() => EquatorialTimeToDegreeState();
+  RightAscensionTimeToDegreeState createState() => RightAscensionTimeToDegreeState();
 }
 
-class EquatorialTimeToDegreeState extends State<EquatorialTimeToDegree> {
+class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> {
   FocusNode _hoursFocusNode;
   FocusNode _minutesFocusNode;
   FocusNode _secondsFocusNode;
@@ -130,7 +130,6 @@ class EquatorialTimeToDegreeState extends State<EquatorialTimeToDegree> {
             onChanged: (value) {
               setState(() {
                 _currentSign = value;
-                // _setCurrentValueAndEmitOnChange();
               });
             }),
           GCWIntegerTextField(
@@ -140,7 +139,6 @@ class EquatorialTimeToDegreeState extends State<EquatorialTimeToDegree> {
             onChanged: (ret) {
               setState(() {
                 _currentHours = ret['text'];
-                //if (ret['text'].length == 2) FocusScope.of(context).requestFocus(_minutesFocusNode);
               });
             }
           ),

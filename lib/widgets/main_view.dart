@@ -235,7 +235,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/equatorial_time_to_degree.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -511,7 +511,6 @@ void _initStaticToolList() {
       className(EnclosedAreas()),
       className(Enigma()),
       className(ExifReader()),
-      className(EquatorialTimeToDegree()),
       className(EquilateralTriangle()),
       className(ESelection()),
       className(FormatConverter()),
@@ -596,6 +595,7 @@ void _initStaticToolList() {
       className(Resection()),
       className(ResistorSelection()),
       className(Reverse()),
+      className(RightAscensionTimeToDegree()),
       className(RobberLanguage()),
       className(RomanNumbers()),
       className(Rot123()),
