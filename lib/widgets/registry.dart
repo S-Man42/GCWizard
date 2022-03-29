@@ -945,10 +945,10 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'reverse',
     ]),
-    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'time_degree', categories: [
+    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'right_ascension_time_to_degree', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
-      'time_degree',
+      'right_ascension_time_to_degree',
       'coordinates',
     ]),
     GCWTool(

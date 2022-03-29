@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right
 
 void main() {
 
-  group("time_degree.raDegree2Time:", () {
+  group("right_ascension_time_to_degree.raDegree2Time:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null.toString()},
       {'input' : 66.918277, 'expectedOutput' : '4:27:40.3864800000'},
@@ -16,13 +16,13 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raDegree2Time(DEG(elem['input']));
+        var _actual = raDegree2Time(RADEG(elem['input']));
         expect(_actual.toString(), elem['expectedOutput']);
       });
     });
   });
 
-  group("time_degree.raTime2Degree:", () {
+  group("right_ascension_time_to_degree.raTime2Degree:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '66.918275'},
@@ -57,7 +57,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = DEG.parse(elem['input']);
+        var _actual = RADEG.parse(elem['input']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else

@@ -569,7 +569,7 @@
   "telegraph_wigwag": "us semaphore flags signalcorps unitedstates army",
   "telegraph_wheatstonecooke_needle": "needle",
   "teletypewriter": "teleprinter teletypewriter",
-  "time_degree": "equatorial time astronomical declination right ascension",
+  "right_ascension_time_to_degree": "equatorial time astronomical declination right ascension",
   "tomtom": "",
   "trifid": "",
   "trithemius": "",

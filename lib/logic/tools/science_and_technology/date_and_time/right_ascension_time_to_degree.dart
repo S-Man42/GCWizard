@@ -1,3 +1,5 @@
+// https://github.com/maxogden/equatorial
+
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
@@ -6,7 +8,7 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 
 
 /// Right ascension to equatorial coordinate system
-Equatorial raDegree2Time(DEG ra) {
+Equatorial raDegree2Time(RADEG ra) {
   if ((ra == null) || (ra.degress == null)) return null;
   var deg = ra.degress.abs();
 
@@ -17,8 +19,8 @@ Equatorial raDegree2Time(DEG ra) {
   return Equatorial(_sign(ra.degress), hour, min, sec);
 }
 
-/// Right ascension hms to degrees
-DEG raTime2Degree(Equatorial equatorial) {
+/// Right ascension hms to degree
+RADEG raTime2Degree(Equatorial equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;
@@ -28,7 +30,7 @@ DEG raTime2Degree(Equatorial equatorial) {
   var sDeg = (s / 240.0);
   var deg = (h * 15.0) + (m / 4.0) + sDeg;
 
-  return DEG(equatorial.sign * deg);
+  return RADEG(equatorial.sign * deg);
 }
 
 int _sign(double num) {
@@ -99,18 +101,18 @@ class Equatorial {
   }
 }
 
-class DEG {
+class RADEG {
   double degress;
 
-  DEG(double degress) {
+  RADEG(double degress) {
     this.degress = degress;
   }
 
-  static DEG parse(String input, {wholeString = false}) {
+  static RADEG parse(String input, {wholeString = false}) {
     input = dec.prepareInput(input, wholeString: wholeString);
     if (input == null) return null;
 
-    RegExp regex = RegExp(_PATTERN_DEG + regexEnd, caseSensitive: false);
+    RegExp regex = RegExp(_PATTERN_RADEG + regexEnd, caseSensitive: false);
 
     if (regex.hasMatch(input)) {
       var matches = regex.firstMatch(input);
@@ -122,7 +124,7 @@ class DEG {
       else
         latDegrees = latSign * double.parse('${matches.group(2)}.0');
 
-      return DEG(latDegrees);
+      return RADEG(latDegrees);
     }
     return null;
   }
@@ -138,7 +140,7 @@ class DEG {
     return '${NumberFormat('0.' + fixedDigits + variableDigits).format(degress)}';
   }
 
-  static final _PATTERN_DEG = '^\\s*?'
+  static final _PATTERN_RADEG = '^\\s*?'
       '([\\+\\-])?\\s*?' //sign
       '(\\d{1,3})\\s*?' //degrees
       '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //millidegrees

@@ -209,9 +209,6 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     onChanged: (ret) {
                       setState(() {
                         _currentDecDegrees = ret['text'];
-                        //_setCurrentValueAndEmitOnChange();
-
-                        //if (_currentDecDegrees.length == 2) FocusScope.of(context).requestFocus(_decMilliDegreesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -230,7 +227,6 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDecMilliDegrees = ret['text'];
-                    //_setCurrentValueAndEmitOnChange();
                   });
                 }),
           ),
@@ -249,9 +245,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     if (_currentMode == GCWSwitchPosition.left) {
       int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
       double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
-      var _currentDeg = DEG(_currentDecSign * _degreesD);
+      var _currentDeg = RADEG(_currentDecSign * _degreesD);
 
-      var entry = <String>['Right ascension', raDegree2Time(_currentDeg).toString()];
+      var entry = <String>[i18n(context, 'right_ascension'), raDegree2Time(_currentDeg).toString()];
       output.add(entry);
     } else {
       int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
@@ -259,7 +255,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       int _seconds = (['', '-'].contains(_currentSeconds) ? 0 : int.parse(_currentSeconds));
       double _secondsD = double.parse('$_seconds.$_currentMilliSeconds');
 
-      var _equatorial =Equatorial(_currentSign, _hours, _minutes, _secondsD);
+      var _equatorial = Equatorial(_currentSign, _hours, _minutes, _secondsD);
 
       var deg = raTime2Degree(_equatorial);
       var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), deg.toString()];
@@ -270,7 +266,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
 
   _parse(String input) {
     if(_currentMode == GCWSwitchPosition.left) {
-      var deg = DEG.parse(input);
+      var deg = RADEG.parse(input);
       if (deg == null) return;
 
       _currentDecDegrees = deg.degress.abs().floor().toString();
