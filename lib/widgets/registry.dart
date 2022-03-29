@@ -633,6 +633,12 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
           'esotericprogramminglanguage',
         ]),
+    GCWTool(tool: EquatorialTimeToDegree(), i18nPrefix: 'time_degree', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'time_degree',
+      'coordinates',
+    ]),
     GCWTool(tool: ExifReader(), i18nPrefix: 'exif', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
     ], searchKeys: [
@@ -1071,12 +1077,6 @@ initializeRegistry(BuildContext context) {
       'symbol_murraybaudot',
       'symbol_baudot'
       'symbol_baudot'
-    ]),
-    GCWTool(tool: TimeDegree(), i18nPrefix: 'time_degree', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'time_degree',
-      'coordinates',
     ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
