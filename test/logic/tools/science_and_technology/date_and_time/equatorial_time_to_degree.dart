@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/time_degree.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/equatorial_time_to_degree.dart';
 
 void main() {
 
