@@ -41,9 +41,9 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
     super.initState();
 
     _currentEllipsoid = widget.ellipsoid ?? defaultEllipsoid();
-    _currentMode = _currentEllipsoid.type == EllipsoidType.STANDARD ? GCWSwitchPosition.left : GCWSwitchPosition.right;
+    _currentMode = _currentEllipsoid.config == EllipsoidType.STANDARD ? GCWSwitchPosition.left : GCWSwitchPosition.right;
 
-    if (_currentEllipsoid.type == EllipsoidType.USER_DEFINED) {
+    if (_currentEllipsoid.config == EllipsoidType.USER_DEFINED) {
       _firstUserValue = {'text': _currentEllipsoid.a.toString(), 'value': _currentEllipsoid.a};
       _secondUserValue = {'text': _currentEllipsoid.b.toString(), 'value': _currentEllipsoid.b};
       _currentStandardEllipsoid = getEllipsoidByName(ELLIPSOID_NAME_WGS84);

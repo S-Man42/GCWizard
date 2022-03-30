@@ -429,8 +429,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                             ),
                             padding: EdgeInsets.only(left: DEFAULT_MARGIN))
                         : Transform.rotate(
-                            child: Icon(_formulaValueTypeIcon(entry.type), color: themeColors().mainFont()),
-                            angle: degreesToRadian(entry.type == FormulaValueType.TEXT ? 0.0 : 90.0),
+                            child: Icon(_formulaValueTypeIcon(entry.config), color: themeColors().mainFont()),
+                            angle: degreesToRadian(entry.config == FormulaValueType.TEXT ? 0.0 : 90.0),
                           )))
             : Container(),
         _editButton(entry),
