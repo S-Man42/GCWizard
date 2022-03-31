@@ -166,12 +166,14 @@ DateTime hoursToHHmmss(double hours) {
   return DateTime(0, 1, 1, h, min, sec, milliSec);
 }
 
-String formatHoursToHHmmss(double hours) {
+String formatHoursToHHmmss(double hours, {limitHours = true}) {
   var time = hoursToHHmmss(hours);
 
   var h = time.hour;
   var min = time.minute;
   var sec = time.second + time.millisecond / 1000.0;
+  if (!limitHours)
+    h += (time.day - 1) * 24 + (time.month -1) * 31;
 
   var secondsStr = NumberFormat('00.000').format(sec);
   //Values like 59.999999999 may be rounded to 60.0. So in that case,

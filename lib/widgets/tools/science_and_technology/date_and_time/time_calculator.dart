@@ -62,9 +62,9 @@ class TimeCalculatorState extends State<TimeCalculator> {
         GCWDateTimePicker(
           config: {DateTimePickerConfig.DAY, DateTimePickerConfig.TIME, DateTimePickerConfig.SECOND_AS_INT},
           dayController: _startDaysController,
-          hourController: _startHoursController,
-          minuteController: _startMinutesController,
-          secondController: _startSecondsController,
+          hoursController: _startHoursController,
+          minutesController: _startMinutesController,
+          secondsController: _startSecondsController,
           minDays: 0,
           maxDays: null,
           duration: _currentStartTime,

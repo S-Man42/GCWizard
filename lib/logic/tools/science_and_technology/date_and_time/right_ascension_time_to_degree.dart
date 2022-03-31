@@ -3,12 +3,13 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 
 
-/// Right ascension to equatorial coordinate system
-Equatorial raDegree2Time(RADEG ra) {
+/// degree to Right ascension
+RightAscension raDegree2Time(RaDeg ra) {
   if ((ra == null) || (ra.degress == null)) return null;
   var deg = ra.degress.abs();
 
@@ -16,11 +17,11 @@ Equatorial raDegree2Time(RADEG ra) {
   var min = (((deg / 15.0) - hour) * 60).floor();
   var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
 
-  return Equatorial(_sign(ra.degress), hour, min, sec);
+  return RightAscension(_sign(ra.degress), hour, min, sec);
 }
 
 /// Right ascension hms to degree
-RADEG raTime2Degree(Equatorial equatorial) {
+RaDeg raTime2Degree(RightAscension equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;
@@ -30,7 +31,7 @@ RADEG raTime2Degree(Equatorial equatorial) {
   var sDeg = (s / 240.0);
   var deg = (h * 15.0) + (m / 4.0) + sDeg;
 
-  return RADEG(equatorial.sign * deg);
+  return RaDeg(equatorial.sign * deg);
 }
 
 int _sign(double num) {
@@ -38,27 +39,27 @@ int _sign(double num) {
 }
 
 /// equatorial coordinate system
-class Equatorial {
+class RightAscension {
   int sign;
   int hours;
   int minutes;
   double seconds;
 
-  Equatorial(int neg, int hours , int min, double sec) {
+  RightAscension(int neg, int hours , int min, double sec) {
     this.sign = neg;
     this.hours = hours.abs();
     this.minutes = min.abs();
     this.seconds = sec.abs();
   }
 
-  static Equatorial parse (String input) {
+  static RightAscension parse (String input) {
     var regex = new RegExp(r"([+|-]?)([\d]*):([0-5]?[0-9]):([0-5]?[0-9])(\.\d*)*");
     if (input == null) return null;
 
     var matches = regex.allMatches(input);
 
     if (matches.length > 0) {
-      return new Equatorial(
+      return new RightAscension(
           (matches.first.group(1) == "-") ? -1 : 1,
           int.parse(matches.first.group(2)),
           int.parse(matches.first.group(3)),
@@ -73,42 +74,20 @@ class Equatorial {
 
   @override
   String toString() {
-    var _hours = hours;
-    var _minutes = minutes;
-    var _secondsStr = '';
-    var _secondsSplitted =  seconds.toString().split('.');
+    var hourFormat = hours +  (minutes / 60) + (seconds / 3600);
 
-    if ((_secondsSplitted.length < 2) || (_secondsSplitted[1].length <= 10))
-      _secondsStr = seconds.toString();
-    else
-      _secondsStr = NumberFormat('0.0' + '#' * 9).format(seconds);
-
-    //Values like 59.999999999' may be rounded to 60.0. So in that case,
-    //the degree has to be increased while minutes should be set to 0.0
-    if (_secondsStr.startsWith('60')) {
-      _secondsStr = '0';
-      _minutes += 1;
-    }
-    if (_minutes == 60) {
-      _minutes = 0;
-      _hours += 1;
-    }
-
-    return (sign < 0 ? '-' : '') +
-        _hours.toString() + ":" +
-        _minutes.toString() + ":" +
-        _secondsStr;
+    return (sign < 0 ? '-' : '') + formatHoursToHHmmss(hourFormat, limitHours: false );
   }
 }
 
-class RADEG {
+class RaDeg {
   double degress;
 
-  RADEG(double degress) {
+  RaDeg(double degress) {
     this.degress = degress;
   }
 
-  static RADEG parse(String input, {wholeString = false}) {
+  static RaDeg parse(String input, {wholeString = false}) {
     input = dec.prepareInput(input, wholeString: wholeString);
     if (input == null) return null;
 
@@ -117,14 +96,14 @@ class RADEG {
     if (regex.hasMatch(input)) {
       var matches = regex.firstMatch(input);
 
-      var latSign = dec.sign(matches.group(1));
-      var latDegrees = 0.0;
+      var sign = dec.sign(matches.group(1));
+      var degree = 0.0;
       if (matches.group(3) != null)
-        latDegrees = latSign * double.parse('${matches.group(2)}.${matches.group(3)}');
+        degree = sign * double.parse('${matches.group(2)}.${matches.group(3)}');
       else
-        latDegrees = latSign * double.parse('${matches.group(2)}.0');
+        degree = sign * double.parse('${matches.group(2)}.0');
 
-      return RADEG(latDegrees);
+      return RaDeg(degree);
     }
     return null;
   }

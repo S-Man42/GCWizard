@@ -3452,7 +3452,6 @@
   "right_ascension_time_to_degree_title": "Time to Degree",
   "right_ascension_time_to_degree_description": "Conversion from the equatorial coordinate system (time) to degree",
   "right_ascension_time_to_degree_example": "4:27:40.386 → 66.918275°",
-  "right_ascension": "Right ascension",
   "robberlanguage_title": "Robber Language",
   "robberlanguage_description": "Game Language, Secret Language",
   "robberlanguage_example": "Robber → rorobobboberor",

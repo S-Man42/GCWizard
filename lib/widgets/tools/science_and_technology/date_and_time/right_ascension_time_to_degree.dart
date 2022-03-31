@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 
 class RightAscensionTimeToDegree extends StatefulWidget {
   @override
@@ -37,6 +38,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   TextEditingController _decMilliDegreesController;
 
   var _currentSign = 1;
+  var _currentDuration = Duration();
   var _currentHours = '';
   var _currentMinutes = '';
   var _currentSeconds = '';
@@ -122,6 +124,21 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
           GCWText(text: 'msec', align: Alignment.center)
         ],
           flexValues: [5,5,1,5,1,5,1,8],
+        ),
+        GCWDateTimePicker(
+          config: {DateTimePickerConfig.SIGN, DateTimePickerConfig.TIME,
+                  DateTimePickerConfig.SECOND_AS_INT, DateTimePickerConfig.TIME_MSEC},
+          hoursController: _hoursController,
+          minutesController: _minutesController,
+          secondsController: _secondsController,
+          mSecondsController: _mSecondsController,
+          maxHours: null,
+          duration: _currentDuration,
+          onChanged: (value) {
+            setState(() {
+              _currentDuration = value['duration'];
+            });
+          },
         ),
         GCWToolBar( children:[
           GCWCoordsSignDropDownButton(
@@ -245,20 +262,33 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     if (_currentMode == GCWSwitchPosition.left) {
       int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
       double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
-      var _currentDeg = RADEG(_currentDecSign * _degreesD);
+      var _currentDeg = RaDeg(_currentDecSign * _degreesD);
 
-      var entry = <String>[i18n(context, 'right_ascension'), raDegree2Time(_currentDeg).toString()];
+      var entry = <String>[i18n(context, 'astronomy_position_rightascension'), raDegree2Time(_currentDeg).toString()];
       output.add(entry);
     } else {
       int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
       int _minutes = ['', '-'].contains(_currentMinutes) ? 0 : int.parse(_currentMinutes);
-      int _seconds = (['', '-'].contains(_currentSeconds) ? 0 : int.parse(_currentSeconds));
+      int _seconds = ['', '-'].contains(_currentSeconds) ? 0 : int.parse(_currentSeconds);
       double _secondsD = double.parse('$_seconds.$_currentMilliSeconds');
 
-      var _equatorial = Equatorial(_currentSign, _hours, _minutes, _secondsD);
+      var _rightAscension = RightAscension(_currentSign, _hours, _minutes, _secondsD);
 
-      var deg = raTime2Degree(_equatorial);
-      var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), deg.toString()];
+      //_secondsD = double.parse(_currentDuration.inSeconds.toString() + '.' + _currentDuration.inMilliseconds.toString());
+      _currentSign = _currentDuration.isNegative ? -1 : 1;
+      var _duration = _currentDuration.abs();
+
+      var hours = _duration.inHours;
+      var minutes = _duration.inMinutes - _duration.inHours * 60;
+      var seconds = _duration.inSeconds - _duration.inMinutes * 60;
+      var mseconds  = _duration.inMilliseconds - _duration.inSeconds * 1000;
+      _secondsD = double.parse('$seconds.$mseconds');
+
+      var _rightAscension1 = RightAscension(_currentSign, hours, minutes, _secondsD);
+
+      var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_rightAscension).toString()];
+      output.add(entry);
+      entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_rightAscension1).toString()];
       output.add(entry);
     }
     return columnedMultiLineOutput(context, output, flexValues: [1, 1]);
@@ -266,7 +296,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
 
   _parse(String input) {
     if(_currentMode == GCWSwitchPosition.left) {
-      var deg = RADEG.parse(input);
+      var deg = RaDeg.parse(input);
       if (deg == null) return;
 
       _currentDecDegrees = deg.degress.abs().floor().toString();
@@ -276,7 +306,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       _decDegreesController.text = _currentDecDegrees.toString();
       _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
     } else {
-      var equatorial = Equatorial.parse(input);
+      var equatorial = RightAscension.parse(input);
       if (equatorial == null) return;
 
       _currentSign = equatorial.sign;

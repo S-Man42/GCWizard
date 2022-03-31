@@ -74,10 +74,10 @@ class GCWDateTimePicker extends StatefulWidget {
   final TextEditingController yearController;
   final TextEditingController monthController;
   final TextEditingController dayController;
-  final TextEditingController hourController;
-  final TextEditingController minuteController;
-  final TextEditingController secondController;
-  final TextEditingController msecondController;
+  final TextEditingController hoursController;
+  final TextEditingController minutesController;
+  final TextEditingController secondsController;
+  final TextEditingController mSecondsController;
 
 
   const GCWDateTimePicker(
@@ -94,10 +94,10 @@ class GCWDateTimePicker extends StatefulWidget {
       this.yearController,
       this.monthController,
       this.dayController,
-      this.hourController,
-      this.minuteController,
-      this.secondController,
-      this.msecondController,
+      this.hoursController,
+      this.minutesController,
+      this.secondsController,
+      this.mSecondsController,
       })
       : super(key: key);
 
@@ -180,14 +180,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     _secondFocusNode.dispose();
     _msecondFocusNode.dispose();
 
-    widget.yearController?.dispose();
-    widget.monthController?.dispose();
-    widget.dayController?.dispose();
-    widget.hourController?.dispose();
-    widget.minuteController?.dispose();
-    widget.secondController?.dispose();
-    widget.msecondController?.dispose();
-
     super.dispose();
   }
 
@@ -206,7 +198,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _setCurrentValueAndEmitOnChange();
             });
           }
-        ) : 4}
+        ) : 3}
       );
     }
 
@@ -292,7 +284,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         GCWIntegerSpinner(
           focusNode: _hourFocusNode,
           layout: SpinnerLayout.VERTICAL,
-          controller: widget.hourController,
+          controller: widget.hoursController,
           value: _currentHour,
           min: 0,
           max: widget.maxHours,
@@ -314,7 +306,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         GCWIntegerSpinner(
           focusNode: _minuteFocusNode,
           layout: SpinnerLayout.VERTICAL,
-          controller: widget.minuteController,
+          controller: widget.minutesController,
           value: _currentMinute,
           min: 0,
           max: widget.maxSeconds.toInt(),
@@ -337,7 +329,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           GCWIntegerSpinner(
             focusNode: _secondFocusNode,
             layout: SpinnerLayout.VERTICAL,
-            controller: widget.secondController,
+            controller: widget.secondsController,
             value: _currentSecond.truncate(),
             min: 0,
             max: widget.maxSeconds.truncate(),
@@ -360,7 +352,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           GCWDoubleSpinner(
             focusNode: _secondFocusNode,
             layout: SpinnerLayout.VERTICAL,
-            controller: widget.secondController,
+            controller: widget.secondsController,
             value: _currentSecond,
             numberDecimalDigits: 4,
             min: 0.0,
@@ -379,12 +371,12 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           GCWIntegerSpinner(
             focusNode: _msecondFocusNode,
             layout: SpinnerLayout.VERTICAL,
-            controller: widget.msecondController,
+            controller: widget.mSecondsController,
             value: separateDecimalPlaces(_currentSecond),
             min: 0,
             onChanged: (value) {
               setState(() {
-                _currentSecond = double.parse('$_currentSecond.$value');
+                _currentSecond = double.parse(_currentSecond.truncate().toString() + '.$value');
                 _setCurrentValueAndEmitOnChange();
               });
             },
@@ -468,19 +460,19 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
   _setCurrentValueAndEmitOnChange() {
     var milliseconds = separateDecimalPlaces(_currentSecond);
+    var duration = Duration(days: _currentDay - 1,
+        hours: _currentHour, minutes: _currentMinute,
+        seconds: _currentSecond.truncate(),
+        milliseconds: milliseconds);
+    duration *= _currentSign;
 
     var output = {
       'datetime':
           DateTime(_currentYear, _currentMonth, _currentDay,
               _currentHour, _currentMinute, _currentSecond.truncate(),
-              milliseconds, _currentSign > 0 ? 0 : -1),
+              milliseconds),
       'timezone': Duration(minutes: _currentTimezoneOffset),
-      'duration':
-          Duration(days: _currentDay,
-              hours: _currentHour, minutes: _currentMinute,
-              seconds: _currentSecond.truncate(),
-              milliseconds: milliseconds),
-      'sign' : _currentSign
+      'duration':duration,
     };
 
     widget.onChanged(output);
