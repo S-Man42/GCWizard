@@ -5279,7 +5279,7 @@
   "wherigo_http_code_200": "OK",
   "wherigo_http_code_400": "CLIENT ERROR - BAD REQUEST",
   "wherigo_http_code_404": "CLIENT ERROR - NOT FOUND",
-  "wherigo_http_code_413": "CLIENT ERROR - PAYLOAD TO LARGE",
+  "wherigo_http_code_413": "CLIENT ERROR - PAYLOAD TOO LARGE",
   "wherigo_http_code_503": "SERVER ERROR - SERVER UNAVAILABLE",
   "wherigo_http_code_500": "SERVER ERROR - INTERNAL SERVER ERROR",
   "wherigo_http_code_413_detail_size": "The size of the LUA Bytecode exceeds the maximum of 1 MB",
