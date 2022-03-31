@@ -35,6 +35,16 @@ int extractIntegerFromText(String text) {
   return int.tryParse(digits);
 }
 
+int separateDecimalPlaces (double value) {
+  if (value == null) return null;
+  var valueSplitted =  value.toString().split('.');
+
+  if (valueSplitted.length < 2)
+    return 0;
+  else
+    return int.parse(valueSplitted[0]);
+}
+
 String intListToString(List<int> list, {String delimiter: ''}) {
   return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
 }

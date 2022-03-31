@@ -31,19 +31,19 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
   Map<String, dynamic> _firstUserValue;
   Map<String, dynamic> _secondUserValue;
 
-  var _currentMode;
+  GCWSwitchPosition _currentMode;
   var _currentEllipsoidUser2ndValue = keyMinorAxis;
-  var _currentStandardEllipsoid;
+  Ellipsoid _currentStandardEllipsoid;
 
-  var _currentEllipsoid;
+  Ellipsoid _currentEllipsoid;
   @override
   void initState() {
     super.initState();
 
     _currentEllipsoid = widget.ellipsoid ?? defaultEllipsoid();
-    _currentMode = _currentEllipsoid.config == EllipsoidType.STANDARD ? GCWSwitchPosition.left : GCWSwitchPosition.right;
+    _currentMode = _currentEllipsoid.type == EllipsoidType.STANDARD ? GCWSwitchPosition.left : GCWSwitchPosition.right;
 
-    if (_currentEllipsoid.config == EllipsoidType.USER_DEFINED) {
+    if (_currentEllipsoid.type == EllipsoidType.USER_DEFINED) {
       _firstUserValue = {'text': _currentEllipsoid.a.toString(), 'value': _currentEllipsoid.a};
       _secondUserValue = {'text': _currentEllipsoid.b.toString(), 'value': _currentEllipsoid.b};
       _currentStandardEllipsoid = getEllipsoidByName(ELLIPSOID_NAME_WGS84);

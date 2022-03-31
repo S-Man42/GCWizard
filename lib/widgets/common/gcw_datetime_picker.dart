@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
@@ -8,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 
-enum DateTimePickerConfig {SIGN, TIME, TIME_MSEC, DATE, TIMEZONES }
+enum DateTimePickerConfig {SIGN, DATE, DAY, TIME, SECOND_AS_INT, TIME_MSEC, TIMEZONES }
 
 class TimeZone {
   final int offset;
@@ -62,15 +63,42 @@ final TIMEZONES = [
 class GCWDateTimePicker extends StatefulWidget {
   final Function onChanged;
   final DateTime datetime;
+  final Duration duration;
   final Set<DateTimePickerConfig> config;
   final Duration timezoneOffset;
+  final int minDays;
+  final int maxDays;
+  final int maxHours;
+  final double maxSeconds;
+
+  final TextEditingController yearController;
+  final TextEditingController monthController;
+  final TextEditingController dayController;
+  final TextEditingController hourController;
+  final TextEditingController minuteController;
+  final TextEditingController secondController;
+  final TextEditingController msecondController;
+
 
   const GCWDateTimePicker(
       {Key key,
       this.onChanged,
       this.datetime,
+      this.duration,
       this.config,
-      this.timezoneOffset: const Duration(hours: 0)})
+      this.timezoneOffset: const Duration(hours: 0),
+      this.minDays: 1,
+      this.maxDays: 31,
+      this.maxHours: 23,
+      this.maxSeconds: 59.999,
+      this.yearController,
+      this.monthController,
+      this.dayController,
+      this.hourController,
+      this.minuteController,
+      this.secondController,
+      this.msecondController,
+      })
       : super(key: key);
 
   @override
@@ -103,8 +131,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.config.contains(DateTimePickerConfig.SIGN)) {
       _currentSign = _sign(date);
-      _currentMonth = date.month;
-      _currentDay = date.day;
     }
 
     if (widget.config.contains(DateTimePickerConfig.DATE)) {
@@ -113,10 +139,23 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
       _currentDay = date.day;
     }
 
+    if (widget.config.contains(DateTimePickerConfig.DAY)) {
+      if (widget.duration != null)
+        _currentDay = widget.duration.inDays;
+      else
+        _currentDay = date.day;
+    }
+
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
-      _currentHour = date.hour;
-      _currentMinute = date.minute;
-      _currentSecond = date.second.toDouble();
+      if (widget.duration != null) {
+        _currentHour = widget.duration.inHours;
+        _currentMinute = widget.duration.inMinutes;
+        _currentSecond = double.parse(widget.duration.inSeconds.toString() +'.' + widget.duration.inMilliseconds.toString());;
+      } else {
+        _currentHour = date.hour;
+        _currentMinute = date.minute;
+        _currentSecond = date.second.toDouble();
+      }
     }
 
     if (widget.config.contains(DateTimePickerConfig.TIMEZONES)) {
@@ -140,6 +179,14 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     _minuteFocusNode.dispose();
     _secondFocusNode.dispose();
     _msecondFocusNode.dispose();
+
+    widget.yearController?.dispose();
+    widget.monthController?.dispose();
+    widget.dayController?.dispose();
+    widget.hourController?.dispose();
+    widget.minuteController?.dispose();
+    widget.secondController?.dispose();
+    widget.msecondController?.dispose();
 
     super.dispose();
   }
@@ -167,6 +214,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
       widgets.addAll({
         GCWIntegerSpinner(
           layout: SpinnerLayout.VERTICAL,
+          controller: widget.yearController,
           value: _currentYear,
           min: -5000,
           max: 5000,
@@ -175,7 +223,9 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentYear = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentYear.toString().length == 4) {
+              if (_currentYear
+                  .toString()
+                  .length == 4) {
                 FocusScope.of(context).requestFocus(_monthFocusNode);
               }
             });
@@ -186,6 +236,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         GCWIntegerSpinner(
           focusNode: _monthFocusNode,
           layout: SpinnerLayout.VERTICAL,
+          controller: widget.monthController,
           value: _currentMonth,
           min: 1,
           max: 12,
@@ -194,23 +245,35 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentMonth = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentMonth.toString().length == 2) {
+              if (_currentMonth
+                  .toString()
+                  .length == 2) {
                 FocusScope.of(context).requestFocus(_dayFocusNode);
               }
             });
           },
         ): 4});
+    };
+    if (widget.config.contains(DateTimePickerConfig.DATE) ||
+      widget.config.contains(DateTimePickerConfig.DAY)) {
       widgets.addAll({
         GCWIntegerSpinner(
           focusNode: _dayFocusNode,
           layout: SpinnerLayout.VERTICAL,
+          controller: widget.dayController,
           value: _currentDay,
-          min: 1,
-          max: 31,
+          min: widget.minDays,
+          max: widget.maxDays,
           onChanged: (value) {
             setState(() {
               _currentDay = value;
               _setCurrentValueAndEmitOnChange();
+
+              if (_currentDay
+                  .toString()
+                  .length == 2) {
+                FocusScope.of(context).requestFocus(_hourFocusNode);
+              }
             });
           },
         ): 4});
@@ -227,10 +290,12 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.config.contains(DateTimePickerConfig.TIME) ) {
       widgets.addAll({
         GCWIntegerSpinner(
+          focusNode: _hourFocusNode,
           layout: SpinnerLayout.VERTICAL,
+          controller: widget.hourController,
           value: _currentHour,
           min: 0,
-          max: 23,
+          max: widget.maxHours,
           onChanged: (value) {
             setState(() {
               _currentHour = value;
@@ -249,9 +314,10 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         GCWIntegerSpinner(
           focusNode: _minuteFocusNode,
           layout: SpinnerLayout.VERTICAL,
+          controller: widget.minuteController,
           value: _currentMinute,
           min: 0,
-          max: 59,
+          max: widget.maxSeconds.toInt(),
           onChanged: (value) {
             setState(() {
               _currentMinute = value;
@@ -266,31 +332,25 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           },
         ): 4}
       );
-      if (widget.config.contains(DateTimePickerConfig.TIME_MSEC)) {
+      if (widget.config.contains(DateTimePickerConfig.SECOND_AS_INT)) {
         widgets.addAll({
           GCWIntegerSpinner(
             focusNode: _secondFocusNode,
             layout: SpinnerLayout.VERTICAL,
+            controller: widget.secondController,
             value: _currentSecond.truncate(),
             min: 0,
+            max: widget.maxSeconds.truncate(),
             onChanged: (value) {
               setState(() {
-                _currentSecond = value;
+                _currentSecond = value + (_currentSecond % 1);
                 _setCurrentValueAndEmitOnChange();
-              });
-            },
-          ): 4}
-        );
-        widgets.addAll({
-          GCWIntegerSpinner(
-            focusNode: _msecondFocusNode,
-            layout: SpinnerLayout.VERTICAL,
-            value: _separateDecimalPlaces(_currentSecond),
-            min: 0,
-            onChanged: (value) {
-              setState(() {
-                _currentSecond = double.parse('$_currentSecond.$value');
-                _setCurrentValueAndEmitOnChange();
+
+                if (_currentSecond
+                    .toString()
+                    .length == 2) {
+                  FocusScope.of(context).requestFocus(_msecondFocusNode);
+                }
               });
             },
           ): 4}
@@ -300,10 +360,11 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           GCWDoubleSpinner(
             focusNode: _secondFocusNode,
             layout: SpinnerLayout.VERTICAL,
+            controller: widget.secondController,
             value: _currentSecond,
             numberDecimalDigits: 4,
             min: 0.0,
-            max: 59.999,
+            max: widget.maxSeconds,
             onChanged: (value) {
               setState(() {
                 _currentSecond = value;
@@ -313,8 +374,25 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           ): 6}
         );
       }
+      if (widget.config.contains(DateTimePickerConfig.TIME_MSEC)) {
+        widgets.addAll({
+          GCWIntegerSpinner(
+            focusNode: _msecondFocusNode,
+            layout: SpinnerLayout.VERTICAL,
+            controller: widget.msecondController,
+            value: separateDecimalPlaces(_currentSecond),
+            min: 0,
+            onChanged: (value) {
+              setState(() {
+                _currentSecond = double.parse('$_currentSecond.$value');
+                _setCurrentValueAndEmitOnChange();
+              });
+            },
+          ): 4}
+        );
+      }
     }
-    
+
     return Column(
       children: <Widget>[
         GCWToolBar(
@@ -382,30 +460,27 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   int _sign(DateTime datetime) {
     if (datetime == null) return 1;
 
-    if ((datetime.hour <0) || (datetime.year <0)) {
+    if (datetime.microsecond < 0)
       return -1;
-    }
 
     return 1;
   }
 
-  int _separateDecimalPlaces (double value) {
-    var valueSplitted =  value.toString().split('.');
-
-    if (valueSplitted.length < 2)
-      return 0;
-    else
-      return int.parse(valueSplitted[0]);
-  }
-
   _setCurrentValueAndEmitOnChange() {
-    var seconds = _currentSecond.floor();
-    var milliseconds = ((_currentSecond - seconds) * 1000).round();
+    var milliseconds = separateDecimalPlaces(_currentSecond);
 
     var output = {
       'datetime':
-          DateTime(_currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, seconds, milliseconds),
-      'timezone': Duration(minutes: _currentTimezoneOffset)
+          DateTime(_currentYear, _currentMonth, _currentDay,
+              _currentHour, _currentMinute, _currentSecond.truncate(),
+              milliseconds, _currentSign > 0 ? 0 : -1),
+      'timezone': Duration(minutes: _currentTimezoneOffset),
+      'duration':
+          Duration(days: _currentDay,
+              hours: _currentHour, minutes: _currentMinute,
+              seconds: _currentSecond.truncate(),
+              milliseconds: milliseconds),
+      'sign' : _currentSign
     };
 
     widget.onChanged(output);
