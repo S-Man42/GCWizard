@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 // enabling int value to get passed as reference
 class _WrapperForInt {
@@ -27,16 +24,6 @@ class TimeCalculatorState extends State<TimeCalculator> {
   Duration _currentStartTime;
   Duration _currentEndTime;
 
-  var _startDays = _WrapperForInt(0);
-  var _startHours = _WrapperForInt(0);
-  var _startMinutes = _WrapperForInt(0);
-  var _startSeconds = _WrapperForInt(0);
-
-  var _endDays = _WrapperForInt(0);
-  var _endHours = _WrapperForInt(0);
-  var _endMinutes = _WrapperForInt(0);
-  var _endSeconds = _WrapperForInt(0);
-
   TextEditingController _startDaysController;
   TextEditingController _startHoursController;
   TextEditingController _startMinutesController;
@@ -48,10 +35,10 @@ class TimeCalculatorState extends State<TimeCalculator> {
     _currentStartTime = Duration();
     _currentEndTime = Duration();
 
-    _startDaysController = TextEditingController(text: _startDays.value.toString());
-    _startHoursController = TextEditingController(text: _startHours.value.toString());
-    _startMinutesController = TextEditingController(text: _startMinutes.value.toString());
-    _startSecondsController = TextEditingController(text: _startSeconds.value.toString());
+    _startDaysController = TextEditingController(text: _currentStartTime.inDays.toString());
+    _startHoursController = TextEditingController(text: _currentStartTime.inHours.remainder(24).toString());
+    _startMinutesController = TextEditingController(text: _currentStartTime.inMinutes.remainder(60).toString());
+    _startSecondsController = TextEditingController(text: _currentStartTime.inSeconds.remainder(60).toString());
   }
 
   @override
@@ -104,27 +91,6 @@ class TimeCalculatorState extends State<TimeCalculator> {
     );
   }
 
-  _buildIntegerSpinner(_value, {int max, TextEditingController controller}) {
-    return Expanded(
-      child: Container(
-        child: GCWIntegerSpinner(
-          value: _value.value,
-          min: 0,
-          max: max,
-          overflow: max == null ? SpinnerOverflowType.SUPPRESS_OVERFLOW : SpinnerOverflowType.OVERFLOW_MIN,
-          controller: controller,
-          layout: SpinnerLayout.VERTICAL,
-          onChanged: (value) {
-            setState(() {
-              _value.value = value;
-            });
-          },
-        ),
-        padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-      ),
-    );
-  }
-
   _buildOutput() {
     Duration finalTime;
     if (_currentMode == GCWSwitchPosition.left)
@@ -132,20 +98,7 @@ class TimeCalculatorState extends State<TimeCalculator> {
     else
       finalTime = _currentStartTime - _currentEndTime;
 
-    var format = NumberFormat('00');
-
-    var output = finalTime.isNegative ? '-' : '';
-    finalTime = finalTime.abs();
-
-    var days = finalTime.inDays;
-    var hours = finalTime.inHours - finalTime.inDays * 24;
-    var minutes = finalTime.inMinutes - finalTime.inHours * 60;
-    var seconds = finalTime.inSeconds - finalTime.inMinutes * 60;
-
-    output += '${format.format(days)}'
-        ':${format.format(hours)}'
-        ':${format.format(minutes)}'
-        ':${format.format(seconds)}';
+    var output = formatDurationToHHmmss(finalTime, milliseconds: false);
 
     return Column(
       children: [
@@ -158,10 +111,10 @@ class TimeCalculatorState extends State<TimeCalculator> {
             setState(() {
               _currentStartTime = finalTime;
 
-              _startDaysController.text = days.toString();
-              _startHoursController.text = hours.toString();
-              _startMinutesController.text = minutes.toString();
-              _startSecondsController.text = seconds.toString();
+              _startDaysController.text = finalTime.inDays.toString();
+              _startHoursController.text = finalTime.inHours.remainder(24).toString();
+              _startMinutesController.text = finalTime.inMinutes.remainder(60).toString();
+              _startSecondsController.text = finalTime.inSeconds.remainder(60).toString();
             });
           },
         )

@@ -3,6 +3,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
@@ -37,12 +38,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   TextEditingController _decDegreesController;
   TextEditingController _decMilliDegreesController;
 
-  var _currentSign = 1;
   var _currentDuration = Duration();
-  var _currentHours = '';
-  var _currentMinutes = '';
-  var _currentSeconds = '';
-  var _currentMilliSeconds = '';
 
   var _currentDecSign = 1;
   String _currentDecDegrees = '';
@@ -53,10 +49,10 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   @override
   void initState() {
     super.initState();
-    _hoursController = TextEditingController(text: _currentHours);
-    _minutesController = TextEditingController(text: _currentMinutes);
-    _secondsController = TextEditingController(text: _currentSeconds);
-    _mSecondsController = TextEditingController(text: _currentMilliSeconds);
+    _hoursController = TextEditingController(text: _currentDuration.inHours.remainder(24).toString());
+    _minutesController = TextEditingController(text: _currentDuration.inMinutes.remainder(60).toString());
+    _secondsController = TextEditingController(text: _currentDuration.inSeconds.remainder(60).toString());
+    _mSecondsController = TextEditingController(text: _currentDuration.inSeconds.remainder(1000).toString());
 
     _decDegreesController = TextEditingController(text: _currentDecDegrees);
     _decMilliDegreesController = TextEditingController(text: _currentDecMilliDegrees);
@@ -140,64 +136,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
             });
           },
         ),
-        GCWToolBar( children:[
-          GCWCoordsSignDropDownButton(
-            itemList: ['+', '-'],
-            value: _currentSign,
-            onChanged: (value) {
-              setState(() {
-                _currentSign = value;
-              });
-            }),
-          GCWIntegerTextField(
-            hintText: 'h',
-            controller: _hoursController,
-            focusNode: _hoursFocusNode,
-            onChanged: (ret) {
-              setState(() {
-                _currentHours = ret['text'];
-              });
-            }
-          ),
-          GCWText(text: ':', align: Alignment.center),
-          GCWIntegerTextField(
-            hintText: 'min',
-            controller: _minutesController,
-            focusNode: _minutesFocusNode,
-            onChanged: (ret) {
-              setState(() {
-                _currentMinutes = ret['text'];
-                if (ret['text'].length == 2) FocusScope.of(context).requestFocus(_secondsFocusNode);
-              });
-            }
-          ),
-          GCWText(text: ':', align: Alignment.center),
-          GCWIntegerTextField(
-            hintText: 'sec',
-            controller: _secondsController,
-            focusNode: _secondsFocusNode,
-            onChanged: (ret) {
-              setState(() {
-                _currentSeconds = ret['text'];
-                if (ret['text'].length == 2) FocusScope.of(context).requestFocus(_mSecondsFocusNode);
-              });
-            }
-          ),
-          GCWText(text: '.', align: Alignment.center),
-          GCWIntegerTextField(
-            hintText: 'msec',
-            controller: _mSecondsController,
-            focusNode: _mSecondsFocusNode,
-            onChanged: (ret) {
-              setState(() {
-                _currentMilliSeconds = ret['text'];
-              });
-            }
-          ),
-        ],
-          flexValues: [5,5,1,5,1,5,1,8],
-        ),
-      ]);
+       ]);
   }
 
   Widget _buildDegRow() {
@@ -212,7 +151,6 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (value) {
                   setState(() {
                     _currentDecSign = value;
-                    //_setCurrentValueAndEmitOnChange();
                   });
                 }),
           ),
@@ -267,28 +205,17 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       var entry = <String>[i18n(context, 'astronomy_position_rightascension'), raDegree2Time(_currentDeg).toString()];
       output.add(entry);
     } else {
-      int _hours = ['', '-'].contains(_currentHours) ? 0 : int.parse(_currentHours);
-      int _minutes = ['', '-'].contains(_currentMinutes) ? 0 : int.parse(_currentMinutes);
-      int _seconds = ['', '-'].contains(_currentSeconds) ? 0 : int.parse(_currentSeconds);
-      double _secondsD = double.parse('$_seconds.$_currentMilliSeconds');
+      var sign = _currentDuration.isNegative ? -1 : 1;
+      var duration = _currentDuration.abs();
+      var hours = duration.inHours;
+      var minutes = duration.inMinutes.remainder(60);
+      var seconds = duration.inSeconds.remainder(60);
+      var mseconds  = duration.inMilliseconds - _currentDuration.inSeconds * 1000;
+      var _secondsD = double.parse('$seconds.$mseconds');
 
-      var _rightAscension = RightAscension(_currentSign, _hours, _minutes, _secondsD);
-
-      //_secondsD = double.parse(_currentDuration.inSeconds.toString() + '.' + _currentDuration.inMilliseconds.toString());
-      _currentSign = _currentDuration.isNegative ? -1 : 1;
-      var _duration = _currentDuration.abs();
-
-      var hours = _duration.inHours;
-      var minutes = _duration.inMinutes - _duration.inHours * 60;
-      var seconds = _duration.inSeconds - _duration.inMinutes * 60;
-      var mseconds  = _duration.inMilliseconds - _duration.inSeconds * 1000;
-      _secondsD = double.parse('$seconds.$mseconds');
-
-      var _rightAscension1 = RightAscension(_currentSign, hours, minutes, _secondsD);
+      var _rightAscension = RightAscension(sign, hours, minutes, _secondsD);
 
       var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_rightAscension).toString()];
-      output.add(entry);
-      entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_rightAscension1).toString()];
       output.add(entry);
     }
     return columnedMultiLineOutput(context, output, flexValues: [1, 1]);
@@ -299,8 +226,8 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       var deg = RaDeg.parse(input);
       if (deg == null) return;
 
-      _currentDecDegrees = deg.degress.abs().floor().toString();
-      _currentDecMilliDegrees = deg.degress.toString().split('.')[1];
+      _currentDecDegrees = deg.degress.abs().truncate().toString();
+      _currentDecMilliDegrees = separateDecimalPlaces(deg.degress).toString();
 
       _currentDecSign = coordinateSign(deg.degress);
       _decDegreesController.text = _currentDecDegrees.toString();
@@ -308,18 +235,17 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     } else {
       var equatorial = RightAscension.parse(input);
       if (equatorial == null) return;
+      var milliseconds = separateDecimalPlaces(equatorial.seconds);
+      _currentDuration = Duration(
+          hours: equatorial.hours,
+          minutes: equatorial.minutes,
+          seconds: equatorial.seconds.truncate(),
+          milliseconds: milliseconds);
 
-      _currentSign = equatorial.sign;
-      _currentHours = equatorial.hours.toString();
-      _currentMinutes = equatorial.minutes.toString();
-      _currentSeconds = equatorial.seconds.truncate().toString();
-      var seconds =  _currentSeconds.split('.');
-      _currentMilliSeconds = seconds.length < 2 ? '0' : seconds[1];
-
-      _hoursController.text = _currentHours;
-      _minutesController.text = _currentMinutes;
-      _secondsController.text = _currentSeconds;
-      _mSecondsController.text = _currentMilliSeconds;
+      _hoursController.text = equatorial.hours.toString();
+      _minutesController.text = equatorial.minutes.toString();
+      _secondsController.text = equatorial.seconds.truncate().toString();
+      _mSecondsController.text = milliseconds.toString();
     }
   }
 }

@@ -42,7 +42,7 @@ int separateDecimalPlaces (double value) {
   if (valueSplitted.length < 2)
     return 0;
   else
-    return int.parse(valueSplitted[0]);
+    return int.parse(valueSplitted[1]);
 }
 
 String intListToString(List<int> list, {String delimiter: ''}) {
@@ -166,7 +166,7 @@ DateTime hoursToHHmmss(double hours) {
   return DateTime(0, 1, 1, h, min, sec, milliSec);
 }
 
-String formatHoursToHHmmss(double hours, {limitHours = true}) {
+String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours = true}) {
   var time = hoursToHHmmss(hours);
 
   var h = time.hour;
@@ -175,11 +175,11 @@ String formatHoursToHHmmss(double hours, {limitHours = true}) {
   if (!limitHours)
     h += (time.day - 1) * 24 + (time.month -1) * 31;
 
-  var secondsStr = NumberFormat('00.000').format(sec);
+  var secondsStr = milliseconds ? NumberFormat('00.000').format(sec) : NumberFormat('00').format(sec.truncate());
   //Values like 59.999999999 may be rounded to 60.0. So in that case,
   //the greater unit (minutes or degrees) has to be increased instead
   if (secondsStr.startsWith('60')) {
-    secondsStr = '00.000';
+    secondsStr = milliseconds ? '00.000' : '00';
     min += 1;
   }
 
@@ -192,6 +192,22 @@ String formatHoursToHHmmss(double hours, {limitHours = true}) {
   var hourStr = h.toString().padLeft(2, '0');
 
   return '$hourStr:$minutesStr:$secondsStr';
+}
+
+String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true, limitHours = true}) {
+  if(duration == null) return null;
+
+  var sign = duration.isNegative ? '-' : '';
+  var _duration = duration.abs();
+  var hours = days ? _duration.inHours : _duration.inHours.remainder(24);
+  var minutes = _duration.inMinutes.remainder(60);
+  var seconds = _duration.inSeconds.remainder(60);
+
+  var hourFormat = hours +  (minutes / 60) + (seconds / 3600);
+
+  return sign +
+      (days ? _duration.inDays.toString() + ':' : '') +
+      formatHoursToHHmmss(hourFormat, milliseconds: milliseconds, limitHours: limitHours );
 }
 
 Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {

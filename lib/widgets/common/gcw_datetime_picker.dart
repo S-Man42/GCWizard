@@ -112,7 +112,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   var _currentDay = 1;
   var _currentHour = 0;
   var _currentMinute = 0;
-  var _currentSecond = 0.0;
+  var _currentSecond = 0;
+  var _currentMilliSecond = 0;
   var _currentTimezoneOffset = 0;
   var _currentTimezoneOffsetIndex;
 
@@ -149,12 +150,14 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
         _currentHour = widget.duration.inHours;
-        _currentMinute = widget.duration.inMinutes;
-        _currentSecond = double.parse(widget.duration.inSeconds.toString() +'.' + widget.duration.inMilliseconds.toString());;
+        _currentMinute = widget.duration.inMinutes.remainder(60);
+        _currentSecond = widget.duration.inSeconds.remainder(60);
+        _currentMilliSecond = widget.duration.inMilliseconds.remainder(1000);
       } else {
         _currentHour = date.hour;
         _currentMinute = date.minute;
-        _currentSecond = date.second.toDouble();
+        _currentSecond = date.second;
+        _currentMilliSecond = date.millisecond;
       }
     }
 
@@ -335,7 +338,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
             max: widget.maxSeconds.truncate(),
             onChanged: (value) {
               setState(() {
-                _currentSecond = value + (_currentSecond % 1);
+                _currentSecond = value;
                 _setCurrentValueAndEmitOnChange();
 
                 if (_currentSecond
@@ -353,13 +356,14 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
             focusNode: _secondFocusNode,
             layout: SpinnerLayout.VERTICAL,
             controller: widget.secondsController,
-            value: _currentSecond,
+            value: double.parse(_currentSecond.toString() +'.' + _currentMilliSecond.toString()),
             numberDecimalDigits: 4,
             min: 0.0,
             max: widget.maxSeconds,
             onChanged: (value) {
               setState(() {
-                _currentSecond = value;
+                _currentSecond = value.truncate();
+                _currentMilliSecond = separateDecimalPlaces(value);
                 _setCurrentValueAndEmitOnChange();
               });
             },
@@ -372,11 +376,12 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
             focusNode: _msecondFocusNode,
             layout: SpinnerLayout.VERTICAL,
             controller: widget.mSecondsController,
-            value: separateDecimalPlaces(_currentSecond),
+            value: _currentMilliSecond,
             min: 0,
+            max: 999,
             onChanged: (value) {
               setState(() {
-                _currentSecond = double.parse(_currentSecond.truncate().toString() + '.$value');
+                _currentMilliSecond = value;
                 _setCurrentValueAndEmitOnChange();
               });
             },
@@ -459,18 +464,20 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var milliseconds = separateDecimalPlaces(_currentSecond);
-    var duration = Duration(days: _currentDay - 1,
-        hours: _currentHour, minutes: _currentMinute,
-        seconds: _currentSecond.truncate(),
-        milliseconds: milliseconds);
+    var duration = Duration(
+        days: (widget.config.contains(DateTimePickerConfig.DATE) ||
+            widget.config.contains(DateTimePickerConfig.DAY)) ? _currentDay : 0,
+        hours: _currentHour,
+        minutes: _currentMinute,
+        seconds: _currentSecond,
+        milliseconds: _currentMilliSecond);
     duration *= _currentSign;
 
     var output = {
       'datetime':
           DateTime(_currentYear, _currentMonth, _currentDay,
-              _currentHour, _currentMinute, _currentSecond.truncate(),
-              milliseconds),
+              _currentHour, _currentMinute, _currentSecond,
+              _currentMilliSecond),
       'timezone': Duration(minutes: _currentTimezoneOffset),
       'duration':duration,
     };
@@ -478,3 +485,5 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     widget.onChanged(output);
   }
 }
+
+
