@@ -1076,7 +1076,6 @@ initializeRegistry(BuildContext context) {
       'symbol_westernunion',
       'symbol_murraybaudot',
       'symbol_baudot'
-      'symbol_baudot'
     ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
