@@ -53,7 +53,7 @@ class RightAscension {
   }
 
   static RightAscension parse (String input) {
-    var regex = new RegExp(r"([+|-]?)([\d]*):([0-5]?[0-9]):([0-5]?[0-9])(\.\d*)*");
+    var regex = new RegExp(r"([+|-]?)([\d]*):([\d]*):([\d]*)(\.\d*)*");
     if (input == null) return null;
 
     var matches = regex.allMatches(input);
