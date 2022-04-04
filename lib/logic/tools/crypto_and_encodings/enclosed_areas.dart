@@ -1,5 +1,6 @@
-final _AlphabetMap = {
-  '0': 1, '6': 1, '8': 2, '9': 1,
+final _NumbersMap = {'0': 1, '6': 1, '8': 2, '9': 1};
+
+final _LettersMap = {
   'A': 1, 'B': 2, 'D': 1, 'O': 1, 'P': 1, 'Q': 1, 'R': 1,
   String.fromCharCode(196): 1, //Ä
   String.fromCharCode(193): 1, //Á
@@ -51,7 +52,8 @@ final _AlphabetMap = {
   String.fromCharCode(248): 2, //ø
   String.fromCharCode(367): 1, //ů
   String.fromCharCode(254): 1, //þ
-
+};
+final _SpecialCharsMap = {
   '%': 2,
   '&': 2,
   '#': 1,
@@ -63,24 +65,38 @@ final _AlphabetMap = {
 };
 final _With4 = {'4': 1};
 
-_createAlpabetMap(bool with4) {
-  if (with4) {
+Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
     var alphabetMap = new Map<String, int>();
-    alphabetMap.addAll(_AlphabetMap);
-    alphabetMap.addAll(_With4);
+
+    alphabetMap.addAll(_NumbersMap);
+    if (with4) alphabetMap.addAll(_With4);
+    if (!onlyNumbers) alphabetMap.addAll(_LettersMap);
+    if (!onlyNumbers) alphabetMap.addAll(_SpecialCharsMap);
 
     return alphabetMap;
-  } else
-    return _AlphabetMap;
 }
 
-String decodeEnclosedAreas(String input, bool with4) {
+String decodeEnclosedAreas(String input, bool with4, {onlyNumbers: false}) {
   if (input == null || input == '') return '';
+  var splitChars = {'+','-','/',r'\','(','),r''','{','}','[',']','<','>','!','§',r'$','%','&','=',
+                    '?','*','#','€','¿','&','_',r'"','.',',',':',';','.','°','<','>'};
 
-  var alphabetMap = _createAlpabetMap(with4);
+  var alphabetMap = _createAlpabetMap(with4, onlyNumbers);
 
-  return input
-      .split(' ')
+  var inputSeparated = '';
+  var lastSplitChar = true;
+  for (var i = input.length -1; i >= 0; i--) {
+    if (splitChars.contains(input[i])) {
+      inputSeparated = (lastSplitChar ? input[i] + ' ' : input[i]) + inputSeparated;
+      lastSplitChar = false;
+    } else {
+      inputSeparated = input[i] + inputSeparated;
+      lastSplitChar = true;
+    }
+  }
+
+  return inputSeparated
+      .split(RegExp(' '))
       .where((block) => block != null && block.length > 0)
       .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
       .join(' ');
