@@ -408,6 +408,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
       _breakerAlphabetItems = {
         SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
         SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
+        SubstitutionBreakerAlphabet.DUTCH: i18n(context, 'common_language_dutch'),
         SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
         SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
         SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
