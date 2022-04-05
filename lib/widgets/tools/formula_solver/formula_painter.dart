@@ -19,7 +19,8 @@ class FormulaPainter {
     'CSI', // comma 0 or more times
     'BWW', // 0 comma
     'AV', // 0 comma
-    'LEN' // 0 comma
+    'LEN', // 0 comma
+    'NRT' // 1 comma
   };
   var _constants = <String>[];
   int _formulaId;
@@ -320,6 +321,7 @@ class FormulaPainter {
     var result = _seperateLiteral(formula.substring(offset), '(', ')');
 
     if (result == null) return null;
+
     return [
       _combineGroups([functionName, result[0]]),
       result[1],
@@ -352,6 +354,9 @@ class FormulaPainter {
         break;
       case 'ROUND':
         valid = split.length <= 2;
+        break;
+      case 'NRT':
+        valid = split.length == 2;
         break;
       case 'BWW':
       case 'AV':
