@@ -88,8 +88,14 @@ void main() {
               '>52*52**0*52*1*0++1+>1-:v\n' +
               '^,\\ _@', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '0123456789', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
+    {'code' : 'v v                       <\n' +
+              '>0>::.,5:+,1+:9:*9:*9:***-|\n' +
+              '@                         <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
     ];
+
+
+
 
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {

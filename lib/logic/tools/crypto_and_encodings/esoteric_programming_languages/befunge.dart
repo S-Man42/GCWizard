@@ -32,7 +32,7 @@ const PAGEHEIGHT = 25;
 const SCREENWIDTH = LINEWIDTH - 1;
 const SCREENHEIGHT = PAGEHEIGHT - 1;
 
-const MAX_ITERATIONS = 5000;
+const MAX_ITERATIONS = 9999;
 const MAX_OUTPUT_LENGTH = 160;
 
 final Map<String, String> MNEMONIC = {
@@ -135,31 +135,34 @@ String _cur() {
 }
 
 
-void _addDebugInformation(bool stringMode){
+void _addDebugInformation(bool stringMode) {
   _PC.add('(' + _y.toString().padLeft(2) + '|' + _x.toString().padLeft(2) + ')');
   _Command.add(_cur());
 
   if ((_cur() == '"' || _cur() == '”')) {
     _Mnemonic.add(MNEMONIC[_cur()]);
   }
-  else
-  if (stringMode)
+  else if (stringMode)
     _Mnemonic.add('push ' + _cur().codeUnitAt(0).toString());
   else
     _Mnemonic.add(MNEMONIC[_cur()]);
 }
 
 
-bool _isDigit(String char){
-  return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ].contains(char);
+bool _isDigit(String char) {
+  return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',].contains(char);
 }
 
 
 BefungeOutput interpretBefunge(String program, {String input}) {
-
   if (program == '' || program == null)
     return BefungeOutput(
-        Output: '', Error: '', BefungeStack: _BefungeStack, PC: _PC, Command: _Command, Mnemonic: _Mnemonic);
+        Output: '',
+        Error: '',
+        BefungeStack: _BefungeStack,
+        PC: _PC,
+        Command: _Command,
+        Mnemonic: _Mnemonic);
 
   if (_correctBefungeProgramLength(program)) {
     Random random = new Random();
@@ -173,13 +176,12 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     List<String> STDIN = input == null ? [] : input.split(' ');
     List<String> STDOUT = [];
     bool stringMode = false;
-    
+
     _pg = _fillProgram(program);
     _x = 0;
     _y = 0;
 
     while (_cur() != '@') {
-
       if (_infiniteLoop(iterations))
         return BefungeOutput(
             Output: STDOUT.join(''),
@@ -204,70 +206,165 @@ BefungeOutput interpretBefunge(String program, {String input}) {
         if (_cur() == '"' || _cur() == '”') {
           stringMode = false;
         } else {
-              stack.push(_cur().codeUnitAt(0));
-            }
+          stack.push(_cur().codeUnitAt(0));
+        }
       else {
         if (_isDigit(_cur())) {
           stack.push(int.parse(_cur()));
         } else
-        switch (_cur()) {
-          case '>': // move right
-            dx = 1;
-            dy = 0;
-            break;
+          switch (_cur()) {
+            case '>': // move right
+              dx = 1;
+              dy = 0;
+              break;
 
-          case '<': // move left
-            dx = -1;
-            dy = 0;
-            break;
+            case '<': // move left
+              dx = -1;
+              dy = 0;
+              break;
 
-          case '^': // move up
-            dx = 0;
-            dy = -1;
-            break;
+            case '^': // move up
+              dx = 0;
+              dy = -1;
+              break;
 
-          case 'v': // move down
-            dx = 0;
-            dy = 1;
-            break;
+            case 'v': // move down
+              dx = 0;
+              dy = 1;
+              break;
 
-          case '_': // branch horizontal
-            dy = 0;
-            if (stack.pop() == 0) {
-              dx = 1; // move right
-            } else {
-              dx = -1;// move left
-            }
-            break;
+            case '_': // branch horizontal
+              dy = 0;
+              if (stack.pop() == 0) {
+                dx = 1; // move right
+              } else {
+                dx = -1; // move left
+              }
+              break;
 
-          case '|': // branch vertical
-            dx = 0;
-            if (stack.pop() == 0) {
-              dy = 1; // move down
-            } else {
-              dy = -1;// move up
-            }
-            break;
+            case '|': // branch vertical
+              dx = 0;
+              if (stack.pop() == 0) {
+                dy = 1; // move down
+              } else {
+                dy = -1; // move up
+              }
+              break;
 
-          case '+': // add
-            stack.push(stack.pop() + stack.pop());
-            break;
+            case '+': // add
+              stack.push(stack.pop() + stack.pop());
+              break;
 
-          case '-': // sub
-            a = stack.pop();
-            b = stack.pop();
-            stack.push(b - a);
-            break;
+            case '-': // sub
+              a = stack.pop();
+              b = stack.pop();
+              stack.push(b - a);
+              break;
 
-          case '*': // mult
-            stack.push(stack.pop() * stack.pop());
-            break;
+            case '*': // mult
+              stack.push(stack.pop() * stack.pop());
+              break;
 
-          case '/': // integer division
-            a = stack.pop();
-            b = stack.pop();
-            if (a == 0) {
-              if (STDIN.length == 0)
+            case '/': // integer division
+              a = stack.pop();
+              b = stack.pop();
+              if (a == 0) {
+                if (STDIN.length == 0)
+                  return BefungeOutput(
+                      Output: STDOUT.join(''),
+                      Error: BEFUNGE_ERROR_NO_INPUT,
+                      BefungeStack: _BefungeStack,
+                      PC: _PC,
+                      Command: _Command,
+                      Mnemonic: _Mnemonic);
+
+                if (int.tryParse(STDIN.last) == null)
+                  return BefungeOutput(
+                      Output: STDOUT.join(''),
+                      Error: BEFUNGE_ERROR_INVALID_INPUT,
+                      BefungeStack: _BefungeStack,
+                      PC: _PC,
+                      Command: _Command,
+                      Mnemonic: _Mnemonic);
+
+                a = int.parse(STDIN.last);
+              }
+
+              stack.push(b ~/ a);
+              break;
+
+            case '%': // modulo
+              a = stack.pop();
+              b = stack.pop();
+              stack.push(b % a);
+              break;
+
+            case '\\': // swap
+              a = stack.pop();
+              b = stack.pop();
+              stack.push(a);
+              stack.push(b);
+              break;
+
+            case '.': // output decimal
+              STDOUT.add(stack.pop().toString());
+              STDOUT.add(' ');
+              break;
+
+            case ',': // output char
+              STDOUT.add(String.fromCharCode(stack.pop()));
+              break;
+
+            case '"': // string mode on/off
+            case '”':
+              stringMode = !stringMode;
+              break;
+
+            case ':': // dublication
+              a = stack.pop();
+              stack.push(a);
+              stack.push(a);
+              break;
+
+            case '! ': //logical not
+              if (stack.pop() == 0)
+                stack.push(1);
+              else
+                stack.push(0);
+              break;
+
+            case '#': // skip - do nothing
+              _x = _x + dx;
+              _y = _y + dy;
+              break;
+
+            case '\$': // pop and discard
+              stack.pop();
+              break;
+
+            case '?': // move random
+              switch (random.nextInt(3)) {
+                case 0:
+                  dx = 1;
+                  dy = 0;
+                  break;
+                case 1:
+                  dx = -1;
+                  dy = 0;
+                  break;
+                case 2:
+                  dx = 0;
+                  dy = -1;
+                  break;
+                case 3:
+                  dx = 0;
+                  dy = 1;
+                  break;
+              }
+              break;
+
+            case '&': // input decimal
+              if (STDIN.length == 0 || STDIN.join('') == '')
                 return BefungeOutput(
                     Output: STDOUT.join(''),
                     Error: BEFUNGE_ERROR_NO_INPUT,
@@ -285,155 +382,62 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                     Command: _Command,
                     Mnemonic: _Mnemonic);
 
-              a = int.parse(STDIN.last);
-            }
+              stack.push(int.parse(STDIN.last));
+              STDIN.removeLast();
+              break;
 
-            stack.push(b ~/ a);
-            break;
+            case '~': // input char
+              if (STDIN.length == 0 || STDIN.join('') == '')
+                return BefungeOutput(
+                    Output: STDOUT.join(''),
+                    Error: BEFUNGE_ERROR_NO_INPUT,
+                    BefungeStack: _BefungeStack,
+                    PC: _PC,
+                    Command: _Command,
+                    Mnemonic: _Mnemonic);
+              stack.push((STDIN.last[0].codeUnitAt(0)));
+              break;
 
-          case '%': // modulo
-            a = stack.pop();
-            b = stack.pop();
-            stack.push(b % a);
-            break;
+            case 'g': // self modify - get value from memory
+              a = stack.pop(); // y
+              b = stack.pop(); // x
+              if (_outOfBoundsAccess(a, b))
+                return BefungeOutput(
+                    Output: STDOUT.join('') + '\n\nget(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) +
+                        ')',
+                    Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
+                    BefungeStack: _BefungeStack,
+                    PC: _PC,
+                    Command: _Command,
+                    Mnemonic: _Mnemonic);
+              else
+                stack.push(_pg[a * SCREENWIDTH + b]);
+              break;
 
-          case '\\': // swap
-            a = stack.pop();
-            b = stack.pop();
-            stack.push(a);
-            stack.push(b);
-            break;
+            case 'p': // self modify - put value into memory
+              a = stack.pop(); // y
+              b = stack.pop(); // x
+              v = stack.pop(); // value
 
-          case '.': // output decimal
-            STDOUT.add(stack.pop().toString());
-            STDOUT.add(' ');
-            break;
+              if (_outOfBoundsAccess(a, b))
+                return BefungeOutput(
+                    Output: STDOUT.join('') + '\n\nput(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) +
+                        ')',
+                    Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
+                    BefungeStack: _BefungeStack,
+                    PC: _PC,
+                    Command: _Command,
+                    Mnemonic: _Mnemonic);
+              else
+                _put(a, b, v);
+              break;
 
-          case ',': // output char
-            STDOUT.add(String.fromCharCode(stack.pop()));
-            break;
+            case ' ':
+              break;
 
-          case '"': // string mode on/off
-          case '”':
-            stringMode = !stringMode;
-            break;
-
-          case ':': // dublication
-            a = stack.pop();
-            stack.push(a);
-            stack.push(a);
-            break;
-
-          case '! ': //logical not
-            if (stack.pop() == 0)
-              stack.push(1);
-            else
-              stack.push(0);
-            break;
-
-          case '#': // skip - do nothing
-            _x = _x + dx;
-            _y = _y + dy;
-            break;
-
-          case '\$': // pop and discard
-            stack.pop();
-            break;
-
-          case '?': // move random
-            switch (random.nextInt(3)) {
-              case 0:
-                dx = 1;
-                dy = 0;
-                break;
-              case 1:
-                dx = -1;
-                dy = 0;
-                break;
-              case 2:
-                dx = 0;
-                dy = -1;
-                break;
-              case 3:
-                dx = 0;
-                dy = 1;
-                break;
-            }
-            break;
-
-          case '&': // input decimal
-            if (STDIN.length == 0  || STDIN.join('') == '')
-              return BefungeOutput(
-                  Output: STDOUT.join(''),
-                  Error: BEFUNGE_ERROR_NO_INPUT,
-                  BefungeStack: _BefungeStack,
-                  PC: _PC,
-                  Command: _Command,
-                  Mnemonic: _Mnemonic);
-
-            if (int.tryParse(STDIN.last) == null)
-              return BefungeOutput(
-                  Output: STDOUT.join(''),
-                  Error: BEFUNGE_ERROR_INVALID_INPUT,
-                  BefungeStack: _BefungeStack,
-                  PC: _PC,
-                  Command: _Command,
-                  Mnemonic: _Mnemonic);
-
-            stack.push(int.parse(STDIN.last));
-            STDIN.removeLast();
-            break;
-
-          case '~': // input char
-            if (STDIN.length == 0 || STDIN.join('') == '')
-              return BefungeOutput(
-                  Output: STDOUT.join(''),
-                  Error: BEFUNGE_ERROR_NO_INPUT,
-                  BefungeStack: _BefungeStack,
-                  PC: _PC,
-                  Command: _Command,
-                  Mnemonic: _Mnemonic);
-            stack.push((STDIN.last[0].codeUnitAt(0)));
-            break;
-
-          case 'g': // self modify - get value from memory
-            a = stack.pop(); // y
-            b = stack.pop(); // x
-            if (_outOfBoundsAccess(a, b))
-              return BefungeOutput(
-                  Output: STDOUT.join('') + '\n\nget(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
-                  Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
-                  BefungeStack: _BefungeStack,
-                  PC: _PC,
-                  Command: _Command,
-                  Mnemonic: _Mnemonic);
-            else
-              stack.push(_pg[a * SCREENWIDTH + b]);
-            break;
-
-          case 'p': // self modify - put value into memory
-            a = stack.pop(); // y
-            b = stack.pop(); // x
-            v = stack.pop(); // value
-
-            if (_outOfBoundsAccess(a, b))
-              return BefungeOutput(
-                  Output: STDOUT.join('') + '\n\nput(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
-                  Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
-                  BefungeStack: _BefungeStack,
-                  PC: _PC,
-                  Command: _Command,
-                  Mnemonic: _Mnemonic);
-            else
-              _put(a, b, v);
-            break;
-
-          case ' ':
-            break;
-
-          case '\'': // greater than
-            break;
-        } // switch cur
+            case '\'': // greater than
+              break;
+          } // switch cur
       }
 
       _BefungeStack.add(stack.toString());
@@ -467,18 +471,18 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 }
 
 bool _infiniteLoop(int iterations) {
- return (iterations > MAX_ITERATIONS);
+  return (iterations > MAX_ITERATIONS);
 }
 
-bool _outOfBounds(){
+bool _outOfBounds() {
   return (_y > SCREENHEIGHT || _x > SCREENWIDTH);
 }
 
-bool _outOfBoundsAccess(int y, int x){
+bool _outOfBoundsAccess(int y, int x) {
   return (y > SCREENHEIGHT || y < 0 || x > SCREENWIDTH || x < 0);
 }
 
-void _put(int y, int x, int v){
+void _put(int y, int x, int v) {
   _pg[y * SCREENWIDTH + x] = v;
 }
 
@@ -521,7 +525,12 @@ String generateBefunge(String OutputText) {
 
   if (OutputText.length > MAX_OUTPUT_LENGTH) return BEFUNGE_ERROR_INVALID_PROGRAM;
 
-  OutputText.toUpperCase().split('').reversed.toList().forEach((char) {
+  OutputText
+      .toUpperCase()
+      .split('')
+      .reversed
+      .toList()
+      .forEach((char) {
     code = code + _convertCharCode[char.codeUnitAt(0)];
   });
 
@@ -576,6 +585,8 @@ String generateBefunge(String OutputText) {
 }
 
 final Map<int, String> _convertCharCode = {
+// https://www.thepcmanwebsite.com/ascii-chart.shtml
+// https://www.torsten-horn.de/techdocs/ascii.htm
   0: '0', // NUL
   1: '1', // SOH
   2: '2', // STX
@@ -677,31 +688,159 @@ final Map<int, String> _convertCharCode = {
   98: '483+8*6++', // b
   99: '', // c
   100: '35*9:*+4+', // d
-  101: '',// e
-  102: '',// f
-  103: '',// g
-  104: '',// h
-  105: '',// i
-  106: '',// j
-  107: '',// k
-  108: '',// l
-  109: '',// m
-  110: '',// n
-  111: '',// o
-  112: '',// p
-  113: '',// q
-  114: '',// r
-  115: '',// s
-  116: '',// t
-  117: '',// u
-  118: '',// v
-  119: '',// w
-  120: '',// x
-  121: '',// y
-  122: '',// z
-  123: '',// {
-  124: '',// |
-  125: '',// }
-  126: '',// ~
-  127: '',// del
+  101: '', // e
+  102: '', // f
+  103: '', // g
+  104: '', // h
+  105: '', // i
+  106: '', // j
+  107: '', // k
+  108: '', // l
+  109: '', // m
+  110: '', // n
+  111: '', // o
+  112: '', // p
+  113: '', // q
+  114: '', // r
+  115: '', // s
+  116: '', // t
+  117: '', // u
+  118: '', // v
+  119: '', // w
+  120: '', // x
+  121: '', // y
+  122: '', // z
+  123: '', // {
+  124: '', // |
+  125: '', // }
+  126: '', // ~
+  127: '', // del
+  128: '', // €
+  129: '', // 
+  130: '', // ‚
+  131: '', // ƒ
+  132: '', // „
+  133: '', // …
+  134: '', // †
+  135: '', // ‡
+  136: '', // ˆ
+  137: '', // ‰
+  138: '', // Š
+  139: '', // ‹
+  140: '', // Œ
+  141: '', // 
+  142: '', // Ž
+  143: '', // 
+  144: '', // 
+  145: '', // ‘
+  146: '', // ’
+  147: '', // “
+  148: '', // ”
+  149: '', // •
+  150: '', // –
+  151: '4:*25**9-', // —
+  152: '4:*25**8-', // ˜
+  153: '4:*25**7-', // ™
+  154: '4:*25**6-', // š
+  155: '4:*25**5-', // ›
+  156: '4:*25**4-', // œ
+  157: '4:*25**3-', // 
+  158: '4:*25**2-', // ž
+  159: '4:*25**1-', // Ÿ
+  160: '4:*25**', //
+  161: '14:*25**+', // ¡
+  162: '24:*25**+', // ¢
+  163: '34:*25**+', // £
+  164: '44:*25**+', // ¤
+  165: '54:*25**+', // ¥
+  166: '64:*25**+', // ¦
+  167: '74:*25**+', // §
+  168: '84:*25**+', // ¨
+  169: '94:*25**+', // ©
+  170: '94:*25**+25*+', // ª
+  171: '2:3:**5*9-', // «
+  172: '2:3:**5*8-', // ¬
+  173: '2:3:**5*7-', //
+  174: '2:3:**5*6-', // ®
+  175: '2:3:**5*5-', // ¯
+  176: '2:3:**5*4-', // °
+  177: '2:3:**5*3-', // ±
+  178: '2:3:**5*2-', // ²
+  179: '2:3:**5*1-', // ³
+  180: '2:3:**5*', // ´
+  181: '12:3:**5*+', // µ
+  182: '22:3:**5*+', // ¶
+  183: '32:3:**5*+', // ·
+  184: '42:3:**5*+', // ¸
+  185: '52:3:**5*+', // ¹
+  186: '62:3:**5*+', // º
+  187: '72:3:**5*+', // »
+  188: '82:3:**5*+', // ¼
+  189: '92:3:**5*+', // ½
+  190: '2:3:**5*25*-', // ¾
+  191: '85:**9-', // ¿
+  192: '85:**8-', // À
+  193: '85:**7-', // Á
+  194: '85:**6-', // Â
+  195: '85:**5-', // Ã
+  196: '85:**4-', // Ä
+  197: '85:**3-', // Å
+  198: '85:**2-', // Æ
+  199: '85:**1-', // Ç
+  200: '85:**', // É
+  201: '185:**+', // É
+  202: '85:**2+', // Ê
+  203: '385:**+', // Ë
+  204: '85:**4+', // Ì
+  205: '585:**+', // Í
+  206: '85:**6+', // Î
+  207: '785:**+', // Ï
+  208: '85:**8+', // Ñ
+  209: '985:**+', // Ñ
+  210: '', // Ò
+  211: '', // Ó
+  212: '', // Ô
+  213: '', // Ö
+  214: '', // Ö
+  215: '', // ×
+  216: '', // Ø
+  217: '', // Ù
+  218: '', // Ú
+  219: '', // Û
+  220: '', // Ü
+  221: '', // Ý
+  222: '', // Þ
+  223: '', // ß
+  224: '', // à
+  225: '', // á
+  226: '', // â
+  227: '', // ã
+  228: '', // ä
+  229: '', // å
+  230: '', // æ
+  231: '', // ç
+  232: '', // è
+  233: '', // é
+  234: '', // ê
+  235: '', // ë
+  236: '', // ì
+  237: '', // í
+  238: '', // î
+  239: '', // ï
+  240: '', // ð
+  241: '', // ñ
+  242: '', // ò
+  243: '', // ó
+  244: '', // ô
+  245: '', // õ
+  246: '', // ö
+  247: '', // ÷
+  248: '', // ø
+  249: '', // ú
+  250: '', // ú
+  251: '', // û
+  252: '', // ü
+  253: '', // ý
+  254: '', // þ
+  255: '', // ÿ
 };
