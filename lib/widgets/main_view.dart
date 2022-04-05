@@ -68,6 +68,7 @@ import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_auth.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
@@ -336,7 +337,6 @@ class _MainViewState extends State<MainView> {
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
-
     return DefaultTabController(
       length: 3,
       initialIndex:
@@ -461,6 +461,7 @@ void _initStaticToolList() {
       className(BookCipher()),
       className(BrailleSelection()),
       className(Brainfk()),
+      className(BundeswehrAuth()),
       className(BurrowsWheeler()),
       className(Caesar()),
       className(Calendar()),

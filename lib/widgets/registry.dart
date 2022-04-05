@@ -106,6 +106,7 @@ import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_auth.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
@@ -511,6 +512,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'bookcipher',
+    ]),
+    GCWTool(tool: BundeswehrAuth(), i18nPrefix: 'bundeswehr_auth', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'bundeswehr_auth',
     ]),
     GCWTool(tool: BurrowsWheeler(), i18nPrefix: 'burrowswheeler', categories: [
       ToolCategory.CRYPTOGRAPHY
