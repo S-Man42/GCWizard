@@ -1,4 +1,7 @@
 import 'dart:math';
+ // 08 41 75 51 36 30 99 28 65 10 66 46 55 20 79 16 82 02 93 45 97 19 88 81 63 01 38 72 29 87 98 54 50 04 49 44 27 31 77 17 18 64 15 56 32 86 73 26 67 95 35 14 96 39 06 80 25 68 85 43 12 48 07 24 74
+ // cjosmhlquweby
+ // dainrtxfkpvzg
 
 class AuthentificationTable {
   final List<String> xAxis;
@@ -36,10 +39,13 @@ const AUTH_RESPONSE_NOT_OK = 'bundeswehr_auth_response_not_ok';
 const AUTH_RESPONSE_INVALID_CALLSIGN_LETTER = 'bundeswehr_auth_response_invalid_callsign_letter';
 const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER = 'bundeswehr_auth_response_invalid_authentification_letter';
 const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE = 'bundeswehr_auth_response_invalid_autentification_code';
-const AUTH_RESPONSE_ = 'bundeswehr_auth_response_';
+const AUTH_RESPONSE_INVALID_CUSTOM_TABLE = 'bundeswehr_auth_response_invalid_custom_table';
 
 String buildAuthBundeswehr(String currentCallSign, String currentLetterAuth, String currentLetterCallSign,
     AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
+  if (tableNumeralCode.Content.isEmpty || tableAuthentificationCode.Content.isEmpty)
+    return AUTH_RESPONSE_INVALID_CUSTOM_TABLE;
+
   if (currentCallSign.split('').contains(currentLetterCallSign)) {
     if (AUTH_TABLE_Y_AXIS.contains(currentLetterCallSign)) {
       List<String> result = [];
@@ -107,7 +113,10 @@ String buildAuthBundeswehr(String currentCallSign, String currentLetterAuth, Str
 
 String checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
     AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
-  print(currentAuth);
+
+  if (tableNumeralCode.Content.isEmpty || tableAuthentificationCode.Content.isEmpty)
+    return AUTH_RESPONSE_INVALID_CUSTOM_TABLE;
+
   currentAuth = _normalizeAuthCode(currentAuth);
   if (currentAuth != '') {
     List<String> authCode = currentAuth.split(' ');
@@ -158,6 +167,7 @@ String checkAuthBundeswehr(String currentCallSign, String currentAuth, String cu
     }
 
     String digit = '';
+    print(char);
     digit = tableAuthentificationCode.Content[tableAuthentificationCode.xAxis.indexOf(currentLetterAuth) +
         tableAuthentificationCode.yAxis.indexOf(char) * 5];
 
