@@ -32,7 +32,7 @@ dependencies:
   mask_text_input_formatter: ^2.0.0
   math_expressions: ^2.3.0
   package_info_plus: ^1.4.0
-  path: ^1.8.1
+  path: ^1.8.0
   path_provider: ^2.0.9
   permission_handler: ^9.2.0
   #photo_view: ^0.13.0
