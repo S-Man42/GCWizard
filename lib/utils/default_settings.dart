@@ -128,14 +128,14 @@ void initDefaultSettings() {
         });
         tool.options = options;
         updateMultiDecoderTool(tool);
-      } else if ([MDT_INTERNALNAMES_CCITT1, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
+      } else if ([MDT_INTERNALNAMES_CCITT1].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
         tool.options.where((element) => element.name == 'ccitt1_numeralbase').forEach((option) {
           options.add(MultiDecoderToolOption(MDT_CCITT1_OPTION_MODE, option.value));
         });
         tool.options = options;
         updateMultiDecoderTool(tool);
-      } else if ([MDT_INTERNALNAMES_CCITT2, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
+      } else if ([MDT_INTERNALNAMES_CCITT2].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
         tool.options.where((element) => element.name == 'ccitt2_numeralbase').forEach((option) {
           options.add(MultiDecoderToolOption(MDT_CCITT2_OPTION_MODE, option.value));
