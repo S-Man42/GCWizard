@@ -26,8 +26,8 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
   String _currentLetterAuth = '';
   String _currentLetterCallSign = '';
 
-  List<String> _colTitle = [];
-  List<String> _rowTitle = [];
+  AuthentificationTable _tableNumeralCode;
+  AuthentificationTable _tableAuthentificationCode;
 
   String _authTableString = '';
   Map<String, Map<String, String>> _authTable = {};
@@ -44,9 +44,6 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     _callSignController = TextEditingController(text: _currentCallSign);
     _letterControllerAuth = TextEditingController(text: _currentLetterAuth);
     _letterControllerCallSign = TextEditingController(text: _currentLetterCallSign);
-
-    _colTitle = _buildTitles().column;
-    _rowTitle = _buildTitles().row;
 
     _buildAuthTable();
     _buildNumeralCode();
@@ -79,7 +76,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
         GCWTextField(
           controller: _callSignController,
           hintText: i18n(context, 'bundeswehr_auth_call_sign'),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Z]')),],
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),],
           onChanged: (text) {
             setState(() {
               _currentCallSign = text;
@@ -89,14 +86,41 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
         _currentMode == GCWSwitchPosition.right
         ? Column( // decode - checkAuth
           children: <Widget>[
-            GCWTextField(
-              controller: _inputAuthController,
-              onChanged: (text) {
-                setState(() {
-                  _currentAuthInput = text;
-                });
-              },
+            Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                        child: GCWTextField(
+                          controller: _letterControllerAuth,
+                          hintText: i18n(context, 'bundeswehr_auth_letter_auth'),
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[vwxyzVWXYZ]')),],
+                          onChanged: (text) {
+                            setState(() {
+                              _currentLetterAuth = text;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(right: 2)
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                        child:  GCWTextField(
+                          controller: _inputAuthController,
+                          hintText: i18n(context, 'bundeswehr_auth_authentification_code'),
+                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ,.]')),],
+                          onChanged: (text) {
+                            setState(() {
+                              _currentAuthInput = text;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(left: 2)
+                    ),
+                  ),
+                ]
             ),
+
           ],
         )
         : Column( // encode - auth
@@ -104,29 +128,35 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
             Row(
               children: <Widget>[
                 Expanded(
+                  child: Padding(
                     child: GCWTextField(
                       controller: _letterControllerAuth,
                       hintText: i18n(context, 'bundeswehr_auth_letter_auth'),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[VWXYZ]')),],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[vwxyzVWXYZ]')),],
                       onChanged: (text) {
                         setState(() {
                           _currentLetterAuth = text;
                         });
                       },
                     ),
+                    padding: EdgeInsets.only(right: 2)
+                  ),
                 ),
                 Expanded(
+                  child: Padding(
                     child: GCWTextField(
                       controller: _letterControllerCallSign,
                       hintText: i18n(context, 'bundeswehr_auth_letter_callsign'),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Z]')),],
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),],
                       onChanged: (text) {
                         setState(() {
                           _currentLetterCallSign = text;
                         });
                       },
                     ),
-                )
+                    padding: EdgeInsets.only(left: 2)
+                  ),
+                ),
               ]
             ),
           ],
@@ -147,7 +177,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           ),
         GCWDefaultOutput(
           child: GCWOutputText(
-            text: _calculateOutput(),
+            text: _calculateOutput(context),
             isMonotype: true,
           ),
         )
@@ -155,20 +185,23 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     );
   }
 
-  _calculateOutput() {
+  _calculateOutput(BuildContext context) {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.right) {
-      output = i18n(context, checkAuthBundeswehr(_currentCallSign, _currentAuthInput));
+      output = i18n(context, checkAuthBundeswehr(_currentCallSign.toUpperCase(), _currentAuthInput.toUpperCase(), _currentLetterAuth.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode));
     } else {
-      output = buildAuthBundeswehr(_currentCallSign, _currentLetterAuth, _currentLetterCallSign, _rowTitle, _colTitle, _numeralCode, _authTable);
+      output = buildAuthBundeswehr(_currentCallSign.toUpperCase(), _currentLetterAuth.toUpperCase(), _currentLetterCallSign.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
     }
 
-    return output ?? '';
+    if (output.startsWith('bundeswehr'))
+      output = i18n(context, output);
+
+    return output;
   }
 
   String _buildAuthTable(){
-    List<int> authCode = [];
+    List<String> authCode = [];
     var random = new Random();
     int rnd = 0;
     while (authCode.length != 65) {
@@ -176,15 +209,15 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
       if (authCode.contains(rnd)) {
 
       } else {
-        authCode.add(rnd);
+        authCode.add(rnd.toString().padLeft(2, '0'));
       }
     }
 
     int i = 0;
-    ['A', 'D', 'E', 'G', 'H', 'I', 'L', 'N', 'O', 'R', 'S', 'T', 'U',].forEach((row) {
+    AUTH_TABLE_Y_AXIS.forEach((row) {
       Map<String, String> authTableRow = {'V': '0', 'W': '0', 'X': '0', 'Y': '0', 'Z':'0'};
-      ['V', 'W', 'X', 'Y', 'Z', ].forEach((col) {
-        authTableRow[col] = authCode[i].toString().padLeft(2, '0');
+      AUTH_TABLE_X_AXIS.forEach((col) {
+        authTableRow[col] = authCode[i];
         i++;
       });
       _authTable[row] = authTableRow;
@@ -200,9 +233,23 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           + '  ' + authCode[i + 4].toString().padLeft(2, '0') + '\n';
       i = i + 5;
     });
+
+    _tableAuthentificationCode = AuthentificationTable(yAxis: AUTH_TABLE_Y_AXIS, xAxis: AUTH_TABLE_X_AXIS, Content: authCode);
   }
 
   String _buildNumeralCode(){
+    List<String> alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
+    var random = new Random();
+    int rnd = 0;
+    String description = '';
+    while (alphabet.length > 0) {
+      rnd = random.nextInt(alphabet.length);
+      description = description + alphabet[rnd];
+      alphabet.removeAt(rnd);
+    }
+     List<String> _colTitle = description.substring(0, 13).split('');
+     List<String> _rowTitle = description.substring(13).split('');
+
     _numeralCode.addAll('0123456789ABC'.split(''));
     _numeralCode.addAll('D0123456789EF'.split(''));
     _numeralCode.addAll('GH0123456789I'.split(''));
@@ -227,19 +274,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
       i++;
       _numeralCodeString = _numeralCodeString + '\n ';
     });
-  }
-
-  TableTitle _buildTitles(){
-    List<String> alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
-    var random = new Random();
-    int rnd = 0;
-    String description = '';
-    while (alphabet.length > 0) {
-      rnd = random.nextInt(alphabet.length);
-      description = description + alphabet[rnd];
-      alphabet.removeAt(rnd);
-    }
-    return TableTitle(description.substring(0, 13).split(''), description.substring(13).split(''));
+    _tableNumeralCode = AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode);
   }
 
 }
