@@ -96,7 +96,7 @@ String decodeEnclosedAreas(String input, bool with4, {onlyNumbers: false}) {
   }
 
   return inputSeparated
-      .split(RegExp(' '))
+      .split(RegExp(r'\s+'))
       .where((block) => block != null && block.length > 0)
       .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
       .join(' ');
