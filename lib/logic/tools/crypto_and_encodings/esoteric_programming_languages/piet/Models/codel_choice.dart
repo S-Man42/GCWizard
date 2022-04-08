@@ -1,5 +1,0 @@
-﻿enum CodelChoice {
-    Left,
-    Right
-}
-

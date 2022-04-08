@@ -1,10 +1,23 @@
-﻿import 'dart:html';
+import 'dart:html';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/darkness.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/hueColour.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_ops.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/base_operations.dart';
 import 'package:tuple/tuple.dart';
+
+enum HueColour {
+    Red,
+    Yellow,
+    Green,
+    Cyan,
+    Blue,
+    Magenta
+}
+
+enum Darkness {
+    Light,
+    Normal,
+    Dark
+}
 
 class PietBlockOpResolver {
     /// <summary>

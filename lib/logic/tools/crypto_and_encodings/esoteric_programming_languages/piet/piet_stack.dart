@@ -75,26 +75,25 @@ class PietStack {
         Push(result);
     }
 
-    _ApplyTernary(Func<int, int, int> operatorFunc) {
+    _ApplyTernary(Function operatorFunc) { //<int, int, int>
         Tuple2<int, int> stackResults;
         if (!TryPop2(stackResults)) return;   //out
         var top = stackResults.item1;
         var second = stackResults.item2;
 
-        var result = operatorFunc.Invoke(top, second);
+        var result = operatorFunc(top, second);
         Push(result);
     }
 
-    _ApplyTernaryIf(Func<int, int, int> operatorFunc, Func<int, int, bool> conditionalFunc)
-    {
+    _ApplyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
         Tuple2<int, int> stackResults;
         if (!TryPop2(stackResults)) return;   //out
         var top = stackResults.item1;
         var second = stackResults.item2;
 
-        if (!conditionalFunc.Invoke(top, second)) return;
+        if (!conditionalFunc(top, second)) return;
 
-        var result = operatorFunc.Invoke(top, second);
+        var result = operatorFunc(top, second);
         Push(result);
 
     }

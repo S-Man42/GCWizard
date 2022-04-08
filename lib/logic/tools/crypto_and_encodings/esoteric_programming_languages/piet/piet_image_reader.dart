@@ -1,38 +1,25 @@
 ﻿import 'dart:core';
-import 'dart:ui';
+import 'dart:typed_data';
+import 'package:image/image.dart' as Image;
 
-class PietImageReader
-{
-    List<List<int>> ReadImage(String path)
+class PietImageReader {
+    List<List<int>> ReadImage(Uint8List image)
     {
-        var image = Image.FromFile(path);
-        return _ReadImage(image);
+        var _image = Image.decodeImage(image);
+        return _ReadImage(_image);
     }
 
-    List<List<int>> ReadImage(Stream stream) {
-        var image = Image.FromStream(stream);
-        return _ReadImage(image);
-    }
-
-    List<List<int>> ReadImage(byte[] data)
-    {
-        var image = Image.FromStream(new MemoryStream(data));
-        return _ReadImage(image);
-    }
-
-    List<List<int>> _ReadImage(Image image) {
-        var bmp = new Bitmap(image);
-        var step = codelSize ?? EstimateCodelSize(bmp);
-        var pixels = List<int>>[]; //new int[bmp.Height / step, bmp.Width / step];
+    List<List<int>> _ReadImage(Image.Image image) {
+        var step = EstimateCodelSize(image);
+        var pixels = <List<int>>[]; //new int[bmp.Height / step, bmp.Width / step];
 
         int outY = 0;
-        for (var y = 0; y < bmp.Height; y += step, outY++)
+        for (var y = 0; y < image.height; y += step, outY++)
         {
-            pixels.add
+            pixels.add(<int>[]);
             var outX = 0;
-            for (var x = 0; x < bmp.Width; x += step, outX++)
-            {
-                var pix = bmp.GetPixel(x, y);
+            for (var x = 0; x < image.width; x += step, outX++) {
+                var pix = image.getPixel(x, y);
                 pixels[outY].add(_ToRgb(pix));
             }
         }
@@ -41,44 +28,32 @@ class PietImageReader
     }
 
 
-    int _ToRgb(Color rgb24) {
-        return ((rgb24.red << 16) | (rgb24.green << 8) | rgb24.blue);
+    int _ToRgb(int rgb24) {
+        return ((rgb24 & 0x000000FF) << 16) | (rgb24 & 0x0000FF00) | ((rgb24 & 0x00FF0000) >> 16); //AABBGGRR -> RGB
     }
 
-    int EstimateCodelSize(Bitmap bmp) {
+    int EstimateCodelSize(Image.Image image) {
         // test the first row
         int count = 1;
         int minCount = 9999999999999; //int.MaxValue;
 
-        for (var rowIndex = 0; rowIndex < bmp.Height; rowIndex++)
-        {
-            var prevColour = _ToRgb(bmp.GetPixel(0, rowIndex));
-            for (var i = 1; i < bmp.Width; i++)
-            {
-                var currentColour = _ToRgb(bmp.GetPixel(i, rowIndex));
+        for (var rowIndex = 0; rowIndex < image.height; rowIndex++) {
+            var prevColour = _ToRgb(image.getPixel(0, rowIndex));
+            for (var i = 1; i < image.width; i++) {
+                var currentColour = _ToRgb(image.getPixel(i, rowIndex));
                 if (currentColour == prevColour)
                     count++;
-                else
-                {
-                    if (count < minCount)
-                        minCount = count;
+                else {
+                    if (count < minCount) minCount = count;
 
                     prevColour = currentColour;
                     count = 1;
                 }
             }
 
-            if (count < minCount)
-                minCount = count;
+            if (count < minCount) minCount = count;
         }
         return minCount;
-    }
-
-    int EstimateCodelSize(String path) {
-        var image = Image.FromFile(path);
-        var rgb = new Bitmap(image);
-
-        return EstimateCodelSize(rgb);
     }
 }
 

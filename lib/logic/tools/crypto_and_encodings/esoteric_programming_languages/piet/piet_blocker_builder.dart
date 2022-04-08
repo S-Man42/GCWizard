@@ -1,24 +1,23 @@
 ﻿import 'dart:core';
 
-//import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
 
 class PietBlockerBuilder {
     // we if want to support custom colours and operations going forward
     // we'll need to allow extensions to add to this collection
     List<int> _knownColours;
 
-    int[,] _data;
+    List<List<int>> _data;
     int _width;
     int _height;
 
-    PietBlockerBuilder(int[,] data) {
+    PietBlockerBuilder(List<List<int>> data) {
         _data = data;
-        _width = _data.GetLength(1);
-        _height = _data.GetLength(0);
+        _width = _data[0].length;
+        _height = _data.length;
 
         _knownColours =
         {
-            // reds
             0xFFC0C0,
             0xFF0000,
             0xC00000,
@@ -45,8 +44,8 @@ class PietBlockerBuilder {
             // white
             0xFFFFFF,
             // black
-            0X000000
-        };
+            0x000000
+         }.toList();
     }
 
     PietBlock GetBlockAt(int x, int y) {
@@ -54,8 +53,8 @@ class PietBlockerBuilder {
     }
 
     PietBlock _BuildPietBlock(int x, int y) {
-        int targetColour = _data[y, x];
-        var knownColour = _knownColours.Contains(targetColour);
+        int targetColour = _data[y][x];
+        var knownColour = _knownColours.contains(targetColour);
         PietBlock block = new PietBlock(targetColour, knownColour);
 
         return BuildPietBlockRec(block, x, y, 0, 0);
@@ -68,32 +67,26 @@ class PietBlockerBuilder {
         if (newX < 0 || newX >= _width || newY < 0 || newY >= _height) // out of bounds
             return block;
 
-        var currentColour = _data[newY, newX];
+        var currentColour = _data[newY][newX];
         if (currentColour != block.Colour) // colours don't match - you hit an edge
             return block;
 
         // int countBefore = block.BlockCount;
-        if (!block.AddPixel(newX, newY))
-            return block;
+        if (!block.AddPixel(newX, newY)) return block;
 
-        if (yOffset != 1)
-            // top
-            BuildPietBlockRec(block, newX, newY, 0, -1);
+        // top
+        if (yOffset != 1) BuildPietBlockRec(block, newX, newY, 0, -1);
 
-        if (yOffset != -1)
-            // bottom
-            BuildPietBlockRec(block, newX, newY, 0, 1);
+        // bottom
+        if (yOffset != -1) BuildPietBlockRec(block, newX, newY, 0, 1);
 
-        if (xOffset != 1)
-            // left
-            BuildPietBlockRec(block, newX, newY, -1, 0);
+        // left
+        if (xOffset != 1) BuildPietBlockRec(block, newX, newY, -1, 0);
 
-        if (xOffset != -1)
-            // right
-            BuildPietBlockRec(block, newX, newY, 1, 0);
+        // right
+        if (xOffset != -1) BuildPietBlockRec(block, newX, newY, 1, 0);
 
         return block;
     }
-
 }
 

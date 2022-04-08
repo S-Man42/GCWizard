@@ -1,20 +1,41 @@
 ﻿import 'dart:core';
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_ops.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
+
+enum PietOps {
+    Noop,
+    Push,
+    Pop,
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    Mod,
+    Not,
+    Greater,
+    Pointer,
+    Switch,
+    Duplicate,
+    Roll,
+    InputNumber,
+    InputChar,
+    OutputNumber,
+    OutputChar
+}
 
 class BaseOperations {
     PietStack _stack;
 
-    Function<PietBlock> _getExitedBlock;
-    Function<int> _toggleDirectionPointer;
-    Function<int> _toggleCodelChooser;
+    Function _getExitedBlock; //<PietBlock>
+    Function _toggleDirectionPointer; //<int>
+    Function _toggleCodelChooser; //<int>
 
     IPietIO _io;
 
-    BaseOperations(PietStack stack, IPietIO io, Func<PietBlock> getExitedBlock, Action<int> toggleDirectionPointer, Action<int> toggleCodelChooser) {
+    BaseOperations(PietStack stack, IPietIO io, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
         _stack = stack;
         _io = io;
-        _getExitedBlock = getExitedBlock;
+        _getExitedBlock = getExitedBlock; //<PietBlock>
         _toggleDirectionPointer = toggleDirectionPointer;
         _toggleCodelChooser = toggleCodelChooser;
     }
@@ -22,8 +43,8 @@ class BaseOperations {
     /// <summary>
     /// Pushes the value of the colour block just exited on to the stack
     /// </summary>
-    void Push() {
-        var exitedBlock = _getExitedBlock.Invoke();
+    Push() {
+        PietBlock exitedBlock = _getExitedBlock();
         if (exitedBlock == null) return;
 
         _stack.Push(exitedBlock.BlockCount);
@@ -32,80 +53,74 @@ class BaseOperations {
     /// <summary>
     /// Pops the top value off the stack and discards it
     /// </summary>
-    void Pop() {
+    Pop() {
         _stack.Pop();
     }
 
-    void Add() {
+    Add() {
         _stack.Add();
     }
 
-    void Subtract() {
+    Subtract() {
         _stack.Subtract();
     }
 
-    void Multiply() {
+    Multiply() {
         _stack.Multiply();
     }
 
-    void Divide() {
+    Divide() {
         _stack.Divide();
     }
 
-    void Mod() {
+    Mod() {
         _stack.Mod();
     }
 
-    void Not() {
+    Not() {
         _stack.Not();
     }
 
-    void Greater() {
+    Greater() {
         _stack.Greater();
     }
 
-    void Pointer() {
+    Pointer() {
         var result = _stack.Pop();
-        if (result.HasValue)
-            _toggleDirectionPointer(result.Value);
+        if (result != null) _toggleDirectionPointer(result);
     }
 
-    void Switch() {
+    Switch() {
         var result = _stack.Pop();
-        if (result.HasValue)
-            _toggleCodelChooser(result.Value);
+        if (result != null) _toggleCodelChooser(result);
     }
 
-    void Duplicate() {
+    Duplicate() {
         _stack.Duplicate();
     }
 
-    void Roll() {
+    Roll() {
         _stack.Roll();
     }
 
     void InNumber() {
         var val = _io.ReadInt();
-        if (val.HasValue)
-            _stack.Push(val.Value);
+        if (val != null) _stack.Push(val.Value);
     }
 
     void InChar() {
         var val = _io.ReadChar();
-        if (val.HasValue)
-            _stack.Push(val.Value);
+        if (val != null) _stack.Push(val);
     }
 
     void OutNumeric() {
         var result = _stack.Pop();
-        if (result.HasValue)
-            _io.Output(result.Value);
+        if (result != null) _io.Output(result);
     }
 
-    void OutChar() {
+    OutChar() {
         var result = _stack.Pop();
-        if (result.HasValue)
-            _io.Output(result.Value);
+        if (result != null) _io.Output(result);
     }
 
     Map<PietOps, void Function()> GetMap()
