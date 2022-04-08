@@ -118,9 +118,9 @@ void initDefaultSettings() {
   if (Prefs.get('multidecoder_tools') == null) {
     Prefs.setStringList('multidecoder_tools', []);
   } else {
-    // ensure backward compatibility; breaking change in 2.0.1 due to a bug fix
     refreshMultiDecoderTools();
     for (var tool in multiDecoderTools) {
+      // ensure backward compatibility; breaking change in 2.0.1 due to a bug fix
       if ([MDT_INTERNALNAMES_BCD, MDT_INTERNALNAMES_BASE].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
         tool.options.forEach((option) {
@@ -128,15 +128,12 @@ void initDefaultSettings() {
         });
         tool.options = options;
         updateMultiDecoderTool(tool);
-      } else if ([MDT_INTERNALNAMES_CCITT1].contains(tool.internalToolName)) {
+      // ensure backward compatibility; breaking change in 2.2.1 due to a bug fix
+      } else if ([MDT_INTERNALNAMES_CCITT1, MDT_INTERNALNAMES_CCITT2].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
         tool.options.where((element) => element.name == 'ccitt1_numeralbase').forEach((option) {
           options.add(MultiDecoderToolOption(MDT_CCITT1_OPTION_MODE, option.value));
         });
-        tool.options = options;
-        updateMultiDecoderTool(tool);
-      } else if ([MDT_INTERNALNAMES_CCITT2].contains(tool.internalToolName)) {
-        var options = <MultiDecoderToolOption>[];
         tool.options.where((element) => element.name == 'ccitt2_numeralbase').forEach((option) {
           options.add(MultiDecoderToolOption(MDT_CCITT2_OPTION_MODE, option.value));
         });
