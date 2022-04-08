@@ -77,11 +77,17 @@ void main() {
       {'formula' : 'log(100,10)', 'expectedOutput' : 'bbbbgggbggb'}, // 1 comma
       {'formula' : 'log(10,100)', 'expectedOutput' : 'bbbbggbgggb'},
       {'formula' : 'log(100)', 'expectedOutput' : 'bbbbRRRb'},
-      {'formula' : 'log(100,2,1)', 'expectedOutput' : 'bbbbRRRRRRRb'},
+      {'formula' : 'log(100,2,1)', 'expectedOutput' : 'bbbbgggbgBGb'},
+      {'formula' : 'sqrt(4)', 'expectedOutput' : 'bbbbbgb'},
+      {'formula' : 'sqrt(4,2)', 'expectedOutput' : 'bbbbbgBGb'},
+      {'formula' : 'sqrt(4,2,12)', 'expectedOutput' : 'bbbbbgBGBGGb'},
+      {'formula' : 'sqrt(4 , - 44.123)', 'expectedOutput' : 'bbbbbggBBBBGGGGGGb'},
+      {'formula' : 'sinDeg(-4.3)', 'expectedOutput' : 'bbbbbbbbgggb'},
+      {'formula' : 'sinDeg(-4.3 , - 44.123)', 'expectedOutput' : 'bbbbbbbbggggBBBBGGGGGGb'},
       {'formula' : 'round(1)', 'expectedOutput' : 'bbbbbbgb'},  // 0 or 1 comma
       {'formula' : 'round(1.247)', 'expectedOutput' : 'bbbbbbgggggb'},
       {'formula' : 'round(1.247,2)', 'expectedOutput' : 'bbbbbbgggggbgb'},
-      {'formula' : 'round(1.234,2,1)', 'expectedOutput' : 'bbbbbbRRRRRRRRRb'},
+      {'formula' : 'round(1.234,2,1)', 'expectedOutput' : 'bbbbbbgggggbgBGb'},
       {'formula' : 'cs(88,99)', 'expectedOutput' : 'bbbggbggb'}, // any number of commas
       {'formula' : 'csi(88,99)', 'expectedOutput' : 'bbbbggbggb'}, // any number of commas
       {'formula' : 'MIN(8.1,99.0,123.213)', 'expectedOutput' : 'bbbbgggbggggbgggggggb'}, // any number of commas
@@ -93,7 +99,7 @@ void main() {
       {'formula' : 'nth(1234,2,3)', 'expectedOutput' : 'bbbbggggbgbgb'},
       {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
       {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
-      {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbRRRRRRRRRb'},
+      {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbgggbgbgBGb'},
       {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
       {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
       {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
@@ -241,8 +247,8 @@ void main() {
       {'formula' : 'round(1.4, max(1,2,3,4))', 'expectedOutput' : 'bbbbbbgggbbbbbbgbgbgbgbb'},
       {'formula' : 'round(1.4, max(1))', 'expectedOutput' : 'bbbbbbgggbbbbbbgbb'},
       {'formula' : 'max(1, round(1.4,1))', 'expectedOutput' : 'bbbbgbbbbbbbbgggbgbb'},
-      {'formula' : 'max(round(1.4,1,2))', 'expectedOutput' : 'bbbbbbbbbbRRRRRRRbb'},
-      {'formula' : 'max(1.321, round(1.4,1,2))', 'expectedOutput' : 'bbbbgggggbbbbbbbbRRRRRRRbb'},
+      {'formula' : 'max(round(1.4,1,2))', 'expectedOutput' : 'bbbbbbbbbbgggbgBGbb'},
+      {'formula' : 'max(1.321, round(1.4,1,2))', 'expectedOutput' : 'bbbbgggggbbbbbbbbgggbgBGbb'},
       {'formula' : 'round( - 1.321,sqrt(2))', 'expectedOutput' : 'bbbbbbbbbgggggbbbbbbgbb'},
       {'formula' : 'log(log(10, 2),log(round(10,2),2))', 'expectedOutput' : 'bbbbbbbbggbggbbbbbbbbbbbbggbgbbgbb'},
     ];
