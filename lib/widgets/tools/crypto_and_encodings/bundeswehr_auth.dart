@@ -352,10 +352,17 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
         return;
       }
       authTable.trim().split(' ').forEach((element) {
-        if (element.length == 1)
-          authCode.add('0' + element);
+        if (element.length > 2) {
+              _tableAuthentificationCode =
+                  AuthentificationTable(yAxis: AUTH_TABLE_Y_AXIS, xAxis: AUTH_TABLE_X_AXIS, Content: []);
+              _authTableString = i18n(context, 'bundeswehr_auth_response_invalid_custom_table_auth');
+              return;
+        }
         else
-          authCode.add(element);
+          if (element.length == 1)
+            authCode.add('0' + element);
+          else
+            authCode.add(element);
       });
     } else {
       var random = new Random();
