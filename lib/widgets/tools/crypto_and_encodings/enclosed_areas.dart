@@ -38,7 +38,7 @@ class EnclosedAreasState extends State<EnclosedAreas> {
         ),
         _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
         GCWDefaultOutput(child: decodeEnclosedAreas(_currentInput,
-          _with4On == GCWSwitchPosition.left,
+          with4: _with4On == GCWSwitchPosition.left,
           onlyNumbers : _onlyNumbers
         ))
       ],

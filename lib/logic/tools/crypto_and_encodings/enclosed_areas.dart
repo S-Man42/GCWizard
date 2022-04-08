@@ -76,27 +76,13 @@ Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
     return alphabetMap;
 }
 
-String decodeEnclosedAreas(String input, bool with4, {onlyNumbers: false}) {
+String decodeEnclosedAreas(String input, {bool with4, onlyNumbers: false}) {
   if (input == null || input == '') return '';
-  var splitChars = {'+','-','/',r'\','(','),r''','{','}','[',']','<','>','!','§',r'$','%','&','=',
-                    '?','*','#','€','¿','&','_',r'"','.',',',':',';','.','°','<','>'};
 
   var alphabetMap = _createAlpabetMap(with4, onlyNumbers);
 
-  var inputSeparated = '';
-  var lastSplitChar = true;
-  for (var i = input.length -1; i >= 0; i--) {
-    if (splitChars.contains(input[i])) {
-      inputSeparated = (lastSplitChar ? input[i] + ' ' : input[i]) + inputSeparated;
-      lastSplitChar = false;
-    } else {
-      inputSeparated = input[i] + inputSeparated;
-      lastSplitChar = true;
-    }
-  }
-
-  return inputSeparated
-      .split(RegExp(r'\s+'))
+  return input
+      .split(RegExp(onlyNumbers ? r'[^0-9]+' : r'\s+'))
       .where((block) => block != null && block.length > 0)
       .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
       .join(' ');

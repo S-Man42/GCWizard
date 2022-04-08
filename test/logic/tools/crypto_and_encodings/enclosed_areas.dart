@@ -15,12 +15,12 @@ void main() {
       {'input' : '0123456789', 'expectedOutput' : '6'},
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 6'},
       {'input' : '._*&%><', 'expectedOutput' : '4'},
-      {'input' : '1082158111 2355712317° 2111355772 2309215781.1603217532 0229798165 7273291356', 'expectedOutput' : '5 1 0 4 2 6 2'},
+      {'input' : '1082158111 2355712317° 2111355772 2309215781.1603217532 0229798165 7273291356', 'expectedOutput' : '5 1 0 6 6 2'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], true);
+        var _actual = decodeEnclosedAreas(elem['input'], with4: true);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -40,7 +40,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], false);
+        var _actual = decodeEnclosedAreas(elem['input'], with4: false);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -51,17 +51,17 @@ void main() {
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
-      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '0'},
-      {'input' : 'abcdefghijklmnopqrstuvwxyzäöüß', 'expectedOutput' : '0'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : ''},
+      {'input' : 'abcdefghijklmnopqrstuvwxyzäöüß', 'expectedOutput' : ''},
       {'input' : '0123456789', 'expectedOutput' : '6'},
-      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '0 6'},
-      {'input' : '._*&%><', 'expectedOutput' : '0'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '6'},
+      {'input' : '._*&%><', 'expectedOutput' : ''},
       {'input' : '1082158111 2355712317° 2111355772 2309215781.1603217532 0229798165 7273291356', 'expectedOutput' : '5 0 0 4 2 6 2'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeEnclosedAreas(elem['input'], true, onlyNumbers: true);
+        var _actual = decodeEnclosedAreas(elem['input'], with4: true, onlyNumbers: true);
         expect(_actual, elem['expectedOutput']);
       });
     });
