@@ -93,6 +93,12 @@ void main() {
       {'formula' : 'nth(1234,2,3)', 'expectedOutput' : 'bbbbggggbgbgb'},
       {'formula' : 'nth(1234.,2,3)', 'expectedOutput' : 'bbbbgggggbgbgb'},
       {'formula' : 'nth(1234.1,2,3)', 'expectedOutput' : 'bbbbggggggbgbgb'},
+      {'formula' : 'nth(567,3,8,2)', 'expectedOutput' : 'bbbbRRRRRRRRRb'},
+      {'formula' : 'max()', 'expectedOutput' : 'BBBBB'},
+      {'formula' : 'max(1)', 'expectedOutput' : 'bbbbgb'},
+      {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
+      {'formula' : 'max(1,2,3)', 'expectedOutput' : 'bbbbgbgbgb'},
+      {'formula' : 'max(1,2,3,4)', 'expectedOutput' : 'bbbbgbgbgbgb'},
 
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
@@ -202,19 +208,43 @@ void main() {
       {'formula' : '[A]', 'values': {'A':''}, 'expectedOutput' : 'bRb'},
 
       // new line
-      {'formula' : 'sindeg(90)\r\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
-      {'formula' : 'sindeg(90)\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
-      {'formula' : 'sindeg(90)\rsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
+      {'formula' : 'sindeg(90)\r\nsindeg(90)', 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
+      {'formula' : 'sindeg(90)\nsindeg(90)', 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
+      {'formula' : 'sindeg(90)\rsindeg(90)', 'expectedOutput' : 'bbbbbbbggbbbbbbbbbggb'},
       {'formula' : 'sindeg(90)\n\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
 
       {'formula' : '[ 48*I - 2]', 'values': {'I': '1'}, 'formulaId': 2, 'expectedOutput' : 'bbggbrrbbgb'},
 
-      {'formula' : 'nth(567,nrt(3,8))', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbgggbbbbbgbgbb'},
+      {'formula' : 'nth(567,nrt(3,8))', 'expectedOutput' : 'bbbbgggbbbbbgbgbb'},
       {'formula' : 'nth((nth(67,2) +6)!,3)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbbbggbgbbbgbbbgb'},
       {'formula' : 'sqrt(nrt(2,16))', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbbbgbggbb'},
       {'formula' : '5!', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'gb'},
+      {'formula' : '5  !', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'gggb'},
       {'formula' : '!5', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bg'},
+      {'formula' : '! 5', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbg'},
       {'formula' : '!!5', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbg'},
+      {'formula' : '! !5', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbg'},
+      {'formula' : '3!+!4', 'expectedOutput' : 'gbbbg'},
+      {'formula' : '3 ! + ! 4', 'expectedOutput' : 'ggbbbbbbg'},
+
+      //nested functions with >1 parameter
+      {'formula' : 'sqrt(log(10,2))', 'expectedOutput' : 'bbbbbbbbbggbgbb'},
+      {'formula' : 'log(log(10 ,2), 2)', 'expectedOutput' : 'bbbbbbbbgggbgbbggb'},
+      {'formula' : 'log(sqrt(4),2)', 'expectedOutput' : 'bbbbbbbbbgbbgb'},
+      {'formula' : 'log(sqrt(),2)', 'expectedOutput' : 'bbbbBBBBBBbgb'},
+      {'formula' : 'log(sqrt(4,2),2)', 'expectedOutput' : 'bbbbbbbbbgBGbbgb'},
+      {'formula' : 'log(10, sqrt (4) )', 'expectedOutput' : 'bbbbggbbbbbbbbgbbb'},
+      {'formula' : 'log(sqrt(4), sqrt(sqrt(4)))', 'expectedOutput' : 'bbbbbbbbbgbbbbbbbbbbbbbgbbb'},
+      {'formula' : 'log(  2   ,   log  (  10,2)   )', 'expectedOutput' : 'bbbbggggggbbbbbbbbbbggggbgbbbbb'},
+      {'formula' : 'log(log(10,2),nth(10,2,3))', 'expectedOutput' : 'bbbbbbbbggbgbbbbbbggbgbgbb'},
+      {'formula' : 'log(log(10,2),nth(10,2,3,4,5))', 'expectedOutput' : 'bbbbbbbbggbgbbbbbbRRRRRRRRRRbb'},
+      {'formula' : 'round(1.4, max(1,2,3,4))', 'expectedOutput' : 'bbbbbbgggbbbbbbgbgbgbgbb'},
+      {'formula' : 'round(1.4, max(1))', 'expectedOutput' : 'bbbbbbgggbbbbbbgbb'},
+      {'formula' : 'max(1, round(1.4,1))', 'expectedOutput' : 'bbbbgbbbbbbbbgggbgbb'},
+      {'formula' : 'max(round(1.4,1,2))', 'expectedOutput' : 'bbbbbbbbbbRRRRRRRbb'},
+      {'formula' : 'max(1.321, round(1.4,1,2))', 'expectedOutput' : 'bbbbgggggbbbbbbbbRRRRRRRbb'},
+      {'formula' : 'round(1.321,sqrt(2))', 'expectedOutput' : 'bbbbbbgggggbbbbbbgbb'},
+      {'formula' : 'log(log(10, 2),log(round(10,2),2))', 'expectedOutput' : 'bbbbbbbbggbggbbbbbbbbbbbbggbgbbgbb'},
     ];
 
     _inputsToExpected.forEach((elem) {

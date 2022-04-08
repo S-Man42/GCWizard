@@ -147,8 +147,6 @@ class _GpxWriter {
     }
   }
 
-
-
   void _writeAttribute(XmlBuilder builder, String tagName, value) {
     if (value != null) {
       builder.attribute(tagName, value);
