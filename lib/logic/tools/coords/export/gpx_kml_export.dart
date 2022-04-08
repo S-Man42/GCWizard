@@ -7,11 +7,14 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-Future<File> exportCoordinates(
-    BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
-    {bool kmlFormat = false, String json}) async {
+Future<File> exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
+
+  var defaultName = points.first.markerText;
+  if (defaultName == null || defaultName.isEmpty) {
+    defaultName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+  }
 
   if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0) && (json == null))
     return null;
@@ -20,10 +23,10 @@ Future<File> exportCoordinates(
     data = json;
     extension = '.json';
   } else if (kmlFormat) {
-    data = _KmlWriter().asString(name, points, polylines);
+    data = _KmlWriter().asString(defaultName, points, polylines);
     extension = '.kml';
   } else {
-    data = _GpxWriter().asString(name, points, polylines);
+    data = _GpxWriter().asString(defaultName, points, polylines);
     extension = '.gpx';
   }
 
@@ -143,6 +146,8 @@ class _GpxWriter {
       builder.element(tagName, nest: value);
     }
   }
+
+
 
   void _writeAttribute(XmlBuilder builder, String tagName, value) {
     if (value != null) {
