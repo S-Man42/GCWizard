@@ -408,6 +408,7 @@
   "bundeswehr_auth_title": "Bundeswehr Authentification",
   "bundeswehr_auth_description": "W → LR PJ MP",
   "bundeswehr_auth_example": "",
+  "bundeswehr_auth_details": "Authentification Details",
   "bundeswehr_auth_mode_auth": "Auth.",
   "bundeswehr_auth_mode_auth_check": "Check Auth.",
   "bundeswehr_auth_table_mode_custom": "Custom",

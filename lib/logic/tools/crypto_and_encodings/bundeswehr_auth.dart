@@ -107,7 +107,7 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
 
   currentAuth = _normalizeAuthCode(currentAuth);
   if (currentAuth != '') {
-    String details = '';
+    String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
 
     List<String> tupel = authCode[0].split('');
@@ -132,14 +132,14 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
     if (tableNumeralCode.yAxis.contains(tupel[0]) && tableNumeralCode.yAxis.contains(tupel[1]))
       return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
 
+    int index = 0;
     String digit1 = '';
     if (tableNumeralCode.xAxis.contains(tupel[0])) {
-      digit1 = tableNumeralCode
-          .Content[tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13];
+      index = tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13;
     } else {
-      digit1 = tableNumeralCode
-          .Content[tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13];
+      index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
+    digit1 = tableNumeralCode.Content[index];
     details = details + authCode[1] + ' ⇒ ' + digit1 + '\n';
 
     tupel = authCode[2].split('');
@@ -150,20 +150,17 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
 
     String digit2 = '';
     if (tableNumeralCode.xAxis.contains(tupel[0])) {
-      digit2 = tableNumeralCode
-          .Content[tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1] * 13)];
+      index = tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13;
     } else {
-      digit2 = tableNumeralCode
-          .Content[tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13];
+      index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
+    digit2 = tableNumeralCode.Content[index];
     details = details + authCode[2] + ' ⇒ ' + digit2 + '\n';
 
     String digit = '';
-    print(char);
-    print(digit1);
-    print(digit2);
     digit = tableAuthentificationCode.Content[tableAuthentificationCode.xAxis.indexOf(currentLetterAuth) +
         tableAuthentificationCode.yAxis.indexOf(char) * 5];
+    details = details + '\nAuthent. Code\n';
     details = details + char + currentLetterAuth + ' ⇒ ' + digit + '\n';
 
     if (currentCallSign.split('').contains(char) && (digit == digit1 + digit2 || digit == digit2 + digit1)) {

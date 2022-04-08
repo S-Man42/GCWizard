@@ -269,6 +269,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
             ),
             GCWExpandableTextDivider(
               text: i18n(context, 'bundeswehr_auth_details'),
+              expanded: false,
               child: GCWText(
                   text: output.Details),
             )
@@ -279,7 +280,6 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           child: i18n(context, output.ResponseCode),
         );
       }
-      return Container();
     } else {
       output = buildAuthBundeswehr(_currentCallSign.toUpperCase(), _currentLetterAuth.toUpperCase(), _currentLetterCallSign.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
       if (output.ResponseCode == 'OK') {
