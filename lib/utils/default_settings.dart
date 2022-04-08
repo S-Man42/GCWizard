@@ -9,7 +9,10 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_base.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_bcd.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt1.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt2.dart';
 import 'package:prefs/prefs.dart';
+
 
 void initDefaultSettings() {
   if (Prefs.get('alphabetvalues_custom_alphabets') == null) {
@@ -122,6 +125,20 @@ void initDefaultSettings() {
         var options = <MultiDecoderToolOption>[];
         tool.options.forEach((option) {
           options.add(MultiDecoderToolOption(option.name, option.value.split('_title')[0]));
+        });
+        tool.options = options;
+        updateMultiDecoderTool(tool);
+      } else if ([MDT_INTERNALNAMES_CCITT1].contains(tool.internalToolName)) {
+        var options = <MultiDecoderToolOption>[];
+        tool.options.where((element) => element.name == 'ccitt1_numeralbase').forEach((option) {
+          options.add(MultiDecoderToolOption(MDT_CCITT1_OPTION_MODE, option.value));
+        });
+        tool.options = options;
+        updateMultiDecoderTool(tool);
+      } else if ([MDT_INTERNALNAMES_CCITT2].contains(tool.internalToolName)) {
+        var options = <MultiDecoderToolOption>[];
+        tool.options.where((element) => element.name == 'ccitt2_numeralbase').forEach((option) {
+          options.add(MultiDecoderToolOption(MDT_CCITT2_OPTION_MODE, option.value));
         });
         tool.options = options;
         updateMultiDecoderTool(tool);
