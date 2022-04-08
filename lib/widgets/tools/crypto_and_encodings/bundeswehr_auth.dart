@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class BundeswehrAuth extends StatefulWidget {
@@ -242,6 +243,9 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
             ]
           )
         ),
+        GCWTextDivider(
+          text: i18n(context, 'common_output'),
+        ),
         _calculateOutput(context),
       ],
     );
@@ -282,55 +286,66 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
         return Row(children: <Widget>[
           Expanded(
             child: Padding(
-                child: GCWDropDownButton(
-                  onChanged: (value) {
-                    setState(() {
-                    });
-                  },
-                  items: output.Tupel1.map((mode) {
-                    return GCWDropDownMenuItem(
-                      value: mode,
-                      child: mode,
-                    );
-                  }).toList(),
+                child: Column(
+                  children: <Widget>[
+                    Center(child: Text(_currentLetterCallSign.toUpperCase(),)),
+                    GCWDropDownButton(
+                      onChanged: (value) {
+                        setState(() {
+                        });
+                      },
+                      items: output.Tupel1.map((mode) {
+                        return GCWDropDownMenuItem(
+                          value: mode,
+                          child: mode,
+                        );
+                      }).toList(),
+                    )
+                  ],
                 ),
                 padding: EdgeInsets.only(right: 2)),
           ),
           Expanded(
             child: Padding(
-                child: GCWText(
-                  text: output.Number,
-                  textAlign: TextAlign.justify,
+                child: Column(
+                  children: <Widget>[
+                    Center(child: Text(output.Number[0],)),
+                    GCWDropDownButton(
+                      onChanged: (value) {
+                        setState(() {
+                        });
+                      },
+                      items: output.Tupel2.map((mode) {
+                        return GCWDropDownMenuItem(
+                          value: mode,
+                          child: mode,
+                        );
+                      }).toList(),
+                    )
+                  ],
                 ),
                 padding: EdgeInsets.only(left: 2, right: 2)),
           ),
           Expanded(
-            child: Padding(child: GCWDropDownButton(
-              onChanged: (value) {
-                setState(() {
-                });
-              },
-              items: output.Tupel2.map((mode) {
-                return GCWDropDownMenuItem(
-                  value: mode,
-                  child: mode,
-                );
-              }).toList(),
-            ), padding: EdgeInsets.only(left: 2, right: 2)),
-          ),
-          Expanded(
-            child: Padding(child: GCWDropDownButton(
-              onChanged: (value) {
-                setState(() {
-                });
-              },
-              items: output.Tupel3.map((mode) {
-                return GCWDropDownMenuItem(
-                  value: mode,
-                  child: mode,
-                );
-              }).toList(),
-            ), padding: EdgeInsets.only(left: 2, )),
+            child: Padding(
+                child: Column(
+                  children: <Widget>[
+                    Center(child: Text(output.Number[1],)),
+                    GCWDropDownButton(
+                      onChanged: (value) {
+                        setState(() {
+                        });
+                      },
+                      items: output.Tupel3.map((mode) {
+                        return GCWDropDownMenuItem(
+                          value: mode,
+                          child: mode,
+                        );
+                      }).toList(),
+                    )
+                  ],
+                ),
+                padding: EdgeInsets.only(left: 2, )),
           ),
         ]);
       } else
@@ -347,14 +362,14 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     if (custom) {
       if (authTable.trim().split(' ').length != 65) {
         _tableAuthentificationCode =
-            AuthentificationTable(yAxis: AUTH_TABLE_Y_AXIS, xAxis: AUTH_TABLE_X_AXIS, Content: []);
+            AuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _authTableString = i18n(context, 'bundeswehr_auth_response_invalid_custom_table_auth');
         return;
       }
       authTable.trim().split(' ').forEach((element) {
         if (element.length > 2) {
               _tableAuthentificationCode =
-                  AuthentificationTable(yAxis: AUTH_TABLE_Y_AXIS, xAxis: AUTH_TABLE_X_AXIS, Content: []);
+                  AuthentificationTable(yAxis: [], xAxis: [], Content: []);
               _authTableString = i18n(context, 'bundeswehr_auth_response_invalid_custom_table_auth');
               return;
         }
@@ -389,7 +404,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
 
     i = 0;
     _authTableString = '     V   W   X   Y   Z \n-----------------------\n';
-    ['A', 'D', 'E', 'G', 'H', 'I', 'L', 'N', 'O', 'R', 'S', 'T', 'U',].forEach((element) {
+    AUTH_TABLE_Y_AXIS.forEach((element) {
       _authTableString = _authTableString + ' ' + element + '   ' + authCode[i].toString().padLeft(2, '0')
           + '  ' + authCode[i + 1].toString().padLeft(2, '0')
           + '  ' + authCode[i + 2].toString().padLeft(2, '0')
@@ -407,19 +422,19 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     List<String> _numeralCode = [];
 
     if (custom) {
-      if (_invalidAxisTitle(xAxis)) {
+      if (_invalidSingleAxisTitle(xAxis)) {
         _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_x_axis_numeral_code');
         return;
       }
 
-      if (_invalidAxisTitle(yAxis)) {
+      if (_invalidSingleAxisTitle(yAxis)) {
         _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_y_axis_numeral_code');
         return;
       }
 
-      if (_invalidAlphabet(xAxis + yAxis)) {
+      if (_invalidAxisDescription(xAxis + yAxis)) {
 
         _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_axis_numeral_code');
@@ -470,7 +485,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     _tableNumeralCode = AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode);
   }
 
-  bool _invalidAxisTitle(String text) {
+  bool _invalidSingleAxisTitle(String text) {
     if (text.length != 13)
       return true;
     List<String> dublicates = [];
@@ -481,7 +496,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     return false;
   }
 
-  bool _invalidAlphabet(String text) {
+  bool _invalidAxisDescription(String text) {
     List<String> dublicates = [];
     text.split('').forEach((element) {
       if (dublicates.contains(element))
