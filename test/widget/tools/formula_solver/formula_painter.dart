@@ -243,7 +243,7 @@ void main() {
       {'formula' : 'max(1, round(1.4,1))', 'expectedOutput' : 'bbbbgbbbbbbbbgggbgbb'},
       {'formula' : 'max(round(1.4,1,2))', 'expectedOutput' : 'bbbbbbbbbbRRRRRRRbb'},
       {'formula' : 'max(1.321, round(1.4,1,2))', 'expectedOutput' : 'bbbbgggggbbbbbbbbRRRRRRRbb'},
-      {'formula' : 'round(1.321,sqrt(2))', 'expectedOutput' : 'bbbbbbgggggbbbbbbgbb'},
+      {'formula' : 'round( - 1.321,sqrt(2))', 'expectedOutput' : 'bbbbbbbbbgggggbbbbbbgbb'},
       {'formula' : 'log(log(10, 2),log(round(10,2),2))', 'expectedOutput' : 'bbbbbbbbggbggbbbbbbbbbbbbggbgbbgbb'},
     ];
 
