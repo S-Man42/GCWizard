@@ -208,6 +208,13 @@ void main() {
       {'formula' : 'sindeg(90)\n\nsindeg(90)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbggbbbbbbbbbbggb'},
 
       {'formula' : '[ 48*I - 2]', 'values': {'I': '1'}, 'formulaId': 2, 'expectedOutput' : 'bbggbrrbbgb'},
+
+      {'formula' : 'nth(567,nrt(3,8))', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbgggbbbbbgbgbb'},
+      {'formula' : 'nth((nth(67,2) +6)!,3)', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbbbggbgbbbgbbbgb'},
+      {'formula' : 'sqrt(nrt(2,16))', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbbbbbbbbgbggbb'},
+      {'formula' : '5!', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'gb'},
+      {'formula' : '!5', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bg'},
+      {'formula' : '!!5', 'values': <String, String>{}, 'formulaId': 2, 'expectedOutput' : 'bbg'},
     ];
 
     _inputsToExpected.forEach((elem) {

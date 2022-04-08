@@ -19,11 +19,13 @@ class FormulaPainter {
     'CSI', // comma 0 or more times
     'BWW', // 0 comma
     'AV', // 0 comma
-    'LEN' // 0 comma
+    'LEN', // 0 comma
+    'NRT' // 1 comma
   };
   var _constants = <String>[];
   int _formulaId;
   bool _operatorBevor;
+  String formula;
 
   String _operatorsRegEx;
   String _functionsRegEx;
@@ -61,6 +63,7 @@ class FormulaPainter {
 
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
     formula = formula.toUpperCase();
+    this.formula = formula;
 
     RegExp regExp = new RegExp(r'(\[)(.+?|\s*)(\])');
     var matches = regExp.allMatches(formula);
@@ -231,6 +234,15 @@ class FormulaPainter {
           isOperator = true;
         }
       }
+      // faculty
+      if (offset == 0) {
+        _parserResult = _isFaculty(formula);
+        if (_parserResult != null) {
+          result = _coloredOperator(result, _parserResult, false);
+          offset = _calcOffset(_parserResult);
+          isOperator = true;
+        }
+      }
       // new line
       if (offset == 0) {
         _parserResult = _isNewLine(formula);
@@ -317,9 +329,10 @@ class FormulaPainter {
     if (match == null) return null;
     var functionName = _combineGroups([match.group(1), match.group(2)]);
     var offset = functionName.length;
-    var result = _seperateLiteral(formula.substring(offset), '(', ')');
+    var result = _separateLiteral(formula.substring(offset), '(', ')');
 
     if (result == null) return null;
+
     return [
       _combineGroups([functionName, result[0]]),
       result[1],
@@ -341,33 +354,39 @@ class FormulaPainter {
     var wordFunction = false;
 
     var result = <String>[];
-    var split = formula.split(',');
+    var arguments = _separateArguments(formula);
     var valid = true;
     switch (functionName) {
       case 'LOG':
-        valid = split.length == 2;
+        valid = arguments.length == 1 * 2 + 1;
         break;
       case 'NTH':
-        valid = split.length >= 1;
+        valid = arguments.length >= 0;
         break;
       case 'ROUND':
-        valid = split.length <= 2;
+        valid = arguments.length <= 1 * 2 + 1;
+        break;
+      case 'NRT':
+        valid = arguments.length == 1 * 2 + 1;
         break;
       case 'BWW':
       case 'AV':
       case 'LEN':
-        valid = split.length == 1;
+        valid = arguments.length == 0 * 2 + 1;
         wordFunction = true;
         break;
     }
     if (!valid) return null;
 
-    for (var i = 0; i < split.length; i++) {
-      if (result.isNotEmpty) result.add('b');
-      _operatorBevor = true;
-      var subresult = _paintSubFormula(split[i], 0);
-      if (wordFunction) subresult = subresult.replaceAll('R', 'g');
-      result.add(subresult);
+    for (var i = 0; i < arguments.length; i++) {
+      if (arguments[i] == ',')
+        result.add('b');
+      else {
+        _operatorBevor = true;
+        var subresult = _paintSubFormula(arguments[i], 0);
+        if (wordFunction) subresult = subresult.replaceAll('R', 'g');
+        result.add(subresult);
+      }
     }
 
     return result;
@@ -383,12 +402,27 @@ class FormulaPainter {
     return result;
   }
 
+  List<String> _isFaculty(String formula)
+  {
+    RegExp regex = RegExp(r'^(\s*)(!)(\s*)');
+
+    var match = regex.firstMatch(formula);
+    if (match == null) return null;
+
+    regex = RegExp(r'(\d)');
+    var matchNumber = regex.firstMatch(this.formula);
+    regex = RegExp(r'(' + _variablesRegEx + ')');
+    var matchVariable = regex.firstMatch(this.formula);
+
+    return (matchNumber == null && matchVariable == null) ?  null : [match.group(0)];
+  }
+
   List<String> _isLiteral(String formula) {
     RegExp regex = RegExp(r'^([\(\{])');
     var match = regex.firstMatch(formula);
 
     if (match == null) return null;
-    var result = _seperateLiteral(formula.substring(match.start), match.group(1), _bracket[match.group(1)]);
+    var result = _separateLiteral(formula.substring(match.start), match.group(1), _bracket[match.group(1)]);
 
     if (result == null) return null;
     return [result[1], result[2], result[3]];
@@ -526,13 +560,13 @@ class FormulaPainter {
     return s * count;
   }
 
-  List<String> _seperateLiteral(String formula, String openBracket, String closeBracket) {
+  List<String> _separateLiteral(String formula, String openBracket, String closeBracket) {
     var bracketCounter = 0;
     var bracketPosition = -1;
 
     for (var i = 0; i < formula.length; i++) {
       if (formula[i] == openBracket) {
-        bracketCounter += 1;
+        bracketCounter++;
         if (bracketPosition < 0) bracketPosition = i;
       } else if ((formula[i] == closeBracket) && (bracketCounter > 0)) {
         bracketCounter--;
@@ -547,6 +581,37 @@ class FormulaPainter {
     }
 
     return null;
+  }
+
+  List<String> _separateArguments(String formula) {
+    const String separator = ',';
+    var arguments = <String>[];
+    var startIndex = 0;
+
+    for (int i = 0; i < formula.length; i++) {
+      if (formula[i] == separator) {
+        //if (arguments.isNotEmpty) arguments.add(separator);
+        arguments.add(formula.substring(startIndex, i));
+        startIndex = i + 1;
+        arguments.add(separator);
+        // empty argument ?
+        if (startIndex == formula.length) {
+          arguments.add("");
+        }
+
+      } else if (_bracket.containsKey(formula[i])) {
+        var literal = _separateLiteral(formula.substring(i), formula[i], _bracket[formula[i]]);
+
+        if (literal != null) {
+          var literalString = _combineGroups(literal);
+          i += literalString.length - 1;
+        }
+      }
+    }
+    if ((formula.length - startIndex > 0) || (arguments.length == 0))
+      arguments.add(formula.substring(startIndex));
+
+    return arguments;
   }
 
   String _combineGroups(List<String> list) {
