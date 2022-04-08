@@ -11,6 +11,9 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
+      {'formula' : 'cs(88,99)', 'expectedOutput' : 'bbbggbggb'}, // any number of commas
+
+
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},
@@ -243,7 +246,7 @@ void main() {
       {'formula' : 'log(sqrt(4), sqrt(sqrt(4)))', 'expectedOutput' : 'bbbbbbbbbgbbbbbbbbbbbbbgbbb'},
       {'formula' : 'log(  2   ,   log  (  10,2)   )', 'expectedOutput' : 'bbbbggggggbbbbbbbbbbggggbgbbbbb'},
       {'formula' : 'log(log(10,2),nth(10,2,3))', 'expectedOutput' : 'bbbbbbbbggbgbbbbbbggbgbgbb'},
-      {'formula' : 'log(log(10,2),nth(10,2,3,4,5))', 'expectedOutput' : 'bbbbbbbbggbgbbbbbbRRRRRRRRRRbb'},
+      {'formula' : 'log(log(10,2),nth(10,2,3,4,5))', 'expectedOutput' : 'bbbbbbbbggbgbbbbbbggbgbgBGBGbb'},
       {'formula' : 'round(1.4, max(1,2,3,4))', 'expectedOutput' : 'bbbbbbgggbbbbbbgbgbgbgbb'},
       {'formula' : 'round(1.4, max(1))', 'expectedOutput' : 'bbbbbbgggbbbbbbgbb'},
       {'formula' : 'max(1, round(1.4,1))', 'expectedOutput' : 'bbbbgbbbbbbbbgggbgbb'},

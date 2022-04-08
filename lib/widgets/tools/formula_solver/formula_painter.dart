@@ -143,16 +143,10 @@ class FormulaPainter {
           offset = _calcOffset(_parserResult, count: 2);
           subResult = formula.substring(offset, _calcOffset(_parserResult, count: 3));
 
-          if (_specialFunctions.contains(_parserResult[0].trim())) {
-            var _parserSubResult = _isSpecialFunctionsLiteral(subResult, _parserResult);
-            subResult = _coloredSpecialFunctionsLiteral(subResult, _parserSubResult);
-            result = _replaceRange(result, offset, null, subResult);
-          } else {
-            // literal
-            _operatorBevor = true;
-            subResult = _paintSubFormula(subResult, 0);
-            result = _replaceRange(result, offset, null, subResult);
-          }
+          var _parserSubResult = _isSpecialFunctionsLiteral(subResult, _parserResult);
+          subResult = _coloredSpecialFunctionsLiteral(subResult, _parserSubResult);
+          result = _replaceRange(result, offset, null, subResult);
+
           offset = _calcOffset(_parserResult);
         }
       }
@@ -355,32 +349,49 @@ class FormulaPainter {
 
     var result = <String>[];
     var arguments = _separateArguments(formula);
-    var valid = true;
+    var maxCommaCount;
+    var minCommaCount = 0;
     switch (functionName) {
       case 'LOG':
-        valid = arguments.length == 1 * 2 + 1; // ${number commas} * 2 + 1
+        minCommaCount =  1;
+        maxCommaCount = minCommaCount;
         break;
       case 'NTH':
-        valid = arguments.length <= 2 * 2 + 1;
+        minCommaCount = 0;
+        maxCommaCount = 2;
         break;
       case 'ROUND':
-        valid = arguments.length <= 1 * 2 + 1;
+        minCommaCount = 0;
+        maxCommaCount = 1;
         break;
       case 'NRT':
-        valid = arguments.length == 1 * 2 + 1;
+        maxCommaCount == minCommaCount;
+        break;
+      case 'MIN':
+      case 'MAX':
+      case 'CS':
+      case 'CSI':
         break;
       case 'BWW':
       case 'AV':
       case 'LEN':
-        valid = arguments.length == 0 * 2 + 1;
+        maxCommaCount == minCommaCount;
         wordFunction = true;
         break;
+      default:
+        maxCommaCount = minCommaCount;
     }
-    if (!valid) return null;
+    minCommaCount = minCommaCount * 2 + 1; // ${number commas} * 2 + 1
+    maxCommaCount = maxCommaCount == null ? null : maxCommaCount * 2 + 1;
+    if (arguments.length < minCommaCount) return null;
 
     for (var i = 0; i < arguments.length; i++) {
-      if (arguments[i] == ',')
-        result.add('b');
+      if (maxCommaCount != null && i >= maxCommaCount) {
+        var subresult = _paintSubFormula(arguments[i], 0);
+        result.add(subresult.toUpperCase());
+        //result.add(_buildResultString('R', arguments[i].length));
+      } else if (arguments[i] == ',')
+         result.add('b');
       else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
