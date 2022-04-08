@@ -208,8 +208,8 @@ class GCWMapViewState extends State<GCWMapView> {
                   interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
                   plugins: [TappablePolylineMapPlugin()],
                   onTap: (_, __) => _popupLayerController.hidePopup(),
-                  onLongPress: (_, __)  => widget.isEditable
-                      ? (LatLng coordinate) {
+                  onLongPress: widget.isEditable
+                      ? (_, LatLng coordinate) {
                           setState(() {
                             var newPoint = _persistanceAdapter.addMapPoint(coordinate);
 

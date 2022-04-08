@@ -307,13 +307,13 @@ class _KmlWriter {
 
         if (circles != null) {
           for (i = 0; i < circles.length; i++) {
-            _writeLines(builder, 'circle', circles[i].shape, '#' + styleMap['circle' + i.toString()]);
+            _writeLines(builder, circles[i].shape, '#' + styleMap['circle' + i.toString()]);
           }
         }
 
         if (polylines != null && polylines.length > 0) {
           for (i = 0; i < polylines.length; i++) {
-            _writeLines(builder, 'line', polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
+            _writeLines(builder, polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
                 '#' + styleMap['polyline' + i.toString()]);
           }
         }
@@ -348,10 +348,9 @@ class _KmlWriter {
     }
   }
 
-  void _writeLines(XmlBuilder builder, String name, List<LatLng> shapes, String styleId) {
+  void _writeLines(XmlBuilder builder, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
-        if ((name != null) && name.isNotEmpty) _writeElement(builder, 'name', _checkName(name));
         _writeElement(builder, 'visibility', 1);
         _writeElement(builder, 'styleUrl', styleId);
 
