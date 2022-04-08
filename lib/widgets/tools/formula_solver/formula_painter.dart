@@ -358,10 +358,10 @@ class FormulaPainter {
     var valid = true;
     switch (functionName) {
       case 'LOG':
-        valid = arguments.length == 1 * 2 + 1;
+        valid = arguments.length == 1 * 2 + 1; // ${number commas} * 2 + 1
         break;
       case 'NTH':
-        valid = arguments.length >= 0;
+        valid = arguments.length <= 2 * 2 + 1;
         break;
       case 'ROUND':
         valid = arguments.length <= 1 * 2 + 1;

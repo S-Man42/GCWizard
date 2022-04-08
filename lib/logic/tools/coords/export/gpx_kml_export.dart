@@ -7,11 +7,14 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-Future<File> exportCoordinates(
-    BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
-    {bool kmlFormat = false, String json}) async {
+Future<File> exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
+
+  var defaultName = points.first.markerText;
+  if (defaultName == null || defaultName.isEmpty) {
+    defaultName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+  }
 
   if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0) && (json == null))
     return null;
@@ -20,10 +23,10 @@ Future<File> exportCoordinates(
     data = json;
     extension = '.json';
   } else if (kmlFormat) {
-    data = _KmlWriter().asString(name, points, polylines);
+    data = _KmlWriter().asString(defaultName, points, polylines);
     extension = '.kml';
   } else {
-    data = _GpxWriter().asString(name, points, polylines);
+    data = _GpxWriter().asString(defaultName, points, polylines);
     extension = '.gpx';
   }
 
@@ -307,13 +310,13 @@ class _KmlWriter {
 
         if (circles != null) {
           for (i = 0; i < circles.length; i++) {
-            _writeLines(builder, 'circle', circles[i].shape, '#' + styleMap['circle' + i.toString()]);
+            _writeLines(builder, circles[i].shape, '#' + styleMap['circle' + i.toString()]);
           }
         }
 
         if (polylines != null && polylines.length > 0) {
           for (i = 0; i < polylines.length; i++) {
-            _writeLines(builder, 'line', polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
+            _writeLines(builder, polylines[i].points.map((mapPoint) => mapPoint.point).toList(),
                 '#' + styleMap['polyline' + i.toString()]);
           }
         }
@@ -348,10 +351,9 @@ class _KmlWriter {
     }
   }
 
-  void _writeLines(XmlBuilder builder, String name, List<LatLng> shapes, String styleId) {
+  void _writeLines(XmlBuilder builder, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
-        if ((name != null) && name.isNotEmpty) _writeElement(builder, 'name', _checkName(name));
         _writeElement(builder, 'visibility', 1);
         _writeElement(builder, 'styleUrl', styleId);
 
