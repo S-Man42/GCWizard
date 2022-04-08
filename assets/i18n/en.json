@@ -417,6 +417,7 @@
   "bundeswehr_auth_authentification_code_x_axis": "Authentification Code Y-Axis",
   "bundeswehr_auth_authentification_code_y_axis": "Authentification Code X-Axis",
   "bundeswehr_auth_call_sign": "Call sign",
+  "bundeswehr_auth_call_details": "Details",
   "bundeswehr_auth_letter_auth": "Letter to authenticate",
   "bundeswehr_auth_letter_callsign": "Letter, Callsign",
   "bundeswehr_auth_response_ok": "Authentification is Correct",

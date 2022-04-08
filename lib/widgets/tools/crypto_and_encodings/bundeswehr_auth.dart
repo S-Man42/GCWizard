@@ -1,10 +1,13 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_auth.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
@@ -239,18 +242,13 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
             ]
           )
         ),
-        GCWDefaultOutput(
-          child: GCWOutputText(
-            text: _calculateOutput(context),
-            isMonotype: true,
-          ),
-        )
+        _calculateOutput(context),
       ],
     );
   }
 
-  _calculateOutput(BuildContext context) {
-    var output = '';
+  Widget _calculateOutput(BuildContext context) {
+    AuthentificationOutput output;
 
     if (_currentTableMode == GCWSwitchPosition.left) {
       _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
@@ -258,15 +256,88 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     }
 
     if (_currentMode == GCWSwitchPosition.right) {
-      output = i18n(context, checkAuthBundeswehr(_currentCallSign.toUpperCase(), _currentAuthInput.toUpperCase(), _currentLetterAuth.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode));
+      output = checkAuthBundeswehr(_currentCallSign.toUpperCase(), _currentAuthInput.toUpperCase(), _currentLetterAuth.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
+      if (output.ResponseCode == 'OK') {
+        return Column(
+          children: <Widget>[
+            GCWText(
+              text: i18n(context, 'bundeswehr_auth_response_ok')
+            ),
+            GCWExpandableTextDivider(
+              text: i18n(context, 'bundeswehr_auth_details'),
+              child: GCWText(
+                  text: output.Details),
+            )
+          ],
+        );
+      } else {
+        return GCWDefaultOutput(
+          child: i18n(context, output.ResponseCode),
+        );
+      }
+      return Container();
     } else {
       output = buildAuthBundeswehr(_currentCallSign.toUpperCase(), _currentLetterAuth.toUpperCase(), _currentLetterCallSign.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
+      if (output.ResponseCode == 'OK') {
+        return Row(children: <Widget>[
+          Expanded(
+            child: Padding(
+                child: GCWDropDownButton(
+                  onChanged: (value) {
+                    setState(() {
+                    });
+                  },
+                  items: output.Tupel1.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode,
+                      child: mode,
+                    );
+                  }).toList(),
+                ),
+                padding: EdgeInsets.only(right: 2)),
+          ),
+          Expanded(
+            child: Padding(
+                child: GCWText(
+                  text: output.Number,
+                  textAlign: TextAlign.justify,
+                ),
+                padding: EdgeInsets.only(left: 2, right: 2)),
+          ),
+          Expanded(
+            child: Padding(child: GCWDropDownButton(
+              onChanged: (value) {
+                setState(() {
+                });
+              },
+              items: output.Tupel2.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode,
+                  child: mode,
+                );
+              }).toList(),
+            ), padding: EdgeInsets.only(left: 2, right: 2)),
+          ),
+          Expanded(
+            child: Padding(child: GCWDropDownButton(
+              onChanged: (value) {
+                setState(() {
+                });
+              },
+              items: output.Tupel3.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode,
+                  child: mode,
+                );
+              }).toList(),
+            ), padding: EdgeInsets.only(left: 2, )),
+          ),
+        ]);
+      } else
+        return GCWDefaultOutput(
+          child: i18n(context, output.ResponseCode),
+        );
     }
-
-    if (output.startsWith('bundeswehr'))
-      output = i18n(context, output);
-
-    return output;
   }
 
   void _buildAuthTable(BuildContext context, {bool custom, String authTable}){
