@@ -116,12 +116,12 @@ class BaseOperations {
 
     void OutNumeric() {
         var result = _stack.Pop();
-        if (result != null) _io.Output(result);
+        if (result != null) _io.Output(result.toString());
     }
 
     OutChar() {
         var result = _stack.Pop();
-        if (result != null) _io.Output(result);
+        if (result != null) _io.Output(String.fromCharCode(result));
     }
 
     Map<PietOps, void Function()> GetMap()

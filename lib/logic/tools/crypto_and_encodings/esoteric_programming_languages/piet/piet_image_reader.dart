@@ -3,8 +3,7 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as Image;
 
 class PietImageReader {
-    List<List<int>> ReadImage(Uint8List image)
-    {
+    List<List<int>> ReadImage(Uint8List image) {
         var _image = Image.decodeImage(image);
         return _ReadImage(_image);
     }
@@ -14,16 +13,13 @@ class PietImageReader {
         var pixels = <List<int>>[]; //new int[bmp.Height / step, bmp.Width / step];
 
         int outY = 0;
-        for (var y = 0; y < image.height; y += step, outY++)
-        {
+        for (var y = 0; y < image.height; y += step, outY++) {
             pixels.add(<int>[]);
-            var outX = 0;
-            for (var x = 0; x < image.width; x += step, outX++) {
+            for (var x = 0; x < image.width; x += step) {
                 var pix = image.getPixel(x, y);
                 pixels[outY].add(_ToRgb(pix));
             }
         }
-
         return pixels;
     }
 

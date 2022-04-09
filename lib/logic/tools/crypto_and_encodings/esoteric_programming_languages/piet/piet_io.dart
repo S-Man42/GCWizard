@@ -1,10 +1,10 @@
 ﻿class PietIO{
-    Output(dynamic value) {
-        print(value.ToString());
+    Output(String value) {
+        print(value);
     }
 
     int ReadInt() {
-        return int.tryParse("3");
+        return int.tryParse("5");
     }
 
     String ReadChar() {

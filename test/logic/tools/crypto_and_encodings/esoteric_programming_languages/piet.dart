@@ -9,7 +9,17 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       // {'code': null, 'expectedOutput': ''},
       // {'code': '', 'expectedOutput': ''},
-      {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_hello_artistic2.gif', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_hello_artistic2.gif', 'expectedOutput': ''},
+      //{'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_alpha_filled.png', 'expectedOutput': ''},
+       {'path': r'H:\Meine Ablage\PietSharp-main\Images\piet_factorial_big.png', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_fizzbuzz.png', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_hello.png', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_hello_artistic.gif', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_helloworld-mondrian-big.png', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_nfib.gif', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_nprime.gif', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_power2_big.png', 'expectedOutput': ''},
+      // {'path': r'H:\Meine Ablage\PietSharp-main\Images\Piet_tetris.png', 'expectedOutput': ''},
     ];
 
     _inputsToExpected.forEach((elem) {

@@ -5,7 +5,7 @@ class PietStack {
 
     int get length => _stack.length;
 
-    Push(int value) {
+    void Push(int value) {
         _stack.add(value);
         //_stack.Push(value);
     }
@@ -14,30 +14,30 @@ class PietStack {
         return TryPop().item2;
     }
 
-    Add() {
-        _ApplyTernary((s1, s2) => s1 + s2);
+    int Add() {
+        _ApplyTernary((int s1, int s2) => s1 + s2);
     }
 
-    Subtract() {
-        _ApplyTernary((s1, s2) => s2 - s1);
+    int Subtract() {
+        _ApplyTernary((int s1, int s2) => s2 - s1);
     }
 
-    Multiply() {
-        _ApplyTernary((s1, s2) => s1 * s2);
+    int Multiply() {
+        _ApplyTernary((int s1, int s2) => s1 * s2);
     }
 
-    Divide() {
+    int Divide() {
         _ApplyTernaryIf(
-            (s1, s2) => s2 / s1,
-            (_, s2) => s2 != 0
+            (int s1, int s2) => (s2 / s1).toInt(),
+            (_, int s2) => s2 != 0
         );
     }
 
-    Mod() {
+    int Mod() {
         // per the spec take the second value mod the first
         _ApplyTernaryIf(
-            (s1, s2) => _ModExt(s2, s1),
-            (s1, _) => s1 != 0
+            (int s1, int s2) => _ModExt(s2, s1),
+            (int s1, _) => s1 != 0
         );
     }
 
@@ -53,16 +53,16 @@ class PietStack {
         return (((a %= n) < 0) && n > 0) || (a > 0 && n < 0) ? a + n : a;
     }
 
-    Not() {
+    int Not() {
         var ret = TryPop();
         var result = ret.item2;
-        if (!ret.item1) return;
+        if (!ret.item1) return null;
 
         Push(result == 0 ? 1 : 0);
     }
 
-    Greater() {
-        _ApplyTernary((s1, s2) => s2 > s1 ? 1 : 0);
+    int Greater() {
+        return _ApplyTernary((int s1, int s2) => s2 > s1 ? 1 : 0);
     }
 
     Duplicate() {
@@ -73,10 +73,10 @@ class PietStack {
         Push(result);
     }
 
-    _ApplyTernary(Function operatorFunc) { //<int, int, int>
+    int _ApplyTernary(Function operatorFunc) { //<int, int, int>
         var ret = TryPop2();
         var stackResults = ret.item2;
-        if (!ret.item1) return;
+        if (!ret.item1) return null;
 
         var top = stackResults.item1;
         var second = stackResults.item2;
@@ -85,19 +85,18 @@ class PietStack {
         Push(result);
     }
 
-    _ApplyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
+    bool _ApplyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
         var ret = TryPop2();
         var stackResults = ret.item2;
-        if (!ret.item1) return;
+        if (!ret.item1) return false;
 
         var top = stackResults.item1;
         var second = stackResults.item2;
 
-        if (!conditionalFunc(top, second)) return;
+        if (!conditionalFunc(top, second)) return false;
 
         var result = operatorFunc(top, second);
         Push(result);
-
     }
 
     void Roll() {

@@ -74,6 +74,7 @@ class PietNavigator {
             else if (Direction == DirectionEnum.North && CodelChooser == CodelChoiceEnum.Left) exitPoint = block.NorthLeft;
             else if (Direction == DirectionEnum.North && CodelChooser == CodelChoiceEnum.Right) exitPoint = block.NorthRight;
             else return null; //throw new NotImplementedException();
+            //print(Direction.toString() + " " + CodelChooser.toString() + " " + exitPoint.toString());
 
             if (moveStraight) {
                 var prevStep = exitPoint;

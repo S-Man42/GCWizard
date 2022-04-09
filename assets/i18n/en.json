@@ -3039,6 +3039,8 @@
   "piano_german": "German",
   "piano_midi": "MIDI",
   "piano_latin": "Latin",
+  "piet_title": "Piet",
+  "piet_description": "Esoteric programming language (Image)",
   "piglatin_title": "Pig Latin",
   "piglatin_description": "Game Language, Secret Language",
   "piglatin_example": "Pig Latin → Ig-pay Atin-lay",

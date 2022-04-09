@@ -8,6 +8,24 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_navigator.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
 
+class PietResult {
+  final String output;
+  final String code;
+  final bool input_expected;
+  final bool error;
+  final String errorText;
+  final bool finished;
+  final PietSession state;
+
+  PietResult(
+      {this.output = '',
+        this.code = '',
+        this.input_expected = false,
+        this.error = false,
+        this.errorText = '',
+        this.finished = true,
+        this.state = null});
+}
 
 class PietSession {
   PietBlock _currentBlock;
