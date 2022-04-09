@@ -51,6 +51,8 @@ class PietState extends State<Piet> {
   }
 
   _resetInputs() {
+    _currentInput = "";
+    _currentOutput = null;
     setState(() {
     });
   }
@@ -74,6 +76,7 @@ class PietState extends State<Piet> {
             setState(() {
               _originalData = value;
               _resetInputs();
+              _calcOutput(context);
             });
           },
         ), // Fixes a display issue
@@ -81,6 +84,7 @@ class PietState extends State<Piet> {
         GCWImageView(
           imageData: _originalData?.bytes == null ? null : GCWImageViewData(GCWFile(bytes: _originalData.bytes)),
           ),
+        _buildOutput(context)
       ],
     );
   }
