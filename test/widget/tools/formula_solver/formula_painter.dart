@@ -11,9 +11,6 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'formula' : 'cs(88,99)', 'expectedOutput' : 'bbbggbggb'}, // any number of commas
-
-
       {'formula' : null, 'values': null, 'expectedOutput' : null},
       {'formula' : null, 'values': <String, String>{}, 'expectedOutput' : null},
       {'formula' : null, 'expectedOutput' : null},

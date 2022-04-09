@@ -389,9 +389,8 @@ class FormulaPainter {
       if (maxCommaCount != null && i >= maxCommaCount) {
         var subresult = _paintSubFormula(arguments[i], 0);
         result.add(subresult.toUpperCase());
-        //result.add(_buildResultString('R', arguments[i].length));
       } else if (arguments[i] == ',')
-         result.add('b');
+         result.add(wordFunction ? 'g' : 'b');
       else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
