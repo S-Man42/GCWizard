@@ -1,7 +1,13 @@
 import 'dart:math';
- // 08 41 75 51 36 30 99 28 65 10 66 46 55 20 79 16 82 02 93 45 97 19 88 81 63 01 38 72 29 87 98 54 50 04 49 44 27 31 77 17 18 64 15 56 32 86 73 26 67 95 35 14 96 39 06 80 25 68 85 43 12 48 07 24 74
- // cjosmhlquweby
- // dainrtxfkpvzg
+// https://www.reservistenverband.de/wp-content/uploads/2019/08/taschenkarte_fernmeldedienst_aller_truppen_nr.9_3.pdf
+// https://www.rk-ubstadt.de/?p=2079
+// https://www.geocaching.com/geocache/GC7DF7R_garnisonsgeschichte-6?guid=27ba9b97-31ab-473e-b35f-6d657e5d60b4
+// https://fschjgbtl251.de/technik/fernmeldetechnik/
+// http://scherfel.de/shared-files/388/FmDst-SchleiernUndSchluesseln.pdf
+//
+// 08 41 75 51 36 30 99 28 65 10 66 46 55 20 79 16 82 02 93 45 97 19 88 81 63 01 38 72 29 87 98 54 50 04 49 44 27 31 77 17 18 64 15 56 32 86 73 26 67 95 35 14 96 39 06 80 25 68 85 43 12 48 07 24 74
+// cjosmhlquweby
+// dainrtxfkpvzg
 
 class AuthentificationTable {
   final List<String> xAxis;

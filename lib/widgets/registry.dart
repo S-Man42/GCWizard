@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/bundeswehr_talkingboard.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
@@ -107,6 +108,7 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_auth.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
@@ -513,10 +515,9 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'bookcipher',
     ]),
-    GCWTool(tool: BundeswehrAuth(), i18nPrefix: 'bundeswehr_auth', categories: [
+    GCWTool(tool: BundeswehrTalkingBoardSelection(), i18nPrefix: 'bundeswehr', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
-      'bundeswehr_auth',
     ]),
     GCWTool(tool: BurrowsWheeler(), i18nPrefix: 'burrowswheeler', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1310,6 +1311,19 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Beaufort(), i18nPrefix: 'beaufort', searchKeys: [
       'beaufort',
     ]),
+
+    // BundeswehrTalkingBoard Selection *******************************************************************************************
+    GCWTool(tool: BundeswehrAuth(), i18nPrefix: 'bundeswehr_auth', categories: [
+    ], searchKeys: [
+      'bundeswehr_auth',
+      'bundeswehr',
+    ]),
+    GCWTool(tool: BundeswehrCode(), i18nPrefix: 'bundeswehr_code', categories: [
+    ], searchKeys: [
+      'bundeswehr',
+      'bundeswehr_code',
+    ]),
+
 
     //Braille Selection ****************************************************************
     GCWTool(tool: Braille(), i18nPrefix: 'braille', searchKeys: [

@@ -195,29 +195,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
                     text: _numeralCodeString,
                     isMonotype: true,
                  )
-               : GCWTextField(
-                  controller: _authTableCustom,
-                  hintText: i18n(context, 'bundeswehr_auth_numeral_code'),
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
-                  onChanged: (text) {
-                    setState(() {
-                      _currentAuthTableCustom = text;
-                    });
-                  },
-                ),
-            ],
-          )
-        ),
-        GCWExpandableTextDivider(
-          text: i18n(context, 'bundeswehr_auth_authentification_code'),
-          child: Column(
-            children: <Widget>[
-              _currentTableMode == GCWSwitchPosition.right
-              ? GCWOutputText(
-                text: _authTableString,
-                isMonotype: true,
-                )
-              : Column(
+               : Column(
                 children: <Widget>[
                   GCWTextField(
                     controller: _numeralCodeCustomXaxis,
@@ -238,8 +216,31 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
                         _currentNumeralCodeYaxisCustom = text;
                       });
                     },
-                  ),                ],
-              )
+                  ),
+                ],
+              ),
+            ],
+          )
+        ),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'bundeswehr_auth_authentification_code'),
+          child: Column(
+            children: <Widget>[
+              _currentTableMode == GCWSwitchPosition.right
+              ? GCWOutputText(
+                text: _authTableString,
+                isMonotype: true,
+                )
+              : GCWTextField(
+                controller: _authTableCustom,
+                hintText: i18n(context, 'bundeswehr_auth_authentification_code'),
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
+                onChanged: (text) {
+                  setState(() {
+                    _currentAuthTableCustom = text;
+                  });
+                },
+              ),
             ]
           )
         ),
