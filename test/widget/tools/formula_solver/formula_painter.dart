@@ -267,8 +267,9 @@ void main() {
       {'formula' : 'log(2,bww(ABC, ABC), 2)', 'expectedOutput' : 'bbbbgbbbbbggggggggbBGGb'},
       {'formula' : 'log(2,bww(ABC, ABC), 2)', 'values': {'C': '1'}, 'expectedOutput' : 'bbbbgbbbbbggrggggrbBGGb'},
       {'formula' : 'csi(log(bww(A), 2))', 'expectedOutput' : 'bbbbbbbbbbbbgbbggbb'},
+      {'formula' : 'csi(log(bww(A),2), log(2,bww(A)), log(bww(A)))', 'expectedOutput' : 'bbbbbbbbbbbbgbbgbbbbbbbgbbbbbgbbbbbbbbRRRRRRbb'},
       {'formula' : 'log(2, 2, round(12, 3))', 'expectedOutput' : 'bbbbgbggBBBBBBBBGGBGGBb'},
-      {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23), csi(123))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbgggbbbbttbbbbbbbbggbbbbbbbgggbbbtttbbbbbbbbbbbbbgbbggbbbt'},
+      {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23,23), csi(123,1,2,3))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbgggbbbbttbbbbbbbbggbggbbbbbbbgggbgbgbgbbbtttbbbbbbbbbbbbbgbbggbbbt'},
     ];
 
     _inputsToExpected.forEach((elem) {
