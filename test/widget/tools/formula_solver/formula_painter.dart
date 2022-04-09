@@ -124,6 +124,7 @@ void main() {
       {'formula' : 'av(xyz)', 'expectedOutput' : 'bbbgggb'},
       {'formula' : 'av(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbgrgb'},
       {'formula' : 'len(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgb'},
+      {'formula' : 'len(xcz, 123)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgBGGGGb'},
 
       {'formula' : 'N [1', 'values': values, 'expectedOutput' : 'RRBG'},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : 'ttBB'},
