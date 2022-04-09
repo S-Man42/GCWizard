@@ -105,6 +105,8 @@ void main() {
       {'formula' : 'max(1,2)', 'expectedOutput' : 'bbbbgbgb'},
       {'formula' : 'max(1,2,3)', 'expectedOutput' : 'bbbbgbgbgb'},
       {'formula' : 'max(1,2,3,4)', 'expectedOutput' : 'bbbbgbgbgbgb'},
+      {'formula' : 'cs(33)', 'expectedOutput' : 'bbbggb'},
+      {'formula' : 'cs(33 , 444,  55)', 'expectedOutput' : 'bbbgggbggggbggggb'},
 
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
