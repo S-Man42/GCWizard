@@ -111,8 +111,14 @@ void main() {
 
       {'formula' : 'bww(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(c)', 'expectedOutput' : 'bbbbgb'},
+      {'formula' : 'bww()', 'expectedOutput' : 'BBBB'},
+      {'formula' : 'bww(xyz)', 'expectedOutput' : 'bbbbgggb'},
+      {'formula' : 'bww(xyz,xyz,xyz)', 'expectedOutput' : 'bbbbgggBGGGBGGGb'},
       {'formula' : 'bww(xyz)', 'expectedOutput' : 'bbbbgggb'},
       {'formula' : 'bww(xcz)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgb'},
+      {'formula' : 'bww(xcz, abc)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgrgBBGGRb'},
+      {'formula' : 'bww(223)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbbgggb'},
+      {'formula' : 'bww(223)', 'expectedOutput' : 'bbbbgggb'},
       {'formula' : 'av(c)', 'values': {'C':'1'}, 'expectedOutput' : 'bbbrb'},
       {'formula' : 'av(c)', 'expectedOutput' : 'bbbgb'},
       {'formula' : 'av(xyz)', 'expectedOutput' : 'bbbgggb'},
@@ -254,6 +260,13 @@ void main() {
       {'formula' : 'max(1.321, round(1.4,1,2))', 'expectedOutput' : 'bbbbgggggbbbbbbbbgggbgBGbb'},
       {'formula' : 'round( - 1.321,sqrt(2))', 'expectedOutput' : 'bbbbbbbbbgggggbbbbbbgbb'},
       {'formula' : 'log(log(10, 2),log(round(10,2),2))', 'expectedOutput' : 'bbbbbbbbggbggbbbbbbbbbbbbggbgbbgbb'},
+      {'formula' : 'log(2,bww(ABC))', 'expectedOutput' : 'bbbbgbbbbbgggbb'},
+      {'formula' : 'log(2,bww(ABC))', 'values': {'C': '1'}, 'expectedOutput' : 'bbbbgbbbbbggrbb'},
+      {'formula' : 'log(2,bww(ABC, ABC))', 'expectedOutput' : 'bbbbgbbbbbgggbBGGGbb'},
+      {'formula' : 'log(2,bww(ABC, ABC), 2)', 'expectedOutput' : 'bbbbgbbbbbgggbBGGGbBGGb'},
+      {'formula' : 'csi(log(bww(A), 2))', 'expectedOutput' : 'bbbbbbbbbbbbgbbggbb'},
+      {'formula' : 'log(2, 2, round(12, 3))', 'expectedOutput' : 'bbbbgbggBBBBBBBBGGBGGBb'},
+      {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23), csi(123))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbgggbbbbttbbbbbbbbggbbbbbbbgggbbbtttbbbbbbbbbbbbbgbbggbbbt'},
     ];
 
     _inputsToExpected.forEach((elem) {
