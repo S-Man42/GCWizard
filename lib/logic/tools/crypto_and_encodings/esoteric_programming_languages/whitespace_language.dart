@@ -166,8 +166,8 @@ String _clean(String s) {
 }
 
 List<String> _input;
-var _stack = List<int>();
-var _return_positions = List<int>();
+var _stack = <int>[];
+var _return_positions = <int>[];
 var _heap = Map<int, int>();
 var _labels = Map<String, int>();
 var _pos = 0;

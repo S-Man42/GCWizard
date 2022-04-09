@@ -3,23 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_image_reader.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_io.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_session.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
@@ -38,7 +29,7 @@ class PietState extends State<Piet> {
   GCWFile _originalData;
   String _currentInput = '';
   PietResult _currentOutput = null;
-  PietState _continueState = null;
+  PietSession _continueState = null;
   var _isStarted = false;
 
   @override
@@ -94,16 +85,8 @@ class PietState extends State<Piet> {
 
     if (_currentOutput == null) return GCWDefaultOutput();
 
-    return GCWMultipleOutput(
-      children: [
+    return GCWOutput( child:
         _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText : ''),
-        GCWOutput(
-          title: i18n(context, 'whitespace_language_readable_code'),
-          child: GCWOutputText(
-            text: _currentOutput.code,
-          ),
-        ),
-      ],
     );
   }
 
@@ -116,24 +99,22 @@ class PietState extends State<Piet> {
 
     var imageReader = PietImageReader();
     var _pietPixels = imageReader.ReadImage(_originalData.bytes);
-    var _pietIO = PietIO();
 
-    var pietSession = PietSession(_pietPixels, _pietIO);
+    var currentOutputFuture = interpreterPiet(_pietPixels, "5");
 
-    //var currentOutputFuture = interpreterWhitespace(_currentCode, '', continueState: _continueState);
-    _continueState = null;
+     _continueState = null;
 
-    // currentOutputFuture.then((output) {
-    //   if (output.finished) {
-    //     _currentOutput = output;
-    //     _isStarted = false;
-    //     this.setState(() {});
-    //   } else {
-    //     _continueState = output.state;
-    //     _currentInput = "";
-    //     _showDialogBox(context, output.output);
-    //   }
-    // });
+    currentOutputFuture.then((output) {
+      if (output.finished) {
+        _currentOutput = output;
+        _isStarted = false;
+        this.setState(() {});
+      } else {
+        _continueState = output.state;
+        _currentInput = "";
+        _showDialogBox(context, output.output);
+      }
+    });
   }
 
   _showDialogBox(BuildContext context, String text) {
@@ -161,7 +142,7 @@ class PietState extends State<Piet> {
             text: i18n(context, 'common_ok'),
             onPressed: () {
               _isStarted = false;
-              if (_continueState != null) _continueState._currentInput = _currentInput + '\n';
+              if (_continueState != null) _continueState.inp = _currentInput + '\n';
               _calcOutput(context);
             },
           )

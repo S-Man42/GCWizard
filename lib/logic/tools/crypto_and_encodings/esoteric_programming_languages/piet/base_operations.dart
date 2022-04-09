@@ -1,6 +1,6 @@
 ﻿import 'dart:core';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_io.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_session.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
 
 enum PietOps {
@@ -31,11 +31,11 @@ class BaseOperations {
   Function _toggleDirectionPointer; //<int>
   Function _toggleCodelChooser; //<int>
 
-  PietIO _io;
+  PietSession _session;
 
-  BaseOperations(PietStack stack, PietIO io, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
+  BaseOperations(PietStack stack, PietSession session, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
     _stack = stack;
-    _io = io;
+    _session = session;
     _getExitedBlock = getExitedBlock; //<PietBlock>
     _toggleDirectionPointer = toggleDirectionPointer;
     _toggleCodelChooser = toggleCodelChooser;
@@ -105,23 +105,23 @@ class BaseOperations {
   }
 
   void InNumber() {
-    var val = _io.ReadInt();
+    var val = _session.ReadInt();
     if (val != null) _stack.Push(val);
   }
 
   void InChar() {
-    var val = _io.ReadChar();
+    var val = _session.ReadChar();
     if (val != null && val.isNotEmpty) _stack.Push(val.runes.first);
   }
 
   void OutNumeric() {
     var result = _stack.Pop();
-    if (result != null) _io.Output(result.toString());
+    if (result != null) _session.Output(result.toString());
   }
 
   void OutChar() {
     var result = _stack.Pop();
-    if (result != null) _io.Output(String.fromCharCode(result));
+    if (result != null) _session.Output(String.fromCharCode(result));
   }
 
   Map<PietOps, void Function()> GetMap() {
