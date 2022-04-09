@@ -1,5 +1,6 @@
 ﻿import 'dart:core';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_io.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
 
 enum PietOps {
@@ -30,9 +31,9 @@ class BaseOperations {
     Function _toggleDirectionPointer; //<int>
     Function _toggleCodelChooser; //<int>
 
-    IPietIO _io;
+    PietIO _io;
 
-    BaseOperations(PietStack stack, IPietIO io, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
+    BaseOperations(PietStack stack, PietIO io, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
         _stack = stack;
         _io = io;
         _getExitedBlock = getExitedBlock; //<PietBlock>
@@ -105,12 +106,12 @@ class BaseOperations {
 
     void InNumber() {
         var val = _io.ReadInt();
-        if (val != null) _stack.Push(val.Value);
+        if (val != null) _stack.Push(val);
     }
 
     void InChar() {
         var val = _io.ReadChar();
-        if (val != null) _stack.Push(val);
+        if (val != null) _stack.Push(val.runes.first); //ToDo Orgin char to Stack
     }
 
     void OutNumeric() {

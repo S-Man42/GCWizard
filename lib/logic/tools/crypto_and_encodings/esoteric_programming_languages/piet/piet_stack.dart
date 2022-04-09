@@ -11,11 +11,7 @@ class PietStack {
     }
 
     int Pop() {
-        int result;
-        if (TryPop(result)) //Out
-            return result;
-
-        return null;
+        return TryPop().item2;
     }
 
     Add() {
@@ -58,8 +54,9 @@ class PietStack {
     }
 
     Not() {
-        int result;
-        if (!TryPop(result)) return; //out
+        var ret = TryPop();
+        var result = ret.item2;
+        if (!ret.item1) return;
 
         Push(result == 0 ? 1 : 0);
     }
@@ -69,15 +66,18 @@ class PietStack {
     }
 
     Duplicate() {
-        int result;
-        if (!TryPop(result)) return;  //out
+        var ret = TryPop();
+        var result = ret.item2;
+        if (!ret.item1) return;
         Push(result);
         Push(result);
     }
 
     _ApplyTernary(Function operatorFunc) { //<int, int, int>
-        Tuple2<int, int> stackResults;
-        if (!TryPop2(stackResults)) return;   //out
+        var ret = TryPop2();
+        var stackResults = ret.item2;
+        if (!ret.item1) return;
+
         var top = stackResults.item1;
         var second = stackResults.item2;
 
@@ -86,8 +86,10 @@ class PietStack {
     }
 
     _ApplyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
-        Tuple2<int, int> stackResults;
-        if (!TryPop2(stackResults)) return;   //out
+        var ret = TryPop2();
+        var stackResults = ret.item2;
+        if (!ret.item1) return;
+
         var top = stackResults.item1;
         var second = stackResults.item2;
 
@@ -99,8 +101,9 @@ class PietStack {
     }
 
     void Roll() {
-        Tuple2<int, int> stackResults;
-        if (!TryPop2(stackResults)) return;   //out
+        var ret = TryPop2();
+        var stackResults = ret.item2;
+        if (!ret.item1) return;
 
         var numberOfRolls = stackResults.item1;
         var depthOfRoll = stackResults.item2;
@@ -117,24 +120,19 @@ class PietStack {
     //     return _stack.AsEnumerable();
     // }
 
-    bool TryPop(int result) {    //out
-        result = 0;
-        if (_stack.length < 1) return false;
+    Tuple2<bool, int> TryPop() {
+        if (_stack.length < 1) return Tuple2<bool, int>(false, null);
 
-        //result = _stack.Pop();
-        result = _stack.last;
+        var result = _stack.last;
         _stack.removeLast();
 
-        return true;
+        return Tuple2<bool, int>(true, result);
     }
 
-    bool TryPop2(Tuple2<int, int> results) {     //out
-        results = Tuple2<int, int>(0, 0);
-        if (_stack.length < 2) return false;
+    Tuple2<bool, Tuple2<int, int>> TryPop2() {
+        if (_stack.length < 2) return Tuple2<bool, Tuple2<int, int>>(false, Tuple2<int, int>(0, 0));
 
-        results = Tuple2<int, int>(Pop(), Pop());
-
-        return true;
+        return Tuple2<bool, Tuple2<int, int>>(true, Tuple2<int, int>(Pop(), Pop()));
     }
 
     bool RotateRight(int depth, int iterations) {

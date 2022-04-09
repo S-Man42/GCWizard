@@ -1,9 +1,10 @@
-﻿import 'dart:html';
+﻿import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/base_operations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block_op_resolver.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_blocker_builder.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_io.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_navigator.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
 
@@ -19,7 +20,7 @@ class PietSession {
   PietBlockerBuilder _builder;
   PietNavigator _navigator;
 
-  PietSession(List<List<int>> data, IPietIO io) {
+  PietSession(List<List<int>> data, PietIO io) {
       _data = data;
 
       _builder = PietBlockerBuilder(_data);
@@ -41,15 +42,16 @@ class PietSession {
 
   Step() {
       Point result;
-      if (!_navigator.TryNavigate(_currentBlock, result)) // Out result
-          _Running = false;
+      var ret = _navigator.TryNavigate(_currentBlock);
+      if (!ret.item1) _Running = false;
+      result = ret.item2;
 
       var newBlock = _builder.GetBlockAt(result.x, result.y);
       var opCode = _opsResolver.Resolve(_currentBlock, newBlock);
 
       Function action;
-      if (_actionMap.TryGetValue(opCode, action))  // Out action
-          action();
+      if (_actionMap.containsKey(opCode))
+        _actionMap[opCode]();
 
       _currentBlock = newBlock;
   }

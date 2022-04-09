@@ -1,4 +1,4 @@
-﻿import 'dart:html';
+﻿//import 'dart:html';
 import 'dart:math';
 
 class PietBlock {
@@ -18,12 +18,13 @@ class PietBlock {
     int get BlockCount => _pixels.length;
 
     bool AddPixel(int x, int y) {
-        if (_pixels.contains(Point(x, y))) return false;
+        if (ContainsPixel(Point<int>(x, y))) return false;
 
-        _pixels.add(Point(x, y));
+        _pixels.add(Point<int>(x, y));
+        return true;
     }
 
-    bool ContainsPixel(Point point) {
+    bool ContainsPixel(Point<int> point) {
         return _pixels.contains(point);
     }
 

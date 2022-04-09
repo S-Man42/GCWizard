@@ -1,7 +1,9 @@
 ﻿import 'dart:core';
-import 'dart:html';
+import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/Models/piet_block.dart';
+import 'package:tuple/tuple.dart';
+
 
 enum DirectionEnum {
     East,
@@ -41,22 +43,23 @@ class PietNavigator {
     var _StepCount = 0;
     int get StepCount => _StepCount;
 
-    var _CurrentPoint =  Point(0, 0);
+    Point _CurrentPoint =  Point<int>(0, 0);
     Point get CurrentPoint => _CurrentPoint;
 
-    bool TryNavigate(PietBlock block, Point result) {// out result
+    Tuple2<bool, Point<int>>  TryNavigate(PietBlock block) {// out result
+        Point<int> result;
         if (StepCount > _maxSteps) {
             // todo: aborting purely on step count seems crude - detect cycles rather
-            result = Point(0, 0);
+            result = Point<int>(0, 0);
             // todo: log warning
-            return false;
+            return Tuple2<bool, Point<int>>(false, result);
         }
         int failureCount = 0;
 
         bool moveStraight = block.Colour == White || !block.KnownColour;
 
         while (failureCount < 8) {
-            var exitPoint = Point(0, 0);
+            Point exitPoint= Point<int>(0, 0);
 
             if (moveStraight) exitPoint = CurrentPoint;
             else if (Direction == DirectionEnum.East && CodelChooser == CodelChoiceEnum.Left) exitPoint = block.EastLeft;
@@ -79,16 +82,16 @@ class PietNavigator {
                     switch (Direction)
                     {
                         case DirectionEnum.East:
-                            exitPoint = Point(exitPoint.x + 1, exitPoint.y);
+                            exitPoint = Point<int>(exitPoint.x + 1, exitPoint.y);
                             break;
                         case DirectionEnum.South:
-                            exitPoint = Point(exitPoint.x, exitPoint.y + 1);
+                            exitPoint = Point<int>(exitPoint.x, exitPoint.y + 1);
                             break;
                         case DirectionEnum.West:
-                            exitPoint = Point(exitPoint.x - 1, exitPoint.y);
+                            exitPoint = Point<int>(exitPoint.x - 1, exitPoint.y);
                             break;
                         case DirectionEnum.North:
-                            exitPoint = Point(exitPoint.x, exitPoint.y - 1);
+                            exitPoint = Point<int>(exitPoint.x, exitPoint.y - 1);
                             break;
                         default:
                             return null; //throw new NotImplementedException();
@@ -100,10 +103,10 @@ class PietNavigator {
             }
 
             Point nextStep;
-            if (Direction == DirectionEnum.East) nextStep = Point(exitPoint.x + 1, exitPoint.y);
-            else if (Direction == DirectionEnum.South) nextStep = Point(exitPoint.x, exitPoint.y + 1);
-            else if (Direction == DirectionEnum.West) nextStep = Point(exitPoint.x - 1, exitPoint.y);
-            else if (Direction == DirectionEnum.North) nextStep = Point(exitPoint.x, exitPoint.y - 1);
+            if (Direction == DirectionEnum.East) nextStep = Point<int>(exitPoint.x + 1, exitPoint.y);
+            else if (Direction == DirectionEnum.South) nextStep = Point<int>(exitPoint.x, exitPoint.y + 1);
+            else if (Direction == DirectionEnum.West) nextStep = Point<int>(exitPoint.x - 1, exitPoint.y);
+            else if (Direction == DirectionEnum.North) nextStep = Point<int>(exitPoint.x, exitPoint.y - 1);
             else  null; //throw new ArgumentOutOfRangeException();
 
             bool isOutOfBounds = nextStep.x < 0 ||
@@ -118,7 +121,7 @@ class PietNavigator {
                 _CurrentPoint = nextStep;
                 result = nextStep;
                 _StepCount++;
-                return true;
+                return Tuple2<bool, Point<int>>(true, result);
             }
 
             _CurrentPoint = exitPoint;
@@ -131,8 +134,8 @@ class PietNavigator {
             failureCount++;
         }
 
-        result = Point(0,0);
-        return false;
+        result = Point<int>(0,0);
+        return Tuple2<bool, Point<int>>(false, result);
     }
 
     bool StillInBlock(Point exitPoint, PietBlock block) {
@@ -140,7 +143,7 @@ class PietNavigator {
                exitPoint.y >= 0 &&
                exitPoint.x < _width &&
                exitPoint.y < _height &&
-               block.ContainsPixel(Point(exitPoint.x, exitPoint.y));
+               block.ContainsPixel(Point<int>(exitPoint.x, exitPoint.y));
     }
 
     /// <summary>
