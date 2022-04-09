@@ -7,7 +7,6 @@ class PietStack {
 
   void Push(int value) {
     _stack.add(value);
-    //_stack.Push(value);
   }
 
   int Pop() {

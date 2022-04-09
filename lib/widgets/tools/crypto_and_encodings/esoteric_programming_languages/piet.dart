@@ -14,7 +14,6 @@ import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
-import 'package:image/image.dart' as img;
 
 class Piet extends StatefulWidget {
   final GCWFile file;
@@ -41,13 +40,6 @@ class PietState extends State<Piet> {
     }
   }
 
-  _resetInputs() {
-    _currentInput = "";
-    _currentOutput = null;
-    setState(() {
-    });
-  }
-
   bool _validateData(Uint8List bytes) {
     return isImage(bytes);
   }
@@ -66,9 +58,11 @@ class PietState extends State<Piet> {
 
             setState(() {
               _originalData = value;
-              _resetInputs();
-              _calcOutput(context);
+              _currentInput = "";
+              _currentOutput = null;
+              _continueState = null;
             });
+            _calcOutput(context);
           },
         ), // Fixes a display issue
 
@@ -94,15 +88,13 @@ class PietState extends State<Piet> {
     if (_isStarted) return;
 
     _isStarted = true;
-    String _currentInput = '';
-    _currentOutput = null;
 
     var imageReader = PietImageReader();
-    var _pietPixels = imageReader.ReadImage(_originalData.bytes);
+    var _pietPixels = _continueState?.data ?? imageReader.ReadImage(_originalData.bytes);
 
-    var currentOutputFuture = interpreterPiet(_pietPixels, "5");
+    var currentOutputFuture = interpreterPiet(_pietPixels, _currentInput, continueState: _continueState);
 
-     _continueState = null;
+    _continueState = null;
 
     currentOutputFuture.then((output) {
       if (output.finished) {

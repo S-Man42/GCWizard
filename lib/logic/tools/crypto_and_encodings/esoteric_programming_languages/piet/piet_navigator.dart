@@ -32,7 +32,7 @@ class PietNavigator {
   int _width;
   int _height;
 
-  PietNavigator(List<List<int>> data, {int maxSteps = 10000}) {
+  PietNavigator(List<List<int>> data, {int maxSteps = 500000}) {
     _data = data;
     _width = _data[0].length;
     _height = _data.length;

@@ -28,8 +28,10 @@ var _input_required = false;
 var _input_required_number = false;
 final _inputRequired = "input required";
 
-Future<PietResult> interpreterPiet(List<List<int>> data, String inp, {int timeOut = 30000}) async {
-  var pietSession = PietSession(data);
+Future<PietResult> interpreterPiet(List<List<int>> data, String inp,
+    {int timeOut = 60000, PietSession continueState}) async {
+
+  var pietSession = continueState ?? PietSession(data, timeOut: timeOut);
 
   try {
     pietSession._input = (inp ?? '').split('').toList();
@@ -53,7 +55,7 @@ class PietSession {
   PietBlock _currentBlock;
   Map<PietOps, Function> _actionMap;
 
-  List<List<int>> _data;
+  List<List<int>> data;
 
   PietStack _stack;
   PietBlockOpResolver _opsResolver;
@@ -66,11 +68,11 @@ class PietSession {
 
   var _timeOut = 30000;
 
-  PietSession(List<List<int>> data, {int timeOut = 30000}) {
-    _data = data;
+  PietSession(List<List<int>> image, {int timeOut = 30000}) {
+    data = image;
 
-    _builder = PietBlockerBuilder(_data);
-    _navigator = PietNavigator(_data);
+    _builder = PietBlockerBuilder(data);
+    _navigator = PietNavigator(data);
     _opsResolver = PietBlockOpResolver();
     _stack = PietStack();
     _timeOut = max(timeOut, 100);
@@ -111,6 +113,7 @@ class PietSession {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
         throw new Exception('TimeOut: Program runs too long');
       }
+      if (_navigator.StepCount % 10 == 0) print(_navigator.StepCount);
       Step();
     }
   }
@@ -132,7 +135,6 @@ class PietSession {
   String ReadChar() {
     _input_required = true;
     _input_required_number = false;
-
     if (_input.length == 0) throw new Exception(_inputRequired);
 
     var input = _input.first;
