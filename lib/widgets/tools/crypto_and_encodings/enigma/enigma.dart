@@ -164,35 +164,32 @@ class EnigmaState extends State<Enigma> {
 
   _rotorType(EnigmaRotorType type) {
     switch (type) {
-      case EnigmaRotorType.ENTRY_ROTOR: return i18n(context, 'enigma_rotortype_entryrotor');
-      case EnigmaRotorType.REFLECTOR: return i18n(context, 'enigma_rotortype_reflector');
-      case EnigmaRotorType.STANDARD: return i18n(context, 'enigma_rotortype_standard');
+      case EnigmaRotorType.ENTRY_ROTOR:
+        return i18n(context, 'enigma_rotortype_entryrotor');
+      case EnigmaRotorType.REFLECTOR:
+        return i18n(context, 'enigma_rotortype_reflector');
+      case EnigmaRotorType.STANDARD:
+        return i18n(context, 'enigma_rotortype_standard');
     }
   }
 
   _buildRotorInformation() {
     List<EnigmaRotorConfiguration> _allRotors = [];
-    if (_currentReflectorMode)
-      _allRotors.add(_currentReflector);
+    if (_currentReflectorMode) _allRotors.add(_currentReflector);
 
     _allRotors.addAll(_currentRotorsConfigurations);
 
-    if (_currentEntryRotorMode)
-      _allRotors.add(_currentEntryRotor);
+    if (_currentEntryRotorMode) _allRotors.add(_currentEntryRotor);
 
-    if (_allRotors.length == 0)
-      return Container();
+    if (_allRotors.length == 0) return Container();
 
-    if (_currentRotorInformation >= _allRotors.length)
-      _currentRotorInformation = 0;
+    if (_currentRotorInformation >= _allRotors.length) _currentRotorInformation = 0;
 
     var currentRotor = _allRotors[_currentRotorInformation].rotor;
 
     return Column(
       children: [
-        GCWTextDivider(
-            text: i18n(context, 'enigma_rotorinfo')
-        ),
+        GCWTextDivider(text: i18n(context, 'enigma_rotorinfo')),
         GCWDropDownSpinner(
           index: _currentRotorInformation,
           items: _allRotors.map((EnigmaRotorConfiguration e) => e.rotor.name).toList(),
@@ -208,12 +205,13 @@ class EnigmaState extends State<Enigma> {
           copyText: currentRotor.alphabet,
         ),
         Column(
-          children: columnedMultiLineOutput(context,
-              [
-                [i18n(context, 'common_type'), _rotorType(currentRotor.type)],
-                [i18n(context, 'enigma_turnovers'), (currentRotor.turnovers ?? '').isEmpty ? i18n(context, 'common_none') : currentRotor.turnovers]
-              ]
-          ),
+          children: columnedMultiLineOutput(context, [
+            [i18n(context, 'common_type'), _rotorType(currentRotor.type)],
+            [
+              i18n(context, 'enigma_turnovers'),
+              (currentRotor.turnovers ?? '').isEmpty ? i18n(context, 'common_none') : currentRotor.turnovers
+            ]
+          ]),
         )
       ],
     );

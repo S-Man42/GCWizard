@@ -66,14 +66,14 @@ final _SpecialCharsMap = {
 final _With4 = {'4': 1};
 
 Map<String, int> _createAlpabetMap(bool with4, bool onlyNumbers) {
-    var alphabetMap = new Map<String, int>();
+  var alphabetMap = new Map<String, int>();
 
-    alphabetMap.addAll(_NumbersMap);
-    if (with4) alphabetMap.addAll(_With4);
-    if (!onlyNumbers) alphabetMap.addAll(_LettersMap);
-    if (!onlyNumbers) alphabetMap.addAll(_SpecialCharsMap);
+  alphabetMap.addAll(_NumbersMap);
+  if (with4) alphabetMap.addAll(_With4);
+  if (!onlyNumbers) alphabetMap.addAll(_LettersMap);
+  if (!onlyNumbers) alphabetMap.addAll(_SpecialCharsMap);
 
-    return alphabetMap;
+  return alphabetMap;
 }
 
 String decodeEnclosedAreas(String input, {bool with4, onlyNumbers: false}) {

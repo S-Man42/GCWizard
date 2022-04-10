@@ -200,7 +200,9 @@ class GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
-                  allowPanningOnScrollingParent: false, /// IMPORTANT for dragging
+                  allowPanningOnScrollingParent: false,
+
+                  /// IMPORTANT for dragging
                   bounds: _getBounds(),
                   boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
                   minZoom: 1.0,
@@ -939,11 +941,11 @@ class _GCWMapPopupController {
     popupController.togglePopup(marker);
   }
 
-  void showPopupsAlsoFor(List<Marker> markers, {bool disableAnimation = false}){
+  void showPopupsAlsoFor(List<Marker> markers, {bool disableAnimation = false}) {
     popupController.showPopupsAlsoFor(markers, disableAnimation: disableAnimation);
   }
 
-  void showPopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}){
+  void showPopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}) {
     popupController.showPopupsOnlyFor(markers, disableAnimation: disableAnimation);
   }
 
@@ -951,7 +953,7 @@ class _GCWMapPopupController {
     popupController.hideAllPopups(disableAnimation: disableAnimation);
   }
 
-  void hidePopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}){
+  void hidePopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}) {
     popupController.hidePopupsOnlyFor(markers, disableAnimation: disableAnimation);
   }
 }

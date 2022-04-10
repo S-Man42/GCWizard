@@ -40,7 +40,8 @@ bool generate_quadgram() {
   ];
 
   _inputsToExpected.forEach((elem) async {
-    var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/";
+    var filePath =
+        path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/";
     var fileIn = File(normalizePath(filePath + elem['input']));
     var fileOut = File(normalizePath(filePath + elem['fileOut']));
     filePath = path.current + "/assets/quadgrams/";

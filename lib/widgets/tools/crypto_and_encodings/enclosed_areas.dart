@@ -37,10 +37,9 @@ class EnclosedAreasState extends State<EnclosedAreas> {
           },
         ),
         _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
-        GCWDefaultOutput(child: decodeEnclosedAreas(_currentInput,
-          with4: _with4On == GCWSwitchPosition.left,
-          onlyNumbers : _onlyNumbers
-        ))
+        GCWDefaultOutput(
+            child: decodeEnclosedAreas(_currentInput,
+                with4: _with4On == GCWSwitchPosition.left, onlyNumbers: _onlyNumbers))
       ],
     );
   }
@@ -48,29 +47,28 @@ class EnclosedAreasState extends State<EnclosedAreas> {
   Widget _buildAdvancedModeControl(BuildContext context) {
     return Column(children: <Widget>[
       GCWOnOffSwitch(
-        title: i18n(context, 'enclosedareas_only_numbers'),
-        value: _onlyNumbers,
-        onChanged: (value) {
-          setState(() {
-            _onlyNumbers = value;
-          });
-        }),
+          title: i18n(context, 'enclosedareas_only_numbers'),
+          value: _onlyNumbers,
+          onChanged: (value) {
+            setState(() {
+              _onlyNumbers = value;
+            });
+          }),
       Row(children: [
         Expanded(child: Container(), flex: 1),
-        Expanded(child:
-          GCWTwoOptionsSwitch(
-            notitle: true,
-            leftValue: i18n(context, 'enclosedareas_with4'),
-            rightValue: i18n(context, 'enclosedareas_without4'),
-            value: _with4On,
-            onChanged: (value) {
-              setState(() {
-                _with4On = value;
-              });
-            },
-          ),
-          flex: 3
-        )
+        Expanded(
+            child: GCWTwoOptionsSwitch(
+              notitle: true,
+              leftValue: i18n(context, 'enclosedareas_with4'),
+              rightValue: i18n(context, 'enclosedareas_without4'),
+              value: _with4On,
+              onChanged: (value) {
+                setState(() {
+                  _with4On = value;
+                });
+              },
+            ),
+            flex: 3)
       ]),
     ]);
   }

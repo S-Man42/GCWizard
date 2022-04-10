@@ -353,7 +353,7 @@ class FormulaPainter {
     var minCommaCount = 0;
     switch (functionName) {
       case 'LOG':
-        minCommaCount =  1;
+        minCommaCount = 1;
         maxCommaCount = minCommaCount;
         break;
       case 'NTH':
@@ -390,7 +390,7 @@ class FormulaPainter {
         var subresult = _paintSubFormula(arguments[i], 0);
         result.add(subresult.toUpperCase());
       } else if (arguments[i] == ',')
-         result.add(wordFunction ? 'g' : 'b');
+        result.add(wordFunction ? 'g' : 'b');
       else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
@@ -412,8 +412,7 @@ class FormulaPainter {
     return result;
   }
 
-  List<String> _isFaculty(String formula)
-  {
+  List<String> _isFaculty(String formula) {
     RegExp regex = RegExp(r'^(\s*)(!)(\s*)');
 
     var match = regex.firstMatch(formula);
@@ -424,7 +423,7 @@ class FormulaPainter {
     regex = RegExp(r'(' + _variablesRegEx + ')');
     var matchVariable = regex.firstMatch(this.formula);
 
-    return (matchNumber == null && matchVariable == null) ?  null : [match.group(0)];
+    return (matchNumber == null && matchVariable == null) ? null : [match.group(0)];
   }
 
   List<String> _isLiteral(String formula) {
@@ -608,7 +607,6 @@ class FormulaPainter {
         if (startIndex == formula.length) {
           arguments.add("");
         }
-
       } else if (_bracket.containsKey(formula[i])) {
         var literal = _separateLiteral(formula.substring(i), formula[i], _bracket[formula[i]]);
 
@@ -618,8 +616,7 @@ class FormulaPainter {
         }
       }
     }
-    if ((formula.length - startIndex > 0) || (arguments.length == 0))
-      arguments.add(formula.substring(startIndex));
+    if ((formula.length - startIndex > 0) || (arguments.length == 0)) arguments.add(formula.substring(startIndex));
 
     return arguments;
   }

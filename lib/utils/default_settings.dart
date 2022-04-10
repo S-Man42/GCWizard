@@ -13,7 +13,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt2.dart';
 import 'package:prefs/prefs.dart';
 
-
 void initDefaultSettings() {
   if (Prefs.get('alphabetvalues_custom_alphabets') == null) {
     Prefs.setStringList('alphabetvalues_custom_alphabets', []);
@@ -128,7 +127,7 @@ void initDefaultSettings() {
         });
         tool.options = options;
         updateMultiDecoderTool(tool);
-      // ensure backward compatibility; breaking change in 2.2.1 due to a bug fix
+        // ensure backward compatibility; breaking change in 2.2.1 due to a bug fix
       } else if ([MDT_INTERNALNAMES_CCITT1, MDT_INTERNALNAMES_CCITT2].contains(tool.internalToolName)) {
         var options = <MultiDecoderToolOption>[];
         tool.options.where((element) => element.name == 'ccitt1_numeralbase').forEach((option) {
