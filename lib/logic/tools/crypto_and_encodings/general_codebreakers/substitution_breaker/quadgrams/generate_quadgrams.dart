@@ -35,10 +35,13 @@ bool generate_quadgram() {
     //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_quadgrams.dart', 'className' : 'SpanishQuadgrams', 'assetName' : 'es.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
     /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> ell_newscrawl_2017_1M-sentences.txt)
     //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'GreekQuadgrams', 'assetName' : 'gr.json', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Dutch quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/nld_news_2020_1M.tar.gz -> nld_news_2020_1M-sentences.txt)
+    //{'input' : 'nld_news_2020_1M-sentences.txt', 'fileOut' : 'dutch_quadgrams.dart', 'className' : 'DutchQuadgrams', 'assetName' : 'nl.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
   ];
 
   _inputsToExpected.forEach((elem) async {
-    var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
+    var filePath =
+        path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/";
     var fileIn = File(normalizePath(filePath + elem['input']));
     var fileOut = File(normalizePath(filePath + elem['fileOut']));
     filePath = path.current + "/assets/quadgrams/";
@@ -57,13 +60,13 @@ BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, S
     double quadgram_sum, String max_chars, double max_val, List<double> quadgrams) {
   var sb = new StringBuffer();
   var quadgrams_sum = 0;
-  var quadgramsInt = List<int>(quadgrams.length);
+  var quadgramsInt = List.filled(quadgrams.length, 0);
   for (int i = 0; i < quadgrams.length; i++) {
     quadgramsInt[i] = quadgrams[i].round();
     quadgrams_sum += quadgramsInt[i];
   }
   sb.write(
-      "import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';\n");
+      "import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';\n");
   sb.write("\n");
   sb.write("class " + className + " extends Quadgrams {\n");
   sb.write("\n");

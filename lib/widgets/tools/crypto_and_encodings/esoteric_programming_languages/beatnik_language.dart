@@ -290,6 +290,6 @@ class BeatnikState extends State<Beatnik> {
       } else
         output = output + element + '\n';
     });
-    return output;
+    return output.trim();
   }
 }

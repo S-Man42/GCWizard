@@ -188,7 +188,6 @@ class MultiDecoderState extends State<MultiDecoder> {
           result = null;
         } else {
           result = tool.onDecode(_currentInput, _currentKey);
-          print('${tool.name}:${result.toString().codeUnits}');
         }
       } catch (e) {}
 

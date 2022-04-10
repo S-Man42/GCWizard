@@ -20,15 +20,15 @@ Map<String, String> defaultCoordFormat() {
   return {'format': format, 'subtype': subtype};
 }
 
-defaultHemiphereLatitude() {
+int defaultHemiphereLatitude() {
   return Prefs.getString('coord_default_hemisphere_latitude') == HemisphereLatitude.North.toString() ? 1 : -1;
 }
 
-defaultHemiphereLongitude() {
+int defaultHemiphereLongitude() {
   return Prefs.getString('coord_default_hemisphere_longitude') == HemisphereLongitude.East.toString() ? 1 : -1;
 }
 
-defaultEllipsoid() {
+Ellipsoid defaultEllipsoid() {
   String type = Prefs.get('coord_default_ellipsoid_type');
 
   if (type == EllipsoidType.STANDARD.toString()) {

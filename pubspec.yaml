@@ -1,12 +1,12 @@
 name: gc_wizard
 description: GC Wizard
-version: 2.2.0+149
+version: 2.2.1+151
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  archive: ^3.2.1
+  archive: ^3.3.0
   audioplayers: ^0.20.1
   auto_size_text: ^3.0.0
   base32: ^2.0.0
@@ -20,9 +20,9 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^0.13.1
-  flutter_map_marker_popup: ^1.0.1
-  flutter_map_tappable_polyline: ^3.0.0
+  flutter_map: ^0.14.0
+  flutter_map_marker_popup: ^2.1.2
+  flutter_map_tappable_polyline: ^3.1.0
   fluttertoast: ^8.0.9
   http: ^0.13.4
   http_parser: ^4.0.0
@@ -34,7 +34,7 @@ dependencies:
   package_info_plus: ^1.4.0
   path: ^1.8.0
   path_provider: ^2.0.9
-  permission_handler: ^8.1.6
+  permission_handler: ^9.2.0
   #photo_view: ^0.13.0
   pointycastle: ^3.5.1
   prefs: ^3.3.0
