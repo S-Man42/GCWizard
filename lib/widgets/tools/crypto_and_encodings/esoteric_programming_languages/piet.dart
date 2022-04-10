@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
@@ -26,10 +27,11 @@ class Piet extends StatefulWidget {
 
 class PietState extends State<Piet> {
   GCWFile _originalData;
-  String _currentInput = '';
+  String _currentInput;
   PietResult _currentOutput = null;
-  PietSession _continueState = null;
+  var __calcOutput = false;
   var _isStarted = false;
+  var _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -48,6 +50,16 @@ class PietState extends State<Piet> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile value) {
@@ -55,14 +67,17 @@ class PietState extends State<Piet> {
               showToast(i18n(context, 'common_loadfile_exception_notloaded'));
               return;
             }
-
             setState(() {
               _originalData = value;
-              _currentInput = "";
+              _currentInput = null;
               _currentOutput = null;
-              _continueState = null;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {});
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _calcOutput(context);
+                });
+              });
             });
-            _calcOutput(context);
           },
         ), // Fixes a display issue
 
@@ -75,12 +90,11 @@ class PietState extends State<Piet> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if ((_originalData?.bytes == null) || (_currentOutput == null)) return GCWDefaultOutput();
+    if (_originalData?.bytes == null) return GCWDefaultOutput();
+    if (_currentOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
-    if (_currentOutput == null) return GCWDefaultOutput();
-
-    return GCWOutput( child:
-        _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText : ''),
+    return GCWDefaultOutput( child:
+        _currentOutput.output + (_currentOutput.error ? '\n' + i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText : ''),
     );
   }
 
@@ -90,11 +104,15 @@ class PietState extends State<Piet> {
     _isStarted = true;
 
     var imageReader = PietImageReader();
-    var _pietPixels = _continueState?.data ?? imageReader.ReadImage(_originalData.bytes);
+    var _pietPixels = _currentOutput?.state?.data ?? imageReader.ReadImage(_originalData.bytes);
+    var _currentInputList = <String>[];
+    if (!(_currentInput == null || _currentInput.isEmpty))
+      if (_currentOutput?.state != null && !_currentOutput.input_number_expected)
+        _currentInputList = _currentInput.split('').toList();
+      else
+        _currentInputList = [_currentInput];
 
-    var currentOutputFuture = interpreterPiet(_pietPixels, _currentInput, continueState: _continueState);
-
-    _continueState = null;
+    var currentOutputFuture = interpreterPiet(_pietPixels, _currentInputList, continueState: _currentOutput?.state);
 
     currentOutputFuture.then((output) {
       if (output.finished) {
@@ -102,8 +120,8 @@ class PietState extends State<Piet> {
         _isStarted = false;
         this.setState(() {});
       } else {
-        _continueState = output.state;
-        _currentInput = "";
+        _currentOutput = output;
+        _currentInput = null;
         _showDialogBox(context, output.output);
       }
     });
@@ -134,7 +152,6 @@ class PietState extends State<Piet> {
             text: i18n(context, 'common_ok'),
             onPressed: () {
               _isStarted = false;
-              if (_continueState != null) _continueState.inp = _currentInput + '\n';
               _calcOutput(context);
             },
           )

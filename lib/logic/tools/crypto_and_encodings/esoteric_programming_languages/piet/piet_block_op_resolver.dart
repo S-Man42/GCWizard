@@ -59,7 +59,7 @@ class PietBlockOpResolver {
       else if (comparePoint == Point<int>(5, 0)) return PietOps.InputChar;
       else if (comparePoint == Point<int>(5, 1)) return PietOps.OutputNumber;
       else if (comparePoint == Point<int>(5, 2)) return PietOps.OutputChar;
-      //else throw new NotImplementedException();
+      else throw new Exception('common_programming_error_invalid_opcode');
     }
 
     return PietOps.Noop;

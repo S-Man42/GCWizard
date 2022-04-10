@@ -230,7 +230,7 @@ class _Interpreter {
   /// Main loop of the program goes through each instruction.
   void run() {
     if (_code_length == 0) {
-      throw new Exception('SyntaxError: No program');
+      throw new Exception('common_programming_error_program_to_short');
     }
 
     start_time = DateTime.now();
@@ -238,7 +238,7 @@ class _Interpreter {
 
     while (_pos + 1 <= _code_length) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
-        throw new Exception('TimeOut: Program runs too long');
+        throw new Exception('common_programming_error_maxiterations');
       }
       var _instruction = '';
       var token = _code.substring(_pos, _pos + 1);
@@ -249,7 +249,7 @@ class _Interpreter {
       if (_IMP.containsKey(token)) {
         _instruction = _IMP[token];
       } else {
-        if (!_loading) throw new Exception('Unknown instruction ' + _instruction);
+        if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
       }
 
       _pos += token.length;
@@ -278,7 +278,7 @@ class _Interpreter {
       _loading = false;
       run();
     } else if ((_return_positions.length > 0) && (_pos != 9999999)) {
-      if (!_loading) throw new Exception('SyntaxError: Subroutine does not properly exit or return');
+      if (!_loading) throw new Exception('common_programming_error_invalid_program');
     } else if (_pos == _code_length) {
       if (!_loading) throw new Exception('RuntimeError: Unclean termination');
     }
@@ -359,9 +359,9 @@ class _Stack {
 
   void _duplicate_nth(int n) {
     if (n > _stack.length - 1) {
-      if (!_loading) Exception('ValueError: Cannot duplicate - Value exceeds stack size limit');
+      if (!_loading) Exception('common_programming_error_infinite_loop');
     } else if (n < 0) {
-      if (!_loading) throw new Exception('IndexError: Cannot duplicate negative stack index');
+      if (!_loading) throw new Exception('ERROR: Invalid operation found');
     }
     var item = _stack[n]; //-n - 1
     _stack_append(item);
@@ -577,7 +577,7 @@ class _FlowControl {
 
   void _mark_label(String label) {
     if (_labels.containsKey(label)) {
-      if (!_loading) throw new Exception('ValueError: Label already exists');
+      if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
     }
     _labels[label] = _pos + label.length;
   }
@@ -590,7 +590,7 @@ class _FlowControl {
     if (_return_positions.length > 0) {
       _pos = _return_positions_pop();
     } else {
-      if (!_loading) throw new Exception('SyntaxError: Return outside of subroutine');
+      if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
     }
   }
 
@@ -677,7 +677,7 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == 0) if (!_loading)
-      throw new Exception('ZeroDivisionError: Cannot divide by zero');
+      throw new Exception('common_programming_error_invalid_opcode');
     else
       a = 999999999999;
     var c = (b / a).floor();
@@ -688,7 +688,7 @@ class _Arithmetic {
     var a = _stack_pop();
     var b = _stack_pop();
     if (a == 0) if (!_loading)
-      throw new Exception('ZeroDivisionError: Cannot divide by zero');
+      throw new Exception('common_programming_error_invalid_opcode');
     else
       a = 999999999999;
     var c = b % a;
@@ -763,7 +763,7 @@ void _get_command(Map<String, String> imp) {
     _command = imp[token];
     _pos += token.length;
   } else {
-    if (!_loading) throw new Exception('KeyError: No IMP found for token: ' + token);
+    if (!_loading) throw new Exception('common_programming_error_invalid_opcode');
   }
 }
 
@@ -778,7 +778,7 @@ Tuple2<int, int> _num_parameter() {
   var index = _code.indexOf('\n', _pos);
   // Only including a terminal causes an error
   if (index == _pos) {
-    if (!_loading) Exception('SyntaxError: Number must include more than just the terminal.');
+    if (!_loading) Exception('common_programming_error_invalid_opcode');
   }
 
   var item = _whitespaceToInt(_code.substring(_pos, index));

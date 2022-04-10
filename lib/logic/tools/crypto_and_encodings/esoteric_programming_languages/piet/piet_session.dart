@@ -10,6 +10,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_
 class PietResult {
   final String output;
   final bool input_expected;
+  final bool input_number_expected;
   final bool error;
   final String errorText;
   final bool finished;
@@ -18,6 +19,7 @@ class PietResult {
   PietResult(
       {this.output = '',
         this.input_expected = false,
+        this.input_number_expected = false,
         this.error = false,
         this.errorText = '',
         this.finished = true,
@@ -28,24 +30,28 @@ var _input_required = false;
 var _input_required_number = false;
 final _inputRequired = "input required";
 
-Future<PietResult> interpreterPiet(List<List<int>> data, String inp,
+Future<PietResult> interpreterPiet(List<List<int>> data, List<String> input,
     {int timeOut = 60000, PietSession continueState}) async {
 
   var pietSession = continueState ?? PietSession(data, timeOut: timeOut);
+  pietSession.input  = input;
 
   try {
-    pietSession._input = (inp ?? '').split('').toList();
     pietSession.Run();
 
-    return PietResult(output: pietSession._output, input_expected: _input_required);
+    return PietResult(output: pietSession._output, input_expected: _input_required, input_number_expected: _input_required_number);
   } catch (err) {
     if (err.message == _inputRequired) {
       return PietResult(
-          output: pietSession._output, input_expected: _input_required, finished: false, state: pietSession);
+          output: pietSession._output,
+          input_expected: _input_required,
+          input_number_expected: _input_required_number,
+          finished: false, state: pietSession);
     } else
       return PietResult(
           output: pietSession._output,
           input_expected: _input_required,
+          input_number_expected: _input_required_number,
           error: true,
           errorText: err.toString());
   }
@@ -62,8 +68,7 @@ class PietSession {
   PietBlockerBuilder _builder;
   PietNavigator _navigator;
 
-  String inp;
-  List<String> _input;
+  List<String> input;
   var _output = '';
 
   var _timeOut = 30000;
@@ -111,9 +116,9 @@ class PietSession {
 
     while (Running) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
-        throw new Exception('TimeOut: Program runs too long');
+        throw new Exception('common_programming_error_maxiterations');
       }
-      if (_navigator.StepCount % 10 == 0) print(_navigator.StepCount);
+      //if (_navigator.StepCount % 10 == 0) print(_navigator.StepCount);
       Step();
     }
   }
@@ -125,20 +130,22 @@ class PietSession {
   int ReadInt() {
     _input_required = true;
     _input_required_number = true;
-    if (_input.length == 0) throw new Exception(_inputRequired);
+    if (input.length == 0) throw new Exception(_inputRequired);
 
-    var input = _input.first;
-    _input.removeAt(0);
-    return int.tryParse(input);
+    var _input = input.first;
+    input.removeAt(0);
+    _input_required = false;
+    return int.tryParse(_input);
   }
 
   String ReadChar() {
     _input_required = true;
     _input_required_number = false;
-    if (_input.length == 0) throw new Exception(_inputRequired);
+    if (input.length == 0) throw new Exception(_inputRequired);
 
-    var input = _input.first;
-    _input.removeAt(0);
-    return input;
+    var _input = input.first;
+    input.removeAt(0);
+    _input_required = false;
+    return _input;
   }
 }

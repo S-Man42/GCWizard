@@ -73,7 +73,7 @@ class PietNavigator {
 
       else if (Direction == DirectionEnum.North && CodelChooser == CodelChoiceEnum.Left) exitPoint = block.NorthLeft;
       else if (Direction == DirectionEnum.North && CodelChooser == CodelChoiceEnum.Right) exitPoint = block.NorthRight;
-      else return throw new Exception('NotImplementedException (' + Direction.toString() + ', ' + CodelChooser.toString() +')');
+      else return throw new Exception('common_programming_error_invalid_opcode');
 
       if (moveStraight) {
         var prevStep = exitPoint;
@@ -93,7 +93,7 @@ class PietNavigator {
               exitPoint = Point<int>(exitPoint.x, exitPoint.y - 1);
               break;
             default:
-              return throw new Exception('NotImplementedException (' + Direction.toString() + ')');
+              return throw new Exception('common_programming_error_invalid_opcode');
           }
         }
 
@@ -106,7 +106,7 @@ class PietNavigator {
       else if (Direction == DirectionEnum.South) nextStep = Point<int>(exitPoint.x, exitPoint.y + 1);
       else if (Direction == DirectionEnum.West) nextStep = Point<int>(exitPoint.x - 1, exitPoint.y);
       else if (Direction == DirectionEnum.North) nextStep = Point<int>(exitPoint.x, exitPoint.y - 1);
-      else  null;
+      else  return throw new Exception('common_programming_error_invalid_opcode');;
 
       bool isOutOfBounds = nextStep.x < 0 ||
           nextStep.y < 0 ||
