@@ -9,53 +9,53 @@ Under tiden har projektet blivit mycket stort och kan användas för många andr
 <b>Höjdpunkter</b>
 
 <b>Allmän</b>
-• Formula Solver: For handling multi stage variables
-• Multi Decoder: Enter an unknown code and let several decoders and calculators interpret it in a row
-• More than 200 sets of Symbol Tables: Direct decoding symbols to characters; save own encoding as an image
-• Online Manual: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+• Formelupplösare: För hantering av variabler vid multicacher
+• Multi avkodare: Ange en okänd kod och låt olika avkodare och kalkylatorer tolka den efter varandra
+• Mer än 200 uppsättningar av symboltabeller: Använd direkt avkodning av symboler för tecken, spara den egna kodningen som en bild
+• Onlinehandbok: Varje verktyg har en egen sida med instruktioner, översatta till 🇬🇧 🇩🇪 🇫🇷
 
-<b>Cryptography & Encodings</b>
+<b>Kryptografi & kryptering</b>
 • Alfabetsvärden (A = 1, B = 2, ...): Konfigurerbara alfabet med språkspecifik teckenbehandling
-• Braille graphical decoder: Type the points into a graphical interface; supports different languages
-• Book Cipher: Choose the correct system (e.g. Line + Letter Number or Section + Line + Word Number, ...), handle special characters and empty lines, ...
-• Enigma: A full working Enigma simulator incl. numerous possible settings
-• Esoteric Languages: Generators and interpretors for several esoteric programming languages like Brainf**k, Ook, Malbolge and Chef
+• Grafisk punktskriftsavkodare: Skriv prickarna i ett grafiskt gränssnitt; stöder flera språk
+• Nummerbok: Välj rätt system (t.ex. linje + bokstavsnummer eller sektion + linje + ordnummer, ...), hantera specialtecken och tomma linjer ...
+• Enigma: En fullt fungerande Enigma-simulator inkl. många inställningsmöjligheter
+• Esoteriska språk: Generatorer och tolkar för flera esoteriska programmeringsspråk som Brainf**k, Ook, Malbolge och Chef
 • Morse
-• Grundtal: Listor över viktiga tal på olika språk. For English + German there are parsers to identify even complex numeral words
-• Substitution and Vigenère Code Breakers: Try to find the solution without knowing the keys
-• Classic Codes: Playfair, Polybios, Railfence, ...
-• Historic codes: Caesar, Vigenènere, telegraph codes, ...
-• Military codes: ADFGX, Cipher Wheel, Tapir, ...
-• Technical encodings: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
+• Grundtal: Listor över viktiga tal på olika språk. För engelska + tyska finns det parsers för att identifiera även komplexa numeriska ord
+• Ersättning och Vigenère Kodbrytare: Försök att hitta lösningen utan att känna till nycklarna
+• Klassiska koder: Playfair, Polybios, Railfence, ...
+• Historiska koder: Caesar, Vigenènere, telegraf koder, ...
+• Militära koder: ADFGX, Cipherhjul, Tapir, ...
+• Tekniska kodningar: BCD, CCITT, Hashes (inkl. brute-force hash brytare), RSA, ...
 
 <b>Koordinater</b>
-• High precision coordinate algorithms which support precise calculations even with very long distances by always considering the earth's shape (ellipsoid)
-• Support of different ellipsoids, even other planets
+• Koordinatoralgoritmer med hög precision som stöder noggranna beräkningar även vid mycket långa avstånd genom att alltid ta hänsyn till jordens form (ellipsoid)
+• Stöd för olika ellipsoider, även andra planeter
 • Koordinatformat: Stöd för UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
-• Waypoint Projection: Includes precise reverse projection
-• Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
+• Vägpunkt (waypoint) projektion: Inkluderar exakt omvänd projektion
+• Open Map: Ange egna punkter och linjer, mäta vägar, exportera och importera GPX/KML; OpenStreetMap och satellitvisning
 • Variabel koordinat: Interpolera koordinatformler om vissa delar av koordinaten inte ges. Visa resultatet på kartan
 • Korsbäring, mitten av två och tre koordinater, olika skärningspunkter av linjer och cirklar, ...
 
 <b>Vetenskap och teknik</b>
-• Astronomy: Calculate position of sun and moon at a certain place and time
+• Astronomi: Beräkna positionen av solen och månen på en viss plats och tid
 • Color Space Converter: Konvertera färgvärden mellan RGB, HSL, Hex, CMYK, ...
-• Countries: ISO, calling and vehicle registration codes, flags
-• Date and Time functions: Weekday, time differences, ...
-• Irrational Numbers: π, φ and e: Show and search up to > 1 Mio. digits
-• Number sequences: Factorial, Fibonacci and Co.
-• Numeral Systems: Converts decimal to binary, hexadecimal, ...
-• Periodic Table of the Elements: Interactive view; lists which order the elements by any criterion
-• Phone Keys: Converts classic phone keys to letters. Supports phone model specific behaviours
-• Prime Numbers: Search prime numbers up to 1 Mio.
+• Länder: ISO, telefon- och fordonsregistreringskoder, flaggor
+• Datum och tid funktioner: Vardag, tidsskillnader, ...
+• Irrationella tal: π, φ och e: Visa och sök upp till > 1 miljon siffror
+• Talserier: Factorial, Fibonacci och Co.
+• Numeriska system: konvertera decimaltal till binärt tal, hexadecimalt tal, ...
+• Periodiskt system för grundämnena: Interaktiv visning; listor som sorterar elementen enligt varje kriterium
+• Telefonnycklar: Konverterar klassiska telefonknappar till bokstäver. Stödjer telefonmodellens specifika beteende
+• Primtal: Hitta primtal upp till 1 Miljon
 • Segmentsdisplay: Grafiskt gränssnitt för avkodning och kodning 7- till 16-segmentsdisplayer
-• Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
+• Enhetsomvandlare: längd, volym, tryck, effekt och många fler; konvertera mellan gemensamma enheter inkl. prefix som micro och kg
 • Skenbar temperatur, Siffersummor, DTMF, tangentbordslayouter, Projektiler, Resistor-koder, ...
 
-<b>Images and Files</b>
+<b>Bilder och Filer</b>
 • Hex Viewer
 • Exif/Metadata Viewer
-• Analyse frames of Animated Images
-• Color corrections: Adjust contrast, saturation, edge detection, ...
-• Search for Hidden Data or hidden archives
-• Read QR/Barcodes from images, create them from binary input
+• Analysera ramar i animerade bilder
+• Färgkorrigeringar: Justera kontrast, mättnad, kantdetektering, ...
+• Sök efter dolda data eller dolda arkiv
+• -Läs QR/streckkoder från bilder, skapa dem från binär input
