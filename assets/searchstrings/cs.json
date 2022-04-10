@@ -332,7 +332,7 @@
   "solitaire": "carddeck cardgame streamcipher",
   "straddlingcheckerboard": "straddlingcheckerboard spy",
   "substitution": "replacements exchange",
-  "substitutionbreaker": "monoalphabetic replacements",
+  "substitutionbreaker": "monoalphabeticreplacements substitutionbreaker substitutionsolver",
   "symbol": "images pictures fonts symbols signs tables",
   "symbol_adlam": "",
   "symbol_albhed": "roleplayinggame roleplaygame",

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/enigma.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/gcw_enigma_rotor_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Enigma extends StatefulWidget {
@@ -33,6 +36,8 @@ class EnigmaState extends State<Enigma> {
   var _currentNumberRotors = 3;
   List<GCWEnigmaRotorDropDownButton> _currentRotors = [];
   List<EnigmaRotorConfiguration> _currentRotorsConfigurations = [];
+
+  var _currentRotorInformation = 0;
 
   var _plugboardMaskFormatter =
       WrapperForMaskTextInputFormatter(mask: '## ' * 25 + '##', filter: {"#": RegExp(r'[A-Za-z]')});
@@ -151,7 +156,63 @@ class EnigmaState extends State<Enigma> {
             });
           },
         ),
-        _buildOutput()
+        _buildOutput(),
+        _buildRotorInformation()
+      ],
+    );
+  }
+
+  _rotorType(EnigmaRotorType type) {
+    switch (type) {
+      case EnigmaRotorType.ENTRY_ROTOR:
+        return i18n(context, 'enigma_rotortype_entryrotor');
+      case EnigmaRotorType.REFLECTOR:
+        return i18n(context, 'enigma_rotortype_reflector');
+      case EnigmaRotorType.STANDARD:
+        return i18n(context, 'enigma_rotortype_standard');
+    }
+  }
+
+  _buildRotorInformation() {
+    List<EnigmaRotorConfiguration> _allRotors = [];
+    if (_currentReflectorMode) _allRotors.add(_currentReflector);
+
+    _allRotors.addAll(_currentRotorsConfigurations);
+
+    if (_currentEntryRotorMode) _allRotors.add(_currentEntryRotor);
+
+    if (_allRotors.length == 0) return Container();
+
+    if (_currentRotorInformation >= _allRotors.length) _currentRotorInformation = 0;
+
+    var currentRotor = _allRotors[_currentRotorInformation].rotor;
+
+    return Column(
+      children: [
+        GCWTextDivider(text: i18n(context, 'enigma_rotorinfo')),
+        GCWDropDownSpinner(
+          index: _currentRotorInformation,
+          items: _allRotors.map((EnigmaRotorConfiguration e) => e.rotor.name).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentRotorInformation = value;
+            });
+          },
+        ),
+        GCWOutputText(
+          style: gcwMonotypeTextStyle(),
+          text: alphabet_AZ.keys.join() + '\n' + currentRotor.alphabet,
+          copyText: currentRotor.alphabet,
+        ),
+        Column(
+          children: columnedMultiLineOutput(context, [
+            [i18n(context, 'common_type'), _rotorType(currentRotor.type)],
+            [
+              i18n(context, 'enigma_turnovers'),
+              (currentRotor.turnovers ?? '').isEmpty ? i18n(context, 'common_none') : currentRotor.turnovers
+            ]
+          ]),
+        )
       ],
     );
   }
