@@ -19,7 +19,7 @@ void main() {
       {'code' : ' >25*"!dlrow ,olleH":v\n' +
                 '                  v:,_@\n' +
                 '                  >  ^\n', 'input' : '', 'expectedOutput' : BefungeOutput(Output: ' Helloworld!\n', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-      // random number generator - does not work as a test
+      // random number generator - does not work as a testcase
       //  {'code' : ' v>>>>>v\n' +
       //            '  12345\n' +
       //            '  ^?^\n' +
@@ -87,7 +87,7 @@ void main() {
               'v                                              >\n' +
               '>52*52**0*52*1*0++1+>1-:v\n' +
               '^,\\ _@', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '0123456789', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-
+    // prints UNICODE Table from 0 .. 81^3
     {'code' : 'v v                       <\n' +
               '>0>::.,5:+,1+:9:*9:*9:***-|\n' +
               '@                         <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},

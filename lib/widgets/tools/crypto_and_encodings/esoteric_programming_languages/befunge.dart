@@ -20,13 +20,12 @@ class Befunge extends StatefulWidget {
 }
 
 class BefungeState extends State< Befunge > {
-  var _textEncodeController;
-  var _textDecodeController;
+  var _befungeGenerateController;
+  var _befungeInterpretController;
   var _inputController;
-  var _scrollController = ScrollController();
 
-  var _currentEncodeText = '';
-  var _currentDecodeText = '';
+  var _currentGenerate = '';
+  var _currentInterpret = '';
   var _currentInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
@@ -36,8 +35,8 @@ class BefungeState extends State< Befunge > {
   @override
   void initState() {
     super.initState();
-    _textEncodeController = TextEditingController(text: _currentEncodeText);
-    _textDecodeController = TextEditingController(text: _currentDecodeText);
+    _befungeGenerateController = TextEditingController(text: _currentGenerate);
+    _befungeInterpretController = TextEditingController(text: _currentInterpret);
     _inputController = TextEditingController(text: _currentInput);
     _codeController = CodeController(
       text: _sourceCode,
@@ -48,8 +47,8 @@ class BefungeState extends State< Befunge > {
 
   @override
   void dispose() {
-    _textEncodeController.dispose();
-    _textDecodeController.dispose();
+    _befungeGenerateController.dispose();
+    _befungeInterpretController.dispose();
     _inputController.dispose();
     _codeController.dispose();
     super.dispose();
@@ -57,7 +56,7 @@ class BefungeState extends State< Befunge > {
 
   @override
   Widget build(BuildContext context) {
-    _codeController.text = generateBefunge (_currentEncodeText);
+    _codeController.text = generateBefunge (_currentGenerate);
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -72,24 +71,23 @@ class BefungeState extends State< Befunge > {
         ),
         _currentMode == GCWSwitchPosition.left
         ? GCWTextField(
-            controller: _textDecodeController,
+            controller: _befungeInterpretController,
             style: gcwMonotypeTextStyle(),
             hintText: i18n(context, 'common_programming_hint_sourcecode'),
             maxLines: 5,
             maxLength: MAX_LENGTH_PROGRAM,
             onChanged: (text) {
               setState(() {
-                _currentDecodeText = text;
+                _currentInterpret = text;
               });
             },
           )
         : GCWTextField(
-            controller: _textEncodeController,
-            //inputFormatters: [TextInputFormatter.allow('A-Z0-9')],
+            controller: _befungeGenerateController,
             hintText: i18n(context, 'common_programming_hint_output'),
             onChanged: (text) {
               setState(() {
-                _currentEncodeText = text;
+                _currentGenerate = text;
               });
             },
         ),
@@ -111,7 +109,7 @@ class BefungeState extends State< Befunge > {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      BefungeOutput output = interpretBefunge(_currentDecodeText, input: _currentInput);
+      BefungeOutput output = interpretBefunge(_currentInterpret, input: _currentInput);
       String outputText = '';
       if (output.Error == '')
         outputText = output.Output;
@@ -151,7 +149,6 @@ class BefungeState extends State< Befunge > {
                 child:CodeField(
                   controller: _codeController,
                   textStyle: gcwMonotypeTextStyle(),
-                  //textStyle: TextStyle(fontFamily: 'SourceCode'),
                 ),
                 trailing: Row(
                   children: <Widget>[
