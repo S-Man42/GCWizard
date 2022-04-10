@@ -55,6 +55,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   Map<int, Map<int, Map<String, dynamic>>> _foundCoordinates = {};
 
   ThemeColors _themeColors;
+  var _editFocusNode;
 
   @override
   void initState() {
@@ -63,12 +64,15 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
 
     refreshFormulas();
+
+    _editFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _newFormulaController.dispose();
     _editFormulaController.dispose();
+    _editFocusNode.dispose();
 
     super.dispose();
   }
@@ -252,6 +256,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                       ? Padding(
                           child: GCWTextField(
                             controller: _editFormulaController,
+                            focusNode: _editFocusNode,
                             onChanged: (text) {
                               setState(() {
                                 _currentEditedFormula = text;
@@ -320,6 +325,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                         _currentEditId = formula.id;
                                         _currentEditedFormula = formula.formula;
                                         _editFormulaController.text = formula.formula;
+                                        FocusScope.of(context).requestFocus(_editFocusNode);
                                       })),
                               GCWPopupMenuItem(
                                   child: iconedGCWPopupMenuItem(

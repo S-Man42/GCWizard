@@ -226,6 +226,7 @@ void main() {
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'formula' : 'bww(ABCD)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '10', 'state': 'ok'}]}},
+      {'formula' : 'bww(AB,CD)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '10', 'state': 'ok'}]}},
       {'formula' : 'bww(123)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '6', 'state': 'ok'}]}},
       {'formula' : 'bww(AB)C)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'error', 'output': [{'result': 'bww(AB)C)', 'state': 'error'}]}},
       {'formula' : 'bww(1-3#2,7)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '13', 'state': 'ok'}]}},
@@ -244,6 +245,7 @@ void main() {
 
       {'formula' : 'len(ABC)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '3', 'state': 'ok'}]}},
       {'formula' : 'len(ABC)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '5', 'state': 'ok'}]}},
+      {'formula' : 'len(A,B,C)', 'values': [FormulaValue('A', 'ABC', type: FormulaValueType.TEXT)], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '7', 'state': 'ok'}]}},
 
       {'formula' : 'len(ABC) * bww(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '30', 'state': 'ok'}]}},
       {'formula' : 'cs(bww(ABCDE)) * len(55)', 'values': <FormulaValue>[], 'expectedOutput' : {'state': 'ok', 'output': [{'result': '12', 'state': 'ok'}]}},
