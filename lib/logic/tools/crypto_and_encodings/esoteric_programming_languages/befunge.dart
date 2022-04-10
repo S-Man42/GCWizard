@@ -442,7 +442,6 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       _BefungeStack.add(stack.toString());
 
-//print(_y.toString().padLeft(2)+_x.toString().padLeft(3)+_cur().toString().padLeft(6)+'   ['+stack.toString().padRight(50)+']   '+STDOUT.join(''));
       _x = _x + dx;
       if (_x < 0) _x = SCREENWIDTH;
       if (_x == LINEWIDTH) _x = 0;
