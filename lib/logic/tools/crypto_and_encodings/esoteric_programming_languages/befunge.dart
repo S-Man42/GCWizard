@@ -35,47 +35,6 @@ const SCREENHEIGHT = PAGEHEIGHT - 1;
 const MAX_ITERATIONS = 9999;
 const MAX_OUTPUT_LENGTH = 160;
 
-final Map<String, String> MNEMONIC = {
-  '0': 'push 0',
-  '1': 'push 1',
-  '2': 'push 2',
-  '3': 'push 3',
-  '4': 'push 4',
-  '5': 'push 5',
-  '6': 'push 6',
-  '7': 'push 7',
-  '8': 'push 8',
-  '9': 'push 9',
-  '+': 'add',
-  '-': 'sub',
-  '*': 'mult',
-  '/': 'div',
-  '%': 'mod',
-  '!': 'not',
-  '\'': 'greater',
-  '<': 'move left',
-  '>': 'move right',
-  '^': 'move up',
-  'v': 'move down',
-  '?': 'move random',
-  '_': 'move right if zero',
-  '|': 'move up down if zero',
-  '"': 'string mode',
-  '”': 'string mode',
-  ':': 'dublicate',
-  '\\': 'swap',
-  '\$': 'pop discard',
-  '.': 'pop out int',
-  ',': 'pop out char',
-  '#': 'skip cell',
-  'g': 'push (get y,x)',
-  'p': 'put v → y,x,',
-  '&': 'input int',
-  '~': 'input char',
-  '@': 'end',
-  ' ': 'nop',
-};
-
 class BefungeOutput {
   String Output = '';
   String Error = '';
@@ -88,17 +47,17 @@ class BefungeOutput {
 }
 
 class Stack {
-  List<int> content;
+  List<BigInt> content;
 
-  push(int element) {
+  push(BigInt element) {
     content.add(element);
   }
 
-  int pop() {
+  BigInt pop() {
     if (isEmpty())
-      return 0;
+      return BigInt.zero;
     else {
-      int element = content[content.length - 1];
+      BigInt element = content[content.length - 1];
       content.removeAt(content.length - 1);
       return element;
     }
@@ -120,6 +79,8 @@ int _x = 0;
 int _y = 0;
 List<int> _pg = [];
 
+int _iterations = 0;
+
 List<String> _BefungeStack = [];
 List<String> _PC = [];
 List<String> _Command = [];
@@ -138,11 +99,9 @@ void _addDebugInformation(bool stringMode) {
   _Command.add(_cur());
 
   if ((_cur() == '"' || _cur() == '”')) {
-    _Mnemonic.add(MNEMONIC[_cur()]);
+    _Mnemonic.add('stringmode');
   } else if (stringMode)
     _Mnemonic.add('push ' + _cur().codeUnitAt(0).toString());
-  else
-    _Mnemonic.add(MNEMONIC[_cur()]);
 }
 
 bool _isDigit(String char) {
@@ -170,20 +129,28 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     Stack stack = Stack([]);
     int dx = 1;
     int dy = 0;
-    int a;
-    int b;
-    int v;
-    int iterations = 0;
+    BigInt a;
+    BigInt b;
+    BigInt v;
     List<String> STDIN = input == null ? [] : input.split(' ');
     List<String> STDOUT = [];
+
     bool stringMode = false;
+    bool endOfProgram = false;
 
     _pg = _fillProgram(program);
     _x = 0;
     _y = 0;
+    _iterations = 0;
 
-    while (_cur() != '@') {
-      if (_infiniteLoop(iterations))
+    _BefungeStack = [];
+    _PC = [];
+    _Command = [];
+    _Mnemonic = [];
+
+    while (!endOfProgram) {
+      if (_infiniteLoop()) {
+        _BefungeStack.add(stack.toString());
         return BefungeOutput(
             Output: STDOUT.join(''),
             Error: BEFUNGE_ERROR_INFINITE_LOOP,
@@ -191,8 +158,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
             PC: _PC,
             Command: _Command,
             Mnemonic: _Mnemonic);
+      }
 
-      if (_outOfBounds())
+      if (_outOfBounds()) {
+        _BefungeStack.add(stack.toString());
         return BefungeOutput(
             Output: STDOUT.join(''),
             Error: BEFUNGE_ERROR_NULL_COMMAND,
@@ -200,76 +169,102 @@ BefungeOutput interpretBefunge(String program, {String input}) {
             PC: _PC,
             Command: _Command,
             Mnemonic: _Mnemonic);
+      }
 
       _addDebugInformation(stringMode);
 
-      if (stringMode) if (_cur() == '"' || _cur() == '”') {
-        stringMode = false;
-      } else {
-        stack.push(_cur().codeUnitAt(0));
-      }
+      if (stringMode)
+        if (_cur() == '"' || _cur() == '”') {
+          stringMode = false;
+        } else {
+          stack.push(BigInt.from(_cur().codeUnitAt(0)));
+        }
       else {
         if (_isDigit(_cur())) {
-          stack.push(int.parse(_cur()));
+          stack.push(BigInt.from(int.parse(_cur())));
+          _Mnemonic.add('push ' + _cur());
         } else
           switch (_cur()) {
+            case '@':
+              endOfProgram = true;
+              _Mnemonic.add('end');
+              break;
+
             case '>': // move right
               dx = 1;
               dy = 0;
+              _Mnemonic.add('move right');
               break;
 
             case '<': // move left
               dx = -1;
               dy = 0;
+              _Mnemonic.add('move left');
               break;
 
             case '^': // move up
               dx = 0;
               dy = -1;
+              _Mnemonic.add('move up');
               break;
 
             case 'v': // move down
               dx = 0;
               dy = 1;
+              _Mnemonic.add('move down');
               break;
 
             case '_': // branch horizontal
               dy = 0;
-              if (stack.pop() == 0) {
+              a = stack.pop();
+              if (a == BigInt.zero) {
                 dx = 1; // move right
+                _Mnemonic.add('branch right');
               } else {
                 dx = -1; // move left
+                _Mnemonic.add('branch left');
               }
               break;
 
             case '|': // branch vertical
               dx = 0;
-              if (stack.pop() == 0) {
+              a = stack.pop();
+              if (a == BigInt.zero) {
                 dy = 1; // move down
+                _Mnemonic.add('branch down');
               } else {
                 dy = -1; // move up
+                _Mnemonic.add('branch up');
               }
               break;
 
             case '+': // add
-              stack.push(stack.pop() + stack.pop());
+              a = stack.pop();
+              b = stack.pop();
+              stack.push(a + b);
+              _Mnemonic.add('add ' + a.toString() + ', ' +  b.toString());
               break;
 
             case '-': // sub
               a = stack.pop();
               b = stack.pop();
               stack.push(b - a);
+              _Mnemonic.add('sub ' + b.toString() + ', ' +  a.toString());
               break;
 
             case '*': // mult
-              stack.push(stack.pop() * stack.pop());
+              a = stack.pop();
+              b = stack.pop();
+              stack.push(a * b);
+              _Mnemonic.add('mult ' + a.toString() + ', ' +  b.toString());
               break;
 
             case '/': // integer division
               a = stack.pop();
               b = stack.pop();
               if (a == 0) {
-                if (STDIN.length == 0)
+                if (STDIN.length == 0) {
+                  _BefungeStack.add(stack.toString());
                   return BefungeOutput(
                       Output: STDOUT.join(''),
                       Error: BEFUNGE_ERROR_NO_INPUT,
@@ -277,8 +272,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                       PC: _PC,
                       Command: _Command,
                       Mnemonic: _Mnemonic);
+                }
 
-                if (int.tryParse(STDIN.last) == null)
+                if (int.tryParse(STDIN.last) == null) {
+                  _BefungeStack.add(stack.toString());
                   return BefungeOutput(
                       Output: STDOUT.join(''),
                       Error: BEFUNGE_ERROR_INVALID_INPUT,
@@ -286,17 +283,20 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                       PC: _PC,
                       Command: _Command,
                       Mnemonic: _Mnemonic);
+                }
 
-                a = int.parse(STDIN.last);
+                a = BigInt.from(int.parse(STDIN.last));
               }
 
               stack.push(b ~/ a);
+              _Mnemonic.add('div ' + b.toString() + ', ' +  a.toString());
               break;
 
             case '%': // modulo
               a = stack.pop();
               b = stack.pop();
               stack.push(b % a);
+              _Mnemonic.add('mod ' + b.toString() + ', ' +  a.toString());
               break;
 
             case '\\': // swap
@@ -304,42 +304,53 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               b = stack.pop();
               stack.push(a);
               stack.push(b);
+              _Mnemonic.add('swap ' + a.toString() + ', ' +  b.toString());
               break;
 
             case '.': // output decimal
-              STDOUT.add(stack.pop().toString());
+              a = stack.pop();
+              STDOUT.add(a.toString());
               STDOUT.add(' ');
+              _Mnemonic.add('out int ' + a.toString());
               break;
 
             case ',': // output char
-              STDOUT.add(String.fromCharCode(stack.pop()));
+              a = stack.pop();
+              STDOUT.add(String.fromCharCode(a.toInt()));
+              _Mnemonic.add('out char ' + String.fromCharCode(a.toInt()));
               break;
 
             case '"': // string mode on/off
             case '”':
               stringMode = !stringMode;
+              _Mnemonic.add('stringmode');
               break;
 
             case ':': // dublication
               a = stack.pop();
               stack.push(a);
               stack.push(a);
+              _Mnemonic.add('dublicate ' + a.toString());
               break;
 
             case '! ': //logical not
-              if (stack.pop() == 0)
-                stack.push(1);
+              a = stack.pop();
+              if (a == BigInt.zero)
+                stack.push(BigInt.one);
               else
-                stack.push(0);
+                stack.push(BigInt.zero);
+              _Mnemonic.add('not ' + a.toString());
               break;
 
             case '#': // skip - do nothing
               _x = _x + dx;
               _y = _y + dy;
+              _Mnemonic.add('skip');
               break;
 
             case '\$': // pop and discard
               stack.pop();
+              _Mnemonic.add('discard');
               break;
 
             case '?': // move random
@@ -361,10 +372,12 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                   dy = 1;
                   break;
               }
+              _Mnemonic.add('move random');
               break;
 
             case '&': // input decimal
-              if (STDIN.length == 0 || STDIN.join('') == '')
+              if (STDIN.length == 0 || STDIN.join('') == '') {
+                _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
                     Error: BEFUNGE_ERROR_NO_INPUT,
@@ -372,8 +385,10 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
+              }
 
-              if (int.tryParse(STDIN.last) == null)
+              if (int.tryParse(STDIN.last) == null) {
+                _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
                     Error: BEFUNGE_ERROR_INVALID_INPUT,
@@ -381,13 +396,16 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
+              }
 
-              stack.push(int.parse(STDIN.last));
+              stack.push(BigInt.from(int.parse(STDIN.last)));
               STDIN.removeLast();
+              _Mnemonic.add('input int');
               break;
 
             case '~': // input char
-              if (STDIN.length == 0 || STDIN.join('') == '')
+              if (STDIN.length == 0 || STDIN.join('') == '') {
+                _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output: STDOUT.join(''),
                     Error: BEFUNGE_ERROR_NO_INPUT,
@@ -395,13 +413,18 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
-              stack.push((STDIN.last[0].codeUnitAt(0)));
+              }
+              stack.push(BigInt.from(STDIN.last[0].codeUnitAt(0)));
+              _Mnemonic.add('input char');
               break;
 
-            case 'g': // self modify - get value from memory
-              a = stack.pop(); // y
-              b = stack.pop(); // x
-              if (_outOfBoundsAccess(a, b))
+            case 'g': // self modify - get value from memory/torus and push to stack
+              b = stack.pop(); // y
+              a = stack.pop(); // x
+              _Mnemonic.add('get ' + '[' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ']');
+
+              if (_outOfBoundsAccess(a, b)) {
+                _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output:
                         STDOUT.join('') + '\n\nget(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
@@ -410,16 +433,18 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
-              else
-                stack.push(_pg[a * SCREENWIDTH + b]);
+              } else
+                stack.push(BigInt.from(_pg[a.toInt() * SCREENWIDTH + b.toInt()]));
               break;
 
-            case 'p': // self modify - put value into memory
+            case 'p': // self modify - put value from stack into memory/torus
               a = stack.pop(); // y
               b = stack.pop(); // x
               v = stack.pop(); // value
+              _Mnemonic.add('put '+v.toString() + ' → ' + '[' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ']');
 
-              if (_outOfBoundsAccess(a, b))
+              if (_outOfBoundsAccess(a, b)) {
+                _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output:
                         STDOUT.join('') + '\n\nput(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
@@ -428,14 +453,23 @@ BefungeOutput interpretBefunge(String program, {String input}) {
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
-              else
+              } else
                 _put(a, b, v);
               break;
 
             case ' ':
+              _Mnemonic.add('nop');
               break;
 
             case '\'': // greater than
+            case '`':
+              a = stack.pop();
+              b = stack.pop();
+              if (b > a)
+                stack.push(BigInt.one);
+              else
+                stack.push(BigInt.zero);
+              _Mnemonic.add('greater than');
               break;
           } // switch cur
       }
@@ -448,7 +482,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
       _y = _y + dy;
       if (_y < 0) _y = SCREENHEIGHT;
       if (_y == PAGEHEIGHT) _y = 0;
-      iterations++;
+      _iterations++;
     } // while
 
     return BefungeOutput(
@@ -464,20 +498,20 @@ BefungeOutput interpretBefunge(String program, {String input}) {
   }
 }
 
-bool _infiniteLoop(int iterations) {
-  return (iterations > MAX_ITERATIONS);
+bool _infiniteLoop() {
+  return (_iterations > MAX_ITERATIONS);
 }
 
 bool _outOfBounds() {
   return (_y > SCREENHEIGHT || _x > SCREENWIDTH);
 }
 
-bool _outOfBoundsAccess(int y, int x) {
-  return (y > SCREENHEIGHT || y < 0 || x > SCREENWIDTH || x < 0);
+bool _outOfBoundsAccess(BigInt y, BigInt x) {
+  return (y > BigInt.from(SCREENHEIGHT) || y < BigInt.zero || x > BigInt.from(SCREENWIDTH) || x < BigInt.zero);
 }
 
-void _put(int y, int x, int v) {
-  _pg[y * SCREENWIDTH + x] = v;
+void _put(BigInt y, BigInt x, BigInt v) {
+  _pg[y.toInt() * SCREENWIDTH + x.toInt()] = v.toInt();
 }
 
 List<int> _fillProgram(String program) {

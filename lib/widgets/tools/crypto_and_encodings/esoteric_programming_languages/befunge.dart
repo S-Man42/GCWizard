@@ -120,7 +120,13 @@ class BefungeState extends State< Befunge > {
       columnData.add(['PC', 'Cmd', 'Mnemonic', 'Stack']);
       for (int i = 0; i < output.PC.length; i++) {
         columnData
-            .add([output.PC[i], output.Command[i], output.Mnemonic[i], i < output.BefungeStack.length ? output.BefungeStack[i] : '']);
+            .add(
+            [
+              output.PC[i],
+              i < output.Command.length ? output.Command[i] : '',
+              i < output.Mnemonic.length ? output.Mnemonic[i] : '',
+              i < output.BefungeStack.length ? output.BefungeStack[i] : ''
+            ]);
       }
 
       return Column(
