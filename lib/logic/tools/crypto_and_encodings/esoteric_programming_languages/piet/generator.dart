@@ -11,17 +11,18 @@ import 'package:gc_wizard/utils/common_utils.dart';
 
 Future<Uint8List> generatePiet(String input) async {
   List<List<int>> result;
+  _currentColor = _colorStack();
   var i = 0;
   input
     .split('')
     .forEach((char) {
       var block = _drawBlock(char.runes.first, i);
-        i++;
-        if (result == null)
-          result = block;
-        else
-          for (var x=0; x < result.length; x++)
-            result[x].addAll(block[x]);
+      i++;
+      if (result == null)
+        result = block;
+      else
+        for (var x=0; x < result.length; x++)
+          result[x].addAll(block[x]);
     });
   var block = _drawEnd(i);
   if (result == null)
@@ -32,13 +33,13 @@ Future<Uint8List> generatePiet(String input) async {
 
   var lines = <String>[];
   var colorMap = Map<String, Color>();
-  var colorMapSwitched = Map<Color, String>();
+  var colorMapSwitched = Map<int, String>();
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < knownColors.length; i++) {
-    colorMap.addAll({mapList[i]: Color(knownColors.elementAt(i))});
+    colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)}); // | 0xFF000000
+    colorMapSwitched.addAll({knownColors.elementAt(i): mapList[i + 1]});
   };
-  colorMapSwitched = switchMapKeyValue(colorMap);
 
   result.forEach((line) {
     var row ='';
@@ -48,11 +49,10 @@ Future<Uint8List> generatePiet(String input) async {
     lines.add(row);
   });
 
-  return input2Image(lines, colors: colorMap, bounds:0, pointSize: 1);
+  return input2Image(lines, colors: colorMap, bounds: 0, pointSize: 1);
 }
 
 class _colorStack {
-
   var _color_table = {1 ,0}.toList();
 
   int RGB() {
@@ -71,7 +71,7 @@ class _colorStack {
   }
 }
 
-var _currentColor = _colorStack();
+_colorStack _currentColor;
 
 final _blockHeight = 12;
 final int _white = knownColors.elementAt(18);
@@ -80,21 +80,22 @@ final int _black = knownColors.elementAt(19);
 
 List<List<int>>  _drawBlock(int size, int num) {
   final blockWidth = 12;
-  var block = List.filled(_blockHeight * blockWidth, _black);
+  var block = List.filled(_blockHeight * blockWidth, _white);
   if (num != 0) {
     var old_push_color = _currentColor.push_color();
     _currentColor.write_color();
     block[0] = old_push_color;
-    size = size + 1;
+    size++;
   } else
     block[0] = _currentColor.RGB();
 
-  block.fillRange(1, _calcIndex((size / blockWidth).ceil(), blockWidth, blockWidth), _currentColor.RGB());
-  var pixLft = size; //144 - size;
-  var div = (pixLft / 12).toInt();
-  var rem = pixLft % 12;
+  var rem = size % blockWidth;
+  var rows = (size / blockWidth).ceil();
+  if (rows > 0) rows--;
+  block.fillRange(1, _calcIndex(rows, blockWidth, blockWidth), _currentColor.RGB());
+
   if (rem != 0)
-    block.fillRange(_calcIndex(div , 0, blockWidth), _calcIndex(div, rem, blockWidth), _black);
+    block.fillRange(_calcIndex(rows, 0, blockWidth), _calcIndex(rows, blockWidth - rem, blockWidth), _white);
 
   var lines = <List<int>>[];
   for (var i = 0; i < _blockHeight; i++)

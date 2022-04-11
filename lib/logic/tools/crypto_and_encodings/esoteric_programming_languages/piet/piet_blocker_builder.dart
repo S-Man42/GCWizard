@@ -2,27 +2,27 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 
-const knownColors = { //format BBGGRR (not RGB)
+const knownColors = { //format RGB
   // reds
-  0xC0C0FF, // light
-  0x0000FF,
-  0x0000C0, //dark
+  0xFFC0C0, // light
+  0xFF0000,
+  0xC00000, //dark
   // yellows
-  0xC0FFFF,
-  0x00FFFF,
-  0x00C0C0,
+  0xFFFFC0,
+  0xFFFF00,
+  0x0C0C000,
   // greens
   0xC0FFC0,
   0x00FF00,
   0x00C000,
   // cyans
-  0xFFFFC0,
-  0xFFFF00,
-  0xC0C000,
+  0xC0FFFF,
+  0x00FFFF,
+  0x00C0C0,
   // blues
-  0xFFC0C0,
-  0xFF0000,
-  0xC00000,
+  0xC0C0FF,
+  0x0000FF,
+  0x0000C0,
   // magentas
   0xFFC0FF,
   0xFF00FF,

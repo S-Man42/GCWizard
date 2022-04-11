@@ -10,21 +10,21 @@ class PietImageReader {
 
   List<List<int>> _readImage(img.Image image) {
     var step = _estimateCodelSize(image);
-    var pixels = <List<int>>[];
+    var codels = <List<int>>[];
 
     int outY = 0;
     for (var y = 0; y < image.height; y += step, outY++) {
-      pixels.add(<int>[]);
+      codels.add(<int>[]);
       for (var x = 0; x < image.width; x += step) {
         var pix = image.getPixel(x, y);
-        pixels[outY].add(_toRgb(pix));
+        codels[outY].add(_toRgb(pix));
       }
     }
-    return pixels;
+    return codels;
   }
 
-  int _toRgb(int rgb24) {
-    return (rgb24 & 0x00FFFFFF); //AABBGGRR -> BGR (not RGB)
+  int _toRgb(int abgr24) {
+    return ((abgr24 & 0x000000FF) << 16) | (abgr24 & 0x0000FF00) | ((abgr24 & 0x00FF0000) >> 16); //AABBGGRR -> RGB
   }
 
   int _estimateCodelSize(img.Image image) {

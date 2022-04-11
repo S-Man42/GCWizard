@@ -176,8 +176,9 @@ class PietState extends State<Piet> {
     if (_currentGeneratorOutput == null) return GCWDefaultOutput();
 
     return GCWDefaultOutput( child:
-      GCWImageViewData(GCWFile(bytes: _currentGeneratorOutput))
-    );
+      GCWImageView(
+        imageData: GCWImageViewData(GCWFile(bytes: _currentGeneratorOutput))
+    ));
   }
 
   void _calcGeneratorOutput() async {
