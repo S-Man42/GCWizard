@@ -27,8 +27,8 @@ class PietNavigator {
 
   List<List<int>> _data;
 
-  final int white = knownColors[18];
-  final int black = knownColors[19];
+  final int white = knownColors.elementAt(18);
+  final int black = knownColors.elementAt(19);
 
   int _width;
   int _height;

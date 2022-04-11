@@ -2,7 +2,7 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 
-final knownColors = { //format BBGGRR (not RGB)
+const knownColors = { //format BBGGRR (not RGB)
   // reds
   0xC0C0FF, // light
   0x0000FF,
@@ -31,7 +31,7 @@ final knownColors = { //format BBGGRR (not RGB)
   0xFFFFFF,
   // black
   0x000000
-}.toList();
+};
 
 class PietBlockerBuilder {
   // we if want to support custom colors and operations going forward

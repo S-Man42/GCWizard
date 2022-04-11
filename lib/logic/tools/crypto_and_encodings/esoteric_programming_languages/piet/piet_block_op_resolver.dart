@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/base_operations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_blocker_builder.dart';
 import 'package:tuple/tuple.dart';
 
 enum HueColor {
@@ -65,53 +66,51 @@ class PietBlockOpResolver {
     return PietOps.Noop;
   }
 
-  Tuple2<bool, Tuple2<HueColor, Darkness>> _tryResolveColor(int colour) {
-    switch (colour) {
+  Tuple2<bool, Tuple2<HueColor, Darkness>> _tryResolveColor(int color) {
     // red
-      case 0xFFC0C0:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light));
-      case 0xFF0000:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Normal));
-      case 0xC00000:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Dark));
+    if (color == knownColors.elementAt(0))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light));
+    else if (color == knownColors.elementAt(1))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Normal));
+    else if (color == knownColors.elementAt(2))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Dark));
     // yellow
-      case 0xFFFFC0:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Light));
-      case 0xFFFF00:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Normal));
-      case 0xC0C000:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Dark));
+    else if (color == knownColors.elementAt(3))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Light));
+    else if (color == knownColors.elementAt(4))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Normal));
+    else if (color == knownColors.elementAt(5))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Dark));
     // green
-      case 0xC0FFC0:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Light));
-      case 0x00FF00:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Normal));
-      case 0x00C000:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Dark));
+    else if (color == knownColors.elementAt(6))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Light));
+    else if (color == knownColors.elementAt(7))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Normal));
+    else if (color == knownColors.elementAt(8))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Dark));
     //cyan
-      case 0xC0FFFF:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Light));
-      case 0x00FFFF:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Normal));
-      case 0x00C0C0:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Dark));
+    else if (color == knownColors.elementAt(9))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Light));
+    else if (color == knownColors.elementAt(10))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Normal));
+    else if (color == knownColors.elementAt(11))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Dark));
     //blue
-      case 0xC0C0FF:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Light));
-      case 0x0000FF:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Normal));
-      case 0x0000C0:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Dark));
+    else if (color == knownColors.elementAt(12))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Light));
+    else if (color == knownColors.elementAt(13))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Normal));
+    else if (color == knownColors.elementAt(14))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Dark));
     //magenta
-      case 0xFFC0FF:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Light));
-      case 0xFF00FF:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Normal));
-      case 0xC000C0:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Dark));
-      default:
-        return Tuple2<bool, Tuple2<HueColor, Darkness>>(false, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light)); // default
-    }
+    else if (color == knownColors.elementAt(15))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Light));
+    else if (color == knownColors.elementAt(16))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Normal));
+    else if (color == knownColors.elementAt(17))
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Dark));
+    else
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(false, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light)); // default
   }
 }
 

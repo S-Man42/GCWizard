@@ -36,7 +36,7 @@ Future<Uint8List> generatePiet(String input) async {
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < knownColors.length; i++) {
-    colorMap.addAll({mapList[i]: Color(knownColors[i])});
+    colorMap.addAll({mapList[i]: Color(knownColors.elementAt(i))});
   };
   colorMapSwitched = switchMapKeyValue(colorMap);
 
@@ -52,76 +52,11 @@ Future<Uint8List> generatePiet(String input) async {
 }
 
 class _colorStack {
+
   var _color_table = {1 ,0}.toList();
 
   int RGB() {
-    if (_color_table[1] == 0) {
-      //Red
-      if (_color_table[0] == 0)
-        //Light
-        return knownColors[0];
-      else if (_color_table[0] == 1)
-        //Normal
-        return knownColors[1];
-      else if (_color_table[0] == 2)
-        //Dark
-        return knownColors[2];
-    } else if (_color_table[1] == 1) {
-      //Yellow
-      if (_color_table[0] == 0)
-        //Light
-        return knownColors[3];
-      else if (_color_table[0] == 1)
-        //Normal
-        return knownColors[4];
-      else if (_color_table[0] == 2)
-        //Dark
-        return knownColors[5];
-    } else if (_color_table[1] == 2) {
-      //Green
-      if (_color_table[0] == 0)
-        //Light
-        return knownColors[6];
-      else if (_color_table[0] == 1)
-        //Normal
-        return knownColors[7];
-      else if (_color_table[0] == 2)
-        //Dark
-        return knownColors[8];
-    } else if (_color_table[1] == 3) {
-      //Cyan
-      if (_color_table[0] == 0)
-        //Light
-        return knownColors[9];
-      else if (_color_table[0] == 1)
-        //Normal
-        return knownColors[10];
-      else if (_color_table[0] == 2)
-        //Dark
-        return knownColors[11];
-    } else if (_color_table[1] == 4) {
-      //Blue
-      if (_color_table[0] == 0)
-        //Light
-        return knownColors[12];
-      else if (_color_table[0] == 1)
-        //Normal
-        return knownColors[13];
-      else if (_color_table[0] == 2)
-        //Dark
-        return knownColors[14];
-    } else if (_color_table[1] == 5) {
-      //Magenta
-      if (_color_table[0] == 0)
-        //Light
-        return knownColors[15];
-      else if (_color_table[0] == 1)
-        //Normal
-        return knownColors[16];
-      else if (_color_table[0] == 2)
-        //Dark
-        return knownColors[17];
-    }
+    return knownColors.elementAt(_color_table[1] * 3 + _color_table[0]);
   }
 
   int push_color() {
@@ -139,10 +74,13 @@ class _colorStack {
 var _currentColor = _colorStack();
 
 final _blockHeight = 12;
+final int _white = knownColors.elementAt(18);
+final int _black = knownColors.elementAt(19);
+
 
 List<List<int>>  _drawBlock(int size, int num) {
   final blockWidth = 12;
-  var block = List.filled(_blockHeight * blockWidth, knownColors[19]); // black
+  var block = List.filled(_blockHeight * blockWidth, _black);
   if (num != 0) {
     var old_push_color = _currentColor.push_color();
     _currentColor.write_color();
@@ -156,7 +94,7 @@ List<List<int>>  _drawBlock(int size, int num) {
   var div = (pixLft / 12).toInt();
   var rem = pixLft % 12;
   if (rem != 0)
-    block.fillRange(_calcIndex(div , 0, blockWidth), _calcIndex(div, rem, blockWidth), knownColors[19]);
+    block.fillRange(_calcIndex(div , 0, blockWidth), _calcIndex(div, rem, blockWidth), _black);
 
   var lines = <List<int>>[];
   for (var i = 0; i < _blockHeight; i++)
@@ -167,18 +105,18 @@ List<List<int>>  _drawBlock(int size, int num) {
 
 List<List<int>> _drawEnd(int num) {
   final blockWidth = 5;
-  var block = List.filled(_blockHeight * blockWidth, knownColors[18]); // white
+  var block = List.filled(_blockHeight * blockWidth, _white);
   var oldPushColor = _currentColor.push_color();
 
   block[_calcIndex(0, 0, blockWidth)] = oldPushColor;
   block[_calcIndex(0, 1, 5)] = _currentColor.write_color();
-  block[_calcIndex(0, 3, blockWidth)] = knownColors[19];
-  block[_calcIndex(1, 1, blockWidth)] = knownColors[19];
-  block[_calcIndex(1, 3, blockWidth)] = knownColors[19];
-  block[_calcIndex(2, 0, blockWidth)] = knownColors[19];
+  block[_calcIndex(0, 3, blockWidth)] = _black;
+  block[_calcIndex(1, 1, blockWidth)] = _black;
+  block[_calcIndex(1, 3, blockWidth)] = _black;
+  block[_calcIndex(2, 0, blockWidth)] = _black;
   block.fillRange(_calcIndex(2, 1, blockWidth), _calcIndex(2, 4, blockWidth), _currentColor.write_color());
-  block[_calcIndex(2, 4, blockWidth)] = knownColors[19];
-  block.fillRange(_calcIndex(3, 1, blockWidth), _calcIndex(3, 4, blockWidth), knownColors[19]);
+  block[_calcIndex(2, 4, blockWidth)] = knownColors.elementAt(19);
+  block.fillRange(_calcIndex(3, 1, blockWidth), _calcIndex(3, 4, blockWidth), _black);
 
   var lines = <List<int>>[];
   for (var i = 0; i < _blockHeight; i++)
