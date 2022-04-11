@@ -47,19 +47,19 @@ class PietBlockerBuilder {
     _height = _data.length;
   }
 
-  PietBlock GetBlockAt(int x, int y) {
-    return _BuildPietBlock(x, y);
+  PietBlock getBlockAt(int x, int y) {
+    return _buildPietBlock(x, y);
   }
 
-  PietBlock _BuildPietBlock(int x, int y) {
+  PietBlock _buildPietBlock(int x, int y) {
     int targetColor = _data[y][x];
     var knownColor = knownColors.contains(targetColor);
     PietBlock block = PietBlock(targetColor, knownColor);
 
-    return BuildPietBlockRec(block, x, y, 0, 0);
+    return _buildPietBlockRec(block, x, y, 0, 0);
   }
 
-  PietBlock BuildPietBlockRec(PietBlock block, int x, int y, int xOffset, int yOffset) {
+  PietBlock _buildPietBlockRec(PietBlock block, int x, int y, int xOffset, int yOffset) {
     var newX = x + xOffset;
     var newY = y + yOffset;
 
@@ -67,23 +67,23 @@ class PietBlockerBuilder {
       return block;
 
     var currentColor = _data[newY][newX];
-    if (currentColor != block.Color) // colors don't match - you hit an edge
+    if (currentColor != block.color) // colors don't match - you hit an edge
       return block;
 
     // int countBefore = block.BlockCount;
-    if (!block.AddPixel(newX, newY)) return block;
+    if (!block.addPixel(newX, newY)) return block;
 
     // top
-    if (yOffset != 1) BuildPietBlockRec(block, newX, newY, 0, -1);
+    if (yOffset != 1) _buildPietBlockRec(block, newX, newY, 0, -1);
 
     // bottom
-    if (yOffset != -1) BuildPietBlockRec(block, newX, newY, 0, 1);
+    if (yOffset != -1) _buildPietBlockRec(block, newX, newY, 0, 1);
 
     // left
-    if (xOffset != 1) BuildPietBlockRec(block, newX, newY, -1, 0);
+    if (xOffset != 1) _buildPietBlockRec(block, newX, newY, -1, 0);
 
     // right
-    if (xOffset != -1) BuildPietBlockRec(block, newX, newY, 1, 0);
+    if (xOffset != -1) _buildPietBlockRec(block, newX, newY, 1, 0);
 
     return block;
   }

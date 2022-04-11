@@ -28,7 +28,7 @@ void main() {
 
         var data  = await readByteDataFromFile(elem['path']);
         var imageReader = PietImageReader();
-        var _pietPixels = imageReader.ReadImage(data);
+        var _pietPixels = imageReader.readImage(data);
 
         var _actual = await interpretPiet(_pietPixels, []);
         expect(_actual.output, elem['expectedOutput']);
@@ -64,12 +64,12 @@ void main() {
 
         PietStack stack = new PietStack();
 
-        stack.Push(elem['value1']);
-        stack.Push(elem['value2']);
+        stack.push(elem['value1']);
+        stack.push(elem['value2']);
 
-        stack.Mod();
+        stack.mod();
 
-        var _actual = stack.Pop();
+        var _actual = stack.pop();
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -92,7 +92,7 @@ void main() {
       test('input: ${elem['input']}', () async {
         var result = await interpretPiet(data, []);
 
-        expect(result.state.Running, false);
+        expect(result.state.running, false);
         
         expect(result.output, elem['expectedOutput']);
       });

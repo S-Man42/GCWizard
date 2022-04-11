@@ -2,40 +2,39 @@
 
 class PietStack {
   List<int> _stack = <int>[];
-
   int get length => _stack.length;
 
-  void Push(int value) {
+  void push(int value) {
     _stack.add(value);
   }
 
-  int Pop() {
-    return TryPop().item2;
+  int pop() {
+    return tryPop().item2;
   }
 
-  int Add() {
-    _ApplyTernary((int s1, int s2) => s1 + s2);
+  int add() {
+    _applyTernary((int s1, int s2) => s1 + s2);
   }
 
-  int Subtract() {
-    _ApplyTernary((int s1, int s2) => s2 - s1);
+  int subtract() {
+    _applyTernary((int s1, int s2) => s2 - s1);
   }
 
-  int Multiply() {
-    _ApplyTernary((int s1, int s2) => s1 * s2);
+  int multiply() {
+    _applyTernary((int s1, int s2) => s1 * s2);
   }
 
-  int Divide() {
-    _ApplyTernaryIf(
+  int divide() {
+    _applyTernaryIf(
         (int s1, int s2) => (s2 / s1).toInt(),
         (_, int s2) => s2 != 0
     );
   }
 
-  int Mod() {
+  int mod() {
     // per the spec take the second value mod the first
-    _ApplyTernaryIf(
-        (int s1, int s2) => _ModExt(s2, s1),
+    _applyTernaryIf(
+        (int s1, int s2) => m(s2, s1),
         (int s1, _) => s1 != 0
     );
   }
@@ -46,34 +45,34 @@ class PietStack {
   /// <param name="a">the dividend</param>
   /// <param name="n">the divisor</param>
   /// <returns>the modulus</returns>
-  int _ModExt(int a, int n) {
+  int m(int a, int n) {
     // kudos to Erdal G of Stackoverflow - https://stackoverflow.com/a/61524484
 
     return (((a %= n) < 0) && n > 0) || (a > 0 && n < 0) ? a + n : a;
   }
 
-  int Not() {
-    var ret = TryPop();
+  int not() {
+    var ret = tryPop();
     var result = ret.item2;
     if (!ret.item1) return null;
 
-    Push(result == 0 ? 1 : 0);
+    push(result == 0 ? 1 : 0);
   }
 
-  int Greater() {
-    return _ApplyTernary((int s1, int s2) => s2 > s1 ? 1 : 0);
+  int greater() {
+    return _applyTernary((int s1, int s2) => s2 > s1 ? 1 : 0);
   }
 
-  void Duplicate() {
-    var ret = TryPop();
+  void duplicate() {
+    var ret = tryPop();
     var result = ret.item2;
     if (!ret.item1) return;
-    Push(result);
-    Push(result);
+    push(result);
+    push(result);
   }
 
-  int _ApplyTernary(Function operatorFunc) { //<int, int, int>
-    var ret = TryPop2();
+  int _applyTernary(Function operatorFunc) { //<int, int, int>
+    var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return null;
 
@@ -81,11 +80,11 @@ class PietStack {
     var second = stackResults.item2;
 
     var result = operatorFunc(top, second);
-    Push(result);
+    push(result);
   }
 
-  bool _ApplyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
-    var ret = TryPop2();
+  bool _applyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
+    var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return false;
 
@@ -95,11 +94,11 @@ class PietStack {
     if (!conditionalFunc(top, second)) return false;
 
     var result = operatorFunc(top, second);
-    Push(result);
+    push(result);
   }
 
-  void Roll() {
-    var ret = TryPop2();
+  void roll() {
+    var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return;
 
@@ -114,7 +113,7 @@ class PietStack {
       RotateLeft(depthOfRoll, absNumberOfRolls);
   }
 
-  Tuple2<bool, int> TryPop() {
+  Tuple2<bool, int> tryPop() {
     if (_stack.length < 1) return Tuple2<bool, int>(false, null);
 
     var result = _stack.last;
@@ -123,10 +122,10 @@ class PietStack {
     return Tuple2<bool, int>(true, result);
   }
 
-  Tuple2<bool, Tuple2<int, int>> TryPop2() {
+  Tuple2<bool, Tuple2<int, int>> tryPop2() {
     if (_stack.length < 2) return Tuple2<bool, Tuple2<int, int>>(false, Tuple2<int, int>(0, 0));
 
-    return Tuple2<bool, Tuple2<int, int>>(true, Tuple2<int, int>(Pop(), Pop()));
+    return Tuple2<bool, Tuple2<int, int>>(true, Tuple2<int, int>(pop(), pop()));
   }
 
   bool RotateRight(int depth, int iterations) {
@@ -139,16 +138,16 @@ class PietStack {
     for (var i = 0; i < depth; i++)
     {
       if (i < absoluteIterations)
-        stack1.Push(Pop());
+        stack1.push(pop());
       else
-        stack2.Push(Pop());
+        stack2.push(pop());
     }
 
     while (stack1.length > 0)
-      Push(stack1.Pop());
+      push(stack1.pop());
 
     while (stack2.length > 0)
-      Push(stack2.Pop());
+      push(stack2.pop());
 
     return true;
   }
@@ -163,16 +162,16 @@ class PietStack {
     for (var i = depth; i > 0; i--)
     {
       if (i <= absoluteIterations)
-        stack1.Push(Pop());
+        stack1.push(pop());
       else
-        stack2.Push(Pop());
+        stack2.push(pop());
     }
 
     while (stack2.length > 0)
-      Push(stack2.Pop());
+      push(stack2.pop());
 
     while (stack1.length > 0)
-      Push(stack1.Pop());
+      push(stack1.pop());
 
     return true;
   }

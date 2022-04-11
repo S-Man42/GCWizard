@@ -39,7 +39,7 @@ Future<PietResult> interpretPiet(List<List<int>> data, List<String> input,
   pietSession.input  = input;
 
   try {
-    pietSession.Run();
+    pietSession.run();
 
     return PietResult(output: pietSession._output, input_expected: _input_required, input_number_expected: _input_required_number);
   } catch (err) {
@@ -84,26 +84,26 @@ class PietSession {
     _stack = PietStack();
     _timeOut = max(timeOut, 100);
 
-    _currentBlock = _builder.GetBlockAt(0, 0);
+    _currentBlock = _builder.getBlockAt(0, 0);
 
     var ops = BaseOperations(_stack, this,
         () => _currentBlock,
-        (i) => _navigator.RotateDirectionPointer(i),
-        (i) => _navigator.ToggleCodelChooser(i));
-    _actionMap = ops.GetMap();
+        (i) => _navigator.rotateDirectionPointer(i),
+        (i) => _navigator.toggleCodelChooser(i));
+    _actionMap = ops.getMap();
   }
 
-  bool _Running = false;
-  bool get Running => _Running;
+  bool _running = false;
+  bool get running => _running;
 
-  void Step() {
+  void _step() {
     Point result;
-    var ret = _navigator.TryNavigate(_currentBlock);
-    if (!ret.item1) _Running = false;
+    var ret = _navigator.tryNavigate(_currentBlock);
+    if (!ret.item1) _running = false;
     result = ret.item2;
 
-    var newBlock = _builder.GetBlockAt(result.x, result.y);
-    var opCode = _opsResolver.Resolve(_currentBlock, newBlock);
+    var newBlock = _builder.getBlockAt(result.x, result.y);
+    var opCode = _opsResolver.resolve(_currentBlock, newBlock);
 
     if (_actionMap.containsKey(opCode))
       _actionMap[opCode]();
@@ -111,25 +111,25 @@ class PietSession {
     _currentBlock = newBlock;
   }
 
-  void Run() {
-    _Running = true;
+  void run() {
+    _running = true;
 
     var start_time = DateTime.now();
 
-    while (Running) {
+    while (running) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
         throw new Exception('common_programming_error_maxiterations');
       }
       //if (_navigator.StepCount % 10 == 0) print(_navigator.StepCount);
-      Step();
+      _step();
     }
   }
 
-  void Output(String value) {
+  void output(String value) {
     _output += value;
   }
 
-  int ReadInt() {
+  int readInt() {
     _input_required = true;
     _input_required_number = true;
     if (input.length == 0) throw new Exception(_inputRequired);
@@ -140,7 +140,7 @@ class PietSession {
     return int.tryParse(_input);
   }
 
-  String ReadChar() {
+  String readChar() {
     _input_required = true;
     _input_required_number = false;
     if (input.length == 0) throw new Exception(_inputRequired);

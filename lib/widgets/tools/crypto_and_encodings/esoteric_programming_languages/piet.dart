@@ -2,8 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/generator.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_image_reader.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_session.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -27,19 +29,29 @@ class Piet extends StatefulWidget {
 
 class PietState extends State<Piet> {
   GCWFile _originalData;
-  String _currentInput;
-  PietResult _currentOutput = null;
+  String _currentInterpreterInput;
+  String _currentGeneratorInput;
+  PietResult _currentInterpreterOutput = null;
+  Uint8List _currentGeneratorOutput = null;
   var __calcOutput = false;
   var _isStarted = false;
   var _currentMode = GCWSwitchPosition.left;
+  TextEditingController _inputGeneratorController;
 
   @override
   void initState() {
     super.initState();
 
+    _inputGeneratorController = TextEditingController(text: _currentGeneratorInput);
     if (widget.file != null && widget.file.bytes != null) {
       _originalData = widget.file;
     }
+  }
+
+  @override
+  void dispose() {
+    _inputGeneratorController.dispose();
+    super.dispose();
   }
 
   bool _validateData(Uint8List bytes) {
@@ -68,16 +80,6 @@ class PietState extends State<Piet> {
   Widget _buildInterpreter() {
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'common_programming_mode_interpret'),
-          rightValue: i18n(context, 'common_programming_mode_generate'),
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile value) {
@@ -87,12 +89,12 @@ class PietState extends State<Piet> {
             }
             setState(() {
               _originalData = value;
-              _currentInput = null;
-              _currentOutput = null;
+              _currentInterpreterInput = null;
+              _currentInterpreterOutput = null;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 setState(() {});
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _calcOutput(context);
+                  _calcInterpreterOutput();
                 });
               });
             });
@@ -109,49 +111,61 @@ class PietState extends State<Piet> {
 
   Widget _buildInterpreterOutput() {
     if (_originalData?.bytes == null) return GCWDefaultOutput();
-    if (_currentOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
+    if (_currentInterpreterOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
     return GCWDefaultOutput( child:
-        _currentOutput.output + (_currentOutput.error ? '\n' + i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText : ''),
+        _currentInterpreterOutput.output + (_currentInterpreterOutput.error ? '\n' +
+            i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText : ''),
     );
+  }
+
+  void _calcInterpreterOutput() async {
+    if (_isStarted) return;
+
+    _isStarted = true;
+
+    var imageReader = PietImageReader();
+    var _pietPixels = _currentInterpreterOutput?.state?.data ?? imageReader.readImage(_originalData.bytes);
+    var _currentInputList = <String>[];
+    if (!(_currentInterpreterInput == null || _currentInterpreterInput.isEmpty))
+      if (_currentInterpreterOutput?.state != null && !_currentInterpreterOutput.input_number_expected)
+        _currentInputList = _currentInterpreterInput.split('').toList();
+      else
+        _currentInputList = [_currentInterpreterInput];
+
+    var currentOutputFuture = interpretPiet(_pietPixels, _currentInputList, continueState: _currentInterpreterOutput?.state);
+
+    currentOutputFuture.then((output) {
+      if (output.finished) {
+        _currentInterpreterOutput = output;
+        _isStarted = false;
+        this.setState(() {});
+      } else {
+        _currentInterpreterOutput = output;
+        _currentInterpreterInput = null;
+        _showDialogBox(context, output.output);
+      }
+    });
   }
 
   Widget _buildGenerator() {
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'common_programming_mode_interpret'),
-          rightValue: i18n(context, 'common_programming_mode_generate'),
-          value: _currentMode,
-          onChanged: (value) {
+        GCWTextField(
+          controller: _inputGeneratorController,
+          onChanged: (text) {
             setState(() {
-              _currentMode = value;
+              _currentGeneratorInput = text;
             });
           },
         ),
-        GCWOpenFile(
-          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-          onLoaded: (GCWFile value) {
-            if (value == null || !_validateData(value.bytes)) {
-              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-              return;
-            }
+        GCWButton(
+          text: i18n(context, 'common_start'),
+          onPressed: () {
             setState(() {
-              _originalData = value;
-              _currentInput = null;
-              _currentOutput = null;
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                setState(() {});
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _calcOutput(context);
-                });
-              });
+              _calcGeneratorOutput();
             });
           },
-        ), // Fixes a display issue
-
-        GCWImageView(
-          imageData: _originalData?.bytes == null ? null : GCWImageViewData(GCWFile(bytes: _originalData.bytes)),
         ),
         _buildGeneratorOutput()
       ],
@@ -159,40 +173,20 @@ class PietState extends State<Piet> {
   }
 
   Widget _buildGeneratorOutput() {
-    if (_originalData?.bytes == null) return GCWDefaultOutput();
-    if (_currentOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
+    if (_currentGeneratorOutput == null) return GCWDefaultOutput();
 
     return GCWDefaultOutput( child:
-    _currentOutput.output + (_currentOutput.error ? '\n' + i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText : ''),
+      GCWImageViewData(GCWFile(bytes: _currentGeneratorOutput))
     );
   }
 
-  _calcOutput(BuildContext context) async {
-    if (_isStarted) return;
-
-    _isStarted = true;
-
-    var imageReader = PietImageReader();
-    var _pietPixels = _currentOutput?.state?.data ?? imageReader.ReadImage(_originalData.bytes);
-    var _currentInputList = <String>[];
-    if (!(_currentInput == null || _currentInput.isEmpty))
-      if (_currentOutput?.state != null && !_currentOutput.input_number_expected)
-        _currentInputList = _currentInput.split('').toList();
-      else
-        _currentInputList = [_currentInput];
-
-    var currentOutputFuture = interpretPiet(_pietPixels, _currentInputList, continueState: _currentOutput?.state);
-
-    currentOutputFuture.then((output) {
-      if (output.finished) {
-        _currentOutput = output;
-        _isStarted = false;
-        this.setState(() {});
-      } else {
-        _currentOutput = output;
-        _currentInput = null;
-        _showDialogBox(context, output.output);
-      }
+  void _calcGeneratorOutput() async {
+    _currentGeneratorOutput = null;
+    var generatorOutput = generatePiet(_currentGeneratorInput);
+    generatorOutput.then((output) {
+      setState(() {
+        _currentGeneratorOutput = output;
+      });
     });
   }
 
@@ -210,7 +204,7 @@ class PietState extends State<Piet> {
                 autofocus: true,
                 filled: true,
                 onChanged: (text) {
-                  _currentInput = text;
+                  _currentInterpreterInput = text;
                 },
               ),
             ],
@@ -221,7 +215,7 @@ class PietState extends State<Piet> {
             text: i18n(context, 'common_ok'),
             onPressed: () {
               _isStarted = false;
-              _calcOutput(context);
+              _calcInterpreterOutput();
             },
           )
         ],

@@ -26,9 +26,9 @@ class PietBlockOpResolver {
   /// <param name="block1">The egress block</param>
   /// <param name="block2">The ingress block</param>
   /// <returns>An operation</returns>
-  PietOps Resolve(PietBlock block1, PietBlock block2) {
-    var ret1 = _TryResolveColor(block1.Color);
-    var ret2 = _TryResolveColor(block2.Color);
+  PietOps resolve(PietBlock block1, PietBlock block2) {
+    var ret1 = _tryResolveColor(block1.color);
+    var ret2 = _tryResolveColor(block2.color);
     var color1 = ret1.item2;
     var color2 = ret2.item2;
     if (ret1.item1 && ret2.item1) {
@@ -65,7 +65,7 @@ class PietBlockOpResolver {
     return PietOps.Noop;
   }
 
-  Tuple2<bool, Tuple2<HueColor, Darkness>> _TryResolveColor(int colour) {
+  Tuple2<bool, Tuple2<HueColor, Darkness>> _tryResolveColor(int colour) {
     switch (colour) {
     // red
       case 0xFFC0C0:

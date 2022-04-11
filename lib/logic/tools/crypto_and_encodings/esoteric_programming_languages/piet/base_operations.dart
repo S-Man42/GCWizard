@@ -26,11 +26,9 @@ enum PietOps {
 
 class BaseOperations {
   PietStack _stack;
-
-  Function _getExitedBlock; //<PietBlock>
-  Function _toggleDirectionPointer; //<int>
-  Function _toggleCodelChooser; //<int>
-
+  Function _getExitedBlock;
+  Function _toggleDirectionPointer;
+  Function _toggleCodelChooser;
   PietSession _session;
 
   BaseOperations(PietStack stack, PietSession session, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
@@ -44,105 +42,105 @@ class BaseOperations {
   /// <summary>
   /// Pushes the value of the color block just exited on to the stack
   /// </summary>
-  void Push() {
+  void push() {
     PietBlock exitedBlock = _getExitedBlock();
     if (exitedBlock == null) return;
 
-    _stack.Push(exitedBlock.BlockCount);
+    _stack.push(exitedBlock.blockCount);
   }
 
   /// <summary>
   /// Pops the top value off the stack and discards it
   /// </summary>
-  int Pop() {
-    return _stack.Pop();
+  int pop() {
+    return _stack.pop();
   }
 
-  int Add() {
-    return _stack.Add();
+  int add() {
+    return _stack.add();
   }
 
-  int Subtract() {
-    return _stack.Subtract();
+  int subtract() {
+    return _stack.subtract();
   }
 
-  int Multiply() {
-    return _stack.Multiply();
+  int multiply() {
+    return _stack.multiply();
   }
 
-  int Divide() {
-    return _stack.Divide();
+  int divide() {
+    return _stack.divide();
   }
 
-  int Mod() {
-    _stack.Mod();
+  int mod() {
+    _stack.mod();
   }
 
-  int Not() {
-    return _stack.Not();
+  int not() {
+    return _stack.not();
   }
 
-  int Greater() {
-    return _stack.Greater();
+  int greater() {
+    return _stack.greater();
   }
 
-  void Pointer() {
-    var result = _stack.Pop();
+  void pointer() {
+    var result = _stack.pop();
     if (result != null) _toggleDirectionPointer(result);
   }
 
-  void Switch() {
-    var result = _stack.Pop();
+  void switch_() {
+    var result = _stack.pop();
     if (result != null) _toggleCodelChooser(result);
   }
 
-  void Duplicate() {
-    _stack.Duplicate();
+  void duplicate() {
+    _stack.duplicate();
   }
 
-  void Roll() {
-    _stack.Roll();
+  void roll() {
+    _stack.roll();
   }
 
-  void InNumber() {
-    var val = _session.ReadInt();
-    if (val != null) _stack.Push(val);
+  void inNumber() {
+    var val = _session.readInt();
+    if (val != null) _stack.push(val);
   }
 
-  void InChar() {
-    var val = _session.ReadChar();
-    if (val != null && val.isNotEmpty) _stack.Push(val.runes.first);
+  void inChar() {
+    var val = _session.readChar();
+    if (val != null && val.isNotEmpty) _stack.push(val.runes.first);
   }
 
-  void OutNumeric() {
-    var result = _stack.Pop();
-    if (result != null) _session.Output(result.toString());
+  void outNumeric() {
+    var result = _stack.pop();
+    if (result != null) _session.output(result.toString());
   }
 
-  void OutChar() {
-    var result = _stack.Pop();
-    if (result != null) _session.Output(String.fromCharCode(result));
+  void outChar() {
+    var result = _stack.pop();
+    if (result != null) _session.output(String.fromCharCode(result));
   }
 
-  Map<PietOps, void Function()> GetMap() {
+  Map<PietOps, void Function()> getMap() {
     return {
-        PietOps.Push : this.Push,
-        PietOps.Pop : this.Pop,
-        PietOps.Add : this.Add,
-        PietOps.Subtract : this.Subtract,
-        PietOps.Multiply : this.Multiply,
-        PietOps.Divide : this.Divide,
-        PietOps.Mod : this.Mod,
-        PietOps.Not : this.Not,
-        PietOps.Greater : this.Greater,
-        PietOps.Pointer : this.Pointer,
-        PietOps.Switch : this.Switch,
-        PietOps.Duplicate : this.Duplicate,
-        PietOps.Roll : this.Roll,
-        PietOps.InputChar : this.InChar,
-        PietOps.InputNumber : this.InNumber,
-        PietOps.OutputNumber : this.OutNumeric,
-        PietOps.OutputChar : this.OutChar
+        PietOps.Push : this.push,
+        PietOps.Pop : this.pop,
+        PietOps.Add : this.add,
+        PietOps.Subtract : this.subtract,
+        PietOps.Multiply : this.multiply,
+        PietOps.Divide : this.divide,
+        PietOps.Mod : this.mod,
+        PietOps.Not : this.not,
+        PietOps.Greater : this.greater,
+        PietOps.Pointer : this.pointer,
+        PietOps.Switch : this.switch_,
+        PietOps.Duplicate : this.duplicate,
+        PietOps.Roll : this.roll,
+        PietOps.InputChar : this.inChar,
+        PietOps.InputNumber : this.inNumber,
+        PietOps.OutputNumber : this.outNumeric,
+        PietOps.OutputChar : this.outChar
       };
   }
 }
