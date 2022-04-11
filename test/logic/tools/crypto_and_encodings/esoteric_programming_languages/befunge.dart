@@ -18,7 +18,7 @@ void main() {
                 '>25*,@', 'input' : null, 'expectedOutput' : BefungeOutput(Output: 'Hello World!\n', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : ' >25*"!dlrow ,olleH":v\n' +
                 '                  v:,_@\n' +
-                '                  >  ^\n', 'input' : '', 'expectedOutput' : BefungeOutput(Output: ' Helloworld!\n', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+                '                  >  ^\n', 'input' : '', 'expectedOutput' : BefungeOutput(Output: ' Hello, world!\n', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       // random number generator - does not work as a testcase
       //  {'code' : ' v>>>>>v\n' +
       //            '  12345\n' +
@@ -34,18 +34,18 @@ void main() {
       {'code' : '0.1> #<:#<.#<:#<0#<0#<p#<+#<0#<0#<g#<\\# <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '0.1>:.:00p+00g\\v\n' +
                 '^           <', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-      {'code' : '4 3 + . @', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '7', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+      {'code' : '4 3 + . @', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '7 ', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : 'v   > . v\n' +
                 '         \n' +
                 '4   +   @\n' +
                 '         \n' +
-                '> 3 ^', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '7', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+                '> 3 ^', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '7 ', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : 'v*>.v\n' +
                 '4*+*@\n' +
-                '>3^**', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '7', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+                '>3^**', 'input' : '', 'expectedOutput' : BefungeOutput(Output: '7 ', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
       {'code' : '"!dlroW olleH"v\n' +
                 '@,,,,,,,,,,,,<', 'input' : '', 'expectedOutput' : BefungeOutput(Output: 'Hello World', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
-      {'code' : '"!dlrow olleH">:#,_@', 'input' : '', 'expectedOutput' : BefungeOutput(Output: 'Hello World', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+      {'code' : '"!dlrow olleH">:#,_@', 'input' : '', 'expectedOutput' : BefungeOutput(Output: 'Hello world!', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
       // http://quadium.net/funge/downloads/bef93src/
 
@@ -64,7 +64,7 @@ void main() {
       // https://github.com/catseye/Befunge-93/blob/master/eg/fact2.bf
       {'code' : 'vv    <>v *<\n' +
                 '&>:1-:|\$>\\:|\n' +
-                '>^    >^@.\$<', 'input' : '7', 'expectedOutput' : BefungeOutput(Output: '5040', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
+                '>^    >^@.\$<', 'input' : '7', 'expectedOutput' : BefungeOutput(Output: '5040 ', Error: '', BefungeStack: [], PC: [], Command: [], Mnemonic: [])},
 
       // https://github.com/catseye/Befunge-93/blob/master/eg/ea.bf
       {'code' : '100p            v\n' +
@@ -100,8 +100,8 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('code: ${elem['code']}, input: ${elem['input']}', () {
         var _actual = interpretBefunge(elem['code'], input: elem['input']);
-        expect(_actual.Output, elem['expectedOutput'].output);
-        expect(_actual.Error, elem['expectedOutput'].error);
+        expect(_actual.Output, elem['expectedOutput'].Output);
+        expect(_actual.Error, elem['expectedOutput'].Error);
       });
     });
   });
