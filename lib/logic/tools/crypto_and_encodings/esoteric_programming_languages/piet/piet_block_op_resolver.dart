@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/base_operations.dart';
 import 'package:tuple/tuple.dart';
 
-enum HueColour {
+enum HueColor {
   Red,
   Yellow,
   Green,
@@ -27,16 +27,16 @@ class PietBlockOpResolver {
   /// <param name="block2">The ingress block</param>
   /// <returns>An operation</returns>
   PietOps Resolve(PietBlock block1, PietBlock block2) {
-    var ret1 = _TryResolveColour(block1.Colour);
-    var ret2 = _TryResolveColour(block2.Colour);
-    var colour1 = ret1.item2;
-    var colour2 = ret2.item2;
+    var ret1 = _TryResolveColor(block1.Color);
+    var ret2 = _TryResolveColor(block2.Color);
+    var color1 = ret1.item2;
+    var color2 = ret2.item2;
     if (ret1.item1 && ret2.item1) {
-      int lightShift = colour2.item2.index - colour1.item2.index;
+      int lightShift = color2.item2.index - color1.item2.index;
       if (lightShift < 0)
         lightShift += 3;
 
-      int colourShift = colour2.item1.index - colour1.item1.index;
+      int colourShift = color2.item1.index - color1.item1.index;
       if (colourShift < 0)
         colourShift += 6;
 
@@ -65,52 +65,52 @@ class PietBlockOpResolver {
     return PietOps.Noop;
   }
 
-  Tuple2<bool, Tuple2<HueColour, Darkness>> _TryResolveColour(int colour) {
+  Tuple2<bool, Tuple2<HueColor, Darkness>> _TryResolveColor(int colour) {
     switch (colour) {
     // red
       case 0xFFC0C0:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Red, Darkness.Light));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light));
       case 0xFF0000:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Red, Darkness.Normal));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Normal));
       case 0xC00000:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Red, Darkness.Dark));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Dark));
     // yellow
       case 0xFFFFC0:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Yellow, Darkness.Light));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Light));
       case 0xFFFF00:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Yellow, Darkness.Normal));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Normal));
       case 0xC0C000:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Yellow, Darkness.Dark));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Yellow, Darkness.Dark));
     // green
       case 0xC0FFC0:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Green, Darkness.Light));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Light));
       case 0x00FF00:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Green, Darkness.Normal));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Normal));
       case 0x00C000:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Green, Darkness.Dark));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Green, Darkness.Dark));
     //cyan
       case 0xC0FFFF:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Cyan, Darkness.Light));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Light));
       case 0x00FFFF:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Cyan, Darkness.Normal));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Normal));
       case 0x00C0C0:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Cyan, Darkness.Dark));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Cyan, Darkness.Dark));
     //blue
       case 0xC0C0FF:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Blue, Darkness.Light));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Light));
       case 0x0000FF:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Blue, Darkness.Normal));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Normal));
       case 0x0000C0:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Blue, Darkness.Dark));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Blue, Darkness.Dark));
     //magenta
       case 0xFFC0FF:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Magenta, Darkness.Light));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Light));
       case 0xFF00FF:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Magenta, Darkness.Normal));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Normal));
       case 0xC000C0:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(true, Tuple2<HueColour, Darkness>(HueColour.Magenta, Darkness.Dark));
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Magenta, Darkness.Dark));
       default:
-        return Tuple2<bool, Tuple2<HueColour, Darkness>>(false, Tuple2<HueColour, Darkness>(HueColour.Red, Darkness.Light)); // default
+        return Tuple2<bool, Tuple2<HueColor, Darkness>>(false, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light)); // default
     }
   }
 }

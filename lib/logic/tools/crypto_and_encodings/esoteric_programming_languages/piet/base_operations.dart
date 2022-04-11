@@ -42,7 +42,7 @@ class BaseOperations {
   }
 
   /// <summary>
-  /// Pushes the value of the colour block just exited on to the stack
+  /// Pushes the value of the color block just exited on to the stack
   /// </summary>
   void Push() {
     PietBlock exitedBlock = _getExitedBlock();

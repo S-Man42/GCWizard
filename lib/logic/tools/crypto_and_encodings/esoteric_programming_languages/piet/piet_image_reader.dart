@@ -24,24 +24,24 @@ class PietImageReader {
   }
 
   int _ToRgb(int rgb24) {
-    return ((rgb24 & 0x000000FF) << 16) | (rgb24 & 0x0000FF00) | ((rgb24 & 0x00FF0000) >> 16); //AABBGGRR -> RGB
+    return (rgb24 & 0x00FFFFFF); //AABBGGRR -> BGR (not RGB)
   }
 
   int EstimateCodelSize(img.Image image) {
     // test the first row
     int count = 1;
-    int minCount = 9999999999999; //int.MaxValue;
+    int minCount = 9999999999999;
 
     for (var rowIndex = 0; rowIndex < image.height; rowIndex++) {
-      var prevColour = _ToRgb(image.getPixel(0, rowIndex));
+      var prevColor = _ToRgb(image.getPixel(0, rowIndex));
       for (var i = 1; i < image.width; i++) {
-        var currentColour = _ToRgb(image.getPixel(i, rowIndex));
-        if (currentColour == prevColour)
+        var currentColor = _ToRgb(image.getPixel(i, rowIndex));
+        if (currentColor == prevColor)
           count++;
         else {
           if (count < minCount) minCount = count;
 
-          prevColour = currentColour;
+          prevColor = currentColor;
           count = 1;
         }
       }

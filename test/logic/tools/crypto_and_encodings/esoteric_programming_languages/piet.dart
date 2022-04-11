@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/generator.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_image_reader.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_io.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_session.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_stack.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -29,13 +29,23 @@ void main() {
         var data  = await readByteDataFromFile(elem['path']);
         var imageReader = PietImageReader();
         var _pietPixels = imageReader.ReadImage(data);
-        var _pietIO = PietIO();
 
-        var pietSession = PietSession(_pietPixels, _pietIO);
+        var _actual = await interpretPiet(_pietPixels, []);
+        expect(_actual.output, elem['expectedOutput']);
+      });
+    });
+  });
 
-        pietSession.Run();
-        // var _actual = interpretCow(elem['path']).output;
-        // expect(_actual, elem['expectedOutput']);
+  group("Piet.generatePiet:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input': 'Hello World!', 'expectedOutput': null},
+    ];
+
+    _inputsToExpected.forEach((elem) async {
+      test('input: ${elem['input']}', () async {
+
+        var _actual = await generatePiet(elem['input']);
+        expect(_actual, elem['expectedOutput']);
       });
     });
   });
@@ -75,18 +85,16 @@ void main() {
     }.toList();
 
     List<Map<String, dynamic>> _inputsToExpected = [
-    {'input': data, 'expectedOutput': '10'},
+      {'input': data, 'expectedOutput': '10'},
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('value1: ${elem['value1']}', () async {
-        var io = new PietIO();
-        var session = new PietSession(data, io);
+      test('input: ${elem['input']}', () async {
+        var result = await interpretPiet(data, []);
 
-        session.Run();
-        expect(session.Running, false);
+        expect(result.state.Running, false);
         
-        expect(io.OutputStream[0], elem['expectedOutput');
+        expect(result.output, elem['expectedOutput']);
       });
     });
   });

@@ -2,27 +2,27 @@
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 
-final knownColours = {
+final knownColors = { //format BBGGRR (not RGB)
   // reds
-  0xFFC0C0, // light
-  0xFF0000,
-  0xC00000, //dark
+  0xC0C0FF, // light
+  0x0000FF,
+  0x0000C0, //dark
   // yellows
-  0xFFFFC0,
-  0xFFFF00,
-  0x0C0C000,
+  0xC0FFFF,
+  0x00FFFF,
+  0x00C0C0,
   // greens
   0xC0FFC0,
   0x00FF00,
   0x00C000,
   // cyans
-  0xC0FFFF,
-  0x00FFFF,
-  0x00C0C0,
+  0xFFFFC0,
+  0xFFFF00,
+  0xC0C000,
   // blues
-  0xC0C0FF,
-  0x0000FF,
-  0x0000C0,
+  0xFFC0C0,
+  0xFF0000,
+  0xC00000,
   // magentas
   0xFFC0FF,
   0xFF00FF,
@@ -34,7 +34,7 @@ final knownColours = {
 }.toList();
 
 class PietBlockerBuilder {
-  // we if want to support custom colours and operations going forward
+  // we if want to support custom colors and operations going forward
   // we'll need to allow extensions to add to this collection
 
   List<List<int>> _data;
@@ -52,9 +52,9 @@ class PietBlockerBuilder {
   }
 
   PietBlock _BuildPietBlock(int x, int y) {
-    int targetColour = _data[y][x];
-    var knownColour = knownColours.contains(targetColour);
-    PietBlock block = PietBlock(targetColour, knownColour);
+    int targetColor = _data[y][x];
+    var knownColor = knownColors.contains(targetColor);
+    PietBlock block = PietBlock(targetColor, knownColor);
 
     return BuildPietBlockRec(block, x, y, 0, 0);
   }
@@ -66,8 +66,8 @@ class PietBlockerBuilder {
     if (newX < 0 || newX >= _width || newY < 0 || newY >= _height) // out of bounds
       return block;
 
-    var currentColour = _data[newY][newX];
-    if (currentColour != block.Colour) // colours don't match - you hit an edge
+    var currentColor = _data[newY][newX];
+    if (currentColor != block.Color) // colors don't match - you hit an edge
       return block;
 
     // int countBefore = block.BlockCount;

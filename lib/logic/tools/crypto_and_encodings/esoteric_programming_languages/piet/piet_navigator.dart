@@ -32,31 +32,20 @@ class PietNavigator {
   int _width;
   int _height;
 
-  PietNavigator(List<List<int>> data, {int maxSteps = 500000}) {
+  PietNavigator(List<List<int>> data) {
     _data = data;
     _width = _data[0].length;
     _height = _data.length;
-    _maxSteps = maxSteps;
   }
-
-  int _maxSteps;
-  var _StepCount = 0;
-  int get StepCount => _StepCount;
 
   Point _CurrentPoint =  Point<int>(0, 0);
   Point get CurrentPoint => _CurrentPoint;
 
-  Tuple2<bool, Point<int>>  TryNavigate(PietBlock block) {// out result
+  Tuple2<bool, Point<int>>  TryNavigate(PietBlock block) {
     Point<int> result;
-    if (StepCount > _maxSteps) {
-      // todo: aborting purely on step count seems crude - detect cycles rather
-      result = Point<int>(0, 0);
-      // todo: log warning
-      return Tuple2<bool, Point<int>>(false, result);
-    }
     int failureCount = 0;
 
-    bool moveStraight = block.Colour == White || !block.KnownColour;
+    bool moveStraight = block.Color == White || !block.KnownColor;
 
     while (failureCount < 8) {
       Point exitPoint= Point<int>(0, 0);
@@ -96,8 +85,7 @@ class PietNavigator {
               return throw new Exception('common_programming_error_invalid_opcode');
           }
         }
-
-        // we've crossed the boundary, one step back to be on the edge
+       // we've crossed the boundary, one step back to be on the edge
         exitPoint = prevStep;
       }
 
@@ -119,7 +107,6 @@ class PietNavigator {
       if (!isBlocked) {
         _CurrentPoint = nextStep;
         result = nextStep;
-        _StepCount++;
         return Tuple2<bool, Point<int>>(true, result);
       }
 

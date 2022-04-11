@@ -60,6 +60,24 @@ class PietState extends State<Piet> {
             });
           },
         ),
+        _currentMode == GCWSwitchPosition.left ? _buildInterpreter() : _buildGenerator(),
+      ],
+    );
+  }
+
+  Widget _buildInterpreter() {
+    return Column(
+      children: <Widget>[
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
         GCWOpenFile(
           supportedFileTypes: SUPPORTED_IMAGE_TYPES,
           onLoaded: (GCWFile value) {
@@ -83,18 +101,69 @@ class PietState extends State<Piet> {
 
         GCWImageView(
           imageData: _originalData?.bytes == null ? null : GCWImageViewData(GCWFile(bytes: _originalData.bytes)),
-          ),
-        _buildOutput(context)
+        ),
+        _buildInterpreterOutput()
       ],
     );
   }
 
-  Widget _buildOutput(BuildContext context) {
+  Widget _buildInterpreterOutput() {
     if (_originalData?.bytes == null) return GCWDefaultOutput();
     if (_currentOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
     return GCWDefaultOutput( child:
         _currentOutput.output + (_currentOutput.error ? '\n' + i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText : ''),
+    );
+  }
+
+  Widget _buildGenerator() {
+    return Column(
+      children: <Widget>[
+        GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'common_programming_mode_interpret'),
+          rightValue: i18n(context, 'common_programming_mode_generate'),
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        GCWOpenFile(
+          supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+          onLoaded: (GCWFile value) {
+            if (value == null || !_validateData(value.bytes)) {
+              showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+              return;
+            }
+            setState(() {
+              _originalData = value;
+              _currentInput = null;
+              _currentOutput = null;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                setState(() {});
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _calcOutput(context);
+                });
+              });
+            });
+          },
+        ), // Fixes a display issue
+
+        GCWImageView(
+          imageData: _originalData?.bytes == null ? null : GCWImageViewData(GCWFile(bytes: _originalData.bytes)),
+        ),
+        _buildGeneratorOutput()
+      ],
+    );
+  }
+
+  Widget _buildGeneratorOutput() {
+    if (_originalData?.bytes == null) return GCWDefaultOutput();
+    if (_currentOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
+
+    return GCWDefaultOutput( child:
+    _currentOutput.output + (_currentOutput.error ? '\n' + i18n(context, _currentOutput.errorText) ?? _currentOutput.errorText : ''),
     );
   }
 
@@ -112,7 +181,7 @@ class PietState extends State<Piet> {
       else
         _currentInputList = [_currentInput];
 
-    var currentOutputFuture = interpreterPiet(_pietPixels, _currentInputList, continueState: _currentOutput?.state);
+    var currentOutputFuture = interpretPiet(_pietPixels, _currentInputList, continueState: _currentOutput?.state);
 
     currentOutputFuture.then((output) {
       if (output.finished) {

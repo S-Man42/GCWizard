@@ -1,16 +1,16 @@
 ﻿import 'dart:math';
 
 class PietBlock {
-  int _Colour = 0;
-  int get Colour => _Colour;
-  bool _KnownColour = false;
-  bool get KnownColour => _KnownColour;
+  int _Color = 0;
+  int get Color => _Color;
+  bool _KnownColor = false;
+  bool get KnownColor => _KnownColor;
 
   List<Point> _pixels;
 
-  PietBlock(int colour, bool knownColour) {
-    _Colour = colour;
-    _KnownColour = knownColour;
+  PietBlock(int color, bool knownColor) {
+    _Color = color;
+    _KnownColor = knownColor;
     _pixels = <Point>[];
   }
 

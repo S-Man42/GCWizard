@@ -1,4 +1,6 @@
-﻿import 'dart:math';
+﻿//source: https://github.com/MatthewMooreZA/PietSharp
+
+import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/base_operations.dart';
@@ -30,7 +32,7 @@ var _input_required = false;
 var _input_required_number = false;
 final _inputRequired = "input required";
 
-Future<PietResult> interpreterPiet(List<List<int>> data, List<String> input,
+Future<PietResult> interpretPiet(List<List<int>> data, List<String> input,
     {int timeOut = 60000, PietSession continueState}) async {
 
   var pietSession = continueState ?? PietSession(data, timeOut: timeOut);
@@ -71,9 +73,9 @@ class PietSession {
   List<String> input;
   var _output = '';
 
-  var _timeOut = 30000;
+  var _timeOut = 60000;
 
-  PietSession(List<List<int>> image, {int timeOut = 30000}) {
+  PietSession(List<List<int>> image, {int timeOut = 60000}) {
     data = image;
 
     _builder = PietBlockerBuilder(data);
