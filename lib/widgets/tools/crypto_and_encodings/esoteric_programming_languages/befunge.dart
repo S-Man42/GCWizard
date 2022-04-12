@@ -29,8 +29,8 @@ class BefungeState extends State< Befunge > {
   var _currentInput = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  var _codeController;
-  var _sourceCode = '';
+  var _codeGenerateController;
+  var _sourceCodeGenerated = '';
 
   @override
   void initState() {
@@ -38,8 +38,8 @@ class BefungeState extends State< Befunge > {
     _befungeGenerateController = TextEditingController(text: _currentGenerate);
     _befungeInterpretController = TextEditingController(text: _currentInterpret);
     _inputController = TextEditingController(text: _currentInput);
-    _codeController = CodeController(
-      text: _sourceCode,
+    _codeGenerateController = CodeController(
+      text: _sourceCodeGenerated,
       theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
           ? atomOneDarkTheme
           : atomOneLightTheme,
@@ -50,13 +50,13 @@ class BefungeState extends State< Befunge > {
     _befungeGenerateController.dispose();
     _befungeInterpretController.dispose();
     _inputController.dispose();
-    _codeController.dispose();
+    _codeGenerateController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _codeController.text = generateBefunge (_currentGenerate);
+    _codeGenerateController.text = generateBefunge (_currentGenerate);
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -153,7 +153,7 @@ class BefungeState extends State< Befunge > {
     else
       return GCWDefaultOutput(
                 child:CodeField(
-                  controller: _codeController,
+                  controller: _codeGenerateController,
                   textStyle: gcwMonotypeTextStyle(),
                 ),
                 trailing: Row(
@@ -163,8 +163,8 @@ class BefungeState extends State< Befunge > {
                       size: IconButtonSize.SMALL,
                       icon: Icons.content_copy,
                       onPressed: () {
-                        var copyText = _codeController.text != null
-                            ? _codeController.text
+                        var copyText = _codeGenerateController.text != null
+                            ? _codeGenerateController.text
                             : '';
                         insertIntoGCWClipboard(context, copyText);
                       },

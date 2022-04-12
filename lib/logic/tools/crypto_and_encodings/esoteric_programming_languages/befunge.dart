@@ -12,6 +12,7 @@
 //
 // Reference Implementation
 //   https://github.com/catseye/Befunge-93/blob/master/src/bef.c
+//   http://www.quirkster.com/iano/js/befunge.js
 
 import 'dart:math';
 
@@ -77,7 +78,7 @@ class Stack {
 
 int _x = 0;
 int _y = 0;
-List<int> _pg = [];
+List<BigInt> _pg = [];
 
 int _iterations = 0;
 
@@ -87,9 +88,9 @@ List<String> _Command = [];
 List<String> _Mnemonic = [];
 
 String _cur() {
-  int opCode = _pg[_y * LINEWIDTH + _x];
-  if (0 < opCode && opCode < 256)
-    return String.fromCharCode(opCode);
+  BigInt opCode = _pg[_y * LINEWIDTH + _x];
+  if (BigInt.zero < opCode && opCode < BigInt.from(256))
+    return String.fromCharCode(opCode.toInt());
   else
     return opCode.toString();
 }
@@ -131,7 +132,9 @@ BefungeOutput interpretBefunge(String program, {String input}) {
     int dy = 0;
     BigInt a;
     BigInt b;
-    BigInt v;
+    BigInt x;
+    BigInt y;
+    BigInt value;
     List<String> STDIN = input == null ? [] : input.split(' ');
     List<String> STDOUT = [];
 
@@ -419,42 +422,42 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               break;
 
             case 'g': // self modify - get value from memory/torus and push to stack
-              b = stack.pop(); // y
-              a = stack.pop(); // x
-              _Mnemonic.add('get ' + '[' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ']');
+              y = stack.pop();
+              x = stack.pop();
+              _Mnemonic.add('get ' + '[' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ']');
 
-              if (_outOfBoundsAccess(a, b)) {
+              if (_outOfBoundsAccess(x: x, y: y)) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output:
-                        STDOUT.join('') + '\n\nget(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
+                        STDOUT.join('') + '\n\nget(' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ')',
                     Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
               } else
-                stack.push(BigInt.from(_pg[a.toInt() * SCREENWIDTH + b.toInt()]));
+                stack.push(_pg[y.toInt() * SCREENWIDTH + x.toInt()]);
               break;
 
             case 'p': // self modify - put value from stack into memory/torus
-              a = stack.pop(); // y
-              b = stack.pop(); // x
-              v = stack.pop(); // value
-              _Mnemonic.add('put '+v.toString() + ' → ' + '[' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ']');
+              y = stack.pop();
+              x = stack.pop();
+              value = stack.pop();
+              _Mnemonic.add('put '+value.toString() + ' → ' + '[' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ']');
 
-              if (_outOfBoundsAccess(a, b)) {
+              if (_outOfBoundsAccess(x: x, y: y)) {
                 _BefungeStack.add(stack.toString());
                 return BefungeOutput(
                     Output:
-                        STDOUT.join('') + '\n\nput(' + a.toString().padLeft(2) + '|' + b.toString().padLeft(2) + ')',
+                        STDOUT.join('') + '\n\nput(' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ')',
                     Error: BEFUNGE_ERROR_OUT_OF_BOUNDS_ACCESS,
                     BefungeStack: _BefungeStack,
                     PC: _PC,
                     Command: _Command,
                     Mnemonic: _Mnemonic);
               } else
-                _put(a, b, v);
+                _put(x: x, y: y, value: value);
               break;
 
             case ' ':
@@ -506,26 +509,26 @@ bool _outOfBounds() {
   return (_y > SCREENHEIGHT || _x > SCREENWIDTH);
 }
 
-bool _outOfBoundsAccess(BigInt y, BigInt x) {
+bool _outOfBoundsAccess({BigInt y, BigInt x}) {
   return (y > BigInt.from(SCREENHEIGHT) || y < BigInt.zero || x > BigInt.from(SCREENWIDTH) || x < BigInt.zero);
 }
 
-void _put(BigInt y, BigInt x, BigInt v) {
-  _pg[y.toInt() * SCREENWIDTH + x.toInt()] = v.toInt();
+void _put({BigInt y, BigInt x, BigInt value}) {
+  _pg[y.toInt() * SCREENWIDTH + x.toInt()] = value;
 }
 
-List<int> _fillProgram(String program) {
-  List<int> pg = [];
+List<BigInt> _fillProgram(String program) {
+  List<BigInt> pg = [];
 
   program.split('\n').forEach((line) {
     line.padRight(LINEWIDTH, ' ').split('').forEach((element) {
-      pg.add(element.codeUnitAt(0));
+      pg.add(BigInt.from(element.codeUnitAt(0)));
     });
   });
 
   while (pg.length < MAX_LENGTH_PROGRAM) {
     BEFUNGE_EMPTY_LINE.split('').forEach((element) {
-      pg.add(element.codeUnitAt(0));
+      pg.add(BigInt.from(element.codeUnitAt(0)));
     });
   }
 
