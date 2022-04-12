@@ -13,14 +13,17 @@ class BundeswehrTalkingBoardCodingOutput {
   BundeswehrTalkingBoardCodingOutput({this.ResponseCode, this.Details});
 }
 
-BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Map<String, List<String>> tableEncoding){
-  if (tableEncoding == null || tableEncoding.isEmpty)
+BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, AuthentificationTable tableEncoding){
+  if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_TABLE, Details: '');
 
   List<String> result = [];
   var random = new Random();
-  plainText.split('').forEach((char) { 
-    result.add(tableEncoding[char][random.nextInt(tableEncoding[char].length)]);
+  plainText.split('').forEach((char) {
+    if (random.nextInt(100) > 75) {
+      result.add(_getObfuscatedTupel(tableEncoding));
+    }
+    result.add(tableEncoding.Encoding[char][random.nextInt(tableEncoding.Encoding[char].length)]);
   });
   return BundeswehrTalkingBoardCodingOutput(ResponseCode: 'OK',Details: result.join(' '));
 }
@@ -36,7 +39,7 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, Authentif
   bool invalidCypher = false;
   cypherText.split(' ').forEach((pair) {
     if (pair.length == 2) {
-      result = result + _decode(pair, tableNumeralCode);
+      result = result + _decodeNumeralCode(pair, tableNumeralCode);
     } else {
       result = result + UNKNOWN_ELEMENT;
       invalidCypher = true;
@@ -45,12 +48,32 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, Authentif
   return BundeswehrTalkingBoardCodingOutput(ResponseCode: invalidCypher ? CODE_RESPONSE_INVALID_CYPHER : 'OK', Details: result);
 }
 
-String _decode(String tupel, AuthentificationTable tableNumeralCode) {
+String _decodeNumeralCode(String tupel, AuthentificationTable tableNumeralCode) {
   int index = 0;
   if (tableNumeralCode.xAxis.contains(tupel[0])) {
-    index = tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13;
+    if (tableNumeralCode.xAxis.contains(tupel[1])) {
+      index = -1;
+    } else {
+      index = tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13;
+    }
   } else {
-    index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
+    if (tableNumeralCode.yAxis.contains(tupel[1])) {
+      index = -1;
+    } else {
+      index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
+    }
   }
-  return tableNumeralCode.Content[index];
+  if (index != -1)
+    return tableNumeralCode.Content[index];
+  else
+    return '';
+}
+
+String _getObfuscatedTupel(AuthentificationTable tableNumeralCode){
+  var random = new Random();
+  if (random.nextInt(100) > 50) {
+    return tableNumeralCode.yAxis[random.nextInt(13)] + tableNumeralCode.yAxis[random.nextInt(13)];
+  } else {
+    return tableNumeralCode.xAxis[random.nextInt(13)] + tableNumeralCode.xAxis[random.nextInt(13)];
+  }
 }

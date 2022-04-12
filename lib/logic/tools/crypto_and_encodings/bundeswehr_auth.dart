@@ -13,8 +13,9 @@ class AuthentificationTable {
   final List<String> xAxis;
   final List<String> yAxis;
   final List<String> Content;
+  final Map<String, List<String>> Encoding;
 
-  AuthentificationTable({this.xAxis, this.yAxis, this.Content});
+  AuthentificationTable({this.xAxis, this.yAxis, this.Content, this.Encoding});
 }
 
 class AuthentificationOutput {

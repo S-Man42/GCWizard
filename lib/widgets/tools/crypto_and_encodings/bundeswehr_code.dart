@@ -31,7 +31,6 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
   String _currentNumeralCodeYaxisCustom = '';
 
   AuthentificationTable _tableNumeralCode;
-  Map<String, List<String>> _tableEncoding = {};
 
   String _numeralCodeString = '';
 
@@ -150,7 +149,7 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     if (_currentMode == GCWSwitchPosition.right)
       output = decodeBundeswehr(_currentDecode.toUpperCase(), _tableNumeralCode);
     else
-      output = encodeBundeswehr(_currentEncode.toUpperCase(), _tableEncoding);
+      output = encodeBundeswehr(_currentEncode.toUpperCase(), _tableNumeralCode);
 
     return Column(
       children: <Widget>[
@@ -170,26 +169,22 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     List<String> _colTitle;
     List<String> _rowTitle;
     List<String> _numeralCode = [];
-
+    Map<String, List<String>> _tableEncoding = {};
     if (custom) {
       if (_invalidSingleAxisTitle(xAxis)) {
-        _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _tableEncoding = {};
+        _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: [], Encoding: _tableEncoding);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_x_axis_numeral_code');
         return;
       }
 
       if (_invalidSingleAxisTitle(yAxis)) {
-        _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _tableEncoding = {};
+        _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: [], Encoding: _tableEncoding);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_y_axis_numeral_code');
         return;
       }
 
       if (_invalidAxisDescription(xAxis + yAxis)) {
-
-        _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _tableEncoding = {};
+        _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: [], Encoding: _tableEncoding);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_axis_numeral_code');
         return;
       }
@@ -235,8 +230,250 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
       i++;
       _numeralCodeString = _numeralCodeString + '\n ';
     });
-    _tableNumeralCode = AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode);
-    _buildTableEncoding();
+
+    _tableEncoding['0'] = [
+      _colTitle[0] + _rowTitle[0],   _rowTitle[0] + _colTitle[0],
+      _colTitle[1] + _rowTitle[1],   _rowTitle[1] + _colTitle[1],
+      _colTitle[2] + _rowTitle[2],   _rowTitle[2] + _colTitle[2],
+      _colTitle[3] + _rowTitle[3],   _rowTitle[3] + _colTitle[3],
+      _colTitle[4] + _rowTitle[4],   _rowTitle[4] + _colTitle[4],
+      _colTitle[5] + _rowTitle[5],   _rowTitle[5] + _colTitle[5],
+      _colTitle[6] + _rowTitle[6],   _rowTitle[6] + _colTitle[6],
+      _colTitle[7] + _rowTitle[7],   _rowTitle[7] + _colTitle[7],
+      _colTitle[8] + _rowTitle[8],   _rowTitle[8] + _colTitle[8],
+      _colTitle[9] + _rowTitle[9],   _rowTitle[9] + _colTitle[9],
+      _colTitle[10] + _rowTitle[10], _rowTitle[10] + _colTitle[10],
+      _colTitle[11] + _rowTitle[11], _rowTitle[11] + _colTitle[11],
+      _colTitle[12] + _rowTitle[12], _rowTitle[12] + _colTitle[12],
+    ];
+    _tableEncoding['1'] = [
+      _colTitle[1] + _rowTitle[0],   _rowTitle[0] + _colTitle[1],
+      _colTitle[2] + _rowTitle[1],   _rowTitle[1] + _colTitle[2],
+      _colTitle[3] + _rowTitle[2],   _rowTitle[2] + _colTitle[3],
+      _colTitle[4] + _rowTitle[3],   _rowTitle[3] + _colTitle[4],
+      _colTitle[5] + _rowTitle[4],   _rowTitle[4] + _colTitle[5],
+      _colTitle[6] + _rowTitle[5],   _rowTitle[5] + _colTitle[6],
+      _colTitle[7] + _rowTitle[6],   _rowTitle[6] + _colTitle[7],
+      _colTitle[8] + _rowTitle[7],   _rowTitle[7] + _colTitle[8],
+      _colTitle[9] + _rowTitle[8],   _rowTitle[8] + _colTitle[9],
+      _colTitle[10] + _rowTitle[9],   _rowTitle[9] + _colTitle[10],
+      _colTitle[11] + _rowTitle[10], _rowTitle[10] + _colTitle[11],
+      _colTitle[12] + _rowTitle[11], _rowTitle[11] + _colTitle[12],
+      _colTitle[0] + _rowTitle[12], _rowTitle[12] + _colTitle[0],
+    ];
+    _tableEncoding['2'] = [
+      _colTitle[2] + _rowTitle[0],   _rowTitle[0] + _colTitle[2],
+      _colTitle[3] + _rowTitle[1],   _rowTitle[1] + _colTitle[3],
+      _colTitle[4] + _rowTitle[2],   _rowTitle[2] + _colTitle[4],
+      _colTitle[5] + _rowTitle[3],   _rowTitle[3] + _colTitle[5],
+      _colTitle[6] + _rowTitle[4],   _rowTitle[4] + _colTitle[6],
+      _colTitle[7] + _rowTitle[5],   _rowTitle[5] + _colTitle[7],
+      _colTitle[8] + _rowTitle[6],   _rowTitle[6] + _colTitle[8],
+      _colTitle[9] + _rowTitle[7],   _rowTitle[7] + _colTitle[9],
+      _colTitle[10] + _rowTitle[8],   _rowTitle[8] + _colTitle[10],
+      _colTitle[11] + _rowTitle[9],   _rowTitle[9] + _colTitle[11],
+      _colTitle[12] + _rowTitle[10], _rowTitle[10] + _colTitle[12],
+      _colTitle[0] + _rowTitle[11], _rowTitle[11] + _colTitle[0],
+      _colTitle[1] + _rowTitle[12], _rowTitle[12] + _colTitle[1],
+    ];
+    _tableEncoding['3'] = [
+      _colTitle[3] + _rowTitle[0],   _rowTitle[0] + _colTitle[3],
+      _colTitle[4] + _rowTitle[1],   _rowTitle[1] + _colTitle[4],
+      _colTitle[5] + _rowTitle[2],   _rowTitle[2] + _colTitle[5],
+      _colTitle[6] + _rowTitle[3],   _rowTitle[3] + _colTitle[6],
+      _colTitle[7] + _rowTitle[4],   _rowTitle[4] + _colTitle[7],
+      _colTitle[8] + _rowTitle[5],   _rowTitle[5] + _colTitle[8],
+      _colTitle[9] + _rowTitle[6],   _rowTitle[6] + _colTitle[9],
+      _colTitle[10] + _rowTitle[7],   _rowTitle[7] + _colTitle[10],
+      _colTitle[11] + _rowTitle[8],   _rowTitle[8] + _colTitle[11],
+      _colTitle[12] + _rowTitle[9],   _rowTitle[9] + _colTitle[12],
+      _colTitle[0] + _rowTitle[10], _rowTitle[10] + _colTitle[0],
+      _colTitle[1] + _rowTitle[11], _rowTitle[11] + _colTitle[1],
+      _colTitle[2] + _rowTitle[12], _rowTitle[12] + _colTitle[2],
+    ];
+    _tableEncoding['4'] = [
+      _colTitle[4] + _rowTitle[0],   _rowTitle[0] + _colTitle[4],
+      _colTitle[5] + _rowTitle[1],   _rowTitle[1] + _colTitle[5],
+      _colTitle[6] + _rowTitle[2],   _rowTitle[2] + _colTitle[6],
+      _colTitle[7] + _rowTitle[3],   _rowTitle[3] + _colTitle[7],
+      _colTitle[8] + _rowTitle[4],   _rowTitle[4] + _colTitle[8],
+      _colTitle[9] + _rowTitle[5],   _rowTitle[5] + _colTitle[9],
+      _colTitle[10] + _rowTitle[6],   _rowTitle[6] + _colTitle[10],
+      _colTitle[11] + _rowTitle[7],   _rowTitle[7] + _colTitle[11],
+      _colTitle[12] + _rowTitle[8],   _rowTitle[8] + _colTitle[12],
+      _colTitle[0] + _rowTitle[9],   _rowTitle[9] + _colTitle[0],
+      _colTitle[1] + _rowTitle[10], _rowTitle[10] + _colTitle[1],
+      _colTitle[2] + _rowTitle[11], _rowTitle[11] + _colTitle[2],
+      _colTitle[3] + _rowTitle[12], _rowTitle[12] + _colTitle[3],
+    ];
+    _tableEncoding['5'] = [
+      _colTitle[5] + _rowTitle[0],   _rowTitle[0] + _colTitle[5],
+      _colTitle[6] + _rowTitle[1],   _rowTitle[1] + _colTitle[6],
+      _colTitle[7] + _rowTitle[2],   _rowTitle[2] + _colTitle[7],
+      _colTitle[8] + _rowTitle[3],   _rowTitle[3] + _colTitle[8],
+      _colTitle[9] + _rowTitle[4],   _rowTitle[4] + _colTitle[9],
+      _colTitle[10] + _rowTitle[5],   _rowTitle[5] + _colTitle[10],
+      _colTitle[11] + _rowTitle[6],   _rowTitle[6] + _colTitle[11],
+      _colTitle[12] + _rowTitle[7],   _rowTitle[7] + _colTitle[12],
+      _colTitle[0] + _rowTitle[8],   _rowTitle[8] + _colTitle[0],
+      _colTitle[1] + _rowTitle[9],   _rowTitle[9] + _colTitle[1],
+      _colTitle[2] + _rowTitle[10], _rowTitle[10] + _colTitle[2],
+      _colTitle[3] + _rowTitle[11], _rowTitle[11] + _colTitle[3],
+      _colTitle[4] + _rowTitle[12], _rowTitle[12] + _colTitle[4],
+    ];
+    _tableEncoding['6'] = [
+      _colTitle[6] + _rowTitle[0],   _rowTitle[0] + _colTitle[6],
+      _colTitle[7] + _rowTitle[1],   _rowTitle[1] + _colTitle[7],
+      _colTitle[8] + _rowTitle[2],   _rowTitle[2] + _colTitle[8],
+      _colTitle[9] + _rowTitle[3],   _rowTitle[3] + _colTitle[9],
+      _colTitle[10] + _rowTitle[4],   _rowTitle[4] + _colTitle[10],
+      _colTitle[11] + _rowTitle[5],   _rowTitle[5] + _colTitle[11],
+      _colTitle[12] + _rowTitle[6],   _rowTitle[6] + _colTitle[12],
+      _colTitle[0] + _rowTitle[7],   _rowTitle[7] + _colTitle[0],
+      _colTitle[1] + _rowTitle[8],   _rowTitle[8] + _colTitle[1],
+      _colTitle[2] + _rowTitle[9],   _rowTitle[9] + _colTitle[2],
+      _colTitle[3] + _rowTitle[10], _rowTitle[10] + _colTitle[3],
+      _colTitle[4] + _rowTitle[11], _rowTitle[11] + _colTitle[4],
+      _colTitle[5] + _rowTitle[12], _rowTitle[12] + _colTitle[5],
+    ];
+    _tableEncoding['7'] = [
+      _colTitle[7] + _rowTitle[0],   _rowTitle[0] + _colTitle[7],
+      _colTitle[8] + _rowTitle[1],   _rowTitle[1] + _colTitle[8],
+      _colTitle[9] + _rowTitle[2],   _rowTitle[2] + _colTitle[9],
+      _colTitle[10] + _rowTitle[3],   _rowTitle[3] + _colTitle[10],
+      _colTitle[11] + _rowTitle[4],   _rowTitle[4] + _colTitle[11],
+      _colTitle[12] + _rowTitle[5],   _rowTitle[5] + _colTitle[12],
+      _colTitle[0] + _rowTitle[6],   _rowTitle[6] + _colTitle[0],
+      _colTitle[1] + _rowTitle[7],   _rowTitle[7] + _colTitle[1],
+      _colTitle[2] + _rowTitle[8],   _rowTitle[8] + _colTitle[2],
+      _colTitle[3] + _rowTitle[9],   _rowTitle[9] + _colTitle[3],
+      _colTitle[4] + _rowTitle[10], _rowTitle[10] + _colTitle[4],
+      _colTitle[5] + _rowTitle[11], _rowTitle[11] + _colTitle[5],
+      _colTitle[6] + _rowTitle[12], _rowTitle[12] + _colTitle[6],
+    ];
+    _tableEncoding['8'] = [
+      _colTitle[8] + _rowTitle[0],   _rowTitle[0] + _colTitle[8],
+      _colTitle[9] + _rowTitle[1],   _rowTitle[1] + _colTitle[9],
+      _colTitle[10] + _rowTitle[2],   _rowTitle[2] + _colTitle[10],
+      _colTitle[11] + _rowTitle[3],   _rowTitle[3] + _colTitle[11],
+      _colTitle[12] + _rowTitle[4],   _rowTitle[4] + _colTitle[12],
+      _colTitle[0] + _rowTitle[5],   _rowTitle[5] + _colTitle[0],
+      _colTitle[1] + _rowTitle[6],   _rowTitle[6] + _colTitle[1],
+      _colTitle[2] + _rowTitle[7],   _rowTitle[7] + _colTitle[2],
+      _colTitle[3] + _rowTitle[8],   _rowTitle[8] + _colTitle[3],
+      _colTitle[4] + _rowTitle[9],   _rowTitle[9] + _colTitle[4],
+      _colTitle[5] + _rowTitle[10], _rowTitle[10] + _colTitle[5],
+      _colTitle[6] + _rowTitle[11], _rowTitle[11] + _colTitle[6],
+      _colTitle[7] + _rowTitle[12], _rowTitle[12] + _colTitle[7],
+    ];
+    _tableEncoding['9'] = [
+      _colTitle[9] + _rowTitle[0],   _rowTitle[0] + _colTitle[9],
+      _colTitle[10] + _rowTitle[1],   _rowTitle[1] + _colTitle[10],
+      _colTitle[11] + _rowTitle[2],   _rowTitle[2] + _colTitle[11],
+      _colTitle[12] + _rowTitle[3],   _rowTitle[3] + _colTitle[12],
+      _colTitle[0] + _rowTitle[4],   _rowTitle[4] + _colTitle[0],
+      _colTitle[1] + _rowTitle[5],   _rowTitle[5] + _colTitle[1],
+      _colTitle[2] + _rowTitle[6],   _rowTitle[6] + _colTitle[2],
+      _colTitle[3] + _rowTitle[7],   _rowTitle[7] + _colTitle[3],
+      _colTitle[4] + _rowTitle[8],   _rowTitle[8] + _colTitle[4],
+      _colTitle[5] + _rowTitle[9],   _rowTitle[9] + _colTitle[5],
+      _colTitle[6] + _rowTitle[10], _rowTitle[10] + _colTitle[6],
+      _colTitle[7] + _rowTitle[11], _rowTitle[11] + _colTitle[7],
+      _colTitle[8] + _rowTitle[12], _rowTitle[12] + _colTitle[8],
+    ];
+    _tableEncoding['A'] = [
+      _colTitle[10] + _rowTitle[ 0],   _rowTitle[ 0] + _colTitle[10],
+      _colTitle[7] + _rowTitle[ 8],   _rowTitle[ 8] + _colTitle[7],
+    ];
+    _tableEncoding['B'] = [
+      _colTitle[11] + _rowTitle[ 0],   _rowTitle[ 0] + _colTitle[11],
+    ];
+    _tableEncoding['C'] = [
+      _colTitle[12] + _rowTitle[ 0],   _rowTitle[ 0] + _colTitle[12],
+    ];
+    _tableEncoding['D'] = [
+      _colTitle[ 0] + _rowTitle[ 1],   _rowTitle[ 1] + _colTitle[ 0],
+      _colTitle[6] + _rowTitle[ 9],   _rowTitle[ 9] + _colTitle[6],
+    ];
+    _tableEncoding['E'] = [
+      _colTitle[11] + _rowTitle[ 1],   _rowTitle[ 1] + _colTitle[11],
+      _colTitle[7] + _rowTitle[ 9],   _rowTitle[ 9] + _colTitle[7],
+    ];
+    _tableEncoding['F'] = [
+      _colTitle[12] + _rowTitle[ 1],   _rowTitle[ 1] + _colTitle[12],
+    ];
+    _tableEncoding['G'] = [
+      _colTitle[ 0] + _rowTitle[ 2],   _rowTitle[ 2] + _colTitle[ 0],
+      _colTitle[8] + _rowTitle[ 9],   _rowTitle[ 9] + _colTitle[8],
+    ];
+    _tableEncoding['H'] = [
+      _colTitle[ 1] + _rowTitle[ 2],   _rowTitle[ 2] + _colTitle[ 1],
+      _colTitle[7] + _rowTitle[10],   _rowTitle[10] + _colTitle[7],
+    ];
+    _tableEncoding['I'] = [
+      _colTitle[12] + _rowTitle[ 2],   _rowTitle[ 2] + _colTitle[12],
+      _colTitle[8] + _rowTitle[10],   _rowTitle[10] + _colTitle[8],
+    ];
+    _tableEncoding['J'] = [
+      _colTitle[ 0] + _rowTitle[ 3],   _rowTitle[ 3] + _colTitle[ 0],
+    ];
+    _tableEncoding['K'] = [
+      _colTitle[ 1] + _rowTitle[ 3],   _rowTitle[ 3] + _colTitle[ 1],
+    ];
+    _tableEncoding['L'] = [
+      _colTitle[ 2] + _rowTitle[ 3],   _rowTitle[ 3] + _colTitle[ 2],
+      _colTitle[9] + _rowTitle[10],   _rowTitle[10] + _colTitle[9],
+    ];
+    _tableEncoding['M'] = [
+      _colTitle[ 1] + _rowTitle[ 4],   _rowTitle[ 4] + _colTitle[ 1],
+    ];
+    _tableEncoding['N'] = [
+      _colTitle[ 2] + _rowTitle[ 4],   _rowTitle[ 4] + _colTitle[ 2],
+      _colTitle[8] + _rowTitle[11],   _rowTitle[11] + _colTitle[8],
+    ];
+    _tableEncoding['O'] = [
+      _colTitle[ 3] + _rowTitle[ 4],   _rowTitle[ 4] + _colTitle[ 3],
+      _colTitle[9] + _rowTitle[11],   _rowTitle[11] + _colTitle[9],
+    ];
+    _tableEncoding['P'] = [
+      _colTitle[ 2] + _rowTitle[ 5],   _rowTitle[ 5] + _colTitle[ 2],
+    ];
+    _tableEncoding['Q'] = [
+      _colTitle[ 3] + _rowTitle[ 5],   _rowTitle[ 5] + _colTitle[ 3],
+    ];
+    _tableEncoding['R'] = [
+      _colTitle[ 4] + _rowTitle[ 5],   _rowTitle[ 5] + _colTitle[ 4],
+      _colTitle[10] + _rowTitle[11],   _rowTitle[11] + _colTitle[10],
+    ];
+    _tableEncoding['S'] = [
+      _colTitle[ 3] + _rowTitle[ 6],   _rowTitle[ 6] + _colTitle[ 3],
+      _colTitle[9] + _rowTitle[12],   _rowTitle[12] + _colTitle[9],
+    ];
+    _tableEncoding['T'] = [
+      _colTitle[ 4] + _rowTitle[ 6],   _rowTitle[ 6] + _colTitle[ 4],
+      _colTitle[10] + _rowTitle[12],   _rowTitle[12] + _colTitle[10],
+    ];
+    _tableEncoding['U'] = [
+      _colTitle[ 5] + _rowTitle[ 6],   _rowTitle[ 6] + _colTitle[ 5],
+      _colTitle[11] + _rowTitle[12],   _rowTitle[12] + _colTitle[11],
+    ];
+    _tableEncoding['V'] = [
+      _colTitle[ 4] + _rowTitle[ 7],   _rowTitle[ 7] + _colTitle[ 4],
+    ];
+    _tableEncoding['W'] = [
+      _colTitle[ 5] + _rowTitle[ 7],   _rowTitle[ 7] + _colTitle[ 5],
+    ];
+    _tableEncoding['X'] = [
+      _colTitle[ 6] + _rowTitle[ 7],   _rowTitle[ 7] + _colTitle[ 6],
+    ];
+    _tableEncoding['Y'] = [
+      _colTitle[ 5] + _rowTitle[ 8],   _rowTitle[ 8] + _colTitle[ 5],
+    ];
+    _tableEncoding['Z'] = [
+      _colTitle[ 6] + _rowTitle[ 8],   _rowTitle[ 8] + _colTitle[ 6],
+    ];
+
+    _tableNumeralCode = AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
   }
 
   bool _invalidSingleAxisTitle(String text) {
@@ -259,247 +496,4 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     return false;
   }
 
-  void _buildTableEncoding(){
-    _tableEncoding['0'] = [
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[12],
-    ];
-    _tableEncoding['1'] = [
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[0],
-    ];
-    _tableEncoding['2'] = [
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[1],
-    ];
-    _tableEncoding['3'] = [
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[2],
-    ];
-    _tableEncoding['4'] = [
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[3],
-    ];
-    _tableEncoding['5'] = [
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[4],
-    ];
-    _tableEncoding['6'] = [
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[5],
-    ];
-    _tableEncoding['7'] = [
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[6],
-    ];
-    _tableEncoding['8'] = [
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[8],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[7],
-    ];
-    _tableEncoding['9'] = [
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[0],   _tableNumeralCode.yAxis[0] + _tableNumeralCode.xAxis[9],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[1],   _tableNumeralCode.yAxis[1] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[2],   _tableNumeralCode.yAxis[2] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[3],   _tableNumeralCode.yAxis[3] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[0] + _tableNumeralCode.yAxis[4],   _tableNumeralCode.yAxis[4] + _tableNumeralCode.xAxis[0],
-      _tableNumeralCode.xAxis[1] + _tableNumeralCode.yAxis[5],   _tableNumeralCode.yAxis[5] + _tableNumeralCode.xAxis[1],
-      _tableNumeralCode.xAxis[2] + _tableNumeralCode.yAxis[6],   _tableNumeralCode.yAxis[6] + _tableNumeralCode.xAxis[2],
-      _tableNumeralCode.xAxis[3] + _tableNumeralCode.yAxis[7],   _tableNumeralCode.yAxis[7] + _tableNumeralCode.xAxis[3],
-      _tableNumeralCode.xAxis[4] + _tableNumeralCode.yAxis[8],   _tableNumeralCode.yAxis[8] + _tableNumeralCode.xAxis[4],
-      _tableNumeralCode.xAxis[5] + _tableNumeralCode.yAxis[9],   _tableNumeralCode.yAxis[9] + _tableNumeralCode.xAxis[5],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[10], _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[6],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[11], _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[7],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[12], _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[8],
-    ];
-    _tableEncoding['A'] = [
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[ 0],   _tableNumeralCode.yAxis[ 0] + _tableNumeralCode.xAxis[10],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[ 8],   _tableNumeralCode.yAxis[ 8] + _tableNumeralCode.xAxis[7],
-    ];
-    _tableEncoding['B'] = [
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[ 0],   _tableNumeralCode.yAxis[ 0] + _tableNumeralCode.xAxis[11],
-    ];
-    _tableEncoding['C'] = [
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[ 0],   _tableNumeralCode.yAxis[ 0] + _tableNumeralCode.xAxis[12],
-    ];
-    _tableEncoding['D'] = [
-      _tableNumeralCode.xAxis[ 0] + _tableNumeralCode.yAxis[ 1],   _tableNumeralCode.yAxis[ 1] + _tableNumeralCode.xAxis[ 0],
-      _tableNumeralCode.xAxis[6] + _tableNumeralCode.yAxis[ 9],   _tableNumeralCode.yAxis[ 9] + _tableNumeralCode.xAxis[6],
-    ];
-    _tableEncoding['E'] = [
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[ 1],   _tableNumeralCode.yAxis[ 1] + _tableNumeralCode.xAxis[11],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[ 9],   _tableNumeralCode.yAxis[ 9] + _tableNumeralCode.xAxis[7],
-    ];
-    _tableEncoding['F'] = [
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[ 1],   _tableNumeralCode.yAxis[ 1] + _tableNumeralCode.xAxis[12],
-    ];
-    _tableEncoding['G'] = [
-      _tableNumeralCode.xAxis[ 0] + _tableNumeralCode.yAxis[ 2],   _tableNumeralCode.yAxis[ 2] + _tableNumeralCode.xAxis[ 0],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[ 9],   _tableNumeralCode.yAxis[ 9] + _tableNumeralCode.xAxis[8],
-    ];
-    _tableEncoding['H'] = [
-      _tableNumeralCode.xAxis[ 1] + _tableNumeralCode.yAxis[ 2],   _tableNumeralCode.yAxis[ 2] + _tableNumeralCode.xAxis[ 1],
-      _tableNumeralCode.xAxis[7] + _tableNumeralCode.yAxis[10],   _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[7],
-    ];
-    _tableEncoding['I'] = [
-      _tableNumeralCode.xAxis[12] + _tableNumeralCode.yAxis[ 2],   _tableNumeralCode.yAxis[ 2] + _tableNumeralCode.xAxis[12],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[10],   _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[8],
-    ];
-    _tableEncoding['J'] = [
-      _tableNumeralCode.xAxis[ 0] + _tableNumeralCode.yAxis[ 3],   _tableNumeralCode.yAxis[ 3] + _tableNumeralCode.xAxis[ 0],
-    ];
-    _tableEncoding['K'] = [
-      _tableNumeralCode.xAxis[ 1] + _tableNumeralCode.yAxis[ 3],   _tableNumeralCode.yAxis[ 3] + _tableNumeralCode.xAxis[ 1],
-    ];
-    _tableEncoding['L'] = [
-      _tableNumeralCode.xAxis[ 2] + _tableNumeralCode.yAxis[ 3],   _tableNumeralCode.yAxis[ 3] + _tableNumeralCode.xAxis[ 2],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[10],   _tableNumeralCode.yAxis[10] + _tableNumeralCode.xAxis[9],
-    ];
-    _tableEncoding['M'] = [
-      _tableNumeralCode.xAxis[ 1] + _tableNumeralCode.yAxis[ 4],   _tableNumeralCode.yAxis[ 4] + _tableNumeralCode.xAxis[ 1],
-    ];
-    _tableEncoding['N'] = [
-      _tableNumeralCode.xAxis[ 2] + _tableNumeralCode.yAxis[ 4],   _tableNumeralCode.yAxis[ 4] + _tableNumeralCode.xAxis[ 2],
-      _tableNumeralCode.xAxis[8] + _tableNumeralCode.yAxis[11],   _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[8],
-    ];
-    _tableEncoding['O'] = [
-      _tableNumeralCode.xAxis[ 3] + _tableNumeralCode.yAxis[ 4],   _tableNumeralCode.yAxis[ 4] + _tableNumeralCode.xAxis[ 3],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[11],   _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[9],
-    ];
-    _tableEncoding['P'] = [
-      _tableNumeralCode.xAxis[ 2] + _tableNumeralCode.yAxis[ 5],   _tableNumeralCode.yAxis[ 5] + _tableNumeralCode.xAxis[ 2],
-    ];
-    _tableEncoding['Q'] = [
-      _tableNumeralCode.xAxis[ 3] + _tableNumeralCode.yAxis[ 5],   _tableNumeralCode.yAxis[ 5] + _tableNumeralCode.xAxis[ 3],
-    ];
-    _tableEncoding['R'] = [
-      _tableNumeralCode.xAxis[ 4] + _tableNumeralCode.yAxis[ 5],   _tableNumeralCode.yAxis[ 5] + _tableNumeralCode.xAxis[ 4],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[11],   _tableNumeralCode.yAxis[11] + _tableNumeralCode.xAxis[10],
-    ];
-    _tableEncoding['S'] = [
-      _tableNumeralCode.xAxis[ 3] + _tableNumeralCode.yAxis[ 6],   _tableNumeralCode.yAxis[ 6] + _tableNumeralCode.xAxis[ 3],
-      _tableNumeralCode.xAxis[9] + _tableNumeralCode.yAxis[12],   _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[9],
-    ];
-    _tableEncoding['T'] = [
-      _tableNumeralCode.xAxis[ 4] + _tableNumeralCode.yAxis[ 6],   _tableNumeralCode.yAxis[ 6] + _tableNumeralCode.xAxis[ 4],
-      _tableNumeralCode.xAxis[10] + _tableNumeralCode.yAxis[12],   _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[10],
-    ];
-    _tableEncoding['U'] = [
-      _tableNumeralCode.xAxis[ 5] + _tableNumeralCode.yAxis[ 6],   _tableNumeralCode.yAxis[ 6] + _tableNumeralCode.xAxis[ 5],
-      _tableNumeralCode.xAxis[11] + _tableNumeralCode.yAxis[12],   _tableNumeralCode.yAxis[12] + _tableNumeralCode.xAxis[11],
-    ];
-    _tableEncoding['V'] = [
-      _tableNumeralCode.xAxis[ 4] + _tableNumeralCode.yAxis[ 7],   _tableNumeralCode.yAxis[ 7] + _tableNumeralCode.xAxis[ 4],
-    ];
-    _tableEncoding['W'] = [
-      _tableNumeralCode.xAxis[ 5] + _tableNumeralCode.yAxis[ 7],   _tableNumeralCode.yAxis[ 7] + _tableNumeralCode.xAxis[ 5],
-    ];
-    _tableEncoding['X'] = [
-      _tableNumeralCode.xAxis[ 6] + _tableNumeralCode.yAxis[ 7],   _tableNumeralCode.yAxis[ 7] + _tableNumeralCode.xAxis[ 6],
-    ];
-    _tableEncoding['Y'] = [
-      _tableNumeralCode.xAxis[ 5] + _tableNumeralCode.yAxis[ 8],   _tableNumeralCode.yAxis[ 8] + _tableNumeralCode.xAxis[ 5],
-    ];
-    _tableEncoding['Z'] = [
-      _tableNumeralCode.xAxis[ 6] + _tableNumeralCode.yAxis[ 8],   _tableNumeralCode.yAxis[ 8] + _tableNumeralCode.xAxis[ 6],
-    ];
-  }
 }
