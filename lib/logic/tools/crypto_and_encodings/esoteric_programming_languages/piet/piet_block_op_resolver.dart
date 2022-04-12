@@ -67,6 +67,11 @@ class PietBlockOpResolver {
   }
 
   Tuple2<bool, Tuple2<HueColor, Darkness>> _tryResolveColor(int color) {
+    var index = knownColors.toList().indexOf(color);
+    if (index >= 0 && index < 18)
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.values.elementAt((index/3).toInt() % 6), Darkness.values.elementAt(index % 3)));
+    else
+      return Tuple2<bool, Tuple2<HueColor, Darkness>>(false, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light)); // default
     // red
     if (color == knownColors.elementAt(0))
       return Tuple2<bool, Tuple2<HueColor, Darkness>>(true, Tuple2<HueColor, Darkness>(HueColor.Red, Darkness.Light));

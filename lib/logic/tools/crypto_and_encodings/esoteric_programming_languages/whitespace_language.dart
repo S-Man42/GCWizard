@@ -109,7 +109,7 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
           code: _clean(_code),
           input_expected: _input_required,
           error: true,
-          errorText: err.toString() + (' (Position: ' + _pos.toString() + ')'));
+          errorText: err.message);
   }
 }
 

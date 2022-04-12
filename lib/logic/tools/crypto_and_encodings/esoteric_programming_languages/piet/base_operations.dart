@@ -34,7 +34,7 @@ class BaseOperations {
   BaseOperations(PietStack stack, PietSession session, Function getExitedBlock, Function toggleDirectionPointer, Function toggleCodelChooser) {
     _stack = stack;
     _session = session;
-    _getExitedBlock = getExitedBlock; //<PietBlock>
+    _getExitedBlock = getExitedBlock;
     _toggleDirectionPointer = toggleDirectionPointer;
     _toggleCodelChooser = toggleCodelChooser;
   }
@@ -109,7 +109,9 @@ class BaseOperations {
 
   void inChar() {
     var val = _session.readChar();
-    if (val != null && val.isNotEmpty) _stack.push(val.runes.first);
+    if (val != null && val.isNotEmpty)
+      val.runes.forEach((char) {_stack.push(char); });
+    _stack.push('\n'.runes.first);
   }
 
   void outNumeric() {

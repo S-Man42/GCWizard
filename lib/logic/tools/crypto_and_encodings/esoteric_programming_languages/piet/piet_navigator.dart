@@ -42,7 +42,7 @@ class PietNavigator {
   Point _currentPoint =  Point<int>(0, 0);
   Point get currentPoint => _currentPoint;
 
-  Tuple2<bool, Point<int>>  tryNavigate(PietBlock block) {
+  Tuple2<bool, Point<int>> tryNavigate(PietBlock block) {
     Point<int> result;
     int failureCount = 0;
 
@@ -63,7 +63,7 @@ class PietNavigator {
 
       else if (direction == Direction.North && codelChooser == CodelChoice.Left) exitPoint = block.northLeft;
       else if (direction == Direction.North && codelChooser == CodelChoice.Right) exitPoint = block.northRight;
-      else return throw new Exception('common_programming_error_invalid_opcode');
+      else return throw Exception('common_programming_error_invalid_opcode');
 
       if (moveStraight) {
         var prevStep = exitPoint;
@@ -82,8 +82,7 @@ class PietNavigator {
             case Direction.North:
               exitPoint = Point<int>(exitPoint.x, exitPoint.y - 1);
               break;
-            default:
-              return throw new Exception('common_programming_error_invalid_opcode');
+            default: return throw Exception('common_programming_error_invalid_opcode');
           }
         }
        // we've crossed the boundary, one step back to be on the edge
@@ -95,7 +94,7 @@ class PietNavigator {
       else if (direction == Direction.South) nextStep = Point<int>(exitPoint.x, exitPoint.y + 1);
       else if (direction == Direction.West) nextStep = Point<int>(exitPoint.x - 1, exitPoint.y);
       else if (direction == Direction.North) nextStep = Point<int>(exitPoint.x, exitPoint.y - 1);
-      else  return throw new Exception('common_programming_error_invalid_opcode');;
+      else  return throw Exception('common_programming_error_invalid_opcode');
 
       bool isOutOfBounds = nextStep.x < 0 ||
           nextStep.y < 0 ||

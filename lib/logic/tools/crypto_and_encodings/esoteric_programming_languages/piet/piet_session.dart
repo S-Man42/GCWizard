@@ -36,7 +36,7 @@ Future<PietResult> interpretPiet(List<List<int>> data, List<String> input,
     {int timeOut = 60000, PietSession continueState}) async {
 
   var pietSession = continueState ?? PietSession(data, timeOut: timeOut);
-  pietSession.input  = input;
+  pietSession.input = input;
 
   try {
     pietSession.run();
@@ -48,14 +48,15 @@ Future<PietResult> interpretPiet(List<List<int>> data, List<String> input,
           output: pietSession._output,
           input_expected: _input_required,
           input_number_expected: _input_required_number,
-          finished: false, state: pietSession);
+          finished: false);
     } else
       return PietResult(
           output: pietSession._output,
           input_expected: _input_required,
           input_number_expected: _input_required_number,
           error: true,
-          errorText: err.toString());
+          errorText: err.message,
+          state: pietSession);
   }
 }
 
@@ -74,6 +75,7 @@ class PietSession {
   var _output = '';
 
   var _timeOut = 60000;
+  int _counter  =0;
 
   PietSession(List<List<int>> image, {int timeOut = 60000}) {
     data = image;
@@ -109,6 +111,7 @@ class PietSession {
       _actionMap[opCode]();
 
     _currentBlock = newBlock;
+    _counter ++;
   }
 
   void run() {
@@ -118,11 +121,14 @@ class PietSession {
 
     while (running) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
-        throw new Exception('common_programming_error_maxiterations');
+        print('Steps/s: ' + (_counter*1000 / (DateTime.now().difference(start_time)).inMilliseconds).toInt().toString());
+        throw Exception('common_programming_error_maxiterations');
       }
-      //if (_navigator.StepCount % 10 == 0) print(_navigator.StepCount);
+
       _step();
     }
+
+    print('Steps/s: ' + (_counter*1000 / (DateTime.now().difference(start_time)).inMilliseconds).toInt().toString());
   }
 
   void output(String value) {

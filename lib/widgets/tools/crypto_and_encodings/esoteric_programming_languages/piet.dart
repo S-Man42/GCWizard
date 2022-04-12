@@ -12,7 +12,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -33,7 +32,6 @@ class PietState extends State<Piet> {
   String _currentGeneratorInput;
   PietResult _currentInterpreterOutput = null;
   Uint8List _currentGeneratorOutput = null;
-  var __calcOutput = false;
   var _isStarted = false;
   var _currentMode = GCWSwitchPosition.left;
   TextEditingController _inputGeneratorController;
@@ -104,18 +102,18 @@ class PietState extends State<Piet> {
         GCWImageView(
           imageData: _originalData?.bytes == null ? null : GCWImageViewData(GCWFile(bytes: _originalData.bytes)),
         ),
-        _buildInterpreterOutput()
+        _buildInterpreterOutput(context)
       ],
     );
   }
 
-  Widget _buildInterpreterOutput() {
+  Widget _buildInterpreterOutput(BuildContext context) {
     if (_originalData?.bytes == null) return GCWDefaultOutput();
     if (_currentInterpreterOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
     return GCWDefaultOutput( child:
         _currentInterpreterOutput.output + (_currentInterpreterOutput.error ? '\n' +
-            i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText : ''),
+            (i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText) : ''),
     );
   }
 
@@ -167,12 +165,12 @@ class PietState extends State<Piet> {
             });
           },
         ),
-        _buildGeneratorOutput()
+        _buildGeneratorOutput(context)
       ],
     );
   }
 
-  Widget _buildGeneratorOutput() {
+  Widget _buildGeneratorOutput(BuildContext context) {
     if (_currentGeneratorOutput == null) return GCWDefaultOutput();
 
     return GCWDefaultOutput( child:
@@ -192,6 +190,7 @@ class PietState extends State<Piet> {
   }
 
   _showDialogBox(BuildContext context, String text) {
+    _isStarted = false;
     showGCWDialog(
         context,
         text,
@@ -215,7 +214,6 @@ class PietState extends State<Piet> {
           GCWDialogButton(
             text: i18n(context, 'common_ok'),
             onPressed: () {
-              _isStarted = false;
               _calcInterpreterOutput();
             },
           )
