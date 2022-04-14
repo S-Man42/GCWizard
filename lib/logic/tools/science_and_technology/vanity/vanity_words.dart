@@ -131,7 +131,7 @@ final VanityToESP = {
 final VanityToNLD = {
   '685': 'NUL',
   '336': 'EEN',
-  '9933': 'ZWEE',
+  '9933': 'TWEE',
   '3743': 'DRIE',
   '8437': 'VIER',
   '8453': 'VIJF',
