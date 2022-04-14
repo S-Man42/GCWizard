@@ -111,7 +111,6 @@ class BaseOperations {
     var val = _session.readChar();
     if (val != null && val.isNotEmpty)
       val.runes.forEach((char) {_stack.push(char); });
-    _stack.push('\n'.runes.first);
   }
 
   void outNumeric() {

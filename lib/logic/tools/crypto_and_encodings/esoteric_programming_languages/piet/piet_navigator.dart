@@ -27,8 +27,8 @@ class PietNavigator {
 
   List<List<int>> _data;
 
-  final int white = knownColors.elementAt(18);
-  final int black = knownColors.elementAt(19);
+  final int white = knownColors[18];
+  final int black = knownColors[19];
 
   int _width;
   int _height;
@@ -46,7 +46,7 @@ class PietNavigator {
     Point<int> result;
     int failureCount = 0;
 
-    bool moveStraight = block.color == white || !block.KnownColor;
+    bool moveStraight = block.color == white || !block.knownColor;
 
     while (failureCount < 8) {
       Point exitPoint= Point<int>(0, 0);
@@ -137,11 +137,11 @@ class PietNavigator {
   /// </summary>
   /// <param name="turns">I</param>
   void rotateDirectionPointer(int turns) {
-    _direction = Direction.values.elementAt((direction.index + turns) % 4);
+    _direction = Direction.values[(direction.index + turns) % 4];
   }
 
   void toggleCodelChooser(int times) {
-    _codelChooser = CodelChoice.values.elementAt((codelChooser.index + times.abs()) % 2);
+    _codelChooser = CodelChoice.values[(codelChooser.index + times.abs()) % 2];
   }
 
 }

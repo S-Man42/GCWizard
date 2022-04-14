@@ -37,8 +37,8 @@ Future<Uint8List> generatePiet(String input) async {
   var mapList = switchMapKeyValue(alphabet_AZ);
 
   for (var i = 0; i < knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)}); // | 0xFF000000
-    colorMapSwitched.addAll({knownColors.elementAt(i): mapList[i + 1]});
+    colorMap.addAll({mapList[i + 1]: Color(knownColors[i] | 0xFF000000)}); // | 0xFF000000
+    colorMapSwitched.addAll({knownColors[i]: mapList[i + 1]});
   };
 
   result.forEach((line) {
@@ -56,7 +56,7 @@ class _colorStack {
   var _color_table = {1 ,0}.toList();
 
   int RGB() {
-    return knownColors.elementAt(_color_table[1] * 3 + _color_table[0]);
+    return knownColors[_color_table[1] * 3 + _color_table[0]];
   }
 
   int push_color() {
@@ -74,8 +74,8 @@ class _colorStack {
 _colorStack _currentColor;
 
 final _blockHeight = 12;
-final int _white = knownColors.elementAt(18);
-final int _black = knownColors.elementAt(19);
+final int _white = knownColors[18];
+final int _black = knownColors[19];
 
 
 List<List<int>>  _drawBlock(int size, int num) {
@@ -116,7 +116,7 @@ List<List<int>> _drawEnd(int num) {
   block[_calcIndex(1, 3, blockWidth)] = _black;
   block[_calcIndex(2, 0, blockWidth)] = _black;
   block.fillRange(_calcIndex(2, 1, blockWidth), _calcIndex(2, 4, blockWidth), _currentColor.write_color());
-  block[_calcIndex(2, 4, blockWidth)] = knownColors.elementAt(19);
+  block[_calcIndex(2, 4, blockWidth)] = knownColors[19];
   block.fillRange(_calcIndex(3, 1, blockWidth), _calcIndex(3, 4, blockWidth), _black);
 
   var lines = <List<int>>[];

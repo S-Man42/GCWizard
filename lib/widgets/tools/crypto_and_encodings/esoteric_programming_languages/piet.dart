@@ -112,8 +112,9 @@ class PietState extends State<Piet> {
     if (_currentInterpreterOutput == null) return GCWDefaultOutput(child: i18n(context, 'common_please_wait'));
 
     return GCWDefaultOutput( child:
-        _currentInterpreterOutput.output + (_currentInterpreterOutput.error ? '\n' +
-            (i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText) : ''),
+      (_currentInterpreterOutput.output ?? '') +
+          (_currentInterpreterOutput.error && (_currentInterpreterOutput.errorText != null) ? '\n' +
+          (i18n(context, _currentInterpreterOutput.errorText) ?? _currentInterpreterOutput.errorText) : ''),
     );
   }
 
@@ -124,14 +125,7 @@ class PietState extends State<Piet> {
 
     var imageReader = PietImageReader();
     var _pietPixels = _currentInterpreterOutput?.state?.data ?? imageReader.readImage(_originalData.bytes);
-    var _currentInputList = <String>[];
-    if (!(_currentInterpreterInput == null || _currentInterpreterInput.isEmpty))
-      if (_currentInterpreterOutput?.state != null && !_currentInterpreterOutput.input_number_expected)
-        _currentInputList = _currentInterpreterInput.split('').toList();
-      else
-        _currentInputList = [_currentInterpreterInput];
-
-    var currentOutputFuture = interpretPiet(_pietPixels, _currentInputList, continueState: _currentInterpreterOutput?.state);
+    var currentOutputFuture = interpretPiet(_pietPixels, _currentInterpreterInput, continueState: _currentInterpreterOutput?.state);
 
     currentOutputFuture.then((output) {
       if (output.finished) {

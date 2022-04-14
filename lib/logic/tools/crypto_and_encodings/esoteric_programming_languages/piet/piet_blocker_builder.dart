@@ -1,8 +1,9 @@
 ﻿import 'dart:core';
+import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/piet/piet_block.dart';
 
-const knownColors = { //format RGB
+const knownColors = [ //format RGB
   // reds
   0xFFC0C0, // light
   0xFF0000,
@@ -31,13 +32,15 @@ const knownColors = { //format RGB
   0xFFFFFF,
   // black
   0x000000
-};
+];
 
 class PietBlockerBuilder {
   // we if want to support custom colors and operations going forward
   // we'll need to allow extensions to add to this collection
 
   List<List<int>> _data;
+  PietBlock _block;
+  var _blockCache = Map<Point<int>, PietBlock>();
   int _width;
   int _height;
 
@@ -52,40 +55,42 @@ class PietBlockerBuilder {
   }
 
   PietBlock _buildPietBlock(int x, int y) {
+    var point = Point<int>(x, y);
+    if (_blockCache.containsKey(point)) return _blockCache[point];
     int targetColor = _data[y][x];
     var knownColor = knownColors.contains(targetColor);
-    PietBlock block = PietBlock(targetColor, knownColor);
 
-    return _buildPietBlockRec(block, x, y, 0, 0);
+    _block = PietBlock(targetColor, knownColor);
+    _buildPietBlockRec(x, y, 0, 0);
+    _blockCache.addAll({point: _block});
+
+    return _block;
   }
 
-  PietBlock _buildPietBlockRec(PietBlock block, int x, int y, int xOffset, int yOffset) {
+  void _buildPietBlockRec(int x, int y, int xOffset, int yOffset) {
     var newX = x + xOffset;
     var newY = y + yOffset;
 
     if (newX < 0 || newX >= _width || newY < 0 || newY >= _height) // out of bounds
-      return block;
+      return;
 
     var currentColor = _data[newY][newX];
-    if (currentColor != block.color) // colors don't match - you hit an edge
-      return block;
+    if (currentColor != _block.color) // colors don't match - you hit an edge
+      return;
 
-    // int countBefore = block.BlockCount;
-    if (!block.addPixel(newX, newY)) return block;
+    if (!_block.addPixel(Point<int>(newX, newY))) return;
 
     // top
-    if (yOffset != 1) _buildPietBlockRec(block, newX, newY, 0, -1);
+    if (yOffset != 1) _buildPietBlockRec(newX, newY, 0, -1);
 
     // bottom
-    if (yOffset != -1) _buildPietBlockRec(block, newX, newY, 0, 1);
+    if (yOffset != -1) _buildPietBlockRec(newX, newY, 0, 1);
 
     // left
-    if (xOffset != 1) _buildPietBlockRec(block, newX, newY, -1, 0);
+    if (xOffset != 1) _buildPietBlockRec(newX, newY, -1, 0);
 
     // right
-    if (xOffset != -1) _buildPietBlockRec(block, newX, newY, 1, 0);
-
-    return block;
+    if (xOffset != -1) _buildPietBlockRec(newX, newY, 1, 0);
   }
 }
 
