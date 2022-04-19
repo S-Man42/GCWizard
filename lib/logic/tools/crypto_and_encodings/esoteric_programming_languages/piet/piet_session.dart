@@ -31,18 +31,23 @@ class PietResult {
 var _input_required = false;
 var _input_required_number = false;
 final _inputRequired = "input required";
+final maxOutputLength = 1000;
 
 Future<PietResult> interpretPiet(List<List<int>> data, String input,
-    {int timeOut = 15000, PietSession continueState}) async {
+    {int timeOut = 15000,
+      bool multipleInputs = false,
+      PietSession continueState}) async {
 
-  var pietSession = continueState ?? PietSession(data, timeOut: timeOut);
+  var pietSession = continueState ?? PietSession(data, timeOut: timeOut, multipleInputs: multipleInputs);
   if (input != null && !input.endsWith('\n')) input += '\n';
   pietSession.input = input;
 
   try {
     pietSession.run();
 
-    return PietResult(output: pietSession._output, input_expected: _input_required, input_number_expected: _input_required_number);
+    return PietResult(output: pietSession._output,
+        input_expected: _input_required,
+        input_number_expected: _input_required_number);
   } catch (err) {
     if (err.message == _inputRequired) {
       return PietResult(
@@ -76,9 +81,10 @@ class PietSession {
   var _output = '';
 
   var _timeOut = 60000;
+  var _multipleInputs  = false;
   int _counter  =0;
 
-  PietSession(List<List<int>> image, {int timeOut = 15000}) {
+  PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
 
     _builder = PietBlockerBuilder(data);
@@ -86,6 +92,7 @@ class PietSession {
     _opsResolver = PietBlockOpResolver();
     _stack = PietStack();
     _timeOut = max(timeOut, 100);
+    _multipleInputs = multipleInputs;
 
     _currentBlock = _builder.getBlockAt(0, 0);
 
@@ -133,12 +140,12 @@ class PietSession {
 
   void output(String value) {
     _output += value;
+    if (_output.length > maxOutputLength)
+      throw Exception('common_programming_error_maxiterations');
   }
 
   int readInt() {
-    _input_required = true;
-    _input_required_number = true;
-    if (input == null) throw Exception(_inputRequired);
+    if (_inputNeeded(true)) throw Exception(_inputRequired);
 
     if (input.isEmpty) return null;
     var match = RegExp(r'^[0-9]+').firstMatch(input);
@@ -155,14 +162,18 @@ class PietSession {
   }
 
   String readChar() {
-    _input_required = true;
-    _input_required_number = false;
-    if (input == null) throw Exception(_inputRequired);
+    if (_inputNeeded(false)) throw Exception(_inputRequired);
 
     if (input.isEmpty) return null;
     var _input = input[0];
     input = input.substring(1);
     _input_required = false;
     return _input;
+  }
+
+  bool _inputNeeded(bool numberInput) {
+    _input_required = true;
+    _input_required_number = numberInput;
+    return input == null || (input.isEmpty && _multipleInputs);
   }
 }
