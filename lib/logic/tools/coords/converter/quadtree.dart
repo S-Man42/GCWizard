@@ -13,7 +13,7 @@ Quadtree latLonToQuadtree(LatLng coord, {int precision: _DEFAULT_PRECISION}) {
   var siny = sin(degreesToRadian(coord.latitude));
   var y = (_TILESIZE / 2.0) + 0.5 * log((1.0 + siny) / (1.0 - siny)) * -(_TILESIZE / (2.0 * pi));
 
-  var countTiles = 1 << precision;
+  var countTiles = int.parse('1' + '0' * precision, radix: 2); //1 << precision (bugfix for web version)
 
   var tileX = (x * countTiles / _TILESIZE).floor();
   var tileY = (y * countTiles / _TILESIZE).floor();
@@ -39,7 +39,7 @@ LatLng quadtreeToLatLon(Quadtree quadtree) {
     tileY = 2 * tileY + (quadtree.coords[i] / 2.0).floor();
   }
 
-  var countTiles = 1 << quadtree.coords.length;
+  var countTiles = int.parse('1' + '0' * quadtree.coords.length, radix: 2); //1 << quadtree.coords.length (bugfix for web version)
 
   var x = (tileX) * _TILESIZE / countTiles;
   var y = (tileY) * _TILESIZE / countTiles;
