@@ -411,7 +411,6 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 
-
 chili.
 
 Ingredients.
@@ -853,7 +852,6 @@ Schüssel in eine Servierschale stürzen.
 
 Portionen: 1.
 
-
 schwere scharfe Currydressings
 
 Zutaten:
@@ -863,7 +861,6 @@ Zutaten:
 Zubereitung:
 Pfeffer in die Schüssel geben.
 Frischkäse kombinieren.
-
 
 schwere bittere Currychips
 
@@ -915,7 +912,6 @@ Schüssel in eine Servierschale stürzen.
 
 Portionen: 1.
 
-
 cremige bittere Ketchuptoppings
 
 Zutaten:
@@ -925,7 +921,6 @@ Zutaten:
 Zubereitung:
 Zwiebeln in die Schüssel geben.
 Bohnen kombinieren.
-
 
 leichte bittere Currychips
 
@@ -989,7 +984,6 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 
-
 fluffy hot ketchuptopping
 
 Ingredients.
@@ -999,7 +993,6 @@ Ingredients.
 Method.
 Put tofu into the mixing bowl.
 Combine apple pieces into mixing bowl.
-
 
 light hot honeychips
 
@@ -1051,7 +1044,6 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 
-
 fluffy hot honeychips
 
 Ingredients.
@@ -1061,7 +1053,6 @@ Ingredients.
 Method.
 Put jam into the mixing bowl.
 Combine shrimps into mixing bowl.
-
 
 light bitter honeydressing
 
@@ -1167,7 +1158,7 @@ Salz in die Schüssel geben.
 Pfeffer kombinieren.
 Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen: 1.''';
+Portionen: 1.'''; // run in the emulator
     var teile = '''Test DIVIDE.
 
 Zutaten:
@@ -1924,7 +1915,7 @@ Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
-''';
+'''; // run in the emulator
     var stdin = '''STDIN stew.
 
 Read flour from STDIN and output it.
@@ -2608,7 +2599,6 @@ Example STDIN for turing program that does addition:
 2 0 0 0 3
 3 1 0 0 0
 3 0	0 0 0
-
 
 Ingredients.
 tapelength
