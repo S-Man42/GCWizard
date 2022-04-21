@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_language.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
@@ -205,7 +206,7 @@ class ChefState extends State<Chef> {
       if (isValid(_currentInput)) {
         try {
           output = buildOutputText(
-              interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+              interpretChef(language, normalizeUmlauts(_currentRecipe.toLowerCase().replaceAll('  ', ' ')), _currentInput));
         } catch (e) {
           output = buildOutputText([
             'common_programming_error_runtime',
