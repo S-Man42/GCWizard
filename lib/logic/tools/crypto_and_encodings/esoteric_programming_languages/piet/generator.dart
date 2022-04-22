@@ -32,39 +32,61 @@ Future<Uint8List> generatePiet(String input) async {
   });
   result.add(_drawEndBlock(i));
 
+  var arrangment = _calcOutputArrangement(result.length);
 
   var resultLines =  <List<int>>[];
-  var index = 0;
+  var row = 0;
+  var column = 0;
   var rowOffset = 0;
+  var direction = Alignment.topRight;
+  var nextDirection = Alignment.topRight;
+  var pixelIndex = 0;
+  int firstPixelColor = null;
+
   result.forEach((mapEntry) {
-    if (index< 3) {
-      mapEntry.value[0].first = mapEntry.key;
-      for (var row = 0; row < mapEntry.value.length; row++) {
-        if (resultLines.length <= rowOffset + row) resultLines.add(<int>[]);
+    var block = mapEntry.value;
+    if (mapEntry == result.last) {
+      if (direction == Alignment.bottomLeft)
+        block = _reverseBlock(block, _blockWidth);
+    };
 
-        resultLines[rowOffset + row].addAll(mapEntry.value[row]);
-      }
-    } else {
-      rowOffset = 12;
-      // if (result.last == mapEntry)
-      //   mapEntry.value[0].first = mapEntry.key;
-      // else
-      //   mapEntry.value[0].last = mapEntry.key;
+    if (firstPixelColor != null) {
+      pixelIndex = _searchFirstPixelIndex(block, direction);
+      if (pixelIndex != null && pixelIndex >= 0)
+        block[pixelIndex] = firstPixelColor;
+    } else if (mapEntry != result.first)
+      block = _removeLastPixel(block);
 
-      for (var row = 0; row < mapEntry.value.length; row++) {
-        if (resultLines.length <= rowOffset + row) resultLines.add(<int>[]);
+    nextDirection = _getNextBlockDirection(row, column, arrangment);
 
-        if (result.last == mapEntry)
-          resultLines[rowOffset + row].insertAll(0, mapEntry.value[row].reversed);
-        else
-          resultLines[rowOffset + row].insertAll(0, mapEntry.value[row]);
-      }
-    }
-    index++;
+    pixelIndex = _searchLastWhitePixelIndex(block, nextDirection);
+    if (pixelIndex != null && pixelIndex >= 0) {
+      block[pixelIndex] = mapEntry.key;
+      firstPixelColor = null;
+    } else
+      firstPixelColor = mapEntry.key;
+
+
+    resultLines = _addBlockToResult(block, resultLines, row,
+        direction == Alignment.topRight);
+
+
+    if (nextDirection == Alignment.topRight)
+      column++;
+    else if (nextDirection == Alignment.bottomRight)
+      row++;
+    else if (nextDirection == Alignment.bottomLeft)
+      column--;
+    else if (nextDirection == Alignment.topLeft)
+      row--;
+
+    direction = nextDirection;
   });
 
+  return _convertToImage(resultLines);
+}
 
-
+Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
   var lines = <String>[];
   var colorMap = Map<String, Color>();
   var colorMapSwitched = Map<int, String>();
@@ -72,7 +94,7 @@ Future<Uint8List> generatePiet(String input) async {
 
 
   for (var i = 0; i < knownColors.length; i++) {
-    colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)}); // | 0xFF000000
+    colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)});
     colorMapSwitched.addAll({knownColors.elementAt(i): mapList[i + 1]});
   };
 
@@ -85,6 +107,23 @@ Future<Uint8List> generatePiet(String input) async {
   });
 
   return input2Image(lines, colors: colorMap, bounds: 0, pointSize: 1);
+}
+
+List<List<int>> _addBlockToResult(List<int> block, List<List<int>> resultLines, int row, bool append) {
+  var lines = _splitToLines(block, _blockWidth);
+  row *= _blockHeight;
+  if (resultLines.isEmpty) return lines;
+
+  while (resultLines.length  < row + _blockHeight)
+    resultLines.add(<int>[]);
+
+  for (var i = row; i < row + _blockHeight; i++) {
+    if (append)
+      resultLines[i].addAll(lines[i-row]);
+    else
+      resultLines[i].insertAll(0, lines[i-row]);
+  }
+  return resultLines;
 }
 
 Alignment _getNextBlockDirection(int row, int column, List<List<int>> outputArrangement) {
@@ -103,48 +142,51 @@ Alignment _getNextBlockDirection(int row, int column, List<List<int>> outputArra
 List<List<int>> _calcOutputArrangement(int blockCount) {
   var sqr = sqrt(blockCount);
   var columnCount = blockCount <= 2 ? 2 : blockCount <= 4 ? 2 : sqr.ceil();
+  //columnCount = blockCount;
   var rowCount = (blockCount/ columnCount).ceil();
   var lines = <List<int>>[];
-
   var direction = Alignment.topRight;
   var row = 0;
   var column = 0;
-  for (var i=0; i< rowCount * columnCount; i++)
+
+  for (var i=0; i< rowCount; i++)
     lines.add(List.filled(columnCount, -1));
 
   for (var i=0; i< rowCount * columnCount; i++) {
-    lines[column][row] = i;
+    lines[row][column] = i;
 
     if (direction == Alignment.topRight) {
       column++;
-      if ((column >= columnCount) || (lines[column][row] != -1)) {
+      if ((column >= columnCount) || (lines[row][column] != -1)) {
         direction = Alignment.bottomRight;
         row++;
         column--;
       }
     } else if (direction == Alignment.bottomRight) {
       row++;
-      if ((row >= rowCount) || (lines[column][row] != -1)) {
+      if ((row >= rowCount) || (lines[row][column] != -1)) {
         direction = Alignment.bottomLeft;
         row--;
         column--;
       }
     } else if (direction == Alignment.bottomLeft) {
       column--;
-      if ((column < 0) || (lines[column][row] != -1)) {
+      if ((column < 0) || (lines[row][column] != -1)) {
         direction = Alignment.topLeft;
         row--;
         column++;
       }
     } else if (direction == Alignment.topLeft) {
       row--;
-      if ((row < 0) || (lines[column][row] != -1)) {
+      if ((row < 0) || (lines[row][column] != -1)) {
         direction = Alignment.topRight;
         row++;
         column++;
       }
     }
   }
+
+  return lines;
 }
 
 int _searchLastWhitePixelIndex(List<int> block, Alignment alignment) {
@@ -193,44 +235,36 @@ int _searchLastWhitePixelIndex(List<int> block, Alignment alignment) {
   }
 }
 
-void _removeLastPixel(List<int> block) {
+int _searchFirstPixelIndex(List<int> block, Alignment alignment) {
+  if (alignment == Alignment.topRight) {
+    return _calcIndex(0, 0, _blockWidth);
+  } else if (alignment == Alignment.bottomRight) {
+    return _calcIndex(0, _blockWidth - 1, _blockWidth);
+  } else if (alignment == Alignment.bottomLeft) {
+    return _calcIndex(0, _blockWidth-1, _blockWidth);
+  } else if (alignment == Alignment.topLeft) {
+    return _calcIndex(_blockHeight-1, 0, _blockWidth);
+  }
+}
+
+List<int> _removeLastPixel(List<int> block) {
   var index = block.indexWhere((pixel) => pixel == _white);
   if (index >= 0) {
     var index1 = block.indexWhere((pixel) => (pixel != _white), index);
     if (index1 >= 0) block[index1] = _white;
   } else
     block.last = _white;
+
+  return block;
 }
-
-class _colorStack {
-  var _colorTable = [1 ,0];
-
-  int RGB() {
-    return knownColors.elementAt(_colorTable[1] * 3 + _colorTable[0]);
-  }
-
-  int pushColor() {
-    _colorTable[0] = (_colorTable[0] + 1) % 3;
-    return RGB();
-  }
-
-  int pullColor() {
-    _colorTable[0] = (_colorTable[0] + 2) % 3;
-    _colorTable[1] = (_colorTable[1] + 5) % 6;
-    return RGB();
-  }
-}
-
 
 MapEntry<int, List<int>> _drawBlock(int size, int num) {
   var block = List.filled(_blockHeight * _blockWidth, _white);
-  int oldPushColor;
+
   if (num != 0) {
-    oldPushColor = _currentColor.pushColor();
-    _currentColor.pullColor();
+    _currentColor.writeOutputColor();
     size++;
-  } else
-    oldPushColor = _currentColor.RGB();
+  }
 
   var rem = size % _blockWidth;
   var rows = (size / _blockWidth).ceil();
@@ -240,23 +274,22 @@ MapEntry<int, List<int>> _drawBlock(int size, int num) {
   if (rem != 0)
     block.fillRange(_calcIndex(rows, 0, _blockWidth), _calcIndex(rows, _blockWidth - rem, _blockWidth), _white);
 
-  return MapEntry<int, List<int>>(oldPushColor, block);
+  return MapEntry<int, List<int>>(_currentColor.pushColor(), block);
 }
 
 MapEntry<int, List<int>> _drawEndBlock(int num) {
   var block = List.filled(_blockHeight * _blockWidth, _white);
-  var oldPushColor = _currentColor.pushColor();
 
-  block[_calcIndex(0, 1, 5)] = _currentColor.pullColor();
+  block[_calcIndex(0, 1, 5)] = _currentColor.writeOutputColor();
   block[_calcIndex(0, 3, _blockWidth)] = _black;
   block[_calcIndex(1, 1, _blockWidth)] = _black;
   block[_calcIndex(1, 3, _blockWidth)] = _black;
   block[_calcIndex(2, 0, _blockWidth)] = _black;
-  block.fillRange(_calcIndex(2, 1, _blockWidth), _calcIndex(2, 4, _blockWidth), _currentColor.pullColor());
+  block.fillRange(_calcIndex(2, 1, _blockWidth), _calcIndex(2, 4, _blockWidth), _currentColor.writeOutputColor());
   block[_calcIndex(2, 4, _blockWidth)] = _black;
   block.fillRange(_calcIndex(3, 1, _blockWidth), _calcIndex(3, 4, _blockWidth), _black);
 
-  return MapEntry<int, List<int>>(oldPushColor, block);
+  return MapEntry<int, List<int>>(_white, block);
 }
 
 MapEntry<int, List<int>> _drawWhiteBlock(int num) {
@@ -273,8 +306,39 @@ List<List<int>> _splitToLines(List<int> block, int width) {
   return lines;
 }
 
+List<int> _reverseBlock(List<int> block, int width) {
+  var lines = _splitToLines(block, width);
+  var result = <int>[];
+
+  lines.forEach((line) {
+    result.addAll(line.reversed);
+  });
+
+  return result;
+}
+
 int _calcIndex(int row, int column, int width) {
   return row * width + column;
+}
+
+
+class _colorStack {
+  var _colorTable = [1 ,0];
+
+  int RGB() {
+    return knownColors.elementAt(_colorTable[1] * 3 + _colorTable[0]);
+  }
+
+  int pushColor() {
+    _colorTable[0] = (_colorTable[0] + 1) % 3;
+    return RGB();
+  }
+
+  int writeOutputColor() {
+    _colorTable[0] = (_colorTable[0] + 2) % 3;
+    _colorTable[1] = (_colorTable[1] + 5) % 6;
+    return RGB();
+  }
 }
 
 
