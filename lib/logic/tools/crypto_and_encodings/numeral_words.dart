@@ -2315,6 +2315,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 
     // trim korean
     input = input
+        .replaceAll('\n', ' ')
         .replaceAll('hah - nah', 'hah-nah')
         .replaceAll('dah suht', 'dahsuht')
         .replaceAll('yuh suht', 'yuhsuht')
@@ -2509,7 +2510,6 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // check degree ° and dot .
     inputToDecode = inputToDecode.replaceAll('°', ' ° ').replaceAll('.', ' . ').replaceAll('  ', ' ');
     // start decoding
-    //decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
     decodeText = inputToDecode.split(RegExp(r'[ ]'));
     decodeText.forEach((element) {
       _alreadyFound = false;
