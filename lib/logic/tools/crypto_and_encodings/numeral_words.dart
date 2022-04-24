@@ -2312,10 +2312,10 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     String inputToDecode;
 
     // simplify input
+    input = input.replaceAll(RegExp(r'\s+'),' ');
 
     // trim korean
     input = input
-        .replaceAll('\n', ' ')
         .replaceAll('hah - nah', 'hah-nah')
         .replaceAll('dah suht', 'dahsuht')
         .replaceAll('yuh suht', 'yuhsuht')
