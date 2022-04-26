@@ -73,16 +73,14 @@ class GadeState extends State<Gade> {
                 output.item1.entries.map((entry) {
                   return [entry.key, entry.value];
                 }).toList(),
-                copyAll: true,
               ),
-
           ),
           trailing:
             GCWIconButton(
               size: IconButtonSize.SMALL,
               icon: Icons.content_copy,
               onPressed: () {
-                var copyText = toJsonString(output.item1.entries.toList());
+                var copyText = toJson(output.item1.entries.toList());
                 if (copyText == null) return;
                 insertIntoGCWClipboard(context, copyText);
               },
