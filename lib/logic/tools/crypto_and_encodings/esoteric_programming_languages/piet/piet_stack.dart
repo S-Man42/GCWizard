@@ -71,7 +71,7 @@ class PietStack {
     push(result);
   }
 
-  int _applyTernary(Function operatorFunc) { //<int, int, int>
+  int _applyTernary(Function operatorFunc) {
     var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return null;
@@ -83,7 +83,7 @@ class PietStack {
     push(result);
   }
 
-  bool _applyTernaryIf(Function operatorFunc, Function conditionalFunc) {//<int, int, int> <int, int, bool>
+  bool _applyTernaryIf(Function operatorFunc, Function conditionalFunc) {
     var ret = tryPop2();
     var stackResults = ret.item2;
     if (!ret.item1) return false;
@@ -133,8 +133,8 @@ class PietStack {
     // if we need to rotate 3 items 7 items, then we can skip the full cycles and just the the 1
     int absoluteIterations = iterations % depth;
 
-    var stack1 = PietStack(); //<int>(absoluteIterations);
-    var stack2 = PietStack(); //<int>(depth - absoluteIterations);
+    var stack1 = PietStack();
+    var stack2 = PietStack();
     for (var i = 0; i < depth; i++)
     {
       if (i < absoluteIterations)
@@ -157,8 +157,8 @@ class PietStack {
     // if we need to rotate 3 items 7 items, then we can skip the full cycles and just the the 1
     int absoluteIterations = iterations % depth;
 
-    var stack1 = PietStack(); //<int>(absoluteIterations);
-    var stack2 = PietStack(); //<int>(depth - absoluteIterations);
+    var stack1 = PietStack();
+    var stack2 = PietStack();
     for (var i = depth; i > 0; i--)
     {
       if (i <= absoluteIterations)

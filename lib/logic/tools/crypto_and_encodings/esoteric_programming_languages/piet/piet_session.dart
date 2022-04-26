@@ -80,9 +80,8 @@ class PietSession {
   String input;
   var _output = '';
 
-  var _timeOut = 60000;
+  var _timeOut = 15000;
   var _multipleInputs  = false;
-  int _counter  =0;
 
   PietSession(List<List<int>> image, {int timeOut = 15000, bool multipleInputs = false}) {
     data = image;
@@ -119,23 +118,19 @@ class PietSession {
       _actionMap[opCode]();
 
     _currentBlock = newBlock;
-    _counter ++;
   }
 
   void run() {
     _running = true;
 
-    var start_time = DateTime.now();
+    var startTime = DateTime.now();
 
     while (running) {
-      if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
-        print('Steps/s: ' + (_counter*1000 / (DateTime.now().difference(start_time)).inMilliseconds).toInt().toString());
+      if ((DateTime.now().difference(startTime)).inMilliseconds > _timeOut)
         throw Exception('common_programming_error_maxiterations');
-      }
+
       _step();
     }
-
-    print('Steps/s: ' + (_counter*1000 / (DateTime.now().difference(start_time)).inMilliseconds).toInt().toString() + ' ' + (DateTime.now().difference(start_time)).inMilliseconds.toString());
   }
 
   void output(String value) {

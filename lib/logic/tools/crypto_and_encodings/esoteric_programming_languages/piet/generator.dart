@@ -11,8 +11,9 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:tuple/tuple.dart';
 
-final _blockHeight = 12;
-final _blockWidth = 12;
+var _blockHeight = 12;
+var _blockWidth = 12;
+const _minBlockSize = 5;
 
 final int _white = knownColors.elementAt(18);
 final int _black = knownColors.elementAt(19);
@@ -21,6 +22,7 @@ _colorStack _currentColor;
 Future<Uint8List> generatePiet(String input) async {
   var result = <MapEntry<int, List<int>>>[];
 
+  _setBlockSize(input);
   _currentColor = _colorStack();
   var i = 0;
   input
@@ -37,7 +39,6 @@ Future<Uint8List> generatePiet(String input) async {
   var resultLines =  <List<int>>[];
   var row = 0;
   var column = 0;
-  var rowOffset = 0;
   var direction = Alignment.topRight;
   var nextDirection = Alignment.topRight;
   var pixelIndex = 0;
@@ -86,12 +87,18 @@ Future<Uint8List> generatePiet(String input) async {
   return _convertToImage(resultLines);
 }
 
+void _setBlockSize(String input) {
+  var _max = input == null || input.isEmpty ? 0 : input.runes.reduce(max);
+  _max = max(_minBlockSize, sqrt(_max + 1).ceil());
+  _blockHeight = _max;
+  _blockWidth = _max;
+}
+
 Future<Uint8List> _convertToImage(List<List<int>> resultLines) {
   var lines = <String>[];
   var colorMap = Map<String, Color>();
   var colorMapSwitched = Map<int, String>();
   var mapList = switchMapKeyValue(alphabet_AZ);
-
 
   for (var i = 0; i < knownColors.length; i++) {
     colorMap.addAll({mapList[i + 1]: Color(knownColors.elementAt(i) | 0xFF000000)});
@@ -142,7 +149,7 @@ Alignment _getNextBlockDirection(int row, int column, List<List<int>> outputArra
 List<List<int>> _calcOutputArrangement(int blockCount) {
   var sqr = sqrt(blockCount);
   var columnCount = blockCount <= 2 ? 2 : blockCount <= 4 ? 2 : sqr.ceil();
-  //columnCount = blockCount;
+  columnCount = blockCount; //only 1 row
   var rowCount = (blockCount/ columnCount).ceil();
   var lines = <List<int>>[];
   var direction = Alignment.topRight;
