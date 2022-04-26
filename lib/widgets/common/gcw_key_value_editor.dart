@@ -548,13 +548,7 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       });
     } else if (widget.keyValueMap != null) json = widget.keyValueMap.entries.toList();
 
-    var list = json.map((e) {
-      return jsonEncode({'key': e.key, 'value': e.value});
-    }).toList();
-
-    if (list.isEmpty) return null;
-
-    return jsonEncode(list);
+    return toJsonString(json);
   }
 
   void _pasteClipboard(String text) {
@@ -604,4 +598,15 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
     return list.length == 0 ? null : list;
   }
+}
+
+String toJsonString(List<MapEntry> map) {
+  if (map == null) return null;
+  var list = map.map((e) {
+    return jsonEncode({'key': e.key, 'value': e.value});
+  }).toList();
+
+  if (list.isEmpty) return null;
+
+  return jsonEncode(list);
 }
