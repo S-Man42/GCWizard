@@ -4,18 +4,14 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart'
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:tuple/tuple.dart';
 
-Tuple2<Map<String, String>, String> buildGade(String key, String formula, {bool onlyNumber = false}) {
+Tuple2<Map<String, String>, String> buildGade(String key, String formula) {
   if (key == null) return null;
   var outputList = <String>[];
   var gadeMap = Map<String, String>();
   String valuesString;
 
-  if (onlyNumber)
-    valuesString = key;
-  else {
-    var values = AlphabetValues().textToValues(key, keepNumbers: true);
-    valuesString = values.map((value) => value.toString()).join();
-  }
+  var values = AlphabetValues().textToValues(key, keepNumbers: true);
+  valuesString = values.map((value) => value.toString()).join();
 
   outputList = valuesString.replaceAll(RegExp(r'[^0-9]'), '').split('');
   outputList.sort();
@@ -23,8 +19,7 @@ Tuple2<Map<String, String>, String> buildGade(String key, String formula, {bool 
   for (int index = 0; index <= 9; index++)
     if (!outputList.contains(index.toString()))
       outputList.add(index.toString());
-
-
+    
   for (int index = 0; index < outputList.length; index++)
     if (index < 26)
       gadeMap[String.fromCharCode(index + 65)] = outputList[index];

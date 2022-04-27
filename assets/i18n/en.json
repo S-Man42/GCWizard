@@ -1988,6 +1988,8 @@
   "fox_example": "FOX → 16 26 36",
   "gade_title": "Gade",
   "gade_description": "Calculating letters according to Gade",
+  "gade_key": "Gade Input",
+  "gade_input": "Optional Input Mask",
   "gameoflife_title": "Conway's Game of Life",
   "gameoflife_description": "Simulator for John Horton Conway's 'Game of Life'",
   "gameoflife_conway": "Conway's Original",

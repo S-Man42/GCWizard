@@ -17,19 +17,6 @@ void main() {
     });
   });
 
-  group("Gade.buildGadeNumbers:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' :'d', 'expectedOutput' : {'A':'0', 'B':'1', 'C':'2', 'D':'3', 'E':'4', 'F':'5', 'G':'6', 'H':'7', 'I':'8', 'J':'9'}},
-      {'input' :'d 4wt zwer46 89 3', 'expectedOutput' : {'A':'3', 'B':'4', 'C':'4', 'D':'6', 'E':'8', 'F':'9', 'G':'0', 'H':'1', 'I':'2', 'J':'5', 'K':'7'}},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () {
-        var _actual = buildGade(elem['input'], null, onlyNumber: true);
-        expect(_actual.item1, elem['expectedOutput']);
-      });
-    });
-  });
 
   group("Gade.buildGadeInput:", () {
     List<Map<String, dynamic>> _inputsToExpected = [

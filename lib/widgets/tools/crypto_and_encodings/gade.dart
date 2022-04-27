@@ -37,8 +37,8 @@ class GadeState extends State<Gade> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
+          hintText: i18n(context, 'gade_key'),
           controller: _GadeKeyController,
           onChanged: (text) {
             setState(() {
@@ -46,8 +46,8 @@ class GadeState extends State<Gade> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_input')),
         GCWTextField(
+          hintText: i18n(context, 'gade_input'),
           controller: _GadeFormualController,
           onChanged: (text) {
             setState(() {
@@ -62,9 +62,12 @@ class GadeState extends State<Gade> {
 
   Widget _buildOutput() {
     var output = buildGade(_currentGadeKey, _currentGadeFormula);
+    if (output == null) return GCWDefaultOutput();
     return Column(
       children: <Widget>[
-        GCWDefaultOutput(child: output.item2),
+        output.item2 == null || output.item2.length == 0
+        ? Container()
+        : GCWDefaultOutput(child: output.item2),
         GCWDefaultOutput(
           child: Column(
             children:
