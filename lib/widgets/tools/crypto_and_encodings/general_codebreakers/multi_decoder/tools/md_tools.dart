@@ -32,6 +32,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_esoteric_language_whitespace.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_keyboard_layout.dart';
@@ -67,6 +68,7 @@ final List<String> mdtToolsRegistry = [
   MDT_INTERNALNAMES_BRAILLE_DOT_NUMBERS,
   MDT_INTERNALNAMES_COORDINATEFORMATS,
   MDT_INTERNALNAMES_BACON,
+  MDT_INTERNALNAMES_GADE,
   MDT_INTERNALNAMES_GCCODE,
   MDT_INTERNALNAMES_BCD,
   MDT_INTERNALNAMES_KENNY,
@@ -212,6 +214,9 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_DEADFISH:
       gcwTool = MultiDecoderToolEsotericLanguageDeadfish(
           id: mdtTool.id, name: mdtTool.name, options: options, context: context);
+      break;
+    case MDT_INTERNALNAMES_GADE:
+      gcwTool = MultiDecoderToolGade(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_HOHOHO:
       gcwTool = MultiDecoderToolEsotericLanguageHohoho(id: mdtTool.id, name: mdtTool.name, options: options);
@@ -394,6 +399,7 @@ initializeMultiToolDecoder(BuildContext context) {
         i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_MALBOLGE),
     MultiDecoderTool(
         i18n(context, MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE), MDT_INTERNALNAMES_ESOTERIC_LANGUAGE_WHITESPACE),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_GADE), MDT_INTERNALNAMES_GADE),
   ];
 
   for (int i = 25; i >= 1; i--) {
