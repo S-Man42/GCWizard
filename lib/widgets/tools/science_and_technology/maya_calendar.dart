@@ -49,6 +49,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       ),
       _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWIntegerSpinner(
+              overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
               min: 0,
               value: _currentEncodeInput,
               onChanged: (value) {
