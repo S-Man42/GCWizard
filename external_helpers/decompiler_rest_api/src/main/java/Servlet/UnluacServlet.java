@@ -69,8 +69,8 @@ public class UnluacServlet extends HttpServlet {
 				// Create a new file upload handler
 				ServletFileUpload upload = new ServletFileUpload(factory);
 				
-				// Set overall request size constraint (1MB)
-				upload.setSizeMax(1000000);
+				// Set overall request size constraint (2,5MB)
+				upload.setSizeMax(2500000);
 	
 				List<FileItem> fileItems = null;
 				// Parse request
