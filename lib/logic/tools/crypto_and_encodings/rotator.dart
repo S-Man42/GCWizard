@@ -78,4 +78,9 @@ class Rotator {
     this.alphabet = '!"#\$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
     return rotate(input, 47, removeUnknownCharacters: false, ignoreCase: false);
   }
+
+  String rotateAlphabet(String input, int key, String alphabet) {
+    this.alphabet = alphabet;
+    return rotate(input, key);
+  }
 }

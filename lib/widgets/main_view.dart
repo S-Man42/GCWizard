@@ -70,6 +70,7 @@ import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -601,6 +602,7 @@ void _initStaticToolList() {
       className(Rot18()),
       className(Rot5()),
       className(Rot47()),
+      className(RotationAlphabet()),
       className(RotationGeneral()),
       className(RSASelection()),
       className(SchillingCanstattTelegraph()),

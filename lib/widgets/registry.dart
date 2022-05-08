@@ -108,6 +108,7 @@ import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_alphabet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
@@ -2637,6 +2638,9 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Rot123(), i18nPrefix: 'rotation_rot123', searchKeys: [
       'rotation',
       'rotation_rot123',
+    ]),
+    GCWTool(tool: RotationAlphabet(), i18nPrefix: 'rotation_alphabet', searchKeys: [
+      'rotation',
     ]),
     GCWTool(tool: RotationGeneral(), i18nPrefix: 'rotation_general', searchKeys: [
       'rotation',

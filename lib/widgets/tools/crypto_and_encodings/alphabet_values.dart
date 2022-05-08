@@ -250,12 +250,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                 Expanded(
                   child: GCWDropDownButton(
                     value: _currentAlphabetKey,
-                    items: _alphabets.map((Alphabet alphabet) {
-                      return GCWDropDownMenuItem(
-                          value: alphabet.key,
-                          child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                          subtitle: _generateItemDescription(alphabet));
-                    }).toList(),
+                    items: buildAlphabetItems(_alphabets, context),
                     onChanged: (value) {
                       setState(() {
                         _currentAlphabetKey = value;
@@ -291,26 +286,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
         _buildCrossTotals()
       ],
     );
-  }
-
-  _generateItemDescription(Alphabet alphabet) {
-    var description = i18n(context, alphabet.key + '_description');
-    if (description != null && description.length > 0) return description;
-
-    var entries = alphabet.alphabet.entries.toList();
-
-    description = '';
-    if (alphabet.type == AlphabetType.CUSTOM) description = '[' + i18n(context, 'alphabetvalues_custom') + '] ';
-
-    description += '${entries.length} ${i18n(context, 'alphabetvalues_letters')}';
-    if (entries.length == 0) return description;
-
-    description += ': ';
-    description += entries.first.key + ' ' + String.fromCharCode(8594) + ' ' + entries.first.value;
-    description += ' ... ';
-    description += entries.last.key + ' ' + String.fromCharCode(8594) + ' ' + entries.last.value;
-
-    return description;
   }
 
   _buildEditingAlphabet() {
@@ -532,4 +507,34 @@ class AlphabetValuesState extends State<AlphabetValues> {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
     }
   }
+}
+
+List<GCWDropDownMenuItem> buildAlphabetItems(List<Alphabet> _alphabets, BuildContext context) {
+  return _alphabets.map((Alphabet alphabet) {
+    return GCWDropDownMenuItem(
+        value: alphabet.key,
+        child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+        subtitle: _generateItemDescription(alphabet, context));
+  }).toList();
+}
+
+
+_generateItemDescription(Alphabet alphabet, BuildContext context) {
+  var description = i18n(context, alphabet.key + '_description');
+  if (description != null && description.length > 0) return description;
+
+  var entries = alphabet.alphabet.entries.toList();
+
+  description = '';
+  if (alphabet.type == AlphabetType.CUSTOM) description = '[' + i18n(context, 'alphabetvalues_custom') + '] ';
+
+  description += '${entries.length} ${i18n(context, 'alphabetvalues_letters')}';
+  if (entries.length == 0) return description;
+
+  description += ': ';
+  description += entries.first.key + ' ' + String.fromCharCode(8594) + ' ' + entries.first.value;
+  description += ' ... ';
+  description += entries.last.key + ' ' + String.fromCharCode(8594) + ' ' + entries.last.value;
+
+  return description;
 }

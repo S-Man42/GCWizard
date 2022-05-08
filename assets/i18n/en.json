@@ -3484,6 +3484,8 @@
   "rotation_rot47_title": "ROT-47",
   "rotation_rot47_description": "Shifts characters by 47 over all ASCII characters from 33 to 126 (including A-Z, a-z, 0-9 and some special characters)",
   "rotation_rot47_example": "A → p, L → {, a → 2, ) → W, ... ",
+  "rotation_alphabet_title": "Rotation (other Alphabets)",
+  "rotation_alphabet_description": "Shifts letters by arbitrary n",
   "rotation_general_title": "Rotation",
   "rotation_general_description": "Shifts letters by arbitrary n",
   "rotation_general_reverse": "Reverse",
