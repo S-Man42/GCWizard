@@ -149,4 +149,28 @@ void main() {
       });
     });
   });
+
+  /****************************/
+
+  group("Rotator.rotateAlphabet:", () {
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'key' : 12, 'alphabet' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : ''},
+      {'input' : null, 'key' : 12, 'alphabet' : '', 'expectedOutput' : ''},
+      {'input' : 'ёщцще ёгегя цгёщб ёжщдщв жеэкфжр-лщжпещ жгляф жеэёжф ёщбршщёуж жеэ бэвзж цгёжгч шщцужр  ёжщдщв цгёщб жгляф лщжпещёжф шщцужр бэвзж',
+        'key' : 12, 'alphabet' : 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
+        'expectedOutput' : 'север сорок восем степен трицать-четыре точка триста семьдесят три минут востог девять  степен восем точка четыреста девять минут'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'key' : 1, 'alphabet' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß',
+        'expectedOutput' : 'BCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜßa'},
+    ];
+
+    var _rotator = Rotator();
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, key: ${elem['key']}', () {
+        var _actual = _rotator.rotateAlphabet(elem['input'], elem['key'], elem['alphabet']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }
