@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
@@ -77,6 +79,8 @@ class RotationAlphabetState extends State<RotationAlphabet> {
             });
           },
         ),
+        GCWText(text: generateItemDescription(_getAlphabetByKey(_currentAlphabetKey), context),
+            style: gcwDescriptionTextStyle()),
         GCWDropDownButton(
           value: _currentAlphabetKey,
           items: buildAlphabetItems(_alphabets, context),
@@ -124,13 +128,5 @@ class RotationAlphabetState extends State<RotationAlphabet> {
     var currentAlphabet = _getAlphabetByKey(_currentAlphabetKey).alphabet;
 
     _currentAlphabet = currentAlphabet.keys.join();
-    // _currentIsEditingAlphabet = false;
-    // _currentOffset = 0;
-    // _currentReverseAlphabet = GCWSwitchPosition.left;
-    // _currentCustomizeAlphabet = GCWSwitchPosition.left;
-
-    // Prefs.setString('alphabetvalues_default_alphabet', _currentAlphabetKey);
-
-    // _setReverseLabels();
   }
 }

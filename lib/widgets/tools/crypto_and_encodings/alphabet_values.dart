@@ -514,12 +514,12 @@ List<GCWDropDownMenuItem> buildAlphabetItems(List<Alphabet> _alphabets, BuildCon
     return GCWDropDownMenuItem(
         value: alphabet.key,
         child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-        subtitle: _generateItemDescription(alphabet, context));
+        subtitle: generateItemDescription(alphabet, context));
   }).toList();
 }
 
 
-_generateItemDescription(Alphabet alphabet, BuildContext context) {
+generateItemDescription(Alphabet alphabet, BuildContext context) {
   var description = i18n(context, alphabet.key + '_description');
   if (description != null && description.length > 0) return description;
 
@@ -538,3 +538,4 @@ _generateItemDescription(Alphabet alphabet, BuildContext context) {
 
   return description;
 }
+
