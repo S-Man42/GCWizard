@@ -92,7 +92,7 @@
   "coordinates_distancebearing": "angles bearings distances directions",
   "coordinates_ellipsoidtransform": "rotationsellipsoids converter converting date airy modified",
   "coordinates_equilateraltriangle": "triangles equilateral",
-  "coordinates_formatconverter": "coordinateformatconverter converting",
+  "coordinates_formatconverter": "coordinateformatconverter converting reversewhereigo",
   "coordinates_intersectbearing": "intersections bearings angles",
   "coordinates_intersectfourpoints": "points four lines crossing bearings arcs intersection directions",
   "coordinates_intersectgeodeticandcircle": "bearings angles distances circles arcs intersection",
