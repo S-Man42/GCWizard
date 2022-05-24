@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_primes_calculator.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class RSASelection extends GCWSelection {
@@ -22,6 +23,7 @@ class RSASelection extends GCWSelection {
         className(RSADCalculator()),
         className(RSANCalculator()),
         className(RSAPhiCalculator()),
+        className(RSAPrimesCalculator()),
       ].contains(className(element.tool));
     }).toList();
 
