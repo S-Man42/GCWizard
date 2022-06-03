@@ -189,6 +189,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
@@ -376,6 +377,7 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/search_strings.dart';
+
 
 List<GCWTool> registeredTools;
 
@@ -813,6 +815,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
       'multidecoder',
+    ]),
+    GCWTool(tool: MusicNotes(), i18nPrefix: 'music_notes', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'music_notes'
     ]),
     GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
       ToolCategory.CRYPTOGRAPHY
