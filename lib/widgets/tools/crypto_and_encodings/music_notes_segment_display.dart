@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -19,7 +21,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
 };
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 360; //110;
-const _NOTES_RELATIVE_DISPLAY_HEIGHT = 260; //100;
+const _NOTES_RELATIVE_DISPLAY_HEIGHT = 360; //100;
 
 class NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -29,449 +31,127 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
   NotesSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
       : super(
-      key: key,
-      initialSegments: _INITIAL_SEGMENTS,
-      segments: segments,
-      readOnly: readOnly,
-      onChanged: onChanged,
-      type: SegmentDisplayType.CUSTOM,
-      customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
-          Color segment_color_on, Color segment_color_off) {
-        return SizedBox(width:100, height: 100);
-;
-});
-}
+            key: key,
+            initialSegments: _INITIAL_SEGMENTS,
+            segments: segments,
+            readOnly: readOnly,
+            onChanged: onChanged,
+            type: SegmentDisplayType.CUSTOM,
+            customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
+                Color segment_color_on, Color segment_color_off) {
+              var paint = defaultSegmentPaint();
+              var SEGMENTS_COLOR_ON = segment_color_on;
+              var SEGMENTS_COLOR_OFF = segment_color_off;
+              var LINE_OFFSET = 10;
+              var LINE_DISTANCE = 20;
+              var NOTE_X1 = 120;
+              var NOTE_X2 = 150;
 
-//   NotesSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged, this.tapeStyle: false})
-//       : super(
-//             key: key,
-//             initialSegments: _INITIAL_SEGMENTS,
-//             segments: segments,
-//             readOnly: readOnly,
-//             onChanged: onChanged,
-//             type: SegmentDisplayType.CUSTOM,
-//             customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
-//                 Color segment_color_on, Color segment_color_off) {
-//               var paint = defaultSegmentPaint();
-//               var SEGMENTS_COLOR_ON = segment_color_on;
-//               var SEGMENTS_COLOR_OFF = segment_color_off;
-//
-//               paint.color = Colors.grey;
-//               canvas.touchCanvas.drawCircle(
-//                   Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 185,
-//                       size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 55),
-//                   size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 25.0,
-//                   paint);
-//
-//               canvas.touchCanvas.drawCircle(
-//                   Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 185,
-//                       size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120),
-//                   size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 35.0,
-//                   paint);
-//
-//               paint.color = currentSegments['l1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathL = Path();
-//               // pathL.addPath(_createLine(10, false, size), Offset(0, 0));
-//               // pathL.addPath(_createLine(30, false, size), Offset(0, 0));
-//               // pathL.addPath(_createLine(50, false, size), Offset(0, 0));
-//               // pathL.addPath(_createLine(70, false, size), Offset(0, 0));
-//
-//               // paint.color = currentSegments['r1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathR1 = Path();
-//               // pathR1.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 280,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 10);
-//               // pathR1.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 230,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 10);
-//               // pathR1.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 230,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120);
-//               // pathR1.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120);
-//               // pathR1.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 60);
-//               // pathR1.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 280,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 60);
-//               // pathR1.close();
-//               // if (size.height < 180) if (currentSegments['r1'])
-//               //   canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r1', !currentSegments['r1']);
-//               //     if (currentSegments['r1']) {
-//               //       setSegmentState('r2', false);
-//               //       setSegmentState('r3', false);
-//               //       setSegmentState('r4', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathR1, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r1', !currentSegments['r1']);
-//               //     if (currentSegments['r1']) {
-//               //       setSegmentState('r2', false);
-//               //       setSegmentState('r3', false);
-//               //       setSegmentState('r4', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['l2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathL2 = Path();
-//               // pathL2.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 50,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 40);
-//               // pathL2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 130,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120);
-//               // pathL2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 120,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 130);
-//               // pathL2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 80,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 90);
-//               // pathL2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 50,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120);
-//               // pathL2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 80);
-//               // pathL2.close();
-//               // if (size.height < 180) if (currentSegments['l2'])
-//               //   canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l2', !currentSegments['l2']);
-//               //     if (currentSegments['l2']) {
-//               //       setSegmentState('l1', false);
-//               //       //setSegmentState('l3', false);
-//               //       //setSegmentState('l4', false);
-//               //       setSegmentState('l5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathL2, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l2', !currentSegments['l2']);
-//               //     if (currentSegments['l2']) {
-//               //       setSegmentState('l1', false);
-//               //       //setSegmentState('l3', false);
-//               //       //setSegmentState('l4', false);
-//               //       setSegmentState('l5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['r2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathR2 = Path();
-//               // pathR2.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120);
-//               // pathR2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 320,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 40);
-//               // pathR2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 360,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 80);
-//               // pathR2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 320,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 120);
-//               // pathR2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 290,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 90);
-//               // pathR2.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 250,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 130);
-//               // pathR2.close();
-//               // if (size.height < 180) if (currentSegments['r2'])
-//               //   canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r2', !currentSegments['r2']);
-//               //     if (currentSegments['r2']) {
-//               //       setSegmentState('r1', false);
-//               //       //setSegmentState('r3', false);
-//               //       //setSegmentState('r4', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathR2, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r2', !currentSegments['r2']);
-//               //     if (currentSegments['r2']) {
-//               //       setSegmentState('r1', false);
-//               //       //setSegmentState('r3', false);
-//               //       //setSegmentState('r4', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['l3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathL3 = Path();
-//               // pathL3.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 130);
-//               // pathL3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 120,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 130);
-//               // pathL3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 120,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 140);
-//               // pathL3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 140);
-//               // pathL3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 180);
-//               // pathL3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 180);
-//               // pathL3.close();
-//               // if (size.height < 180) if (currentSegments['l3'])
-//               //   canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l3', !currentSegments['l3']);
-//               //     if (currentSegments['l3']) {
-//               //       //setSegmentState('l2', false);
-//               //       setSegmentState('l1', false);
-//               //       //setSegmentState('l4', false);
-//               //       setSegmentState('l5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathL3, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l3', !currentSegments['l3']);
-//               //     if (currentSegments['l3']) {
-//               //       //setSegmentState('l2', false);
-//               //       setSegmentState('l1', false);
-//               //       //setSegmentState('l4', false);
-//               //       setSegmentState('l5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['r3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathR3 = Path();
-//               // pathR3.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 250,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 130);
-//               // pathR3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 360,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 130);
-//               // pathR3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 360,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 180);
-//               // pathR3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 310,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 180);
-//               // pathR3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 310,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 140);
-//               // pathR3.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 250,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 140);
-//               // pathR3.close();
-//               // if (size.height < 180) if (currentSegments['r3'])
-//               //   canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r3', !currentSegments['r3']);
-//               //     if (currentSegments['r3']) {
-//               //       //setSegmentState('r2', false);
-//               //       setSegmentState('r1', false);
-//               //       //setSegmentState('r4', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathR3, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r3', !currentSegments['r3']);
-//               //     if (currentSegments['r3']) {
-//               //       //setSegmentState('r2', false);
-//               //       setSegmentState('r1', false);
-//               //       //setSegmentState('r4', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['l4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathL4 = Path();
-//               // pathL4.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 40,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 220);
-//               // pathL4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 120,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 140);
-//               // pathL4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 130,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 150);
-//               // pathL4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 90,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 190);
-//               // pathL4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 120,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 220);
-//               // pathL4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 80,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//               // pathL4.close();
-//               // if (size.height < 180) if (currentSegments['l4'])
-//               //   canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l4', !currentSegments['l4']);
-//               //     if (currentSegments['l4']) {
-//               //       //setSegmentState('l2', false);
-//               //       //setSegmentState('l3', false);
-//               //       setSegmentState('l1', false);
-//               //       setSegmentState('l5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathL4, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l4', !currentSegments['l4']);
-//               //     if (currentSegments['l4']) {
-//               //       //setSegmentState('l2', false);
-//               //       //setSegmentState('l3', false);
-//               //       setSegmentState('l1', false);
-//               //       setSegmentState('l5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['r4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathR4 = Path();
-//               // pathR4.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 150);
-//               // pathR4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 250,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 140);
-//               // pathR4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 330,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 220);
-//               // pathR4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 290,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//               // pathR4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 250,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 220);
-//               // pathR4.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 280,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 190);
-//               // pathR4.close();
-//               // if (size.height < 180) if (currentSegments['r4'])
-//               //   canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r4', !currentSegments['r4']);
-//               //     if (currentSegments['r4']) {
-//               //       //setSegmentState('r2', false);
-//               //       //setSegmentState('r3', false);
-//               //       setSegmentState('r1', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathR4, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r4', !currentSegments['r4']);
-//               //     if (currentSegments['r4']) {
-//               //       //setSegmentState('r2', false);
-//               //       //setSegmentState('r3', false);
-//               //       setSegmentState('r1', false);
-//               //       setSegmentState('r5', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['l5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathL5 = Path();
-//               // pathL5.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 130,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 150);
-//               // pathL5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 140,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 150);
-//               // pathL5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 140,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 210);
-//               // pathL5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 210);
-//               // pathL5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//               // pathL5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 130,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//               // pathL5.close();
-//               // if (size.height < 180) if (currentSegments['l5'])
-//               //   canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l5', !currentSegments['l5']);
-//               //     if (currentSegments['l5']) {
-//               //       setSegmentState('l2', false);
-//               //       setSegmentState('l3', false);
-//               //       setSegmentState('l4', false);
-//               //       setSegmentState('l1', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathL5, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('l5', !currentSegments['l5']);
-//               //     if (currentSegments['l5']) {
-//               //       setSegmentState('l2', false);
-//               //       setSegmentState('l3', false);
-//               //       setSegmentState('l4', false);
-//               //       setSegmentState('l1', false);
-//               //     }
-//               //   });
-//               //
-//               // paint.color = currentSegments['r5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-//               // var pathR5 = Path();
-//               // pathR5.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 230,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 150);
-//               // pathR5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 150);
-//               // pathR5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//               // pathR5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 190,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//               // pathR5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 190,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 210);
-//               // pathR5.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 230,
-//               //     size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 210);
-//               // pathR5.close();
-//               // if (size.height < 180) if (currentSegments['r5'])
-//               //   canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r5', !currentSegments['r5']);
-//               //     if (currentSegments['r5']) {
-//               //       setSegmentState('r2', false);
-//               //       setSegmentState('r3', false);
-//               //       setSegmentState('r4', false);
-//               //       setSegmentState('r1', false);
-//               //     }
-//               //   });
-//               // else
-//               //   ;
-//               // else
-//               //   canvas.touchCanvas.drawPath(pathR5, paint, onTapDown: (tapDetail) {
-//               //     setSegmentState('r5', !currentSegments['r5']);
-//               //     if (currentSegments['r5']) {
-//               //       setSegmentState('r2', false);
-//               //       setSegmentState('r3', false);
-//               //       setSegmentState('r4', false);
-//               //       setSegmentState('r1', false);
-//               //     }
-//               //   });
-//             });
-//
-//   static Path _createLine(int yOffset, bool shortLine, Size size) {
-//     var path = Path();
-//     if (shortLine) {
-//       var rect = Rect.fromCenter(
-//           center: Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180, yOffset.toDouble()),
-//           width: 40,
-//           height: 2);
-//       path.addRect(rect);
-//     } else {
-//       var rect = Rect.fromCenter(
-//           center: Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180, yOffset.toDouble()),
-//           width: _NOTES_RELATIVE_DISPLAY_WIDTH.toDouble(),
-//           height: 2);
-//       path.addRect(rect);
-//     }
-//     return path;
-//   }
-//
-//   static Path _createNote(int xOffset, int yOffset, Size size) {
-//     var path = Path();
-//     var rect = Rect.fromCenter(center: Offset(xOffset.toDouble(), yOffset.toDouble()),
-//                width:  size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 20,
-//                height: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10);
-//     path.addOval(rect);
-//
-//     return path;
-//   }
-//
-//   static Path _createHash(int xOffset, int yOffset, Size size) {
-//     var path = Path();
-//     var rect = Rect.fromCenter(center: Offset((xOffset - 20).toDouble(), (yOffset + 2).toDouble()),
-//         width:  4,
-//         height: 40);
-//     path.addRect(rect);
-//     rect = Rect.fromCenter(center: Offset((xOffset + 20).toDouble(), (yOffset - 2).toDouble()),
-//         width:  4,
-//         height: 40);
-//     path.addRect(rect);
-//
-//     path.moveTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH  * xOffset - 30,
-//                 size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * yOffset - 26);
-//     path.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH  * xOffset + 30,
-//                 size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * yOffset - 30);
-//     path.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH  * xOffset + 30,
-//                 size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * yOffset - 30);
-//     path.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 190,
-//         size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 260);
-//     path.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 190,
-//         size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 210);
-//     path.lineTo(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 230,
-//         size.width / _NOTES_RELATIVE_DISPLAY_HEIGHT * 210);
-//     path.close();
-//
-//     return path;
-//   }
-// }
+
+              paint.color = Colors.grey;
+
+              var pathL = Path();
+              pathL.addPath(_createLine(true, size), Offset(0, 0 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(true, size), Offset(0, 1 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(true, size), Offset(0, 2 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(false, size), Offset(0, 3 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(false, size), Offset(0, 4 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(false, size), Offset(0, 5 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(false, size), Offset(0, 6 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(false, size), Offset(0, 7 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(true, size), Offset(0, 8 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(true, size), Offset(0, 9 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createLine(true, size), Offset(0, 10 * LINE_DISTANCE + LINE_OFFSET));
+
+              canvas.touchCanvas.drawPath(pathL, paint);
+
+              pathL = Path();
+              pathL.addPath(_createHash(size), Offset(70, 50));
+              pathL.addPath(_createNote(size), Offset(NOTE_X1, 7 * LINE_DISTANCE + LINE_OFFSET));
+              pathL.addPath(_createNote(size), Offset(NOTE_X1, 9 * LINE_DISTANCE + LINE_OFFSET/2));
+              pathL.addPath(_createNote(size), Offset(NOTE_X2, 1 * LINE_DISTANCE + LINE_OFFSET));
+
+              paint.color = currentSegments['l1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; //SEGMENTS_COLOR_OFF
+              canvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
+                setSegmentState('r1', !currentSegments['r1']);
+                if (currentSegments['r1']) {
+                  setSegmentState('r2', false);
+                  setSegmentState('r3', false);
+                  setSegmentState('r4', false);
+                  setSegmentState('r5', false);
+                }
+              });
+            });
+  
+  static resetOtherNotes(string allowedNote) {
+    for (var i = 1; i<= 5; i++) {
+      setSegmentState(i.toString(), false);
+      setSegmentState(i.toString() & 's', false);
+      setSegmentState('-' & i.toString(), false);
+      setSegmentState('-' & i.toString() & 's', false);
+      setSegmentState(i.toString() & 'h', false);
+      setSegmentState(i.toString() & 's', false);
+      setSegmentState('-' & i.toString() & 'h', false);
+      setSegmentState('-' & i.toString() & 's', false);
+    }
+  }
+
+  static Path _createLine(bool shortLine, Size size) {
+    var path = Path();
+    if (shortLine) {
+      var rect = Rect.fromCenter(
+          center: Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180, 0.0),
+          width: 40,
+          height: 2);
+      path.addRect(rect);
+    } else {
+      var rect = Rect.fromCenter(
+          center: Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180, 0.0),
+          width: _NOTES_RELATIVE_DISPLAY_WIDTH.toDouble(),
+          height: 2);
+      path.addRect(rect);
+    }
+    return path;
+  }
+
+  static Path _createNote(Size size) {
+    var path = Path();
+    var rect = Rect.fromCenter(center: Offset(0.0, 0.0),
+               width:  size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 50,
+               height: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 30);
+    path.addOval(rect);
+
+    return path;
+  }
+
+  static Path _createHash(Size size) {
+    const innerSize = 30.0;
+    const overLength = 10.0;
+    const angle = 10.0;
+    const width = 4.0;
+
+    var path = Path();
+    var rect = Rect.fromCenter(center: Offset(-innerSize/2, width/2),
+        width:  width,
+        height: innerSize);
+    path.addRect(rect);
+    rect = Rect.fromCenter(center: Offset(innerSize/2, - width/2),
+        width:  width,
+        height: innerSize);
+    path.addRect(rect);
+
+    path.moveTo(-(innerSize/2 + overLength), -(innerSize/2 - angle));
+    path.lineTo((innerSize/2 + overLength), -innerSize/2);
+    path.lineTo((innerSize/2 + overLength), -innerSize/2 + width);
+    path.lineTo(-(innerSize/2 + overLength), -(innerSize/2 - angle) + width);
+    path.close();
+
+    path.moveTo(-(innerSize/2 + overLength), innerSize/2);
+    path.lineTo((innerSize/2 + overLength), (innerSize/2 - angle));
+    path.lineTo((innerSize/2 + overLength), (innerSize/2 - angle) - width);
+    path.lineTo(-(innerSize/2 + overLength), innerSize/2 - width);
+    path.close();
+
+    return path;
+  }
+}

@@ -69,6 +69,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
                       });
                     }, customPaint: widget.customPaint));
                   },
+                  gesturesToOverride: [],
                 )))
       ],
     );

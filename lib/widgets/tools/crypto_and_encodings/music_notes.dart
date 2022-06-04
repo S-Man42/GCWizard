@@ -93,7 +93,7 @@ class MusicNotesState extends State<MusicNotes> {
       children: <Widget>[
         Container(
           width: 180,
-          height: 200,
+          height: 300,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
