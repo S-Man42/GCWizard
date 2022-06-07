@@ -148,7 +148,7 @@ class MusicNotesState extends State<MusicNotes> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeNotes(_currentEncodeInput);
+      List<List<String>> segments = encodeNotes(_currentEncodeInput, NotesCodebook.ALT);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -159,7 +159,7 @@ class MusicNotesState extends State<MusicNotes> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      var segments = decodeNotes(output);
+      var segments = decodeNotes(output, NotesCodebook.ALT);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
