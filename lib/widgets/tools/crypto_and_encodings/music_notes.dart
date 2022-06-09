@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/music_notes.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -160,26 +161,27 @@ class MusicNotesState extends State<MusicNotes> {
         if (character != null) return character.join();
       }).toList();
       var segments = decodeNotes(output, NotesCodebook.ALT);
+      //print('displays: ' +segments['displays'].toString()+ " " +segments['chars'].toString());
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: _normalize(segments['chars'].join(''))),
+          GCWDefaultOutput(child: _normalize(segments['chars'], NotesCodebook.ALT)),
         ],
       );
     }
   }
 
-  String _normalize(String input) {
-    return input
-        .replaceAll('symboltables_semaphore_cancel', ' ' + i18n(context, 'symboltables_semaphore_cancel') + ' ')
-        .replaceAll('symboltables_semaphore_correct', ' ' + i18n(context, 'symboltables_semaphore_correct') + ' ')
-        .replaceAll('symboltables_semaphore_error', ' ' + i18n(context, 'symboltables_semaphore_error') + ' ')
-        .replaceAll('symboltables_semaphore_attention', ' ' + i18n(context, 'symboltables_semaphore_attention') + ' ')
-        .replaceAll('symboltables_semaphore_letters_following',
-            ' ' + i18n(context, 'symboltables_semaphore_letters_following') + ' ')
-        .replaceAll('symboltables_semaphore_numerals_following',
-            ' ' + i18n(context, 'symboltables_semaphore_numerals_following') + ' ')
-        .replaceAll('symboltables_semaphore_rest', ' ' + i18n(context, 'symboltables_semaphore_rest') + ' ')
-        .trim();
+  String _normalize(List<String> input, NotesCodebook notes) {
+    //print('input: ' + input.toString());
+    return input.map((note) {
+      switch (notes) {
+        case NotesCodebook.ALT:
+          return i18n(context, 'symboltables_notes_names_altoclef_' + note) ?? UNKNOWN_ELEMENT;
+        case NotesCodebook.BASS:
+          return i18n(context, 'symboltables_notes_names_bassclef_' + note) ?? UNKNOWN_ELEMENT;
+        case NotesCodebook.TREBLE:
+          return i18n(context, 'symboltables_notes_names_trebleclef_' + note) ?? UNKNOWN_ELEMENT;
+      }
+    }).join(' ');
   }
 }
