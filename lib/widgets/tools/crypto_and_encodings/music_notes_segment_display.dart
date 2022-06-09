@@ -52,9 +52,9 @@ const _INITIAL_SEGMENTS = <String, bool>{
     nh4: true,
 };
 
-const _NOTES_RELATIVE_DISPLAY_WIDTH = 360;
+const _NOTES_RELATIVE_DISPLAY_WIDTH = 340;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 430;
-const _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL = 180;
+//const _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL = 180;
 
 class NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -75,131 +75,169 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
-              var LINE_OFFSET = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 10.0;
+              var LINE_OFFSET_Y = 0;//size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 10.0;
+              var LINE_OFFSET_X = 30;
               var LINE_DISTANCE = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 30.0;
               var NOTE_X1 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
-                  ((size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL) ? (90 - 25) : 90);
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 - 75 + LINE_OFFSET_X/1));
               var NOTE_X2 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
-                  ((size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL) ? (90 + 25) : 90);
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 - 25 + LINE_OFFSET_X/1));
+              var NOTE_X3 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + 25 + LINE_OFFSET_X/1));
+              var NOTE_X4 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + 75 + LINE_OFFSET_X/1));
 
               paint.color = Colors.grey;
               //print('paint segments: ' + currentSegments.toString() + " size: " + size.toString());
 
               var pathL = Path();
               if (currentSegments[h5])
-                pathL.addPath(_createLine(true, size, Offset(0, 0 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 0 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[h4])
-                pathL.addPath(_createLine(true, size, Offset(0, 1 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 1 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[h3])
-                pathL.addPath(_createLine(true, size, Offset(0, 2 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 2 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[h2])
-                pathL.addPath(_createLine(true, size, Offset(0, 3 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 3 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[h1])
-                pathL.addPath(_createLine(true, size, Offset(0, 4 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
-              pathL.addPath(_createLine(false, size, Offset(0, 5 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
-              pathL.addPath(_createLine(false, size, Offset(0, 6 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
-              pathL.addPath(_createLine(false, size, Offset(0, 7 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
-              pathL.addPath(_createLine(false, size, Offset(0, 8 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
-              pathL.addPath(_createLine(false, size, Offset(0, 9 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 4 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
+              pathL.addPath(_createLine(false, size, Offset(0, 5 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
+              pathL.addPath(_createLine(false, size, Offset(0, 6 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
+              pathL.addPath(_createLine(false, size, Offset(0, 7 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
+              pathL.addPath(_createLine(false, size, Offset(0, 8 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
+              pathL.addPath(_createLine(false, size, Offset(0, 9 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[nh1])
-                pathL.addPath(_createLine(true, size, Offset(0, 10 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 10 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[nh2])
-                pathL.addPath(_createLine(true, size, Offset(0, 11 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 11 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[nh3])
-                pathL.addPath(_createLine(true, size, Offset(0, 12 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 12 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
               if (currentSegments[nh4])
-                pathL.addPath(_createLine(true, size, Offset(0, 13 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
+                pathL.addPath(_createLine(true, size, Offset(0, 13 * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
 
               canvas.touchCanvas.drawPath(pathL, paint);
 
-              var active = currentSegments[hashLabel];
-              if (active || (size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL)) {
-                pathL = _createHash(size, Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 20.0, 6 * LINE_DISTANCE + LINE_OFFSET));
-                paint.color = active ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+              if (!readOnly) {
+                _drawHash(hashLabel, _createHash(size,
+                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 6 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                    size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
 
-                canvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
-                  setSegmentState(hashLabel, !currentSegments[hashLabel]);
-                  if (currentSegments[hashLabel]) setSegmentState(bLabel, false);
-                });
+                _drawB(bLabel, _createB(size,
+                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 10 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                    size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
               }
 
-              active = currentSegments[bLabel];
-              if (active || (size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL)) {
-                pathL = _createB(size, Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 20.0, 10 * LINE_DISTANCE + LINE_OFFSET));
-                paint.color = active ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-
-                canvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
-                  setSegmentState(bLabel, !currentSegments[bLabel]);
-                  if (currentSegments[bLabel]) setSegmentState(hashLabel, false);
-                });
-              }
-
-              _drawNote('5h', _createNote(size, Offset(NOTE_X1, 0 * LINE_DISTANCE + LINE_OFFSET)),
-                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('4hs', _createNote(size, Offset(NOTE_X2, 0.5 * LINE_DISTANCE + LINE_OFFSET)),
-                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('4h', _createNote(size, Offset(NOTE_X1, 1 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('3hs', _createNote(size, Offset(NOTE_X2, 1.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('3h', _createNote(size, Offset(NOTE_X1, 2 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('2hs', _createNote(size, Offset(NOTE_X2, 2.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('2h', _createNote(size, Offset(NOTE_X1, 3 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('1hs', _createNote(size, Offset(NOTE_X2, 3.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('1h', _createNote(size, Offset(NOTE_X1, 4 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('5s', _createNote(size, Offset(NOTE_X2, 4.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('5', _createNote(size, Offset(NOTE_X1, 5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('4s', _createNote(size, Offset(NOTE_X2, 5.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('4', _createNote(size, Offset(NOTE_X1, 6 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('3s', _createNote(size, Offset(NOTE_X2, 6.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('3', _createNote(size, Offset(NOTE_X1, 7 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('2s', _createNote(size, Offset(NOTE_X2, 7.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('2', _createNote(size, Offset(NOTE_X1, 8 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('1s', _createNote(size, Offset(NOTE_X2, 8.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('1', _createNote(size, Offset(NOTE_X1, 9 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-1hs', _createNote(size, Offset(NOTE_X2, 9.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-1h', _createNote(size, Offset(NOTE_X1, 10 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-2hs', _createNote(size, Offset(NOTE_X2, 10.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-2h', _createNote(size, Offset(NOTE_X1, 11 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-3hs', _createNote(size, Offset(NOTE_X2, 11.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-3h', _createNote(size, Offset(NOTE_X1, 12 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-4hs', _createNote(size, Offset(NOTE_X2, 12.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-4h', _createNote(size, Offset(NOTE_X1, 13 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-5hs', _createNote(size, Offset(NOTE_X2, 13.5 * LINE_DISTANCE + LINE_OFFSET)),
-                  size, canvas, paint, currentSegments, setSegmentState);
+              _drawNote('5h', _createNote(size, Offset(NOTE_X3, 0 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                   size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('4hs', _createNote(size, Offset(NOTE_X4, 0.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                   size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('4h', _createNote(size, Offset(NOTE_X1, 1 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('3hs', _createNote(size, Offset(NOTE_X2, 1.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('3h', _createNote(size, Offset(NOTE_X3, 2 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('2hs', _createNote(size, Offset(NOTE_X4, 2.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('2h', _createNote(size, Offset(NOTE_X1, 3 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('1hs', _createNote(size, Offset(NOTE_X2, 3.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('1h', _createNote(size, Offset(NOTE_X3, 4 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('5s', _createNote(size, Offset(NOTE_X4, 4.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('5', _createNote(size, Offset(NOTE_X1, 5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('4s', _createNote(size, Offset(NOTE_X2, 5.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('4', _createNote(size, Offset(NOTE_X3, 6 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('3s', _createNote(size, Offset(NOTE_X4, 6.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('3', _createNote(size, Offset(NOTE_X1, 7 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('2s', _createNote(size, Offset(NOTE_X2, 7.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('2', _createNote(size, Offset(NOTE_X3, 8 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('1s', _createNote(size, Offset(NOTE_X4, 8.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('1', _createNote(size, Offset(NOTE_X1, 9 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-1hs', _createNote(size, Offset(NOTE_X2, 9.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-1h', _createNote(size, Offset(NOTE_X3, 10 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-2hs', _createNote(size, Offset(NOTE_X4, 10.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-2h', _createNote(size, Offset(NOTE_X1, 11 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-3hs', _createNote(size, Offset(NOTE_X2, 11.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-3h', _createNote(size, Offset(NOTE_X3, 12 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-4hs', _createNote(size, Offset(NOTE_X4, 12.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-4h', _createNote(size, Offset(NOTE_X1, 13 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
+              _drawNote('-5hs', _createNote(size, Offset(NOTE_X2, 13.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                  size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
             });
 
-  static _drawNote(String note, Path path, Size size, GCWTouchCanvas canvas, Paint paint,
-      Map<String, bool> currentSegments, Function setSegmentState) {
+  static _drawNote(String note, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
+      Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
     var active = currentSegments[note];
-    paint.color = active ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    if (active || (size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL))
+    paint.color = active ? colorOn : colorOff;
+    if (active || !readOnly) {
+      canvas.touchCanvas.drawPath(path, paint);
+      path.addRect(path.getBounds());
+      paint.color = Colors.transparent;
       canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
         _setNotesState(note, currentSegments, setSegmentState);
       });
+    }
+
+    if (active && readOnly) {
+      var bounds = path.getBounds();
+      _drawHash(hashLabel, _createHash(size,
+          Offset(bounds.center.dx - size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60, bounds.center.dy)),
+          size, canvas, paint, readOnly,currentSegments, setSegmentState, colorOn, colorOff);
+
+      _drawB(bLabel, _createB(size,
+          Offset(bounds.center.dx - size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60, bounds.center.dy)),
+          size, canvas, paint, readOnly, currentSegments, setSegmentState, colorOn, colorOff);
+    }
+  }
+
+  static _drawHash(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
+      Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
+    var active = currentSegments[label];
+    paint.color = active ? colorOn : colorOff;
+    if (active || !readOnly) {
+      canvas.touchCanvas.drawPath(path, paint);
+      path.addRect(path.getBounds());
+      paint.color = Colors.transparent;
+      canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
+        setSegmentState(label, !currentSegments[label]);
+        if (currentSegments[label]) setSegmentState(bLabel, false);
+      });
+    }
+  }
+
+  static _drawB(String label, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
+      Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
+    var active = currentSegments[label];
+    paint.color = active ? colorOn : colorOff;
+    if (active || !readOnly) {
+      canvas.touchCanvas.drawPath(path, paint);
+      path.addRect(path.getBounds());
+      paint.color = Colors.transparent;
+      canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
+        setSegmentState(label, !currentSegments[label]);
+        if (currentSegments[label]) setSegmentState(hashLabel, false);
+      });
+    }
   }
 
   static _setNotesState(String tappedNote, Map<String, bool> currentSegments, Function setSegmentState) {
@@ -219,18 +257,24 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     setSegmentState(tappedNote, newState);
   }
 
-  static Path _createLine(bool shortLine, Size size, Offset offset) {
+  static Path _createLine(bool shortLine, Size size, Offset offset, int lineOffsetX, bool readOnly) {
     var path = Path();
     if (shortLine) {
       var rect = Rect.fromCenter(
-          center: Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180, 0.0),
-          width: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60,
+          center: Offset(
+              size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + (readOnly ? 0 : lineOffsetX)),
+              0.0),
+          width: readOnly
+              ? size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 70
+              : size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 200,
           height: max(1.0, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 2));
       path.addRect(rect);
     } else {
       var rect = Rect.fromCenter(
-          center: Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 180, 0.0),
-          width: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 80,
+          center: Offset(
+              size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *  (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + (readOnly ? 0 : lineOffsetX)),
+              0.0),
+          width: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 280,
           height: max(1.0, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 2));
       path.addRect(rect);
     }
@@ -241,8 +285,8 @@ class NotesSegmentDisplay extends NSegmentDisplay {
   static Path _createNote(Size size, Offset offset) {
     var path = Path();
     var rect = Rect.fromCenter(center: offset,
-               width:  max(3, size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 50),
-               height: max(2, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 30));
+               width:  max(3, size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 45),
+               height: max(2, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 28));
     path.addOval(rect);
 
     return path;

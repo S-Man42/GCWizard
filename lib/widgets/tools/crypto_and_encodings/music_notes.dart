@@ -3,13 +3,16 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/music_notes.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes_segment_display.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class MusicNotes extends StatefulWidget {
   @override
@@ -19,6 +22,8 @@ class MusicNotes extends StatefulWidget {
 class MusicNotesState extends State<MusicNotes> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
+  var _gcwTextStyle = gcwTextStyle();
+  var _currentCode = NotesCodebook.ALT;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -39,6 +44,32 @@ class MusicNotesState extends State<MusicNotes> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      GCWDropDownButton(
+        value: _currentCode,
+        onChanged: (value) {
+          setState(() {
+            _currentCode = value;
+          });
+        },
+        items: NotesCodebook.values.map((codeBook) {
+          switch (codeBook) {
+            case NotesCodebook.ALT:
+              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
+              return GCWDropDownMenuItem( value: NotesCodebook.ALT,
+                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+            case NotesCodebook.BASS:
+              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
+              return GCWDropDownMenuItem( value: NotesCodebook.BASS,
+                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+            case NotesCodebook.TREBLE:
+              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
+              return GCWDropDownMenuItem( value: NotesCodebook.TREBLE,
+                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+            default:
+              return null;
+          };
+        }).toList(),
+      ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -150,7 +181,7 @@ class MusicNotesState extends State<MusicNotes> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeNotes(_currentEncodeInput, NotesCodebook.ALT);
+      List<List<String>> segments = encodeNotes(_currentEncodeInput, _currentCode);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -161,21 +192,21 @@ class MusicNotesState extends State<MusicNotes> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      var segments = decodeNotes(output, NotesCodebook.ALT);
+      var segments = decodeNotes(output, _currentCode);
       //print('displays: ' +segments['displays'].toString()+ " " +segments['chars'].toString());
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),
-          GCWDefaultOutput(child: _normalize(segments['chars'], NotesCodebook.ALT)),
+          GCWDefaultOutput(child: _normalize(segments['chars'], _currentCode)),
         ],
       );
     }
   }
 
-  String _normalize(List<String> input, NotesCodebook notes) {
+  String _normalize(List<String> input, NotesCodebook codeBook) {
     //print('input: ' + input.toString());
     return input.map((note) {
-      switch (notes) {
+      switch (codeBook) {
         case NotesCodebook.ALT:
           return i18n(context, 'symboltables_notes_names_altoclef_' + note) ?? UNKNOWN_ELEMENT;
         case NotesCodebook.BASS:
@@ -184,5 +215,21 @@ class MusicNotesState extends State<MusicNotes> {
           return i18n(context, 'symboltables_notes_names_trebleclef_' + note) ?? UNKNOWN_ELEMENT;
       }
     }).join(' ');
+  }
+
+  Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
+    return Row(children: [
+      Container(
+        child: (icon != null) ? icon : Container(width: 50),
+        margin: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 10),
+      ),
+      Expanded(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(toolName, style: _gcwTextStyle),
+              ]))
+    ]);
   }
 }
