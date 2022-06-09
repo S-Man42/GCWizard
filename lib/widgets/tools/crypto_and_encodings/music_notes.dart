@@ -140,6 +140,7 @@ class MusicNotesState extends State<MusicNotes> {
   Widget _buildDigitalOutput(List<List<String>> segments) {
     return GCWSegmentDisplayOutput(
         segmentFunction: (displayedSegments, readOnly) {
+          displayedSegments = filterVisibleHelpLines(displayedSegments);
           return NotesSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,

@@ -8,16 +8,16 @@ enum NotesCodebook {
 }
 const hashLabel = 'k';
 const bLabel = 'b';
-const h1 = 'q';
-const h2 = 'r';
-const h3 = 's';
-const h4 = 't';
-const h5 = 'u';
-const nh1 = 'v';
-const nh2 = 'w';
-const nh3 = 'x';
-const nh4 = 'y';
-const nh5 = 'z';
+const h1 = 'c';
+const h2 = 'd';
+const h3 = 'e';
+const h4 = 'f';
+const h5 = 'g';
+const nh1 = 'w';
+const nh2 = 'x';
+const nh3 = 'y';
+const nh4 = 'z';
+
 
 final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_ALT = {
   '1': ['-2hs'],
@@ -279,7 +279,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     var charH = '';
     var display = <String>[];
 
-    input = input.replaceAll(RegExp('$h1|$h2|$h3|$h4|$h5|$nh1|$nh2|$nh3|$nh3|$nh4|$nh5'), '');
+    input = input.replaceAll(RegExp('$h1|$h2|$h3|$h4|$h5|$nh1|$nh2|$nh3|$nh3|$nh4'), '');
 
     if (input.contains(hashLabel)) {
       display.add(input.replaceAll(hashLabel, ''));
@@ -290,9 +290,9 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     } else
       display.add(input);
 
-    display.addAll([h1, h2, h3, h4, h5, nh1, nh2, nh3, nh4, nh5]);
-
-    display = _filterHelpLines(input, display);
+    // display.addAll([h1, h2, h3, h4, h5, nh1, nh2, nh3, nh4, nh5]);
+    //
+    // display = _filterHelpLines(input, display);
 
     if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
       char = char + UNKNOWN_ELEMENT;
@@ -311,35 +311,40 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
   return {'displays': displays, 'chars': text};
 }
 
-List<String> _filterHelpLines(String input, List<String> display) {
+Map<String, bool> filterVisibleHelpLines(Map<String, bool> displayedSegments) {
 
-  if (!_containsNote(['5h'], display))
-    display.remove(h5);
-   if (!display.contains(['4hs', '4h']))
-    display.remove(h4);
-   if (!display.contains(['3hs', '3h']))
-    display.remove(h3);
-   if (!display.contains(['2hs', '2h']))
-    display.remove(h2);
-   if (!display.contains(['1hs', '1h']))
-    display.remove(h1);
+  if (!_containsNote(['5h'], displayedSegments)) {
+    displayedSegments[h5] = false;
+    if (!_containsNote(['4hs', '4h'], displayedSegments)) {
+      displayedSegments[h4] = false;
+      if (!_containsNote(['3hs', '3h'], displayedSegments)) {
+        displayedSegments[h3] = false;
+        if (!_containsNote(['2hs', '2h'], displayedSegments)) {
+          displayedSegments[h2] = false;
+          if (!_containsNote(['1hs', '1h'], displayedSegments))
+            displayedSegments[h1] = false;
+        }
+      }
+    }
+  }
 
-  if (!_containsNote(['-5h'], display))
-    display.remove(nh5);
-   if (!display.contains(['-4hs', '-4h']))
-    display.remove(nh4);
-   if (!display.contains(['-3hs', '-3h']))
-    display.remove(nh3);
-   if (!display.contains(['-2hs', '-2h']))
-    display.remove(nh2);
-   if (!display.contains(['-1hs', '-1h']))
-    display.remove(nh1);
-  return display;
+  if (!_containsNote(['-5hs', '-4h'], displayedSegments)) {
+    displayedSegments[nh4] = false;
+    if (!_containsNote(['-4hs', '-3h'], displayedSegments)) {
+      displayedSegments[nh3] = false;
+      if (!_containsNote(['-3hs', '-2h'], displayedSegments)) {
+        displayedSegments[nh2] = false;
+        if (!_containsNote(['-2hs', '-1h'], displayedSegments))
+          displayedSegments[nh1] = false;
+      }
+    }
+  }
+  return displayedSegments;
 }
 
-bool _containsNote(List<String> notes, List<String> display) {
+bool _containsNote(List<String> notes, Map<String, bool> displayedSegments) {
   for(var note in notes)
-    if (display.contains(note)) return true;
+    if (displayedSegments[note] != null) return true;
   return false;
 }
 

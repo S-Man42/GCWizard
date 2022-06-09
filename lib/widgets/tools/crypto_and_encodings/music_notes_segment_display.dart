@@ -50,11 +50,10 @@ const _INITIAL_SEGMENTS = <String, bool>{
     nh2: true,
     nh3: true,
     nh4: true,
-    nh5: true,
 };
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 360;
-const _NOTES_RELATIVE_DISPLAY_HEIGHT = 360;
+const _NOTES_RELATIVE_DISPLAY_HEIGHT = 430;
 const _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL = 180;
 
 class NotesSegmentDisplay extends NSegmentDisplay {
@@ -84,7 +83,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                   ((size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL) ? (90 + 25) : 90);
 
               paint.color = Colors.grey;
-              print('paint segments: ' + currentSegments.toString() + " size: " + size.toString());
+              //print('paint segments: ' + currentSegments.toString() + " size: " + size.toString());
 
               var pathL = Path();
               if (currentSegments[h5])
@@ -110,8 +109,6 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                 pathL.addPath(_createLine(true, size, Offset(0, 12 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
               if (currentSegments[nh4])
                 pathL.addPath(_createLine(true, size, Offset(0, 13 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
-              if (currentSegments[nh5])
-                pathL.addPath(_createLine(true, size, Offset(0, 14 * LINE_DISTANCE + LINE_OFFSET)), Offset(0, 0));
 
               canvas.touchCanvas.drawPath(pathL, paint);
 
@@ -121,10 +118,10 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                 paint.color = active ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
                 canvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
-                  setSegmentState(hashLabel, !active);
-                  if (!active) setSegmentState(bLabel, false);
+                  setSegmentState(hashLabel, !currentSegments[hashLabel]);
+                  if (currentSegments[hashLabel]) setSegmentState(bLabel, false);
                 });
-              };
+              }
 
               active = currentSegments[bLabel];
               if (active || (size.height >= _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL)) {
@@ -132,10 +129,10 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                 paint.color = active ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
 
                 canvas.touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
-                  setSegmentState(bLabel, !active);
-                  if (!active) setSegmentState(hashLabel, false);
+                  setSegmentState(bLabel, !currentSegments[bLabel]);
+                  if (currentSegments[bLabel]) setSegmentState(hashLabel, false);
                 });
-              };
+              }
 
               _drawNote('5h', _createNote(size, Offset(NOTE_X1, 0 * LINE_DISTANCE + LINE_OFFSET)),
                    size, canvas, paint, currentSegments, setSegmentState);
@@ -183,15 +180,15 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                   size, canvas, paint, currentSegments, setSegmentState);
               _drawNote('-2h', _createNote(size, Offset(NOTE_X1, 11 * LINE_DISTANCE + LINE_OFFSET)),
                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-3hs', _createNote(size, Offset(NOTE_X2, 10.5 * LINE_DISTANCE + LINE_OFFSET)),
+              _drawNote('-3hs', _createNote(size, Offset(NOTE_X2, 11.5 * LINE_DISTANCE + LINE_OFFSET)),
                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-3h', _createNote(size, Offset(NOTE_X1, 11 * LINE_DISTANCE + LINE_OFFSET)),
+              _drawNote('-3h', _createNote(size, Offset(NOTE_X1, 12 * LINE_DISTANCE + LINE_OFFSET)),
                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-4hs', _createNote(size, Offset(NOTE_X2, 11.5 * LINE_DISTANCE + LINE_OFFSET)),
+              _drawNote('-4hs', _createNote(size, Offset(NOTE_X2, 12.5 * LINE_DISTANCE + LINE_OFFSET)),
                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-4h', _createNote(size, Offset(NOTE_X1, 12 * LINE_DISTANCE + LINE_OFFSET)),
+              _drawNote('-4h', _createNote(size, Offset(NOTE_X1, 13 * LINE_DISTANCE + LINE_OFFSET)),
                   size, canvas, paint, currentSegments, setSegmentState);
-              _drawNote('-5hs', _createNote(size, Offset(NOTE_X2, 12.5 * LINE_DISTANCE + LINE_OFFSET)),
+              _drawNote('-5hs', _createNote(size, Offset(NOTE_X2, 13.5 * LINE_DISTANCE + LINE_OFFSET)),
                   size, canvas, paint, currentSegments, setSegmentState);
             });
 
@@ -252,7 +249,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
   }
 
   static Path _createHash(Size size, Offset offset) {
-    var outerSize = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0;
+    var outerSize = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 35.0;
     var overLength = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 4.0;
     var overLengthCorr = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 3.0;
     var angle = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10.0;
@@ -282,7 +279,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
   }
 
   static Path _createB(Size size, Offset offset) {
-    var outerSize = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0;
+    var outerSize = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 35.0;
     var overLength = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 4.0;
     var overLengthCorr = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 3.0;
     var angle = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10.0;
