@@ -5,52 +5,51 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/music_notes.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_touchcanvas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{
+final _INITIAL_SEGMENTS = <String, bool>{
   bLabel: false,
   hashLabel: false,
-  '5h': false,
-  '4hs': false,
-  '4h': false,
-  '3hs': false,
-  '3h': false,
-  '2hs': false,
-  '2h': false,
-  '1hs': false,
-  '1h': false,
-  '5s': false,
-  '5': false,
-  '4s': false,
-  '4': false,
-  '3s': false,
-  '3': false,
-  '2s': false,
-  '2': false,
-  '1s': false,
-  '1': false,
-  '-1hs': false,
-  '-1h': false,
-  '-2hs': false,
-  '-2h': false,
-  '-3hs': false,
-  '-3h': false,
-  '-4hs': false,
-  '-4h': false,
-  '-5hs': false,
+  notes[0]: false,
+  notes[1]: false,
+  notes[2]: false,
+  notes[3]: false,
+  notes[4]: false,
+  notes[5]: false,
+  notes[6]: false,
+  notes[7]: false,
+  notes[8]: false,
+  notes[9]: false,
+  notes[10]: false,
+  notes[11]: false,
+  notes[12]: false,
+  notes[13]: false,
+  notes[14]: false,
+  notes[15]: false,
+  notes[16]: false,
+  notes[17]: false,
+  notes[18]: false,
+  notes[19]: false,
+  notes[20]: false,
+  notes[21]: false,
+  notes[22]: false,
+  notes[23]: false,
+  notes[24]: false,
+  notes[25]: false,
+  notes[26]: false,
+  notes[27]: false,
 
-    h1: true,
-    h2: true,
-    h3: true,
-    h4: true,
-    h5: true,
-    nh1: true,
-    nh2: true,
-    nh3: true,
-    nh4: true,
+  h1: true,
+  h2: true,
+  h3: true,
+  h4: true,
+  h5: true,
+  nh1: true,
+  nh2: true,
+  nh3: true,
+  nh4: true,
 };
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
@@ -103,13 +102,11 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               }
 
               var notePositions = [-105, -35, 35, 105];
-              var notes = ['5h','4hs','4h','3hs','3h','2hs','2h','1hs','1h','5s','5','4s','4','3s','3',
-                           '2s','2','1s','1','-1hs','-1h','-2hs','-2h','-3hs','-3h','-4hs','-4h','-5hs'];
               counter = 0;
               notes.forEach((key) {
                 var offsetX = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
                     (readOnly
-                        ? _NOTES_RELATIVE_DISPLAY_WIDTH/2
+                        ?  _NOTES_RELATIVE_DISPLAY_WIDTH/2
                         : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + notePositions[(counter % 4).toInt()] + LINE_OFFSET_X));
 
                 _drawNote(key, _createNote(size, Offset(offsetX, counter * 0.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
