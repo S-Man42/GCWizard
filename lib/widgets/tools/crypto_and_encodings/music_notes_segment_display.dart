@@ -55,7 +55,6 @@ const _INITIAL_SEGMENTS = <String, bool>{
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 340;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 430;
-//const _NOTES_RELATIVE_DISPLAY_SHOW_LEVEL = 180;
 
 class NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -118,7 +117,8 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
               canvas.touchCanvas.drawPath(pathL, paint);
 
-              if (!readOnly) {
+              if (!readOnly || (readOnly && !_noteSelected(currentSegments))) {
+                // if readOnly drawed in _drawNote (note position needed)
                 _drawHash(hashLabel, _createHash(size,
                     Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 5 * LINE_DISTANCE + LINE_OFFSET_Y)),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
@@ -340,8 +340,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
       0,     0,     scale, 0,
       offset.dx, offset.dy, 0, 1]
     );
-    path = path.transform(translateM);
-    return path;
+    return path.transform(translateM);
   }
 
   static Path _createB(Size size, Offset offset) {
@@ -397,8 +396,14 @@ class NotesSegmentDisplay extends NSegmentDisplay {
       0,     0,     scale, 0,
       offset.dx, offset.dy, 0, 1]
     );
-    path = path.transform(translateM);
-    //pathL = pathL.shift(offset);
-    return path;
+    return path.transform(translateM);
+  }
+
+  static bool _noteSelected(Map<String, bool> currentSegments) {
+    var regExp = RegExp(r'^-?\d');
+    return currentSegments.entries.any((element) {
+      if (element.value == false) return false;
+      return regExp.hasMatch(element.key);
+    });
   }
 }
