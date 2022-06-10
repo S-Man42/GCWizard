@@ -120,11 +120,11 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
               if (!readOnly) {
                 _drawHash(hashLabel, _createHash(size,
-                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 6 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 5 * LINE_DISTANCE + LINE_OFFSET_Y)),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
 
                 _drawB(bLabel, _createB(size,
-                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 10 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 9 * LINE_DISTANCE + LINE_OFFSET_Y)),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
               }
 
@@ -295,7 +295,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
   static Path _createHash(Size size, Offset offset) {
     var path = Path();
-    var scale = 0.8*size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
+    var scale = 0.8 * size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
 
     path.moveTo(-19.201,-8.436);
     path.moveTo(-11.389,-12.587);
@@ -346,7 +346,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
   static Path _createB(Size size, Offset offset) {
     var path = Path();
-    var scale = 0.8*size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
+    var scale = 0.8 * size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
 
     path.moveTo(1.234,15.737);
     path.lineTo(-4.796,17.079);
