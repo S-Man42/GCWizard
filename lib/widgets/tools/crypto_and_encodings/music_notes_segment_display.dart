@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -293,62 +294,111 @@ class NotesSegmentDisplay extends NSegmentDisplay {
   }
 
   static Path _createHash(Size size, Offset offset) {
-    var outerSize = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 35.0;
-    var overLength = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 4.0;
-    var overLengthCorr = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 3.0;
-    var angle = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10.0;
-    var width = max(1.0, size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 4.0);
-
     var path = Path();
-    var rect = Rect.fromCenter(center: Offset(-outerSize/2 + 2  + overLength, angle/2),
-        width:  width,
-        height: outerSize);
-    path.addRect(rect);
-    rect = Rect.fromCenter(center: Offset(outerSize/2 - 2 - overLength, - angle/2),
-        width:  width,
-        height: outerSize);
-    path.addRect(rect);
+    var scale = 0.8*size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
 
-    var pathL = Path();
-    pathL.moveTo(-(outerSize/2 + overLength),  (overLengthCorr + angle/2) - width/2);
-    pathL.lineTo( (outerSize/2 + overLength), -(overLengthCorr + angle/2) - width/2);
-    pathL.lineTo( (outerSize/2 + overLength), -(overLengthCorr + angle/2) + width/2);
-    pathL.lineTo(-(outerSize/2 + overLength),  (overLengthCorr + angle/2) + width/2);
-    pathL.close();
-    path.addPath(pathL, Offset(0, -outerSize/2 + overLength + 3));
-    path.addPath(pathL, Offset(0,  outerSize/2 - overLength - 4));
+    path.moveTo(-19.201,-8.436);
+    path.moveTo(-11.389,-12.587);
+    path.lineTo(-11.389,-25.77);
+    path.lineTo(-6.359,-25.77);
+    path.lineTo(-6.359,-15.272);
+    path.lineTo(6.385,-22.059);
+    path.lineTo(6.385,-35.34);
+    path.lineTo(11.414,-35.34);
+    path.lineTo(11.414,-24.745);
+    path.lineTo(19.227,-28.895);
+    path.lineTo(19.227,-21.473);
+    path.lineTo(11.414,-17.323);
+    path.lineTo(11.414,4.454);
+    path.lineTo(19.227,0.304);
+    path.lineTo(19.227,7.726);
+    path.lineTo(11.414,11.876);
+    path.lineTo(11.414,26.232);
+    path.lineTo(6.385,26.232);
+    path.lineTo(6.385,14.562);
+    path.lineTo(-6.359,21.349);
+    path.lineTo(-6.359,34.679);
+    path.lineTo(-11.389,34.679);
+    path.lineTo(-11.389,24.035);
+    path.lineTo(-19.201,28.185);
+    path.lineTo(-19.201,20.763);
+    path.lineTo(-11.389,16.613);
+    path.lineTo(-11.389,-5.165);
+    path.lineTo(-19.201,-1.014);
+    path.lineTo(-19.201,-8.436);
+    path.close();
+    path.moveTo(-6.359,13.927);
+    path.lineTo(6.385,7.14);
+    path.lineTo(6.385,-14.637);
+    path.lineTo(-6.359,-7.85);
+    path.lineTo(-6.359,13.927);
+    path.close();
 
-    path = path.shift(offset);
+    final translateM = Float64List.fromList([
+      scale,     0,     0, 0,
+      0,     scale,     0, 0,
+      0,     0,     scale, 0,
+      offset.dx, offset.dy, 0, 1]
+    );
+    path = path.transform(translateM);
     return path;
   }
 
   static Path _createB(Size size, Offset offset) {
-    var outerSize = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 35.0;
-    var overLength = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 4.0;
-    var overLengthCorr = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 3.0;
-    var angle = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10.0;
-    var width = max(1.0, size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 4.0);
-
     var path = Path();
-    var rect = Rect.fromCenter(center: Offset(-outerSize/2 + 2  + overLength, angle/2),
-        width:  width,
-        height: outerSize);
-    path.addRect(rect);
-    rect = Rect.fromCenter(center: Offset(outerSize/2 - 2 - overLength, - angle/2),
-        width:  width,
-        height: outerSize);
-    path.addRect(rect);
+    var scale = 0.8*size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
 
-    var pathL = Path();
-    pathL.moveTo(-(outerSize/2 + overLength),  (overLengthCorr + angle/2) - width/2);
-    pathL.lineTo( (outerSize/2 + overLength), -(overLengthCorr + angle/2) - width/2);
-    pathL.lineTo( (outerSize/2 + overLength), -(overLengthCorr + angle/2) + width/2);
-    pathL.lineTo(-(outerSize/2 + overLength),  (overLengthCorr + angle/2) + width/2);
-    pathL.close();
-    path.addPath(pathL, Offset(0, -outerSize/2 + overLength + 3));
-    path.addPath(pathL, Offset(0,  outerSize/2 - overLength - 4));
+    path.moveTo(1.234,15.737);
+    path.lineTo(-4.796,17.079);
+    path.lineTo(-8.447,17.436);
+    path.lineTo(-10.509,17.494);
+    path.lineTo(-12.364,17.494);
+    path.lineTo(-12.364,-52.525);
+    path.lineTo(-7.335,-52.525);
+    path.lineTo(-7.335,-11.217);
+    path.lineTo(-4.08,-13.717);
+    path.lineTo(-1.72,-15.05);
+    path.lineTo(2.046,-16.212);
+    path.lineTo(5.018,-16.441);
+    path.lineTo(7.643,-16.191);
+    path.lineTo(9.95,-15.44);
+    path.lineTo(13.563,-12.633);
+    path.lineTo(15.243,-9.802);
+    path.lineTo(15.785,-8.287);
+    path.lineTo(16.453,-4.744);
+    path.lineTo(16.542,-2.721);
+    path.lineTo(16.263,0.778);
+    path.lineTo(15.272,4.237);
+    path.lineTo(12.011,9.345);
+    path.lineTo(6.996,13.271);
+    path.lineTo(1.234,15.737);
+    path.close();
+    path.moveTo(7.655,-6.212);
+    path.lineTo(6.312,-9.044);
+    path.lineTo(4.042,-10.948);
+    path.lineTo(2.246,-11.539);
+    path.lineTo(0.819,-11.656);
+    path.lineTo(-3.453,-10.704);
+    path.lineTo(-7.277,-8.333);
+    path.lineTo(-7.335,14.858);
+    path.lineTo(-3.716,14.192);
+    path.lineTo(-0.572,12.978);
+    path.lineTo(3.065,10.441);
+    path.lineTo(4.262,9.169);
+    path.lineTo(7.143,3.822);
+    path.lineTo(8.035,-0.993);
+    path.lineTo(8.095,-2.721);
+    path.lineTo(7.868,-5.274);
+    path.close();
 
-    path = path.shift(offset);
+    final translateM = Float64List.fromList([
+      scale,     0,     0, 0,
+      0,     scale,     0, 0,
+      0,     0,     scale, 0,
+      offset.dx, offset.dy, 0, 1]
+    );
+    path = path.transform(translateM);
+    //pathL = pathL.shift(offset);
     return path;
   }
 }
