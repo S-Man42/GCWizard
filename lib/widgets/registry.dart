@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -254,7 +255,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.da
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/game_of_life/game_of_life.dart';
-import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/games/scrabble/scrabble_overview.dart';
+import 'tools/games/scrabble/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
@@ -951,9 +953,7 @@ initializeRegistry(BuildContext context) {
         searchKeys: []),
     GCWTool(tool: RotationSelection(), i18nPrefix: 'rotation_selection', categories: [
       ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'rotation',
-    ]),
+    ], searchKeys: []),
     GCWTool(tool: RSASelection(), i18nPrefix: 'rsa_selection', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -962,11 +962,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', searchKeys: [
       'scienceandtechnologyselection',
     ]),
-    GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', categories: [
+    GCWTool(tool: ScrabbleSelection(), i18nPrefix: 'scrabble_selection', categories: [
       ToolCategory.GAMES
     ], searchKeys: [
-      'games',
-      'games_scrabble',
+      'games'
     ]),
     GCWTool(
         tool: SegmentDisplaySelection(),
@@ -2663,6 +2662,15 @@ initializeRegistry(BuildContext context) {
       'rsa_ncalculator',
     ]),
     GCWTool(tool: RSAPhiCalculator(), i18nPrefix: 'rsa_phi.calculator', searchKeys: ['rsa']),
+
+    //Scrabble Selection *****************************************************************************************
+
+    GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', searchKeys: [
+      'games_scrabble',
+    ]),
+    GCWTool(tool: ScrabbleOverview(), i18nPrefix: 'scrabbleoverview', searchKeys: [
+      'games_scrabble',
+    ]),
 
     //Segments Display *******************************************************************************************
     GCWTool(

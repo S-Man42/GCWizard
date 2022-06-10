@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
 import 'package:latlong2/latlong.dart';
 
-import '../../../plugins/xmp/xmp.dart';
+import 'package:gc_wizard/plugins/xmp/xmp.dart';
 
 const String TIFF_THUMBNAIL = 'TIFFThumbnail';
 const String JPEG_THUMBNAIL = 'JPEGThumbnail';
