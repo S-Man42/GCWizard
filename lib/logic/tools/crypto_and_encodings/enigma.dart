@@ -38,8 +38,8 @@ final List<EnigmaRotor> allEnigmaRotors = [
 
   // M4 'Shark'
   EnigmaRotor('ETW, M4 \'Shark\'', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', type: EnigmaRotorType.ENTRY_ROTOR),
-  EnigmaRotor('Greek B \'Beta\', M4 \'Shark\'', 'LEYJVCNIXWPBQMDRTAKZGFUHOS', type: EnigmaRotorType.REFLECTOR),
-  EnigmaRotor('Greek C \'Gamma\', M4 \'Shark\'', 'FSOKANUERHMBTIYCWLQPZXVGJD', type: EnigmaRotorType.REFLECTOR),
+  EnigmaRotor('Greek B \'Beta\', M4 \'Shark\'', 'LEYJVCNIXWPBQMDRTAKZGFUHOS'),
+  EnigmaRotor('Greek C \'Gamma\', M4 \'Shark\'', 'FSOKANUERHMBTIYCWLQPZXVGJD'),
   EnigmaRotor('UKW B \'thin\', M4 \'Shark\'', 'ENKQAUYWJICOPBLMDXZVFTHRGS', type: EnigmaRotorType.REFLECTOR),
   EnigmaRotor('UKW C \'thin\', M4 \'Shark\'', 'RDOBJNTKVEHMLFCWZAXGYIPSUQ', type: EnigmaRotorType.REFLECTOR),
 

@@ -41,16 +41,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   @override
   Widget build(BuildContext context) {
-    var BreakerAlphabetItems = {
-      SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
-      SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
-      SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
-      SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
-      SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
-      SubstitutionBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
-      SubstitutionBreakerAlphabet.RUSSIAN: i18n(context, 'common_language_russian'),
-    };
-
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -68,7 +58,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
               _currentAlphabet = value;
             });
           },
-          items: BreakerAlphabetItems.entries.map((alphabet) {
+          items: BreakerAlphabetItems(context).entries.map((alphabet) {
             return GCWDropDownMenuItem(
               value: alphabet.key,
               child: alphabet.value,
@@ -199,4 +189,18 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
       setState(() {});
     });
   }
+}
+
+Map<SubstitutionBreakerAlphabet, String> BreakerAlphabetItems(BuildContext context) {
+  var breakerAlphabetItems = {
+    SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
+    SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
+    SubstitutionBreakerAlphabet.DUTCH: i18n(context, 'common_language_dutch'),
+    SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
+    SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
+    SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
+    SubstitutionBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
+    SubstitutionBreakerAlphabet.RUSSIAN: i18n(context, 'common_language_russian'),
+  };
+  return breakerAlphabetItems;
 }

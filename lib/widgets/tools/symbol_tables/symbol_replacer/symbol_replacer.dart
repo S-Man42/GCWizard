@@ -58,7 +58,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   var _descriptionTextStyle = gcwDescriptionTextStyle();
   SymbolReplacerSymbolTableViewData _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
-  Map<SubstitutionBreakerAlphabet, String> _breakerAlphabetItems;
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
   double _currentMergeDistance;
@@ -336,7 +335,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 _currentAlphabet = value;
               });
             },
-            items: _breakerAlphabetItems.entries.map((alphabet) {
+            items: BreakerAlphabetItems(context).entries.map((alphabet) {
               return GCWDropDownMenuItem(
                 value: alphabet.key,
                 child: alphabet.value,
@@ -405,16 +404,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   _initDropDownLists() {
     if (_compareSymbolItems == null) {
-      _breakerAlphabetItems = {
-        SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
-        SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
-        SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
-        SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
-        SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
-        SubstitutionBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
-        SubstitutionBreakerAlphabet.RUSSIAN: i18n(context, 'common_language_russian'),
-      };
-
       List<GCWTool> _toolList = registeredTools.where((element) {
         return [
           className(SymbolTable()),

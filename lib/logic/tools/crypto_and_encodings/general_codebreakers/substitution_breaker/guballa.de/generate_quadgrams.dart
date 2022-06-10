@@ -27,7 +27,8 @@ Future<BreakerResult> generateQuadgrams(
 
   var iterator = _file_iterator(corpus_fh, _alphabet);
   var quadgram_val = 0;
-  var quadgrams = <double>[pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength]; //_alphabet.length
+  var quadgrams =
+      List.filled(pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength, 0.0); //_alphabet.length
   quadgrams.fillRange(0, quadgrams.length, 0);
 
   var idx = 0;
