@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -9,66 +9,80 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
+var filePositions = <int>[];
 
-Future<List<GCWFile>> hiddenData(GCWFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
+Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
+  filePositions.clear();
 
+  return  _hiddenData(data);
+}
+
+Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
   var resultList = <GCWFile>[];
   var bytes = data.bytes;
 
   while (bytes != null && bytes.length > 0) {
-    int imageLength;
+    int fileSize;
     FileType detectedFileType = getFileType(bytes);
 
     switch (detectedFileType) {
       case FileType.JPEG:
-        imageLength = jpgImageSize(bytes);
+        fileSize = jpgImageSize(bytes);
         break;
       case FileType.PNG:
-        imageLength = pngImageSize(bytes);
+        fileSize = pngImageSize(bytes);
         break;
       case FileType.GIF:
-        imageLength = gifImageSize(bytes);
+        fileSize = gifImageSize(bytes);
         break;
       case FileType.BMP:
-        imageLength = bmpImageSize(bytes);
+        fileSize = bmpImageSize(bytes);
         break;
       case FileType.ZIP:
-        imageLength = zipFileSize(bytes);
+        fileSize = zipFileSize(bytes);
         break;
       case FileType.RAR:
-        imageLength = rarFileSize(bytes);
+        fileSize = rarFileSize(bytes);
         break;
       case FileType.MP3:
-        imageLength = mp3FileSize(bytes);
+        fileSize = mp3FileSize(bytes);
         break;
       case FileType.TAR:
-        imageLength = tarFileSize(bytes);
+        fileSize = tarFileSize(bytes);
         break;
       default:
-        imageLength = bytes.length;
+        fileSize = bytes.length;
         break;
     }
 
     var resultBytes;
-    if ((imageLength != null) && (imageLength > 0) && (bytes.length > imageLength)) {
-      resultBytes = bytes.sublist(0, imageLength);
+    if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
+      resultBytes = bytes.sublist(0, fileSize);
       // remove result from source data
-      bytes = bytes.sublist(imageLength);
+      bytes = bytes.sublist(fileSize);
+      filePosition += fileSize;
     } else {
       resultBytes = bytes;
       bytes = null;
     }
 
     List<GCWFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE) children = await extractArchive(GCWFile(bytes: resultBytes));
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
+      children = await extractArchive(GCWFile(name: data.name, bytes: resultBytes));
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
       var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
+      if (!filePositions.contains(filePosition)) {
+        print('main: 1 ' + (children == null ? '' : children?.length?.toString()) + ' pos: ' + filePosition.toString() + ' ' + result.name + ' ' + result.fileType.name);
+        resultList.add(result);filePositions.add(filePosition);
+        //if (result.fileType == FileType.GZIP) calledFromSearchMagicBytes = true;
+      } else {
+        print('ignore:' + result.name);
 
-      resultList.add(result);
+      }
     }
 
     if (calledFromSearchMagicBytes) break;
@@ -81,17 +95,17 @@ Future<List<GCWFile>> hiddenData(GCWFile data, {bool calledFromSearchMagicBytes 
       if (index == 0 && result.fileClass != FileClass.ARCHIVE) return;
 
       if ((result.children == null) || (result.children.length == 0))
-        _searchMagicBytes(result, fileTypeList);
+        _searchMagicBytes(result, fileTypeList, filePosition);
       else
         result.children.forEach((element) {
-          _searchMagicBytes(element, fileTypeList);
+          _searchMagicBytes(element, fileTypeList, filePosition);
         });
     });
   }
   return resultList;
 }
 
-_searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
+_searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int filePosition) {
   fileTypeList.forEach((fileType) {
     var magicBytesList = magicBytes(fileType);
     magicBytesList.forEach((magicBytes) async {
@@ -110,10 +124,15 @@ _searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
 
           if (validMagicBytes) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
-            if (i - bytesOffset >= 0) {
-              var children = await hiddenData(GCWFile(bytes: bytes.sublist(i - bytesOffset)),
-                  calledFromSearchMagicBytes: true, fileIndex: data.children.length + 1);
+            bytesOffset = i - bytesOffset;
+            if (bytesOffset >= 0) {
+              var children = await _hiddenData(GCWFile(bytes: bytes.sublist(bytesOffset)),
+                  filePosition: filePosition + bytesOffset, calledFromSearchMagicBytes: true,
+                  fileIndex: data.children.length + 1);
               if ((children != null) && (children.length > 0)) {
+                children.forEach((element) {
+                  print('children: ' + children.length.toString() + ' pos: ' + (filePosition + bytesOffset).toString() + ' ' + element.name + ' ' + element.fileType.name);
+                });
                 if (data.children != null) data.children.addAll(children);
               }
             }

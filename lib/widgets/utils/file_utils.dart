@@ -610,7 +610,7 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
-        return {GCWFile(name: changeExtension(file?.name ?? 'gzip', '.xxx'), bytes: output?.getBytes())}.toList();
+        return {GCWFile(name: changeExtension(file?.name ?? 'xxx', '.gzip'), bytes: output?.getBytes())}.toList();
       case FileType.RAR:
         return await extractRarArchive(file);
         break;
