@@ -8,229 +8,241 @@ enum NotesCodebook {
 }
 const hashLabel = 'k';
 const bLabel = 'b';
-const h1 = 'c';
-const h2 = 'd';
-const h3 = 'e';
-const h4 = 'f';
-const h5 = 'g';
-const nh1 = 'w';
-const nh2 = 'x';
-const nh3 = 'y';
-const nh4 = 'z';
+const helpLine1 = 'c';
+const helpLine2 = 'd';
+const helpLine3 = 'e';
+const helpLine4 = 'f';
+const helpLine5 = 'g';
+const helpLineN1 = 'w';
+const helpLineN2 = 'x';
+const helpLineN3 = 'y';
+const helpLineN4 = 'z';
 
+const notePosition = ['5h','4hs','4h','3hs','3h','2hs','2h','1hs','1h','5s','5','4s','4','3s','3',
+                      '2s','2','1s','1','-1hs','-1h','-2hs','-2h','-3hs','-3h','-4hs','-4h','-5hs'];
 
 final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_ALT = {
-  '1': ['-2hs'],
-  '1_b': ['-2hs', bLabel],
-  '1_k': ['-2hs', hashLabel],
-  '2': ['-1h'],
-  '2_b': ['-1h', bLabel],
-  '2_k': ['-1h', hashLabel],
-  '3': ['-1hs'],
-  '3_b': ['-1hs', bLabel],
-  '3_k': ['-1hs', hashLabel],
-  '4': ['1'],
-  '4_b': ['1', bLabel],
-  '4_k': ['1', hashLabel],
-  '5': ['1s'],
-  '5_b': ['1s', bLabel],
-  '5_k': ['1s', hashLabel],
-  '6': ['2'],
-  '6_b': ['2', bLabel],
-  '6_k': ['2', hashLabel],
-  '7': ['2s'],
-  '7_b': ['2s', bLabel],
-  '7_k': ['2s', hashLabel],
-  '8': ['3'],
-  '8_b': ['3', bLabel],
-  '8_k': ['3', hashLabel],
-  '9': ['3s'],
-  '9_b': ['3s', bLabel],
-  '9_k': ['3s', hashLabel],
-  '10': ['4'],
-  '10_b': ['4', bLabel],
-  '10_k': ['4', hashLabel],
-  '11': ['4s'],
-  '11_b': ['4s', bLabel],
-  '11_k': ['4s', hashLabel],
-  '12': ['5'],
-  '12_b': ['5', bLabel],
-  '12_k': ['5', hashLabel],
-  '13': ['5s'],
-  '13_b': ['5s', bLabel],
-  '13_k': ['5s', hashLabel],
-  '14': ['1h'],
-  '14_b': ['1h', bLabel],
-  '14_k': ['1h', hashLabel],
-  '15': ['1hs'],
-  '15_b': ['1hs', bLabel],
-  '15_k': ['1hs', hashLabel],
-  '16': ['2h'],
-  '16_b': ['2h', bLabel],
-  '16_k': ['2h', hashLabel],
-  '17': ['2hs'],
-  '17_b': ['2hs', bLabel],
-  '17_k': ['2hs', hashLabel],
-  '18': ['3h'],
-  '18_b': ['3h', bLabel],
-  '18_k': ['3h', hashLabel],
-  '19': ['3hs'],
-  '19_b': ['3hs', bLabel],
-  '19_k': ['3hs', hashLabel],
-  '20': ['4h'],
-  '20_b': ['4h', bLabel],
-  '20_k': ['4h', hashLabel],
-  '21': ['4hs'],
-  '21_b': ['4hs', bLabel],
-  '21_k': ['4hs', hashLabel],
-  '22': ['5h'],
-  '22_b': ['5h', bLabel],
-  '22_k': ['5h', hashLabel],
+  '1':   [notePosition[21]],
+  '1_b': [notePosition[21], bLabel],
+  '1_k': [notePosition[21], hashLabel],
+  '2':   [notePosition[20]],
+  '2_b': [notePosition[20], bLabel],
+  '2_k': [notePosition[20], hashLabel],
+  '3':   [notePosition[19]],
+  '3_b': [notePosition[19], bLabel],
+  '3_k': [notePosition[19], hashLabel],
+  '4':   [notePosition[18]],
+  '4_b': [notePosition[18], bLabel],
+  '4_k': [notePosition[18], hashLabel],
+  '5':   [notePosition[17]],
+  '5_b': [notePosition[17], bLabel],
+  '5_k': [notePosition[17], hashLabel],
+  '6':   [notePosition[16]],
+  '6_b': [notePosition[16], bLabel],
+  '6_k': [notePosition[16], hashLabel],
+  '7':   [notePosition[15]],
+  '7_b': [notePosition[15], bLabel],
+  '7_k': [notePosition[15], hashLabel],
+  '8':   [notePosition[14]],
+  '8_b': [notePosition[14], bLabel],
+  '8_k': [notePosition[14], hashLabel],
+  '9':   [notePosition[13]],
+  '9_b': [notePosition[13], bLabel],
+  '9_k': [notePosition[13], hashLabel],
+  '10':   [notePosition[12]],
+  '10_b': [notePosition[12], bLabel],
+  '10_k': [notePosition[12], hashLabel],
+  '11':   [notePosition[11]],
+  '11_b': [notePosition[11], bLabel],
+  '11_k': [notePosition[11], hashLabel],
+  '12':   [notePosition[10]],
+  '12_b': [notePosition[10], bLabel],
+  '12_k': [notePosition[10], hashLabel],
+  '13':   [notePosition[9]],
+  '13_b': [notePosition[9], bLabel],
+  '13_k': [notePosition[9], hashLabel],
+  '14':   [notePosition[8]],
+  '14_b': [notePosition[8], bLabel],
+  '14_k': [notePosition[8], hashLabel],
+  '15':   [notePosition[7]],
+  '15_b': [notePosition[7], bLabel],
+  '15_k': [notePosition[7], hashLabel],
+  '16':   [notePosition[6]],
+  '16_b': [notePosition[6], bLabel],
+  '16_k': [notePosition[6], hashLabel],
+  '17':   [notePosition[5]],
+  '17_b': [notePosition[5], bLabel],
+  '17_k': [notePosition[5], hashLabel],
+  '18':   [notePosition[4]],
+  '18_b': [notePosition[4], bLabel],
+  '18_k': [notePosition[4], hashLabel],
+  '19':   [notePosition[3]],
+  '19_b': [notePosition[3], bLabel],
+  '19_k': [notePosition[3], hashLabel],
+  '20':   [notePosition[2]],
+  '20_b': [notePosition[2], bLabel],
+  '20_k': [notePosition[2], hashLabel],
+  '21':   [notePosition[1]],
+  '21_b': [notePosition[1], bLabel],
+  '21_k': [notePosition[1], hashLabel],
+  '22':   [notePosition[0]],
+  '22_b': [notePosition[0], bLabel],
+  '22_k': [notePosition[0], hashLabel],
 };
 
 final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_BASS = {
-  '1': ['-2h'],
-  '1_b': ['-2h', bLabel],
-  '1_k': ['-2h', hashLabel],
-  '2': ['-2hs'],
-  '2_b': ['-2hs', bLabel],
-  '2_k': ['-2hs', hashLabel],
-  '3': ['-1h'],
-  '3_b': ['-1h', bLabel],
-  '3_k': ['-1h', hashLabel],
-  '4': ['-1hs'],
-  '4_b': ['-1hs', bLabel],
-  '4_k': ['-1hs', hashLabel],
-  '5': ['1'],
-  '5_b': ['1', bLabel],
-  '5_k': ['1', hashLabel],
-  '6': ['1s'],
-  '6_b': ['1s', bLabel],
-  '6_k': ['1s', hashLabel],
-  '7': ['2'],
-  '7_b': ['2', bLabel],
-  '7_k': ['2', hashLabel],
-  '8': ['2s'],
-  '8_b': ['2s', bLabel],
-  '8_k': ['2s', hashLabel],
-  '9': ['3'],
-  '9_b': ['3', bLabel],
-  '9_k': ['3', hashLabel],
-  '10': ['3s'],
-  '10_b': ['3s', bLabel],
-  '10_k': ['3s', hashLabel],
-  '11': ['4'],
-  '11_b': ['4', bLabel],
-  '11_k': ['4', hashLabel],
-  '12': ['4s'],
-  '12_b': ['4s', bLabel],
-  '12_k': ['4s', hashLabel],
-  '13': ['5'],
-  '13_b': ['5', bLabel],
-  '13_k': ['5', hashLabel],
-  '14': ['5s'],
-  '14_b': ['5s', bLabel],
-  '14_k': ['5s', hashLabel],
-  '15': ['1h'],
-  '15_b': ['1h', bLabel],
-  '15_k': ['1h', hashLabel],
-  '16': ['1hs'],
-  '16_b': ['1hs', bLabel],
-  '16_k': ['1hs', hashLabel],
-  '17': ['2h'],
-  '17_b': ['2h', bLabel],
-  '17_k': ['2h', hashLabel],
-  '18': ['2hs'],
-  '18_b': ['2hs', bLabel],
-  '18_k': ['2hs', hashLabel],
-  '19': ['3h'],
-  '19_b': ['3h', bLabel],
-  '19_k': ['3h', hashLabel],
-  '20': ['3hs'],
-  '20_b': ['3hs', bLabel],
-  '20_k': ['3hs', hashLabel],
-  '21': ['4h'],
-  '21_b': ['4h', bLabel],
-  '21_k': ['4h', hashLabel],
-  '22': ['4hs'],
-  '22_b': ['4hs', bLabel],
-  '22_k': ['4hs', hashLabel],
+  '1':   [notePosition[22]],
+  '1_b': [notePosition[22], bLabel],
+  '1_k': [notePosition[22], hashLabel],
+  '2':   [notePosition[21]],
+  '2_b': [notePosition[21], bLabel],
+  '2_k': [notePosition[21], hashLabel],
+  '3':   [notePosition[20]],
+  '3_b': [notePosition[20], bLabel],
+  '3_k': [notePosition[20], hashLabel],
+  '4':   [notePosition[19]],
+  '4_b': [notePosition[19], bLabel],
+  '4_k': [notePosition[19], hashLabel],
+  '5':   [notePosition[18]],
+  '5_b': [notePosition[18], bLabel],
+  '5_k': [notePosition[18], hashLabel],
+  '6':   [notePosition[17]],
+  '6_b': [notePosition[17], bLabel],
+  '6_k': [notePosition[17], hashLabel],
+  '7':   [notePosition[16]],
+  '7_b': [notePosition[16], bLabel],
+  '7_k': [notePosition[16], hashLabel],
+  '8':   [notePosition[15]],
+  '8_b': [notePosition[15], bLabel],
+  '8_k': [notePosition[15], hashLabel],
+  '9':   [notePosition[14]],
+  '9_b': [notePosition[14], bLabel],
+  '9_k': [notePosition[14], hashLabel],
+  '10':   [notePosition[13]],
+  '10_b': [notePosition[13], bLabel],
+  '10_k': [notePosition[13], hashLabel],
+  '11':   [notePosition[12]],
+  '11_b': [notePosition[12], bLabel],
+  '11_k': [notePosition[12], hashLabel],
+  '12':   [notePosition[11]],
+  '12_b': [notePosition[11], bLabel],
+  '12_k': [notePosition[11], hashLabel],
+  '13':   [notePosition[10]],
+  '13_b': [notePosition[10], bLabel],
+  '13_k': [notePosition[10], hashLabel],
+  '14':   [notePosition[9]],
+  '14_b': [notePosition[9], bLabel],
+  '14_k': [notePosition[9], hashLabel],
+  '15':   [notePosition[8]],
+  '15_b': [notePosition[8], bLabel],
+  '15_k': [notePosition[8], hashLabel],
+  '16':   [notePosition[7]],
+  '16_b': [notePosition[7], bLabel],
+  '16_k': [notePosition[7], hashLabel],
+  '17':   [notePosition[6]],
+  '17_b': [notePosition[6], bLabel],
+  '17_k': [notePosition[6], hashLabel],
+  '18':   [notePosition[5]],
+  '18_b': [notePosition[5], bLabel],
+  '18_k': [notePosition[5], hashLabel],
+  '19':   [notePosition[4]],
+  '19_b': [notePosition[4], bLabel],
+  '19_k': [notePosition[4], hashLabel],
+  '20':   [notePosition[3]],
+  '20_b': [notePosition[3], bLabel],
+  '20_k': [notePosition[3], hashLabel],
+  '21':   [notePosition[2]],
+  '21_b': [notePosition[2], bLabel],
+  '21_k': [notePosition[2], hashLabel],
+  '22':   [notePosition[1]],
+  '22_b': [notePosition[1], bLabel],
+  '22_k': [notePosition[1], hashLabel],
 };
 
 final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
-  '1': ['-5hs'],
-  '1_b': ['-5hs', bLabel],
-  '1_k': ['-5hs', hashLabel],
-  '2': ['-4h'],
-  '2_b': ['-4h', bLabel],
-  '2_k': ['-4h', hashLabel],
-  '3': ['-4hs'],
-  '3_b': ['-4hs', bLabel],
-  '3_k': ['-4hs', hashLabel],
-  '4': ['-3h'],
-  '4_b': ['-3h', bLabel],
-  '4_k': ['-3h', hashLabel],
-  '5': ['-3hs'],
-  '5_b': ['-3hs', bLabel],
-  '5_k': ['-3hs', hashLabel],
-  '6': ['-2h'],
-  '6_b': ['-2h', bLabel],
-  '6_k': ['-2h', hashLabel],
-  '7': ['-2hs'],
-  '7_b': ['-2hs', bLabel],
-  '7_k': ['-2hs', hashLabel],
-  '8': ['-1h'],
-  '8_b': ['-1h', bLabel],
-  '8_k': ['-1h', hashLabel],
-  '9': ['-1hs'],
-  '9_b': ['-1hs', bLabel],
-  '9_k': ['-1hs', hashLabel],
-  '10': ['1'],
-  '10_b': ['1', bLabel],
-  '10_k': ['1', hashLabel],
-  '11': ['1s'],
-  '11_b': ['1s', bLabel],
-  '11_k': ['1s', hashLabel],
-  '12': ['2'],
-  '12_b': ['2', bLabel],
-  '12_k': ['2', hashLabel],
-  '13': ['2s'],
-  '13_b': ['2s', bLabel],
-  '13_k': ['2s', hashLabel],
-  '14': ['3'],
-  '14_b': ['3', bLabel],
-  '14_k': ['3', hashLabel],
-  '15': ['3s'],
-  '15_b': ['3s', bLabel],
-  '15_k': ['3s', hashLabel],
-  '16': ['4'],
-  '16_b': ['4', bLabel],
-  '16_k': ['4', hashLabel],
-  '17': ['4s'],
-  '17_b': ['4s', bLabel],
-  '17_k': ['4s', hashLabel],
-  '18': ['5'],
-  '18_b': ['5', bLabel],
-  '18_k': ['5', hashLabel],
-  '19': ['5s'],
-  '19_b': ['5s', bLabel],
-  '19_k': ['5s', hashLabel],
-  '20': ['1h'],
-  '20_b': ['1h', bLabel],
-  '20_k': ['1h', hashLabel],
-  '21': ['1hs'],
-  '21_b': ['1hs', bLabel],
-  '21_k': ['1hs', hashLabel],
-  '22': ['2h'],
-  '22_b': ['2h', bLabel],
-  '22_k': ['2h', hashLabel],
+  '1':   [notePosition[27]],
+  '1_b': [notePosition[27], bLabel],
+  '1_k': [notePosition[27], hashLabel],
+  '2':   [notePosition[26]],
+  '2_b': [notePosition[26], bLabel],
+  '2_k': [notePosition[26], hashLabel],
+  '3':   [notePosition[25]],
+  '3_b': [notePosition[25], bLabel],
+  '3_k': [notePosition[25], hashLabel],
+  '4':   [notePosition[24]],
+  '4_b': [notePosition[24], bLabel],
+  '4_k': [notePosition[24], hashLabel],
+  '5':   [notePosition[23]],
+  '5_b': [notePosition[23], bLabel],
+  '5_k': [notePosition[23], hashLabel],
+  '6':   [notePosition[22]],
+  '6_b': [notePosition[22], bLabel],
+  '6_k': [notePosition[22], hashLabel],
+  '7':   [notePosition[21]],
+  '7_b': [notePosition[21], bLabel],
+  '7_k': [notePosition[21], hashLabel],
+  '8':   [notePosition[20]],
+  '8_b': [notePosition[20], bLabel],
+  '8_k': [notePosition[20], hashLabel],
+  '9':   [notePosition[19]],
+  '9_b': [notePosition[19], bLabel],
+  '9_k': [notePosition[19], hashLabel],
+  '10':   [notePosition[18]],
+  '10_b': [notePosition[18], bLabel],
+  '10_k': [notePosition[18], hashLabel],
+  '11':   [notePosition[17]],
+  '11_b': [notePosition[17], bLabel],
+  '11_k': [notePosition[17], hashLabel],
+  '12':   [notePosition[16]],
+  '12_b': [notePosition[16], bLabel],
+  '12_k': [notePosition[16], hashLabel],
+  '13':   [notePosition[15]],
+  '13_b': [notePosition[15], bLabel],
+  '13_k': [notePosition[15], hashLabel],
+  '14':   [notePosition[14]],
+  '14_b': [notePosition[14], bLabel],
+  '14_k': [notePosition[14], hashLabel],
+  '15':   [notePosition[13]],
+  '15_b': [notePosition[13], bLabel],
+  '15_k': [notePosition[13], hashLabel],
+  '16':   [notePosition[12]],
+  '16_b': [notePosition[12], bLabel],
+  '16_k': [notePosition[12], hashLabel],
+  '17':   [notePosition[11]],
+  '17_b': [notePosition[11], bLabel],
+  '17_k': [notePosition[11], hashLabel],
+  '18':   [notePosition[10]],
+  '18_b': [notePosition[10], bLabel],
+  '18_k': [notePosition[10], hashLabel],
+  '19':   [notePosition[9]],
+  '19_b': [notePosition[9], bLabel],
+  '19_k': [notePosition[9], hashLabel],
+  '20':   [notePosition[8]],
+  '20_b': [notePosition[8], bLabel],
+  '20_k': [notePosition[8], hashLabel],
+  '21':   [notePosition[7]],
+  '21_b': [notePosition[7], bLabel],
+  '21_k': [notePosition[7], hashLabel],
+  '22':   [notePosition[6]],
+  '22_b': [notePosition[6], bLabel],
+  '22_k': [notePosition[6], hashLabel],
 };
 
 
-List<List<String>> encodeNotes(String input, NotesCodebook notes) {
+List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
   if (input == null) return [];
 
-  Map<String, List<String>> CODEBOOK = new Map<String, List<String>>();
+  // sorted by length (longest first)
+  var entries = translationMap.entries.toList();
+  entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) => b.value.length.compareTo(a.value.length));
+  translationMap = Map<String, String>.fromEntries(entries);
+
+  input = input.toUpperCase();
+  translationMap.forEach((key, value) {
+    input = input.replaceAll(value.toUpperCase(), key);
+  });
+
+  Map<String, List<String>> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
@@ -243,12 +255,12 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes) {
       break;
   }
 
-  List<String> inputs = input.split('');
+  List<String> inputs = input.split(RegExp(r'\s'));
   List<List<String>> result = [];
 
-  for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK[inputs[i].toUpperCase()] != null) result.add(CODEBOOK[inputs[i].toUpperCase()]);
-  }
+  for (int i = 0; i < inputs.length; i++)
+    if (CODEBOOK[inputs[i]] != null) result.add(CODEBOOK[inputs[i]]);
+
   return result;
 }
 
@@ -261,7 +273,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
 
   var displays = <List<String>>[];
 
-  Map<List<String>, String> CODEBOOK = new Map<List<String>, String>();
+  Map<List<String>, String> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_ALT);
@@ -279,7 +291,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     var charH = '';
     var display = <String>[];
 
-    input = input.replaceAll(RegExp('$h1|$h2|$h3|$h4|$h5|$nh1|$nh2|$nh3|$nh3|$nh4'), '');
+    input = input.replaceAll(RegExp('$helpLine1|$helpLine2|$helpLine3|$helpLine4|$helpLine5|$helpLineN1|$helpLineN2|$helpLineN3|$helpLineN3|$helpLineN4'), '');
 
     if (input.contains(hashLabel)) {
       display.add(input.replaceAll(hashLabel, ''));
@@ -290,13 +302,9 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     } else
       display.add(input);
 
-    // display.addAll([h1, h2, h3, h4, h5, nh1, nh2, nh3, nh4, nh5]);
-    //
-    // display = _filterHelpLines(input, display);
-
-    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
+    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null)
       char = char + UNKNOWN_ELEMENT;
-    } else {
+    else {
       charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       char = char + charH;
     }
@@ -306,36 +314,34 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     return char;
   }).toList();
 
-  print('display input: ' + displays.toString() + ' inputs: ' + inputs.toString() + ' chars: ' + text.toString());
-
   return {'displays': displays, 'chars': text};
 }
 
 Map<String, bool> filterVisibleHelpLines(Map<String, bool> displayedSegments) {
 
-  if (!_containsNote(['5h'], displayedSegments)) {
-    displayedSegments[h5] = false;
-    if (!_containsNote(['4hs', '4h'], displayedSegments)) {
-      displayedSegments[h4] = false;
-      if (!_containsNote(['3hs', '3h'], displayedSegments)) {
-        displayedSegments[h3] = false;
-        if (!_containsNote(['2hs', '2h'], displayedSegments)) {
-          displayedSegments[h2] = false;
-          if (!_containsNote(['1hs', '1h'], displayedSegments))
-            displayedSegments[h1] = false;
+  if (!_containsNote([notePosition[0]], displayedSegments)) {
+    displayedSegments[helpLine5] = false;
+    if (!_containsNote([notePosition[1], notePosition[2]], displayedSegments)) {
+      displayedSegments[helpLine4] = false;
+      if (!_containsNote([notePosition[3], notePosition[4]], displayedSegments)) {
+        displayedSegments[helpLine3] = false;
+        if (!_containsNote([notePosition[5], notePosition[6]], displayedSegments)) {
+          displayedSegments[helpLine2] = false;
+          if (!_containsNote([notePosition[7], notePosition[8]], displayedSegments))
+            displayedSegments[helpLine1] = false;
         }
       }
     }
   }
 
-  if (!_containsNote(['-5hs', '-4h'], displayedSegments)) {
-    displayedSegments[nh4] = false;
-    if (!_containsNote(['-4hs', '-3h'], displayedSegments)) {
-      displayedSegments[nh3] = false;
-      if (!_containsNote(['-3hs', '-2h'], displayedSegments)) {
-        displayedSegments[nh2] = false;
-        if (!_containsNote(['-2hs', '-1h'], displayedSegments))
-          displayedSegments[nh1] = false;
+  if (!_containsNote([notePosition[27], notePosition[26]], displayedSegments)) {
+    displayedSegments[helpLineN4] = false;
+    if (!_containsNote([notePosition[25], notePosition[24]], displayedSegments)) {
+      displayedSegments[helpLineN3] = false;
+      if (!_containsNote([notePosition[23], notePosition[22]], displayedSegments)) {
+        displayedSegments[helpLineN2] = false;
+        if (!_containsNote([notePosition[21], notePosition[20]], displayedSegments))
+          displayedSegments[helpLineN1] = false;
       }
     }
   }
@@ -348,12 +354,12 @@ bool _containsNote(List<String> notes, Map<String, bool> displayedSegments) {
   return false;
 }
 
-List<String> _stringToSegment(String input) {
+List<String> possibleNoteKeys(NotesCodebook notes) {
   List<String> result = [];
-  int j = 0;
-  for (int i = 0; i < input.length / 2; i++) {
-    result.add(input[j] + input[j + 1]);
-    j = j + 2;
+  for (int i = 1; i <= 22; i++) {
+    result.add(i.toString());
+    result.add(i.toString() +'_b');
+    result.add(i.toString() +'_k');
   }
   return result;
 }
