@@ -12,7 +12,6 @@ import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes_segment_display.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class MusicNotes extends StatefulWidget {
   @override
@@ -220,6 +219,7 @@ Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
     var keys = possibleNoteKeys(codeBook);
     var translationMap = Map<String, String>();
     String translation;
+
     keys.forEach((note) {
       switch (codeBook) {
         case NotesCodebook.ALT:

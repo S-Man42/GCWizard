@@ -12,44 +12,44 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 final _INITIAL_SEGMENTS = <String, bool>{
   bLabel: false,
   hashLabel: false,
-  notes[0]: false,
-  notes[1]: false,
-  notes[2]: false,
-  notes[3]: false,
-  notes[4]: false,
-  notes[5]: false,
-  notes[6]: false,
-  notes[7]: false,
-  notes[8]: false,
-  notes[9]: false,
-  notes[10]: false,
-  notes[11]: false,
-  notes[12]: false,
-  notes[13]: false,
-  notes[14]: false,
-  notes[15]: false,
-  notes[16]: false,
-  notes[17]: false,
-  notes[18]: false,
-  notes[19]: false,
-  notes[20]: false,
-  notes[21]: false,
-  notes[22]: false,
-  notes[23]: false,
-  notes[24]: false,
-  notes[25]: false,
-  notes[26]: false,
-  notes[27]: false,
+  notePosition[0]: false,
+  notePosition[1]: false,
+  notePosition[2]: false,
+  notePosition[3]: false,
+  notePosition[4]: false,
+  notePosition[5]: false,
+  notePosition[6]: false,
+  notePosition[7]: false,
+  notePosition[8]: false,
+  notePosition[9]: false,
+  notePosition[10]: false,
+  notePosition[11]: false,
+  notePosition[12]: false,
+  notePosition[13]: false,
+  notePosition[14]: false,
+  notePosition[15]: false,
+  notePosition[16]: false,
+  notePosition[17]: false,
+  notePosition[18]: false,
+  notePosition[19]: false,
+  notePosition[20]: false,
+  notePosition[21]: false,
+  notePosition[22]: false,
+  notePosition[23]: false,
+  notePosition[24]: false,
+  notePosition[25]: false,
+  notePosition[26]: false,
+  notePosition[27]: false,
 
-  h1: true,
-  h2: true,
-  h3: true,
-  h4: true,
-  h5: true,
-  nh1: true,
-  nh2: true,
-  nh3: true,
-  nh4: true,
+  helpLine1: true,
+  helpLine2: true,
+  helpLine3: true,
+  helpLine4: true,
+  helpLine5: true,
+  helpLineN1: true,
+  helpLineN2: true,
+  helpLineN3: true,
+  helpLineN4: true,
 };
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
@@ -78,7 +78,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               var LINE_OFFSET_Y = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 20.0;
               var LINE_DISTANCE = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 30.0;
 
-              var lines = [h5, h4, h3, h2, h1, '', '', '', '', '', nh1, nh2, nh3, nh4];
+              var lines = [helpLine5, helpLine4, helpLine3, helpLine2, helpLine1, '', '', '', '', '', helpLineN1, helpLineN2, helpLineN3, helpLineN4];
               var pathL = Path();
               var counter = 0;
               paint.color = Colors.grey;
@@ -103,7 +103,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
               var notePositions = [-105, -35, 35, 105];
               counter = 0;
-              notes.forEach((key) {
+              notePosition.forEach((key) {
                 var offsetX = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
                     (readOnly
                         ?  _NOTES_RELATIVE_DISPLAY_WIDTH/2
