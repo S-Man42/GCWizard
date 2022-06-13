@@ -74,7 +74,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
-              var LINE_OFFSET_X = 30;
+              var LINE_OFFSET_X = size.width  / _NOTES_RELATIVE_DISPLAY_WIDTH  * 50.0;
               var LINE_OFFSET_Y = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 20.0;
               var LINE_DISTANCE = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 30.0;
 
@@ -187,7 +187,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     setSegmentState(tappedNote, newState);
   }
 
-  static Path _createLine(bool shortLine, Size size, Offset offset, int lineOffsetX, bool readOnly) {
+  static Path _createLine(bool shortLine, Size size, Offset offset, double lineOffsetX, bool readOnly) {
     var path = Path();
     if (shortLine) {
       var rect = Rect.fromCenter(
