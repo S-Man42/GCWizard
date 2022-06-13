@@ -181,7 +181,7 @@ class MusicNotesState extends State<MusicNotes> {
   Widget _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      List<List<String>> segments = encodeNotes(_currentEncodeInput, _currentCode);
+      List<List<String>> segments = encodeNotes(_currentEncodeInput, _currentCode, _buildTranslationMap(_currentCode));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments),
@@ -204,7 +204,6 @@ class MusicNotesState extends State<MusicNotes> {
   }
 
   String _normalize(List<String> input, NotesCodebook codeBook) {
-    //print('input: ' + input.toString());
     return input.map((note) {
       switch (codeBook) {
         case NotesCodebook.ALT:
@@ -216,6 +215,30 @@ class MusicNotesState extends State<MusicNotes> {
       }
     }).join(' ');
   }
+
+Map<String, String> _buildTranslationMap(NotesCodebook codeBook) {
+    var keys = possibleNoteKeys(codeBook);
+    var translationMap = Map<String, String>();
+    String translation;
+    keys.forEach((note) {
+      switch (codeBook) {
+        case NotesCodebook.ALT:
+          translation = i18n(context, 'symboltables_notes_names_altoclef_' + note);
+          break;
+        case NotesCodebook.BASS:
+          translation = i18n(context, 'symboltables_notes_names_bassclef_' + note);
+          break;
+        case NotesCodebook.TREBLE:
+          translation = i18n(context, 'symboltables_notes_names_trebleclef_' + note);
+          break;
+        default:
+          translation = null;
+      }
+      if (translation != null && translation != '')
+        translationMap.addAll ({note: translation});
+    });
+    return translationMap;
+}
 
   Widget _buildDropDownMenuItem(dynamic icon, String toolName, String description) {
     return Row(children: [

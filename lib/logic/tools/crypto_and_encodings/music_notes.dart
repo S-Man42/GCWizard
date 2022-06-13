@@ -229,10 +229,20 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
 };
 
 
-List<List<String>> encodeNotes(String input, NotesCodebook notes) {
+List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
   if (input == null) return [];
 
-  Map<String, List<String>> CODEBOOK = new Map<String, List<String>>();
+  // sorted by length (longest first)
+  var entries = translationMap.entries.toList();
+  entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) => b.value.length.compareTo(a.value.length));
+  translationMap = Map<String, String>.fromEntries(entries);
+
+  input = input.toUpperCase();
+  translationMap.forEach((key, value) {
+    input = input.replaceAll(value.toUpperCase(), key);
+  });
+
+  Map<String, List<String>> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
@@ -245,11 +255,11 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes) {
       break;
   }
 
-  List<String> inputs = input.split('');
+  List<String> inputs = input.split(RegExp(r'\s'));
   List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++) {
-    if (CODEBOOK[inputs[i].toUpperCase()] != null) result.add(CODEBOOK[inputs[i].toUpperCase()]);
+    if (CODEBOOK[inputs[i]] != null) result.add(CODEBOOK[inputs[i]]);
   }
   return result;
 }
@@ -263,7 +273,7 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
 
   var displays = <List<String>>[];
 
-  Map<List<String>, String> CODEBOOK = new Map<List<String>, String>();
+  Map<List<String>, String> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_ALT);
@@ -292,13 +302,9 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     } else
       display.add(input);
 
-    // display.addAll([h1, h2, h3, h4, h5, nh1, nh2, nh3, nh4, nh5]);
-    //
-    // display = _filterHelpLines(input, display);
-
-    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null) {
+    if (CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()] == null)
       char = char + UNKNOWN_ELEMENT;
-    } else {
+    else {
       charH = CODEBOOK.map((key, value) => MapEntry(key.join(), value.toString()))[input.split('').join()];
       char = char + charH;
     }
@@ -307,8 +313,6 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
 
     return char;
   }).toList();
-
-  print('display input: ' + displays.toString() + ' inputs: ' + inputs.toString() + ' chars: ' + text.toString());
 
   return {'displays': displays, 'chars': text};
 }
@@ -350,12 +354,12 @@ bool _containsNote(List<String> notes, Map<String, bool> displayedSegments) {
   return false;
 }
 
-List<String> _stringToSegment(String input) {
+List<String> possibleNoteKeys(NotesCodebook notes) {
   List<String> result = [];
-  int j = 0;
-  for (int i = 0; i < input.length / 2; i++) {
-    result.add(input[j] + input[j + 1]);
-    j = j + 2;
+  for (int i = 1; i <= 22; i++) {
+    result.add(i.toString());
+    result.add(i.toString() +'_b');
+    result.add(i.toString() +'_k');
   }
   return result;
 }
