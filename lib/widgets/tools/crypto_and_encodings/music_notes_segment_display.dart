@@ -53,7 +53,7 @@ const _INITIAL_SEGMENTS = <String, bool>{
     nh4: true,
 };
 
-const _NOTES_RELATIVE_DISPLAY_WIDTH = 340;
+const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 430;
 
 class NotesSegmentDisplay extends NSegmentDisplay {
@@ -79,13 +79,13 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               var LINE_OFFSET_X = 30;
               var LINE_DISTANCE = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 30.0;
               var NOTE_X1 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
-                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 - 75 + LINE_OFFSET_X/1));
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 - 105 + LINE_OFFSET_X/1));
               var NOTE_X2 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
-                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 - 25 + LINE_OFFSET_X/1));
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 - 35 + LINE_OFFSET_X/1));
               var NOTE_X3 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
-                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + 25 + LINE_OFFSET_X/1));
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + 35 + LINE_OFFSET_X/1));
               var NOTE_X4 = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
-                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + 75 + LINE_OFFSET_X/1));
+                  (readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH/2 : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + 105 + LINE_OFFSET_X/1));
 
               paint.color = Colors.grey;
               //print('paint segments: ' + currentSegments.toString() + " size: " + size.toString());
@@ -267,7 +267,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               0.0),
           width: readOnly
               ? size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 70
-              : size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 200,
+              : size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 240,
           height: max(1.0, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 2));
       path.addRect(rect);
     } else {
@@ -275,7 +275,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
           center: Offset(
               size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *  (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + (readOnly ? 0 : lineOffsetX)),
               0.0),
-          width: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 280,
+          width: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 320,
           height: max(1.0, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 2));
       path.addRect(rect);
     }
