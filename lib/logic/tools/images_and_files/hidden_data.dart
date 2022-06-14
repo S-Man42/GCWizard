@@ -45,18 +45,18 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
       case FileType.RAR:
         fileSize = rarFileSize(bytes);
         break;
-      case FileType.MP3:
-        fileSize = mp3FileSize(bytes);
-        break;
       case FileType.TAR:
         fileSize = tarFileSize(bytes);
+        break;
+      case FileType.MP3:
+        fileSize = mp3FileSize(bytes);
         break;
       default:
         fileSize = bytes.length;
         break;
     }
 
-    var resultBytes;
+    Uint8List resultBytes;
     if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
       resultBytes = bytes.sublist(0, fileSize);
       // remove result from source data
@@ -68,16 +68,29 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
     }
 
     List<GCWFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE) {
+      print('fileType: ' +detectedFileType.toString() + ' length: ' + resultBytes.length.toString() + ' position: ' + filePosition.toString());
       children = await extractArchive(GCWFile(name: data.name, bytes: resultBytes));
+      if (children?.length == 1 && getFileType(children[0].bytes) == FileType.TAR) {
+        //print('children1 count: ' + children.length.toString() + ' ' + getFileType(children[0].bytes).toString());
+        print('children1 count: ' + children.toString());
+        children = await extractArchive(children[0]);
+        print('children2 count: ' + children.toString());
+
+      } else {
+        print('children:' + children.toString());
+      }
+
+    }
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
       var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
-      if (!filePositions.contains(filePosition)) {
-        print('main: 1 ' + (children == null ? '' : children?.length?.toString()) + ' pos: ' + filePosition.toString() + ' ' + result.name + ' ' + result.fileType.name);
-        resultList.add(result);filePositions.add(filePosition);
+      if (!filePositions.contains(filePosition) || true) {
+        //print('main: 1 ' + (children == null ? '' : children?.length?.toString()) + ' pos: ' + filePosition.toString() + ' ' + result.name + ' ' + result.fileType.name);
+        resultList.add(result);
+        filePositions.add(filePosition);
         //if (result.fileType == FileType.GZIP) calledFromSearchMagicBytes = true;
       } else {
         print('ignore:' + result.name);
@@ -97,11 +110,16 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
       if ((result.children == null) || (result.children.length == 0))
         _searchMagicBytes(result, fileTypeList, filePosition);
       else
-        result.children.forEach((element) {
-          _searchMagicBytes(element, fileTypeList, filePosition);
+        result.children.forEach((element) async {
+          if (fileClass(getFileType(element.bytes)) == FileClass.ARCHIVE) {
+            var children = await _hiddenData(element);
+            resultList.addAll(children);
+          } else
+            _searchMagicBytes(element, fileTypeList, filePosition);
         });
     });
   }
+  if (calledFromSearchMagicBytes) print('result count: ' + resultList.length.toString() + ' ' + resultList.toString());
   return resultList;
 }
 
@@ -131,7 +149,7 @@ _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int filePosition) {
                   fileIndex: data.children.length + 1);
               if ((children != null) && (children.length > 0)) {
                 children.forEach((element) {
-                  print('children: ' + children.length.toString() + ' pos: ' + (filePosition + bytesOffset).toString() + ' ' + element.name + ' ' + element.fileType.name);
+                  //print('children: ' + children.length.toString() + ' pos: ' + (filePosition + bytesOffset).toString() + ' ' + element.name + ' ' + element.fileType.name);
                 });
                 if (data.children != null) data.children.addAll(children);
               }
