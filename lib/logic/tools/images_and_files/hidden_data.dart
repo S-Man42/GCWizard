@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -76,8 +75,10 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
       var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
+
       resultList.add(result);
     }
+
     if (calledFromSearchMagicBytes) break;
   }
 
