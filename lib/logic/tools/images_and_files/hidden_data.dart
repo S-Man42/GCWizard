@@ -86,7 +86,9 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
-      var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
+      var b = Uint8List.fromList(resultBytes);
+
+      var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: b, children: children);
       if (!filePositions.contains(filePosition) || true) {
         //print('main: 1 ' + (children == null ? '' : children?.length?.toString()) + ' pos: ' + filePosition.toString() + ' ' + result.name + ' ' + result.fileType.name);
         resultList.add(result);
@@ -104,7 +106,7 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
   if (!calledFromSearchMagicBytes) {
     var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
 
-    resultList.asMap().forEach((index, result) {
+    resultList.asMap().forEach((index, result) { 
       if (index == 0 && result.fileClass != FileClass.ARCHIVE) return;
 
       if ((result.children == null) || (result.children.length == 0))
@@ -112,7 +114,9 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
       else
         result.children.forEach((element) async {
           if (fileClass(getFileType(element.bytes)) == FileClass.ARCHIVE) {
-            var children = await _hiddenData(element);
+            var b = Uint8List.fromList( element.bytes);
+            var result = GCWFile(name: element.name, bytes: b, children: element.children);
+            var children = await _hiddenData(result, filePosition: filePosition);
             resultList.addAll(children);
           } else
             _searchMagicBytes(element, fileTypeList, filePosition);
