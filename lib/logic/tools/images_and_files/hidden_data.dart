@@ -9,16 +9,14 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
-var filePositions = <int>[];
 
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
-  filePositions.clear();
 
   return  _hiddenData(data);
 }
 
-Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
+Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
   var resultList = <GCWFile>[];
   var bytes = data.bytes;
 
@@ -61,7 +59,6 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
       resultBytes = bytes.sublist(0, fileSize);
       // remove result from source data
       bytes = bytes.sublist(fileSize);
-      filePosition += fileSize;
     } else {
       resultBytes = bytes;
       bytes = null;
@@ -69,65 +66,45 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {int filePosition = 0, bool call
 
     List<GCWFile> children;
     if (fileClass(detectedFileType) == FileClass.ARCHIVE) {
-      print('fileType: ' +detectedFileType.toString() + ' length: ' + resultBytes.length.toString() + ' position: ' + filePosition.toString());
       children = await extractArchive(GCWFile(name: data.name, bytes: resultBytes));
-      if (children?.length == 1 && getFileType(children[0].bytes) == FileType.TAR) {
-        //print('children1 count: ' + children.length.toString() + ' ' + getFileType(children[0].bytes).toString());
-        print('children1 count: ' + children.toString());
+      if (children?.length == 1 && getFileType(children[0].bytes) == FileType.TAR)
+        // FileType gz/bz2 -> tar
         children = await extractArchive(children[0]);
-        print('children2 count: ' + children.toString());
-
-      } else {
-        print('children:' + children.toString());
-      }
-
     }
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
-      var b = Uint8List.fromList(resultBytes);
-
-      var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: b, children: children);
-      if (!filePositions.contains(filePosition) || true) {
-        //print('main: 1 ' + (children == null ? '' : children?.length?.toString()) + ' pos: ' + filePosition.toString() + ' ' + result.name + ' ' + result.fileType.name);
-        resultList.add(result);
-        filePositions.add(filePosition);
-        //if (result.fileType == FileType.GZIP) calledFromSearchMagicBytes = true;
-      } else {
-        print('ignore:' + result.name);
-
-      }
+      var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
+      resultList.add(result);
     }
-
     if (calledFromSearchMagicBytes) break;
   }
 
   if (!calledFromSearchMagicBytes) {
     var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
 
-    resultList.asMap().forEach((index, result) { 
+    resultList.asMap().forEach((index, result) {
       if (index == 0 && result.fileClass != FileClass.ARCHIVE) return;
 
       if ((result.children == null) || (result.children.length == 0))
-        _searchMagicBytes(result, fileTypeList, filePosition);
+        _searchMagicBytes(result, fileTypeList);
       else
         result.children.forEach((element) async {
           if (fileClass(getFileType(element.bytes)) == FileClass.ARCHIVE) {
-            var b = Uint8List.fromList( element.bytes);
-            var result = GCWFile(name: element.name, bytes: b, children: element.children);
-            var children = await _hiddenData(result, filePosition: filePosition);
+            // clone byte (I have no idea why this is actually necessary)
+            var result = GCWFile(name: element.name, bytes: element.bytes.sublist(0), children: element.children);
+            var children = await _hiddenData(result);
             resultList.addAll(children);
           } else
-            _searchMagicBytes(element, fileTypeList, filePosition);
+            _searchMagicBytes(element, fileTypeList);
         });
     });
   }
-  if (calledFromSearchMagicBytes) print('result count: ' + resultList.length.toString() + ' ' + resultList.toString());
   return resultList;
 }
 
-_searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int filePosition) {
+_searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
   fileTypeList.forEach((fileType) {
     var magicBytesList = magicBytes(fileType);
     magicBytesList.forEach((magicBytes) async {
@@ -149,14 +126,10 @@ _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int filePosition) {
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
               var children = await _hiddenData(GCWFile(bytes: bytes.sublist(bytesOffset)),
-                  filePosition: filePosition + bytesOffset, calledFromSearchMagicBytes: true,
+                  calledFromSearchMagicBytes: true,
                   fileIndex: data.children.length + 1);
-              if ((children != null) && (children.length > 0)) {
-                children.forEach((element) {
-                  //print('children: ' + children.length.toString() + ' pos: ' + (filePosition + bytesOffset).toString() + ' ' + element.name + ' ' + element.fileType.name);
-                });
+              if ((children != null) && (children.length > 0))
                 if (data.children != null) data.children.addAll(children);
-              }
             }
           }
         }
