@@ -22,8 +22,7 @@ List<int> _textToValues(String text, String scrabbleVersion, _SCRABBLE_MODE mode
             output.add(
                 mode == _SCRABBLE_MODE.FREQUENCY
                     ? set.letterFrequency(tile)
-                    : set.letterValue(tile)
-            );
+                    : set.letterValue(tile)            );
           } else {
             output.add(0);
           }

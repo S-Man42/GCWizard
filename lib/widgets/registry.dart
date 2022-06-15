@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/configuration/abstract_tool_registration.dart';
+import 'package:gc_wizard/configuration/reflector.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/config/AbaddonConfig.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -256,6 +259,8 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/game_of_life/game_of_life.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble/scrabble_overview.dart';
+import 'package:reflectable/reflectable.dart';
+import 'package:universal_html/html.dart';
 import 'tools/games/scrabble/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
@@ -384,11 +389,11 @@ List<GCWTool> registeredTools;
 initializeRegistry(BuildContext context) {
   registeredTools = [
     //MainSelection
-    GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'abaddon',
-    ]),
+    // GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', categories: [
+    //   ToolCategory.CRYPTOGRAPHY
+    // ], searchKeys: [
+    //   'abaddon',
+    // ]),
     GCWTool(tool: ADFGVX(), i18nPrefix: 'adfgvx', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
@@ -3703,6 +3708,18 @@ initializeRegistry(BuildContext context) {
 
     return toolWidget;
   }).toList();
+
+  print('start');
+
+  var instanceMirror = reflector.reflect(AbaddonRegistration());
+  reflector.annotatedClasses.forEach((ClassMirror element) {
+    print('class S');
+    print(element.invokeGetter('i18nPrefix'));
+    print('class E');
+  });
+  print(instanceMirror.invokeGetter('i18nPrefix').toString() + ' ABC');
+
+  print('ready');
 
   createIndexedSearchStrings();
 }

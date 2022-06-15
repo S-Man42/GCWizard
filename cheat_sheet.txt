@@ -11,6 +11,12 @@ Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
 
 ==============================
+
+Create Reflections:
+
+flutter packages pub run build_runner build DIR
+
+==============================
 Common Build Error Fixes:
 
 flutter upgrade --force
