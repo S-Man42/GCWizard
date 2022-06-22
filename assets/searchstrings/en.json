@@ -13,6 +13,7 @@
   "apparenttemperature_humidex": "humidity  canadian canada  dewpoint",
   "apparenttemperature_summersimmerindex": "humidity",
   "apparenttemperature_windchill": "windspeed",
+  "apparenttemperature_wet_bulb_temperature": "wetbulbtemperature wetbulbglobetemperature heatstress",
   "asciivalues": "",
   "astronomy": "astronomy stars planets astronomical",
   "astronomy_moon": "moon",

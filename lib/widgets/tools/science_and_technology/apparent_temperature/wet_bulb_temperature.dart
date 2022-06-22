@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class SummerSimmerIndex extends StatefulWidget {
+class WetBulbTemperature extends StatefulWidget {
   @override
-  SummerSimmerIndexState createState() => SummerSimmerIndexState();
+  WetBulbTemperatureState createState() => WetBulbTemperatureState();
 }
 
-class SummerSimmerIndexState extends State<SummerSimmerIndex> {
+class WetBulbTemperatureState extends State<WetBulbTemperature> {
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
 
@@ -25,10 +25,7 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
       children: <Widget>[
         Row(
           children: [
-            Expanded(
-              child: GCWText(text: i18n(context, 'common_measure_temperature')),
-              flex: 1,
-            ),
+            Expanded(child: GCWText(text: i18n(context, 'common_measure_temperature')), flex: 1),
             Expanded(
                 child: Column(
                   children: [
@@ -72,52 +69,56 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
 
   Widget _buildOutput(BuildContext context) {
     String unit = '';
+    String hintT = '';
+    String hintH = '';
+    String hintM = '';
 
     double output;
     if (_isMetric) {
-      output = calculateSummerSimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
+      output = calculateWetBulbTemperature(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
       unit = TEMPERATURE_CELSIUS.symbol;
     } else {
-      output = calculateSummerSimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
+      output = calculateWetBulbTemperature(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
-    String hintT;
-    if ((_isMetric && _currentTemperature < 18) || (!_isMetric && _currentTemperature < 64)) {
-      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 18 : 64} $unit']);
+    if ((_isMetric && _currentTemperature < -20.0) || (!_isMetric && (_currentTemperature - 32) / 1.8 < -20.0)) {
+      hintT = i18n(context, 'heatindex_hint_temperature_low', parameters: ['${_isMetric ? 27 : 80} $unit']);
+    }
+    if ((_isMetric && _currentTemperature > 50.0) || (!_isMetric && (_currentTemperature - 32) / 1.8 > 50.0)) {
+      hintT = i18n(context, 'heatindex_hint_temperature_high', parameters: ['${_isMetric ? 27 : 80} $unit']);
     }
 
-    String hintH;
-    if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
+    if (_currentHumidity < 5) hintH = i18n(context, 'heatindex_hint_humidity_low');
+    if (_currentHumidity > 99) hintH = i18n(context, 'heatindex_hint_humidity_high');
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
-    String hintM;
-    if (output > 51.7)
-      hintM = 'summersimmerindex_index_51.7';
-    else if (output > 44.4)
-      hintM = 'summersimmerindex_index_44.4';
-    else if (output > 37.8)
-      hintM = 'summersimmerindex_index_37.8';
-    else if (output > 32.8)
-      hintM = 'summersimmerindex_index_32.8';
-    else if (output > 28.3)
-      hintM = 'summersimmerindex_index_28.3';
-    else if (output > 25.0)
-      hintM = 'summersimmerindex_index_25.0';
-    else if (output > 21.3) hintM = 'summersimmerindex_index_21.3';
+    if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.WHITE])
+      if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.GREEN])
+        if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.YELLOW])
+          if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.RED])
+            hintM = 'wet_bulb_temperature_index_black';
+          else
+            hintM = 'wet_bulb_temperature_index_red';
+        else
+          hintM = 'wet_bulb_temperature_index_yellow';
+      else
+        hintM = 'wet_bulb_temperature_index_green';
+    else
+      hintM = 'wet_bulb_temperature_index_white';
 
     var outputs = [
       GCWOutput(
-        title: i18n(context, 'heatindex_output'),
-        child: output.toStringAsFixed(3) + ' ' + unit,
+        title: i18n(context, 'wet_bulb_temperature_output'),
+        child: output.toStringAsFixed(2) + ' ' + unit,
       )
     ];
 
-    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_hint'), child: hint));
 
     if (hintM != null && hintM.length > 0)
-      outputs.add(GCWOutput(title: i18n(context, 'heatindex_meaning'), child: i18n(context, hintM)));
+      outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_meaning'), child: i18n(context, hintM)));
 
     return GCWMultipleOutput(
       children: outputs,

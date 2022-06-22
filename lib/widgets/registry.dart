@@ -268,6 +268,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.
 import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
@@ -1154,6 +1155,12 @@ initializeRegistry(BuildContext context) {
       'apparenttemperature',
       'apparenttemperature_windchill',
     ]),
+    GCWTool(tool: WetBulbTemperature(), i18nPrefix: 'wet_bulb_temperature', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_wet_bulb_temperature',
+    ]),
+
+
     GCWTool(tool: Zodiac(), i18nPrefix: 'zodiac', searchKeys: [
       'symbol_alchemy',
       'symbol_planets',
