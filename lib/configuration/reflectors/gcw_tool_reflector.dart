@@ -1,11 +1,12 @@
 // Annotate with this class to enable reflection.
 import 'package:reflectable/reflectable.dart';
 
-class Reflector extends Reflectable {
-  const Reflector()
+class GCWToolReflector extends Reflectable {
+  const GCWToolReflector()
       : super(
       invokingCapability,
+      subtypeQuantifyCapability
   ); // Request the capability to invoke methods.
 }
 
-const reflector = const Reflector();
+const gcwToolReflector = const GCWToolReflector();

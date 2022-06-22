@@ -70,7 +70,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
+import '../tools/crypto_and_encodings/abaddon/widget/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
@@ -87,7 +87,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import '../tools/crypto_and_encodings/enigma/widget/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
@@ -437,7 +437,7 @@ refreshToolLists() {
 void _initStaticToolList() {
   _mainToolList = registeredTools.where((element) {
     return [
-      className(Abaddon()),
+      // className(Abaddon()),
       className(ADFGVX()),
       className(Affine()),
       className(AlcoholMass()),

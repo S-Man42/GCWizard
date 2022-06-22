@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/configuration/abstract_tool_registration.dart';
-import 'package:gc_wizard/configuration/reflector.dart';
+import 'package:gc_wizard/configuration/reflectors/gcw_tool_reflector.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/abaddon/config/AbaddonConfig.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -19,9 +18,6 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -42,6 +38,7 @@ import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/morse_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
@@ -76,11 +73,13 @@ import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
@@ -109,16 +108,9 @@ import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
@@ -154,13 +146,11 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille/braille_dot_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ancient_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/charsets/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
@@ -183,6 +173,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/houdini.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
@@ -208,6 +199,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/chronogram.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot13.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
@@ -226,42 +218,45 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/pasley_telegraph.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/popham_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ancient_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt3.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_ccir476.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/chappe.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/edelcrantz.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/gauss_weber_telegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/murray.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/ohlsen_telegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/prussiatelegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/schilling_canstatt_telegraph.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphore.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wasd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/earwigo_text_deobfuscation.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_text_deobfuscation.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/game_of_life/game_of_life.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble/scrabble_overview.dart';
-import 'package:reflectable/reflectable.dart';
-import 'package:universal_html/html.dart';
-import 'tools/games/scrabble/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/general_tools/grid_generator/grid.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
@@ -275,10 +270,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.
 import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
-import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/wherigo_analyze.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
@@ -358,6 +350,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
@@ -380,9 +373,12 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/weather_symbols.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_tables_examples_select.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
 import 'package:gc_wizard/widgets/utils/search_strings.dart';
+
+import 'tools/games/scrabble/scrabble.dart';
 
 List<GCWTool> registeredTools;
 
@@ -624,11 +620,6 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'e',
       'irrationalnumbers',
-    ]),
-    GCWTool(tool: Enigma(), i18nPrefix: 'enigma', categories: [
-      ToolCategory.CRYPTOGRAPHY
-    ], searchKeys: [
-      'enigma',
     ]),
     GCWTool(
         tool: EsotericProgrammingLanguageSelection(),
@@ -3694,7 +3685,29 @@ initializeRegistry(BuildContext context) {
         tool: EarwigoTextDeobfuscation(),
         i18nPrefix: 'earwigo_textdeobfuscation',
         searchKeys: ['wherigo', 'earwigo', 'urwigo_textdeobfuscation']),
-  ].map((toolWidget) {
+  ];
+
+  print(gcwToolReflector.annotatedClasses);
+
+  for (var classMirror in gcwToolReflector.annotatedClasses) {
+    if (classMirror.isAbstract) {
+      print(classMirror.simpleName);
+      continue;
+    }
+
+    var instance = classMirror.newInstance('', [], {}) as AbstractToolRegistration;
+
+    print(instance.i18nPrefix);
+
+    registeredTools.add(GCWTool(
+        tool: instance.tool,
+        i18nPrefix: instance.i18nPrefix,
+        searchKeys: instance.searchKeys,
+        categories: instance.categories)
+    );
+  }
+
+  registeredTools.map((toolWidget) {
     toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
     toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);
 
@@ -3708,18 +3721,6 @@ initializeRegistry(BuildContext context) {
 
     return toolWidget;
   }).toList();
-
-  print('start');
-
-  var instanceMirror = reflector.reflect(AbaddonRegistration());
-  reflector.annotatedClasses.forEach((ClassMirror element) {
-    print('class S');
-    print(element.invokeGetter('i18nPrefix'));
-    print('class E');
-  });
-  print(instanceMirror.invokeGetter('i18nPrefix').toString() + ' ABC');
-
-  print('ready');
 
   createIndexedSearchStrings();
 }

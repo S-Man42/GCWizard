@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/enigma.dart';
+import '../../../../lib/tools/crypto_and_encodings/enigma/logic/enigma.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
 void main() {

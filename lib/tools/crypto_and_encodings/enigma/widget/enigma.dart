@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/enigma.dart';
+import '../logic/enigma.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -10,7 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/gcw_enigma_rotor_dropdownbutton.dart';
+import 'gcw_enigma_rotor_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 

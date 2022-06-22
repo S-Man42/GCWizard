@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/abaddon.dart';
+import '../../../../lib/tools/crypto_and_encodings/abaddon/logic/abaddon.dart';
 
 final _A = YEN + YEN + MY;
 final _N = YEN + YEN + THORN;

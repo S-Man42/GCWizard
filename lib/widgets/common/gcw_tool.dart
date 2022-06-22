@@ -160,6 +160,10 @@ class _GCWToolState extends State<GCWTool> {
     // this is the case when Tool is not called by Registry but as subpage of another tool
     if (_toolName == null) _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
 
+    if (widget.i18nPrefix == 'abaddon') {
+      print(_toolName);
+    }
+
     if (_defaultLanguageToolName == null)
       _defaultLanguageToolName =
           widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
