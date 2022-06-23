@@ -1,5 +1,7 @@
-// Annotate with this class to enable reflection.
 import 'package:reflectable/reflectable.dart';
+
+/************* Never Remove this import! *************/
+import 'package:gc_wizard/configuration/reflectors/gcw_tool_reflected_classes.dart';
 
 class GCWToolReflector extends Reflectable {
   const GCWToolReflector()
@@ -8,5 +10,3 @@ class GCWToolReflector extends Reflectable {
       subtypeQuantifyCapability
   ); // Request the capability to invoke methods.
 }
-
-const gcwToolReflector = const GCWToolReflector();

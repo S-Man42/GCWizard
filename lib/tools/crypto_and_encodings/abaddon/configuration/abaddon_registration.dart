@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/configuration/abstract_tool_registration.dart';
-import 'package:gc_wizard/configuration/reflectors/gcw_tool_reflector.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import '../widget/abaddon.dart';
 

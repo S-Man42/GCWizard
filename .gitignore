@@ -94,3 +94,4 @@ howtocode/
 /ios/build
 crowdin.yml
 /lib/main.reflectable.dart
+/lib/configuration/reflectors/gcw_tool_reflected_classes.dart
