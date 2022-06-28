@@ -3594,6 +3594,8 @@
   "shadowlength_no_shadow": "There is no shadow visible",
   "shadowlength_length": "Length of the Shadow",
   "shadowlength_outputunit": "Unit of Shadow Length",
+  "shadowlength_shadow_direction": "Bearing of Shadow",
+  "shadowlength_shadow_waypoint": "Waypoint of Shadow",
   "silverratio_selection_title": "Silver Ratio (δ = 2,414213562373...)",
   "silverratio_selection_description": "Mathematical constant: Silver ratio",
   "skytale_title": "Skytale",
