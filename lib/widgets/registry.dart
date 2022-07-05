@@ -1998,6 +1998,7 @@ initializeRegistry(BuildContext context) {
 
     //MayaCalendar Selection **************************************************************************************
     GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', searchKeys: [
+      'calendar',
       'maya_calendar',
     ]),
 
@@ -3187,19 +3188,19 @@ initializeRegistry(BuildContext context) {
       'symbol_matoran',
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_calendar_longcount', symbolSearchStrings: [
-      'symbol_maya_calendar_longcount',
+      'calendar', 'symbol_maya_calendar_longcount',
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_codices', symbolSearchStrings: [
-      'symbol_maya_calendar_haab',
+      'calendar', 'symbol_maya_calendar_haab',
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_inscripts', symbolSearchStrings: [
-      'symbol_maya_calendar_haab',
+      'calendar', 'symbol_maya_calendar_haab',
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_codices', symbolSearchStrings: [
-      'symbol_maya_calendar_tzolkin',
+      'calendar', 'symbol_maya_calendar_tzolkin',
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_inscripts', symbolSearchStrings: [
-      'symbol_maya_calendar_tzolkin',
+      'calendar', 'symbol_maya_calendar_tzolkin',
     ]),
     GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: [
       'mayanumbers',
