@@ -81,6 +81,7 @@ flutter:
     - assets/symbol_tables/albhed/
     - assets/symbol_tables/alchemy/
     - assets/symbol_tables/alchemy_alphabet/
+    - assets/symbol_tables/alien_mushrooms/
     - assets/symbol_tables/alphabetum_arabum/
     - assets/symbol_tables/alphabetum_egiptiorum/
     - assets/symbol_tables/alphabetum_gothicum/
@@ -233,6 +234,7 @@ flutter:
     - assets/symbol_tables/murray_v4_roucoux/
     - assets/symbol_tables/murraybaudot/
     - assets/symbol_tables/musica/
+    - assets/symbol_tables/my_little_pony/
     - assets/symbol_tables/nazcaan/
     - assets/symbol_tables/new_zealand_sign_language/
     - assets/symbol_tables/niessen/

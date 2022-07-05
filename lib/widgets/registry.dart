@@ -2743,6 +2743,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', symbolSearchStrings: [
       'symbol_alchemy_alphabet',
     ]),
+    GCWSymbolTableTool(symbolKey: 'alien_mushrooms', symbolSearchStrings: [
+      'symbol_alien_mushrooms',
+    ]),
     GCWSymbolTableTool(symbolKey: 'angerthas_cirth', symbolSearchStrings: [
       'symbol_lordoftherings',
       'symbol_runes',
@@ -3223,6 +3226,9 @@ initializeRegistry(BuildContext context) {
         symbolKey: 'murraybaudot', symbolSearchStrings: ['ccitt', 'symbol_murraybaudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'symbol_musica',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'my_little_pony', symbolSearchStrings: [
+      'symbol_my_little_pony',
     ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
       'symbol_nazcaan',
