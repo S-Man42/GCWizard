@@ -109,6 +109,7 @@ import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/algol.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/illiac.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot123.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_primes_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
@@ -2662,6 +2663,7 @@ initializeRegistry(BuildContext context) {
       'rsa_ncalculator',
     ]),
     GCWTool(tool: RSAPhiCalculator(), i18nPrefix: 'rsa_phi.calculator', searchKeys: ['rsa']),
+    GCWTool(tool: RSAPrimesCalculator(), i18nPrefix: 'rsa_primes.calculator', searchKeys: ['rsa', 'primes']),
 
     //Scrabble Selection *****************************************************************************************
 
