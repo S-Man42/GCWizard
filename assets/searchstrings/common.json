@@ -72,7 +72,7 @@
   "ccitt_2": "ccitt2 ccitt-2 ita2 ita-2 mtk2 ustty",
   "ccitt_3": "ccitt3 ccitt-3 ita3 ita-3 moorearq-code rca",
   "ccitt_4": "ccitt4 ccitt-4 ita4 ita-4",
-  "ccitt_5": "ccitt5 ccitt-5 ia5 ia-5",
+  "ccitt_5": "ccitt5 ccitt-5 ia5 ia-5 iso646 itut.50 itut50",
   "ccitt_ccir_476": "ccir476 ccir-476 amtor sitor navtex",
   "changelog": "changelog ",
   "chao": "chao john francis byrne",
