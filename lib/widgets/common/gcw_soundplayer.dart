@@ -48,13 +48,13 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
     advancedPlayer = AudioPlayer(playerId: Uuid().v4());
 
-    // if (kIsWeb) {
-    //   // Calls to Platform.isIOS fails on web
-    //   return;
-    // }
-    // if (Platform.isIOS) {
-    //   //audioCache.fixedPlayer?.notificationService.startHeadlessService();
-    // }
+    if (kIsWeb) {
+      // Calls to Platform.isIOS fails on web
+      return;
+    }
+    if (Platform.isIOS) {
+      //audioCache.fixedPlayer?.notificationService.startHeadlessService();
+    }
 
     _onDurationChangedStream = advancedPlayer.onDurationChanged.listen((Duration d) {
       setState(() {
@@ -84,13 +84,12 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
     // save byteData to File
     var byteData = widget.file.bytes;
-    // _audioFile = await _writeToFile(ByteData.sublistView(byteData));
-    //
-    // if (kIsWeb) {
-    //   // do nothing - web does not support local file or byte array
-    // } else {
+
+    if (kIsWeb) {
+      // do nothing - web does not support local filö or byte array
+    } else {
       _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
-    // }
+    }
 
     _loadedFileBytes = widget.file.bytes.length;
     _isLoaded = true;
@@ -183,9 +182,9 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   }
 
   _audioPlayerPlay({bool seek: false}) async {
-    // if (kIsWeb) {
-    //   // do nothing - web does not support local filö or byte array
-    // } else {
+    if (kIsWeb) {
+      // do nothing - web does not support local filö or byte array
+    } else {
       if (playerState == PlayerState.paused) {
         if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
           var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
@@ -198,7 +197,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       }
 
       setState(() => playerState = PlayerState.playing);
-    // }
+    }
   }
 
   Future _audioPlayerStop() async {
