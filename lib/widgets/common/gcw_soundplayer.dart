@@ -194,7 +194,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
         await advancedPlayer.resume();
       } else {
-        await advancedPlayer.play(DeviceFileSource(widget.file.path));
+        await advancedPlayer.play(DeviceFileSource(_audioFile.path));
       }
 
       setState(() => playerState = PlayerState.playing);
