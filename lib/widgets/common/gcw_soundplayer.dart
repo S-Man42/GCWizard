@@ -83,13 +83,14 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     await _audioPlayerStop();
 
     // save byteData to File
-    var byteData = widget.file.bytes;
-
-    if (kIsWeb) {
-      // do nothing - web does not support local filö or byte array
-    } else {
-      _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
-    }
+    // var byteData = widget.file.bytes;
+    // _audioFile = await _writeToFile(ByteData.sublistView(byteData));
+    //
+    // if (kIsWeb) {
+    //   // do nothing - web does not support local file or byte array
+    // } else {
+    //   _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
+    // }
 
     _loadedFileBytes = widget.file.bytes.length;
     _isLoaded = true;
@@ -182,9 +183,9 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
   }
 
   _audioPlayerPlay({bool seek: false}) async {
-    if (kIsWeb) {
-      // do nothing - web does not support local filö or byte array
-    } else {
+    // if (kIsWeb) {
+    //   // do nothing - web does not support local filö or byte array
+    // } else {
       if (playerState == PlayerState.paused) {
         if (seek && _totalDurationInMS != null && _totalDurationInMS > 0) {
           var newPosition = (_totalDurationInMS * _currentSliderPosition).floor();
@@ -193,11 +194,11 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
         await advancedPlayer.resume();
       } else {
-        await advancedPlayer.play(DeviceFileSource(_audioFile.path));
+        await advancedPlayer.play(BytesSource(widget.file.bytes));
       }
 
       setState(() => playerState = PlayerState.playing);
-    }
+    // }
   }
 
   Future _audioPlayerStop() async {
@@ -209,13 +210,13 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     });
   }
 
-  Future<File> _writeToFile(ByteData data) async {
-    final buffer = data.buffer;
-    Directory tempDir = await getApplicationDocumentsDirectory();
-    String tempPath = tempDir.path;
-    var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
-    return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
-  }
+  // Future<File> _writeToFile(ByteData data) async {
+  //   final buffer = data.buffer;
+  //   Directory tempDir = await getApplicationDocumentsDirectory();
+  //   String tempPath = tempDir.path;
+  //   var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
+  //   return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  // }
 
   _durationText() {
     var total = '--:--';
