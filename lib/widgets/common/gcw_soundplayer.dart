@@ -48,13 +48,13 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
     advancedPlayer = AudioPlayer(playerId: Uuid().v4());
 
-    if (kIsWeb) {
-      // Calls to Platform.isIOS fails on web
-      return;
-    }
-    if (Platform.isIOS) {
-      //audioCache.fixedPlayer?.notificationService.startHeadlessService();
-    }
+    // if (kIsWeb) {
+    //   // Calls to Platform.isIOS fails on web
+    //   return;
+    // }
+    // if (Platform.isIOS) {
+    //   //audioCache.fixedPlayer?.notificationService.startHeadlessService();
+    // }
 
     _onDurationChangedStream = advancedPlayer.onDurationChanged.listen((Duration d) {
       setState(() {
@@ -83,13 +83,13 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     await _audioPlayerStop();
 
     // save byteData to File
-    // var byteData = widget.file.bytes;
+    var byteData = widget.file.bytes;
     // _audioFile = await _writeToFile(ByteData.sublistView(byteData));
     //
     // if (kIsWeb) {
     //   // do nothing - web does not support local file or byte array
     // } else {
-    //   _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
+      _audioFile = await _writeToFile(ByteData.sublistView(byteData)); // <= returns File
     // }
 
     _loadedFileBytes = widget.file.bytes.length;
@@ -194,7 +194,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
         await advancedPlayer.resume();
       } else {
-        await advancedPlayer.play(BytesSource(widget.file.bytes));
+        await advancedPlayer.play(DeviceFileSource(widget.file.path));
       }
 
       setState(() => playerState = PlayerState.playing);
@@ -210,13 +210,13 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
     });
   }
 
-  // Future<File> _writeToFile(ByteData data) async {
-  //   final buffer = data.buffer;
-  //   Directory tempDir = await getApplicationDocumentsDirectory();
-  //   String tempPath = tempDir.path;
-  //   var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
-  //   return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
-  // }
+  Future<File> _writeToFile(ByteData data) async {
+    final buffer = data.buffer;
+    Directory tempDir = await getApplicationDocumentsDirectory();
+    String tempPath = tempDir.path;
+    var filePath = tempPath + '/${advancedPlayer.playerId}.tmp';
+    return new File(filePath).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  }
 
   _durationText() {
     var total = '--:--';
