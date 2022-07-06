@@ -3606,7 +3606,7 @@
   "shadowlength_height": "Height of the object",
   "shadowlength_no_shadow": "There is no shadow visible",
   "shadowlength_length": "Length of the Shadow",
-  "shadowlength_outputunit": "Unit of Shadow Length",
+  "shadowlenght_location": "Location of Shadow's End",
   "silverratio_selection_title": "Silver Ratio (δ = 2,414213562373...)",
   "silverratio_selection_description": "Mathematical constant: Silver ratio",
   "skytale_title": "Skytale",
