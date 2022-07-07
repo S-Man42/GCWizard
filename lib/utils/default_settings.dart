@@ -13,31 +13,31 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_ccitt2.dart';
 import 'package:prefs/prefs.dart';
 
-void initDefaultSettings() {
-  if (Prefs.get('alphabetvalues_custom_alphabets') == null) {
+void initDefaultSettings({resetToDefault: false}) {
+  if (resetToDefault || Prefs.get('alphabetvalues_custom_alphabets') == null) {
     Prefs.setStringList('alphabetvalues_custom_alphabets', []);
   }
 
-  if (Prefs.get('alphabetvalues_default_alphabet') == null) {
+  if (resetToDefault || Prefs.get('alphabetvalues_default_alphabet') == null) {
     Prefs.setString('alphabetvalues_default_alphabet', alphabetAZ.key);
   }
 
-  if (Prefs.get('app_count_opened') == null) {
+  if (resetToDefault || Prefs.get('app_count_opened') == null) {
     Prefs.setInt('app_count_opened', 1);
   } else {
     Prefs.setInt('app_count_opened', Prefs.getInt('app_count_opened') + 1);
   }
 
-  if (Prefs.get('clipboard_max_items') == null) {
+  if (resetToDefault || Prefs.get('clipboard_max_items') == null) {
     Prefs.setInt('clipboard_max_items', 10);
   }
 
-  if (Prefs.get('clipboard_keep_entries_in_days') == null) {
+  if (resetToDefault || Prefs.get('clipboard_keep_entries_in_days') == null) {
     Prefs.setInt('clipboard_keep_entries_in_days', 7);
   }
 
   var clipboardData = Prefs.getStringList('clipboard_items');
-  if (clipboardData == null) {
+  if (resetToDefault || clipboardData == null) {
     Prefs.setStringList('clipboard_items', []);
   } else {
     clipboardData.removeWhere((item) {
@@ -51,35 +51,35 @@ void initDefaultSettings() {
     Prefs.setStringList('clipboard_items', clipboardData);
   }
 
-  if (Prefs.get('coord_default_ellipsoid_type') == null) {
+  if (resetToDefault || Prefs.get('coord_default_ellipsoid_type') == null) {
     Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.STANDARD.toString());
     Prefs.setString('coord_default_ellipsoid_name', ELLIPSOID_NAME_WGS84);
   }
 
-  if (Prefs.get('coord_default_format') == null ||
+  if (resetToDefault || Prefs.get('coord_default_format') == null ||
           Prefs.get('coord_default_format') == 'coords_deg' //old name for DMM until v1.1.0
       ) {
     Prefs.setString('coord_default_format', keyCoordsDMM);
   }
 
-  if (Prefs.get('coord_default_hemisphere_latitude') == null) {
+  if (resetToDefault || Prefs.get('coord_default_hemisphere_latitude') == null) {
     Prefs.setString('coord_default_hemisphere_latitude', HemisphereLatitude.North.toString());
   }
 
-  if (Prefs.get('coord_default_hemisphere_longitude') == null) {
+  if (resetToDefault || Prefs.get('coord_default_hemisphere_longitude') == null) {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
-  if (Prefs.get('coord_variablecoordinate_formulas') == null) {
+  if (resetToDefault || Prefs.get('coord_variablecoordinate_formulas') == null) {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
 
-  if (Prefs.get('default_length_unit') == null) {
+  if (resetToDefault || Prefs.get('default_length_unit') == null) {
     Prefs.setString('default_length_unit', 'm');
   }
 
   var _favorites = Prefs.getStringList('favorites');
-  if (_favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
+  if (resetToDefault || _favorites == null || _favorites.where((element) => element != null && element.isNotEmpty).isEmpty) {
     Prefs.setStringList('favorites', [
       'AlphabetValues_alphabetvalues',
       'Morse_morse',
@@ -90,31 +90,31 @@ void initDefaultSettings() {
     ]);
   }
 
-  if (Prefs.get('formulasolver_formulas') == null) {
+  if (resetToDefault || Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
 
-  if (Prefs.get('formulasolver_coloredformulas') == null) {
+  if (resetToDefault || Prefs.get('formulasolver_coloredformulas') == null) {
     Prefs.setBool('formulasolver_coloredformulas', true);
   }
 
-  if (Prefs.get('imagecolorcorrections_maxpreviewheight') == null) {
+  if (resetToDefault || Prefs.get('imagecolorcorrections_maxpreviewheight') == null) {
     Prefs.setInt('imagecolorcorrections_maxpreviewheight', 250);
   }
 
-  if (Prefs.get('mapview_circle_colorfilled') == null) {
+  if (resetToDefault || Prefs.get('mapview_circle_colorfilled') == null) {
     Prefs.setBool('mapview_circle_colorfilled', false);
   }
 
-  if (Prefs.get('mapview_mapviews') == null) {
+  if (resetToDefault || Prefs.get('mapview_mapviews') == null) {
     Prefs.setStringList('mapview_mapviews', []);
   }
 
-  if (Prefs.get('mayacalendar_correlation') == null) {
+  if (resetToDefault || Prefs.get('mayacalendar_correlation') == null) {
     Prefs.setString('mayacalendar_correlation', THOMPSON);
   }
 
-  if (Prefs.get('multidecoder_tools') == null) {
+  if (resetToDefault || Prefs.get('multidecoder_tools') == null) {
     Prefs.setStringList('multidecoder_tools', []);
   } else {
     refreshMultiDecoderTools();
@@ -142,39 +142,39 @@ void initDefaultSettings() {
     }
   }
 
-  if (Prefs.get('symboltables_countcolumns_portrait') == null) {
+  if (resetToDefault || Prefs.get('symboltables_countcolumns_portrait') == null) {
     Prefs.setInt('symboltables_countcolumns_portrait', 6);
   }
 
-  if (Prefs.get('symboltables_countcolumns_landscape') == null) {
+  if (resetToDefault || Prefs.get('symboltables_countcolumns_landscape') == null) {
     Prefs.setInt('symboltables_countcolumns_landscape', 10);
   }
 
-  if (Prefs.get('tabs_use_default_tab') == null) {
+  if (resetToDefault || Prefs.get('tabs_use_default_tab') == null) {
     Prefs.setBool('tabs_use_default_tab', false);
   }
 
-  if (Prefs.get('tabs_default_tab') == null) {
+  if (resetToDefault || Prefs.get('tabs_default_tab') == null) {
     Prefs.setInt('tabs_default_tab', 2);
   }
 
-  if (Prefs.get('tabs_last_viewed_tab') == null) {
+  if (resetToDefault || Prefs.get('tabs_last_viewed_tab') == null) {
     Prefs.setInt('tabs_last_viewed_tab', 2);
   }
 
-  if (Prefs.get('theme_color') == null) {
+  if (resetToDefault || Prefs.get('theme_color') == null) {
     Prefs.setString('theme_color', ThemeType.DARK.toString());
   }
 
-  if (Prefs.get('theme_font_size') == null) {
+  if (resetToDefault || Prefs.get('theme_font_size') == null) {
     Prefs.setDouble('theme_font_size', Prefs.get('font_size') ?? 16.0); //font_size == pre version 1.2.0
   }
 
-  if (Prefs.get('toollist_show_descriptions') == null) {
+  if (resetToDefault || Prefs.get('toollist_show_descriptions') == null) {
     Prefs.setBool('toollist_show_descriptions', true);
   }
 
-  if (Prefs.get('toollist_show_examples') == null) {
+  if (resetToDefault || Prefs.get('toollist_show_examples') == null) {
     Prefs.setBool('toollist_show_examples', true);
   }
 }

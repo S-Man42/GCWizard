@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_checkbox.dart';
+import 'package:gc_wizard/utils/default_settings.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -50,10 +50,30 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
 
   @override
   Widget build(BuildContext context) {
+    var children = <Widget>[
+      GCWButton(
+        text: i18n(context, 'settings_preferences_reset_button_title'),
+        onPressed: () {
+          showGCWAlertDialog(
+            context,
+            i18n(context, 'settings_preferences_reset_title'),
+            i18n(context, 'settings_preferences_reset_text'),
+            () {
+              setState(() {
+                initDefaultSettings(resetToDefault: true);
+              });
+            }
+          );
+        },
+      ),
+    ];
+
+    children.addAll(keys.map((String key) {
+      return _buildPreferencesView(key);
+    }).toList());
+
     return Column(
-      children: keys.map((String key) {
-        return _buildPreferencesView(key);
-      }).toList(),
+      children: children,
     );
   }
 
@@ -61,7 +81,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     var prefValue = Prefs.get(key).toString();
 
     return Container(
-      color: keys.indexOf(key) % 2 == 1 ? themeColors().outputListOddRows() : null,
+      color: keys.indexOf(key) % 2 == 0 ? themeColors().outputListOddRows() : null,
       child: Column(
         children: [
           Container(
@@ -236,8 +256,6 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                     Prefs.setStringList(key, []);
                     break;
                 }
-
-                setState(() {});
               }
             );
           },

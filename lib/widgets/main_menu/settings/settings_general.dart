@@ -255,7 +255,17 @@ class GeneralSettingsState extends State<GeneralSettings> {
                 Navigator.of(context).push(NoAnimationMaterialPageRoute(
                     builder: (context) => GCWTool(
                         tool: SettingsPreferences(),
-                        i18nPrefix: 'settings_preferences')));
+                        i18nPrefix: 'settings_preferences'))).whenComplete(() {
+                    setState(() {});
+
+                    showGCWAlertDialog(
+                      context,
+                      i18n(context, 'settings_preferences_aftermath_title'),
+                      i18n(context, 'settings_preferences_aftermath_text'),
+                      () {},
+                      cancelButton: false
+                    );
+                });
               },
             );
           },
