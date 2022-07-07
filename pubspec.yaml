@@ -20,9 +20,9 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^0.14.0
-  flutter_map_marker_popup: ^2.1.2
-  flutter_map_tappable_polyline: ^3.1.0
+  flutter_map: ^1.1.1
+  flutter_map_marker_popup: ^3.1.0+1
+  flutter_map_tappable_polyline: ^3.2.0
   fluttertoast: ^8.0.9
   http: ^0.13.4
   http_parser: ^4.0.1
