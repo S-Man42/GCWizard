@@ -71,8 +71,7 @@ class _GCWToolListState extends State<GCWToolList> {
         onPressed: () {
           if (tool.isFavorite) {
             showDeleteAlertDialog(context, tool.toolName, () {
-              tool.isFavorite = false;
-              Favorites.update(tool, FavoriteChangeStatus.remove);
+              Favorites.update(tool.id, FavoriteChangeStatus.REMOVE);
 
               setState(() {
                 AppBuilder.of(context).rebuild();
@@ -80,8 +79,7 @@ class _GCWToolListState extends State<GCWToolList> {
             });
           } else {
             setState(() {
-              tool.isFavorite = true;
-              Favorites.update(tool, FavoriteChangeStatus.add);
+              Favorites.update(tool.id, FavoriteChangeStatus.ADD);
 
               AppBuilder.of(context).rebuild();
             });

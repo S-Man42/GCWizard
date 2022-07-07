@@ -99,7 +99,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
               children: [
                 _buildEditSaveButton(key),
                 _buildEmptyButton(key),
-                _buildResetButton(key),
+                if (editKey != null)
+                  _buildResetButton(key),
                 Container(
                   width: 3 * DOUBLE_DEFAULT_MARGIN,
                 ),
@@ -145,7 +146,9 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
 
   _buildEditSaveButton(String key) {
     return GCWIconButton(
-      icon: editKey != null && editKey == key ? Icons.save : Icons.edit,
+      icon: editKey != null && editKey == key
+          ? (_prefValueHasChanged(key) ? Icons.save : Icons.close)
+          : Icons.edit,
       onPressed: () {
         setState(() {
           if (editKey == key) {
@@ -240,25 +243,40 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
       case _PrefType.OBJECTLIST:
       case _PrefType.STRINGLIST:
         return GCWIconButton(
-          icon: Icons.close,
+          icon: Icons.delete,
           onPressed: () {
-            showGCWAlertDialog(
-              context,
-              i18n(context, 'settings_preferences_warning_save_title'),
-              i18n(context, 'settings_preferences_warning_empty_text'),
-                  () {
-                switch (_getPrefType(key)) {
-                  case _PrefType.STRING:
-                    Prefs.setString(key, '');
-                    break;
-                  case _PrefType.OBJECTLIST:
-                  case _PrefType.STRINGLIST:
-                    Prefs.setStringList(key, []);
-                    break;
+            if (editKey != null && editKey == key) {
+              setState(() {
+                if (_getPrefType(key) == _PrefType.STRING) {
+                  editedValue = '';
+                  controllers.first.text = '';
+                } else {
+                  editedValue = [];
+                  controllers = [];
                 }
-              }
-            );
-          },
+              });
+            } else {
+              showGCWAlertDialog(
+                  context,
+                  i18n(context, 'settings_preferences_warning_save_title'),
+                  i18n(context, 'settings_preferences_warning_empty_text'),
+                  () {
+                    switch (_getPrefType(key)) {
+                      case _PrefType.STRING:
+                        Prefs.setString(key, '');
+                        break;
+                      case _PrefType.OBJECTLIST:
+                      case _PrefType.STRINGLIST:
+                        Prefs.setStringList(key, []);
+                        break;
+                    }
+
+                    setState(() {});
+                  }
+
+              );
+            }
+          }
         );
     }
 
@@ -288,14 +306,15 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   _buildEditView(String key) {
     switch (_getPrefType(key)) {
       case _PrefType.STRING:
-        if (controllers.isEmpty) {
-          controllers.add(TextEditingController());
+        if (editedValue == null) {
+          controllers = [TextEditingController(text: editedValue ?? Prefs.getString(key))];
         }
-        controllers.first.text = editedValue ?? Prefs.getString(key);
         return GCWTextField(
           controller: controllers.first,
           onChanged: (text) {
-            editedValue = text;
+            setState(() {
+              editedValue = text;
+            });
           },
         );
       case _PrefType.INT:
@@ -327,8 +346,12 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
         );
       case _PrefType.OBJECTLIST:
       case _PrefType.STRINGLIST:
-        if (editedValue == null)
-          editedValue = List<String>.from(Prefs.get(key)).map((e) => e.toString()).toList();
+        if (editedValue == null) {
+          editedValue = List<String>.from(Prefs.get(key))
+              .map((e) => e.toString())
+              .toList();
+          controllers = [];
+        }
 
         var children = <Widget>[
           Row(
@@ -354,12 +377,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
           );
         }
 
-        while (controllers.length < editedValue.length) {
-          controllers.add(TextEditingController());
-        }
-
         for (var i = 0; i < editedValue.length; i++) {
-          controllers[i].text = editedValue[i].toString();
+           controllers.add(TextEditingController(text: editedValue[i].toString()));
         }
 
         children.addAll(
@@ -372,8 +391,9 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                       child: GCWTextField(
                         controller: controllers[index],
                         onChanged: (value) {
-                          editedValue[index] = value;
-                          print(editedValue);
+                          setState(() {
+                            editedValue[index] = value;
+                          });
                         },
                       ),
                     ),

@@ -23,7 +23,7 @@ void initDefaultSettings({resetToDefault: false}) {
   }
 
   if (resetToDefault || Prefs.get('app_count_opened') == null) {
-    Prefs.setInt('app_count_opened', 1);
+    Prefs.setInt('app_count_opened', 0);
   } else {
     Prefs.setInt('app_count_opened', Prefs.getInt('app_count_opened') + 1);
   }

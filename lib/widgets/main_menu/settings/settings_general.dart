@@ -256,7 +256,9 @@ class GeneralSettingsState extends State<GeneralSettings> {
                     builder: (context) => GCWTool(
                         tool: SettingsPreferences(),
                         i18nPrefix: 'settings_preferences'))).whenComplete(() {
-                    setState(() {});
+                    setState(() {
+                      AppBuilder.of(context).rebuild();
+                    });
 
                     showGCWAlertDialog(
                       context,

@@ -3603,7 +3603,7 @@
   "settings_preferences_reset_button_title": "Auf Werkseinstellungen zurücksetzen",
   "settings_preferences_reset_title": "Zurücksetzen",
   "settings_preferences_reset_text": "Möchtest du wirklich alle App-Einstellungen zurücksetzen? Du verlierst alle eigenen Einstellungen und Daten.",
-  "settings_preferences_aftermath_title": "Neustart notwendig?",
+  "settings_preferences_aftermath_title": "Eventuell Neustart erforderlich",
   "settings_preferences_aftermath_text": "Einige Änderungen in den internen Einstellungen erfordern möglicherweise einen Neustart der App.",
   "shadoks_selection_title": "Shadok Zahlen",
   "shadoks_selection_description": "Zahlensymbole der französischen Cartoons \"Die Shadoks\" von Jacques Rouxel",

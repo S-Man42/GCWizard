@@ -361,7 +361,7 @@ class _MainViewState extends State<MainView> {
           children: [
             GCWToolList(toolList: toolList ?? _categoryList),
             GCWToolList(toolList: toolList ?? _mainToolList),
-            GCWToolList(toolList: toolList ?? Favorites.toolList),
+            GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
           ],
         ),
       ),

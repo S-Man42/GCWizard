@@ -3603,7 +3603,7 @@
   "settings_preferences_reset_button_title": "Reset App to Default",
   "settings_preferences_reset_title": "App Reset",
   "settings_preferences_reset_text": "Do you really want to reset all app settings? You will lose all your custom settings and data.",
-  "settings_preferences_aftermath_title": "Restart required?",
+  "settings_preferences_aftermath_title": "Maybe restart required",
   "settings_preferences_aftermath_text": "Some changes in the internal settings may require an app restart to take effect.",
   "shadoks_selection_title": "Nombres Shadoks",
   "shadoks_selection_description": "Symboles numériques des caricatures françaises « Les Shadoks » de Jacques Rouxel",
