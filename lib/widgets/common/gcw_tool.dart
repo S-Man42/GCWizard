@@ -229,7 +229,7 @@ class _GCWToolState extends State<GCWTool> {
     return IconButton(
       icon: Icon(Icons.help),
       onPressed: () {
-        launch(url);
+        launchUrl(Uri.parse(url));
       },
     );
   }
@@ -260,11 +260,11 @@ class _GCWToolState extends State<GCWTool> {
                   i18n(context, button.title),
                   i18n(context, button.text),
                   () {
-                    launch(i18n(context, url) ?? url);
+                    launchUrl(Uri.parse(i18n(context, url) ?? url));
                   },
                 );
               } else
-                launch(i18n(context, url));
+                launchUrl(Uri.parse(i18n(context, url)));
             },
           ));
       });

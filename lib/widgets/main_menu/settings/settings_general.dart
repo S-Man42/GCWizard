@@ -6,15 +6,20 @@ import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/main_menu/settings/settings_preferences.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -78,7 +83,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               style: gcwHyperlinkTextStyle(),
             ),
             onTap: () {
-              launch(i18n(context, 'about_crowdin_url'));
+              launchUrl(Uri.parse(i18n(context, 'about_crowdin_url')));
             },
           ),
           padding: EdgeInsets.only(bottom: 10 * DEFAULT_MARGIN, top: 5 * DEFAULT_MARGIN),
@@ -227,6 +232,32 @@ class GeneralSettingsState extends State<GeneralSettings> {
             setState(() {
               Prefs.setInt('clipboard_keep_entries_in_days', value);
             });
+          },
+        ),
+
+
+        // always on bottom
+        Container(
+          margin: EdgeInsets.only(top: 25.0),
+          child: GCWDivider()
+        ),
+        InkWell(
+          child: Icon(
+            Icons.more_horiz,
+            size: 20.0
+          ),
+          onTap: () {
+            showGCWAlertDialog(
+              context,
+              i18n(context, 'settings_preferences_warning_title'),
+              i18n(context, 'settings_preferences_warning_text'),
+              () {
+                Navigator.of(context).push(NoAnimationMaterialPageRoute(
+                    builder: (context) => GCWTool(
+                        tool: SettingsPreferences(),
+                        i18nPrefix: 'settings_preferences')));
+              },
+            );
           },
         )
       ],

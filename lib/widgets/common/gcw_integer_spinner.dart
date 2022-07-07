@@ -48,6 +48,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   TextEditingController _controller;
   var _currentValue = 0;
 
+  var _externalChange = true;
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +71,13 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    if ((widget.value != null) & (_currentValue == null)) _currentValue = widget.value;
+    if (widget.value != null) {
+      _currentValue = widget.value;
+
+      if (_externalChange) _controller.text = _currentValue.toString();
+    }
+
+    _externalChange = true;
 
     return _buildSpinner();
   }
@@ -114,6 +122,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         controller: _controller,
         onChanged: (ret) {
           setState(() {
+            _externalChange = false;
+
             _currentValue = ret['value'];
             _setCurrentValueAndEmitOnChange();
           });

@@ -8,8 +8,9 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final bool expanded;
   final Widget child;
   final Function onChanged;
+  final suppressBottomSpace;
 
-  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child, this.onChanged})
+  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child, this.onChanged, this.suppressBottomSpace})
       : super(key: key);
 
   @override
@@ -37,6 +38,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
           child: GCWTextDivider(
             text: widget.text,
             suppressTopSpace: true,
+            suppressBottomSpace: widget.suppressBottomSpace,
             style: widget.style,
             bottom: 0.0,
             trailing: GCWIconButton(

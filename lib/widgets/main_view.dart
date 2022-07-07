@@ -314,7 +314,7 @@ class _MainViewState extends State<MainView> {
           context,
           i18n(context, 'common_support_title'),
           i18n(context, 'common_support_text', parameters: [Prefs.getInt('app_count_opened')]),
-          () => launch(i18n(context, 'common_support_link')),
+          () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
         );
       }
     });
