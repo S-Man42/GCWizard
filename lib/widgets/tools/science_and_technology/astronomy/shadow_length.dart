@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -30,8 +31,8 @@ class ShadowLengthState extends State<ShadowLength> {
   var _currentCoordsFormat = defaultCoordFormat();
   var _currentHeight = 0.0;
 
-  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
-  Length _currentOutputLength = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+  Length _currentOutputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
   var _currentCoordsOutputFormat = defaultCoordFormat();
 
   @override

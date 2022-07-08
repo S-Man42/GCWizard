@@ -1,10 +1,11 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 Map<String, String> defaultCoordFormat() {
-  var format = Prefs.get('coord_default_format');
-  var subtype = Prefs.get('coord_default_format_subtype');
+  var format = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT);
+  var subtype = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
 
   if (subtype == null) {
     switch (format) {
@@ -21,23 +22,23 @@ Map<String, String> defaultCoordFormat() {
 }
 
 int defaultHemiphereLatitude() {
-  return Prefs.getString('coord_default_hemisphere_latitude') == HemisphereLatitude.North.toString() ? 1 : -1;
+  return Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE) == HemisphereLatitude.North.toString() ? 1 : -1;
 }
 
 int defaultHemiphereLongitude() {
-  return Prefs.getString('coord_default_hemisphere_longitude') == HemisphereLongitude.East.toString() ? 1 : -1;
+  return Prefs.getString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LONGITUDE) == HemisphereLongitude.East.toString() ? 1 : -1;
 }
 
 Ellipsoid defaultEllipsoid() {
-  String type = Prefs.get('coord_default_ellipsoid_type');
+  String type = Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_TYPE);
 
   if (type == EllipsoidType.STANDARD.toString()) {
-    return getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name'));
+    return getEllipsoidByName(Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_NAME));
   }
 
   if (type == EllipsoidType.USER_DEFINED.toString()) {
-    double a = Prefs.get('coord_default_ellipsoid_a');
-    double invf = Prefs.get('coord_default_ellipsoid_invf');
+    double a = Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_A);
+    double invf = Prefs.get(PREFERENCE_COORD_DEFAULT_ELLIPSOID_INVF);
     return Ellipsoid(null, a, invf, type: EllipsoidType.USER_DEFINED);
   }
 }

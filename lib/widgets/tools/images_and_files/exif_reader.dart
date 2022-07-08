@@ -7,6 +7,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/hidden_data.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -164,7 +165,7 @@ class _ExifReaderState extends State<ExifReader> {
 
     var _currentCoordsFormat = defaultCoordFormat();
     List<String> _currentOutput = [
-      formatCoordOutput(point, {'format': Prefs.get('coord_default_format')}, defaultEllipsoid()),
+      formatCoordOutput(point, {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid()),
     ];
 
     widgets.add(

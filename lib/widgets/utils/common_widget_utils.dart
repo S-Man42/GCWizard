@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -24,15 +25,15 @@ String printErrorMessage(BuildContext context, String message) {
 }
 
 defaultFontSize() {
-  var fontSize = Prefs.get('theme_font_size');
+  var fontSize = Prefs.get(PREFERENCE_THEME_FONT_SIZE);
 
   if (fontSize < FONT_SIZE_MIN) {
-    Prefs.setDouble('theme_font_size', FONT_SIZE_MIN.toDouble());
+    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, FONT_SIZE_MIN.toDouble());
     return FONT_SIZE_MIN;
   }
 
   if (fontSize > FONT_SIZE_MAX) {
-    Prefs.setDouble('theme_font_size', FONT_SIZE_MAX.toDouble());
+    Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, FONT_SIZE_MAX.toDouble());
     return FONT_SIZE_MAX;
   }
 
@@ -135,7 +136,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
 insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: true}) {
   if (useGlobalClipboard) Clipboard.setData(ClipboardData(text: text));
 
-  var gcwClipboard = Prefs.getStringList('clipboard_items');
+  var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
 
   var existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null);
 
@@ -147,10 +148,10 @@ insertIntoGCWClipboard(BuildContext context, String text, {useGlobalClipboard: t
             {'text': jsonDecode(existingText)['text'], 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
   } else {
     gcwClipboard.insert(0, jsonEncode({'text': text, 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
-    while (gcwClipboard.length > Prefs.get('clipboard_max_items')) gcwClipboard.removeLast();
+    while (gcwClipboard.length > Prefs.get(PREFERENCE_CLIPBOARD_MAX_ITEMS)) gcwClipboard.removeLast();
   }
 
-  Prefs.setStringList('clipboard_items', gcwClipboard);
+  Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, gcwClipboard);
 
   if (useGlobalClipboard) showToast(i18n(context, 'common_clipboard_copied') + ':\n' + text);
 }

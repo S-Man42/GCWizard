@@ -1,3 +1,4 @@
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -26,11 +27,11 @@ class Favorites {
     }
 
     if (changed)
-      Prefs.setStringList('favorites', favoritedToolList);
+      Prefs.setStringList(PREFERENCE_FAVORITES, favoritedToolList);
   }
 
   static initialize() {
-    favoritedToolList = Prefs.getStringList('favorites');
+    favoritedToolList = Prefs.getStringList(PREFERENCE_FAVORITES);
   }
 
   static bool isFavorite(String toolId) {

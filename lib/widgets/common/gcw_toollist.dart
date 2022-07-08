@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -91,7 +92,7 @@ class _GCWToolListState extends State<GCWToolList> {
 
   _buildSubtitle(BuildContext context, GCWTool tool) {
     var descriptionText;
-    if (Prefs.getBool('toollist_show_descriptions') && tool.description != null && tool.description.length > 0) {
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS) && tool.description != null && tool.description.length > 0) {
       descriptionText = IgnorePointer(
           child: GCWText(
         text: tool.description,
@@ -100,7 +101,7 @@ class _GCWToolListState extends State<GCWToolList> {
     }
 
     var exampleText;
-    if (Prefs.getBool('toollist_show_examples') && tool.example != null && tool.example.length > 0) {
+    if (Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) && tool.example != null && tool.example.length > 0) {
       exampleText = IgnorePointer(child: GCWText(text: tool.example, style: gcwDescriptionTextStyle()));
     }
 

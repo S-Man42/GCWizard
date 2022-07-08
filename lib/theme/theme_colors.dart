@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors_dark.dart';
 import 'package:gc_wizard/theme/theme_colors_light.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 enum ThemeType { DARK, LIGHT }
@@ -71,7 +72,7 @@ setThemeColors(ThemeType type) {
 ThemeColors themeColors() {
   if (_themeColors != null) return _themeColors;
 
-  var themeSetting = Prefs.getString('theme_color');
+  var themeSetting = Prefs.getString(PREFERENCE_THEME_COLOR);
   var type = ThemeType.values.firstWhere((e) => e.toString() == themeSetting);
 
   setThemeColors(type);

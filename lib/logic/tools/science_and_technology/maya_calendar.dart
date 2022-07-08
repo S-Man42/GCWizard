@@ -9,6 +9,7 @@
 
 import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 enum CORRELATION { THOMPSON, SMILEY, WEITZEL }
@@ -251,17 +252,17 @@ DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount) {
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount) {
-  if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
+  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null || Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
-    return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
+    return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)]);
 }
 
 int JulianDateToMayaDayCount(double jd) {
-  if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
+  if (Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == null || Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION) == '')
     jd = jd - _CORRELATION_NUMBER[THOMPSON];
   else
-    jd = jd - _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')];
+    jd = jd - _CORRELATION_NUMBER[Prefs.getString(PREFERENCE_MAYACALENDAR_CORRELATION)];
   return jd.round();
 }
 

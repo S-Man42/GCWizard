@@ -4,7 +4,7 @@ import 'package:gc_wizard/i18n/app_language.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/default_settings.dart';
+import 'utils/settings/default_settings.dart';
 import 'package:gc_wizard/widgets/common/gcw_clipboard_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_view.dart';
@@ -19,7 +19,7 @@ void main() async {
   await Prefs.init();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
-  initDefaultSettings();
+  initDefaultSettings(PreferencesInitMode.STARTUP);
 
   runApp(App(
     appLanguage: appLanguage,

@@ -1,4 +1,5 @@
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -50,8 +51,8 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
+        ? Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT)
+        : Prefs.get(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE);
 
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
       widget.symbolImage != null ? _buildEditRow() : Container(),

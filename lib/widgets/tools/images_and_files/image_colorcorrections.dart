@@ -5,6 +5,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/image_processing.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -76,7 +77,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   };
 
   _currentDataInit({int previewSize}) {
-    var previewHeight = previewSize ?? Prefs.getInt('imagecolorcorrections_maxpreviewheight');
+    var previewHeight = previewSize ?? Prefs.getInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT);
 
     img.Image image = img.decodeImage(_originalData.bytes);
 
@@ -149,7 +150,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
           GCWTextDivider(
               suppressTopSpace: true,
               text: i18n(context, 'image_colorcorrections_previewsize_title', parameters: [
-                i18n(context, PREVIEW_VALUES[Prefs.get('imagecolorcorrections_maxpreviewheight')]['title'])
+                i18n(context, PREVIEW_VALUES[Prefs.get(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT)]['title'])
               ]),
               trailing: GCWPopupMenu(
                   iconData: Icons.settings,
@@ -175,7 +176,7 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
                                 ),
                                 action: (index) {
                                   setState(() {
-                                    Prefs.setInt('imagecolorcorrections_maxpreviewheight', key);
+                                    Prefs.setInt(PREFERENCE_IMAGECOLORCORRECTIONS_MAXPREVIEWHEIGHT, key);
 
                                     _originalPreview = _currentDataInit(previewSize: key);
                                     _currentPreview = img.Image.from(_originalPreview);

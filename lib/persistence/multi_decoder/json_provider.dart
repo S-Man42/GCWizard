@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/persistence/utils.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshMultiDecoderTools() {
-  var tools = Prefs.getStringList('multidecoder_tools');
+  var tools = Prefs.getStringList(PREFERENCE_MULTIDECODER_TOOLS);
   if (tools == null || tools.length == 0) return;
 
   multiDecoderTools = tools.where((tool) => tool.length > 0).map((tool) {
@@ -15,7 +16,7 @@ void refreshMultiDecoderTools() {
 
 _saveData() {
   var jsonData = multiDecoderTools.map((tool) => jsonEncode(tool.toMap())).toList();
-  Prefs.setStringList('multidecoder_tools', jsonData);
+  Prefs.setStringList(PREFERENCE_MULTIDECODER_TOOLS, jsonData);
 }
 
 int insertMultiDecoderTool(MultiDecoderTool tool) {

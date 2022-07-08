@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/utils/default_settings.dart';
+import 'package:gc_wizard/utils/settings/default_settings.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -52,15 +52,15 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   Widget build(BuildContext context) {
     var children = <Widget>[
       GCWButton(
-        text: i18n(context, 'settings_preferences_reset_button_title'),
+        text: i18n(context, 'settings_preferences_resetall_button_title'),
         onPressed: () {
           showGCWAlertDialog(
             context,
-            i18n(context, 'settings_preferences_reset_title'),
-            i18n(context, 'settings_preferences_reset_text'),
+            i18n(context, 'settings_preferences_resetall_title'),
+            i18n(context, 'settings_preferences_resetall_text'),
             () {
               setState(() {
-                initDefaultSettings(resetToDefault: true);
+                initDefaultSettings(PreferencesInitMode.REINIT_ALL);
               });
             }
           );
