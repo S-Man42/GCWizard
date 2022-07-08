@@ -1,18 +1,19 @@
 import 'dart:ui';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/gcw_file.dart';
-import 'package:xml/xml.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:flutter/material.dart';
+
 import 'package:archive/archive_io.dart';
-import 'package:gc_wizard/utils/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
+import 'package:gc_wizard/persistence/map_view/model.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
-import 'package:gc_wizard/persistence/map_view/model.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/gcw_file.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:xml/xml.dart';
 
 Future<MapViewDAO> importCoordinatesFile(GCWFile file) async {
   var type = fileTypeByFilename(file.name);

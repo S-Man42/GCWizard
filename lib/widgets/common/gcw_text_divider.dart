@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWTextDivider extends StatefulWidget {
   final String text;

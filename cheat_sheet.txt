@@ -6,6 +6,16 @@ flutter pub global activate dart_style
 dart format lib -l 120
 
 ==============================
+Build Checklist
+
+- Project explorer, project root, right click -> Optimize Imports
+- Format code: dart format lib -l 120
+- flutter upgrade
+- flutter pub get
+- Build
+
+==============================
+
 
 Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64

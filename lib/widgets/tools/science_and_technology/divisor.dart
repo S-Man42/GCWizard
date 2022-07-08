@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';

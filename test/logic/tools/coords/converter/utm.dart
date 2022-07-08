@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';

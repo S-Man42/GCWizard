@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bifid.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 void main() {

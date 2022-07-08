@@ -6,7 +6,6 @@
 // 678068550685506386047230386303863 07865807432360386308437
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 class VanityWordsDecodeOutput {
   final String number;

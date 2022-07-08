@@ -1,11 +1,11 @@
 // Code snippet for accessing REST API
 // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
+import 'dart:async';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:async';
-import 'package:flutter/material.dart';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
