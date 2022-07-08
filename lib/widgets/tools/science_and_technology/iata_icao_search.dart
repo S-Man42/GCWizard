@@ -46,6 +46,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
       children: <Widget>[
         GCWTwoOptionsSwitch(
           value: _currentMode,
+          notitle: true,
           title: i18n(context, 'iataicao_search'),
           leftValue: i18n(context, 'iataicao_search_name'),
           rightValue: i18n(context, 'iataicao_search_code'),
@@ -71,7 +72,7 @@ class IATAICAOSearchState extends State<IATAICAOSearch> {
                 children: <Widget>[
                   GCWTwoOptionsSwitch(
                     value: _currentCode,
-                    title: i18n(context, 'iataicao_search'),
+                    notitle: true,
                     leftValue: i18n(context, 'iataicao_iata'),
                     rightValue: i18n(context, 'iataicao_icao'),
                     onChanged: (value) {

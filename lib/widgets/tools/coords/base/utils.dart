@@ -7,15 +7,30 @@ Map<String, String> defaultCoordFormat() {
   var format = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT);
   var subtype = Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE);
 
-  if (subtype == null) {
-    switch (format) {
-      case keyCoordsGaussKrueger:
+  var subtypeChanged = false;
+  switch (format) {
+    case keyCoordsGaussKrueger:
+      if (![
+        keyCoordsGaussKruegerGK1,
+        keyCoordsGaussKruegerGK2,
+        keyCoordsGaussKruegerGK3,
+        keyCoordsGaussKruegerGK4,
+        keyCoordsGaussKruegerGK5
+      ].contains(subtype)) {
         subtype = keyCoordsGaussKruegerGK1;
-        break;
-      case keyCoordsSlippyMap:
+        subtypeChanged = true;
+      }
+      break;
+    case keyCoordsSlippyMap:
+      if (int.tryParse(subtype) == null) {
         subtype = '10';
-        break;
-    }
+        subtypeChanged = true;
+      }
+      break;
+  }
+
+  if (subtypeChanged) {
+    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, subtype);
   }
 
   return {'format': format, 'subtype': subtype};

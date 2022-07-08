@@ -85,6 +85,10 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
     Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT, keyCoordsDMM);
   }
 
+  if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE || _reinitAll || Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE) == null) {
+    Prefs.setString(PREFERENCE_COORD_DEFAULT_FORMAT_SUBTYPE, '');
+  }
+
   if (reinitSinglePreference == PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE || _reinitAll || Prefs.get(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE) == null) {
     Prefs.setString(PREFERENCE_COORD_DEFAULT_HEMISPHERE_LATITUDE, HemisphereLatitude.North.toString());
   }

@@ -16,7 +16,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 const _PREF_VALUE_MAX_LENGTH = 300;
-enum _PrefType {STRING, STRINGLIST, OBJECTLIST, INT, DOUBLE, BOOL}
+enum _PrefType {STRING, STRINGLIST, INT, DOUBLE, BOOL}
 
 class SettingsPreferences extends StatefulWidget {
   @override
@@ -56,8 +56,8 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
         onPressed: () {
           showGCWAlertDialog(
             context,
-            i18n(context, 'settings_preferences_resetall_title'),
-            i18n(context, 'settings_preferences_resetall_text'),
+            i18n(context, 'settings_preferences_warning_resetall_title'),
+            i18n(context, 'settings_preferences_warning_resetall_text'),
             () {
               setState(() {
                 initDefaultSettings(PreferencesInitMode.REINIT_ALL);
@@ -98,9 +98,15 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildEditSaveButton(key),
-                _buildEmptyButton(key),
-                if (editKey != null)
-                  _buildResetButton(key),
+                if (editKey != null && editKey == key)
+                  Row(
+                    children: [
+                      _buildEmptyButton(key),
+                      _buildUndoButton(key),
+                      Container(width: DEFAULT_MARGIN),
+                      _buildDefaultButton(key),
+                    ],
+                  ),
                 Container(
                   width: 3 * DOUBLE_DEFAULT_MARGIN,
                 ),
@@ -193,7 +199,6 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
             if (editedValue is bool)
               Prefs.setBool(key, editedValue);
             break;
-          case _PrefType.OBJECTLIST:
           case _PrefType.STRINGLIST:
             if (editedValue is List<String>) {
               (editedValue as List<String>).removeWhere((element) => element.isEmpty);
@@ -221,7 +226,6 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
       case _PrefType.DOUBLE:
       case _PrefType.BOOL:
         return editedValue != Prefs.get(key);
-      case _PrefType.OBJECTLIST:
       case _PrefType.STRINGLIST:
         var list = Prefs.get(key);
         if (editedValue.length != list.length)
@@ -240,42 +244,19 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
   _buildEmptyButton(String key) {
     switch (_getPrefType(key)) {
       case _PrefType.STRING:
-      case _PrefType.OBJECTLIST:
       case _PrefType.STRINGLIST:
         return GCWIconButton(
           icon: Icons.delete,
           onPressed: () {
-            if (editKey != null && editKey == key) {
-              setState(() {
-                if (_getPrefType(key) == _PrefType.STRING) {
-                  editedValue = '';
-                  controllers.first.text = '';
-                } else {
-                  editedValue = [];
-                  controllers = [];
-                }
-              });
-            } else {
-              showGCWAlertDialog(
-                  context,
-                  i18n(context, 'settings_preferences_warning_save_title'),
-                  i18n(context, 'settings_preferences_warning_empty_text'),
-                  () {
-                    switch (_getPrefType(key)) {
-                      case _PrefType.STRING:
-                        Prefs.setString(key, '');
-                        break;
-                      case _PrefType.OBJECTLIST:
-                      case _PrefType.STRINGLIST:
-                        Prefs.setStringList(key, []);
-                        break;
-                    }
-
-                    setState(() {});
-                  }
-
-              );
-            }
+            setState(() {
+              if (_getPrefType(key) == _PrefType.STRING) {
+                editedValue = '';
+                controllers.first.text = '';
+              } else {
+                editedValue = [];
+                controllers = [];
+              }
+            });
           }
         );
     }
@@ -283,9 +264,10 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     return Container();
   }
 
-  _buildResetButton(String key) {
+  _buildUndoButton(String key) {
     return GCWIconButton(
       icon: Icons.refresh,
+      iconColor: _prefValueHasChanged(key) ? null : themeColors().inActive(),
       onPressed: () {
         setState(() {
           editedValue = null;
@@ -294,11 +276,32 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
     );
   }
 
+  _buildDefaultButton(String key) {
+    return GCWButton(
+      text: i18n(context, 'settings_preferences_resetsingle_button_title'),
+      onPressed: () {
+        showGCWAlertDialog(
+            context,
+            i18n(context, 'settings_preferences_warning_resetsingle_title'),
+            i18n(context, 'settings_preferences_warning_resetsingle_text'),
+                () {
+              initDefaultSettings(PreferencesInitMode.REINIT_SINGLE, reinitSinglePreference: key);
+
+              setState(() {
+                editKey = null;
+                editedValue = null;
+              });
+            }
+        );
+      },
+    );
+  }
+
   _buildCopyButton(String key) {
     return GCWIconButton(
       icon: Icons.copy,
       onPressed: () {
-        insertIntoGCWClipboard(context, Prefs.get(key).toString());
+        insertIntoGCWClipboard(context, editedValue != null ? editedValue.toString() : Prefs.get(key).toString());
       },
     );
   }
@@ -344,7 +347,6 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
             });
           },
         );
-      case _PrefType.OBJECTLIST:
       case _PrefType.STRINGLIST:
         if (editedValue == null) {
           editedValue = List<String>.from(Prefs.get(key))
@@ -364,6 +366,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                 onPressed: () {
                   setState(() {
                     editedValue.add('');
+                    controllers = [];
                   });
                 },
               )
@@ -378,7 +381,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
         }
 
         for (var i = 0; i < editedValue.length; i++) {
-           controllers.add(TextEditingController(text: editedValue[i].toString()));
+          controllers.add(TextEditingController(text: editedValue[i].toString()));
         }
 
         children.addAll(
@@ -403,6 +406,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
                       onPressed: () {
                         setState(() {
                           editedValue.removeAt(index);
+                          controllers = [];
                         });
                       },
                     )
@@ -431,7 +435,7 @@ class SettingsPreferencesState extends State<SettingsPreferences> {
 
     try {
       List<Object> x = Prefs.get(key);
-      return _PrefType.OBJECTLIST;
+      return _PrefType.STRINGLIST;
     } catch(e) {}
 
     try {
