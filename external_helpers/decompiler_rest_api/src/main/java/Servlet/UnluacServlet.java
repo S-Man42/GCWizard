@@ -1,6 +1,6 @@
 package Servlet;
 
-import org.apache.tomcat.jakartaee.commons.compress.utils.FileNameUtils;
+import org.apache.commons.compress.utils.FileNameUtils;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
