@@ -30,15 +30,16 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet("")
 public class UnluacServlet extends HttpServlet {
+
+	private static final long serialVersionUID = -259811092051390105L;
+	
 	// From 'https://github.com/HansWessels/unluac'
 	private String unluacJarPath;
 	private static final String SCRIPTTEMPLATE = "java -jar %s %s > %s";
 	
 	private final String os = System.getProperty("os.name").toLowerCase();
     private final boolean isWindows = os.contains("windows");
-	
-	private static final long serialVersionUID = 1L;
-	
+		
 	private final transient Logger logger = Logger.getLogger("GCW_UnluacServlet");
 	
 	public UnluacServlet() {
@@ -60,14 +61,8 @@ public class UnluacServlet extends HttpServlet {
 				final String uploadPath = servletCtxPath + "Uploads" + File.separator;
 				final String outputPath = servletCtxPath + "Output" + File.separator;
 				
-				try {
-					unluacJarPath = getClass().getClassLoader().getResource("unluac.jar").toURI().getPath().substring(1);
-				} catch (URISyntaxException e) {
-					logger.severe("URISyntaxException:: " + e.getMessage());
-					buildErrorResponse("wherigo_http_code_500_detail_access", 500, res);
-					return;
-				}
-				
+				unluacJarPath = getUnluacJarPath(res);
+								
 				DiskFileItemFactory factory = new DiskFileItemFactory();
 				// Write all to disk
 				factory.setSizeThreshold(0);
@@ -80,19 +75,8 @@ public class UnluacServlet extends HttpServlet {
 				// Set overall request size constraint (2,5MB)
 				upload.setSizeMax(2500000);
 	
-				List<FileItem> fileItems = null;
 				// Parse request
-				try {
-					fileItems = upload.parseRequest(new ServletRequestContext(req));
-				} catch (SizeLimitExceededException e) {
-					logger.severe("SizeLimitExceededException::" + e.getMessage());
-					buildErrorResponse("wherigo_http_code_413_detail_size", 413, res);
-					return;
-				} catch (FileUploadException e) {
-					logger.severe("FileUploadException::" + e.getMessage());
-					buildErrorResponse("wherigo_http_code_400_detail_extract", 400, res);
-					return;
-				}
+				List<FileItem> fileItems = getFileItems(upload, req, res);
 				
 				// Should only be one file, so only consider first in list
 				FileItem submittedFile = fileItems.get(0);
@@ -105,69 +89,11 @@ public class UnluacServlet extends HttpServlet {
 				File uploadedFile = new File(uploadPath + uploadFileName);
 							
 				// Save .luac file
-				try {
-					submittedFile.write(uploadedFile);
-				} catch (Exception e) {
-					logger.severe("Exception:: " + e.getMessage() + "\nCould not write LUA Bytecode to disk");
-					buildErrorResponse("wherigo_http_code_500_detail_write", 500, res);
-					return;
-				}
+				writeFile(submittedFile, uploadedFile, res);
 				
-				File result = null;
-				BufferedReader reader = new BufferedReader(null);
-				try {
-					final String fileName = FileNameUtils.getBaseName(uploadedFile.getName());
-					
-					// Check if output directory exists
-					checkForDir(outputPath);
-		
-					// Generate output file path
-					final String resultPath = outputPath + fileName + ".txt";
-					
-					// Try to execute unluac.jar with received file
-					try {
-						executeScript(uploadedFile, resultPath);
-					} catch (IOException e) {
-						logger.severe("IOException:: " + e.getMessage());
-						buildErrorResponse("wherigo_http_code_500_detail_process", 500, res);
-						return;
-					} catch (InterruptedException e) {
-						logger.severe("InterruptedException:: " + e.getMessage());
-						buildErrorResponse("wherigo_http_code_500_detail_interrupt", 500, res);
-						Thread.currentThread().interrupt();
-						return;
-					}
-					
-					result = new File(resultPath);
-					reader.close();
-					reader = new BufferedReader(new FileReader(result));
-					PrintWriter w = res.getWriter();
-					String line = reader.readLine();
-					
-					// Check if result file is empty
-					if (line == null) {
-						logger.severe("LUA Sourcecode is empty");
-						buildErrorResponse("wherigo_http_code_500_detail_empty", 500, res);
-						return;
-					}
-					
-					// Write result file content to response body
-					while (line != null) {
-						w.append(line + "\n");
-						line = reader.readLine();
-					}		
-
-					//Send response
-					res.setStatus(200);
-					res.setContentType("text/plain");
-					res.flushBuffer();
-
-				} finally {
-					// Cleanup
-					reader.close();
-					result.delete();
-					uploadedFile.delete();
-				}
+				// Decompile .luac and send response
+				handleFile(uploadedFile, outputPath, res);
+				
 			} else {
 				logger.severe("Not a multipart request");
 				buildErrorResponse("wherigo_http_code_400_detail_multipart", 400, res);
@@ -175,6 +101,8 @@ public class UnluacServlet extends HttpServlet {
 		} catch (IOException e) {
 			logger.severe("IOException 'detail_response':: " + e);
 			throw new IOException("wherigo_http_code_500_detail_response");
+		} catch (AbortControlFlowException e) {
+			logger.info("Control flow was aborted");
 		}
 	}
 
@@ -185,6 +113,115 @@ public class UnluacServlet extends HttpServlet {
 	private void checkForDir(final String path) {
 		File dir = new File(path);
 		if (!dir.exists()) dir.mkdir();
+	}
+	
+	/**
+	 * Return path to 'unluac.jar' resource
+	 * @param res
+	 * @return path
+	 * @throws IOException
+	 */
+	private String getUnluacJarPath(HttpServletResponse res) throws IOException {
+		try {
+			return getClass().getClassLoader().getResource("unluac.jar").toURI().getPath().substring(1);
+		} catch (URISyntaxException e) {
+			logger.severe("URISyntaxException:: " + e.getMessage());
+			buildErrorResponse("wherigo_http_code_500_detail_access", 500, res);
+			throw new AbortControlFlowException();
+		}
+	}
+	
+	/**
+	 * Parse the request and return a list of contained files
+	 * @param upload
+	 * @param req
+	 * @param res
+	 * @return a list of files from the request
+	 * @throws IOException
+	 */
+	private List<FileItem> getFileItems(ServletFileUpload upload, HttpServletRequest req, HttpServletResponse res) throws IOException {
+		try {
+			return upload.parseRequest(new ServletRequestContext(req));
+		} catch (SizeLimitExceededException e) {
+			logger.severe("SizeLimitExceededException::" + e.getMessage());
+			buildErrorResponse("wherigo_http_code_413_detail_size", 413, res);
+			throw new AbortControlFlowException();
+		} catch (FileUploadException e) {
+			logger.severe("FileUploadException::" + e.getMessage());
+			buildErrorResponse("wherigo_http_code_400_detail_extract", 400, res);
+			throw new AbortControlFlowException();
+		}
+	}
+	
+	/**
+	 * Write file to disk
+	 * @param item
+	 * @param target
+	 * @param res
+	 * @throws IOException
+	 */
+	private void writeFile(FileItem item, File target, HttpServletResponse res) throws IOException {
+		try {
+			item.write(target);
+		} catch (Exception e) {
+			logger.severe("Exception:: " + e.getMessage() + "\nCould not write LUA Bytecode to disk");
+			buildErrorResponse("wherigo_http_code_500_detail_write", 500, res);
+			throw new AbortControlFlowException();
+		}
+	}
+	
+	/**
+	 * Decompiles the .luac file and sends the result back
+	 * @param uploadedFile
+	 * @param outputPath
+	 * @param res
+	 * @throws IOException
+	 */
+	private void handleFile(File uploadedFile, String outputPath, HttpServletResponse res) throws IOException {
+		File result = null;
+		BufferedReader reader = null;
+		try {
+			final String fileName = FileNameUtils.getBaseName(uploadedFile.getName());
+			
+			// Check if output directory exists
+			checkForDir(outputPath);
+
+			// Generate output file path
+			final String resultPath = outputPath + fileName + ".txt";
+			
+			// Try to execute unluac.jar with received file
+			executeScript(uploadedFile, resultPath, res);
+								
+			result = new File(resultPath);
+			reader = new BufferedReader(new FileReader(result));
+			PrintWriter w = res.getWriter();
+			String line = reader.readLine();
+			
+			// Check if result file is empty
+			if (line == null) {
+				logger.severe("LUA Sourcecode is empty");
+				buildErrorResponse("wherigo_http_code_500_detail_empty", 500, res);
+				return;
+			}
+			
+			// Write result file content to response body
+			while (line != null) {
+				w.append(line + "\n");
+				line = reader.readLine();
+			}		
+
+			//Send response
+			res.setStatus(200);
+			res.setContentType("text/plain");
+			res.flushBuffer();
+		} finally {
+			// Cleanup
+			reader.close();
+			if (result != null) {
+				result.delete();
+			}
+			uploadedFile.delete();
+		}
 	}
 	
 	/**
@@ -207,21 +244,32 @@ public class UnluacServlet extends HttpServlet {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	private void executeScript(File file, String resultPath) throws IOException, InterruptedException {				
-		// Create process to execute script
-		ProcessBuilder pb = new ProcessBuilder();
-				
-		final String script = String.format(SCRIPTTEMPLATE,
-				"\"" + unluacJarPath +"\"", "\"" + file.getAbsolutePath() + "\"", "\"" + resultPath + "\"");
-		
-		if (isWindows) {
-			pb.command("cmd.exe", "/c", script);
-		} else {
-			pb.command("/bin/bash", "-c", script);
+	private void executeScript(File file, String resultPath, HttpServletResponse res) throws IOException {		
+		try {
+			// Create process to execute script
+			ProcessBuilder pb = new ProcessBuilder();
+					
+			final String script = String.format(SCRIPTTEMPLATE,
+					"\"" + unluacJarPath +"\"", "\"" + file.getAbsolutePath() + "\"", "\"" + resultPath + "\"");
+			
+			if (isWindows) {
+				pb.command("cmd.exe", "/c", script);
+			} else {
+				pb.command("/bin/bash", "-c", script);
+			}
+			Process p = pb.start();
+			p.waitFor(120, TimeUnit.SECONDS);
+			p.destroy();
+		} catch (IOException e) {
+			logger.severe("IOException:: " + e.getMessage());
+			buildErrorResponse("wherigo_http_code_500_detail_process", 500, res);
+			throw new AbortControlFlowException();
+		} catch (InterruptedException e) {
+			logger.severe("InterruptedException:: " + e.getMessage());
+			buildErrorResponse("wherigo_http_code_500_detail_interrupt", 500, res);
+			Thread.currentThread().interrupt();
+			throw new AbortControlFlowException();
 		}
-		Process p = pb.start();
-		p.waitFor(120, TimeUnit.SECONDS);
-		p.destroy();
 	}
 	
 	@Override
@@ -258,5 +306,13 @@ public class UnluacServlet extends HttpServlet {
 	@Override
 	protected void doTrace(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		doGet(req, res);
+	}
+	
+	private class AbortControlFlowException extends RuntimeException {
+		private static final long serialVersionUID = -8630126674490936951L;
+
+		public AbortControlFlowException() {
+			super();
+		}
 	}
 }
