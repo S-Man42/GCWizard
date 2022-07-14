@@ -29,6 +29,7 @@ List<String> textToBinaryList(String text) {
 }
 
 int extractIntegerFromText(String text) {
+  if (text == null) return null;
   var digits = text.replaceAll(RegExp(r'[^0-9]'), '');
   if (digits.length == 0) return null;
 
@@ -166,7 +167,8 @@ DateTime hoursToHHmmss(double hours) {
   return DateTime(0, 1, 1, h, min, sec, milliSec);
 }
 
-String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours = true}) {
+String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours: true}) {
+  if (hours == null) return null;
   var time = hoursToHHmmss(hours);
 
   var h = time.hour;
@@ -194,19 +196,20 @@ String formatHoursToHHmmss(double hours, {milliseconds: true, limitHours = true}
   return '$hourStr:$minutesStr:$secondsStr';
 }
 
-String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true, limitHours = true}) {
+String formatDurationToHHmmss(Duration duration, {days: true, milliseconds: true, limitHours: true}) {
   if(duration == null) return null;
 
   var sign = duration.isNegative ? '-' : '';
   var _duration = duration.abs();
-  var hours = days ? _duration.inHours : _duration.inHours.remainder(24);
+  var hours = days ? _duration.inHours.remainder(24) : _duration.inHours ;
   var minutes = _duration.inMinutes.remainder(60);
   var seconds = _duration.inSeconds.remainder(60);
+  var dayValue = limitHours ? _duration.inDays : _duration.inDays;
 
-  var hourFormat = hours +  (minutes / 60) + (seconds / 3600);
+  var hourFormat = hours + (minutes / 60) + (seconds / 3600);
 
   return sign +
-      (days ? _duration.inDays.toString() + ':' : '') +
+      (days ? dayValue.toString() + ':' : '') +
       formatHoursToHHmmss(hourFormat, milliseconds: milliseconds, limitHours: limitHours );
 }
 

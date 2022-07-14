@@ -945,12 +945,6 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'reverse',
     ]),
-    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'right_ascension_time_to_degree', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'right_ascension_time_to_degree',
-      'coordinates',
-    ]),
     GCWTool(
         tool: RomanNumbersSelection(),
         i18nPrefix: 'romannumbers',
@@ -1707,6 +1701,12 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
       'dates',
       'dates_calendar',
+    ]),
+    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'right_ascension_time_to_degree', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'right_ascension_time_to_degree',
+      'coordinates',
     ]),
 
     //DNASelection ************************************************************************************************

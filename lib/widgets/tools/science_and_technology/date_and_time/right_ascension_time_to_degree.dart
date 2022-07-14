@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
@@ -68,12 +69,12 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     _decDegreesController.dispose();
     _decMilliDegreesController.dispose();
 
-    _hoursFocusNode.dispose();
-    _minutesFocusNode.dispose();
-    _secondsFocusNode.dispose();
-    _mSecondsFocusNode.dispose();
+    _hoursFocusNode?.dispose();
+    _minutesFocusNode?.dispose();
+    _secondsFocusNode?.dispose();
+    _mSecondsFocusNode?.dispose();
 
-    _decMilliDegreesFocusNode.dispose();
+    _decMilliDegreesFocusNode?.dispose();
     super.dispose();
   }
 
@@ -224,7 +225,10 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   _parse(String input) {
     if(_currentMode == GCWSwitchPosition.left) {
       var deg = RaDeg.parse(input);
-      if (deg == null) return;
+      if (deg == null) {
+        showToast(i18n(context, 'right_ascension_time_to_degree_clipboard_nodatafound'));
+        return;
+      }
 
       _currentDecDegrees = deg.degress.abs().truncate().toString();
       _currentDecMilliDegrees = separateDecimalPlaces(deg.degress).toString();
@@ -234,7 +238,11 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
     } else {
       var equatorial = RightAscension.parse(input);
-      if (equatorial == null) return;
+      if (equatorial == null) {
+        showToast(i18n(context, 'right_ascension_time_to_degree_clipboard_nodatafound'));
+        return;
+      }
+
       var milliseconds = separateDecimalPlaces(equatorial.seconds);
       _currentDuration = Duration(
           hours: equatorial.hours,

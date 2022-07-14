@@ -9,7 +9,22 @@ import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 
-enum DateTimePickerConfig {SIGN, DATE, DAY, TIME, SECOND_AS_INT, TIME_MSEC, TIMEZONES }
+enum DateTimePickerConfig {
+  /// Show sign selection
+  SIGN,
+  /// Show year, day, month
+  DATE,
+  /// Show days
+  DAY,
+  /// Show hour, minutes, seconds, milliseconds
+  TIME,
+  /// Show seconds without decimal places
+  SECOND_AS_INT,
+  /// Show milliseconds (option for SECOND_AS_INT)
+  TIME_MSEC,
+  /// Show timezones
+  TIMEZONES
+}
 
 class TimeZone {
   final int offset;
