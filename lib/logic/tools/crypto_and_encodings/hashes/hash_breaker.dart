@@ -1,5 +1,6 @@
-import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'dart:isolate';
+
+import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 
 class HashBreakerJobData {
   final String input;

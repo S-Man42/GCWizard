@@ -6,6 +6,17 @@ flutter pub global activate dart_style
 dart format lib -l 120
 
 ==============================
+Build Checklist
+
+- Crowdin translations: crowdin download
+- Project explorer, project root, right click -> Optimize Imports
+- Format code: dart format lib -l 120
+- flutter upgrade
+- flutter pub get
+- Build
+
+==============================
+
 
 Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
@@ -80,3 +91,6 @@ scoop bucket add extras
 scoop install jq
 
 Run Scripts in external_helpers/crowdin using the GitBash
+
+Crowdin Upload: crowdin upload sources
+Crowdin Download: crowdin download

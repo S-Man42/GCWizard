@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 
 /// Basic functions for encoding/decoding substitution ciphers with a given key
 class Key {
