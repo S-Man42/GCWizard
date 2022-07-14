@@ -20,6 +20,7 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -112,7 +113,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
     if (widget.isEditable) _persistanceAdapter = MapViewPersistenceAdapter(widget);
 
-    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
   }
 
   @override
@@ -200,15 +201,18 @@ class GCWMapViewState extends State<GCWMapView> {
             FlutterMap(
               mapController: _mapController,
               options: MapOptions(
+                  allowPanningOnScrollingParent: false,
+
+                  /// IMPORTANT for dragging
                   bounds: _getBounds(),
                   boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
                   minZoom: 1.0,
                   maxZoom: 18.0,
                   interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
                   plugins: [TappablePolylineMapPlugin()],
-                  onTap: (_) => _popupLayerController.hidePopup(),
+                  onTap: (_, __) => _popupLayerController.hidePopup(),
                   onLongPress: widget.isEditable
-                      ? (LatLng coordinate) {
+                      ? (_, LatLng coordinate) {
                           setState(() {
                             var newPoint = _persistanceAdapter.addMapPoint(coordinate);
 
@@ -244,8 +248,8 @@ class GCWMapViewState extends State<GCWMapView> {
                   opacity: 0.7,
                 ),
                 onTap: () {
-                  launch(
-                      i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL));
+                  launchUrl(Uri.parse(
+                      i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL)));
                 },
               ),
             )
@@ -261,7 +265,7 @@ class GCWMapViewState extends State<GCWMapView> {
         !_locationSubscription.isPaused &&
         _currentAccuracy != null &&
         _currentPosition != null) {
-      var filled = Prefs.get('mapview_circle_colorfilled');
+      var filled = Prefs.get(PREFERENCE_MAPVIEW_CIRCLE_COLORFILLED);
       var circleColor = COLOR_MAP_USERPOSITION.withOpacity(filled ?? false ? 0.3 : 0.0);
 
       layers.add(CircleLayerWidget(
@@ -294,7 +298,7 @@ class GCWMapViewState extends State<GCWMapView> {
           options: PopupMarkerLayerOptions(
               markers: _markers,
               popupSnap: PopupSnap.markerTop,
-              popupController: _popupLayerController,
+              popupController: _popupLayerController.popupController,
               popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker))),
     ]);
 
@@ -925,13 +929,33 @@ class _GCWTappablePolyline extends TaggedPolyline {
         );
 }
 
-class _GCWMapPopupController extends PopupController {
+class _GCWMapPopupController {
   MapController mapController;
+  PopupController popupController;
 
-  @override
+  _GCWMapPopupController() {
+    popupController = PopupController();
+  }
+
   void togglePopup(Marker marker) {
     if (mapController != null) mapController.move(marker.point, mapController.zoom);
-    super.togglePopup(marker);
+    popupController.togglePopup(marker);
+  }
+
+  void showPopupsAlsoFor(List<Marker> markers, {bool disableAnimation = false}) {
+    popupController.showPopupsAlsoFor(markers, disableAnimation: disableAnimation);
+  }
+
+  void showPopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}) {
+    popupController.showPopupsOnlyFor(markers, disableAnimation: disableAnimation);
+  }
+
+  void hidePopup({bool disableAnimation = false}) {
+    popupController.hideAllPopups(disableAnimation: disableAnimation);
+  }
+
+  void hidePopupsOnlyFor(List<Marker> markers, {bool disableAnimation = false}) {
+    popupController.hidePopupsOnlyFor(markers, disableAnimation: disableAnimation);
   }
 }
 

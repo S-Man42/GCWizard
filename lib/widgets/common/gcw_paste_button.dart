@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
@@ -91,7 +92,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
           })
     ];
 
-    var gcwClipboard = Prefs.getStringList('clipboard_items').map((clipboardItem) {
+    var gcwClipboard = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS).map((clipboardItem) {
       var item = jsonDecode(clipboardItem);
 
       var datetime = DateTime.fromMillisecondsSinceEpoch(int.tryParse(item['created']));
@@ -121,7 +122,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
             padding: EdgeInsets.only(bottom: 15),
           ),
           action: (index) {
-            var pasteData = jsonDecode(Prefs.getStringList('clipboard_items')[index - 2])['text'];
+            var pasteData = jsonDecode(Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS)[index - 2])['text'];
             widget.onSelected(pasteData);
             insertIntoGCWClipboard(context, pasteData, useGlobalClipboard: false);
           });

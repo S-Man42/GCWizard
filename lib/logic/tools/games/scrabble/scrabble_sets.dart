@@ -1,6 +1,7 @@
 const scrabbleID_EN = "EN";
 const scrabbleID_ENSuperScrabble = "EN SuperScrabble";
 const scrabbleID_D = "D";
+const scrabbleID_D_Gender = "D (Gender)";
 const scrabbleID_D1955 = "D 1955";
 const scrabbleID_D55_87 = "D 1955-1987";
 const scrabbleID_DNorthAmerica = "D North America";
@@ -152,6 +153,39 @@ final scrabbleSets = {
     String.fromCharCode(196): _LetterAttribute(6, 1), //Ä
     String.fromCharCode(214): _LetterAttribute(8, 1), //Ö
     String.fromCharCode(220): _LetterAttribute(6, 1), //Ü
+  }),
+  scrabbleID_D_Gender: ScrabbleSet(scrabbleID_D_Gender, 'scrabble_version_d_gendered_2022', {
+    ' ': _LetterAttribute(0, 2),
+    'A': _LetterAttribute(1, 5),
+    'B': _LetterAttribute(3, 2),
+    'C': _LetterAttribute(4, 2),
+    'D': _LetterAttribute(1, 4),
+    'E': _LetterAttribute(1, 15),
+    'F': _LetterAttribute(4, 2),
+    'G': _LetterAttribute(2, 3),
+    'H': _LetterAttribute(2, 4),
+    'I': _LetterAttribute(1, 6),
+    'J': _LetterAttribute(6, 1),
+    'K': _LetterAttribute(4, 2),
+    'L': _LetterAttribute(2, 3),
+    'M': _LetterAttribute(3, 4),
+    'N': _LetterAttribute(1, 9),
+    'O': _LetterAttribute(2, 3),
+    'P': _LetterAttribute(4, 1),
+    'Q': _LetterAttribute(10, 1),
+    'R': _LetterAttribute(1, 6),
+    'S': _LetterAttribute(1, 7),
+    'T': _LetterAttribute(1, 6),
+    'U': _LetterAttribute(1, 6),
+    'V': _LetterAttribute(6, 1),
+    'W': _LetterAttribute(3, 1),
+    'X': _LetterAttribute(8, 1),
+    'Y': _LetterAttribute(10, 1),
+    'Z': _LetterAttribute(3, 1),
+    String.fromCharCode(196): _LetterAttribute(6, 1), //Ä
+    String.fromCharCode(214): _LetterAttribute(8, 1), //Ö
+    String.fromCharCode(220): _LetterAttribute(6, 1), //Ü
+    '*IN': _LetterAttribute(10, 1),
   }),
   scrabbleID_D1955: ScrabbleSet(scrabbleID_D1955, 'scrabble_version_d_1955', {
     ' ': _LetterAttribute(0, 2),

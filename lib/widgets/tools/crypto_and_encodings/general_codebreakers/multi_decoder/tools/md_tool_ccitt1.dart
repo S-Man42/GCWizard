@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
 
 const MDT_INTERNALNAMES_CCITT1 = 'multidecoder_tool_ccitt1_title';
-const MDT_CCITT1_OPTION_MODE = 'ccitt1_numeralbase';
+const MDT_CCITT1_OPTION_MODE = 'common_mode';
 
 const MDT_CCITT1_OPTION_MODE_DENARY = 'common_numeralbase_denary';
 const MDT_CCITT1_OPTION_MODE_BINARY = 'common_numeralbase_binary';

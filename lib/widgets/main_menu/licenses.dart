@@ -91,6 +91,7 @@ class LicensesState extends State<Licenses> {
         children: columnedMultiLineOutput(null, [
           ['several', 'myGeoTools'],
           ['several', 'Wikipedia'],
+          [i18n(context, 'symboltables_alien_mushrooms_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_cirth_erebor_title'), '(Personal Use)'],
           [i18n(context, 'symboltables_christmas_title'), 'StudioMIES (Personal Use)'],
           [i18n(context, 'symboltables_dragon_language_title'), '(Personal Use)'],

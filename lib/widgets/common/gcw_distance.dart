@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:prefs/prefs.dart';
@@ -41,7 +42,7 @@ class _GCWDistanceState extends State<GCWDistance> {
       _controller = TextEditingController(text: _currentInput['text']);
     }
 
-    _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+    _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
   }
 
   @override

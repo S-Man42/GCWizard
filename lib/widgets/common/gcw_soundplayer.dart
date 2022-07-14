@@ -6,7 +6,6 @@ import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart'; // https://pub.dev/packages/audioplayers
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -63,7 +62,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       });
     });
 
-    _onPositionChangedStream = advancedPlayer.onAudioPositionChanged.listen((Duration p) {
+    _onPositionChangedStream = advancedPlayer.onPositionChanged.listen((Duration p) {
       setState(() {
         _currentPositionInMS = p.inMilliseconds;
 
@@ -75,7 +74,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
       });
     });
 
-    _onCompletionStream = advancedPlayer.onPlayerCompletion.listen((event) {
+    _onCompletionStream = advancedPlayer.onPlayerComplete.listen((event) {
       onComplete();
     });
   }
@@ -194,7 +193,7 @@ class _GCWSoundPlayerState extends State<GCWSoundPlayer> {
 
         await advancedPlayer.resume();
       } else {
-        await advancedPlayer.play(_audioFile.path, isLocal: true);
+        await advancedPlayer.play(DeviceFileSource(_audioFile.path));
       }
 
       setState(() => playerState = PlayerState.playing);
