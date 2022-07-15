@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -301,7 +302,7 @@ class _MainViewState extends State<MainView> {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      var countAppOpened = Prefs.getInt('app_count_opened');
+      var countAppOpened = Prefs.getInt(PREFERENCE_APP_COUNT_OPENED);
 
       if (countAppOpened > 1 && Prefs.getString('changelog_displayed') != CHANGELOG.keys.first) {
         _showWhatsNewDialog();
@@ -313,8 +314,8 @@ class _MainViewState extends State<MainView> {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
-          i18n(context, 'common_support_text', parameters: [Prefs.getInt('app_count_opened')]),
-          () => launch(i18n(context, 'common_support_link')),
+          i18n(context, 'common_support_text', parameters: [Prefs.getInt(PREFERENCE_APP_COUNT_OPENED)]),
+          () => launchUrl(Uri.parse(i18n(context, 'common_support_link'))),
         );
       }
     });
@@ -339,13 +340,13 @@ class _MainViewState extends State<MainView> {
     return DefaultTabController(
       length: 3,
       initialIndex:
-          Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
+          Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB) ? Prefs.get(PREFERENCE_TABS_DEFAULT_TAB) : Prefs.get(PREFERENCE_TABS_LAST_VIEWED_TAB),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
             bottom: TabBar(
               onTap: (value) {
-                Prefs.setInt('tabs_last_viewed_tab', value);
+                Prefs.setInt(PREFERENCE_TABS_LAST_VIEWED_TAB, value);
               },
               tabs: [
                 Tab(icon: Icon(Icons.category)),
@@ -361,7 +362,7 @@ class _MainViewState extends State<MainView> {
           children: [
             GCWToolList(toolList: toolList ?? _categoryList),
             GCWToolList(toolList: toolList ?? _mainToolList),
-            GCWToolList(toolList: toolList ?? Favorites.toolList),
+            GCWToolList(toolList: toolList ?? Favorites.favoritedGCWTools()),
           ],
         ),
       ),

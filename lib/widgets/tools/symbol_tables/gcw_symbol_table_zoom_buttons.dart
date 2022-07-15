@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:prefs/prefs.dart';
 
@@ -27,8 +28,8 @@ class GCWSymbolTableZoomButtonsState extends State<GCWSymbolTableZoomButtons> {
               int newCountColumn = max(widget.countColumns - 1, 1);
 
               widget.mediaQueryData.orientation == Orientation.portrait
-                  ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                  : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  ? Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT, newCountColumn)
+                  : Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE, newCountColumn);
 
               widget.onChanged();
             });
@@ -41,8 +42,8 @@ class GCWSymbolTableZoomButtonsState extends State<GCWSymbolTableZoomButtons> {
               int newCountColumn = widget.countColumns + 1;
 
               widget.mediaQueryData.orientation == Orientation.portrait
-                  ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                  : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  ? Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_PORTRAIT, newCountColumn)
+                  : Prefs.setInt(PREFERENCE_SYMBOLTABLES_COUNTCOLUMNS_LANDSCAPE, newCountColumn);
 
               widget.onChanged();
             });

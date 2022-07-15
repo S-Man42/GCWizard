@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:universal_html/html.dart' as html;
+
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 import 'package:file_picker_writable/file_picker_writable.dart';
@@ -15,6 +15,7 @@ import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:unrar_file/unrar_file.dart';
 
 enum FileType {

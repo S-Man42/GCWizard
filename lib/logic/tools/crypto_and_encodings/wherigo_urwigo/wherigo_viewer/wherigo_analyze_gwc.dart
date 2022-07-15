@@ -89,6 +89,7 @@
 
 import 'dart:isolate';
 import 'dart:typed_data';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
 
 StringOffset readString(Uint8List byteList, int offset) {

@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/generate_quadgrams.dart';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/generate_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:path/path.dart' as path;

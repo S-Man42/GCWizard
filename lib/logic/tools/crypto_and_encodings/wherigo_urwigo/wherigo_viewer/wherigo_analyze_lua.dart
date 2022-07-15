@@ -1,11 +1,11 @@
 // Code snippet for accessing REST API
 // https://medium.com/nerd-for-tech/multipartrequest-in-http-for-sending-images-videos-via-post-request-in-flutter-e689a46471ab
 
+import 'dart:async';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:async';
-import 'package:flutter/material.dart';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
@@ -1217,7 +1217,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             } while (!sectionAnalysed); // end of section
           } // end of NIL
 
-          else if (_SectionEnd(lines[i])) {
+          else if (_OnGetInputSectionEnd(lines[i])) {
             //
             if (insideInputFunction) {
               answerList.forEach((answer) {
@@ -1230,7 +1230,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               answerActions = [];
               answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
             }
-          } else if ((i + 1 < lines.length - 1) && _FunctionEnd(lines[i], lines[i + 1].trim())) {
+          } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
               answerActions.forEach((element) {});
@@ -1264,7 +1264,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           } // end buttons
 
           else {
-            action = _handleLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
+            action = _handleAnswerLine(lines[i].trimLeft(), _obfuscatorTable, _obfuscatorFunction);
             if (action != null) {
               answerActions.add(action);
               answerActions.forEach((element) {});
@@ -1526,6 +1526,7 @@ List<String> _getAnswers(
   } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
+    line = line.split('and')[0];
     line = line
         .trim()
         .replaceAll('if ', '')
@@ -1589,7 +1590,7 @@ List<String> _getAnswers(
   }
 }
 
-bool _SectionEnd(String line) {
+bool _OnGetInputSectionEnd(String line) {
   if (line.trim().startsWith('if input == ') ||
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('if _Urwigo.Hash(') ||
@@ -1604,12 +1605,12 @@ bool _SectionEnd(String line) {
     return false;
 }
 
-bool _FunctionEnd(String line1, String line2) {
+bool _OnGetInputFunctionEnd(String line1, String line2) {
   return (line1.trimLeft().startsWith('end') &&
       (line2.trimLeft().startsWith('function') || line2.trimLeft().startsWith('return')));
 }
 
-ActionMessageElementData _handleLine(String line, String dtable, String obfuscator) {
+ActionMessageElementData _handleAnswerLine(String line, String dtable, String obfuscator) {
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());

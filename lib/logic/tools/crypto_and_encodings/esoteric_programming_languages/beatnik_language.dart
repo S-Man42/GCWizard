@@ -5,8 +5,9 @@
 // - http://search.cpan.org/~beatnik/Acme-Beatnik-0.02/Beatnik.pm
 // - https://github.com/catseye/Beatnik
 
-import 'package:gc_wizard/logic/tools/games/scrabble/scrabble.dart';
 import 'dart:math';
+
+import 'package:gc_wizard/logic/tools/games/scrabble/scrabble.dart';
 
 class BeatnikOutput {
   final List<String> output;

@@ -31,7 +31,6 @@
  * @date 15.05.2012
  * @version 0.1
  */
-
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
