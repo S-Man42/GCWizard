@@ -65,12 +65,9 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes
     }
 
     List<GCWFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE) {
+    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
       children = await extractArchive(GCWFile(name: data.name, bytes: resultBytes));
-      if (children?.length == 1 && getFileType(children[0].bytes) == FileType.TAR)
-        // FileType gz/bz2 -> tar
-        children = await extractArchive(children[0]);
-    }
+
 
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
@@ -92,14 +89,14 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes
       if ((result.children == null) || (result.children.length == 0))
         _searchMagicBytes(result, fileTypeList);
       else
-        result.children.forEach((element) async {
-          if (fileClass(getFileType(element.bytes)) == FileClass.ARCHIVE) {
+        result.children.forEach((data) async {
+          if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
             // clone byte (I have no idea why this is actually necessary)
-            var result = GCWFile(name: element.name, bytes: element.bytes.sublist(0), children: element.children);
-            var children = await _hiddenData(result);
-            resultList.addAll(children);
+            var children = await _hiddenData(GCWFile(bytes: data.bytes.sublist(0)));
+            if ((children != null) && (children.length > 0))
+              if (data.children != null) data.children.addAll(children);
           } else
-            _searchMagicBytes(element, fileTypeList);
+            _searchMagicBytes(data, fileTypeList);
         });
     });
   }
