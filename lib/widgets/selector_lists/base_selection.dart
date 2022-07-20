@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
+import 'package:gc_wizard/tools/common/gcw_tool/widget/gcw_tool.dart';
+import 'package:gc_wizard/tools/common/gcw_toollist/widget/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base122.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base58.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base91.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base122/widget/base122.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base16/widget/base16.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base32/widget/base32.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base58/widget/base58.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base64/widget/base64.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base85/widget/base85.dart';
+import 'package:gc_wizard/tools/crypto_and_encodings/base/base91/widget/base91.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 
 class BaseSelection extends GCWSelection {
   @override

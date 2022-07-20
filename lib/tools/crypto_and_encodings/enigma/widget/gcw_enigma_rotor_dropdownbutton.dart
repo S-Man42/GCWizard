@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../logic/enigma.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_abc_dropdownbutton.dart';
+import 'package:gc_wizard/tools/common/base/gcw_dropdownbutton/widget/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/tools/common/gcw_abc_dropdownbutton/widget/gcw_abc_dropdownbutton.dart';
 
 class GCWEnigmaRotorDropDownButton extends StatefulWidget {
   final Function onChanged;

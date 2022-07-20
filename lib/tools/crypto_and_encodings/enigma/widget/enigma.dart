@@ -3,16 +3,16 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import '../logic/enigma.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/tools/common/base/gcw_output_text/widget/gcw_output_text.dart';
+import 'package:gc_wizard/tools/common/base/gcw_textfield/widget/gcw_textfield.dart';
+import 'package:gc_wizard/tools/common/gcw_dropdown_spinner/widget/gcw_dropdown_spinner.dart';
+import 'package:gc_wizard/tools/common/gcw_integer_spinner/widget/gcw_integer_spinner.dart';
+import 'package:gc_wizard/tools/common/gcw_multiple_output/widget/gcw_multiple_output.dart';
+import 'package:gc_wizard/tools/common/gcw_onoff_switch/widget/gcw_onoff_switch.dart';
+import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
 import 'gcw_enigma_rotor_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
+import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
+import 'package:gc_wizard/tools/utils/textinputformatter/wrapper_for_masktextinputformatter/widget/wrapper_for_masktextinputformatter.dart';
 
 class Enigma extends StatefulWidget {
   @override
