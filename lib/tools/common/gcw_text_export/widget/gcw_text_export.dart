@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/tools/common/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/tools/images_and_files/qr_code/logic/qr_code.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/tools/common/base/gcw_button/widget/gcw_button.dart';
@@ -10,8 +11,6 @@ import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptio
 import 'package:gc_wizard/tools/utils/common_widget_utils/widget/common_widget_utils.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:intl/intl.dart';
-
-import 'package:gc_wizard/tools/common/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
 
 enum TextExportMode { TEXT, QR }
 enum PossibleExportMode { TEXTONLY, QRONLY, BOTH }

@@ -4,15 +4,14 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/tools/common/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
+import 'package:gc_wizard/tools/common/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/base/n_segment_display/widget/n_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/utils/widget/utils.dart';
 import 'package:gc_wizard/tools/utils/file_utils/widget/file_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
-
-import 'package:gc_wizard/tools/common/base/gcw_iconbutton/widget/gcw_iconbutton.dart';
-import 'package:gc_wizard/tools/common/gcw_exported_file_dialog/widget/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/tools/common/gcw_text_divider/widget/gcw_text_divider.dart';
 
 class GCWSegmentDisplayOutput extends StatefulWidget {
   final bool upsideDownButton;

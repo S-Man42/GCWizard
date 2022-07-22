@@ -15,7 +15,7 @@ import 'package:gc_wizard/tools/science_and_technology/segment_display/base/14_s
 import 'package:gc_wizard/tools/science_and_technology/segment_display/base/16_segment_display/widget/16_segment_display.dart';
 import 'package:gc_wizard/tools/science_and_technology/segment_display/base/7_segment_display/widget/7_segment_display.dart';
 
-import 'package:gc_wizard/tools/science_and_technology/segment_display/base/n_segment_display/widget/n_segment_display.dart';
+import 'package:gc_wizard/tools/science_and_technology/segment_displayase/n_segment_display/widget/n_segment_display.dart';
 
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;

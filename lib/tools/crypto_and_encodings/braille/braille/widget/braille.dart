@@ -13,7 +13,6 @@ import 'package:gc_wizard/tools/common/gcw_twooptions_switch/widget/gcw_twooptio
 
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_euro_segment_display/widget/braille_euro_segment_display.dart';
 import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_segment_display/widget/braille_segment_display.dart';
-import 'package:gc_wizard/tools/crypto_and_encodings/braille/braille_segment_display/widget/braille_segment_display.dart';
 
 class Braille extends StatefulWidget {
   @override

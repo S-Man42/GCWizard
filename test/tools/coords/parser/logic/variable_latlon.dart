@@ -2,9 +2,9 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/tools/common/units/logic/unit_category.dart';
 import 'package:gc_wizard/tools/coords/data/logic/ellipsoid.dart';
 import 'package:gc_wizard/tools/coords/parser/logic/variable_latlon.dart';
-import 'package:gc_wizard/tools/coords/utils/utils/widget/utils.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../utils.dart';
 
 void main() {
   group("Parser.variableLatLon.parseVariableLatLon:", () {

@@ -1,7 +1,7 @@
 import "package:flutter_test/flutter_test.dart";
-import "../../converter/logic/dec.dart";
-import "../../converter/logic/dmm.dart";
-import "../../converter/logic/dms.dart";
+import "../converter/dec.dart";
+import "../converter/dmm.dart";
+import "../converter/dms.dart";
 import 'package:gc_wizard/tools/coords/parser/logic/latlon.dart';
 
 void main() {
