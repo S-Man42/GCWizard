@@ -122,8 +122,8 @@ class ShadowLengthState extends State<ShadowLength> {
     _currentBearing = sunPosition.azimuth + 180;
 
     var outputsShadow = [
-      [i18n(context, 'shadowlength_length') + ': $lengthOutput'],
-      [i18n(context, 'shadowlength_shadow_direction') + ': ' + format.format(_currentBearing) + '°'],
+      [i18n(context, 'shadowlength_length'), lengthOutput],
+      [i18n(context, 'shadowlength_shadow_direction'), format.format(_currentBearing) + '°'],
     ];
     var rowsShadowData = columnedMultiLineOutput(context, outputsShadow);
     var outputShadowData = GCWDefaultOutput(
