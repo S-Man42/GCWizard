@@ -2722,13 +2722,6 @@ bool _isNavi(String element) {
       .replaceAll('ki', '');
 
   return (element == '');
-  var expr = RegExp(
-      r'(mezazam|pxezazam|tsizazam|mrrzazam|puzazam|kizazam|zazam)?(mevozam|pxevozam|tsivozam|mrrvozam|puvozam|kivozam|vozam)?(mezam|pxezam|tsizam|mrrzam|puzam|kizam|zam)?(mevol|pxevol|tsivol|mrrvol|puvol|kivol|vol)?(mevo|pxevo|tsivo|mrrvo|puvo|kivo|vo)?(kew|aw|mun|peysing|mrr|fu|hin)?(aw|mune|pxey|tsing|mrr|pukap|kinae)?');
-  if (expr.firstMatch(element).group(0) != '' && expr.firstMatch(element).group(0) == element) {
-    return true;
-  } else {
-    return false;
-  }
 }
 
 String _decodeNavi(String element) {
