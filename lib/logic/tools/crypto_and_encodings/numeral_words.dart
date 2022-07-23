@@ -2720,7 +2720,7 @@ bool _isNavi(String element) {
       .replaceAll('sing', '')
       .replaceAll('za', '')
       .replaceAll('ki', '');
-  print(element);
+
   return (element == '');
   var expr = RegExp(
       r'(mezazam|pxezazam|tsizazam|mrrzazam|puzazam|kizazam|zazam)?(mevozam|pxevozam|tsivozam|mrrvozam|puvozam|kivozam|vozam)?(mezam|pxezam|tsizam|mrrzam|puzam|kizam|zam)?(mevol|pxevol|tsivol|mrrvol|puvol|kivol|vol)?(mevo|pxevo|tsivo|mrrvo|puvo|kivo|vo)?(kew|aw|mun|peysing|mrr|fu|hin)?(aw|mune|pxey|tsing|mrr|pukap|kinae)?');
@@ -2733,10 +2733,11 @@ bool _isNavi(String element) {
 
 String _decodeNavi(String element) {
   // https://de.wikipedia.org/wiki/Na%E2%80%99vi-Sprache#Zahlen
+  // https://james-camerons-avatar.fandom.com/de/wiki/Oktale_Arithmetik
   // https://forum.learnnavi.org/navi-lernen/das-navi-zahlensystem/#:~:text=Das%20Na%27vi%20hat%20zwei%20Lehnw%C3%B6rter%20aus%20dem%20Englischen.,Ziffern%2C%20wie%20z.%20B.%20Telefonnummern%2C%20Autokennzeichen%2C%20IDs%20etc.
   String octal = '';
   if (NAVIWordToNum[element] != null) return NAVIWordToNum[element];
-print('start '+element);
+
   element = element
       .replaceAll('zame', 'zamme')
       .replaceAll('zavo', 'zamvo')
@@ -2755,7 +2756,6 @@ print('start '+element);
       .replaceAll('vohin', 'volhin')
   ;
 
-  print('4096  '+element + ' '+octal);
   // check 4096
   if (element.contains('kizazam') ||
       element.contains('puzazam') ||
@@ -2794,7 +2794,7 @@ print('start '+element);
     }
   } else
     octal = '0';
-  print(' 512  '+element + ' '+octal);
+
   // check 512
   if (element.contains('kivozam') ||
       element.contains('puvozam') ||
@@ -2833,7 +2833,7 @@ print('start '+element);
     }
   } else
     octal = octal + '0';
-  print('  64  '+element + ' '+octal);
+
   // check 64
   if (element.contains('kizam') ||
       element.contains('puzam') ||
@@ -2872,7 +2872,7 @@ print('start '+element);
     }
   } else
     octal = octal + '0';
-  print('   8  '+element + ' '+octal);
+
   // check 8
   if (element.contains('kivol') ||
       element.contains('puvol') ||
@@ -2914,7 +2914,6 @@ print('start '+element);
     octal = octal + '0';
 
     // check 1
-    print('   1  '+element + ' '+octal);
     if (element.contains('hin') ||
         element.contains('fu') ||
         element.contains('mrr') ||
@@ -2940,7 +2939,6 @@ print('start '+element);
     } else
       octal = octal + '0';
 
-  print('final '+element + ' '+octal);
   return convertBase(octal, 8, 10);
 }
 
@@ -3239,9 +3237,12 @@ OutputConvertToNumeralWord _encodeNavi(int currentNumber) {
   }
   return OutputConvertToNumeralWord(
       numeralWord
+          .replaceAll('zamk', 'zak')
           .replaceAll('zamm', 'zam')
           .replaceAll('zamp', 'zap')
+          .replaceAll('zams', 'zas')
           .replaceAll('zamt', 'zat')
+          .replaceAll('zamv', 'zav')
           .replaceAll('voaw', 'volaw'),
       convertBase(currentNumber.toString(), 10, 8),
       'common_numeralbase_octenary',
