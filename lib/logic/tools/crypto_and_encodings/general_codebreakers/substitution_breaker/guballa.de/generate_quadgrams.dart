@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/Key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/generate_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 
 String _alphabet;
 List<int> _quadgrams;
@@ -27,7 +27,8 @@ Future<BreakerResult> generateQuadgrams(
 
   var iterator = _file_iterator(corpus_fh, _alphabet);
   var quadgram_val = 0;
-  var quadgrams = <double>[pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength]; //_alphabet.length
+  var quadgrams =
+      List.filled(pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength, 0.0); //_alphabet.length
   quadgrams.fillRange(0, quadgrams.length, 0);
 
   var idx = 0;

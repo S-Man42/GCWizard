@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:latlong2/latlong.dart';
