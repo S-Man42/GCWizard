@@ -176,6 +176,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/magic_eye.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
@@ -550,6 +551,7 @@ void _initStaticToolList() {
       className(KarolRobot()),
       className(Kenny()),
       className(KeyboardSelection()),
+      className(MagicEye()),
       className(Malbolge()),
       className(MapView()),
       className(MayaCalendarSelection()),

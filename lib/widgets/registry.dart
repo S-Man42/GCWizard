@@ -266,6 +266,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/magic_eye.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
@@ -795,6 +796,12 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'languagegames_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
+    GCWTool(tool: MagicEye(), i18nPrefix: 'magic_eye', isBeta: true,
+        categories: [ToolCategory.IMAGES_AND_FILES],
+        searchKeys: [
+        'magic_eye',
+        'images'
+    ]),
     GCWTool(
         tool: MayaCalendarSelection(),
         categories: [ToolCategory.CRYPTOGRAPHY],
@@ -1106,6 +1113,7 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'visualcryptography',
+      'images'
     ]),
     GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
       ToolCategory.CRYPTOGRAPHY
