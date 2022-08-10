@@ -47,7 +47,7 @@ class MagicEyeState extends State<MagicEye> {
           }
 
           _decodeImage = _file;
-          _imageData == null;
+          _imageData = null;
           _outData = null;
           _displacement = null;
 
@@ -77,9 +77,6 @@ class MagicEyeState extends State<MagicEye> {
   }
 
   Widget _buildOutputDecode() {
-    if (_decodeImage == null) return null;
-
-
     if (_outData == null) return null;
 
     return Column(children: <Widget>[
@@ -92,7 +89,7 @@ class MagicEyeState extends State<MagicEye> {
   }
 
 
-  Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
+  GCWAsyncExecuterParameters _buildJobDataDecode() {
     return GCWAsyncExecuterParameters(Tuple3<Uint8List, Image.Image, int>(
         _decodeImage?.bytes, _imageData, _displacement));
   }

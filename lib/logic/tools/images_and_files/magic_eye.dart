@@ -11,9 +11,9 @@ const MAX_TESTED_LINES_COUNT = 50;
 Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  var image = jobData.parameters.item1;
-  var imageData = jobData.parameters.item2;
-  var displacement = jobData.parameters.item3;
+  Uint8List image = jobData.parameters.item1;
+  Image.Image imageData = jobData.parameters.item2;
+  int displacement = jobData.parameters.item3;
 
   if (image == null) return null;
   if (imageData == null)
@@ -22,8 +22,7 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) as
     displacement = magicEyeSolver(imageData);
 
   var outputImage = createResultImage(imageData, displacement);
-
-  var result = Tuple3<Image.Image, Uint8List, int>(image, outputImage, displacement);
+  var result = Tuple3<Image.Image, Uint8List, int>(imageData, outputImage, displacement);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(result);
 
