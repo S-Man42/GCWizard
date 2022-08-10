@@ -1,4 +1,4 @@
-// source https://piellardj.github.io/stereogram-solver/
+// source: https://piellardj.github.io/stereogram-solver/
 
 import 'dart:typed_data';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -34,6 +34,7 @@ Image.Image decodeImage(Uint8List image) {
   return Image.decodeImage(image);
 }
 
+/// calculate the displacement
 int magicEyeSolver(Image.Image image) {
   if (image == null) return null;
 
@@ -77,11 +78,12 @@ List<int> _computeTestedLines(Image.Image image) {
   return lines;
 }
 
-/// when reaching the correct delta, on most stereograms the total difference is at its lowest, and goes right up just after
-/// so try to detect this point
+/// when reaching the correct delta, on most stereograms the total difference is at its lowest,
+/// and goes right up just after, so try to detect this point
 int _computeBestDisplacement(List<double> differences) {
   var highestGradientIndex = 1;
   var highestGradient = -1.0;
+
   for (var i = 2; i < differences.length - 1; i++)
   {
     var gradient = differences[i + 1] - differences[i];
@@ -96,7 +98,7 @@ int _computeBestDisplacement(List<double> differences) {
   for (var i = 0; i < 3; i++)
   {
     if (highestGradientIndex > 0 && differences[highestGradientIndex - 1] < differences[highestGradientIndex])
-    highestGradientIndex--;
+      highestGradientIndex--;
   }
   return highestGradientIndex;
 }
