@@ -1,15 +1,42 @@
-import 'dart:isolate';
+// source https://piellardj.github.io/stereogram-solver/
+
 import 'dart:typed_data';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
+import 'package:tuple/tuple.dart';
 
+const int MIN_DISPLACEMENT_ALLOWED = 10;
+const MAX_TESTED_LINES_COUNT = 50;
+
+Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) async {
+  if (jobData == null) return null;
+
+  var image = jobData.parameters.item1;
+  var imageData = jobData.parameters.item2;
+  var displacement = jobData.parameters.item3;
+
+  if (image == null) return null;
+  if (imageData == null)
+    imageData = decodeImage(image);
+  if (displacement == null)
+    displacement = magicEyeSolver(imageData);
+
+  var outputImage = createResultImage(imageData, displacement);
+
+  var result = Tuple3<Image.Image, Uint8List, int>(image, outputImage, displacement);
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(result);
+
+  return Future.value(result);
+}
 
 Image.Image decodeImage(Uint8List image) {
   return Image.decodeImage(image);
 }
 
 int magicEyeSolver(Image.Image image) {
-  const int MIN_DISPLACEMENT_ALLOWED = 10;
+  if (image == null) return null;
+
   var testedLines = _computeTestedLines(image);
   int maxDisplacementAllowed = (image.width / 3).toInt();
 
@@ -39,7 +66,8 @@ int magicEyeSolver(Image.Image image) {
 }
 
 List<int> _computeTestedLines(Image.Image image) {
-  const MAX_TESTED_LINES_COUNT = 50;
+  if (image == null) return null;
+
   var lines = <int>[];
   var delta = (image.height < MAX_TESTED_LINES_COUNT) ? 1 : (image.height / MAX_TESTED_LINES_COUNT);
 
@@ -74,7 +102,10 @@ int _computeBestDisplacement(List<double> differences) {
 }
 
 Uint8List createResultImage(Image.Image image, int displacement) {
+  if (image == null || displacement == null) return null;
+
   var bitmap = Image.Image(image.width, image.height);
+
   for (int y = 0; y < bitmap.height; y++)
     for (int x = 0; x < displacement; x++)
       bitmap.setPixel(x, y, image.getPixel(x, y));

@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 
 class MagicEye extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class MagicEyeState extends State<MagicEye> {
   GCWFile _decodeImage;
   Image.Image _imageData;
   Uint8List _outData;
-  var _decodeOffsetsX = 0;
+  int _displacement = null;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +46,13 @@ class MagicEyeState extends State<MagicEye> {
             return;
           }
 
-          setState(() {
-            _decodeImage = _file;
-            _outData = null;
-            _decodeOffsetsX = 0;
+          _decodeImage = _file;
+          _imageData == null;
+          _outData = null;
+          _displacement = null;
+
+          decodeImageAsync(_buildJobDataDecode()).then((output) {
+            _saveOutputDecode(output);
           });
         },
       ),
@@ -56,16 +60,17 @@ class MagicEyeState extends State<MagicEye> {
       Container(height: 25),
       GCWIntegerSpinner(
         title: i18n(context, 'magic_eye_offset'),
-        value: _decodeOffsetsX,
+        value: _displacement,
         onChanged: (value) {
           setState(() {
-            _decodeOffsetsX = value;
+            _displacement = value;
             _outData = null;
+            decodeImageAsync(_buildJobDataDecode()).then((output) {
+              _saveOutputDecode(output);
+            });
           });
         },
       ),
-
-      //_buildDecodeSubmitButton(),
 
       GCWDefaultOutput(child: _buildOutputDecode())
     ]);
@@ -73,15 +78,7 @@ class MagicEyeState extends State<MagicEye> {
 
   Widget _buildOutputDecode() {
     if (_decodeImage == null) return null;
-    if (_imageData == null)
-      _imageData = decodeImage(_decodeImage.bytes);
 
-    if (_imageData == null)  return null;
-    if (_decodeOffsetsX == 0)
-      _decodeOffsetsX = magicEyeSolver(_imageData);
-    if (_outData == null) {
-      _outData = createResultImage(_imageData, _decodeOffsetsX);
-    }
 
     if (_outData == null) return null;
 
@@ -95,36 +92,15 @@ class MagicEyeState extends State<MagicEye> {
   }
 
 
-  // Widget _buildDecodeSubmitButton() {
-  //   return GCWSubmitButton(onPressed: () async {
-  //     await showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (context) {
-  //         return Center(
-  //           child: Container(
-  //             child: GCWAsyncExecuter(
-  //               isolatedFunction: decodeImagesAsync,
-  //               parameter: _buildJobDataDecode(),
-  //               onReady: (data) => _saveOutputDecode(data),
-  //               isOverlay: true,
-  //             ),
-  //             height: 220,
-  //             width: 150,
-  //           ),
-  //         );
-  //       },
-  //     );
-  //   });
-  // }
-  //
-  // Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
-  //   return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, int, int>(
-  //       _decodeImage1?.bytes, _decodeImage2?.bytes, _decodeOffsetsX, _decodeOffsetsY));
-  // }
+  Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
+    return GCWAsyncExecuterParameters(Tuple3<Uint8List, Image.Image, int>(
+        _decodeImage?.bytes, _imageData, _displacement));
+  }
 
-  _saveOutputDecode(Uint8List output) {
-    _outData = output;
+  _saveOutputDecode(Tuple3<Image.Image, Uint8List, int> output) {
+    _imageData = output.item1;
+    _outData = output.item2;
+    _displacement = output.item3;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
