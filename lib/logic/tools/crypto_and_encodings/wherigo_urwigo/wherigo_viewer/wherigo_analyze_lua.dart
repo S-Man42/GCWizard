@@ -295,7 +295,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   int progressStep = max(lines.length ~/ 200, 1); // 2 * 100 steps
 
   lines = _LUAFile.split('\n');
-
   for (int i = 0; i < lines.length; i++) {
     lines[i] = lines[i].trim();
 
@@ -1294,6 +1293,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   //
   progress = lines.length;
   for (int i = 0; i < lines.length; i++) {
+
     progress++;
     if (sendAsyncPort != null && (progress % progressStep == 0)) {
       sendAsyncPort.send({'progress': progress / lines.length / 2});
