@@ -3364,6 +3364,9 @@ initializeRegistry(BuildContext context) {
       'barcodes',
       'symbol_rm4scc',
     ]),
+    GCWSymbolTableTool(symbolKey: 'robots', symbolSearchStrings: [
+      'symbol_robots',
+    ]),
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: [
       'symbol_romulan',
     ]),
