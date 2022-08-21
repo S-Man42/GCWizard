@@ -198,7 +198,7 @@ class SymbolReplacerManualControlState extends State<SymbolReplacerManualControl
         Expanded(
           child: Column(children: [
             GCWText(
-                text: "Source",
+                text: i18n(context, 'symbol_replacer_source'),
                 align: Alignment.topCenter,
                 style: gcwTextStyle().copyWith(fontSize: defaultFontSize() - 2)),
             Row(children: [
