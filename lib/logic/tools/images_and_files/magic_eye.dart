@@ -1,4 +1,4 @@
-// source: https://piellardj.github.io/stereogram-solver/
+// source decode: https://piellardj.github.io/stereogram-solver/
 
 import 'dart:typed_data';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
@@ -17,7 +17,7 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) as
 
   if (image == null) return null;
   if (imageData == null)
-    imageData = decodeImage(image);
+    imageData = Image.decodeImage(image);
   if (displacement == null)
     displacement = magicEyeSolver(imageData);
 
@@ -27,10 +27,6 @@ Future<Tuple3<Image.Image, Uint8List, int>> decodeImageAsync(dynamic jobData) as
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(result);
 
   return Future.value(result);
-}
-
-Image.Image decodeImage(Uint8List image) {
-  return Image.decodeImage(image);
 }
 
 /// calculate the displacement

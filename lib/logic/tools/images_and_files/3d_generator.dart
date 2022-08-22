@@ -1,10 +1,11 @@
-import 'dart:ffi';
+// source encode: https://github.com/machinewrapped/StereogrammerOS
+
+import 'dart:isolate';
 import 'dart:math';
-
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:image/image.dart' as Image;
 import 'dart:typed_data';
-
+import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:image/image.dart' as Image;
 import 'image_processing.dart';
 
 double fieldDepth;
@@ -18,30 +19,43 @@ int textureWidth;
 int textureHeight;
 Uint32List pixels;
 
-Uint32List texturePixels;
+Uint8List texturePixels;
 Uint8List depthBytes;
 
-Uint8List Generate(Uint8List image1, Uint8List image2) {
+Future<Uint8List> generateImageAsync(dynamic jobData) async {
+  if (jobData == null) return null;
+
+  Uint8List textureImage = jobData.parameters.item1;
+  Uint8List hiddenImage = jobData.parameters.item2;
+
+  var outputImage = generateImage(textureImage, hiddenImage);
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputImage);
+
+  return Future.value(outputImage);
+}
+
+Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {SendPort sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
   fieldDepth = 0.33333;
   separation = 128;
 
 
-  var bmTexture = Image.decodeImage(image1);
-  var bmDepthMap = Image.decodeImage(image2);
+  var depthmap = Image.decodeImage(hiddenDataImage);
+  var texture = Image.decodeImage(textureImage);
 
-  var resolutionX = bmTexture.width;
-  var resolutionY = bmTexture.height;
+  var resolutionX = depthmap.width;
+  var resolutionY = depthmap.height;
   textureWidth = separation;
-  textureHeight = ((separation * bmTexture.height)/ bmTexture.width).toInt();
+  textureHeight = ((separation * texture.height)/ texture.width).toInt();
 
   // Cache some intermediaries
   lineWidth = resolutionX;
   rows = resolutionY;
   depthWidth = lineWidth;
   depthScale = oversample;
-  midpoint = (lineWidth / 2).toInt();
+  midpoint = (lineWidth/ 2).toInt();
 
   fieldDepth = fieldDepth.clamp(0, 1);
 
@@ -57,11 +71,11 @@ Uint8List Generate(Uint8List image1, Uint8List image2) {
     }
   }
 
-  // // Convert texture to RGB24 and scale it to fit the separation (preserving ratio but doubling width for HQ mode)
-  // bmTexture = texture.GetToScaleAndFormat(textureWidth, textureHeight, PixelFormats.Pbgra32);
+  // Convert texture to RGB24 and scale it to fit the separation (preserving ratio but doubling width for HQ mode)
+  var bmTexture = Image.copyResize(texture, width: textureWidth, height: textureHeight);
 
   // Resize the depthmap to our target resolution
-  // bmDepthMap = depthmap.GetToScale(depthWidth, resolutionY);
+  var bmDepthMap = Image.copyResize(depthmap, width: depthWidth, height: resolutionY);
 
   // Create a great big 2D array to hold the bytes - wasteful but convenient
   pixels = Uint32List(lineWidth * rows);
@@ -77,28 +91,27 @@ Uint8List Generate(Uint8List image1, Uint8List image2) {
 
   // invert and grayscale
   for (var i = 0, len = depthBytes.length; i < len; i += 4) {
-    var pixel = RGBPixel(depthBytes[i].toDouble(), depthBytes[i + 1].toDouble(), depthBytes[i + 2].toDouble());
+    var pixel = RGBPixel.getPixel(depthBytes, i);
 
     pixel = invert(pixel);
     pixel = grayscale(pixel);
 
-    depthBytes[i] = pixel.red.round().clamp(0, 255);
-    depthBytes[i + 1] = pixel.green.round().clamp(0, 255);
-    depthBytes[i + 2] = pixel.blue.round().clamp(0, 255);
+    pixel.setPixel(depthBytes, i);
   }
 
-  // Can mock up a progress indicator
-  // GeneratedLines = 0;
+  // progress indicator
+  var generatedLines = 0;
+  var _progressStep = max(rows ~/ 100, 1); // 100 steps
 
   initHoroptic();
 
   // Prime candidate for Parallel.For... yes, about doubles the speed of generation on my Quad-Core
   for (int y = 0; y < rows; y++) {
-    DoLineHoroptic(y);
-    // if (y > GeneratedLines)
-    // {
-    //   GeneratedLines = y;
-    // }
+    _doLineHoroptic(y);
+
+    if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
+      sendAsyncPort.send({'progress': generatedLines / y});
+    }
   }
 
 
@@ -116,23 +129,25 @@ Uint8List Generate(Uint8List image1, Uint8List image2) {
   // wbStereogram.WritePixels(new Int32Rect(0, 0, lineWidth, rows), pixels, lineWidth * bytesPerPixel, 0);
   //
   // BitmapSource bmStereogram = wbStereogram;
-  //
+  var bmStereogram = Image.Image.fromBytes(lineWidth, rows, pixels.buffer.asUint8List());
+
   // High quality images need to be scaled back down...
   if (oversample > 1) {
-    double over = oversample.toDouble();
-    double centre = lineWidth / 2;
-    while (over > 1)
-    {
-      // Scale by steps... could do it in one pass, but quality would depend on what the hardware does?
-      double div = min(over, 2.0);
-      //                    double div = over;
-      ScaleTransform scale = new ScaleTransform(1.0 / div, 1.0, centre, 0);
-      bmStereogram = new TransformedBitmap(bmStereogram, scale);
-      bmStereogram = img.copyResize(image, height: previewHeight);
+    // double over = oversample.toDouble();
+    // double centre = lineWidth / 2;
+    // while (over > 1) {
+    //   // Scale by steps... could do it in one pass, but quality would depend on what the hardware does?
+    //   double div = min(over, 2.0);
+    //   //                    double div = over;
+    //   ScaleTransform scale = new ScaleTransform(1.0 / div, 1.0, centre, 0);
+    //   bmStereogram = new TransformedBitmap(bmStereogram, scale);
+    //   bmStereogram = img.copyResize(image, height: previewHeight);
+    //
+    //   over /= div;
+    //   centre /= div;
+    // }
 
-      over /= div;
-      centre /= div;
-    }
+    bmStereogram = Image.copyResize(bmStereogram, width: resolutionX, height: resolutionY);
   }
 
 
@@ -143,6 +158,8 @@ Uint8List Generate(Uint8List image1, Uint8List image2) {
   // stereogram.Name = String.Format("{0}+{1}+{2}", depthmap.Name, texture.Name, options.algorithm.ToString());
   // stereogram.Milliseconds = timer.ElapsedMilliseconds;
   // return stereogram;
+
+  return encodeTrimmedPng(bmStereogram);
 }
 
 
@@ -160,7 +177,7 @@ void initHoroptic(){
   }
 }
 
-void DoLineHoroptic( int y ) {
+void _doLineHoroptic(int y) {
   // Set up a constraints buffer with each pixel initially constrained to equal itself (probably slower than a for loop but easier to step over :p)
   // And convert depths to floats normalised 0..1
 
@@ -170,24 +187,24 @@ void DoLineHoroptic( int y ) {
 
   for (int i = 0; i < lineWidth; i++) {
     constraints[i] = i;
-    depthLine[i] = GetDepthFloat(i, y);
+    depthLine[i] = _getDepthFloat(i, y);
   }
 
   // Process the line updating any constrained pixels
   for (int ii = 0; ii < lineWidth; ii++) {
     // Work from centre out
-    int i = centreOut[ ii ];
+    int i = centreOut[ii];
 
     // Calculate Z value of the horopter at this x,y. w.r.t its centre.  20 * separation is approximation of distance to viewer's eyes
-    double ZH = sqrt(SquareOf(20 * separation) - SquareOf(i - midpoint) );
+    double zh = sqrt(_squareOf(20 * separation) - _squareOf(i - midpoint));
 
     // Scale to the range [0,1] and adjust to displacement from the far plane
-    ZH = 1.0 - (ZH / ( 20 * separation ) );
+    zh = 1.0 - (zh/ (20 * separation));
 
     // Separation of pixels on image plane for this point
     // Note - divide ZH by FieldDepth as the horopter is independant
     // of field depth, but sep macro is not.
-    int s = round(sep(depthLine[i] - ( ZH/ fieldDepth))).toInt();
+    int s = round(_sep(depthLine[i] - (zh/ fieldDepth))).toInt();
 
     int left = (i - ( s/ 2 )).toInt();           // The pixel on the image plane for the left eye
     int right = left + s;           // And for the right eye
@@ -196,7 +213,7 @@ void DoLineHoroptic( int y ) {
       // Decide whether we want to constrain the left or right pixel
       // Want to avoid constraint loops, so always constrain outermost pixel to innermost
       // Should depend if one or the other is already constrained I suppose
-      int constrainee = Outermost(left, right, midpoint);
+      int constrainee = _outermost(left, right, midpoint);
       int constrainer = (constrainee == left) ? right : left;
 
       // Find an unconstrained pixel and constrain ourselves to it
@@ -221,16 +238,16 @@ void DoLineHoroptic( int y ) {
       pix = constraints[pix];
 
     // And get the RGBs from the tiled texture at that point
-    SetStereoPixel(i, y, GetTexturePixel(pix, y));
+    _setStereoPixel(i, y, _getTexturePixel(pix, y));
   }
 }
 
-double GetDepthFloat(int x, int y) {
+double _getDepthFloat(int x, int y) {
   return (depthBytes[((y * depthWidth) + (x/ depthScale)).toInt()])/ 255;
 }
 
 // Just for readability
-int SquareOf(int x) {
+int _squareOf(int x) {
   return x * x;
 }
 
@@ -239,24 +256,23 @@ int SquareOf(int x) {
 /// </summary>
 /// <param name="Z"></param>
 /// <returns></returns>
-double sep( double Z ) {
-  if (Z < 0.0) Z = 0.0;
-  if (Z > 1.0) Z = 1.0;
-  return ((1 - fieldDepth * Z) * (2 * separation)/ (2 - fieldDepth * Z));
+double _sep(double z) {
+  z = z.clamp(0.0, 1.0);
+  return ((1 - fieldDepth * z) * (2 * separation)/ (2 - fieldDepth * z));
 }
 
 // Return which of two values is furthest from a mid-point (or indeed any point)
-int Outermost( int a, int b, int midpoint ) {
+int _outermost(int a, int b, int midpoint) {
   return ((midpoint - a).abs() > (midpoint - b).abs()) ? a : b;
 }
 
-int GetTexturePixel(int x, int y) {
-  int tp = (((y % textureHeight ) * textureWidth) + ((x + midpoint) % textureWidth));
-  return texturePixels[tp];
+RGBPixel _getTexturePixel(int x, int y) {
+  int tp = (((y % textureHeight) * textureWidth) * 4 + ((x + midpoint) % textureWidth)) * 4;
+  return RGBPixel.getPixel(texturePixels, tp);
 }
 
-SetStereoPixel(int x, int y, int pixel) {
+_setStereoPixel(int x, int y, RGBPixel pixel) {
   int sp = ((y * lineWidth ) + x);
-  pixels[sp] = pixel;
+  pixels[sp] = pixel.color();
 }
 

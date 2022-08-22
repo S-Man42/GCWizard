@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_hue.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
@@ -13,6 +14,26 @@ class RGBPixel {
   @override
   String toString() {
     return 'RGB(${this.red}, ${this.green}, ${this.blue})';
+  }
+
+  static RGBPixel getPixel(Uint8List data, int offset) {
+    return RGBPixel(data[offset].toDouble(),
+                    data[offset + 1].toDouble(),
+                    data[offset + 2].toDouble());
+  }
+
+  RGBPixel setPixel(Uint8List data, int offset) {
+    data[offset] = this.red.round().clamp(0, 255);
+    data[offset + 1] = this.green.round().clamp(0, 255);
+    data[offset + 2] = this.blue.round().clamp(0, 255);
+  }
+
+  int color() {
+    var _color = ByteData(4);
+    _color.setUint8(0, this.red.round().clamp(0, 255));
+    _color.setUint8(1, this.green.round().clamp(0, 255));
+    _color.setUint8(2, this.blue.round().clamp(0, 255));
+    return _color.getInt32(0);
   }
 }
 
