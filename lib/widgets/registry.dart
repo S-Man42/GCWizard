@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/colors_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/countries_selection.dart';
@@ -357,7 +358,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
+import 'tools/science_and_technology/colors/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
@@ -549,12 +550,9 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'cistercian_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
-    GCWTool(tool: ColorTool(), i18nPrefix: 'colors', categories: [
+    GCWTool(tool: ColorsSelection(), i18nPrefix: 'colors_selection', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'color',
-      'colorpicker',
-    ]),
+    ], searchKeys: []),
     GCWTool(
         tool: CombinatoricsSelection(),
         i18nPrefix: 'combinatorics_selection',
@@ -921,12 +919,6 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'railfence',
-    ]),
-    GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'color',
-      'ralcolorcodes',
     ]),
     GCWTool(tool: RC4(), i18nPrefix: 'rc4', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1346,6 +1338,16 @@ initializeRegistry(BuildContext context) {
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', searchKeys: [
       'cistercian',
+    ]),
+
+    //ColorsSelection **********************************************************************************************
+    GCWTool(tool: ColorTool(), i18nPrefix: 'colors', searchKeys: [
+      'color',
+      'colorpicker',
+    ]),
+    GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', searchKeys: [
+      'color',
+      'ralcolorcodes',
     ]),
 
     //CombinatoricsSelection ***************************************************************************************

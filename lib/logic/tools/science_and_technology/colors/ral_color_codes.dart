@@ -1,3 +1,5 @@
+import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
+
 Map<String, Map<String, String>> RAL_COLOR_CODES = {
   "RAL 1000": {"colorcode": "#BEBD7F", "name": "ralcolorcodes_color_name_1000"},
   "RAL 1001": {"colorcode": "#C2B078", "name": "ralcolorcodes_color_name_1001"},
@@ -213,3 +215,41 @@ Map<String, Map<String, String>> RAL_COLOR_CODES = {
   "RAL 9022": {"colorcode": "#9C9C9C", "name": "ralcolorcodes_color_name_9022"},
   "RAL 9023": {"colorcode": "#828282", "name": "ralcolorcodes_color_name_9023"}
 };
+
+MapEntry<String, Map<String, String>> _ralByHex(HexCode hexCode) {
+  return RAL_COLOR_CODES.entries.firstWhere((element) => element.value['colorcode'].toLowerCase() == hexCode.toString().toLowerCase());
+}
+
+MapEntry<String, Map<String, String>> _ralByRGB(RGB rgb) {
+  return RAL_COLOR_CODES.entries.firstWhere((element) => HexCode(element.value['colorcode']).toRGB().equals(rgb));
+}
+
+List<Map<String, String>> findSimilarRALColors(RGB rgb) {
+  var RALHexes = RAL_COLOR_CODES.values.map((ral) => HexCode(ral['colorcode']).toString()).toList();
+  var hexCode = HexCode.fromRGB(rgb);
+  if (RALHexes.contains(hexCode.toString())) {
+    var ral = _ralByHex(hexCode);
+    return [{'ralcode': ral.key, 'colorcode': ral.value['colorcode'], 'name': ral.value['name']}];
+  }
+
+  var _rgb = hexCode.toRGB();
+  var RALRGBs = RAL_COLOR_CODES.values.map((ral) => HexCode(ral['colorcode']).toRGB()).toList();
+
+  List<Map<String, String>> out = [];
+  var distance = 0;
+  while (distance < 100) {
+    distance++;
+    var nearestRGBs = findNearestRGBs(_rgb, RALRGBs, distance: distance);
+
+    if (nearestRGBs.length >= 5) {
+      out = nearestRGBs.map((nearestRGB) {
+        var ral = _ralByRGB(nearestRGB);
+        return {'ralcode': ral.key, 'colorcode': ral.value['colorcode'], 'name': ral.value['name']};
+      }).toList();
+
+      return out;
+    }
+  }
+
+  return out;
+}

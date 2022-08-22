@@ -18,6 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/colors_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
@@ -229,7 +230,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constant
 import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
+import 'tools/science_and_technology/colors/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
@@ -476,7 +477,7 @@ void _initStaticToolList() {
       className(Chronogram()),
       className(CipherWheel()),
       className(CistercianNumbersSelection()),
-      className(ColorTool()),
+      className(ColorsSelection()),
       className(Combination()),
       className(CombinationPermutation()),
       className(ComplexNumbers()),
@@ -588,7 +589,6 @@ void _initStaticToolList() {
       className(QrCode()),
       className(QuadraticEquation()),
       className(RailFence()),
-      className(RALColorCodes()),
       className(RC4()),
       className(Recycling()),
       className(Resection()),
