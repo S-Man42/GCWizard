@@ -172,8 +172,8 @@ class MagicEyeState extends State<MagicEye> {
   }
 
   GCWAsyncExecuterParameters _buildJobDataEncode() {
-    return GCWAsyncExecuterParameters(Tuple2<Uint8List, Uint8List>(
-        _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes));
+    return GCWAsyncExecuterParameters(Tuple3<Uint8List, Uint8List, TextureType>(
+        _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes, TextureType.BITMAP));
   }
 
   void _saveOutputEncode(Uint8List output) {

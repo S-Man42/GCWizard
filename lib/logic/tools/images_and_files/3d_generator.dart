@@ -8,6 +8,12 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 import 'image_processing.dart';
 
+enum TextureType {
+  GREYDOTS,
+  COLOURDOTS,
+  BITMAP
+}
+
 double fieldDepth;
 int separation;
 int lineWidth;
@@ -27,29 +33,41 @@ Future<Uint8List> generateImageAsync(dynamic jobData) async {
 
   Uint8List hiddenImage = jobData.parameters.item1;
   Uint8List textureImage = jobData.parameters.item2;
+  TextureType textureType = jobData.parameters.item3;
 
-  var outputImage = generateImage(hiddenImage, textureImage);
+  var outputImage = generateImage(hiddenImage, textureImage, textureType);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputImage);
 
   return Future.value(outputImage);
 }
 
-Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {SendPort sendAsyncPort}) {
+Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType, {SendPort sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
   fieldDepth = 0.33333;
   separation = 128;
 
-  if (hiddenDataImage == null || textureImage== null)
+  if (hiddenDataImage == null)
     return null;
 
 
   var depthmap = Image.decodeImage(hiddenDataImage);
-  var texture = Image.decodeImage(textureImage);
-
+  Image.Image texture;
   var resolutionX = depthmap.width;
   var resolutionY = depthmap.height;
+
+  if ((textureType == TextureType.BITMAP) ||  (textureType == null) && (textureImage != null))
+    texture= Image.decodeImage(textureImage);
+  else if (textureType == TextureType.GREYDOTS)
+    texture = _generateGrayDots(separation, resolutionY);
+  else
+    texture = _generateColoredDots(separation, resolutionY);
+
+  if (hiddenDataImage == null || textureImage== null)
+    return null;
+
+
   textureWidth = separation;
   textureHeight = ((separation * texture.height)/ texture.width).toInt();
 
@@ -84,21 +102,20 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
   pixels = Uint32List(lineWidth * rows);
 
   // Copy the texture data into a buffer
-  // texturePixels = Uint32List((textureWidth * textureHeight).toInt());
-  texturePixels = bmTexture.getBytes(); //.CopyPixels(new Int32Rect(0, 0, textureWidth, textureHeight), texturePixels, textureWidth * bytesPerPixel, 0);
+  texturePixels = bmTexture.getBytes();
 
   // invert and grayscale
   bmDepthMap = Image.grayscale(bmDepthMap);
   bmDepthMap = Image.invert(bmDepthMap);
   // Copy the depthmap data into a buffer
-  depthBytes = bmDepthMap.getBytes(); // //bmDepthMap.CopyPixels(new Int32Rect(0, 0, depthWidth, rows), depthBytes, depthWidth, 0);
+  depthBytes = bmDepthMap.getBytes();
 
   // progress indicator
   var generatedLines = 0;
   var _progressStep = max(rows ~/ 100, 1); // 100 steps
 
   initHoroptic();
-  
+
   for (int y = 0; y < rows; y++) {
     _doLineHoroptic(y);
 
@@ -108,39 +125,11 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
     }
   }
 
-
-
-  // if (abort)
-  // {
-  //   return null;
-  // }
-  //
-  // // Virtual finaliser... not needed for any current algorithms
-  // Finalise();
-  //
-  // // Create a writeable bitmap to dump the stereogram into
-  // wbStereogram = new WriteableBitmap(lineWidth, resolutionY, 96.0, 96.0, bmTexture.Format, bmTexture.Palette);
-  // wbStereogram.WritePixels(new Int32Rect(0, 0, lineWidth, rows), pixels, lineWidth * bytesPerPixel, 0);
-  //
   // BitmapSource bmStereogram = wbStereogram;
   var bmStereogram = Image.Image.fromBytes(lineWidth, rows, pixels.buffer.asUint8List());
 
   // High quality images need to be scaled back down...
   if (oversample > 1) {
-    // double over = oversample.toDouble();
-    // double centre = lineWidth / 2;
-    // while (over > 1) {
-    //   // Scale by steps... could do it in one pass, but quality would depend on what the hardware does?
-    //   double div = min(over, 2.0);
-    //   //                    double div = over;
-    //   ScaleTransform scale = new ScaleTransform(1.0 / div, 1.0, centre, 0);
-    //   bmStereogram = new TransformedBitmap(bmStereogram, scale);
-    //   bmStereogram = img.copyResize(image, height: previewHeight);
-    //
-    //   over /= div;
-    //   centre /= div;
-    // }
-
     bmStereogram = Image.copyResize(bmStereogram, width: resolutionX, height: resolutionY);
   }
 
@@ -270,19 +259,18 @@ _setStereoPixel(int x, int y, RGBPixel pixel) {
   pixels[sp] = pixel.color();
 }
 
-Image.Image _generateColouredDots(int resX, int resY) {
+Image.Image _generateColoredDots(int resX, int resY) {
   Random random = new Random();
   var pixels = Uint8List(resX * resY * 4);
 
-  for (int i = 0; i < pixels.length; i++) {
+  for (int i = 0; i < pixels.length; i++)
     pixels[i] = random.nextInt(256);
-  }
 
   return Image.Image.fromBytes(resX, resY, pixels);
 }
 
 Image.Image _generateGrayDots(int resX, int resY) {
-  var image = _generateColouredDots(resX, resY);
+  var image = _generateColoredDots(resX, resY);
   return Image.grayscale(image);
 }
 
