@@ -132,7 +132,7 @@ class MagicEyeState extends State<MagicEye> {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
             return;
           }
-
+          _encodeHiddenDataImage = _file;
           generateImageAsync(_buildJobDataEncode()).then((output) {
             _saveOutputEncode(output);
           });
@@ -148,7 +148,7 @@ class MagicEyeState extends State<MagicEye> {
             showToast(i18n(context, 'common_loadfile_exception_notloaded'));
             return;
           }
-
+          _encodeTextureImage= _file;
           generateImageAsync(_buildJobDataEncode()).then((output) {
             _saveOutputEncode(output);
           });
@@ -173,7 +173,7 @@ class MagicEyeState extends State<MagicEye> {
 
   GCWAsyncExecuterParameters _buildJobDataEncode() {
     return GCWAsyncExecuterParameters(Tuple2<Uint8List, Uint8List>(
-        _encodeTextureImage?.bytes, _encodeHiddenDataImage?.bytes));
+        _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes));
   }
 
   void _saveOutputEncode(Uint8List output) {

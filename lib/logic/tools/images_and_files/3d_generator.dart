@@ -25,10 +25,10 @@ Uint8List depthBytes;
 Future<Uint8List> generateImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
-  Uint8List textureImage = jobData.parameters.item1;
-  Uint8List hiddenImage = jobData.parameters.item2;
+  Uint8List hiddenImage = jobData.parameters.item1;
+  Uint8List textureImage = jobData.parameters.item2;
 
-  var outputImage = generateImage(textureImage, hiddenImage);
+  var outputImage = generateImage(hiddenImage, textureImage);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputImage);
 
@@ -40,6 +40,9 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
   var oversample = 2;
   fieldDepth = 0.33333;
   separation = 128;
+
+  if (hiddenDataImage == null || textureImage== null)
+    return null;
 
 
   var depthmap = Image.decodeImage(hiddenDataImage);
@@ -55,7 +58,6 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
   rows = resolutionY;
   depthWidth = lineWidth;
   depthScale = oversample;
-  midpoint = (lineWidth/ 2).toInt();
 
   fieldDepth = fieldDepth.clamp(0, 1);
 
@@ -70,6 +72,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
       depthScale = 1;
     }
   }
+  midpoint = (lineWidth/ 2).toInt();
 
   // Convert texture to RGB24 and scale it to fit the separation (preserving ratio but doubling width for HQ mode)
   var bmTexture = Image.copyResize(texture, width: textureWidth, height: textureHeight);
@@ -110,6 +113,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
     _doLineHoroptic(y);
 
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
+      print((generatedLines / y)*100);
       sendAsyncPort.send({'progress': generatedLines / y});
     }
   }
@@ -171,7 +175,7 @@ void initHoroptic(){
   int offset = midpoint;
   int flip = -1;
   for (int i = 0; i < lineWidth; i++) {
-    centreOut[ i ] = offset;
+    centreOut[i] = offset;
     offset += ((i + 1) * flip);
     flip = -flip;
   }
@@ -206,10 +210,10 @@ void _doLineHoroptic(int y) {
     // of field depth, but sep macro is not.
     int s = round(_sep(depthLine[i] - (zh/ fieldDepth))).toInt();
 
-    int left = (i - ( s/ 2 )).toInt();           // The pixel on the image plane for the left eye
+    int left = (i - (s/ 2 )).toInt();           // The pixel on the image plane for the left eye
     int right = left + s;           // And for the right eye
 
-    if ((0 <= left ) && ( right < lineWidth ) ) {                    // If both points lie within the image bounds ...
+    if ((0 <= left) && (right < lineWidth)) {                    // If both points lie within the image bounds ...
       // Decide whether we want to constrain the left or right pixel
       // Want to avoid constraint loops, so always constrain outermost pixel to innermost
       // Should depend if one or the other is already constrained I suppose
