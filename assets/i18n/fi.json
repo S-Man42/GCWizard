@@ -1966,6 +1966,7 @@
   "formulasolver_formulas_notcomputable": "Ei laskettavissa!",
   "formulasolver_formulas_editformula": "Muokkaa kaavaa",
   "formulasolver_formulas_modifiedformula": "Esikatsele",
+  "formulasolver_formulas_nameformula": "Name Formula",
   "formulasolver_formulas_modifyformula": "Muuta kaavaa",
   "formulasolver_formulas_modifyformulas": "Muuta kaikki kaavat",
   "formulasolver_formulas_removeformula": "Poista kaava",

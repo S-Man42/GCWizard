@@ -1966,6 +1966,7 @@
   "formulasolver_formulas_notcomputable": "계산할 수 없습니다!",
   "formulasolver_formulas_editformula": "수식 편집",
   "formulasolver_formulas_modifiedformula": "미리 보기",
+  "formulasolver_formulas_nameformula": "Name Formula",
   "formulasolver_formulas_modifyformula": "수식 편집",
   "formulasolver_formulas_modifyformulas": "모든 수식 편집",
   "formulasolver_formulas_removeformula": "수식 제거",

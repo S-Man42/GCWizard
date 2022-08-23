@@ -1966,6 +1966,7 @@
   "formulasolver_formulas_notcomputable": "Nicht berechenbar!",
   "formulasolver_formulas_editformula": "Formel bearbeiten",
   "formulasolver_formulas_modifiedformula": "Vorschau",
+  "formulasolver_formulas_nameformula": "Benenne Formel",
   "formulasolver_formulas_modifyformula": "Formel modifizieren",
   "formulasolver_formulas_modifyformulas": "Alle Formeln modifizieren",
   "formulasolver_formulas_removeformula": "Formel löschen",

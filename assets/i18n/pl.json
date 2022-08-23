@@ -1966,6 +1966,7 @@
   "formulasolver_formulas_notcomputable": "Not computable!",
   "formulasolver_formulas_editformula": "Edit Formula",
   "formulasolver_formulas_modifiedformula": "Preview",
+  "formulasolver_formulas_nameformula": "Name Formula",
   "formulasolver_formulas_modifyformula": "Modify Formula",
   "formulasolver_formulas_modifyformulas": "Modyfikuj wszystkie formuły",
   "formulasolver_formulas_removeformula": "Remove Formula",
