@@ -1,3 +1,5 @@
+import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
+
 Map<String, Map<String, String>> PANTONE_COLOR_CODES_WITH_NAMES = {
   "Black 1": {"colorcode": "#2D2926", "name": "common_color_black", "suffix": "1"},
   "Black 2": {"colorcode": "#332F21", "name": "common_color_black", "suffix": "2"},
@@ -12,50 +14,50 @@ Map<String, Map<String, String>> PANTONE_COLOR_CODES_WITH_NAMES = {
   "Bright Green": {"colorcode": "#00B08B", "name": "common_color_light_grey"},
   "Bright Orange": {"colorcode": "#FF5E00", "name": "common_color_light_orange"},
   "Bright Red": {"colorcode": "#F93822", "name": "common_color_light_red"},
-  "Cool Gray 1": {"colorcode": "#D9D9D6", "name": "common_color_grey", "suffix": "1", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 2": {"colorcode": "#D0D0CE", "name": "common_color_grey", "suffix": "2", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 3": {"colorcode": "#C8C9C7", "name": "common_color_grey", "suffix": "3", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 4": {"colorcode": "#BBBCBC", "name": "common_color_grey", "suffix": "4", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 5": {"colorcode": "#B1B3B3", "name": "common_color_grey", "suffix": "5", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 6": {"colorcode": "#A7A8AA", "name": "common_color_grey", "suffix": "6", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 7": {"colorcode": "#97999B", "name": "common_color_grey", "suffix": "7", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 8": {"colorcode": "#888B8D", "name": "common_color_grey", "suffix": "8", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 9": {"colorcode": "#75787B", "name": "common_color_grey", "suffix": "9", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 10": {"colorcode": "#63666A", "name": "common_color_grey", "suffix": "10", "prefix": "pantone_colorcodes_cool"},
-  "Cool Gray 11": {"colorcode": "#53565A", "name": "common_color_grey", "suffix": "11", "prefix": "pantone_colorcodes_cool"},
+  "Cool Gray 1": {"colorcode": "#D9D9D6", "name": "common_color_grey", "suffix": "1", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 2": {"colorcode": "#D0D0CE", "name": "common_color_grey", "suffix": "2", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 3": {"colorcode": "#C8C9C7", "name": "common_color_grey", "suffix": "3", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 4": {"colorcode": "#BBBCBC", "name": "common_color_grey", "suffix": "4", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 5": {"colorcode": "#B1B3B3", "name": "common_color_grey", "suffix": "5", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 6": {"colorcode": "#A7A8AA", "name": "common_color_grey", "suffix": "6", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 7": {"colorcode": "#97999B", "name": "common_color_grey", "suffix": "7", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 8": {"colorcode": "#888B8D", "name": "common_color_grey", "suffix": "8", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 9": {"colorcode": "#75787B", "name": "common_color_grey", "suffix": "9", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 10": {"colorcode": "#63666A", "name": "common_color_grey", "suffix": "10", "prefix": "pantonecolorcodes_cool"},
+  "Cool Gray 11": {"colorcode": "#53565A", "name": "common_color_grey", "suffix": "11", "prefix": "pantonecolorcodes_cool"},
   "Dark Blue": {"colorcode": "#00239C", "name": "common_color_dark_blue"},
   "Green": {"colorcode": "#00AB84", "name": "common_color_green"},
   "Green 0921": {"colorcode": "#9DE7D7", "name": "common_color_green", "suffix": "0921"},
   "Magenta 0521": {"colorcode": "#F1B2DC", "name": "common_color_magenta", "suffix": "0521"},
-  "Medium Blue": {"colorcode": "#0084CA", "name": "common_color_blue", "prefix": "pantone_colorcodes_medium"},
-  "Medium Purple": {"colorcode": "#4E008E", "name": "common_color_purple", "prefix": "pantone_colorcodes_medium"},
-  "Medium Yellow ": {"colorcode": "#FFD900", "name": "common_color_yellow", "prefix": "pantone_colorcodes_medium"},
-  "Neutral Black": {"colorcode": "#222223", "name": "common_color_black", "prefix": "pantone_colorcodes_neutral"},
-  "Orange 021": {"colorcode": "#FE5000", "name": "Orange", "suffix": "021"},
-  "Pink": {"colorcode": "#D62598", "name": "Pink"},
-  "Process Blue": {"colorcode": "#0085CA", "name": "Process Blue", "prefix": "pantone_colorcodes_process"},
+  "Medium Blue": {"colorcode": "#0084CA", "name": "common_color_blue", "prefix": "pantonecolorcodes_medium"},
+  "Medium Purple": {"colorcode": "#4E008E", "name": "common_color_purple", "prefix": "pantonecolorcodes_medium"},
+  "Medium Yellow ": {"colorcode": "#FFD900", "name": "common_color_yellow", "prefix": "pantonecolorcodes_medium"},
+  "Neutral Black": {"colorcode": "#222223", "name": "common_color_black", "prefix": "pantonecolorcodes_neutral"},
+  "Orange 021": {"colorcode": "#FE5000", "name": "common_color_orange", "suffix": "021"},
+  "Pink": {"colorcode": "#D62598", "name": "common_color_pink"},
+  "Process Blue": {"colorcode": "#0085CA", "name": "pantonecolorcodes_color_processblue"},
   "Purple": {"colorcode": "#BB29BB", "name": "common_color_purple"},
   "Red 032": {"colorcode": "#EF3340", "name": "common_color_red", "suffix": "032"},
   "Red 0331": {"colorcode": "#FCAEBB", "name": "common_color_red", "suffix": "0331"},
-  "Reflex Blue": {"colorcode": "#001489", "name": "common_color_blue", "prefix": "pantone_colorcodes_reflex"},
-  "Rhodamine Red": {"colorcode": "#E10098", "name": "common_color_red", "prefix": "pantone_colorcodes_rhodamine"},
-  "Rubine Red": {"colorcode": "#CE0058", "name": "common_color_red", "prefix": "pantone_colorcodes_rubine"},
-  "Strong Red": {"colorcode": "#CE0056", "name": "common_color_red", "prefix": "pantone_colorcodes_strong"},
-  "Violet": {"colorcode": "#440099", "name": "Violet"},
+  "Reflex Blue": {"colorcode": "#001489", "name": "pantonecolorcodes_color_reflexblue"},
+  "Rhodamine Red": {"colorcode": "#E10098", "name": "pantonecolorcodes_color_rhodaminered"},
+  "Rubine Red": {"colorcode": "#CE0058", "name": "pantonecolorcodes_color_rubinered"},
+  "Strong Red": {"colorcode": "#CE0056", "name": "pantonecolorcodes_color_strongred"},
+  "Violet": {"colorcode": "#440099", "name": "common_color_violet"},
   "Violet 0631": {"colorcode": "#BF9BDE", "name": "common_color_violet", "suffix": "0631"},
-  "Warm Gray 1": {"colorcode": "#D7D2CB", "name": "common_color_grey", "suffix": "1", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 2": {"colorcode": "#CBC4BC", "name": "common_color_grey", "suffix": "2", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 3": {"colorcode": "#BFB8AF", "name": "common_color_grey", "suffix": "3", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 4": {"colorcode": "#B6ADA5", "name": "common_color_grey", "suffix": "4", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 5": {"colorcode": "#ACA39A", "name": "common_color_grey", "suffix": "5", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 6": {"colorcode": "#A59C94", "name": "common_color_grey", "suffix": "6", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 7": {"colorcode": "#968C83", "name": "common_color_grey", "suffix": "7", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 8": {"colorcode": "#8C8279", "name": "common_color_grey", "suffix": "8", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 9": {"colorcode": "#83786F", "name": "common_color_grey", "suffix": "9", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 10": {"colorcode": "#796E65", "name": "common_color_grey", "suffix": "10", "prefix": "pantone_colorcodes_warm"},
-  "Warm Gray 11": {"colorcode": "#6E6259", "name": "common_color_grey", "suffix": "11", "prefix": "pantone_colorcodes_warm"},
-  "Warm Red": {"colorcode": "#F9423A", "name": "common_color_red", "prefix": "pantone_colorcodes_warm"},
-  "Yellow": {"colorcode": "#FEDD00", "name": "common_color_yellow", "prefix": "pantone_colorcodes_warm"},
+  "Warm Gray 1": {"colorcode": "#D7D2CB", "name": "common_color_grey", "suffix": "1", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 2": {"colorcode": "#CBC4BC", "name": "common_color_grey", "suffix": "2", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 3": {"colorcode": "#BFB8AF", "name": "common_color_grey", "suffix": "3", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 4": {"colorcode": "#B6ADA5", "name": "common_color_grey", "suffix": "4", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 5": {"colorcode": "#ACA39A", "name": "common_color_grey", "suffix": "5", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 6": {"colorcode": "#A59C94", "name": "common_color_grey", "suffix": "6", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 7": {"colorcode": "#968C83", "name": "common_color_grey", "suffix": "7", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 8": {"colorcode": "#8C8279", "name": "common_color_grey", "suffix": "8", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 9": {"colorcode": "#83786F", "name": "common_color_grey", "suffix": "9", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 10": {"colorcode": "#796E65", "name": "common_color_grey", "suffix": "10", "prefix": "pantonecolorcodes_warm"},
+  "Warm Gray 11": {"colorcode": "#6E6259", "name": "common_color_grey", "suffix": "11", "prefix": "pantonecolorcodes_warm"},
+  "Warm Red": {"colorcode": "#F9423A", "name": "common_color_red", "prefix": "pantonecolorcodes_warm"},
+  "Yellow": {"colorcode": "#FEDD00", "name": "common_color_yellow", "prefix": "pantonecolorcodes_warm"},
   "Yellow 012": {"colorcode": "#FFD700", "name": "common_color_yellow", "suffix": "012"},
   "Yellow 0131": {"colorcode": "#F2F0A1", "name": "common_color_yellow", "suffix": "0131"},
 };
@@ -1286,3 +1288,35 @@ Map<String, Map<String, String>> PANTONE_COLOR_CODES_ONLY_NUMBERS = {
   "876": {"colorcode": "#8B634B", "name": "876"},
   "877": {"colorcode": "#8A8D8F,", "name": "877"},
 };
+
+Map<String, String> _pantoneByRGB(RGB rgb, List<Map<String, String>> pantoneValues) {
+  var hexCode = HexCode.fromRGB(rgb);
+  return pantoneValues.firstWhere((element) => element['colorcode'].toLowerCase() == hexCode.toString().toLowerCase(), orElse: () => null);
+}
+
+List<Map<String, String>> findSimilarPantoneColors(RGB rgb, List<Map<String, String>> pantoneValues) {
+  var pantone = _pantoneByRGB(rgb, pantoneValues);
+  if (pantone != null) {
+    return [pantone];
+  }
+
+  var pantoneRGBs = pantoneValues.map((element) => HexCode(element['colorcode']).toRGB()).toList();
+
+  List<Map<String, String>> out = [];
+  var distance = 0;
+  while (distance < 100) {
+    distance++;
+    var nearestRGBs = findNearestRGBs(rgb, pantoneRGBs, distance: distance);
+
+    if (nearestRGBs.length >= 5) {
+      out = nearestRGBs.map((nearestRGB) {
+        var nearestPantone = _pantoneByRGB(nearestRGB, pantoneValues);
+        return nearestPantone;
+      }).toList();
+
+      return out;
+    }
+  }
+
+  return out;
+}

@@ -18,7 +18,6 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/colors_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
@@ -194,6 +193,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_ris
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/pantone_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -230,7 +230,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/physical_constant
 import 'package:gc_wizard/widgets/tools/science_and_technology/piano.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
-import 'tools/science_and_technology/colors/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
@@ -242,6 +241,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'tools/science_and_technology/colors/ral_color_codes.dart';
 
 class MainView extends StatefulWidget {
   @override
@@ -477,7 +478,7 @@ void _initStaticToolList() {
       className(Chronogram()),
       className(CipherWheel()),
       className(CistercianNumbersSelection()),
-      className(ColorsSelection()),
+      className(ColorTool()),
       className(Combination()),
       className(CombinationPermutation()),
       className(ComplexNumbers()),
@@ -568,6 +569,7 @@ void _initStaticToolList() {
       className(OhlsenTelegraph()),
       className(OneTimePad()),
       className(Ook()),
+      className(PantoneColorCodes()),
       className(PasleyTelegraph()),
       className(PophamTelegraph()),
       className(PeriodicTable()),
@@ -589,6 +591,7 @@ void _initStaticToolList() {
       className(QrCode()),
       className(QuadraticEquation()),
       className(RailFence()),
+      className(RALColorCodes()),
       className(RC4()),
       className(Recycling()),
       className(Resection()),

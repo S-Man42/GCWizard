@@ -287,6 +287,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/pantone_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -1348,6 +1349,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', searchKeys: [
       'color',
       'ralcolorcodes',
+    ]),
+    GCWTool(tool: PantoneColorCodes(), i18nPrefix: 'pantonecolorcodes', searchKeys: [
+      'color',
+      'pantonecolorcodes',
     ]),
 
     //CombinatoricsSelection ***************************************************************************************
