@@ -48,7 +48,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   fieldDepth = 0.33333;
   separation = 128;
 
-  if (hiddenDataImage == null)
+  if ((hiddenDataImage == null) | ((textureType == TextureType.BITMAP) && (textureImage == null)))
     return null;
 
 
@@ -57,7 +57,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   var resolutionX = depthmap.width;
   var resolutionY = depthmap.height;
 
-  if ((textureType == TextureType.BITMAP) ||  (textureType == null) && (textureImage != null))
+  if ((textureType == TextureType.BITMAP) || ((textureType == null) && (textureImage != null)))
     texture= Image.decodeImage(textureImage);
   else if (textureType == TextureType.GREYDOTS)
     texture = _generateGrayDots(separation, resolutionY);
@@ -114,15 +114,20 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   var generatedLines = 0;
   var _progressStep = max(rows ~/ 100, 1); // 100 steps
 
+  if (sendAsyncPort != null)
+    sendAsyncPort.send({'progress': 0.0});
+
   initHoroptic();
 
   for (int y = 0; y < rows; y++) {
     _doLineHoroptic(y);
 
-    if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
-      print((generatedLines/ y)*100);
-      sendAsyncPort.send({'progress': generatedLines/ y});
-    }
+    if  (y % _progressStep == 0)
+      print((y/ rows)*100);
+
+
+    if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
+       sendAsyncPort.send({'progress': generatedLines/ y});
   }
 
   // BitmapSource bmStereogram = wbStereogram;
@@ -189,7 +194,7 @@ void _doLineHoroptic(int y) {
     // of field depth, but sep macro is not.
     int s = round(_sep(depthLine[i] - (zh/ fieldDepth))).toInt();
 
-    int left = (i - (s/ 2 )).toInt();           // The pixel on the image plane for the left eye
+    int left = (i - (s/ 2)).toInt();           // The pixel on the image plane for the left eye
     int right = left + s;           // And for the right eye
 
     if ((0 <= left) && (right < lineWidth)) {                    // If both points lie within the image bounds ...
@@ -250,13 +255,14 @@ int _outermost(int a, int b, int midpoint) {
 }
 
 RGBPixel _getTexturePixel(int x, int y) {
-  int tp = (((y % textureHeight) * textureWidth) * 4 + ((x + midpoint) % textureWidth)) * 4;
-  return RGBPixel.getPixel(texturePixels, tp);
+  int tp = (((y % textureHeight) * textureWidth) + ((x + midpoint) % textureWidth));
+  return RGBPixel.getPixel(texturePixels, tp * 4);
 }
 
 _setStereoPixel(int x, int y, RGBPixel pixel) {
   int sp = ((y * lineWidth) + x);
   pixels[sp] = pixel.color();
+
 }
 
 Image.Image _generateColoredDots(int resX, int resY) {

@@ -133,9 +133,7 @@ class MagicEyeState extends State<MagicEye> {
             return;
           }
           _encodeHiddenDataImage = _file;
-          generateImageAsync(_buildJobDataEncode()).then((output) {
-            _saveOutputEncode(output);
-          });
+          _generateEncodeImage();
         },
       ),
       Container(), // fixes strange behaviour: First GCWOpenFile widget from encode/decode affect each other
@@ -149,9 +147,7 @@ class MagicEyeState extends State<MagicEye> {
             return;
           }
           _encodeTextureImage= _file;
-          generateImageAsync(_buildJobDataEncode()).then((output) {
-            _saveOutputEncode(output);
-          });
+          _generateEncodeImage();
         },
       ),
 
@@ -160,7 +156,7 @@ class MagicEyeState extends State<MagicEye> {
   }
 
   Widget _buildOutputEncode() {
-    if (_decodeOutData == null) return null;
+    if (_encodeOutData == null) return null;
 
     return Column(children: <Widget>[
       GCWImageView(
@@ -171,7 +167,7 @@ class MagicEyeState extends State<MagicEye> {
     ]);
   }
 
-  GCWAsyncExecuterParameters _buildJobDataEncode() {
+  Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
     return GCWAsyncExecuterParameters(Tuple3<Uint8List, Uint8List, TextureType>(
         _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes, TextureType.BITMAP));
   }
@@ -182,5 +178,29 @@ class MagicEyeState extends State<MagicEye> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
+  }
+
+  void _generateEncodeImage() async {
+    if (_encodeHiddenDataImage == null || _encodeTextureImage == null)
+      return;
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: Container(
+            child: GCWAsyncExecuter(
+              isolatedFunction: generateImageAsync,
+              parameter: _buildJobDataEncode(),
+              onReady: (data) => _saveOutputEncode(data),
+              isOverlay: true,
+            ),
+            height: 220,
+            width: 150,
+          ),
+        );
+      },
+    );
   }
 }
