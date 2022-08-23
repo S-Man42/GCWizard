@@ -87,34 +87,24 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, {Send
   // texturePixels = Uint32List((textureWidth * textureHeight).toInt());
   texturePixels = bmTexture.getBytes(); //.CopyPixels(new Int32Rect(0, 0, textureWidth, textureHeight), texturePixels, textureWidth * bytesPerPixel, 0);
 
-
-  // Copy the depthmap data into a buffer
-  // depthBytes = Uint8List[depthWidth * rows];
-  depthBytes = bmDepthMap.getBytes(); // //bmDepthMap.CopyPixels(new Int32Rect(0, 0, depthWidth, rows), depthBytes, depthWidth, 0);
-
   // invert and grayscale
-  for (var i = 0, len = depthBytes.length; i < len; i += 4) {
-    var pixel = RGBPixel.getPixel(depthBytes, i);
-
-    pixel = invert(pixel);
-    pixel = grayscale(pixel);
-
-    pixel.setPixel(depthBytes, i);
-  }
+  bmDepthMap = Image.grayscale(bmDepthMap);
+  bmDepthMap = Image.invert(bmDepthMap);
+  // Copy the depthmap data into a buffer
+  depthBytes = bmDepthMap.getBytes(); // //bmDepthMap.CopyPixels(new Int32Rect(0, 0, depthWidth, rows), depthBytes, depthWidth, 0);
 
   // progress indicator
   var generatedLines = 0;
   var _progressStep = max(rows ~/ 100, 1); // 100 steps
 
   initHoroptic();
-
-  // Prime candidate for Parallel.For... yes, about doubles the speed of generation on my Quad-Core
+  
   for (int y = 0; y < rows; y++) {
     _doLineHoroptic(y);
 
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0)) {
-      print((generatedLines / y)*100);
-      sendAsyncPort.send({'progress': generatedLines / y});
+      print((generatedLines/ y)*100);
+      sendAsyncPort.send({'progress': generatedLines/ y});
     }
   }
 
@@ -276,7 +266,23 @@ RGBPixel _getTexturePixel(int x, int y) {
 }
 
 _setStereoPixel(int x, int y, RGBPixel pixel) {
-  int sp = ((y * lineWidth ) + x);
+  int sp = ((y * lineWidth) + x);
   pixels[sp] = pixel.color();
+}
+
+Image.Image _generateColouredDots(int resX, int resY) {
+  Random random = new Random();
+  var pixels = Uint8List(resX * resY * 4);
+
+  for (int i = 0; i < pixels.length; i++) {
+    pixels[i] = random.nextInt(256);
+  }
+
+  return Image.Image.fromBytes(resX, resY, pixels);
+}
+
+Image.Image _generateGrayDots(int resX, int resY) {
+  var image = _generateColouredDots(resX, resY);
+  return Image.grayscale(image);
 }
 
