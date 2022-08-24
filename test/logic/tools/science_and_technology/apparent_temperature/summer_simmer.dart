@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
 
 void main() {
   group("SummerSimmer.calculate:", () {

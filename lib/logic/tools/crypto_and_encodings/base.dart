@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:base32/base32.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ascii85.dart';
 
 final Map<String, Function> BASE_FUNCTIONS = {

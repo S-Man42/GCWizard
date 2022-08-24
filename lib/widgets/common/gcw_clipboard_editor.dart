@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -13,8 +14,6 @@ import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:prefs/prefs.dart';
-
-const _PREFS_KEY_CLIPBOARD_ITEMS = 'clipboard_items';
 
 class GCWClipboardEditor extends StatefulWidget {
   final FormulaGroup group;
@@ -45,28 +44,28 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
 
   @override
   Widget build(BuildContext context) {
-    var entries = Prefs.getStringList(_PREFS_KEY_CLIPBOARD_ITEMS);
+    var entries = Prefs.getStringList(PREFERENCE_CLIPBOARD_ITEMS);
 
     var children = <Widget>[
       GCWIntegerSpinner(
         title: i18n(context, 'settings_general_clipboard_maxitems'),
-        value: Prefs.getInt('clipboard_max_items'),
+        value: Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS),
         min: 1,
         max: 100,
         onChanged: (value) {
           setState(() {
-            Prefs.setInt('clipboard_max_items', value);
+            Prefs.setInt(PREFERENCE_CLIPBOARD_MAX_ITEMS, value);
           });
         },
       ),
       GCWIntegerSpinner(
         title: i18n(context, 'settings_general_clipboard_keep.entries.in.days'),
-        value: Prefs.getInt('clipboard_keep_entries_in_days'),
+        value: Prefs.getInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS),
         min: 1,
         max: 1000,
         onChanged: (value) {
           setState(() {
-            Prefs.setInt('clipboard_keep_entries_in_days', value);
+            Prefs.setInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS, value);
           });
         },
       ),
@@ -76,7 +75,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
           showGCWAlertDialog(
               context, i18n(context, 'clipboardeditor_clear_title'), i18n(context, 'clipboardeditor_clear_text'), () {
             setState(() {
-              Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, []);
+              Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, []);
             });
           });
         },
@@ -113,7 +112,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
 
                       var newEntries = List<String>.from(entries);
                       newEntries[index] = jsonEncode(item);
-                      Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, newEntries);
+                      Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, newEntries);
                     }
 
                     _currentEditId = null;
@@ -145,7 +144,7 @@ class GCWClipboardEditorState extends State<GCWClipboardEditor> {
                     setState(() {
                       var newEntries = List<String>.from(entries);
                       newEntries.removeAt(index);
-                      Prefs.setStringList(_PREFS_KEY_CLIPBOARD_ITEMS, newEntries);
+                      Prefs.setStringList(PREFERENCE_CLIPBOARD_ITEMS, newEntries);
                     });
                   });
                 },

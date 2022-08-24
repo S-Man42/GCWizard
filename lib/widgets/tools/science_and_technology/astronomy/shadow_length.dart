@@ -11,13 +11,15 @@ import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_da
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/sun_position.dart' as logic;
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/shadow_length.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
@@ -45,8 +47,10 @@ class ShadowLengthState extends State<ShadowLength> {
   var _currentBearing = 0.0;
 
 
-  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
-  Length _currentOutputLength = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+  Length _currentInputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+  Length _currentOutputLength = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
+  var _currentCoordsOutputFormat = defaultCoordFormat();
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,34 +90,44 @@ class ShadowLengthState extends State<ShadowLength> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'shadowlength_outputunit')),
-        GCWUnitDropDownButton(
-            unitList: allLengths(),
-            value: _currentOutputLength,
-            onChanged: (Length value) {
-              setState(() {
-                _currentOutputLength = value;
-              });
-            }),
+        GCWCoordsOutputFormatDistance(
+          coordFormat: _currentCoordsOutputFormat,
+          onChanged: (value) {
+            setState(() {
+              _currentCoordsOutputFormat = value['coordFormat'];
+              _currentOutputLength = value['unit'];
+            });
+          },
+        ),
         _buildOutput()
       ],
     );
   }
 
   _buildOutput() {
+
     var format = NumberFormat('0.000');
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
     var sunPosition =
         logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
-    _currentLength =
-        _currentHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
-    var lengthOutput = '';
 
+    var shadowLen = shadowLength(
+        _currentHeight,
+        _currentCoords,
+        defaultEllipsoid(),
+        _currentDateTime['datetime'],
+        _currentDateTime['timezone']
+    );
+
+    var lengthOutput = '';
+    var _currentLength = shadowLen.length;
+
+    var _currentFormattedLength;
     if (_currentLength < 0)
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
     else {
-      _currentLength = _currentOutputLength.fromMeter(_currentLength);
-      lengthOutput = format.format(_currentLength) + ' ' + _currentOutputLength.symbol;
+      _currentFormattedLength = _currentOutputLength.fromMeter(_currentLength);
+      lengthOutput = format.format(_currentFormattedLength) + ' ' + _currentOutputLength.symbol;
     }
 
     if (sunPosition.azimuth > 180)
@@ -130,11 +144,12 @@ class ShadowLengthState extends State<ShadowLength> {
       child: Column(
         children: rowsShadowData,
       ),
+
     );
 
     var outputsSun = [
-      [i18n(context, 'astronomy_position_azimuth'), format.format(sunPosition.azimuth) + '°'],
-      [i18n(context, 'astronomy_position_altitude'), format.format(sunPosition.altitude) + '°'],
+      [i18n(context, 'astronomy_position_azimuth'), format.format(shadowLen.sunPosition.azimuth) + '°'],
+      [i18n(context, 'astronomy_position_altitude'), format.format(shadowLen.sunPosition.altitude) + '°'],
     ];
 
     var rowsSunData = columnedMultiLineOutput(context, outputsSun);
@@ -180,8 +195,10 @@ class ShadowLengthState extends State<ShadowLength> {
     );
 
     var output = rowsSunData;
+
     output.insert(0, shadowProjection);
     output.insert(0, outputShadowData);
+
     return Column(children: output);
   }
 }
