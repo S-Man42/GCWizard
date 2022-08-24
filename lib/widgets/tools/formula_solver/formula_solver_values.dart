@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';

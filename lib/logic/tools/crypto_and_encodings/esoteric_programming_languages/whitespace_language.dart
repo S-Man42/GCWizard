@@ -1,7 +1,8 @@
 import 'dart:math';
-import 'package:tuple/tuple.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:tuple/tuple.dart';
 
 // ported from https://github.com/adapap/whitespace-interpreter/blob/master/whitespace_interpreter.py#L1
 // decoder with debug https://naokikp.github.io/wsi/whitespace.html

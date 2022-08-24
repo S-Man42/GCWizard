@@ -6,7 +6,6 @@
  *  https://web.archive.org/web/20041206052853/http://www.dekoepel.nl/pdf/Transformatieformules.pdf
  *
  */
-
 import 'dart:math';
 
 // Coordinates of origin (Amersfoort)

@@ -1,15 +1,9 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/coords/converter/dutchgrid.dart';
-import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dutchgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
@@ -25,6 +19,11 @@ import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
+import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 const keyCoordsDEC = 'coords_dec';
 const keyCoordsDMM = 'coords_dmm';

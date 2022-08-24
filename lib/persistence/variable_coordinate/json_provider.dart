@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_model;
 import 'package:gc_wizard/persistence/utils.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
-  var formulasList = Prefs.getStringList('coord_variablecoordinate_formulas');
+  var formulasList = Prefs.getStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS);
   if (formulasList == null || formulasList.length == 0) return;
 
   formulas = formulasList.where((formula) => formula.length > 0).map((formula) {
@@ -17,7 +18,7 @@ void refreshFormulas() {
 _saveData() {
   var jsonData = formulas.map((formula) => jsonEncode(formula.toMap())).toList();
 
-  Prefs.setStringList('coord_variablecoordinate_formulas', jsonData);
+  Prefs.setStringList(PREFERENCE_COORD_VARIABLECOORDINATE_FORMULAS, jsonData);
 }
 
 void updateFormulas() {

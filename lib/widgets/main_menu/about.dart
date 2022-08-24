@@ -47,7 +47,7 @@ class AboutState extends State<About> {
                   style: gcwHyperlinkTextStyle(),
                 ),
                 onTap: () {
-                  launch(i18n(context, 'about_${key}_url'));
+                  launchUrl(Uri.parse(i18n(context, 'about_${key}_url')));
                 },
               ),
               flex: 3)
@@ -208,6 +208,7 @@ class AboutState extends State<About> {
                     'Franz K.',
                     '\'Freakyfinder\'',
                     '\'GrafZahl75\'',
+                    '\'hwi\'',
                     'Isidore S.',
                     'Johannes C.',
                     'Jonas M.',

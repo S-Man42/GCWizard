@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';

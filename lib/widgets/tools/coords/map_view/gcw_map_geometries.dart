@@ -5,7 +5,6 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 

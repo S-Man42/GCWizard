@@ -2316,6 +2316,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     String inputToDecode;
 
     // simplify input
+    input = input.replaceAll(RegExp(r'\s+'),' ');
 
     // trim korean
     input = input
@@ -2513,7 +2514,6 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // check degree ° and dot .
     inputToDecode = inputToDecode.replaceAll('°', ' ° ').replaceAll('.', ' . ').replaceAll('  ', ' ');
     // start decoding
-    //decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-€°.' + "'" + ']'));
     decodeText = inputToDecode.split(RegExp(r'[ ]'));
     decodeText.forEach((element) {
       _alreadyFound = false;
