@@ -4,10 +4,10 @@ import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -49,6 +49,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       ),
       _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWIntegerSpinner(
+              overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
               min: 0,
               value: _currentEncodeInput,
               onChanged: (value) {

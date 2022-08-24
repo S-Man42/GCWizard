@@ -5,13 +5,9 @@ import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_cmyk.
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_hue.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_yuv.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_colorpicker.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_colors.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -26,7 +22,6 @@ class ColorTool extends StatefulWidget {
 
 class ColorToolState extends State<ColorTool> {
   dynamic _currentColor = defaultColor;
-  HSVColor _currentColorPickerColor;
   String _currentColorSpace = keyColorSpaceRGB;
   String _currentOutputColorSpace = keyColorSpaceHex;
 
@@ -37,38 +32,19 @@ class ColorToolState extends State<ColorTool> {
     super.initState();
 
     _currentColor = widget.color ?? defaultColor;
-    _setColorPickerColor(_currentColor);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          child: GCWColorPicker(
-            hsvColor: _currentColorPickerColor,
-            onChanged: (color) {
-              setState(() {
-                _currentColorPickerColor = color;
-
-                HSV hsv = HSV(color.hue, color.saturation, color.value);
-                _currentColor = convertColorSpace(hsv, keyColorSpaceHSV, _currentColorSpace);
-              });
-            },
-          ),
-          padding: EdgeInsets.only(bottom: 20.0),
-        ),
         GCWColors(
           color: _currentColor,
           colorSpace: _currentColorSpace,
-          onChanged: (result) {
+          onChanged: (value) {
             setState(() {
-              _currentColorSpace = result['colorSpace'];
-              _currentColor = result['color'];
-
-              HSV colorPickerColor = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceHSV);
-              _currentColorPickerColor =
-                  HSVColor.fromAHSV(1.0, colorPickerColor.hue, colorPickerColor.saturation, colorPickerColor.value);
+              _currentColorSpace = value['colorSpace'];
+              _currentColor = value['color'];
             });
           },
         ),
@@ -188,10 +164,5 @@ class ColorToolState extends State<ColorTool> {
     rows.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
 
     return Column(children: rows);
-  }
-
-  _setColorPickerColor(RGB rgbColor) {
-    var color = Color.fromARGB(255, rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round());
-    _currentColorPickerColor = HSVColor.fromColor(color);
   }
 }

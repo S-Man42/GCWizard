@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/heat_index.dart';
 
 void main() {
   group("heat.calculate:", () {
