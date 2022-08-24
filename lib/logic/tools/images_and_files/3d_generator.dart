@@ -125,7 +125,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
-                                          format: Image.Format.rgba, channels: Image.Channels.rgba);
+                                          format: Image.Format.rgb, channels: Image.Channels.rgb);
 
   // High quality images need to be scaled back down...
   if (oversample > 1) {
