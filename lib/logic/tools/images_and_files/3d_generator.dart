@@ -14,19 +14,18 @@ enum TextureType {
   BITMAP
 }
 
-double fieldDepth;
-int separation;
-int lineWidth;
-int rows;
-int depthWidth;
-int depthScale;
-int midpoint;
-int textureWidth;
-int textureHeight;
-Uint32List pixels;
-
-Uint8List texturePixels;
-Uint8List depthBytes;
+double _fieldDepth;
+int _separation;
+int _lineWidth;
+int _rows;
+int _depthWidth;
+int _depthScale;
+int _midpoint;
+int _textureWidth;
+int _textureHeight;
+Uint32List _pixels;
+Uint8List _texturePixels;
+Uint8List _depthBytes;
 
 Future<Uint8List> generateImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
@@ -45,107 +44,93 @@ Future<Uint8List> generateImageAsync(dynamic jobData) async {
 Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType, {SendPort sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
-  fieldDepth = 0.33333;
-  separation = 128;
+  Image.Image texture;
+
+  _fieldDepth = 0.33333;
+  _separation = 128;
 
   if ((hiddenDataImage == null) | ((textureType == TextureType.BITMAP) && (textureImage == null)))
     return null;
 
-
   var depthmap = Image.decodeImage(hiddenDataImage);
-  Image.Image texture;
   var resolutionX = depthmap.width;
   var resolutionY = depthmap.height;
 
   if ((textureType == TextureType.BITMAP) || ((textureType == null) && (textureImage != null)))
     texture= Image.decodeImage(textureImage);
   else if (textureType == TextureType.GREYDOTS)
-    texture = _generateGrayDots(separation, resolutionY);
+    texture = _generateGrayDotsTexture(_separation, resolutionY);
   else
-    texture = _generateColoredDots(separation, resolutionY);
+    texture = _generateColoredDotsTexture(_separation, resolutionY);
 
   if (hiddenDataImage == null || textureImage== null)
     return null;
 
-
-  textureWidth = separation;
-  textureHeight = ((separation * texture.height)/ texture.width).toInt();
+  _textureWidth = _separation;
+  _textureHeight = ((_separation * texture.height)/ texture.width).toInt();
 
   // Cache some intermediaries
-  lineWidth = resolutionX;
-  rows = resolutionY;
-  depthWidth = lineWidth;
-  depthScale = oversample;
+  _lineWidth = resolutionX;
+  _rows = resolutionY;
+  _depthWidth = _lineWidth;
+  _depthScale = oversample;
 
-  fieldDepth = fieldDepth.clamp(0, 1);
+  _fieldDepth = _fieldDepth.clamp(0, 1);
 
   // Apply oversampling factor to relevant settings
   if (oversample > 1) {
-    separation *= oversample;
-    lineWidth *= oversample;
-    textureWidth *= oversample;
+    _separation *= oversample;
+    _lineWidth *= oversample;
+    _textureWidth *= oversample;
 
-    if (bInterpolateDepthmap ) {
-      depthWidth *= oversample;
-      depthScale = 1;
+    if (bInterpolateDepthmap) {
+      _depthWidth *= oversample;
+      _depthScale = 1;
     }
   }
-  midpoint = (lineWidth/ 2).toInt();
+  _midpoint = (_lineWidth/ 2).toInt();
 
   // Convert texture to RGB24 and scale it to fit the separation (preserving ratio but doubling width for HQ mode)
-  var bmTexture = Image.copyResize(texture, width: textureWidth, height: textureHeight);
+  var bmTexture = Image.copyResize(texture, width: _textureWidth, height: _textureHeight);
 
   // Resize the depthmap to our target resolution
-  var bmDepthMap = Image.copyResize(depthmap, width: depthWidth, height: resolutionY);
+  var bmDepthMap = Image.copyResize(depthmap, width: _depthWidth, height: resolutionY);
 
   // Create a great big 2D array to hold the bytes - wasteful but convenient
-  pixels = Uint32List(lineWidth * rows);
+  _pixels = Uint32List(_lineWidth * _rows);
 
   // Copy the texture data into a buffer
-  texturePixels = bmTexture.getBytes();
+  _texturePixels = bmTexture.getBytes(format: Image.Format.rgba);
 
-  // invert and grayscale
+  // grayscale and invert
   bmDepthMap = Image.grayscale(bmDepthMap);
   bmDepthMap = Image.invert(bmDepthMap);
   // Copy the depthmap data into a buffer
-  depthBytes = bmDepthMap.getBytes();
+  _depthBytes = bmDepthMap.getBytes(format: Image.Format.rgba);
 
   // progress indicator
   var generatedLines = 0;
-  var _progressStep = max(rows ~/ 100, 1); // 100 steps
+  var _progressStep = max(_rows ~/ 100, 1); // 100 steps
 
   if (sendAsyncPort != null)
     sendAsyncPort.send({'progress': 0.0});
 
   initHoroptic();
 
-  for (int y = 0; y < rows; y++) {
+  for (int y = 0; y < _rows; y++) {
     _doLineHoroptic(y);
 
-    if  (y % _progressStep == 0)
-      print((y/ rows)*100);
-
-
     if (sendAsyncPort != null && (generatedLines % _progressStep == 0))
-       sendAsyncPort.send({'progress': generatedLines/ y});
+       sendAsyncPort.send({'progress': y/ _rows});
   }
 
-  // BitmapSource bmStereogram = wbStereogram;
-  var bmStereogram = Image.Image.fromBytes(lineWidth, rows, pixels.buffer.asUint8List());
+  var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
+                                          format: Image.Format.rgba, channels: Image.Channels.rgba);
 
   // High quality images need to be scaled back down...
   if (oversample > 1) {
     bmStereogram = Image.copyResize(bmStereogram, width: resolutionX, height: resolutionY);
   }
-
-
-
-  //
-  // Stereogram stereogram = new Stereogram(bmStereogram);
-  // stereogram.options = this.options;
-  // stereogram.Name = String.Format("{0}+{1}+{2}", depthmap.Name, texture.Name, options.algorithm.ToString());
-  // stereogram.Milliseconds = timer.ElapsedMilliseconds;
-  // return stereogram;
 
   return encodeTrimmedPng(bmStereogram);
 }
@@ -155,10 +140,10 @@ List<int> centreOut;
 
 void initHoroptic(){
   // Create an array of offsets which alternate pixels from the center out to the edges
-  centreOut = List<int>.filled(lineWidth, 0);
-  int offset = midpoint;
+  centreOut = List<int>.filled(_lineWidth, 0);
+  int offset = _midpoint;
   int flip = -1;
-  for (int i = 0; i < lineWidth; i++) {
+  for (int i = 0; i < _lineWidth; i++) {
     centreOut[i] = offset;
     offset += ((i + 1) * flip);
     flip = -flip;
@@ -169,39 +154,39 @@ void _doLineHoroptic(int y) {
   // Set up a constraints buffer with each pixel initially constrained to equal itself (probably slower than a for loop but easier to step over :p)
   // And convert depths to floats normalised 0..1
 
-  var constraints = List<int>.filled(lineWidth, 0);
-  var depthLine = List<double>.filled(lineWidth, 0);
+  var constraints = List<int>.filled(_lineWidth, 0);
+  var depthLine = List<double>.filled(_lineWidth, 0);
   var max_depth = 0.0;
 
-  for (int i = 0; i < lineWidth; i++) {
+  for (int i = 0; i < _lineWidth; i++) {
     constraints[i] = i;
     depthLine[i] = _getDepthFloat(i, y);
   }
 
   // Process the line updating any constrained pixels
-  for (int ii = 0; ii < lineWidth; ii++) {
+  for (int ii = 0; ii < _lineWidth; ii++) {
     // Work from centre out
     int i = centreOut[ii];
 
     // Calculate Z value of the horopter at this x,y. w.r.t its centre.  20 * separation is approximation of distance to viewer's eyes
-    double zh = sqrt(_squareOf(20 * separation) - _squareOf(i - midpoint));
+    double zh = sqrt(_squareOf(20 * _separation) - _squareOf(i - _midpoint));
 
     // Scale to the range [0,1] and adjust to displacement from the far plane
-    zh = 1.0 - (zh/ (20 * separation));
+    zh = 1.0 - (zh/ (20 * _separation));
 
     // Separation of pixels on image plane for this point
     // Note - divide ZH by FieldDepth as the horopter is independant
     // of field depth, but sep macro is not.
-    int s = round(_sep(depthLine[i] - (zh/ fieldDepth))).toInt();
+    int s = round(_sep(depthLine[i] - (zh/ _fieldDepth))).toInt();
 
-    int left = (i - (s/ 2)).toInt();           // The pixel on the image plane for the left eye
+    int left = (i - (s/ 2)).toInt(); // The pixel on the image plane for the left eye
     int right = left + s;           // And for the right eye
 
-    if ((0 <= left) && (right < lineWidth)) {                    // If both points lie within the image bounds ...
+    if ((0 <= left) && (right < _lineWidth)) {  // If both points lie within the image bounds ...
       // Decide whether we want to constrain the left or right pixel
       // Want to avoid constraint loops, so always constrain outermost pixel to innermost
       // Should depend if one or the other is already constrained I suppose
-      int constrainee = _outermost(left, right, midpoint);
+      int constrainee = _outermost(left, right, _midpoint);
       int constrainer = (constrainee == left) ? right : left;
 
       // Find an unconstrained pixel and constrain ourselves to it
@@ -218,7 +203,7 @@ void _doLineHoroptic(int y) {
   }
 
   // Now actually set the pixels
-  for (int i = 0; i < lineWidth; i++) {
+  for (int i = 0; i < _lineWidth; i++) {
     int pix = i;
 
     // Find an unconstrained pixel
@@ -231,52 +216,47 @@ void _doLineHoroptic(int y) {
 }
 
 double _getDepthFloat(int x, int y) {
-  return (depthBytes[((y * depthWidth) + (x/ depthScale)).toInt()])/ 255;
+  return (_depthBytes[((y * _depthWidth) + (x/ _depthScale)).toInt()])/ 255;
 }
 
-// Just for readability
+/// Just for readability
 int _squareOf(int x) {
   return x * x;
 }
 
-/// <summary>
 /// Helper to calculate stereo separation in pixels of a point at depth Z
-/// </summary>
-/// <param name="Z"></param>
-/// <returns></returns>
 double _sep(double z) {
   z = z.clamp(0.0, 1.0);
-  return ((1 - fieldDepth * z) * (2 * separation)/ (2 - fieldDepth * z));
+  return ((1 - _fieldDepth * z) * (2 * _separation)/ (2 - _fieldDepth * z));
 }
 
-// Return which of two values is furthest from a mid-point (or indeed any point)
+/// Return which of two values is furthest from a mid-point (or indeed any point)
 int _outermost(int a, int b, int midpoint) {
   return ((midpoint - a).abs() > (midpoint - b).abs()) ? a : b;
 }
 
 RGBPixel _getTexturePixel(int x, int y) {
-  int tp = (((y % textureHeight) * textureWidth) + ((x + midpoint) % textureWidth));
-  return RGBPixel.getPixel(texturePixels, tp * 4);
+  int tp = ((y % _textureHeight) * _textureWidth) + ((x + _midpoint) % _textureWidth);
+  return RGBPixel.getPixel(_texturePixels, tp * 4); // 4 Channels (RGBA)
 }
 
 _setStereoPixel(int x, int y, RGBPixel pixel) {
-  int sp = ((y * lineWidth) + x);
-  pixels[sp] = pixel.color();
-
+  int sp = ((y * _lineWidth) + x);
+  _pixels[sp] = pixel.color();
 }
 
-Image.Image _generateColoredDots(int resX, int resY) {
+Image.Image _generateColoredDotsTexture(int resX, int resY) {
   Random random = new Random();
-  var pixels = Uint8List(resX * resY * 4);
+  var pixels = Uint8List(resX * resY * 4); // 4 Channels (RGBA)
 
   for (int i = 0; i < pixels.length; i++)
     pixels[i] = random.nextInt(256);
 
-  return Image.Image.fromBytes(resX, resY, pixels);
+  return Image.Image.fromBytes(resX, resY, pixels, format: Image.Format.rgba, channels: Image.Channels.rgba);
 }
 
-Image.Image _generateGrayDots(int resX, int resY) {
-  var image = _generateColoredDots(resX, resY);
+Image.Image _generateGrayDotsTexture(int resX, int resY) {
+  var image = _generateColoredDotsTexture(resX, resY);
   return Image.grayscale(image);
 }
 
