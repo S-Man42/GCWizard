@@ -88,18 +88,29 @@ class HexCode {
   }
 }
 
+double _rgbDistance(RGB a, RGB b) {
+  return sqrt(
+      pow(a.red - b.red, 2)
+          + pow(a.green - b.green, 2)
+          + pow(a.blue - b.blue, 2)
+  );
+}
+
 List<RGB> findNearestRGBs(RGB fromRGB, List<RGB> toRGBs, {int distance: 32}) {
   var out = <RGB>[];
 
   toRGBs.forEach((toRGB) {
-    var actualDistance = sqrt(
-        pow(fromRGB.red - toRGB.red, 2)
-            + pow(fromRGB.green - toRGB.green, 2)
-            + pow(fromRGB.blue - toRGB.blue, 2)
-    );
+    var actualDistance = _rgbDistance(fromRGB, toRGB);
 
     if (actualDistance <= distance)
       out.add(toRGB);
+  });
+
+  out.sort((a, b) {
+    var aDistance = _rgbDistance(a, fromRGB);
+    var bDistance = _rgbDistance(b, fromRGB);
+
+    return aDistance.compareTo(bDistance);
   });
 
   return out;

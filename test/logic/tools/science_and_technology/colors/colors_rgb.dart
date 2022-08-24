@@ -24,7 +24,7 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'fromRGB' : RGB(40, 116, 81), 'toRGBs': PANTONE_COLOR_CODES_ONLY_NUMBERS.values.map((e) {
         return HexCode(e['colorcode']).toRGB();
-      }).toList(), 'expectedOutput' : ['#205C40', '#43695B', '#28724F', '#285C4D', '#228848', '#286140']},
+      }).toList(), 'expectedOutput' : ['#28724F', '#228848', '#285C4D', '#286140', '#205C40', '#43695B']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -32,7 +32,7 @@ void main() {
         List<RGB> _actual = findNearestRGBs(elem['fromRGB'], elem['toRGBs']);
         print(_actual);
 
-        expect(_actual.map((e) => HexCode.fromRGB(e)).toList(), elem['expectedOutput']);
+        expect(_actual.map((e) => HexCode.fromRGB(e).toString()).toList(), elem['expectedOutput']);
       });
     });
   });
