@@ -1,4 +1,5 @@
 import 'dart:core';
+
 import 'package:gc_wizard/utils/constants.dart';
 
 enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM }

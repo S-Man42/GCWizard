@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/games/scrabble.dart';
-import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
+import 'package:gc_wizard/logic/tools/games/scrabble/scrabble.dart';
+import 'package:gc_wizard/logic/tools/games/scrabble/scrabble_sets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -96,9 +96,9 @@ class ScrabbleState extends State<Scrabble> {
 
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentValues = textToLetterValues(_currentInput, _currentScrabbleVersion);
+      _currentValues = scrabbleTextToLetterValues(_currentInput, _currentScrabbleVersion);
     } else {
-      _currentValues = textToLetterFrequencies(_currentInput, _currentScrabbleVersion);
+      _currentValues = scrabbleTextToLetterFrequencies(_currentInput, _currentScrabbleVersion);
     }
 
     _output = intListToString(_currentValues, delimiter: ' ');

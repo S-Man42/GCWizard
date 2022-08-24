@@ -1,7 +1,6 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/astronomie_info/astronomy.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
-
 import 'package:latlong2/latlong.dart';
 
 class MoonRiseSet {

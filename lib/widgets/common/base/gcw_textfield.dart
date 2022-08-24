@@ -127,7 +127,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             style: widget.style != null ? widget.style : TextStyle(
                 fontSize: widget.fontSize ?? defaultFontSize(),
                 color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
-            maxLengthEnforced: true,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
             maxLength: widget.maxLength,
             selectionControls: GCWTextSelectionControls(),
           );

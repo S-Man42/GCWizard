@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 class BifidOutput {

@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_gwc.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -119,7 +120,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     _codeControllerHighlightedLUA = CodeController(
       text: _LUA_SourceCode,
       language: lua,
-      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
+      theme: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
       stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
     );
   }
@@ -1399,7 +1400,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           ? [
               i18n(context, 'wherigo_output_originalpoint'),
               formatCoordOutput(LatLng(data.ZoneOriginalPoint.Latitude, data.ZoneOriginalPoint.Longitude),
-                  {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
+                  {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
             ]
           : ['', ''],
       [i18n(context, 'wherigo_output_zonepoints'), ''],
@@ -1409,7 +1410,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       result.add([
         '',
         formatCoordOutput(
-            LatLng(point.Latitude, point.Longitude), {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
+            LatLng(point.Latitude, point.Longitude), {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
       ]);
     });
     return result;
@@ -1441,7 +1442,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       result.add([
         i18n(context, 'wherigo_output_location'),
         formatCoordOutput(LatLng(data.ItemZonepoint.Latitude, data.ItemZonepoint.Longitude),
-            {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
+            {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
       ]);
     else
       result.add([i18n(context, 'wherigo_output_location'), data.ItemLocation]);
@@ -1529,7 +1530,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       result.add([
         i18n(context, 'wherigo_output_location'),
         formatCoordOutput(LatLng(data.CharacterZonepoint.Latitude, data.CharacterZonepoint.Longitude),
-            {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
+            {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
       ]);
     else
       result.add([i18n(context, 'wherigo_output_location'), data.CharacterLocation]);
@@ -2371,7 +2372,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
       [
         i18n(context, 'wherigo_output_location'),
         formatCoordOutput(LatLng(_WherigoCartridgeGWC.Latitude, _WherigoCartridgeGWC.Longitude),
-            {'format': Prefs.get('coord_default_format')}, defaultEllipsoid())
+            {'format': Prefs.get(PREFERENCE_COORD_DEFAULT_FORMAT)}, defaultEllipsoid())
       ],
       [i18n(context, 'wherigo_header_altitude'), _WherigoCartridgeGWC.Altitude.toString()],
       [i18n(context, 'wherigo_header_typeofcartridge'), _WherigoCartridgeGWC.TypeOfCartridge],
