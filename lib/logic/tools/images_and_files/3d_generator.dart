@@ -169,7 +169,7 @@ void _doLineHoroptic(int y) {
     int i = centreOut[ii];
 
     // Calculate Z value of the horopter at this x,y. w.r.t its centre.  20 * separation is approximation of distance to viewer's eyes
-    double zh = sqrt(_squareOf(20 * _separation) - _squareOf(i - _midpoint));
+    double zh = sqrt(pow(20 * _separation, 2) - pow(i - _midpoint, 2));
 
     // Scale to the range [0,1] and adjust to displacement from the far plane
     zh = 1.0 - (zh/ (20 * _separation));
@@ -217,11 +217,6 @@ void _doLineHoroptic(int y) {
 
 double _getDepthFloat(int x, int y) {
   return (_depthBytes[((y * _depthWidth) + (x/ _depthScale)).toInt()])/ 255;
-}
-
-/// Just for readability
-int _squareOf(int x) {
-  return x * x;
 }
 
 /// Helper to calculate stereo separation in pixels of a point at depth Z
