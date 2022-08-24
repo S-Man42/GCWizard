@@ -27,14 +27,6 @@ class RGBPixel {
     data[offset + 1] = this.green.round().clamp(0, 255);
     data[offset + 2] = this.blue.round().clamp(0, 255);
   }
-
-  int color() {
-    var _color = ByteData(4);
-    _color.setUint8(0, this.red.round().clamp(0, 255));
-    _color.setUint8(1, this.green.round().clamp(0, 255));
-    _color.setUint8(2, this.blue.round().clamp(0, 255));
-    return _color.getInt32(0);
-  }
 }
 
 // https://www.dfstudios.co.uk/articles/programming/image-programming-algorithms/

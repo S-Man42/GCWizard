@@ -14,6 +14,7 @@ enum TextureType {
   BITMAP
 }
 
+const int _channelCount = 4;
 double _fieldDepth;
 int _separation;
 int _lineWidth;
@@ -125,7 +126,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   }
 
   var bmStereogram = Image.Image.fromBytes(_lineWidth, _rows, _pixels.buffer.asUint8List(),
-                                          format: Image.Format.rgb, channels: Image.Channels.rgb);
+                                          format: Image.Format.rgba, channels: Image.Channels.rgba);
 
   // High quality images need to be scaled back down...
   if (oversample > 1) {
@@ -213,10 +214,42 @@ void _doLineHoroptic(int y) {
     // And get the RGBs from the tiled texture at that point
     _setStereoPixel(i, y, _getTexturePixel(pix, y));
   }
+
+  // if (y == 150)
+  // {
+  //   var s1 = "";
+  //   var s2 = "";
+  //   var s3 = "";
+  //   var s4 = "";
+  //   //Debug.Print(depthLine.ToString());
+  //   for (int x = 110; x < 130; x++)
+  //   {
+  //     s1 += depthLine[x].toStringAsFixed(2) + " ";
+  //     s2 += _pixels[(y * _lineWidth) + x].toStringAsFixed(0) + " ";
+  //     s3 += _getTexturePixel(x,y).color().toString() + " ";
+  //     s4 +=_getDepthFloat(x, y).toStringAsFixed(2) + " ";;
+  //
+  //   }
+  //   print(s1 + " \n\n" );
+  //   print( s4);
+  //   print( s2);
+  //   print( s3);
+  //   //Debug.Print(depthLine.ToString());
+  // }
+}
+
+int RgbPixelColor(RGBPixel pixel) {
+  var _color = ByteData(4);
+  _color.setUint8(3, pixel.red.round().clamp(0, 255));
+  _color.setUint8(2, pixel.green.round().clamp(0, 255));
+  _color.setUint8(1, pixel.blue.round().clamp(0, 255));
+  _color.setUint8(0, 255);
+  return _color.getUint32(0);
 }
 
 double _getDepthFloat(int x, int y) {
-  return (_depthBytes[((y * _depthWidth) + (x/ _depthScale)).toInt()])/ 255;
+  int tp = ((y * _depthWidth) + (x/ _depthScale)).toInt() * _channelCount;
+  return ((_depthBytes[tp]/255.0 + _depthBytes[tp+1]/255.0 + _depthBytes[tp+2])/255.0); // (RGBA)
 }
 
 /// Helper to calculate stereo separation in pixels of a point at depth Z
@@ -232,17 +265,17 @@ int _outermost(int a, int b, int midpoint) {
 
 RGBPixel _getTexturePixel(int x, int y) {
   int tp = ((y % _textureHeight) * _textureWidth) + ((x + _midpoint) % _textureWidth);
-  return RGBPixel.getPixel(_texturePixels, tp * 4); // 4 Channels (RGBA)
+  return RGBPixel.getPixel(_texturePixels, tp * _channelCount); // (RGBA)
 }
 
 _setStereoPixel(int x, int y, RGBPixel pixel) {
   int sp = ((y * _lineWidth) + x);
-  _pixels[sp] = pixel.color();
+  _pixels[sp] = RgbPixelColor(pixel);
 }
 
 Image.Image _generateColoredDotsTexture(int resX, int resY) {
   Random random = new Random();
-  var pixels = Uint8List(resX * resY * 4); // 4 Channels (RGBA)
+  var pixels = Uint8List(resX * resY * _channelCount); // (RGBA)
 
   for (int i = 0; i < pixels.length; i++)
     pixels[i] = random.nextInt(256);
