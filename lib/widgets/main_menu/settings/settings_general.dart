@@ -6,15 +6,21 @@ import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/main_menu/settings/settings_preferences.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -78,7 +84,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
               style: gcwHyperlinkTextStyle(),
             ),
             onTap: () {
-              launch(i18n(context, 'about_crowdin_url'));
+              launchUrl(Uri.parse(i18n(context, 'about_crowdin_url')));
             },
           ),
           padding: EdgeInsets.only(bottom: 10 * DEFAULT_MARGIN, top: 5 * DEFAULT_MARGIN),
@@ -88,10 +94,10 @@ class GeneralSettingsState extends State<GeneralSettings> {
           Expanded(
             child: GCWUnitDropDownButton(
                 unitList: allLengths(),
-                value: getUnitBySymbol(allLengths(), Prefs.get('default_length_unit')),
+                value: getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT)),
                 onChanged: (Length value) {
                   setState(() {
-                    Prefs.setString('default_length_unit', value.symbol);
+                    Prefs.setString(PREFERENCE_DEFAULT_LENGTH_UNIT, value.symbol);
                   });
                 }),
           ),
@@ -99,7 +105,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
         GCWTextDivider(text: i18n(context, 'settings_general_theme')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'settings_general_theme_color'),
-          value: Prefs.getString('theme_color') == ThemeType.DARK.toString()
+          value: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
               ? GCWSwitchPosition.left
               : GCWSwitchPosition.right,
           leftValue: i18n(context, 'settings_general_theme_color_dark'),
@@ -107,10 +113,10 @@ class GeneralSettingsState extends State<GeneralSettings> {
           onChanged: (value) {
             setState(() {
               if (value == GCWSwitchPosition.left) {
-                Prefs.setString('theme_color', ThemeType.DARK.toString());
+                Prefs.setString(PREFERENCE_THEME_COLOR, ThemeType.DARK.toString());
                 setThemeColors(ThemeType.DARK);
               } else {
-                Prefs.setString('theme_color', ThemeType.LIGHT.toString());
+                Prefs.setString(PREFERENCE_THEME_COLOR, ThemeType.LIGHT.toString());
                 setThemeColors(ThemeType.LIGHT);
               }
 
@@ -120,12 +126,12 @@ class GeneralSettingsState extends State<GeneralSettings> {
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'settings_general_theme_font_size'),
-          value: Prefs.getDouble('theme_font_size').floor(),
+          value: Prefs.getDouble(PREFERENCE_THEME_FONT_SIZE).floor(),
           min: 10,
           max: 30,
           onChanged: (value) {
             setState(() {
-              Prefs.setDouble('theme_font_size', value.toDouble());
+              Prefs.setDouble(PREFERENCE_THEME_FONT_SIZE, value.toDouble());
 
               // source: https://hillel.dev/2018/08/15/flutter-how-to-rebuild-the-entire-app-to-change-the-theme-or-locale/
               AppBuilder.of(context).rebuild();
@@ -134,21 +140,21 @@ class GeneralSettingsState extends State<GeneralSettings> {
         ),
         GCWTextDivider(text: i18n(context, 'settings_general_toollist')),
         GCWOnOffSwitch(
-          value: Prefs.getBool('toollist_show_descriptions'),
+          value: Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS),
           title: i18n(context, 'settings_general_toollist_showdescriptions'),
           onChanged: (value) {
             setState(() {
-              Prefs.setBool('toollist_show_descriptions', value);
+              Prefs.setBool(PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS, value);
               AppBuilder.of(context).rebuild();
             });
           },
         ),
         GCWOnOffSwitch(
-          value: Prefs.getBool('toollist_show_examples'),
+          value: Prefs.getBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES),
           title: i18n(context, 'settings_general_toollist_showexamples'),
           onChanged: (value) {
             setState(() {
-              Prefs.setBool('toollist_show_examples', value);
+              Prefs.setBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES, value);
               AppBuilder.of(context).rebuild();
             });
           },
@@ -156,18 +162,18 @@ class GeneralSettingsState extends State<GeneralSettings> {
         GCWTextDivider(text: i18n(context, 'settings_general_defaulttab')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'settings_general_defaulttab_atstart'),
-          value: Prefs.getBool('tabs_use_default_tab') ? GCWSwitchPosition.right : GCWSwitchPosition.left,
+          value: Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB) ? GCWSwitchPosition.right : GCWSwitchPosition.left,
           leftValue: i18n(context, 'settings_general_defaulttab_uselasttab'),
           rightValue: i18n(context, 'settings_general_defaulttab_usedefaulttab'),
           onChanged: (value) {
             setState(() {
-              Prefs.setBool('tabs_use_default_tab', value == GCWSwitchPosition.right);
+              Prefs.setBool(PREFERENCE_TABS_USE_DEFAULT_TAB, value == GCWSwitchPosition.right);
             });
           },
         ),
-        Prefs.getBool('tabs_use_default_tab')
+        Prefs.getBool(PREFERENCE_TABS_USE_DEFAULT_TAB)
             ? GCWDropDownButton(
-                value: Prefs.get('tabs_default_tab'),
+                value: Prefs.get(PREFERENCE_TABS_DEFAULT_TAB),
                 items: [
                   {
                     'index': 0,
@@ -201,7 +207,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    Prefs.setInt('tabs_default_tab', value);
+                    Prefs.setInt(PREFERENCE_TABS_DEFAULT_TAB, value);
                   });
                 },
               )
@@ -209,24 +215,62 @@ class GeneralSettingsState extends State<GeneralSettings> {
         GCWTextDivider(text: i18n(context, 'settings_general_clipboard')),
         GCWIntegerSpinner(
           title: i18n(context, 'settings_general_clipboard_maxitems'),
-          value: Prefs.getInt('clipboard_max_items'),
+          value: Prefs.getInt(PREFERENCE_CLIPBOARD_MAX_ITEMS),
           min: 1,
           max: 100,
           onChanged: (value) {
             setState(() {
-              Prefs.setInt('clipboard_max_items', value);
+              Prefs.setInt(PREFERENCE_CLIPBOARD_MAX_ITEMS, value);
             });
           },
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'settings_general_clipboard_keep.entries.in.days'),
-          value: Prefs.getInt('clipboard_keep_entries_in_days'),
+          value: Prefs.getInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS),
           min: 1,
           max: 1000,
           onChanged: (value) {
             setState(() {
-              Prefs.setInt('clipboard_keep_entries_in_days', value);
+              Prefs.setInt(PREFERENCE_CLIPBOARD_KEEP_ENTRIES_IN_DAYS, value);
             });
+          },
+        ),
+
+
+        // always on bottom
+        Container(
+          margin: EdgeInsets.only(top: 25.0),
+          child: GCWDivider()
+        ),
+        InkWell(
+          child: Icon(
+            Icons.more_horiz,
+            size: 20.0
+          ),
+          onTap: () {
+            showGCWAlertDialog(
+              context,
+              i18n(context, 'settings_preferences_warning_title'),
+              i18n(context, 'settings_preferences_warning_text'),
+              () {
+                Navigator.of(context).push(NoAnimationMaterialPageRoute(
+                    builder: (context) => GCWTool(
+                        tool: SettingsPreferences(),
+                        i18nPrefix: 'settings_preferences'))).whenComplete(() {
+                    setState(() {
+                      AppBuilder.of(context).rebuild();
+                    });
+
+                    showGCWAlertDialog(
+                      context,
+                      i18n(context, 'settings_preferences_aftermath_title'),
+                      i18n(context, 'settings_preferences_aftermath_text'),
+                      () {},
+                      cancelButton: false
+                    );
+                });
+              },
+            );
           },
         )
       ],

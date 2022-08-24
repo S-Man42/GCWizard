@@ -1,5 +1,6 @@
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'dart:math';
+
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 enum InputFormat { AUTO, TEXT, HEX, BINARY, ASCIIVALUES }
 enum OutputFormat { TEXT, HEX, BINARY, ASCIIVALUES }

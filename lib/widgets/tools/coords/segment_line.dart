@@ -8,6 +8,7 @@ import 'package:gc_wizard/logic/tools/coords/segment_line.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
@@ -47,7 +48,7 @@ class SegmentLineState extends State<SegmentLine> {
   void initState() {
     super.initState();
 
-    _currentOutputUnit = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
+    _currentOutputUnit = getUnitBySymbol(allLengths(), Prefs.get(PREFERENCE_DEFAULT_LENGTH_UNIT));
   }
 
   @override

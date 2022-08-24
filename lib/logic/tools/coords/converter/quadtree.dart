@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;

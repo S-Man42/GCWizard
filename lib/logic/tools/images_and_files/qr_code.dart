@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:qr/qr.dart' as qr;
