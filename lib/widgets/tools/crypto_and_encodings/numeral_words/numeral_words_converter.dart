@@ -116,7 +116,7 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
     return GCWDefaultOutput(
         child: Column(children: <Widget>[
       if (output.title != '')
-          Column(
+        Column(
           children: <Widget>[
             GCWTextDivider(text: i18n(context, output.title)),
             GCWOutputText(
@@ -125,21 +125,17 @@ class NumeralWordsConverterState extends State<NumeralWordsConverter> {
           ],
         ),
       if (_currentMode == GCWSwitchPosition.right) // decode
-          GCWTextDivider(
-            text: i18n(context, 'common_numeralbase_denary')
-          )
+        GCWTextDivider(text: i18n(context, 'common_numeralbase_denary'))
       else
-          GCWTextDivider(
-            text: i18n(context, 'numeralwords_converter_numeralword')
-          ),
+        GCWTextDivider(text: i18n(context, 'numeralwords_converter_numeralword')),
       if (_currentMode == GCWSwitchPosition.right) // decode
-          GCWOutputText(
-            text: output.number.toString(),
-          )
+        GCWOutputText(
+          text: output.number.toString(),
+        )
       else
-          GCWOutputText(
-            text: output.numeralWord,
-          ),
+        GCWOutputText(
+          text: output.numeralWord,
+        ),
     ]));
   }
 }
