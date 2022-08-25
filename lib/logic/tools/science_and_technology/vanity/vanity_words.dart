@@ -6,7 +6,6 @@
 // 678068550685506386047230386303863 07865807432360386308437
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 class VanityWordsDecodeOutput {
   final String number;
@@ -131,7 +130,7 @@ final VanityToESP = {
 final VanityToNLD = {
   '685': 'NUL',
   '336': 'EEN',
-  '9933': 'ZWEE',
+  '9933': 'TWEE',
   '3743': 'DRIE',
   '8437': 'VIER',
   '8453': 'VIJF',
@@ -371,14 +370,6 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
         } else {
           // already found
           ambigous = true;
-          print('ambiguous ' +
-              hDigits.toString() +
-              ' ' +
-              hWord.toString() +
-              ' ' +
-              digits.toString() +
-              ' ' +
-              word.toString());
           output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], true));
           output.add(VanityWordsDecodeOutput(digits, word, NumWords[language][word.toString().toLowerCase()], true));
         }

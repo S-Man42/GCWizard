@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';

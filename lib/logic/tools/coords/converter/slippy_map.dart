@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 // Source: https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames

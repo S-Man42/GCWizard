@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 class AmscoOutput {
   final String output;

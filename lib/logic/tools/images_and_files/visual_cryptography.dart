@@ -1,11 +1,11 @@
+import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:tuple/tuple.dart';
 import 'package:image/image.dart' as Image;
+import 'package:tuple/tuple.dart';
 
 int whiteColor = Colors.white.value;
 int blackColor = Colors.black.value;
