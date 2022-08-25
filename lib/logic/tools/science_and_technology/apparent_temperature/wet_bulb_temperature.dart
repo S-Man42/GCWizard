@@ -1,6 +1,7 @@
 // https://en.wikipedia.org/wiki/Wet-bulb_temperature
 // https://de.wikipedia.org/wiki/K%C3%BChlgrenztemperatur
 // https://climate-preparedness.com/understanding-wet-bulb-temperature-and-why-it-is-so-dangerous/
+// https://www.omnicalculator.com/physics/wet-bulb
 
 import 'dart:math';
 
