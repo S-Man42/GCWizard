@@ -94,17 +94,17 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
-    if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.WHITE])
-      if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.GREEN])
-        if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.YELLOW])
-          if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.RED])
-            hintM = 'wet_bulb_temperature_index_black';
-          else
-            hintM = 'wet_bulb_temperature_index_red';
-        else
-          hintM = 'wet_bulb_temperature_index_yellow';
-      else
-        hintM = 'wet_bulb_temperature_index_green';
+    if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.WHITE]) if (output >
+        HEAT_STRESS[unit]
+            [HEATSTRESS_CONDITION.GREEN]) if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.YELLOW]) if (output >
+        HEAT_STRESS[unit][HEATSTRESS_CONDITION.RED])
+      hintM = 'wet_bulb_temperature_index_black';
+    else
+      hintM = 'wet_bulb_temperature_index_red';
+    else
+      hintM = 'wet_bulb_temperature_index_yellow';
+    else
+      hintM = 'wet_bulb_temperature_index_green';
     else
       hintM = 'wet_bulb_temperature_index_white';
 
@@ -115,7 +115,8 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
       )
     ];
 
-    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_hint'), child: hint));
+    if (hint != null && hint.length > 0)
+      outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_hint'), child: hint));
 
     if (hintM != null && hintM.length > 0)
       outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_meaning'), child: i18n(context, hintM)));
