@@ -1293,7 +1293,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   //
   progress = lines.length;
   for (int i = 0; i < lines.length; i++) {
-
     progress++;
     if (sendAsyncPort != null && (progress % progressStep == 0)) {
       sendAsyncPort.send({'progress': progress / lines.length / 2});
@@ -1360,8 +1359,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
             } else if (lines[i].trimLeft().startsWith('Media')) {
-              singleMessageDialog
-                  .add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
+              singleMessageDialog.add(
+                  ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
             } else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
@@ -1394,8 +1393,8 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
             } else if (lines[i].trimLeft().startsWith('Media')) {
-              singleMessageDialog
-                  .add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
+              singleMessageDialog.add(
+                  ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
             } else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
@@ -1415,12 +1414,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           _Messages.add(singleMessageDialog);
         }
       }
-    }
-    catch (exception) {
+    } catch (exception) {
       _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
       _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_media', exception));
     }
-
   } // end of second parse for i = 0 to lines.length - getting Messages/Dialogs
 
   // ------------------------------------------------------------------------------------------------------------------
