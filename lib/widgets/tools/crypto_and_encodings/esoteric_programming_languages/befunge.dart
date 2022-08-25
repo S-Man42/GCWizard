@@ -19,7 +19,7 @@ class Befunge extends StatefulWidget {
   BefungeState createState() => BefungeState();
 }
 
-class BefungeState extends State< Befunge > {
+class BefungeState extends State<Befunge> {
   var _befungeGenerateController;
   var _befungeInterpretController;
   var _inputController;
@@ -40,10 +40,9 @@ class BefungeState extends State< Befunge > {
     _inputController = TextEditingController(text: _currentInput);
     _codeGenerateController = CodeController(
       text: _sourceCodeGenerated,
-      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString()
-          ? atomOneDarkTheme
-          : atomOneLightTheme,
-    );}
+      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
+    );
+  }
 
   @override
   void dispose() {
@@ -56,55 +55,53 @@ class BefungeState extends State< Befunge > {
 
   @override
   Widget build(BuildContext context) {
-    _codeGenerateController.text = generateBefunge (_currentGenerate);
-    return Column(
-      children: <Widget>[
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'common_programming_mode_interpret'),
-          rightValue: i18n(context, 'common_programming_mode_generate'),
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
-        _currentMode == GCWSwitchPosition.left
-        ? GCWTextField(
-            controller: _befungeInterpretController,
-            style: gcwMonotypeTextStyle(),
-            hintText: i18n(context, 'common_programming_hint_sourcecode'),
-            maxLines: 5,
-            maxLength: MAX_LENGTH_PROGRAM,
-            onChanged: (text) {
-              setState(() {
-                _currentInterpret = text;
-              });
-            },
-          )
-        : GCWTextField(
-            controller: _befungeGenerateController,
-            hintText: i18n(context, 'common_programming_hint_output'),
-            onChanged: (text) {
-              setState(() {
-                _currentGenerate = text;
-              });
-            },
-        ),
-        _currentMode == GCWSwitchPosition.left
-        ? GCWTextField(
-          controller: _inputController,
-          hintText: i18n(context, 'common_programming_hint_input'),
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        )
-        : Container(),
-        _buildOutput(),
-      ]
-    );
+    _codeGenerateController.text = generateBefunge(_currentGenerate);
+    return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        leftValue: i18n(context, 'common_programming_mode_interpret'),
+        rightValue: i18n(context, 'common_programming_mode_generate'),
+        value: _currentMode,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+          });
+        },
+      ),
+      _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _befungeInterpretController,
+              style: gcwMonotypeTextStyle(),
+              hintText: i18n(context, 'common_programming_hint_sourcecode'),
+              maxLines: 5,
+              maxLength: MAX_LENGTH_PROGRAM,
+              onChanged: (text) {
+                setState(() {
+                  _currentInterpret = text;
+                });
+              },
+            )
+          : GCWTextField(
+              controller: _befungeGenerateController,
+              hintText: i18n(context, 'common_programming_hint_output'),
+              onChanged: (text) {
+                setState(() {
+                  _currentGenerate = text;
+                });
+              },
+            ),
+      _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _inputController,
+              hintText: i18n(context, 'common_programming_hint_input'),
+              onChanged: (text) {
+                setState(() {
+                  _currentInput = text;
+                });
+              },
+            )
+          : Container(),
+      _buildOutput(),
+    ]);
   }
 
   _buildOutput() {
@@ -114,19 +111,17 @@ class BefungeState extends State< Befunge > {
       if (output.Error == '')
         outputText = output.Output;
       else
-       outputText = output.Output + '\n' + i18n(context, output.Error);
+        outputText = output.Output + '\n' + i18n(context, output.Error);
 
       List<List<String>> columnData = <List<String>>[];
       columnData.add(['PC', 'Cmd', 'Mnemonic', 'Stack']);
       for (int i = 0; i < output.PC.length; i++) {
-        columnData
-            .add(
-            [
-              output.PC[i],
-              i < output.Command.length ? output.Command[i] : '',
-              i < output.Mnemonic.length ? output.Mnemonic[i] : '',
-              i < output.BefungeStack.length ? output.BefungeStack[i] : ''
-            ]);
+        columnData.add([
+          output.PC[i],
+          i < output.Command.length ? output.Command[i] : '',
+          i < output.Mnemonic.length ? output.Mnemonic[i] : '',
+          i < output.BefungeStack.length ? output.BefungeStack[i] : ''
+        ]);
       }
 
       return Column(
@@ -139,40 +134,34 @@ class BefungeState extends State< Befunge > {
             text: i18n(context, 'common_programming_debug'),
             child: Column(
                 children: columnedMultiLineOutput(
-                    context,
-                    columnData,
-                    flexValues: [2, 2, 3, 5],
-                    suppressCopyButtons: true,
-                    hasHeader: true,
-                )),
+              context,
+              columnData,
+              flexValues: [2, 2, 3, 5],
+              suppressCopyButtons: true,
+              hasHeader: true,
+            )),
           )
         ],
       );
-    }
-
-    else
+    } else
       return GCWDefaultOutput(
-                child:CodeField(
-                  controller: _codeGenerateController,
-                  textStyle: gcwMonotypeTextStyle(),
-                ),
-                trailing: Row(
-                  children: <Widget>[
-                    GCWIconButton(
-                      iconColor: themeColors().mainFont(),
-                      size: IconButtonSize.SMALL,
-                      icon: Icons.content_copy,
-                      onPressed: () {
-                        var copyText = _codeGenerateController.text != null
-                            ? _codeGenerateController.text
-                            : '';
-                        insertIntoGCWClipboard(context, copyText);
-                      },
-                    ),
-                  ],
-                ),
-            );
+        child: CodeField(
+          controller: _codeGenerateController,
+          textStyle: gcwMonotypeTextStyle(),
+        ),
+        trailing: Row(
+          children: <Widget>[
+            GCWIconButton(
+              iconColor: themeColors().mainFont(),
+              size: IconButtonSize.SMALL,
+              icon: Icons.content_copy,
+              onPressed: () {
+                var copyText = _codeGenerateController.text != null ? _codeGenerateController.text : '';
+                insertIntoGCWClipboard(context, copyText);
+              },
+            ),
+          ],
+        ),
+      );
   }
-
-
 }

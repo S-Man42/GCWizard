@@ -101,8 +101,7 @@ void _addDebugInformation(bool stringMode) {
 
   if ((_cur() == '"' || _cur() == '”')) {
     _Mnemonic.add('stringmode');
-  } else if (stringMode)
-    _Mnemonic.add('push ' + _cur().codeUnitAt(0).toString());
+  } else if (stringMode) _Mnemonic.add('push ' + _cur().codeUnitAt(0).toString());
 }
 
 bool _isDigit(String char) {
@@ -176,12 +175,11 @@ BefungeOutput interpretBefunge(String program, {String input}) {
 
       _addDebugInformation(stringMode);
 
-      if (stringMode)
-        if (_cur() == '"' || _cur() == '”') {
-          stringMode = false;
-        } else {
-          stack.push(BigInt.from(_cur().codeUnitAt(0)));
-        }
+      if (stringMode) if (_cur() == '"' || _cur() == '”') {
+        stringMode = false;
+      } else {
+        stack.push(BigInt.from(_cur().codeUnitAt(0)));
+      }
       else {
         if (_isDigit(_cur())) {
           stack.push(BigInt.from(int.parse(_cur())));
@@ -245,21 +243,21 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               a = stack.pop();
               b = stack.pop();
               stack.push(a + b);
-              _Mnemonic.add('add ' + a.toString() + ', ' +  b.toString());
+              _Mnemonic.add('add ' + a.toString() + ', ' + b.toString());
               break;
 
             case '-': // sub
               a = stack.pop();
               b = stack.pop();
               stack.push(b - a);
-              _Mnemonic.add('sub ' + b.toString() + ', ' +  a.toString());
+              _Mnemonic.add('sub ' + b.toString() + ', ' + a.toString());
               break;
 
             case '*': // mult
               a = stack.pop();
               b = stack.pop();
               stack.push(a * b);
-              _Mnemonic.add('mult ' + a.toString() + ', ' +  b.toString());
+              _Mnemonic.add('mult ' + a.toString() + ', ' + b.toString());
               break;
 
             case '/': // integer division
@@ -292,14 +290,14 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               }
 
               stack.push(b ~/ a);
-              _Mnemonic.add('div ' + b.toString() + ', ' +  a.toString());
+              _Mnemonic.add('div ' + b.toString() + ', ' + a.toString());
               break;
 
             case '%': // modulo
               a = stack.pop();
               b = stack.pop();
               stack.push(b % a);
-              _Mnemonic.add('mod ' + b.toString() + ', ' +  a.toString());
+              _Mnemonic.add('mod ' + b.toString() + ', ' + a.toString());
               break;
 
             case '\\': // swap
@@ -307,7 +305,7 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               b = stack.pop();
               stack.push(a);
               stack.push(b);
-              _Mnemonic.add('swap ' + a.toString() + ', ' +  b.toString());
+              _Mnemonic.add('swap ' + a.toString() + ', ' + b.toString());
               break;
 
             case '.': // output decimal
@@ -444,7 +442,14 @@ BefungeOutput interpretBefunge(String program, {String input}) {
               y = stack.pop();
               x = stack.pop();
               value = stack.pop();
-              _Mnemonic.add('put '+value.toString() + ' → ' + '[' + x.toString().padLeft(2) + '|' + y.toString().padLeft(2) + ']');
+              _Mnemonic.add('put ' +
+                  value.toString() +
+                  ' → ' +
+                  '[' +
+                  x.toString().padLeft(2) +
+                  '|' +
+                  y.toString().padLeft(2) +
+                  ']');
 
               if (_outOfBoundsAccess(x: x, y: y)) {
                 _BefungeStack.add(stack.toString());
@@ -557,7 +562,6 @@ String generateBefunge(String OutputText) {
   if (OutputText.length > MAX_OUTPUT_LENGTH) return BEFUNGE_ERROR_INVALID_PROGRAM;
 
   OutputText.split('').reversed.toList().forEach((char) {
-    
     if (char.codeUnitAt(0) < 256 && _convertCharCode[char.codeUnitAt(0)] != null)
       code = code + _convertCharCode[char.codeUnitAt(0)];
   });
