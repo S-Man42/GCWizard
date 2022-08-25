@@ -168,15 +168,10 @@ class MagicEyeState extends State<MagicEye> {
           GCWDropDownMenuItem(
             value: TextureType.GREYDOTS,
             child: i18n(context, 'magic_eye_texture_graydots'),
-          ),
-          GCWDropDownMenuItem(
-            value: TextureType.BITMAP,
-            child: i18n(context, 'magic_eye_texture_bitmap'),
           )]
         ),
         _currentEncodeTextureType == TextureType.BITMAP
         ? GCWOpenFile(
-            title: i18n(context, 'magic_eye_texture_image'),
             supportedFileTypes: SUPPORTED_IMAGE_TYPES,
             file: _encodeTextureImage,
             onLoaded: (_file) {
