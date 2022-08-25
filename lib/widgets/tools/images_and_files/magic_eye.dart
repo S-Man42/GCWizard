@@ -2,14 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/3d_generator.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/magic_eye.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_openfile.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
@@ -32,6 +33,7 @@ class MagicEyeState extends State<MagicEye> {
   GCWFile _encodeTextureImage;
   GCWFile _encodeHiddenDataImage;
   Uint8List _encodeOutData;
+  TextureType _currentEncodeTextureType = TextureType.BITMAP;
 
   @override
   Widget build(BuildContext context) {
@@ -137,22 +139,57 @@ class MagicEyeState extends State<MagicEye> {
         },
       ),
       Container(), // fixes strange behaviour: First GCWOpenFile widget from encode/decode affect each other
-      GCWOpenFile(
-        title: i18n(context, 'magic_eye_texture_image'),
-        supportedFileTypes: SUPPORTED_IMAGE_TYPES,
-        file: _encodeTextureImage,
-        onLoaded: (_file) {
-          if (_file == null) {
-            showToast(i18n(context, 'common_loadfile_exception_notloaded'));
-            return;
-          }
-          _encodeTextureImage= _file;
-          _generateEncodeImage();
-        },
-      ),
+      _buildEncodeTextureSelection(),
 
       GCWDefaultOutput(child: _buildOutputEncode())
     ]);
+  }
+
+  Widget _buildEncodeTextureSelection() {
+    return Column(children: [
+      GCWTextDivider(text: i18n(context, 'magic_eye_texture_image')),
+      GCWDropDownButton(
+        value: _currentEncodeTextureType,
+        onChanged: (value) {
+          setState(() {
+            _currentEncodeTextureType = value;
+            _generateEncodeImage();
+          });
+        },
+        items:
+           [GCWDropDownMenuItem(
+              value: TextureType.BITMAP,
+              child: i18n(context, 'magic_eye_texture_bitmap'),
+           ),
+           GCWDropDownMenuItem(
+            value: TextureType.COLORDOTS,
+            child: i18n(context, 'magic_eye_texture_colordots'),
+          ),
+          GCWDropDownMenuItem(
+            value: TextureType.GREYDOTS,
+            child: i18n(context, 'magic_eye_texture_graydots'),
+          ),
+          GCWDropDownMenuItem(
+            value: TextureType.BITMAP,
+            child: i18n(context, 'magic_eye_texture_bitmap'),
+          )]
+        ),
+        _currentEncodeTextureType == TextureType.BITMAP
+        ? GCWOpenFile(
+            title: i18n(context, 'magic_eye_texture_image'),
+            supportedFileTypes: SUPPORTED_IMAGE_TYPES,
+            file: _encodeTextureImage,
+            onLoaded: (_file) {
+              if (_file == null) {
+                showToast(i18n(context, 'common_loadfile_exception_notloaded'));
+                return;
+              }
+              _encodeTextureImage= _file;
+              _generateEncodeImage();
+            },
+          )
+        : Container(),
+      ]);
   }
 
   Widget _buildOutputEncode() {
@@ -169,7 +206,7 @@ class MagicEyeState extends State<MagicEye> {
 
   Future<GCWAsyncExecuterParameters> _buildJobDataEncode() async {
     return GCWAsyncExecuterParameters(Tuple3<Uint8List, Uint8List, TextureType>(
-        _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes, TextureType.BITMAP));
+        _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes, _currentEncodeTextureType));
   }
 
   void _saveOutputEncode(Uint8List output) {
@@ -181,7 +218,8 @@ class MagicEyeState extends State<MagicEye> {
   }
 
   void _generateEncodeImage() async {
-    if (_encodeHiddenDataImage == null || _encodeTextureImage == null)
+    if (_encodeHiddenDataImage == null ||
+        (_currentEncodeTextureType == TextureType.BITMAP && _encodeTextureImage == null))
       return;
 
     await showDialog(
