@@ -6,7 +6,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-
 List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredientOne, ingredientTwo, String language) {
   List<String> output = new List<String>();
   bool combine = true;
@@ -349,14 +348,11 @@ List<String> decodeChef(String language, recipe, additionalIngredients) {
           result.add('» Schüssel in eine Servierschale stürzen. «');
       }
       return result;
-    }
-
-    else { // runtime error
+    } else {
+      // runtime error
       return interpreter.error;
     }
-  }
-
-  else {
+  } else {
     // invalid recipe
     return interpreter.error;
   }
@@ -500,7 +496,7 @@ class Chef {
     }
     readRecipe = recipe.join('\n');
     recipe = readRecipe.split("\n\n");
-    for (int i = 0; i < recipe.length; i++){
+    for (int i = 0; i < recipe.length; i++) {
       line = recipe[i];
       if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
         if (progress > 3) {
@@ -514,9 +510,7 @@ class Chef {
           this.error.addAll(r.errorList);
           valid = false;
         }
-      }
-
-      else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
+      } else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
         if (progress > 4) {
           valid = false;
           _addError(language, 3, progress);
@@ -527,9 +521,7 @@ class Chef {
           this.error.addAll(r.errorList);
           this.valid = false;
         }
-      }
-
-      else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
+      } else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
         if (progress > 5) {
           valid = false;
           _addError(language, 4, progress);
@@ -540,9 +532,7 @@ class Chef {
           this.error.addAll(r.errorList);
           this.valid = false;
         }
-      }
-
-      else if (line.startsWith("method") || line.startsWith("zubereitung")) {
+      } else if (line.startsWith("method") || line.startsWith("zubereitung")) {
         if (progress > 5) {
           valid = false;
           _addError(language, 5, progress);
@@ -555,9 +545,7 @@ class Chef {
           this.error.addAll(r.errorList);
           this.valid = false;
         }
-      }
-
-      else if (line.startsWith("serves") || line.startsWith("portionen")) {
+      } else if (line.startsWith("serves") || line.startsWith("portionen")) {
         if (progress != 6) {
           valid = false;
           _addError(language, 6, progress);
@@ -569,10 +557,7 @@ class Chef {
           this.error.addAll(r.errorList);
           this.valid = false;
         }
-
-      }
-
-      else {
+      } else {
         if (progress == 0 || progress >= 6) {
           title = _parseTitle(line);
           titleFound = true;
@@ -583,14 +568,10 @@ class Chef {
           }
           progress = 1;
           recipes.addAll({title: r});
-        }
-
-        else if (progress == 1) {
+        } else if (progress == 1) {
           progress = 2;
           r.setComments(line);
-        }
-
-        else {
+        } else {
           valid = false;
           if (!progressError) {
             progressError = true;
@@ -607,7 +588,8 @@ class Chef {
           }
         }
       }
-  }; // for each element of the recipe
+    }
+    ; // for each element of the recipe
 
     if (mainrecipe == null) {
       valid = false;
