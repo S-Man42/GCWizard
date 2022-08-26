@@ -388,7 +388,7 @@ void main() {
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
       {'input' : 'AaaA', 'expectedOutput' : true},
-      {'input' : 'ABCÄÖÜßàé', 'expectedOutput' : true},
+      {'input' : 'ABCÄÖÜß\u1e9eàé', 'expectedOutput' : true},
 
       {'input' : 'a a', 'expectedOutput' : false},
       {'input' : 'a1', 'expectedOutput' : false},

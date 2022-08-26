@@ -153,6 +153,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphor
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/text_analysis.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
@@ -631,6 +632,7 @@ void _initStaticToolList() {
       className(Tapir()),
       className(TeletypewriterSelection()),
       className(TeletypewriterPunchTape()),
+      className(TextAnalysis()),
       className(TimeCalculator()),
       className(TomTomSelection()),
       className(Trifid()),

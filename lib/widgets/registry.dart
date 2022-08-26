@@ -239,6 +239,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccit
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/text_analysis.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
@@ -1063,6 +1064,13 @@ initializeRegistry(BuildContext context) {
       'symbol_westernunion',
       'symbol_murraybaudot',
       'symbol_baudot'
+    ]),
+    GCWTool(tool: TextAnalysis(), i18nPrefix: 'textanalysis', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'alphabetvalues',
+      'asciivalues',
+      'textanalysis'
     ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
