@@ -18,7 +18,7 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${elem['temperatureUnit'].symbol}', () {
         var _actual = calculateWetBulbTemperature(elem['temperature'], elem['humidity'], elem['temperatureUnit']);
-        expect(_actual.toStringAsFixed(3), elem['expectedOutput']);
+        expect(_actual.WBT.toStringAsFixed(3), elem['expectedOutput']);
       });
     });
   });

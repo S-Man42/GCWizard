@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class WetBulbTemperature extends StatefulWidget {
   @override
@@ -42,6 +43,8 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
                     ),
                     GCWDoubleSpinner(
                         value: _currentTemperature,
+                        min: -20.0,
+                        max: 50.0,
                         onChanged: (value) {
                           setState(() {
                             _currentTemperature = value;
@@ -55,8 +58,8 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
         GCWDoubleSpinner(
             title: i18n(context, 'common_measure_humidity'),
             value: _currentHumidity,
-            min: 0.0,
-            max: 100.0,
+            min: 5.0,
+            max: 99.0,
             onChanged: (value) {
               setState(() {
                 _currentHumidity = value;
@@ -69,11 +72,10 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
 
   Widget _buildOutput(BuildContext context) {
     String unit = '';
-    String hintT = '';
-    String hintH = '';
-    String hintM = '';
+    String hintWBGT = '';
+    String hintWBT = '';
 
-    double output;
+    WBOutput output;
     if (_isMetric) {
       output = calculateWetBulbTemperature(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
       unit = TEMPERATURE_CELSIUS.symbol;
@@ -82,47 +84,70 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
-    if ((_isMetric && _currentTemperature < -20.0) || (!_isMetric && (_currentTemperature - 32) / 1.8 < -20.0)) {
-      hintT = i18n(context, 'heatindex_hint_temperature_low', parameters: ['${_isMetric ? 27 : 80} $unit']);
-    }
-    if ((_isMetric && _currentTemperature > 50.0) || (!_isMetric && (_currentTemperature - 32) / 1.8 > 50.0)) {
-      hintT = i18n(context, 'heatindex_hint_temperature_high', parameters: ['${_isMetric ? 27 : 80} $unit']);
-    }
+    hintWBT = _calculateHintWBT(output.WBT, unit);
+    hintWBGT = _calculateHintWBGT(output.WBGT, unit);
 
-    if (_currentHumidity < 5) hintH = i18n(context, 'heatindex_hint_humidity_low');
-    if (_currentHumidity > 99) hintH = i18n(context, 'heatindex_hint_humidity_high');
+    var outputs = [];
 
-    var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
-
-    if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.WHITE]) if (output >
-        HEAT_STRESS[unit]
-            [HEATSTRESS_CONDITION.GREEN]) if (output > HEAT_STRESS[unit][HEATSTRESS_CONDITION.YELLOW]) if (output >
-        HEAT_STRESS[unit][HEATSTRESS_CONDITION.RED])
-      hintM = 'wet_bulb_temperature_index_black';
-    else
-      hintM = 'wet_bulb_temperature_index_red';
-    else
-      hintM = 'wet_bulb_temperature_index_yellow';
-    else
-      hintM = 'wet_bulb_temperature_index_green';
-    else
-      hintM = 'wet_bulb_temperature_index_white';
-
-    var outputs = [
-      GCWOutput(
-        title: i18n(context, 'wet_bulb_temperature_output'),
-        child: output.toStringAsFixed(2) + ' ' + unit,
-      )
-    ];
-
-    if (hint != null && hint.length > 0)
-      outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_hint'), child: hint));
-
-    if (hintM != null && hintM.length > 0)
-      outputs.add(GCWOutput(title: i18n(context, 'wet_bulb_temperature_meaning'), child: i18n(context, hintM)));
+    outputs.add(
+        GCWOutput(
+            title: i18n(context, 'wet_bulb_temperature_wbt_output'),
+            child: Column(
+                children: columnedMultiLineOutput(context,
+                    [[output.WBT.toStringAsFixed(2) + ' ' + unit], [i18n(context, hintWBT)]],
+                    flexValues: [1, 3]))
+        )
+    );
+    outputs.add(
+        GCWOutput(
+            title: i18n(context, 'wet_bulb_temperature_wbgt_output'),
+            child: Column(
+                children: columnedMultiLineOutput(context,
+                    [[output.WBGT.toStringAsFixed(2) + ' ' + unit], [i18n(context, hintWBGT)]],
+                    flexValues: [1, 3]))
+        )
+    );
 
     return GCWMultipleOutput(
       children: outputs,
     );
+  }
+
+  String _calculateHintWBT(double WBT, String unit){
+    if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.WHITE])
+      if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.LIGHT_GREEN])
+        if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.GREEN])
+          if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.YELLOW])
+            if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
+              if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.DARK_RED])
+                return 'wet_bulb_temperature_index_wbt_black';
+              else
+                return 'wet_bulb_temperature_index_wbt_dark_red';
+            else
+              return 'wet_bulb_temperature_index_wbt_red';
+          else
+            return 'wet_bulb_temperature_index_wbt_yellow';
+        else
+          return 'wet_bulb_temperature_index_wbt_green';
+      else
+        return 'wet_bulb_temperature_index_wbt_light_green';
+    else
+      return 'wet_bulb_temperature_index_wbt_white';
+  }
+
+  String _calculateHintWBGT(double WBGT, String unit){
+    if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.WHITE])
+      if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.GREEN])
+        if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.YELLOW])
+          if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.RED])
+            return 'wet_bulb_temperature_index_wbgt_black';
+          else
+            return 'wet_bulb_temperature_index_wbgt_red';
+        else
+          return 'wet_bulb_temperature_index_wbgt_yellow';
+      else
+        return 'wet_bulb_temperature_index_wbgt_green';
+    else
+      return 'wet_bulb_temperature_index_wbgt_white';
   }
 }
