@@ -574,7 +574,7 @@
   "telegraph_wigwag": "semaphore drapeaux etatunis",
   "telegraph_wheatstonecooke_needle": "aiguilles",
   "teletypewriter": "téléimprimante teletypewriter téléscripteur",
-  "textanalysis": "textanalysis textanalyzer textanalyser countwords countingwords numberwords whitespaces controlcharacters controllingcharacters total specialcharacters letters digits numbers",
+  "textanalysis": "textanalysis textanalyzer textanalyser countwords countingwords numberwords whitespaces controlcharacters controllingcharacters total specialcharacters letters digits numbers lettercount wordcount lettersfrequencies letterfrequencies letterfrequency letterfrequencies characterfrequencies characterfrequency",
   "tomtom": "",
   "trifid": "",
   "trithemius": "",

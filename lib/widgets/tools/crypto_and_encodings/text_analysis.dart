@@ -75,7 +75,7 @@ class TextAnalysisState extends State<TextAnalysis> {
             GCWDivider(),
             GCWOnOffSwitch(
               value: _currentCaseSensitive,
-              title: 'Case Sensitive',
+              title: i18n(context, 'common_case_sensitive'),
               onChanged: (value) {
                 setState(() {
                   _currentCaseSensitive = value;
