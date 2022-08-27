@@ -150,6 +150,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/befunge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
@@ -1763,6 +1764,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Beatnik(), i18nPrefix: 'beatnik', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_beatnik',
+    ]),
+    GCWTool(tool: Befunge(), i18nPrefix: 'befunge', searchKeys: [
+      'esotericprogramminglanguage',
+      'befunge',
     ]),
     GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', searchKeys: [
       'esotericprogramminglanguage',
