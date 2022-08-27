@@ -1796,7 +1796,7 @@ initializeRegistry(BuildContext context) {
       'esoteric_brainfk',
       'esoteric_ook',
     ]),
-    GCWTool(tool: Piet(), i18nPrefix: 'piet', searchKeys: [
+    GCWTool(tool: Piet(), i18nPrefix: 'piet', isBeta: true, searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_piet',
       'color',
