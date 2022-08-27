@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -85,26 +86,76 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
     }
 
     hintWBT = _calculateHintWBT(output.WBT, unit);
-    hintWBGT = _calculateHintWBGT(output.WBGT, unit);
+    hintWBGT = _calculateHintWBGT(output.WBGTOutdoor, unit);
 
     var outputs = [];
 
     outputs.add(
         GCWOutput(
             title: i18n(context, 'wet_bulb_temperature_wbt_output'),
-            child: Column(
-                children: columnedMultiLineOutput(context,
-                    [[output.WBT.toStringAsFixed(2) + ' ' + unit], [i18n(context, hintWBT)]],
-                    flexValues: [1, 3]))
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    child: GCWText(
+                      text: output.WBT.toStringAsFixed(2) + ' ' + unit,
+                    ),
+                    padding: EdgeInsets.only(right: 2)),
+                  ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    child: GCWIconButton(
+                      icon: Icons.wb_sunny,
+                      iconColor: _colorWBT(output.WBT, unit),
+                    ),
+                  padding: EdgeInsets.only(left: 2, right: 2)),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Padding(
+                      child: GCWText(
+                        text: i18n(context, hintWBT),
+                      ),
+                      padding: EdgeInsets.only(left: 8)),
+                ),
+              ]
+            )
         )
     );
     outputs.add(
         GCWOutput(
             title: i18n(context, 'wet_bulb_temperature_wbgt_output'),
-            child: Column(
-                children: columnedMultiLineOutput(context,
-                    [[output.WBGT.toStringAsFixed(2) + ' ' + unit], [i18n(context, hintWBGT)]],
-                    flexValues: [1, 3]))
+            child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                        child: GCWText(
+                          text: output.WBGTOutdoor.toStringAsFixed(2) + ' ' + unit,
+                        ),
+                        padding: EdgeInsets.only(right: 2)),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                        child: GCWIconButton(
+                          icon: Icons.wb_sunny,
+                          iconColor: _colorWBGT(output.WBGTOutdoor, unit),
+                        ),
+                        padding: EdgeInsets.only(left: 2, right: 2)),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Padding(
+                        child: GCWText(
+                          text: i18n(context, hintWBGT),
+                        ),
+                        padding: EdgeInsets.only(left: 8)),
+                  ),
+                ]
+            )
         )
     );
 
@@ -114,25 +165,28 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
   }
 
   String _calculateHintWBT(double WBT, String unit){
-    if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.WHITE])
-      if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.LIGHT_GREEN])
-        if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.GREEN])
-          if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.YELLOW])
-            if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
-              if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.DARK_RED])
-                return 'wet_bulb_temperature_index_wbt_black';
+    if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.PURPLE])
+      if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.BLUE])
+        if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
+          if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.GREEN])
+            if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.ORANGE])
+              if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
+                if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
+                  return 'wet_bulb_temperature_index_wbt_dark_red';
+                else
+                  return 'wet_bulb_temperature_index_wbt_red';
               else
-                return 'wet_bulb_temperature_index_wbt_dark_red';
+                return 'wet_bulb_temperature_index_wbt_orange';
             else
-              return 'wet_bulb_temperature_index_wbt_red';
+              return 'wet_bulb_temperature_index_wbt_green';
           else
-            return 'wet_bulb_temperature_index_wbt_yellow';
+            return 'wet_bulb_temperature_index_wbt_light_blue';
         else
-          return 'wet_bulb_temperature_index_wbt_green';
+          return 'wet_bulb_temperature_index_wbt_blue';
       else
-        return 'wet_bulb_temperature_index_wbt_light_green';
+        return 'wet_bulb_temperature_index_wbt_purple';
     else
-      return 'wet_bulb_temperature_index_wbt_white';
+      return 'wet_bulb_temperature_index_wbt_black';
   }
 
   String _calculateHintWBGT(double WBGT, String unit){
@@ -149,5 +203,46 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
         return 'wet_bulb_temperature_index_wbgt_green';
     else
       return 'wet_bulb_temperature_index_wbgt_white';
+  }
+
+  Color _colorWBT(double WBT, String unit){
+    if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.PURPLE])
+      if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.BLUE])
+        if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
+          if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.GREEN])
+            if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.ORANGE])
+              if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
+                if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.DARK_RED])
+                  return Colors.red[900];
+                else
+                  return Colors.red;
+              else
+                return Colors.orange;
+            else
+              return Colors.green;
+          else
+            return Colors.lightBlue[200];
+        else
+          return Colors.blue;
+      else
+        return Colors.purple;
+    else
+      return Colors.white;
+  }
+
+  Color _colorWBGT(double WBGT, String unit){
+    if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.WHITE])
+      if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.GREEN])
+        if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.YELLOW])
+          if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.RED])
+            return Colors.black;
+          else
+            return Colors.red;
+        else
+          return Colors.yellow;
+      else
+        return Colors.green;
+    else
+      return Colors.white;
   }
 }
