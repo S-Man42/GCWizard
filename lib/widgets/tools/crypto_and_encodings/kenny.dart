@@ -108,7 +108,7 @@ class KennyState extends State<Kenny> {
           },
         ),
         GCWOnOffSwitch(
-          title: i18n(context, 'kenny_case_sensitive'),
+          title: i18n(context, 'common_case_sensitive'),
           value: _currentCaseSensitive,
           onChanged: (value) {
             setState(() {

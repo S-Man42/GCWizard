@@ -101,7 +101,7 @@ class SubstitutionState extends State<Substitution> {
         onAddEntry: _addEntry,
         middleWidget: Column(children: <Widget>[
           GCWOnOffSwitch(
-            title: i18n(context, 'substitution_case_sensitive'),
+            title: i18n(context, 'common_case_sensitive'),
             value: _currentCaseSensitive,
             onChanged: (value) {
               _currentCaseSensitive = value;
