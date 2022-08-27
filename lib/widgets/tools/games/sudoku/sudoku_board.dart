@@ -28,6 +28,7 @@ class SudokuBoardState extends State<SudokuBoard> {
             child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: CanvasTouchDetector(
+                  gesturesToOverride: [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
                         painter: SudokuBoardPainter(context, widget.type, widget.board, (x, y, value) {

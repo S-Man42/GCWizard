@@ -71,7 +71,7 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
           },
         ),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'crosssum_range_frequency_sortby'),
+          title: i18n(context, 'common_sortby'),
           leftValue: i18n(context, 'crosssum_range_frequency_sortby_crosssum'),
           rightValue: i18n(context, 'crosssum_range_frequency_sortby_frequency'),
           value: _currentSort,

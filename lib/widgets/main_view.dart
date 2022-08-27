@@ -88,6 +88,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/befunge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
@@ -96,6 +97,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/piet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -153,6 +155,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/semaphor
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wheatstone_cooke_5_needles.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/telegraphs/wigwag.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/text_analysis.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tts.dart';
@@ -223,6 +226,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
@@ -456,6 +460,7 @@ void _initStaticToolList() {
       className(BCDSelection()),
       className(Beatnik()),
       className(BeaufortSelection()),
+      className(Befunge()),
       className(Beghilos()),
       className(Bifid()),
       className(Binary()),
@@ -553,6 +558,7 @@ void _initStaticToolList() {
       className(KarolRobot()),
       className(Kenny()),
       className(KeyboardSelection()),
+      className(MathematicalConstants()),
       className(Malbolge()),
       className(MapView()),
       className(MayaCalendarSelection()),
@@ -579,6 +585,7 @@ void _initStaticToolList() {
       className(PhiSelection()),
       className(PhysicalConstants()),
       className(Piano()),
+      className(Piet()),
       className(PiSelection()),
       className(PigLatin()),
       className(Playfair()),
@@ -632,6 +639,7 @@ void _initStaticToolList() {
       className(Tapir()),
       className(TeletypewriterSelection()),
       className(TeletypewriterPunchTape()),
+      className(TextAnalysis()),
       className(TimeCalculator()),
       className(TomTomSelection()),
       className(Trifid()),

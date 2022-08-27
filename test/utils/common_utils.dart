@@ -388,7 +388,7 @@ void main() {
       {'input' : 'a', 'expectedOutput' : true},
       {'input' : 'aaa', 'expectedOutput' : true},
       {'input' : 'AaaA', 'expectedOutput' : true},
-      {'input' : 'ABCÄÖÜßàé', 'expectedOutput' : true},
+      {'input' : 'ABCÄÖÜß\u1e9eàé', 'expectedOutput' : true},
 
       {'input' : 'a a', 'expectedOutput' : false},
       {'input' : 'a1', 'expectedOutput' : false},
@@ -399,6 +399,28 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var _actual = isOnlyLetters(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.isOnlyNumerals:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : false},
+      {'input' : '', 'expectedOutput' : false},
+
+      {'input' : '0', 'expectedOutput' : true},
+      {'input' : '000', 'expectedOutput' : true},
+      {'input' : '1001', 'expectedOutput' : true},
+
+      {'input' : '0 1', 'expectedOutput' : false},
+      {'input' : 'a1', 'expectedOutput' : false},
+      {'input' : '0.1', 'expectedOutput' : false}
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = isOnlyNumerals(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
