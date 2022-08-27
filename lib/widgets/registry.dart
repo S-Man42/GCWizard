@@ -1799,6 +1799,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Piet(), i18nPrefix: 'piet', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_piet',
+      'color',
       'images'
     ]),
     GCWTool(tool: WhitespaceLanguage(), i18nPrefix: 'whitespace_language', searchKeys: [
