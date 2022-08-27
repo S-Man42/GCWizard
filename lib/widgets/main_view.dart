@@ -223,6 +223,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
@@ -553,6 +554,7 @@ void _initStaticToolList() {
       className(KarolRobot()),
       className(Kenny()),
       className(KeyboardSelection()),
+      className(MathematicalConstants()),
       className(Malbolge()),
       className(MapView()),
       className(MayaCalendarSelection()),
