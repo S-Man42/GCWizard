@@ -324,6 +324,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
@@ -795,6 +796,11 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'languagegames_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
+    GCWTool(tool: MathematicalConstants(), i18nPrefix: 'mathematical_constants', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'mathematical_constants',
+    ]),
     GCWTool(
         tool: MayaCalendarSelection(),
         categories: [ToolCategory.CRYPTOGRAPHY],
