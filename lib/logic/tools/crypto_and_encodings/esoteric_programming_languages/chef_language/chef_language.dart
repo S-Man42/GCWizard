@@ -322,7 +322,7 @@ bool isValid(String input) {
 List<String> interpretChef(String language, recipe, input) {
   if (recipe == null || recipe == '') return new List<String>();
 
-  return decodeChef(language, normalizeUmlauts(recipe.toLowerCase().replaceAll('  ', ' ')), input);
+  return decodeChef(language, normalizeUmlauts(recipe.toLowerCase().replaceAll(RegExp(r' +'), ' ')), input);
 }
 
 List<String> decodeChef(String language, recipe, additionalIngredients) {
