@@ -97,7 +97,7 @@ String _getDetails(String line, String obfuscator, String dtable) {
       //get obfuscated string
       element = element + line[i];
       i = i + 1;
-    } while (line[i] + line[i + 1] != '")');
+    } while ((line[i] + line[i + 1] != '")') && (i + 2 < line[i].length));
     result = result + deobfuscateUrwigoText(element, dtable);
     line = line.substring(i + 2);
 
