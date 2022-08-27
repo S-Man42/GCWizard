@@ -1,6 +1,8 @@
 import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/quadgrams.dart'
     as guballa;
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/dutch_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/english_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/french_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/german_quadgrams.dart';
@@ -142,6 +144,9 @@ Quadgrams getQuadgrams(SubstitutionBreakerAlphabet alphabet) {
       break;
     case SubstitutionBreakerAlphabet.GERMAN:
       return GermanQuadgrams();
+      break;
+    case SubstitutionBreakerAlphabet.DUTCH:
+      return DutchQuadgrams();
       break;
     case SubstitutionBreakerAlphabet.SPANISH:
       return SpanishQuadgrams();

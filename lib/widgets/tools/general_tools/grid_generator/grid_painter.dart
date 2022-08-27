@@ -263,7 +263,9 @@ class GridPainterState extends State<GridPainter> {
         Expanded(
             child: AspectRatio(
                 aspectRatio: widget.countColumns / widget.countRows,
-                child: CanvasTouchDetector(builder: (context) {
+                child: CanvasTouchDetector(
+                  gesturesToOverride: [GestureType.onTapDown],
+                  builder: (context) {
                   return CustomPaint(
                       painter: CustomGridPainter(
                           context,

@@ -3,9 +3,9 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class Kenny extends StatefulWidget {
   @override
@@ -108,7 +108,7 @@ class KennyState extends State<Kenny> {
           },
         ),
         GCWOnOffSwitch(
-          title: i18n(context, 'kenny_case_sensitive'),
+          title: i18n(context, 'common_case_sensitive'),
           value: _currentCaseSensitive,
           onChanged: (value) {
             setState(() {

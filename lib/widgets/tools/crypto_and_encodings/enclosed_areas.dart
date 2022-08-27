@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class EnclosedAreas extends StatefulWidget {
@@ -12,7 +13,9 @@ class EnclosedAreas extends StatefulWidget {
 
 class EnclosedAreasState extends State<EnclosedAreas> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.left;
+  var _with4On = GCWSwitchPosition.left;
+  var _currentSimpleMode = GCWSwitchPosition.left;
+  var _onlyNumbers = false;
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +27,49 @@ class EnclosedAreasState extends State<EnclosedAreas> {
           });
         }),
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'enclosedareas_with4'),
-          rightValue: i18n(context, 'enclosedareas_without4'),
-          value: _currentMode,
+          value: _currentSimpleMode,
+          leftValue: i18n(context, 'common_mode_simple'),
+          rightValue: i18n(context, 'common_mode_advanced'),
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentSimpleMode = value;
             });
           },
         ),
-        GCWDefaultOutput(child: decodeEnclosedAreas(_currentInput, _currentMode == GCWSwitchPosition.left))
+        _currentSimpleMode == GCWSwitchPosition.left ? Container() : _buildAdvancedModeControl(context),
+        GCWDefaultOutput(
+            child: decodeEnclosedAreas(_currentInput,
+                with4: _with4On == GCWSwitchPosition.left, onlyNumbers: _onlyNumbers))
       ],
     );
+  }
+
+  Widget _buildAdvancedModeControl(BuildContext context) {
+    return Column(children: <Widget>[
+      GCWOnOffSwitch(
+          title: i18n(context, 'enclosedareas_only_numbers'),
+          value: _onlyNumbers,
+          onChanged: (value) {
+            setState(() {
+              _onlyNumbers = value;
+            });
+          }),
+      Row(children: [
+        Expanded(child: Container(), flex: 1),
+        Expanded(
+            child: GCWTwoOptionsSwitch(
+              notitle: true,
+              leftValue: i18n(context, 'enclosedareas_with4'),
+              rightValue: i18n(context, 'enclosedareas_without4'),
+              value: _with4On,
+              onChanged: (value) {
+                setState(() {
+                  _with4On = value;
+                });
+              },
+            ),
+            flex: 3)
+      ]),
+    ]);
   }
 }

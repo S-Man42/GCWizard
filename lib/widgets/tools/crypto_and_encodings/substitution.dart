@@ -3,8 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class Substitution extends StatefulWidget {
   final String input;
@@ -101,7 +101,7 @@ class SubstitutionState extends State<Substitution> {
         onAddEntry: _addEntry,
         middleWidget: Column(children: <Widget>[
           GCWOnOffSwitch(
-            title: i18n(context, 'substitution_case_sensitive'),
+            title: i18n(context, 'common_case_sensitive'),
             value: _currentCaseSensitive,
             onChanged: (value) {
               _currentCaseSensitive = value;

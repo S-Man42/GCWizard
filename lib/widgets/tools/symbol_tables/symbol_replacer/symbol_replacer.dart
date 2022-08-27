@@ -1,9 +1,6 @@
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
@@ -12,9 +9,11 @@ import 'package:gc_wizard/logic/tools/symbol_tables/symbol_replacer.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_slider.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -33,6 +32,7 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart' as local;
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:tuple/tuple.dart';
 
 class SymbolReplacer extends StatefulWidget {
@@ -58,7 +58,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
   var _descriptionTextStyle = gcwDescriptionTextStyle();
   SymbolReplacerSymbolTableViewData _currentSymbolTableViewData;
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
-  Map<SubstitutionBreakerAlphabet, String> _breakerAlphabetItems;
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   var _isLoading = <bool>[false];
   double _currentMergeDistance;
@@ -336,7 +335,7 @@ class SymbolReplacerState extends State<SymbolReplacer> {
                 _currentAlphabet = value;
               });
             },
-            items: _breakerAlphabetItems.entries.map((alphabet) {
+            items: BreakerAlphabetItems(context).entries.map((alphabet) {
               return GCWDropDownMenuItem(
                 value: alphabet.key,
                 child: alphabet.value,
@@ -405,16 +404,6 @@ class SymbolReplacerState extends State<SymbolReplacer> {
 
   _initDropDownLists() {
     if (_compareSymbolItems == null) {
-      _breakerAlphabetItems = {
-        SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
-        SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
-        SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
-        SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
-        SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
-        SubstitutionBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
-        SubstitutionBreakerAlphabet.RUSSIAN: i18n(context, 'common_language_russian'),
-      };
-
       List<GCWTool> _toolList = registeredTools.where((element) {
         return [
           className(SymbolTable()),

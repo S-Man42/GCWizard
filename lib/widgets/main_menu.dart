@@ -6,14 +6,13 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
-import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/main_menu/settings_general.dart';
-import 'package:gc_wizard/widgets/main_menu/settings_tools.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-import 'main_menu/settings_tools.dart';
+import 'main_menu/settings/settings_coordinates.dart';
+import 'main_menu/settings/settings_general.dart';
+import 'main_menu/settings/settings_tools.dart';
 
 buildMainMenu(BuildContext context) {
   var header = SizedBox(
