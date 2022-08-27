@@ -319,6 +319,12 @@ bool isOnlyLetters(String input) {
   return removeAccents(input).replaceAll(RegExp(r'[A-Za-z]'), '').length == 0;
 }
 
+bool isOnlyNumerals(String input) {
+  if (input == null || input.isEmpty) return false;
+
+  return input.replaceAll(RegExp(r'[0-9]'), '').length == 0;
+}
+
 Uint8List trimNullBytes(Uint8List bytes) {
   if (bytes == null) return null;
 

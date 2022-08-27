@@ -90,7 +90,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('index: ${elem['index']}', () {
-        var _actual = irCalculator.decimalOccurence(elem['input']);
+        var _actual = irCalculator.decimalOccurences(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
