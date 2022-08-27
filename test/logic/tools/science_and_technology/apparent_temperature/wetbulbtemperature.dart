@@ -3,22 +3,32 @@ import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 
 void main() {
-  group("wet_bulb_temperature.calculate:", () {
-    // https://climate-preparedness.com/understanding-wet-bulb-temperature-and-why-it-is-so-dangerous/
+  group("wet_bulb_temperature.calculate.WBT:", () {
+    // https://rechneronline.de/air/wet-bulb-temperature.php
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'temperature' : 20.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '14.8'},
-      {'temperature' : 38.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '25.8'},
-      {'temperature' : 42.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '28.1'},
-      {'temperature' : 46.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '30.3'},
-      {'temperature' : 50.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '32.5'},
-      {'temperature' : 30.0, 'humidity' : 15.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '33.988'},
-      {'temperature' : 30.0, 'humidity' : 25.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '42.375'},
+      {'temperature' : 20.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '6.13'},
+      {'temperature' : 38.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '13.59'},
+      {'temperature' : 42.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '15.24'},
+      {'temperature' : 46.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '16.89'},
+      {'temperature' : 50.0, 'humidity' : 0.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '18.55'},
+
+      {'temperature' : 20.0, 'humidity' : 10.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '6.96'},
+      {'temperature' : 38.0, 'humidity' : 10.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '17.35'},
+      {'temperature' : 42.0, 'humidity' : 10.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '19.66'},
+      {'temperature' : 46.0, 'humidity' : 10.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '21.97'},
+      {'temperature' : 50.0, 'humidity' : 10.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '24.28'},
+
+      {'temperature' : 20.0, 'humidity' : 50.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '13.70'},
+      {'temperature' : 38.0, 'humidity' : 50.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '29.17'},
+      {'temperature' : 42.0, 'humidity' : 50.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '32.61'},
+      {'temperature' : 46.0, 'humidity' : 50.0, 'temperatureUnit' : TEMPERATURE_CELSIUS, 'expectedOutput' : '36.05'},
+      {'temperature' : 50.0, 'humidity' : 50.0, 'temperatureUnit' : TEMPERATURE_CELSIUS,  'expectedOutput' : '39.49'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, temperatureUnit: ${elem['temperatureUnit'].symbol}', () {
         var _actual = calculateWetBulbTemperature(elem['temperature'], elem['humidity'], elem['temperatureUnit']);
-        expect(_actual.WBT.toStringAsFixed(3), elem['expectedOutput']);
+        expect(_actual.WBT.toStringAsFixed(2), elem['expectedOutput']);
       });
     });
   });
