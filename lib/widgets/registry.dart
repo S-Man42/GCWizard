@@ -1765,7 +1765,7 @@ initializeRegistry(BuildContext context) {
       'esotericprogramminglanguage',
       'esoteric_beatnik',
     ]),
-    GCWTool(tool: Befunge(), i18nPrefix: 'befunge', searchKeys: [
+    GCWTool(tool: Befunge(), i18nPrefix: 'befunge', isBeta: true, searchKeys: [
       'esotericprogramminglanguage',
       'befunge',
     ]),
