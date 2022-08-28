@@ -30,8 +30,8 @@ class MagicEyeState extends State<MagicEye> {
   Image.Image _decodeImageData;
   Uint8List _decodeOutData;
   int _displacement = null;
-  GCWFile _encodeTextureImage;
   GCWFile _encodeHiddenDataImage;
+  GCWFile _encodeTextureImage;
   Uint8List _encodeOutData;
   TextureType _currentEncodeTextureType = TextureType.BITMAP;
 
@@ -52,7 +52,6 @@ class MagicEyeState extends State<MagicEye> {
 
   Widget _decodeWidgets() {
     return Column(children: [
-      Container(), // fixes strange behaviour: First GCWOpenFile widget from encode/decode affect each other
       GCWOpenFile(
         supportedFileTypes: SUPPORTED_IMAGE_TYPES,
         file: _decodeImage,

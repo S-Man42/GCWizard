@@ -803,7 +803,7 @@ initializeRegistry(BuildContext context) {
         categories: [ToolCategory.IMAGES_AND_FILES],
         searchKeys: [
         'magic_eye',
-        'images'
+        'images']),
     GCWTool(tool: MathematicalConstants(), i18nPrefix: 'mathematical_constants', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
