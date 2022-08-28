@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/colors_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/countries_selection.dart';
@@ -149,6 +150,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/befunge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
@@ -157,6 +159,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/karol_robot.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/piet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/fox.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -238,6 +241,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccit
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/ccitt_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/other_teletypewriter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/teletypewriter/punchtape.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/text_analysis.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
@@ -287,6 +291,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/blood_alcohol_content.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_tool.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/pantone_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
@@ -322,6 +327,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
@@ -358,7 +364,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/ral_color_codes.dart';
+import 'tools/science_and_technology/colors/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
@@ -550,12 +556,9 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'cistercian_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
-    GCWTool(tool: ColorTool(), i18nPrefix: 'colors', categories: [
+    GCWTool(tool: ColorsSelection(), i18nPrefix: 'colors_selection', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'color',
-      'colorpicker',
-    ]),
+    ], searchKeys: []),
     GCWTool(
         tool: CombinatoricsSelection(),
         i18nPrefix: 'combinatorics_selection',
@@ -801,6 +804,10 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
         'magic_eye',
         'images'
+    GCWTool(tool: MathematicalConstants(), i18nPrefix: 'mathematical_constants', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'mathematical_constants',
     ]),
     GCWTool(
         tool: MayaCalendarSelection(),
@@ -928,12 +935,6 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'railfence',
-    ]),
-    GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'color',
-      'ralcolorcodes',
     ]),
     GCWTool(tool: RC4(), i18nPrefix: 'rc4', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1077,6 +1078,13 @@ initializeRegistry(BuildContext context) {
       'symbol_westernunion',
       'symbol_murraybaudot',
       'symbol_baudot'
+    ]),
+    GCWTool(tool: TextAnalysis(), i18nPrefix: 'textanalysis', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'alphabetvalues',
+      'asciivalues',
+      'textanalysis'
     ]),
     GCWTool(tool: Trifid(), i18nPrefix: 'trifid', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1354,6 +1362,20 @@ initializeRegistry(BuildContext context) {
     //Cistercian Selection *****************************************************************************************
     GCWTool(tool: CistercianNumbers(), i18nPrefix: 'cistercian', searchKeys: [
       'cistercian',
+    ]),
+
+    //ColorsSelection **********************************************************************************************
+    GCWTool(tool: ColorTool(), i18nPrefix: 'colors', searchKeys: [
+      'color',
+      'colorpicker',
+    ]),
+    GCWTool(tool: RALColorCodes(), i18nPrefix: 'ralcolorcodes', searchKeys: [
+      'color',
+      'ralcolorcodes',
+    ]),
+    GCWTool(tool: PantoneColorCodes(), i18nPrefix: 'pantonecolorcodes', searchKeys: [
+      'color',
+      'pantonecolorcodes',
     ]),
 
     //CombinatoricsSelection ***************************************************************************************
@@ -1750,6 +1772,10 @@ initializeRegistry(BuildContext context) {
       'esotericprogramminglanguage',
       'esoteric_beatnik',
     ]),
+    GCWTool(tool: Befunge(), i18nPrefix: 'befunge', isBeta: true, searchKeys: [
+      'esotericprogramminglanguage',
+      'befunge',
+    ]),
     GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', searchKeys: [
       'esotericprogramminglanguage',
       'esoteric_brainfk',
@@ -1781,6 +1807,12 @@ initializeRegistry(BuildContext context) {
       'esotericprogramminglanguage',
       'esoteric_brainfk',
       'esoteric_ook',
+    ]),
+    GCWTool(tool: Piet(), i18nPrefix: 'piet', isBeta: true, searchKeys: [
+      'esotericprogramminglanguage',
+      'esoteric_piet',
+      'color',
+      'images'
     ]),
     GCWTool(tool: WhitespaceLanguage(), i18nPrefix: 'whitespace_language', searchKeys: [
       'esotericprogramminglanguage',
@@ -3371,6 +3403,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
       'barcodes',
       'symbol_rm4scc',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'robots', symbolSearchStrings: [
+      'symbol_robots',
     ]),
     GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: [
       'symbol_romulan',

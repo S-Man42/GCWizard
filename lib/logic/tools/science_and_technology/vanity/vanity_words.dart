@@ -370,14 +370,6 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
         } else {
           // already found
           ambigous = true;
-          print('ambiguous ' +
-              hDigits.toString() +
-              ' ' +
-              hWord.toString() +
-              ' ' +
-              digits.toString() +
-              ' ' +
-              word.toString());
           output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], true));
           output.add(VanityWordsDecodeOutput(digits, word, NumWords[language][word.toString().toLowerCase()], true));
         }

@@ -58,6 +58,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
             child: AspectRatio(
                 aspectRatio: widget.aspectRatio,
                 child: CanvasTouchDetector(
+                  gesturesToOverride: [GestureType.onTapDown],
                   builder: (context) {
                     return CustomPaint(
                         painter: SegmentDisplayPainter(context, widget.type, _segments, (key, value) {
