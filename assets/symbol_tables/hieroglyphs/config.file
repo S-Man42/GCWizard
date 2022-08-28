@@ -1,0 +1,15 @@
+{
+	"case_sensitive" : false,
+	"special_mappings" : {
+		"A1" : "A",
+		"CH1" : "CH",
+		"D1" : "D",
+		"I1" : "I",
+		"M1" : "M",
+		"N1" : "N",
+		"R1" : "R",
+		"U1" : "U",
+		"V1" : "V",
+		"W1" : "W"
+    }
+}
