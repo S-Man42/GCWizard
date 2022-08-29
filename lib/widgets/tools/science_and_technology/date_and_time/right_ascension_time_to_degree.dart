@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
@@ -202,9 +203,15 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
       double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
       var _currentDeg = RaDeg(_currentDecSign * _degreesD);
+      var _time = raDegree2Time(_currentDeg);
 
-      var entry = <String>[i18n(context, 'astronomy_position_rightascension'), raDegree2Time(_currentDeg).toString()];
+      var entry = <String>[i18n(context, 'astronomy_position_rightascension'), _time.toString()];
       output.add(entry);
+      entry = <String>[allCoordFormats.where((element) => element.key == keyCoordsDMM).first.name, _time.toDMMPart()];
+      output.add(entry);
+      entry = <String>[allCoordFormats.where((element) => element.key == keyCoordsDMS).first.name, _time.toDMSPart()];
+      output.add(entry);
+
     } else {
       var sign = _currentDuration.isNegative ? -1 : 1;
       var duration = _currentDuration.abs();

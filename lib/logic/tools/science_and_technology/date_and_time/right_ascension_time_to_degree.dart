@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
@@ -78,6 +79,23 @@ class RightAscension {
 
     return (sign < 0 ? '-' : '') + formatHoursToHHmmss(hourFormat, limitHours: false );
   }
+
+  String toDMMPart() {
+    var lat = DMMLatitude(sign, hours, minutes + seconds/ 60);
+    var result = lat.format();
+    result = result.replaceFirst( 'N ', '');
+    result = result.replaceFirst( 'S ', '-');
+    return result;
+  }
+
+  String toDMSPart() {
+    var lat = DMSLatitude(sign, hours, minutes, seconds);
+    var result = lat.format();
+    result = result.replaceFirst( 'N ', '');
+    result = result.replaceFirst( 'S ', '-');
+    return result;
+  }
+
 }
 
 class RaDeg {
