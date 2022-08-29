@@ -203,8 +203,13 @@ class MagicEyeState extends State<MagicEye> {
         _encodeHiddenDataImage?.bytes, _encodeTextureImage?.bytes, _currentEncodeTextureType));
   }
 
-  void _saveOutputEncode(Uint8List output) {
-    _encodeOutData = output;
+  void _saveOutputEncode(Tuple2<Uint8List, MagicEyeErrorCode> output) {
+    if (output == null)
+      _encodeOutData = null;
+
+    _encodeOutData = output.item1;
+    if (output.item2 == MagicEyeErrorCode.IMAGE_TOO_SMALL)
+        showToast(i18n(context, 'magic_eye_image_too_small'));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

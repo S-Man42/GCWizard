@@ -2558,6 +2558,7 @@
   "magic_eye_title": "Magic Eye",
   "magic_eye_description": "3D Stereogram",
   "magic_eye_hidden_image": "Hidden Image",
+  "magic_eye_image_too_small": "Image too small",
   "magic_eye_offset": "Offset",
   "magic_eye_texture_image": "Texture Image",
   "magic_eye_texture_bitmap": "Image",

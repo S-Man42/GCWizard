@@ -17,6 +17,11 @@ enum TextureType {
   BITMAP
 }
 
+enum MagicEyeErrorCode {
+  OK,
+  IMAGE_TOO_SMALL
+}
+
 const int MIN_DISPLACEMENT_ALLOWED = 10;
 const MAX_TESTED_LINES_COUNT = 50;
 const int _channelCount = 4;
@@ -148,21 +153,21 @@ Uint8List createResultImage(Image.Image image, int displacement) {
   return encodeTrimmedPng(bitmap);
 }
 
-Future<Uint8List> generateImageAsync(dynamic jobData) async {
+Future<Tuple2<Uint8List, MagicEyeErrorCode>> generateImageAsync(dynamic jobData) async {
   if (jobData == null) return null;
 
   Uint8List hiddenImage = jobData.parameters.item1;
   Uint8List textureImage = jobData.parameters.item2;
   TextureType textureType = jobData.parameters.item3;
 
-  var outputImage = generateImage(hiddenImage, textureImage, textureType);
+  var outputData = generateImage(hiddenImage, textureImage, textureType);
 
-  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputImage);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(outputData);
 
-  return Future.value(outputImage);
+  return Future.value(outputData);
 }
 
-Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType, {SendPort sendAsyncPort}) {
+Tuple2<Uint8List, MagicEyeErrorCode> generateImage(Uint8List hiddenDataImage, Uint8List textureImage, TextureType textureType, {SendPort sendAsyncPort}) {
   var bInterpolateDepthmap = true;
   var oversample = 2;
   Image.Image texture;
@@ -176,6 +181,10 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   var depthmap = Image.decodeImage(hiddenDataImage);
   var resolutionX = depthmap.width;
   var resolutionY = depthmap.height;
+
+  if (resolutionX < 3 * _separation)
+    return Tuple2<Uint8List, MagicEyeErrorCode>(null, MagicEyeErrorCode.IMAGE_TOO_SMALL);
+
 
   if ((textureType == TextureType.BITMAP) || ((textureType == null) && (textureImage != null)))
     texture= Image.decodeImage(textureImage);
@@ -197,6 +206,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
   _depthScale = oversample;
 
   _fieldDepth = _fieldDepth.clamp(0, 1);
+
 
   // Apply oversampling factor to relevant settings
   if (oversample > 1) {
@@ -253,7 +263,7 @@ Uint8List generateImage(Uint8List hiddenDataImage, Uint8List textureImage, Textu
     bmStereogram = Image.copyResize(bmStereogram, width: resolutionX, height: resolutionY);
   }
 
-  return encodeTrimmedPng(bmStereogram);
+  return Tuple2<Uint8List, MagicEyeErrorCode>(encodeTrimmedPng(bmStereogram), MagicEyeErrorCode.OK);
 }
 
 
