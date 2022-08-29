@@ -255,11 +255,27 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
       break;
   }
 
+  // filtered main line notes
+  var mainLineNotes = Map<String, List<String>>();
+  CODEBOOK.forEach((String key, List<String> value) {
+    var helplineNote = false;
+    value.forEach((element) {
+      if (element.contains("h"))
+        helplineNote = true;
+    });
+    if (!helplineNote) mainLineNotes.addAll({key: value});
+  });
+
   List<String> inputs = input.split(RegExp(r'\s'));
   List<List<String>> result = [];
 
-  for (int i = 0; i < inputs.length; i++)
-    if (CODEBOOK[inputs[i]] != null) result.add(CODEBOOK[inputs[i]]);
+  for (int i = 0; i < inputs.length; i++) {
+    // check main line grades first
+    if (mainLineNotes[inputs[i]] != null)
+      result.add(mainLineNotes[inputs[i]]);
+    else if (CODEBOOK[inputs[i]] != null)
+      result.add(CODEBOOK[inputs[i]]);
+  }
 
   return result;
 }
