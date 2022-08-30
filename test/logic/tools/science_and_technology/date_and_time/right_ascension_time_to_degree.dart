@@ -10,17 +10,18 @@ void main() {
       {'input' : -66.918277, 'expectedOutput' : '-04:27:40.386'},
       {'input' : 9.618291666666666, 'expectedOutput' : '00:38:28.390'},
 
-      {'input' : 90.0, 'expectedOutput' : '06:0:00.000'},
+      {'input' : 90.0, 'expectedOutput' : '06:00:00.000'},
       {'input' : 460.0, 'expectedOutput' : '30:40:00.000'},
-      {'input' : 0, 'expectedOutput' : '30:40:00.000'},
-      {'input' : -0, 'expectedOutput' : '30:40:00.000'},
-      {'input' : 90, 'expectedOutput' : '30:40:00.000'},
-      {'input' : -90, 'expectedOutput' : '30:40:00.000'},
-      {'input' : 180, 'expectedOutput' : '30:40:00.000'},
-      {'input' : -180, 'expectedOutput' : '30:40:00.000'},
-      {'input' : 360, 'expectedOutput' : '30:40:00.000'},
-      {'input' : -360, 'expectedOutput' : '30:40:00.000'},
-      {'input' : 720, 'expectedOutput' : '30:40:00.000'},
+      {'input' : 0.0, 'expectedOutput' : '00:00:00.000'},
+      {'input' : -0.0, 'expectedOutput' : '00:00:00.000'},
+      {'input' : 90.0, 'expectedOutput' : '06:00:00.000'},
+      {'input' : -90.0, 'expectedOutput' : '-06:00:00.000'},
+      {'input' : 180.0, 'expectedOutput' : '12:00:00.000'},
+      {'input' : -180.0, 'expectedOutput' : '-12:00:00.000'},
+      {'input' : 360.0, 'expectedOutput' : '24:00:00.000'},
+      {'input' : -360.0, 'expectedOutput' : '-24:00:00.000'},
+      {'input' : 720.0, 'expectedOutput' : '48:00:00.000'},
+      {'input' : -47.000, 'expectedOutput' : '-03:08:00.000'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -41,7 +42,7 @@ void main() {
 
       {'input' : '-44:27:40.386', 'expectedOutput' : '-666.918275'},
       {'input' : '50:38:28.39', 'expectedOutput' : '759.6182916667'},
-      {'input' : '-3:8:0', 'expectedOutput' : '759.6182916667'},
+      {'input' : '-3:8:0', 'expectedOutput' : '-47.000'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -110,6 +111,23 @@ void main() {
           expect(_actual, elem['expectedOutput']);
         else
           expect(_actual.toString(), elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("RightAscension.fromDMM:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'sign' : null, 'hours' : null, 'expectedOutput' : '00:00:00.000'},
+      {'sign' : 1, 'hours' : 1, 'minutes' : 0.0 , 'expectedOutput' : '01:00:00.000'},
+      {'sign' : 1, 'hours' : 1, 'minutes' : 30.500 , 'expectedOutput' : '01:30:30.000'},
+
+      {'sign' : 1, 'hours' : 170, 'minutes' : 0.0 , 'expectedOutput' : '170:00:00.000'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['sign']}, ${elem['hours']}, ${elem['minutes']}', () {
+        var _actual = RightAscension.fromDMM(elem['sign'], elem['hours'], elem['minutes'])?.toString();
+        expect(_actual, elem['expectedOutput']);
       });
     });
   });

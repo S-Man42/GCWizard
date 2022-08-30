@@ -537,18 +537,20 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   }
 
   void _updateControler() {
-    _hoursController.text = _currentRightAscension?.hours?.toString();
+    _hoursController.text = _currentRightAscension?.hours?.abs().toString();
     _minutesController.text = _currentRightAscension?.minutes?.toString();
     _secondsController.text = _currentRightAscension?.seconds?.truncate().toString();
     _mSecondsController.text = _currentRightAscension?.milliseconds?.toString();
 
     var _dmm = _currentRightAscension.toDMMPart();
-    _DmmDegreesController.text = _dmm?.degrees.toString();
-    _DmmMinutesController.text = _dmm?.minutes.truncate().toString();
-    _DmmMilliMinutesController.text = commaSplit(_dmm.minutes);
+    _currentDmmSign = _dmm?.sign;
+    _DmmDegreesController.text = _dmm?.degrees?.abs().toString();
+    _DmmMinutesController.text = _dmm?.minutes?.truncate().toString();
+    _DmmMilliMinutesController.text = commaSplit(_dmm?.minutes);
 
     var _dms = _currentRightAscension.toDMSPart();
-    _DmsDegreesController.text = _dms?.degrees?.toString();
+    _currentDmsSign = _dms?.sign;
+    _DmsDegreesController.text = _dms?.degrees?.abs().toString();
     _DmsMinutesController.text = _dms?.minutes?.toString();
     _DmsSecondsController.text = _dms?.seconds?.truncate().toString();
     _DmsMilliSecondsController.text = commaSplit(_dms.seconds);

@@ -59,10 +59,17 @@ class RightAscension {
   }
 
   static RightAscension fromDMM(int sign, int degrees, double minutes) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0;
+    if (minutes == null) minutes = 0.0;
     return fromDEC(sign * (degrees.abs() + minutes / 60.0));
   }
 
   static RightAscension fromDMS (int sign, int degrees, int minutes, double seconds) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0;
+    if (minutes == null) minutes = 0;
+    if (seconds == null) seconds = 0.0;
     return fromDEC(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
   }
 
