@@ -46,7 +46,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   TextEditingController _decDegreesController;
   TextEditingController _decMilliDegreesController;
 
-  var _currentDuration = Duration();
+  var _currentRightAscension = RightAscension(1, 0 ,0 , 0.0);
   var _currentEncryptFormat = keyCoordsHMS;
 
   var _currentDecSign = 1;
@@ -81,24 +81,24 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   @override
   void initState() {
     super.initState();
-    _hoursController = TextEditingController(text: _currentDuration.inHours.remainder(24).toString());
-    _minutesController = TextEditingController(text: _currentDuration.inMinutes.remainder(60).toString());
-    _secondsController = TextEditingController(text: _currentDuration.inSeconds.remainder(60).toString());
-    _mSecondsController = TextEditingController(text: _currentDuration.inSeconds.remainder(1000).toString());
+    _hoursController = TextEditingController(text: _currentRightAscension.hours.toString());
+    _minutesController = TextEditingController(text: _currentRightAscension.minutes.toString());
+    _secondsController = TextEditingController(text: _currentRightAscension.seconds.truncate().toString());
+    _mSecondsController = TextEditingController(text: _currentRightAscension.seconds.toString().split('.')[1]);
 
     _decDegreesController = TextEditingController(text: _currentDecDegrees);
     _decMilliDegreesController = TextEditingController(text: _currentDecMilliDegrees);
 
-    _DmmDegreesController = TextEditingController(text: _currentDmmDegrees);
-    _DmmMinutesController = TextEditingController(text: _currentDmmMinutes);
-    _DmmMilliMinutesController = TextEditingController(text: _currentDmmMilliMinutes);
+    _DmmDegreesController = TextEditingController(text: _currentDmmDegrees.toString());
+    _DmmMinutesController = TextEditingController(text: _currentDmmMinutes.toString());
+    _DmmMilliMinutesController = TextEditingController(text: _currentDmmMilliMinutes.toString());
     _dmmMinutesFocusNode = FocusNode();
     _dmmMilliMinutesFocusNode = FocusNode();
 
-    _DmsDegreesController = TextEditingController(text: _currentDmsDegrees);
-    _DmsMinutesController = TextEditingController(text: _currentDmsMinutes);
-    _DmsSecondsController = TextEditingController(text: _currentDmsSeconds);
-    _DmsMilliSecondsController = TextEditingController(text: _currentDmsMilliSeconds);
+    _DmsDegreesController = TextEditingController(text: _currentDmsDegrees.toString());
+    _DmsMinutesController = TextEditingController(text: _currentDmsMinutes.toString());
+    _DmsSecondsController = TextEditingController(text: _currentDmsSeconds.toString());
+    _DmsMilliSecondsController = TextEditingController(text: _currentDmsMilliSeconds.toString());
     _dmsMinutesFocusNode = FocusNode();
     _dmsSecondsFocusNode = FocusNode();
     _dmsMilliSecondsFocusNode = FocusNode();
@@ -106,13 +106,13 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
 
   @override
   void dispose() {
-    _hoursController.dispose();
-    _minutesController.dispose();
-    _secondsController.dispose();
-    _mSecondsController.dispose();
+    _hoursController?.dispose();
+    _minutesController?.dispose();
+    _secondsController?.dispose();
+    _mSecondsController?.dispose();
 
-    _decDegreesController.dispose();
-    _decMilliDegreesController.dispose();
+    _decDegreesController?.dispose();
+    _decMilliDegreesController?.dispose();
 
     _hoursFocusNode?.dispose();
     _minutesFocusNode?.dispose();
@@ -175,7 +175,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         onChanged: (newValue) {
           setState(() {
             _currentEncryptFormat = newValue;
-            // _setCurrentValueAndEmitOnChange();
+            _updateControler();
           });
         },
         items: [
@@ -224,10 +224,10 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
           secondsController: _secondsController,
           mSecondsController: _mSecondsController,
           maxHours: null,
-          duration: _currentDuration,
+          duration: _currentRightAscension.toDuration(),
           onChanged: (value) {
             setState(() {
-              _currentDuration = value['duration'];
+              _currentRightAscension = RightAscension.fromDuration(value['duration']);
             });
           },
         ),
@@ -259,8 +259,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     onChanged: (ret) {
                       setState(() {
                         _currentDmmDegrees = ret['text'];
+                        setDmmRightAscension();
 
-                        if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
+                        // if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -279,8 +280,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmmMinutes = ret['text'];
+                    setDmmRightAscension();
 
-                    if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
+                    // if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
                   });
                 }),
           ),
@@ -298,6 +300,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmmMilliMinutes = ret['text'];
+                    setDmmRightAscension();
                   });
                 }),
           ),
@@ -308,6 +311,14 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         ],
       ),
     ]);
+  }
+
+  void setDmmRightAscension() {
+    int _degrees = ['', '-'].contains(_currentDmmDegrees) ? 0 : int.parse(_currentDmmDegrees);
+    int _minutes = ['', '-'].contains(_currentDmmMinutes) ? 0 : int.parse(_currentDmmMinutes);
+    double _minutesD = double.parse('$_minutes.$_currentDmmMilliMinutes');
+
+    _currentRightAscension = RightAscension.fromDMM(_currentDmmSign, _degrees, _minutesD);
   }
 
   Widget _buildDmsPartRow() {
@@ -335,8 +346,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     onChanged: (ret) {
                       setState(() {
                         _currentDmsDegrees = ret['text'];
+                        setDmsRightAscension();
 
-                        if (_currentDmsDegrees.length == 2) FocusScope.of(context).requestFocus(_dmsMinutesFocusNode);
+                        // if (_currentDmsDegrees.length == 2) FocusScope.of(context).requestFocus(_dmsMinutesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -355,8 +367,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmsMinutes = ret['text'];
+                    setDmsRightAscension();
 
-                    if (_currentDmsMinutes.length == 2) FocusScope.of(context).requestFocus(_dmsSecondsFocusNode);
+                    // if (_currentDmsMinutes.length == 2) FocusScope.of(context).requestFocus(_dmsSecondsFocusNode);
                   });
                 }),
           ),
@@ -374,8 +387,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmsSeconds = ret['text'];
+                    setDmsRightAscension();
 
-                    if (_currentDmsSeconds.length == 2) FocusScope.of(context).requestFocus(_dmsMilliSecondsFocusNode);
+                    // if (_currentDmsSeconds.length == 2) FocusScope.of(context).requestFocus(_dmsMilliSecondsFocusNode);
                   });
                 }),
           ),
@@ -393,6 +407,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmsMilliSeconds = ret['text'];
+                    setDmsRightAscension();
                   });
                 }),
           ),
@@ -403,6 +418,16 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         ],
       ),
     ]);
+  }
+
+
+  void setDmsRightAscension() {
+    int _degrees = ['', '-'].contains(_currentDmsDegrees) ? 0 : int.parse(_currentDmsDegrees);
+    int _minutes = ['', '-'].contains(_currentDmsMinutes) ? 0 : int.parse(_currentDmsMinutes);
+    int _seconds = ['', '-'].contains(_currentDmsSeconds) ? 0 : int.parse(_currentDmsSeconds);
+    double _secondsD = double.parse('$_seconds.$_currentDmsMilliSeconds');
+
+    _currentRightAscension = RightAscension.fromDMS(_currentDmmSign, _degrees, _minutes, _secondsD);
   }
 
   Widget _buildDegRow() {
@@ -471,23 +496,14 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
 
       var entry = <String>[i18n(context, 'astronomy_position_rightascension'), _time.toString()];
       output.add(entry);
-      entry = <String>[getCoordinateFormatByKey(keyCoordsDMM).name, _time.toDMMPart()];
+      entry = <String>[getCoordinateFormatByKey(keyCoordsDMM).name, _time.toDMMPartString()];
       output.add(entry);
-      entry = <String>[getCoordinateFormatByKey(keyCoordsDMS).name, _time.toDMSPart()];
+      entry = <String>[getCoordinateFormatByKey(keyCoordsDMS).name, _time.toDMSPartString()];
       output.add(entry);
 
     } else {
-      var sign = _currentDuration.isNegative ? -1 : 1;
-      var duration = _currentDuration.abs();
-      var hours = duration.inHours;
-      var minutes = duration.inMinutes.remainder(60);
-      var seconds = duration.inSeconds.remainder(60);
-      var mseconds  = duration.inMilliseconds - _currentDuration.inSeconds * 1000;
-      var _secondsD = double.parse('$seconds.$mseconds');
 
-      var _rightAscension = RightAscension(sign, hours, minutes, _secondsD);
-
-      var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_rightAscension).toString()];
+      var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_currentRightAscension).toString()];
       output.add(entry);
     }
     return columnedMultiLineOutput(context, output, flexValues: [1, 1]);
@@ -508,23 +524,33 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       _decDegreesController.text = _currentDecDegrees.toString();
       _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
     } else {
-      var equatorial = RightAscension.parse(input);
-      if (equatorial == null) {
+      var rightAscension = RightAscension.parse(input);
+      if (rightAscension == null) {
         showToast(i18n(context, 'right_ascension_time_to_degree_clipboard_nodatafound'));
         return;
       }
 
-      var milliseconds = separateDecimalPlaces(equatorial.seconds);
-      _currentDuration = Duration(
-          hours: equatorial.hours,
-          minutes: equatorial.minutes,
-          seconds: equatorial.seconds.truncate(),
-          milliseconds: milliseconds);
+      _currentRightAscension = rightAscension;
 
-      _hoursController.text = equatorial.hours.toString();
-      _minutesController.text = equatorial.minutes.toString();
-      _secondsController.text = equatorial.seconds.truncate().toString();
-      _mSecondsController.text = milliseconds.toString();
+      _updateControler();
     }
+  }
+
+  void _updateControler() {
+    _hoursController.text = _currentRightAscension?.hours?.toString();
+    _minutesController.text = _currentRightAscension?.minutes?.toString();
+    _secondsController.text = _currentRightAscension?.seconds?.truncate().toString();
+    _mSecondsController.text = _currentRightAscension?.milliseconds?.toString();
+
+    var _dmm = _currentRightAscension.toDMMPart();
+    _DmmDegreesController.text = _dmm?.degrees.toString();
+    _DmmMinutesController.text = _dmm?.minutes.truncate().toString();
+    _DmmMilliMinutesController.text = commaSplit(_dmm.minutes);
+
+    var _dms = _currentRightAscension.toDMSPart();
+    _DmsDegreesController.text = _dms?.degrees?.toString();
+    _DmsMinutesController.text = _dms?.minutes?.toString();
+    _DmsSecondsController.text = _dms?.seconds?.truncate().toString();
+    _DmsMilliSecondsController.text = commaSplit(_dms.seconds);
   }
 }
