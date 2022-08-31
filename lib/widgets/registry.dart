@@ -308,6 +308,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterat
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_of_the_year.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -1725,6 +1726,10 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
       'dates',
       'dates_calendar',
+    ]),
+    GCWTool(tool: DayOfTheYear(), i18nPrefix: 'dates_day_of_the_year', searchKeys: [
+      'dates',
+      'dates_day_of_the_year',
     ]),
     GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'right_ascension_time_to_degree', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY

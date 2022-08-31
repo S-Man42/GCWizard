@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/day_of_the_year.dart';
 
 void main() {
-  group("DayOfTheYear.decode:", () {
+  group("DayOfTheYear.calculateDayInfos:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'year' : null, 'day': null, 'expectedOutput' : null},
 
@@ -21,7 +21,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('year: ${elem['year']}, day: ${elem['day']}', () {
-        DayOfTheYearOutput _actual = decode(elem['year'], elem['day']);
+        DayOfTheYearOutput _actual = calculateDayInfos(elem['year'], elem['day']);
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else {

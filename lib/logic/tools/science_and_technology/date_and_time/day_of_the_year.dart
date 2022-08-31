@@ -8,7 +8,7 @@ class DayOfTheYearOutput{
   DayOfTheYearOutput(this.date, this.weekday, this.weeknumber);
 }
 
-DayOfTheYearOutput decode(int year, int day) {
+DayOfTheYearOutput calculateDayInfos(int year, int day) {
   if (year == null || day == null) return null;
   var date = DateTime(year, 1, day);
 
