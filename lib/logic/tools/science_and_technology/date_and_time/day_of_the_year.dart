@@ -10,9 +10,7 @@ class DayOfTheYearOutput{
 
 DayOfTheYearOutput decode(int year, int day) {
   if (year == null || day == null) return null;
-  var date = DateTime(year);
-  date = date.add(Duration(days: day - 1));
-  date = date.add(Duration(hours: -date.hour));
+  var date = DateTime(year, 1, day);
 
   return DayOfTheYearOutput(date, date.weekday, isoWeekOfYear(date));
 }
