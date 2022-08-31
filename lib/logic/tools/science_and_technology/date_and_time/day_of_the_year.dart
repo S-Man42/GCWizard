@@ -8,9 +8,11 @@ class DayOfTheYearOutput{
   DayOfTheYearOutput(this.date, this.weekday, this.weeknumber);
 }
 
-DayOfTheYearOutput decode(int year,int day) {
+DayOfTheYearOutput decode(int year, int day) {
+  if (year == null || day == null) return null;
   var date = DateTime(year);
-  date = date.add(Duration(days: day));
+  date = date.add(Duration(days: day - 1));
+  date = date.add(Duration(hours: -date.hour));
 
   return DayOfTheYearOutput(date, date.weekday, isoWeekOfYear(date));
 }
@@ -18,6 +20,8 @@ DayOfTheYearOutput decode(int year,int day) {
 
 
 int isoWeekOfYear(DateTime date) {
+  if (date == null)  return null;
+
   // Get the monday of week 1
   final DateTime mondayWeek1 = _isoWeek1Monday(date);
 
