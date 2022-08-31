@@ -23,7 +23,9 @@ enum DateTimePickerConfig {
   /// Show milliseconds (option for SECOND_AS_INT)
   TIME_MSEC,
   /// Show timezones
-  TIMEZONES
+  TIMEZONES,
+  /// Show days (of the year)
+  DAY_OF_THE_YEAR
 }
 
 class TimeZone {
@@ -97,22 +99,22 @@ class GCWDateTimePicker extends StatefulWidget {
 
   const GCWDateTimePicker(
       {Key key,
-      this.onChanged,
-      this.datetime,
-      this.duration,
-      this.config,
-      this.timezoneOffset: const Duration(hours: 0),
-      this.minDays: 1,
-      this.maxDays: 31,
-      this.maxHours: 23,
-      this.maxSeconds: 59.999,
-      this.yearController,
-      this.monthController,
-      this.dayController,
-      this.hoursController,
-      this.minutesController,
-      this.secondsController,
-      this.mSecondsController,
+        this.onChanged,
+        this.datetime,
+        this.duration,
+        this.config,
+        this.timezoneOffset: const Duration(hours: 0),
+        this.minDays: 1,
+        this.maxDays: 31,
+        this.maxHours: 23,
+        this.maxSeconds: 59.999,
+        this.yearController,
+        this.monthController,
+        this.dayController,
+        this.hoursController,
+        this.minutesController,
+        this.secondsController,
+        this.mSecondsController,
       })
       : super(key: key);
 
@@ -162,12 +164,17 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         _currentDay = date.day;
     }
 
+    if (widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR)) {
+      _currentYear = date.year;
+      /// calc day of the year
+      _currentDay = date.difference(new DateTime(date.year)).inDays + 1;
+    }
+
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
-        _currentSign = widget.duration.isNegative ? -1 : 1;
-        _currentHour = widget.duration.inHours.abs();
-        _currentMinute = widget.duration.inMinutes.abs().remainder(60);
-        _currentSecond = widget.duration.inSeconds.abs().remainder(60);
+        _currentHour = widget.duration.inHours;
+        _currentMinute = widget.duration.inMinutes.remainder(60);
+        _currentSecond = widget.duration.inSeconds.remainder(60);
         _currentMilliSecond = _durationMilliseconds(widget.duration);
       } else {
         _currentHour = date.hour;
@@ -208,48 +215,47 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
-        // ppdate with new values (paste, ..)
-        if (_currentSign != (widget.duration.isNegative ? -1 : 1)) {
+        // update with new values (paste, ..)
+        if (_currentSign != (widget.duration.isNegative ? -1 : 1))
           _currentSign = widget.duration.isNegative ? -1 : 1;
-        }
-        if (_currentHour != widget.duration.inHours.abs()) {
+        if (_currentHour != widget.duration.inHours.abs())
           _currentHour = widget.duration.inHours.abs();
-        }
-        if (_currentMinute != widget.duration.inMinutes.abs().remainder(60)) {
+        if (_currentMinute != widget.duration.inMinutes.abs().remainder(60))
           _currentMinute = widget.duration.inMinutes.abs().remainder(60);
-        }
-        if (_currentSecond != widget.duration.inSeconds.abs().remainder(60)) {
+        if (_currentSecond != widget.duration.inSeconds.abs().remainder(60))
           _currentSecond = widget.duration.inSeconds.abs().remainder(60);
-        }
-        if (_currentMilliSecond != _durationMilliseconds(widget.duration)) {
+        if (_currentMilliSecond != _durationMilliseconds(widget.duration))
           _currentMilliSecond = _durationMilliseconds(widget.duration);
-        }
       } else {
-        _currentHour = widget.datetime.hour;
-        _currentMinute = widget.datetime.minute;
-        _currentSecond = widget.datetime.second;
-        _currentMilliSecond = widget.datetime.millisecond;
+        // update with new values (paste, ..)
+        if (_currentHour != widget.datetime.hour)
+          _currentHour = widget.datetime.hour;
+        if (_currentMinute == widget.datetime.minute)
+          _currentMinute = widget.datetime.minute;
+        if (_currentSecond == widget.datetime.second)
+          _currentSecond = widget.datetime.second;
+        if (_currentMilliSecond == widget.datetime.millisecond)
+          _currentMilliSecond = widget.datetime.millisecond;
       }
     }
-
-
 
     if (widget.config.contains(DateTimePickerConfig.SIGN)) {
       widgets.addAll({
         GCWCoordsSignDropDownButton(
-          itemList: ['+', '-'],
-          value: _currentSign,
-          onChanged: (value) {
-            setState(() {
-              _currentSign = value;
-              _setCurrentValueAndEmitOnChange();
-            });
-          }
+            itemList: ['+', '-'],
+            value: _currentSign,
+            onChanged: (value) {
+              setState(() {
+                _currentSign = value;
+                _setCurrentValueAndEmitOnChange();
+              });
+            }
         ) : 3}
       );
     }
 
-    if (widget.config.contains(DateTimePickerConfig.DATE)) {
+    if (widget.config.contains(DateTimePickerConfig.DATE) ||
+        widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR)) {
       widgets.addAll({
         GCWIntegerSpinner(
           layout: SpinnerLayout.VERTICAL,
@@ -265,12 +271,17 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               if (_currentYear
                   .toString()
                   .length == 4) {
-                FocusScope.of(context).requestFocus(_monthFocusNode);
+                if (widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR))
+                  FocusScope.of(context).requestFocus(_dayFocusNode);
+                else
+                  FocusScope.of(context).requestFocus(_monthFocusNode);
               }
             });
           },
         ): 5}
       );
+    }
+    if (widget.config.contains(DateTimePickerConfig.DATE)) {
       widgets.addAll({
         GCWIntegerSpinner(
           focusNode: _monthFocusNode,
@@ -294,7 +305,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         ): 4});
     };
     if (widget.config.contains(DateTimePickerConfig.DATE) ||
-      widget.config.contains(DateTimePickerConfig.DAY)) {
+        widget.config.contains(DateTimePickerConfig.DAY) ||
+        widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR)) {
       widgets.addAll({
         GCWIntegerSpinner(
           focusNode: _dayFocusNode,
@@ -308,9 +320,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentDay = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentDay
-                  .toString()
-                  .length == 2) {
+              if ((_currentDay.toString().length == 2) &&
+                  !widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR)) {
                 FocusScope.of(context).requestFocus(_hourFocusNode);
               }
             });
@@ -463,12 +474,12 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               items: TIMEZONES
                   .asMap()
                   .map((index, timeZone) {
-                    return MapEntry(
-                        index,
-                      GCWDropDownMenuItem(
-                          value: index, child: _buildTimeZoneItemText(timeZone), subtitle: timeZone.name ?? ''
-                      ));
-                  })
+                return MapEntry(
+                    index,
+                    GCWDropDownMenuItem(
+                        value: index, child: _buildTimeZoneItemText(timeZone), subtitle: timeZone.name ?? ''
+                    ));
+              })
                   .values
                   .toList(),
               onChanged: (value) {
@@ -510,7 +521,9 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   _setCurrentValueAndEmitOnChange() {
     var duration = Duration(
         days: (widget.config.contains(DateTimePickerConfig.DATE) ||
-            widget.config.contains(DateTimePickerConfig.DAY)) ? _currentDay : 0,
+            widget.config.contains(DateTimePickerConfig.DAY) ||
+            widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR))
+            ? _currentDay : 0,
         hours: _currentHour,
         minutes: _currentMinute,
         seconds: _currentSecond,
@@ -519,9 +532,9 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     var output = {
       'datetime':
-          DateTime(_currentYear, _currentMonth, _currentDay,
-              _currentHour, _currentMinute, _currentSecond,
-              _currentMilliSecond),
+      DateTime(_currentYear, _currentMonth, _currentDay,
+          _currentHour, _currentMinute, _currentSecond,
+          _currentMilliSecond),
       'timezone': Duration(minutes: _currentTimezoneOffset),
       'duration':duration,
     };
@@ -533,5 +546,3 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     return(duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).round();
   }
 }
-
-
