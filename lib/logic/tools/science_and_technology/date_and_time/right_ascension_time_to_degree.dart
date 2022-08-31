@@ -90,7 +90,7 @@ class RightAscension {
     var _hours = duration.inHours;
     var _minutes = duration.inMinutes.abs().remainder(60);
     var _seconds = duration.inSeconds.abs().remainder(60);
-    var _mseconds  = (duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).truncate();
+    var _mseconds  = (duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).round();
     var _secondsD = double.parse('$_seconds.$_mseconds');
     return RightAscension (duration.isNegative ? -1 : 1, _hours, _minutes, _secondsD);
   }

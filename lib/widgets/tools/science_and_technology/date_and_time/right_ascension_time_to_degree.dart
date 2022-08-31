@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
@@ -162,8 +161,8 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         _currentMode == GCWSwitchPosition.left
           ? _buildDegRow()
           : _buildEncryptRow(),
-
-        GCWMultipleOutput(children: _buildOutput())
+        Container(height: 10),
+        _buildOutput()
       ],
     );
   }
@@ -246,6 +245,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (value) {
                   setState(() {
                     _currentDmmSign = value;
+                    _setDmmRightAscension();
                   });
                 }),
           ),
@@ -261,7 +261,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                         _currentDmmDegrees = ret['text'];
                         _setDmmRightAscension();
 
-                        // if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
+                         if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -282,7 +282,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     _currentDmmMinutes = ret['text'];
                     _setDmmRightAscension();
 
-                    // if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
+                     if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
                   });
                 }),
           ),
@@ -333,6 +333,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (value) {
                   setState(() {
                     _currentDmsSign = value;
+                    _setDmsRightAscension();
                   });
                 }),
           ),
@@ -348,7 +349,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                         _currentDmsDegrees = ret['text'];
                         _setDmsRightAscension();
 
-                        // if (_currentDmsDegrees.length == 2) FocusScope.of(context).requestFocus(_dmsMinutesFocusNode);
+                        if (_currentDmsDegrees.length == 2) FocusScope.of(context).requestFocus(_dmsMinutesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -369,7 +370,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     _currentDmsMinutes = ret['text'];
                     _setDmsRightAscension();
 
-                    // if (_currentDmsMinutes.length == 2) FocusScope.of(context).requestFocus(_dmsSecondsFocusNode);
+                    if (_currentDmsMinutes.length == 2) FocusScope.of(context).requestFocus(_dmsSecondsFocusNode);
                   });
                 }),
           ),
@@ -389,7 +390,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     _currentDmsSeconds = ret['text'];
                     _setDmsRightAscension();
 
-                    // if (_currentDmsSeconds.length == 2) FocusScope.of(context).requestFocus(_dmsMilliSecondsFocusNode);
+                    if (_currentDmsSeconds.length == 2) FocusScope.of(context).requestFocus(_dmsMilliSecondsFocusNode);
                   });
                 }),
           ),
@@ -427,7 +428,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     int _seconds = ['', '-'].contains(_currentDmsSeconds) ? 0 : int.parse(_currentDmsSeconds);
     double _secondsD = double.parse('$_seconds.$_currentDmsMilliSeconds');
 
-    _currentRightAscension = RightAscension.fromDMS(_currentDmmSign, _degrees, _minutes, _secondsD);
+    _currentRightAscension = RightAscension.fromDMS(_currentDmsSign, _degrees, _minutes, _secondsD);
   }
 
   Widget _buildDegRow() {
@@ -480,33 +481,32 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
             flex: 1,
             child: GCWText(align: Alignment.center, text: '°'),
           ),
+          Container(height: 10),
         ],
       ),
     ]);
   }
 
-  _buildOutput() {
-
-    var output = <List<String>>[];
+  Widget _buildOutput() {
+    var rows = <Widget>[];
     if (_currentMode == GCWSwitchPosition.left) {
       int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
       double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
       var _currentDeg = RaDeg(_currentDecSign * _degreesD);
       var _time = raDegree2Time(_currentDeg);
 
-      var entry = <String>[i18n(context, 'astronomy_position_rightascension'), _time.toString()];
-      output.add(entry);
-      entry = <String>[getCoordinateFormatByKey(keyCoordsDMM).name, _time.toDMMPartString()];
-      output.add(entry);
-      entry = <String>[getCoordinateFormatByKey(keyCoordsDMS).name, _time.toDMSPartString()];
-      output.add(entry);
+      rows = columnedMultiLineOutput(context, [
+        [i18n(context, 'astronomy_position_rightascension'), _time.toString()],
+        [getCoordinateFormatByKey(keyCoordsDMM).name, _time.toDMMPartString()],
+        [getCoordinateFormatByKey(keyCoordsDMS).name, _time.toDMSPartString()]
+      ]);
 
     } else {
-
-      var entry = <String>[i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_currentRightAscension).toString()];
-      output.add(entry);
+      rows = columnedMultiLineOutput(context, [
+        [i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_currentRightAscension).toString()]
+      ]);
     }
-    return columnedMultiLineOutput(context, output, flexValues: [1, 1]);
+    return Column(children: rows);
   }
 
   _parse(String input) {
