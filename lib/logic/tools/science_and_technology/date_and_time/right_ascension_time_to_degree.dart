@@ -55,7 +55,7 @@ class RightAscension {
   }
 
   int get milliseconds{
-    return ((this.seconds - this.seconds.truncate()) * 1000).truncate();
+    return ((this.seconds - this.seconds.truncate()) * 1000).round();
   }
 
   static RightAscension fromDMM(int sign, int degrees, double minutes) {
@@ -96,11 +96,16 @@ class RightAscension {
   }
 
   Duration toDuration() {
-    return Duration(
+    var duration = Duration(
         hours: this.hours,
         minutes: this.minutes,
         seconds: this.seconds.truncate(),
         milliseconds: this.milliseconds);
+
+    if (sign < 0)
+      duration = -duration;
+
+    return duration;
   }
 
   static RightAscension parse(String input) {

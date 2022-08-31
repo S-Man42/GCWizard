@@ -259,7 +259,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     onChanged: (ret) {
                       setState(() {
                         _currentDmmDegrees = ret['text'];
-                        setDmmRightAscension();
+                        _setDmmRightAscension();
 
                         // if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
                       });
@@ -280,7 +280,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmmMinutes = ret['text'];
-                    setDmmRightAscension();
+                    _setDmmRightAscension();
 
                     // if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
                   });
@@ -300,7 +300,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmmMilliMinutes = ret['text'];
-                    setDmmRightAscension();
+                    _setDmmRightAscension();
                   });
                 }),
           ),
@@ -313,7 +313,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     ]);
   }
 
-  void setDmmRightAscension() {
+  void _setDmmRightAscension() {
     int _degrees = ['', '-'].contains(_currentDmmDegrees) ? 0 : int.parse(_currentDmmDegrees);
     int _minutes = ['', '-'].contains(_currentDmmMinutes) ? 0 : int.parse(_currentDmmMinutes);
     double _minutesD = double.parse('$_minutes.$_currentDmmMilliMinutes');
@@ -346,7 +346,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                     onChanged: (ret) {
                       setState(() {
                         _currentDmsDegrees = ret['text'];
-                        setDmsRightAscension();
+                        _setDmsRightAscension();
 
                         // if (_currentDmsDegrees.length == 2) FocusScope.of(context).requestFocus(_dmsMinutesFocusNode);
                       });
@@ -367,7 +367,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmsMinutes = ret['text'];
-                    setDmsRightAscension();
+                    _setDmsRightAscension();
 
                     // if (_currentDmsMinutes.length == 2) FocusScope.of(context).requestFocus(_dmsSecondsFocusNode);
                   });
@@ -387,7 +387,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmsSeconds = ret['text'];
-                    setDmsRightAscension();
+                    _setDmsRightAscension();
 
                     // if (_currentDmsSeconds.length == 2) FocusScope.of(context).requestFocus(_dmsMilliSecondsFocusNode);
                   });
@@ -407,7 +407,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmsMilliSeconds = ret['text'];
-                    setDmsRightAscension();
+                    _setDmsRightAscension();
                   });
                 }),
           ),
@@ -421,7 +421,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   }
 
 
-  void setDmsRightAscension() {
+  void _setDmsRightAscension() {
     int _degrees = ['', '-'].contains(_currentDmsDegrees) ? 0 : int.parse(_currentDmsDegrees);
     int _minutes = ['', '-'].contains(_currentDmsMinutes) ? 0 : int.parse(_currentDmsMinutes);
     int _seconds = ['', '-'].contains(_currentDmsSeconds) ? 0 : int.parse(_currentDmsSeconds);
@@ -517,12 +517,14 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         return;
       }
 
-      _currentDecDegrees = deg.degress.abs().truncate().toString();
-      _currentDecMilliDegrees = separateDecimalPlaces(deg.degress).toString();
+      setState(() {
+        _currentDecDegrees = deg.degress.abs().truncate().toString();
+        _currentDecMilliDegrees = separateDecimalPlaces(deg.degress).toString();
 
-      _currentDecSign = coordinateSign(deg.degress);
-      _decDegreesController.text = _currentDecDegrees.toString();
-      _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
+        _currentDecSign = coordinateSign(deg.degress);
+        _decDegreesController.text = _currentDecDegrees.toString();
+        _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
+      });
     } else {
       var rightAscension = RightAscension.parse(input);
       if (rightAscension == null) {
@@ -531,8 +533,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
       }
 
       _currentRightAscension = rightAscension;
-
-      _updateControler();
+      setState(() {
+        _updateControler();
+      });
     }
   }
 
@@ -553,6 +556,6 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     _DmsDegreesController.text = _dms?.degrees?.abs().toString();
     _DmsMinutesController.text = _dms?.minutes?.toString();
     _DmsSecondsController.text = _dms?.seconds?.truncate().toString();
-    _DmsMilliSecondsController.text = commaSplit(_dms.seconds);
+    _DmsMilliSecondsController.text = commaSplit(_dms?.seconds);
   }
 }
