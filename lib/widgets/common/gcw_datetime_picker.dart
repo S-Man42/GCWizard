@@ -167,7 +167,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.config.contains(DateTimePickerConfig.DAY_OF_THE_YEAR)) {
       _currentYear = date.year;
       /// calc day of the year
-      _currentDay = (date.day + (153 * date.month - 162)/ 5).toInt();
+      _currentDay = date.difference(new DateTime(date.year)).inDays + 1;
     }
 
     if (widget.config.contains(DateTimePickerConfig.TIME)) {

@@ -1,4 +1,4 @@
-//weeknumber code: https://gist.github.com/Maistho/
+//weeknumber code: https://gist.github.com/Maistho/e38da422ad5c097c635ccf708ec68251
 
 class DayOfTheYearOutput{
   final DateTime date;
