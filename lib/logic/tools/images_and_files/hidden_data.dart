@@ -16,7 +16,8 @@ Future<List<GCWFile>> hiddenData(GCWFile data) async {
   return  _hiddenData(data);
 }
 
-Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes = false, int fileIndex = 0}) async {
+Future<List<GCWFile>> _hiddenData(GCWFile data,
+    {bool calledFromSearchMagicBytes = false, onlyChildren: false, int fileIndex = 0}) async {
   var resultList = <GCWFile>[];
   var bytes = data.bytes;
 
@@ -72,7 +73,7 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0) {
       var fileCounter = fileIndex + resultList.length;
-      var result = GCWFile(name: HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
+      var result = GCWFile(name: data.name ?? HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
 
       resultList.add(result);
     }
@@ -92,7 +93,7 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes
         result.children.forEach((data) async {
           if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
             // clone byte (I have no idea why this is actually necessary)
-            var children = await _hiddenData(GCWFile(bytes: data.bytes.sublist(0)));
+            var children = await _hiddenData(GCWFile(name: data.name, bytes: data.bytes.sublist(0)), onlyChildren : true);
             if ((children != null) && (children.length > 0))
               if (data.children != null) data.children.addAll(children);
           } else
@@ -100,6 +101,8 @@ Future<List<GCWFile>> _hiddenData(GCWFile data, {bool calledFromSearchMagicBytes
         });
     });
   }
+  if (onlyChildren)
+    resultList = resultList?.first?.children;
   return resultList;
 }
 
