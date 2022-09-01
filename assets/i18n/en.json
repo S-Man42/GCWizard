@@ -1820,6 +1820,7 @@
   "dates_daycalculator_minutes": "Minutes",
   "dates_daycalculator_seconds": "Seconds",
   "dates_day_of_the_year_title": "Day of the Year",
+  "dates_day_of_the_year_date": "Date (Year, Day)",
   "dates_day_of_the_year_description": "Date, Week, .. of a Day number",
   "dates_timecalculator_title": "Time Calculator",
   "dates_timecalculator_description": "Adds or subtracts days, hours, minutes and seconds",
