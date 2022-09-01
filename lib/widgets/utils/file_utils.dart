@@ -607,7 +607,11 @@ Future<List<GCWFile>> extractArchive(GCWFile file) async {
         return _archiveToPlatformFileList(TarDecoder().decodeBuffer(input));
       case FileType.BZIP2:
         var output = BZip2Decoder().decodeBuffer(input);
-        return {GCWFile(name: changeExtension(file?.name ?? 'bzip', '.tar'), bytes: output)}.toList();
+        var fileName = file?.name ?? 'xxx';
+        fileName = changeExtension(fileName, '');
+        if (extension(fileName) != '.tar')
+          fileName += '.tar';
+        return {GCWFile(name: fileName, bytes: output)}.toList();
       case FileType.GZIP:
         var output = OutputStream();
         GZipDecoder().decodeStream(input, output);
