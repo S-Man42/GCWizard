@@ -309,6 +309,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterat
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
@@ -1724,6 +1725,12 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
       'dates',
       'dates_calendar',
+    ]),
+    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'right_ascension_time_to_degree', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'right_ascension_time_to_degree',
+      'coordinates',
     ]),
 
     //DNASelection ************************************************************************************************

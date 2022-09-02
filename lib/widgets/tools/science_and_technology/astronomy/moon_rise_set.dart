@@ -38,8 +38,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
           text: i18n(context, 'astronomy_riseset_date'),
         ),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATE_ONLY,
-          withTimezones: true,
+          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;

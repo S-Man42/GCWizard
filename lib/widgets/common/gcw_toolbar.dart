@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class GCWToolBar extends StatefulWidget {
   final List<Widget> children;
-  final List<int> flex;
+  final List<int> flexValues;
 
-  const GCWToolBar({Key key, this.children, this.flex}) : super(key: key);
+  const GCWToolBar({Key key, this.children, this.flexValues}) : super(key: key);
 
   @override
   _GCWToolBarState createState() => _GCWToolBarState();
@@ -21,9 +21,9 @@ class _GCWToolBarState extends State<GCWToolBar> {
             right: 2,
           ),
         ),
-        flex: ((widget.flex == null) || (widget.children.length != widget.flex.length))
+        flex: ((widget.flexValues == null) || (widget.children.length != widget.flexValues.length))
             ? 1
-            : widget.flex[widget.children.indexOf(child)],
+            : widget.flexValues[widget.children.indexOf(child)],
       );
     }).toList();
 

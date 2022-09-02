@@ -31,11 +31,11 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
   Map<String, dynamic> _firstUserValue;
   Map<String, dynamic> _secondUserValue;
 
-  var _currentMode;
+  GCWSwitchPosition _currentMode;
   var _currentEllipsoidUser2ndValue = keyMinorAxis;
-  var _currentStandardEllipsoid;
+  Ellipsoid _currentStandardEllipsoid;
 
-  var _currentEllipsoid;
+  Ellipsoid _currentEllipsoid;
   @override
   void initState() {
     super.initState();

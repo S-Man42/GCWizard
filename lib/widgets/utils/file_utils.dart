@@ -566,7 +566,6 @@ Future<Uint8List> createZipFile(String fileName, String extension, List<Uint8Lis
       encoder.addFile(imageFileTmp, fileNameZip);
       imageFileTmp.delete();
     }
-    ;
 
     encoder.close();
 
