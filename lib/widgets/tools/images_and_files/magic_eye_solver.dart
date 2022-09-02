@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/magic_eye.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/magic_eye_solver.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
@@ -18,12 +18,12 @@ import 'package:image/image.dart' as Image;
 import 'package:intl/intl.dart';
 import 'package:tuple/tuple.dart';
 
-class MagicEye extends StatefulWidget {
+class MagicEyeSolver extends StatefulWidget {
   @override
-  MagicEyeState createState() => MagicEyeState();
+  MagicEyeSolverState createState() => MagicEyeSolverState();
 }
 
-class MagicEyeState extends State<MagicEye> {
+class MagicEyeSolverState extends State<MagicEyeSolver> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   GCWFile _decodeImage;
