@@ -86,7 +86,6 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
     }
 
     hintWBT = _calculateHintWBT(output.WBT, unit);
-    hintWBGT = _calculateHintWBGT(output.WBGTOutdoor, unit);
 
     var outputs = [];
 
@@ -124,41 +123,6 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
             )
         )
     );
-    outputs.add(
-        GCWOutput(
-            title: i18n(context, 'wet_bulb_temperature_wbgt_output'),
-            child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                        child: GCWText(
-                          text: output.WBGTOutdoor.toStringAsFixed(2) + ' ' + unit,
-                        ),
-                        padding: EdgeInsets.only(right: 2)),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                        child: GCWIconButton(
-                          icon: Icons.wb_sunny,
-                          iconColor: _colorWBGT(output.WBGTOutdoor, unit),
-                        ),
-                        padding: EdgeInsets.only(left: 2, right: 2)),
-                  ),
-                  Expanded(
-                    flex: 7,
-                    child: Padding(
-                        child: GCWText(
-                          text: i18n(context, hintWBGT),
-                        ),
-                        padding: EdgeInsets.only(left: 8)),
-                  ),
-                ]
-            )
-        )
-    );
-
     return GCWMultipleOutput(
       children: outputs,
     );
@@ -189,22 +153,6 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
       return 'wet_bulb_temperature_index_wbt_black';
   }
 
-  String _calculateHintWBGT(double WBGT, String unit){
-    if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.WHITE])
-      if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.GREEN])
-        if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.YELLOW])
-          if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.RED])
-            return 'wet_bulb_temperature_index_wbgt_black';
-          else
-            return 'wet_bulb_temperature_index_wbgt_red';
-        else
-          return 'wet_bulb_temperature_index_wbgt_yellow';
-      else
-        return 'wet_bulb_temperature_index_wbgt_green';
-    else
-      return 'wet_bulb_temperature_index_wbgt_white';
-  }
-
   Color _colorWBT(double WBT, String unit){
     if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.PURPLE])
       if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.BLUE])
@@ -226,22 +174,6 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
           return Colors.blue;
       else
         return Colors.purple;
-    else
-      return Colors.white;
-  }
-
-  Color _colorWBGT(double WBGT, String unit){
-    if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.WHITE])
-      if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.GREEN])
-        if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.YELLOW])
-          if (WBGT > WBGT_HEAT_STRESS[unit][WBGT_HEATSTRESS_CONDITION.RED])
-            return Colors.black;
-          else
-            return Colors.red;
-        else
-          return Colors.yellow;
-      else
-        return Colors.green;
     else
       return Colors.white;
   }

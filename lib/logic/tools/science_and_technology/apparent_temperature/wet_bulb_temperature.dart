@@ -16,27 +16,9 @@ import 'package:gc_wizard/logic/common/units/temperature.dart';
 
 class WBOutput{
   final double WBT;
-  final double WBGTOutdoor;
 
-  WBOutput({this.WBT, this.WBGTOutdoor});
+  WBOutput({this.WBT});
 }
-
-enum WBGT_HEATSTRESS_CONDITION { WHITE, GREEN, YELLOW, RED, BLACK }
-
-final Map<String, Map<WBGT_HEATSTRESS_CONDITION, double>> WBGT_HEAT_STRESS = {
-  TEMPERATURE_CELSIUS.symbol: {
-    WBGT_HEATSTRESS_CONDITION.WHITE: 24.9,
-    WBGT_HEATSTRESS_CONDITION.GREEN: 27.7,
-    WBGT_HEATSTRESS_CONDITION.YELLOW: 29.4,
-    WBGT_HEATSTRESS_CONDITION.RED: 31.6,
-  },
-  TEMPERATURE_FAHRENHEIT.symbol: {
-    WBGT_HEATSTRESS_CONDITION.WHITE: 76.9,
-    WBGT_HEATSTRESS_CONDITION.GREEN: 81.9,
-    WBGT_HEATSTRESS_CONDITION.YELLOW: 84.9,
-    WBGT_HEATSTRESS_CONDITION.RED: 88.9,
-  },
-};
 
 enum WBT_HEATSTRESS_CONDITION { BLACK, PURPLE, BLUE, LIGHT_BLUE, GREEN, ORANGE, RED, DARK_RED }
 
@@ -73,32 +55,9 @@ WBOutput calculateWetBulbTemperature(double temperature, double humidity, Temper
       0.00391838 * pow(humidity, 1.5) * atan(0.023101 * humidity) -
       4.686035;
 
-  // calculating T dewpoint from temperature and humidity
-  // https://www.vcalc.com/wiki/rklarsen/Calculating+Dew+Point+Temperature+from+Relative+Humidity
-  double B1 = 243.04;
-  double A1 = 17.625;
-  double Tdew = (humidity != 0.0) ? (B1 * (log(humidity / 100) / log(e) + (A1 * temperature) / (B1 + temperature)))/(A1 - log(humidity/100) / log(e) - A1 * temperature / (B1 + temperature)) : 0.0;
-
-  // Estimation of Black Globe Temperature for Calculation of the WBGT Index
-  // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
-  double P = 1.0; // Barometric pressure
-  double ea = exp(17.67 * (Tdew - temperature) / (Tdew + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * temperature / (240.97 + temperature)); // atmospheric vapor pressure
-  double epsilona = 0.575 * pow(ea, 1/7);
-  double S = 1.0; // Solar irradiance in Watts per meter squared - TSI Total Solar irradiance
-  double fdb = 0.5; // direct beam radiation from the sun - DNI Direct Normal irradiance, 6000 W/m2 per day => 4.1 W/m2 per minute
-  double fdif = 0.5; // diffuse  radiation from the sun - DHI Diffuse Horizontal Irradiance
-  double sigma = 5.67 * pow(10, -8); // Stefan-Boltzmann const
-  double z = 89.1 * pi / 180; // zenith angle in radian - 0° <=> 90° - altitude
-  double B = S * (fdb / 4 / sigma / cos(z) + 1.2 / sigma * fdif) + epsilona * pow(temperature, 4);
-  double u = 1.0; // wind speed in m/h
-  double C = 0.315 * pow(u, 0.58) / (5.3865 * pow(10, -8));
-  double GT = (B + C * temperature + 7680000) / (C + 256000);
-  double WBGTOutdoor = 0.7 * WBT + 0.2 * GT + 0.1 * temperature;
-
   if (temperatureUnit == TEMPERATURE_FAHRENHEIT) {
     WBT = WBT * 1.8 + 32;
-    WBGTOutdoor = WBGTOutdoor * 1.8 + 32;
   }
 
-  return WBOutput(WBT: WBT, WBGTOutdoor: WBGTOutdoor, );
+  return WBOutput(WBT: WBT, );
 }
