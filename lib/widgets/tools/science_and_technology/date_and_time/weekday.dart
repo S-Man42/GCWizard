@@ -25,7 +25,7 @@ class WeekdayState extends State<Weekday> {
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'dates_weekday_date')),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATE_ONLY,
+          config: {DateTimePickerConfig.DATE},
           datetime: _currentDate,
           onChanged: (value) {
             setState(() {

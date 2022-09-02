@@ -69,7 +69,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
                         widget.onChanged(_segments);
                       });
                     }, customPaint: widget.customPaint));
-                  },
+                  }
                 )))
       ],
     );

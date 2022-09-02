@@ -69,7 +69,7 @@ class GCWSymbolTableSymbolMatrixState extends State<GCWSymbolTableSymbolMatrix> 
               child: GCWOnOffSwitch(
                 value: _currentShowOverlayedSymbols,
                 title: i18n(context, 'symboltables_showoverlay'),
-                flex: [
+                flexValues: [
                   _decryptionSwitchPartWidth,
                   _decryptionSwitchPartWidth,
                   max(100 - 2 * _decryptionSwitchPartWidth, 0)

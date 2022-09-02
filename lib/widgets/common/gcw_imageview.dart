@@ -161,6 +161,7 @@ class _GCWImageViewState extends State<GCWImageView> {
 
   _createToolbar() {
     var iconSize = widget.toolBarRight ? IconButtonSize.NORMAL : IconButtonSize.SMALL;
+    var padding = widget.toolBarRight ? 2 * DOUBLE_DEFAULT_MARGIN : null;
 
     return [
       GCWIconButton(
