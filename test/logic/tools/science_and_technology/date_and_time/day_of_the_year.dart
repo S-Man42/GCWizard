@@ -4,19 +4,22 @@ import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/day_o
 void main() {
   group("DayOfTheYear.calculateDayInfos:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
+      {'year' : 2020, 'day': 366, 'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 12, 31), 366, 4, 5, 53, 53)},
       {'year' : null, 'day': null, 'expectedOutput' : null},
 
-      {'year' : 2022, 'day': 243, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022,8,31),  3, 35)},
-      {'year' : 2020, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 1, 1), 3, 1)},
-      {'year' : 2021, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 1, 1), 5, 53)},
-      {'year' : 2022, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 1, 1), 6, 52)},
+      {'year' : 2022, 'day': 243, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 8, 31), 243, 3, 4, 35, 36)},
+      {'year' : 2022, 'day': 240, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 8, 28), 240, 7, 1, 34, 36)},
+      {'year' : 2022, 'day': 239, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 8, 27), 239, 6, 7, 34, 36)},
+      {'year' : 2020, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 1, 1), 1, 3, 4, 1, 1)},
+      {'year' : 2021, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 1, 1), 1, 5, 6, 53, 1)},
+      {'year' : 2022, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 1, 1), 1, 6, 7, 52, 1)},
 
-      {'year' : 2020, 'day': 366, 'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 12, 31), 4, 53)},
-      {'year' : 2021, 'day': 365, 'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 12, 31), 5, 52)},
-      {'year' : 2022, 'day': 365, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 12, 31), 6, 52)},
+      {'year' : 2020, 'day': 366, 'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 12, 31), 366, 4, 5, 53, 53)},
+      {'year' : 2021, 'day': 365, 'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 12, 31), 365, 5, 6, 52, 53)},
+      {'year' : 2022, 'day': 365, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 12, 31), 365, 6, 7, 52, 53)},
 
-      {'year' : 2020, 'day': 367, 'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 1, 1),  5, 53)},
-      {'year' : 2022, 'day': 0,   'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 12, 31), 5, 52)},
+      {'year' : 2020, 'day': 367, 'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 1, 1),  1, 5, 6, 53, 1)},
+      {'year' : 2022, 'day': 0,   'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 12, 31), 365, 5, 6, 52, 53)},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -26,8 +29,11 @@ void main() {
           expect(_actual, elem['expectedOutput']);
         else {
           expect(_actual.date, elem['expectedOutput'].date);
+          expect(_actual.dayNumber, elem['expectedOutput'].dayNumber);
           expect(_actual.weekday, elem['expectedOutput'].weekday);
-          expect(_actual.weeknumberIso, elem['expectedOutput'].weeknumberIso);
+          expect(_actual.weekdayAlternate, elem['expectedOutput'].weekdayAlternate);
+          expect(_actual.weekNumberIso, elem['expectedOutput'].weekNumberIso);
+          expect(_actual.weekNumberAlternate, elem['expectedOutput'].weekNumberAlternate);
         }
       });
     });
