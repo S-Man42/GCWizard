@@ -435,6 +435,7 @@
   "bundeswehr_auth_letter_callsign": "Letter, Callsign",
   "bundeswehr_auth_response_ok": "Authentification is Correct",
   "bundeswehr_auth_response_not_ok": "Authentification is NOT Correct",
+  "bundeswehr_auth_response_invalid_auth": "ERROR: Invalid String to authentificate",
   "bundeswehr_auth_response_invalid_callsign_letter":  "ERROR: Letter does not belong to the Callsign",
   "bundeswehr_auth_response_invalid_authentification_letter":  "ERROR: Letter does not belog to the Authentification Code",
   "bundeswehr_auth_response_invalid_autentification_code": "ERROR: Authentification code is faulty",

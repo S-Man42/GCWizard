@@ -54,15 +54,21 @@ const AUTH_TABLE_X_AXIS = [
 
 const AUTH_RESPONSE_OK = 'bundeswehr_auth_response_ok';
 const AUTH_RESPONSE_NOT_OK = 'bundeswehr_auth_response_not_ok';
+const AUTH_RESPONSE_INVALID_AUTH = 'bundeswehr_auth_response_invalid_auth';
 const AUTH_RESPONSE_INVALID_CALLSIGN_LETTER = 'bundeswehr_auth_response_invalid_callsign_letter';
 const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER = 'bundeswehr_auth_response_invalid_authentification_letter';
 const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE = 'bundeswehr_auth_response_invalid_autentification_code';
-const AUTH_RESPONSE_INVALID_CUSTOM_TABLE = 'bundeswehr_auth_response_invalid_custom_table';
+const AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE = 'bundeswehr_auth_response_invalid_custom_table_numeral';
+const AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE = 'bundeswehr_auth_response_invalid_custom_table_auth';
 
 AuthentificationOutput buildAuthBundeswehr(String currentCallSign, String currentLetterAuth, String currentLetterCallSign,
     AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
-  if (tableNumeralCode.Content.isEmpty || tableAuthentificationCode.Content.isEmpty)
-    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_TABLE);
+
+  if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
+    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
+
+  if (tableAuthentificationCode == null || tableAuthentificationCode.Content.isEmpty)
+    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
 
   if (currentCallSign.split('').contains(currentLetterCallSign)) {
     if (AUTH_TABLE_Y_AXIS.contains(currentLetterCallSign)) {
@@ -109,13 +115,19 @@ AuthentificationOutput buildAuthBundeswehr(String currentCallSign, String curren
 AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
     AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
 
-  if (tableNumeralCode.Content.isEmpty || tableAuthentificationCode.Content.isEmpty)
-    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_TABLE);
+  if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
+    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
+
+  if (tableAuthentificationCode == null || tableAuthentificationCode.Content.isEmpty)
+    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
 
   currentAuth = _normalizeAuthCode(currentAuth);
-  if (currentAuth != '') {
+  if (currentAuth != '' || currentAuth != null) {
     String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
+
+    if (authCode.length != 2)
+      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTH);
 
     List<String> tupel = authCode[0].split('');
     if (tableNumeralCode.xAxis.contains(tupel[0]) && tableNumeralCode.xAxis.contains(tupel[1]))

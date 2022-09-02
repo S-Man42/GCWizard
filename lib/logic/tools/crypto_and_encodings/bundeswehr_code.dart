@@ -15,7 +15,7 @@ class BundeswehrTalkingBoardCodingOutput {
 
 BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, AuthentificationTable tableEncoding){
   if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_TABLE, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
   List<String> result = [];
   var random = new Random();
@@ -30,7 +30,7 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Authentifi
 
 BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, AuthentificationTable tableNumeralCode){
   if (tableNumeralCode.Content.isEmpty)
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_TABLE, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
   if (cypherText == null || cypherText == '')
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: 'OK', Details: '');
