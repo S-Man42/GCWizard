@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -231,10 +233,47 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
 
 List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
   if (input == null) return [];
+  var mainEntrysStart = 0;
+  var mainEntrysEnd = 99;
+
+  Map<String, List<String>> CODEBOOK;
+  switch (notes) {
+    case NotesCodebook.ALT:
+      CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
+      mainEntrysStart = 8;
+      mainEntrysEnd = 14;
+      break;
+    case NotesCodebook.BASS:
+      CODEBOOK = CODEBOOK_MUSIC_NOTES_BASS;
+      mainEntrysStart = 8;
+      mainEntrysEnd = 14;
+      break;
+    case NotesCodebook.TREBLE:
+      CODEBOOK = CODEBOOK_MUSIC_NOTES_TREBLE;
+      mainEntrysStart = 5;
+      mainEntrysEnd = 14;
+      break;
+  }
 
   // sorted by length (longest first)
   var entries = translationMap.entries.toList();
-  entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) => b.value.length.compareTo(a.value.length));
+  entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) {
+    if (b.value.length != a.value.length)
+      return b.value.length.compareTo(a.value.length);
+    else {
+      var aKey =  int.parse(a.key.split('_')[0]);
+      var bKey =  int.parse(b.key.split('_')[0]);
+      var aMainEntry = (aKey >= mainEntrysStart) && (aKey <= mainEntrysEnd);
+      var bMainEntry = (bKey >= mainEntrysStart) && (bKey <= mainEntrysEnd);
+      if (aMainEntry && bMainEntry)
+        return bKey.compareTo(aKey);
+      else if (aMainEntry)
+        return -1;
+      else if (bMainEntry)
+        return 1;
+      return 0;
+    }
+  } );
   translationMap = Map<String, String>.fromEntries(entries);
 
   input = input.toUpperCase();
@@ -242,40 +281,11 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
     input = input.replaceAll(value.toUpperCase(), key);
   });
 
-  Map<String, List<String>> CODEBOOK;
-  switch (notes) {
-    case NotesCodebook.ALT:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
-      break;
-    case NotesCodebook.BASS:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_BASS;
-      break;
-    case NotesCodebook.TREBLE:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_TREBLE;
-      break;
-  }
-
-  // filtered main line notes
-  var mainLineNotes = Map<String, List<String>>();
-  CODEBOOK.forEach((String key, List<String> value) {
-    var helplineNote = false;
-    value.forEach((element) {
-      if (element.contains("h"))
-        helplineNote = true;
-    });
-    if (!helplineNote) mainLineNotes.addAll({key: value});
-  });
-
   List<String> inputs = input.split(RegExp(r'\s'));
   List<List<String>> result = [];
 
-  for (int i = 0; i < inputs.length; i++) {
-    // check main line grades first
-    if (mainLineNotes[inputs[i]] != null)
-      result.add(mainLineNotes[inputs[i]]);
-    else if (CODEBOOK[inputs[i]] != null)
-      result.add(CODEBOOK[inputs[i]]);
-  }
+  for (int i = 0; i < inputs.length; i++)
+    result.add(CODEBOOK[inputs[i]]);
 
   return result;
 }

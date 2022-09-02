@@ -102,7 +102,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
               }
 
-              var notePositions = [-105, -35, 35, 105];
+              var notePositions = [105, 35, -35, -105];
               counter = 0;
               notePosition.forEach((key) {
                 var offsetX = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
