@@ -40,8 +40,7 @@ class MoonPositionState extends State<MoonPosition> {
           text: i18n(context, 'astronomy_postion_datetime'),
         ),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATETIME,
-          withTimezones: true,
+          config: {DateTimePickerConfig.DATE, DateTimePickerConfig.TIME, DateTimePickerConfig.TIMEZONES},
           onChanged: (datetime) {
             setState(() {
               _currentDateTime = datetime;

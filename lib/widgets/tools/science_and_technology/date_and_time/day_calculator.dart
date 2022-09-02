@@ -33,7 +33,7 @@ class DayCalculatorState extends State<DayCalculator> {
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'dates_daycalculator_startdate')),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATE_ONLY,
+          config: {DateTimePickerConfig.DATE},
           datetime: _currentStartDate,
           onChanged: (value) {
             setState(() {
@@ -43,7 +43,7 @@ class DayCalculatorState extends State<DayCalculator> {
         ),
         GCWTextDivider(text: i18n(context, 'dates_daycalculator_enddate')),
         GCWDateTimePicker(
-          type: DateTimePickerType.DATE_ONLY,
+          config: {DateTimePickerConfig.DATE},
           datetime: _currentEndDate,
           onChanged: (value) {
             setState(() {

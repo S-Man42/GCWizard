@@ -446,7 +446,7 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
 
   final pixels = image.getBytes();
   for (var i = 0, len = pixels.length; i < len; i += 4) {
-    var pixel = RGBPixel(pixels[i].toDouble(), pixels[i + 1].toDouble(), pixels[i + 2].toDouble());
+    var pixel = RGBPixel.getPixel(pixels, i);
 
     if (input.red != 0.0 || input.green != 0.0 || input.blue != 0.0)
       pixel = colorOffset(pixel, input.red, input.green, input.blue);
@@ -466,9 +466,7 @@ img.Image _doAdjustColor(_AdjustColorInput input) {
 
     if (input.grayscale) pixel = grayscale(pixel);
 
-    pixels[i] = pixel.red.round().clamp(0, 255);
-    pixels[i + 1] = pixel.green.round().clamp(0, 255);
-    pixels[i + 2] = pixel.blue.round().clamp(0, 255);
+    pixel.setPixel(pixels, i);
   }
 
   return image;
