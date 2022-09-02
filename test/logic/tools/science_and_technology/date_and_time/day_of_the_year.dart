@@ -27,7 +27,7 @@ void main() {
         else {
           expect(_actual.date, elem['expectedOutput'].date);
           expect(_actual.weekday, elem['expectedOutput'].weekday);
-          expect(_actual.weeknumber, elem['expectedOutput'].weeknumber);
+          expect(_actual.weeknumberIso, elem['expectedOutput'].weeknumberIso);
         }
       });
     });

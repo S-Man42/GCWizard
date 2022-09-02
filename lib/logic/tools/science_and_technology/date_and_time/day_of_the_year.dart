@@ -3,16 +3,18 @@
 class DayOfTheYearOutput{
   final DateTime date;
   final int weekday;
-  final int weeknumber;
+  final int weeknumberIso;
+  final int weekdayAlternate;
+  final int weeknumberAlternate;
 
-  DayOfTheYearOutput(this.date, this.weekday, this.weeknumber);
+  DayOfTheYearOutput(this.date, this.weekday, this.weekdayAlternate, this.weeknumberIso, this.weeknumberAlternate);
 }
 
 DayOfTheYearOutput calculateDayInfos(int year, int day) {
   if (year == null || day == null) return null;
   var date = DateTime(year, 1, day);
 
-  return DayOfTheYearOutput(date, date.weekday, isoWeekOfYear(date));
+  return DayOfTheYearOutput(date, date.weekday, (date.weekday - 1) % 7, isoWeekOfYear(date), isoWeekOfYear(date));
 }
 
 
