@@ -100,13 +100,12 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
                       ? Container()
                       : GCWIconButton(
                           icon: Icons.content_copy,
+                          iconSize: 14,
                           size: IconButtonSize.TINY,
                           onPressed: () {
                             insertIntoGCWClipboard(context, copyText);
                           },
                         ),
-                  width: 25,
-                  height: 22,
                 )
         ],
       ),

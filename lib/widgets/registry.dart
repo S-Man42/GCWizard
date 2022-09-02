@@ -184,6 +184,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
@@ -270,6 +271,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/magic_eye.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
@@ -388,6 +390,7 @@ import 'main_menu/settings/settings_coordinates.dart';
 import 'main_menu/settings/settings_general.dart';
 import 'main_menu/settings/settings_tools.dart';
 import 'tools/games/scrabble/scrabble.dart';
+
 
 List<GCWTool> registeredTools;
 
@@ -800,6 +803,11 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'languagegames_selection',
         categories: [ToolCategory.CRYPTOGRAPHY],
         searchKeys: []),
+    GCWTool(tool: MagicEye(), i18nPrefix: 'magic_eye', isBeta: true,
+        categories: [ToolCategory.IMAGES_AND_FILES],
+        searchKeys: [
+        'magic_eye',
+        'images']),
     GCWTool(tool: MathematicalConstants(), i18nPrefix: 'mathematical_constants', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
@@ -827,6 +835,11 @@ initializeRegistry(BuildContext context) {
       ToolCategory.GENERAL_CODEBREAKERS
     ], searchKeys: [
       'multidecoder',
+    ]),
+    GCWTool(tool: MusicNotes(), i18nPrefix: 'music_notes', categories: [
+      ToolCategory.CRYPTOGRAPHY
+    ], searchKeys: [
+      'music_notes'
     ]),
     GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -1117,6 +1130,7 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'visualcryptography',
+      'images'
     ]),
     GCWTool(tool: WASD(), i18nPrefix: 'wasd', categories: [
       ToolCategory.CRYPTOGRAPHY
@@ -2946,6 +2960,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
       'symbol_covenant',
     ]),
+    GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: [
+      'symbol_crystal',
+    ]),
     GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: [
       'symbol_cyrillic',
     ]),
@@ -3120,6 +3137,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'hieroglyphs', symbolSearchStrings: [
       'symbol_hieroglyphs',
     ]),
+    GCWSymbolTableTool(symbolKey: 'hieroglyphs_v2', symbolSearchStrings: [
+      'symbol_hieroglyphs',
+    ]),
     GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: [
       'symbol_lordoftherings',
       'symbol_runes',
@@ -3273,9 +3293,6 @@ initializeRegistry(BuildContext context) {
         symbolKey: 'murraybaudot', symbolSearchStrings: ['ccitt', 'symbol_murraybaudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'symbol_musica',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'my_little_pony', symbolSearchStrings: [
-      'symbol_my_little_pony',
     ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
       'symbol_nazcaan',

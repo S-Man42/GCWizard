@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
@@ -30,8 +31,9 @@ RaDeg raTime2Degree(RightAscension equatorial) {
 
   var sDeg = (s / 240.0);
   var deg = (h * 15.0) + (m / 4.0) + sDeg;
+  var _sign =   equatorial.sign == 0 ? 1 : equatorial.sign;
 
-  return RaDeg(equatorial.sign * deg);
+  return RaDeg(_sign * deg);
 }
 
 int _sign(double num) {
@@ -40,19 +42,73 @@ int _sign(double num) {
 
 /// equatorial coordinate system
 class RightAscension {
-  int sign;
+  int sign = 1;
   int hours;
   int minutes;
   double seconds;
 
-  RightAscension(int neg, int hours , int min, double sec) {
-    this.sign = neg;
+  RightAscension(int sign, int hours, int min, double sec) {
+    this.sign = sign;
     this.hours = hours.abs();
     this.minutes = min.abs();
     this.seconds = sec.abs();
   }
 
-  static RightAscension parse (String input) {
+  int get milliseconds{
+    return ((this.seconds - this.seconds.truncate()) * 1000).round();
+  }
+
+  static RightAscension fromDMM(int sign, int degrees, double minutes) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0;
+    if (minutes == null) minutes = 0.0;
+    return fromDEC(sign * (degrees.abs() + minutes / 60.0));
+  }
+
+  static RightAscension fromDMS (int sign, int degrees, int minutes, double seconds) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0;
+    if (minutes == null) minutes = 0;
+    if (seconds == null) seconds = 0.0;
+    return fromDEC(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
+  }
+
+  static RightAscension fromDEC(double dec) {
+    var ra = RightAscension(0, 0, 0, 0.0);
+    ra.hours = dec.truncate();
+    dec -= ra.hours;
+
+    ra.minutes = (dec * 60).truncate();
+    dec -= ra.minutes/ 60;
+
+    ra.seconds = dec * 3600;
+    return ra;
+  }
+
+  static RightAscension fromDuration(Duration duration) {
+    if (duration == null) return null;
+    var _hours = duration.inHours;
+    var _minutes = duration.inMinutes.abs().remainder(60);
+    var _seconds = duration.inSeconds.abs().remainder(60);
+    var _mseconds  = (duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).round();
+    var _secondsD = double.parse('$_seconds.$_mseconds');
+    return RightAscension (duration.isNegative ? -1 : 1, _hours, _minutes, _secondsD);
+  }
+
+  Duration toDuration() {
+    var duration = Duration(
+        hours: this.hours,
+        minutes: this.minutes,
+        seconds: this.seconds.truncate(),
+        milliseconds: this.milliseconds);
+
+    if (sign < 0)
+      duration = -duration;
+
+    return duration;
+  }
+
+  static RightAscension parse(String input) {
     var regex = new RegExp(r"([+|-]?)([\d]*):([\d]*):([\d]*)(\.\d*)*");
     if (input == null) return null;
 
@@ -74,10 +130,46 @@ class RightAscension {
 
   @override
   String toString() {
-    var hourFormat = hours +  (minutes / 60) + (seconds / 3600);
+    var hourFormat = hours + (minutes / 60) + (seconds / 3600);
 
     return (sign < 0 ? '-' : '') + formatHoursToHHmmss(hourFormat, limitHours: false );
   }
+
+
+  DMMLatitude toDMMPart() {
+    return DMMLatitude(sign, hours, minutes + seconds/ 60);
+  }
+
+  String toDMMPartString() {
+    var lat = toDMMPart();
+    var result = lat.format();
+    result = result.replaceFirst( 'N ', '');
+    result = result.replaceFirst( 'S ', '-');
+    return result;
+  }
+
+  DMSLatitude toDMSPart() {
+    return DMSLatitude(sign, hours, minutes, seconds);
+  }
+
+  String toDMSPartString() {
+    var lat = toDMSPart();
+    var result = lat.format();
+    result = result.replaceFirst( 'N ', '');
+    result = result.replaceFirst( 'S ', '-');
+    return result;
+  }
+
+}
+
+String commaSplit(double value) {
+  if (value == null) return '0';
+  var splitted = (value - value.truncate()).toString().split('.');
+  if (splitted == null || splitted.length <2)
+    return '0';
+  if (splitted[1].length <= 4)
+    return splitted[1];
+  return splitted[1].substring(0, 4);
 }
 
 class RaDeg {

@@ -119,6 +119,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
@@ -179,6 +180,7 @@ import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hidden_data.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_flip_rotate.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/magic_eye.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/qr_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/stegano.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/visual_cryptography.dart';
@@ -560,6 +562,7 @@ void _initStaticToolList() {
       className(KarolRobot()),
       className(Kenny()),
       className(KeyboardSelection()),
+      className(MagicEye()),
       className(MathematicalConstants()),
       className(Malbolge()),
       className(MapView()),
@@ -570,6 +573,7 @@ void _initStaticToolList() {
       className(MoonRiseSet()),
       className(MorseSelection()),
       className(MurrayTelegraph()),
+      className(MusicNotes()),
       className(Navajo()),
       className(NumberSequenceSelection()),
       className(MultiDecoder()),
