@@ -116,6 +116,7 @@ flutter:
     - assets/symbol_tables/cookewheatstone_5/
     - assets/symbol_tables/country_flags/
     - assets/symbol_tables/covenant/
+    - assets/symbol_tables/crystal/
     - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/cyrillic_numbers/
     - assets/symbol_tables/daedric/
@@ -171,6 +172,7 @@ flutter:
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/hieratic_numerals/
     - assets/symbol_tables/hieroglyphs/
+    - assets/symbol_tables/hieroglyphs_v2/
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
     - assets/symbol_tables/hylian_64/
@@ -224,7 +226,6 @@ flutter:
     - assets/symbol_tables/murray_v4_roucoux/
     - assets/symbol_tables/murraybaudot/
     - assets/symbol_tables/musica/
-    - assets/symbol_tables/my_little_pony/
     - assets/symbol_tables/nazcaan/
     - assets/symbol_tables/new_zealand_sign_language/
     - assets/symbol_tables/niessen/

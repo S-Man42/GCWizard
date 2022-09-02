@@ -2934,6 +2934,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
       'symbol_covenant',
     ]),
+    GCWSymbolTableTool(symbolKey: 'crystal', symbolSearchStrings: [
+      'symbol_crystal',
+    ]),
     GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: [
       'symbol_cyrillic',
     ]),
@@ -3108,6 +3111,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'hieroglyphs', symbolSearchStrings: [
       'symbol_hieroglyphs',
     ]),
+    GCWSymbolTableTool(symbolKey: 'hieroglyphs_v2', symbolSearchStrings: [
+      'symbol_hieroglyphs',
+    ]),
     GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: [
       'symbol_lordoftherings',
       'symbol_runes',
@@ -3261,9 +3267,6 @@ initializeRegistry(BuildContext context) {
         symbolKey: 'murraybaudot', symbolSearchStrings: ['ccitt', 'symbol_murraybaudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'symbol_musica',
-    ]),
-    GCWSymbolTableTool(symbolKey: 'my_little_pony', symbolSearchStrings: [
-      'symbol_my_little_pony',
     ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
       'symbol_nazcaan',
