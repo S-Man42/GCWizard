@@ -82,14 +82,14 @@ WBOutput calculateWetBulbTemperature(double temperature, double humidity, Temper
   // Estimation of Black Globe Temperature for Calculation of the WBGT Index
   // https://www.weather.gov/media/tsa/pdf/WBGTpaper2.pdf
   double P = 1.0; // Barometric pressure
-  double ea = exp(17.67 * (Tdew - temperature) / (Tdew + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * temperature / (240.97 + temperature));
+  double ea = exp(17.67 * (Tdew - temperature) / (Tdew + 243.5)) * (1.0007 + 0.00000346 * P) * 6.112 * exp(17.502 * temperature / (240.97 + temperature)); // atmospheric vapor pressure
   double epsilona = 0.575 * pow(ea, 1/7);
-  double S = 1.0; // Solar irradiance in Watts per meter squared
-  double fdb = 0.5; // direct beam radiation from the sun
-  double fdif = 0.5; // diffuse  radiation from the sun
-  double rho = 5.67 * pow(10, -8); // Boltzmann const
-  double z = 89 * pi / 180; // zenith angle in radian - 89°
-  double B = S * (fdb / 4 / rho / cos(z) + 1.2 / rho * fdif) + epsilona * pow(temperature, 4);
+  double S = 1.0; // Solar irradiance in Watts per meter squared - TSI Total Solar irradiance
+  double fdb = 0.5; // direct beam radiation from the sun - DNI Direct Normal irradiance, 6000 W/m2 per day => 4.1 W/m2 per minute
+  double fdif = 0.5; // diffuse  radiation from the sun - DHI Diffuse Horizontal Irradiance
+  double sigma = 5.67 * pow(10, -8); // Stefan-Boltzmann const
+  double z = 89.1 * pi / 180; // zenith angle in radian - 0° <=> 90° - altitude
+  double B = S * (fdb / 4 / sigma / cos(z) + 1.2 / sigma * fdif) + epsilona * pow(temperature, 4);
   double u = 1.0; // wind speed in m/h
   double C = 0.315 * pow(u, 0.58) / (5.3865 * pow(10, -8));
   double GT = (B + C * temperature + 7680000) / (C + 256000);
