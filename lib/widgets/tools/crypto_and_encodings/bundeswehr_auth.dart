@@ -277,8 +277,8 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           ],
         );
       } else {
-        return GCWDefaultOutput(
-          child: i18n(context, output.ResponseCode),
+        return GCWText(
+          text: i18n(context, output.ResponseCode),
         );
       }
     } else {
@@ -350,8 +350,8 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           ),
         ]);
       } else
-        return GCWDefaultOutput(
-          child: i18n(context, output.ResponseCode),
+        return GCWText(
+          text: i18n(context, output.ResponseCode),
         );
     }
   }
@@ -483,7 +483,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
       i++;
       _numeralCodeString = _numeralCodeString + '\n ';
     });
-    _tableNumeralCode = AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode);
+    _tableNumeralCode = AuthentificationTable(xAxis: _rowTitle, yAxis: _colTitle, Content: _numeralCode);
   }
 
   bool _invalidSingleAxisTitle(String text) {

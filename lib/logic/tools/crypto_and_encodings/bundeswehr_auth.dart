@@ -44,6 +44,7 @@ const AUTH_TABLE_Y_AXIS = [
   'T',
   'U',
 ];
+
 const AUTH_TABLE_X_AXIS = [
   'V',
   'W',
@@ -52,9 +53,14 @@ const AUTH_TABLE_X_AXIS = [
   'Z',
 ];
 
+const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+
 const AUTH_RESPONSE_OK = 'bundeswehr_auth_response_ok';
 const AUTH_RESPONSE_NOT_OK = 'bundeswehr_auth_response_not_ok';
 const AUTH_RESPONSE_INVALID_AUTH = 'bundeswehr_auth_response_invalid_auth';
+const AUTH_RESPONSE_INVALID_MISSING_CALLSIGN = 'bundeswehr_auth_response_invalid_missing_callsign';
 const AUTH_RESPONSE_INVALID_CALLSIGN_LETTER = 'bundeswehr_auth_response_invalid_callsign_letter';
 const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER = 'bundeswehr_auth_response_invalid_authentification_letter';
 const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE = 'bundeswehr_auth_response_invalid_autentification_code';
@@ -121,12 +127,17 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
   if (tableAuthentificationCode == null || tableAuthentificationCode.Content.isEmpty)
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
 
-  currentAuth = _normalizeAuthCode(currentAuth);
+  if (!AUTH_TABLE_X_AXIS.contains(currentLetterAuth)) 
+    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
+
+  if (currentCallSign == null || currentCallSign == '')
+    return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_MISSING_CALLSIGN);
+
+currentAuth = _normalizeAuthCode(currentAuth);
   if (currentAuth != '' || currentAuth != null) {
     String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
-
-    if (authCode.length != 2)
+    if (authCode.length != 3)
       return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTH);
 
     List<String> tupel = authCode[0].split('');
@@ -135,14 +146,22 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
     if (tableNumeralCode.yAxis.contains(tupel[0]) && tableNumeralCode.yAxis.contains(tupel[1]))
       return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
 
+    int index_x = 0;
+    int index_y = 0;
+
     String char = '';
     if (tableNumeralCode.xAxis.contains(tupel[0])) {
-      char = tableNumeralCode
-          .Content[tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13];
+      index_x = tableNumeralCode.xAxis.indexOf(tupel[0]);
+      index_y = tableNumeralCode.yAxis.indexOf(tupel[1]);
     } else {
-      char = tableNumeralCode
-          .Content[tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13];
+      index_x = tableNumeralCode.xAxis.indexOf(tupel[1]);
+      index_y = tableNumeralCode.yAxis.indexOf(tupel[0]);
     }
+    char = tableNumeralCode.Content[index_x + index_y * 13];
+
+    if (!LETTERS.contains(char))
+      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+
     details = details + authCode[0] + ' ⇒ ' + char + '\n';
 
     tupel = authCode[1].split('');
@@ -159,6 +178,8 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
       index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
     digit1 = tableNumeralCode.Content[index];
+    if (!DIGITS.contains(digit1))
+      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
     details = details + authCode[1] + ' ⇒ ' + digit1 + '\n';
 
     tupel = authCode[2].split('');
@@ -174,16 +195,19 @@ AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String curren
       index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
     digit2 = tableNumeralCode.Content[index];
+    if (!DIGITS.contains(digit2))
+      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
     details = details + authCode[2] + ' ⇒ ' + digit2 + '\n';
 
     String digit = '';
-    digit = tableAuthentificationCode.Content[tableAuthentificationCode.xAxis.indexOf(currentLetterAuth) +
-        tableAuthentificationCode.yAxis.indexOf(char) * 5];
+    index_x = tableAuthentificationCode.xAxis.indexOf(currentLetterAuth);
+    index_y = tableAuthentificationCode.yAxis.indexOf(char);
+    digit = tableAuthentificationCode.Content[index_x + index_y * 5];
     details = details + '\nAuthent. Code\n';
     details = details + char + currentLetterAuth + ' ⇒ ' + digit + '\n';
 
     if (currentCallSign.split('').contains(char) && (digit == digit1 + digit2 || digit == digit2 + digit1)) {
-      return AuthentificationOutput(ResponseCode: 'OK', Details: details);
+      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_OK, Details: details);
     } else
       return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
   }
