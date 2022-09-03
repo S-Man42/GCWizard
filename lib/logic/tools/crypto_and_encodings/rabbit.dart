@@ -62,10 +62,10 @@ Uint8List keyStreamBytes(int length) {
     _nextState(_working);
 
     /* Generate 16 bytes of pseudo-random data */
-    buffer[0] = (_working.state[0] ^ (_working.state[5] >> 16) ^ (_working.state[3] << 16));
-    buffer[1] = (_working.state[2] ^ (_working.state[7] >> 16) ^ (_working.state[5] << 16));
-    buffer[2] = (_working.state[4] ^ (_working.state[1] >> 16) ^ (_working.state[7] << 16));
-    buffer[3] = (_working.state[6] ^ (_working.state[3] >> 16) ^ (_working.state[1] << 16));
+    buffer[0] = (_working.state[0] ^ (_working.state[5] >> 16) ^ _uint32(_working.state[3] << 16));
+    buffer[1] = (_working.state[2] ^ (_working.state[7] >> 16) ^ _uint32(_working.state[5] << 16));
+    buffer[2] = (_working.state[4] ^ (_working.state[1] >> 16) ^ _uint32(_working.state[7] << 16));
+    buffer[3] = (_working.state[6] ^ (_working.state[3] >> 16) ^ _uint32(_working.state[1] << 16));
     output.setRange(outputPointer, outputPointer + min(16, length),  _fromUInt32ToBytes(buffer)); //Uint32 to Bytes
 
     /* Increment output and Decrement length */
@@ -76,12 +76,16 @@ Uint8List keyStreamBytes(int length) {
   return output;
 }
 
+int _uint32(int value) {
+  return value & 0xFFFFFFFF;
+}
+
 int _rotateLeft(int x, int count) {
   return (x << count) | (x >> (32 - count));
 }
 
 int _fromBytesToUInt32(Uint8List list, int offset) {
-  return ByteData.sublistView(list, offset, offset+4).getUint32(0);
+  return ByteData.sublistView(list, offset, offset+4).getUint32(0, Endian.little);
 }
 
 Uint8List _fromUInt32ToBytes(Uint32List list) {
@@ -100,7 +104,7 @@ int _g(int x) {
 
   /* Calculate high and low result of squaring */
   h = ((((a * a) >> 17) + (a * b)) >> 15) + (b * b);
-  l = (x * x);
+  l = _uint32(x * x);
 
   /* Return high XOR low */
   return h ^ l;
@@ -118,29 +122,29 @@ void _nextState(_context1 ctx) {
     c_old[i] = ctx.counters[i];
 
   /* Calculate new counter values */
-  ctx.counters[0] = (ctx.counters[0] + 0x4D34D34D + ctx.carry);
-  ctx.counters[1] = (ctx.counters[1] + 0xD34D34D3 + (ctx.counters[0] < c_old[0] ? 1 : 0));
-  ctx.counters[2] = (ctx.counters[2] + 0x34D34D34 + (ctx.counters[1] < c_old[1] ? 1 : 0));
-  ctx.counters[3] = (ctx.counters[3] + 0x4D34D34D + (ctx.counters[2] < c_old[2] ? 1 : 0));
-  ctx.counters[4] = (ctx.counters[4] + 0xD34D34D3 + (ctx.counters[3] < c_old[3] ? 1 : 0));
-  ctx.counters[5] = (ctx.counters[5] + 0x34D34D34 + (ctx.counters[4] < c_old[4] ? 1 : 0));
-  ctx.counters[6] = (ctx.counters[6] + 0x4D34D34D + (ctx.counters[5] < c_old[5] ? 1 : 0));
-  ctx.counters[7] = (ctx.counters[7] + 0xD34D34D3 + (ctx.counters[6] < c_old[6] ? 1 : 0));
+  ctx.counters[0] = _uint32(ctx.counters[0] + 0x4D34D34D + ctx.carry);
+  ctx.counters[1] = _uint32(ctx.counters[1] + 0xD34D34D3 + (ctx.counters[0] < c_old[0] ? 1 : 0));
+  ctx.counters[2] = _uint32(ctx.counters[2] + 0x34D34D34 + (ctx.counters[1] < c_old[1] ? 1 : 0));
+  ctx.counters[3] = _uint32(ctx.counters[3] + 0x4D34D34D + (ctx.counters[2] < c_old[2] ? 1 : 0));
+  ctx.counters[4] = _uint32(ctx.counters[4] + 0xD34D34D3 + (ctx.counters[3] < c_old[3] ? 1 : 0));
+  ctx.counters[5] = _uint32(ctx.counters[5] + 0x34D34D34 + (ctx.counters[4] < c_old[4] ? 1 : 0));
+  ctx.counters[6] = _uint32(ctx.counters[6] + 0x4D34D34D + (ctx.counters[5] < c_old[5] ? 1 : 0));
+  ctx.counters[7] = _uint32(ctx.counters[7] + 0xD34D34D3 + (ctx.counters[6] < c_old[6] ? 1 : 0));
   ctx.carry = (ctx.counters[7] < c_old[7] ? 1 : 0);
 
   /* Calculate the g-values */
   for (i = 0; i < 8; i++)
-    g[i] = _g((ctx.state[i] + ctx.counters[i]));
+    g[i] = _g(_uint32(ctx.state[i] + ctx.counters[i]));
 
   /* Calculate new state values */
-  ctx.state[0] = (g[0] + _rotateLeft(g[7], 16) + _rotateLeft(g[6], 16));
-  ctx.state[1] = (g[1] + _rotateLeft(g[0], 8) + g[7]);
-  ctx.state[2] = (g[2] + _rotateLeft(g[1], 16) + _rotateLeft(g[0], 16));
-  ctx.state[3] = (g[3] + _rotateLeft(g[2], 8) + g[1]);
-  ctx.state[4] = (g[4] + _rotateLeft(g[3], 16) + _rotateLeft(g[2], 16));
-  ctx.state[5] = (g[5] + _rotateLeft(g[4], 8) + g[3]);
-  ctx.state[6] = (g[6] + _rotateLeft(g[5], 16) + _rotateLeft(g[4], 16));
-  ctx.state[7] = (g[7] + _rotateLeft(g[6], 8) + g[5]);
+  ctx.state[0] = _uint32(g[0] + _rotateLeft(g[7], 16) + _rotateLeft(g[6], 16));
+  ctx.state[1] = _uint32(g[1] + _rotateLeft(g[0], 8) + g[7]);
+  ctx.state[2] = _uint32(g[2] + _rotateLeft(g[1], 16) + _rotateLeft(g[0], 16));
+  ctx.state[3] = _uint32(g[3] + _rotateLeft(g[2], 8) + g[1]);
+  ctx.state[4] = _uint32(g[4] + _rotateLeft(g[3], 16) + _rotateLeft(g[2], 16));
+  ctx.state[5] = _uint32(g[5] + _rotateLeft(g[4], 8) + g[3]);
+  ctx.state[6] = _uint32(g[6] + _rotateLeft(g[5], 16) + _rotateLeft(g[4], 16));
+  ctx.state[7] = _uint32(g[7] + _rotateLeft(g[6], 8) + g[5]);
 }
 
 /// Key setup
@@ -160,10 +164,10 @@ void _keySetup(Uint8List key){
   _master.state[2] = k[1];
   _master.state[4] = k[2];
   _master.state[6] = k[3];
-  _master.state[1] = (k[3] << 16) | (k[2] >> 16);
-  _master.state[3] = (k[0] << 16) | (k[3] >> 16);
-  _master.state[5] = (k[1] << 16) | (k[0] >> 16);
-  _master.state[7] = (k[2] << 16) | (k[1] >> 16);
+  _master.state[1] = _uint32(k[3] << 16) | (k[2] >> 16);
+  _master.state[3] = _uint32(k[0] << 16) | (k[3] >> 16);
+  _master.state[5] = _uint32(k[1] << 16) | (k[0] >> 16);
+  _master.state[7] = _uint32(k[2] << 16) | (k[1] >> 16);
 
   /* Generate initial counter values */
   _master.counters[0] = _rotateLeft(k[2], 16);
