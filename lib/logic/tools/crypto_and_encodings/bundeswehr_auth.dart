@@ -67,8 +67,12 @@ const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE = 'bundeswehr_auth_response_in
 const AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE = 'bundeswehr_auth_response_invalid_custom_table_numeral';
 const AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE = 'bundeswehr_auth_response_invalid_custom_table_auth';
 
-AuthentificationOutput buildAuthBundeswehr(String currentCallSign, String currentLetterAuth, String currentLetterCallSign,
-    AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
+AuthentificationOutput buildAuthBundeswehr(
+    String currentCallSign,
+    String currentLetterAuth,
+    String currentLetterCallSign,
+    AuthentificationTable tableNumeralCode,
+    AuthentificationTable tableAuthentificationCode) {
 
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
@@ -111,15 +115,19 @@ AuthentificationOutput buildAuthBundeswehr(String currentCallSign, String curren
           tupel3.add(t2 + t1);
         }
       }
-      return AuthentificationOutput(ResponseCode: 'OK', Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
+      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_OK, Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
     }
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
   }
   return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER);
 }
 
-AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
-    AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
+AuthentificationOutput checkAuthBundeswehr(
+    String currentCallSign,
+    String currentAuth,
+    String currentLetterAuth,
+    AuthentificationTable tableNumeralCode,
+    AuthentificationTable tableAuthentificationCode) {
 
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);

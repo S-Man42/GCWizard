@@ -40,7 +40,7 @@ const AUTH_CODE_CONTENT = [
 
 
 void main() {
-  group("bundeswehr.auth:", () {
+  group("bundeswehr.check_auth:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'currentCallSign' : null,
         'currentAuth' : null,
@@ -122,5 +122,90 @@ void main() {
     });
   });
 
+  group("bundeswehr.create_auth:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'currentCallSign' : null,
+        'currentLetterAuth' : null,
+        'currentLetterCallSign' : null,
+        'tableNumeralCode' : null,
+        'tableAuthentificationCode' : null,
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
 
+      {'currentCallSign' : null,
+        'currentLetterAuth' : null,
+        'currentLetterCallSign' : null,
+        'tableNumeralCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : '',
+        'currentLetterAuth' : '',
+        'currentLetterCallSign' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : '',
+        'currentLetterAuth' : '',
+        'currentLetterCallSign' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : '',
+        'currentLetterAuth' : '',
+        'currentLetterCallSign' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : '',
+        'currentLetterAuth' : 'a',
+        'currentLetterCallSign' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : '',
+        'currentLetterAuth' : 'Y',
+        'currentLetterCallSign' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : 'TIGER',
+        'currentLetterAuth' : 'Y',
+        'currentLetterCallSign' : 'O',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+
+      {'currentCallSign' : 'TIGER',
+        'currentLetterAuth' : 'Y',
+        'currentLetterCallSign' : 'I',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : AuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : AuthentificationOutput(
+            ResponseCode: AUTH_RESPONSE_OK,
+            Tupel1: ['CJ', 'JC', 'DB', 'BD'],
+            Tupel2: ['DO', 'OD', 'GZ', 'ZG', 'EJ', 'JE', 'VR', 'RV', 'CP', 'PC', 'IW', 'WI', 'XM', 'MX', 'SA', 'AS', 'YT', 'TY', 'UL', 'LU', 'KB', 'BK', 'FN', 'NF', 'QH', 'HQ'],
+            Tupel3: ['IO', 'OI', 'XZ', 'ZX', 'SJ', 'JS', 'YR', 'RY', 'UP', 'PU', 'KW', 'WK', 'FM', 'MF', 'QA', 'AQ', 'DT', 'TD', 'GL', 'LG', 'EB', 'BE', 'VN', 'NV', 'CH', 'HC'],
+            Number: '80',
+            Details: '')},
+
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('currentCallSign: ${elem['currentCallSign']}, currentLetterAuth: ${elem['currentLetterAuth']}, currentLetterCallSign: ${elem['currentLetterCallSign']}, tableNumeralCode: ${elem['tableNumeralCode']}, tableAuthentificationCode: ${elem['tableAuthentificationCode']}, ', () {
+        var _actual = buildAuthBundeswehr(elem['currentCallSign'], elem['currentLetterAuth'], elem['currentLetterCallSign'], elem['tableNumeralCode'], elem['tableAuthentificationCode']);
+        expect(_actual.ResponseCode, elem['expectedOutput'].ResponseCode);
+        if (_actual.ResponseCode == AUTH_RESPONSE_OK) {
+          expect(_actual.Tupel1, elem['expectedOutput'].Tupel1);
+          expect(_actual.Tupel2, elem['expectedOutput'].Tupel2);
+          expect(_actual.Tupel3, elem['expectedOutput'].Tupel3);
+          expect(_actual.Number, elem['expectedOutput'].Number);
+        }
+      });
+    });
+  });
 }

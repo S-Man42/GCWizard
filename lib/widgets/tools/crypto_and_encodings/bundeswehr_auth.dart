@@ -97,7 +97,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-        ? Column( // decode - checkAuth
+        ? Column( // checkAuth
           children: <Widget>[
             Row(
                 children: <Widget>[
@@ -136,7 +136,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
 
           ],
         )
-        : Column( // encode - auth
+        : Column( // build auth
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -255,14 +255,14 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
   Widget _calculateOutput(BuildContext context) {
     AuthentificationOutput output;
 
-    if (_currentTableMode == GCWSwitchPosition.left) {
+    if (_currentTableMode == GCWSwitchPosition.left) { // custom tables
       _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
       _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
     }
 
-    if (_currentMode == GCWSwitchPosition.right) {
+    if (_currentMode == GCWSwitchPosition.right) { // check auth
       output = checkAuthBundeswehr(_currentCallSign.toUpperCase(), _currentAuthInput.toUpperCase(), _currentLetterAuth.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
-      if (output.ResponseCode == 'OK') {
+      if (output.ResponseCode == AUTH_RESPONSE_OK) {
         return Column(
           children: <Widget>[
             GCWText(
@@ -281,9 +281,9 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           text: i18n(context, output.ResponseCode),
         );
       }
-    } else {
+    } else { // build auth
       output = buildAuthBundeswehr(_currentCallSign.toUpperCase(), _currentLetterAuth.toUpperCase(), _currentLetterCallSign.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
-      if (output.ResponseCode == 'OK') {
+      if (output.ResponseCode == AUTH_RESPONSE_OK) {
         return Row(children: <Widget>[
           Expanded(
             child: Padding(
