@@ -19,7 +19,10 @@ class _GCWButtonState extends State<GCWButton> {
   Widget build(BuildContext context) {
     return Container(
       margin: widget.margin ?? EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: RaisedButton(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: themeColors().accent()
+        ),
         onPressed: widget.onPressed,
         child: Text(
           widget.text,
