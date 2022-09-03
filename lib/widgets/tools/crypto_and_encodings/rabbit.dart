@@ -8,12 +8,12 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-class RC4 extends StatefulWidget {
+class Rabbit extends StatefulWidget {
   @override
-  RC4State createState() => RC4State();
+  RabbitState createState() => RabbitState();
 }
 
-class RC4State extends State<RC4> {
+class RabbitState extends State<Rabbit> {
   String _currentInput = '';
   String _currentKey = '';
 
@@ -23,7 +23,7 @@ class RC4State extends State<RC4> {
 
   @override
   Widget build(BuildContext context) {
-    var rc4InputFormatItems = {
+    var rabbitInputFormatItems = {
       InputFormat.AUTO: i18n(context, 'rc4_format_auto'),
       InputFormat.TEXT: i18n(context, 'rc4_format_text'),
       InputFormat.HEX: i18n(context, 'common_numeralbase_hexadecimal'),
@@ -31,7 +31,7 @@ class RC4State extends State<RC4> {
       InputFormat.ASCIIVALUES: i18n(context, 'rc4_format_asciivalues'),
     };
 
-    var rc4OutputFormatItems = {
+    var rabbitOutputFormatItems = {
       OutputFormat.TEXT: i18n(context, 'rc4_format_text'),
       OutputFormat.HEX: i18n(context, 'common_numeralbase_hexadecimal'),
       OutputFormat.BINARY: i18n(context, 'common_numeralbase_binary'),
@@ -57,7 +57,7 @@ class RC4State extends State<RC4> {
                     _currentInputFormat = value;
                   });
                 },
-                items: rc4InputFormatItems.entries.map((mode) {
+                items: rabbitInputFormatItems.entries.map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
@@ -85,7 +85,7 @@ class RC4State extends State<RC4> {
                     _currentKeyFormat = value;
                   });
                 },
-                items: rc4InputFormatItems.entries.map((mode) {
+                items: rabbitInputFormatItems.entries.map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
@@ -105,7 +105,7 @@ class RC4State extends State<RC4> {
                     _currentOutputFormat = value;
                   });
                 },
-                items: rc4OutputFormatItems.entries.map((mode) {
+                items: rabbitOutputFormatItems.entries.map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
@@ -142,7 +142,8 @@ class RC4State extends State<RC4> {
           break;
       }
       return GCWDefaultOutput();
-    };
+    }
+    ;
 
     return GCWDefaultOutput(
       child: _currentOutput.output,
