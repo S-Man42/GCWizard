@@ -4,12 +4,12 @@ import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/day_o
 void main() {
   group("DayOfTheYear.calculateDayInfos:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'year' : 2020, 'day': 366, 'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 12, 31), 366, 4, 5, 53, 53)},
       {'year' : null, 'day': null, 'expectedOutput' : null},
 
-      {'year' : 2022, 'day': 243, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 8, 31), 243, 3, 4, 35, 36)},
-      {'year' : 2022, 'day': 240, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 8, 28), 240, 7, 1, 34, 36)},
-      {'year' : 2022, 'day': 239, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 8, 27), 239, 6, 7, 34, 36)},
+      {'year' : 2022, 'day': 60, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 3, 1), 60, 2, 3, 9, 10)},
+      {'year' : 2022, 'day': 59, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 2, 28), 59, 1, 2, 9, 10)},
+      {'year' : 2022, 'day': 58, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 2, 27), 58, 7, 1, 8, 10)},
+      {'year' : 2022, 'day': 57, 'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 2, 26), 57, 6, 7, 8, 9)},
       {'year' : 2020, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2020, 1, 1), 1, 3, 4, 1, 1)},
       {'year' : 2021, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2021, 1, 1), 1, 5, 6, 53, 1)},
       {'year' : 2022, 'day': 1,   'expectedOutput' : DayOfTheYearOutput(DateTime(2022, 1, 1), 1, 6, 7, 52, 1)},

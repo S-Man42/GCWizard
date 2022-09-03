@@ -1,5 +1,7 @@
 //weeknumber code: https://gist.github.com/Maistho/e38da422ad5c097c635ccf708ec68251
 
+import 'package:gc_wizard/logic/common/date_utils.dart';
+
 class DayOfTheYearOutput{
   final DateTime date;
   final int dayNumber;
@@ -40,9 +42,7 @@ DayOfTheYearOutput calculateDateInfos(DateTime date) {
       alternateWeekOfYear(date));
 }
 
-int dayNumber(DateTime date) {
-  return date.difference(DateTime(date.year)).inDays + 1;
-}
+
 int _weekdayAlternate(int weekday) {
   weekday = (weekday + 1) % 7;
   return weekday == 0 ? 7 : weekday;
@@ -92,7 +92,7 @@ int alternateWeekOfYear(DateTime date) {
 
   // If this date is before the first week of the year, it is the same week as the last week of the previous year.
   if (date.isBefore(mondayWeek1)) {
-    return isoWeekOfYear(DateTime(date.year - 1, 12, 31));
+    return alternateWeekOfYear(DateTime(date.year - 1, 12, 31));
   }
 
   final int ordinalWeek1Monday = _ordinalDate(mondayWeek1);

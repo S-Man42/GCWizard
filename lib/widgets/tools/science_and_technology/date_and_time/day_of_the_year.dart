@@ -24,7 +24,8 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     DateTime now = DateTime.now();
     _currentEncodeDate = DateTime(now.year, now.month, now.day);
     _currentDecodeDate = DateTime(now.year, now.month, now.day);
-    super.initState();
+
+     super.initState();
   }
 
   @override
@@ -71,7 +72,6 @@ class DayOfTheYearState extends State<DayOfTheYear> {
         GCWDateTimePicker(
           config: {DateTimePickerConfig.DATE},
           datetime: _currentDecodeDate,
-          maxDays: 31,
           onChanged: (value) {
             setState(() {
               _currentDecodeDate = value['datetime'];
