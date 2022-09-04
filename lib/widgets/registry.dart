@@ -881,6 +881,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'music_notes',
       'piano',
     ]),
     GCWTool(tool: PiSelection(), i18nPrefix: 'pi_selection', categories: [
@@ -3292,6 +3293,7 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(
         symbolKey: 'murraybaudot', symbolSearchStrings: ['ccitt', 'symbol_murraybaudot', 'teletypewriter']),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
+      'music_notes',
       'symbol_musica',
     ]),
     GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
@@ -3309,21 +3311,27 @@ initializeRegistry(BuildContext context) {
       'symbol_ninjargon',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
+      'music_notes',
       'symbol_notes_doremi',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: [
+      'music_notes',
       'symbol_notes_names_altoclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: [
+      'music_notes',
       'symbol_notes_names_bassclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: [
+      'music_notes',
       'symbol_notes_names_trebleclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: [
+      'music_notes',
       'symbol_notes_notevalues',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: [
+      'music_notes',
       'symbol_notes_restvalues',
     ]),
     GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: [

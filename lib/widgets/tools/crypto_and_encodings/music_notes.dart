@@ -22,7 +22,7 @@ class MusicNotesState extends State<MusicNotes> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
   var _gcwTextStyle = gcwTextStyle();
-  var _currentCode = NotesCodebook.ALT;
+  var _currentCode = NotesCodebook.TREBLE;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -56,13 +56,13 @@ class MusicNotesState extends State<MusicNotes> {
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.ALT,
                         child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
-            case NotesCodebook.BASS:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
-              return GCWDropDownMenuItem( value: NotesCodebook.BASS,
-                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             case NotesCodebook.TREBLE:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.TREBLE,
+                  child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+            case NotesCodebook.BASS:
+              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
+              return GCWDropDownMenuItem( value: NotesCodebook.BASS,
                         child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             default:
               return null;
