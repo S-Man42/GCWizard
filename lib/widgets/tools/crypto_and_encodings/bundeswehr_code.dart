@@ -45,7 +45,10 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     _numeralCodeCustomXaxis = TextEditingController(text: _currentNumeralCodeXaxisCustom);
     _numeralCodeCustomYaxis = TextEditingController(text: _currentNumeralCodeYaxisCustom);
 
-    _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
+    _buildNumeralCode(context,
+        custom: _currentTableMode == GCWSwitchPosition.left,
+        xAxis: _currentNumeralCodeXaxisCustom,
+        yAxis: _currentNumeralCodeYaxisCustom);
   }
 
   @override
@@ -70,24 +73,28 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
           },
         ),
         _currentMode == GCWSwitchPosition.right
-        ? GCWTextField(
-          controller: _decodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),],
-          onChanged: (text) {
-            setState(() {
-              _currentDecode = text;
-            });
-          },
-        )
-        : GCWTextField(
-          controller: _encodeController,
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),],
-          onChanged: (text) {
-            setState(() {
-              _currentEncode = text;
-            });
-          },
-        ),
+            ? GCWTextField(
+                controller: _decodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecode = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _encodeController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncode = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           rightValue: i18n(context, 'bundeswehr_auth_table_mode_random'),
           leftValue: i18n(context, 'bundeswehr_auth_table_mode_custom'),
@@ -95,7 +102,10 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
           onChanged: (value) {
             setState(() {
               _currentTableMode = value;
-              _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
+              _buildNumeralCode(context,
+                  custom: _currentTableMode == GCWSwitchPosition.left,
+                  xAxis: _currentNumeralCodeXaxisCustom,
+                  yAxis: _currentNumeralCodeYaxisCustom);
             });
           },
         ),
@@ -104,37 +114,40 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
             child: Column(
               children: <Widget>[
                 _currentTableMode == GCWSwitchPosition.right
-                ? GCWOutputText(
-                  text: _numeralCodeString,
-                  isMonotype: true,
-                )
-                : Column(
-                  children: <Widget>[
-                    GCWTextField(
-                      controller: _numeralCodeCustomXaxis,
-                      hintText: i18n(context, 'bundeswehr_auth_authentification_code_x_axis'),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentNumeralCodeXaxisCustom = text;
-                        });
-                      },
-                    ),
-                    GCWTextField(
-                      controller: _numeralCodeCustomYaxis,
-                      hintText: i18n(context, 'bundeswehr_auth_authentification_code_y_axis'),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentNumeralCodeYaxisCustom = text;
-                        });
-                      },
-                    ),
-                  ],
-                )
+                    ? GCWOutputText(
+                        text: _numeralCodeString,
+                        isMonotype: true,
+                      )
+                    : Column(
+                        children: <Widget>[
+                          GCWTextField(
+                            controller: _numeralCodeCustomXaxis,
+                            hintText: i18n(context, 'bundeswehr_auth_authentification_code_x_axis'),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
+                            ],
+                            onChanged: (text) {
+                              setState(() {
+                                _currentNumeralCodeXaxisCustom = text;
+                              });
+                            },
+                          ),
+                          GCWTextField(
+                            controller: _numeralCodeCustomYaxis,
+                            hintText: i18n(context, 'bundeswehr_auth_authentification_code_y_axis'),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
+                            ],
+                            onChanged: (text) {
+                              setState(() {
+                                _currentNumeralCodeYaxisCustom = text;
+                              });
+                            },
+                          ),
+                        ],
+                      )
               ],
-            )
-        ),
+            )),
         _calculateOutput(context),
       ],
     );
@@ -144,7 +157,10 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     BundeswehrTalkingBoardCodingOutput output;
 
     if (_currentTableMode == GCWSwitchPosition.left) {
-      _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
+      _buildNumeralCode(context,
+          custom: _currentTableMode == GCWSwitchPosition.left,
+          xAxis: _currentNumeralCodeXaxisCustom,
+          yAxis: _currentNumeralCodeYaxisCustom);
     }
     if (_currentMode == GCWSwitchPosition.right)
       output = decodeBundeswehr(_currentDecode.toUpperCase(), _tableNumeralCode);
@@ -157,15 +173,15 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
           child: output.Details,
         ),
         output.ResponseCode.startsWith('bundeswehr')
-        ? GCWText(
-          text: i18n(context, output.ResponseCode),
-        )
-        : Container()
+            ? GCWText(
+                text: i18n(context, output.ResponseCode),
+              )
+            : Container()
       ],
     );
   }
 
-  void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}){
+  void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {
     List<String> _colTitle;
     List<String> _rowTitle;
     List<String> _numeralCode = [];
@@ -191,9 +207,35 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
 
       _colTitle = yAxis.toUpperCase().split('');
       _rowTitle = xAxis.toUpperCase().split('');
-
     } else {
-      List<String> alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
+      List<String> alphabet = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+      ];
       var random = new Random();
       int rnd = 0;
       String description = '';
@@ -221,7 +263,7 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     _numeralCode.addAll('123456789STU0'.split(''));
 
     int i = 0;
-    _numeralCodeString = '   ' + _colTitle.join(' ') +'\n----------------------------\n ';
+    _numeralCodeString = '   ' + _colTitle.join(' ') + '\n----------------------------\n ';
     _rowTitle.forEach((row) {
       _numeralCodeString = _numeralCodeString + row + ' ';
       for (int j = 0; j < 13; j++) {
@@ -232,257 +274,425 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     });
 
     _tableEncoding['0'] = [
-      _colTitle[0] + _rowTitle[0],   _rowTitle[0] + _colTitle[0],
-      _colTitle[1] + _rowTitle[1],   _rowTitle[1] + _colTitle[1],
-      _colTitle[2] + _rowTitle[2],   _rowTitle[2] + _colTitle[2],
-      _colTitle[3] + _rowTitle[3],   _rowTitle[3] + _colTitle[3],
-      _colTitle[4] + _rowTitle[4],   _rowTitle[4] + _colTitle[4],
-      _colTitle[5] + _rowTitle[5],   _rowTitle[5] + _colTitle[5],
-      _colTitle[6] + _rowTitle[6],   _rowTitle[6] + _colTitle[6],
-      _colTitle[7] + _rowTitle[7],   _rowTitle[7] + _colTitle[7],
-      _colTitle[8] + _rowTitle[8],   _rowTitle[8] + _colTitle[8],
-      _colTitle[9] + _rowTitle[9],   _rowTitle[9] + _colTitle[9],
-      _colTitle[10] + _rowTitle[10], _rowTitle[10] + _colTitle[10],
-      _colTitle[11] + _rowTitle[11], _rowTitle[11] + _colTitle[11],
-      _colTitle[12] + _rowTitle[12], _rowTitle[12] + _colTitle[12],
+      _colTitle[0] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[0],
+      _colTitle[1] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[1],
+      _colTitle[2] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[2],
+      _colTitle[3] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[3],
+      _colTitle[4] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[4],
+      _colTitle[5] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[5],
+      _colTitle[6] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[6],
+      _colTitle[7] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[7],
+      _colTitle[8] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[8],
+      _colTitle[9] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[9],
+      _colTitle[10] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[10],
+      _colTitle[11] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[11],
+      _colTitle[12] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[12],
     ];
     _tableEncoding['1'] = [
-      _colTitle[1] + _rowTitle[0],   _rowTitle[0] + _colTitle[1],
-      _colTitle[2] + _rowTitle[1],   _rowTitle[1] + _colTitle[2],
-      _colTitle[3] + _rowTitle[2],   _rowTitle[2] + _colTitle[3],
-      _colTitle[4] + _rowTitle[3],   _rowTitle[3] + _colTitle[4],
-      _colTitle[5] + _rowTitle[4],   _rowTitle[4] + _colTitle[5],
-      _colTitle[6] + _rowTitle[5],   _rowTitle[5] + _colTitle[6],
-      _colTitle[7] + _rowTitle[6],   _rowTitle[6] + _colTitle[7],
-      _colTitle[8] + _rowTitle[7],   _rowTitle[7] + _colTitle[8],
-      _colTitle[9] + _rowTitle[8],   _rowTitle[8] + _colTitle[9],
-      _colTitle[10] + _rowTitle[9],   _rowTitle[9] + _colTitle[10],
-      _colTitle[11] + _rowTitle[10], _rowTitle[10] + _colTitle[11],
-      _colTitle[12] + _rowTitle[11], _rowTitle[11] + _colTitle[12],
-      _colTitle[0] + _rowTitle[12], _rowTitle[12] + _colTitle[0],
+      _colTitle[1] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[1],
+      _colTitle[2] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[2],
+      _colTitle[3] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[3],
+      _colTitle[4] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[4],
+      _colTitle[5] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[5],
+      _colTitle[6] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[6],
+      _colTitle[7] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[7],
+      _colTitle[8] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[8],
+      _colTitle[9] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[9],
+      _colTitle[10] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[10],
+      _colTitle[11] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[11],
+      _colTitle[12] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[12],
+      _colTitle[0] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[0],
     ];
     _tableEncoding['2'] = [
-      _colTitle[2] + _rowTitle[0],   _rowTitle[0] + _colTitle[2],
-      _colTitle[3] + _rowTitle[1],   _rowTitle[1] + _colTitle[3],
-      _colTitle[4] + _rowTitle[2],   _rowTitle[2] + _colTitle[4],
-      _colTitle[5] + _rowTitle[3],   _rowTitle[3] + _colTitle[5],
-      _colTitle[6] + _rowTitle[4],   _rowTitle[4] + _colTitle[6],
-      _colTitle[7] + _rowTitle[5],   _rowTitle[5] + _colTitle[7],
-      _colTitle[8] + _rowTitle[6],   _rowTitle[6] + _colTitle[8],
-      _colTitle[9] + _rowTitle[7],   _rowTitle[7] + _colTitle[9],
-      _colTitle[10] + _rowTitle[8],   _rowTitle[8] + _colTitle[10],
-      _colTitle[11] + _rowTitle[9],   _rowTitle[9] + _colTitle[11],
-      _colTitle[12] + _rowTitle[10], _rowTitle[10] + _colTitle[12],
-      _colTitle[0] + _rowTitle[11], _rowTitle[11] + _colTitle[0],
-      _colTitle[1] + _rowTitle[12], _rowTitle[12] + _colTitle[1],
+      _colTitle[2] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[2],
+      _colTitle[3] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[3],
+      _colTitle[4] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[4],
+      _colTitle[5] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[5],
+      _colTitle[6] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[6],
+      _colTitle[7] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[7],
+      _colTitle[8] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[8],
+      _colTitle[9] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[9],
+      _colTitle[10] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[10],
+      _colTitle[11] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[11],
+      _colTitle[12] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[12],
+      _colTitle[0] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[0],
+      _colTitle[1] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[1],
     ];
     _tableEncoding['3'] = [
-      _colTitle[3] + _rowTitle[0],   _rowTitle[0] + _colTitle[3],
-      _colTitle[4] + _rowTitle[1],   _rowTitle[1] + _colTitle[4],
-      _colTitle[5] + _rowTitle[2],   _rowTitle[2] + _colTitle[5],
-      _colTitle[6] + _rowTitle[3],   _rowTitle[3] + _colTitle[6],
-      _colTitle[7] + _rowTitle[4],   _rowTitle[4] + _colTitle[7],
-      _colTitle[8] + _rowTitle[5],   _rowTitle[5] + _colTitle[8],
-      _colTitle[9] + _rowTitle[6],   _rowTitle[6] + _colTitle[9],
-      _colTitle[10] + _rowTitle[7],   _rowTitle[7] + _colTitle[10],
-      _colTitle[11] + _rowTitle[8],   _rowTitle[8] + _colTitle[11],
-      _colTitle[12] + _rowTitle[9],   _rowTitle[9] + _colTitle[12],
-      _colTitle[0] + _rowTitle[10], _rowTitle[10] + _colTitle[0],
-      _colTitle[1] + _rowTitle[11], _rowTitle[11] + _colTitle[1],
-      _colTitle[2] + _rowTitle[12], _rowTitle[12] + _colTitle[2],
+      _colTitle[3] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[3],
+      _colTitle[4] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[4],
+      _colTitle[5] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[5],
+      _colTitle[6] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[6],
+      _colTitle[7] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[7],
+      _colTitle[8] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[8],
+      _colTitle[9] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[9],
+      _colTitle[10] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[10],
+      _colTitle[11] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[11],
+      _colTitle[12] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[12],
+      _colTitle[0] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[0],
+      _colTitle[1] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[1],
+      _colTitle[2] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[2],
     ];
     _tableEncoding['4'] = [
-      _colTitle[4] + _rowTitle[0],   _rowTitle[0] + _colTitle[4],
-      _colTitle[5] + _rowTitle[1],   _rowTitle[1] + _colTitle[5],
-      _colTitle[6] + _rowTitle[2],   _rowTitle[2] + _colTitle[6],
-      _colTitle[7] + _rowTitle[3],   _rowTitle[3] + _colTitle[7],
-      _colTitle[8] + _rowTitle[4],   _rowTitle[4] + _colTitle[8],
-      _colTitle[9] + _rowTitle[5],   _rowTitle[5] + _colTitle[9],
-      _colTitle[10] + _rowTitle[6],   _rowTitle[6] + _colTitle[10],
-      _colTitle[11] + _rowTitle[7],   _rowTitle[7] + _colTitle[11],
-      _colTitle[12] + _rowTitle[8],   _rowTitle[8] + _colTitle[12],
-      _colTitle[0] + _rowTitle[9],   _rowTitle[9] + _colTitle[0],
-      _colTitle[1] + _rowTitle[10], _rowTitle[10] + _colTitle[1],
-      _colTitle[2] + _rowTitle[11], _rowTitle[11] + _colTitle[2],
-      _colTitle[3] + _rowTitle[12], _rowTitle[12] + _colTitle[3],
+      _colTitle[4] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[4],
+      _colTitle[5] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[5],
+      _colTitle[6] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[6],
+      _colTitle[7] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[7],
+      _colTitle[8] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[8],
+      _colTitle[9] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[9],
+      _colTitle[10] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[10],
+      _colTitle[11] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[11],
+      _colTitle[12] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[12],
+      _colTitle[0] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[0],
+      _colTitle[1] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[1],
+      _colTitle[2] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[2],
+      _colTitle[3] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[3],
     ];
     _tableEncoding['5'] = [
-      _colTitle[5] + _rowTitle[0],   _rowTitle[0] + _colTitle[5],
-      _colTitle[6] + _rowTitle[1],   _rowTitle[1] + _colTitle[6],
-      _colTitle[7] + _rowTitle[2],   _rowTitle[2] + _colTitle[7],
-      _colTitle[8] + _rowTitle[3],   _rowTitle[3] + _colTitle[8],
-      _colTitle[9] + _rowTitle[4],   _rowTitle[4] + _colTitle[9],
-      _colTitle[10] + _rowTitle[5],   _rowTitle[5] + _colTitle[10],
-      _colTitle[11] + _rowTitle[6],   _rowTitle[6] + _colTitle[11],
-      _colTitle[12] + _rowTitle[7],   _rowTitle[7] + _colTitle[12],
-      _colTitle[0] + _rowTitle[8],   _rowTitle[8] + _colTitle[0],
-      _colTitle[1] + _rowTitle[9],   _rowTitle[9] + _colTitle[1],
-      _colTitle[2] + _rowTitle[10], _rowTitle[10] + _colTitle[2],
-      _colTitle[3] + _rowTitle[11], _rowTitle[11] + _colTitle[3],
-      _colTitle[4] + _rowTitle[12], _rowTitle[12] + _colTitle[4],
+      _colTitle[5] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[5],
+      _colTitle[6] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[6],
+      _colTitle[7] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[7],
+      _colTitle[8] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[8],
+      _colTitle[9] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[9],
+      _colTitle[10] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[10],
+      _colTitle[11] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[11],
+      _colTitle[12] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[12],
+      _colTitle[0] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[0],
+      _colTitle[1] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[1],
+      _colTitle[2] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[2],
+      _colTitle[3] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[3],
+      _colTitle[4] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[4],
     ];
     _tableEncoding['6'] = [
-      _colTitle[6] + _rowTitle[0],   _rowTitle[0] + _colTitle[6],
-      _colTitle[7] + _rowTitle[1],   _rowTitle[1] + _colTitle[7],
-      _colTitle[8] + _rowTitle[2],   _rowTitle[2] + _colTitle[8],
-      _colTitle[9] + _rowTitle[3],   _rowTitle[3] + _colTitle[9],
-      _colTitle[10] + _rowTitle[4],   _rowTitle[4] + _colTitle[10],
-      _colTitle[11] + _rowTitle[5],   _rowTitle[5] + _colTitle[11],
-      _colTitle[12] + _rowTitle[6],   _rowTitle[6] + _colTitle[12],
-      _colTitle[0] + _rowTitle[7],   _rowTitle[7] + _colTitle[0],
-      _colTitle[1] + _rowTitle[8],   _rowTitle[8] + _colTitle[1],
-      _colTitle[2] + _rowTitle[9],   _rowTitle[9] + _colTitle[2],
-      _colTitle[3] + _rowTitle[10], _rowTitle[10] + _colTitle[3],
-      _colTitle[4] + _rowTitle[11], _rowTitle[11] + _colTitle[4],
-      _colTitle[5] + _rowTitle[12], _rowTitle[12] + _colTitle[5],
+      _colTitle[6] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[6],
+      _colTitle[7] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[7],
+      _colTitle[8] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[8],
+      _colTitle[9] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[9],
+      _colTitle[10] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[10],
+      _colTitle[11] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[11],
+      _colTitle[12] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[12],
+      _colTitle[0] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[0],
+      _colTitle[1] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[1],
+      _colTitle[2] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[2],
+      _colTitle[3] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[3],
+      _colTitle[4] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[4],
+      _colTitle[5] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[5],
     ];
     _tableEncoding['7'] = [
-      _colTitle[7] + _rowTitle[0],   _rowTitle[0] + _colTitle[7],
-      _colTitle[8] + _rowTitle[1],   _rowTitle[1] + _colTitle[8],
-      _colTitle[9] + _rowTitle[2],   _rowTitle[2] + _colTitle[9],
-      _colTitle[10] + _rowTitle[3],   _rowTitle[3] + _colTitle[10],
-      _colTitle[11] + _rowTitle[4],   _rowTitle[4] + _colTitle[11],
-      _colTitle[12] + _rowTitle[5],   _rowTitle[5] + _colTitle[12],
-      _colTitle[0] + _rowTitle[6],   _rowTitle[6] + _colTitle[0],
-      _colTitle[1] + _rowTitle[7],   _rowTitle[7] + _colTitle[1],
-      _colTitle[2] + _rowTitle[8],   _rowTitle[8] + _colTitle[2],
-      _colTitle[3] + _rowTitle[9],   _rowTitle[9] + _colTitle[3],
-      _colTitle[4] + _rowTitle[10], _rowTitle[10] + _colTitle[4],
-      _colTitle[5] + _rowTitle[11], _rowTitle[11] + _colTitle[5],
-      _colTitle[6] + _rowTitle[12], _rowTitle[12] + _colTitle[6],
+      _colTitle[7] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[7],
+      _colTitle[8] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[8],
+      _colTitle[9] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[9],
+      _colTitle[10] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[10],
+      _colTitle[11] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[11],
+      _colTitle[12] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[12],
+      _colTitle[0] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[0],
+      _colTitle[1] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[1],
+      _colTitle[2] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[2],
+      _colTitle[3] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[3],
+      _colTitle[4] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[4],
+      _colTitle[5] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[5],
+      _colTitle[6] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[6],
     ];
     _tableEncoding['8'] = [
-      _colTitle[8] + _rowTitle[0],   _rowTitle[0] + _colTitle[8],
-      _colTitle[9] + _rowTitle[1],   _rowTitle[1] + _colTitle[9],
-      _colTitle[10] + _rowTitle[2],   _rowTitle[2] + _colTitle[10],
-      _colTitle[11] + _rowTitle[3],   _rowTitle[3] + _colTitle[11],
-      _colTitle[12] + _rowTitle[4],   _rowTitle[4] + _colTitle[12],
-      _colTitle[0] + _rowTitle[5],   _rowTitle[5] + _colTitle[0],
-      _colTitle[1] + _rowTitle[6],   _rowTitle[6] + _colTitle[1],
-      _colTitle[2] + _rowTitle[7],   _rowTitle[7] + _colTitle[2],
-      _colTitle[3] + _rowTitle[8],   _rowTitle[8] + _colTitle[3],
-      _colTitle[4] + _rowTitle[9],   _rowTitle[9] + _colTitle[4],
-      _colTitle[5] + _rowTitle[10], _rowTitle[10] + _colTitle[5],
-      _colTitle[6] + _rowTitle[11], _rowTitle[11] + _colTitle[6],
-      _colTitle[7] + _rowTitle[12], _rowTitle[12] + _colTitle[7],
+      _colTitle[8] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[8],
+      _colTitle[9] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[9],
+      _colTitle[10] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[10],
+      _colTitle[11] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[11],
+      _colTitle[12] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[12],
+      _colTitle[0] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[0],
+      _colTitle[1] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[1],
+      _colTitle[2] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[2],
+      _colTitle[3] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[3],
+      _colTitle[4] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[4],
+      _colTitle[5] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[5],
+      _colTitle[6] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[6],
+      _colTitle[7] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[7],
     ];
     _tableEncoding['9'] = [
-      _colTitle[9] + _rowTitle[0],   _rowTitle[0] + _colTitle[9],
-      _colTitle[10] + _rowTitle[1],   _rowTitle[1] + _colTitle[10],
-      _colTitle[11] + _rowTitle[2],   _rowTitle[2] + _colTitle[11],
-      _colTitle[12] + _rowTitle[3],   _rowTitle[3] + _colTitle[12],
-      _colTitle[0] + _rowTitle[4],   _rowTitle[4] + _colTitle[0],
-      _colTitle[1] + _rowTitle[5],   _rowTitle[5] + _colTitle[1],
-      _colTitle[2] + _rowTitle[6],   _rowTitle[6] + _colTitle[2],
-      _colTitle[3] + _rowTitle[7],   _rowTitle[7] + _colTitle[3],
-      _colTitle[4] + _rowTitle[8],   _rowTitle[8] + _colTitle[4],
-      _colTitle[5] + _rowTitle[9],   _rowTitle[9] + _colTitle[5],
-      _colTitle[6] + _rowTitle[10], _rowTitle[10] + _colTitle[6],
-      _colTitle[7] + _rowTitle[11], _rowTitle[11] + _colTitle[7],
-      _colTitle[8] + _rowTitle[12], _rowTitle[12] + _colTitle[8],
+      _colTitle[9] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[9],
+      _colTitle[10] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[10],
+      _colTitle[11] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[11],
+      _colTitle[12] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[12],
+      _colTitle[0] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[0],
+      _colTitle[1] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[1],
+      _colTitle[2] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[2],
+      _colTitle[3] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[3],
+      _colTitle[4] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[4],
+      _colTitle[5] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[5],
+      _colTitle[6] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[6],
+      _colTitle[7] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[7],
+      _colTitle[8] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[8],
     ];
     _tableEncoding['A'] = [
-      _colTitle[10] + _rowTitle[ 0],   _rowTitle[ 0] + _colTitle[10],
-      _colTitle[7] + _rowTitle[ 8],   _rowTitle[ 8] + _colTitle[7],
+      _colTitle[10] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[10],
+      _colTitle[7] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[7],
     ];
     _tableEncoding['B'] = [
-      _colTitle[11] + _rowTitle[ 0],   _rowTitle[ 0] + _colTitle[11],
+      _colTitle[11] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[11],
     ];
     _tableEncoding['C'] = [
-      _colTitle[12] + _rowTitle[ 0],   _rowTitle[ 0] + _colTitle[12],
+      _colTitle[12] + _rowTitle[0],
+      _rowTitle[0] + _colTitle[12],
     ];
     _tableEncoding['D'] = [
-      _colTitle[ 0] + _rowTitle[ 1],   _rowTitle[ 1] + _colTitle[ 0],
-      _colTitle[6] + _rowTitle[ 9],   _rowTitle[ 9] + _colTitle[6],
+      _colTitle[0] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[0],
+      _colTitle[6] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[6],
     ];
     _tableEncoding['E'] = [
-      _colTitle[11] + _rowTitle[ 1],   _rowTitle[ 1] + _colTitle[11],
-      _colTitle[7] + _rowTitle[ 9],   _rowTitle[ 9] + _colTitle[7],
+      _colTitle[11] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[11],
+      _colTitle[7] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[7],
     ];
     _tableEncoding['F'] = [
-      _colTitle[12] + _rowTitle[ 1],   _rowTitle[ 1] + _colTitle[12],
+      _colTitle[12] + _rowTitle[1],
+      _rowTitle[1] + _colTitle[12],
     ];
     _tableEncoding['G'] = [
-      _colTitle[ 0] + _rowTitle[ 2],   _rowTitle[ 2] + _colTitle[ 0],
-      _colTitle[8] + _rowTitle[ 9],   _rowTitle[ 9] + _colTitle[8],
+      _colTitle[0] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[0],
+      _colTitle[8] + _rowTitle[9],
+      _rowTitle[9] + _colTitle[8],
     ];
     _tableEncoding['H'] = [
-      _colTitle[ 1] + _rowTitle[ 2],   _rowTitle[ 2] + _colTitle[ 1],
-      _colTitle[7] + _rowTitle[10],   _rowTitle[10] + _colTitle[7],
+      _colTitle[1] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[1],
+      _colTitle[7] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[7],
     ];
     _tableEncoding['I'] = [
-      _colTitle[12] + _rowTitle[ 2],   _rowTitle[ 2] + _colTitle[12],
-      _colTitle[8] + _rowTitle[10],   _rowTitle[10] + _colTitle[8],
+      _colTitle[12] + _rowTitle[2],
+      _rowTitle[2] + _colTitle[12],
+      _colTitle[8] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[8],
     ];
     _tableEncoding['J'] = [
-      _colTitle[ 0] + _rowTitle[ 3],   _rowTitle[ 3] + _colTitle[ 0],
+      _colTitle[0] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[0],
     ];
     _tableEncoding['K'] = [
-      _colTitle[ 1] + _rowTitle[ 3],   _rowTitle[ 3] + _colTitle[ 1],
+      _colTitle[1] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[1],
     ];
     _tableEncoding['L'] = [
-      _colTitle[ 2] + _rowTitle[ 3],   _rowTitle[ 3] + _colTitle[ 2],
-      _colTitle[9] + _rowTitle[10],   _rowTitle[10] + _colTitle[9],
+      _colTitle[2] + _rowTitle[3],
+      _rowTitle[3] + _colTitle[2],
+      _colTitle[9] + _rowTitle[10],
+      _rowTitle[10] + _colTitle[9],
     ];
     _tableEncoding['M'] = [
-      _colTitle[ 1] + _rowTitle[ 4],   _rowTitle[ 4] + _colTitle[ 1],
+      _colTitle[1] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[1],
     ];
     _tableEncoding['N'] = [
-      _colTitle[ 2] + _rowTitle[ 4],   _rowTitle[ 4] + _colTitle[ 2],
-      _colTitle[8] + _rowTitle[11],   _rowTitle[11] + _colTitle[8],
+      _colTitle[2] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[2],
+      _colTitle[8] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[8],
     ];
     _tableEncoding['O'] = [
-      _colTitle[ 3] + _rowTitle[ 4],   _rowTitle[ 4] + _colTitle[ 3],
-      _colTitle[9] + _rowTitle[11],   _rowTitle[11] + _colTitle[9],
+      _colTitle[3] + _rowTitle[4],
+      _rowTitle[4] + _colTitle[3],
+      _colTitle[9] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[9],
     ];
     _tableEncoding['P'] = [
-      _colTitle[ 2] + _rowTitle[ 5],   _rowTitle[ 5] + _colTitle[ 2],
+      _colTitle[2] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[2],
     ];
     _tableEncoding['Q'] = [
-      _colTitle[ 3] + _rowTitle[ 5],   _rowTitle[ 5] + _colTitle[ 3],
+      _colTitle[3] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[3],
     ];
     _tableEncoding['R'] = [
-      _colTitle[ 4] + _rowTitle[ 5],   _rowTitle[ 5] + _colTitle[ 4],
-      _colTitle[10] + _rowTitle[11],   _rowTitle[11] + _colTitle[10],
+      _colTitle[4] + _rowTitle[5],
+      _rowTitle[5] + _colTitle[4],
+      _colTitle[10] + _rowTitle[11],
+      _rowTitle[11] + _colTitle[10],
     ];
     _tableEncoding['S'] = [
-      _colTitle[ 3] + _rowTitle[ 6],   _rowTitle[ 6] + _colTitle[ 3],
-      _colTitle[9] + _rowTitle[12],   _rowTitle[12] + _colTitle[9],
+      _colTitle[3] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[3],
+      _colTitle[9] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[9],
     ];
     _tableEncoding['T'] = [
-      _colTitle[ 4] + _rowTitle[ 6],   _rowTitle[ 6] + _colTitle[ 4],
-      _colTitle[10] + _rowTitle[12],   _rowTitle[12] + _colTitle[10],
+      _colTitle[4] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[4],
+      _colTitle[10] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[10],
     ];
     _tableEncoding['U'] = [
-      _colTitle[ 5] + _rowTitle[ 6],   _rowTitle[ 6] + _colTitle[ 5],
-      _colTitle[11] + _rowTitle[12],   _rowTitle[12] + _colTitle[11],
+      _colTitle[5] + _rowTitle[6],
+      _rowTitle[6] + _colTitle[5],
+      _colTitle[11] + _rowTitle[12],
+      _rowTitle[12] + _colTitle[11],
     ];
     _tableEncoding['V'] = [
-      _colTitle[ 4] + _rowTitle[ 7],   _rowTitle[ 7] + _colTitle[ 4],
+      _colTitle[4] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[4],
     ];
     _tableEncoding['W'] = [
-      _colTitle[ 5] + _rowTitle[ 7],   _rowTitle[ 7] + _colTitle[ 5],
+      _colTitle[5] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[5],
     ];
     _tableEncoding['X'] = [
-      _colTitle[ 6] + _rowTitle[ 7],   _rowTitle[ 7] + _colTitle[ 6],
+      _colTitle[6] + _rowTitle[7],
+      _rowTitle[7] + _colTitle[6],
     ];
     _tableEncoding['Y'] = [
-      _colTitle[ 5] + _rowTitle[ 8],   _rowTitle[ 8] + _colTitle[ 5],
+      _colTitle[5] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[5],
     ];
     _tableEncoding['Z'] = [
-      _colTitle[ 6] + _rowTitle[ 8],   _rowTitle[ 8] + _colTitle[ 6],
+      _colTitle[6] + _rowTitle[8],
+      _rowTitle[8] + _colTitle[6],
     ];
 
-    _tableNumeralCode = AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
+    _tableNumeralCode =
+        AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
   }
 
   bool _invalidSingleAxisTitle(String text) {
-    if (text.length != 13)
-      return true;
+    if (text.length != 13) return true;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element))
-        return true;
+      if (dublicates.contains(element)) return true;
     });
     return false;
   }
@@ -490,10 +700,8 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
   bool _invalidAxisDescription(String text) {
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element))
-        return true;
+      if (dublicates.contains(element)) return true;
     });
     return false;
   }
-
 }

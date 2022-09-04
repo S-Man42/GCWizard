@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_auth.dart';
@@ -13,7 +12,7 @@ class BundeswehrTalkingBoardCodingOutput {
   BundeswehrTalkingBoardCodingOutput({this.ResponseCode, this.Details});
 }
 
-BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, AuthentificationTable tableEncoding){
+BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, AuthentificationTable tableEncoding) {
   if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
@@ -25,10 +24,10 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Authentifi
     }
     result.add(tableEncoding.Encoding[char][random.nextInt(tableEncoding.Encoding[char].length)]);
   });
-  return BundeswehrTalkingBoardCodingOutput(ResponseCode: 'OK',Details: result.join(' '));
+  return BundeswehrTalkingBoardCodingOutput(ResponseCode: 'OK', Details: result.join(' '));
 }
 
-BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, AuthentificationTable tableNumeralCode){
+BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, AuthentificationTable tableNumeralCode) {
   if (tableNumeralCode.Content.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
@@ -45,7 +44,8 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, Authentif
       invalidCypher = true;
     }
   });
-  return BundeswehrTalkingBoardCodingOutput(ResponseCode: invalidCypher ? CODE_RESPONSE_INVALID_CYPHER : 'OK', Details: result);
+  return BundeswehrTalkingBoardCodingOutput(
+      ResponseCode: invalidCypher ? CODE_RESPONSE_INVALID_CYPHER : 'OK', Details: result);
 }
 
 String _decodeNumeralCode(String tupel, AuthentificationTable tableNumeralCode) {
@@ -69,7 +69,7 @@ String _decodeNumeralCode(String tupel, AuthentificationTable tableNumeralCode) 
     return '';
 }
 
-String _getObfuscatedTupel(AuthentificationTable tableNumeralCode){
+String _getObfuscatedTupel(AuthentificationTable tableNumeralCode) {
   var random = new Random();
   if (random.nextInt(100) > 50) {
     return tableNumeralCode.yAxis[random.nextInt(13)] + tableNumeralCode.yAxis[random.nextInt(13)];

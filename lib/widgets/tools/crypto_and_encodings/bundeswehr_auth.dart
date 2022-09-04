@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_auth.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -57,7 +59,10 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     _numeralCodeCustomYaxis = TextEditingController(text: _currentNumeralCodeYaxisCustom);
 
     _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
-    _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
+    _buildNumeralCode(context,
+        custom: _currentTableMode == GCWSwitchPosition.left,
+        xAxis: _currentNumeralCodeXaxisCustom,
+        yAxis: _currentNumeralCodeYaxisCustom);
   }
 
   @override
@@ -87,163 +92,129 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           },
         ),
         GCWTextField(
+          title: i18n(context, 'bundeswehr_auth_call_sign'),
           controller: _callSignController,
-          hintText: i18n(context, 'bundeswehr_auth_call_sign'),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),],
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+          ],
           onChanged: (text) {
             setState(() {
               _currentCallSign = text;
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.right
-        ? Column( // checkAuth
-          children: <Widget>[
-            Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                        child: GCWTextField(
-                          controller: _letterControllerAuth,
-                          hintText: i18n(context, 'bundeswehr_auth_letter_auth'),
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[vwxyzVWXYZ]')),],
-                          onChanged: (text) {
-                            setState(() {
-                              _currentLetterAuth = text;
-                            });
-                          },
-                        ),
-                        padding: EdgeInsets.only(right: 2)
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                        child:  GCWTextField(
-                          controller: _inputAuthController,
-                          hintText: i18n(context, 'bundeswehr_auth_authentification_code'),
-                          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ,.]')),],
-                          onChanged: (text) {
-                            setState(() {
-                              _currentAuthInput = text;
-                            });
-                          },
-                        ),
-                        padding: EdgeInsets.only(left: 2)
-                    ),
-                  ),
-                ]
-            ),
-
-          ],
-        )
-        : Column( // build auth
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    child: GCWTextField(
-                      controller: _letterControllerAuth,
-                      hintText: i18n(context, 'bundeswehr_auth_letter_auth'),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[vwxyzVWXYZ]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentLetterAuth = text;
-                        });
-                      },
-                    ),
-                    padding: EdgeInsets.only(right: 2)
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    child: GCWTextField(
-                      controller: _letterControllerCallSign,
-                      hintText: i18n(context, 'bundeswehr_auth_letter_callsign'),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),],
-                      onChanged: (text) {
-                        setState(() {
-                          _currentLetterCallSign = text;
-                        });
-                      },
-                    ),
-                    padding: EdgeInsets.only(left: 2)
-                  ),
-                ),
-              ]
-            ),
-          ],
+        GCWDropDownSpinner(
+          title: i18n(context, 'bundeswehr_auth_letter_auth'),
+          index: 0,
+          items: AUTH_TABLE_X_AXIS.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentLetterAuth = value;
+            });
+          },
         ),
+        _currentMode == GCWSwitchPosition.right
+            ? GCWTextField(
+                title: i18n(context, 'bundeswehr_auth_authentification_code'),
+                controller: _inputAuthController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ,.]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentAuthInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                title: i18n(context, 'bundeswehr_auth_letter_callsign'),
+                controller: _letterControllerCallSign,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                ],
+                onChanged: (text) {
+                  setState(() {
+                    _currentLetterCallSign = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
+          title: i18n(context, 'bundeswehr_auth_table_mode'),
           rightValue: i18n(context, 'bundeswehr_auth_table_mode_random'),
           leftValue: i18n(context, 'bundeswehr_auth_table_mode_custom'),
           value: _currentTableMode,
           onChanged: (value) {
             setState(() {
               _currentTableMode = value;
-              _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
-              _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
+              _buildAuthTable(context,
+                  custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
+              _buildNumeralCode(context,
+                  custom: _currentTableMode == GCWSwitchPosition.left,
+                  xAxis: _currentNumeralCodeXaxisCustom,
+                  yAxis: _currentNumeralCodeYaxisCustom);
             });
           },
         ),
         GCWExpandableTextDivider(
-          text: i18n(context, 'bundeswehr_auth_numeral_code'),
-          child: Column(
-            children: <Widget>[
-              _currentTableMode == GCWSwitchPosition.right
-               ? GCWOutputText(
-                    text: _numeralCodeString,
-                    isMonotype: true,
-                 )
-               : Column(
-                children: <Widget>[
-                  GCWTextField(
-                    controller: _numeralCodeCustomXaxis,
-                    hintText: i18n(context, 'bundeswehr_auth_authentification_code_x_axis'),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),],
-                    onChanged: (text) {
-                      setState(() {
-                        _currentNumeralCodeXaxisCustom = text;
-                      });
-                    },
-                  ),
-                  GCWTextField(
-                    controller: _numeralCodeCustomYaxis,
-                    hintText: i18n(context, 'bundeswehr_auth_authentification_code_y_axis'),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),],
-                    onChanged: (text) {
-                      setState(() {
-                        _currentNumeralCodeYaxisCustom = text;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ],
-          )
-        ),
+            text: i18n(context, 'bundeswehr_auth_numeral_code'),
+            child: Column(
+              children: <Widget>[
+                _currentTableMode == GCWSwitchPosition.right
+                    ? GCWOutputText(
+                        text: _numeralCodeString,
+                        isMonotype: true,
+                      )
+                    : Column(
+                        children: <Widget>[
+                          GCWTextField(
+                            controller: _numeralCodeCustomXaxis,
+                            hintText: i18n(context, 'bundeswehr_auth_authentification_code_x_axis'),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
+                            ],
+                            onChanged: (text) {
+                              setState(() {
+                                _currentNumeralCodeXaxisCustom = text;
+                              });
+                            },
+                          ),
+                          GCWTextField(
+                            controller: _numeralCodeCustomYaxis,
+                            hintText: i18n(context, 'bundeswehr_auth_authentification_code_y_axis'),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
+                            ],
+                            onChanged: (text) {
+                              setState(() {
+                                _currentNumeralCodeYaxisCustom = text;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+              ],
+            )),
         GCWExpandableTextDivider(
-          text: i18n(context, 'bundeswehr_auth_authentification_code'),
-          child: Column(
-            children: <Widget>[
+            text: i18n(context, 'bundeswehr_auth_authentification_code'),
+            child: Column(children: <Widget>[
               _currentTableMode == GCWSwitchPosition.right
-              ? GCWOutputText(
-                text: _authTableString,
-                isMonotype: true,
-                )
-              : GCWTextField(
-                controller: _authTableCustom,
-                hintText: i18n(context, 'bundeswehr_auth_authentification_code'),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
-                onChanged: (text) {
-                  setState(() {
-                    _currentAuthTableCustom = text;
-                  });
-                },
-              ),
-            ]
-          )
-        ),
+                  ? GCWOutputText(
+                      text: _authTableString,
+                      isMonotype: true,
+                    )
+                  : GCWTextField(
+                      controller: _authTableCustom,
+                      hintText: i18n(context, 'bundeswehr_auth_authentification_code'),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),
+                      ],
+                      onChanged: (text) {
+                        setState(() {
+                          _currentAuthTableCustom = text;
+                        });
+                      },
+                    ),
+            ])),
         GCWTextDivider(
           text: i18n(context, 'common_output'),
         ),
@@ -255,24 +226,27 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
   Widget _calculateOutput(BuildContext context) {
     AuthentificationOutput output;
 
-    if (_currentTableMode == GCWSwitchPosition.left) { // custom tables
+    if (_currentTableMode == GCWSwitchPosition.left) {
+      // custom tables
       _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
-      _buildNumeralCode(context, custom: _currentTableMode == GCWSwitchPosition.left, xAxis: _currentNumeralCodeXaxisCustom, yAxis: _currentNumeralCodeYaxisCustom);
+      _buildNumeralCode(context,
+          custom: _currentTableMode == GCWSwitchPosition.left,
+          xAxis: _currentNumeralCodeXaxisCustom,
+          yAxis: _currentNumeralCodeYaxisCustom);
     }
 
-    if (_currentMode == GCWSwitchPosition.right) { // check auth
-      output = checkAuthBundeswehr(_currentCallSign.toUpperCase(), _currentAuthInput.toUpperCase(), _currentLetterAuth.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
+    if (_currentMode == GCWSwitchPosition.right) {
+      // check auth
+      output = checkAuthBundeswehr(_currentCallSign.toUpperCase(), _currentAuthInput.toUpperCase(),
+          _currentLetterAuth.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
       if (output.ResponseCode == AUTH_RESPONSE_OK) {
         return Column(
           children: <Widget>[
-            GCWText(
-              text: i18n(context, 'bundeswehr_auth_response_ok')
-            ),
+            GCWText(text: i18n(context, 'bundeswehr_auth_response_ok')),
             GCWExpandableTextDivider(
               text: i18n(context, 'bundeswehr_auth_details'),
               expanded: false,
-              child: GCWText(
-                  text: output.Details),
+              child: GCWText(text: output.Details),
             )
           ],
         );
@@ -281,19 +255,23 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
           text: i18n(context, output.ResponseCode),
         );
       }
-    } else { // build auth
-      output = buildAuthBundeswehr(_currentCallSign.toUpperCase(), _currentLetterAuth.toUpperCase(), _currentLetterCallSign.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
+    } else {
+      // build auth
+      output = buildAuthBundeswehr(_currentCallSign.toUpperCase(), _currentLetterAuth.toUpperCase(),
+          _currentLetterCallSign.toUpperCase(), _tableNumeralCode, _tableAuthentificationCode);
       if (output.ResponseCode == AUTH_RESPONSE_OK) {
         return Row(children: <Widget>[
           Expanded(
             child: Padding(
                 child: Column(
                   children: <Widget>[
-                    Center(child: Text(_currentLetterCallSign.toUpperCase(),)),
+                    Center(
+                        child: Text(
+                      _currentLetterCallSign.toUpperCase(),
+                    )),
                     GCWDropDownButton(
                       onChanged: (value) {
-                        setState(() {
-                        });
+                        setState(() {});
                       },
                       items: output.Tupel1.map((mode) {
                         return GCWDropDownMenuItem(
@@ -310,11 +288,13 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
             child: Padding(
                 child: Column(
                   children: <Widget>[
-                    Center(child: Text(output.Number[0],)),
+                    Center(
+                        child: Text(
+                      output.Number[0],
+                    )),
                     GCWDropDownButton(
                       onChanged: (value) {
-                        setState(() {
-                        });
+                        setState(() {});
                       },
                       items: output.Tupel2.map((mode) {
                         return GCWDropDownMenuItem(
@@ -331,11 +311,13 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
             child: Padding(
                 child: Column(
                   children: <Widget>[
-                    Center(child: Text(output.Number[1],)),
+                    Center(
+                        child: Text(
+                      output.Number[1],
+                    )),
                     GCWDropDownButton(
                       onChanged: (value) {
-                        setState(() {
-                        });
+                        setState(() {});
                       },
                       items: output.Tupel3.map((mode) {
                         return GCWDropDownMenuItem(
@@ -346,7 +328,9 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
                     )
                   ],
                 ),
-                padding: EdgeInsets.only(left: 2, )),
+                padding: EdgeInsets.only(
+                  left: 2,
+                )),
           ),
         ]);
       } else
@@ -356,29 +340,25 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     }
   }
 
-  void _buildAuthTable(BuildContext context, {bool custom, String authTable}){
+  void _buildAuthTable(BuildContext context, {bool custom, String authTable}) {
     List<String> authCode = [];
     Map<String, Map<String, String>> _authTable = {};
 
     if (custom) {
       if (authTable.trim().split(' ').length != 65) {
-        _tableAuthentificationCode =
-            AuthentificationTable(yAxis: [], xAxis: [], Content: []);
+        _tableAuthentificationCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _authTableString = i18n(context, 'bundeswehr_auth_response_invalid_custom_table_auth');
         return;
       }
       authTable.trim().split(' ').forEach((element) {
         if (element.length > 2) {
-              _tableAuthentificationCode =
-                  AuthentificationTable(yAxis: [], xAxis: [], Content: []);
-              _authTableString = i18n(context, 'bundeswehr_auth_response_invalid_custom_table_auth');
-              return;
-        }
+          _tableAuthentificationCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
+          _authTableString = i18n(context, 'bundeswehr_auth_response_invalid_custom_table_auth');
+          return;
+        } else if (element.length == 1)
+          authCode.add('0' + element);
         else
-          if (element.length == 1)
-            authCode.add('0' + element);
-          else
-            authCode.add(element);
+          authCode.add(element);
       });
     } else {
       var random = new Random();
@@ -386,7 +366,6 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
       while (authCode.length != 65) {
         rnd = random.nextInt(100);
         if (authCode.contains(rnd)) {
-
         } else {
           authCode.add(rnd.toString().padLeft(2, '0'));
         }
@@ -406,18 +385,28 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     i = 0;
     _authTableString = '     V   W   X   Y   Z \n-----------------------\n';
     AUTH_TABLE_Y_AXIS.forEach((element) {
-      _authTableString = _authTableString + ' ' + element + '   ' + authCode[i].toString().padLeft(2, '0')
-          + '  ' + authCode[i + 1].toString().padLeft(2, '0')
-          + '  ' + authCode[i + 2].toString().padLeft(2, '0')
-          + '  ' + authCode[i + 3].toString().padLeft(2, '0')
-          + '  ' + authCode[i + 4].toString().padLeft(2, '0') + '\n';
+      _authTableString = _authTableString +
+          ' ' +
+          element +
+          '   ' +
+          authCode[i].toString().padLeft(2, '0') +
+          '  ' +
+          authCode[i + 1].toString().padLeft(2, '0') +
+          '  ' +
+          authCode[i + 2].toString().padLeft(2, '0') +
+          '  ' +
+          authCode[i + 3].toString().padLeft(2, '0') +
+          '  ' +
+          authCode[i + 4].toString().padLeft(2, '0') +
+          '\n';
       i = i + 5;
     });
 
-    _tableAuthentificationCode = AuthentificationTable(yAxis: AUTH_TABLE_Y_AXIS, xAxis: AUTH_TABLE_X_AXIS, Content: authCode);
+    _tableAuthentificationCode =
+        AuthentificationTable(yAxis: AUTH_TABLE_Y_AXIS, xAxis: AUTH_TABLE_X_AXIS, Content: authCode);
   }
 
-  void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}){
+  void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {
     List<String> _colTitle;
     List<String> _rowTitle;
     List<String> _numeralCode = [];
@@ -436,7 +425,6 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
       }
 
       if (_invalidAxisDescription(xAxis + yAxis)) {
-
         _tableNumeralCode = AuthentificationTable(yAxis: [], xAxis: [], Content: []);
         _numeralCodeString = i18n(context, 'bundeswehr_auth_response_invalid_axis_numeral_code');
         return;
@@ -444,9 +432,35 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
 
       _colTitle = yAxis.toUpperCase().split('');
       _rowTitle = xAxis.toUpperCase().split('');
-
     } else {
-      List<String> alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',];
+      List<String> alphabet = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+      ];
       var random = new Random();
       int rnd = 0;
       String description = '';
@@ -474,7 +488,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
     _numeralCode.addAll('123456789STU0'.split(''));
 
     int i = 0;
-    _numeralCodeString = '   ' + _colTitle.join(' ') +'\n----------------------------\n ';
+    _numeralCodeString = '   ' + _colTitle.join(' ') + '\n----------------------------\n ';
     _rowTitle.forEach((row) {
       _numeralCodeString = _numeralCodeString + row + ' ';
       for (int j = 0; j < 13; j++) {
@@ -487,12 +501,10 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
   }
 
   bool _invalidSingleAxisTitle(String text) {
-    if (text.length != 13)
-      return true;
+    if (text.length != 13) return true;
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element))
-        return true;
+      if (dublicates.contains(element)) return true;
     });
     return false;
   }
@@ -500,8 +512,7 @@ class BundeswehrAuthState extends State<BundeswehrAuth> {
   bool _invalidAxisDescription(String text) {
     List<String> dublicates = [];
     text.split('').forEach((element) {
-      if (dublicates.contains(element))
-        return true;
+      if (dublicates.contains(element)) return true;
     });
     return false;
   }

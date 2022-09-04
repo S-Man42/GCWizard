@@ -53,7 +53,34 @@ const AUTH_TABLE_X_AXIS = [
   'Z',
 ];
 
-const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const LETTERS = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z'
+];
 
 const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
@@ -73,7 +100,6 @@ AuthentificationOutput buildAuthBundeswehr(
     String currentLetterCallSign,
     AuthentificationTable tableNumeralCode,
     AuthentificationTable tableAuthentificationCode) {
-
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
 
@@ -115,38 +141,33 @@ AuthentificationOutput buildAuthBundeswehr(
           tupel3.add(t2 + t1);
         }
       }
-      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_OK, Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
+      return AuthentificationOutput(
+          ResponseCode: AUTH_RESPONSE_OK, Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
     }
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
   }
   return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER);
 }
 
-AuthentificationOutput checkAuthBundeswehr(
-    String currentCallSign,
-    String currentAuth,
-    String currentLetterAuth,
-    AuthentificationTable tableNumeralCode,
-    AuthentificationTable tableAuthentificationCode) {
-
+AuthentificationOutput checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
+    AuthentificationTable tableNumeralCode, AuthentificationTable tableAuthentificationCode) {
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
 
   if (tableAuthentificationCode == null || tableAuthentificationCode.Content.isEmpty)
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
 
-  if (!AUTH_TABLE_X_AXIS.contains(currentLetterAuth)) 
+  if (!AUTH_TABLE_X_AXIS.contains(currentLetterAuth))
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
 
   if (currentCallSign == null || currentCallSign == '')
     return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_MISSING_CALLSIGN);
 
-currentAuth = _normalizeAuthCode(currentAuth);
+  currentAuth = _normalizeAuthCode(currentAuth);
   if (currentAuth != '' || currentAuth != null) {
     String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
-    if (authCode.length != 3)
-      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTH);
+    if (authCode.length != 3) return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTH);
 
     List<String> tupel = authCode[0].split('');
     if (tableNumeralCode.xAxis.contains(tupel[0]) && tableNumeralCode.xAxis.contains(tupel[1]))
@@ -167,8 +188,7 @@ currentAuth = _normalizeAuthCode(currentAuth);
     }
     char = tableNumeralCode.Content[index_x + index_y * 13];
 
-    if (!LETTERS.contains(char))
-      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+    if (!LETTERS.contains(char)) return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
 
     details = details + authCode[0] + ' ⇒ ' + char + '\n';
 
@@ -186,8 +206,7 @@ currentAuth = _normalizeAuthCode(currentAuth);
       index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
     digit1 = tableNumeralCode.Content[index];
-    if (!DIGITS.contains(digit1))
-      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+    if (!DIGITS.contains(digit1)) return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
     details = details + authCode[1] + ' ⇒ ' + digit1 + '\n';
 
     tupel = authCode[2].split('');
@@ -203,8 +222,7 @@ currentAuth = _normalizeAuthCode(currentAuth);
       index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
     digit2 = tableNumeralCode.Content[index];
-    if (!DIGITS.contains(digit2))
-      return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+    if (!DIGITS.contains(digit2)) return AuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
     details = details + authCode[2] + ' ⇒ ' + digit2 + '\n';
 
     String digit = '';
