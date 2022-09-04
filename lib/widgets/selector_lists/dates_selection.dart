@@ -19,7 +19,7 @@ class DatesSelection extends GCWSelection {
         className(DayCalculator()),
         className(TimeCalculator()),
         className(Weekday()),
-        className(DayOfTheYear())
+        className(DayOfTheYear()),
         className(Calendar()),
         className(MayaCalendarSelection()),
       ].contains(className(element.tool));
