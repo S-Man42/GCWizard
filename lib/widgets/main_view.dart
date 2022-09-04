@@ -241,7 +241,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_replacer/symbol_replacer.dart';
 import 'package:gc_wizard/widgets/tools/uncategorized/zodiac.dart';
@@ -250,6 +249,7 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'tools/science_and_technology/colors/ral_color_codes.dart';
 
 class MainView extends StatefulWidget {
@@ -611,7 +611,7 @@ void _initStaticToolList() {
       className(Resection()),
       className(ResistorSelection()),
       className(Reverse()),
-      className(RightAscensionTimeToDegree()),
+      className(RightAscensionToDegree()),
       className(RobberLanguage()),
       className(RomanNumbers()),
       className(Rot123()),

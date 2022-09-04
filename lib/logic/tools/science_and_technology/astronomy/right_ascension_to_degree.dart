@@ -3,26 +3,25 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart' as dec;
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 
 
 /// degree to Right ascension
-RightAscension raDegree2Time(RaDeg ra) {
-  if ((ra == null) || (ra.degress == null)) return null;
-  var deg = ra.degress.abs();
+RightAscension raDegree2RightAscension(RaDeg ra) {
+  if ((ra == null) || (ra.degrees == null)) return null;
+  var deg = ra.degrees.abs();
 
   var hour = (deg / 15.0).floor();
   var min = (((deg / 15.0) - hour) * 60).floor();
   var sec = ((((deg / 15.0) - hour) * 60) - min) * 60;
 
-  return RightAscension(_sign(ra.degress), hour, min, sec);
+  return RightAscension(_sign(ra.degrees), hour, min, sec);
 }
 
 /// Right ascension hms to degree
-RaDeg raTime2Degree(RightAscension equatorial) {
+RaDeg raRightAscension2Degree(RightAscension equatorial) {
   if (equatorial == null) return null;
 
   var h = equatorial.hours;
@@ -58,40 +57,14 @@ class RightAscension {
     return ((this.seconds - this.seconds.truncate()) * 1000).round();
   }
 
-  static RightAscension fromDMM(int sign, int degrees, double minutes) {
-    if (sign == null) sign = 1;
-    if (degrees == null) degrees = 0;
-    if (minutes == null) minutes = 0.0;
-    return fromDEC(sign * (degrees.abs() + minutes / 60.0));
-  }
-
-  static RightAscension fromDMS (int sign, int degrees, int minutes, double seconds) {
-    if (sign == null) sign = 1;
-    if (degrees == null) degrees = 0;
-    if (minutes == null) minutes = 0;
-    if (seconds == null) seconds = 0.0;
-    return fromDEC(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
-  }
-
-  static RightAscension fromDEC(double dec) {
-    var ra = RightAscension(0, 0, 0, 0.0);
-    ra.hours = dec.truncate();
-    dec -= ra.hours;
-
-    ra.minutes = (dec * 60).truncate();
-    dec -= ra.minutes/ 60;
-
-    ra.seconds = dec * 3600;
-    return ra;
-  }
-
   static RightAscension fromDuration(Duration duration) {
     if (duration == null) return null;
     var _hours = duration.inHours;
     var _minutes = duration.inMinutes.abs().remainder(60);
     var _seconds = duration.inSeconds.abs().remainder(60);
     var _mseconds  = (duration.abs().inMilliseconds - duration.abs().inSeconds * 1000).round();
-    var _secondsD = double.parse('$_seconds.$_mseconds');
+    var _msStr = _mseconds.toString().padLeft(3, '0');
+    var _secondsD = double.parse('$_seconds.$_msStr');
     return RightAscension (duration.isNegative ? -1 : 1, _hours, _minutes, _secondsD);
   }
 
@@ -134,49 +107,34 @@ class RightAscension {
 
     return (sign < 0 ? '-' : '') + formatHoursToHHmmss(hourFormat, limitHours: false );
   }
-
-
-  DMMLatitude toDMMPart() {
-    return DMMLatitude(sign, hours, minutes + seconds/ 60);
-  }
-
-  String toDMMPartString() {
-    var lat = toDMMPart();
-    var result = lat.format();
-    result = result.replaceFirst( 'N ', '');
-    result = result.replaceFirst( 'S ', '-');
-    return result;
-  }
-
-  DMSLatitude toDMSPart() {
-    return DMSLatitude(sign, hours, minutes, seconds);
-  }
-
-  String toDMSPartString() {
-    var lat = toDMSPart();
-    var result = lat.format();
-    result = result.replaceFirst( 'N ', '');
-    result = result.replaceFirst( 'S ', '-');
-    return result;
-  }
-
-}
-
-String commaSplit(double value) {
-  if (value == null) return '0';
-  var splitted = (value - value.truncate()).toString().split('.');
-  if (splitted == null || splitted.length <2)
-    return '0';
-  if (splitted[1].length <= 4)
-    return splitted[1];
-  return splitted[1].substring(0, 4);
 }
 
 class RaDeg {
-  double degress;
+  double degrees;
 
-  RaDeg(double degress) {
-    this.degress = degress;
+  RaDeg(double degrees) {
+    this.degrees = degrees;
+  }
+
+  static RaDeg fromDMM(int sign, int degrees, double minutes) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0;
+    if (minutes == null) minutes = 0.0;
+    return RaDeg(sign * (degrees.abs() + minutes / 60.0));
+  }
+
+  static RaDeg fromDMS (int sign, int degrees, int minutes, double seconds) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0;
+    if (minutes == null) minutes = 0;
+    if (seconds == null) seconds = 0.0;
+    return RaDeg(sign * (degrees.abs() + minutes / 60.0 + seconds / 60.0 / 60.0));
+  }
+
+  static RaDeg fromDEC (int sign, double degrees) {
+    if (sign == null) sign = 1;
+    if (degrees == null) degrees = 0.0;
+    return RaDeg(sign * degrees);
   }
 
   static RaDeg parse(String input, {wholeString = false}) {
@@ -201,14 +159,13 @@ class RaDeg {
   }
 
   @override
-  String toString([int precision]) {
-    if (precision == null) precision = 10;
+  String toString([int precision = 10]) {
     if (precision < 1) precision = 1;
 
     String fixedDigits = '0' * min(precision, 3);
     String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
 
-    return '${NumberFormat('0.' + fixedDigits + variableDigits).format(degress)}';
+    return '${NumberFormat('0.' + fixedDigits + variableDigits).format(degrees)}';
   }
 
   static final _PATTERN_RADEG = '^\\s*?'
