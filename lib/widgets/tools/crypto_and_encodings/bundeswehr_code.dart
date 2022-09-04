@@ -685,7 +685,7 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     ];
 
     _tableNumeralCode =
-        AuthentificationTable(yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
+        AuthentificationTable(xAxis: _rowTitle, yAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
   }
 
   bool _invalidSingleAxisTitle(String text) {
