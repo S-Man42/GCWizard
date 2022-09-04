@@ -1,9 +1,11 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_auth.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 const CODE_RESPONSE_INVALID_CYPHER = 'bundeswehr_code_response_invalid_cypher';
+const CODE_RESPONSE_INVALID_PLAIN = 'bundeswehr_code_response_invalid_plain';
+const CODE_RESPONSE_OK = 'bundeswehr_auth_response_ok';
 
 class BundeswehrTalkingBoardCodingOutput {
   final String ResponseCode;
@@ -16,6 +18,9 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Authentifi
   if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
+  if (plainText == null || plainText == '')
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_INVALID_CYPHER, Details: '');
+
   List<String> result = [];
   var random = new Random();
   plainText.split('').forEach((char) {
@@ -24,15 +29,15 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Authentifi
     }
     result.add(tableEncoding.Encoding[char][random.nextInt(tableEncoding.Encoding[char].length)]);
   });
-  return BundeswehrTalkingBoardCodingOutput(ResponseCode: 'OK', Details: result.join(' '));
+  return BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_OK, Details: result.join(' '));
 }
 
 BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, AuthentificationTable tableNumeralCode) {
-  if (tableNumeralCode.Content.isEmpty)
+  if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
     return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
   if (cypherText == null || cypherText == '')
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: 'OK', Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_INVALID_CYPHER, Details: '');
 
   String result = '';
   bool invalidCypher = false;
@@ -45,7 +50,7 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, Authentif
     }
   });
   return BundeswehrTalkingBoardCodingOutput(
-      ResponseCode: invalidCypher ? CODE_RESPONSE_INVALID_CYPHER : 'OK', Details: result);
+      ResponseCode: invalidCypher ? CODE_RESPONSE_INVALID_CYPHER : CODE_RESPONSE_OK, Details: result);
 }
 
 String _decodeNumeralCode(String tupel, AuthentificationTable tableNumeralCode) {

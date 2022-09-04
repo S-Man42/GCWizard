@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_auth.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code.dart';
 
 const NUMERAL_CODE_X_AXIS = ['I', 'X', 'S', 'Y', 'U', 'K', 'F', 'Q', 'D', 'G', 'E', 'V', 'C',]; //IXSYUKFQDGEVC
 const NUMERAL_CODE_Y_AXIS = ['O', 'Z', 'J', 'R', 'P', 'W', 'M', 'A', 'T', 'L', 'B', 'N', 'H',]; //OZJRPWMATLBNH
@@ -38,6 +39,9 @@ const AUTH_CODE_CONTENT = [
   '65', '44', '86', '07', '20',
 ];
 
+const GC7DF7R_cypherText = 'SP OK UR SO PF SA HU FM ZV BU VA RG AE VL QH';
+const GC7DF7R_cypherText_1 = 'TV ZG VF OC EH ZZ KA KO XM EU XZ AG XX QZ DH BU YM WZ DB AC';
+const GC7DF7R_plainText = 'N5122850E746328';
 
 void main() {
   group("bundeswehr.check_auth:", () {
@@ -204,6 +208,68 @@ void main() {
           expect(_actual.Tupel2, elem['expectedOutput'].Tupel2);
           expect(_actual.Tupel3, elem['expectedOutput'].Tupel3);
           expect(_actual.Number, elem['expectedOutput'].Number);
+        }
+      });
+    });
+  });
+
+  group("bundeswehr.decode:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      { 'cypherText' : null,
+        'tableNumeralCode' : null,
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
+
+      { 'cypherText' : null,
+        'tableNumeralCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,Details: '')},
+
+      { 'cypherText' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,  Details: '')},
+
+      { 'cypherText' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_INVALID_CYPHER, Details: '')},
+
+      { 'cypherText' : GC7DF7R_cypherText,
+        'tableNumeralCode' : AuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(
+            ResponseCode: CODE_RESPONSE_OK,
+            Details: GC7DF7R_plainText)},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
+        var _actual = decodeBundeswehr(elem['cypherText'], elem['tableNumeralCode']);
+        expect(_actual.ResponseCode, elem['expectedOutput'].ResponseCode);
+        if (_actual.ResponseCode == CODE_RESPONSE_OK) {
+          expect(_actual.Details, elem['expectedOutput'].Details);
+        }
+      });
+    });
+  });
+
+  group("bundeswehr.encode:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      { 'cypherText' : null,
+        'tableNumeralCode' : null,
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
+
+      { 'cypherText' : null,
+        'tableNumeralCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,Details: '')},
+
+      { 'cypherText' : '',
+        'tableNumeralCode' : AuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,  Details: '')},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
+        var _actual = encodeBundeswehr(elem['cypherText'], elem['tableNumeralCode']);
+        expect(_actual.ResponseCode, elem['expectedOutput'].ResponseCode);
+        if (_actual.ResponseCode == CODE_RESPONSE_OK) {
+          expect(_actual.Details, elem['expectedOutput'].Details);
         }
       });
     });

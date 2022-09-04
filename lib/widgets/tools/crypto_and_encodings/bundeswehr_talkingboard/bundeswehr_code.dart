@@ -4,14 +4,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_auth.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_code.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class BundeswehrCode extends StatefulWidget {
@@ -156,13 +154,13 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
   Widget _calculateOutput(BuildContext context) {
     BundeswehrTalkingBoardCodingOutput output;
 
-    if (_currentTableMode == GCWSwitchPosition.left) {
+    if (_currentTableMode == GCWSwitchPosition.left) { // encrypt
       _buildNumeralCode(context,
           custom: _currentTableMode == GCWSwitchPosition.left,
           xAxis: _currentNumeralCodeXaxisCustom,
           yAxis: _currentNumeralCodeYaxisCustom);
     }
-    if (_currentMode == GCWSwitchPosition.right)
+    if (_currentMode == GCWSwitchPosition.right) // decrypt
       output = decodeBundeswehr(_currentDecode.toUpperCase(), _tableNumeralCode);
     else
       output = encodeBundeswehr(_currentEncode.toUpperCase(), _tableNumeralCode);
@@ -172,11 +170,6 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
         GCWDefaultOutput(
           child: output.Details,
         ),
-        output.ResponseCode.startsWith('bundeswehr')
-            ? GCWText(
-                text: i18n(context, output.ResponseCode),
-              )
-            : Container()
       ],
     );
   }
