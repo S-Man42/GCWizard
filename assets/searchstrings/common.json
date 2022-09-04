@@ -125,7 +125,7 @@
   "crossum": "",
   "crossumrange": "",
   "cryptographyselection": "",
-  "dates": "",
+  "dates": "iso8601",
   "dates_daycalculator": "",
   "dates_timecalculator": "",
   "dates_weekday": "",

@@ -119,7 +119,7 @@
   "cryptographyselection": "cryptography encoding decoding encode decode encryption encrypt decrypt decryption",
   "dates": "dates",
   "dates_daycalculator": "daycalculator countdays",
-  "dates_day_of_the_year": "daynumber year week",
+  "dates_day_of_the_year": "daynumber year weekday weeknumber dayoftheyear",
   "dates_timecalculator": "times timecalculator clockcalculator minutes hours seconds",
   "dates_weekday": "weekdays",
   "dates_calendar": "julian date gregorian date calendar",

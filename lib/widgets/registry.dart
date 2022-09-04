@@ -1743,13 +1743,13 @@ initializeRegistry(BuildContext context) {
       'dates',
       'dates_weekday',
     ]),
-    GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
-      'dates',
-      'dates_calendar',
-    ]),
     GCWTool(tool: DayOfTheYear(), i18nPrefix: 'dates_day_of_the_year', searchKeys: [
       'dates',
       'dates_day_of_the_year',
+    ]),
+    GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
+      'dates',
+      'dates_calendar',
     ]),
 
     //DNASelection ************************************************************************************************
