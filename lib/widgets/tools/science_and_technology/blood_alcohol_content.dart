@@ -37,8 +37,6 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
   var _currentHeight = 0.0;
   var _currentAge = 0;
 
-  var _currentOutputUnit = GCWSwitchPosition.right;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -116,7 +114,8 @@ class BloodAlcoholContentState extends State<BloodAlcoholContent> {
           title: i18n(context, 'bloodalcoholcontent_person_age'),
           value: _currentAge,
           min: 0,
-          overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
+          max: 999,
+          // overflow: SpinnerOverflowType.ALLOW_OVERFLOW,
           onChanged: (value) {
             setState(() {
               _currentAge = value;

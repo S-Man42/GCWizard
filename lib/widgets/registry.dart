@@ -311,7 +311,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterat
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
@@ -366,10 +365,10 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
-import 'tools/science_and_technology/colors/ral_color_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
+import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -389,6 +388,7 @@ import 'main_menu/settings/settings_coordinates.dart';
 import 'main_menu/settings/settings_general.dart';
 import 'main_menu/settings/settings_tools.dart';
 import 'tools/games/scrabble/scrabble.dart';
+import 'tools/science_and_technology/colors/ral_color_codes.dart';
 
 
 List<GCWTool> registeredTools;
@@ -1220,6 +1220,12 @@ initializeRegistry(BuildContext context) {
       'astronomy',
       'astronomy_shadow_length',
     ]),
+    GCWTool(tool: RightAscensionToDegree(), i18nPrefix: 'right_ascension_to_degree', categories: [
+    ], searchKeys: [
+      'astronomy',
+      'right_ascension_to_degree',
+      'coordinates',
+    ]),
 
     //Babylon Numbers Selection **************************************************************************************
     GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchKeys: [
@@ -1739,12 +1745,6 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', searchKeys: [
       'dates',
       'dates_calendar',
-    ]),
-    GCWTool(tool: RightAscensionTimeToDegree(), i18nPrefix: 'right_ascension_time_to_degree', categories: [
-      ToolCategory.SCIENCE_AND_TECHNOLOGY
-    ], searchKeys: [
-      'right_ascension_time_to_degree',
-      'coordinates',
     ]),
 
     //DNASelection ************************************************************************************************

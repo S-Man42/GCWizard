@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import '../../../../logic/tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/integer_minutesseconds_textinputformatter.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/integer_minutesseconds_textinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
 
 
-class RightAscensionTimeToDegree extends StatefulWidget {
+class RightAscensionToDegree extends StatefulWidget {
   @override
-  RightAscensionTimeToDegreeState createState() => RightAscensionTimeToDegreeState();
+  RightAscensionToDegreeState createState() => RightAscensionToDegreeState();
 }
 
-class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> {
-
-  static const keyCoordsHMS = 'coords_hms';
-
+class RightAscensionToDegreeState extends State<RightAscensionToDegree> {
   FocusNode _hoursFocusNode;
   FocusNode _minutesFocusNode;
   FocusNode _secondsFocusNode;
@@ -45,18 +44,19 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   TextEditingController _decDegreesController;
   TextEditingController _decMilliDegreesController;
 
-  var _currentRightAscension = RightAscension(1, 0 ,0 , 0.0);
-  var _currentEncryptFormat = keyCoordsHMS;
+  var _currentRaDeg = RaDeg(0.0);
+  var _currentRightAscension = RightAscension(0, 0 ,0 , 0.0);
+  var _currentDecryptFormat = keyCoordsDEC;
 
   var _currentDecSign = 1;
-  String _currentDecDegrees = '';
-  String _currentDecMilliDegrees = '';
+  String _currentDecDegrees = '0';
+  String _currentDecMilliDegrees = '0';
 
   TextEditingController _DmmDegreesController;
   TextEditingController _DmmMinutesController;
   TextEditingController _DmmMilliMinutesController;
   int _currentDmmSign = 1;
-  String _currentDmmDegrees = '1';
+  String _currentDmmDegrees = '0';
   String _currentDmmMinutes = '0';
   String _currentDmmMilliMinutes = '0';
   FocusNode _dmmMinutesFocusNode;
@@ -67,7 +67,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   TextEditingController _DmsSecondsController;
   TextEditingController _DmsMilliSecondsController;
   int _currentDmsSign = 1;
-  String _currentDmsDegrees = '1';
+  String _currentDmsDegrees = '0';
   String _currentDmsMinutes = '0';
   String _currentDmsSeconds = '0';
   String _currentDmsMilliSeconds = '0';
@@ -149,38 +149,51 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
             });
           },
         ),
+        _currentMode == GCWSwitchPosition.left ? Container() :
         GCWTextDivider(
             trailing: GCWPasteButton(
               iconSize: IconButtonSize.SMALL,
               onSelected: (text) {
                 setState(() {
-                  _parse(text);
+                  _parseRAPaste(text);
                 });
               },
             )),
         _currentMode == GCWSwitchPosition.left
-          ? _buildDegRow()
-          : _buildEncryptRow(),
+          ? _buildDecryptWidget()
+          : _buildHmsWidget(),
         Container(height: 10),
         _buildOutput()
       ],
     );
   }
 
-  Widget _buildEncryptRow() {
+  Widget _buildDecryptWidget() {
+    var _decryptWidget;
+    switch (_currentDecryptFormat) {
+      case keyCoordsDEC: _decryptWidget = _buildDecPartRow(); break;
+      case keyCoordsDMM: _decryptWidget = _buildDmmPartRow(); break;
+      case keyCoordsDMS: _decryptWidget = _buildDmsPartRow(); break;
+    }
+
     return Column(children: [
       GCWDropDownButton(
-        value: _currentEncryptFormat,
+        value: _currentDecryptFormat,
         onChanged: (newValue) {
           setState(() {
-            _currentEncryptFormat = newValue;
-            _updateControler();
+            _currentDecryptFormat = newValue;
+
+            switch (_currentDecryptFormat) {
+              case keyCoordsDEC: _setDecRightAscension(); break;
+              case keyCoordsDMM: _setDmmDegrees(); break;
+              case keyCoordsDMS: _setDmsRightAscension(); break;
+            }
           });
         },
         items: [
           GCWDropDownMenuItem(
-            value: keyCoordsHMS,
-            child: "HMS: h:min:sec.msec",
+            value: keyCoordsDEC,
+            child: getCoordinateFormatByKey(keyCoordsDEC).name,
           ),
           GCWDropDownMenuItem(
             value: keyCoordsDMM,
@@ -193,15 +206,11 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         ],
       ),
       Container(height: 10),
-      _currentEncryptFormat == keyCoordsDMM
-      ? _buildDmmPartRow()
-      : _currentEncryptFormat == keyCoordsDMS
-        ? _buildDmsPartRow()
-        : _buildHmsRow()
+      _decryptWidget
     ]);
   }
 
-  Widget _buildHmsRow() {
+  Widget _buildHmsWidget() {
     return Column(children: [
         GCWToolBar( children:[
           GCWText(text: '+/-', align: Alignment.center),
@@ -209,9 +218,9 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
           GCWText(text: ''),
           GCWText(text: 'min', align: Alignment.center),
           GCWText(text: ''),
-          GCWText(text: 'sec', align: Alignment.center),
+          GCWText(text: 's', align: Alignment.center),
           GCWText(text: ''),
-          GCWText(text: 'msec', align: Alignment.center)
+          GCWText(text: 'ms', align: Alignment.center)
         ],
           flexValues: [5,5,1,5,1,5,1,8],
         ),
@@ -245,7 +254,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (value) {
                   setState(() {
                     _currentDmmSign = value;
-                    _setDmmRightAscension();
+                    _setDmmDegrees();
                   });
                 }),
           ),
@@ -254,14 +263,12 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
               child: Container(
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
+                    textInputFormatter: IntegerTextInputFormatter(min: 0),
                     controller: _DmmDegreesController,
                     onChanged: (ret) {
                       setState(() {
                         _currentDmmDegrees = ret['text'];
-                        _setDmmRightAscension();
-
-                         if (_currentDmmDegrees.length == 2) FocusScope.of(context).requestFocus(_dmmMinutesFocusNode);
+                        _setDmmDegrees();
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -280,7 +287,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmmMinutes = ret['text'];
-                    _setDmmRightAscension();
+                    _setDmmDegrees();
 
                      if (_currentDmmMinutes.length == 2) FocusScope.of(context).requestFocus(_dmmMilliMinutesFocusNode);
                   });
@@ -300,7 +307,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDmmMilliMinutes = ret['text'];
-                    _setDmmRightAscension();
+                    _setDmmDegrees();
                   });
                 }),
           ),
@@ -311,14 +318,6 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
         ],
       ),
     ]);
-  }
-
-  void _setDmmRightAscension() {
-    int _degrees = ['', '-'].contains(_currentDmmDegrees) ? 0 : int.parse(_currentDmmDegrees);
-    int _minutes = ['', '-'].contains(_currentDmmMinutes) ? 0 : int.parse(_currentDmmMinutes);
-    double _minutesD = double.parse('$_minutes.$_currentDmmMilliMinutes');
-
-    _currentRightAscension = RightAscension.fromDMM(_currentDmmSign, _degrees, _minutesD);
   }
 
   Widget _buildDmsPartRow() {
@@ -342,14 +341,12 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
               child: Container(
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(),
+                    textInputFormatter: IntegerTextInputFormatter(min: 0),
                     controller: _DmsDegreesController,
                     onChanged: (ret) {
                       setState(() {
                         _currentDmsDegrees = ret['text'];
                         _setDmsRightAscension();
-
-                        if (_currentDmsDegrees.length == 2) FocusScope.of(context).requestFocus(_dmsMinutesFocusNode);
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -421,17 +418,31 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
     ]);
   }
 
-
   void _setDmsRightAscension() {
     int _degrees = ['', '-'].contains(_currentDmsDegrees) ? 0 : int.parse(_currentDmsDegrees);
     int _minutes = ['', '-'].contains(_currentDmsMinutes) ? 0 : int.parse(_currentDmsMinutes);
     int _seconds = ['', '-'].contains(_currentDmsSeconds) ? 0 : int.parse(_currentDmsSeconds);
     double _secondsD = double.parse('$_seconds.$_currentDmsMilliSeconds');
 
-    _currentRightAscension = RightAscension.fromDMS(_currentDmsSign, _degrees, _minutes, _secondsD);
+    _currentRaDeg = RaDeg.fromDMS(_currentDmsSign, _degrees, _minutes, _secondsD);
   }
 
-  Widget _buildDegRow() {
+  void _setDmmDegrees() {
+    int _degrees = ['', '-'].contains(_currentDmmDegrees) ? 0 : int.parse(_currentDmmDegrees);
+    int _minutes = ['', '-'].contains(_currentDmmMinutes) ? 0 : int.parse(_currentDmmMinutes);
+    double _minutesD = double.parse('$_minutes.$_currentDmmMilliMinutes');
+
+    _currentRaDeg = RaDeg.fromDMM(_currentDmmSign, _degrees, _minutesD);
+  }
+
+  void _setDecRightAscension() {
+    int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
+    double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
+
+    _currentRaDeg = RaDeg.fromDEC(_currentDecSign, _degreesD);
+  }
+
+  Widget _buildDecPartRow() {
     return Column(children: <Widget>[
       Row(
         children: <Widget>[
@@ -443,6 +454,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (value) {
                   setState(() {
                     _currentDecSign = value;
+                    _setDecRightAscension();
                   });
                 }),
           ),
@@ -451,11 +463,12 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
               child: Container(
                 child: GCWIntegerTextField(
                     hintText: 'DD',
-                    textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
+                    textInputFormatter: IntegerTextInputFormatter(min: 0),
                     controller: _decDegreesController,
                     onChanged: (ret) {
                       setState(() {
                         _currentDecDegrees = ret['text'];
+                        _setDecRightAscension();
                       });
                     }),
                 padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
@@ -474,6 +487,7 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
                 onChanged: (ret) {
                   setState(() {
                     _currentDecMilliDegrees = ret['text'];
+                    _setDecRightAscension();
                   });
                 }),
           ),
@@ -488,74 +502,47 @@ class RightAscensionTimeToDegreeState extends State<RightAscensionTimeToDegree> 
   }
 
   Widget _buildOutput() {
-    var rows = <Widget>[];
     if (_currentMode == GCWSwitchPosition.left) {
-      int _degrees = ['', '-'].contains(_currentDecDegrees) ? 0 : int.parse(_currentDecDegrees);
-      double _degreesD = double.parse('$_degrees.$_currentDecMilliDegrees');
-      var _currentDeg = RaDeg(_currentDecSign * _degreesD);
-      var _time = raDegree2Time(_currentDeg);
-
-      rows = columnedMultiLineOutput(context, [
-        [i18n(context, 'astronomy_position_rightascension'), _time.toString()],
-        [getCoordinateFormatByKey(keyCoordsDMM).name, _time.toDMMPartString()],
-        [getCoordinateFormatByKey(keyCoordsDMS).name, _time.toDMSPartString()]
-      ]);
-
+      return GCWOutput(
+        title: i18n(context, 'common_output') + ': ' + i18n(context, 'astronomy_position_rightascension'),
+        child: raDegree2RightAscension(_currentRaDeg).toString()
+      );
     } else {
-      rows = columnedMultiLineOutput(context, [
-        [i18n(context, 'common_unit_angle_deg_name'), raTime2Degree(_currentRightAscension).toString()]
+      RaDeg output = raRightAscension2Degree(_currentRightAscension);
+      var dmm = DMMLatitude.from(doubleToDMMPart(output.degrees))
+          .format(6)
+          .replaceAll('N ', '')
+          .replaceAll('S ', '-');
+
+      var dms = DMSLatitude.from(doubleToDMSPart(output.degrees))
+          .format(6)
+          .replaceAll('N ', '')
+          .replaceAll('S ', '-');
+
+      var rows = columnedMultiLineOutput(context, [
+        [getCoordinateFormatByKey(keyCoordsDEC).name, output.toString() + '°'],
+        [getCoordinateFormatByKey(keyCoordsDMM).name, dmm],
+        [getCoordinateFormatByKey(keyCoordsDMS).name, dms],
       ]);
-    }
-    return Column(children: rows);
-  }
-
-  _parse(String input) {
-    if(_currentMode == GCWSwitchPosition.left) {
-      var deg = RaDeg.parse(input);
-      if (deg == null) {
-        showToast(i18n(context, 'right_ascension_time_to_degree_clipboard_nodatafound'));
-        return;
-      }
-
-      setState(() {
-        _currentDecDegrees = deg.degress.abs().truncate().toString();
-        _currentDecMilliDegrees = separateDecimalPlaces(deg.degress).toString();
-
-        _currentDecSign = coordinateSign(deg.degress);
-        _decDegreesController.text = _currentDecDegrees.toString();
-        _decMilliDegreesController.text = _currentDecMilliDegrees.toString();
-      });
-    } else {
-      var rightAscension = RightAscension.parse(input);
-      if (rightAscension == null) {
-        showToast(i18n(context, 'right_ascension_time_to_degree_clipboard_nodatafound'));
-        return;
-      }
-
-      _currentRightAscension = rightAscension;
-      setState(() {
-        _updateControler();
-      });
+      return GCWDefaultOutput(
+        child: Column(children: rows)
+      );
     }
   }
 
-  void _updateControler() {
-    _hoursController.text = _currentRightAscension?.hours?.abs().toString();
-    _minutesController.text = _currentRightAscension?.minutes?.toString();
-    _secondsController.text = _currentRightAscension?.seconds?.truncate().toString();
-    _mSecondsController.text = _currentRightAscension?.milliseconds?.toString();
+  _parseRAPaste(String input) {
+    var rightAscension = RightAscension.parse(input);
+    if (rightAscension == null) {
+      showToast(i18n(context, 'right_ascension_to_degree_clipboard_nodatafound'));
+      return;
+    }
 
-    var _dmm = _currentRightAscension.toDMMPart();
-    _currentDmmSign = _dmm?.sign;
-    _DmmDegreesController.text = _dmm?.degrees?.abs().toString();
-    _DmmMinutesController.text = _dmm?.minutes?.truncate().toString();
-    _DmmMilliMinutesController.text = commaSplit(_dmm?.minutes);
-
-    var _dms = _currentRightAscension.toDMSPart();
-    _currentDmsSign = _dms?.sign;
-    _DmsDegreesController.text = _dms?.degrees?.abs().toString();
-    _DmsMinutesController.text = _dms?.minutes?.toString();
-    _DmsSecondsController.text = _dms?.seconds?.truncate().toString();
-    _DmsMilliSecondsController.text = commaSplit(_dms?.seconds);
+    _currentRightAscension = rightAscension;
+    setState(() {
+      _hoursController.text = _currentRightAscension?.hours?.abs().toString();
+      _minutesController.text = _currentRightAscension?.minutes?.toString();
+      _secondsController.text = _currentRightAscension?.seconds?.truncate().toString();
+      _mSecondsController.text = _currentRightAscension?.milliseconds?.toString();
+    });
   }
 }
