@@ -53,8 +53,8 @@ final _INITIAL_SEGMENTS = <String, bool>{
 };
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
+const _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT = 160;
 const _NOTES_RELATIVE_DISPLAY_HEIGHT = 445;
-
 
 class NotesSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -69,13 +69,16 @@ class NotesSegmentDisplay extends NSegmentDisplay {
             segments: segments,
             readOnly: readOnly,
             onChanged: onChanged,
+            aspectRatio: readOnly
+                ? _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT / _NOTES_RELATIVE_DISPLAY_HEIGHT
+                : SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT,
             type: SegmentDisplayType.CUSTOM,
             customPaint: (GCWTouchCanvas canvas, Size size, Map<String, bool> currentSegments, Function setSegmentState,
                 Color segment_color_on, Color segment_color_off) {
               var paint = defaultSegmentPaint();
               var SEGMENTS_COLOR_ON = segment_color_on;
               var SEGMENTS_COLOR_OFF = segment_color_off;
-              var LINE_OFFSET_X = size.width  / _NOTES_RELATIVE_DISPLAY_WIDTH  * 50.0;
+              var LINE_OFFSET_X = size.width  / _getSymbolWidth(readOnly)  * 50.0;
               var LINE_OFFSET_Y = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 20.0;
               var LINE_DISTANCE = size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 30.0;
 
@@ -94,27 +97,31 @@ class NotesSegmentDisplay extends NSegmentDisplay {
               if (!readOnly || (readOnly && !_noteSelected(currentSegments))) {
                 // if readOnly drawed in _drawNote (note position needed)
                 _drawHash(hashLabel, _createHash(size,
-                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                    Offset(size.width / _getSymbolWidth(readOnly) * 25.0, 5 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
 
                 _drawB(bLabel, _createB(size,
-                    Offset(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 25.0, 9 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                    Offset(size.width / _getSymbolWidth(readOnly) * 25.0, 9 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
               }
 
               var notePositions = [105, 35, -35, -105];
               counter = 0;
               notePosition.forEach((key) {
-                var offsetX = size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *
+                var offsetX = size.width / _getSymbolWidth(readOnly) *
                     (readOnly
-                        ?  _NOTES_RELATIVE_DISPLAY_WIDTH/2
-                        : (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + notePositions[(counter % 4).toInt()] + LINE_OFFSET_X));
+                        ?  _getSymbolWidth(readOnly)/2
+                        : (_getSymbolWidth(readOnly)/2 + notePositions[(counter % 4).toInt()] + LINE_OFFSET_X));
 
-                _drawNote(key, _createNote(size, Offset(offsetX, counter * 0.5 * LINE_DISTANCE + LINE_OFFSET_Y)),
+                _drawNote(key, _createNote(size, Offset(offsetX, counter * 0.5 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
                 counter ++;
               });
             });
+
+  static _getSymbolWidth(bool readOnly) {
+    return readOnly ? _NOTES_RELATIVE_DISPLAY_WIDTH_OUTPUT : _NOTES_RELATIVE_DISPLAY_WIDTH;
+  }
 
   static _drawNote(String note, Path path, Size size, GCWTouchCanvas canvas, Paint paint, bool readOnly,
       Map<String, bool> currentSegments, Function setSegmentState, Color colorOn, Color colorOff) {
@@ -122,7 +129,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     paint.color = active ? colorOn : colorOff;
     if (active || !readOnly) {
       canvas.touchCanvas.drawPath(path, paint);
-      path.addRect(path.getBounds().inflate(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10));
+      path.addRect(path.getBounds().inflate(size.width / _getSymbolWidth(readOnly) * 10));
       paint.color = Colors.transparent;
       canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
         _setNotesState(note, currentSegments, setSegmentState);
@@ -132,11 +139,11 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     if (active && readOnly) {
       var bounds = path.getBounds();
       _drawHash(hashLabel, _createHash(size,
-          Offset(bounds.center.dx - size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60, bounds.center.dy)),
+          Offset(bounds.center.dx - size.width / _getSymbolWidth(readOnly) * 60, bounds.center.dy), readOnly),
           size, canvas, paint, readOnly,currentSegments, setSegmentState, colorOn, colorOff);
 
       _drawB(bLabel, _createB(size,
-          Offset(bounds.center.dx - size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 60, bounds.center.dy)),
+          Offset(bounds.center.dx - size.width / _getSymbolWidth(readOnly) * 60, bounds.center.dy), readOnly),
           size, canvas, paint, readOnly, currentSegments, setSegmentState, colorOn, colorOff);
     }
   }
@@ -147,7 +154,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     paint.color = active ? colorOn : colorOff;
     if (active || !readOnly) {
       canvas.touchCanvas.drawPath(path, paint);
-      path.addRect(path.getBounds().inflate(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10));
+      path.addRect(path.getBounds().inflate(size.width / _getSymbolWidth(readOnly) * 10));
       paint.color = Colors.transparent;
       canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
         setSegmentState(label, !currentSegments[label]);
@@ -162,7 +169,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     paint.color = active ? colorOn : colorOff;
     if (active || !readOnly) {
       canvas.touchCanvas.drawPath(path, paint);
-      path.addRect(path.getBounds().inflate(size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 10));
+      path.addRect(path.getBounds().inflate(size.width / _getSymbolWidth(readOnly) * 10));
       paint.color = Colors.transparent;
       canvas.touchCanvas.drawPath(path, paint, onTapDown: (tapDetail) {
         setSegmentState(label, !currentSegments[label]);
@@ -193,19 +200,19 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     if (shortLine) {
       var rect = Rect.fromCenter(
           center: Offset(
-              size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + (readOnly ? 0 : lineOffsetX)),
+              size.width / _getSymbolWidth(readOnly) * (_getSymbolWidth(readOnly)/2 + (readOnly ? 0 : lineOffsetX)),
               0.0),
           width: readOnly
-              ? size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 70
-              : size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 260,
+              ? size.width / _getSymbolWidth(readOnly) * 70
+              : size.width / _getSymbolWidth(readOnly) * 260,
           height: max(1.0, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 2));
       path.addRect(rect);
     } else {
       var rect = Rect.fromCenter(
           center: Offset(
-              size.width / _NOTES_RELATIVE_DISPLAY_WIDTH *  (_NOTES_RELATIVE_DISPLAY_WIDTH/2 + (readOnly ? 0 : lineOffsetX)),
+              size.width / _getSymbolWidth(readOnly) *  (_getSymbolWidth(readOnly)/2 + (readOnly ? 0 : lineOffsetX)),
               0.0),
-          width: size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 340,
+          width: size.width / _getSymbolWidth(readOnly) * (readOnly ? 380 : 340),
           height: max(1.0, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 2));
       path.addRect(rect);
     }
@@ -213,19 +220,19 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     return path;
   }
 
-  static Path _createNote(Size size, Offset offset) {
+  static Path _createNote(Size size, Offset offset, bool readOnly) {
     var path = Path();
     var rect = Rect.fromCenter(center: offset,
-               width:  max(3, size.width / _NOTES_RELATIVE_DISPLAY_WIDTH * 45),
+               width:  max(3, size.width / _getSymbolWidth(readOnly) * 45),
                height: max(2, size.height / _NOTES_RELATIVE_DISPLAY_HEIGHT * 28));
     path.addOval(rect);
 
     return path;
   }
 
-  static Path _createHash(Size size, Offset offset) {
+  static Path _createHash(Size size, Offset offset, bool readOnly) {
     var path = Path();
-    var scale = 0.8 * size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
+    var scale = 0.8 * size.width / _getSymbolWidth(readOnly);
 
     path.moveTo(-19.201,-8.436);
     path.moveTo(-11.389,-12.587);
@@ -273,9 +280,9 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     return path.transform(translateM);
   }
 
-  static Path _createB(Size size, Offset offset) {
+  static Path _createB(Size size, Offset offset, bool readOnly) {
     var path = Path();
-    var scale = 0.8 * size.width / _NOTES_RELATIVE_DISPLAY_WIDTH;
+    var scale = 0.8 * size.width / _getSymbolWidth(readOnly);
 
     path.moveTo(1.234,15.737);
     path.lineTo(-4.796,17.079);
