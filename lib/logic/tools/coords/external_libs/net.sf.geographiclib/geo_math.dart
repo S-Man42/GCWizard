@@ -12,8 +12,8 @@
  **********************************************************************/
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/math.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/pair.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/math.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/pair.dart';
 
 /**
  * Mathematical functions needed by GeographicLib.
@@ -38,7 +38,29 @@ class GeoMath {
     return x * x;
   }
 
-  static double _log1p(double x) {
+  /**
+   * The inverse hyperbolic sine function.  This is defined in terms of
+   * Math::log1p(\e x) in order to maintain accuracy near \e x = 0.  In
+   * addition, the odd parity of the function is enforced.
+   *
+   * @param[in] x
+   * @return asinh(\e x).
+   **********************************************************************/
+  static double asinh(double x) {
+    double y = x.abs();     // Enforce odd parity
+    y = log1p(y * (1 + y / (hypot(1.0, y) + 1)));
+    return x < 0 ? -y : y;
+  }
+
+  static pi() {
+    return atan2(0.0, -1.0);
+  }
+
+  static double degree() {
+    return pi() / 180.0;
+  }
+
+  static double log1p(double x) {
     if (x.isInfinite && !x.isNegative) {
       return x;
     } else {
@@ -63,7 +85,7 @@ class GeoMath {
    **********************************************************************/
   static double atanh(double x) {
     double y = x.abs(); // Enforce odd parity
-    y = _log1p(2 * y / (1 - y)) / 2;
+    y = log1p(2 * y / (1 - y)) / 2;
     return x > 0 ? y : (x < 0 ? -y : x);
   }
 
@@ -105,11 +127,27 @@ class GeoMath {
   }
 
   /**
+   * The hypotenuse function avoiding underflow and overflow.
+   *
+   * @param[in] x
+   * @param[in] y
+   * @return sqrt(\e x<sup>2</sup> + \e y<sup>2</sup>).
+   **********************************************************************/
+  static double hypot(double x, double y) {
+    x = x.abs();
+    y = y.abs();
+    double a = max(x, y),
+    b = min(x, y) / (a != 0.0 ? a : 1);
+    return a * sqrt(1 + b * b);
+  }
+
+
+  /**
    * Evaluate a polynomial.
    * <p>
    * @param N the order of the polynomial.
    * @param p the coefficient array (of size <i>N</i> + <i>s</i> + 1 or more).
-   * @param s starting index for the array.
+   * @param s starting index for the array.f
    * @param x the variable.
    * @return the value of the polynomial.
    * <p>
