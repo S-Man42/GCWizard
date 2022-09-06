@@ -123,6 +123,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
         controller: dayController,
         value: _currentDayOfTheYear,
         min: 0,
+        max: 9999,
         onChanged: (value) {
           setState(() {
             _currentDayOfTheYear = value;

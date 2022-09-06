@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -126,7 +125,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   var _currentYear = 0;
   var _currentMonth = 1;
   var _currentDay = 1;
-  var _currentDayOfTheYear = 1;
   var _currentHour = 0;
   var _currentMinute = 0;
   var _currentSecond = 0;
@@ -155,8 +153,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
       _currentYear = date.year;
       _currentMonth = date.month;
       _currentDay = date.day;
-      /// calc day in the year
-      _currentDayOfTheYear = dayNumber(date);
     }
 
     if (widget.config.contains(DateTimePickerConfig.DAY)) {
@@ -168,7 +164,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.config.contains(DateTimePickerConfig.TIME)) {
       if (widget.duration != null) {
-        _currentHour = widget.duration.inHours;
+        _currentHour = widget.duration.inHours.remainder(24);
         _currentMinute = widget.duration.inMinutes.remainder(60);
         _currentSecond = widget.duration.inSeconds.remainder(60);
         _currentMilliSecond = _durationMilliseconds(widget.duration);
@@ -215,7 +211,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         if (_currentSign != (widget.duration.isNegative ? -1 : 1))
           _currentSign = widget.duration.isNegative ? -1 : 1;
         if (_currentHour != widget.duration.inHours.abs())
-          _currentHour = widget.duration.inHours.abs();
+          _currentHour = widget.duration.inHours.abs().remainder(24);
         if (_currentMinute != widget.duration.inMinutes.abs().remainder(60))
           _currentMinute = widget.duration.inMinutes.abs().remainder(60);
         if (_currentSecond != widget.duration.inSeconds.abs().remainder(60))
@@ -242,7 +238,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           _currentMonth = widget.datetime.month;
         if (_currentDay != widget.datetime.day) {
           _currentDay = widget.datetime.day;
-          _currentDayOfTheYear = dayNumber(widget.datetime);
         }
       }
     }
