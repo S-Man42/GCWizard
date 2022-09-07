@@ -270,10 +270,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentYear = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentYear
-                  .toString()
-                  .length == 4) {
-                  FocusScope.of(context).requestFocus(_dayFocusNode);
+              if (_currentYear.toString().length == 4) {
+                  FocusScope?.of(context)?.requestFocus(_monthFocusNode);
               }
             });
           },
@@ -294,10 +292,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentMonth = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentMonth
-                  .toString()
-                  .length == 2) {
-                FocusScope.of(context).requestFocus(_dayFocusNode);
+              if (_dayFocusNode != null && _currentMonth.toString().length == 2) {
+                FocusScope?.of(context)?.requestFocus(_dayFocusNode);
               }
             });
           },
@@ -318,8 +314,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentDay = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentDay.toString().length == 2) {
-                FocusScope.of(context).requestFocus(_hourFocusNode);
+              if (_hourFocusNode != null && _currentDay.toString().length == 2 ) {
+                FocusScope?.of(context)?.requestFocus(_hourFocusNode);
               }
             });
           },
@@ -348,9 +344,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentHour = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentHour
-                  .toString()
-                  .length == 2) {
+              if (_minuteFocusNode != null && _currentHour.toString().length == 2) {
                 FocusScope.of(context).requestFocus(_minuteFocusNode);
               }
             });
@@ -370,9 +364,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
               _currentMinute = value;
               _setCurrentValueAndEmitOnChange();
 
-              if (_currentMinute
-                  .toString()
-                  .length == 2) {
+              if (_secondFocusNode != null && _currentMinute.toString().length == 2) {
                 FocusScope.of(context).requestFocus(_secondFocusNode);
               }
             });
@@ -393,9 +385,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
                 _currentSecond = value;
                 _setCurrentValueAndEmitOnChange();
 
-                if (_currentSecond
-                    .toString()
-                    .length == 2) {
+                if (_msecondFocusNode != null && _currentSecond.toString().length == 2) {
                   FocusScope.of(context).requestFocus(_msecondFocusNode);
                 }
               });

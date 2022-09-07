@@ -37,7 +37,7 @@ class DayOfTheYearState extends State<DayOfTheYear> {
     _dayFocusNode = FocusNode();
 
     _currentYear = _currentEncodeDate.year;
-    _currentDayOfTheYear = _currentEncodeDate.day;
+    _currentDayOfTheYear = dayNumber(_currentEncodeDate);
 
      super.initState();
   }
