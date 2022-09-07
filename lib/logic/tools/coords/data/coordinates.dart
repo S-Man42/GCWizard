@@ -9,6 +9,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/makaney.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
@@ -48,6 +49,7 @@ const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
+const keyCoordsMakaney = 'coords_makaney';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister'; // typo known. DO NOT change!
 
@@ -91,6 +93,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
+  CoordinateFormat(keyCoordsMakaney, 'Makaney (MKC)', 'M97F-BBOOI'),
   CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsGeo3x3, 'Geo3x3', 'W7392967941169'),
 ];
@@ -708,6 +711,30 @@ class Maidenhead extends BaseCoordinates {
 
   static Maidenhead parse(String input) {
     return parseMaidenhead(input);
+  }
+
+  @override
+  String toString() {
+    return text;
+  }
+}
+
+class Makaney extends BaseCoordinates {
+  String get key => keyCoordsMakaney;
+  String text;
+
+  Makaney(this.text);
+
+  LatLng toLatLng() {
+    return makaneyToLatLon(this);
+  }
+
+  static Makaney fromLatLon(LatLng coord) {
+    return latLonToMakaney(coord);
+  }
+
+  static Makaney parse(String input) {
+    return parseMakaney(input);
   }
 
   @override

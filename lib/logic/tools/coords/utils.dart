@@ -72,6 +72,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return OpenLocationCode.fromLatLon(_coords, codeLength: 14).toString();
     case keyCoordsQuadtree:
       return Quadtree.fromLatLon(_coords, precision: 40).toString();
+    case keyCoordsMakaney:
+      return Makaney.fromLatLon(_coords).toString();
     case keyCoordsReverseWherigoWaldmeister:
       return Waldmeister.fromLatLon(_coords).toString();
     default:

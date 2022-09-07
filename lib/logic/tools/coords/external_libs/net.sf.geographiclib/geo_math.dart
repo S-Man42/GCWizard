@@ -141,6 +141,23 @@ class GeoMath {
     return a * sqrt(1 + b * b);
   }
 
+  /**
+   * exp(\e x) - 1 accurate near \e x = 0.  This is taken from
+   * N. J. Higham, Accuracy and Stability of Numerical Algorithms, 2nd
+   * Edition (SIAM, 2002), Sec 1.14.1, p 19.
+   *
+   * @param[in] x
+   * @return exp(\e x) - 1.
+   **********************************************************************/
+  static double expm1(double x) {
+    double y = exp(x),
+    z = y - 1;
+    // The reasoning here is similar to that for log1p.  The expression
+    // mathematically reduces to exp(x) - 1, and the factor z/log(y) = (y -
+    // 1)/log(y) is a slowly varying quantity near y = 1 and is accurately
+    // computed.
+    return x.abs() > 1 ? z : z == 0 ?  x : x * z / log(y);
+  }
 
   /**
    * Evaluate a polynomial.

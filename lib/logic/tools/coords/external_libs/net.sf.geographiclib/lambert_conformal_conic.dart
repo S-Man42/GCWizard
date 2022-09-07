@@ -18,79 +18,80 @@ import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/
  * http://geographiclib.sourceforge.net/
  **********************************************************************/
 
-class LambertConformalConic {
+/**
+ * \brief Lambert Conformal Conic Projection
+ *
+ * Implementation taken from the report,
+ * - J. P. Snyder,
+ *   <a href="http://pubs.er.usgs.gov/usgspubs/pp/pp1395"> Map Projections: A
+ *   Working Manual</a>, USGS Professional Paper 1395 (1987),
+ *   pp. 107&ndash;109.
+ *
+ * This is a implementation of the equations in Snyder except that divided
+ * differences have been used to transform the expressions into ones which
+ * may be evaluated accurately and that Newton's method is used to invert the
+ * projection.  In this implementation, the projection correctly becomes the
+ * Mercator_ projection or the polar sterographic projection when the standard
+ * latitude is the equator or a pole.  The accuracy of the projections is
+ * about 10 nm.
+ *
+ * The ellipsoid parameters, the standard parallels, and the scale on the
+ * standard parallels are set in the constructor.  Internally, the case with
+ * two standard parallels is converted into a single standard parallel, the
+ * latitude of tangency (also the latitude of minimum scale), with a scale
+ * specified on this parallel.  This latitude is also used as the latitude of
+ * origin which is returned by LambertConformalConic::OriginLatitude.  The
+ * scale on the latitude of origin is given by
+ * LambertConformalConic::CentralScale.  The case with two distinct standard
+ * parallels where one is a pole is singular and is disallowed.  The central
+ * meridian (which is a trivial shift of the longitude) is specified as the
+ * \e lon0 argument of the LambertConformalConic::Forward and
+ * LambertConformalConic::Reverse functions.  There is no provision in this
+ * class for specifying a false easting or false northing or a different
+ * latitude of origin.  However these are can be simply included by the
+ * calling function.  For example the Pennsylvania South state coordinate
+ * system (<a href="http://www.spatialreference.org/ref/epsg/3364/">
+ * EPSG:3364</a>) is obtained by:
+    \code
+    const double
+    a = GeographicLib::Constants::WGS84_a<double>(),
+    f = 1/298.257222101,                      // GRS80
+    lat1 = 40 + 58/60.0, lat2 = 39 + 56/60.0, // standard parallels
+    k1 = 1,                                   // scale
+    lat0 = 39 + 20/60.0, lon0 =-77 - 45/60.0, // origin
+    fe = 600000, fn = 0;                      // false easting and northing
+    // Set up basic projection
+    const GeographicLib::LambertConformalConic PASouth(a, f, lat1, lat2, k1);
+    double x0, y0;
+    {
+    // Transform origin point
+    PASouth.Forward(lon0, lat0, lon0, x0, y0);
+    x0 -= fe; y0 -= fn;         // Combine result with false origin
+    }
+    double lat, lon, x, y;
+    // Sample conversion from geodetic to PASouth grid
+    std::cin >> lat >> lon;
+    PASouth.Forward(lon0, lat, lon, x, y);
+    x -= x0; y -= y0;
+    std::cout << x << " " << y << "\n";
+    // Sample conversion from PASouth grid to geodetic
+    std::cin >> x >> y;
+    x += x0; y += y0;
+    PASouth.Reverse(lon0, x, y, lat, lon);
+    std::cout << lat << " " << lon << "\n";
+    \endcode
+ **********************************************************************/
 
-  /**
-   * \brief Lambert Conformal Conic Projection
-   *
-   * Implementation taken from the report,
-   * - J. P. Snyder,
-   *   <a href="http://pubs.er.usgs.gov/usgspubs/pp/pp1395"> Map Projections: A
-   *   Working Manual</a>, USGS Professional Paper 1395 (1987),
-   *   pp. 107&ndash;109.
-   *
-   * This is a implementation of the equations in Snyder except that divided
-   * differences have been used to transform the expressions into ones which
-   * may be evaluated accurately and that Newton's method is used to invert the
-   * projection.  In this implementation, the projection correctly becomes the
-   * Mercator_ projection or the polar sterographic projection when the standard
-   * latitude is the equator or a pole.  The accuracy of the projections is
-   * about 10 nm.
-   *
-   * The ellipsoid parameters, the standard parallels, and the scale on the
-   * standard parallels are set in the constructor.  Internally, the case with
-   * two standard parallels is converted into a single standard parallel, the
-   * latitude of tangency (also the latitude of minimum scale), with a scale
-   * specified on this parallel.  This latitude is also used as the latitude of
-   * origin which is returned by LambertConformalConic::OriginLatitude.  The
-   * scale on the latitude of origin is given by
-   * LambertConformalConic::CentralScale.  The case with two distinct standard
-   * parallels where one is a pole is singular and is disallowed.  The central
-   * meridian (which is a trivial shift of the longitude) is specified as the
-   * \e lon0 argument of the LambertConformalConic::Forward and
-   * LambertConformalConic::Reverse functions.  There is no provision in this
-   * class for specifying a false easting or false northing or a different
-   * latitude of origin.  However these are can be simply included by the
-   * calling function.  For example the Pennsylvania South state coordinate
-   * system (<a href="http://www.spatialreference.org/ref/epsg/3364/">
-   * EPSG:3364</a>) is obtained by:
-      \code
-      const double
-      a = GeographicLib::Constants::WGS84_a<double>(),
-      f = 1/298.257222101,                      // GRS80
-      lat1 = 40 + 58/60.0, lat2 = 39 + 56/60.0, // standard parallels
-      k1 = 1,                                   // scale
-      lat0 = 39 + 20/60.0, lon0 =-77 - 45/60.0, // origin
-      fe = 600000, fn = 0;                      // false easting and northing
-      // Set up basic projection
-      const GeographicLib::LambertConformalConic PASouth(a, f, lat1, lat2, k1);
-      double x0, y0;
-      {
-      // Transform origin point
-      PASouth.Forward(lon0, lat0, lon0, x0, y0);
-      x0 -= fe; y0 -= fn;         // Combine result with false origin
-      }
-      double lat, lon, x, y;
-      // Sample conversion from geodetic to PASouth grid
-      std::cin >> lat >> lon;
-      PASouth.Forward(lon0, lat, lon, x, y);
-      x -= x0; y -= y0;
-      std::cout << x << " " << y << "\n";
-      // Sample conversion from PASouth grid to geodetic
-      std::cin >> x >> y;
-      x += x0; y += y0;
-      PASouth.Reverse(lon0, x, y, lat, lon);
-      std::cout << lat << " " << lon << "\n";
-      \endcode
-   **********************************************************************/
+class LambertConformalConic {
 
   double _a, _f, _r, _fm, _e2, _e, _e2m;
   double _sign, _n, _nc, _t0nm1, _scale, _lat0, _k0;
   double _scbet0, _tchi0, _scchi0, _psi0, _nrho0;
-  double eps_;
-  double epsx_;
-  double tol_;
-  double ahypover_;
+  static double eps_ = epsilon;
+  static double epsx_ = GeoMath.sq(eps_);
+  static double tol_ = 0.1 * sqrt(eps_);
+  // static double ahypover_ = real(numeric_limits<real>::digits) * log(real(numeric_limits<real>::radix)) + 2;
+  static double ahypover_ = 53.0 * log(2.0) + 2.0;
   static final int numit_ = 5;
 
   static double hyp(double x) {
@@ -176,188 +177,281 @@ class LambertConformalConic {
     return t != 0 ? eatanhe(t / d) / t : _e2 / d;
   }
 
-  // /**
-  //  * Constructor with a single standard parallel.
-  //  *
-  //  * @param[in] a equatorial radius of ellipsoid (meters)
-  //  * @param[in] f flattening of ellipsoid.  Setting \e f = 0 gives a sphere.
-  //  *   Negative \e f gives a prolate ellipsoid.  If \e f > 1, set flattening
-  //  *   to 1/\e f.
-  //  * @param[in] stdlat standard parallel (degrees), the circle of tangency.
-  //  * @param[in] k0 scale on the standard parallel.
-  //  *
-  //  * An exception is thrown if \e a or \e k0 is not positive or if \e stdlat
-  //  * is not in the range [-90, 90].
-  //  **********************************************************************/
-  // LambertConformalConic(double a, double f, double stdlat, double k0);
+  /**
+   * Constructor with two standard parallels.
+   *
+   * @param[in] a equatorial radius of ellipsoid (meters)
+   * @param[in] f flattening of ellipsoid.  Setting \e f = 0 gives a sphere.
+   *   Negative \e f gives a prolate ellipsoid.  If \e f > 1, set flattening
+   *   to 1/\e f.
+   * @param[in] stdlat1 first standard parallel (degrees).
+   * @param[in] stdlat2 second standard parallel (degrees).
+   * @param[in] k1 scale on the standard parallels.
+   *
+   * An exception is thrown if \e a or \e k0 is not positive or if \e stdlat1
+   * or \e stdlat2 is not in the range [-90, 90].  In addition, if either \e
+   * stdlat1 or \e stdlat2 is a pole, then an exception is thrown if \e
+   * stdlat1 is not equal \e stdlat2.
+   **********************************************************************/
 
-// /**
-//  * Constructor with two standard parallels.
-//  *
-//  * @param[in] a equatorial radius of ellipsoid (meters)
-//  * @param[in] f flattening of ellipsoid.  Setting \e f = 0 gives a sphere.
-//  *   Negative \e f gives a prolate ellipsoid.  If \e f > 1, set flattening
-//  *   to 1/\e f.
-//  * @param[in] stdlat1 first standard parallel (degrees).
-//  * @param[in] stdlat2 second standard parallel (degrees).
-//  * @param[in] k1 scale on the standard parallels.
-//  *
-//  * An exception is thrown if \e a or \e k0 is not positive or if \e stdlat1
-//  * or \e stdlat2 is not in the range [-90, 90].  In addition, if either \e
-//  * stdlat1 or \e stdlat2 is a pole, then an exception is thrown if \e
-//  * stdlat1 is not equal \e stdlat2.
-//  **********************************************************************/
-// LambertConformalConic(double a, double f, double stdlat1, double stdlat2, double k1);
-//
-// /**
-//  * Constructor with two standard parallels specified by sines and cosines.
-//  *
-//  * @param[in] a equatorial radius of ellipsoid (meters)
-//  * @param[in] f flattening of ellipsoid.  Setting \e f = 0 gives a sphere.
-//  *   Negative \e f gives a prolate ellipsoid.  If \e f > 1, set flattening
-//  *   to 1/\e f.
-//  * @param[in] sinlat1 sine of first standard parallel.
-//  * @param[in] coslat1 cosine of first standard parallel.
-//  * @param[in] sinlat2 sine of second standard parallel.
-//  * @param[in] coslat2 cosine of second standard parallel.
-//  * @param[in] k1 scale on the standard parallels.
-//  *
-//  * This allows parallels close to the poles to be specified accurately.
-//  * This routine computes the latitude of origin and the scale at this
-//  * latitude.  In the case where \e lat1 and \e lat2 are different, the
-//  * errors in this routines are as follows: if \e dlat = abs(\e lat2 - \e
-//  * lat1) <= 160<sup>o</sup> and max(abs(\e lat1), abs(\e lat2)) <= 90 -
-//  * min(0.0002, 2.2e-6(180 - \e dlat), 6e-8\e dlat<sup>2</sup>) (in
-//  * degrees), then the error in the latitude of origin is less than
-//  * 4.5e-14<sup>o</sup> and the relative error in the scale is less than
-//  * 7e-15.
-//  **********************************************************************/
-// LambertConformalConic(double a, double f,
-// double sinlat1, double coslat1,
-// double sinlat2, double coslat2,
-// double k1);
-//
-// /**
-//  * Set the scale for the projection.
-//  *
-//  * @param[in] lat (degrees).
-//  * @param[in] k scale at latitude \e lat (default 1).
-//  *
-//  * This allows a "latitude of true scale" to be specified.  An exception is
-//  * thrown if \e k is not positive or if \e stdlat is not in the range [-90,
-//  * 90]
-//  **********************************************************************/
-// void SetScale(double lat, double k = double(1));
-//
-// /**
-//  * Forward projection, from geographic to Lambert conformal conic.
-//  *
-//  * @param[in] lon0 central meridian longitude (degrees).
-//  * @param[in] lat latitude of point (degrees).
-//  * @param[in] lon longitude of point (degrees).
-//  * @param[out] x easting of point (meters).
-//  * @param[out] y northing of point (meters).
-//  * @param[out] gamma meridian convergence at point (degrees).
-//  * @param[out] k scale of projection at point.
-//  *
-//  * The latitude origin is given by LambertConformalConic::LatitudeOrigin().
-//  * No false easting or northing is added and \e lat should be in the range
-//  * [-90, 90]; \e lon and \e lon0 should be in the range [-180, 360].  The
-//  * error in the projection is less than about 10 nm (true distance) and the
-//  * errors in the meridian convergence and scale are consistent with this.
-//  * The values of \e x and \e y returned for points which project to
-//  * infinity (i.e., one or both of the poles) will be large but finite.
-//  **********************************************************************/
-// void Forward(double lon0, double lat, double lon,
-// double& x, double& y, double& gamma, double& k) const throw();
-//
-// /**
-//  * Reverse projection, from Lambert conformal conic to geographic.
-//  *
-//  * @param[in] lon0 central meridian longitude (degrees).
-//  * @param[in] x easting of point (meters).
-//  * @param[in] y northing of point (meters).
-//  * @param[out] lat latitude of point (degrees).
-//  * @param[out] lon longitude of point (degrees).
-//  * @param[out] gamma meridian convergence at point (degrees).
-//  * @param[out] k scale of projection at point.
-//  *
-//  * The latitude origin is given by LambertConformalConic::LatitudeOrigin().
-//  * No false easting or northing is added.  \e lon0 should be in the range
-//  * [-180, 360].  The value of \e lon returned is in the range [-180, 180).
-//  * The error in the projection is less than about 10 nm (true distance) and
-//  * the errors in the meridian convergence and scale are consistent with
-//  * this.
-//  **********************************************************************/
-// void Reverse(double lon0, double x, double y,
-// double& lat, double& lon, double& gamma, double& k) const throw();
-//
-// /**
-//  * LambertConformalConic::Forward without returning the convergence and
-//  * scale.
-//  **********************************************************************/
-// void Forward(double lon0, double lat, double lon,
-// double& x, double& y) const throw() {
-// double gamma, k;
-// Forward(lon0, lat, lon, x, y, gamma, k);
-// }
-//
-// /**
-//  * LambertConformalConic::Reverse without returning the convergence and
-//  * scale.
-//  **********************************************************************/
-// void Reverse(double lon0, double x, double y,
-// double& lat, double& lon) const throw() {
-// double gamma, k;
-// Reverse(lon0, x, y, lat, lon, gamma, k);
-// }
-//
-// /** \name Inspector functions
-//  **********************************************************************/
-// ///@{
-// /**
-//  * @return \e a the equatorial radius of the ellipsoid (meters).  This is
-//  *   the value used in the constructor.
-//  **********************************************************************/
-// double MajorRadius() const throw() { return _a; }
-//
-// /**
-//  * @return \e f the  flattening of the ellipsoid.  This is the
-//  *   value used in the constructor.
-//  **********************************************************************/
-// double Flattening() const throw() { return _f; }
-//
-// /**
-//  * <b>DEPRECATED</b>
-//  * @return \e r the inverse flattening of the ellipsoid.
-//  **********************************************************************/
-// double InverseFlattening() const throw() { return _r; }
-//
-// /**
-//  * @return latitude of the origin for the projection (degrees).
-//  *
-//  * This is the latitude of minimum scale and equals the \e stdlat in the
-//  * 1-parallel constructor and lies between \e stdlat1 and \e stdlat2 in the
-//  * 2-parallel constructors.
-//  **********************************************************************/
-// double OriginLatitude() const throw() { return _lat0; }
-//
-// /**
-//  * @return central scale for the projection.  This is the scale on the
-//  *   latitude of origin.
-//  **********************************************************************/
-// double CentralScale() const throw() { return _k0; }
-// ///@}
-//
-// /**
-//  * A global instantiation of LambertConformalConic with the WGS84
-//  * ellipsoid, \e stdlat = 0, and \e k0 = 1.  This degenerates to the
-//  * Mercator_ projection.
-//  **********************************************************************/
-// static const LambertConformalConic Mercator;
-// };
+  LambertConformalConic(double a, double f, LambertConformalConicType type, double stdlat1, double stdlat2, double k1) {
+    _a = a;
+    _f = f <= 1 ? f : 1/f;
+    _r = 1/f;
+    _fm = 1 - _f;
+    _e2 = _f * (2 - _f);
+    _e = sqrt(_e2.abs());
+    _e2m = (1 - _e2);
 
-  GeographicLibLambert Forward(double lon0, double lat, double lon) {
+    if (!(GeoMath.isfinite(_a) && _a > 0))
+      throw Exception("Major radius is not positive");
+    if (!(GeoMath.isfinite(_f) && _f < 1))
+      throw Exception("Minor radius is not positive");
+    if (!(GeoMath.isfinite(k1) && k1 > 0))
+      throw Exception("Scale is not positive");
+    if (!(stdlat1.abs() <= 90))
+      throw Exception("Standard latitude 1 not in [-90, 90]");
+    if (stdlat2 != null && !(stdlat2.abs() <= 90))
+      throw Exception("Standard latitude 2 not in [-90, 90]");
+    if (k1 != null && !(k1 > 0))
+      throw Exception("Scale is not positive");
+
+
+    switch (type) {
+      case LambertConformalConicType.SP1:
+        double phi = stdlat1 * GeoMath.degree(),
+        sphi = sin(phi),
+        cphi = stdlat1.abs() != 90 ? cos(phi) : 0;
+        _init(sphi, cphi, sphi, cphi, k1);
+
+        break;
+      case LambertConformalConicType.SP2:
+        double phi1 = stdlat1 * GeoMath.degree(),
+        phi2 = stdlat2 * GeoMath.degree();
+
+        _init(sin(phi1), stdlat1.abs() != 90 ? cos(phi1) : 0, sin(phi2), stdlat2.abs() != 90 ? cos(phi2) : 0, k1);
+        break;
+    }
+  }
+
+
+  void _init(double sphi1, double cphi1, double sphi2, double cphi2, double k1) {
+    double r;
+    r = GeoMath.hypot(sphi1, cphi1);
+    sphi1 /= r;
+    cphi1 /= r;
+    r = GeoMath.hypot(sphi2, cphi2);
+    sphi2 /= r;
+    cphi2 /= r;
+
+    bool polar = (cphi1 == 0);
+
+    cphi1 = max(epsx_, cphi1);   // Avoid singularities at poles
+    cphi2 = max(epsx_, cphi2);
+    // Determine hemisphere of tangent latitude
+    _sign = sphi1 + sphi2 >= 0 ? 1 : -1;
+    // Internally work with tangent latitude positive
+    sphi1 *= _sign; sphi2 *= _sign;
+    if (sphi1 > sphi2) {
+      // swap(sphi1, sphi2);
+      var _sphi = sphi2;
+      sphi2 = sphi1;
+      sphi1 = _sphi;
+      // swap(cphi1, cphi2); // Make phi1 < phi2
+      var _cphi = cphi2;
+      cphi2 = cphi1;
+      cphi1 = _cphi;
+    }
+    double tphi1 = sphi1/cphi1, tphi2 = sphi2/cphi2, tphi0;
+    //
+    // Snyder: 15-8: n = (log(m1) - log(m2))/(log(t1)-log(t2))
+    //
+    // m = cos(bet) = 1/sec(bet) = 1/sqrt(1+tan(bet)^2)
+    // bet = parametric lat, tan(bet) = (1-f)*tan(phi)
+    //
+    // t = tan(pi/4-chi/2) = 1/(sec(chi) + tan(chi)) = sec(chi) - tan(chi)
+    // log(t) = -asinh(tan(chi)) = -psi
+    // chi = conformal lat
+    // tan(chi) = tan(phi)*cosh(xi) - sinh(xi)*sec(phi)
+    // xi = eatanhe(sin(phi)), eatanhe(x) = e * atanh(e*x)
+    //
+    // n = (log(sec(bet2))-log(sec(bet1)))/(asinh(tan(chi2))-asinh(tan(chi1)))
+    //
+    // Let log(sec(bet)) = b(tphi), asinh(tan(chi)) = c(tphi)
+    // Then n = Db(tphi2, tphi1)/Dc(tphi2, tphi1)
+    // In limit tphi2 -> tphi1, n -> sphi1
+    //
+    double tbet1 = _fm * tphi1, scbet1 = hyp(tbet1),
+    tbet2 = _fm * tphi2, scbet2 = hyp(tbet2);
+    double scphi1 = 1/cphi1,
+    xi1 = eatanhe(sphi1), shxi1 = sinh(xi1), chxi1 = hyp(shxi1),
+    tchi1 = chxi1 * tphi1 - shxi1 * scphi1, scchi1 = hyp(tchi1),
+    scphi2 = 1/cphi2,
+    xi2 = eatanhe(sphi2), shxi2 = sinh(xi2), chxi2 = hyp(shxi2),
+    tchi2 = chxi2 * tphi2 - shxi2 * scphi2, scchi2 = hyp(tchi2),
+    psi1 = GeoMath.asinh(tchi1);
+    if (tphi2 - tphi1 != 0) {
+      // Db(tphi2, tphi1)
+      double num = Dlog1p(
+          GeoMath.sq(tbet2)/(1 + scbet2),
+          GeoMath.sq(tbet1)/(1 + scbet1)
+      ) * Dhyp(tbet2, tbet1, scbet2, scbet1) * _fm;
+      // Dc(tphi2, tphi1)
+      double den =  Dasinh(tphi2, tphi1, scphi2, scphi1) - Deatanhe(sphi2, sphi1) * Dsn(tphi2, tphi1, sphi2, sphi1);
+      _n = num/den;
+
+      if (_n < 0.25)
+        _nc = sqrt((1 - _n) * (1 + _n));
+      else {
+        // Compute nc = cos(phi0) = sqrt((1 - n) * (1 + n)), evaluating 1 - n
+        // carefully.  First write
+        //
+        // Dc(tphi2, tphi1) * (tphi2 - tphi1)
+        //   = log(tchi2 + scchi2) - log(tchi1 + scchi1)
+        //
+        // then den * (1 - n) =
+        // (log((tchi2 + scchi2)/(2*scbet2)) - log((tchi1 + scchi1)/(2*scbet1)))
+        // / (tphi2 - tphi1)
+        // = Dlog1p(a2, a1) * (tchi2+scchi2 + tchi1+scchi1)/(4*scbet1*scbet2)
+        //   * fm * Q
+        //
+        // where
+        // a1 = ( (tchi1 - scbet1) + (scchi1 - scbet1) ) / (2 * scbet1)
+        // Q = ((scbet2 + scbet1)/fm)/((scchi2 + scchi1)/D(tchi2, tchi1))
+        //     - (tbet2 + tbet1)/(scbet2 + scbet1)
+        double t;
+        // s1 = (scbet1 - scchi1) * (scbet1 + scchi1)
+        double s1 = (tphi1 * (2 * shxi1 * chxi1 * scphi1 - _e2 * tphi1) - GeoMath.sq(shxi1) * (1 + 2 * GeoMath.sq(tphi1))),
+        s2 = (tphi2 * (2 * shxi2 * chxi2 * scphi2 - _e2 * tphi2) - GeoMath.sq(shxi2) * (1 + 2 * GeoMath.sq(tphi2))),
+        // t1 = scbet1 - tchi1
+        t1 = tchi1 < 0 ? scbet1 - tchi1 : (s1 + 1)/(scbet1 + tchi1),
+        t2 = tchi2 < 0 ? scbet2 - tchi2 : (s2 + 1)/(scbet2 + tchi2),
+        a2 = -(s2 / (scbet2 + scchi2) + t2) / (2 * scbet2),
+        a1 = -(s1 / (scbet1 + scchi1) + t1) / (2 * scbet1);
+        t = Dlog1p(a2, a1) / den;
+
+        // multiply by (tchi2 + scchi2 + tchi1 + scchi1)/(4*scbet1*scbet2) * fm
+        t *= ( ( (tchi2 >= 0 ? scchi2 + tchi2 : 1/(scchi2 - tchi2)) + (tchi1 >= 0 ? scchi1 + tchi1 : 1/(scchi1 - tchi1)) ) / (4 * scbet1 * scbet2) ) * _fm;
+
+        // Rewrite
+        // Q = (1 - (tbet2 + tbet1)/(scbet2 + scbet1)) -
+        //     (1 - ((scbet2 + scbet1)/fm)/((scchi2 + scchi1)/D(tchi2, tchi1)))
+        //   = tbm - tam
+        // where
+        double tbm = ( ((tbet1 > 0 ? 1/(scbet1+tbet1) : scbet1 - tbet1) +
+        (tbet2 > 0 ? 1/(scbet2+tbet2) : scbet2 - tbet2)) /
+        (scbet1+scbet2) );
+
+        // tam = (1 - ((scbet2+scbet1)/fm)/((scchi2+scchi1)/D(tchi2, tchi1)))
+        //
+        // Let
+        //   (scbet2 + scbet1)/fm = scphi2 + scphi1 + dbet
+        //   (scchi2 + scchi1)/D(tchi2, tchi1) = scphi2 + scphi1 + dchi
+        // then
+        //   tam = D(tchi2, tchi1) * (dchi - dbet) / (scchi1 + scchi2)
+        double
+        // D(tchi2, tchi1)
+        dtchi = den / Dasinh(tchi2, tchi1, scchi2, scchi1),
+        // (scbet2 + scbet1)/fm - (scphi2 + scphi1)
+        dbet = (_e2/_fm) * ( 1 / (scbet2 + _fm * scphi2) +
+        1 / (scbet1 + _fm * scphi1) );
+
+        // dchi = (scchi2 + scchi1)/D(tchi2, tchi1) - (scphi2 + scphi1)
+        // Let
+        //    tzet = chxiZ * tphi - shxiZ * scphi
+        //    tchi = tzet + nu
+        //    scchi = sczet + mu
+        // where
+        //    xiZ = eatanhe(1), shxiZ = sinh(xiZ), chxiZ = cosh(xiZ)
+        //    nu =   scphi * (shxiZ - shxi) - tphi * (chxiZ - chxi)
+        //    mu = - scphi * (chxiZ - chxi) + tphi * (shxiZ - shxi)
+        // then
+        // dchi = ((mu2 + mu1) - D(nu2, nu1) * (scphi2 +  scphi1)) /
+        //         D(tchi2, tchi1)
+        double xiZ = eatanhe(1.0), shxiZ = sinh(xiZ), chxiZ = hyp(shxiZ),
+        // These are differences not divided differences
+        // dxiZ1 = xiZ - xi1; dshxiZ1 = shxiZ - shxi; dchxiZ1 = chxiZ - chxi
+        dxiZ1 = Deatanhe(1.0, sphi1)/(scphi1*(tphi1+scphi1)),
+        dxiZ2 = Deatanhe(1.0, sphi2)/(scphi2*(tphi2+scphi2)),
+        dshxiZ1 = Dsinh(xiZ, xi1, shxiZ, shxi1, chxiZ, chxi1) * dxiZ1,
+        dshxiZ2 = Dsinh(xiZ, xi2, shxiZ, shxi2, chxiZ, chxi2) * dxiZ2,
+        dchxiZ1 = Dhyp(shxiZ, shxi1, chxiZ, chxi1) * dshxiZ1,
+        dchxiZ2 = Dhyp(shxiZ, shxi2, chxiZ, chxi2) * dshxiZ2,
+        // mu1 + mu2
+        amu12 = (- scphi1 * dchxiZ1 + tphi1 * dshxiZ1 - scphi2 * dchxiZ2 + tphi2 * dshxiZ2),
+        // D(xi2, xi1)
+        dxi = Deatanhe(sphi1, sphi2) * Dsn(tphi2, tphi1, sphi2, sphi1),
+        // D(nu2, nu1)
+        dnu12 = ( (_f * 4 * scphi2 * dshxiZ2 > _f * scphi1 * dshxiZ1
+            // Use divided differences
+            ? (dshxiZ1 + dshxiZ2)/2 * Dhyp(tphi1, tphi2, scphi1, scphi2) - ( (scphi1 + scphi2)/2 * Dsinh(xi1, xi2, shxi1, shxi2, chxi1, chxi2) * dxi )
+            // Use ratio of differences
+            : (scphi2 * dshxiZ2 - scphi1 * dshxiZ1)/(tphi2 - tphi1)) + ( (tphi1 + tphi2)/2 * Dhyp(shxi1, shxi2, chxi1, chxi2) * Dsinh(xi1, xi2, shxi1, shxi2, chxi1, chxi2) * dxi ) - (dchxiZ1 + dchxiZ2)/2 ),
+        // dtchi * dchi
+        dchia = (amu12 - dnu12 * (scphi2 + scphi1)),
+        tam = (dchia - dtchi * dbet) / (scchi1 + scchi2);
+        t *= tbm - tam;
+        _nc = sqrt(max(0.0, t) * (1 + _n));
+      }
+
+      double r = GeoMath.hypot(_n, _nc);
+      _n /= r;
+      _nc /= r;
+      tphi0 = _n / _nc;
+
+    } else {
+      tphi0 = tphi1;
+      _nc = 1/hyp(tphi0);
+      _n = tphi0 * _nc;
+      if (polar)
+        _nc = 0;
+    }
+
+    _scbet0 = hyp(_fm * tphi0);
+    double shxi0 = sinh(eatanhe(_n));
+    _tchi0 = tphi0 * hyp(shxi0) - shxi0 * hyp(tphi0); _scchi0 = hyp(_tchi0);
+    _psi0 = GeoMath.asinh(_tchi0);
+
+    _lat0 = atan(_sign * tphi0) / GeoMath.degree();
+    _t0nm1 = GeoMath.expm1(- _n * _psi0); // Snyder's t0^n - 1
+    // a * k1 * m1/t1^n = a * k1 * m2/t2^n = a * k1 * n * (Snyder's F)
+    // = a * k1 / (scbet1 * exp(-n * psi1))
+    _scale = _a * k1 / scbet1 *
+    // exp(n * psi1) = exp(- (1 - n) * psi1) * exp(psi1)
+    // with (1-n) = nc^2/(1+n) and exp(-psi1) = scchi1 + tchi1
+      exp( - (GeoMath.sq(_nc)/(1 + _n)) * psi1 )
+      * (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1));
+    // Scale at phi0 = k0 = k1 * (scbet0*exp(-n*psi0))/(scbet1*exp(-n*psi1))
+    //                    = k1 * scbet0/scbet1 * exp(n * (psi1 - psi0))
+    // psi1 - psi0 = Dasinh(tchi1, tchi0) * (tchi1 - tchi0)
+    _k0 = k1 * (_scbet0/scbet1) * exp( - (GeoMath.sq(_nc)/(1 + _n)) *
+    Dasinh(tchi1, _tchi0, scchi1, _scchi0) * (tchi1 - _tchi0))
+    * (tchi1 >= 0 ? scchi1 + tchi1 : 1 / (scchi1 - tchi1)) /
+    (_scchi0 + _tchi0);
+    _nrho0 = polar ? 0 : _a * _k0 / _scbet0;
+  }
+
+  /**
+   * Forward projection, from geographic to Lambert conformal conic.
+   *
+   * @param[in] lon0 central meridian longitude (degrees).
+   * @param[in] lat latitude of point (degrees).
+   * @param[in] lon longitude of point (degrees).
+   * @param[out] x easting of point (meters).
+   * @param[out] y northing of point (meters).
+   * @param[out] gamma meridian convergence at point (degrees).
+   * @param[out] k scale of projection at point.
+   *
+   * The latitude origin is given by LambertConformalConic::LatitudeOrigin().
+   * No false easting or northing is added and \e lat should be in the range
+   * [-90, 90]; \e lon and \e lon0 should be in the range [-180, 360].  The
+   * error in the projection is less than about 10 nm (true distance) and the
+   * errors in the meridian convergence and scale are consistent with this.
+   * The values of \e x and \e y returned for points which project to
+   * infinity (i.e., one or both of the poles) will be large but finite.
+   **********************************************************************/
+
+  GeographicLibLambert forward(double lon0, double lat, double lon) {
     if (lon - lon0 >= 180)
       lon -= lon0 + 360;
     else if (lon - lon0 < -180)
@@ -397,6 +491,25 @@ class LambertConformalConic {
 
     return GeographicLibLambert(x, y, gamma, k);
   }
+
+  /**
+   * Reverse projection, from Lambert conformal conic to geographic.
+   *
+   * @param[in] lon0 central meridian longitude (degrees).
+   * @param[in] x easting of point (meters).
+   * @param[in] y northing of point (meters).
+   * @param[out] lat latitude of point (degrees).
+   * @param[out] lon longitude of point (degrees).
+   * @param[out] gamma meridian convergence at point (degrees).
+   * @param[out] k scale of projection at point.
+   *
+   * The latitude origin is given by LambertConformalConic::LatitudeOrigin().
+   * No false easting or northing is added.  \e lon0 should be in the range
+   * [-180, 360].  The value of \e lon returned is in the range [-180, 180).
+   * The error in the projection is less than about 10 nm (true distance) and
+   * the errors in the meridian convergence and scale are consistent with
+   * this.
+   **********************************************************************/
 
   GeographicLibLambertLatLon Reverse(double lon0, double x, double y) {
     // From Snyder, we have
@@ -474,6 +587,8 @@ class LambertConformalConic {
   }
 
 } // class GeographicLib
+
+enum LambertConformalConicType {SP1, SP2}
 
 class GeographicLibLambert {
   final double x; 

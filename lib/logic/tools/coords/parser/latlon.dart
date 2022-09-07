@@ -80,6 +80,9 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     coord = OpenLocationCode.parse(text);
     if (coord != null) coords.add(coord);
 
+    coord = Makaney.parse(text);
+    if (coord != null) coords.add(coord);
+
     coord = Quadtree.parse(text);
     if (coord != null) coords.add(coord);
 

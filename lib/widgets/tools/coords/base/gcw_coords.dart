@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geo3x3.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohex.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_makaney.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.dart';
@@ -238,6 +239,17 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsMakaney),
+        'widget': GCWCoordsMakaney(
+          coordinates: _pastedCoords,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsGeohash),
         'widget': GCWCoordsGeohash(
           coordinates: _pastedCoords,
@@ -442,6 +454,7 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsGeo3x3:
       case keyCoordsOpenLocationCode:
       case keyCoordsQuadtree:
+      case keyCoordsMakaney:
       case keyCoordsReverseWherigoWaldmeister:
         break;
       default:

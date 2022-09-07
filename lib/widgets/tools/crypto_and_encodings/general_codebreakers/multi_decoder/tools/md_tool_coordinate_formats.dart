@@ -84,6 +84,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
                   case keyCoordsSlippyMap:
                     coords = SlippyMap.parse(input)?.toLatLng();
                     break;
+                  case keyCoordsMakaney:
+                    coords = Makaney.parse(input)?.toLatLng();
+                    break;
                 }
               } catch (e) {}
 

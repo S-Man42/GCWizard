@@ -1635,6 +1635,7 @@
   "coords_formatconverter_geo3x3_locator": "Geo3x3",
   "coords_formatconverter_naturalareacode_x": "X (East)",
   "coords_formatconverter_naturalareacode_y": "Y (North)",
+  "coords_formatconverter_makaney_locator": "Makaney",
   "coords_formatconverter_openlocationcode_novalidcode": "No valid OpenLocationCode input",
   "coords_formatconverter_slippymap_zoom": "Zoom",
   "coords_intersection_title": "Intersection",
