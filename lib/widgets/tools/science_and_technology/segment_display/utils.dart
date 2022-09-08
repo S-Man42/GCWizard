@@ -19,7 +19,7 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays, {doub
 
         widget = Container(
           child: display,
-          padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 5),
         );
       } else {
         widget = Container();
@@ -28,7 +28,7 @@ Widget buildSegmentDisplayOutput(int countColumns, List<dynamic> displays, {doub
       columns.add(Expanded(
           child: Container(
         child: widget,
-        padding: EdgeInsets.symmetric(vertical: verticalPadding),
+        padding: EdgeInsets.symmetric(vertical: verticalPadding ?? 5),
       )));
     }
 
