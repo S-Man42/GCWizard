@@ -190,18 +190,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   }
 
   @override
-  void dispose() {
-    _monthFocusNode.dispose();
-    _dayFocusNode.dispose();
-    _hourFocusNode.dispose();
-    _minuteFocusNode.dispose();
-    _secondFocusNode.dispose();
-    _msecondFocusNode.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var widgets = Map<Widget, int>(); // widget: flex
 

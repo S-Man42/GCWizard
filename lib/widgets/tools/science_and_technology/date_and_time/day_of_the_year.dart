@@ -43,13 +43,6 @@ class DayOfTheYearState extends State<DayOfTheYear> {
   }
 
   @override
-  void dispose() {
-    _dayFocusNode.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
