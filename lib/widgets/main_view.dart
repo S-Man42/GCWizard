@@ -417,9 +417,13 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    Set<String> _queryTexts = removeAccents(_searchText.toLowerCase())
-        .replaceAll(ALLOWED_SEARCH_CHARACTERS, '')
-        .split(REGEXP_SPLIT_STRINGLIST).toSet();
+    var _sanitizedSearchText = removeAccents(_searchText.toLowerCase())
+        .replaceAll(ALLOWED_SEARCH_CHARACTERS, '');
+
+    if (_sanitizedSearchText.length == 0)
+      return <GCWTool>[];
+
+    Set<String> _queryTexts = _sanitizedSearchText.split(REGEXP_SPLIT_STRINGLIST).toSet();
 
     return registeredTools.where((tool) {
       if (tool.indexedSearchStrings == null) return false;
