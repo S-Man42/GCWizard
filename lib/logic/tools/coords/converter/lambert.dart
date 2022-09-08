@@ -1,16 +1,14 @@
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/lambert_conformal_conic.dart';
 import 'package:latlong2/latlong.dart';
 
 enum LambertType {
   LAMBERT_93, LAMBERT_2008, ETRS89_LCC, LAMBERT_72
-  , L93_CC42, L93_CC43, L93_CC44, L93_CC45, L93_CC46, L93_CC47, L93_CC48, L93_CC49
-  , LAMBERT_ZONE_I, LAMBERT_ZONE_II, LAMBERT_ZONE_III, LAMBERT_ZONE_IV
+  , L93_CC42, L93_CC43, L93_CC44, L93_CC45, L93_CC46, L93_CC47, L93_CC48, L93_CC49, L93_CC50
 }
 
 class _LambertDefinition {
-  final LambertConformalConicType type;
-
   final double centralMeridian; // lon0 λ0
   final double latitudeOfOrigin; // lat0 φ0
   final double standardParallel1; // stdlat1 φ1
@@ -20,7 +18,6 @@ class _LambertDefinition {
   final double falseNorthing; // y1
 
   const _LambertDefinition({
-    this.type,
     this.centralMeridian,
     this.latitudeOfOrigin,
     this.standardParallel1,
@@ -36,7 +33,6 @@ class _LambertDefinition {
 final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   //EPSG 2154, LAMB93, RGF93, Reseau Geodesique Francais 1993
   LambertType.LAMBERT_93 : _LambertDefinition(
-    type: LambertConformalConicType.SP2,
     centralMeridian: 3.0,
     latitudeOfOrigin: 46.5,
     standardParallel1: 49.0,
@@ -46,7 +42,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3812, Belgian Lambert 2008
   LambertType.LAMBERT_2008 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 4.359215833333335,
       latitudeOfOrigin: 50.79781500000001,
       standardParallel1: 49.833333333333336,
@@ -56,7 +51,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 31370
   LambertType.LAMBERT_72 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 4.367486666666666,
       latitudeOfOrigin: 90.0,
       standardParallel1: 51.16666723333333,
@@ -66,7 +60,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3034
   LambertType.ETRS89_LCC : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 10.0,
       latitudeOfOrigin: 52.0,
       standardParallel1: 35.0,
@@ -76,7 +69,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3942, RGF93
   LambertType.L93_CC42 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 42.0,
       standardParallel1: 41.25,
@@ -86,7 +78,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3943, RGF93
   LambertType.L93_CC43 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 43.0,
       standardParallel1: 42.25,
@@ -96,7 +87,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3944, RGF93
   LambertType.L93_CC44 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 44.0,
       standardParallel1: 43.25,
@@ -106,7 +96,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3945, RGF93
   LambertType.L93_CC45 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 45.0,
       standardParallel1: 44.25,
@@ -116,7 +105,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3946, RGF93
   LambertType.L93_CC46 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 46.0,
       standardParallel1: 45.25,
@@ -126,7 +114,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3947, RGF93
   LambertType.L93_CC47 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 47.0,
       standardParallel1: 46.25,
@@ -136,7 +123,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3948, RGF93
   LambertType.L93_CC48 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 48.0,
       standardParallel1: 47.25,
@@ -146,7 +132,6 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
   ),
   //EPSG 3949, RGF93
   LambertType.L93_CC49 : _LambertDefinition(
-      type: LambertConformalConicType.SP2,
       centralMeridian: 3.0,
       latitudeOfOrigin: 49.0,
       standardParallel1: 48.25,
@@ -154,116 +139,51 @@ final Map<LambertType, _LambertDefinition> _LambertDefinitions = {
       falseEasting: 1700000.0,
       falseNorthing: 8200000.0
   ),
-  //EPSG 27561, NTF (Paris), Lambert North, LAMB1
-  LambertType.LAMBERT_ZONE_I : _LambertDefinition(
-      type: LambertConformalConicType.SP1,
-      centralMeridian: 0.0,
-      latitudeOfOrigin: 55.0,
-      scaleFactor: 0.999877341,
-      falseEasting: 600000.0,
-      falseNorthing: 200000.0
-  ),
-  //EPSG 27562, NTF (Paris), Lambert Center, LAMB2
-  LambertType.LAMBERT_ZONE_II : _LambertDefinition(
-      type: LambertConformalConicType.SP1,
-      centralMeridian: 0.0,
-      latitudeOfOrigin: 52.0,
-      scaleFactor: 0.99987742,
-      falseEasting: 600000.0,
-      falseNorthing: 200000.0
-  ),
-  //EPSG 27563, NTF (Paris), Lambert South, LAMB3
-  LambertType.LAMBERT_ZONE_III : _LambertDefinition(
-      type: LambertConformalConicType.SP1,
-      centralMeridian: 0.0,
-      latitudeOfOrigin: 49.0,
-      scaleFactor: 0.999877499,
-      falseEasting: 600000.0,
-      falseNorthing: 200000.0
-  ),
-  //EPSG 27564, NTF (Paris), Lambert Corsica, LAMB4
-  LambertType.LAMBERT_ZONE_IV : _LambertDefinition(
-      type: LambertConformalConicType.SP1,
-      centralMeridian: 0.0,
-      latitudeOfOrigin: 46.85,
-      scaleFactor: 0.99994471,
-      falseEasting: 234.358,
-      falseNorthing: 185861.369
+  //EPSG 3950, RGF93
+  LambertType.L93_CC50 : _LambertDefinition(
+      centralMeridian: 3.0,
+      latitudeOfOrigin: 50.0,
+      standardParallel1: 49.25,
+      standardParallel2: 50.75,
+      falseEasting: 1700000.0,
+      falseNorthing: 9200000.0
   ),
 };
-
-class Lambert {
-  final double x;
-  final double y;
-
-  const Lambert(this.x, this.y);
-
-  @override
-  String toString() {
-    return 'X: $x, Y: $y';
-  }
-}
 
 // https://sourceforge.net/p/geographiclib/discussion/1026621/thread/87c3cb91af/
 // https://sourceforge.net/p/geographiclib/code/ci/release/tree/examples/example-LambertConformalConic.cpp#l36
 
-Lambert latLonToSpecificLambert(LatLng latLon, LambertType type, Ellipsoid ellipsoid) {
+Lambert latLonToLambert(LatLng latLon, LambertType type, Ellipsoid ellipsoid) {
   var specificLambert = _LambertDefinitions[type];
 
-  var lambertObject = LambertConformalConic(
-    ellipsoid.a,
-    ellipsoid.f,
-    specificLambert.type,
-    specificLambert.type == LambertConformalConicType.SP1 ? specificLambert.latitudeOfOrigin : specificLambert.standardParallel1,
-    specificLambert.type == LambertConformalConicType.SP1 ? null : specificLambert.standardParallel2,
-    // k1 "always" 1 if two different standard parallels given
-    specificLambert.type == LambertConformalConicType.SP1 ? specificLambert.scaleFactor : 1.0
-  );
-
-  GeographicLibLambert transformation = lambertObject.forward(
-    specificLambert.centralMeridian,
-    specificLambert.latitudeOfOrigin,
-    specificLambert.centralMeridian
-  );
+  LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
+  GeographicLibLambert transformation = _transformLambertFalseXY(specificLambert, lambertCC);
 
   var x0 = transformation.x - specificLambert.falseEasting;
   var y0 = transformation.y - specificLambert.falseNorthing;
 
-  GeographicLibLambert lambert = lambertObject.forward(
+  GeographicLibLambert lambert = lambertCC.forward(
     specificLambert.centralMeridian,
     latLon.latitude,
     latLon.longitude
   );
 
-  return Lambert(lambert.x - x0, lambert.y - y0);
+  return Lambert(type, lambert.x - x0, lambert.y - y0);
 }
 
-LatLng specificLambertToLatLon (Lambert lambert, LambertType type, Ellipsoid ellipsoid) {
-  var specificLambert = _LambertDefinitions[type];
+LatLng lambertToLatLon (Lambert lambert, Ellipsoid ellipsoid) {
+  var specificLambert = _LambertDefinitions[lambert.type];
 
-  var lambertObject = LambertConformalConic(
-      ellipsoid.a,
-      ellipsoid.f,
-      specificLambert.type,
-      specificLambert.type == LambertConformalConicType.SP1 ? specificLambert.latitudeOfOrigin : specificLambert.standardParallel1,
-      specificLambert.type == LambertConformalConicType.SP1 ? null : specificLambert.standardParallel2,
-      // k1 "always" 1 if two different standard parallels given
-      specificLambert.type == LambertConformalConicType.SP1 ? specificLambert.scaleFactor : 1.0
-  );
-
-  GeographicLibLambert transformation = lambertObject.forward(
-      specificLambert.centralMeridian,
-      specificLambert.latitudeOfOrigin,
-      specificLambert.centralMeridian
-  );
+  LambertConformalConic lambertCC = _lambertConformalConic(specificLambert, ellipsoid);
+  GeographicLibLambert transformation = _transformLambertFalseXY(specificLambert, lambertCC);
 
   var x0 = transformation.x - specificLambert.falseEasting;
   var y0 = transformation.y - specificLambert.falseNorthing;
 
-  var x = lambert.x + x0;
-  var y = lambert.y + y0;
+  var x = lambert.easting + x0;
+  var y = lambert.northing + y0;
 
-  GeographicLibLambertLatLon latLon = lambertObject.Reverse(
+  GeographicLibLambertLatLon latLon = lambertCC.Reverse(
       specificLambert.centralMeridian,
       x,
       y
@@ -272,23 +192,56 @@ LatLng specificLambertToLatLon (Lambert lambert, LambertType type, Ellipsoid ell
   return LatLng(latLon.lat, latLon.lon);
 }
 
-main() {
-  var l = latLonToSpecificLambert(
-      LatLng(43.297225, 0.3770638889),
-      LambertType.LAMBERT_ZONE_I,
-      getEllipsoidByName(ELLIPSOID_NAME_WGS84)
+GeographicLibLambert _transformLambertFalseXY(_LambertDefinition specificLambert, LambertConformalConic lambertCC) {
+  GeographicLibLambert transformation = lambertCC.forward(
+      specificLambert.centralMeridian,
+      specificLambert.latitudeOfOrigin,
+      specificLambert.centralMeridian
+  );
+  return transformation;
+}
+
+LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert, Ellipsoid ellipsoid) {
+  var lambertCC = LambertConformalConic(
+      ellipsoid.a,
+      ellipsoid.f,
+      specificLambert.standardParallel1,
+      specificLambert.standardParallel2,
+      // k1 "always" 1 if two different standard parallels given
+      1.0
   );
 
-  print(
-      l
-  );
+  return lambertCC;
+}
 
-  var ll = specificLambertToLatLon(
-      l,
-      LambertType.LAMBERT_ZONE_I,
-      getEllipsoidByName(ELLIPSOID_NAME_WGS84)
-  );
-  print(
-      '${ll.latitude} ${ll.longitude}'
-  );
+Lambert parseLambert(String input, {type: LambertType.LAMBERT_93}) {
+  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
+  var matches = regExp.allMatches(input);
+  var _eastingString = '';
+  var _northingString = '';
+
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    _eastingString = match.group(1);
+    _northingString = match.group(3);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _eastingString = match.group(2);
+      _northingString = match.group(5);
+    }
+  }
+
+  if (matches.length == 0) return null;
+
+  var _easting = double.tryParse(_eastingString);
+  if (_easting == null) return null;
+
+  var _northing = double.tryParse(_northingString);
+  if (_northing == null) return null;
+
+  return Lambert(type, _easting, _northing);
 }

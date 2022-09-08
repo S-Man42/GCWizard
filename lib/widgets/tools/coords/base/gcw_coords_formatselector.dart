@@ -40,6 +40,9 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
                 case keyCoordsGaussKrueger:
                   _currentSubtype = keyCoordsGaussKruegerGK1;
                   break;
+                case keyCoordsLambert:
+                  _currentSubtype = keyCoordsLambert93;
+                  break;
                 case keyCoordsSlippyMap:
                   _currentSubtype = '10';
                   break;
@@ -61,11 +64,14 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   }
 
   _buildSubtype() {
-    switch (widget.format['format'] ?? _currentFormat) {
+    var format = widget.format['format'] ?? _currentFormat;
+
+    switch (format) {
       case keyCoordsGaussKrueger:
+      case keyCoordsLambert:
         return GCWDropDownButton(
           value: _currentSubtype,
-          items: getCoordinateFormatByKey(keyCoordsGaussKrueger).subtypes.map((subtype) {
+          items: getCoordinateFormatByKey(format).subtypes.map((subtype) {
             return GCWDropDownMenuItem(
               value: subtype.key,
               child: i18n(context, subtype.name),

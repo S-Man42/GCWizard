@@ -99,7 +99,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
         ],
       ),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_utm_easting'),
+          hintText: i18n(context, 'coords_formatconverter_easting'),
           min: 0.0,
           controller: _EastingController,
           onChanged: (ret) {
@@ -109,7 +109,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
             });
           }),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_utm_northing'),
+          hintText: i18n(context, 'coords_formatconverter_northing'),
           min: 0.0,
           controller: _NorthingController,
           onChanged: (ret) {

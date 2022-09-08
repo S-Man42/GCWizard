@@ -50,7 +50,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
 
     return Column(children: <Widget>[
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_mercator_easting'),
+          hintText: i18n(context, 'coords_formatconverter_easting'),
           controller: _EastingController,
           onChanged: (ret) {
             setState(() {
@@ -59,7 +59,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
             });
           }),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_mercator_northing'),
+          hintText: i18n(context, 'coords_formatconverter_northing'),
           controller: _NorthingController,
           onChanged: (ret) {
             setState(() {

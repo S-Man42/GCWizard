@@ -158,7 +158,7 @@ GaussKrueger parseGaussKrueger(String input, {gaussKruegerCode: 1}) {
     _northingString = match.group(3);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(R|r)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(H|h)\:?\s*([\-0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(R|r|X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(H|h|Y|y)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

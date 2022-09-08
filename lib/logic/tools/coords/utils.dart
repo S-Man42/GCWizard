@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/coords/converter/lambert.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -33,6 +34,25 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     }
   }
 
+  LambertType _getLambertType() {
+    switch (_outputFormat['subtype']) {
+      case keyCoordsLambert93: return LambertType.LAMBERT_93;
+      case keyCoordsLambert2008: return LambertType.LAMBERT_2008;
+      case keyCoordsLambertETRS89LCC: return LambertType.ETRS89_LCC;
+      case keyCoordsLambert72: return LambertType.LAMBERT_72;
+      case keyCoordsLambert93CC42: return LambertType.L93_CC42;
+      case keyCoordsLambert93CC43: return LambertType.L93_CC43;
+      case keyCoordsLambert93CC44: return LambertType.L93_CC44;
+      case keyCoordsLambert93CC45: return LambertType.L93_CC45;
+      case keyCoordsLambert93CC46: return LambertType.L93_CC46;
+      case keyCoordsLambert93CC47: return LambertType.L93_CC47;
+      case keyCoordsLambert93CC48: return LambertType.L93_CC48;
+      case keyCoordsLambert93CC49: return LambertType.L93_CC49;
+      case keyCoordsLambert93CC50: return LambertType.L93_CC50;
+      default: return null;
+    }
+  }
+
   switch (_outputFormat['format']) {
     case keyCoordsDEC:
       return DEC.fromLatLon(_coords).toString(precision);
@@ -52,6 +72,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return SwissGridPlus.fromLatLon(_coords, ells).toString();
     case keyCoordsGaussKrueger:
       return GaussKrueger.fromLatLon(_coords, _getGKCode(), ells).toString();
+    case keyCoordsLambert:
+      return Lambert.fromLatLon(_coords, _getLambertType(), ells).toString();
     case keyCoordsDutchGrid:
       return DutchGrid.fromLatLon(_coords).toString();
     case keyCoordsMaidenhead:

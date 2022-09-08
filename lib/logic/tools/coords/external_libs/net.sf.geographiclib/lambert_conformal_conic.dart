@@ -194,7 +194,7 @@ class LambertConformalConic {
    * stdlat1 is not equal \e stdlat2.
    **********************************************************************/
 
-  LambertConformalConic(double a, double f, LambertConformalConicType type, double stdlat1, double stdlat2, double k1) {
+  LambertConformalConic(double a, double f, double stdlat1, double stdlat2, double k1) {
     _a = a;
     _f = f <= 1 ? f : 1/f;
     _r = 1/f;
@@ -211,27 +211,13 @@ class LambertConformalConic {
       throw Exception("Scale is not positive");
     if (!(stdlat1.abs() <= 90))
       throw Exception("Standard latitude 1 not in [-90, 90]");
-    if (stdlat2 != null && !(stdlat2.abs() <= 90))
+    if (!(stdlat2.abs() <= 90))
       throw Exception("Standard latitude 2 not in [-90, 90]");
-    if (k1 != null && !(k1 > 0))
-      throw Exception("Scale is not positive");
 
-
-    switch (type) {
-      case LambertConformalConicType.SP1:
-        double phi = stdlat1 * GeoMath.degree(),
-        sphi = sin(phi),
-        cphi = stdlat1.abs() != 90 ? cos(phi) : 0;
-        _init(sphi, cphi, sphi, cphi, k1);
-
-        break;
-      case LambertConformalConicType.SP2:
-        double phi1 = stdlat1 * GeoMath.degree(),
+    double phi1 = stdlat1 * GeoMath.degree(),
         phi2 = stdlat2 * GeoMath.degree();
 
-        _init(sin(phi1), stdlat1.abs() != 90 ? cos(phi1) : 0, sin(phi2), stdlat2.abs() != 90 ? cos(phi2) : 0, k1);
-        break;
-    }
+    _init(sin(phi1), stdlat1.abs() != 90 ? cos(phi1) : 0, sin(phi2), stdlat2.abs() != 90 ? cos(phi2) : 0, k1);
   }
 
 
@@ -587,8 +573,6 @@ class LambertConformalConic {
   }
 
 } // class GeographicLib
-
-enum LambertConformalConicType {SP1, SP2}
 
 class GeographicLibLambert {
   final double x; 

@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohex.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_makaney.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_lambert.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
@@ -173,6 +174,18 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsGaussKrueger),
         'widget': GCWCoordsGaussKrueger(
+          coordinates: _pastedCoords,
+          subtype: _currentCoordsFormat['subtype'],
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsLambert),
+        'widget': GCWCoordsLambert(
           coordinates: _pastedCoords,
           subtype: _currentCoordsFormat['subtype'],
           onChanged: (newValue) {
@@ -426,20 +439,10 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsSwissGridPlus:
         break;
       case keyCoordsGaussKrueger:
-      case keyCoordsGaussKruegerGK1:
         _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
         break;
-      case keyCoordsGaussKruegerGK2:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK2});
-        break;
-      case keyCoordsGaussKruegerGK3:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK3});
-        break;
-      case keyCoordsGaussKruegerGK4:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK4});
-        break;
-      case keyCoordsGaussKruegerGK5:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK5});
+      case keyCoordsLambert:
+        _currentCoordsFormat.addAll({'subtype': keyCoordsLambert93});
         break;
       case keyCoordsDutchGrid:
       case keyCoordsMaidenhead:

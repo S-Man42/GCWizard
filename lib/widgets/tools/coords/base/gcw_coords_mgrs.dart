@@ -150,7 +150,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
         ],
       ),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_mgrs_easting'),
+          hintText: i18n(context, 'coords_formatconverter_easting'),
           min: 0.0,
           controller: _EastingController,
           onChanged: (ret) {
@@ -160,7 +160,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
             });
           }),
       GCWDoubleTextField(
-          hintText: i18n(context, 'coords_formatconverter_mgrs_northing'),
+          hintText: i18n(context, 'coords_formatconverter_northing'),
           min: 0.0,
           controller: _NorthingController,
           onChanged: (ret) {
