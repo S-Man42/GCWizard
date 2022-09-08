@@ -11,7 +11,7 @@ Map<String, String> _COMMON_SEARCHSTRINGS;
 Map<String, String> _EN_SEARCHSTRINGS;
 Map<String, String> _LOCALE_SEARCHSTRINGS;
 
-final ALLOWED_SEARCH_CHARACTERS = RegExp(r'[^a-z0-9, ]');
+final ALLOWED_SEARCH_CHARACTERS = RegExp(r'[^a-z0-9α-ω¥, ]');
 
 Future loadSearchStrings(String languageCode) async {
   if (_COMMON_SEARCHSTRINGS == null) {
