@@ -23,12 +23,7 @@ DayOfTheYearOutput calculateDayInfos(int year, int day) {
   if (year == null || day == null) return null;
   var date = DateTime(year, 1, day);
 
-  return DayOfTheYearOutput(date,
-      dayNumber(date),
-      date.weekday,
-      _weekdayAlternate(date.weekday),
-      isoWeekOfYear(date),
-      alternateWeekOfYear(date));
+  return calculateDateInfos(date);
 }
 
 DayOfTheYearOutput calculateDateInfos(DateTime date) {
