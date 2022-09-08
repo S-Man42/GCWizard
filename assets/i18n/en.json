@@ -2564,7 +2564,7 @@
   "licenses_symboltablesources": "Symbol Table Sources",
   "licenses_telegraphs": "Telegraph Sources",
   "magic_eye_title": "Magic Eye Solver",
-  "magic_eye_description": "Solves so-called autostereograms, knows as 'Magic Eye' or '3D Stereogram' pictures",
+  "magic_eye_description": "Solves so-called autostereograms, known as 'Magic Eye' or '3D Stereogram' pictures",
   "magic_eye_hidden_image": "Hidden Image",
   "magic_eye_image_too_small": "Image too small",
   "magic_eye_offset": "Offset",
