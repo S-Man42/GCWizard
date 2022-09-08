@@ -18,7 +18,7 @@ class DayOfTheYear extends StatefulWidget {
 }
 
 class DayOfTheYearState extends State<DayOfTheYear> {
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   DateTime _currentEncodeDate;
   DateTime _currentDecodeDate;
 
