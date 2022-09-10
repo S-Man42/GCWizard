@@ -43,6 +43,9 @@ import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.
 import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
@@ -639,6 +642,9 @@ void _initStaticToolList() {
       className(Skytale()),
       className(Solitaire()),
       className(SpoonLanguage()),
+      className(SQRT2Selection()),
+      className(SQRT3Selection()),
+      className(SQRT5Selection()),
       className(Stegano()),
       className(StraddlingCheckerboard()),
       className(Substitution()),
