@@ -518,9 +518,7 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA_EXPERT = {
 Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.GWCFILE: 'wherigo_data_gwc',
   WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
-  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
   WHERIGO.ITEMS: 'wherigo_data_item_list',
   WHERIGO.CHARACTER: 'wherigo_data_character_list',
   WHERIGO.ZONES: 'wherigo_data_zone_list',
@@ -532,7 +530,6 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
 Map<WHERIGO, String> WHERIGO_DATA_GWC_USER = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.GWCFILE: 'wherigo_data_gwc',
   WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
 };
 

@@ -5326,7 +5326,7 @@
   "wherigo_data_task" : "Task Object",
   "wherigo_data_timer" : "Timer Object",
   "wherigo_data_zone" : "Zone Object",
-  "wherigo_data_character_list" : "List of Character Objects",
+  "wherigo_data_character_list" : "List of Characters",
   "wherigo_data_identifier_list" : "List of Variables",
   "wherigo_data_input_list" : "List of Input Objects with possible Answers",
   "wherigo_data_item_list" : "Inventory - List of Items",
