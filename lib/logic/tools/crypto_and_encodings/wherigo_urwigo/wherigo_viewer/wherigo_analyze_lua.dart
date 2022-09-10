@@ -1200,9 +1200,13 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           if (lines[i].trim().endsWith('= tonumber(input)')) {
             _answerVariable = lines[i].trim().replaceAll(' = tonumber(input)', '');
-          } else if (lines[i].trim().endsWith(' = input')) {
+          }
+
+          else if (lines[i].trim().endsWith(' = input')) {
             _answerVariable = lines[i].trim().replaceAll(' = input', '');
-          } else if (lines[i].trimLeft() == 'if input == nil then') {
+          }
+
+          else if (lines[i].trimLeft() == 'if input == nil then') {
             i++;
             lines[i] = lines[i].trim();
             _answerVariable = 'input';
@@ -1217,7 +1221,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           } // end of NIL
 
           else if (_OnGetInputSectionEnd(lines[i])) {
-            //
             if (insideInputFunction) {
               answerList.forEach((answer) {
                 Answers[inputObject].add(AnswerData(
@@ -1229,7 +1232,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               answerActions = [];
               answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
             }
-          } else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
+          }
+
+          else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
               answerActions.forEach((element) {});
@@ -1244,7 +1249,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
               answerList = [];
               _answerVariable = '';
             }
-          } else if (lines[i].trimLeft().startsWith('Buttons')) {
+          }
+
+          else if (lines[i].trimLeft().startsWith('Buttons')) {
             do {
               i++;
               lines[i] = lines[i].trim();
@@ -1514,8 +1521,24 @@ ZonePoint _getPoint(String line) {
 List<String> _getAnswers(
     int i, String line, String lineBefore, String obfuscator, String dtable, List<VariableData> variables) {
   if (line.trim().startsWith('if input == ') ||
+      line.trim().startsWith('if input >= ') ||
+      line.trim().startsWith('if input <= ') ||
       line.trim().startsWith('elseif input == ') ||
+      line.trim().startsWith('elseif input >= ') ||
+      line.trim().startsWith('elseif input <= ') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ')) {
+    if (line.contains('<=') && line.contains('>=')) {
+      return [line
+          .trimLeft()
+          .replaceAll('if', '')
+          .replaceAll('else', '')
+          .replaceAll('==', '')
+          .replaceAll('then', '')
+          .replaceAll(' ', '')
+          .replaceAll('and', ' and ')
+          .replaceAll('or', ' or ')
+        ];
+    }
     return line
         .trimLeft()
         .replaceAll('if', '')
@@ -1525,7 +1548,7 @@ List<String> _getAnswers(
         .replaceAll('then', '')
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
-        .split('or');
+        .split(RegExp(r'(or|and)'));
   } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
@@ -1595,7 +1618,11 @@ List<String> _getAnswers(
 
 bool _OnGetInputSectionEnd(String line) {
   if (line.trim().startsWith('if input == ') ||
+      line.trim().startsWith('if input >= ') ||
+      line.trim().startsWith('if input <= ') ||
       line.trim().startsWith('elseif input == ') ||
+      line.trim().startsWith('elseif input >= ') ||
+      line.trim().startsWith('elseif input <= ') ||
       line.trim().startsWith('if _Urwigo.Hash(') ||
       line.trim().startsWith('if (_Urwigo.Hash(') ||
       line.trim().startsWith('elseif _Urwigo.Hash(') ||
@@ -1617,8 +1644,11 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
   line = line.trim();
   if (line.startsWith('Wherigo.PlayAudio')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
-  } else if (line.startsWith('Wherigo.GetInput'))
+  }
+
+  else if (line.startsWith('Wherigo.GetInput'))
     return ActionMessageElementData(ACTIONMESSAGETYPE.COMMAND, line.trim());
+
   else if (line.startsWith('_Urwigo') ||
       line.startsWith('Callback') ||
       line.startsWith('Wherigo') ||
@@ -1629,12 +1659,17 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
       line.startsWith('{') ||
       line.startsWith('}'))
     return null;
+
   else if (line.startsWith('Text = ')) {
     return ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, getTextData(line, obfuscator, dtable));
-  } else if (line.startsWith('Media = ')) {
+  }
+
+  else if (line.startsWith('Media = ')) {
     return ActionMessageElementData(
         ACTIONMESSAGETYPE.IMAGE, line.trim().replaceAll('Media = ', '').replaceAll(',', ''));
-  } else if (line.startsWith('Buttons = ')) {
+  }
+
+  else if (line.startsWith('Buttons = ')) {
     if (line.endsWith('}') || line.endsWith('},')) {
       // single line
       return ActionMessageElementData(
@@ -1642,8 +1677,11 @@ ActionMessageElementData _handleAnswerLine(String line, String dtable, String ob
           getTextData(
               line.trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''), obfuscator, dtable));
     }
-  } else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else'))
+  }
+
+  else if (line.startsWith('if ') || line.startsWith('elseif ') || line.startsWith('else'))
     return ActionMessageElementData(ACTIONMESSAGETYPE.CASE, line.trim());
+
   else {
     String actionLine = '';
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
