@@ -13,10 +13,74 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
-  return  _hiddenData(data);
+  return  _hiddenData1(data);
 }
 
-Future<List<GCWFile>> _hiddenData(GCWFile data,
+Future<GCWFile> _hiddenData(GCWFile data) {
+
+}
+
+Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter) {
+  var bytes = data.bytes;
+  var resultList = <GCWFile>[];
+
+  while (bytes != null && bytes.length > 0) {
+    int fileSize;
+    FileType detectedFileType = getFileType(bytes);
+
+    switch (detectedFileType) {
+      case FileType.JPEG:
+        fileSize = jpgImageSize(bytes);
+        break;
+      case FileType.PNG:
+        fileSize = pngImageSize(bytes);
+        break;
+      case FileType.GIF:
+        fileSize = gifImageSize(bytes);
+        break;
+      case FileType.BMP:
+        fileSize = bmpImageSize(bytes);
+        break;
+      case FileType.ZIP:
+        fileSize = zipFileSize(bytes);
+        break;
+      case FileType.RAR:
+        fileSize = rarFileSize(bytes);
+        break;
+      case FileType.TAR:
+        fileSize = tarFileSize(bytes);
+        break;
+      case FileType.MP3:
+        fileSize = mp3FileSize(bytes);
+        break;
+      default:
+        fileSize = bytes.length;
+        break;
+    }
+
+    Uint8List resultBytes;
+    if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
+      resultBytes = bytes.sublist(0, fileSize);
+      // remove result from source data
+      bytes = bytes.sublist(fileSize);
+    } else {
+      resultBytes = bytes;
+      bytes = null;
+    }
+
+    resultBytes = trimNullBytes(resultBytes);
+    if (resultBytes.length > 0) {
+      fileIndexCounter++;
+      var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
+
+      resultList.add(GCWFile(name: fileName, bytes: resultBytes));
+    }
+  }
+
+  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter),
+}
+
+Future<List<GCWFile>> _hiddenData1(GCWFile data,
     {bool calledFromSearchMagicBytes = false, onlyChildren: false, int fileIndex = 0}) async {
   var resultList = <GCWFile>[];
   var bytes = data.bytes;
@@ -93,7 +157,7 @@ Future<List<GCWFile>> _hiddenData(GCWFile data,
         result.children.forEach((data) async {
           if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
             // clone byte (I have no idea why this is actually necessary)
-            var children = await _hiddenData(GCWFile(name: data.name, bytes: data.bytes.sublist(0)), onlyChildren : true);
+            var children = await _hiddenData1(GCWFile(name: data.name, bytes: data.bytes.sublist(0)), onlyChildren : true);
             if ((children != null) && (children.length > 0))
               if (data.children != null) data.children.addAll(children);
           } else
@@ -127,7 +191,7 @@ _searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
-              var children = await _hiddenData(GCWFile(bytes: bytes.sublist(bytesOffset)),
+              var children = await _hiddenData1(GCWFile(bytes: bytes.sublist(bytesOffset)),
                   calledFromSearchMagicBytes: true,
                   fileIndex: data.children.length + 1);
               if ((children != null) && (children.length > 0))
