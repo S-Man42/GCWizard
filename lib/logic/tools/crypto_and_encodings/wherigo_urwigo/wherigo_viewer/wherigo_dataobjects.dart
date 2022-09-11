@@ -26,6 +26,9 @@ enum WHERIGO {
 const DATA_TYPE_LUA = 'LUA-Sourcecode';
 const DATA_TYPE_GWC = 'GWC-Cartridge';
 
+const EXPERT_MODE = true;
+const USER_MODE = false;
+
 enum FILE_LOAD_STATE { NULL, GWC, LUA, FULL }
 
 enum BUILDER { EARWIGO, URWIGO, GROUNDSPEAK, WHERIGOKIT, UNKNOWN }
@@ -455,14 +458,22 @@ class WherigoCartridgeLUA {
       this.httpMessage = ''});
 }
 
-Map<FILE_LOAD_STATE, Map<WHERIGO, String>> WHERIGO_DATA = {
-  FILE_LOAD_STATE.NULL: {},
-  FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC,
-  FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA,
-  FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL,
+Map<bool, Map<FILE_LOAD_STATE, Map<WHERIGO, String>>> WHERIGO_DATA = {
+  EXPERT_MODE : {
+    FILE_LOAD_STATE.NULL: {},
+    FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_EXPERT,
+    FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_EXPERT,
+    FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_EXPERT,
+  },
+  USER_MODE : {
+    FILE_LOAD_STATE.NULL: {},
+    FILE_LOAD_STATE.GWC: WHERIGO_DATA_GWC_USER,
+    FILE_LOAD_STATE.LUA: WHERIGO_DATA_LUA_USER,
+    FILE_LOAD_STATE.FULL: WHERIGO_DATA_FULL_USER,
+  }
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_FULL = {
+Map<WHERIGO, String> WHERIGO_DATA_FULL_EXPERT = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -481,7 +492,7 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL = {
   WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_GWC = {
+Map<WHERIGO, String> WHERIGO_DATA_GWC_EXPERT = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.LUABYTECODE: 'wherigo_data_luabytecode',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -489,7 +500,7 @@ Map<WHERIGO, String> WHERIGO_DATA_GWC = {
   WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
 };
 
-Map<WHERIGO, String> WHERIGO_DATA_LUA = {
+Map<WHERIGO, String> WHERIGO_DATA_LUA_EXPERT = {
   WHERIGO.OBFUSCATORTABLE: 'wherigo_data_obfuscatortable',
   WHERIGO.LUAFILE: 'wherigo_data_lua',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
@@ -501,6 +512,34 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA = {
   WHERIGO.TIMERS: 'wherigo_data_timer_list',
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
   WHERIGO.IDENTIFIER: 'wherigo_data_identifier_list',
+  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
+  WHERIGO.ITEMS: 'wherigo_data_item_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zone_list',
+  WHERIGO.INPUTS: 'wherigo_data_input_list',
+  WHERIGO.MESSAGES: 'wherigo_data_message_list',
+  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_GWC_USER = {
+  WHERIGO.HEADER: 'wherigo_data_header',
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
+};
+
+Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
+  WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
+  WHERIGO.ITEMS: 'wherigo_data_item_list',
+  WHERIGO.CHARACTER: 'wherigo_data_character_list',
+  WHERIGO.ZONES: 'wherigo_data_zone_list',
+  WHERIGO.INPUTS: 'wherigo_data_input_list',
+  WHERIGO.MESSAGES: 'wherigo_data_message_list',
   WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
