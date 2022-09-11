@@ -8,7 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class WetBulbTemperature extends StatefulWidget {
   @override
@@ -73,7 +72,6 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
 
   Widget _buildOutput(BuildContext context) {
     String unit = '';
-    String hintWBGT = '';
     String hintWBT = '';
 
     WBOutput output;
