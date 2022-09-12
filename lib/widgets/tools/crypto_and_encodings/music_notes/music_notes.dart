@@ -194,7 +194,7 @@ class MusicNotesState extends State<MusicNotes> {
         if (character != null) return character.join();
       }).toList();
       var segments = decodeNotes(output, _currentCode);
-      //print('displays: ' +segments['displays'].toString()+ " " +segments['chars'].toString());
+
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),

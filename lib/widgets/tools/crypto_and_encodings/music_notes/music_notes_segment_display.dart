@@ -50,6 +50,10 @@ final _INITIAL_SEGMENTS = <String, bool>{
   helpLineN2: true,
   helpLineN3: true,
   helpLineN4: true,
+
+  trebleClef: false,
+  altClef: false,
+  bassClef: false,
 };
 
 const _NOTES_RELATIVE_DISPLAY_WIDTH = 380;
@@ -92,7 +96,12 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                       Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
                 counter++;
               });
-              pathL.addPath(_createBassClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
+              if (currentSegments.containsKey(trebleClef))
+                pathL.addPath(_createTrebleClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
+              else if (currentSegments.containsKey(altClef))
+                pathL.addPath(_createAltClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
+              else if (currentSegments.containsKey(bassClef))
+                pathL.addPath(_createBassClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
 
               canvas.touchCanvas.drawPath(pathL, paint);
 
@@ -557,7 +566,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     return path.transform(translateM);
   }
 
-  static Path _createTrebbleClef(Size size, Offset offset, bool readOnly) {
+  static Path _createTrebleClef(Size size, Offset offset, bool readOnly) {
     var path = Path();
     var scale = 0.8 * size.width / _getSymbolWidth(readOnly);
 

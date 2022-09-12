@@ -10,6 +10,9 @@ enum NotesCodebook {
 }
 const hashLabel = 'k';
 const bLabel = 'b';
+const trebleClef = 'treble';
+const altClef = 'alt';
+const bassClef = 'bass';
 const helpLine1 = 'c';
 const helpLine2 = 'd';
 const helpLine3 = 'e';
@@ -303,12 +306,15 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_ALT);
+      displays.add([altClef]);
       break;
     case NotesCodebook.BASS:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_BASS);
+      displays.add([bassClef]);
       break;
     case NotesCodebook.TREBLE:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_TREBLE);
+      displays.add([trebleClef]);
       break;
   }
 
