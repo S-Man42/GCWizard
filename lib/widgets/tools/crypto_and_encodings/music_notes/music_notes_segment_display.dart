@@ -96,11 +96,11 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                       Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
                 counter++;
               });
-              if (currentSegments.containsKey(trebleClef))
+              if (currentSegments[trebleClef])
                 pathL.addPath(_createTrebleClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
-              else if (currentSegments.containsKey(altClef))
+              else if (currentSegments[altClef])
                 pathL.addPath(_createAltClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
-              else if (currentSegments.containsKey(bassClef))
+              else if (currentSegments[bassClef])
                 pathL.addPath(_createBassClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
 
               canvas.touchCanvas.drawPath(pathL, paint);
@@ -349,7 +349,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
   static Path _createBassClef(Size size, Offset offset, bool readOnly) {
     var path = Path();
-    var scale = 0.8 * size.width / _getSymbolWidth(readOnly);
+    var scale = size.width / _getSymbolWidth(readOnly);
 
     path.addRect(Rect.fromLTWH(0, -60, 15.066, 120.002));
     path.addRect(Rect.fromLTWH(20.116, -60, 4.964, 120.002));
@@ -365,7 +365,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(48.767, -38.316);
     path.lineTo(45.371, -37.706);
     path.lineTo(41.887, -38.229);
-    path.lineTo(39.014, -39.97);
+    path.lineTo(39.014, -39.970);
     path.lineTo(37.011, -42.583);
     path.lineTo(36.314, -45.805);
     path.lineTo(37.794, -51.204);
@@ -440,7 +440,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(34.834, -8.010);
     path.lineTo(39.188, -15.064);
     path.lineTo(41.452, -22.815);
-    path.lineTo(42.845, -17.59);
+    path.lineTo(42.845, -17.590);
     path.lineTo(44.761, -14.106);
     path.lineTo(48.854, -11.407);
     path.lineTo(55.037, -10.536);
@@ -467,7 +467,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
   static Path _createAltClef(Size size, Offset offset, bool readOnly) {
     var path = Path();
-    var scale = 0.8 * size.width / _getSymbolWidth(readOnly);
+    var scale = size.width / _getSymbolWidth(readOnly);
 
     path.moveTo(14.804, -18.548);
     path.lineTo(14.282, -14.368);
@@ -512,7 +512,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(48.157, 3.485);
     path.lineTo(48.332, -1.566);
     path.lineTo(45.806, -14.455);
-    path.lineTo(38.23, -22.728);
+    path.lineTo(38.230, -22.728);
     path.lineTo(33.702, -24.644);
     path.lineTo(28.825, -25.34);
     path.lineTo(22.119, -24.295);
@@ -536,7 +536,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(72.193, -18.199);
     path.lineTo(74.457, -19.767);
     path.lineTo(77.156, -20.289);
-    path.lineTo(80.03, -19.767);
+    path.lineTo(80.030, -19.767);
     path.close();
     path.moveTo(82.469, 7.578);
     path.lineTo(84.123, 9.929);
@@ -568,7 +568,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
 
   static Path _createTrebleClef(Size size, Offset offset, bool readOnly) {
     var path = Path();
-    var scale = 0.8 * size.width / _getSymbolWidth(readOnly);
+    var scale = size.width / _getSymbolWidth(readOnly);
 
     path.moveTo(52.947, -96.333);
     path.lineTo(60.262, -76.13);
@@ -621,7 +621,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(58.259, 85.324);
     path.lineTo(53.644, 59.460);
     path.lineTo(47.983, 60.070);
-    path.lineTo(41.8, 60.331);
+    path.lineTo(41.800, 60.331);
     path.lineTo(25.864, 57.196);
     path.lineTo(12.366, 47.878);
     path.lineTo(3.135, 34.293);
@@ -634,7 +634,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(31.699, -49.569);
     path.lineTo(30.479, -57.929);
     path.lineTo(30.044, -63.764);
-    path.lineTo(31.35, -75.607);
+    path.lineTo(31.350, -75.607);
     path.lineTo(35.269, -87.102);
     path.lineTo(41.191, -96.594);
     path.lineTo(47.722, -99.729);
