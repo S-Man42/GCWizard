@@ -96,12 +96,13 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                       Offset(0, counter * LINE_DISTANCE + LINE_OFFSET_Y), LINE_OFFSET_X, readOnly), Offset(0, 0));
                 counter++;
               });
+              var xOffset = readOnly ? 0.0 : -size.width / _getSymbolWidth(readOnly) * 100.0;
               if (currentSegments[trebleClef])
-                pathL.addPath(_createTrebleClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
+                pathL.addPath(_createTrebleClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
               else if (currentSegments[altClef])
-                pathL.addPath(_createAltClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
+                pathL.addPath(_createAltClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
               else if (currentSegments[bassClef])
-                pathL.addPath(_createBassClef(size, Offset(-20, LINE_OFFSET_Y), readOnly), Offset(0, 0));
+                pathL.addPath(_createBassClef(size, Offset(xOffset, 7 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly), Offset(0, 0));
 
               canvas.touchCanvas.drawPath(pathL, paint);
 
@@ -248,7 +249,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.moveTo(-19.201,-8.436);
     path.moveTo(-11.389,-12.587);
     path.lineTo(-11.389,-25.77);
-    path.lineTo(-6.359,-25.77);
+    path.lineTo(-6.359,-25.770);
     path.lineTo(-6.359,-15.272);
     path.lineTo(6.385,-22.059);
     path.lineTo(6.385,-35.34);
@@ -276,9 +277,9 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(-19.201,-8.436);
     path.close();
     path.moveTo(-6.359,13.927);
-    path.lineTo(6.385,7.14);
+    path.lineTo(6.385,7.140);
     path.lineTo(6.385,-14.637);
-    path.lineTo(-6.359,-7.85);
+    path.lineTo(-6.359,-7.850);
     path.lineTo(-6.359,13.927);
     path.close();
 
@@ -303,12 +304,12 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     path.lineTo(-12.364,-52.525);
     path.lineTo(-7.335,-52.525);
     path.lineTo(-7.335,-11.217);
-    path.lineTo(-4.08,-13.717);
-    path.lineTo(-1.72,-15.05);
+    path.lineTo(-4.080,-13.717);
+    path.lineTo(-1.720,-15.050);
     path.lineTo(2.046,-16.212);
     path.lineTo(5.018,-16.441);
     path.lineTo(7.643,-16.191);
-    path.lineTo(9.95,-15.44);
+    path.lineTo(9.950,-15.440);
     path.lineTo(13.563,-12.633);
     path.lineTo(15.243,-9.802);
     path.lineTo(15.785,-8.287);
@@ -347,7 +348,7 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     return path.transform(translateM);
   }
 
-  static Path _createBassClef(Size size, Offset offset, bool readOnly) {
+  static Path _createAltClef(Size size, Offset offset, bool readOnly) {
     var path = Path();
     var scale = size.width / _getSymbolWidth(readOnly);
 
@@ -465,97 +466,63 @@ class NotesSegmentDisplay extends NSegmentDisplay {
     return path.transform(translateM);
   }
 
-  static Path _createAltClef(Size size, Offset offset, bool readOnly) {
+  static Path _createBassClef(Size size, Offset offset, bool readOnly) {
     var path = Path();
     var scale = size.width / _getSymbolWidth(readOnly);
 
-    path.moveTo(14.804, -18.548);
-    path.lineTo(14.282, -14.368);
-    path.lineTo(14.456, -13.323);
-    path.lineTo(15.675, -11.320);
-    path.lineTo(18.113, -10.013);
-    path.lineTo(20.639, -9.404);
-    path.lineTo(24.122, -8.968);
-    path.lineTo(27.867, -7.749);
-    path.lineTo(29.957, -5.05);
-    path.lineTo(30.392, -2.785);
-    path.lineTo(30.654, 0.698);
-    path.lineTo(29.783, 4.268);
-    path.lineTo(26.996, 7.142);
-    path.lineTo(22.816, 9.058);
-    path.lineTo(17.591, 9.755);
-    path.lineTo(12.366, 9.058);
-    path.lineTo(8.186, 6.968);
-    path.lineTo(5.225, 3.223);
-    path.lineTo(4.180, -2.002);
-    path.lineTo(6.270, -13.061);
-    path.lineTo(12.888, -23.163);
-    path.lineTo(20.726, -28.04);
-    path.lineTo(32.395, -29.694);
-    path.lineTo(47.896, -26.559);
-    path.lineTo(59.217, -17.067);
-    path.lineTo(64.094, -7.923);
-    path.lineTo(65.661, 2.004);
-    path.lineTo(61.307, 16.808);
-    path.lineTo(48.332, 32.745);
-    path.lineTo(34.921, 43.805);
-    path.lineTo(18.810, 54.255);
-    path.lineTo(6.880, 60.525);
-    path.lineTo(0.958, 62.092);
-    path.lineTo(0.523, 59.915);
-    path.lineTo(9.753, 55.996);
-    path.lineTo(19.681, 49.726);
-    path.lineTo(33.789, 37.622);
-    path.lineTo(42.236, 25.778);
-    path.lineTo(45.458, 17.592);
-    path.lineTo(47.461, 8.623);
-    path.lineTo(48.157, 3.485);
-    path.lineTo(48.332, -1.566);
-    path.lineTo(45.806, -14.455);
-    path.lineTo(38.230, -22.728);
-    path.lineTo(33.702, -24.644);
-    path.lineTo(28.825, -25.34);
-    path.lineTo(22.119, -24.295);
-    path.lineTo(16.807, -21.073);
-    path.lineTo(14.804, -18.548);
-    path.close();
-    path.moveTo(80.030, -19.767);
-    path.lineTo(84.123, -15.761);
-    path.lineTo(84.646, -12.974);
-    path.lineTo(84.123, -10.362);
-    path.lineTo(82.643, -8.098);
-    path.lineTo(80.291, -6.443);
-    path.lineTo(77.418, -5.833);
-    path.lineTo(74.805, -6.182);
-    path.lineTo(72.541, -7.575);
-    path.lineTo(71.322, -8.794);
-    path.lineTo(70.625, -10.10);
-    path.lineTo(70.277, -11.233);
-    path.lineTo(70.016, -13.061);
-    path.lineTo(70.538, -15.935);
-    path.lineTo(72.193, -18.199);
-    path.lineTo(74.457, -19.767);
-    path.lineTo(77.156, -20.289);
-    path.lineTo(80.030, -19.767);
-    path.close();
-    path.moveTo(82.469, 7.578);
-    path.lineTo(84.123, 9.929);
-    path.lineTo(84.646, 12.803);
-    path.lineTo(84.297, 15.154);
-    path.lineTo(83.252, 17.070);
-    path.lineTo(80.727, 19.160);
-    path.lineTo(77.418, 19.943);
-    path.lineTo(73.412, 18.898);
-    path.lineTo(70.625, 15.676);
-    path.lineTo(70.277, 14.370);
-    path.lineTo(70.016, 12.541);
-    path.lineTo(71.061, 8.623);
-    path.lineTo(74.021, 6.010);
-    path.lineTo(75.502, 5.575);
-    path.lineTo(77.156, 5.400);
-    path.lineTo(80.030, 5.923);
-    path.close();
+    path.moveTo(14.804, -50.640);
+    path.lineTo(14.282, -46.460);
+    path.lineTo(14.456, -45.415);
+    path.lineTo(15.675, -43.412);
+    path.lineTo(18.113, -42.105);
+    path.lineTo(20.639, -41.496);
+    path.lineTo(24.122, -41.060);
+    path.lineTo(27.867, -39.841);
+    path.lineTo(29.957, -37.142);
+    path.lineTo(30.392, -34.877);
+    path.lineTo(30.654, -31.394);
+    path.lineTo(29.783, -27.824);
+    path.lineTo(26.996, -24.950);
+    path.lineTo(22.816, -23.034);
+    path.lineTo(17.591, -22.337);
+    path.lineTo(12.366, -23.034);
+    path.lineTo(8.186, -25.124);
+    path.lineTo(5.225, -28.869);
+    path.lineTo(4.180, -34.094);
+    path.lineTo(6.270, -45.153);
+    path.lineTo(12.888, -55.255);
+    path.lineTo(20.726, -60.132);
+    path.lineTo(32.395, -61.786);
+    path.lineTo(47.896, -58.651);
+    path.lineTo(59.217, -49.159);
+    path.lineTo(64.094, -40.015);
+    path.lineTo(65.661, -30.088);
+    path.lineTo(61.307, -15.284);
+    path.lineTo(48.332, 0.653);
+    path.lineTo(34.921, 11.713);
+    path.lineTo(18.810, 22.163);
+    path.lineTo(6.880, 28.433);
+    path.lineTo(0.958, 30.000);
+    path.lineTo(0.523, 27.823);
+    path.lineTo(9.753, 23.904);
+    path.lineTo(19.681, 17.634);
+    path.lineTo(33.789, 5.530);
+    path.lineTo(42.236, -6.314);
+    path.lineTo(45.458, -14.500);
+    path.lineTo(47.461, -23.469);
+    path.lineTo(48.157, -28.607);
+    path.lineTo(48.332, -33.658);
+    path.lineTo(45.806, -46.547);
+    path.lineTo(38.230, -54.820);
+    path.lineTo(33.702, -56.736);
+    path.lineTo(28.825, -57.432);
+    path.lineTo(22.119, -56.387);
+    path.lineTo(16.807, -53.165);
+    path.lineTo(14.804, -50.640);
 
+    path.addOval(Rect.fromLTWH(70.016, -26.692, 16.300, 16.300));
+
+    path.addOval(Rect.fromLTWH(70.016, -52.381, 16.300, 16.300));
 
     final translateM = Float64List.fromList([
       scale,     0,     0, 0,
