@@ -13,16 +13,35 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
-  return  _hiddenData1(data);
+  return  Future.value((await _hiddenData(data, 0))?.item1);
 }
 
-Future<GCWFile> _hiddenData(GCWFile data) {
+Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
+  var result = _splitFile(data, fileIndexCounter);
+  var childrenList = <GCWFile>[];
 
+  if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE)
+    // clone byte (I have no idea why this is actually necessary)
+    childrenList.addAll(await extractArchive(GCWFile(name: data.name, bytes: data.bytes.sublist(0))));
+
+  if (result?.item1 != null)
+    childrenList.addAll(result?.item1);
+
+  childrenList.removeWhere((element) => element == null);
+  data.children = childrenList.length == 0 ? null : childrenList;
+
+
+  await childrenList.forEach((data) async {
+    result = await _hiddenData(data, result.item2);
+  });
+
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
 
 Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter) {
   var bytes = data.bytes;
   var resultList = <GCWFile>[];
+  var parent = true;
 
   while (bytes != null && bytes.length > 0) {
     int fileSize;
@@ -69,15 +88,17 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter) {
     }
 
     resultBytes = trimNullBytes(resultBytes);
-    if (resultBytes.length > 0) {
+    if (resultBytes.length > 0 && !parent) {
       fileIndexCounter++;
+      //detectedFileType = getFileType(bytes);
       var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
 
       resultList.add(GCWFile(name: fileName, bytes: resultBytes));
     }
+    parent = false;
   }
 
-  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter),
+  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
 }
 
 Future<List<GCWFile>> _hiddenData1(GCWFile data,
