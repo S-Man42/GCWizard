@@ -728,6 +728,9 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
       case NumberSequencesMode.LYCHREL:
         sequenceList.addAll(lychrel_numbers);
         break;
+      case NumberSequencesMode.PERMUTABLE_PRIMES:
+        sequenceList.addAll(permutable_primes);
+        break;
     }
     for (int i = start; i <= stop; i++) numberList.add(BigInt.parse(sequenceList[i]));
   }
@@ -949,6 +952,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       case NumberSequencesMode.LYCHREL:
         sequenceList.addAll(lychrel_numbers);
         break;
+      case NumberSequencesMode.PERMUTABLE_PRIMES:
+        sequenceList.addAll(permutable_primes);
+        break;
     }
     for (int i = 0; i < sequenceList.length; i++) {
       if (expr.hasMatch(sequenceList[i])) {
@@ -1102,6 +1108,9 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits) {
         break;
       case NumberSequencesMode.LYCHREL:
         sequenceList.addAll(lychrel_numbers);
+        break;
+      case NumberSequencesMode.PERMUTABLE_PRIMES:
+        sequenceList.addAll(permutable_primes);
         break;
     }
     for (int i = 0; i < sequenceList.length; i++) if (sequenceList[i].length == digits) numberList.add(sequenceList[i]);
