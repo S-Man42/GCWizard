@@ -105,11 +105,6 @@ class NotesSegmentDisplay extends NSegmentDisplay {
                 _drawB(bLabel, _createB(size,
                     Offset(size.width / _getSymbolWidth(readOnly) * 25.0, 9 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
                     size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
-
-                _drawB(bLabel, _createB(size,
-                    Offset(size.width / _getSymbolWidth(readOnly) * 25.0, 9 * LINE_DISTANCE + LINE_OFFSET_Y), readOnly),
-                    size, canvas, paint, readOnly, currentSegments, setSegmentState, SEGMENTS_COLOR_ON, SEGMENTS_COLOR_OFF);
-
               }
 
               var notePositions = [105, 35, -35, -105];
