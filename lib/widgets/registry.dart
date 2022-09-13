@@ -188,11 +188,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/permutable_primes.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt2.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt3.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt5.dart';
-import 'package:gc_wizard/widgets/tools/tools/crypto_and_encodings/music_notes/music_notes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
@@ -335,6 +331,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt2.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt3.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt5.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
@@ -356,6 +355,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/permutable_primes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
@@ -377,7 +377,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equatio
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -397,6 +396,7 @@ import 'main_menu/settings/settings_coordinates.dart';
 import 'main_menu/settings/settings_general.dart';
 import 'main_menu/settings/settings_tools.dart';
 import 'tools/games/scrabble/scrabble.dart';
+import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'tools/science_and_technology/colors/ral_color_codes.dart';
 
 
