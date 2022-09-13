@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
+import 'package:image/image.dart' as Image;
 import 'package:tuple/tuple.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
@@ -30,18 +31,20 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   childrenList.removeWhere((element) => element == null);
   data.children = childrenList.length == 0 ? null : childrenList;
 
-
   await childrenList.forEach((data) async {
     result = await _hiddenData(data, result.item2);
   });
 
+  if (fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE)
+    result = _searchMagicBytesHeader(data, result.item2);
+
   return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
 
-Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter) {
+Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) {
   var bytes = data.bytes;
   var resultList = <GCWFile>[];
-  var parent = true;
+  var parent = !onlyParent;
 
   while (bytes != null && bytes.length > 0) {
     int fileSize;
@@ -90,10 +93,13 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter) {
     resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0 && !parent) {
       fileIndexCounter++;
-      //detectedFileType = getFileType(bytes);
       var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
-
-      resultList.add(GCWFile(name: fileName, bytes: resultBytes));
+      var file = GCWFile(name: fileName, bytes: resultBytes);
+      if (_checkFileValid(file))
+        resultList.add(file);
+      else
+        fileIndexCounter--;
+      if (onlyParent) break;
     }
     parent = false;
   }
@@ -101,102 +107,29 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter) {
   return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
 }
 
-Future<List<GCWFile>> _hiddenData1(GCWFile data,
-    {bool calledFromSearchMagicBytes = false, onlyChildren: false, int fileIndex = 0}) async {
-  var resultList = <GCWFile>[];
-  var bytes = data.bytes;
+Tuple2<List<GCWFile>, int> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) {
+  var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.BMP, FileType.ZIP,
+    FileType.RAR, FileType.TAR, FileType.MP3];
 
-  while (bytes != null && bytes.length > 0) {
-    int fileSize;
-    FileType detectedFileType = getFileType(bytes);
-
-    switch (detectedFileType) {
-      case FileType.JPEG:
-        fileSize = jpgImageSize(bytes);
-        break;
-      case FileType.PNG:
-        fileSize = pngImageSize(bytes);
-        break;
-      case FileType.GIF:
-        fileSize = gifImageSize(bytes);
-        break;
-      case FileType.BMP:
-        fileSize = bmpImageSize(bytes);
-        break;
-      case FileType.ZIP:
-        fileSize = zipFileSize(bytes);
-        break;
-      case FileType.RAR:
-        fileSize = rarFileSize(bytes);
-        break;
-      case FileType.TAR:
-        fileSize = tarFileSize(bytes);
-        break;
-      case FileType.MP3:
-        fileSize = mp3FileSize(bytes);
-        break;
-      default:
-        fileSize = bytes.length;
-        break;
-    }
-
-    Uint8List resultBytes;
-    if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
-      resultBytes = bytes.sublist(0, fileSize);
-      // remove result from source data
-      bytes = bytes.sublist(fileSize);
-    } else {
-      resultBytes = bytes;
-      bytes = null;
-    }
-
-    List<GCWFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
-      children = await extractArchive(GCWFile(name: data.name, bytes: resultBytes));
-
-
-    resultBytes = trimNullBytes(resultBytes);
-    if (resultBytes.length > 0) {
-      var fileCounter = fileIndex + resultList.length;
-      var result = GCWFile(name: data.name ?? HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
-
-      resultList.add(result);
-    }
-
-    if (calledFromSearchMagicBytes) break;
+  var result = _searchMagicBytes(data, fileTypeList, fileIndexCounter);
+  if (result?.item1 != null && result?.item1.length > 0) {
+    if (data.children != null)
+      data.children.addAll(result?.item1);
+    else
+      data.children = result?.item1;
   }
-
-  if (!calledFromSearchMagicBytes) {
-    var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
-
-    resultList.asMap().forEach((index, result) {
-      if (index == 0 && result.fileClass != FileClass.ARCHIVE) return;
-
-      if ((result.children == null) || (result.children.length == 0))
-        _searchMagicBytes(result, fileTypeList);
-      else
-        result.children.forEach((data) async {
-          if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
-            // clone byte (I have no idea why this is actually necessary)
-            var children = await _hiddenData1(GCWFile(name: data.name, bytes: data.bytes.sublist(0)), onlyChildren : true);
-            if ((children != null) && (children.length > 0))
-              if (data.children != null) data.children.addAll(children);
-          } else
-            _searchMagicBytes(data, fileTypeList);
-        });
-    });
-  }
-  if (onlyChildren)
-    resultList = resultList?.first?.children;
-  return resultList;
+  return Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter);
 }
 
-_searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
+Tuple2<List<GCWFile>, int> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) {
+  var resultList = <GCWFile>[];
+
   fileTypeList.forEach((fileType) {
     var magicBytesList = magicBytes(fileType);
-    magicBytesList.forEach((magicBytes) async {
+    magicBytesList.forEach((magicBytes) {
       var bytes = data.bytes;
-      if (bytes == null) return;
+      if (bytes == null)
+        return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
 
       for (int i = 1; i < bytes.length; i++) {
         if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
@@ -212,17 +145,32 @@ _searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
-              var children = await _hiddenData1(GCWFile(bytes: bytes.sublist(bytesOffset)),
-                  calledFromSearchMagicBytes: true,
-                  fileIndex: data.children.length + 1);
-              if ((children != null) && (children.length > 0))
-                if (data.children != null) data.children.addAll(children);
+              var result = _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)),
+                  fileIndexCounter, onlyParent : true);
+              if (result?.item1 != null && result?.item1.length > 0)
+                resultList.addAll(result?.item1);
+
+              fileIndexCounter = result?.item2 ?? fileIndexCounter;
             }
           }
         }
       }
     });
   });
+
+  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
+}
+
+bool _checkFileValid(GCWFile data) {
+  var result = true;
+  try {
+    var _fileClass = fileClass(getFileType(data?.bytes));
+    if (_fileClass == FileClass.IMAGE) {
+      return Image.decodeImage(data.bytes) != null;
+    }
+  } catch (e) {result = false;}
+
+  return result;
 }
 
 Uint8List mergeFiles(List<dynamic> data) {
@@ -579,10 +527,10 @@ int mp3FileSize(Uint8List data) {
       // Frame Header
 
       var bitrateIndex = (data[offset + 2] & 0xF0) >> 4;
-      if ((bitrateIndex <= 0) | (bitrateIndex > bitRates.length)) return null;
+      if ((bitrateIndex <= 0) | (bitrateIndex >= bitRates.length)) return null;
 
       var sampleRateIndex = (data[offset + 2] & 0xC) >> 2;
-      if ((sampleRateIndex < 0) | (sampleRateIndex > sampleRates.length)) return null;
+      if ((sampleRateIndex < 0) | (sampleRateIndex >= sampleRates.length)) return null;
 
       var padding = (data[offset + 2] & 0x02) != 0 ? 1 : 0;
 
