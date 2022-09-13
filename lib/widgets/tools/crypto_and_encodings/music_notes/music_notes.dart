@@ -104,6 +104,18 @@ class MusicNotesState extends State<MusicNotes> {
     else
       currentDisplay = {};
 
+    switch (_currentCode) {
+      case NotesCodebook.ALT:
+        currentDisplay.addAll({altClef: true});
+        break;
+      case NotesCodebook.BASS:
+        currentDisplay.addAll({bassClef: true});
+        break;
+      case NotesCodebook.TREBLE:
+        currentDisplay.addAll({trebleClef: true});
+        break;
+    }
+
     var onChanged = (Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
@@ -194,7 +206,7 @@ class MusicNotesState extends State<MusicNotes> {
         if (character != null) return character.join();
       }).toList();
       var segments = decodeNotes(output, _currentCode);
-      //print('displays: ' +segments['displays'].toString()+ " " +segments['chars'].toString());
+
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),

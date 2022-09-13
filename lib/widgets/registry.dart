@@ -74,6 +74,9 @@ import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
@@ -186,7 +189,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/permutable_primes.dart';
-import 'tools/crypto_and_encodings/music_notes/music_notes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt2.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt3.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt5.dart';
+import 'package:gc_wizard/widgets/tools/tools/crypto_and_encodings/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
@@ -1014,6 +1020,24 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'solitaire',
+    ]),
+    GCWTool(tool: SQRT2Selection(), i18nPrefix: 'sqrt2_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: SQRT3Selection(), i18nPrefix: 'sqrt3_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: SQRT5Selection(), i18nPrefix: 'sqrt5_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
     ]),
     GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
@@ -2803,6 +2827,39 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
       'silverratiosearch',
+    ]),
+
+    //SQRT 2 Selection **********************************************************************************************
+    GCWTool(tool: SQRT2NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT2DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT2Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
+    //SQRT 3 Selection **********************************************************************************************
+    GCWTool(tool: SQRT3NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT3DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT3Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
+    //SQRT 5 Selection **********************************************************************************************
+    GCWTool(tool: SQRT5NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT5DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT5Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
     ]),
 
     //Symbol Tables **********************************************************************************************
