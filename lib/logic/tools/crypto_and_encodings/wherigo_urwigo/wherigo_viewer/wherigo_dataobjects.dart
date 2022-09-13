@@ -418,10 +418,10 @@ class WherigoCartridgeLUA {
   final String StateID;
   final String CountryID;
   final String UseLogging;
-  final String CreateDate;
-  final String PublishDate;
-  final String UpdateDate;
-  final String LastPlayedDate;
+  final DateTime CreateDate;
+  final DateTime PublishDate;
+  final DateTime UpdateDate;
+  final DateTime LastPlayedDate;
   final String httpCode;
   final String httpMessage;
 
@@ -450,10 +450,10 @@ class WherigoCartridgeLUA {
       this.CountryID = '',
       this.StateID = '',
       this.UseLogging = '',
-      this.CreateDate = '',
-      this.PublishDate = '',
-      this.UpdateDate = '',
-      this.LastPlayedDate = '',
+      this.CreateDate = null,
+      this.PublishDate = null,
+      this.UpdateDate = null,
+      this.LastPlayedDate = null,
       this.httpCode = '',
       this.httpMessage = ''});
 }
