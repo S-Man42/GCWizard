@@ -2130,6 +2130,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: NumberSequenceMersennePrimesSelection(), i18nPrefix: 'numbersequence_mersenneprimes', searchKeys: [
       'numbersequence',
+      'primes',
       'numbersequence_mersenneprimesselection',
     ]),
     GCWTool(
@@ -2175,6 +2176,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: NumberSequencePermutablePrimesSelection(), i18nPrefix: 'numbersequence_permutableprimes', searchKeys: [
       'numbersequence',
+      'primes',
       'numbersequence_permutableprimesselection',
     ]),
     GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', searchKeys: [
