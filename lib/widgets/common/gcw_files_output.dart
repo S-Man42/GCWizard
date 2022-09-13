@@ -36,9 +36,6 @@ class _GCWFilesOutputState extends State<GCWFilesOutput> {
   }
 
   Widget _buildFileTree(List<GCWFile> files, List<String> parents, {level: 0}) {
-    print("FILES =========");
-    print(files);
-
     var isFirst = true;
     var children = files.map((GCWFile file) {
       var hasChildren = file.children != null && file.children.isNotEmpty;

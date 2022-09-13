@@ -7,6 +7,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:image/image.dart' as Image;
+import 'package:audioplayers/audioplayers.dart' as Audio;
 import 'package:tuple/tuple.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
@@ -35,8 +36,10 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     result = await _hiddenData(data, result.item2);
   });
 
-  if (fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE)
+  if (fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
+    data = GCWFile(name: data.name, bytes: data.bytes.sublist(0, _fileSize(data.bytes)), children: data.children);
     result = _searchMagicBytesHeader(data, result.item2);
+  }
 
   return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
@@ -47,38 +50,7 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter, {bool 
   var parent = !onlyParent;
 
   while (bytes != null && bytes.length > 0) {
-    int fileSize;
-    FileType detectedFileType = getFileType(bytes);
-
-    switch (detectedFileType) {
-      case FileType.JPEG:
-        fileSize = jpgImageSize(bytes);
-        break;
-      case FileType.PNG:
-        fileSize = pngImageSize(bytes);
-        break;
-      case FileType.GIF:
-        fileSize = gifImageSize(bytes);
-        break;
-      case FileType.BMP:
-        fileSize = bmpImageSize(bytes);
-        break;
-      case FileType.ZIP:
-        fileSize = zipFileSize(bytes);
-        break;
-      case FileType.RAR:
-        fileSize = rarFileSize(bytes);
-        break;
-      case FileType.TAR:
-        fileSize = tarFileSize(bytes);
-        break;
-      case FileType.MP3:
-        fileSize = mp3FileSize(bytes);
-        break;
-      default:
-        fileSize = bytes.length;
-        break;
-    }
+    int fileSize = _fileSize(bytes);
 
     Uint8List resultBytes;
     if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
@@ -105,6 +77,31 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter, {bool 
   }
 
   return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
+}
+
+int _fileSize(Uint8List bytes) {
+  FileType detectedFileType = getFileType(bytes);
+
+  switch (detectedFileType) {
+    case FileType.JPEG:
+      return jpgImageSize(bytes);
+    case FileType.PNG:
+      return pngImageSize(bytes);
+    case FileType.GIF:
+      return gifImageSize(bytes);
+    case FileType.BMP:
+      return bmpImageSize(bytes);
+    case FileType.ZIP:
+      return zipFileSize(bytes);
+    case FileType.RAR:
+      return rarFileSize(bytes);
+    case FileType.TAR:
+      return tarFileSize(bytes);
+    case FileType.MP3:
+      return mp3FileSize(bytes);
+    default:
+      return bytes.length;
+  }
 }
 
 Tuple2<List<GCWFile>, int> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) {
@@ -165,8 +162,11 @@ bool _checkFileValid(GCWFile data) {
   var result = true;
   try {
     var _fileClass = fileClass(getFileType(data?.bytes));
-    if (_fileClass == FileClass.IMAGE) {
+    if (_fileClass == FileClass.IMAGE)
       return Image.decodeImage(data.bytes) != null;
+    else if (_fileClass == FileClass.SOUND) {
+      var a =Audio.AudioPlayer();
+      a.setSourceBytes(data.bytes);
     }
   } catch (e) {result = false;}
 
