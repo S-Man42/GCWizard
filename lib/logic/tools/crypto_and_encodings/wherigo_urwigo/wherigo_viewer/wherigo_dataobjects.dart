@@ -524,13 +524,11 @@ Map<WHERIGO, String> WHERIGO_DATA_FULL_USER = {
   WHERIGO.ZONES: 'wherigo_data_zone_list',
   WHERIGO.INPUTS: 'wherigo_data_input_list',
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_GWC_USER = {
   WHERIGO.HEADER: 'wherigo_data_header',
   WHERIGO.MEDIAFILES: 'wherigo_data_mediafiles',
-  WHERIGO.RESULTS_GWC: 'wherigo_data_results_gwc',
 };
 
 Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
@@ -540,7 +538,6 @@ Map<WHERIGO, String> WHERIGO_DATA_LUA_USER = {
   WHERIGO.ZONES: 'wherigo_data_zone_list',
   WHERIGO.INPUTS: 'wherigo_data_input_list',
   WHERIGO.MESSAGES: 'wherigo_data_message_list',
-  WHERIGO.RESULTS_LUA: 'wherigo_data_results_lua',
 };
 
 final Map<String, String> HTTP_STATUS = {
