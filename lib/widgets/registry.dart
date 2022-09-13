@@ -347,6 +347,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucky_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
@@ -2585,6 +2586,26 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'numbersequence_containsdigits',
         searchKeys: [
           'numbersequence_sublimenumbersselection',
+        ]),
+
+    //NumberSequenceSelection Lucky numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceLuckyNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceLuckyNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_luckynumbersselection',
         ]),
 
     //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************

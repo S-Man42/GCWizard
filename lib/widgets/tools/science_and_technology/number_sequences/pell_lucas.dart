@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/number_sequences/number_sequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_check.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_containsdigits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_digits.dart';
