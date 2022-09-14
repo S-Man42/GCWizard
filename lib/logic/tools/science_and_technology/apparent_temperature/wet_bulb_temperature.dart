@@ -14,18 +14,11 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 
-class WBOutput{
-  final double WBT;
-
-  WBOutput({this.WBT});
-}
-
 enum WBT_HEATSTRESS_CONDITION { BLACK, PURPLE, BLUE, LIGHT_BLUE, GREEN, ORANGE, RED, DARK_RED }
 
-final Map<String, Map<WBT_HEATSTRESS_CONDITION, double>> WBT_HEAT_STRESS = {
+final Map<WBT_HEATSTRESS_CONDITION, double> WBT_HEAT_STRESS = {
   // https://sustainabilitymath.org/2020/06/01/what-is-our-wet-bulb-temperature-limit/
   // https://www.science.org/doi/10.1126/sciadv.aaw1838
-  TEMPERATURE_CELSIUS.symbol: {
     WBT_HEATSTRESS_CONDITION.PURPLE: 23.0,
     WBT_HEATSTRESS_CONDITION.BLUE: 25.0,
     WBT_HEATSTRESS_CONDITION.LIGHT_BLUE: 27.0,
@@ -33,31 +26,13 @@ final Map<String, Map<WBT_HEATSTRESS_CONDITION, double>> WBT_HEAT_STRESS = {
     WBT_HEATSTRESS_CONDITION.ORANGE: 31.0,
     WBT_HEATSTRESS_CONDITION.RED: 33.0,
     WBT_HEATSTRESS_CONDITION.DARK_RED: 35.0,
-  },
-  TEMPERATURE_FAHRENHEIT.symbol: {
-    WBT_HEATSTRESS_CONDITION.PURPLE: 73.0,
-    WBT_HEATSTRESS_CONDITION.BLUE: 77.0,
-    WBT_HEATSTRESS_CONDITION.LIGHT_BLUE: 81.0,
-    WBT_HEATSTRESS_CONDITION.GREEN: 84.0,
-    WBT_HEATSTRESS_CONDITION.ORANGE: 88.0,
-    WBT_HEATSTRESS_CONDITION.RED: 91.0,
-    WBT_HEATSTRESS_CONDITION.DARK_RED: 94.0,
-  },
 };
 
-WBOutput calculateWetBulbTemperature(double temperature, double humidity, Temperature temperatureUnit) {
-  if (temperatureUnit == TEMPERATURE_FAHRENHEIT) temperature = (temperature - 32) / 1.8;
-
+double calculateWetBulbTemperature(double temperature, double humidity, ) {
   // https://rechneronline.de/air/wet-bulb-temperature.php
-  double WBT = temperature * atan(0.151977 * sqrt((humidity + 8.313659))) +
+  return temperature * atan(0.151977 * sqrt((humidity + 8.313659))) +
       atan(temperature + humidity) -
       atan(humidity - 1.676331) +
       0.00391838 * pow(humidity, 1.5) * atan(0.023101 * humidity) -
       4.686035;
-
-  if (temperatureUnit == TEMPERATURE_FAHRENHEIT) {
-    WBT = WBT * 1.8 + 32;
-  }
-
-  return WBOutput(WBT: WBT, );
 }

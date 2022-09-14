@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/humidity.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_units.dart';
 
 class WetBulbTemperature extends StatefulWidget {
   @override
@@ -15,57 +18,50 @@ class WetBulbTemperature extends StatefulWidget {
 }
 
 class WetBulbTemperatureState extends State<WetBulbTemperature> {
-  double _currentTemperature = 0.0;
+  double _currentTemperature = 1.0;
   double _currentHumidity = 0.0;
 
-  var _isMetric = true;
+  Map<String, dynamic> _currentOutputUnit = {'unit': TEMPERATURE_CELSIUS, 'prefix': UNITPREFIX_NONE};
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Row(
-          children: [
-            Expanded(child: GCWText(text: i18n(context, 'common_measure_temperature')), flex: 1),
-            Expanded(
-                child: Column(
-                  children: [
-                    GCWTwoOptionsSwitch(
-                      notitle: true,
-                      leftValue: i18n(context, 'common_unit_temperature_degc_name'),
-                      rightValue: i18n(context, 'common_unit_temperature_degf_name'),
-                      value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-                      onChanged: (value) {
-                        setState(() {
-                          _isMetric = value == GCWSwitchPosition.left;
-                        });
-                      },
-                    ),
-                    GCWDoubleSpinner(
-                        value: _currentTemperature,
-                        min: -20.0,
-                        max: 50.0,
-                        onChanged: (value) {
-                          setState(() {
-                            _currentTemperature = value;
-                          });
-                        }),
-                  ],
-                ),
-                flex: 3)
-          ],
+        GCWUnitInput(
+          value: _currentTemperature,
+          title: i18n(context, 'common_measure_temperature'),
+          initialUnit: TEMPERATURE_CELSIUS,
+          min: 1.0,
+          unitList: temperatures,
+          onChanged: (value) {
+            setState(() {
+              _currentTemperature = TEMPERATURE_CELSIUS.fromKelvin(value);
+            });
+          },
         ),
-        GCWDoubleSpinner(
-            title: i18n(context, 'common_measure_humidity'),
-            value: _currentHumidity,
-            min: 5.0,
-            max: 99.0,
-            onChanged: (value) {
-              setState(() {
-                _currentHumidity = value;
-              });
-            }),
-        _buildOutput(context)
+        GCWUnitInput(
+          value: _currentHumidity,
+          title: i18n(context, 'common_measure_humidity'),
+          initialUnit: HUMIDITY,
+          min: 0.0,
+          unitList: humidity,
+          onChanged: (value) {
+            setState(() {
+              _currentHumidity = value;
+            });
+          },
+        ),
+        GCWTextDivider(text: i18n(context, 'common_outputunit')),
+        GCWUnits(
+          value: _currentOutputUnit,
+          unitCategory: UNITCATEGORY_TEMPERATURE,
+          onlyShowPrefixSymbols: false,
+          onChanged: (value) {
+            setState(() {
+              _currentOutputUnit = value;
+            });
+          },
+        ),        _buildOutput(context)
       ],
     );
   }
@@ -73,21 +69,18 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
   Widget _buildOutput(BuildContext context) {
     String unit = '';
     String hintWBT = '';
+    double WBT_C = 0.0;
+    double WBT = 0.0;
 
-    WBOutput output;
-    if (_isMetric) {
-      output = calculateWetBulbTemperature(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
-      unit = TEMPERATURE_CELSIUS.symbol;
-    } else {
-      output = calculateWetBulbTemperature(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
-      unit = TEMPERATURE_FAHRENHEIT.symbol;
-    }
+    WBT_C = calculateWetBulbTemperature(_currentTemperature, _currentHumidity);
+    hintWBT = _calculateHintWBT(WBT_C);
 
-    hintWBT = _calculateHintWBT(output.WBT, unit);
+    WBT = TEMPERATURE_CELSIUS.toKelvin(WBT_C);
+    WBT = _currentOutputUnit['unit'].fromReference(WBT) / _currentOutputUnit['prefix'].value;
 
-    var outputs = [];
+    unit = _currentOutputUnit['unit'].symbol;
 
-    outputs.add(
+    return
         GCWOutput(
             title: i18n(context, 'wet_bulb_temperature_wbt_output'),
             child: Row(
@@ -96,7 +89,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
                   flex: 2,
                   child: Padding(
                     child: GCWText(
-                      text: output.WBT.toStringAsFixed(2) + ' ' + unit,
+                      text: WBT.toStringAsFixed(2) + ' ' + unit,
                     ),
                     padding: EdgeInsets.only(right: 2)),
                   ),
@@ -105,7 +98,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
                   child: Padding(
                     child: GCWIconButton(
                       icon: Icons.wb_sunny,
-                      iconColor: _colorWBT(output.WBT, unit),
+                      iconColor: _colorWBT(WBT_C),
                     ),
                   padding: EdgeInsets.only(left: 2, right: 2)),
                 ),
@@ -119,21 +112,17 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
                 ),
               ]
             )
-        )
-    );
-    return GCWMultipleOutput(
-      children: outputs,
-    );
+        );
   }
 
-  String _calculateHintWBT(double WBT, String unit){
-    if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.PURPLE])
-      if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.BLUE])
-        if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
-          if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.GREEN])
-            if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.ORANGE])
-              if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
-                if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
+  String _calculateHintWBT(double WBT){
+    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE])
+      if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.BLUE])
+        if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
+          if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.GREEN])
+            if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE])
+              if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
+                if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
                   return 'wet_bulb_temperature_index_wbt_dark_red';
                 else
                   return 'wet_bulb_temperature_index_wbt_red';
@@ -151,14 +140,14 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
       return 'wet_bulb_temperature_index_wbt_black';
   }
 
-  Color _colorWBT(double WBT, String unit){
-    if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.PURPLE])
-      if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.BLUE])
-        if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
-          if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.GREEN])
-            if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.ORANGE])
-              if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.RED])
-                if (WBT > WBT_HEAT_STRESS[unit][WBT_HEATSTRESS_CONDITION.DARK_RED])
+  Color _colorWBT(double WBT){
+    if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.PURPLE])
+      if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.BLUE])
+        if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.LIGHT_BLUE])
+          if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.GREEN])
+            if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.ORANGE])
+              if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.RED])
+                if (WBT > WBT_HEAT_STRESS[WBT_HEATSTRESS_CONDITION.DARK_RED])
                   return Colors.red[900];
                 else
                   return Colors.red;
