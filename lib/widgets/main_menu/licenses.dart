@@ -77,6 +77,7 @@ class LicensesState extends State<Licenses> {
           ['Geo3x3 Code', '@taisukef', 'CC0-1.0 License'],
           ['Geodetics Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
           ['GeoHex Code', '@chsii (geohex4j), @sa2da (geohex.org)', 'MIT License'],
+          ['Lambert Code', 'Charles Karney (GeographicLib)', 'MIT/X11 License'],
           ['Magic Eye Solver', 'piellardj.github.io\ngithub.com/machinewrapped', 'MIT License'],
           ['Malbolge Code', 'lscheffer.com, Matthias Ernst', 'CC0, Public Domain'],
           ['Substitution Breaker', 'Jens Guballa (guballa.de)', 'MIT License'],
