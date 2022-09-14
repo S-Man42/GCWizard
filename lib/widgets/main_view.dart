@@ -231,6 +231,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart'
 import 'package:gc_wizard/widgets/tools/science_and_technology/iata_icao_search.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/ip_codes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
@@ -252,9 +253,9 @@ import 'package:gc_wizard/widgets/utils/search_strings.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'tools/crypto_and_encodings/music_notes/music_notes.dart';
-import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
-import 'tools/science_and_technology/colors/ral_color_codes.dart';
+
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/ral_color_codes.dart';
 
 class MainView extends StatefulWidget {
   @override

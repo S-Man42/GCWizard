@@ -229,6 +229,12 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
   '22':   [notePosition[6]],
   '22_b': [notePosition[6], bLabel],
   '22_k': [notePosition[6], hashLabel],
+  '23':   [notePosition[5]],
+  '23_b': [notePosition[5], bLabel],
+  '23_k': [notePosition[5], hashLabel],
+  '24':   [notePosition[4]],
+  '24_b': [notePosition[4], bLabel],
+  '24_k': [notePosition[4], hashLabel],
 };
 
 

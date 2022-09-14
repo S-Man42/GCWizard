@@ -189,7 +189,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes/music_notes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
@@ -319,6 +319,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/guitar_strings.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
@@ -339,6 +340,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.d
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/maya_calendar.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
@@ -707,6 +709,12 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'grid',
     ]),
+    GCWTool(tool: GuitarStrings(), i18nPrefix: 'guitarstrings', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'music',
+      'guitar',
+    ]),
     GCWTool(
         tool: HashSelection(), i18nPrefix: 'hashes_selection', categories: [ToolCategory.CRYPTOGRAPHY], searchKeys: []),
     GCWTool(tool: Hexadecimal(), i18nPrefix: 'hexadecimal', categories: [
@@ -847,8 +855,9 @@ initializeRegistry(BuildContext context) {
       'multidecoder',
     ]),
     GCWTool(tool: MusicNotes(), i18nPrefix: 'music_notes', categories: [
-      ToolCategory.CRYPTOGRAPHY
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'music',
       'music_notes'
     ]),
     GCWTool(tool: Navajo(), i18nPrefix: 'navajo', categories: [
@@ -891,6 +900,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Piano(), i18nPrefix: 'piano', categories: [
       ToolCategory.SCIENCE_AND_TECHNOLOGY
     ], searchKeys: [
+      'music'
       'music_notes',
       'piano',
     ]),
@@ -3423,26 +3433,32 @@ initializeRegistry(BuildContext context) {
       'symbol_ninjargon',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_doremi',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_names_altoclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_names_bassclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_names_trebleclef',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_notevalues',
     ]),
     GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: [
+      'music',
       'music_notes',
       'symbol_notes_restvalues',
     ]),
