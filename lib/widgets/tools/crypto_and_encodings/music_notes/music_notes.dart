@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_segmentdisplay_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes/music_notes_segment_display.dart';
 
 class MusicNotes extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class MusicNotesState extends State<MusicNotes> {
   String _currentEncodeInput = '';
   TextEditingController _encodeController;
   var _gcwTextStyle = gcwTextStyle();
-  var _currentCode = NotesCodebook.ALT;
+  var _currentCode = NotesCodebook.TREBLE;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -56,13 +56,13 @@ class MusicNotesState extends State<MusicNotes> {
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.ALT,
                         child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
-            case NotesCodebook.BASS:
-              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
-              return GCWDropDownMenuItem( value: NotesCodebook.BASS,
-                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             case NotesCodebook.TREBLE:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.TREBLE,
+                  child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+            case NotesCodebook.BASS:
+              var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
+              return GCWDropDownMenuItem( value: NotesCodebook.BASS,
                         child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             default:
               return null;
@@ -103,6 +103,18 @@ class MusicNotesState extends State<MusicNotes> {
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
+
+    switch (_currentCode) {
+      case NotesCodebook.ALT:
+        currentDisplay.addAll({altClef: true});
+        break;
+      case NotesCodebook.BASS:
+        currentDisplay.addAll({bassClef: true});
+        break;
+      case NotesCodebook.TREBLE:
+        currentDisplay.addAll({trebleClef: true});
+        break;
+    }
 
     var onChanged = (Map<String, bool> d) {
       setState(() {
@@ -174,6 +186,8 @@ class MusicNotesState extends State<MusicNotes> {
           return NotesSegmentDisplay(segments: displayedSegments, readOnly: readOnly);
         },
         segments: segments,
+        horizontalSymbolPadding: 0,
+        verticalSymbolPadding: 10,
         readOnly: true);
   }
 
@@ -192,7 +206,7 @@ class MusicNotesState extends State<MusicNotes> {
         if (character != null) return character.join();
       }).toList();
       var segments = decodeNotes(output, _currentCode);
-      //print('displays: ' +segments['displays'].toString()+ " " +segments['chars'].toString());
+
       return Column(
         children: <Widget>[
           _buildDigitalOutput(segments['displays']),

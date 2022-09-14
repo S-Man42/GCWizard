@@ -8,6 +8,9 @@ enum NotesCodebook {
 }
 const hashLabel = 'k';
 const bLabel = 'b';
+const trebleClef = 'o';
+const altClef = 'p';
+const bassClef = 'q';
 const helpLine1 = 'c';
 const helpLine2 = 'd';
 const helpLine3 = 'e';
@@ -231,10 +234,51 @@ final Map<String, List<String>> CODEBOOK_MUSIC_NOTES_TREBLE = {
 
 List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, String> translationMap) {
   if (input == null) return [];
+  var mainEntrysStart = 0;
+  var mainEntrysEnd = 99;
+  List<List<String>> result = [];
+
+  Map<String, List<String>> CODEBOOK;
+  switch (notes) {
+    case NotesCodebook.ALT:
+      CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
+      result.add([altClef]);
+      mainEntrysStart = 8;
+      mainEntrysEnd = 14;
+      break;
+    case NotesCodebook.BASS:
+      CODEBOOK = CODEBOOK_MUSIC_NOTES_BASS;
+      result.add([bassClef]);
+      mainEntrysStart = 8;
+      mainEntrysEnd = 14;
+      break;
+    case NotesCodebook.TREBLE:
+      CODEBOOK = CODEBOOK_MUSIC_NOTES_TREBLE;
+      result.add([trebleClef]);
+      mainEntrysStart = 5;
+      mainEntrysEnd = 14;
+      break;
+  }
 
   // sorted by length (longest first)
   var entries = translationMap.entries.toList();
-  entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) => b.value.length.compareTo(a.value.length));
+  entries.sort((MapEntry<String, String> a, MapEntry<String, String> b) {
+    if (b.value.length != a.value.length)
+      return b.value.length.compareTo(a.value.length);
+    else {
+      var aKey =  int.parse(a.key.split('_')[0]);
+      var bKey =  int.parse(b.key.split('_')[0]);
+      var aMainEntry = (aKey >= mainEntrysStart) && (aKey <= mainEntrysEnd);
+      var bMainEntry = (bKey >= mainEntrysStart) && (bKey <= mainEntrysEnd);
+      if (aMainEntry && bMainEntry)
+        return bKey.compareTo(aKey);
+      else if (aMainEntry)
+        return -1;
+      else if (bMainEntry)
+        return 1;
+      return 0;
+    }
+  } );
   translationMap = Map<String, String>.fromEntries(entries);
 
   input = input.toUpperCase();
@@ -242,40 +286,10 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
     input = input.replaceAll(value.toUpperCase(), key);
   });
 
-  Map<String, List<String>> CODEBOOK;
-  switch (notes) {
-    case NotesCodebook.ALT:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
-      break;
-    case NotesCodebook.BASS:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_BASS;
-      break;
-    case NotesCodebook.TREBLE:
-      CODEBOOK = CODEBOOK_MUSIC_NOTES_TREBLE;
-      break;
-  }
-
-  // filtered main line notes
-  var mainLineNotes = Map<String, List<String>>();
-  CODEBOOK.forEach((String key, List<String> value) {
-    var helplineNote = false;
-    value.forEach((element) {
-      if (element.contains("h"))
-        helplineNote = true;
-    });
-    if (!helplineNote) mainLineNotes.addAll({key: value});
-  });
-
   List<String> inputs = input.split(RegExp(r'\s'));
-  List<List<String>> result = [];
 
-  for (int i = 0; i < inputs.length; i++) {
-    // check main line grades first
-    if (mainLineNotes[inputs[i]] != null)
-      result.add(mainLineNotes[inputs[i]]);
-    else if (CODEBOOK[inputs[i]] != null)
-      result.add(CODEBOOK[inputs[i]]);
-  }
+  for (int i = 0; i < inputs.length; i++)
+    result.add(CODEBOOK[inputs[i]]);
 
   return result;
 }
@@ -293,12 +307,15 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_ALT);
+      displays.add([altClef]);
       break;
     case NotesCodebook.BASS:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_BASS);
+      displays.add([bassClef]);
       break;
     case NotesCodebook.TREBLE:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_TREBLE);
+      displays.add([trebleClef]);
       break;
   }
 
@@ -307,7 +324,9 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     var charH = '';
     var display = <String>[];
 
-    input = input.replaceAll(RegExp('$helpLine1|$helpLine2|$helpLine3|$helpLine4|$helpLine5|$helpLineN1|$helpLineN2|$helpLineN3|$helpLineN3|$helpLineN4'), '');
+    input = input.replaceAll(RegExp('$helpLine1|$helpLine2|$helpLine3|$helpLine4|$helpLine5|'
+        '$helpLineN1|$helpLineN2|$helpLineN3|$helpLineN3|$helpLineN4|'
+        '$altClef|$bassClef|$trebleClef'), '');
 
     if (input.contains(hashLabel)) {
       display.add(input.replaceAll(hashLabel, ''));
