@@ -4,8 +4,10 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/rc4.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/rc4.dart' as rc4;
 
+enum InputFormat { AUTO, TEXT, HEX, BINARY, ASCIIVALUES }
+enum OutputFormat { TEXT, HEX, BINARY, ASCIIVALUES }
 enum ErrorCode { OK, INPUT_FORMAT, KEY_FORMAT, MISSING_KEY, IV_FORMAT }
 
 class RabbitOutput {
@@ -25,21 +27,21 @@ RabbitOutput cryptRabbit(
 
   if (input == null || input == '') return RabbitOutput('', null, null, ErrorCode.OK);
 
-  var inputList = convertInputToIntList(input, inputFormat);
+  var inputList = rc4.convertInputToIntList(input, _convertInputFormatEnum(inputFormat));
   if (inputList == null || inputList.length == 0) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
   var inputData = _generateData(inputList, inputList.length);
   if (inputData == null || inputData.length == 0) return RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT);
 
   if (key == null || key == '') return RabbitOutput('', null, null, ErrorCode.MISSING_KEY);
 
-  var keyList = convertInputToIntList(key, keyFormat);
+  var keyList = rc4.convertInputToIntList(key, _convertInputFormatEnum(keyFormat));
   if (keyList == null || keyList.length == 0) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
   var keyData = _generateData(keyList, 16);
   if (keyData == null || keyData.length == 0) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
   Uint8List ivData;
   if (initializationVector != null && initializationVector.length > 0) {
-    var ivList = convertInputToIntList(initializationVector, ivFormat);
+    var ivList = rc4.convertInputToIntList(initializationVector, _convertInputFormatEnum(ivFormat));
     if (ivList == null || ivList.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
     ivData = _generateData(keyList, 8);
     if (ivData == null || ivData.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
@@ -50,9 +52,9 @@ RabbitOutput cryptRabbit(
 
   var output = rabbit.cryptData(inputData);
 
-  return RabbitOutput(formatOutput(output, outputFormat),
-      formatOutput(keyData, OutputFormat.HEX),
-      formatOutput(ivData, OutputFormat.HEX),
+  return RabbitOutput(rc4.formatOutput(output, _convertOutputFormatEnum(outputFormat)),
+      rc4.formatOutput(keyData, rc4.OutputFormat.HEX),
+      rc4.formatOutput(ivData, rc4.OutputFormat.HEX),
       ErrorCode.OK);
 }
 
@@ -65,6 +67,34 @@ Uint8List _generateData(List<int> data, int length) {
     list[i] = data[i] & 0xFF;
 
   return list;
+}
+
+rc4.InputFormat _convertInputFormatEnum(InputFormat inputFormat) {
+  switch(inputFormat) {
+    case InputFormat.TEXT:
+      return rc4.InputFormat.TEXT;
+    case InputFormat.HEX:
+      return rc4.InputFormat.HEX;
+    case InputFormat.BINARY:
+      return rc4.InputFormat.BINARY;
+    case InputFormat.ASCIIVALUES:
+      return rc4.InputFormat.ASCIIVALUES;
+    default:
+      return rc4.InputFormat.AUTO;
+  }
+}
+
+rc4.OutputFormat _convertOutputFormatEnum(OutputFormat outputFormat) {
+  switch(outputFormat) {
+    case OutputFormat.HEX:
+      return rc4.OutputFormat.HEX;
+    case OutputFormat.BINARY:
+      return rc4.OutputFormat.BINARY;
+    case OutputFormat.ASCIIVALUES:
+      return rc4.OutputFormat.ASCIIVALUES;
+    default:
+      return rc4.OutputFormat.TEXT;
+  }
 }
 
 class Rabbit {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/rc4.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/rabbit.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -16,9 +16,11 @@ class Rabbit extends StatefulWidget {
 class RabbitState extends State<Rabbit> {
   String _currentInput = '';
   String _currentKey = '';
+  String _currentInitializationVector = '';
 
   var _currentInputFormat = InputFormat.AUTO;
   var _currentKeyFormat = InputFormat.AUTO;
+  var _currentIvFormat = InputFormat.AUTO;
   var _currentOutputFormat = OutputFormat.TEXT;
 
   @override
@@ -94,6 +96,34 @@ class RabbitState extends State<Rabbit> {
               ),
               flex: 2),
         ]),
+        GCWTextDivider(text: i18n(context, 'rabbit_initialization_vector')),
+        GCWTextField(
+          hintText: i18n(context, 'rabbit_initialization_vector'),
+          onChanged: (text) {
+            setState(() {
+              _currentInitializationVector = text;
+            });
+          },
+        ),
+        Row(children: <Widget>[
+          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+          Expanded(
+              child: GCWDropDownButton(
+                value: _currentIvFormat,
+                onChanged: (value) {
+                  setState(() {
+                    _currentIvFormat = value;
+                  });
+                },
+                items: rabbitInputFormatItems.entries.map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode.key,
+                    child: mode.value,
+                  );
+                }).toList(),
+              ),
+              flex: 2),
+        ]),
         GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
@@ -125,7 +155,8 @@ class RabbitState extends State<Rabbit> {
     }
 
     var _currentOutput =
-        cryptRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
+        cryptRabbit(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat,
+            _currentInitializationVector, _currentIvFormat, _currentOutputFormat);
 
     if (_currentOutput == null) {
       return GCWDefaultOutput();
