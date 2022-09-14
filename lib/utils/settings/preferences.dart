@@ -31,3 +31,4 @@ const PREFERENCE_THEME_COLOR = 'theme_color';
 const PREFERENCE_THEME_FONT_SIZE = 'theme_font_size';
 const PREFERENCE_TOOLLIST_SHOW_DESCRIPTIONS = 'toollist_show_descriptions';
 const PREFERENCE_TOOLLIST_SHOW_EXAMPLES = 'toollist_show_examples';
+const PREFERENCE_WHERIGOANALYZER_EXPERTMODE = 'wherigoanalyzer_expertmode';

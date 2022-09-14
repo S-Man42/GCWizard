@@ -52,8 +52,6 @@ class WherigoAnalyze extends StatefulWidget {
 }
 
 class WherigoAnalyzeState extends State<WherigoAnalyze> {
-  ScrollController _scrollControllerHex;
-
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
@@ -120,7 +118,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
-    _expertMode = Prefs.getString('wherigo_display_data_mode') == 'Expert';
+    _expertMode = Prefs.getBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE);
 
      _codeControllerHighlightedLUA = CodeController(
       text: _LUA_SourceCode,
@@ -359,12 +357,26 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
               Row(
                 children: <Widget>[
                   GCWIconButton(
-                    //icon: _expertMode ? Icons.plagiarism : Icons.note,
-                    icon: _expertMode ? Icons.psychology : Icons.account_circle,
+                    customIcon: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Icon(_expertMode ? Icons.psychology : Icons.psychology_outlined,
+                          color: themeColors().mainFont()
+                        ),
+                        _expertMode ? Container() :
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(Icons.block, size: 35.0, color: themeColors().mainFont())
+                            ],
+                          ),
+                      ],
+                    ),
+
                     onPressed: () {
                       setState(() {
                         _expertMode = !_expertMode;
-                        _expertMode ? Prefs.setString('wherigo_display_data_mode', 'Expert') : Prefs.setString('wherigo_display_data_mode', 'User');
+                        Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, _expertMode);
                         _displayCartridgeDataList = _setDisplayCartridgeDataList();
                         showToast(_expertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
                         if (!_expertMode && ( _displayedCartridgeData == WHERIGO.LUABYTECODE) ||
@@ -373,7 +385,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                                               _displayedCartridgeData == WHERIGO.LUAFILE ||
                                               _displayedCartridgeData == WHERIGO.TASKS ||
                                               _displayedCartridgeData == WHERIGO.TIMERS ||
-                                              _displayedCartridgeData == WHERIGO.IDENTIFIER
+                                              _displayedCartridgeData == WHERIGO.IDENTIFIER ||
+                                              _displayedCartridgeData == WHERIGO.RESULTS_GWC ||
+                                              _displayedCartridgeData == WHERIGO.RESULTS_LUA
                                             )
                           _displayedCartridgeData = WHERIGO.HEADER;
                       });
@@ -658,8 +672,8 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         if (_WherigoCartridgeLUA.Media.length > 0) {
           filename = _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaFilename;
           _outputMedia = [
-            [i18n(context, 'wherigo_media_id'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaID],
-            [i18n(context, 'wherigo_media_luaname'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaLUAName],
+            _expertMode ? [i18n(context, 'wherigo_media_id'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaID] : null,
+            _expertMode ? [i18n(context, 'wherigo_media_luaname'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaLUAName] : null,
             [i18n(context, 'wherigo_media_name'), _WherigoCartridgeLUA.Media[_mediaFileIndex - 1].MediaName],
             [
               i18n(context, 'wherigo_media_description'),
@@ -1408,7 +1422,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputZone(ZoneData data) {
     List<List<dynamic>> result = [
-      [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ZoneLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.ZoneID] : null,
       [i18n(context, 'wherigo_output_name'), data.ZoneName],
       [i18n(context, 'wherigo_output_description'), data.ZoneDescription],
@@ -1457,7 +1471,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputItem(ItemData data) {
     List<List<dynamic>> result = [
-      [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.ItemLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.ItemID] : null,
       [i18n(context, 'wherigo_output_name'), data.ItemName],
       [i18n(context, 'wherigo_output_description'), data.ItemDescription],
@@ -1500,7 +1514,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputTask(TaskData data) {
     return [
-      [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TaskLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.TaskID] : null,
       [i18n(context, 'wherigo_output_name'), data.TaskName],
       [i18n(context, 'wherigo_output_description'), data.TaskDescription],
@@ -1527,7 +1541,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputTimer(TimerData data) {
     return [
-      [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.TimerLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.TimerID] : null,
       [i18n(context, 'wherigo_output_name'), data.TimerName],
       [i18n(context, 'wherigo_output_description'), data.TimerDescription],
@@ -1542,11 +1556,11 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputCharacter(CharacterData data) {
     List<List<dynamic>> result = [
-      [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.CharacterLUAName] : null,
       _expertMode ?[i18n(context, 'wherigo_output_id'), data.CharacterID] : null,
       [i18n(context, 'wherigo_output_name'), data.CharacterName],
       [i18n(context, 'wherigo_output_description'), data.CharacterDescription],
-    _expertMode ? [
+      _expertMode ? [
         i18n(context, 'wherigo_output_medianame'),
         data.CharacterMediaName +
             (data.CharacterMediaName != ''
@@ -1590,7 +1604,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
 
   List<List<dynamic>> _outputInput(InputData data) {
     return [
-      [i18n(context, 'wherigo_output_luaname'), data.InputLUAName],
+      _expertMode ? [i18n(context, 'wherigo_output_luaname'), data.InputLUAName] : null,
       _expertMode ? [i18n(context, 'wherigo_output_id'), data.InputID] : null,
       [i18n(context, 'wherigo_output_name'), data.InputName],
       [i18n(context, 'wherigo_output_description'), data.InputDescription],
@@ -2231,10 +2245,10 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                 CountryID: '',
                 StateID: '',
                 UseLogging: '',
-                CreateDate: '',
-                PublishDate: '',
-                UpdateDate: '',
-                LastPlayedDate: '',
+                CreateDate: null,
+                PublishDate: null,
+                UpdateDate: null,
+                LastPlayedDate: null,
                 httpCode: _WherigoCartridgeLUA.httpCode,
                 httpMessage: _WherigoCartridgeLUA.httpMessage,
                 ResultStatus: ANALYSE_RESULT_STATUS.ERROR_HTTP,
@@ -2407,7 +2421,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   _buildHeader() {
     if (_WherigoCartridgeGWC != null && _WherigoCartridgeLUA != null) {
       _outputHeader = [
-        [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature],
+        _expertMode ? [i18n(context, 'wherigo_header_signature'), _WherigoCartridgeGWC.Signature] : null,
         [i18n(context, 'wherigo_header_numberofmediafiles'), (_WherigoCartridgeGWC.NumberOfObjects - 1).toString()],
         [
           i18n(context, 'wherigo_output_location'),
@@ -2438,14 +2452,15 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
         [i18n(context, 'wherigo_header_startinglocation'), _WherigoCartridgeGWC.StartingLocationDescription],
         _expertMode ? [i18n(context, 'wherigo_header_state'), _WherigoCartridgeLUA.StateID] : null,
         _expertMode ? [i18n(context, 'wherigo_header_country'), _WherigoCartridgeLUA.CountryID] : null,
-        [i18n(context, 'wherigo_header_version'), _WherigoCartridgeGWC.Version],
-        [i18n(context, 'wherigo_header_creationdate'), _getCreationDate(_WherigoCartridgeGWC.DateOfCreation)],
-        _expertMode ? [i18n(context, 'wherigo_header_publish'), _WherigoCartridgeLUA.PublishDate] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_update'), _WherigoCartridgeLUA.UpdateDate] : null,
-        _expertMode ? [i18n(context, 'wherigo_header_lastplayed'), _WherigoCartridgeLUA.LastPlayedDate] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_version'), _WherigoCartridgeGWC.Version] : null,
+        [i18n(context, 'wherigo_header_creationdate') + ' (GWC)', _getCreationDate(_WherigoCartridgeGWC.DateOfCreation)],
+        _expertMode ? [i18n(context, 'wherigo_header_creationdate') + ' (LUA)', formatDate(_WherigoCartridgeLUA.CreateDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_publish'), formatDate(_WherigoCartridgeLUA.PublishDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_update'), formatDate(_WherigoCartridgeLUA.UpdateDate)] : null,
+        _expertMode ? [i18n(context, 'wherigo_header_lastplayed'), formatDate(_WherigoCartridgeLUA.LastPlayedDate)] : null,
         [i18n(context, 'wherigo_header_author'), _WherigoCartridgeGWC.Author],
         _expertMode ? [i18n(context, 'wherigo_header_company'), _WherigoCartridgeGWC.Company] : null,
-        [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice],
+        _expertMode ? [i18n(context, 'wherigo_header_device'), _WherigoCartridgeGWC.RecommendedDevice] : null,
         _expertMode ? [i18n(context, 'wherigo_header_deviceversion'), _WherigoCartridgeLUA.TargetDeviceVersion] : null,
         _expertMode ? [i18n(context, 'wherigo_header_logging'), i18n(context, 'common_' + _WherigoCartridgeLUA.UseLogging)] : null
       ];

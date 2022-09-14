@@ -206,7 +206,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           _currentSecond = widget.duration.inSeconds.abs().remainder(60);
         if (_currentMilliSecond != _durationMilliseconds(widget.duration))
           _currentMilliSecond = _durationMilliseconds(widget.duration);
-      } else {
+      } else if (widget.datetime != null) {
         // update with new values (paste, ..)
         if (_currentHour != widget.datetime.hour)
           _currentHour = widget.datetime.hour;

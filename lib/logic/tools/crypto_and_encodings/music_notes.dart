@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -10,6 +8,9 @@ enum NotesCodebook {
 }
 const hashLabel = 'k';
 const bLabel = 'b';
+const trebleClef = 'o';
+const altClef = 'p';
+const bassClef = 'q';
 const helpLine1 = 'c';
 const helpLine2 = 'd';
 const helpLine3 = 'e';
@@ -235,21 +236,25 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
   if (input == null) return [];
   var mainEntrysStart = 0;
   var mainEntrysEnd = 99;
+  List<List<String>> result = [];
 
   Map<String, List<String>> CODEBOOK;
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = CODEBOOK_MUSIC_NOTES_ALT;
+      result.add([altClef]);
       mainEntrysStart = 8;
       mainEntrysEnd = 14;
       break;
     case NotesCodebook.BASS:
       CODEBOOK = CODEBOOK_MUSIC_NOTES_BASS;
+      result.add([bassClef]);
       mainEntrysStart = 8;
       mainEntrysEnd = 14;
       break;
     case NotesCodebook.TREBLE:
       CODEBOOK = CODEBOOK_MUSIC_NOTES_TREBLE;
+      result.add([trebleClef]);
       mainEntrysStart = 5;
       mainEntrysEnd = 14;
       break;
@@ -282,7 +287,6 @@ List<List<String>> encodeNotes(String input, NotesCodebook notes, Map<String, St
   });
 
   List<String> inputs = input.split(RegExp(r'\s'));
-  List<List<String>> result = [];
 
   for (int i = 0; i < inputs.length; i++)
     result.add(CODEBOOK[inputs[i]]);
@@ -303,12 +307,15 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
   switch (notes) {
     case NotesCodebook.ALT:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_ALT);
+      displays.add([altClef]);
       break;
     case NotesCodebook.BASS:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_BASS);
+      displays.add([bassClef]);
       break;
     case NotesCodebook.TREBLE:
       CODEBOOK = switchMapKeyValue(CODEBOOK_MUSIC_NOTES_TREBLE);
+      displays.add([trebleClef]);
       break;
   }
 
@@ -317,7 +324,9 @@ Map<String, dynamic> decodeNotes(List<String> inputs, NotesCodebook notes) {
     var charH = '';
     var display = <String>[];
 
-    input = input.replaceAll(RegExp('$helpLine1|$helpLine2|$helpLine3|$helpLine4|$helpLine5|$helpLineN1|$helpLineN2|$helpLineN3|$helpLineN3|$helpLineN4'), '');
+    input = input.replaceAll(RegExp('$helpLine1|$helpLine2|$helpLine3|$helpLine4|$helpLine5|'
+        '$helpLineN1|$helpLineN2|$helpLineN3|$helpLineN3|$helpLineN4|'
+        '$altClef|$bassClef|$trebleClef'), '');
 
     if (input.contains(hashLabel)) {
       display.add(input.replaceAll(hashLabel, ''));

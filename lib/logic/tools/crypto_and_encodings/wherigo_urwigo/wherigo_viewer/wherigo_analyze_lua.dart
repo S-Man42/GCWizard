@@ -169,10 +169,10 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
   String _CountryID = '';
   String _StateID = '';
   String _UseLogging = '';
-  String _CreateDate = '';
-  String _PublishDate = '';
-  String _UpdateDate = '';
-  String _LastPlayedDate = '';
+  DateTime _CreateDate;
+  DateTime _PublishDate;
+  DateTime _UpdateDate;
+  DateTime _LastPlayedDate;
   List<ZonePoint> points = [];
   String visible = '';
   String media = '';
@@ -337,16 +337,16 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
           lines[i].replaceAll(_CartridgeLUAName + '.UseLogging = ', '').replaceAll('"', '').trim().toLowerCase();
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.CreateDate'))
-      _CreateDate = lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim();
+      _CreateDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.CreateDate = ', '').replaceAll('"', '').trim());
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.PublishDate'))
-      _PublishDate = lines[i].replaceAll(_CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim();
+      _PublishDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.PublishDate = ', '').replaceAll('"', '').trim());
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.UpdateDate'))
-      _UpdateDate = lines[i].replaceAll(_CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim();
+      _UpdateDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.UpdateDate = ', '').replaceAll('"', '').trim());
 
     if (lines[i].replaceAll(_CartridgeLUAName, '').trim().startsWith('.LastPlayedDate'))
-      _LastPlayedDate = lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim();
+      _LastPlayedDate = _normalizeDate(lines[i].replaceAll(_CartridgeLUAName + '.LastPlayedDate = ', '').replaceAll('"', '').trim());
 
     // ----------------------------------------------------------------------------------------------------------------
     // search and get Media Object
@@ -1715,4 +1715,15 @@ String _getVariable(String line) {
   if (line.trim().endsWith('~= nil then'))
     line = line.trim().replaceAll('if', '').replaceAll(' ~= nil then', '').replaceAll(' ', '');
   return line;
+}
+
+DateTime _normalizeDate(String dateString){
+  if (dateString == null || dateString == '' || dateString == '1/1/0001 12:00:00 AM')
+    return null;
+
+  List<String> dateTime = dateString.split(' ');
+  List<String> date = dateTime[0].split('/');
+  List<String> time = dateTime[1].split(':');
+
+  return DateTime(int.parse(date[2]), int.parse(date[0]), int.parse(date[1]), (dateTime.length == 3 && dateTime[2] == 'PM') ? int.parse(time[0]) + 12 : int.parse(time[0]), int.parse(time[1]), int.parse(time[2]));
 }

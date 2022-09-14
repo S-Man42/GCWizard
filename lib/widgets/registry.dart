@@ -44,6 +44,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_luckynumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lychrel_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
@@ -52,6 +53,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_permutableprimes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
@@ -73,6 +75,9 @@ import 'package:gc_wizard/widgets/selector_lists/scrabble_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt3_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/sqrt5_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/telegraph_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/teletypewriter_selection.dart';
@@ -184,7 +189,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
-import 'tools/crypto_and_encodings/music_notes/music_notes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/music_notes/music_notes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_converter.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
@@ -327,6 +332,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt2.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt3.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/sqrt5.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/mathematical_constants.dart';
@@ -340,6 +348,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucky_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lychrel.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
@@ -348,6 +357,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/permutable_primes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
@@ -369,7 +379,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equatio
 import 'package:gc_wizard/widgets/tools/science_and_technology/recycling.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -389,6 +398,7 @@ import 'main_menu/settings/settings_coordinates.dart';
 import 'main_menu/settings/settings_general.dart';
 import 'main_menu/settings/settings_tools.dart';
 import 'tools/games/scrabble/scrabble.dart';
+import 'tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 import 'tools/science_and_technology/colors/ral_color_codes.dart';
 
 
@@ -1012,6 +1022,24 @@ initializeRegistry(BuildContext context) {
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
       'solitaire',
+    ]),
+    GCWTool(tool: SQRT2Selection(), i18nPrefix: 'sqrt2_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: SQRT3Selection(), i18nPrefix: 'sqrt3_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
+    ]),
+    GCWTool(tool: SQRT5Selection(), i18nPrefix: 'sqrt5_selection', categories: [
+      ToolCategory.SCIENCE_AND_TECHNOLOGY
+    ], searchKeys: [
+      'sqrt',
+      'irrationalnumbers',
     ]),
     GCWTool(tool: Stegano(), i18nPrefix: 'stegano', isBeta: true, categories: [
       ToolCategory.IMAGES_AND_FILES
@@ -2104,6 +2132,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: NumberSequenceMersennePrimesSelection(), i18nPrefix: 'numbersequence_mersenneprimes', searchKeys: [
       'numbersequence',
+      'primes',
       'numbersequence_mersenneprimesselection',
     ]),
     GCWTool(
@@ -2146,6 +2175,15 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceSublimeNumbersSelection(), i18nPrefix: 'numbersequence_sublimenumbers', searchKeys: [
       'numbersequence',
       'numbersequence_sublimenumbersselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesSelection(), i18nPrefix: 'numbersequence_permutableprimes', searchKeys: [
+      'numbersequence',
+      'primes',
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersSelection(), i18nPrefix: 'numbersequence_luckynumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_luckynumbersselection',
     ]),
     GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', searchKeys: [
       'numbersequence',
@@ -2555,6 +2593,26 @@ initializeRegistry(BuildContext context) {
           'numbersequence_sublimenumbersselection',
         ]),
 
+    //NumberSequenceSelection Lucky numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceLuckyNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceLuckyNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_luckynumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceLuckyNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_luckynumbersselection',
+        ]),
+
     //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
     GCWTool(tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
       'numbersequence_primarypseudoperfectnumbersselection',
@@ -2594,6 +2652,27 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: NumberSequenceLychrelContainsDigits(), i18nPrefix: 'numbersequence_containsdigits', searchKeys: [
       'numbersequence_lychrelselection',
     ]),
+
+    //NumberSequenceSelection Mersenne Primes ****************************************************************************************
+    GCWTool(tool: NumberSequencePermutablePrimesNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(tool: NumberSequencePermutablePrimesDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_permutableprimesselection',
+    ]),
+    GCWTool(
+        tool: NumberSequencePermutablePrimesContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_permutableprimesselection',
+        ]),
+
 
     //PeriodicTableSelection ***************************************************************************************
     GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', searchKeys: []),
@@ -2776,6 +2855,39 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
       'silverratiosearch',
+    ]),
+
+    //SQRT 2 Selection **********************************************************************************************
+    GCWTool(tool: SQRT2NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT2DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT2Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
+    //SQRT 3 Selection **********************************************************************************************
+    GCWTool(tool: SQRT3NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT3DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT3Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
+    ]),
+
+    //SQRT 5 Selection **********************************************************************************************
+    GCWTool(tool: SQRT5NthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT5DecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', searchKeys: [
+      '',
+    ]),
+    GCWTool(tool: SQRT5Search(), i18nPrefix: 'irrationalnumbers_search', searchKeys: [
+      '',
     ]),
 
     //Symbol Tables **********************************************************************************************

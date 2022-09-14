@@ -204,4 +204,8 @@ void initDefaultSettings(PreferencesInitMode mode, {String reinitSinglePreferenc
   if (reinitSinglePreference == PREFERENCE_TOOLLIST_SHOW_EXAMPLES || _reinitAll || Prefs.get(PREFERENCE_TOOLLIST_SHOW_EXAMPLES) == null) {
     Prefs.setBool(PREFERENCE_TOOLLIST_SHOW_EXAMPLES, true);
   }
+
+  if (reinitSinglePreference == PREFERENCE_WHERIGOANALYZER_EXPERTMODE || _reinitAll || Prefs.get(PREFERENCE_WHERIGOANALYZER_EXPERTMODE) == null) {
+    Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, false);
+  }
 }
