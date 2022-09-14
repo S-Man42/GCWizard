@@ -33,6 +33,7 @@
 
 import 'dart:math';
 
+import 'package:gc_wizard/logic/tools/science_and_technology/number_sequences/list_happy_numbers.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequences/list_lucky_numbers.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequences/list_lychrel_numbers.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequences/list_mersenne_exponents.dart';
@@ -76,6 +77,7 @@ enum NumberSequencesMode {
   LYCHREL,
   PERMUTABLE_PRIMES,
   LUCKY_NUMBERS,
+  HAPPY_NUMBERS,
 }
 
 
@@ -330,6 +332,9 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
       case NumberSequencesMode.LUCKY_NUMBERS:
         sequenceList.addAll(lucky_numbers);
         break;
+      case NumberSequencesMode.HAPPY_NUMBERS:
+        sequenceList.addAll(happy_numbers);
+        break;
     }
     for (int i = start; i <= stop; i++) numberList.add(BigInt.parse(sequenceList[i]));
   }
@@ -557,6 +562,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       case NumberSequencesMode.LUCKY_NUMBERS:
         sequenceList.addAll(lucky_numbers);
         break;
+      case NumberSequencesMode.HAPPY_NUMBERS:
+        sequenceList.addAll(happy_numbers);
+        break;
     }
     for (int i = 0; i < sequenceList.length; i++) {
       if (expr.hasMatch(sequenceList[i])) {
@@ -716,6 +724,9 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits) {
         break;
       case NumberSequencesMode.LUCKY_NUMBERS:
         sequenceList.addAll(lucky_numbers);
+        break;
+      case NumberSequencesMode.HAPPY_NUMBERS:
+        sequenceList.addAll(happy_numbers);
         break;
     }
     for (int i = 0; i < sequenceList.length; i++) if (sequenceList[i].length == digits) numberList.add(sequenceList[i]);

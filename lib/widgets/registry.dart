@@ -40,6 +40,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_happynumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
@@ -346,6 +347,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/happy_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
@@ -2195,6 +2197,10 @@ initializeRegistry(BuildContext context) {
       'numbersequence',
       'numbersequence_luckynumbersselection',
     ]),
+    GCWTool(tool: NumberSequenceHappyNumbersSelection(), i18nPrefix: 'numbersequence_happynumbers', searchKeys: [
+      'numbersequence',
+      'numbersequence_happynumbersselection',
+    ]),
     GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', searchKeys: [
       'numbersequence',
       'numbersequence_bellselection',
@@ -2621,6 +2627,26 @@ initializeRegistry(BuildContext context) {
         i18nPrefix: 'numbersequence_containsdigits',
         searchKeys: [
           'numbersequence_luckynumbersselection',
+        ]),
+
+    //NumberSequenceSelection Happy numbers ****************************************************************************************
+    GCWTool(tool: NumberSequenceHappyNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersRange(), i18nPrefix: 'numbersequence_range', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(tool: NumberSequenceHappyNumbersDigits(), i18nPrefix: 'numbersequence_digits', searchKeys: [
+      'numbersequence_happynumbersselection',
+    ]),
+    GCWTool(
+        tool: NumberSequenceHappyNumbersContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchKeys: [
+          'numbersequence_happynumbersselection',
         ]),
 
     //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************

@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_luckynumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_happynumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lychrel_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
@@ -48,6 +49,7 @@ class NumberSequenceSelection extends GCWSelection {
         className(NumberSequenceSublimeNumbersSelection()),
         className(NumberSequencePermutablePrimesSelection()),
         className(NumberSequenceLuckyNumbersSelection()),
+        className(NumberSequenceHappyNumbersSelection()),
         className(NumberSequenceBellSelection()),
         className(NumberSequenceCatalanSelection()),
         className(NumberSequenceJacobsthalSelection()),
