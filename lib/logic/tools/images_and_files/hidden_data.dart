@@ -19,7 +19,7 @@ Future<List<GCWFile>> hiddenData(GCWFile data) async {
 }
 
 Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
-  var result = _splitFile(data, fileIndexCounter);
+  var result = await _splitFile(data, fileIndexCounter);
   var childrenList = <GCWFile>[];
 
   if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE)
@@ -38,13 +38,13 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
 
   if (fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
     data = GCWFile(name: data.name, bytes: data.bytes.sublist(0, _fileSize(data.bytes)), children: data.children);
-    result = _searchMagicBytesHeader(data, result.item2);
+    result = await _searchMagicBytesHeader(data, result.item2);
   }
 
   return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
 
-Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) {
+Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) async {
   var bytes = data.bytes;
   var resultList = <GCWFile>[];
   var parent = !onlyParent;
@@ -67,7 +67,7 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter, {bool 
       fileIndexCounter++;
       var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
       var file = GCWFile(name: fileName, bytes: resultBytes);
-      if (_checkFileValid(file))
+      if (await _checkFileValid(file))
         resultList.add(file);
       else
         fileIndexCounter--;
@@ -76,7 +76,7 @@ Tuple2<List<GCWFile>, int> _splitFile(GCWFile data, int fileIndexCounter, {bool 
     parent = false;
   }
 
-  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
+  return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
 }
 
 int _fileSize(Uint8List bytes) {
@@ -104,18 +104,18 @@ int _fileSize(Uint8List bytes) {
   }
 }
 
-Tuple2<List<GCWFile>, int> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) {
+Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) async {
   var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.BMP, FileType.ZIP,
     FileType.RAR, FileType.TAR, FileType.MP3];
 
-  var result = _searchMagicBytes(data, fileTypeList, fileIndexCounter);
+  var result = await _searchMagicBytes(data, fileTypeList, fileIndexCounter);
   if (result?.item1 != null && result?.item1.length > 0) {
     if (data.children != null)
       data.children.addAll(result?.item1);
     else
       data.children = result?.item1;
   }
-  return Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter);
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
 }
 
 Tuple2<List<GCWFile>, int> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) {
@@ -123,7 +123,7 @@ Tuple2<List<GCWFile>, int> _searchMagicBytes(GCWFile data, List<FileType> fileTy
 
   fileTypeList.forEach((fileType) {
     var magicBytesList = magicBytes(fileType);
-    magicBytesList.forEach((magicBytes) {
+    magicBytesList.forEach((magicBytes) async {
       var bytes = data.bytes;
       if (bytes == null)
         return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
@@ -142,7 +142,7 @@ Tuple2<List<GCWFile>, int> _searchMagicBytes(GCWFile data, List<FileType> fileTy
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
-              var result = _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)),
+              var result = await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)),
                   fileIndexCounter, onlyParent : true);
               if (result?.item1 != null && result?.item1.length > 0)
                 resultList.addAll(result?.item1);
@@ -158,15 +158,17 @@ Tuple2<List<GCWFile>, int> _searchMagicBytes(GCWFile data, List<FileType> fileTy
   return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
 }
 
-bool _checkFileValid(GCWFile data) {
+Future<bool> _checkFileValid(GCWFile data) async {
   var result = true;
   try {
     var _fileClass = fileClass(getFileType(data?.bytes));
     if (_fileClass == FileClass.IMAGE)
       return Image.decodeImage(data.bytes) != null;
     else if (_fileClass == FileClass.SOUND) {
-      var a =Audio.AudioPlayer();
-      a.setSourceBytes(data.bytes);
+      var advancedPlayer =Audio.AudioPlayer();
+      await advancedPlayer.setSourceBytes(data.bytes);
+      var duration = await advancedPlayer.getDuration();
+      return duration.inMilliseconds > 0;
     }
   } catch (e) {result = false;}
 
