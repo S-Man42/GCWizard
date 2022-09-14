@@ -51,7 +51,7 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
 
     return Column(children: <Widget>[
       GCWTextField(
-          hintText: i18n(context, 'coords_formatconverter_naturalareacode_x'),
+          hintText: i18n(context, 'coords_formatconverter_easting'),
           controller: _controllerX,
           inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
           onChanged: (ret) {
@@ -61,7 +61,7 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
             });
           }),
       GCWTextField(
-          hintText: i18n(context, 'coords_formatconverter_naturalareacode_y'),
+          hintText: i18n(context, 'coords_formatconverter_northing'),
           controller: _controllerY,
           inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
           onChanged: (ret) {

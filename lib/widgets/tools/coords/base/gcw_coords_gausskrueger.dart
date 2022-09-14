@@ -104,29 +104,6 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
     return code;
   }
 
-  String _getSubTypeString(int code) {
-    var subtype = keyCoordsGaussKruegerGK1;
-    switch (code) {
-      case 1:
-        subtype = keyCoordsGaussKruegerGK1;
-        break;
-      case 2:
-        subtype = keyCoordsGaussKruegerGK2;
-        break;
-      case 3:
-        subtype = keyCoordsGaussKruegerGK3;
-        break;
-      case 4:
-        subtype = keyCoordsGaussKruegerGK4;
-        break;
-      case 5:
-        subtype = keyCoordsGaussKruegerGK5;
-        break;
-    }
-
-    return subtype;
-  }
-
   bool _subtypeChanged() {
     return _currentSubtype != _getSubTypeCode(widget.subtype);
   }

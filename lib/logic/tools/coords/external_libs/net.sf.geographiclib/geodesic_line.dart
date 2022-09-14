@@ -12,12 +12,12 @@
  **********************************************************************/
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geo_math.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic_data.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/geodesic_mask.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/math.dart';
-import 'package:gc_wizard/logic/tools/coords/karney/net.sf.geographiclib/pair.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geo_math.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic_data.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/geodesic_mask.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/math.dart';
+import 'package:gc_wizard/logic/tools/coords/external_libs/net.sf.geographiclib/pair.dart';
 
 /**
  * A geodesic line.

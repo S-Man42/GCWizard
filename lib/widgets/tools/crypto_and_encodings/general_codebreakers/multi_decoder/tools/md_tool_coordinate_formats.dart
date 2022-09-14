@@ -51,6 +51,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
                   case keyCoordsGaussKrueger:
                     coords = GaussKrueger.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
+                  case keyCoordsLambert:
+                    coords = Lambert.parse(input)?.toLatLng(ells: defaultEllipsoid());
+                    break;
                   case keyCoordsDutchGrid:
                     coords = DutchGrid.parse(input)?.toLatLng();
                     break;
@@ -83,6 +86,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
                     break;
                   case keyCoordsSlippyMap:
                     coords = SlippyMap.parse(input)?.toLatLng();
+                    break;
+                  case keyCoordsMakaney:
+                    coords = Makaney.parse(input)?.toLatLng();
                     break;
                 }
               } catch (e) {}

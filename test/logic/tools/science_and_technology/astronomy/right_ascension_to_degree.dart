@@ -1,9 +1,9 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/right_ascension_time_to_degree.dart';
+import '../../../../../lib/logic/tools/science_and_technology/astronomy/right_ascension_to_degree.dart';
 
 void main() {
 
-  group("right_ascension_time_to_degree.raDegree2Time:", () {
+  group("right_ascension_to_degree.raDegree2RightAscension:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null.toString()},
       {'input' : 66.918277, 'expectedOutput' : '04:27:40.386'},
@@ -26,14 +26,14 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raDegree2Time(RaDeg(elem['input']));
+        var _actual = raDegree2RightAscension(RaDeg(elem['input']));
         expect(_actual.toString(), elem['expectedOutput']);
       });
     });
   });
 
 
-  group("right_ascension_time_to_degree.raTime2Degree:", () {
+  group("right_ascension_to_degree.raRightAscension2Degree:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},
       {'input' : '4:27:40.386', 'expectedOutput' : '66.918275'},
@@ -47,7 +47,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = raTime2Degree(RightAscension.parse(elem['input']));
+        var _actual = raRightAscension2Degree(RightAscension.parse(elem['input']));
         if (_actual == null)
           expect(_actual, elem['expectedOutput']);
         else
@@ -111,23 +111,6 @@ void main() {
           expect(_actual, elem['expectedOutput']);
         else
           expect(_actual.toString(), elem['expectedOutput']);
-      });
-    });
-  });
-
-  group("RightAscension.fromDMM:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'sign' : null, 'hours' : null, 'expectedOutput' : '00:00:00.000'},
-      {'sign' : 1, 'hours' : 1, 'minutes' : 0.0 , 'expectedOutput' : '01:00:00.000'},
-      {'sign' : 1, 'hours' : 1, 'minutes' : 30.500 , 'expectedOutput' : '01:30:30.000'},
-
-      {'sign' : 1, 'hours' : 170, 'minutes' : 0.0 , 'expectedOutput' : '170:00:00.000'},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['sign']}, ${elem['hours']}, ${elem['minutes']}', () {
-        var _actual = RightAscension.fromDMM(elem['sign'], elem['hours'], elem['minutes'])?.toString();
-        expect(_actual, elem['expectedOutput']);
       });
     });
   });
