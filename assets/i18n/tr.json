@@ -2109,7 +2109,7 @@
   "grid_boxes_behaviour_spiral_description": "Enumeration goes as a spiral from outer to inner boxes",
   "gronsfeld_title": "Gronsfeld Cipher",
   "gronsfeld_description": "Special case of Vigenère encryption with numbers as key",
-  "guitarstrings_title": "Guitar Strings",
+  "guitarstrings_title": "Guitar Tabs",
   "guitarstrings_description": "Guitar tabs to note names",
   "guitarstrings_string": "String",
   "guitarstrings_fret": "Fret",

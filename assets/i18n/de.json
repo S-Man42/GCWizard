@@ -2109,7 +2109,7 @@
   "grid_boxes_behaviour_spiral_description": "Beschriftung geht als Spirale von außen nach innen",
   "gronsfeld_title": "Gronsfeld Chiffre",
   "gronsfeld_description": "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
-  "guitarstrings_title": "Gitarrensaiten",
+  "guitarstrings_title": "Gitarrengriffe",
   "guitarstrings_description": "Gitarrentabs zu Notennamen",
   "guitarstrings_string": "Saite",
   "guitarstrings_fret": "Bund",

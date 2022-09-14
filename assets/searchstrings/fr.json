@@ -165,7 +165,7 @@
   "gray": "distance",
   "grid": "cellules lignes intersections boites grille papier tableau loterie matrice",
   "gronsfeld": "",
-  "guitar": "guitars guitarstrings guitartabs guitartabulators guitargrips accords",
+  "guitar": "guitars guitarstrings guitartabs guitartabulators guitargrips accords frets",
   "hashbreaker": "casseurdehash solveurdehash",
   "hashes": "fermetures jetables unique",
   "hashes_blake2b": "",

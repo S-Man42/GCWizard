@@ -2109,7 +2109,7 @@
   "grid_boxes_behaviour_spiral_description": "열거는 외부 격자 박스에서 내부 상자로 나선형으로 진행됩니다.",
   "gronsfeld_title": "Gronsfeld 암호",
   "gronsfeld_description": "숫자를 키로 사용하는 비즈네르 암호의 특수 사례",
-  "guitarstrings_title": "Guitar Strings",
+  "guitarstrings_title": "Guitar Tabs",
   "guitarstrings_description": "Guitar tabs to note names",
   "guitarstrings_string": "String",
   "guitarstrings_fret": "Fret",

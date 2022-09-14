@@ -165,7 +165,7 @@
   "gray": "distance",
   "grid": "cells lines intersections boxes points coordinatesystems gridpaper graphpaper squaredpaper crosshatchedpaper quadpaper checkedpaper checkeredpaper chessboard checkersboard lottery",
   "gronsfeld": "",
-  "guitar": "guitars guitarstrings guitartabs guitartabulators guitargrips accords",
+  "guitar": "guitars guitarstrings guitartabs guitartabulators guitargrips accords frets",
   "hashbreaker": "hashbreaker hashsolver hashcracker",
   "hashes": "onewayencryptions hashvalues message digests",
   "hashes_blake2b": "",
