@@ -15,16 +15,18 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
-  return  Future.value((await _hiddenData(data, 0))?.item1);
+  return  (await _hiddenData(data, 0))?.item1;
 }
 
 Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
   var result = await _splitFile(data, fileIndexCounter);
   var childrenList = <GCWFile>[];
 
-  if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE)
+  if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
     // clone byte (I have no idea why this is actually necessary)
-    childrenList.addAll(await extractArchive(GCWFile(name: data.name, bytes: data.bytes.sublist(0))));
+    var children = await extractArchive(GCWFile(name: data.name, bytes: data.bytes.sublist(0)));
+    if (children != null) childrenList.addAll(children);
+  }
 
   if (result?.item1 != null)
     childrenList.addAll(result?.item1);
@@ -32,7 +34,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   childrenList.removeWhere((element) => element == null);
   data.children = childrenList.length == 0 ? null : childrenList;
 
-  await childrenList.forEach((data) async {
+  Future.forEach(childrenList, (data) async {
     result = await _hiddenData(data, result.item2);
   });
 
@@ -41,7 +43,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     result = await _searchMagicBytesHeader(data, result.item2);
   }
 
-  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
+  return Tuple2<List<GCWFile>, int>([data], result.item2);
 }
 
 Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) async {
@@ -76,7 +78,7 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
     parent = false;
   }
 
-  return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
+  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
 }
 
 int _fileSize(Uint8List bytes) {
@@ -115,15 +117,15 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fil
     else
       data.children = result?.item1;
   }
-  return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
+  return Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter);
 }
 
-Tuple2<List<GCWFile>, int> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) {
+Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) async {
   var resultList = <GCWFile>[];
 
-  fileTypeList.forEach((fileType) {
+  await Future.forEach(fileTypeList, (fileType) async {
     var magicBytesList = magicBytes(fileType);
-    magicBytesList.forEach((magicBytes) async {
+    await Future.forEach(magicBytesList, (magicBytes) async {
       var bytes = data.bytes;
       if (bytes == null)
         return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
@@ -163,14 +165,16 @@ Future<bool> _checkFileValid(GCWFile data) async {
   try {
     var _fileClass = fileClass(getFileType(data?.bytes));
     if (_fileClass == FileClass.IMAGE)
-      return Image.decodeImage(data.bytes) != null;
+      result = Image.decodeImage(data.bytes) != null;
     else if (_fileClass == FileClass.SOUND) {
       var advancedPlayer =Audio.AudioPlayer();
       await advancedPlayer.setSourceBytes(data.bytes);
       var duration = await advancedPlayer.getDuration();
-      return duration.inMilliseconds > 0;
+      result = duration.inMilliseconds > 0;
     }
-  } catch (e) {result = false;}
+  } catch (e) {
+    result = false;
+  }
 
   return result;
 }
