@@ -59,11 +59,29 @@ void main() {
       {'input': '', 'inputFormat': null, 'key': null, 'keyFormat': null, 'iv': null, 'ivFormat': null, 'outputFormat': null,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
-      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'Test', 'keyFormat': InputFormat.TEXT, 'iv': null, 'ivFormat': InputFormat.TEXT, 'outputFormat': OutputFormat.HEX,
-        'expectedOutput': RabbitOutput('02 6C DB CD', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', null, ErrorCode.OK)
+      // {'input': '00 00 00 00 00 00 00 00', 'inputFormat': InputFormat.HEX, 'key': '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', 'keyFormat': InputFormat.HEX, 'iv': '00 00 00 00', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+      //   'expectedOutput': RabbitOutput('AE 27 4F 26 F4 13 B7 CB', '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
+      // },
+      // {'input': '00 00 00 00 00 00 00 00', 'inputFormat': InputFormat.HEX, 'key': '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', 'keyFormat': InputFormat.HEX, 'iv': '10 00 00 00', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+      //   'expectedOutput': RabbitOutput('EC E2 13 19 25 79 08 02', '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', '10 00 00 00 00 00 00 00', ErrorCode.OK)
+      // },
+      // {'input': '10 00 00 00 00 00 00 00', 'inputFormat': InputFormat.HEX, 'key': '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', 'keyFormat': InputFormat.HEX, 'iv': '10 00 00 00', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+      //   'expectedOutput': RabbitOutput('FC E2 13 19 25 79 08 02', '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', '10 00 00 00 00 00 00 00', ErrorCode.OK)
+      // },
+      //
+      // {'input': '1A 1B 00 00 00 00 00 01', 'inputFormat': InputFormat.HEX, 'key': '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', 'keyFormat': InputFormat.HEX, 'iv': '10 00 00 00', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+      //   'expectedOutput': RabbitOutput('F6 F9 13 19 25 79 08 03', '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', '10 00 00 00 00 00 00 00', ErrorCode.OK)
+      // },
+
+      {'input': '1A 1B 00 00 00 00 00 01', 'inputFormat': InputFormat.HEX, 'key': '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', 'keyFormat': InputFormat.HEX, 'iv': null, 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+        'expectedOutput': RabbitOutput('B4 3C 4F 26 F4 13 B7 CA', '10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
       },
-      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'TestTestTestTest', 'keyFormat': InputFormat.TEXT, 'iv': '0000000000000000', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.TEXT,
-        'expectedOutput': RabbitOutput('74 E3 D5 4D', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', null, ErrorCode.OK)
+
+      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'Test', 'keyFormat': InputFormat.TEXT, 'iv': null, 'ivFormat': InputFormat.TEXT, 'outputFormat': OutputFormat.HEX,
+        'expectedOutput': RabbitOutput('02 6C DB CD', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', '00 00 00 00 00 00 00 00', ErrorCode.OK)
+      },
+      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'TestTestTestTest', 'keyFormat': InputFormat.TEXT, 'iv': '0000000000000000', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.HEX,
+        'expectedOutput': RabbitOutput('1E DD 30 D4', '54 65 73 74 54 65 73 74 54 65 73 74 54 65 73 74', '00 00 00 00 00 00 00 00', ErrorCode.OK)
       },
     ];
 

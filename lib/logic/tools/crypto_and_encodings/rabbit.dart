@@ -43,9 +43,10 @@ RabbitOutput cryptRabbit(
   if (initializationVector != null && initializationVector.length > 0) {
     var ivList = rc4.convertInputToIntList(initializationVector, _convertInputFormatEnum(ivFormat));
     if (ivList == null || ivList.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
-    ivData = _generateData(keyList, 8);
+    ivData = _generateData(ivList, 8);
     if (ivData == null || ivData.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
-  }
+  } else
+    ivData = _generateData([0], 8);
 
   var rabbit = Rabbit(keyData, ivData);
   if (!rabbit.initialized) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
@@ -318,9 +319,10 @@ class Rabbit {
     for (i = 0; i < 4; i++)
       _nextState(_working);
 
-  return true;
+    return true;
   }
 }
+
 class _context {
   int carry;
   Uint32List counters;
