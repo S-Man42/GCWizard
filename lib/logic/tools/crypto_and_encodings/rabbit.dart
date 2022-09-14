@@ -48,7 +48,7 @@ RabbitOutput cryptRabbit(
   }
 
   var rabbit = Rabbit(keyData, ivData);
-  if (rabbit.initialized) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
+  if (!rabbit.initialized) return RabbitOutput('', null, null, ErrorCode.KEY_FORMAT);
 
   var output = rabbit.cryptData(inputData);
 
@@ -125,7 +125,7 @@ class Rabbit {
   Uint8List cryptData(Uint8List msg) {
     if (msg == null) return null;
     var keyStream = keyStreamBytes(msg.length);
-    if (keyStream == null )return null;
+    if (keyStream == null) return null;
 
     var output = Uint8List(msg.length);
     /* Encrypt/decrypt the data */

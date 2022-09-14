@@ -59,8 +59,11 @@ void main() {
       {'input': '', 'inputFormat': null, 'key': null, 'keyFormat': null, 'iv': null, 'ivFormat': null, 'outputFormat': null,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
       },
-      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'Test', 'keyFormat': InputFormat.TEXT, 'iv': null, 'ivFormat': InputFormat.TEXT, 'outputFormat': OutputFormat.TEXT,
-        'expectedOutput': RabbitOutput('', null, null, ErrorCode.OK)
+      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'Test', 'keyFormat': InputFormat.TEXT, 'iv': null, 'ivFormat': InputFormat.TEXT, 'outputFormat': OutputFormat.HEX,
+        'expectedOutput': RabbitOutput('02 6C DB CD', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', null, ErrorCode.OK)
+      },
+      {'input': 'Test', 'inputFormat': InputFormat.TEXT, 'key': 'TestTestTestTest', 'keyFormat': InputFormat.TEXT, 'iv': '0000000000000000', 'ivFormat': InputFormat.HEX, 'outputFormat': OutputFormat.TEXT,
+        'expectedOutput': RabbitOutput('74 E3 D5 4D', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', null, ErrorCode.OK)
       },
     ];
 
