@@ -111,9 +111,6 @@ class Rabbit {
   }
 
   bool _reSeedIV(Uint8List iv) {
-    if (!initialized)
-      // Cannot set IV if object not initialized! Call Initialize(x[,x]) first!
-      return false;
     if (iv != null && iv.length != 8)
       // If IV is not NULL, then IV MUST be 8 bytes in length!
       return false;
