@@ -52,8 +52,6 @@ class WherigoAnalyze extends StatefulWidget {
 }
 
 class WherigoAnalyzeState extends State<WherigoAnalyze> {
-  ScrollController _scrollControllerHex;
-
   Uint8List _GWCbytes;
   Uint8List _LUAbytes;
 
@@ -120,7 +118,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   @override
   void initState() {
     super.initState();
-    _expertMode = Prefs.getString('wherigo_display_data_mode') == 'Expert';
+    _expertMode = Prefs.getBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE);
 
      _codeControllerHighlightedLUA = CodeController(
       text: _LUA_SourceCode,
@@ -378,7 +376,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     onPressed: () {
                       setState(() {
                         _expertMode = !_expertMode;
-                        _expertMode ? Prefs.setString('wherigo_display_data_mode', 'Expert') : Prefs.setString('wherigo_display_data_mode', 'User');
+                        Prefs.setBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE, _expertMode);
                         _displayCartridgeDataList = _setDisplayCartridgeDataList();
                         showToast(_expertMode ? i18n(context, 'wherigo_mode_expert') : i18n(context, 'wherigo_mode_user'));
                         if (!_expertMode && ( _displayedCartridgeData == WHERIGO.LUABYTECODE) ||
