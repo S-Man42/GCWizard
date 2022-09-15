@@ -46,6 +46,7 @@ RabbitOutput cryptRabbit(
     ivData = _generateData(ivList, 8);
     if (ivData == null || ivData.length == 0) return RabbitOutput('', null, null, ErrorCode.IV_FORMAT);
   } else
+    // for same result like http://kryptografie.de/kryptografie/chiffre/rabbit.htm
     ivData = _generateData([0], 8);
 
   var rabbit = Rabbit(keyData, ivData);
