@@ -15,7 +15,7 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
-  return  (await _hiddenData(data, 0))?.item1;
+  return (await _hiddenData(data, 0))?.item1;
 }
 
 Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
@@ -24,7 +24,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
 
   if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
     // clone byte (I have no idea why this is actually necessary)
-    var children = await extractArchive(GCWFile(name: data.name, bytes: data.bytes.sublist(0)));
+    var children = await extractArchive(GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0))));
     if (children != null) childrenList.addAll(children);
   }
 
@@ -34,12 +34,13 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   childrenList.removeWhere((element) => element == null);
   data.children = childrenList.length == 0 ? null : childrenList;
 
-  Future.forEach(childrenList, (data) async {
+  await Future.forEach(childrenList, (data) async {
     result = await _hiddenData(data, result.item2);
   });
 
   if (fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
-    data = GCWFile(name: data.name, bytes: data.bytes.sublist(0, _fileSize(data.bytes)), children: data.children);
+    data = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))),
+        children: data.children);
     result = await _searchMagicBytesHeader(data, result.item2);
   }
 
@@ -57,14 +58,12 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
     Uint8List resultBytes;
     if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
       resultBytes = bytes.sublist(0, fileSize);
-      // remove result from source data
       bytes = bytes.sublist(fileSize);
     } else {
       resultBytes = bytes;
       bytes = null;
     }
 
-    resultBytes = trimNullBytes(resultBytes);
     if (resultBytes.length > 0 && !parent) {
       fileIndexCounter++;
       var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
