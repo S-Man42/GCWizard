@@ -96,7 +96,9 @@ void main() {
       {'input': 'Test', 'inputFormat': InputFormat.AUTO, 'key': 'Test', 'keyFormat': InputFormat.AUTO, 'iv': 'Test', 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('64 CE 79 3E', '54 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00', '54 65 73 74 00 00 00 00', ErrorCode.OK)
       },
-
+      {'input': 'Test', 'inputFormat': InputFormat.AUTO, 'key': 'TestTestTestTestTestTest', 'keyFormat': InputFormat.AUTO, 'iv': 'TestTestTestTest', 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
+        'expectedOutput': RabbitOutput('E0 16 3B 59', '54 65 73 74 54 65 73 74 54 65 73 74 54 65 73 74', '54 65 73 74 54 65 73 74', ErrorCode.OK)
+      },
 
       {'input': 'Test', 'inputFormat': InputFormat.BINARY, 'key': 'Test', 'keyFormat': InputFormat.AUTO, 'iv': null, 'ivFormat': InputFormat.AUTO, 'outputFormat': OutputFormat.HEX,
         'expectedOutput': RabbitOutput('', null, null, ErrorCode.INPUT_FORMAT)
