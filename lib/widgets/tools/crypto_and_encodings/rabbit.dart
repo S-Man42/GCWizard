@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 class Rabbit extends StatefulWidget {
@@ -17,6 +18,7 @@ class RabbitState extends State<Rabbit> {
   String _currentInput = '';
   String _currentKey = '';
   String _currentInitializationVector = '';
+  bool _currentExpanded = false;
 
   var _currentInputFormat = InputFormat.AUTO;
   var _currentKeyFormat = InputFormat.AUTO;
@@ -52,21 +54,21 @@ class RabbitState extends State<Rabbit> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
-                value: _currentInputFormat,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputFormat = value;
-                  });
-                },
-                items: rabbitInputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              ),
-              flex: 2),
+            child: GCWDropDownButton(
+              value: _currentInputFormat,
+              onChanged: (value) {
+                setState(() {
+                  _currentInputFormat = value;
+                });
+              },
+              items: rabbitInputFormatItems.entries.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: mode.value,
+                );
+              }).toList(),
+            ),
+            flex: 2),
         ]),
         GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
@@ -80,50 +82,63 @@ class RabbitState extends State<Rabbit> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
-                value: _currentKeyFormat,
-                onChanged: (value) {
-                  setState(() {
-                    _currentKeyFormat = value;
-                  });
-                },
-                items: rabbitInputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              ),
-              flex: 2),
+            child: GCWDropDownButton(
+              value: _currentKeyFormat,
+              onChanged: (value) {
+                setState(() {
+                  _currentKeyFormat = value;
+                });
+              },
+              items: rabbitInputFormatItems.entries.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: mode.value,
+                );
+              }).toList(),
+            ),
+            flex: 2),
         ]),
-        GCWTextDivider(text: i18n(context, 'rabbit_initialization_vector')),
-        GCWTextField(
-          hintText: i18n(context, 'rabbit_initialization_vector'),
-          onChanged: (text) {
+        GCWExpandableTextDivider(
+          text: i18n(context, 'rabbit_initialization_vector'),
+          expanded: _currentExpanded,
+          onChanged: (value) {
             setState(() {
-              _currentInitializationVector = text;
+            _currentExpanded = value;
             });
           },
-        ),
-        Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
-          Expanded(
-              child: GCWDropDownButton(
-                value: _currentIvFormat,
-                onChanged: (value) {
+          child: Column(
+            children: [
+              GCWTextField(
+                hintText: i18n(context, 'rabbit_initialization_vector'),
+                onChanged: (text) {
                   setState(() {
-                    _currentIvFormat = value;
+                    _currentInitializationVector = text;
                   });
                 },
-                items: rabbitInputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
               ),
-              flex: 2),
-        ]),
+              Row(children: <Widget>[
+                Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+                Expanded(
+                    child: GCWDropDownButton(
+                      value: _currentIvFormat,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentIvFormat = value;
+                        });
+                      },
+                      items: rabbitInputFormatItems.entries.map((mode) {
+                        return GCWDropDownMenuItem(
+                          value: mode.key,
+                          child: mode.value,
+                        );
+                      }).toList(),
+                    ),
+                    flex: 2),
+              ]),
+            ]
+          )
+        ),
+
         GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
