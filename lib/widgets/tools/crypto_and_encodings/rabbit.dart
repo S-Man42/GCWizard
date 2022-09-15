@@ -171,6 +171,9 @@ class RabbitState extends State<Rabbit> {
         case ErrorCode.INPUT_FORMAT:
           showToast(i18n(context, 'rc4_error_input_format'));
           break;
+        case ErrorCode.IV_FORMAT:
+          showToast(i18n(context, 'rabbit_error_iv_format'));
+          break;
       }
       return GCWDefaultOutput();
     }

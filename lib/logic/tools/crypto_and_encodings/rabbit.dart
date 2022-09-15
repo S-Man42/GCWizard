@@ -141,7 +141,7 @@ class Rabbit {
     if (!initialized)
       // Cannot get KeyStream if object not initialized! Call Initialize(x[,x]) first!
       return null;
-    if (length < 1)
+    if (length== null || length < 1)
       // Length must be an integer greater than 1.");
       return null;
 
