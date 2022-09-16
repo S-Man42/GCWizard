@@ -98,6 +98,7 @@ import 'package:gc_wizard/widgets/tools/coords/dmm_offset.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/widgets/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
+import 'package:gc_wizard/widgets/tools/coords/format_overview.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
@@ -1483,6 +1484,18 @@ initializeRegistry(BuildContext context) {
         searchKeys: [
           'coordinates',
           'coordinates_formatconverter',
+        ]),
+    GCWTool(
+        tool: FormatOverview(),
+        i18nPrefix: 'coords_formatoverview',
+        iconPath: 'assets/icons/coords/icon_format_converter.png',
+        categories: [
+          ToolCategory.COORDINATES
+        ],
+        searchKeys: [
+          'coordinates',
+          'coordinates_formatconverter',
+          'coordinates_formatoverview',
         ]),
     GCWTool(
         tool: MapView(),
