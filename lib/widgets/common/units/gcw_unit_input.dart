@@ -8,12 +8,14 @@ import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 
 class GCWUnitInput extends StatefulWidget {
   final min;
+  final max;
   final numberDecimalDigits;
   final double value;
   final List<Unit> unitList;
   final UnitCategory unitCategory;
   final title;
   final Unit initialUnit;
+  final suppressOverflow;
 
   final Function onChanged;
 
@@ -21,12 +23,14 @@ class GCWUnitInput extends StatefulWidget {
       {Key key,
       this.title,
       this.min,
+      this.max,
       this.numberDecimalDigits: 5,
       this.value: 0.0,
       this.unitCategory,
       this.unitList,
       this.initialUnit,
-      this.onChanged})
+      this.onChanged,
+      this.suppressOverflow: false})
       : super(key: key);
 
   @override
@@ -53,9 +57,10 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
             child: GCWDoubleSpinner(
               title: widget.title,
               min: widget.min,
+              max: widget.max,
               numberDecimalDigits: widget.numberDecimalDigits,
               value: _currentValue,
-              suppressOverflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
+              suppressOverflow: widget.suppressOverflow,
               onChanged: (value) {
                 setState(() {
                   _currentValue = value;

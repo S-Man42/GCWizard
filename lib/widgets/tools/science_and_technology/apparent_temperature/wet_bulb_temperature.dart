@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/humidity.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/common/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
@@ -9,6 +10,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_units.dart';
 
@@ -21,7 +23,8 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
   double _currentTemperature = 1.0;
   double _currentHumidity = 0.0;
 
-  Map<String, dynamic> _currentOutputUnit = {'unit': TEMPERATURE_CELSIUS, 'prefix': UNITPREFIX_NONE};
+  //Map<String, dynamic> _currentOutputUnit = {'unit': TEMPERATURE_CELSIUS, 'prefix': UNITPREFIX_NONE};
+  Unit _currentOutputUnit = TEMPERATURE_CELSIUS;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
           value: _currentTemperature,
           title: i18n(context, 'common_measure_temperature'),
           initialUnit: TEMPERATURE_CELSIUS,
-          min: 1.0,
+          min: 0.0,
           unitList: temperatures,
           onChanged: (value) {
             setState(() {
@@ -44,6 +47,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
           title: i18n(context, 'common_measure_humidity'),
           initialUnit: HUMIDITY,
           min: 0.0,
+          max:100.0,
           unitList: humidity,
           onChanged: (value) {
             setState(() {
@@ -52,16 +56,17 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
           },
         ),
         GCWTextDivider(text: i18n(context, 'common_outputunit')),
-        GCWUnits(
+        GCWUnitDropDownButton(
           value: _currentOutputUnit,
+          unitList: temperatures,
           unitCategory: UNITCATEGORY_TEMPERATURE,
-          onlyShowPrefixSymbols: false,
           onChanged: (value) {
             setState(() {
               _currentOutputUnit = value;
             });
           },
-        ),        _buildOutput(context)
+        ),
+        _buildOutput(context)
       ],
     );
   }
@@ -76,9 +81,9 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
     hintWBT = _calculateHintWBT(WBT_C);
 
     WBT = TEMPERATURE_CELSIUS.toKelvin(WBT_C);
-    WBT = _currentOutputUnit['unit'].fromReference(WBT) / _currentOutputUnit['prefix'].value;
+    WBT = _currentOutputUnit.fromReference(WBT);
 
-    unit = _currentOutputUnit['unit'].symbol;
+    unit = _currentOutputUnit.symbol;
 
     return
         GCWOutput(
