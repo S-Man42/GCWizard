@@ -15,7 +15,7 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
-  return (await _hiddenData(data, 0))?.item1;
+  return Future.value((await _hiddenData(data, 0))?.item1);
 }
 
 Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
@@ -44,7 +44,7 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
     result = await _searchMagicBytesHeader(data, result.item2);
   }
 
-  return Tuple2<List<GCWFile>, int>([data], result.item2);
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
 
 Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) async {
@@ -77,7 +77,7 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
     parent = false;
   }
 
-  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
+  return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
 }
 
 int _fileSize(Uint8List bytes) {
@@ -156,7 +156,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType
     });
   });
 
-  return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
+  return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
 }
 
 Future<bool> _checkFileValid(GCWFile data) async {
@@ -175,7 +175,7 @@ Future<bool> _checkFileValid(GCWFile data) async {
     result = false;
   }
 
-  return result;
+  return Future.value(result);
 }
 
 Uint8List mergeFiles(List<dynamic> data) {
