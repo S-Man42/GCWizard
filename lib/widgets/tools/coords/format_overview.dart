@@ -56,13 +56,14 @@ class FormatOverviewState extends State<FormatOverview> {
 
       try { // exception, when we have a type with a undefinied subtype
         var outputFormat = Map<String, String>();
-        String sybtypeInfo;
+        String subtypeInfo;
         outputFormat.addAll({'format': coordFormat.key});
 
         switch (coordFormat.key) {
           case keyCoordsLambert:
             outputFormat.addAll({'subtype': keyCoordsLambert93});
-            sybtypeInfo = 
+            var s = Lambert..()
+            subtypeInfo =
             break;
           case keyCoordsGaussKrueger:
             outputFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});

@@ -8,6 +8,8 @@ enum LambertType {
   , L93_CC42, L93_CC43, L93_CC44, L93_CC45, L93_CC46, L93_CC47, L93_CC48, L93_CC49, L93_CC50
 }
 
+const DefaultLambertType = LambertType.LAMBERT_93;
+
 class _LambertDefinition {
   final double centralMeridian; // lon0 λ0
   final double latitudeOfOrigin; // lat0 φ0
@@ -214,7 +216,7 @@ LambertConformalConic _lambertConformalConic(_LambertDefinition specificLambert,
   return lambertCC;
 }
 
-Lambert parseLambert(String input, {type: LambertType.LAMBERT_93}) {
+Lambert parseLambert(String input, {type: DefaultLambertType}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';

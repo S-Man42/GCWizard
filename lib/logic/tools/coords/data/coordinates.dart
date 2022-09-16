@@ -589,7 +589,7 @@ class GaussKrueger extends BaseCoordinates {
     return latLonToGaussKrueger(coord, gkno, ells);
   }
 
-  static GaussKrueger parse(String input, {gaussKruegerCode: 1}) {
+  static GaussKrueger parse(String input, {gaussKruegerCode: DefaultGaussKruegerType}) {
     return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
   }
 
@@ -616,7 +616,7 @@ class Lambert extends BaseCoordinates {
     return latLonToLambert(coord, type, ells);
   }
 
-  static Lambert parse(String input, {type: LambertType.LAMBERT_93}) {
+  static Lambert parse(String input, {type: DefaultLambertType}) {
     return parseLambert(input, type: type);
   }
 
