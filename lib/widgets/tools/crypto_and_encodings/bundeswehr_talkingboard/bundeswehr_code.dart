@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class BundeswehrCode extends StatefulWidget {
   @override
@@ -35,6 +36,9 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentTableMode = GCWSwitchPosition.left;
 
+  var _cryptedTextMaskFormatter =
+  WrapperForMaskTextInputFormatter(mask: '## ' * 1000 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
+
   @override
   void initState() {
     super.initState();
@@ -42,11 +46,7 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
     _decodeController = TextEditingController(text: _currentDecode);
     _numeralCodeCustomXaxis = TextEditingController(text: _currentNumeralCodeXaxisCustom);
     _numeralCodeCustomYaxis = TextEditingController(text: _currentNumeralCodeYaxisCustom);
-
-    _buildNumeralCode(context,
-        custom: _currentTableMode == GCWSwitchPosition.left,
-        xAxis: _currentNumeralCodeXaxisCustom,
-        yAxis: _currentNumeralCodeYaxisCustom);
+    
   }
 
   @override
@@ -73,12 +73,11 @@ class BundeswehrCodeState extends State<BundeswehrCode> {
         _currentMode == GCWSwitchPosition.right
             ? GCWTextField(
                 controller: _decodeController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
-                ],
+                inputFormatters: [_cryptedTextMaskFormatter],
+                hintText: 'AB EF HG IJ MA ...',
                 onChanged: (text) {
                   setState(() {
-                    _currentDecode = text;
+                    _currentDecode = _cryptedTextMaskFormatter.getMaskedText();
                   });
                 },
               )

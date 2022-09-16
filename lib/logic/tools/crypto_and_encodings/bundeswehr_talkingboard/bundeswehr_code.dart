@@ -59,13 +59,13 @@ String _decodeNumeralCode(String tupel, BundeswehrAuthentificationTable tableNum
     if (tableNumeralCode.xAxis.contains(tupel[1])) {
       index = -1;
     } else {
-      index = tableNumeralCode.xAxis.indexOf(tupel[0]) + tableNumeralCode.yAxis.indexOf(tupel[1]) * 13;
+      index = tableNumeralCode.xAxis.indexOf(tupel[0]) * 13 + tableNumeralCode.yAxis.indexOf(tupel[1]);
     }
   } else {
     if (tableNumeralCode.yAxis.contains(tupel[1])) {
       index = -1;
     } else {
-      index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
+      index = tableNumeralCode.xAxis.indexOf(tupel[1]) * 13 + tableNumeralCode.yAxis.indexOf(tupel[0]);
     }
   }
   if (index != -1)
