@@ -22,6 +22,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:intl/intl.dart';
@@ -693,7 +694,7 @@ class SlippyMap extends BaseCoordinates {
     return latLonToSlippyMap(coord, zoom);
   }
 
-  static SlippyMap parse(String input, {zoom: 10.0}) {
+  static SlippyMap parse(String input, {zoom: DefaultSlippyZoom}) {
     return parseSlippyMap(input, zoom: zoom);
   }
 

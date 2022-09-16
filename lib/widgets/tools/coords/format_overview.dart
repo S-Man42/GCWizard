@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -49,36 +50,40 @@ class FormatOverviewState extends State<FormatOverview> {
   }
 
   _calculateOutput(BuildContext context) {
-    var children = <List<Widget>>[];
+    var children = <List<String>>[];
     var ellipsoid= defaultEllipsoid();
 
     allCoordFormats.forEach((coordFormat) {
 
       try { // exception, when we have a type with a undefinied subtype
         var outputFormat = Map<String, String>();
-        String subtypeInfo;
+        String name = coordFormat.name;
         outputFormat.addAll({'format': coordFormat.key});
 
         switch (coordFormat.key) {
           case keyCoordsLambert:
-            outputFormat.addAll({'subtype': keyCoordsLambert93});
-            var s = Lambert..()
-            subtypeInfo =
+            outputFormat.addAll({'subtype': getLambertKey()});
+            name =  i18n(context, coordFormat.name);
+            name += '\n' + i18n(context, coordFormat.subtypes
+                .firstWhere((element) => element.key == getLambertKey()).name);
             break;
           case keyCoordsGaussKrueger:
-            outputFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
+            outputFormat.addAll({'subtype': getGaussKruegerTypKey()});
+            name =  i18n(context, coordFormat.name);
+            name += '\n' + i18n(context, coordFormat.subtypes
+                .firstWhere((element) => element.key == getGaussKruegerTypKey()).name);
             break;
           case keyCoordsSlippyMap:
-            outputFormat.addAll({'subtype': '10'});
+            outputFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
             break;
         }
-        children.add(columnedMultiLineOutput(
-            context, [[coordFormat.name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]]));
+
+        children.add([name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]);
       } catch(e){};
     });
 
     _currentOutput = GCWDefaultOutput(
-      child: Column(children: columnedMultiLineOutput(context, [children]))
+      child: Column(children: columnedMultiLineOutput(context, children))
     );
   }
 }

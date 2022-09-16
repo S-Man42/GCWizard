@@ -6,6 +6,10 @@ import 'package:latlong2/latlong.dart';
 
 import 'converter/gauss_krueger.dart';
 
+const DefaultLambertType = LambertType.LAMBERT_93;
+const DefaultGaussKruegerType = 1;
+const DefaultSlippyZoom = 10.0;
+
 double mod(double x, double y) {
   return x - y * (x / y).floor();
 }
@@ -101,6 +105,24 @@ LambertType getLambertType(String subtype, {defaultValue: DefaultLambertType}) {
   }
 }
 
+String getLambertKey({LambertType lambertType: DefaultLambertType}) {
+  switch (lambertType) {
+    case LambertType.LAMBERT_93: return keyCoordsLambert93;
+    case LambertType.LAMBERT_2008: return keyCoordsLambert2008;
+    case LambertType.ETRS89_LCC: return keyCoordsLambertETRS89LCC;
+    case LambertType.LAMBERT_72: return keyCoordsLambert72;
+    case LambertType.L93_CC42: return keyCoordsLambert93CC42;
+    case LambertType.L93_CC43: return keyCoordsLambert93CC43;
+    case LambertType.L93_CC44: return keyCoordsLambert93CC44;
+    case LambertType.L93_CC45: return keyCoordsLambert93CC45;
+    case LambertType.L93_CC46: return keyCoordsLambert93CC46;
+    case LambertType.L93_CC47: return keyCoordsLambert93CC47;
+    case LambertType.L93_CC48: return keyCoordsLambert93CC48;
+    case LambertType.L93_CC49: return keyCoordsLambert93CC49;
+    case LambertType.L93_CC50: return keyCoordsLambert93CC50;
+  }
+}
+
 int getGkSubTypeCode(String subtype, {defaultValue: DefaultGaussKruegerType}) {
   switch (subtype) {
     case keyCoordsGaussKruegerGK1:
@@ -114,6 +136,23 @@ int getGkSubTypeCode(String subtype, {defaultValue: DefaultGaussKruegerType}) {
     case keyCoordsGaussKruegerGK5:
       return 5;
     default:
-      return defaultValue;
+      return DefaultGaussKruegerType;
+  }
+}
+
+String getGaussKruegerTypKey({int subtype: DefaultGaussKruegerType}) {
+  switch (subtype) {
+    case 1:
+      return keyCoordsGaussKruegerGK1;
+    case 2:
+      return keyCoordsGaussKruegerGK2;
+    case 3:
+      return keyCoordsGaussKruegerGK3;
+    case 4:
+      return keyCoordsGaussKruegerGK4;
+    case 5:
+      return keyCoordsGaussKruegerGK5;
+    default:
+      return getGaussKruegerTypKey();
   }
 }
