@@ -36,14 +36,14 @@ class FormatOverviewState extends State<FormatOverview> {
             });
           },
         ),
-        GCWCoordsOutputFormat(
-          coordFormat: _currentOutputFormat,
-          onChanged: (value) {
-            setState(() {
-              _currentOutputFormat = value;
-            });
-          },
-        ),
+        // GCWCoordsOutputFormat(
+        //   coordFormat: _currentOutputFormat,
+        //   onChanged: (value) {
+        //     setState(() {
+        //       _currentOutputFormat = value;
+        //     });
+        //   },
+        // ),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
@@ -77,12 +77,15 @@ class FormatOverviewState extends State<FormatOverview> {
         case keyCoordsGaussKrueger:
           outputFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
           break;
+        case keyCoordsSlippyMap:
+          outputFormat.addAll({'subtype': '10'});
+          break;
       }
       lines.add([coordFormat.name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]);
     });
 
     _currentOutput = GCWDefaultOutput(
-      child: Column(children: columnedMultiLineOutput(context, [lines]))
+      child: Column(children: columnedMultiLineOutput(context, [lines.take(2).toList()]))
     );
   }
 }
