@@ -36,14 +36,6 @@ class FormatOverviewState extends State<FormatOverview> {
             });
           },
         ),
-        // GCWCoordsOutputFormat(
-        //   coordFormat: _currentOutputFormat,
-        //   onChanged: (value) {
-        //     setState(() {
-        //       _currentOutputFormat = value;
-        //     });
-        //   },
-        // ),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
@@ -52,40 +44,38 @@ class FormatOverviewState extends State<FormatOverview> {
           },
         ),
         _currentOutput
-        // GCWCoordsOutput(
-        //   outputs: _currentOutput,
-        //   points: [
-        //     GCWMapPoint(point: _currentCoords, coordinateFormat: _currentOutputFormat),
-        //   ],
-        // ),
       ],
     );
   }
 
   _calculateOutput(BuildContext context) {
-    var lines = <List<String>>[];
+    var children = <List<Widget>>[];
     var ellipsoid= defaultEllipsoid();
 
     allCoordFormats.forEach((coordFormat) {
-      var outputFormat = Map<String, String>();
-      outputFormat.addAll({'format': coordFormat.key});
 
-      switch (coordFormat.key) {
-        case keyCoordsLambert:
-          outputFormat.addAll({'subtype': keyCoordsLambert93});
-          break;
-        case keyCoordsGaussKrueger:
-          outputFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
-          break;
-        case keyCoordsSlippyMap:
-          outputFormat.addAll({'subtype': '10'});
-          break;
-      }
-      lines.add([coordFormat.name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]);
+      try { // exception, when we have a type with a undefinied subtype
+        var outputFormat = Map<String, String>();
+        outputFormat.addAll({'format': coordFormat.key});
+
+        switch (coordFormat.key) {
+          case keyCoordsLambert:
+            outputFormat.addAll({'subtype': keyCoordsLambert93});
+            break;
+          case keyCoordsGaussKrueger:
+            outputFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
+            break;
+          case keyCoordsSlippyMap:
+            outputFormat.addAll({'subtype': '10'});
+            break;
+        }
+        children.add(columnedMultiLineOutput(
+            context, [[coordFormat.name, formatCoordOutput(_currentCoords, outputFormat, ellipsoid)]]));
+      } catch(e){};
     });
 
     _currentOutput = GCWDefaultOutput(
-      child: Column(children: columnedMultiLineOutput(context, [lines.take(2).toList()]))
+      child: Column(children: columnedMultiLineOutput(context, [children]))
     );
   }
 }
