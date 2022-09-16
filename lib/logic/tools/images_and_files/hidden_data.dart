@@ -22,22 +22,26 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   var result = await _splitFile(data, fileIndexCounter);
   var childrenList = <GCWFile>[];
 
+  // unpack archives
   if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
-    // clone byte (I have no idea why this is actually necessary)
+    // clone bytes (I have no idea why this is actually necessary)
     var children = await extractArchive(GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0))));
     if (children != null) childrenList.addAll(children);
   }
-
+  // first add all children blocks
   if (result?.item1 != null)
     childrenList.addAll(result?.item1);
 
+  // check for empty children (backup)
   childrenList.removeWhere((element) => element == null);
   data.children = childrenList.length == 0 ? null : childrenList;
 
+  // recursive search in the children
   await Future.forEach(childrenList, (data) async {
     result = await _hiddenData(data, result.item2);
   });
 
+  // search for magic bytes (hidden files) in the parent block (e.g. thumbnails) (if not a archive)
   if (data.bytes != null && fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
     data = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))),
         children: data.children);
@@ -47,6 +51,9 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
 }
 
+/// split file into separate files
+/// default is that the first block is not returned (only attachments) (ignored with onlyParent)
+/// with checking whether it is a valid block
 Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) async {
   var bytes = data.bytes;
   var resultList = <GCWFile>[];
@@ -80,6 +87,7 @@ Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter
   return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
 }
 
+/// calculate the file size
 int _fileSize(Uint8List bytes) {
   FileType detectedFileType = getFileType(bytes);
 
@@ -105,7 +113,9 @@ int _fileSize(Uint8List bytes) {
   }
 }
 
+/// search on any position magic bytes
 Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) async {
+  // checked file types header (have file size calculation)
   var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.BMP, FileType.ZIP,
     FileType.RAR, FileType.TAR, FileType.MP3];
 
@@ -119,6 +129,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fil
   return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
 }
 
+/// search on any position magic bytes
 Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) async {
   var resultList = <GCWFile>[];
 
@@ -143,8 +154,10 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
+              /// extract data and check for completeness (only first block)
               var result = await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)),
                   fileIndexCounter, onlyParent : true);
+              /// append file as result, if it is a valid file
               if (result?.item1 != null && result?.item1.length > 0)
                 resultList.addAll(result?.item1);
 
@@ -159,6 +172,7 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType
   return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
 }
 
+/// check, are the data a valid (complete) file or sound
 Future<bool> _checkFileValid(GCWFile data) async {
   var result = true;
   try {
