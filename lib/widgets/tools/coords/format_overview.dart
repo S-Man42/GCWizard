@@ -63,13 +63,13 @@ class FormatOverviewState extends State<FormatOverview> {
         switch (coordFormat.key) {
           case keyCoordsLambert:
             outputFormat.addAll({'subtype': getLambertKey()});
-            name =  i18n(context, coordFormat.name);
+            name = i18n(context, coordFormat.name);
             name += '\n' + i18n(context, coordFormat.subtypes
                 .firstWhere((element) => element.key == getLambertKey()).name);
             break;
           case keyCoordsGaussKrueger:
             outputFormat.addAll({'subtype': getGaussKruegerTypKey()});
-            name =  i18n(context, coordFormat.name);
+            name = i18n(context, coordFormat.name);
             name += '\n' + i18n(context, coordFormat.subtypes
                 .firstWhere((element) => element.key == getGaussKruegerTypKey()).name);
             break;
