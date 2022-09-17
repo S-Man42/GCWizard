@@ -3,17 +3,17 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/humidity.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/common/units/unit_category.dart';
-import 'package:gc_wizard/logic/common/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
-import 'package:gc_wizard/widgets/common/units/gcw_units.dart';
+import 'package:gc_wizard/theme/theme_colors_dark.dart';
+import 'package:prefs/prefs.dart';
 
 class WetBulbTemperature extends StatefulWidget {
   @override
@@ -98,6 +98,9 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
                       child: GCWIconButton(
                         icon: Icons.wb_sunny,
                         iconColor: _colorWBT(WBT_C),
+                        backgroundColor: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
+                          ? Color(0xFF26282F)
+                          : Color(0xFFD1D1D1),
                       ),
                       padding: EdgeInsets.only(right: 2)),
                 ),
