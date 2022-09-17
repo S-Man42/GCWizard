@@ -165,7 +165,7 @@ String formatOutput(List<int> outList, OutputFormat outputFormat) {
       case OutputFormat.BINARY:
         if (out != '') out += ' ';
 
-        out += convertBase(item.toString(), 10, 2);
+        out += convertBase(item.toString(), 10, 2).padLeft(8, '0');
         break;
       case OutputFormat.ASCIIVALUES:
         if (out != '') out += ' ';

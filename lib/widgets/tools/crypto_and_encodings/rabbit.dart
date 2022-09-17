@@ -178,7 +178,7 @@ class RabbitState extends State<Rabbit> {
     } else if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.MISSING_KEY:
-          showToast(i18n(context, 'rc4_error_missing_key'));
+          return GCWDefaultOutput(child: i18n(context, 'rc4_error_missing_key'));
           break;
         case ErrorCode.KEY_FORMAT:
           showToast(i18n(context, 'rc4_error_key_format'));
@@ -191,8 +191,7 @@ class RabbitState extends State<Rabbit> {
           break;
       }
       return GCWDefaultOutput();
-    }
-    ;
+    };
 
     return GCWDefaultOutput(
       child: _currentOutput.output,
