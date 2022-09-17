@@ -26,15 +26,16 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
   if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
     // clone bytes (I have no idea why this is actually necessary)
     var children = await extractArchive(GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0))));
-    if (children != null) childrenList.addAll(children);
+    //if (children != null) childrenList.addAll(children);
+    _addFiles(childrenList, children);
   }
   // first add all children blocks
-  if (result?.item1 != null)
-    childrenList.addAll(result?.item1);
+  _addFiles(childrenList, result?.item1);
 
   // check for empty children (backup)
   childrenList.removeWhere((element) => element == null);
-  data.children = childrenList.length == 0 ? null : childrenList;
+  _addChildren(data, childrenList);
+
 
   // recursive search in the children
   await Future.forEach(childrenList, (data) async {
@@ -43,9 +44,18 @@ Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounte
 
   // search for magic bytes (hidden files) in the parent block (e.g. thumbnails) (if not a archive)
   if (data.bytes != null && fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
-    data = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))),
-        children: data.children);
-    result = await _searchMagicBytesHeader(data, result.item2);
+    // new file with correct size
+    var dataClone = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))));
+    result = await _searchMagicBytesHeader(dataClone, result.item2);
+    _addChildren(data, dataClone.children);
+
+    if (dataClone.children != null && dataClone.children.length > 0) {
+      // check for hidden archives (other types are checked)
+      await Future.forEach(dataClone.children, (data) async {
+        if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE)
+          result = await _hiddenData(data, result.item2);
+      });
+    }
   }
 
   return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
@@ -120,16 +130,26 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fil
     FileType.RAR, FileType.TAR, FileType.MP3];
 
   var result = await _searchMagicBytes(data, fileTypeList, fileIndexCounter);
-  if (result?.item1 != null && result?.item1.length > 0) {
-    if (data.children != null)
-      data.children.addAll(result?.item1);
-    else
-      data.children = result?.item1;
-  }
+  _addChildren (data, result?.item1);
+
   return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
 }
 
-/// search on any position magic bytes
+void _addChildren(GCWFile data, List<GCWFile> children) {
+  if (children != null && children.length > 0) {
+    if (data.children != null)
+      data.children.addAll(children);
+    else
+      data.children = children;
+  }
+}
+
+void _addFiles(List<GCWFile> list, List<GCWFile> files) {
+  if (files != null && files.length > 0)
+    if (list != null) list.addAll(files);
+}
+
+/// search on any position (>0) magic bytes
 Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) async {
   var resultList = <GCWFile>[];
 
@@ -154,12 +174,13 @@ Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
-              /// extract data and check for completeness (only first block)
+              // extract data and check for completeness (only first block)
               var result = await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)),
-                  fileIndexCounter, onlyParent : true);
-              /// append file as result, if it is a valid file
-              if (result?.item1 != null && result?.item1.length > 0)
-                resultList.addAll(result?.item1);
+                  fileIndexCounter, onlyParent: true);
+              if (bytesOffset == 14964)
+                bytesOffset =bytesOffset;
+              // append file as result, if it is a valid file
+              _addFiles(resultList, result?.item1);
 
               fileIndexCounter = result?.item2 ?? fileIndexCounter;
             }
