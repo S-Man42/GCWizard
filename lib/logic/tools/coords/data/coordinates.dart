@@ -28,6 +28,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
+const keyCoordsALL = 'coords_all';
 const keyCoordsDEC = 'coords_dec';
 const keyCoordsDMM = 'coords_dmm';
 const keyCoordsDMS = 'coords_dms';

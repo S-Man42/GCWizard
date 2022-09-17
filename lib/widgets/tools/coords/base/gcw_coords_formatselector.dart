@@ -14,10 +14,17 @@ class GCWCoordsFormatSelector extends StatefulWidget {
   const GCWCoordsFormatSelector({Key key, this.onChanged, this.format}) : super(key: key);
 
   @override
-  _GCWCoordsFormatSelectorState createState() => _GCWCoordsFormatSelectorState();
+  GCWCoordsFormatSelectorState createState() => GCWCoordsFormatSelectorState();
+
+  List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
+    return allCoordFormats.map((entry) {
+      return GCWDropDownMenuItem(
+          value: entry.key, child: i18n(context, entry.name) ?? entry.name, subtitle: entry.example);
+    }).toList();
+  }
 }
 
-class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
+class GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   var _currentFormat = defaultCoordFormat()['format'];
   var _currentSubtype = defaultCoordFormat()['subtype'];
 
@@ -54,10 +61,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
               _emitOnChange();
             });
           },
-          items: allCoordFormats.map((entry) {
-            return GCWDropDownMenuItem(
-                value: entry.key, child: i18n(context, entry.name) ?? entry.name, subtitle: entry.example);
-          }).toList(),
+          items: widget.getDropDownItems(context),
         ),
         _buildSubtype()
       ],

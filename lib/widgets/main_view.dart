@@ -62,7 +62,6 @@ import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/widgets/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
-import 'package:gc_wizard/widgets/tools/coords/format_overview.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
@@ -537,7 +536,6 @@ void _initStaticToolList() {
       className(EquilateralTriangle()),
       className(ESelection()),
       className(FormatConverter()),
-      className(FormatOverview()),
       className(FormulaSolverFormulaGroups()),
       className(FourteenSegments()),
       className(Fox()),
