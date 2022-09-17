@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-const CODE_RESPONSE_INVALID_CYPHER = 'bundeswehr_talkingboard_code_response_invalid_cypher';
-const CODE_RESPONSE_INVALID_PLAIN = 'bundeswehr_talkingboard_code_response_invalid_plain';
-const CODE_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
+const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER = 'bundeswehr_talkingboard_code_response_invalid_cypher';
+const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_PLAIN = 'bundeswehr_talkingboard_code_response_invalid_plain';
+const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
 
 class BundeswehrTalkingBoardCodingOutput {
   final String ResponseCode;
@@ -14,12 +14,12 @@ class BundeswehrTalkingBoardCodingOutput {
   BundeswehrTalkingBoardCodingOutput({this.ResponseCode, this.Details});
 }
 
-BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, BundeswehrAuthentificationTable tableEncoding) {
+BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, BundeswehrTalkingBoardAuthentificationTable tableEncoding) {
   if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
   if (plainText == null || plainText == '')
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_INVALID_CYPHER, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER, Details: '');
 
   List<String> result = [];
   var random = new Random();
@@ -29,15 +29,15 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Bundeswehr
     }
     result.add(tableEncoding.Encoding[char][random.nextInt(tableEncoding.Encoding[char].length)]);
   });
-  return BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_OK, Details: result.join(' '));
+  return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result.join(' '));
 }
 
-BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, BundeswehrAuthentificationTable tableNumeralCode) {
+BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
 
   if (cypherText == null || cypherText == '')
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_INVALID_CYPHER, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER, Details: '');
 
   String result = '';
   bool invalidCypher = false;
@@ -50,10 +50,10 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, Bundesweh
     }
   });
   return BundeswehrTalkingBoardCodingOutput(
-      ResponseCode: invalidCypher ? CODE_RESPONSE_INVALID_CYPHER : CODE_RESPONSE_OK, Details: result);
+      ResponseCode: invalidCypher ? BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER : BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
 }
 
-String _decodeNumeralCode(String tupel, BundeswehrAuthentificationTable tableNumeralCode) {
+String _decodeNumeralCode(String tupel, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
   int index = 0;
   if (tableNumeralCode.xAxis.contains(tupel[0])) {
     if (tableNumeralCode.xAxis.contains(tupel[1])) {
@@ -74,7 +74,7 @@ String _decodeNumeralCode(String tupel, BundeswehrAuthentificationTable tableNum
     return '';
 }
 
-String _getObfuscatedTupel(BundeswehrAuthentificationTable tableNumeralCode) {
+String _getObfuscatedTupel(BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
   var random = new Random();
   if (random.nextInt(100) > 50) {
     return tableNumeralCode.yAxis[random.nextInt(13)] + tableNumeralCode.yAxis[random.nextInt(13)];

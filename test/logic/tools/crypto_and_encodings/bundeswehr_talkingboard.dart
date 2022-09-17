@@ -51,70 +51,70 @@ void main() {
         'currentLetterAuth' : null,
         'tableNumeralCode' : null,
         'tableAuthentificationCode' : null,
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
 
       {'currentCallSign' : null,
         'currentAuth' : null,
         'currentLetterAuth' : null,
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentAuth' : '',
         'currentLetterAuth' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentAuth' : '',
         'currentLetterAuth' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentAuth' : '',
         'currentLetterAuth' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentAuth' : '',
         'currentLetterAuth' : 'a',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentAuth' : '',
         'currentLetterAuth' : 'Y',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_MISSING_CALLSIGN, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_MISSING_CALLSIGN, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : 'TIGER',
         'currentAuth' : '',
         'currentLetterAuth' : 'Y',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTH, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : 'TIGER',
         'currentAuth' : 'ER AN IN',
         'currentLetterAuth' : 'Y',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : 'TIGER',
         'currentAuth' : 'CJ ZG OI',
         'currentLetterAuth' : 'Y',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_OK, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
     ];
 
@@ -133,64 +133,64 @@ void main() {
         'currentLetterCallSign' : null,
         'tableNumeralCode' : null,
         'tableAuthentificationCode' : null,
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
 
       {'currentCallSign' : null,
         'currentLetterAuth' : null,
         'currentLetterCallSign' : null,
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentLetterAuth' : '',
         'currentLetterCallSign' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentLetterAuth' : '',
         'currentLetterCallSign' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentLetterAuth' : '',
         'currentLetterCallSign' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentLetterAuth' : 'a',
         'currentLetterCallSign' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : '',
         'currentLetterAuth' : 'Y',
         'currentLetterCallSign' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : 'TIGER',
         'currentLetterAuth' : 'Y',
         'currentLetterCallSign' : 'O',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CALLSIGN_LETTER, Tupel1: [], Tupel2: [], Tupel3: [], Number: '', Details: '')},
 
       {'currentCallSign' : 'TIGER',
         'currentLetterAuth' : 'Y',
         'currentLetterCallSign' : 'I',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'tableAuthentificationCode' : BundeswehrAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrAuthentificationOutput(
-            ResponseCode: AUTH_RESPONSE_OK,
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableAuthentificationCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: AUTH_CODE_X_AXIS, yAxis: AUTH_CODE_Y_AXIS, Content: AUTH_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardAuthentificationOutput(
+            ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK,
             Tupel1: ['CJ', 'JC', 'DB', 'BD'],
             Tupel2: ['DO', 'OD', 'GZ', 'ZG', 'EJ', 'JE', 'VR', 'RV', 'CP', 'PC', 'IW', 'WI', 'XM', 'MX', 'SA', 'AS', 'YT', 'TY', 'UL', 'LU', 'KB', 'BK', 'FN', 'NF', 'QH', 'HQ'],
             Tupel3: ['IO', 'OI', 'XZ', 'ZX', 'SJ', 'JS', 'YR', 'RY', 'UP', 'PU', 'KW', 'WK', 'FM', 'MF', 'QA', 'AQ', 'DT', 'TD', 'GL', 'LG', 'EB', 'BE', 'VN', 'NV', 'CH', 'HC'],
@@ -203,7 +203,7 @@ void main() {
       test('currentCallSign: ${elem['currentCallSign']}, currentLetterAuth: ${elem['currentLetterAuth']}, currentLetterCallSign: ${elem['currentLetterCallSign']}, tableNumeralCode: ${elem['tableNumeralCode']}, tableAuthentificationCode: ${elem['tableAuthentificationCode']}, ', () {
         var _actual = buildAuthBundeswehr(elem['currentCallSign'], elem['currentLetterAuth'], elem['currentLetterCallSign'], elem['tableNumeralCode'], elem['tableAuthentificationCode']);
         expect(_actual.ResponseCode, elem['expectedOutput'].ResponseCode);
-        if (_actual.ResponseCode == AUTH_RESPONSE_OK) {
+        if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK) {
           expect(_actual.Tupel1, elem['expectedOutput'].Tupel1);
           expect(_actual.Tupel2, elem['expectedOutput'].Tupel2);
           expect(_actual.Tupel3, elem['expectedOutput'].Tupel3);
@@ -217,24 +217,24 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       { 'cypherText' : null,
         'tableNumeralCode' : null,
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
 
       { 'cypherText' : null,
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,Details: '')},
 
       { 'cypherText' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,  Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,  Details: '')},
 
       { 'cypherText' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: CODE_RESPONSE_INVALID_CYPHER, Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER, Details: '')},
 
       { 'cypherText' : GC7DF7R_cypherText,
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: NUMERAL_CODE_X_AXIS, yAxis: NUMERAL_CODE_Y_AXIS, Content: NUMERAL_CODE_CONTENT, Encoding: {}),
         'expectedOutput' : BundeswehrTalkingBoardCodingOutput(
-            ResponseCode: CODE_RESPONSE_OK,
+            ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK,
             Details: GC7DF7R_plainText)},
     ];
 
@@ -242,7 +242,7 @@ void main() {
       test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
         var _actual = decodeBundeswehr(elem['cypherText'], elem['tableNumeralCode']);
         expect(_actual.ResponseCode, elem['expectedOutput'].ResponseCode);
-        if (_actual.ResponseCode == CODE_RESPONSE_OK) {
+        if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK) {
           expect(_actual.Details, elem['expectedOutput'].Details);
         }
       });
@@ -253,22 +253,22 @@ void main() {
     List<Map<String, dynamic>> _inputsToExpected = [
       { 'cypherText' : null,
         'tableNumeralCode' : null,
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE)},
 
       { 'cypherText' : null,
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,Details: '')},
 
       { 'cypherText' : '',
-        'tableNumeralCode' : BundeswehrAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
-        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,  Details: '')},
+        'tableNumeralCode' : BundeswehrTalkingBoardAuthentificationTable(xAxis: [], yAxis: [], Content: [], Encoding: {}),
+        'expectedOutput' : BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE,  Details: '')},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('cypherText: ${elem['cypherText']}, tableNumeralCode: ${elem['tableNumeralCode']}', () {
         var _actual = encodeBundeswehr(elem['cypherText'], elem['tableNumeralCode']);
         expect(_actual.ResponseCode, elem['expectedOutput'].ResponseCode);
-        if (_actual.ResponseCode == CODE_RESPONSE_OK) {
+        if (_actual.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK) {
           expect(_actual.Details, elem['expectedOutput'].Details);
         }
       });

@@ -12,8 +12,8 @@ class BundeswehrTalkingBoardSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = registeredTools.where((element) {
       return [
-        className(BundeswehrAuth()),
-        className(BundeswehrCode()),
+        className(BundeswehrTalkingBoardAuthentification()),
+        className(BundeswehrTalkingBoardObfuscation()),
       ].contains(className(element.tool));
     }).toList();
 

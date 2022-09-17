@@ -544,7 +544,7 @@ initializeRegistry(BuildContext context) {
     ], searchKeys: [
       'bookcipher',
     ]),
-    GCWTool(tool: BundeswehrTalkingBoardSelection(), i18nPrefix: 'bundeswehr_talkingboard', categories: [
+    GCWTool(tool: BundeswehrTalkingBoardSelection(), i18nPrefix: 'bundeswehr_talkingboard_selection', categories: [
       ToolCategory.CRYPTOGRAPHY
     ], searchKeys: [
     ]),
@@ -1386,12 +1386,12 @@ initializeRegistry(BuildContext context) {
     ]),
 
     // BundeswehrTalkingBoard Selection *******************************************************************************************
-    GCWTool(tool: BundeswehrAuth(), i18nPrefix: 'bundeswehr_talkingboard_auth', categories: [
+    GCWTool(tool: BundeswehrTalkingBoardAuthentification(), i18nPrefix: 'bundeswehr_talkingboard_auth', categories: [
     ], searchKeys: [
       'bundeswehr_talkingboard_auth',
       'bundeswehr_talkingboard',
     ]),
-    GCWTool(tool: BundeswehrCode(), i18nPrefix: 'bundeswehr_talkingboard_code', categories: [
+    GCWTool(tool: BundeswehrTalkingBoardObfuscation(), i18nPrefix: 'bundeswehr_talkingboard_code', categories: [
     ], searchKeys: [
       'bundeswehr_talkingboard',
       'bundeswehr_talkingboard_code',

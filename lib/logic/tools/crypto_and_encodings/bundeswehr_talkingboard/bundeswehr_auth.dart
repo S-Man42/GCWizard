@@ -9,16 +9,16 @@ import 'dart:math';
 // cjosmhlquweby
 // dainrtxfkpvzg
 
-class BundeswehrAuthentificationTable {
+class BundeswehrTalkingBoardAuthentificationTable {
   final List<String> xAxis;
   final List<String> yAxis;
   final List<String> Content;
   final Map<String, List<String>> Encoding;
 
-  BundeswehrAuthentificationTable({this.xAxis, this.yAxis, this.Content, this.Encoding});
+  BundeswehrTalkingBoardAuthentificationTable({this.xAxis, this.yAxis, this.Content, this.Encoding});
 }
 
-class BundeswehrAuthentificationOutput {
+class BundeswehrTalkingBoardAuthentificationOutput {
   final String ResponseCode;
   final List<String> Tupel1;
   final List<String> Tupel2;
@@ -26,10 +26,10 @@ class BundeswehrAuthentificationOutput {
   final String Number;
   final String Details;
 
-  BundeswehrAuthentificationOutput({this.ResponseCode, this.Tupel1, this.Tupel2, this.Tupel3, this.Number, this.Details});
+  BundeswehrTalkingBoardAuthentificationOutput({this.ResponseCode, this.Tupel1, this.Tupel2, this.Tupel3, this.Number, this.Details});
 }
 
-const AUTH_TABLE_Y_AXIS = [
+const BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_Y_AXIS = [
   'A',
   'D',
   'E',
@@ -45,7 +45,7 @@ const AUTH_TABLE_Y_AXIS = [
   'U',
 ];
 
-const AUTH_TABLE_X_AXIS = [
+const BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS = [
   'V',
   'W',
   'X',
@@ -53,7 +53,7 @@ const AUTH_TABLE_X_AXIS = [
   'Z',
 ];
 
-const LETTERS = [
+const _LETTERS = [
   'A',
   'B',
   'C',
@@ -82,33 +82,32 @@ const LETTERS = [
   'Z'
 ];
 
-const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+const _DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
 
-const AUTH_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
-const AUTH_RESPONSE_NOT_OK = 'bundeswehr_talkingboard_auth_response_not_ok';
-const AUTH_RESPONSE_INVALID_AUTH = 'bundeswehr_talkingboard_auth_response_invalid_auth';
-const AUTH_RESPONSE_INVALID_MISSING_CALLSIGN = 'bundeswehr_talkingboard_auth_response_invalid_missing_callsign';
-const AUTH_RESPONSE_INVALID_CALLSIGN_LETTER = 'bundeswehr_talkingboard_auth_response_invalid_callsign_letter';
-const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER = 'bundeswehr_talkingboard_auth_response_invalid_authentification_letter';
-const AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE = 'bundeswehr_talkingboard_auth_response_invalid_autentification_code';
-const AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE = 'bundeswehr_talkingboard_auth_response_invalid_custom_table_numeral';
-const AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE = 'bundeswehr_talkingboard_auth_response_invalid_custom_table_auth';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK = 'bundeswehr_talkingboard_auth_response_not_ok';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH = 'bundeswehr_talkingboard_auth_response_invalid_auth';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_MISSING_CALLSIGN = 'bundeswehr_talkingboard_auth_response_invalid_missing_callsign';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CALLSIGN_LETTER = 'bundeswehr_talkingboard_auth_response_invalid_callsign_letter';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER = 'bundeswehr_talkingboard_auth_response_invalid_authentification_letter';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE = 'bundeswehr_talkingboard_auth_response_invalid_autentification_code';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE = 'bundeswehr_talkingboard_auth_response_invalid_custom_table_numeral';
+const BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE = 'bundeswehr_talkingboard_auth_response_invalid_custom_table_auth';
 
-BundeswehrAuthentificationOutput buildAuthBundeswehr(
+BundeswehrTalkingBoardAuthentificationOutput buildAuthBundeswehr(
     String currentCallSign,
     String currentLetterAuth,
     String currentLetterCallSign,
-    BundeswehrAuthentificationTable tableNumeralCode,
-    BundeswehrAuthentificationTable tableAuthentificationCode) {
+    BundeswehrTalkingBoardAuthentificationTable tableNumeralCode,
+    BundeswehrTalkingBoardAuthentificationTable tableAuthentificationCode) {
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
 
   if (tableAuthentificationCode == null || tableAuthentificationCode.Content.isEmpty)
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
 
   if (currentCallSign.split('').contains(currentLetterCallSign)) {
-    if (AUTH_TABLE_Y_AXIS.contains(currentLetterCallSign)) {
-      List<String> result = [];
+    if (BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_Y_AXIS.contains(currentLetterCallSign)) {
       List<String> tupel1 = [];
       for (int i = 0; i < tableNumeralCode.Content.length; i++) {
         if (tableNumeralCode.Content[i] == currentLetterCallSign) {
@@ -141,39 +140,39 @@ BundeswehrAuthentificationOutput buildAuthBundeswehr(
           tupel3.add(t2 + t1);
         }
       }
-      return BundeswehrAuthentificationOutput(
-          ResponseCode: AUTH_RESPONSE_OK, Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
+      return BundeswehrTalkingBoardAuthentificationOutput(
+          ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK, Tupel1: tupel1, Tupel2: tupel2, Tupel3: tupel3, Number: authCode);
     }
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
   }
-  return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CALLSIGN_LETTER);
+  return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CALLSIGN_LETTER);
 }
 
-BundeswehrAuthentificationOutput checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
-    BundeswehrAuthentificationTable tableNumeralCode, BundeswehrAuthentificationTable tableAuthentificationCode) {
+BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(String currentCallSign, String currentAuth, String currentLetterAuth,
+    BundeswehrTalkingBoardAuthentificationTable tableNumeralCode, BundeswehrTalkingBoardAuthentificationTable tableAuthentificationCode) {
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE);
 
   if (tableAuthentificationCode == null || tableAuthentificationCode.Content.isEmpty)
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_AUTH_TABLE);
 
-  if (!AUTH_TABLE_X_AXIS.contains(currentLetterAuth))
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
+  if (!BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS.contains(currentLetterAuth))
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
 
   if (currentCallSign == null || currentCallSign == '')
-    return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_MISSING_CALLSIGN);
+    return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_MISSING_CALLSIGN);
 
   currentAuth = _normalizeAuthCode(currentAuth);
   if (currentAuth != '' || currentAuth != null) {
     String details = 'Numeral Code:\n';
     List<String> authCode = currentAuth.split(' ');
-    if (authCode.length != 3) return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTH);
+    if (authCode.length != 3) return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH);
 
     List<String> tupel = authCode[0].split('');
     if (tableNumeralCode.xAxis.contains(tupel[0]) && tableNumeralCode.xAxis.contains(tupel[1]))
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
     if (tableNumeralCode.yAxis.contains(tupel[0]) && tableNumeralCode.yAxis.contains(tupel[1]))
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
 
     int index_x = 0;
     int index_y = 0;
@@ -188,15 +187,15 @@ BundeswehrAuthentificationOutput checkAuthBundeswehr(String currentCallSign, Str
     }
     char = tableNumeralCode.Content[index_x + index_y * 13];
 
-    if (!LETTERS.contains(char)) return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+    if (!_LETTERS.contains(char)) return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
 
     details = details + authCode[0] + ' ⇒ ' + char + '\n';
 
     tupel = authCode[1].split('');
     if (tableNumeralCode.xAxis.contains(tupel[0]) && tableNumeralCode.xAxis.contains(tupel[1]))
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
     if (tableNumeralCode.yAxis.contains(tupel[0]) && tableNumeralCode.yAxis.contains(tupel[1]))
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
 
     int index = 0;
     String digit1 = '';
@@ -206,14 +205,14 @@ BundeswehrAuthentificationOutput checkAuthBundeswehr(String currentCallSign, Str
       index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
     digit1 = tableNumeralCode.Content[index];
-    if (!DIGITS.contains(digit1)) return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+    if (!_DIGITS.contains(digit1)) return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
     details = details + authCode[1] + ' ⇒ ' + digit1 + '\n';
 
     tupel = authCode[2].split('');
     if (tableNumeralCode.xAxis.contains(tupel[0]) && tableNumeralCode.xAxis.contains(tupel[1]))
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
     if (tableNumeralCode.yAxis.contains(tupel[0]) && tableNumeralCode.yAxis.contains(tupel[1]))
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
 
     String digit2 = '';
     if (tableNumeralCode.xAxis.contains(tupel[0])) {
@@ -222,7 +221,7 @@ BundeswehrAuthentificationOutput checkAuthBundeswehr(String currentCallSign, Str
       index = tableNumeralCode.xAxis.indexOf(tupel[1]) + tableNumeralCode.yAxis.indexOf(tupel[0]) * 13;
     }
     digit2 = tableNumeralCode.Content[index];
-    if (!DIGITS.contains(digit2)) return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+    if (!_DIGITS.contains(digit2)) return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
     details = details + authCode[2] + ' ⇒ ' + digit2 + '\n';
 
     String digit = '';
@@ -233,11 +232,11 @@ BundeswehrAuthentificationOutput checkAuthBundeswehr(String currentCallSign, Str
     details = details + char + currentLetterAuth + ' ⇒ ' + digit + '\n';
 
     if (currentCallSign.split('').contains(char) && (digit == digit1 + digit2 || digit == digit2 + digit1)) {
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_OK, Details: details);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_OK, Details: details);
     } else
-      return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_NOT_OK);
+      return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_NOT_OK);
   }
-  return BundeswehrAuthentificationOutput(ResponseCode: AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE);
+  return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_CODE);
 }
 
 String _normalizeAuthCode(String currentAuth) {
