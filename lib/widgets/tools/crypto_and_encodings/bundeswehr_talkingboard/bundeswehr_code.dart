@@ -5,6 +5,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -74,7 +75,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
                 hintText: 'AB EF HG IJ MA ...',
                 onChanged: (text) {
                   setState(() {
-                    _currentDecode = _cryptedTextMaskFormatter.getMaskedText();
+                    _currentDecode = (text == null || text == '') ? '' : _cryptedTextMaskFormatter.getMaskedText();
                   });
                 },
               )
@@ -161,17 +162,14 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
           yAxis: _currentNumeralCodeYaxisCustom);
     }
     if (_currentMode == GCWSwitchPosition.right) // decrypt
-      output = decodeBundeswehr(_currentDecode.toUpperCase(), _tableNumeralCode);
+      output = decodeBundeswehr(_currentDecode, _tableNumeralCode);
     else
-      output = encodeBundeswehr(_currentEncode.toUpperCase(), _tableNumeralCode);
-
-    return Column(
-      children: <Widget>[
-        GCWDefaultOutput(
-          child: output.Details,
-        ),
-      ],
-    );
+      output = encodeBundeswehr(_currentEncode, _tableNumeralCode);
+print(_currentDecode+' '+output.ResponseCode + '>'+output.Details+'<');
+    return GCWDefaultOutput(
+        child: output.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK
+        ? output.Details
+        : i18n(context, output.ResponseCode));
   }
 
   void _buildNumeralCode(BuildContext context, {bool custom, String xAxis, String yAxis}) {

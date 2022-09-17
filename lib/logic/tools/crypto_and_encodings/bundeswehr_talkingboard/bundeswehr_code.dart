@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER = 'bundeswehr_talkingboard_code_response_invalid_cypher';
-const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_PLAIN = 'bundeswehr_talkingboard_code_response_invalid_plain';
 const BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK = 'bundeswehr_talkingboard_auth_response_ok';
 
 class BundeswehrTalkingBoardCodingOutput {
@@ -16,10 +14,12 @@ class BundeswehrTalkingBoardCodingOutput {
 
 BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, BundeswehrTalkingBoardAuthentificationTable tableEncoding) {
   if (tableEncoding == null || tableEncoding.Encoding.isEmpty)
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
 
   if (plainText == null || plainText == '')
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: '');
+
+  plainText = plainText.toUpperCase();
 
   List<String> result = [];
   var random = new Random();
@@ -34,23 +34,24 @@ BundeswehrTalkingBoardCodingOutput encodeBundeswehr(String plainText, Bundeswehr
 
 BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
   if (tableNumeralCode == null || tableNumeralCode.Content.isEmpty)
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_CUSTOM_NUMERAL_TABLE, Details: '');
-
-  if (cypherText == null || cypherText == '')
-    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER, Details: '');
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE, Details: '');
 
   String result = '';
-  bool invalidCypher = false;
+
+  if (cypherText == null || cypherText == '')
+    return BundeswehrTalkingBoardCodingOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
+
+  cypherText =  cypherText.toUpperCase();
+
   cypherText.split(' ').forEach((pair) {
     if (pair.length == 2) {
       result = result + _decodeNumeralCode(pair, tableNumeralCode);
     } else {
       result = result + UNKNOWN_ELEMENT;
-      invalidCypher = true;
     }
   });
   return BundeswehrTalkingBoardCodingOutput(
-      ResponseCode: invalidCypher ? BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_INVALID_CYPHER : BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
+      ResponseCode: BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK, Details: result);
 }
 
 String _decodeNumeralCode(String tupel, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {

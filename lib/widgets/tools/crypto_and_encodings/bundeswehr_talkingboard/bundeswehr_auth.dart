@@ -44,7 +44,13 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
   String _numeralCodeString = '';
 
   var _authTableMaskFormatter =
-      WrapperForMaskTextInputFormatter(mask: '## ' * 65 + '##', filter: {"#": RegExp(r'[0-9]')});
+      WrapperForMaskTextInputFormatter(mask: '## ' * 64 + '##', filter: {"#": RegExp(r'[0-9]')});
+
+  var _authCodeMaskFormatter =
+  WrapperForMaskTextInputFormatter(mask: '## ' * 2 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
+
+  var _callsignLetterMaskFormatter =
+  WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'[a-zA-Z]')});
 
   var _currentMode = GCWSwitchPosition.right;
   var _currentTableMode = GCWSwitchPosition.left;
@@ -118,24 +124,21 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
             ? GCWTextField(
                 title: i18n(context, 'bundeswehr_talkingboard_auth_authentification_code'),
                 controller: _inputAuthController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ,.]')),
-                ],
+                hintText: 'FW ST CD',
+                inputFormatters: [_authCodeMaskFormatter],
                 onChanged: (text) {
                   setState(() {
-                    _currentAuthInput = text;
+                    _currentAuthInput = (text == null || text == '') ? '' : _authCodeMaskFormatter.getMaskedText();
                   });
-                },
+                }
               )
             : GCWTextField(
                 title: i18n(context, 'bundeswehr_talkingboard_auth_letter_callsign'),
                 controller: _letterControllerCallSign,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                ],
+                inputFormatters: [_callsignLetterMaskFormatter],
                 onChanged: (text) {
                   setState(() {
-                    _currentLetterCallSign = text;
+                    _currentLetterCallSign = (text == null || text == '') ? '' : _callsignLetterMaskFormatter.getMaskedText();
                   });
                 },
               ),
@@ -213,7 +216,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                   inputFormatters: [_authTableMaskFormatter],
                   onChanged: (text) {
                     setState(() {
-                      _currentAuthTableCustom = _authTableMaskFormatter.getMaskedText();
+                      _currentAuthTableCustom = (text == null || text == '') ? '' : _authTableMaskFormatter.getMaskedText();
                       ;
                     });
                   },
