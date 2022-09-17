@@ -8,6 +8,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperatur
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
@@ -92,27 +93,27 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  flex: 2,
-                  child: Padding(
-                    child: GCWText(
-                      text: WBT.toStringAsFixed(2) + ' ' + unit,
-                    ),
-                    padding: EdgeInsets.only(right: 2)),
-                  ),
-                Expanded(
                   flex: 1,
                   child: Padding(
-                    child: GCWIconButton(
-                      icon: Icons.wb_sunny,
-                      iconColor: _colorWBT(WBT_C),
-                    ),
-                  padding: EdgeInsets.only(left: 2, right: 2)),
+                      child: GCWIconButton(
+                        icon: Icons.wb_sunny,
+                        iconColor: _colorWBT(WBT_C),
+                      ),
+                      padding: EdgeInsets.only(right: 2)),
                 ),
                 Expanded(
-                  flex: 7,
+                  flex: 3,
                   child: Padding(
-                      child: GCWText(
-                        text: i18n(context, hintWBT),
+                    child: GCWOutput(
+                      child: WBT.toStringAsFixed(2) + ' ' + unit,
+                    ),
+                    padding: EdgeInsets.only(left: 2, right: 2)),
+                  ),
+                Expanded(
+                  flex: 6,
+                  child: Padding(
+                      child: GCWOutput(
+                        child: i18n(context, hintWBT),
                       ),
                       padding: EdgeInsets.only(left: 8)),
                 ),
