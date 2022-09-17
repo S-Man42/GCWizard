@@ -58,6 +58,7 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
         GCWTextDivider(text: i18n(context, 'common_outputunit')),
         GCWUnitDropDownButton(
           value: _currentOutputUnit,
+          onlyShowSymbols: false,
           unitList: temperatures,
           unitCategory: UNITCATEGORY_TEMPERATURE,
           onChanged: (value) {
