@@ -83,6 +83,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beghilos.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_auth.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bundeswehr_talkingboard/bundeswehr_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
@@ -353,7 +355,6 @@ class _MainViewState extends State<MainView> {
     Favorites.initialize();
 
     var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
-
     return DefaultTabController(
       length: 3,
       initialIndex:
@@ -485,6 +486,8 @@ void _initStaticToolList() {
       className(BookCipher()),
       className(BrailleSelection()),
       className(Brainfk()),
+      className(BundeswehrTalkingBoardAuthentification()),
+      className(BundeswehrTalkingBoardObfuscation()),
       className(BurrowsWheeler()),
       className(Caesar()),
       className(Calendar()),
