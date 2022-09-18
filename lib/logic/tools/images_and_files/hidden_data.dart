@@ -15,6 +15,7 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
+  data.children = null;
   return Future.value((await _hiddenData(data, 0))?.item1);
 }
 
