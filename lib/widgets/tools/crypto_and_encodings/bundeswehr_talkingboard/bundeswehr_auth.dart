@@ -113,10 +113,8 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
               .toList(),
           onChanged: (value) {
             setState(() {
-              print(value);
               _currentLetterAuthIndex = value;
               _currentLetterAuth = BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS[value];
-              print(_currentLetterAuth);
             });
           },
         ),

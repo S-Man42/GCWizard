@@ -165,7 +165,6 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
       output = decodeBundeswehr(_currentDecode, _tableNumeralCode);
     else
       output = encodeBundeswehr(_currentEncode, _tableNumeralCode);
-print(_currentDecode+' '+output.ResponseCode + '>'+output.Details+'<');
     return GCWDefaultOutput(
         child: output.ResponseCode == BUNDESWEHR_TALKINGBOARD_CODE_RESPONSE_OK
         ? output.Details
