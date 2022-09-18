@@ -9,11 +9,13 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/settings/preferences.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
 import 'package:gc_wizard/theme/theme_colors_dark.dart';
 import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/theme/theme.dart';
 
 class WetBulbTemperature extends StatefulWidget {
   @override
@@ -87,42 +89,33 @@ class WetBulbTemperatureState extends State<WetBulbTemperature> {
 
     unit = _currentOutputUnit.symbol;
 
-    return
-        GCWOutput(
-            title: i18n(context, 'wet_bulb_temperature_wbt_output'),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                      child: GCWIconButton(
-                        icon: Icons.wb_sunny,
-                        iconColor: _colorWBT(WBT_C),
-                        backgroundColor: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString()
-                          ? Color(0xFF26282F)
-                          : Color(0xFFD1D1D1),
-                      ),
-                      padding: EdgeInsets.only(right: 2)),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    child: GCWOutput(
-                      child: WBT.toStringAsFixed(2) + ' ' + unit,
-                    ),
-                    padding: EdgeInsets.only(left: 2, right: 2)),
+    return Column(
+      children: [
+        GCWDefaultOutput(
+          child: WBT.toStringAsFixed(2) + ' ' + unit,
+          copyText: WBT.toString()
+        ),
+        Row(
+          children: [
+              Container(
+                  width: 50,
+                  child: GCWIconButton(
+                      icon: Icons.wb_sunny,
+                      iconColor: _colorWBT(WBT_C),
+                      backgroundColor: Color(0xFF4d4d4d)
                   ),
-                Expanded(
-                  flex: 6,
-                  child: Padding(
-                      child: GCWOutput(
-                        child: i18n(context, hintWBT),
-                      ),
-                      padding: EdgeInsets.only(left: 8)),
-                ),
-              ]
-            )
-        );
+                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+              ),
+             Expanded(
+               child: GCWOutput(
+                 child: i18n(context, hintWBT),
+               ),
+             )
+          ],
+        )
+
+      ],
+    );
   }
 
   String _calculateHintWBT(double WBT){

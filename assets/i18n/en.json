@@ -5357,8 +5357,6 @@
   "weathersymbols_ww_99": "Heavy thunderstorm with hail at time of observation",
   "wet_bulb_temperature_title": "Wet Bulb Temperature",
   "wet_bulb_temperature_description": "Calculates the temperature of a parcel of air cooled to saturation",
-  "wet_bulb_temperature_example": "",
-  "wet_bulb_temperature_wbt_output": "Wet Bulb temperature",
   "wet_bulb_temperature_hint": "Hint",
   "wet_bulb_temperature_hint_temperature_low": "To get valid values the temperature should be above %s1.",
   "wet_bulb_temperature_hint_temperature_high": "To get valid values the temperature should be below %s1.",
