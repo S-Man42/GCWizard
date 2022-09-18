@@ -192,6 +192,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperat
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
@@ -679,6 +680,7 @@ void _initStaticToolList() {
       className(WASD()),
       className(WaypointProjection()),
       className(Weekday()),
+      className(WetBulbTemperature()),
       className(WherigoSelection()),
       className(WheatstoneCookeNeedleTelegraph()),
       className(WhitespaceLanguage()),

@@ -286,6 +286,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/alcohol_mass.dart
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/wet_bulb_temperature.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
@@ -1227,6 +1228,12 @@ initializeRegistry(BuildContext context) {
       'apparenttemperature',
       'apparenttemperature_windchill',
     ]),
+    GCWTool(tool: WetBulbTemperature(), i18nPrefix: 'wet_bulb_temperature', searchKeys: [
+      'apparenttemperature',
+      'apparenttemperature_wet_bulb_temperature',
+    ]),
+
+
     GCWTool(tool: Zodiac(), i18nPrefix: 'zodiac', searchKeys: [
       'symbol_alchemy',
       'symbol_planets',
