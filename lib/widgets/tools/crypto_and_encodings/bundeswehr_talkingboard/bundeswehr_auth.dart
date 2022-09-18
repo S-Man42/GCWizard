@@ -30,7 +30,7 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
 
   String _currentAuthInput = '';
   String _currentCallSign = '';
-  String _currentLetterAuth = '';
+  String _currentLetterAuth = 'V';
   String _currentLetterCallSign = '';
   String _currentAuthTableCustom = '';
   String _currentNumeralCodeXaxisCustom = '';
@@ -48,6 +48,12 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
 
   var _authCodeMaskFormatter =
   WrapperForMaskTextInputFormatter(mask: '## ' * 2 + '##', filter: {"#": RegExp(r'[a-zA-Z]')});
+
+  var _numeralCodeXAxisCodeMaskFormatter =
+  WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
+
+  var _numeralCodeYAxisCodeMaskFormatter =
+  WrapperForMaskTextInputFormatter(mask: '#' * 13, filter: {"#": RegExp(r'[a-zA-Z]')});
 
   var _callsignLetterMaskFormatter =
   WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'[a-zA-Z]')});
@@ -174,24 +180,20 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
                       GCWTextField(
                         controller: _numeralCodeCustomXaxis,
                         hintText: i18n(context, 'bundeswehr_talkingboard_auth_table_numeral_code_x_axis'),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
-                        ],
+                        inputFormatters: [_numeralCodeXAxisCodeMaskFormatter],
                         onChanged: (text) {
                           setState(() {
-                            _currentNumeralCodeXaxisCustom = text;
+                            _currentNumeralCodeXaxisCustom = (text == null || text == '') ? '' : _numeralCodeXAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
                       GCWTextField(
                         controller: _numeralCodeCustomYaxis,
                         hintText: i18n(context, 'bundeswehr_talkingboard_auth_table_numeral_code_y_axis'),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
-                        ],
+                        inputFormatters: [_numeralCodeYAxisCodeMaskFormatter],
                         onChanged: (text) {
                           setState(() {
-                            _currentNumeralCodeYaxisCustom = text;
+                            _currentNumeralCodeYaxisCustom = (text == null || text == '') ? '' : _numeralCodeYAxisCodeMaskFormatter.getMaskedText();
                           });
                         },
                       ),
@@ -233,11 +235,22 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
 
     if (_currentTableMode == GCWSwitchPosition.left) {
       // custom tables
-      _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
       _buildNumeralCode(context,
           custom: _currentTableMode == GCWSwitchPosition.left,
           xAxis: _currentNumeralCodeXaxisCustom,
           yAxis: _currentNumeralCodeYaxisCustom);
+      if (_numeralCodeString.startsWith('bundeswehr_')) {
+        return GCWText(
+          text: i18n(context, _numeralCodeString),
+        );
+      }
+
+      _buildAuthTable(context, custom: _currentTableMode == GCWSwitchPosition.left, authTable: _currentAuthTableCustom);
+      if (_authTableString.startsWith('bundeswehr_')) {
+        return GCWText(
+          text: i18n(context, _authTableString),
+        );
+      }
     }
 
     if (_currentMode == GCWSwitchPosition.right) {
@@ -350,15 +363,20 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
     Map<String, Map<String, String>> _authTable = {};
 
     if (custom) {
+      if (authTable == null || authTable == '') {
+        _authTableString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_AUTH_TABLE;
+        return;
+      }
+
       if (authTable.trim().split(' ').length != 65) {
         _tableAuthentificationCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _authTableString = i18n(context, 'bundeswehr_talkingboard_auth_response_invalid_custom_table_auth');
+        _authTableString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH_TABLE;
         return;
       }
       authTable.trim().split(' ').forEach((element) {
         if (element.length > 2) {
           _tableAuthentificationCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
-          _authTableString = i18n(context, 'bundeswehr_talkingboard_auth_response_invalid_custom_table_auth');
+          _authTableString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTH_TABLE;
           return;
         } else if (element.length == 1)
           authCode.add('0' + element);
@@ -419,21 +437,26 @@ class BundeswehrTalkingBoardAuthentificationState extends State<BundeswehrTalkin
     List<String> _numeralCode = [];
 
     if (custom) {
+      if (xAxis == null || xAxis == '' || yAxis == null || yAxis == '') {
+        _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_CUSTOM_NUMERAL_TABLE;
+        return;
+      }
+
       if (_invalidSingleAxisTitle(xAxis)) {
         _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _numeralCodeString = i18n(context, 'bundeswehr_talkingboard_auth_response_invalid_x_axis_numeral_code');
+        _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_X_AXIS_NUMERAL_TABLE;
         return;
       }
 
       if (_invalidSingleAxisTitle(yAxis)) {
         _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _numeralCodeString = i18n(context, 'bundeswehr_talkingboard_auth_response_invalid_y_axis_numeral_code');
+        _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_Y_AXIS_NUMERAL_TABLE;
         return;
       }
 
       if (_invalidAxisDescription(xAxis + yAxis)) {
         _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(yAxis: [], xAxis: [], Content: []);
-        _numeralCodeString = i18n(context, 'bundeswehr_talkingboard_auth_response_invalid_axis_numeral_code');
+        _numeralCodeString = BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_NUMERAL_TABLE;
         return;
       }
 
