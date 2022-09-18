@@ -181,5 +181,8 @@ double maxScreenHeight(BuildContext context) {
 }
 
 int sortToolListAlphabetically(GCWTool a, GCWTool b) {
+  if (a.toolName == null)
+    print(a.i18nPrefix);
+
   return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
 }

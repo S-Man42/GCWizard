@@ -3,13 +3,15 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_all.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -42,10 +44,20 @@ class FormatConverterState extends State<FormatConverter> {
             });
           },
         ),
-        GCWCoordsOutputFormatAll(
-          coordFormat: _currentOutputFormat,
+        GCWTextDivider(
+          text: i18n(context, 'coords_output_format'),
+        ),
+        _GCWCoordsFormatSelectorAll(
+          format: _currentOutputFormat,
           onChanged: (value) {
             setState(() {
+              if ((_currentCoordsFormat['format'] != keyCoordsALL && value['format'] == keyCoordsALL)
+                || (_currentCoordsFormat['format'] == keyCoordsALL && value['format'] != keyCoordsALL)
+              ) {
+                _currentOutput = [];
+                _currentAllOutput = GCWDefaultOutput();
+              }
+
               _currentOutputFormat = value;
             });
           },
@@ -117,5 +129,19 @@ class FormatConverterState extends State<FormatConverter> {
     return GCWDefaultOutput(
         child: Column(children: columnedMultiLineOutput(context, children))
     );
+  }
+}
+
+class _GCWCoordsFormatSelectorAll extends GCWCoordsFormatSelector {
+
+  const _GCWCoordsFormatSelectorAll({Key key, onChanged, format}) :
+        super(key: key, onChanged: onChanged, format: format);
+
+  @override
+  List<GCWDropDownMenuItem> getDropDownItems(BuildContext context) {
+    var items = super.getDropDownItems(context);
+    items.insert(0, GCWDropDownMenuItem(
+        value: keyCoordsALL, child: i18n(context, 'coords_formatconverter_all_formats')));
+    return items;
   }
 }
