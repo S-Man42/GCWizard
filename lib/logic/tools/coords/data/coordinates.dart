@@ -22,11 +22,13 @@ import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
+const keyCoordsALL = 'coords_all';
 const keyCoordsDEC = 'coords_dec';
 const keyCoordsDMM = 'coords_dmm';
 const keyCoordsDMS = 'coords_dms';
@@ -589,7 +591,7 @@ class GaussKrueger extends BaseCoordinates {
     return latLonToGaussKrueger(coord, gkno, ells);
   }
 
-  static GaussKrueger parse(String input, {gaussKruegerCode: 1}) {
+  static GaussKrueger parse(String input, {gaussKruegerCode: DefaultGaussKruegerType}) {
     return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
   }
 
@@ -616,7 +618,7 @@ class Lambert extends BaseCoordinates {
     return latLonToLambert(coord, type, ells);
   }
 
-  static Lambert parse(String input, {type: LambertType.LAMBERT_93}) {
+  static Lambert parse(String input, {type: DefaultLambertType}) {
     return parseLambert(input, type: type);
   }
 
@@ -693,7 +695,7 @@ class SlippyMap extends BaseCoordinates {
     return latLonToSlippyMap(coord, zoom);
   }
 
-  static SlippyMap parse(String input, {zoom: 10.0}) {
+  static SlippyMap parse(String input, {zoom: DefaultSlippyZoom}) {
     return parseSlippyMap(input, zoom: zoom);
   }
 

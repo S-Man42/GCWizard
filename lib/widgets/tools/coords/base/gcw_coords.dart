@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -243,7 +244,7 @@ class GCWCoordsState extends State<GCWCoords> {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSlippyMap),
         'widget': GCWCoordsSlippyMap(
           coordinates: _pastedCoords,
-          zoom: _currentCoordsFormat['subtype'],
+          zoom: double.tryParse(_currentCoordsFormat['subtype'] ?? DefaultSlippyZoom.toString()),
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -439,10 +440,10 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsSwissGridPlus:
         break;
       case keyCoordsGaussKrueger:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsGaussKruegerGK1});
+        _currentCoordsFormat.addAll({'subtype': getGaussKruegerTypKey()});
         break;
       case keyCoordsLambert:
-        _currentCoordsFormat.addAll({'subtype': keyCoordsLambert93});
+        _currentCoordsFormat.addAll({'subtype': getLambertKey()});
         break;
       case keyCoordsDutchGrid:
       case keyCoordsMaidenhead:
@@ -450,7 +451,7 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsNaturalAreaCode:
         break;
       case keyCoordsSlippyMap:
-        _currentCoordsFormat.addAll({'subtype': '10.0'});
+        _currentCoordsFormat.addAll({'subtype': DefaultSlippyZoom.toString()});
         break;
       case keyCoordsGeohash:
       case keyCoordsGeoHex:

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 
 class GCWCoordsSlippyMap extends StatefulWidget {
   final Function onChanged;
   final BaseCoordinates coordinates;
-  final String zoom;
+  final double zoom;
 
-  const GCWCoordsSlippyMap({Key key, this.onChanged, this.coordinates, this.zoom: '10.0'}) : super(key: key);
+  const GCWCoordsSlippyMap({Key key, this.onChanged, this.coordinates, this.zoom: DefaultSlippyZoom}) : super(key: key);
 
   @override
   GCWCoordsSlippyMapState createState() => GCWCoordsSlippyMapState();
@@ -45,7 +46,7 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
     if (widget.coordinates != null) {
       var slippyMap = widget.coordinates is SlippyMap
           ? widget.coordinates as SlippyMap
-          : SlippyMap.fromLatLon(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
+          : SlippyMap.fromLatLon(widget.coordinates.toLatLng(), widget.zoom);
       _currentX['value'] = slippyMap.x;
       _currentY['value'] = slippyMap.y;
 
