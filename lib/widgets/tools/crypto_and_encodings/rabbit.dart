@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/rc4.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/rabbit.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-class RC4 extends StatefulWidget {
+class Rabbit extends StatefulWidget {
   @override
-  RC4State createState() => RC4State();
+  RabbitState createState() => RabbitState();
 }
 
-class RC4State extends State<RC4> {
+class RabbitState extends State<Rabbit> {
   String _currentInput = '';
   String _currentKey = '';
+  String _currentInitializationVector = '';
+  bool _currentExpanded = false;
 
   var _currentInputFormat = InputFormat.AUTO;
   var _currentKeyFormat = InputFormat.AUTO;
+  var _currentIvFormat = InputFormat.AUTO;
   var _currentOutputFormat = OutputFormat.TEXT;
 
   @override
   Widget build(BuildContext context) {
-    var rc4InputFormatItems = {
+    var rabbitInputFormatItems = {
       InputFormat.AUTO: i18n(context, 'rc4_format_auto'),
       InputFormat.TEXT: i18n(context, 'rc4_format_text'),
       InputFormat.HEX: i18n(context, 'common_numeralbase_hexadecimal'),
@@ -31,7 +35,7 @@ class RC4State extends State<RC4> {
       InputFormat.ASCIIVALUES: i18n(context, 'rc4_format_asciivalues'),
     };
 
-    var rc4OutputFormatItems = {
+    var rabbitOutputFormatItems = {
       OutputFormat.TEXT: i18n(context, 'rc4_format_text'),
       OutputFormat.HEX: i18n(context, 'common_numeralbase_hexadecimal'),
       OutputFormat.BINARY: i18n(context, 'common_numeralbase_binary'),
@@ -50,21 +54,21 @@ class RC4State extends State<RC4> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
-                value: _currentInputFormat,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputFormat = value;
-                  });
-                },
-                items: rc4InputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              ),
-              flex: 2),
+            child: GCWDropDownButton(
+              value: _currentInputFormat,
+              onChanged: (value) {
+                setState(() {
+                  _currentInputFormat = value;
+                });
+              },
+              items: rabbitInputFormatItems.entries.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: mode.value,
+                );
+              }).toList(),
+            ),
+            flex: 2),
         ]),
         GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
@@ -78,22 +82,63 @@ class RC4State extends State<RC4> {
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
           Expanded(
-              child: GCWDropDownButton(
-                value: _currentKeyFormat,
-                onChanged: (value) {
+            child: GCWDropDownButton(
+              value: _currentKeyFormat,
+              onChanged: (value) {
+                setState(() {
+                  _currentKeyFormat = value;
+                });
+              },
+              items: rabbitInputFormatItems.entries.map((mode) {
+                return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: mode.value,
+                );
+              }).toList(),
+            ),
+            flex: 2),
+        ]),
+        GCWExpandableTextDivider(
+          text: i18n(context, 'rabbit_initialization_vector'),
+          expanded: _currentExpanded,
+          onChanged: (value) {
+            setState(() {
+            _currentExpanded = value;
+            });
+          },
+          child: Column(
+            children: [
+              GCWTextField(
+                hintText: i18n(context, 'rabbit_initialization_vector'),
+                onChanged: (text) {
                   setState(() {
-                    _currentKeyFormat = value;
+                    _currentInitializationVector = text;
                   });
                 },
-                items: rc4InputFormatItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
               ),
-              flex: 2),
-        ]),
+              Row(children: <Widget>[
+                Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
+                Expanded(
+                    child: GCWDropDownButton(
+                      value: _currentIvFormat,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentIvFormat = value;
+                        });
+                      },
+                      items: rabbitInputFormatItems.entries.map((mode) {
+                        return GCWDropDownMenuItem(
+                          value: mode.key,
+                          child: mode.value,
+                        );
+                      }).toList(),
+                    ),
+                    flex: 2),
+              ]),
+            ]
+          )
+        ),
+
         GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
         Row(children: <Widget>[
           Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
@@ -105,7 +150,7 @@ class RC4State extends State<RC4> {
                     _currentOutputFormat = value;
                   });
                 },
-                items: rc4OutputFormatItems.entries.map((mode) {
+                items: rabbitOutputFormatItems.entries.map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
@@ -125,7 +170,8 @@ class RC4State extends State<RC4> {
     }
 
     var _currentOutput =
-        cryptRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
+        cryptRabbit(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat,
+            _currentInitializationVector, _currentIvFormat, _currentOutputFormat);
 
     if (_currentOutput == null) {
       return GCWDefaultOutput();
@@ -139,6 +185,9 @@ class RC4State extends State<RC4> {
           break;
         case ErrorCode.INPUT_FORMAT:
           showToast(i18n(context, 'rc4_error_input_format'));
+          break;
+        case ErrorCode.IV_FORMAT:
+          showToast(i18n(context, 'rabbit_error_iv_format'));
           break;
       }
       return GCWDefaultOutput();

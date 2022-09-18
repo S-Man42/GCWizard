@@ -128,6 +128,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pokemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/prime_alphabet.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rabbit.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
@@ -615,6 +616,7 @@ void _initStaticToolList() {
       className(PrussiaTelegraph()),
       className(QrCode()),
       className(QuadraticEquation()),
+      className(Rabbit()),
       className(RailFence()),
       className(RALColorCodes()),
       className(RC4()),
