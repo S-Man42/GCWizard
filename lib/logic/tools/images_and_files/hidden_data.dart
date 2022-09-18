@@ -6,6 +6,8 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
+import 'package:image/image.dart' as Image;
+import 'package:audioplayers/audioplayers.dart' as Audio;
 import 'package:tuple/tuple.dart';
 
 const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
@@ -13,105 +15,151 @@ const HIDDEN_FILE_IDENTIFIER = '<<!!!HIDDEN_FILE!!!>>';
 Future<List<GCWFile>> hiddenData(GCWFile data) async {
   if (data == null) return [];
 
-  return  _hiddenData(data);
+  data.children = null;
+  return Future.value((await _hiddenData(data, 0))?.item1);
 }
 
-Future<List<GCWFile>> _hiddenData(GCWFile data,
-    {bool calledFromSearchMagicBytes = false, onlyChildren: false, int fileIndex = 0}) async {
-  var resultList = <GCWFile>[];
+Future<Tuple2<List<GCWFile>, int>> _hiddenData(GCWFile data, int fileIndexCounter) async {
+  var result = await _splitFile(data, fileIndexCounter);
+  var childrenList = <GCWFile>[];
+
+  // unpack archives
+  if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
+    // clone bytes (I have no idea why this is actually necessary)
+    var children = await extractArchive(GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0))));
+    //if (children != null) childrenList.addAll(children);
+    _addFiles(childrenList, children);
+  }
+  // first add all children blocks
+  _addFiles(childrenList, result?.item1);
+
+  // check for empty children (backup)
+  childrenList.removeWhere((element) => element == null);
+  _addChildren(data, childrenList);
+
+
+  // recursive search in the children
+  await Future.forEach(childrenList, (data) async {
+    result = await _hiddenData(data, result.item2);
+  });
+
+  // search for magic bytes (hidden files) in the parent block (e.g. thumbnails) (if not a archive)
+  if (data.bytes != null && fileClass(getFileType(data.bytes)) != FileClass.ARCHIVE) {
+    // new file with correct size
+    var dataClone = GCWFile(name: data.name, bytes: Uint8List.fromList(data.bytes.sublist(0, _fileSize(data.bytes))));
+    result = await _searchMagicBytesHeader(dataClone, result.item2);
+    _addChildren(data, dataClone.children);
+
+    if (dataClone.children != null && dataClone.children.length > 0) {
+      // check for hidden archives (other types are checked)
+      await Future.forEach(dataClone.children, (data) async {
+        if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE)
+          result = await _hiddenData(data, result.item2);
+      });
+    }
+  }
+
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result.item2));
+}
+
+/// split file into separate files
+/// default is that the first block is not returned (only attachments) (ignored with onlyParent)
+/// with checking whether it is a valid block
+Future<Tuple2<List<GCWFile>, int>> _splitFile(GCWFile data, int fileIndexCounter, {bool onlyParent : false}) async {
   var bytes = data.bytes;
+  var resultList = <GCWFile>[];
+  var parent = !onlyParent;
 
   while (bytes != null && bytes.length > 0) {
-    int fileSize;
-    FileType detectedFileType = getFileType(bytes);
-
-    switch (detectedFileType) {
-      case FileType.JPEG:
-        fileSize = jpgImageSize(bytes);
-        break;
-      case FileType.PNG:
-        fileSize = pngImageSize(bytes);
-        break;
-      case FileType.GIF:
-        fileSize = gifImageSize(bytes);
-        break;
-      case FileType.BMP:
-        fileSize = bmpImageSize(bytes);
-        break;
-      case FileType.ZIP:
-        fileSize = zipFileSize(bytes);
-        break;
-      case FileType.RAR:
-        fileSize = rarFileSize(bytes);
-        break;
-      case FileType.TAR:
-        fileSize = tarFileSize(bytes);
-        break;
-      case FileType.MP3:
-        fileSize = mp3FileSize(bytes);
-        break;
-      default:
-        fileSize = bytes.length;
-        break;
-    }
+    int fileSize = _fileSize(bytes);
 
     Uint8List resultBytes;
     if ((fileSize != null) && (fileSize > 0) && (bytes.length > fileSize)) {
       resultBytes = bytes.sublist(0, fileSize);
-      // remove result from source data
       bytes = bytes.sublist(fileSize);
     } else {
       resultBytes = bytes;
       bytes = null;
     }
 
-    List<GCWFile> children;
-    if (fileClass(detectedFileType) == FileClass.ARCHIVE)
-      children = await extractArchive(GCWFile(name: data.name, bytes: resultBytes));
-
-
-    resultBytes = trimNullBytes(resultBytes);
-    if (resultBytes.length > 0) {
-      var fileCounter = fileIndex + resultList.length;
-      var result = GCWFile(name: data.name ?? HIDDEN_FILE_IDENTIFIER + '_$fileCounter', bytes: resultBytes, children: children);
-
-      resultList.add(result);
-    }
-
-    if (calledFromSearchMagicBytes) break;
-  }
-
-  if (!calledFromSearchMagicBytes) {
-    var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.ZIP, FileType.RAR, FileType.TAR];
-
-    resultList.asMap().forEach((index, result) {
-      if (index == 0 && result.fileClass != FileClass.ARCHIVE) return;
-
-      if ((result.children == null) || (result.children.length == 0))
-        _searchMagicBytes(result, fileTypeList);
+    if (resultBytes.length > 0 && !parent) {
+      fileIndexCounter++;
+      var fileName = HIDDEN_FILE_IDENTIFIER + '_$fileIndexCounter';
+      var file = GCWFile(name: fileName, bytes: resultBytes);
+      if (await _checkFileValid(file))
+        resultList.add(file);
       else
-        result.children.forEach((data) async {
-          if (fileClass(getFileType(data.bytes)) == FileClass.ARCHIVE) {
-            // clone byte (I have no idea why this is actually necessary)
-            var children = await _hiddenData(GCWFile(name: data.name, bytes: data.bytes.sublist(0)), onlyChildren : true);
-            if ((children != null) && (children.length > 0))
-              if (data.children != null) data.children.addAll(children);
-          } else
-            _searchMagicBytes(data, fileTypeList);
-        });
-    });
+        fileIndexCounter--;
+      if (onlyParent) break;
+    }
+    parent = false;
   }
-  if (onlyChildren)
-    resultList = resultList?.first?.children;
-  return resultList;
+
+  return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
 }
 
-_searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
-  fileTypeList.forEach((fileType) {
+/// calculate the file size
+int _fileSize(Uint8List bytes) {
+  FileType detectedFileType = getFileType(bytes);
+
+  switch (detectedFileType) {
+    case FileType.JPEG:
+      return jpgImageSize(bytes);
+    case FileType.PNG:
+      return pngImageSize(bytes);
+    case FileType.GIF:
+      return gifImageSize(bytes);
+    case FileType.BMP:
+      return bmpImageSize(bytes);
+    case FileType.ZIP:
+      return zipFileSize(bytes);
+    case FileType.RAR:
+      return rarFileSize(bytes);
+    case FileType.TAR:
+      return tarFileSize(bytes);
+    case FileType.MP3:
+      return mp3FileSize(bytes);
+    default:
+      return bytes.length;
+  }
+}
+
+/// search on any position magic bytes
+Future<Tuple2<List<GCWFile>, int>> _searchMagicBytesHeader(GCWFile data, int fileIndexCounter) async {
+  // checked file types header (have file size calculation)
+  var fileTypeList = <FileType>[FileType.JPEG, FileType.PNG, FileType.GIF, FileType.BMP, FileType.ZIP,
+    FileType.RAR, FileType.TAR, FileType.MP3];
+
+  var result = await _searchMagicBytes(data, fileTypeList, fileIndexCounter);
+  _addChildren (data, result?.item1);
+
+  return Future.value(Tuple2<List<GCWFile>, int>([data], result?.item2 ?? fileIndexCounter));
+}
+
+void _addChildren(GCWFile data, List<GCWFile> children) {
+  if (children != null && children.length > 0) {
+    if (data.children != null)
+      data.children.addAll(children);
+    else
+      data.children = children;
+  }
+}
+
+void _addFiles(List<GCWFile> list, List<GCWFile> files) {
+  if (files != null && files.length > 0)
+    if (list != null) list.addAll(files);
+}
+
+/// search on any position (>0) magic bytes
+Future<Tuple2<List<GCWFile>, int>> _searchMagicBytes(GCWFile data, List<FileType> fileTypeList, int fileIndexCounter) async {
+  var resultList = <GCWFile>[];
+
+  await Future.forEach(fileTypeList, (fileType) async {
     var magicBytesList = magicBytes(fileType);
-    magicBytesList.forEach((magicBytes) async {
+    await Future.forEach(magicBytesList, (magicBytes) async {
       var bytes = data.bytes;
-      if (bytes == null) return;
+      if (bytes == null)
+        return Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter);
 
       for (int i = 1; i < bytes.length; i++) {
         if (bytes[i] == magicBytes[0] && ((i + magicBytes.length) <= bytes.length)) {
@@ -127,17 +175,43 @@ _searchMagicBytes(GCWFile data, List<FileType> fileTypeList) {
             var bytesOffset = magicBytesOffset(fileType) ?? 0;
             bytesOffset = i - bytesOffset;
             if (bytesOffset >= 0) {
-              var children = await _hiddenData(GCWFile(bytes: bytes.sublist(bytesOffset)),
-                  calledFromSearchMagicBytes: true,
-                  fileIndex: data.children.length + 1);
-              if ((children != null) && (children.length > 0))
-                if (data.children != null) data.children.addAll(children);
+              // extract data and check for completeness (only first block)
+              var result = await _splitFile(GCWFile(bytes: data.bytes.sublist(bytesOffset)),
+                  fileIndexCounter, onlyParent: true);
+              if (bytesOffset == 14964)
+                bytesOffset =bytesOffset;
+              // append file as result, if it is a valid file
+              _addFiles(resultList, result?.item1);
+
+              fileIndexCounter = result?.item2 ?? fileIndexCounter;
             }
           }
         }
       }
     });
   });
+
+  return Future.value(Tuple2<List<GCWFile>, int>(resultList, fileIndexCounter));
+}
+
+/// check, are the data a valid (complete) file or sound
+Future<bool> _checkFileValid(GCWFile data) async {
+  var result = true;
+  try {
+    var _fileClass = fileClass(getFileType(data?.bytes));
+    if (_fileClass == FileClass.IMAGE)
+      result = Image.decodeImage(data.bytes) != null;
+    else if (_fileClass == FileClass.SOUND) {
+      var advancedPlayer =Audio.AudioPlayer();
+      await advancedPlayer.setSourceBytes(data.bytes);
+      var duration = await advancedPlayer.getDuration();
+      result = duration.inMilliseconds > 0;
+    }
+  } catch (e) {
+    result = false;
+  }
+
+  return Future.value(result);
 }
 
 Uint8List mergeFiles(List<dynamic> data) {
@@ -494,10 +568,10 @@ int mp3FileSize(Uint8List data) {
       // Frame Header
 
       var bitrateIndex = (data[offset + 2] & 0xF0) >> 4;
-      if ((bitrateIndex <= 0) | (bitrateIndex > bitRates.length)) return null;
+      if ((bitrateIndex <= 0) | (bitrateIndex >= bitRates.length)) return null;
 
       var sampleRateIndex = (data[offset + 2] & 0xC) >> 2;
-      if ((sampleRateIndex < 0) | (sampleRateIndex > sampleRates.length)) return null;
+      if ((sampleRateIndex < 0) | (sampleRateIndex >= sampleRates.length)) return null;
 
       var padding = (data[offset + 2] & 0x02) != 0 ? 1 : 0;
 
