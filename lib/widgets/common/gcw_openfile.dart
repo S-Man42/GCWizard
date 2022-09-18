@@ -172,6 +172,7 @@ class _GCWOpenFileState extends State<GCWOpenFile> {
   }
 
   _saveDownload(dynamic data) {
+    _loadedFile = null;
     if (data is Uint8List) {
       _loadedFile =
           GCWFile(name: Uri.decodeFull(_currentUrl).split('/').last.split('?').first, path: _currentUrl, bytes: data);
