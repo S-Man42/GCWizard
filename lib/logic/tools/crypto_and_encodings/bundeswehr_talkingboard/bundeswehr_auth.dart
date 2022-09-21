@@ -8,6 +8,10 @@ import 'dart:math';
 // 08 41 75 51 36 30 99 28 65 10 66 46 55 20 79 16 82 02 93 45 97 19 88 81 63 01 38 72 29 87 98 54 50 04 49 44 27 31 77 17 18 64 15 56 32 86 73 26 67 95 35 14 96 39 06 80 25 68 85 43 12 48 07 24 74
 // cjosmhlquweby
 // dainrtxfkpvzg
+//
+// 54 15 25 31 02 85 35 26 14 33 05 58 47 32 39 49 88 10 23 78 82 08 92 91 73 56 09 43 80 81 69 74 35 52 53 67 34 71 62 76 42 29 63 27 16 30 17 12 06 99 37 97 46 84 68 90 89 59 48 21 65 44 86 07 20
+// ixsyukfqdgevc
+// ozjrpwmatlbnh
 
 class BundeswehrTalkingBoardAuthentificationTable {
   final List<String> xAxis;
@@ -174,7 +178,6 @@ BundeswehrTalkingBoardAuthentificationOutput checkAuthBundeswehr(String currentC
 
   if (currentAuth == null || currentAuth == '')
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_EMPTY_AUTHCODE);
-print(BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS.toString()+' '+currentLetterAuth);
   if (!BUNDESWEHR_TALKINGBOARD_AUTH_TABLE_X_AXIS.contains(currentLetterAuth))
     return BundeswehrTalkingBoardAuthentificationOutput(ResponseCode: BUNDESWEHR_TALKINGBOARD_AUTH_RESPONSE_INVALID_AUTHENTIFICATION_LETTER);
 
