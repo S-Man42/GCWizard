@@ -208,8 +208,8 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
         return;
       }
 
-      _colTitle = yAxis.toUpperCase().split('');
-      _rowTitle = xAxis.toUpperCase().split('');
+      _colTitle = xAxis.toUpperCase().split('');
+      _rowTitle = yAxis.toUpperCase().split('');
     } else {
       List<String> alphabet = [
         'A',
@@ -688,7 +688,7 @@ class BundeswehrTalkingBoardObfuscationState extends State<BundeswehrTalkingBoar
     ];
 
     _tableNumeralCode = BundeswehrTalkingBoardAuthentificationTable(
-        xAxis: _rowTitle, yAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
+        yAxis: _rowTitle, xAxis: _colTitle, Content: _numeralCode, Encoding: _tableEncoding);
   }
 
   bool _invalidSingleAxisTitle(String text) {
