@@ -441,7 +441,7 @@
   "bundeswehr_talkingboard_auth_response_invalid_auth": "ERROR: Invalid String to authentificate",
   "bundeswehr_talkingboard_auth_response_invalid_missing_callsign": "ERROR: Callsign is missing",
   "bundeswehr_talkingboard_auth_response_invalid_callsign_letter":  "ERROR: Letter does not belong to the Callsign",
-  "bundeswehr_talkingboard_auth_response_invalid_authentification_letter":  "ERROR: Letter does not belog to the Authentification Code",
+  "bundeswehr_talkingboard_auth_response_invalid_authentification_letter":  "ERROR: Letter does not belong to the Authentification Code",
   "bundeswehr_talkingboard_auth_response_invalid_autentification_code": "ERROR: Authentification code is faulty",
   "bundeswehr_talkingboard_auth_response_empty_custom_table_auth": "HINT: Empty Table \"Authentification Code\"",
   "bundeswehr_talkingboard_auth_response_empty_custom_table_numeral": "HINT: Empty Table \"Numeral Code\"",
