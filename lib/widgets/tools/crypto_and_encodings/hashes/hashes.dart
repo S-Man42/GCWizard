@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
 class _DefaultHash extends StatefulWidget {
   final Function hashFunction;
+  final bool needKey;
 
-  const _DefaultHash({Key key, this.hashFunction}) : super(key: key);
+  const _DefaultHash({Key key, this.hashFunction, this.needKey}) : super(key: key);
 
   @override
   _DefaultHashState createState() => _DefaultHashState();
@@ -14,6 +16,7 @@ class _DefaultHash extends StatefulWidget {
 
 class _DefaultHashState extends State<_DefaultHash> {
   String _currentValue = '';
+  String _currentKey = '';
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,16 @@ class _DefaultHashState extends State<_DefaultHash> {
             });
           },
         ),
+        widget.needKey == true
+          ? GCWTextField(
+            hintText: i18n(context, 'common_key'),
+            onChanged: (value) {
+              setState(() {
+                _currentKey = value;
+              });
+            },
+          )
+          : Container(),
         GCWDefaultOutput(child: widget.hashFunction(_currentValue))
       ],
     );
@@ -122,6 +135,34 @@ class SHA3_384 extends _DefaultHash {
 
 class SHA3_512 extends _DefaultHash {
   SHA3_512() : super(hashFunction: sha3_512Digest);
+}
+
+class SHA1HMac extends _DefaultHash {
+  SHA1HMac() : super(hashFunction: sha1HmacDigest, needKey: true);
+}
+
+class SHA224HMac extends _DefaultHash {
+  SHA224HMac() : super(hashFunction: sha224HmacDigest, needKey: true);
+}
+
+class SHA256HMac extends _DefaultHash {
+  SHA256HMac() : super(hashFunction: sha256HmacDigest, needKey: true);
+}
+
+class SHA384HMac extends _DefaultHash {
+  SHA384HMac() : super(hashFunction: sha384HmacDigest, needKey: true);
+}
+
+class SHA512HMac extends _DefaultHash {
+  SHA512HMac() : super(hashFunction: sha512HmacDigest, needKey: true);
+}
+
+class SHA512_224HMac extends _DefaultHash {
+  SHA512_224HMac() : super(hashFunction: sha512_224HmacDigest, needKey: true);
+}
+
+class SHA512_256HMac extends _DefaultHash {
+  SHA512_256HMac() : super(hashFunction: sha512_256HmacDigest, needKey: true);
 }
 
 class Keccak_128 extends _DefaultHash {

@@ -1934,7 +1934,16 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_sha1',
     ]),
+    GCWTool(tool: SHA1HMac(), i18nPrefix: 'hashes_sha1hmac', searchKeys: [
+      'hashes',
+      'hashes_sha1',
+    ]),
     GCWTool(tool: SHA224(), i18nPrefix: 'hashes_sha224', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha224',
+    ]),
+    GCWTool(tool: SHA224HMac(), i18nPrefix: 'hashes_sha224hmac', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha224',
@@ -1944,7 +1953,17 @@ initializeRegistry(BuildContext context) {
       'hashes_sha2',
       'hashes_sha256',
     ]),
+    GCWTool(tool: SHA256HMac(), i18nPrefix: 'hashes_sha256hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha256',
+    ]),
     GCWTool(tool: SHA384(), i18nPrefix: 'hashes_sha384', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha384',
+    ]),
+    GCWTool(tool: SHA384HMac(), i18nPrefix: 'hashes_sha384hmac', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha384',
@@ -1954,12 +1973,27 @@ initializeRegistry(BuildContext context) {
       'hashes_sha2',
       'hashes_sha512',
     ]),
+    GCWTool(tool: SHA512HMac(), i18nPrefix: 'hashes_sha512hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512',
+    ]),
     GCWTool(tool: SHA512_224(), i18nPrefix: 'hashes_sha512.224', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_224',
     ]),
+    GCWTool(tool: SHA512_224HMac(), i18nPrefix: 'hashes_sha512.224hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_224',
+    ]),
     GCWTool(tool: SHA512_256(), i18nPrefix: 'hashes_sha512.256', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_256',
+    ]),
+    GCWTool(tool: SHA512_256HMac(), i18nPrefix: 'hashes_sha512.256hmac', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',

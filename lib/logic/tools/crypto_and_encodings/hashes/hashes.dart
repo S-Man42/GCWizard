@@ -25,7 +25,21 @@ String _digest(Digest digest, String data) {
   if (data == null) data = '';
 
   Uint8List dataToDigest = utf8.encode(data);
-  return digest.process(dataToDigest).map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
+  return _toHexString(digest.process(dataToDigest));
+}
+
+// Wrapper for PointyCastle library
+String _HMac(HMac hmac, String data, String key) {
+  if (data == null) data = '';
+  if (key == null) key = '';
+
+  hmac..init(KeyParameter(utf8.encode(key)));
+  Uint8List dataToDigest = utf8.encode(data);
+  return _toHexString(hmac.process(dataToDigest));
+}
+
+String _toHexString(Uint8List bytes) {
+  return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
 }
 
 final Map<String, Function> HASH_FUNCTIONS = {
@@ -113,29 +127,55 @@ String ripemd_320Digest(String data) {
 String sha1Digest(String data) {
   return _digest(SHA1Digest(), data);
 }
+String sha1HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA1Digest(), 64), data, key);
+}
 
 String sha224Digest(String data) {
   return _digest(SHA224Digest(), data);
+}
+
+String sha224HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA224Digest(), 64), data, key);
 }
 
 String sha256Digest(String data) {
   return _digest(SHA256Digest(), data);
 }
 
+String sha256HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA256Digest(), 64), data, key);
+}
+
 String sha384Digest(String data) {
   return _digest(SHA384Digest(), data);
+}
+
+String sha384HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA384Digest(), 128), data, key);
 }
 
 String sha512Digest(String data) {
   return _digest(SHA512Digest(), data);
 }
 
+String sha512HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA512Digest(), 128), data, key);
+}
+
 String sha512_224Digest(String data) {
   return _digest(SHA512tDigest((224 / 8).floor()), data);
 }
 
+String sha512_224HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA512tDigest((224 / 8).floor()), 64), data, key);
+}
+
 String sha512_256Digest(String data) {
   return _digest(SHA512tDigest((256 / 8).floor()), data);
+}
+String sha512_256HmacDigest(String data, String key) {
+  return _HMac(HMac(SHA512tDigest((256 / 8).floor()), 64), data, key);
 }
 
 String sha3_224Digest(String data) {
