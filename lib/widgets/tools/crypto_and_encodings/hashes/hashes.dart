@@ -39,7 +39,9 @@ class _DefaultHashState extends State<_DefaultHash> {
             },
           )
           : Container(),
-        GCWDefaultOutput(child: widget.hashFunction(_currentValue))
+        widget.needKey
+          ? GCWDefaultOutput(child: widget.hashFunction(_currentValue, _currentKey))
+          : GCWDefaultOutput(child: widget.hashFunction(_currentValue))
       ],
     );
   }
@@ -189,6 +191,30 @@ class SHA512HMac extends _DefaultHash {
   SHA512HMac() : super(hashFunction: sha512Hmac, needKey: true);
 }
 
+class SHA512_224HMac extends _DefaultHash {
+  SHA512_224HMac() : super(hashFunction: sha512_224Hmac, needKey: true);
+}
+
+class SHA512_256HMac extends _DefaultHash {
+  SHA512_256HMac() : super(hashFunction: sha512_256Hmac, needKey: true);
+}
+
+class SHA3_224HMac extends _DefaultHash {
+  SHA3_224HMac() : super(hashFunction: sha3_224Hmac);
+}
+
+class SHA3_256HMac extends _DefaultHash {
+  SHA3_256HMac() : super(hashFunction: sha3_256Hmac);
+}
+
+class SHA3_384HMac extends _DefaultHash {
+  SHA3_384HMac() : super(hashFunction: sha3_384Hmac);
+}
+
+class SHA3_512HMac extends _DefaultHash {
+  SHA3_512HMac() : super(hashFunction: sha3_512Hmac);
+}
+
 class MD2HMac extends _DefaultHash {
   MD2HMac() : super(hashFunction: md2Hmac, needKey: true);
 }
@@ -213,18 +239,6 @@ class Tiger_192HMac extends _DefaultHash {
   Tiger_192HMac() : super(hashFunction: tiger_192Hmac, needKey: true);
 }
 
-class SHA3_224HMac extends _DefaultHash {
-  SHA3_224HMac() : super(hashFunction: sha3_224Hmac);
-}
-
-class SHA3_256HMac extends _DefaultHash {
-  SHA3_256HMac() : super(hashFunction: sha3_256Hmac);
-}
-
-class SHA3_384HMac extends _DefaultHash {
-  SHA3_384HMac() : super(hashFunction: sha3_384Hmac);
-}
-
-class SHA3_512HMac extends _DefaultHash {
-  SHA3_512HMac() : super(hashFunction: sha3_512Hmac);
+class Whirlpool_512HMac extends _DefaultHash {
+  Whirlpool_512HMac() : super(hashFunction: whirlpool_512Hmac, needKey: true);
 }

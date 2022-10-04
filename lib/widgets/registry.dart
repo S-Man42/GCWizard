@@ -1984,10 +1984,22 @@ initializeRegistry(BuildContext context) {
       'hashes_sha2',
       'hashes_sha512_224',
     ]),
+    GCWTool(tool: SHA512_224HMac(), i18nPrefix: 'hashes_sha512.224hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_224',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA512_256(), i18nPrefix: 'hashes_sha512.256', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',
+    ]),
+    GCWTool(tool: SHA512_256HMac(), i18nPrefix: 'hashes_sha512.256hmac', searchKeys: [
+      'hashes',
+      'hashes_sha2',
+      'hashes_sha512_256',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA3_224(), i18nPrefix: 'hashes_sha3.224', searchKeys: [
       'hashes',
@@ -2140,6 +2152,11 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: Whirlpool_512(), i18nPrefix: 'hashes_whirlpool512', searchKeys: [
       'hashes',
       'hashes_whirlpool_512',
+    ]),
+    GCWTool(tool: Whirlpool_512HMac(), i18nPrefix: 'hashes_whirlpool512hmac', searchKeys: [
+      'hashes',
+      'hashes_whirlpool_512',
+      'hashes_hmac',
     ]),
     GCWTool(tool: BLAKE2b_160(), i18nPrefix: 'hashes_blake2b160', searchKeys: [
       'hashes',

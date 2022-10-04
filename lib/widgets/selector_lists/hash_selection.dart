@@ -21,6 +21,8 @@ class HashSelection extends GCWSelection {
         className(SHA256()),
         className(SHA384()),
         className(SHA512()),
+        className(SHA512_224()),
+        className(SHA512_256()),
         className(SHA3_224()),
         className(SHA3_256()),
         className(SHA3_384()),
@@ -50,6 +52,8 @@ class HashSelection extends GCWSelection {
         className(SHA256HMac()),
         className(SHA384HMac()),
         className(SHA512HMac()),
+        className(SHA512_224HMac()),
+        className(SHA512_256HMac()),
         className(SHA3_224HMac()),
         className(SHA3_256HMac()),
         className(SHA3_384HMac()),
@@ -59,6 +63,7 @@ class HashSelection extends GCWSelection {
         className(RIPEMD_128HMac()),
         className(RIPEMD_160HMac()),
         className(Tiger_192HMac()),
+        className(Whirlpool_512HMac()),
       ].contains(className(element.tool));
     }).toList();
 

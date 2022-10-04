@@ -83,6 +83,8 @@ final Map<String, Function> HASHKEY_FUNCTIONS = {
   'hashes_sha256hmac': sha256Hmac,
   'hashes_sha384hmac': sha384Hmac,
   'hashes_sha512hmac': sha512Hmac,
+  'hashes_sha512.224hmac': sha512_224Hmac,
+  'hashes_sha512.256hmac': sha512_256Hmac,
   'hashes_sha3.224hmac': sha3_224Hmac,
   'hashes_sha3.256hmac': sha3_256Hmac,
   'hashes_sha3.384hmac': sha3_384Hmac,
@@ -206,8 +208,16 @@ String sha512_224Digest(String data) {
   return _digest(SHA512tDigest((224 / 8).floor()), data);
 }
 
+String sha512_224Hmac(String data, String key) {
+  return _hMac(HMac(SHA512tDigest((224 / 8).floor()), 128), data, key);
+}
+
 String sha512_256Digest(String data) {
   return _digest(SHA512tDigest((256 / 8).floor()), data);
+}
+
+String sha512_256Hmac(String data, String key) {
+  return _hMac(HMac(SHA512tDigest((256 / 8).floor()), 128), data, key);
 }
 
 String sha3_224Digest(String data) {
@@ -276,4 +286,8 @@ String tiger_192Hmac(String data, String key) {
 
 String whirlpool_512Digest(String data) {
   return _digest(WhirlpoolDigest(), data);
+}
+
+String whirlpool_512Hmac(String data, String key) {
+  return _hMac(HMac(WhirlpoolDigest(), 64), data, key);
 }
