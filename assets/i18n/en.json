@@ -2233,6 +2233,7 @@
   "hashes_sha3.384_title": "SHA3-384 (384 bits)",
   "hashes_sha3.512_title": "SHA3-512 (512 bits)",
   "hashes_tiger192_title": "Tiger (192 bits)",
+  "hashes_tiger192hmac_title": "Tiger (HMAC) (192 bits)",
   "hashes_whirlpool512_title": "Whirlpool (512 bits)",
   "hashes_hashbreaker_title": "Hash Search",
   "hashes_hashbreaker_description": "Configurable search for a solution of a hash value",

@@ -137,6 +137,38 @@ class SHA3_512 extends _DefaultHash {
   SHA3_512() : super(hashFunction: sha3_512Digest);
 }
 
+class Keccak_128 extends _DefaultHash {
+  Keccak_128() : super(hashFunction: keccak_128Digest);
+}
+
+class Keccak_224 extends _DefaultHash {
+  Keccak_224() : super(hashFunction: keccak_224Digest);
+}
+
+class Keccak_256 extends _DefaultHash {
+  Keccak_256() : super(hashFunction: keccak_256Digest);
+}
+
+class Keccak_288 extends _DefaultHash {
+  Keccak_288() : super(hashFunction: keccak_288Digest);
+}
+
+class Keccak_384 extends _DefaultHash {
+  Keccak_384() : super(hashFunction: keccak_384Digest);
+}
+
+class Keccak_512 extends _DefaultHash {
+  Keccak_512() : super(hashFunction: keccak_512Digest);
+}
+
+class Tiger_192 extends _DefaultHash {
+  Tiger_192() : super(hashFunction: tiger_192Digest);
+}
+
+class Whirlpool_512 extends _DefaultHash {
+  Whirlpool_512() : super(hashFunction: whirlpool_512Digest);
+}
+
 class SHA1HMac extends _DefaultHash {
   SHA1HMac() : super(hashFunction: sha1Hmac, needKey: true);
 }
@@ -177,34 +209,6 @@ class RIPEMD_160HMac extends _DefaultHash {
   RIPEMD_160HMac() : super(hashFunction: ripemd_128Hmac, needKey: true);
 }
 
-class Keccak_128 extends _DefaultHash {
-  Keccak_128() : super(hashFunction: keccak_128Digest);
-}
-
-class Keccak_224 extends _DefaultHash {
-  Keccak_224() : super(hashFunction: keccak_224Digest);
-}
-
-class Keccak_256 extends _DefaultHash {
-  Keccak_256() : super(hashFunction: keccak_256Digest);
-}
-
-class Keccak_288 extends _DefaultHash {
-  Keccak_288() : super(hashFunction: keccak_288Digest);
-}
-
-class Keccak_384 extends _DefaultHash {
-  Keccak_384() : super(hashFunction: keccak_384Digest);
-}
-
-class Keccak_512 extends _DefaultHash {
-  Keccak_512() : super(hashFunction: keccak_512Digest);
-}
-
-class Tiger_192 extends _DefaultHash {
-  Tiger_192() : super(hashFunction: tiger_192Digest);
-}
-
-class Whirlpool_512 extends _DefaultHash {
-  Whirlpool_512() : super(hashFunction: whirlpool_512Digest);
+class Tiger_192HMac extends _DefaultHash {
+  Tiger_192HMac() : super(hashFunction: tiger_192Hmac, needKey: true);
 }

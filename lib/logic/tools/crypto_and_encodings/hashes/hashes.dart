@@ -235,6 +235,10 @@ String tiger_192Digest(String data) {
   return _digest(TigerDigest(), data);
 }
 
+String tiger_192Hmac(String data, String key) {
+  return _hMac(HMac(TigerDigest(), 64), data, key);
+}
+
 String whirlpool_512Digest(String data) {
   return _digest(WhirlpoolDigest(), data);
 }

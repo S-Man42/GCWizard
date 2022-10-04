@@ -46,6 +46,7 @@ void main() {
     test('input: ABC, abc, MD5}', () {expect(md5Hmac('ABC','abc'), '14eb1aefe12f566110a492e32a910815');});
     test('input: ABC, abc, RipeMD 128}', () {expect(ripemd_128Hmac('ABC','abc'), 'a6c24d723a13ee63215004826d50452b');});
     test('input: ABC, abc, RipeMD 160}', () {expect(ripemd_160Hmac('ABC','abc'), '2c61a274d9bba24cc176b87f0d1dc8b8899bd39a');});
+    test('input: ABC, abc, Tiger 192}', () {expect(tiger_192Hmac('ABC','abc'), '75bc8c3bf5164a091299f3a9e9d2f47b97c6e8d744c3f041');});
     // test('input: ABC, RipeMD 256}', () {expect(ripemd_256Digest('ABC'), 'b2a837fc4b66a964abd5809333896de83b9f914d00f469e6a5d836879d32cc2e');});
     // test('input: ABC, RipeMD 320}', () {expect(ripemd_320Digest('ABC'), '6c46fb0fafd948b8477463d0eb96e1836fefc062adfc4e6a38b52bb61385eee173ce866de6c375f7');});
     // test('input: ABC, SHA-1}', () {expect(sha1Digest('ABC'), '3c01bdbb26f358bab27f267924aa2c9a03fcfdb8');});

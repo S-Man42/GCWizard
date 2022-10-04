@@ -2108,6 +2108,11 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_tiger_192',
     ]),
+    GCWTool(tool: Tiger_192HMac(), i18nPrefix: 'hashes_tiger192hmac', searchKeys: [
+      'hashes',
+      'hashes_tiger_192',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: Whirlpool_512(), i18nPrefix: 'hashes_whirlpool512', searchKeys: [
       'hashes',
       'hashes_whirlpool_512',
