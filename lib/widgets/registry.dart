@@ -1926,10 +1926,6 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashbreaker',
     ]),
-    GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', searchKeys: [
-      'hashes',
-      'hashes_md5',
-    ]),
     GCWTool(tool: SHA1(), i18nPrefix: 'hashes_sha1', searchKeys: [
       'hashes',
       'hashes_sha1',
@@ -1937,6 +1933,7 @@ initializeRegistry(BuildContext context) {
     GCWTool(tool: SHA1HMac(), i18nPrefix: 'hashes_sha1hmac', searchKeys: [
       'hashes',
       'hashes_sha1',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA224(), i18nPrefix: 'hashes_sha224', searchKeys: [
       'hashes',
@@ -1947,6 +1944,7 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_sha2',
       'hashes_sha224',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA256(), i18nPrefix: 'hashes_sha256', searchKeys: [
       'hashes',
@@ -1957,6 +1955,7 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_sha2',
       'hashes_sha256',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA384(), i18nPrefix: 'hashes_sha384', searchKeys: [
       'hashes',
@@ -1967,6 +1966,7 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_sha2',
       'hashes_sha384',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA512(), i18nPrefix: 'hashes_sha512', searchKeys: [
       'hashes',
@@ -1977,23 +1977,14 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_sha2',
       'hashes_sha512',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA512_224(), i18nPrefix: 'hashes_sha512.224', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_224',
     ]),
-    GCWTool(tool: SHA512_224HMac(), i18nPrefix: 'hashes_sha512.224hmac', searchKeys: [
-      'hashes',
-      'hashes_sha2',
-      'hashes_sha512_224',
-    ]),
     GCWTool(tool: SHA512_256(), i18nPrefix: 'hashes_sha512.256', searchKeys: [
-      'hashes',
-      'hashes_sha2',
-      'hashes_sha512_256',
-    ]),
-    GCWTool(tool: SHA512_256HMac(), i18nPrefix: 'hashes_sha512.256hmac', searchKeys: [
       'hashes',
       'hashes_sha2',
       'hashes_sha512_256',
@@ -2059,10 +2050,22 @@ initializeRegistry(BuildContext context) {
       'hashes_ripemd',
       'hashes_ripemd_128',
     ]),
+    GCWTool(tool: RIPEMD_128HMac(), i18nPrefix: 'hashes_ripemd128hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_128',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: RIPEMD_160(), i18nPrefix: 'hashes_ripemd160', searchKeys: [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_160',
+    ]),
+    GCWTool(tool: RIPEMD_160HMac(), i18nPrefix: 'hashes_ripemd160hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_160',
+      'hashes_hmac',
     ]),
     GCWTool(tool: RIPEMD_256(), i18nPrefix: 'hashes_ripemd256', searchKeys: [
       'hashes',
@@ -2078,9 +2081,28 @@ initializeRegistry(BuildContext context) {
       'hashes',
       'hashes_md2',
     ]),
+    GCWTool(tool: MD2HMac(), i18nPrefix: 'hashes_md2hmac', searchKeys: [
+      'hashes',
+      'hashes_md2',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: MD4(), i18nPrefix: 'hashes_md4', searchKeys: [
       'hashes',
       'hashes_md4',
+    ]),
+    GCWTool(tool: MD4HMac(), i18nPrefix: 'hashes_md4hmac', searchKeys: [
+      'hashes',
+      'hashes_md4',
+      'hashes_hmac',
+    ]),
+    GCWTool(tool: MD5(), i18nPrefix: 'hashes_md5', searchKeys: [
+      'hashes',
+      'hashes_md5',
+    ]),
+    GCWTool(tool: MD5HMac(), i18nPrefix: 'hashes_md5hmac', searchKeys: [
+      'hashes',
+      'hashes_md5',
+      'hashes_hmac',
     ]),
     GCWTool(tool: Tiger_192(), i18nPrefix: 'hashes_tiger192', searchKeys: [
       'hashes',

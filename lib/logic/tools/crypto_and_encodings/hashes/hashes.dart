@@ -29,7 +29,7 @@ String _digest(Digest digest, String data) {
 }
 
 // Wrapper for PointyCastle library
-String _HMac(HMac hmac, String data, String key) {
+String _hMac(HMac hmac, String data, String key) {
   if (data == null) data = '';
   if (key == null) key = '';
 
@@ -100,20 +100,40 @@ String md2Digest(String data) {
   return _digest(MD2Digest(), data);
 }
 
+String md2Hmac(String data, String key) {
+  return _hMac(HMac(MD2Digest(), 16), data, key);
+}
+
 String md4Digest(String data) {
   return _digest(MD4Digest(), data);
+}
+
+String md4Hmac(String data, String key) {
+  return _hMac(HMac(MD4Digest(), 64), data, key);
 }
 
 String md5Digest(String data) {
   return _digest(MD5Digest(), data);
 }
 
+String md5Hmac(String data, String key) {
+  return _hMac(HMac(MD5Digest(), 64), data, key);
+}
+
 String ripemd_128Digest(String data) {
   return _digest(RIPEMD128Digest(), data);
 }
 
+String ripemd_128Hmac(String data, String key) {
+  return _hMac(HMac(RIPEMD128Digest(), 64), data, key);
+}
+
 String ripemd_160Digest(String data) {
   return _digest(RIPEMD160Digest(), data);
+}
+
+String ripemd_160Hmac(String data, String key) {
+  return _hMac(HMac(RIPEMD160Digest(), 64), data, key);
 }
 
 String ripemd_256Digest(String data) {
@@ -127,55 +147,48 @@ String ripemd_320Digest(String data) {
 String sha1Digest(String data) {
   return _digest(SHA1Digest(), data);
 }
-String sha1HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA1Digest(), 64), data, key);
+String sha1Hmac(String data, String key) {
+  return _hMac(HMac(SHA1Digest(), 64), data, key);
 }
 
 String sha224Digest(String data) {
   return _digest(SHA224Digest(), data);
 }
 
-String sha224HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA224Digest(), 64), data, key);
+String sha224Hmac(String data, String key) {
+  return _hMac(HMac(SHA224Digest(), 64), data, key);
 }
 
 String sha256Digest(String data) {
   return _digest(SHA256Digest(), data);
 }
 
-String sha256HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA256Digest(), 64), data, key);
+String sha256Hmac(String data, String key) {
+  return _hMac(HMac(SHA256Digest(), 64), data, key);
 }
 
 String sha384Digest(String data) {
   return _digest(SHA384Digest(), data);
 }
 
-String sha384HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA384Digest(), 128), data, key);
+String sha384Hmac(String data, String key) {
+  return _hMac(HMac(SHA384Digest(), 128), data, key);
 }
 
 String sha512Digest(String data) {
   return _digest(SHA512Digest(), data);
 }
 
-String sha512HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA512Digest(), 128), data, key);
+String sha512Hmac(String data, String key) {
+  return _hMac(HMac(SHA512Digest(), 128), data, key);
 }
 
 String sha512_224Digest(String data) {
   return _digest(SHA512tDigest((224 / 8).floor()), data);
 }
 
-String sha512_224HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA512tDigest((224 / 8).floor()), 64), data, key);
-}
-
 String sha512_256Digest(String data) {
   return _digest(SHA512tDigest((256 / 8).floor()), data);
-}
-String sha512_256HmacDigest(String data, String key) {
-  return _HMac(HMac(SHA512tDigest((256 / 8).floor()), 64), data, key);
 }
 
 String sha3_224Digest(String data) {

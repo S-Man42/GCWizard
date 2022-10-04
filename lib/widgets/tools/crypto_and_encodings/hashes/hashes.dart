@@ -138,31 +138,43 @@ class SHA3_512 extends _DefaultHash {
 }
 
 class SHA1HMac extends _DefaultHash {
-  SHA1HMac() : super(hashFunction: sha1HmacDigest, needKey: true);
+  SHA1HMac() : super(hashFunction: sha1Hmac, needKey: true);
 }
 
 class SHA224HMac extends _DefaultHash {
-  SHA224HMac() : super(hashFunction: sha224HmacDigest, needKey: true);
+  SHA224HMac() : super(hashFunction: sha224Hmac, needKey: true);
 }
 
 class SHA256HMac extends _DefaultHash {
-  SHA256HMac() : super(hashFunction: sha256HmacDigest, needKey: true);
+  SHA256HMac() : super(hashFunction: sha256Hmac, needKey: true);
 }
 
 class SHA384HMac extends _DefaultHash {
-  SHA384HMac() : super(hashFunction: sha384HmacDigest, needKey: true);
+  SHA384HMac() : super(hashFunction: sha384Hmac, needKey: true);
 }
 
 class SHA512HMac extends _DefaultHash {
-  SHA512HMac() : super(hashFunction: sha512HmacDigest, needKey: true);
+  SHA512HMac() : super(hashFunction: sha512Hmac, needKey: true);
 }
 
-class SHA512_224HMac extends _DefaultHash {
-  SHA512_224HMac() : super(hashFunction: sha512_224HmacDigest, needKey: true);
+class MD2HMac extends _DefaultHash {
+  MD2HMac() : super(hashFunction: md2Hmac, needKey: true);
 }
 
-class SHA512_256HMac extends _DefaultHash {
-  SHA512_256HMac() : super(hashFunction: sha512_256HmacDigest, needKey: true);
+class MD4HMac extends _DefaultHash {
+  MD4HMac() : super(hashFunction: md4Hmac, needKey: true);
+}
+
+class MD5HMac extends _DefaultHash {
+  MD5HMac() : super(hashFunction: md5Hmac, needKey: true);
+}
+
+class RIPEMD_128HMac extends _DefaultHash {
+  RIPEMD_128HMac() : super(hashFunction: ripemd_128Hmac, needKey: true);
+}
+
+class RIPEMD_160HMac extends _DefaultHash {
+  RIPEMD_160HMac() : super(hashFunction: ripemd_128Hmac, needKey: true);
 }
 
 class Keccak_128 extends _DefaultHash {
