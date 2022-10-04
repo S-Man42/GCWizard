@@ -2108,10 +2108,22 @@ initializeRegistry(BuildContext context) {
       'hashes_ripemd',
       'hashes_ripemd_256',
     ]),
+    GCWTool(tool: RIPEMD_256HMac(), i18nPrefix: 'hashes_ripemd256hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_256',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: RIPEMD_320(), i18nPrefix: 'hashes_ripemd320', searchKeys: [
       'hashes',
       'hashes_ripemd',
       'hashes_ripemd_320',
+    ]),
+    GCWTool(tool: RIPEMD_320HMac(), i18nPrefix: 'hashes_ripemd320hmac', searchKeys: [
+      'hashes',
+      'hashes_ripemd',
+      'hashes_ripemd_320',
+      'hashes_hmac',
     ]),
     GCWTool(tool: MD2(), i18nPrefix: 'hashes_md2', searchKeys: [
       'hashes',

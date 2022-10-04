@@ -36,6 +36,7 @@ void main() {
   });
 
   group("Hashes HMac:", () {
+    // https://onlinephp.io/hash-hmac
     test('input: ABC, abc, MD2}', () {expect(md2Hmac('ABC','abc'), '5d728a928ab5cff4bdbc0a5c444cb5ce');});
     test('input: ABC, abc, MD4}', () {expect(md4Hmac('ABC','abc'), '07631a6cb46fde547dc9bb543db981db');});
     test('input: ABC, abc, MD5}', () {expect(md5Hmac('ABC','abc'), '14eb1aefe12f566110a492e32a910815');});
@@ -52,6 +53,8 @@ void main() {
     test('input: ABC, abc, SHA3-512}', () {expect(sha3_512Hmac('ABC','abc'), '1e1b01dd4520c065b65687f2f2e2d4a8ddf4c73418ca4d488cae3141b7eb05e408c861a7d0df7f6759904ada89b3338d41eaffc1b8617a93d4505ba24e82d1ad');});
     test('input: ABC, abc, RipeMD 128}', () {expect(ripemd_128Hmac('ABC','abc'), 'a6c24d723a13ee63215004826d50452b');});
     test('input: ABC, abc, RipeMD 160}', () {expect(ripemd_160Hmac('ABC','abc'), '2c61a274d9bba24cc176b87f0d1dc8b8899bd39a');});
+    test('input: ABC, abc, RipeMD 256}', () {expect(ripemd_256Hmac('ABC','abc'), '8b4e039d1c8f6bdb64709a6ec260b8dbd3019ee32c30d4b2cd2062d733e3092a');});
+    test('input: ABC, abc, RipeMD 320}', () {expect(ripemd_320Hmac('ABC','abc'), '01bf278f97a4997d38c2e367e31cbd70238781d4a015224b9286a3ae3150738f6caf759a219bffcb');});
     test('input: ABC, abc, Tiger 192}', () {expect(tiger_192Hmac('ABC','abc'), '75bc8c3bf5164a091299f3a9e9d2f47b97c6e8d744c3f041');});
     test('input: ABC, abc, Whirlpool 512}', () {expect(whirlpool_512Hmac('ABC','abc'), 'af146523d51f512e0560a001859aa3c8424fb2023ae4a9e2ace05629b01456b3d7969cfff26db2317ee3aee14c66a2f8a6e8a3dff0365d86396c082f70483f3c');});
   });

@@ -62,6 +62,8 @@ class HashSelection extends GCWSelection {
         className(MD4HMac()),
         className(RIPEMD_128HMac()),
         className(RIPEMD_160HMac()),
+        className(RIPEMD_256HMac()),
+        className(RIPEMD_320HMac()),
         className(Tiger_192HMac()),
         className(Whirlpool_512HMac()),
       ].contains(className(element.tool));

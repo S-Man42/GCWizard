@@ -93,7 +93,10 @@ final Map<String, Function> HASHKEY_FUNCTIONS = {
   'hashes_md4hmac': md4Hmac,
   'hashes_ripemd128hmac': ripemd_128Hmac,
   'hashes_ripemd160hmac': ripemd_160Hmac,
+  'hashes_ripemd256hmac': ripemd_256Hmac,
+  'hashes_ripemd320hmac': ripemd_320Hmac,
   'hashes_tiger192hmac': tiger_192Hmac,
+  'hashes_whirlpool512hmac': whirlpool_512Hmac,
 };
 
 String blake2b_160Digest(String data) {
@@ -160,8 +163,16 @@ String ripemd_256Digest(String data) {
   return _digest(RIPEMD256Digest(), data);
 }
 
+String ripemd_256Hmac(String data, String key) {
+  return _hMac(HMac(RIPEMD256Digest(), 64), data, key);
+}
+
 String ripemd_320Digest(String data) {
   return _digest(RIPEMD320Digest(), data);
+}
+
+String ripemd_320Hmac(String data, String key) {
+  return _hMac(HMac(RIPEMD320Digest(), 64), data, key);
 }
 
 String sha1Digest(String data) {
