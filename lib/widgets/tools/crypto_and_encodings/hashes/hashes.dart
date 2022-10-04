@@ -212,3 +212,19 @@ class RIPEMD_160HMac extends _DefaultHash {
 class Tiger_192HMac extends _DefaultHash {
   Tiger_192HMac() : super(hashFunction: tiger_192Hmac, needKey: true);
 }
+
+class SHA3_224HMac extends _DefaultHash {
+  SHA3_224HMac() : super(hashFunction: sha3_224Hmac);
+}
+
+class SHA3_256HMac extends _DefaultHash {
+  SHA3_256HMac() : super(hashFunction: sha3_256Hmac);
+}
+
+class SHA3_384HMac extends _DefaultHash {
+  SHA3_384HMac() : super(hashFunction: sha3_384Hmac);
+}
+
+class SHA3_512HMac extends _DefaultHash {
+  SHA3_512HMac() : super(hashFunction: sha3_512Hmac);
+}

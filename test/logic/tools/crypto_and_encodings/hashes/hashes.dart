@@ -47,6 +47,11 @@ void main() {
     test('input: ABC, abc, RipeMD 128}', () {expect(ripemd_128Hmac('ABC','abc'), 'a6c24d723a13ee63215004826d50452b');});
     test('input: ABC, abc, RipeMD 160}', () {expect(ripemd_160Hmac('ABC','abc'), '2c61a274d9bba24cc176b87f0d1dc8b8899bd39a');});
     test('input: ABC, abc, Tiger 192}', () {expect(tiger_192Hmac('ABC','abc'), '75bc8c3bf5164a091299f3a9e9d2f47b97c6e8d744c3f041');});
+    test('input: ABC, abc, SHA3-224}', () {expect(sha3_224Hmac('ABC','abc'), 'a0b6ff16b31f82f5444290c019d8932ade64c7e674095b4d03edb64c');});
+    test('input: ABC, abc, SHA3-256}', () {expect(sha3_256Hmac('ABC','abc'), '83c0e282004c6fe46dda0fa315fb848afaee85107b3888b843dc629f638ea053');});
+    test('input: ABC, abc, SHA3-384}', () {expect(sha3_384Hmac('ABC','abc'), '851bec4f15cbddb701277c68e8bb2b9d9969a38d6a60f309c257ff575c7504c3e2be2c5ec3a2d8c73a2289a8f1fad573');});
+    test('input: ABC, abc, SHA3-512}', () {expect(sha3_512Hmac('ABC','abc'), '1e1b01dd4520c065b65687f2f2e2d4a8ddf4c73418ca4d488cae3141b7eb05e408c861a7d0df7f6759904ada89b3338d41eaffc1b8617a93d4505ba24e82d1ad');});
+
     // test('input: ABC, RipeMD 256}', () {expect(ripemd_256Digest('ABC'), 'b2a837fc4b66a964abd5809333896de83b9f914d00f469e6a5d836879d32cc2e');});
     // test('input: ABC, RipeMD 320}', () {expect(ripemd_320Digest('ABC'), '6c46fb0fafd948b8477463d0eb96e1836fefc062adfc4e6a38b52bb61385eee173ce866de6c375f7');});
     // test('input: ABC, SHA-1}', () {expect(sha1Digest('ABC'), '3c01bdbb26f358bab27f267924aa2c9a03fcfdb8');});

@@ -76,6 +76,24 @@ final Map<String, Function> HASH_FUNCTIONS = {
   'hashes_whirlpool512': whirlpool_512Digest,
 };
 
+final Map<String, Function> HASHKEY_FUNCTIONS = {
+  'hashes_md5hmac': md5Hmac,
+  'hashes_sha1hmac': sha1Hmac,
+  'hashes_sha224hmac': sha224Hmac,
+  'hashes_sha256hmac': sha256Hmac,
+  'hashes_sha384hmac': sha384Hmac,
+  'hashes_sha512hmac': sha512Hmac,
+  'hashes_sha3.224hmac': sha3_224Hmac,
+  'hashes_sha3.256hmac': sha3_256Hmac,
+  'hashes_sha3.384hmac': sha3_384Hmac,
+  'hashes_sha3.512hmac': sha3_512Hmac,
+  'hashes_md2hmac': md2Hmac,
+  'hashes_md4hmac': md4Hmac,
+  'hashes_ripemd128hmac': ripemd_128Hmac,
+  'hashes_ripemd160hmac': ripemd_160Hmac,
+  'hashes_tiger192hmac': tiger_192Hmac,
+};
+
 String blake2b_160Digest(String data) {
   return _digest(Blake2bDigest(digestSize: (160 / 8).floor()), data);
 }
@@ -147,6 +165,7 @@ String ripemd_320Digest(String data) {
 String sha1Digest(String data) {
   return _digest(SHA1Digest(), data);
 }
+
 String sha1Hmac(String data, String key) {
   return _hMac(HMac(SHA1Digest(), 64), data, key);
 }
@@ -195,16 +214,32 @@ String sha3_224Digest(String data) {
   return _digest(SHA3Digest(224), data);
 }
 
+String sha3_224Hmac(String data, String key) {
+  return _hMac(HMac(SHA3Digest(224), 144), data, key);
+}
+
 String sha3_256Digest(String data) {
   return _digest(SHA3Digest(256), data);
+}
+
+String sha3_256Hmac(String data, String key) {
+  return _hMac(HMac(SHA3Digest(256), 136), data, key);
 }
 
 String sha3_384Digest(String data) {
   return _digest(SHA3Digest(384), data);
 }
 
+String sha3_384Hmac(String data, String key) {
+  return _hMac(HMac(SHA3Digest(384), 104), data, key);
+}
+
 String sha3_512Digest(String data) {
   return _digest(SHA3Digest(512), data);
+}
+
+String sha3_512Hmac(String data, String key) {
+  return _hMac(HMac(SHA3Digest(512), 72), data, key);
 }
 
 String keccak_128Digest(String data) {

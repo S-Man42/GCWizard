@@ -1994,20 +1994,44 @@ initializeRegistry(BuildContext context) {
       'hashes_sha3',
       'hashes_sha3_224',
     ]),
+    GCWTool(tool: SHA3_224HMac(), i18nPrefix: 'hashes_sha3.224hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_224',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA3_256(), i18nPrefix: 'hashes_sha3.256', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_256',
+    ]),
+    GCWTool(tool: SHA3_256HMac(), i18nPrefix: 'hashes_sha3.256hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_256',
+      'hashes_hmac',
     ]),
     GCWTool(tool: SHA3_384(), i18nPrefix: 'hashes_sha3.384', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_384',
     ]),
+    GCWTool(tool: SHA3_384HMac(), i18nPrefix: 'hashes_sha3.384hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_384',
+      'hashes_hmac',
+    ]),
     GCWTool(tool: SHA3_512(), i18nPrefix: 'hashes_sha3.512', searchKeys: [
       'hashes',
       'hashes_sha3',
       'hashes_sha3_512',
+    ]),
+    GCWTool(tool: SHA3_512HMac(), i18nPrefix: 'hashes_sha3.512hmac', searchKeys: [
+      'hashes',
+      'hashes_sha3',
+      'hashes_sha3_512',
+      'hashes_hmac',
     ]),
     GCWTool(tool: Keccak_128(), i18nPrefix: 'hashes_keccak128', searchKeys: [
       'hashes',
