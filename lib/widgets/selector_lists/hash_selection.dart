@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes_overview.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/wherigo_urwigo/urwigo_hashbreaker.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -15,6 +16,7 @@ class HashSelection extends GCWSelection {
       return [
         className(HashBreaker()),
         className(UrwigoHashBreaker()),
+        className(HashOverview()),
         className(MD5()),
         className(SHA1()),
         className(SHA224()),

@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
 class _DefaultHash extends StatefulWidget {
   final Function hashFunction;
-  final bool needKey;
+  final bool keyRequired;
 
-  const _DefaultHash({Key key, this.hashFunction, this.needKey}) : super(key: key);
+  const _DefaultHash({Key key, this.hashFunction, this.keyRequired}) : super(key: key);
 
   @override
   _DefaultHashState createState() => _DefaultHashState();
@@ -29,7 +29,7 @@ class _DefaultHashState extends State<_DefaultHash> {
             });
           },
         ),
-        widget.needKey == true
+        widget.keyRequired == true
           ? GCWTextField(
             hintText: i18n(context, 'common_key'),
             onChanged: (value) {
@@ -39,7 +39,7 @@ class _DefaultHashState extends State<_DefaultHash> {
             },
           )
           : Container(),
-        widget.needKey
+        widget.keyRequired
           ? GCWDefaultOutput(child: widget.hashFunction(_currentValue, _currentKey))
           : GCWDefaultOutput(child: widget.hashFunction(_currentValue))
       ],
@@ -172,31 +172,31 @@ class Whirlpool_512 extends _DefaultHash {
 }
 
 class SHA1HMac extends _DefaultHash {
-  SHA1HMac() : super(hashFunction: sha1Hmac, needKey: true);
+  SHA1HMac() : super(hashFunction: sha1Hmac, keyRequired: true);
 }
 
 class SHA224HMac extends _DefaultHash {
-  SHA224HMac() : super(hashFunction: sha224Hmac, needKey: true);
+  SHA224HMac() : super(hashFunction: sha224Hmac, keyRequired: true);
 }
 
 class SHA256HMac extends _DefaultHash {
-  SHA256HMac() : super(hashFunction: sha256Hmac, needKey: true);
+  SHA256HMac() : super(hashFunction: sha256Hmac, keyRequired: true);
 }
 
 class SHA384HMac extends _DefaultHash {
-  SHA384HMac() : super(hashFunction: sha384Hmac, needKey: true);
+  SHA384HMac() : super(hashFunction: sha384Hmac, keyRequired: true);
 }
 
 class SHA512HMac extends _DefaultHash {
-  SHA512HMac() : super(hashFunction: sha512Hmac, needKey: true);
+  SHA512HMac() : super(hashFunction: sha512Hmac, keyRequired: true);
 }
 
 class SHA512_224HMac extends _DefaultHash {
-  SHA512_224HMac() : super(hashFunction: sha512_224Hmac, needKey: true);
+  SHA512_224HMac() : super(hashFunction: sha512_224Hmac, keyRequired: true);
 }
 
 class SHA512_256HMac extends _DefaultHash {
-  SHA512_256HMac() : super(hashFunction: sha512_256Hmac, needKey: true);
+  SHA512_256HMac() : super(hashFunction: sha512_256Hmac, keyRequired: true);
 }
 
 class SHA3_224HMac extends _DefaultHash {
@@ -216,37 +216,37 @@ class SHA3_512HMac extends _DefaultHash {
 }
 
 class MD2HMac extends _DefaultHash {
-  MD2HMac() : super(hashFunction: md2Hmac, needKey: true);
+  MD2HMac() : super(hashFunction: md2Hmac, keyRequired: true);
 }
 
 class MD4HMac extends _DefaultHash {
-  MD4HMac() : super(hashFunction: md4Hmac, needKey: true);
+  MD4HMac() : super(hashFunction: md4Hmac, keyRequired: true);
 }
 
 class MD5HMac extends _DefaultHash {
-  MD5HMac() : super(hashFunction: md5Hmac, needKey: true);
+  MD5HMac() : super(hashFunction: md5Hmac, keyRequired: true);
 }
 
 class RIPEMD_128HMac extends _DefaultHash {
-  RIPEMD_128HMac() : super(hashFunction: ripemd_128Hmac, needKey: true);
+  RIPEMD_128HMac() : super(hashFunction: ripemd_128Hmac, keyRequired: true);
 }
 
 class RIPEMD_160HMac extends _DefaultHash {
-  RIPEMD_160HMac() : super(hashFunction: ripemd_128Hmac, needKey: true);
+  RIPEMD_160HMac() : super(hashFunction: ripemd_128Hmac, keyRequired: true);
 }
 
 class RIPEMD_256HMac extends _DefaultHash {
-  RIPEMD_256HMac() : super(hashFunction: ripemd_256Hmac, needKey: true);
+  RIPEMD_256HMac() : super(hashFunction: ripemd_256Hmac, keyRequired: true);
 }
 
 class RIPEMD_320HMac extends _DefaultHash {
-  RIPEMD_320HMac() : super(hashFunction: ripemd_320Hmac, needKey: true);
+  RIPEMD_320HMac() : super(hashFunction: ripemd_320Hmac, keyRequired: true);
 }
 
 class Tiger_192HMac extends _DefaultHash {
-  Tiger_192HMac() : super(hashFunction: tiger_192Hmac, needKey: true);
+  Tiger_192HMac() : super(hashFunction: tiger_192Hmac, keyRequired: true);
 }
 
 class Whirlpool_512HMac extends _DefaultHash {
-  Whirlpool_512HMac() : super(hashFunction: whirlpool_512Hmac, needKey: true);
+  Whirlpool_512HMac() : super(hashFunction: whirlpool_512Hmac, keyRequired: true);
 }
