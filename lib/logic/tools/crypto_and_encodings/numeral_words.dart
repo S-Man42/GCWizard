@@ -1902,11 +1902,11 @@ final Map<String, String> ROUWordToNum = {
   'unsprezece': '11',
   'doisprezece': '12',
   'treisprezece': '13',
-  'paisprezece': '14',
-  'cincisprezec': '15',
-  'şaisprezece': '16',
-  'şaptesprezec': '17',
-  'optsprezec': '18',
+  'paisprezecee': '14',
+  'cincisprezece': '15',
+  'şaisprezecee': '16',
+  'şaptesprezece': '17',
+  'optsprezece': '18',
   'nouăsprezece': '19',
   'douăzeci': '20',
   'treizeci': '30',
@@ -2819,13 +2819,11 @@ String _decodeROU(String element){
         return int.parse(ROU_numbers[syllables[0].trim()]);
     }
 
-    print(element);
     if (element.contains('o suta'))
       return 100 + decodeTupel(element.trim(), ROU_numbers);
 
     if (element.contains('sute')){ // element > 199
       syllables = element.split('sute');
-      print(syllables[0].trim());
       return int.parse(ROU_numbers[syllables[0].trim()]) * 100 + decodeTupel(syllables[1].trim(), ROU_numbers);
     }
 
@@ -3176,7 +3174,6 @@ OutputConvertToNumeralWord _encodeROU(int currentNumber) {
     ten = (currentNumber - (currentNumber ~/ 100) * 100) ~/ 10;
     one = currentNumber % 10;
 
-    print(hundred.toString()+'   '+ten.toString()+'   '+one.toString());
     return ROU_numbers[hundred.toString()]
         + ' sute '
         + ( ten == 0
