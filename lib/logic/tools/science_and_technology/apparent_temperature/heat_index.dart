@@ -1,8 +1,6 @@
 // https://de.wikipedia.org/wiki/Hitzeindex
 import 'dart:math';
 
-import 'package:gc_wizard/logic/common/units/temperature.dart';
-
 var _heatParameterCelsius = {
   1: 8.784695 * (-1),
   2: 1.61139411,
@@ -15,28 +13,21 @@ var _heatParameterCelsius = {
   9: 3.582 * pow(10, -6) * (-1)
 };
 
-var _heatParameterFahrenheit = {
-  1: 42.379 * (-1),
-  2: 2.04901523,
-  3: 10.1433127,
-  4: 0.22475541 * (-1),
-  5: 6.83783 * pow(10, -3) * (-1),
-  6: 5.481717 * pow(10, -2) * (-1),
-  7: 1.22874 * pow(10, -3),
-  8: 8.5282 * pow(10, -4),
-  9: 1.99 * pow(10, -6) * (-1),
+enum HEATINDEX_HEATSTRESS_CONDITION { LIGHT_YELLOW, YELLOW, ORANGE, RED }
+
+final Map<HEATINDEX_HEATSTRESS_CONDITION, double> HEATINDEX_HEAT_STRESS = {
+  // https://en.wikipedia.org/wiki/Heat_index
+  HEATINDEX_HEATSTRESS_CONDITION.LIGHT_YELLOW: 27.0,
+  HEATINDEX_HEATSTRESS_CONDITION.YELLOW: 33.0,
+  HEATINDEX_HEATSTRESS_CONDITION.ORANGE: 41.0,
+  HEATINDEX_HEATSTRESS_CONDITION.RED: 54.0,
 };
 
-double calculateHeatIndex(double temperature, double humidity, Temperature temperatureUnit) {
+double calculateHeatIndex(double temperature, double humidity) {
   var c;
   double heatIndex = 0;
 
-  if (temperatureUnit == TEMPERATURE_CELSIUS)
-    c = _heatParameterCelsius;
-  else if (temperatureUnit == TEMPERATURE_FAHRENHEIT)
-    c = _heatParameterFahrenheit;
-  else
-    return double.nan;
+  c = _heatParameterCelsius;
 
   heatIndex = c[1] +
       c[2] * temperature +

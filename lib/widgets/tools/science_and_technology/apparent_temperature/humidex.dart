@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/humidity.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/humidex.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
 
 class Humidex extends StatefulWidget {
   @override
@@ -15,117 +19,135 @@ class Humidex extends StatefulWidget {
 
 class HumidexState extends State<Humidex> {
   double _currentTemperature = 0.0;
-  double _currentDewPoint = 0.0;
-
-  var _isMetric = true;
-  var _isHumidity = true;
-  var mode = '';
+  double _currentHumidity = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
+        GCWUnitInput(
+          value: _currentTemperature,
           title: i18n(context, 'common_measure_temperature'),
-          leftValue: i18n(context, 'common_unit_temperature_degc_name'),
-          rightValue: i18n(context, 'common_unit_temperature_degf_name'),
-          value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          initialUnit: TEMPERATURE_CELSIUS,
+          min: 0.0,
+          unitList: temperatures,
           onChanged: (value) {
             setState(() {
-              _isMetric = value == GCWSwitchPosition.left;
+              _currentTemperature = TEMPERATURE_CELSIUS.fromKelvin(value);
             });
           },
         ),
-        GCWDoubleSpinner(
-            value: _currentTemperature,
-            onChanged: (value) {
-              setState(() {
-                _currentTemperature = value;
-              });
-            }),
-        Container(
-          child: GCWDivider(),
-          padding: EdgeInsets.only(top: 10),
-        ),
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'common_measure_humidity'),
-          rightValue: i18n(context, 'common_measure_dewpoint'),
-          value: _isHumidity ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+        GCWUnitInput(
+          value: _currentHumidity,
+          title: i18n(context, 'common_measure_humidity'),
+          initialUnit: HUMIDITY,
+          min: 0.0,
+          max:100.0,
+          unitList: humidity,
           onChanged: (value) {
             setState(() {
-              _isHumidity = value == GCWSwitchPosition.left;
-              if (_isHumidity) {
-                mode = 'common_measure_humidity';
-              } else {
-                mode = 'common_measure_dewpoint';
-              }
+              _currentHumidity = value;
             });
           },
         ),
-        GCWDoubleSpinner(
-            value: _currentDewPoint,
-            min: 0.0,
-            max: 100.0,
-            onChanged: (value) {
-              setState(() {
-                _currentDewPoint = value;
-              });
-            }),
+
         _buildOutput(context)
       ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
-    String unit = '';
-    double output;
-    if (_isMetric) {
-      output = calculateHumidex(_currentTemperature, _currentDewPoint, TEMPERATURE_CELSIUS, _isHumidity);
-      unit = TEMPERATURE_CELSIUS.symbol;
-    } else {
-      output = calculateHumidex(_currentTemperature, _currentDewPoint, TEMPERATURE_FAHRENHEIT, _isHumidity);
-      unit = TEMPERATURE_FAHRENHEIT.symbol;
-    }
+    double humidex = calculateHumidex(_currentTemperature, _currentHumidity);
 
     String hintT;
-    if ((_isMetric && _currentTemperature < 27) || (!_isMetric && _currentTemperature < 80)) {
-      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
+    if (_currentTemperature < 15) {
+      hintT = i18n(context, 'heatindex_hint_temperature');
     }
 
-    String hintH;
-    if (_isHumidity) {
-      if (_currentDewPoint < 40) hintH = i18n(context, 'heatindex_hint_humidity');
-    } else
-      hintH = '';
+    String hintH = '';
+    if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
-    String hintM = '';
-    if (output > 45)
-      hintM = 'humidex_index_45';
-    else if (output > 39)
-      hintM = 'humidex_index_40';
-    else if (output > 29)
-      hintM = 'humidex_index_30';
-    else if (output > 19) hintM = 'humidex_index_20';
+    String hintHumidex =  _calculateHintHumidex(humidex);
+
+    return Column(
+      children: [
+        GCWDefaultOutput(
+            child: humidex.toStringAsFixed(2),
+            copyText: humidex.toString()
+        ),
+        Row(
+          children: [
+            Container(
+                width: 50,
+                child: GCWIconButton(
+                    icon: Icons.wb_sunny,
+                    iconColor: _colorHumidex(humidex),
+                    backgroundColor: Color(0xFF4d4d4d)
+                ),
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+            ),
+            Expanded(
+              child: GCWOutput(
+                child: hint != '' ? hint : i18n(context, hintHumidex),
+              ),
+            )
+          ],
+        )
+
+      ],
+    );
 
     var outputs = [
       GCWOutput(
         title: i18n(context, 'humidex_output'),
-        child: output.toStringAsFixed(3),
+        child: humidex.toStringAsFixed(3),
       )
     ];
 
     if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
-    if (hintM != null && hintM.length > 0)
+    if (hintHumidex != null && hintHumidex.length > 0)
       outputs.add(GCWOutput(
         title: i18n(context, 'humidex_meaning'),
-        child: i18n(context, hintM),
+        child: i18n(context, hintHumidex),
       ));
 
     return GCWMultipleOutput(
       children: outputs,
     );
   }
+  String _calculateHintHumidex(double HeatIndex){
+    if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.GREEN])
+      if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.YELLOW])
+        if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.ORANGE])
+          if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.RED])
+            return 'humidex_index_red';
+          else
+            return 'humidex_index_orange';
+        else
+          return 'humidex_index_yellow';
+      else
+        return 'humidex_index_green';
+    else
+      return 'humidex_index_white';
+  }
+
+  Color _colorHumidex(double HeatIndex){
+    if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.GREEN])
+      if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.YELLOW])
+        if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.ORANGE])
+          if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.RED])
+            return Colors.red;
+          else
+            return Colors.orange;
+        else
+          return Colors.yellow;
+      else
+        return Colors.green;
+    else
+      return Colors.white;
+  }
+
 }
