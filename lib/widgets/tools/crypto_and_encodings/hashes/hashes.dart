@@ -8,7 +8,7 @@ class _DefaultHash extends StatefulWidget {
   final Function hashFunction;
   final bool keyRequired;
 
-  const _DefaultHash({Key key, this.hashFunction, this.keyRequired}) : super(key: key);
+  const _DefaultHash({Key key, this.hashFunction, this.keyRequired = false}) : super(key: key);
 
   @override
   _DefaultHashState createState() => _DefaultHashState();
@@ -29,7 +29,7 @@ class _DefaultHashState extends State<_DefaultHash> {
             });
           },
         ),
-        widget.keyRequired == true
+        widget.keyRequired
           ? GCWTextField(
             hintText: i18n(context, 'common_key'),
             onChanged: (value) {
