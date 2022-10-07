@@ -4,12 +4,10 @@ import 'package:gc_wizard/logic/common/units/humidity.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
 
 class Humidex extends StatefulWidget {
@@ -41,7 +39,7 @@ class HumidexState extends State<Humidex> {
           value: _currentHumidity,
           title: i18n(context, 'common_measure_humidity'),
           initialUnit: HUMIDITY,
-          min: 0.0,
+          min: 0.1,
           max:100.0,
           unitList: humidity,
           onChanged: (value) {
@@ -60,12 +58,12 @@ class HumidexState extends State<Humidex> {
     double humidex = calculateHumidex(_currentTemperature, _currentHumidity);
 
     String hintT;
-    if (_currentTemperature < 15) {
-      hintT = i18n(context, 'heatindex_hint_temperature');
+    if (_currentTemperature < 21) {
+      hintT = i18n(context, 'humidex_hint_temperature');
     }
 
     String hintH = '';
-    if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
+    if (_currentHumidity < 20) hintH = i18n(context, 'humidex_hint_humidity');
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
@@ -98,31 +96,13 @@ class HumidexState extends State<Humidex> {
 
       ],
     );
-
-    var outputs = [
-      GCWOutput(
-        title: i18n(context, 'humidex_output'),
-        child: humidex.toStringAsFixed(3),
-      )
-    ];
-
-    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
-
-    if (hintHumidex != null && hintHumidex.length > 0)
-      outputs.add(GCWOutput(
-        title: i18n(context, 'humidex_meaning'),
-        child: i18n(context, hintHumidex),
-      ));
-
-    return GCWMultipleOutput(
-      children: outputs,
-    );
   }
-  String _calculateHintHumidex(double HeatIndex){
-    if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.GREEN])
-      if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.YELLOW])
-        if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.ORANGE])
-          if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.RED])
+
+  String _calculateHintHumidex(double humidex){
+    if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.GREEN])
+      if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.YELLOW])
+        if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.ORANGE])
+          if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.RED])
             return 'humidex_index_red';
           else
             return 'humidex_index_orange';
@@ -134,11 +114,11 @@ class HumidexState extends State<Humidex> {
       return 'humidex_index_white';
   }
 
-  Color _colorHumidex(double HeatIndex){
-    if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.GREEN])
-      if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.YELLOW])
-        if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.ORANGE])
-          if (HeatIndex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.RED])
+  Color _colorHumidex(double humidex){
+    if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.GREEN])
+      if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.YELLOW])
+        if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.ORANGE])
+          if (humidex > HUMIDEX_HEAT_STRESS[HUMIDEX_HEATSTRESS_CONDITION.RED])
             return Colors.red;
           else
             return Colors.orange;
@@ -147,7 +127,7 @@ class HumidexState extends State<Humidex> {
       else
         return Colors.green;
     else
-      return Colors.white;
+      return Colors.lightBlueAccent;
   }
 
 }
