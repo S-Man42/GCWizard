@@ -62,7 +62,7 @@ class FormulaPainter {
     _variablesRegEx = _variables.map((variable) => variable).join('|');
 
     formula = FormulaParser.normalizeMathematicalSymbols(formula);
-    formula = FormulaParser.normalizeCharacters(formula);
+    formula = FormulaParser.normalizeSpaces(formula);
     formula = formula.toUpperCase();
     this.formula = formula;
 
