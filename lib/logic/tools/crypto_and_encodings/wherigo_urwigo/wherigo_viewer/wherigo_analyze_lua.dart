@@ -1578,7 +1578,7 @@ List<String> _getAnswers(
         .replaceAll('+', '');
     line.split('or').forEach((element) {
       hashvalue = int.parse(element.replaceAll('\D+', ''));
-      results.add(breakUrwigoHash(hashvalue).toString() + '\x01' + hashvalue.toString());
+      results.add(hashvalue.toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.ALPHANUMERIC).toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
     });
     return results;
   } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||

@@ -2,12 +2,16 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readustring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 
-String breakUrwigoHash(int input) {
+enum HASH {ALPHANUMERIC, NUMERIC}
+
+String breakUrwigoHash(int input, HASH type) {
   if (input == null) return '';
   if (input < 0 || input >= 65535) return '';
 
+  var out;
+
   for (int i = 1; i <= 5; i++) {
-    var out = findHash(input, i);
+    type == HASH.ALPHANUMERIC ? out = findHashAlphaNumeric(input, i) : out = findHashNumeric(input, i);
     if (out != null && out.isNotEmpty) return out;
   }
 
