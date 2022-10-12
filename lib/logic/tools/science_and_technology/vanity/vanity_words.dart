@@ -350,10 +350,7 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
     //decodingTable[key] = removeAccents(value);
     decodingTable[key] = (value);
   });
-if (language == NumeralWordsLanguage.DEU) {
-    NumWords[language]['fünf'] = '5';
-    NumWords[language]['zwölf'] = '12';
-  }
+
   // start decoding text with searchlanguages
   bool found = false;
   bool ambigous = false;
