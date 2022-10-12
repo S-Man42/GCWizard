@@ -350,13 +350,16 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
     //decodingTable[key] = removeAccents(value);
     decodingTable[key] = (value);
   });
+  decodingTable['0'] = ' ';
+  decodingTable['1'] = ' ';
 
   // start decoding text with searchlanguages
   bool found = false;
   bool ambigous = false;
   String hDigits = '';
   String hWord = '';
-  text = text.replaceAll('\n', '').replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '');
+  text = text.replaceAll('\n', '0').replaceAll(' ', '0');
+  //text = text.replaceAll('\n', '').replaceAll('0', '').replaceAll('1', '').replaceAll(' ', '');
   while (text.length > 0) {
     found = false;
     ambigous = false;
@@ -376,6 +379,7 @@ List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguag
         }
       }
     }); // end decodingTable.forEach
+
     if (found && !ambigous) {
       output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], false));
       if (hDigits.length > 0) {
