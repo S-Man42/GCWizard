@@ -1790,9 +1790,9 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     var answerNumeric = answers.length == 3 ? answers[2].trim() : null;
 
     List<List<dynamic>> result = [
-      hash != null ? [i18n(context, 'wherigo_output_hash'), hash] : null,
-      [i18n(context, hash != null ? 'wherigo_output_answerdecrypted' : 'wherigo_output_answer'), answerAlphaNumeric],
-      [i18n(context, hash != null ? 'wherigo_output_answerdecrypted' : 'wherigo_output_answer'), answerNumeric],
+      answers.length > 1 ? [i18n(context, 'wherigo_output_hash'), hash] : [i18n(context, 'wherigo_output_answer'), hash],
+      answerAlphaNumeric != null ? [i18n(context, 'wherigo_output_answerdecrypted'), answerAlphaNumeric] : null,
+      answerNumeric != null ? [i18n(context, 'wherigo_output_answerdecrypted'), answerNumeric] : null,
     ];
 
     return result;
