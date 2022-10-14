@@ -1,9 +1,11 @@
+import 'dart:math';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/games/bowling.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
@@ -28,27 +30,27 @@ class BowlingState extends State<Bowling> {
   int _currentOne = 0;
   int _currentTwo = 0;
   int _currentThree = 0;
-  var _codeGenerateController;
-  var _sourceCodeGenerated = '';
+
+  var _cellWidth;
+  var _maxCellHeight;
+  BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
 
   @override
   void initState() {
     super.initState();
     _initScore();
-    _codeGenerateController = CodeController(
-      text: _sourceCodeGenerated,
-      theme: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
-    );
   }
 
   @override
   void dispose() {
-    _codeGenerateController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    _cellWidth = (MediaQuery.of(context).size.width - 20) / 21;
+    _maxCellHeight = maxScreenHeight(context) / 11;
+
     return Column(
       children: <Widget>[
         Row(
@@ -98,7 +100,8 @@ class BowlingState extends State<Bowling> {
                   },
                 )
             ),
-            _currentOne != 10
+
+            _currentOne != 10 ||  _currentRound == 9
             ? Expanded(
                 flex: 1,
                 child: GCWIntegerSpinner(
@@ -115,7 +118,8 @@ class BowlingState extends State<Bowling> {
                 )
               )
             : Container(),
-            _currentRound == 10
+
+            _currentRound == 9 && _currentOne == 10
                 ? Expanded(
                 flex: 1,
                     child: GCWIntegerSpinner(
@@ -142,7 +146,6 @@ class BowlingState extends State<Bowling> {
   }
 
   Widget _buildOutput() {
-    _codeGenerateController.text = _scoreBoard();
     return Column(
       children: <Widget>[
         GCWDefaultOutput(
@@ -154,11 +157,10 @@ class BowlingState extends State<Bowling> {
           text: i18n(context, 'bowling_scoreboard'),
         ),
         GCWOutput(
-            child: CodeField(
-              controller: _codeGenerateController,
-              textStyle: gcwMonotypeTextStyle(),
-            )
-        )
+          child: Column(
+            children: _buildScoreBoard(),
+          )
+        ),
       ],
     );
   }
@@ -216,23 +218,126 @@ class BowlingState extends State<Bowling> {
     return result;
   }
 
-  String _scoreBoard(){
-    String line1 = '|';
-    String line2 = '|';
-    for (int i = 0; i < 10; i++){
-      if ( _currentBowlingSCore[i].one == 10){
-        line1 = line1 + ' |X|';
-      } else {
-        line1 = line1 + _currentBowlingSCore[i].one.toString() + '|';
-        if (_currentBowlingSCore[i].one + _currentBowlingSCore[i].two == 10)
-          line1 = line1 + '/|';
-        else
-          line1 = line1 + _currentBowlingSCore[i].two.toString() + '|';
-      }
+  _buildScoreBoard() {
+    var score = <Widget>[];
+    var scoreRow1 = <Widget>[];
+    var scoreRow2 = <Widget>[];
 
-      line2 = line2 + _currentTotal[i].toString().padLeft(3, ' ') + '|';
+    for (int i = 0; i < 10; i++){
+      scoreRow1.add(_buildCellRow1(i, 1));
+      scoreRow1.add(_buildCellRow1(i, 2));
     }
-    return line1 + '\n' + line2;
+    scoreRow1.add(_buildCellRow1(9, 3));
+    score.add(Row(children: scoreRow1,));
+
+    for (int i = 0; i < 10; i++){
+      i != 9 ? scoreRow2.add(_buildCellRow2(i)) : scoreRow2.add(_buildCellRow2_10());
+    }
+    score.add(Row(children: scoreRow2,));
+
+    return score;
   }
 
+  String _buildDataRow1(int round, int count){
+    switch (count) {
+      case 1:
+        if ( _currentBowlingSCore[round].one == 10)
+          return 'X';
+        else
+          return  _currentBowlingSCore[round].one.toString();
+        break;
+      case 2:
+        if ( _currentBowlingSCore[round].one == 10)
+          if (round != 9)
+            return ' ';
+          else
+            return _currentBowlingSCore[round].two.toString();
+        else if ( _currentBowlingSCore[round].one +  _currentBowlingSCore[round].two == 10)
+          return '/';
+        else
+          return  _currentBowlingSCore[round].two.toString();
+        break;
+      case 3:
+        return  _currentBowlingSCore[round].three.toString();
+        break;
+    }
+  }
+
+  Widget _buildCellRow1(int round, int count){
+    return Container(
+      height: defaultFontSize() * 1.5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+            top: _border,
+            left: _border,
+            right: _border,
+            bottom: count != 1 ? _border : BorderSide.none),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+              child: AutoSizeText(
+                _buildDataRow1(round, count),
+                style: gcwTextStyle().copyWith(color: Colors.black),
+                minFontSize: AUTO_FONT_SIZE_MIN,
+                maxLines: 1,
+              )),
+        ],
+      ),
+      width: _cellWidth,
+    );
+  }
+
+  Widget _buildCellRow2(int round){
+    return Container(
+      height: defaultFontSize() * 1.5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+            top: BorderSide.none,
+            left: _border,
+            right: _border,
+            bottom: _border),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+              child: AutoSizeText(
+                _currentTotal[round].toString(),
+                style: gcwTextStyle().copyWith(color: Colors.black),
+                minFontSize: AUTO_FONT_SIZE_MIN,
+                maxLines: 1,
+              )),
+        ],
+      ),
+      width: _cellWidth * 2,
+    );
+  }
+
+  Widget _buildCellRow2_10() {
+    return Container(
+      height: defaultFontSize() * 1.5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+            top: BorderSide.none,
+            left: _border,
+            right: _border,
+            bottom: _border),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+              child: AutoSizeText(
+                _currentTotal[9].toString(),
+                style: gcwTextStyle().copyWith(color: Colors.black),
+                minFontSize: AUTO_FONT_SIZE_MIN,
+                maxLines: 1,
+              )),
+        ],
+      ),
+      width: _cellWidth * 3,
+    );
+  }
 }
