@@ -267,9 +267,15 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         _obfuscatorTable = _obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
 
         // deObfuscate all texts
+        _LUAFile = _LUAFile.replaceAll('([[', '(').replaceAll(']])', ')');
         RegExp(r'' + _obfuscatorFunction + '\\(".*?"\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
           _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
               '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+        });
+
+        RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
+          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
+              '"' + deObfuscateText(obfuscatedText.group(0).replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''), _obfuscatorFunction, _obfuscatorTable) + '"');
         });
         i = lines.length;
       }
