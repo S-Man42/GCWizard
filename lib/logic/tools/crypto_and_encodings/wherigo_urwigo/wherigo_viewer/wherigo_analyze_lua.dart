@@ -1228,32 +1228,36 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           else if (_OnGetInputSectionEnd(lines[i])) {
             if (insideInputFunction) {
-              answerList.forEach((answer) {
-                Answers[inputObject].add(AnswerData(
-                  answer,
-                  answerHash,
-                  answerActions,
-                ));
-              });
-              answerActions = [];
-              answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
+                answerList.forEach((answer) {
+                  if (answer != 'NIL')
+                    Answers[inputObject].add(AnswerData(
+                      answer,
+                      answerHash,
+                      answerActions,
+                    ));
+                });
+                answerActions = [];
+                answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
+
             }
           }
 
           else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
-              answerActions.forEach((element) {});
-              answerList.forEach((answer) {
-                Answers[inputObject].add(AnswerData(
-                  answer,
-                  answerHash,
-                  answerActions,
-                ));
-              });
-              answerActions = [];
-              answerList = [];
-              _answerVariable = '';
+                answerActions.forEach((element) {});
+                answerList.forEach((answer) {
+                  if (answer != 'NIL')
+                    Answers[inputObject].add(AnswerData(
+                      answer,
+                      answerHash,
+                      answerActions,
+                    ));
+                });
+                answerActions = [];
+                answerList = [];
+                _answerVariable = '';
+
             }
           }
 
@@ -1617,6 +1621,9 @@ List<String> _getAnswers(
         line = variables[i].VariableName + '\x01' + line;
         i = variables.length;
       }
+    }
+    if (line.length == 0) {
+      return ['NIL'];
     }
     return [line];
   }
