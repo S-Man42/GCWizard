@@ -2562,14 +2562,21 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       }
     }); //for each element to decode
     return output;
-  } else {
+  }
+  else
+  {
     // search parts of words: weight => eight => 8
+print('---------------------------------------------------------');
+print(input);
+    print(input.replaceAll(RegExp(r'[^a-z0-9]'), ''));
+    //decodeText = input.replaceAll(' ', '').split(RegExp(r'[^a-z0-9\-]'));
+    decodeText = input.replaceAll(RegExp(r'[^a-z0-9]'), '');
 
-    decodeText = input.replaceAll(' ', '').split(RegExp(r'[^a-z0-9\-]'));
-
-    decodeText.forEach((element) {
-      for (int i = 0; i < element.length; i++) {
-        String checkWord = element.substring(i);
+    //decodeText.forEach((element) {
+//      for (int i = 0; i < element.length; i++) {
+//        String checkWord = element.substring(i);
+        for (int i = 0; i < decodeText.length; i++) {
+          String checkWord = decodeText.substring(i);
         RegExp exp = new RegExp(r"([0-9]+)");
         if (checkWord.startsWith(exp)) {
           // search for numbers
@@ -2617,7 +2624,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
           });
         } // else
       } // for element
-    }); // forEach element
+//    }); // forEach element
     return output;
   }
 }
