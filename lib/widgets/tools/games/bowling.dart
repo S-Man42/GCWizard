@@ -12,11 +12,6 @@ import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:code_text_field/code_text_field.dart';
-import 'package:flutter_highlight/themes/atom-one-dark.dart';
-import 'package:flutter_highlight/themes/atom-one-light.dart';
-import 'package:prefs/prefs.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 
 class Bowling extends StatefulWidget {
   @override
@@ -32,7 +27,6 @@ class BowlingState extends State<Bowling> {
   int _currentThree = 0;
 
   var _cellWidth;
-  var _maxCellHeight;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
 
   @override
@@ -49,7 +43,6 @@ class BowlingState extends State<Bowling> {
   @override
   Widget build(BuildContext context) {
     _cellWidth = (MediaQuery.of(context).size.width - 20) / 21;
-    _maxCellHeight = maxScreenHeight(context) / 11;
 
     return Column(
       children: <Widget>[
@@ -94,9 +87,13 @@ class BowlingState extends State<Bowling> {
                   onChanged: (value) {
                     setState(() {
                       _currentOne = value;
-                      _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                      _calcTotal();
                     });
+                    if (_currentOne == 10) {
+                      _currentTwo = 0;
+                      _currentThree = 0;
+                    }
+                    _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                    _calcTotal();
                   },
                 )
             ),
@@ -111,9 +108,13 @@ class BowlingState extends State<Bowling> {
                   onChanged: (value) {
                     setState(() {
                       _currentTwo = value;
-                      _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                      _calcTotal();
                     });
+                    if (_currentTwo == 10) {
+                      _currentOne = 0;
+                      _currentThree = 0;
+                    }
+                    _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                    _calcTotal();
                   },
                 )
               )
@@ -129,11 +130,10 @@ class BowlingState extends State<Bowling> {
                       onChanged: (value) {
                         setState(() {
                           _currentThree = value;
-                          _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                          _calcTotal();
                         });
+                        _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                        _calcTotal();
                       },
-
                     )
                   )
                 : Container()
@@ -192,18 +192,24 @@ class BowlingState extends State<Bowling> {
       if (_currentBowlingSCore[i].one == 10) {
         round = _currentBowlingSCore[i].one + _currentBowlingSCore[i + 1].one;
         if (_currentBowlingSCore[i + 1].one == 10) {
-          if (i + 1 == 10)
+          if (i + 1 == 10) {
             round = round + _currentBowlingSCore[i + 1].two;
-          else
-            round = round + _currentBowlingSCore[i + 2].one;
+          } else {
+            if (i + 2 == 10)
+              round = round + _currentBowlingSCore[i + 1].two;
+            else
+              round = round + _currentBowlingSCore[i + 2].one;
+          }
         }
         else
           round = round + _currentBowlingSCore[i + 1].two;
         _currentTotal[i] = round;
       }
+
       else if (_currentBowlingSCore[i].one + _currentBowlingSCore[i].two == 10) {
         _currentTotal[i] = _currentBowlingSCore[i].one + _currentBowlingSCore[i].two + _currentBowlingSCore[i + 1].one;
       }
+
       else {
         _currentTotal[i] = _currentBowlingSCore[i].one + _currentBowlingSCore[i].two;
       }
@@ -219,6 +225,7 @@ class BowlingState extends State<Bowling> {
   }
 
   _buildScoreBoard() {
+    https://www.sportcalculators.com/bowling-score-calculator
     var score = <Widget>[];
     var scoreRow1 = <Widget>[];
     var scoreRow2 = <Widget>[];
@@ -241,24 +248,21 @@ class BowlingState extends State<Bowling> {
   String _buildDataRow1(int round, int count){
     switch (count) {
       case 1:
-        if ( _currentBowlingSCore[round].one == 10)
-          return 'X';
-        else
-          return  _currentBowlingSCore[round].one.toString();
+        return _currentBowlingSCore[round].one == 10 ? 'X' : _currentBowlingSCore[round].one.toString();
         break;
       case 2:
         if ( _currentBowlingSCore[round].one == 10)
           if (round != 9)
             return ' ';
           else
-            return _currentBowlingSCore[round].two.toString();
+            return _currentBowlingSCore[round].two == 10 ? 'X' : _currentBowlingSCore[round].two.toString();
         else if ( _currentBowlingSCore[round].one +  _currentBowlingSCore[round].two == 10)
           return '/';
         else
           return  _currentBowlingSCore[round].two.toString();
         break;
       case 3:
-        return  _currentBowlingSCore[round].three.toString();
+        return  _currentBowlingSCore[round].three == 10 ? 'X' : _currentBowlingSCore[round].three.toString();
         break;
     }
   }
