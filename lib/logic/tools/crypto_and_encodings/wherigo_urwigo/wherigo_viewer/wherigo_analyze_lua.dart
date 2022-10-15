@@ -1658,6 +1658,7 @@ List<String> _getAnswers(
       line.trim().startsWith('elseif input <= ') ||
       line.trim().startsWith('if ' + _answerVariable + ' == ') ||
       line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
+
     if (line.contains('<=') && line.contains('>=')) {
       return [line
           .trimLeft()
@@ -1679,8 +1680,11 @@ List<String> _getAnswers(
         .replaceAll('then', '')
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
-        .split(RegExp(r'(or|and)'));
-  } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
+        .replaceAll('and', ' and ')
+        .split(RegExp(r'(or)'));
+  }
+
+  else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
     line = line.split('and')[0];
@@ -1712,7 +1716,9 @@ List<String> _getAnswers(
       results.add(hashvalue.toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.ALPHANUMERIC).toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
     });
     return results;
-  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+  }
+
+  else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
     line = line
