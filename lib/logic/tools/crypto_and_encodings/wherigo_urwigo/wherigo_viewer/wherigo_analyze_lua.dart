@@ -1324,25 +1324,39 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           singleMessageDialog = [];
 
-          if (lines[i].contains('Text = "') || lines[i].contains('Media = ')) {
+          if (lines[i].contains('Text = ') || lines[i].contains('Media = ')) {
             String line = lines[i];
-            do {
-              line = line.substring(1);
-            } while (!line.startsWith('Text'));
-            line = line.replaceAll('Text = "', '').replaceAll('(', '').replaceAll('{', '');
-            line = line.substring(0, line.indexOf('"'));
-            if (line.length != 0)
-              singleMessageDialog.add(
-                  ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
-
+            if (line.contains('Text = ')) {
+              do {
+                line = line.substring(1);
+              } while (!line.startsWith('Text'));
+              line = line
+                  .replaceAll('Text = ', '')
+                  .replaceAll('(', '')
+                  .replaceAll('{', '');
+              if (line.indexOf('"') != -1)
+                line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
+              else if (line.indexOf(',') != -1)
+                line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
+              else
+                line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
+              if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+            }
             line = lines[i];
-            do {
-              line = line.substring(1);
-            } while (!line.startsWith('Media'));
-            line = line.replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '').replaceAll(')', '').replaceAll('}', '');
-            singleMessageDialog.add(
-                ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+            if (line.contains('Media = ')) {
+              do {
+                line = line.substring(1);
+              } while (!line.startsWith('Media'));
+              line = line
+                  .replaceAll('Media = ', '')
+                  .replaceAll('"', '')
+                  .replaceAll(',', '')
+                  .replaceAll(')', '')
+                  .replaceAll('}', '');
+              singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+            }
           }
+
           else {
             i++;
             lines[i] = lines[i].trim();
@@ -1386,22 +1400,61 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             } while (sectionMessages);
           }
           _Messages.add(singleMessageDialog);
-        } else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
+        }
+
+        else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
             lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
           sectionMessages = true;
           singleMessageDialog = [];
           i++;
           lines[i] = lines[i].trim();
           do {
-            if (lines[i].trimLeft().startsWith('Text = ') ||
+            if (lines[i].contains('{Text = ')) {
+              String line = lines[i];
+              if (line.contains('Text = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Text'));
+                line = line
+                    .replaceAll('Text = ', '')
+                    .replaceAll('(', '')
+                    .replaceAll('{', '');
+                if (line.indexOf('"') != -1)
+                  line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
+                else if (line.indexOf(',') != -1)
+                  line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
+                else
+                  line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
+                if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+              }
+              line = lines[i];
+              if (line.contains('Media = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Media'));
+                line = line
+                    .replaceAll('Media = ', '')
+                    .replaceAll('"', '')
+                    .replaceAll(',', '')
+                    .replaceAll(')', '')
+                    .replaceAll('}', '');
+                singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+              }
+            }
+
+            else if (lines[i].trimLeft().startsWith('Text = ') ||
                 lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
                 lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
               do {
@@ -1421,21 +1474,63 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             lines[i] = lines[i].trim();
           } while (sectionMessages && (i < lines.length));
           _Messages.add(singleMessageDialog);
-        } else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
+        }
+
+        else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
           i++;
           lines[i] = lines[i].trim();
           sectionMessages = true;
           singleMessageDialog = [];
+
           do {
-            if (lines[i].trimLeft().startsWith('})')) {
+            if (lines[i].contains('{Text = ')) {
+              String line = lines[i];
+              if (line.contains('Text = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Text'));
+                line = line
+                    .replaceAll('Text = ', '')
+                    .replaceAll('(', '')
+                    .replaceAll('{', '');
+                if (line.indexOf('"') != -1)
+                  line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
+                else if (line.indexOf(',') != -1)
+                  line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
+                else
+                  line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
+                if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+              }
+              line = lines[i];
+              if (line.contains('Media = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Media'));
+                line = line
+                    .replaceAll('Media = ', '')
+                    .replaceAll('"', '')
+                    .replaceAll(',', '')
+                    .replaceAll(')', '')
+                    .replaceAll('}', '');
+                singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+              }
+            }
+
+            else if (lines[i].trimLeft().startsWith('})')) {
               sectionMessages = false;
-            } else if (lines[i].trimLeft().startsWith('Text = ')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Text = ')) {
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
               do {
@@ -1444,7 +1539,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
-            } else
+            }
+
+            else
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, lines[i].replaceAll('{', '').replaceAll('}', '')));
 
@@ -1456,7 +1553,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       }
     } catch (exception) {
       _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_media', exception));
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_messages', exception));
     }
   } // end of second parse for i = 0 to lines.length - getting Messages/Dialogs
 
