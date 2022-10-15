@@ -84,53 +84,63 @@ class BowlingState extends State<Bowling> {
           children: <Widget>[
             Expanded(
                 flex: 1,
-                child: GCWDropDownButton(
-                  value: _currentOne,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentOne = value;
-                    });
-                    if (_currentOne == 10 && _currentRound != 9) {
-                      _currentTwo = 0;
-                      _currentThree = 0;
-                    } else {
-                      _currentTwo = 0;
-                      _currentRound != 9 ? bowlingThrows2 = BOWLING_THROWS[10 - _currentOne] : bowlingThrows2 = BOWLING_THROWS[10];
-                    }
-                _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                    _calcTotal();
-                  },
-                  items: bowlingThrows1.entries.map((mode) {
-                    return GCWDropDownMenuItem(
-                            value: mode.key,
-                            child: mode.value,
-                            );
-                  }).toList(),
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentOne,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentOne = value;
+                      });
+                      if (_currentOne == 10 && _currentRound != 9) {
+                        _currentTwo = 0;
+                        _currentThree = 0;
+                      } else {
+                        _currentTwo = 0;
+                        _currentRound != 9 ? bowlingThrows2 = BOWLING_THROWS[10 - _currentOne] : bowlingThrows2 = BOWLING_THROWS[10];
+                      }
+                      _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                      _calcTotal();
+                    },
+                    items: bowlingThrows1.entries.map((mode) {
+                      return GCWDropDownMenuItem(
+                        value: mode.key,
+                        child: mode.value,
+                      );
+                    }).toList(),
+                  ),
+                  margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                 ),
             ),
 
             _currentOne != 10 ||  _currentRound == 9
             ? Expanded(
                 flex: 1,
-              child: GCWDropDownButton(
-                value: _currentTwo,
-                onChanged: (value) {
-                  setState(() {
-                    _currentTwo = value;
-                  });
-                  if (_currentTwo == 10 && _currentRound != 9) {
-                    _currentOne = 0;
-                    _currentThree = 0;
-                  }
-                  _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                  _calcTotal();
-                },
-                items: bowlingThrows2.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
+              child: Container(
+                child: GCWDropDownButton(
+                  value: _currentTwo,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentTwo = value;
+                    });
+                    if (_currentTwo == 10 && _currentRound != 9) {
+                      _currentOne = 0;
+                      _currentThree = 0;
+                    }
+                    if (_currentRound == 9 && _currentTwo != 10) {
+                          _currentThree = 0;
+                          bowlingThrows3 = BOWLING_THROWS[10 - _currentTwo];
+                        }
+                        _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                    _calcTotal();
+                  },
+                  items: bowlingThrows2.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                      value: mode.key,
+                      child: mode.value,
+                    );
+                  }).toList(),
+                ),
+                margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               ),
               )
             : Container(),
@@ -138,21 +148,24 @@ class BowlingState extends State<Bowling> {
             _currentRound == 9 && _currentOne == 10
                 ? Expanded(
                 flex: 1,
-                    child: GCWDropDownButton(
-                      value: _currentThree,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentThree = value;
-                        });
-                        _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                        _calcTotal();
-                      },
-                      items: bowlingThrows3.entries.map((mode) {
-                        return GCWDropDownMenuItem(
-                          value: mode.key,
-                          child: mode.value,
-                        );
-                      }).toList(),
+                    child: Container(
+                      child: GCWDropDownButton(
+                        value: _currentThree,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentThree = value;
+                          });
+                          _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                          _calcTotal();
+                        },
+                        items: bowlingThrows3.entries.map((mode) {
+                          return GCWDropDownMenuItem(
+                            value: mode.key,
+                            child: mode.value,
+                          );
+                        }).toList(),
+                      ),
+                      margin: EdgeInsets.only(left: DEFAULT_MARGIN),
                     )
                   )
                 : Container()
