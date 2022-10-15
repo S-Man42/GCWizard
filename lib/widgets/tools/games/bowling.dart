@@ -1,14 +1,12 @@
-import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/games/bowling.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -25,6 +23,10 @@ class BowlingState extends State<Bowling> {
   int _currentOne = 0;
   int _currentTwo = 0;
   int _currentThree = 0;
+
+  var bowlingThrows1 = BOWLING_THROWS[10];
+  var bowlingThrows2 = BOWLING_THROWS[10];
+  var bowlingThrows3 = BOWLING_THROWS[10];
 
   var _cellWidth;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
@@ -55,6 +57,7 @@ class BowlingState extends State<Bowling> {
                   _currentRound--;
                   if (_currentRound < 0) _currentRound = 9;
                   _resetScore();
+                  bowlingThrows2 = BOWLING_THROWS[10];
                 });
               },
             ),
@@ -71,6 +74,7 @@ class BowlingState extends State<Bowling> {
                   _currentRound++;
                   if (_currentRound > 9) _currentRound = 0;
                   _resetScore();
+                  bowlingThrows2 = BOWLING_THROWS[10];
                 });
               },
             ),
@@ -80,52 +84,61 @@ class BowlingState extends State<Bowling> {
           children: <Widget>[
             Expanded(
                 flex: 1,
-                child: GCWIntegerSpinner(
-                  min: 0,
-                  max: 10,
+                child: GCWDropDownButton(
                   value: _currentOne,
                   onChanged: (value) {
                     setState(() {
                       _currentOne = value;
                     });
-                    if (_currentOne == 10) {
+                    if (_currentOne == 10 && _currentRound != 9) {
                       _currentTwo = 0;
                       _currentThree = 0;
+                    } else {
+                      _currentTwo = 0;
+                      _currentRound != 9 ? bowlingThrows2 = BOWLING_THROWS[10 - _currentOne] : bowlingThrows2 = BOWLING_THROWS[10];
                     }
-                    _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
                     _calcTotal();
                   },
-                )
+                  items: bowlingThrows1.entries.map((mode) {
+                    return GCWDropDownMenuItem(
+                            value: mode.key,
+                            child: mode.value,
+                            );
+                  }).toList(),
+                ),
             ),
 
             _currentOne != 10 ||  _currentRound == 9
             ? Expanded(
                 flex: 1,
-                child: GCWIntegerSpinner(
-                  min: 0,
-                  max: 10,
-                  value: _currentTwo,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentTwo = value;
-                    });
-                    if (_currentTwo == 10) {
-                      _currentOne = 0;
-                      _currentThree = 0;
-                    }
-                    _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                    _calcTotal();
-                  },
-                )
+              child: GCWDropDownButton(
+                value: _currentTwo,
+                onChanged: (value) {
+                  setState(() {
+                    _currentTwo = value;
+                  });
+                  if (_currentTwo == 10 && _currentRound != 9) {
+                    _currentOne = 0;
+                    _currentThree = 0;
+                  }
+                  _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
+                  _calcTotal();
+                },
+                items: bowlingThrows2.entries.map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode.key,
+                    child: mode.value,
+                  );
+                }).toList(),
+              ),
               )
             : Container(),
 
             _currentRound == 9 && _currentOne == 10
                 ? Expanded(
                 flex: 1,
-                    child: GCWIntegerSpinner(
-                      min: 0,
-                      max: 10,
+                    child: GCWDropDownButton(
                       value: _currentThree,
                       onChanged: (value) {
                         setState(() {
@@ -134,6 +147,12 @@ class BowlingState extends State<Bowling> {
                         _currentBowlingSCore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
                         _calcTotal();
                       },
+                      items: bowlingThrows3.entries.map((mode) {
+                        return GCWDropDownMenuItem(
+                          value: mode.key,
+                          child: mode.value,
+                        );
+                      }).toList(),
                     )
                   )
                 : Container()
