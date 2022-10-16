@@ -188,7 +188,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
             lineNumberStyle: LineNumberStyle(
                 width: 0.0,
                 margin: 0.0,
-                textStyle: TextStyle(fontSize: 0.1)),
+                textStyle: TextStyle(fontSize: 0.1, color: Colors.black87)),
           ),
         )
       ],
