@@ -24,9 +24,9 @@ class BowlingState extends State<Bowling> {
   int _currentTwo = 0;
   int _currentThree = 0;
 
-  var bowlingThrows1 = BOWLING_THROWS[10];
-  var bowlingThrows2 = BOWLING_THROWS[10];
-  var bowlingThrows3 = BOWLING_THROWS[10];
+  var _currentPossibleThrows1 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
+  var _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
+  var _currentPossibleThrows3 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
 
   var _cellWidth;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
@@ -59,7 +59,7 @@ class BowlingState extends State<Bowling> {
                   _currentOne = _currentBowlingScore[_currentRound].one;
                   _currentTwo = _currentBowlingScore[_currentRound].two;
                   _currentThree = _currentBowlingScore[_currentRound].three;
-                  bowlingThrows2 = BOWLING_THROWS[10];
+                  _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
                 });
               },
             ),
@@ -78,7 +78,7 @@ class BowlingState extends State<Bowling> {
                   _currentOne = _currentBowlingScore[_currentRound].one;
                   _currentTwo = _currentBowlingScore[_currentRound].two;
                   _currentThree = _currentBowlingScore[_currentRound].three;
-                  bowlingThrows2 = BOWLING_THROWS[10];
+                  _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
                 });
               },
             ),
@@ -100,12 +100,12 @@ class BowlingState extends State<Bowling> {
                         _currentThree = 0;
                       } else {
                         _currentTwo = 0;
-                        _currentRound != 9 ? bowlingThrows2 = BOWLING_THROWS[10 - _currentOne] : bowlingThrows2 = BOWLING_THROWS[10];
+                        _currentRound != 9 ? _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10 - _currentOne, (i) => i + 1)) : _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));;
                       }
                       _currentBowlingScore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
                       _currentTotal = bowlingCalcTotal(_currentBowlingScore);
                     },
-                    items: bowlingThrows1.entries.map((mode) {
+                    items: _currentPossibleThrows1.entries.map((mode) {
                       return GCWDropDownMenuItem(
                         value: mode.key,
                         child: mode.value,
@@ -132,12 +132,12 @@ class BowlingState extends State<Bowling> {
                     }
                     if (_currentRound == 9 && _currentTwo != 10) {
                           _currentThree = 0;
-                          bowlingThrows3 = BOWLING_THROWS[10 - _currentTwo];
+                          _currentPossibleThrows3 = Map.fromIterable(List<int>.generate(10 - _currentTwo, (i) => i + 1));
                         }
                         _currentBowlingScore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
                     _currentTotal = bowlingCalcTotal(_currentBowlingScore);
                   },
-                  items: bowlingThrows2.entries.map((mode) {
+                  items: _currentPossibleThrows2.entries.map((mode) {
                     return GCWDropDownMenuItem(
                       value: mode.key,
                       child: mode.value,
@@ -162,7 +162,7 @@ class BowlingState extends State<Bowling> {
                           _currentBowlingScore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
                           _currentTotal = bowlingCalcTotal(_currentBowlingScore);
                         },
-                        items: bowlingThrows3.entries.map((mode) {
+                        items: _currentPossibleThrows3.entries.map((mode) {
                           return GCWDropDownMenuItem(
                             value: mode.key,
                             child: mode.value,
