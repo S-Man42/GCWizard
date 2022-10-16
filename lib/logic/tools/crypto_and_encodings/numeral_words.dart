@@ -120,33 +120,6 @@ enum NumeralWordsLanguage {
   NUM
 }
 
- final Map<NumeralWordsLanguage, Map<String, TextStyle>> SYNTAX_HIGLIGHT = {
-   NumeralWordsLanguage.DEU :{
-    r'null': TextStyle(color: Colors.red),
-    r'eins': TextStyle(color: Colors.red),
-    r'zwei': TextStyle(color: Colors.red),
-    r'drei': TextStyle(color: Colors.red),
-    r'vier': TextStyle(color: Colors.red),
-    r'fuenf': TextStyle(color: Colors.red),
-    r'sechs': TextStyle(color: Colors.red),
-    r'sieben': TextStyle(color: Colors.red),
-    r'acht': TextStyle(color: Colors.red),
-    r'neun': TextStyle(color: Colors.red),
-  },
-   NumeralWordsLanguage.ENG :{
-     r'null': TextStyle(color: Colors.red),
-     r'one': TextStyle(color: Colors.red),
-     r'two': TextStyle(color: Colors.red),
-     r'three': TextStyle(color: Colors.red),
-     r'four': TextStyle(color: Colors.red),
-     r'five': TextStyle(color: Colors.red),
-     r'six': TextStyle(color: Colors.red),
-     r'seven': TextStyle(color: Colors.red),
-     r'eight': TextStyle(color: Colors.red),
-     r'nine': TextStyle(color: Colors.red),
-   },
-
- };
 
 final Map<String, String> DEUWordToNum = {
   'null': '0',

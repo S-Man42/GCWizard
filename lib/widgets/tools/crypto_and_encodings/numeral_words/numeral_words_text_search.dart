@@ -190,10 +190,21 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   }
 
   Map<String, TextStyle> _numeralWordsHiglightMap(){
-    if (_currentLanguage == NumeralWordsLanguage.DEU ||
-        _currentLanguage == NumeralWordsLanguage.ENG){
-      return SYNTAX_HIGLIGHT[_currentLanguage];
+    Map<String, TextStyle> result = {};
+    if (_currentLanguage != NumeralWordsLanguage.ALL){
+      NumWords[_currentLanguage].forEach((key, value) {
+        if (int.tryParse(value) == null)
+          if (value.startsWith('numeral'))
+            result[r'' + key + ''] = TextStyle(color: Colors.blue);
+          else
+            result[r'' + key + ''] = TextStyle(color: Colors.green);
+        else
+          if (int.parse(value) < 10)
+            result[r'' + key + ''] = TextStyle(color: Colors.red);
+          else
+            result[r'' + key + ''] = TextStyle(color: Colors.orange);
+      });
     }
-    return {};
+    return result;
   }
 }
