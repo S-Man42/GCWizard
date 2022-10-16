@@ -185,7 +185,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
             controller: _codeControllerHighlighted,
             wrap: true,
             textStyle: TextStyle(fontFamily: 'SourceCode'),
-            lineNumberStyle: LineNumberStyle(width: 0.0),
+            lineNumberStyle: LineNumberStyle(
+                width: 0.0,
+                margin: 0.0,
+                textStyle: TextStyle(fontSize: 0.1)),
           ),
         )
       ],
