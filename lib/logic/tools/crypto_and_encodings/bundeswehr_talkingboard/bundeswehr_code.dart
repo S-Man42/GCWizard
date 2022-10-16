@@ -56,20 +56,17 @@ BundeswehrTalkingBoardCodingOutput decodeBundeswehr(String cypherText, Bundesweh
 
 String _decodeNumeralCode(String tupel, BundeswehrTalkingBoardAuthentificationTable tableNumeralCode) {
   int index = 0;
-  if (tableNumeralCode.xAxis.contains(tupel[0])) {
-    if (tableNumeralCode.xAxis.contains(tupel[1])) {
-      index = -1;
-    } else {
-      index = tableNumeralCode.xAxis.indexOf(tupel[0]) * 13 + tableNumeralCode.yAxis.indexOf(tupel[1]);
-    }
-  } else {
-    if (tableNumeralCode.yAxis.contains(tupel[1])) {
-      index = -1;
-    } else {
-      index = tableNumeralCode.xAxis.indexOf(tupel[1]) * 13 + tableNumeralCode.yAxis.indexOf(tupel[0]);
-    }
+  if (tableNumeralCode.xAxis.contains(tupel[1])) {
+    tupel = tupel[1] + tupel[0];
   }
-  if (index != -1)
+  if ((tableNumeralCode.xAxis.contains(tupel[0]) && tableNumeralCode.xAxis.contains(tupel[1])) ||
+      (tableNumeralCode.yAxis.contains(tupel[0]) && tableNumeralCode.yAxis.contains(tupel[1]))) {
+      index = -1;
+    } else {
+      index = tableNumeralCode.xAxis.indexOf(tupel[0]) + 13 * tableNumeralCode.yAxis.indexOf(tupel[1]);
+    }
+
+  if (0 < index && index <169)
     return tableNumeralCode.Content[index];
   else
     return '';

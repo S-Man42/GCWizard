@@ -110,6 +110,11 @@ class FormulaParser {
     '*': '×',
   };
 
+  static final Map<String, String> alternateSpaces = {
+    // https://www.compart.com/de/unicode/category/Zs and Tab
+    ' ': '\u0009\u000B\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2007\u2008\u2009\u200A\u202F\u205F\u3000',
+  };
+
   FormulaParser({unlimitedExpanded: false}) {
     this.unlimitedExpanded = unlimitedExpanded;
 
@@ -156,7 +161,7 @@ class FormulaParser {
     return formula;
   }
 
-  static String normalizeMathematicalSymbols(formula) {
+  static String normalizeMathematicalSymbols(String formula) {
     alternateOperators.forEach((key, value) {
       formula = formula.replaceAll(RegExp('[$value]'), key);
     });
@@ -171,8 +176,17 @@ class FormulaParser {
     return formula;
   }
 
+  static String normalizeSpaces(String formula) {
+    alternateSpaces.forEach((key, value) {
+      formula = formula.replaceAll(RegExp('[$value]'), key);
+    });
+
+    return formula;
+  }
+
   Map<String, dynamic> _parseFormula(String formula, List<FormulaValue> values, bool expandValues) {
     formula = normalizeMathematicalSymbols(formula);
+    formula = normalizeSpaces(formula);
     safedFormulasMap = {};
 
     List<FormulaValue> preparedValues = _prepareValues(values);

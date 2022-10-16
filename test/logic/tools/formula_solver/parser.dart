@@ -91,6 +91,10 @@ void main() {
       {'formula' : 'G', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '18', 'state': 'ok'}]}},
       {'formula' : '[G] + [F]', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '18 + 1', 'state': 'ok'}]}},
       {'formula' : '[G + F]', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '19', 'state': 'ok'}]}},
+
+      // special characters
+      {'formula' : 'A\u0009+\u00A0B', 'values': values, 'expectedOutput' : {'state': 'ok', 'output': [{'result': '23', 'state': 'ok'}]}},
+
     ];
 
     _inputsToExpected.forEach((elem) {
