@@ -1,8 +1,27 @@
+import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readestring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readustring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 
 enum HASH {ALPHANUMERIC, NUMERIC}
+
+String findHashAlphaNumeric(int hashToFind, int len) {
+  return findHash(hashToFind, len);
+}
+
+String findHashNumeric(int hashToFind, int len) {
+  var max = pow(26, len);
+  for (var i = 0; i < max; i++) {
+    var s = convBase(i, '0123456789', '01234567890').padLeft(len, '0');
+
+    if (RSHash(s) == hashToFind) {
+      return s;
+    }
+  }
+
+  return null;
+}
 
 String breakUrwigoHash(int input, HASH type) {
   if (input == null) return '';
