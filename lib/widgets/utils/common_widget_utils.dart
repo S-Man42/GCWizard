@@ -180,9 +180,39 @@ double maxScreenHeight(BuildContext context) {
   return MediaQuery.of(context).size.height - 100;
 }
 
-int sortToolListAlphabetically(GCWTool a, GCWTool b) {
-  if (a.toolName == null)
-    print(a.i18nPrefix);
-
+int _sortToolListAlphabetically(GCWTool a, GCWTool b) {
   return removeDiacritics(a.toolName).toLowerCase().compareTo(removeDiacritics(b.toolName).toLowerCase());
+}
+
+int sortToolList(GCWTool a, GCWTool b) {
+  if (Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT) != null && !Prefs.getBool(PREFERENCE_TOOL_COUNT_SORT)) {
+    return _sortToolListAlphabetically(a, b);
+  }
+
+  Map<String, int> toolCounts =  Map<String, int>.from(jsonDecode(Prefs.get(PREFERENCE_TOOL_COUNT)));
+
+  var toolCountA = toolCounts[a.id];
+  var toolCountB = toolCounts[b.id];
+
+  if (toolCountA == null && toolCountB == null) {
+    return _sortToolListAlphabetically(a, b);
+  }
+
+  if (toolCountA == null && toolCountB != null) {
+    return 1;
+  }
+
+  if (toolCountA != null && toolCountB == null) {
+    return -1;
+  }
+
+  if (toolCountA != null && toolCountB != null) {
+    if (toolCountA == toolCountB) {
+      return _sortToolListAlphabetically(a, b);
+    } else {
+      return toolCountB.compareTo(toolCountA);
+    }
+  }
+
+  return null;
 }

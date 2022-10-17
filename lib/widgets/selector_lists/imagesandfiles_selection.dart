@@ -12,7 +12,7 @@ class ImagesAndFilesSelection extends GCWSelection {
         .where((element) => element.categories != null && element.categories.contains(ToolCategory.IMAGES_AND_FILES))
         .toList();
 
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     return Container(child: GCWToolList(toolList: _toolList));
   }

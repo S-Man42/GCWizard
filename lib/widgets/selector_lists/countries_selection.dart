@@ -23,7 +23,7 @@ class CountriesSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     return Container(child: GCWToolList(toolList: _toolList));
   }

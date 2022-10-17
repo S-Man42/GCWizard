@@ -451,7 +451,6 @@ List<GCWTool> _categoryList;
 List<GCWTool> _mainToolList;
 
 refreshToolLists() {
-  refreshRegistry();
   _categoryList = null;
   _mainToolList = null;
 }
@@ -697,8 +696,7 @@ void _initStaticToolList() {
       className(Zodiac()),
     ].contains(className(element.tool));
   }).toList();
-
-  _mainToolList.sort((a, b) => sortToolListAlphabetically(a, b));
+  _mainToolList.sort((a, b) => sortToolList(a, b));
 
   _categoryList = registeredTools.where((element) {
     return [
@@ -713,5 +711,5 @@ void _initStaticToolList() {
     ].contains(className(element.tool));
   }).toList();
 
-  _categoryList.sort((a, b) => sortToolListAlphabetically(a, b));
+  _categoryList.sort((a, b) => sortToolList(a, b));
 }

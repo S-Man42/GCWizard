@@ -40,7 +40,7 @@ class Favorites {
 
   static List<GCWTool> favoritedGCWTools() {
     var gcwTools = registeredTools.where((tool) => favoritedToolList.contains(tool.id)).toList();
-    gcwTools.sort((a, b) => sortToolListAlphabetically(a, b));
+    gcwTools.sort((a, b) => sortToolList(a, b));
 
     return gcwTools;
   }

@@ -12,7 +12,7 @@ class ScienceAndTechnologySelection extends GCWSelection {
         .where(
             (element) => element.categories != null && element.categories.contains(ToolCategory.SCIENCE_AND_TECHNOLOGY))
         .toList();
-    _toolList.sort((a, b) => sortToolListAlphabetically(a, b));
+    _toolList.sort((a, b) => sortToolList(a, b));
 
     return Container(child: GCWToolList(toolList: _toolList));
   }

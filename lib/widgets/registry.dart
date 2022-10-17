@@ -5,7 +5,7 @@ import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
-import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
+import 'package:gc_wizard/widgets/selector_lists/apparent_temperature_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
