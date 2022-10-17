@@ -1,61 +1,61 @@
-The GC Wizard is an open-source tool collection.
+GC Wizard je kolekcia nástrojov s otvoreným zdrojovým kódom.
 
-It was originally created to offer Geocachers as an offline tool to support them with in-field mysteries and riddles. So, the GC Wizard contains numerous tools for simple cryptography, geographic and scientific calculations as well as hundreds of sets of various symbols.
+Pôvodne bol vytvorený, aby ponúkol Geocacherom offline nástroj na ich podporu pri lúštení mysteriek a hádaniek v teréne. GC Wizard teda obsahuje množstvo nástrojov pre jednoduchú kryptografiu, geografické a vedecké výpočty, ako aj stovky sád rôznych symbolov.
 
-Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
+Medzitým sa projekt stal veľmi rozsiahlym a môže byť využiteľný na riešenie mnohých vecí, ktoré nesúvisia s geocachingom.
 
-Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+Preložené do 🇬🇧 🇩🇪 🇫🇷 🇰🇷 🇸🇰
 
-<b>Highlights</b>
+<b>Vychytávky</b>
 
-<b>General</b>
-• Formula Solver: For handling multi stage variables
-• Multi Decoder: Enter an unknown code and let several decoders and calculators interpret it in a row
-• More than 200 sets of Symbol Tables: Direct decoding symbols to characters; save own encoding as an image
-• Online Manual: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+<b>Základné</b>
+• Riešiteľ vzorcov: Na správu premenných zo zastávok multín
+• Multi Decoder: Zadajte neznámy kód a nechajte ho interpretovať niekoľkými dekodérmi a kalkulačkami za sebou
+• Viac ako 200 sád tabuliek symbolov: Priame dekódovanie symbolov na znaky; ukladanie vlastného kódovania vo forme obrázkov
+• Online manuál: Každý nástroj má svoju vlastnú manuálovú stránku preloženú do 🇬🇧 🇩🇪 🇫🇷
 
-<b>Cryptography & Encodings</b>
-• Alphabet Values (A = 1, B = 2, ...): Configurable alphabets with language specific special character handling
-• Braille graphical decoder: Type the points into a graphical interface; supports different languages
-• Book Cipher: Choose the correct system (e.g. Line + Letter Number or Section + Line + Word Number, ...), handle special characters and empty lines, ...
-• Enigma: A full working Enigma simulator incl. numerous possible settings
-• Esoteric Languages: Generators and interpretors for several esoteric programming languages like Brainf**k, Ook, Malbolge and Chef
-• Morse
-• Numeral Words: Lists of important numbers in different languages. For English + German there are parsers to identify even complex numeral words
-• Substitution and Vigenère Code Breakers: Try to find the solution without knowing the keys
-• Classic Codes: Playfair, Polybios, Railfence, ...
-• Historic codes: Caesar, Vigenènere, telegraph codes, ...
-• Military codes: ADFGX, Cipher Wheel, Tapir, ...
-• Technical encodings: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
+<b>Kryptografia a kódovanie</b>
+• Abecedné hodnoty (A = 1, B = 2, ...): Konfigurovateľné abecedy so špeciálnymi znakmi špecifickými pre daný jazyk
+• Grafický dekodér Braillovho písma: Zadajte body do grafického rozhrania; podporuje rôzne jazyky
+• Knižná šifra: Vyberte si správny systém (napr. Riadok + Číslo písmena alebo Sekcia + Riadok + Číslo slova, ...), práca so špeciálnymi znakmi a prázdnymi riadkami, ...
+• Enigma: Plne funkčný simulátor Enigmy vrátane množstva rôznych nastavení
+• Ezoterické jazyky: Generátory a interpreti pre niekoľko ezoterických programovacích jazykov, ako sú Brainf**k, Ook, Malbolge a Chef
+• Morseova abeceda
+• Číselné slová: Zoznamy dôležitých čísel v rôznych jazykoch. Pre angličtinu + nemčinu existujú syntaktické analyzátory na identifikáciu aj zložitých číselných slov
+• Lámače subtitučnej a Vigenèrovej šifry: Pokúste sa nájsť riešenie bez toho, aby ste poznali kľúče
+• Klasické šifry: Playfair, Polybios, Railfence, ...
+• Historické šifry: Caesar, Vigenènere, telegrafné kódy, ...
+• Vojenské šifry: ADFGX, Cipher Wheel, Tapir, ...
+• Technické šifry: BCD, CCITT, Hashes (vrátane brute-force hash breaker), RSA, ...
 
-<b>Coordinates</b>
-• High precision coordinate algorithms which support precise calculations even with very long distances by always considering the earth's shape (ellipsoid)
-• Support of different ellipsoids, even other planets
-• Coordinate Formats: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
-• Waypoint Projection: Includes precise reverse projection
-• Open Map: Set own points and lines, measure paths, export as and import from GPX/KML; OpenStreetMap and satellite view
-• Variable Coordinate: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map
-• Cross bearing, Center point of two and three coordinates, different intersections of lines and circles, ...
+<b>Súradnice</b>
+• Vysoko presné súradnicové algoritmy, ktoré podporujú presné výpočty aj pri veľmi dlhých vzdialenostiach tým, že vždy zohľadňujú tvar zeme (elipsoid)
+• Podpora rôznych elipsoidov, dokonca aj iných planét
+• Formáty súradníc: Podpora UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
+• Projekcia bodu trasy: Zahŕňa presnú spätnú projekciu
+• Open Map: Nastavte si vlastné body a čiary, merajte cesty, exportujte ako a importujte z GPX/KML; OpenStreetMap a satelitné zobrazenie
+• Variabilné súradnice: Interpolácia súradnicových vzorcov, ak niektoré časti súradníc nie sú zadané. Zobrazenie výsledku na mape
+• Priečny smer, Stred dvoch a troch súradníc, rôzne priesečníky čiar a kružníc, ...
 
-<b>Science and Technology</b>
-• Astronomy: Calculate position of sun and moon at a certain place and time
-• Color Space Converter: Convert color values between RGB, HSL, Hex, CMYK, ...
-• Countries: ISO, calling and vehicle registration codes, flags
-• Date and Time functions: Weekday, time differences, ...
-• Irrational Numbers: π, φ and e: Show and search up to > 1 Mio. digits
-• Number sequences: Factorial, Fibonacci and Co.
-• Numeral Systems: Converts decimal to binary, hexadecimal, ...
-• Periodic Table of the Elements: Interactive view; lists which order the elements by any criterion
-• Phone Keys: Converts classic phone keys to letters. Supports phone model specific behaviours
-• Prime Numbers: Search prime numbers up to 1 Mio.
-• Segment Display: Graphical interface for decoding and encoding 7 to 16 segment displays
-• Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
-• Apparent Temperature, Cross Sums, DTMF, Keyboard layouts, Projectiles, Resistor codes, ...
+<b>Veda a technika</b>
+• Astronómia: Vypočítajte polohu Slnka a Mesiaca na určitom mieste a čase
+• Prevodník farebného priestoru: Prevádza hodnoty farieb medzi RGB, HSL, Hex, CMYK,...
+• Krajiny: ISO, volacie a registračné kódy vozidiel, vlajky
+• Funkcie dátumu a času: deň v týždni, časové rozdiely, ...
+• Iracionálne čísla: π, φ a e: Zobrazenie a vyhľadávanie do > 1 mil. číslic
+• Číselné postupnosti: faktoriál, Fibonacci a ďalšie
+• Číselné sústavy: Konvertuje desiatkové na binárne, hexadecimálne, ...
+• Periodická tabuľka prvkov: Interaktívny pohľad; zoznamy, ktoré usporiadajú prvky podľa ľubovoľného kritéria
+• Tlačidlá telefónu: Konvertuje klasické tlačidlá telefónu na písmená. Podporuje špecifické správanie modelu telefónu
+• Prvočísla: Vyhľadajte prvočísla až do 1 mil.
+• Segmentový displej: Grafické rozhranie na dekódovanie a kódovanie 7 až 16 segmentových displejov
+• Prevodník jednotiek: dĺžka, objem, tlak, výkon a mnoho ďalších; prevod medzi bežnými jednotkami vrátane predpôn ako mikro a kilo
+• Zdanlivá teplota, krížové súčty, DTMF, rozloženie klávesnice, projektily, kódy rezistorov, ...
 
-<b>Images and Files</b>
-• Hex Viewer
-• Exif/Metadata Viewer
-• Analyse frames of Animated Images
-• Color corrections: Adjust contrast, saturation, edge detection, ...
-• Search for Hidden Data or hidden archives
-• Read QR/Barcodes from images, create them from binary input
+<b>Obrázky a súbory</b>
+• Hexadecimálny prehliadač
+• Zobrazovač Exif/Metadát
+• Analýza snímkov animovaných obrázkov
+• Farebné korekcie: Úprava kontrastu, sýtosti, detekcie hrán,...
+• Vyhľadávanie skrytých dát alebo skrytých archívov
+• Čítačka QR/čiarových kódov z obrázkov, ich tvorba z binárneho vstupu
