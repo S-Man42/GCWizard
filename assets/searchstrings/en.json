@@ -172,6 +172,8 @@
   "guitar": "guitars guitarstrings guitartabs guitartabulators guitargrips accords frets",
   "hashbreaker": "hashbreaker hashsolver hashcracker",
   "hashes": "onewayencryptions hashvalues message digests",
+  "hashes_identification": "hashidentification hashsearch findinghash findhash",
+  "hashes_overview": "allhashes showinghashes showhashes hashsearch findinghash findhash hashoverview",
   "hashes_blake2b": "",
   "hashes_blake2b_160": "",
   "hashes_blake2b_224": "",

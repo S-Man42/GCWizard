@@ -9,8 +9,9 @@ class GCWExpandableTextDivider extends StatefulWidget {
   final Widget child;
   final Function onChanged;
   final suppressBottomSpace;
+  final suppressTopSpace;
 
-  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child, this.onChanged, this.suppressBottomSpace})
+  const GCWExpandableTextDivider({Key key, this.text: '', this.expanded: true, this.style, this.child, this.onChanged, this.suppressBottomSpace, this.suppressTopSpace: true})
       : super(key: key);
 
   @override
@@ -37,7 +38,7 @@ class _GCWExpandableTextDividerState extends State<GCWExpandableTextDivider> {
         InkWell(
           child: GCWTextDivider(
             text: widget.text,
-            suppressTopSpace: true,
+            suppressTopSpace: widget.suppressTopSpace,
             suppressBottomSpace: widget.suppressBottomSpace,
             style: widget.style,
             bottom: 0.0,

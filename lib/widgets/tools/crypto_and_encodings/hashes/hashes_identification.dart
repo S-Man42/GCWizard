@@ -5,13 +5,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class HashIdentifier extends StatefulWidget {
+class HashIdentification extends StatefulWidget {
 
   @override
-  _HashIdentifierState createState() => _HashIdentifierState();
+  _HashIdentificationState createState() => _HashIdentificationState();
 }
 
-class _HashIdentifierState extends State<HashIdentifier> {
+class _HashIdentificationState extends State<HashIdentification> {
   String _currentValue = '';
 
   @override
