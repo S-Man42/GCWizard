@@ -329,7 +329,11 @@ class FormulaParser {
       var value = element.value;
 
       if (value == null || value.length == 0) {
-        value = key;
+        if (element.type == FormulaValueType.TEXT) {
+          value = '';
+        } else {
+          value = key;
+        }
       } else if (element.type == FormulaValueType.FIXED && double.tryParse(value) == null) {
         value = '($value)';
       }
