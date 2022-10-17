@@ -186,6 +186,7 @@
   "hashes_blake2b_256": "256bits",
   "hashes_blake2b_384": "384bits",
   "hashes_blake2b_512": "512bits",
+  "hashes_hmac": "hmac",
   "hashes_keccak": "keccak guido bertoni joan daemen michael peeters gilles nan assche",
   "hashes_keccak_128": "128bits",
   "hashes_keccak_224": "224bits",

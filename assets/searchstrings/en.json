@@ -178,6 +178,7 @@
   "hashes_blake2b_256": "",
   "hashes_blake2b_384": "",
   "hashes_blake2b_512": "",
+  "hashes_hmac": "message authentication code",
   "hashes_keccak": "",
   "hashes_keccak_128": "",
   "hashes_keccak_224": "",
