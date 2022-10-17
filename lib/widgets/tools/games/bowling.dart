@@ -1,9 +1,11 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/games/bowling.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -17,16 +19,12 @@ class Bowling extends StatefulWidget {
 }
 
 class BowlingState extends State<Bowling> {
-  List<BowlingRound> _currentBowlingScore = List<BowlingRound>(10);
-  List<int> _currentTotal = List<int>(10);
-  int _currentRound = 0;
-  int _currentOne = 0;
-  int _currentTwo = 0;
-  int _currentThree = 0;
-
-  var _currentPossibleThrows1 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
-  var _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
-  var _currentPossibleThrows3 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
+  List<BowlingFrame> _currentBowlingScore;
+  List<int> _currentFrameTotals = [10];
+  int _currentFrame = 0;
+  int _currentThrow1 = 0;
+  int _currentThrow2 = 0;
+  int _currentThrow3 = 0;
 
   var _cellWidth;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
@@ -54,31 +52,27 @@ class BowlingState extends State<Bowling> {
               icon: Icons.arrow_back_ios,
               onPressed: () {
                 setState(() {
-                  _currentRound--;
-                  if (_currentRound < 0) _currentRound = 9;
-                  _currentOne = _currentBowlingScore[_currentRound].one;
-                  _currentTwo = _currentBowlingScore[_currentRound].two;
-                  _currentThree = _currentBowlingScore[_currentRound].three;
-                  _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
+                  _currentFrame--;
+                  if (_currentFrame < 0) _currentFrame = 9;
+
+                  _setThrowPointsForCurrentFrame();
                 });
               },
             ),
             Expanded(
               child: GCWText(
                 align: Alignment.center,
-                text:i18n(context, 'bowling_round') + ' '+ ( _currentRound + 1).toString() + ' of 10',
+                text:i18n(context, 'bowling_frame') + ' '+ ( _currentFrame + 1).toString() + ' / 10',
               ),
             ),
             GCWIconButton(
               icon: Icons.arrow_forward_ios,
               onPressed: () {
                 setState(() {
-                  _currentRound++;
-                  if (_currentRound > 9) _currentRound = 0;
-                  _currentOne = _currentBowlingScore[_currentRound].one;
-                  _currentTwo = _currentBowlingScore[_currentRound].two;
-                  _currentThree = _currentBowlingScore[_currentRound].three;
-                  _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));
+                  _currentFrame++;
+                  if (_currentFrame > 9) _currentFrame = 0;
+
+                  _setThrowPointsForCurrentFrame();
                 });
               },
             ),
@@ -89,91 +83,72 @@ class BowlingState extends State<Bowling> {
             Expanded(
                 flex: 1,
                 child: Container(
-                  child: GCWDropDownButton(
-                    value: _currentOne,
+                  child: GCWIntegerSpinner(
+                    layout: SpinnerLayout.VERTICAL,
+                    value: _currentThrow1,
+                    min: 0,
+                    max: 10,
                     onChanged: (value) {
                       setState(() {
-                        _currentOne = value;
+                        _currentThrow1 = value;
+                        if (_currentFrame < 9 || _currentThrow1 < 10) {
+                          _currentThrow2 = min(_currentThrow2, 10 - _currentThrow1);
+                        }
+                        if (_currentThrow1 == 10) {
+                          _currentThrow3 = min(_currentThrow3, 10 - _currentThrow2);
+                        }
+
+                        _calculateAndSetScore();
                       });
-                      if (_currentOne == 10 && _currentRound != 9) {
-                        _currentTwo = 0;
-                        _currentThree = 0;
-                      } else {
-                        _currentTwo = 0;
-                        _currentRound != 9 ? _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10 - _currentOne, (i) => i + 1)) : _currentPossibleThrows2 = Map.fromIterable(List<int>.generate(10, (i) => i + 1));;
-                      }
-                      _currentBowlingScore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                      _currentTotal = bowlingCalcTotal(_currentBowlingScore);
                     },
-                    items: _currentPossibleThrows1.entries.map((mode) {
-                      return GCWDropDownMenuItem(
-                        value: mode.key,
-                        child: mode.value,
-                      );
-                    }).toList(),
                   ),
                   margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
                 ),
             ),
 
-            _currentOne != 10 ||  _currentRound == 9
-            ? Expanded(
-                flex: 1,
+            Expanded(
+              flex: 1,
               child: Container(
-                child: GCWDropDownButton(
-                  value: _currentTwo,
+                child: (_currentFrame < 9 && _currentThrow1 == 10) ? Container() : GCWIntegerSpinner(
+                  layout: SpinnerLayout.VERTICAL,
+                  value: _currentThrow2,
+                  min: 0,
+                  max: (_currentFrame == 9 && _currentThrow1 == 10) ? 10 : 10 - _currentThrow1,
                   onChanged: (value) {
                     setState(() {
-                      _currentTwo = value;
+                      _currentThrow2 = value;
+                      if (_currentThrow1 == 10) {
+                        _currentThrow3 = min(_currentThrow3, 10 - _currentThrow2);
+                      }
+
+                      _calculateAndSetScore();
                     });
-                    if (_currentTwo == 10 && _currentRound != 9) {
-                      _currentOne = 0;
-                      _currentThree = 0;
-                    }
-                    if (_currentRound == 9 && _currentTwo != 10) {
-                          _currentThree = 0;
-                          _currentPossibleThrows3 = Map.fromIterable(List<int>.generate(10 - _currentTwo, (i) => i + 1));
-                        }
-                        _currentBowlingScore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                    _currentTotal = bowlingCalcTotal(_currentBowlingScore);
                   },
-                  items: _currentPossibleThrows2.entries.map((mode) {
-                    return GCWDropDownMenuItem(
-                      value: mode.key,
-                      child: mode.value,
-                    );
-                  }).toList(),
                 ),
                 margin: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
               ),
-              )
-            : Container(),
+            ),
 
-            _currentRound == 9 && _currentOne == 10
-                ? Expanded(
+            (_currentFrame == 9 && _currentBowlingScore[_currentFrame].one + _currentBowlingScore[_currentFrame].two >= 10) ?
+              Expanded(
                 flex: 1,
                     child: Container(
-                      child: GCWDropDownButton(
-                        value: _currentThree,
+                      child: GCWIntegerSpinner(
+                        layout: SpinnerLayout.VERTICAL,
+                        value: _currentThrow3,
+                        min: 0,
+                        max: _currentThrow1 == 10 ? 10 - _currentThrow2 : 10,
                         onChanged: (value) {
                           setState(() {
-                            _currentThree = value;
+                            _currentThrow3 = value;
+
+                            _calculateAndSetScore();
                           });
-                          _currentBowlingScore[_currentRound] = BowlingRound(one: _currentOne, two: _currentTwo, three: _currentThree);
-                          _currentTotal = bowlingCalcTotal(_currentBowlingScore);
                         },
-                        items: _currentPossibleThrows3.entries.map((mode) {
-                          return GCWDropDownMenuItem(
-                            value: mode.key,
-                            child: mode.value,
-                          );
-                        }).toList(),
                       ),
                       margin: EdgeInsets.only(left: DEFAULT_MARGIN),
                     )
-                  )
-                : Container()
-
+                  ) : Container()
           ]
         ),
         _buildOutput(),
@@ -201,18 +176,34 @@ class BowlingState extends State<Bowling> {
     );
   }
 
-  void _initScoreBoard(){
-    for (int i = 0; i < 10; i++) {
-      _currentBowlingScore[i] = BowlingRound(one: 0, two: 0, three: 0);
-      _currentTotal[i] = 0;
-    }
+  void _initScoreBoard() {
+    _currentBowlingScore = List<BowlingFrame>.generate(10, (i) => BowlingFrame(one: 0, two: 0, three: 0));
+    _currentFrameTotals = List<int>.generate(10, (i) => 0);
+  }
+
+  _setThrowPointsForCurrentFrame() {
+    _currentThrow1 = _currentBowlingScore[_currentFrame].one;
+    _currentThrow2 = _currentBowlingScore[_currentFrame].two;
+    _currentThrow3 = _currentBowlingScore[_currentFrame].three;
+  }
+
+  _calculateAndSetScore() {
+    _currentBowlingScore[_currentFrame] = BowlingFrame(one: _currentThrow1, two: _currentThrow2, three: _currentThrow3);
+    _currentFrameTotals = bowlingCalcFrameTotals(_currentBowlingScore);
   }
 
   List<List<dynamic>> _buildBowlingScoreTable(){
     List<List<dynamic>> result = [];
-    result.add([i18n(context, 'bowling_round'), i18n(context, 'bowling_1'), i18n(context, 'bowling_2'), i18n(context, 'bowling_3'), i18n(context, 'bowling_total'), i18n(context, 'bowling_wholetotal')]);
+    result.add([i18n(context, 'bowling_frame'), '1', '2', '3', i18n(context, 'bowling_total'), i18n(context, 'bowling_wholetotal')]);
     for (int i = 0; i < 10; i++)
-      result.add([i + 1, _currentBowlingScore[i].one, _currentBowlingScore[i].two, i == 9 ? _currentBowlingScore[i].three : null, _currentTotal[i], bowlingTotalAfterRounds(i, _currentTotal)]);
+      result.add([
+          i + 1,
+          _currentBowlingScore[i].one,
+          (_currentBowlingScore[i].one == 10) && (i < 9) ? null : _currentBowlingScore[i].two,
+          (i == 9) && (_currentBowlingScore[i].one + _currentBowlingScore[i].two == 10) ? _currentBowlingScore[i].three : null,
+          _currentFrameTotals[i],
+          bowlingTotalAfterFrames(i, _currentFrameTotals)
+      ]);
     return result;
   }
 
@@ -237,7 +228,7 @@ class BowlingState extends State<Bowling> {
     return score;
   }
 
-  Widget _buildCellRow1(int round, int count){
+  Widget _buildCellRow1(int frame, int count){
     return Container(
       height: defaultFontSize() * 1.5,
       decoration: BoxDecoration(
@@ -252,7 +243,7 @@ class BowlingState extends State<Bowling> {
         children: [
           Expanded(
               child: AutoSizeText(
-                bowlingBuildDataRow1(round, count, _currentBowlingScore),
+                bowlingBuildDataRow1(frame, count, _currentBowlingScore),
                 style: gcwTextStyle().copyWith(color: Colors.black),
                 minFontSize: AUTO_FONT_SIZE_MIN,
                 maxLines: 1,
@@ -263,7 +254,7 @@ class BowlingState extends State<Bowling> {
     );
   }
 
-  Widget _buildCellRow2(int round){
+  Widget _buildCellRow2(int frame){
     return Container(
       height: defaultFontSize() * 1.5,
       decoration: BoxDecoration(
@@ -278,7 +269,7 @@ class BowlingState extends State<Bowling> {
         children: [
           Expanded(
               child: AutoSizeText(
-                _currentTotal[round].toString(),
+                bowlingTotalAfterFrames(frame, _currentFrameTotals).toString(),
                 style: gcwTextStyle().copyWith(color: Colors.black),
                 minFontSize: AUTO_FONT_SIZE_MIN,
                 maxLines: 1,
@@ -304,7 +295,7 @@ class BowlingState extends State<Bowling> {
         children: [
           Expanded(
               child: AutoSizeText(
-                _currentTotal[9].toString(),
+                bowlingTotalAfterFrames(9, _currentFrameTotals).toString(),
                 style: gcwTextStyle().copyWith(color: Colors.black),
                 minFontSize: AUTO_FONT_SIZE_MIN,
                 maxLines: 1,

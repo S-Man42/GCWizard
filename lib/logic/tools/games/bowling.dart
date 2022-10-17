@@ -1,31 +1,31 @@
-class BowlingRound {
+class BowlingFrame {
   final int one;
   final int two;
   final int three;
 
-  BowlingRound({this.one = 0, this.two = 0, this.three = 0});
+  BowlingFrame({this.one: 0, this.two: 0, this.three: 0});
 }
 
-List<int> bowlingCalcTotal(List<BowlingRound> bowlingScore){
-  int round = 0;
-  List<int> total = [];
+List<int> bowlingCalcFrameTotals(List<BowlingFrame> bowlingScore){
+  int frame = 0;
+  List<int> total = Iterable<int>.generate(10, (i) => 0).toList();
   
   for (int i = 0; i < 9; i++){
     if (bowlingScore[i].one == 10) {
-      round = bowlingScore[i].one + bowlingScore[i + 1].one;
+      frame = bowlingScore[i].one + bowlingScore[i + 1].one;
       if (bowlingScore[i + 1].one == 10) {
         if (i + 1 == 10) {
-          round = round + bowlingScore[i + 1].two;
+          frame = frame + bowlingScore[i + 1].two;
         } else {
           if (i + 2 == 10)
-            round = round + bowlingScore[i + 1].two;
+            frame = frame + bowlingScore[i + 1].two;
           else
-            round = round + bowlingScore[i + 2].one;
+            frame = frame + bowlingScore[i + 2].one;
         }
       }
       else
-        round = round + bowlingScore[i + 1].two;
-      total[i] = round;
+        frame = frame + bowlingScore[i + 1].two;
+      total[i] = frame;
     }
 
     else if (bowlingScore[i].one + bowlingScore[i].two == 10) {
@@ -36,39 +36,43 @@ List<int> bowlingCalcTotal(List<BowlingRound> bowlingScore){
       total[i] = bowlingScore[i].one + bowlingScore[i].two;
     }
   }
-  total[9] = bowlingScore[9].one + bowlingScore[9].two + bowlingScore[9].three;
+  total[9] = bowlingScore[9].one + bowlingScore[9].two;
+
+  if (total[9] >= 10)
+    total[9] += bowlingScore[9].three;
+
   return total;
 }
 
-int bowlingTotalAfterRounds(int round, List<int> total){
+int bowlingTotalAfterFrames(int frame, List<int> total){
   int result = 0;
-  for (int i = 0; i <= round; i++)
+  for (int i = 0; i <= frame; i++)
     result = result + total[i];
   return result;
 }
 
-String bowlingBuildDataRow1(int round, int count, List<BowlingRound> bowlingScore){
+String bowlingBuildDataRow1(int frame, int count, List<BowlingFrame> bowlingScore){
   String result = '';
   switch (count) {
     case 1:
-      result = bowlingScore[round].one == 10 ? 'X' : bowlingScore[round].one.toString();
+      result = bowlingScore[frame].one == 10 ? 'X' : bowlingScore[frame].one.toString();
       break;
     case 2:
-      if ( bowlingScore[round].one == 10)
-        if (round != 9)
+      if ( bowlingScore[frame].one == 10)
+        if (frame != 9)
           result = ' ';
         else
-          result = bowlingScore[round].two == 10 ? 'X' : bowlingScore[round].two.toString();
-      else if ( bowlingScore[round].one +  bowlingScore[round].two == 10)
+          result = bowlingScore[frame].two == 10 ? 'X' : bowlingScore[frame].two.toString();
+      else if ( bowlingScore[frame].one +  bowlingScore[frame].two == 10)
         result = '/';
       else
-        result = bowlingScore[round].two.toString();
+        result = bowlingScore[frame].two.toString();
       break;
     case 3:
-      result = bowlingScore[round].three == 10 ? 'X' : bowlingScore[round].three.toString();
+      result = bowlingScore[frame].three == 10 ? 'X' : bowlingScore[frame].three.toString();
       break;
   }
-  return result;
+  return result == '0' ? '-' : result;
 }
 
 
