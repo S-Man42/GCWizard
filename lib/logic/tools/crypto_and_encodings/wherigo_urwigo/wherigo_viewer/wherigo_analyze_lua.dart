@@ -1740,7 +1740,9 @@ List<String> _getAnswers(
     if (RegExp(r'(' + obfuscator + ')').hasMatch(line)) {
       line = deobfuscateUrwigoText(line.replaceAll(obfuscator, '').replaceAll('("', '').replaceAll('")', ''), dtable);
     }
-    line = line.split(' or ').join('\n');
+    line = line.split(' or ').map((element) {
+      return element.trim();
+    }).join('\n');
     line = removeWWB(line);
     // check if variable then provide information
     for (int i = 0; i < variables.length; i++) {
