@@ -2794,13 +2794,17 @@ bool _isROU(String element){
         .replaceAll('spre', '')
         .replaceAll('pai', '')
         .replaceAll('si', '')
+        .replaceAll('un', '')
         .replaceAll('zeci', '')
         .replaceAll('o suta', '')
         .replaceAll('sute', '')
         .replaceAll('apte', '')
         .replaceAll('oh mie', '')
         .replaceAll('dou', '')
+        .replaceAll('de', '')
+        .replaceAll('sai', '')
         .replaceAll('mii', '');
+
     return (element == '');
   }
   return false;

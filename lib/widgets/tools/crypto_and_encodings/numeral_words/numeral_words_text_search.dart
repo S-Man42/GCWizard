@@ -161,10 +161,12 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       theme: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
       patternMap: _numeralWordsHiglightMap(),
     );
-    if (_currentDecodeMode == GCWSwitchPosition.left)
+    if (_currentDecodeInput.length < 2) _currentDecodeInput = _currentDecodeInput + '  ';
+    if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
-    else
+    } else {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+    }
 
     return Column(
       children: <Widget>[
