@@ -101,6 +101,8 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
         }
       } else if (detailedOutput[i].number == '?')
         output = output + '.';
+      else if (detailedOutput[i].digit.toString() == 'null')
+        output = output + ' ';
       else
         output = output +
             (detailedOutput[i].digit.startsWith('numeralwords_')
