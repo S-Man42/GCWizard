@@ -24,7 +24,7 @@ int RSHash(String string) {
   return hash;
 }
 
-String _convBase(int numberInput, String fromBaseInput, String toBaseInput) {
+String convBase(int numberInput, String fromBaseInput, String toBaseInput) {
   var toBase = toBaseInput.split('').toList();
   var toLen = toBaseInput.length;
   var retval = '';
@@ -46,7 +46,7 @@ String _convBase(int numberInput, String fromBaseInput, String toBaseInput) {
 String findHash(int hashToFind, int len) {
   var max = pow(26, len);
   for (var i = 0; i < max; i++) {
-    var s = _convBase(i, '0123456789', 'abcdefghijklmnopqrstuvwxyz').padLeft(len, 'a');
+    var s = convBase(i, '0123456789', 'abcdefghijklmnopqrstuvwxyz').padLeft(len, 'a');
 
     if (RSHash(s) == hashToFind) {
       return s;
@@ -55,3 +55,4 @@ String findHash(int hashToFind, int len) {
 
   return null;
 }
+

@@ -267,9 +267,15 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         _obfuscatorTable = _obfuscatorTable.trimLeft().replaceAll('local dtable = "', '');
 
         // deObfuscate all texts
+        _LUAFile = _LUAFile.replaceAll('([[', '(').replaceAll(']])', ')');
         RegExp(r'' + _obfuscatorFunction + '\\(".*?"\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
           _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
               '"' + deObfuscateText(obfuscatedText.group(0), _obfuscatorFunction, _obfuscatorTable) + '"');
+        });
+
+        RegExp(r'' + _obfuscatorFunction + '\\((.|\\s)*?\\)').allMatches(_LUAFile).forEach((obfuscatedText) {
+          _LUAFile = _LUAFile.replaceAll(obfuscatedText.group(0),
+              '"' + deObfuscateText(obfuscatedText.group(0).replaceAll(_obfuscatorFunction + '(', '').replaceAll(')', ''), _obfuscatorFunction, _obfuscatorTable) + '"');
         });
         i = lines.length;
       }
@@ -1222,32 +1228,34 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
           else if (_OnGetInputSectionEnd(lines[i])) {
             if (insideInputFunction) {
-              answerList.forEach((answer) {
-                Answers[inputObject].add(AnswerData(
-                  answer,
-                  answerHash,
-                  answerActions,
-                ));
-              });
-              answerActions = [];
-              answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
+                answerList.forEach((answer) {
+                  if (answer != 'NIL')
+                    Answers[inputObject].add(AnswerData(
+                      answer,
+                      answerHash,
+                      answerActions,
+                    ));
+                });
+                answerActions = [];
+                answerList = _getAnswers(i, lines[i], lines[i - 1], _obfuscatorFunction, _obfuscatorTable, _Variables);
             }
           }
 
           else if ((i + 1 < lines.length - 1) && _OnGetInputFunctionEnd(lines[i], lines[i + 1].trim())) {
             if (insideInputFunction) {
               insideInputFunction = false;
-              answerActions.forEach((element) {});
-              answerList.forEach((answer) {
-                Answers[inputObject].add(AnswerData(
-                  answer,
-                  answerHash,
-                  answerActions,
-                ));
-              });
-              answerActions = [];
-              answerList = [];
-              _answerVariable = '';
+                answerActions.forEach((element) {});
+                answerList.forEach((answer) {
+                  if (answer != 'NIL')
+                    Answers[inputObject].add(AnswerData(
+                      answer,
+                      answerHash,
+                      answerActions,
+                    ));
+                });
+                answerActions = [];
+                answerList = [];
+                _answerVariable = '';
             }
           }
 
@@ -1313,62 +1321,140 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       if (currentObjectSection == OBJECT_TYPE.MESSAGES) {
         if (lines[i].trimLeft().startsWith('_Urwigo.MessageBox(') ||
             lines[i].trimLeft().startsWith('Wherigo.MessageBox(')) {
-          singleMessageDialog = [];
-          i++;
-          lines[i] = lines[i].trim();
-          sectionMessages = true;
-          do {
-            if (lines[i].trimLeft().startsWith('Text')) {
-              singleMessageDialog.add(ActionMessageElementData(
-                  ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
-              singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE,
-                  lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
-              if (lines[i].trimLeft().endsWith('}') || lines[i].trimLeft().endsWith('},')) {
-                // single line
-                singleMessageDialog.add(ActionMessageElementData(
-                    ACTIONMESSAGETYPE.BUTTON,
-                    getTextData(lines[i].trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''),
-                        _obfuscatorFunction, _obfuscatorTable)));
-              } else {
-                // multi line
-                i++;
-                lines[i] = lines[i].trim();
-                List<String> buttonText = [];
-                do {
-                  buttonText
-                      .add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable));
-                  i++;
-                  lines[i] = lines[i].trim();
-                } while (!lines[i].trimLeft().startsWith('}'));
-                singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON, buttonText.join(' » « ')));
-              } // end else multiline
-            } // end buttons
 
+          singleMessageDialog = [];
+
+          if (lines[i].contains('Text = ') || lines[i].contains('Media = ')) {
+            String line = lines[i];
+            if (line.contains('Text = ')) {
+              do {
+                line = line.substring(1);
+              } while (!line.startsWith('Text'));
+              line = line
+                  .replaceAll('Text = ', '')
+                  .replaceAll('(', '')
+                  .replaceAll('{', '');
+              if (line.indexOf('"') != -1)
+                line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
+              else if (line.indexOf(',') != -1)
+                line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
+              else
+                line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
+              if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+            }
+            line = lines[i];
+            if (line.contains('Media = ')) {
+              do {
+                line = line.substring(1);
+              } while (!line.startsWith('Media'));
+              line = line
+                  .replaceAll('Media = ', '')
+                  .replaceAll('"', '')
+                  .replaceAll(',', '')
+                  .replaceAll(')', '')
+                  .replaceAll('}', '');
+              singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+            }
+          }
+
+          else {
             i++;
             lines[i] = lines[i].trim();
+            sectionMessages = true;
+            do {
+              if (lines[i].trimLeft().startsWith('Text')) {
+                singleMessageDialog.add(ActionMessageElementData(
+                    ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
+              } else if (lines[i].trimLeft().startsWith('Media')) {
+                singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE,
+                    lines[i].trimLeft().replaceAll('Media = ', '').replaceAll('"', '').replaceAll(',', '')));
+              } else if (lines[i].trimLeft().startsWith('Buttons')) {
+                if (lines[i].trimLeft().endsWith('}') || lines[i].trimLeft().endsWith('},')) {
+                  // single line
+                  singleMessageDialog.add(ActionMessageElementData(
+                      ACTIONMESSAGETYPE.BUTTON,
+                      getTextData(
+                          lines[i].trim().replaceAll('Buttons = {', '').replaceAll('},', '').replaceAll('}', ''),
+                          _obfuscatorFunction,
+                          _obfuscatorTable)));
+                } else {
+                  // multi line
+                  i++;
+                  lines[i] = lines[i].trim();
+                  List<String> buttonText = [];
+                  do {
+                    buttonText
+                        .add(getTextData(lines[i].replaceAll('),', ')').trim(), _obfuscatorFunction, _obfuscatorTable));
+                    i++;
+                    lines[i] = lines[i].trim();
+                  } while (!lines[i].trimLeft().startsWith('}'));
+                  singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.BUTTON, buttonText.join(' » « ')));
+                } // end else multiline
+              } // end buttons
 
-            if (i > lines.length - 2 || lines[i].trimLeft().startsWith('})') || lines[i].trimLeft().startsWith('end'))
-              sectionMessages = false;
-          } while (sectionMessages);
+              i++;
+              lines[i] = lines[i].trim();
+
+              if (i > lines.length - 2 || lines[i].trimLeft().startsWith('})') || lines[i].trimLeft().startsWith('end'))
+                sectionMessages = false;
+            } while (sectionMessages);
+          }
           _Messages.add(singleMessageDialog);
-        } else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
+        }
+
+        else if (lines[i].trimLeft().startsWith('_Urwigo.Dialog(') ||
             lines[i].trimLeft().startsWith('Wherigo.Dialog(')) {
           sectionMessages = true;
           singleMessageDialog = [];
           i++;
           lines[i] = lines[i].trim();
           do {
-            if (lines[i].trimLeft().startsWith('Text = ') ||
+            if (lines[i].contains('{Text = ')) {
+              String line = lines[i];
+              if (line.contains('Text = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Text'));
+                line = line
+                    .replaceAll('Text = ', '')
+                    .replaceAll('(', '')
+                    .replaceAll('{', '');
+                if (line.indexOf('"') != -1)
+                  line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
+                else if (line.indexOf(',') != -1)
+                  line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
+                else
+                  line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
+                if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+              }
+              line = lines[i];
+              if (line.contains('Media = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Media'));
+                line = line
+                    .replaceAll('Media = ', '')
+                    .replaceAll('"', '')
+                    .replaceAll(',', '')
+                    .replaceAll(')', '')
+                    .replaceAll('}', '');
+                singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+              }
+            }
+
+            else if (lines[i].trimLeft().startsWith('Text = ') ||
                 lines[i].trimLeft().startsWith('Text = ' + _obfuscatorFunction + '(') ||
                 lines[i].trimLeft().startsWith('Text = (' + _obfuscatorFunction + '(')) {
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
               do {
@@ -1388,21 +1474,63 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
             lines[i] = lines[i].trim();
           } while (sectionMessages && (i < lines.length));
           _Messages.add(singleMessageDialog);
-        } else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
+        }
+
+        else if (lines[i].trimLeft().startsWith('_Urwigo.OldDialog(')) {
           i++;
           lines[i] = lines[i].trim();
           sectionMessages = true;
           singleMessageDialog = [];
+
           do {
-            if (lines[i].trimLeft().startsWith('})')) {
+            if (lines[i].contains('{Text = ')) {
+              String line = lines[i];
+              if (line.contains('Text = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Text'));
+                line = line
+                    .replaceAll('Text = ', '')
+                    .replaceAll('(', '')
+                    .replaceAll('{', '');
+                if (line.indexOf('"') != -1)
+                  line = line.substring(0, line.indexOf('"')).replaceAll('"', '');
+                else if (line.indexOf(',') != -1)
+                  line = line.substring(0, line.indexOf(',')).replaceAll('"', '');
+                else
+                  line = line.substring(0, line.indexOf('}')).replaceAll('"', '');
+                if (line.length != 0) singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, line));
+              }
+              line = lines[i];
+              if (line.contains('Media = ')) {
+                do {
+                  line = line.substring(1);
+                } while (!line.startsWith('Media'));
+                line = line
+                    .replaceAll('Media = ', '')
+                    .replaceAll('"', '')
+                    .replaceAll(',', '')
+                    .replaceAll(')', '')
+                    .replaceAll('}', '');
+                singleMessageDialog.add(ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, line));
+              }
+            }
+
+            else if (lines[i].trimLeft().startsWith('})')) {
               sectionMessages = false;
-            } else if (lines[i].trimLeft().startsWith('Text = ')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Text = ')) {
               singleMessageDialog.add(ActionMessageElementData(
                   ACTIONMESSAGETYPE.TEXT, getTextData(lines[i], _obfuscatorFunction, _obfuscatorTable)));
-            } else if (lines[i].trimLeft().startsWith('Media')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Media')) {
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.IMAGE, lines[i].trimLeft().replaceAll('Media = ', '')));
-            } else if (lines[i].trimLeft().startsWith('Buttons')) {
+            }
+
+            else if (lines[i].trimLeft().startsWith('Buttons')) {
               i++;
               lines[i] = lines[i].trim();
               do {
@@ -1411,7 +1539,9 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
                 i++;
                 lines[i] = lines[i].trim();
               } while (lines[i].trimLeft() != '}');
-            } else
+            }
+
+            else
               singleMessageDialog.add(
                   ActionMessageElementData(ACTIONMESSAGETYPE.TEXT, lines[i].replaceAll('{', '').replaceAll('}', '')));
 
@@ -1423,7 +1553,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
       }
     } catch (exception) {
       _Status = ANALYSE_RESULT_STATUS.ERROR_LUA;
-      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_media', exception));
+      _ResultsLUA.addAll(addExceptionErrorMessage(i, 'wherigo_error_lua_messages', exception));
     }
   } // end of second parse for i = 0 to lines.length - getting Messages/Dialogs
 
@@ -1526,7 +1656,9 @@ List<String> _getAnswers(
       line.trim().startsWith('elseif input == ') ||
       line.trim().startsWith('elseif input >= ') ||
       line.trim().startsWith('elseif input <= ') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == ')) {
+      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
+      line.trim().startsWith('elseif ' + _answerVariable + ' == ')) {
+
     if (line.contains('<=') && line.contains('>=')) {
       return [line
           .trimLeft()
@@ -1548,8 +1680,11 @@ List<String> _getAnswers(
         .replaceAll('then', '')
         .replaceAll(_answerVariable, '')
         .replaceAll(' ', '')
-        .split(RegExp(r'(or|and)'));
-  } else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
+        .replaceAll('and', ' and ')
+        .split(RegExp(r'(or)'));
+  }
+
+  else if (RegExp(r'(_Urwigo.Hash)').hasMatch(line)) {
     List<String> results = [];
     int hashvalue = 0;
     line = line.split('and')[0];
@@ -1578,10 +1713,12 @@ List<String> _getAnswers(
         .replaceAll('+', '');
     line.split('or').forEach((element) {
       hashvalue = int.parse(element.replaceAll('\D+', ''));
-      results.add(breakUrwigoHash(hashvalue).toString() + '\x01' + hashvalue.toString());
+      results.add(hashvalue.toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.ALPHANUMERIC).toString() + '\x01' + breakUrwigoHash(hashvalue, HASH.NUMERIC).toString());
     });
     return results;
-  } else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
+  }
+
+  else if (line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(')) {
     if (_answerVariable == '') _answerVariable = _getVariable(lineBefore);
     line = line
@@ -1612,6 +1749,9 @@ List<String> _getAnswers(
         i = variables.length;
       }
     }
+    if (line.length == 0) {
+      return ['NIL'];
+    }
     return [line];
   }
 }
@@ -1629,7 +1769,8 @@ bool _OnGetInputSectionEnd(String line) {
       line.trim().startsWith('elseif (_Urwigo.Hash(') ||
       line.trim().startsWith('if Wherigo.NoCaseEquals(') ||
       line.trim().startsWith('elseif Wherigo.NoCaseEquals(') ||
-      line.trim().startsWith('if ' + _answerVariable + ' == '))
+      line.trim().startsWith('if ' + _answerVariable + ' == ') ||
+      line.trim().startsWith('elseif ' + _answerVariable + ' == '))
     return true;
   else
     return false;
