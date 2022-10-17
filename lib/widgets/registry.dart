@@ -3522,6 +3522,7 @@ initializeRegistry(BuildContext context) {
       'symbol_kabouter_abc_1947',
     ]),
     GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: [
+      'color',
       'barcodes',
       'symbol_kartrak',
     ]),
@@ -3658,14 +3659,17 @@ initializeRegistry(BuildContext context) {
       'symbol_ogham',
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: [
+      'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_fotag',
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: [
+      'color',
       'symbol_opticalfiber',
       'symbol_optical_fiber_iec60304',
     ]),
     GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: [
+      'color',
       'symbol_opticalfiber',
       'optical_fiber_swisscom',
     ]),
@@ -3733,6 +3737,7 @@ initializeRegistry(BuildContext context) {
       'symbol_red_herring',
     ]),
     GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: [
+      'color',
       'resistor_colorcode',
     ]),
     GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
