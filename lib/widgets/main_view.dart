@@ -175,6 +175,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zamonian_numbers.da
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/zc1.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
+import 'package:gc_wizard/widgets/tools/games/bowling.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
@@ -484,6 +485,7 @@ void _initStaticToolList() {
       className(Binary2Image()),
       className(BloodAlcoholContent()),
       className(BookCipher()),
+      className(Bowling()),
       className(BrailleSelection()),
       className(Brainfk()),
       className(BundeswehrTalkingBoardAuthentification()),
