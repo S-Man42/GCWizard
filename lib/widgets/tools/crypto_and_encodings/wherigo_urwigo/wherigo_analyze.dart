@@ -1102,6 +1102,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                     GCWExpandableTextDivider(
                       expanded: false,
                       text: i18n(context, 'wherigo_output_answeractions'),
+                      suppressTopSpace: false,
                       child: Column(
                           children: _outputAnswerActionsWidgets(
                               _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1])),
@@ -1786,13 +1787,13 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
   List<List<dynamic>> _outputAnswer(AnswerData data) {
     List<String> answers = data.AnswerAnswer.split('\x01');
     var hash = answers[0].trim();
-    var answerAlphaNumeric = answers.length >= 2 ? answers[1].trim() : null;
+    var answerAlphabetical = answers.length >= 2 ? answers[1].trim() : null;
     var answerNumeric = answers.length == 3 ? answers[2].trim() : null;
 
     List<List<dynamic>> result = [
-      answers.length > 1 ? [i18n(context, 'wherigo_output_hash'), hash] : [i18n(context, 'wherigo_output_answer'), hash],
-      answerAlphaNumeric != null ? [i18n(context, 'wherigo_output_answerdecrypted'), answerAlphaNumeric] : null,
-      answerNumeric != null ? [i18n(context, 'wherigo_output_answerdecrypted'), answerNumeric] : null,
+      answers.length > 1 ? [i18n(context, 'wherigo_output_hash'), hash, null] : [i18n(context, 'wherigo_output_answer'), hash],
+      answerAlphabetical != null ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical] : null,
+      answerNumeric != null ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric] : null,
     ];
 
     return result;

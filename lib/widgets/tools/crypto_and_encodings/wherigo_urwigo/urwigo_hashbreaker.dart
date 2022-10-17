@@ -16,8 +16,8 @@ class UrwigoHashBreaker extends StatefulWidget {
 
 class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   var _currentInput = 0;
-  var _currentOutputNumeric;
-  var _currentOutputAlphaNumeric;
+  var _currentOutputNumeric = '29735'; // Value for initial Hash == 0;
+  var _currentOutputAlphabetical = 'bgqv'; // Value for initial Hash == 0;
 
   var _inputController;
 
@@ -69,7 +69,7 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
                     text: i18n(context, 'common_submit_button_text'),
                     onPressed: () {
                       setState(() {
-                        _currentOutputAlphaNumeric = breakUrwigoHash(_currentInput, HASH.ALPHANUMERIC);
+                        _currentOutputAlphabetical = breakUrwigoHash(_currentInput, HASH.ALPHABETICAL);
                         _currentOutputNumeric = breakUrwigoHash(_currentInput, HASH.NUMERIC);
                       });
                     },
@@ -92,9 +92,12 @@ class UrwigoHashBreakerState extends State<UrwigoHashBreaker> {
   Widget _buildOutput(BuildContext context) {
     if (_currentMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(
-          child: Column(
-                  children: columnedMultiLineOutput(context, [[_currentOutputAlphaNumeric], [_currentOutputNumeric]])
-                )
+        child: Column(
+          children: columnedMultiLineOutput(context, [
+            [i18n(context, 'common_letters'), _currentOutputAlphabetical],
+            [i18n(context, 'common_numbers'), _currentOutputNumeric]
+          ])
+        )
       );
     } else {
       return GCWDefaultOutput(child: RSHash(_currentTextInput).toString());

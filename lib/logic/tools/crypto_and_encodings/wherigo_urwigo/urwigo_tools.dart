@@ -4,16 +4,16 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/readustring.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 
-enum HASH {ALPHANUMERIC, NUMERIC}
+enum HASH {ALPHABETICAL, NUMERIC}
 
-String findHashAlphaNumeric(int hashToFind, int len) {
+String findHashAlphabetical(int hashToFind, int len) {
   return findHash(hashToFind, len);
 }
 
 String findHashNumeric(int hashToFind, int len) {
   var max = pow(26, len);
   for (var i = 0; i < max; i++) {
-    var s = convBase(i, '0123456789', '01234567890').padLeft(len, '0');
+    var s = urwigoConvBase(i, '0123456789', '01234567890').padLeft(len, '0');
 
     if (RSHash(s) == hashToFind) {
       return s;
@@ -30,7 +30,7 @@ String breakUrwigoHash(int input, HASH type) {
   var out;
 
   for (int i = 1; i <= 5; i++) {
-    type == HASH.ALPHANUMERIC ? out = findHashAlphaNumeric(input, i) : out = findHashNumeric(input, i);
+    type == HASH.ALPHABETICAL ? out = findHashAlphabetical(input, i) : out = findHashNumeric(input, i);
     if (out != null && out.isNotEmpty) return out;
   }
 
