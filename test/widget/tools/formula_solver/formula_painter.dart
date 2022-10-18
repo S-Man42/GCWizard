@@ -278,21 +278,23 @@ void main() {
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
       {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbRb'},
-      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'BBBB'}, // result only cs(), so function without parameter
+      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'BBBRB'}, // result will be function without parameter cs(), which is not valid, that's why completely an error;
       {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgb'},
       {'formula' : 'bww(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbbRb'},
-      {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'BBBBB'}, // result only bww(), so function without parameter
+      {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'BBBBRB'}, //this one is interesting. A = '' is a valid string, nonetheless, this results in bww(), so a function without parameter is an error
       {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbrb'},
 
       {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrb'},
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'}, // function itself is ok, bc there is still a valid parameter, so function is ok, but variable not, bc empty string is not valid number
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrgb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbbrRb'},
-      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrrb'}, // function itself is ok, bc there is still a valid parameter, so function is ok. AND then B is ok as well, since empty text is valid here
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrrb'},
     ];
