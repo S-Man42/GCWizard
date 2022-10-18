@@ -162,23 +162,23 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         GCWOutputText(
           text: output,
         ),
-        output.length == 0
-            ? Container()
-            : GCWExpandableTextDivider(
-                text: i18n(context, 'common_outputdetail'),
-                suppressTopSpace: false,
-                expanded: false,
-                child:
-                    Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
-              ),
         _currentLanguage == NumeralWordsLanguage.ALL ? Container () : GCWExpandableTextDivider (
-          text: i18n(context, 'numeralwords_syntax_highlight'),
-          suppressTopSpace: false,
-          child: GCWCodeTextField(
-            controller: _codeControllerHighlighted,
-            patternMap: _numeralWordsHiglightMap(),
-          )
-        )
+            text: i18n(context, 'numeralwords_syntax_highlight'),
+            suppressTopSpace: false,
+            child: GCWCodeTextField(
+              controller: _codeControllerHighlighted,
+              patternMap: _numeralWordsHiglightMap(),
+            )
+        ),
+        output.length == 0
+          ? Container()
+          : GCWExpandableTextDivider(
+              text: i18n(context, 'common_outputdetail'),
+              suppressTopSpace: false,
+              expanded: false,
+              child:
+                  Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
+            ),
       ],
     );
   }
