@@ -271,30 +271,30 @@ void main() {
       {'formula' : 'log(2, 2, round(12, 3))', 'expectedOutput' : 'bbbbgbggBBBBBBBBGGBGGBb'},
       {'formula' : 'N [log(2,bww(ABC))!]° [log(cs(23,23), csi(123,1,2,3))] E [csi(log(bww(A), 2))]°', 'expectedOutput' : 'ttbbbbbgbbbbbgggbbbbttbbbbbbbbggbggbbbbbbbgggbgbgbgbbbtttbbbbbbbbbbbbbgbbggbbbt'},
 
-      //empty variables
+      //empty variables are always hint for forgotten values, so always R
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': null}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : ''},
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
       {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbRb'},
-      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'BBBRB'}, // result will be function without parameter cs(), which is not valid, that's why completely an error;
+      {'formula' : 'cs(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrb'},
-      {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'},
-      {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgb'},
+      {'formula' : 'cs(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbRb'}, // no number in number function
+      {'formula' : 'bww(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbbgb'},  // no set variable makes any text inside a text function to pure text input (= green)
       {'formula' : 'bww(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbbRb'},
-      {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'BBBBRB'}, //this one is interesting. A = '' is a valid string, nonetheless, this results in bww(), so a function without parameter is an error
+      {'formula' : 'bww(A)', 'values': {'A': ''}, 'expectedOutput' : 'bbbbRb'},
       {'formula' : 'bww(A)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrb'},
       {'formula' : 'bww(A)', 'values': {'A': 'X'}, 'expectedOutput' : 'bbbbrb'},
 
       {'formula' : 'cs(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'}, // function itself is ok, bc there is still a valid parameter, so function is ok, but variable not, bc empty string is not valid number
+      {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbrRb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbrrb'},
       {'formula' : 'cs(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbrRb'},
-      {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrgb'},
+      {'formula' : 'bww(AB)', 'values': {'A': '1'}, 'expectedOutput' : 'bbbbrgb'},  // no set variable makes any text inside a text function to pure text input (= green)
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': null}, 'expectedOutput' : 'bbbbrRb'},
-      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrrb'}, // function itself is ok, bc there is still a valid parameter, so function is ok. AND then B is ok as well, since empty text is valid here
+      {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': ''}, 'expectedOutput' : 'bbbbrRb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': '2'}, 'expectedOutput' : 'bbbbrrb'},
       {'formula' : 'bww(AB)', 'values': {'A': '1', 'B': 'Y'}, 'expectedOutput' : 'bbbbrrb'},
     ];
