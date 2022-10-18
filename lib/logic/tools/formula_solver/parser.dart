@@ -20,12 +20,18 @@ enum FormulaState {
 
 const _MAX_EXPANDED = 100;
 
+const RECURSIVE_FORMULA_REPLACEMENT_START = '{\u0000';
+const RECURSIVE_FORMULA_REPLACEMENT_END = '\u0000}';
+const SAFED_FUNCTION_MARKER = '\x01';
+const SAFED_RECURSIVE_FORMULA_MARKER = '\x02';
+
 class FormulaParser {
   ContextModel _context;
   Parser parser;
 
   bool unlimitedExpanded = false;
   Map<String, String> safedFormulasMap = {};
+  Map<String, String> safedFormulaReplacementMap = {};
 
   static final Map<String, double> CONSTANTS = {
     'ln10': ln10,
@@ -153,9 +159,24 @@ class FormulaParser {
     for (int i = 0; i < list.length; i++) {
       var matches = RegExp(list[i], caseSensitive: false).allMatches(formula);
       for (Match m in matches) {
-        safedFormulasMap.putIfAbsent(m.group(0), () => '\x01${safedFormulasMap.length}\x01');
+        safedFormulasMap.putIfAbsent(m.group(0), () => '$SAFED_FUNCTION_MARKER${safedFormulasMap.length}$SAFED_FUNCTION_MARKER');
       }
       formula = substitution(formula, safedFormulasMap);
+    }
+
+    return formula;
+  }
+
+  // If, for instance, {1} will be replaced by a not yet calculated formula like 'len(ABC)',
+  // then it must be avoided, that 'ABC' will be furtherly replaced by variables A, B or C.
+  // Because: When a former formula will be included, this one IS still ready calculated and does not need another calculation round
+  String _safeFormulaReplacements(String formula) {
+    var formulaReplacementPattern = RegExp(RECURSIVE_FORMULA_REPLACEMENT_START + '(.*?)' + RECURSIVE_FORMULA_REPLACEMENT_END);
+    var matches = formulaReplacementPattern.allMatches(formula);
+
+    for (Match m in matches) {
+      safedFormulaReplacementMap.putIfAbsent(m.group(0), () => '$SAFED_RECURSIVE_FORMULA_MARKER${safedFormulaReplacementMap.length}$SAFED_RECURSIVE_FORMULA_MARKER');
+      formula = substitution(formula, safedFormulaReplacementMap);
     }
 
     return formula;
@@ -213,8 +234,11 @@ class FormulaParser {
       }
     });
 
+    //replace formula replacements
+    var safedFormulaReplacements = _safeFormulaReplacements(formula);
+
     //replace constants and formula names
-    var safedFormulaNames = _safeFunctionsAndConstants(formula);
+    var safedFormulaNames = _safeFunctionsAndConstants(safedFormulaReplacements);
 
     //replace fixed values recursively
     int i = pow(values.length, 2);
@@ -252,7 +276,7 @@ class FormulaParser {
       var results = <Map<String, dynamic>>[];
       var hasError = false;
       for (var expandedFormula in expandedFormulas) {
-        substitutedFormula = substitution(expandedFormula['text'], switchMapKeyValue(safedFormulasMap));
+        substitutedFormula = _reSubstituteFormula(expandedFormula['text']);
 
         try {
           var result = _evaluateFormula(substitutedFormula);
@@ -273,7 +297,7 @@ class FormulaParser {
         'result': results
       };
     } else {
-      substitutedFormula = substitution(substitutedFormula, switchMapKeyValue(safedFormulasMap));
+      substitutedFormula = _reSubstituteFormula(substitutedFormula);
 
       try {
         var result = _evaluateFormula(substitutedFormula);
@@ -282,6 +306,12 @@ class FormulaParser {
         return {'state': FormulaState.STATE_SINGLE_ERROR, 'result': substitutedFormula};
       }
     }
+  }
+
+  String _reSubstituteFormula(String formula) {
+    var substitutedFormula = substitution(formula, switchMapKeyValue(safedFormulasMap));
+    substitutedFormula = substitution(substitutedFormula, switchMapKeyValue(safedFormulaReplacementMap));
+    return substitutedFormula.replaceAll(RECURSIVE_FORMULA_REPLACEMENT_START, '').replaceAll(RECURSIVE_FORMULA_REPLACEMENT_END, '');
   }
 
   bool _isFullySubstituted(String tempSubstitutedFormula, substitutedFormula) {
