@@ -272,7 +272,7 @@ class _MainViewState extends State<MainView> {
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _searchText = '';
-  final _showSupportHintEveryN = 50;
+  final _SHOW_SUPPORT_HINT_EVERY_N = 50;
 
   @override
   void initState() {
@@ -330,7 +330,7 @@ class _MainViewState extends State<MainView> {
         return;
       }
 
-      if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
+      if (countAppOpened > 0 && (countAppOpened == 10 || countAppOpened % _SHOW_SUPPORT_HINT_EVERY_N == 0)) {
         showGCWAlertDialog(
           context,
           i18n(context, 'common_support_title'),
