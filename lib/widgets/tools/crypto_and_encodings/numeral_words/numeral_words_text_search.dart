@@ -11,11 +11,9 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
-import 'package:code_text_field/code_text_field.dart';
-import 'package:flutter_highlight/themes/atom-one-dark.dart';
-import 'package:flutter_highlight/themes/atom-one-light.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
+import 'package:gc_wizard/widgets/common/gcw_code_textfield.dart';
+import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 
 class NumeralWordsTextSearch extends StatefulWidget {
   @override
@@ -24,8 +22,7 @@ class NumeralWordsTextSearch extends StatefulWidget {
 
 class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   TextEditingController _decodeController;
-  var _codeControllerHighlighted;
-  var _SourceCode = '';
+  TextEditingController _codeControllerHighlighted;
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
@@ -37,11 +34,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
-    _codeControllerHighlighted = CodeController(
-      text: _SourceCode,
-      theme: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
-      stringMap: _numeralWordsHiglightMap(),
-    );
+    _codeControllerHighlighted = TextEditingController(text: '');
   }
 
   @override
@@ -68,6 +61,8 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
           onChanged: (value) {
             setState(() {
               _currentLanguage = value;
+
+              AppBuilder.of(context).rebuild();
             });
           },
           items: _languageList.entries.map((mode) {
@@ -156,12 +151,6 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       flexData = [1, 2];
     }
 
-    _codeControllerHighlighted = CodeController(
-      text: '',
-      theme: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
-      patternMap: _numeralWordsHiglightMap(),
-    );
-    if (_currentDecodeInput.length < 2) _currentDecodeInput = _currentDecodeInput + '  ';
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
@@ -177,21 +166,18 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
             ? Container()
             : GCWExpandableTextDivider(
                 text: i18n(context, 'common_outputdetail'),
+                suppressTopSpace: false,
                 expanded: false,
                 child:
                     Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
               ),
-        GCWExpandableTextDivider (
+        _currentLanguage == NumeralWordsLanguage.ALL ? Container () : GCWExpandableTextDivider (
           text: i18n(context, 'numeralwords_syntax_highlight'),
-          child: CodeField(
+          suppressTopSpace: false,
+          child: GCWCodeTextField(
             controller: _codeControllerHighlighted,
-            wrap: true,
-            textStyle: TextStyle(fontFamily: 'SourceCode'),
-            lineNumberStyle: LineNumberStyle(
-                width: 0.0,
-                margin: 0.0,
-                textStyle: TextStyle(fontSize: 0.1, color: Colors.black87)),
-          ),
+            patternMap: _numeralWordsHiglightMap(),
+          )
         )
       ],
     );

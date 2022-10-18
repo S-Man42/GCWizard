@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_soundplayer.dart';
+import 'package:gc_wizard/widgets/common/gcw_code_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hex_viewer.dart';
@@ -41,10 +42,6 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/gcw_file.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
-import 'package:code_text_field/code_text_field.dart';
-import 'package:highlight/languages/lua.dart';
-import 'package:flutter_highlight/themes/atom-one-dark.dart';
-import 'package:flutter_highlight/themes/atom-one-light.dart';
 
 class WherigoAnalyze extends StatefulWidget {
   @override
@@ -120,12 +117,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     super.initState();
     _expertMode = Prefs.getBool(PREFERENCE_WHERIGOANALYZER_EXPERTMODE);
 
-     _codeControllerHighlightedLUA = CodeController(
-      text: _LUA_SourceCode,
-      language: lua,
-      theme: Prefs.getString(PREFERENCE_THEME_COLOR) == ThemeType.DARK.toString() ? atomOneDarkTheme : atomOneLightTheme,
-      stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
-    );
+    _codeControllerHighlightedLUA = TextEditingController(text: _LUA_SourceCode);
   }
 
   _askFoSyntaxHighlighting() {
@@ -759,10 +751,12 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
           children: <Widget>[
             GCWDefaultOutput(
                 child: (_currentSyntaxHighlighting == true)
-                    ? CodeField(
+                    ? GCWCodeTextField(
                         controller: _codeControllerHighlightedLUA,
-                        textStyle: TextStyle(fontFamily: 'SourceCode'),
-                        lineNumberStyle: LineNumberStyle(width: 80.0),
+                        language: CodeHighlightingLanguage.LUA,
+                        lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 80.0),
+                        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
+                        enabled: true
                       )
                     : GCWOutputText(
                         text: _LUA_SourceCode,
