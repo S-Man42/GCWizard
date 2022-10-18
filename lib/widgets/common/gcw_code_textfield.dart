@@ -16,13 +16,13 @@ class GCWCodeTextField extends StatefulWidget {
   final Map<String, TextStyle> stringMap;  // complete strings
   final Map<String, TextStyle> theme;
   final TextStyle textStyle;
-  final bool enabled;
+  final bool readOnly;
   final bool wrap;
   final CodeHighlightingLanguage language;
   final GCWCodeTextFieldLineNumberStyle lineNumberStyle;
 
   const GCWCodeTextField(
-      {Key key, this.controller, this.stringMap, this.patternMap, this.theme, this.textStyle, this.enabled: false, this.wrap, this.language, this.lineNumberStyle})
+      {Key key, this.controller, this.stringMap, this.patternMap, this.theme, this.textStyle, this.readOnly: true, this.wrap, this.language, this.lineNumberStyle})
       : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class _GCWCodeTextFieldState extends State<GCWCodeTextField> {
             : atomOneLightTheme,
         patternMap: widget.patternMap,
       ),
-      enabled: widget.enabled,
+      readOnly: widget.readOnly,
       wrap: widget.wrap ?? false,
       textStyle: widget.textStyle ?? TextStyle(fontFamily: 'SourceCode'),
       lineNumberStyle: widget.lineNumberStyle != null

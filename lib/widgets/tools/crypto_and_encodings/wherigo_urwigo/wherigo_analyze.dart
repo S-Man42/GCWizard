@@ -755,8 +755,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                         controller: _codeControllerHighlightedLUA,
                         language: CodeHighlightingLanguage.LUA,
                         lineNumberStyle: GCWCodeTextFieldLineNumberStyle(width: 80.0),
-                        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP,
-                        enabled: true
+                        stringMap: WHERIGO_SYNTAX_HIGHLIGHT_STRINGMAP
                       )
                     : GCWOutputText(
                         text: _LUA_SourceCode,
