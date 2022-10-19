@@ -2231,10 +2231,10 @@ List ZOOMABLE_LANGUAGE = [
 ];
 
 final Map<Locale, NumeralWordsLanguage> SUPPORTED_LANGUAGES_LOCALES = {
-  //Locale('cz'): NumeralWordsLanguage.CZE,
+  Locale('cz'): NumeralWordsLanguage.CZE,
   Locale('da'): NumeralWordsLanguage.DNK,
   Locale('de'): NumeralWordsLanguage.DEU,
-  //Locale('el'): NumeralWordsLanguage.GRC,
+  Locale('el'): NumeralWordsLanguage.GRC,
   Locale('en'): NumeralWordsLanguage.ENG,
   Locale('es'): NumeralWordsLanguage.ESP,
   Locale('fi'): NumeralWordsLanguage.FIN,
@@ -2246,7 +2246,7 @@ final Map<Locale, NumeralWordsLanguage> SUPPORTED_LANGUAGES_LOCALES = {
   Locale('pt'): NumeralWordsLanguage.POR,
   Locale('ru'): NumeralWordsLanguage.RUS,
   Locale('sv'): NumeralWordsLanguage.SWE,
-  //Locale('sk'): NumeralWordsLanguage.SVK,
+  Locale('sk'): NumeralWordsLanguage.SVK,
   Locale('tr'): NumeralWordsLanguage.TUR,
 };
 
