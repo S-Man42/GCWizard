@@ -26,6 +26,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
   var _currentLanguage;
+  bool _setDefaultLanguage = false;
 
   Map<String, NumeralWordsLanguage> _languageList;
 
@@ -45,7 +46,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   @override
   Widget build(BuildContext context) {
-    _currentLanguage = _defaultLanguage(context);
+    if (!_setDefaultLanguage) {
+      _currentLanguage = _defaultLanguage(context);
+      _setDefaultLanguage = true;
+    }
     if (_languageList == null) {
       var sorted = SplayTreeMap<String, NumeralWordsLanguage>.from(
           switchMapKeyValue(NUMERALWORDS_LANGUAGES).map((key, value) => MapEntry(i18n(context, key), value)));
@@ -187,26 +191,23 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   Map<String, TextStyle> _numeralWordsHiglightMap(){
     Map<String, TextStyle> result = {};
-    if (_currentLanguage != NumeralWordsLanguage.ALL){
-      NumWords[_currentLanguage].forEach((key, value) {
-        if (int.tryParse(value) == null)
-          if (value.startsWith('numeral'))
-            result[r'' + key + ''] = TextStyle(color: Colors.blue);
-          else
-            result[r'' + key + ''] = TextStyle(color: Colors.green);
+    NumWords[_currentLanguage].forEach((key, value) {
+      if (int.tryParse(value) == null)
+        if (value.startsWith('numeral'))
+          result[r'' + key + ''] = TextStyle(color: Colors.blue);
         else
-          if (int.parse(value) < 10)
-            result[r'' + key + ''] = TextStyle(color: Colors.red);
-          else
-            result[r'' + key + ''] = TextStyle(color: Colors.orange);
-      });
-    }
+          result[r'' + key + ''] = TextStyle(color: Colors.green);
+      else
+        if (int.parse(value) < 10)
+          result[r'' + key + ''] = TextStyle(color: Colors.red);
+        else
+          result[r'' + key + ''] = TextStyle(color: Colors.orange);
+    });
     return result;
   }
 
   NumeralWordsLanguage _defaultLanguage(BuildContext context){
     final Locale appLocale = Localizations.localeOf(context);
-    print(appLocale.toString());
     if (isLocaleSupported(appLocale)) {
       return SUPPORTED_LANGUAGES_LOCALES[appLocale];
     }
