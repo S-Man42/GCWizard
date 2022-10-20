@@ -2955,7 +2955,7 @@
   "numeralwords_lists_title": "Numeral Words: Overview",
   "numeralwords_lists_description": "Shows the most important numeral words of different languages",
   "numeralwords_identify_languages_title": "Numeral Words: Identify languages",
-  "numeralwords_identify_languages_description": "Searches for numeral words and show all used languages",
+  "numeralwords_identify_languages_description": "Searches for numeral words of all supported languages",
   "numeralwords_converter_title" : "Numbers to Numeral Words",
   "numeralwords_converter_description" : "Creates numeral words from numbers for some artificial languages (e.g. Klingon)",
   "numeralwords_converter_example" : "2204 → tsìvozamezampxevosìng",

@@ -2294,7 +2294,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWTool(tool: NumeralWordsIdentifyLanguages(), i18nPrefix: 'numeralwords_identify_languages', searchKeys: [
       'numeralwords',
-      'numeralwordsidentifylanguages',
+      'numeralwords_identifylanguages',
     ]),
 
     //NumberSequenceSelection ****************************************************************************************
