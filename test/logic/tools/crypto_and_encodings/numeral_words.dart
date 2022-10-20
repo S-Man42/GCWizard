@@ -38,7 +38,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -140,7 +140,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -238,7 +238,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -491,7 +491,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -665,7 +665,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -709,7 +709,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -747,7 +747,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -792,7 +792,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -836,7 +836,7 @@ void main(){
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -870,9 +870,7 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(
-            removeAccents(elem['input'].toString().toLowerCase()),
-            elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -906,9 +904,7 @@ void main(){
       _inputsToExpected.forEach((elem) {
         test(
             'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-          var _actual = decodeNumeralwords(
-              removeAccents(elem['input'].toString().toLowerCase()),
-              elem['language'], elem['decodeMode']);
+          var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
           var length = elem['expectedOutput'].length;
           for (int i = 0; i < length; i++) {
             expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -942,9 +938,7 @@ void main(){
         _inputsToExpected.forEach((elem) {
           test(
               'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-            var _actual = decodeNumeralwords(
-                removeAccents(elem['input'].toString().toLowerCase()),
-                elem['language'], elem['decodeMode']);
+            var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
             var length = elem['expectedOutput'].length;
             for (int i = 0; i < length; i++) {
               expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -1028,9 +1022,7 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(
-            removeAccents(elem['input'].toString().toLowerCase()),
-            elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -1110,9 +1102,7 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(
-            removeAccents(elem['input'].toString().toLowerCase()),
-            elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -1147,9 +1137,7 @@ void main(){
     _inputsToExpected.forEach((elem) {
       test(
           'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(
-            removeAccents(elem['input'].toString().toLowerCase()),
-            elem['language'], elem['decodeMode']);
+        var _actual = decodeNumeralwords(input: removeAccents(elem['input'].toString().toLowerCase()), language: elem['language'], decodeModeWholeWords: elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
