@@ -12,7 +12,9 @@ dependencies:
   base32: ^2.1.3
   cached_network_image: ^3.2.2
   code_text_field:
-    git: https://github.com/BertrandBev/code_field
+    git:
+      url: https://github.com/gumbarros/code_field
+      ref: 7c174d60f3dfd4f35c8f1d155e8bac0bcceb04c8
   dart_numerics: ^0.0.6
   diacritic: ^0.1.1
   encrypt: ^5.0.0
