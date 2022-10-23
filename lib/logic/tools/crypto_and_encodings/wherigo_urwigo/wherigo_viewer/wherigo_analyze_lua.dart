@@ -1165,7 +1165,7 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
 
         // add hashes to choices
         for (int i = 0; i< listChoices.length; i++) {
-          listChoices[i] = listChoices[i] + '\n    → Hash: ' + RSHash(listChoices[i].toLowerCase()).toString() + '/' + RSHash(listChoices[i].toUpperCase()).toString();
+          listChoices[i] = listChoices[i] + ' → Hash: ' + RSHash(listChoices[i].toLowerCase()).toString();
         }
         _Inputs.add(InputData(
           LUAname,
