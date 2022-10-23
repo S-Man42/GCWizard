@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_analyze_gwc.dart';
@@ -1090,7 +1091,7 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
                   children: <Widget>[
                     Column(
                         children: columnedMultiLineOutput(context,
-                            _outputAnswer(_WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
+                            _outputAnswer(_WherigoCartridgeLUA.Inputs[_inputIndex - 1], _WherigoCartridgeLUA.Inputs[_inputIndex - 1].InputAnswers[_answerIndex - 1]),
                             copyColumn: 1, flexValues: [2, 3, 3])),
                     GCWExpandableTextDivider(
                       expanded: false,
@@ -1777,17 +1778,40 @@ class WherigoAnalyzeState extends State<WherigoAnalyze> {
     return result;
   }
 
-  List<List<dynamic>> _outputAnswer(AnswerData data) {
+  List<List<dynamic>> _outputAnswer(InputData input, AnswerData data) {
+    List<List<dynamic>> result;
+
     List<String> answers = data.AnswerAnswer.split('\x01');
     var hash = answers[0].trim();
     var answerAlphabetical = answers.length >= 2 ? answers[1].trim() : null;
     var answerNumeric = answers.length == 3 ? answers[2].trim() : null;
 
-    List<List<dynamic>> result = [
-      answers.length > 1 ? [i18n(context, 'wherigo_output_hash'), hash, null] : [i18n(context, 'wherigo_output_answer'), hash],
-      answerAlphabetical != null ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical] : null,
-      answerNumeric != null ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric] : null,
-    ];
+    if (input.InputType == 'MultipleChoice') {
+      result = [
+        answers.length > 1
+            ? [i18n(context, 'wherigo_output_hash'), hash, null]
+            : [i18n(context, 'wherigo_output_answer'), hash],
+      ];
+      if (hash != '0') {
+        for (int i = 0; i < input.InputChoices.length; i++) {
+          if (RSHash(input.InputChoices[i].toLowerCase()).toString() == hash)
+            result.add([i18n(context, 'wherigo_output_answerdecrypted'), input.InputChoices[i], null]);
+        };
+      }
+    }
+    else {
+      result = [
+        answers.length > 1
+            ? [i18n(context, 'wherigo_output_hash'), hash, null]
+            : [i18n(context, 'wherigo_output_answer'), hash],
+        answerAlphabetical != null
+            ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_letters'), answerAlphabetical]
+            : null,
+        answerNumeric != null
+            ? [i18n(context, 'wherigo_output_answerdecrypted'), i18n(context, 'common_numbers'), answerNumeric]
+            : null,
+      ];
+    }
 
     return result;
   }

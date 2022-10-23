@@ -5,7 +5,6 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/krevo.wherigotools/ucommons.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/urwigo_tools.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_common.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/wherigo_urwigo/wherigo_viewer/wherigo_dataobjects.dart';
@@ -1163,10 +1162,6 @@ Future<Map<String, dynamic>> getCartridgeLUA(Uint8List byteListLUA, bool getLUAo
         } while (sectionInput);
         i--;
 
-        // add hashes to choices
-        for (int i = 0; i< listChoices.length; i++) {
-          listChoices[i] = listChoices[i] + ' → Hash: ' + RSHash(listChoices[i].toLowerCase()).toString();
-        }
         _Inputs.add(InputData(
           LUAname,
           id,
