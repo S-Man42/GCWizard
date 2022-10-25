@@ -3240,6 +3240,7 @@ initializeRegistry(BuildContext context) {
       'cistercian',
     ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: [
+      'color',
       'symbol_color_add',
     ]),
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
