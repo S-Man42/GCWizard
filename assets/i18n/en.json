@@ -2951,7 +2951,7 @@
   "numeralwords_selection_description": "Searches for numeral words in different languages",
   "numeralwords_selection_example": "one → 1",
   "numeralwords_textsearch_title": "Numeral Words: Text Search",
-  "numeralwords_textsearch_description": "Searches numeral words in texts in a specific languages",
+  "numeralwords_textsearch_description": "Searches numeral words in texts in a specific language",
   "numeralwords_lists_title": "Numeral Words: Overview",
   "numeralwords_lists_description": "Shows the most important numeral words of different languages",
   "numeralwords_identify_languages_title": "Numeral Words: Identify languages",
