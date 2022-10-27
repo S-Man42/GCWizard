@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+
+class GCWCoordsReverseWherigoDay1976 extends StatefulWidget {
+  final Function onChanged;
+  final BaseCoordinates coordinates;
+
+  const GCWCoordsReverseWherigoDay1976({Key key, this.onChanged, this.coordinates}) : super(key: key);
+
+  @override
+  GCWCoordsReverseWherigoDay1976State createState() => GCWCoordsReverseWherigoDay1976State();
+}
+
+class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoDay1976> {
+  var _ControllerA;
+  var _ControllerB;
+
+  FocusNode _FocusNodeA;
+  FocusNode _FocusNodeB;
+
+  var _currentA = "";
+  var _currentB = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _ControllerA = TextEditingController(text: _currentA.toString().padLeft(6, '0'));
+    _ControllerB = TextEditingController(text: _currentB.toString().padLeft(6, '0'));
+
+    _FocusNodeA = FocusNode();
+    _FocusNodeB = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _ControllerA.dispose();
+    _ControllerB.dispose();
+
+    _FocusNodeA.dispose();
+    _FocusNodeB.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var day1976 = widget.coordinates is Day1976
+          ? widget.coordinates as Day1976
+          : Day1976.fromLatLon(widget.coordinates.toLatLng());
+      _currentA = day1976.a;
+      _currentB = day1976.b;
+
+      _ControllerA.text = _currentA.toString();
+      _ControllerB.text = _currentB.toString();
+    }
+
+    return Column(children: <Widget>[
+      GCWTextField(
+        controller: _ControllerA,
+        focusNode: _FocusNodeA,
+        onChanged: (value) {
+          _currentA = value;
+
+          if (_ControllerA.text.length == 6) FocusScope.of(context).requestFocus(_FocusNodeB);
+          _setCurrentValueAndEmitOnChange();
+        },
+      ),
+      GCWTextField(
+        controller: _ControllerB,
+        focusNode: _FocusNodeB,
+        onChanged: (value) {
+          _currentB = value;
+
+          if (_ControllerB.text.toString().length == 6) FocusScope.of(context).requestFocus(_FocusNodeA);
+          _setCurrentValueAndEmitOnChange();
+        },
+      ),
+    ]);
+  }
+
+  _setCurrentValueAndEmitOnChange() {
+    widget
+        .onChanged(Day1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
+  }
+}

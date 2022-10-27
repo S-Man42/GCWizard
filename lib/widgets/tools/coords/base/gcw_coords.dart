@@ -24,6 +24,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.d
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewherigo_day1976.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewherigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
@@ -321,6 +322,17 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoWaldmeister),
         'widget': GCWCoordsReverseWherigoWaldmeister(
+          coordinates: _pastedCoords,
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWherigoDay1976),
+        'widget': GCWCoordsReverseWherigoDay1976(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
