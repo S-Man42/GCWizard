@@ -9,22 +9,10 @@ class FormulaPainter {
   Map<String, String> _values;
   var _variables = <String>[];
   var _functions = <String>[];
-  var _specialFunctions = {
-    'LOG', // 1 comma
-    'NTH', // 0 - 2 commas
-    'ROUND', // 0 or 1 comma
-    'MIN', // comma 0 or more times
-    'MAX', // comma 0 or more times
-    'CS', // comma 0 or more times
-    'CSI', // comma 0 or more times
-    'BWW', // 0 comma
-    'AV', // 0 comma
-    'LEN', // 0 comma
-    'NRT' // 1 comma
-  };
   var _constants = <String>[];
   int _formulaId;
   bool _operatorBevor;
+  String _parentFunctionName;
   String formula;
 
   String _operatorsRegEx;
@@ -386,6 +374,7 @@ class FormulaPainter {
     maxCommaCount = maxCommaCount == null ? null : maxCommaCount * 2 + 1;
     if (arguments.length < minCommaCount) return null;
 
+    _parentFunctionName = functionName;
     for (var i = 0; i < arguments.length; i++) {
       if (maxCommaCount != null && i >= maxCommaCount) {
         var subresult = _paintSubFormula(arguments[i], 0);
@@ -399,6 +388,7 @@ class FormulaPainter {
         result.add(subresult);
       }
     }
+    _parentFunctionName = null;
 
     return result;
   }
