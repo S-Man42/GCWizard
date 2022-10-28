@@ -274,7 +274,7 @@ void main() {
       //empty variables are always hint for forgotten values, so always R
       {'formula' : 'A', 'values': <String, String>{}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': null}, 'expectedOutput' : 'R'},
-      {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : ''},
+      {'formula' : 'A', 'values': {'A': ''}, 'expectedOutput' : 'R'},
       {'formula' : 'A', 'values': {'A': '1'}, 'expectedOutput' : 'r'},
       {'formula' : 'cs(A)', 'values': <String, String>{}, 'expectedOutput' : 'bbbRb'},
       {'formula' : 'cs(A)', 'values': {'A': null}, 'expectedOutput' : 'bbbRb'},
