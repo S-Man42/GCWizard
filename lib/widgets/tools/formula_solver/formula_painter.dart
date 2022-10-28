@@ -402,6 +402,18 @@ class FormulaPainter {
     };
   }
 
+  bool _numberFunction(String functionName) {
+    switch (functionName) {
+      case 'MIN':
+      case 'MAX':
+      case 'CS':
+      case 'CSI':
+        return true;
+      default:
+        return false;
+    };
+  }
+
   String _coloredSpecialFunctionsLiteral(String result, List<String> parts) {
     if (parts != null) {
       for (var i = 0; i < parts.length; i++)
@@ -465,22 +477,30 @@ class FormulaPainter {
   }
 
   List<String> _isVariable(String formula) {
-    if (_variablesRegEx.isEmpty) return null;
-    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
-    var match = regex.firstMatch(formula);
+    var match = _variableMatch(formula);
 
     return (match == null) ? null : [match.group(0)];
   }
 
   bool _isEmptyVariable(String formula) {
-    if (_variablesRegEx.isEmpty) return null;
-    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
-    var match = regex.firstMatch(formula);
+    var match = _variableMatch(formula);
     if (match == null) return true;
 
-    return ((_values != null) &&
-        (_values.containsKey(match.group(1))) &&
-        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
+    var variableValue = _variableValue(match.group(1));
+    return variableValue == null || variableValue.isEmpty;
+  }
+
+  String _variableValue(String variable) {
+    if ((_values == null) || !_values.containsKey(variable))
+        return null;
+    return _values[variable];
+  }
+
+  /// return VariableName (group(1))
+  RegExpMatch _variableMatch(String formula) {
+    if (_variablesRegEx.isEmpty) return null;
+    RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
+    return regex.firstMatch(formula);
   }
 
   bool _emptyValues() {
@@ -498,16 +518,25 @@ class FormulaPainter {
   }
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
-    var char = hasError
-        ? _wordFunction(_parentFunctionName)
-            ? _coloredWordFunctionVariable(parts[0])
-            : 'R'
-        : 'r';
+    var char = hasError ? 'R' : 'r';
+    if (hasError && _wordFunction(_parentFunctionName))
+        char = _coloredWordFunctionVariable(parts[0]);
+    else if (_numberFunction(_parentFunctionName))
+      char = _coloredNumberFunctionVariable(parts[0]);
+
     return _replaceRange(result, 0, parts[0].length, char);
   }
 
   String _coloredWordFunctionVariable(String variable) {
-    return _isVariable(variable]) == null || (_isEmptyVariable(variable) == null || !_isEmptyVariable(variable)) ? 'g' : 'R';
+    return (_isVariable(variable) == null || !_isEmptyVariable(variable)) ? 'g' : 'R';
+  }
+
+  String _coloredNumberFunctionVariable(String variable) {
+    var variableValue = _variableValue(variable);
+    if ((variableValue == null) || variableValue.isEmpty) return 'R';
+    if (_isNumberWithPoint(variableValue) == null)  return 'R';
+
+    return 'r';
   }
 
   List<String> _isNumberWithPoint(String formula) {
