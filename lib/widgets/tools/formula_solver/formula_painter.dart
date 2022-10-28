@@ -334,7 +334,6 @@ class FormulaPainter {
 
   List<String> _isSpecialFunctionsLiteral(String formula, List<String> parts) {
     var functionName = parts[0].trim();
-    var wordFunction = false;
 
     var result = <String>[];
     var arguments = _separateArguments(formula);
@@ -365,7 +364,6 @@ class FormulaPainter {
       case 'AV':
       case 'LEN':
         maxCommaCount == minCommaCount;
-        wordFunction = true;
         break;
       default:
         maxCommaCount = minCommaCount;
@@ -380,17 +378,28 @@ class FormulaPainter {
         var subresult = _paintSubFormula(arguments[i], 0);
         result.add(subresult.toUpperCase());
       } else if (arguments[i] == ',')
-        result.add(wordFunction ? 'g' : 'b');
+        result.add(_wordFunction(functionName) ? 'g' : 'b');
       else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
-        if (wordFunction &&_emptyValues()) subresult = subresult.replaceAll('R', 'g');
+        if (_wordFunction(functionName) && _emptyValues()) subresult = subresult.replaceAll('R', 'g');
         result.add(subresult);
       }
     }
     _parentFunctionName = null;
 
     return result;
+  }
+
+  bool _wordFunction(String functionName) {
+    switch (functionName) {
+      case 'BWW':
+      case 'AV':
+      case 'LEN':
+        return true;
+      default:
+        return false;
+    };
   }
 
   String _coloredSpecialFunctionsLiteral(String result, List<String> parts) {
@@ -469,21 +478,9 @@ class FormulaPainter {
     var match = regex.firstMatch(formula);
     if (match == null) return true;
 
-    var isVariable = (_values != null) && (_values.containsKey(match.group(1)));
-    switch (_parentFunctionName) {
-      case 'BWW':
-      case 'AV':
-        // no set variable makes any text inside a text function to pure text input (= green)
-        if (_emptyValues())
-          return false;
-
-        return isVariable &&
-            ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty));
-        break;
-      default:
-        return isVariable &&
-            ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty));
-    }
+    return ((_values != null) &&
+        (_values.containsKey(match.group(1))) &&
+        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
   }
 
   bool _emptyValues() {
@@ -501,7 +498,16 @@ class FormulaPainter {
   }
 
   String _coloredVariable(String result, List<String> parts, bool hasError) {
-    return _replaceRange(result, 0, parts[0].length, hasError ? 'R' : 'r');
+    var char = hasError
+        ? _wordFunction(_parentFunctionName)
+            ? _coloredWordFunctionVariable(parts[0])
+            : 'R'
+        : 'r';
+    return _replaceRange(result, 0, parts[0].length, char);
+  }
+
+  String _coloredWordFunctionVariable(String variable) {
+    return _isVariable(variable]) == null || (_isEmptyVariable(variable) == null || !_isEmptyVariable(variable)) ? 'g' : 'R';
   }
 
   List<String> _isNumberWithPoint(String formula) {
