@@ -3174,8 +3174,16 @@ initializeRegistry(BuildContext context) {
       'barcodes',
       'barcode39',
     ]),
-    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
-    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'baudot_1888', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_baudot', 
+      'teletypewriter',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'baudot_54123', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_baudot', 
+      'teletypewriter',
+    ]),
     GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
       'symbol_birds_on_a_wire',
     ]),
@@ -3393,7 +3401,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'freemason', symbolSearchStrings: [
       'symbol_freemason',
     ]),
-    GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: ['symbol_freemason']),
+    GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: [
+      'symbol_freemason',
+    ]),
     GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: [
       'symbol_futurama',
     ]),
@@ -3422,7 +3432,9 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
       'symbol_gnommish',
     ]),
-    GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: []),
+    GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: [
+      'symbol_gnommish',
+    ]),
     GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: [
       'symbol_greek_numerals',
     ]),
@@ -3515,10 +3527,26 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
       'symbol_iokharic',
     ]),
-    GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
-    GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: ['ccitt', 'symbol_baudot', 'teletypewriter']),
-    GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: ['ccitt', 'symbol_murray', 'teletypewriter']),
-    GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: ['ccitt', 'symbol_murray', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'ita1_1926', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_baudot', 
+      'teletypewriter',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita1_1929', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_baudot', 
+      'teletypewriter',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita2_1929', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_murray', 
+      'teletypewriter',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'ita2_1931', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_murray', 
+      'teletypewriter',
+    ]),
     GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
       'japanese_numerals',
     ]),
@@ -3609,8 +3637,11 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
       'symbol_murray',
     ]),
-    GCWSymbolTableTool(
-        symbolKey: 'murraybaudot', symbolSearchStrings: ['ccitt', 'symbol_murraybaudot', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
+      'ccitt', 
+      'symbol_murraybaudot', 
+      'teletypewriter',
+    ]),
     GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
       'music_notes',
       'symbol_musica',
@@ -3792,8 +3823,13 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'shoes', symbolSearchStrings: [
       'symbol_shoes',
     ]),
-    GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: ['symbol_siemens', 'teletypewriter']),
-    GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: ['symbol_signlanguage']),
+    GCWSymbolTableTool(symbolKey: 'siemens', symbolSearchStrings: [
+      'symbol_siemens', 
+      'teletypewriter',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: [
+      'symbol_signlanguage',
+    ]),
     GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
       'symbol_skullz',
     ]),
@@ -3902,18 +3938,50 @@ initializeRegistry(BuildContext context) {
     GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: [
       'symbol_wakandan',
     ]),
-    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: ['weather', 'weather_a']),
-    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: ['weather', 'weather_c', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: ['weather', 'weather_cl', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: ['weather', 'weather_cm', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: ['weather', 'weather_ch', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: ['weather', 'weather_n', 'weather_clouds']),
-    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: ['weather', 'weather_w']),
-    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: ['weather', 'weather_ww']),
+    GCWSymbolTableTool(symbolKey: 'weather_a', symbolSearchStrings: [
+      'weather', 
+      'weather_a',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_c', symbolSearchStrings: [
+      'weather', 
+      'weather_c', 
+      'weather_clouds',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_cl', symbolSearchStrings: [
+      'weather', 
+      'weather_cl', 
+      'weather_clouds',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_cm', symbolSearchStrings: [
+      'weather', 
+      'weather_cm', 
+      'weather_clouds',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_ch', symbolSearchStrings: [
+      'weather', 
+      'weather_ch', 
+      'weather_clouds',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_n', symbolSearchStrings: [
+      'weather', 
+      'weather_n', 
+      'weather_clouds',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_w', symbolSearchStrings: [
+      'weather', 
+      'weather_w',
+    ]),
+    GCWSymbolTableTool(symbolKey: 'weather_ww', symbolSearchStrings: [
+      'weather', 
+      'weather_ww',
+    ]),
     GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
       'symbol_webdings',
     ]),
-    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: ['symbol_westernunion', 'teletypewriter']),
+    GCWSymbolTableTool(symbolKey: 'westernunion', symbolSearchStrings: [
+      'symbol_westernunion', 
+      'teletypewriter',
+    ]),
     GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
       'beaufort',
       'symbol_windforce_beaufort',
@@ -4030,7 +4098,7 @@ initializeRegistry(BuildContext context) {
       'ccitt_ccir_476',
       'teletypewriter',
       'symbol_baudot'
-          'symbol_murraybaudot',
+      'symbol_murraybaudot',
     ]),
     GCWTool(
         tool: OtherTeletypewriter(),
