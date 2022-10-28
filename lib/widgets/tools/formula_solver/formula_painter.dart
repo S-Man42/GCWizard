@@ -468,10 +468,19 @@ class FormulaPainter {
     RegExp regex = RegExp(r'^(' + _variablesRegEx + ')');
     var match = regex.firstMatch(formula);
     if (match == null) return true;
+    var isVariable = (_values != null) && (_values.containsKey(match.group(1)));
 
-    return ((_values != null) &&
-        (_values.containsKey(match.group(1))) &&
-        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
+    switch (_parentFunctionName) {
+      case 'BWW':
+      case 'AV':
+        return isVariable &&
+            !((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty));
+
+        break;
+      default:
+        return isVariable &&
+            ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty));
+    }
   }
 
   List<String> _isInvalidVariable(String formula) {
