@@ -3167,6 +3167,7 @@ initializeRegistry(BuildContext context) {
       'symbol_ballet',
     ]),
     GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: [
+      'braille',
       'symbol_barbier',
     ]),
     GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: [
@@ -3240,6 +3241,7 @@ initializeRegistry(BuildContext context) {
       'cistercian',
     ]),
     GCWSymbolTableTool(symbolKey: 'color_add', symbolSearchStrings: [
+      'color',
       'symbol_color_add',
     ]),
     GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
