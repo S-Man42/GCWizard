@@ -148,10 +148,10 @@ Day1976 parseDay1976(String input) {
 
   var match = matches.elementAt(0);
 
-  var a = int.tryParse(match.group(1));
-  var b = int.tryParse(match.group(3));
+  var a = match.group(1);
+  var b = match.group(3);
 
-  if (a == null || b == null) return null;
+  if (a == null || b == null || a.length < 5 || b.length < 5) return null;
 
   return Day1976(match.group(1), match.group(3));
 }

@@ -69,6 +69,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return Makaney.fromLatLon(_coords).toString();
     case keyCoordsReverseWherigoWaldmeister:
       return Waldmeister.fromLatLon(_coords).toString();
+    case keyCoordsReverseWherigoDay1976:
+      return Day1976.fromLatLon(_coords).toString();
     default:
       return DEC.fromLatLon(_coords).toString();
   }

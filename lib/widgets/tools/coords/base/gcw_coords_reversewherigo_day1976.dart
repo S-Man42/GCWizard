@@ -25,8 +25,8 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
   @override
   void initState() {
     super.initState();
-    _ControllerA = TextEditingController(text: _currentA.toString().padLeft(6, '0'));
-    _ControllerB = TextEditingController(text: _currentB.toString().padLeft(6, '0'));
+    _ControllerA = TextEditingController(text: _currentA);
+    _ControllerB = TextEditingController(text: _currentB);
 
     _FocusNodeA = FocusNode();
     _FocusNodeB = FocusNode();
@@ -62,7 +62,7 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
         onChanged: (value) {
           _currentA = value;
 
-          if (_ControllerA.text.length == 6) FocusScope.of(context).requestFocus(_FocusNodeB);
+          if (_ControllerA.text.length == 5) FocusScope.of(context).requestFocus(_FocusNodeB);
           _setCurrentValueAndEmitOnChange();
         },
       ),
@@ -72,7 +72,7 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
         onChanged: (value) {
           _currentB = value;
 
-          if (_ControllerB.text.toString().length == 6) FocusScope.of(context).requestFocus(_FocusNodeA);
+          if (_ControllerB.text.toString().length == 5) FocusScope.of(context).requestFocus(_FocusNodeA);
           _setCurrentValueAndEmitOnChange();
         },
       ),
