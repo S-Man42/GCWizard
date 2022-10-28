@@ -384,7 +384,7 @@ class FormulaPainter {
       else {
         _operatorBevor = true;
         var subresult = _paintSubFormula(arguments[i], 0);
-        if (wordFunction) subresult = subresult.replaceAll('R', 'g');
+        if (wordFunction &&_emptyValues()) subresult = subresult.replaceAll('R', 'g');
         result.add(subresult);
       }
     }
@@ -469,9 +469,25 @@ class FormulaPainter {
     var match = regex.firstMatch(formula);
     if (match == null) return true;
 
-    return ((_values != null) &&
-        (_values.containsKey(match.group(1))) &&
-        ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty)));
+    var isVariable = (_values != null) && (_values.containsKey(match.group(1)));
+    switch (_parentFunctionName) {
+      case 'BWW':
+      case 'AV':
+        // no set variable makes any text inside a text function to pure text input (= green)
+        if (_emptyValues())
+          return false;
+
+        return isVariable &&
+            ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty));
+        break;
+      default:
+        return isVariable &&
+            ((_values[match.group(1)] == null) || (_values[match.group(1)].isEmpty));
+    }
+  }
+
+  bool _emptyValues() {
+    return (_values == null) || (_values.isEmpty);
   }
 
   List<String> _isInvalidVariable(String formula) {
