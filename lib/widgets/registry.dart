@@ -3469,7 +3469,7 @@ initializeRegistry(BuildContext context) {
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_64', symbolSearchStrings: [
       'zelda',
-      'hylian_64',
+      'symbol_hylian_64',
     ]),
     GCWSymbolTableTool(symbolKey: 'hylian_albw_botw', symbolSearchStrings: [
       'zelda',
@@ -3479,7 +3479,10 @@ initializeRegistry(BuildContext context) {
       'zelda',
       'symbol_hylian_skywardsword',
     ]),
-    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: ['zelda']),
+    GCWSymbolTableTool(symbolKey: 'hylian_symbols', symbolSearchStrings: [
+      'zelda',
+      'symbol_hylian_symbols',
+    ]),
     GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
       'zelda',
       'symbol_hylian_twilightprincess_gcn',
