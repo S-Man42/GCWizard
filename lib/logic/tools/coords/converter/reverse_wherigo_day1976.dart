@@ -1,9 +1,10 @@
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:latlong2/latlong.dart';
 
 
-String _letterForValue(int value){
+String _letterForValue(int value){ // function _SRrF6()
   switch (value.toInt()) {
     case 0 : return "0";
     case 1 : return "1";
@@ -45,7 +46,7 @@ String _letterForValue(int value){
   }
 }
 
-double _valueForLetter(String letter){
+double _valueForLetter(String letter){ // function _0YvH()
   switch (letter) {
     case "0": return 0;
     case "1": return 1;
@@ -83,62 +84,104 @@ double _valueForLetter(String letter){
     case "x": return 33;
     case "y": return 34;
     case "z": return 35;
-    default: return 0;
   }
 }
 
-LatLng day1976ToLatLon(Day1976 day1976) {
+LatLng day1976ToLatLon(Day1976 day1976) { // function _YvIY7()
+  String latStr = day1976.s[2] + day1976.s[4] + day1976.t[0] + day1976.t[1] + day1976.t[4];
+  String longStr =  day1976.s[0] + day1976.s[1] + day1976.s[3] + day1976.t[2] + day1976.t[3];
 
-  double _cTzKn = _valueForLetter(day1976.a[0]);
-  double _dJuU = _valueForLetter(day1976.a[1]);
-  double _IIW = _valueForLetter(day1976.a[2]);
-  double _9Ve7 = _valueForLetter(day1976.a[3]);
-  double _KsA = _valueForLetter(day1976.a[4]);
+  double lat = double.parse(convertBase(latStr, 36, 10));
+  double long = double.parse(convertBase(longStr, 36, 10));
 
-  double _QrbCA = _valueForLetter(day1976.b[0]);
-  double _Avr3k = _valueForLetter(day1976.b[1]);
-  double _QWQ = _valueForLetter(day1976.b[2]);
-  double _ErSZ = _valueForLetter(day1976.b[3]);
-  double _rai = _valueForLetter(day1976.b[4]);
-
-  double lat = _IIW * 1679616 + _KsA * 46656 + _QrbCA * 1296 + _Avr3k * 36 + _rai;
-  double lon = _cTzKn * 1679616 + _dJuU * 46656 + _9Ve7 * 1296 + _QWQ * 36 + _ErSZ;
+  // String a = day1976.s[0];
+  // String b = day1976.s[1];
+  // String c = day1976.s[2];
+  // String d = day1976.s[3];
+  // String e = day1976.s[4];
+  //
+  // String _vZmW2 = day1976.t[0];
+  // String _2kSJl = day1976.t[1];
+  // String _5mF = day1976.t[2];
+  // String _tFCg = day1976.t[3];
+  // String _vRGT = day1976.t[4];
+  //
+  // double _IIW = _valueForLetter(c);
+  // double _KsA = _valueForLetter(e);
+  // double _QrbCA = _valueForLetter(_vZmW2);
+  // double _Avr3k = _valueForLetter(_2kSJl);
+  // double _rai = _valueForLetter(_vRGT);
+  //
+  // double _cTzKn = _valueForLetter(a);
+  // double _dJuU = _valueForLetter(b);
+  // double _9Ve7 = _valueForLetter(d);
+  // double _QWQ = _valueForLetter(_5mF);
+  // double _ErSZ = _valueForLetter(_tFCg);
+  //
+  // double lat = _IIW * 1679616 + _KsA * 46656 + _QrbCA * 1296 + _Avr3k * 36 + _rai;
+  // double long = _cTzKn * 1679616 + _dJuU * 46656 + _9Ve7 * 1296 + _QWQ * 36 + _ErSZ;
+  //
   lat = lat / 100000;
-  lon = lon / 100000;
-  lat = lat - 90;
-  lon = lon - 180;
+  long = long / 100000;
 
-  return decToLatLon(DEC(lat, lon));
+  lat = lat - 90;
+  long = long - 180;
+
+  return decToLatLon(DEC(lat, long));
 }
 
-Day1976 latLonToDay1976(LatLng coord) {
-  var lat = coord.latitude + 90;
-  var lon = coord.longitude + 180;
+Day1976 latLonToDay1976(LatLng coord) { // function _6u3VL()
+  int lat = ((coord.latitude + 90) * 100000).floor();
+  int long = ((coord.longitude + 180) * 100000).floor();
+  print(lat.toString()+' '+long.toString());
 
-  lat = lat * 100000;
-  lon = lon * 100000;
-  var _IIW = (lat / 1679616).floor();
-  lat = lat - _IIW * 1679616;
-  var _KsA = (lat / 46656).floor();
-  lat = lat - _KsA * 46656;
-  var _QrbCA = (lat / 1296).floor();
-  lat = lat - _QrbCA * 1296;
-  var _Avr3k = (lat / 36).floor();
-  var _rai = (lat - _Avr3k * 36).toInt();
+  String latStr = convertBase(lat.toString(), 10, 36).toLowerCase();
+  String longStr = convertBase(long.toString(), 10, 36).toLowerCase();
+  print(latStr+' '+longStr);
 
-  var _cTzKn = (lon / 1679616).floor();
-  lon = lon - _cTzKn * 1679616;
-  var _dJuU = (lon / 46656).floor();
-  lon = lon - _dJuU * 46656;
-  var _9Ve7 = (lon / 1296).floor();
-  lon = lon - _9Ve7 * 1296;
-  var _QWQ = (lon / 36).floor();
-  var _ErSZ = (lon - _QWQ * 36).toInt();
+//   double lat = coord.latitude + 90;
+//   double long = coord.longitude + 180;
 
-  return Day1976(
-      _letterForValue(_cTzKn) + _letterForValue(_dJuU) + _letterForValue(_IIW) + _letterForValue(_9Ve7) + _letterForValue(_KsA),
-      _letterForValue(_QrbCA) + _letterForValue(_Avr3k) + _letterForValue(_QWQ) + _letterForValue(_ErSZ) + _letterForValue(_rai)
-  );
+//   lat = (lat * 100000).floorToDouble();
+//   long = (long * 100000).floorToDouble();
+//
+//    int _IIW = (lat / 1679616).floor();
+//    lat = lat - _IIW * 1679616;
+//    int _KsA = (lat / 46656).floor();
+//    lat = lat - _KsA * 46656;
+//    int _QrbCA = (lat / 1296).floor();
+//    lat = lat - _QrbCA * 1296;
+//    int _Avr3k = (lat / 36).floor();
+//    int _rai = (lat - _Avr3k * 36).toInt();
+//
+//    int _cTzKn = (long / 1679616).floor();
+//    long = long - _cTzKn * 1679616;
+//    int _dJuU = (long / 46656).floor();
+//    long = long - _dJuU * 46656;
+//    int _9Ve7 = (long / 1296).floor();
+//    long = long - _9Ve7 * 1296;
+//    int _QWQ = (long / 36).floor();
+//    int _ErSZ = (long - _QWQ * 36).toInt();
+//
+//    String c = _letterForValue(_IIW);
+//    String e = _letterForValue(_KsA);
+//    String _vZmW2 = _letterForValue(_QrbCA);
+//    String _2kSJl = _letterForValue(_Avr3k);
+//    String _vRGT =  _letterForValue(_rai);
+//    String a = _letterForValue(_cTzKn);
+//    String b = _letterForValue(_dJuU);
+//    String d = _letterForValue(_9Ve7);
+//    String _5mF = _letterForValue(_QWQ);
+//    String _tFCg = _letterForValue(_ErSZ);
+//
+//    return Day1976(
+//         a + b + c + d + e,
+//        _vZmW2 + _2kSJl + _5mF +_tFCg  + _vRGT
+//    );
+      return Day1976(
+        longStr[0] + longStr[1] + latStr[0] + longStr[2] + latStr[1],
+        latStr[2] + latStr[3] + longStr[3] + longStr[4] + latStr[4],
+      );
 }
 
 Day1976 parseDay1976(String input) {

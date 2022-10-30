@@ -48,8 +48,8 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
       var day1976 = widget.coordinates is Day1976
           ? widget.coordinates as Day1976
           : Day1976.fromLatLon(widget.coordinates.toLatLng());
-      _currentA = day1976.a;
-      _currentB = day1976.b;
+      _currentA = day1976.s;
+      _currentB = day1976.t;
 
       _ControllerA.text = _currentA.toString();
       _ControllerB.text = _currentB.toString();

@@ -734,9 +734,9 @@ class Waldmeister extends BaseCoordinates {
 
 class Day1976 extends BaseCoordinates {
   String get key => keyCoordsReverseWherigoDay1976;
-  String a, b;
+  String s, t;
 
-  Day1976(this.a, this.b);
+  Day1976(this.s, this.t);
 
   LatLng toLatLng() {
     return day1976ToLatLon(this);
@@ -752,7 +752,7 @@ class Day1976 extends BaseCoordinates {
 
   @override
   String toString() {
-    return '$a\n$b';
+    return '$s\n$t';
   }
 }
 
