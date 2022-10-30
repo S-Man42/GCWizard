@@ -509,10 +509,8 @@ define service{
 
 1. Download the [Tomcat plugin](http://exchange.nagios.org/directory/Plugins/Java-Applications-and-Servers/Apache-Tomcat/check_tomcat-2Epl/details) into `/usr/local/nagios/libexec/` directory (into your nagios server). 
    
-
 2. Rename the plugin from `check_tomcat.pl` to `check_tomcat`and make it executable.
    
-
 3. Just to be on the safe side, install a XML dependency that is used by the tomcat plugin using
 
    ```
@@ -883,6 +881,92 @@ wget https://www.waveshare.com/w/upload/d/d9/UPS_HAT.7z
 7zr x UPS_HAT.7z -r -o./UPS_HAT
 cd UPS_HAT
 python3 INA219.py
+```
+
+Obviously two errors could occur:
+
+- python3 is not installed
+- the smbus module is not installed
+
+Hence you have to install python3 and the smbus module.
+
+
+
+# Installation python3
+
+
+
+## Quellen
+
+- [Welcome to Python.org](https://www.python.org/)
+- [How To Install the Latest Python Version on Raspberry Pi? – RaspberryTips](https://raspberrytips.com/install-latest-python-raspberry-pi/)
+
+
+
+Two versions of Python come preinstalled on Raspberry Pi OS: Python 2 and Python 3. To find the exact version number, use the command line `python –version` and `python3 –version`.
+
+The easiest way to find the latest Python release available is to go to the official Python website. On the download page, the latest versions are listed with their release date and maintenance status.
+
+
+
+## Installation
+
+Go to the tmp-Directory
+
+```
+cd /tmp
+```
+
+Download the latest Python file with
+
+```
+wget https://www.python.org/ftp/python/3.9.15/Python-3.9.15.tgz
+```
+
+Extract the files with
+
+```
+tar -zxvf Python-3.9.15.tgz
+```
+
+Move to the folder containing the extracted files
+
+```
+cd Python-3.9.15
+```
+
+Run the configuration command
+
+```
+./configure --enable-optimizations
+```
+
+Once done, run this command to install it
+
+```
+sudo make altinstall
+```
+
+Make Python the default version on Raspberry Pi OS
+
+```
+python3.9 myscript.py
+```
+
+
+
+## Installation des Paketmanagers PIP
+
+```
+sudo apt-get install python3-pip
+```
+
+
+
+## Installation des Paketes smbus
+
+```
+pip install smbus
 ```
 
 
