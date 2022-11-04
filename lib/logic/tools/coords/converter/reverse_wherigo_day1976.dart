@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 import 'package:latlong2/latlong.dart';
 
 
-String _letterForValue(int value){ // function _SRrF6()
+String _valueToLetter(int value){ // function _SRrF6()
   switch (value.toInt()) {
     case 0 : return "0";
     case 1 : return "1";
@@ -46,7 +46,7 @@ String _letterForValue(int value){ // function _SRrF6()
   }
 }
 
-double _valueForLetter(String letter){ // function _0YvH()
+int _letterToValue(String letter){ // function _0YvH()
   switch (letter) {
     case "0": return 0;
     case "1": return 1;
@@ -88,39 +88,34 @@ double _valueForLetter(String letter){ // function _0YvH()
 }
 
 LatLng day1976ToLatLon(Day1976 day1976) { // function _YvIY7()
-  String latStr = day1976.s[2] + day1976.s[4] + day1976.t[0] + day1976.t[1] + day1976.t[4];
-  String longStr =  day1976.s[0] + day1976.s[1] + day1976.s[3] + day1976.t[2] + day1976.t[3];
 
-  double lat = double.parse(convertBase(latStr, 36, 10));
-  double long = double.parse(convertBase(longStr, 36, 10));
+   String a = day1976.s[0];
+   String b = day1976.s[1];
+   String c = day1976.s[2];
+   String d = day1976.s[3];
+   String e = day1976.s[4];
 
-  // String a = day1976.s[0];
-  // String b = day1976.s[1];
-  // String c = day1976.s[2];
-  // String d = day1976.s[3];
-  // String e = day1976.s[4];
-  //
-  // String _vZmW2 = day1976.t[0];
-  // String _2kSJl = day1976.t[1];
-  // String _5mF = day1976.t[2];
-  // String _tFCg = day1976.t[3];
-  // String _vRGT = day1976.t[4];
-  //
-  // double _IIW = _valueForLetter(c);
-  // double _KsA = _valueForLetter(e);
-  // double _QrbCA = _valueForLetter(_vZmW2);
-  // double _Avr3k = _valueForLetter(_2kSJl);
-  // double _rai = _valueForLetter(_vRGT);
-  //
-  // double _cTzKn = _valueForLetter(a);
-  // double _dJuU = _valueForLetter(b);
-  // double _9Ve7 = _valueForLetter(d);
-  // double _QWQ = _valueForLetter(_5mF);
-  // double _ErSZ = _valueForLetter(_tFCg);
-  //
-  // double lat = _IIW * 1679616 + _KsA * 46656 + _QrbCA * 1296 + _Avr3k * 36 + _rai;
-  // double long = _cTzKn * 1679616 + _dJuU * 46656 + _9Ve7 * 1296 + _QWQ * 36 + _ErSZ;
-  //
+   String _vZmW2 = day1976.t[0];
+   String _2kSJl = day1976.t[1];
+   String _5mF = day1976.t[2];
+   String _tFCg = day1976.t[3];
+   String _vRGT = day1976.t[4];
+
+   int _IIW = _letterToValue(c);
+   int _KsA = _letterToValue(e);
+   int _QrbCA = _letterToValue(_vZmW2);
+   int _Avr3k = _letterToValue(_2kSJl);
+   int _rai = _letterToValue(_vRGT);
+
+   int _cTzKn = _letterToValue(a);
+   int _dJuU = _letterToValue(b);
+   int _9Ve7 = _letterToValue(d);
+   int _QWQ = _letterToValue(_5mF);
+   int _ErSZ = _letterToValue(_tFCg);
+
+   double lat = (_IIW * 1679616 + _KsA * 46656 + _QrbCA * 1296 + _Avr3k * 36 + _rai).toDouble();
+   double long = (_cTzKn * 1679616 + _dJuU * 46656 + _9Ve7 * 1296 + _QWQ * 36 + _ErSZ).toDouble();
+
   lat = lat / 100000;
   long = long / 100000;
 
@@ -131,57 +126,45 @@ LatLng day1976ToLatLon(Day1976 day1976) { // function _YvIY7()
 }
 
 Day1976 latLonToDay1976(LatLng coord) { // function _6u3VL()
+
   int lat = ((coord.latitude + 90) * 100000).floor();
   int long = ((coord.longitude + 180) * 100000).floor();
-  print(lat.toString()+' '+long.toString());
 
-  String latStr = convertBase(lat.toString(), 10, 36).toLowerCase();
-  String longStr = convertBase(long.toString(), 10, 36).toLowerCase();
-  print(latStr+' '+longStr);
+  int _IIW = (lat / 1679616).truncate();
+  lat = lat % 1679616;
+  int _KsA = (lat / 46656).truncate();
+  lat = lat % 46656;
+  int _QrbCA = (lat / 1296).truncate();
+  lat = lat % 1296;
+  int _Avr3k = (lat / 36).truncate();
+  //int _rai = lat % 36;
+  int _rai = _Avr3k;
 
-//   double lat = coord.latitude + 90;
-//   double long = coord.longitude + 180;
+  int _cTzKn = (long / 1679616).truncate();
+  long = long % 1679616;
+  int _dJuU = (long / 46656).truncate();
+  long = long % 46656;
+  int _9Ve7 = (long / 1296).truncate();
+  long = long % 1296;
+  int _QWQ = (long / 36).truncate();
+  //int _ErSZ = long % 36;
+  int _ErSZ = _QWQ;
 
-//   lat = (lat * 100000).floorToDouble();
-//   long = (long * 100000).floorToDouble();
-//
-//    int _IIW = (lat / 1679616).floor();
-//    lat = lat - _IIW * 1679616;
-//    int _KsA = (lat / 46656).floor();
-//    lat = lat - _KsA * 46656;
-//    int _QrbCA = (lat / 1296).floor();
-//    lat = lat - _QrbCA * 1296;
-//    int _Avr3k = (lat / 36).floor();
-//    int _rai = (lat - _Avr3k * 36).toInt();
-//
-//    int _cTzKn = (long / 1679616).floor();
-//    long = long - _cTzKn * 1679616;
-//    int _dJuU = (long / 46656).floor();
-//    long = long - _dJuU * 46656;
-//    int _9Ve7 = (long / 1296).floor();
-//    long = long - _9Ve7 * 1296;
-//    int _QWQ = (long / 36).floor();
-//    int _ErSZ = (long - _QWQ * 36).toInt();
-//
-//    String c = _letterForValue(_IIW);
-//    String e = _letterForValue(_KsA);
-//    String _vZmW2 = _letterForValue(_QrbCA);
-//    String _2kSJl = _letterForValue(_Avr3k);
-//    String _vRGT =  _letterForValue(_rai);
-//    String a = _letterForValue(_cTzKn);
-//    String b = _letterForValue(_dJuU);
-//    String d = _letterForValue(_9Ve7);
-//    String _5mF = _letterForValue(_QWQ);
-//    String _tFCg = _letterForValue(_ErSZ);
-//
-//    return Day1976(
-//         a + b + c + d + e,
-//        _vZmW2 + _2kSJl + _5mF +_tFCg  + _vRGT
-//    );
-      return Day1976(
-        longStr[0] + longStr[1] + latStr[0] + longStr[2] + latStr[1],
-        latStr[2] + latStr[3] + longStr[3] + longStr[4] + latStr[4],
-      );
+  String c = _valueToLetter(_IIW);
+  String e = _valueToLetter(_KsA);
+  String _vZmW2 = _valueToLetter(_QrbCA);
+  String _2kSJl = _valueToLetter(_Avr3k);
+  String _vRGT =  _valueToLetter(_rai);
+  String a = _valueToLetter(_cTzKn);
+  String b = _valueToLetter(_dJuU);
+  String d = _valueToLetter(_9Ve7);
+  String _5mF = _valueToLetter(_QWQ);
+  String _tFCg = _valueToLetter(_ErSZ);
+
+  return Day1976(
+         a + b + c + d + e,
+        _vZmW2 + _2kSJl + _5mF +_tFCg  + _vRGT
+  );
 }
 
 Day1976 parseDay1976(String input) {
