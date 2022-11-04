@@ -566,6 +566,7 @@ sudo nano /usr/local/nagios/libexec/check_ups_hat
 import smbus2
 import smbus
 import time
+import os
 
 OK = 0
 WARNING = 1
@@ -688,8 +689,9 @@ if __name__=='__main__':
 
     print("{:3.1f}%, {:6.3f}V,{:9.6f}A, {:6.3f}W".format(p, bus_voltage, current/1000, power))
     if (current > 0): sys.exit(OK)
-    if (p > 10): sys.exit(WARNING)
-    sys.exit(CRITICAL)
+    if (p > 25): sys.exit(WARNING)
+    if (p > 5):  sys.exit(CRITICAL)
+    os.system("shutdown /s /t 1")
 ```
 
 
