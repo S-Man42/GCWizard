@@ -6,6 +6,10 @@
 
 # Inhaltsverzeichnis
 
+[TOC]
+
+
+
 # Raspberry Pi 4
 
 
@@ -268,7 +272,13 @@ sudo make install-groups-users
 sudo usermod -a -G nagios www-data
 ```
 
- 
+ add password for user
+
+```
+sudo passwd nagios
+```
+
+
 
 ### **Install Binaries**
 
@@ -1197,16 +1207,25 @@ Hence you have to install python3 and the smbus module.
 
 ## nagios
 
-| Schlüssel                 | Wert                                                         |
-| ------------------------- | ------------------------------------------------------------ |
-| Benutzer Name             | nagiosadmin                                                  |
-| Benutzer Kennwort         |                                                              |
-| Port                      | 1417                                                         |
+| Schlüssel         | Wert        |
+| ----------------- | ----------- |
+| Benutzer Name     | nagiosadmin |
+| Benutzer Kennwort |             |
+| Port              | 1417        |
+
+### check Tomcat
+
 | /usr/local/nagios/libexec | check_tomcat.pl generieren                                   |
+| ------------------------- | ------------------------------------------------------------ |
 | commands.cfg              | define command{<br/>       command_name check_tomcat<br/>       command_line /usr/bin/perl /usr/lib/nagios/plugins/check_tomcat -H$HOSTADDRESS$ -p$ARG1$ -l$ARG2$ -a$ARG3$ -w$ARG4$ -c$ARG5$<br/>} |
 | localhost.cfg             | define service{<br />        use                  local-service<br />        host_name            localhost<br />        service_description  Tomcat <br />       check_command        check_tomcat!7323!tomcat_username!tomcat_password!25%,25%!10%,10%<br /> } |
 
+### check UPS_hat
 
+| /usr/local/nagios/libexec | check_ups_hat.pl generieren                                  |
+| ------------------------- | ------------------------------------------------------------ |
+| commands.cfg              | define command{<br/>       command_name check_ups_hat<br/>       command_line echo <PASSWORD> \| sudo -S /usr/bin/python /usr/lib/nagios/plugins/check_ups_hat<br/>} |
+| localhost.cfg             | define service{<br />        use                  local-service<br />        host_name            localhost<br />        service_description  UPS_HAT <br />       check_command        check_ups_hat<br /> } |
 
 ## Apache 2
 
