@@ -138,6 +138,7 @@ class AboutState extends State<About> {
                   TextSpan(
                       text: [
                             '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
+                            '\'andre0707\' (Day1976 Code)',
                             '\'capoaira\' (Code)',
                             'Dennis \'dennistreysa\' (Code)',
                             'Frank \'Wizardland\' (podKst.de) (Hardware)',
