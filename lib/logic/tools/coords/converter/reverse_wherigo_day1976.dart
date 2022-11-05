@@ -1,6 +1,5 @@
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:latlong2/latlong.dart';
 
 
@@ -168,6 +167,7 @@ ReverseWherigoDay1976 latLonToReverseWIGDay1976(LatLng coord) { // function _6u3
 }
 
 ReverseWherigoDay1976 parseReverseWherigoDay1976(String input) {
+  input = input.toLowerCase();
   RegExp regExp = RegExp(r'^\s*([0-9a-z]+)(\s*,\s*|\s+)([0-9a-z]+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.length == 0) return null;
