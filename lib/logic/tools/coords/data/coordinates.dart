@@ -16,6 +16,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_day1976.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_wherigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
@@ -69,6 +70,7 @@ const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsMakaney = 'coords_makaney';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWherigoWaldmeister = 'coords_reversewhereigo_waldmeister'; // typo known. DO NOT change!
+const keyCoordsReverseWherigoDay1976 = 'coords_reversewhereigo_day1976';
 
 class CoordinateFormat {
   final key;
@@ -124,6 +126,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
+  CoordinateFormat(keyCoordsReverseWherigoDay1976, 'Reverse Wherigo (Day1976)', '3f8f1, z4ee4'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsMakaney, 'Makaney (MKC)', 'M97F-BBOOI'),
@@ -705,27 +708,51 @@ class SlippyMap extends BaseCoordinates {
   }
 }
 
-class Waldmeister extends BaseCoordinates {
+class ReverseWherigoWaldmeister extends BaseCoordinates {
   String get key => keyCoordsReverseWherigoWaldmeister;
   String a, b, c;
 
-  Waldmeister(this.a, this.b, this.c);
+  ReverseWherigoWaldmeister(this.a, this.b, this.c);
 
   LatLng toLatLng() {
-    return waldmeisterToLatLon(this);
+    return reverseWIGWaldmeisterToLatLon(this);
   }
 
-  static Waldmeister fromLatLon(LatLng coord) {
-    return latLonToWaldmeister(coord);
+  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+    return latLonToReverseWIGWaldmeister(coord);
   }
 
-  static Waldmeister parse(String input) {
-    return parseWaldmeister(input);
+  static ReverseWherigoWaldmeister parse(String input) {
+    return parseReverseWherigoWaldmeister(input);
   }
 
   @override
   String toString() {
     return '$a\n$b\n$c';
+  }
+}
+
+class ReverseWherigoDay1976 extends BaseCoordinates {
+  String get key => keyCoordsReverseWherigoDay1976;
+  String s, t;
+
+  ReverseWherigoDay1976(this.s, this.t);
+
+  LatLng toLatLng() {
+    return reverseWIGDay1976ToLatLon(this);
+  }
+
+  static ReverseWherigoDay1976 fromLatLon(LatLng coord) {
+    return latLonToReverseWIGDay1976(coord);
+  }
+
+  static ReverseWherigoDay1976 parse(String input) {
+    return parseReverseWherigoDay1976(input);
+  }
+
+  @override
+  String toString() {
+    return '$s\n$t';
   }
 }
 
