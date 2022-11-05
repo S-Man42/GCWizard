@@ -472,6 +472,7 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsQuadtree:
       case keyCoordsMakaney:
       case keyCoordsReverseWherigoWaldmeister:
+      case keyCoordsReverseWherigoDay1976:
         break;
       default:
         _currentCoordsFormat = {'format': keyCoordsDMM};

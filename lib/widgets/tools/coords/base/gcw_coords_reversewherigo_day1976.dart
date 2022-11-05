@@ -45,9 +45,9 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var day1976 = widget.coordinates is Day1976
-          ? widget.coordinates as Day1976
-          : Day1976.fromLatLon(widget.coordinates.toLatLng());
+      var day1976 = widget.coordinates is ReverseWherigoDay1976
+          ? widget.coordinates as ReverseWherigoDay1976
+          : ReverseWherigoDay1976.fromLatLon(widget.coordinates.toLatLng());
       _currentA = day1976.s;
       _currentB = day1976.t;
 
@@ -81,6 +81,6 @@ class GCWCoordsReverseWherigoDay1976State extends State<GCWCoordsReverseWherigoD
 
   _setCurrentValueAndEmitOnChange() {
     widget
-        .onChanged(Day1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
+        .onChanged(ReverseWherigoDay1976.parse(_currentA.toString() + '\n' + _currentB.toString()));
   }
 }

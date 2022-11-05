@@ -35,7 +35,10 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     coord = MGRS.parse(text);
     if (coord != null) coords.add(coord);
 
-    coord = Waldmeister.parse(text);
+    coord = ReverseWherigoWaldmeister.parse(text);
+    if (coord != null) coords.add(coord);
+
+    coord = ReverseWherigoDay1976.parse(text);
     if (coord != null) coords.add(coord);
 
     coord = XYZ.parse(text);
@@ -92,6 +95,7 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     coord = SlippyMap.parse(text);
     if (coord != null) coords.add(coord);
   } catch (e) {}
+
   return coords;
 }
 

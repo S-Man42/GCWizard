@@ -126,7 +126,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsReverseWherigoWaldmeister, 'Reverse Wherigo (Waldmeister)', '042325, 436113, 935102'),
-  CoordinateFormat(keyCoordsReverseWherigoDay1976, 'Reverse Wherigo (Day1976)', '042a3x, 4bzj3'),
+  CoordinateFormat(keyCoordsReverseWherigoDay1976, 'Reverse Wherigo (Day1976)', '3f8f1, z4ee4'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsMakaney, 'Makaney (MKC)', 'M97F-BBOOI'),
@@ -708,22 +708,22 @@ class SlippyMap extends BaseCoordinates {
   }
 }
 
-class Waldmeister extends BaseCoordinates {
+class ReverseWherigoWaldmeister extends BaseCoordinates {
   String get key => keyCoordsReverseWherigoWaldmeister;
   String a, b, c;
 
-  Waldmeister(this.a, this.b, this.c);
+  ReverseWherigoWaldmeister(this.a, this.b, this.c);
 
   LatLng toLatLng() {
-    return waldmeisterToLatLon(this);
+    return reverseWIGWaldmeisterToLatLon(this);
   }
 
-  static Waldmeister fromLatLon(LatLng coord) {
-    return latLonToWaldmeister(coord);
+  static ReverseWherigoWaldmeister fromLatLon(LatLng coord) {
+    return latLonToReverseWIGWaldmeister(coord);
   }
 
-  static Waldmeister parse(String input) {
-    return parseWaldmeister(input);
+  static ReverseWherigoWaldmeister parse(String input) {
+    return parseReverseWherigoWaldmeister(input);
   }
 
   @override
@@ -732,22 +732,22 @@ class Waldmeister extends BaseCoordinates {
   }
 }
 
-class Day1976 extends BaseCoordinates {
+class ReverseWherigoDay1976 extends BaseCoordinates {
   String get key => keyCoordsReverseWherigoDay1976;
   String s, t;
 
-  Day1976(this.s, this.t);
+  ReverseWherigoDay1976(this.s, this.t);
 
   LatLng toLatLng() {
-    return day1976ToLatLon(this);
+    return reverseWIGDay1976ToLatLon(this);
   }
 
-  static Day1976 fromLatLon(LatLng coord) {
-    return latLonToDay1976(coord);
+  static ReverseWherigoDay1976 fromLatLon(LatLng coord) {
+    return latLonToReverseWIGDay1976(coord);
   }
 
-  static Day1976 parse(String input) {
-    return parseDay1976(input);
+  static ReverseWherigoDay1976 parse(String input) {
+    return parseReverseWherigoDay1976(input);
   }
 
   @override

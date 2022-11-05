@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = Day1976.fromLatLon(elem['coord']);
+        var _actual = ReverseWherigoDay1976.fromLatLon(elem['coord']);
         expect(_actual.s, elem['expectedOutput'][0]);
         expect(_actual.t, elem['expectedOutput'][1]);
       });
@@ -34,7 +34,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = Day1976.parse(elem['input'][0] + " " + elem['input'][1])?.toLatLng();
+        var _actual = ReverseWherigoDay1976.parse(elem['input'][0] + " " + elem['input'][1])?.toLatLng();
         expect((_actual.latitude - elem['expectedOutput'].latitude).abs() < 1e-3, true);
         expect((_actual.longitude - elem['expectedOutput'].longitude).abs() < 1e-3, true);
       });
@@ -50,7 +50,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = Day1976.parse(elem['text'])?.toLatLng();
+        var _actual = ReverseWherigoDay1976.parse(elem['text'])?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

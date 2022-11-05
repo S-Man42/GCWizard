@@ -349,6 +349,8 @@ initializeMultiToolDecoder(BuildContext context) {
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsQuadtree)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
         options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsReverseWherigoWaldmeister)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS), MDT_INTERNALNAMES_COORDINATEFORMATS,
+        options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsReverseWherigoDay1976)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VIGENERE), MDT_INTERNALNAMES_VIGENERE),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_PLAYFAIR), MDT_INTERNALNAMES_PLAYFAIR),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_POLYBIOS), MDT_INTERNALNAMES_POLYBIOS),

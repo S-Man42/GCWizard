@@ -87,7 +87,7 @@ int _letterToValue(String letter){ // function _0YvH()
   }
 }
 
-LatLng day1976ToLatLon(Day1976 day1976) { // function _YvIY7()
+LatLng reverseWIGDay1976ToLatLon(ReverseWherigoDay1976 day1976) { // function _YvIY7()
 
    String a = day1976.s[0];
    String b = day1976.s[1];
@@ -125,7 +125,7 @@ LatLng day1976ToLatLon(Day1976 day1976) { // function _YvIY7()
   return decToLatLon(DEC(lat, long));
 }
 
-Day1976 latLonToDay1976(LatLng coord) { // function _6u3VL()
+ReverseWherigoDay1976 latLonToReverseWIGDay1976(LatLng coord) { // function _6u3VL()
 
   int lat = ((coord.latitude + 90) * 100000).floor();
   int long = ((coord.longitude + 180) * 100000).floor();
@@ -161,13 +161,13 @@ Day1976 latLonToDay1976(LatLng coord) { // function _6u3VL()
   String _5mF = _valueToLetter(_QWQ);
   String _tFCg = _valueToLetter(_ErSZ);
 
-  return Day1976(
+  return ReverseWherigoDay1976(
          a + b + c + d + e,
         _vZmW2 + _2kSJl + _5mF +_tFCg  + _vRGT
   );
 }
 
-Day1976 parseDay1976(String input) {
+ReverseWherigoDay1976 parseReverseWherigoDay1976(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9a-z]+)(\s*,\s*|\s+)([0-9a-z]+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.length == 0) return null;
@@ -179,5 +179,5 @@ Day1976 parseDay1976(String input) {
 
   if (a == null || b == null || a.length < 5 || b.length < 5) return null;
 
-  return Day1976(match.group(1), match.group(3));
+  return ReverseWherigoDay1976(match.group(1), match.group(3));
 }
