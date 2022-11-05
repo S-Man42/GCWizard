@@ -2662,9 +2662,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     }); //for each element to decode
     return output;
   }
-  else
+  else // entire parts - search parts of words: weight => eight => 8
   {
-    // search parts of words: weight => eight => 8
     decodeText = input.replaceAll(RegExp(r'[^a-z0-9]'), '');
 
     for (int i = 0; i < decodeText.length; i++) {
