@@ -10,7 +10,6 @@ import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/utils/settings/preferences.dart';
 

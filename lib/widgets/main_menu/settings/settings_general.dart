@@ -24,7 +24,7 @@ import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GeneralSettings extends StatefulWidget {
   @override

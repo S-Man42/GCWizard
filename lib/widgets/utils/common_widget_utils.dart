@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:prefs/prefs.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 String className(Widget widget) {
   return widget.runtimeType.toString();
@@ -215,4 +216,9 @@ int sortToolList(GCWTool a, GCWTool b) {
   }
 
   return null;
+}
+
+Future<bool> launchUrl(
+    Uri url) async {
+  return urlLauncher.launchUrl(url, mode: urlLauncher.LaunchMode.externalApplication);
 }
