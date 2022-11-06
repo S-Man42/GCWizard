@@ -2393,7 +2393,10 @@ Map NumWords = {
 };
 
 List<NumeralWordsDecodeOutput> decodeNumeralwords(
-    {String input, NumeralWordsLanguage language, bool decodeModeWholeWords}) {
+    { String input,
+      NumeralWordsLanguage language,
+      bool decodeModeWholeWords}) {
+
   RegExp expr;
   List<NumeralWordsDecodeOutput> output = new List<NumeralWordsDecodeOutput>();
   if (input == null || input == '') {
@@ -2664,17 +2667,46 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
   }
   else // entire parts - search parts of words: weight => eight => 8
   {
-    decodeText = input.replaceAll(RegExp(r'[^a-z0-9]'), '');
-
+    decodeText = input.replaceAll(RegExp(r'[\s]'), '')
+        .replaceAll('^', '')
+        .replaceAll('°', '')
+        .replaceAll('!', '')
+        .replaceAll('"', '')
+        .replaceAll('§', '')
+        .replaceAll('\$', '')
+        .replaceAll('%', '')
+        .replaceAll('&', '')
+        .replaceAll('/', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '')
+        .replaceAll('=', '')
+        .replaceAll('?', '')
+        .replaceAll('´', '')
+        .replaceAll('`', '')
+        .replaceAll('{', '')
+        .replaceAll('}', '')
+        .replaceAll('[', '')
+        .replaceAll(']', '')
+        .replaceAll('\\', '')
+        .replaceAll('>', '')
+        .replaceAll('<', '')
+        .replaceAll('|', '')
+        .replaceAll(';', '')
+        .replaceAll(',', '')
+        .replaceAll('.', '')
+        .replaceAll(':', '')
+        .replaceAll('-', '')
+        .replaceAll('_', '')
+        .replaceAll('#', '')
+        .replaceAll("'", '')
+        .replaceAll('+', '')
+        .replaceAll('*', '')
+        .replaceAll('~', '')
+        .replaceAll('µ', '')
+        .replaceAll('@', '')
+        .replaceAll('€', '');
     for (int i = 0; i < decodeText.length; i++) {
       String checkWord = decodeText.substring(i);
-      //RegExp exp = new RegExp(r"([0-9]+)");
-      //if (checkWord.startsWith(exp)) {
-        // search for numbers
-      //  String match = exp.firstMatch(checkWord).group(0);
-      //  output.add(NumeralWordsDecodeOutput(match, match, _languageList[NumeralWordsLanguage.NUM]));
-      //  i = i + match.length;
-      //}
       if (language == NumeralWordsLanguage.ALL) {
         _alreadyFound = false;
         int oldValueInt = 0;
@@ -2684,6 +2716,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
           var _language = key;
           value.forEach((key, value) {
             // check language map
+            if (_language == NumeralWordsLanguage.KLI)
+              key = key.replaceAll('-', '').replaceAll(' ', '').replaceAll("'", '');
             if (checkWord.startsWith(removeAccents(key))) {
               if (!_alreadyFound) {
                 _alreadyFound = true;
