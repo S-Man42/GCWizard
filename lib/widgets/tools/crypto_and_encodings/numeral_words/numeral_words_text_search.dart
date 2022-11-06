@@ -160,7 +160,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     if (_currentDecodeMode == GCWSwitchPosition.left) {
       _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase();
     } else {
-      _codeControllerHighlighted.text = _currentDecodeInput.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+      _codeControllerHighlighted.text = removeAccents(_currentDecodeInput.toLowerCase()).replaceAll(RegExp(r'[^a-z0-9]'), '');
     }
 
     return Column(

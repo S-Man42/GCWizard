@@ -5,6 +5,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_expandable.dart';
 
@@ -17,7 +18,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
   TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
-  //GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
   var _currentLanguage = NumeralWordsLanguage.ALL;
 
   @override
@@ -45,6 +46,16 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          value: _currentDecodeMode,
+          leftValue: i18n(context, 'numeralwords_decodemode_left'),
+          rightValue: i18n(context, 'numeralwords_decodemode_right'),
+          onChanged: (value) {
+            setState(() {
+              _currentDecodeMode = value;
+            });
+          },
+        ),
         GCWDefaultOutput(
           child: _buildOutput(context),
         )
@@ -58,7 +69,7 @@ class NumeralWordsIdentifyLanguagesState extends State<NumeralWordsIdentifyLangu
     detailedOutput = decodeNumeralwords(
       input: removeAccents(_currentDecodeInput.toLowerCase()),
       language: _currentLanguage,
-      decodeModeWholeWords: false, );
+      decodeModeWholeWords: _currentDecodeMode == GCWSwitchPosition.left, );
     for (int i = 0; i < detailedOutput.length; i++) {
       if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
         output = output + ' ' + i18n(context, detailedOutput[i].number);
