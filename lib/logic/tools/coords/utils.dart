@@ -4,8 +4,6 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'converter/gauss_krueger.dart';
-
 const DefaultLambertType = LambertType.LAMBERT_93;
 const DefaultGaussKruegerType = 1;
 const DefaultSlippyZoom = 10.0;

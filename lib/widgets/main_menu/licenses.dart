@@ -22,7 +22,6 @@ class LicensesState extends State<Licenses> {
           ['base32', 'MIT License'],
           ['cached_network_image', 'MIT License'],
           ['code_text_field', 'MIT License'],
-          ['dart_numerics', 'MIT License'],
           ['diacritic', 'BSD-3-Clause License'],
           ['encrypt', 'BSD-3-Clause License'],
           ['exif', 'MIT License'],
@@ -56,6 +55,12 @@ class LicensesState extends State<Licenses> {
           ['uuid', 'MIT License'],
           ['url_launcher', 'BSD-3-Clause License'],
           ['utility', 'MIT License']
+        ]),
+      ),
+      GCWTextDivider(text: i18n(context, 'licenses_fonts')),
+      Column(
+        children: columnedMultiLineOutput(null, [
+          ['Roboto', 'Google Fonts', 'Apache License, Version 2.0']
         ]),
       ),
       GCWTextDivider(text: i18n(context, 'licenses_additionalcode')),

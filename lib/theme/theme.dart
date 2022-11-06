@@ -22,7 +22,7 @@ TextStyle gcwTextStyle({double fontSize = 0}) {
   return TextStyle(
       color: themeColors().mainFont(),
       fontSize: fontSize == 0 ? defaultFontSize() : fontSize,
-      fontFamily: 'Roboto Condensed');
+      fontFamily: 'Roboto');
 }
 
 TextStyle gcwBetaStyle() {
