@@ -1,20 +1,20 @@
-The GC Wizard is an open-source tool collection.
+GC Wizard es una colección de herramientas de código abierto.
 
-It was originally created to offer Geocachers as an offline tool to support them with in-field mysteries and riddles. So, the GC Wizard contains numerous tools for simple cryptography, geographic and scientific calculations as well as hundreds of sets of various symbols.
+Originalmente fue creado para ofrecérselo a los Geocachers como una herramienta sin conexión para ayudarlos con misterios y acertijos. Así, GC Wizard contiene numerosas herramientas para cálculos criptográficos, geográficos y científicos simples, así como cientos de conjuntos de diversos símbolos.
 
-Meanwhile the project became very huge and might be practicable for many non-Geocaching issues.
+Por otra parte, el proyecto se hizo muy grande y podría ser útil para muchos asuntos que no son de geocaching.
 
-Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
+Traducido al 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 
-<b>Highlights</b>
+<b>Lo más destacado</b>
 
 <b>General</b>
 • Formula Solver: For handling multi stage variables
 • Multi Decoder: Enter an unknown code and let several decoders and calculators interpret it in a row
 • More than 200 sets of Symbol Tables: Direct decoding symbols to characters; save own encoding as an image
-• Online Manual: Every tool has its own manual page, translated into 🇬🇧 🇩🇪 🇫🇷
+• Manual en línea: Cada herramienta tiene su propia página de manual, traducida al 🇬🇧 🇩🇪 🇫🇷
 
-<b>Cryptography & Encodings</b>
+<b>Criptografía y Codificaciones</b>
 • Alphabet Values (A = 1, B = 2, ...): Configurable alphabets with language specific special character handling
 • Braille graphical decoder: Type the points into a graphical interface; supports different languages
 • Book Cipher: Choose the correct system (e.g. Line + Letter Number or Section + Line + Word Number, ...), handle special characters and empty lines, ...
@@ -28,7 +28,7 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Military codes: ADFGX, Cipher Wheel, Tapir, ...
 • Technical encodings: BCD, CCITT, Hashes (incl. brute-force hash breaker), RSA, ...
 
-<b>Coordinates</b>
+<b>Coordenadas</b>
 • High precision coordinate algorithms which support precise calculations even with very long distances by always considering the earth's shape (ellipsoid)
 • Support of different ellipsoids, even other planets
 • Coordinate Formats: Support of UTM, MGRS, XYZ, SwissGrid, NAC, PlusCode, Geohash, ...
@@ -37,7 +37,7 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Variable Coordinate: Interpolate coordinate formulas if some parts of coordinate are not given. Show result on map
 • Cross bearing, Center point of two and three coordinates, different intersections of lines and circles, ...
 
-<b>Science and Technology</b>
+<b>Ciencia y Tecnología</b>
 • Astronomy: Calculate position of sun and moon at a certain place and time
 • Color Space Converter: Convert color values between RGB, HSL, Hex, CMYK, ...
 • Countries: ISO, calling and vehicle registration codes, flags
@@ -52,8 +52,8 @@ Translated into 🇬🇧 🇩🇪 🇫🇷 🇰🇷
 • Unit Converter: Length, Volume, Pressure, Power and many more; convert between common units incl. prefixes like micro and kilo
 • Apparent Temperature, Cross Sums, DTMF, Keyboard layouts, Projectiles, Resistor codes, ...
 
-<b>Images and Files</b>
-• Hex Viewer
+<b>Imágenes y Archivos</b>
+• Visor Hexadecimal
 • Exif/Metadata Viewer
 • Analyse frames of Animated Images
 • Color corrections: Adjust contrast, saturation, edge detection, ...
