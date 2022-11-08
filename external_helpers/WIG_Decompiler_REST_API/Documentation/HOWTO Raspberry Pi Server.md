@@ -698,9 +698,11 @@ if __name__=='__main__':
     if(p < 0):p = 0
 
     print("{:3.1f}%, {:6.3f}V,{:9.6f}A, {:6.3f}W".format(p, bus_voltage, current/1000, power))
-    if (current > 0): sys.exit(OK)
-    if (p > 25): sys.exit(WARNING)
-    if (p > 5):  sys.exit(CRITICAL)
+    
+    if (p > 25): sys.exit(OK)
+    if (p > 10):  sys.exit(WARNING)
+    if (p > 2): sys.exit(CRITICAL)
+    
     os.system("shutdown /s /t 1")
 ```
 
@@ -1016,7 +1018,33 @@ Anzupassender Inhalt
 
 
 
-# Installation des GCWizardDecompiler-servlet
+# GCWizardDecompiler Servlet
+
+The GCWizardDecompiler Servlet is a Java Servlet that runs Hans Wessels [LUA 5.x decompiler](https://github.com/HansWessels/unluac).
+
+Therefor the servlet 
+
+- receives a HTTP Multipart request containing a file with LUA bytecode.
+
+- returns the decompiled code as plain text.
+
+
+
+## Quellcode
+
+GitHub [GCWizard/external_helpers/decompiler_rest_api at 2.3.0 · S-Man42/GCWizard (github.com)](https://github.com/S-Man42/GCWizard/tree/2.3.0/external_helpers/decompiler_rest_api)
+
+
+
+## Test
+
+```
+curl -F file=@<path_to_luac_file> <server_url>
+```
+
+
+
+## Installation 
 
 - Öffne das Servlet Projekt in Eclipse
 - Wähle File > Export > Web: WAR File
@@ -1027,6 +1055,8 @@ Anzupassender Inhalt
   - Wähle WAR vom Speicherort
   - Klicke "Installieren"
 - Teste Servlet mit `curl -F file=@<path_to_luac_file> <server_url>`
+
+
 
 # Installation python3
 
@@ -1217,15 +1247,15 @@ Hence you have to install python3 and the smbus module.
 
 | /usr/local/nagios/libexec | check_tomcat.pl generieren                                   |
 | ------------------------- | ------------------------------------------------------------ |
-| commands.cfg              | define command{<br/>       command_name check_tomcat<br/>       command_line /usr/bin/perl /usr/lib/nagios/plugins/check_tomcat -H$HOSTADDRESS$ -p$ARG1$ -l$ARG2$ -a$ARG3$ -w$ARG4$ -c$ARG5$<br/>} |
-| localhost.cfg             | define service{<br />        use                  local-service<br />        host_name            localhost<br />        service_description  Tomcat <br />       check_command        check_tomcat!7323!tomcat_username!tomcat_password!25%,25%!10%,10%<br /> } |
+| commands.cfg              | define command{<br/>       command_name      check_tomcat<br/>       command_line          /usr/bin/perl /usr/lib/nagios/plugins/check_tomcat -H\$HOSTADDRESS\$ -p\$ARG1\$ -l\$ARG2\$ -a\$ARG3\$ -w\$ARG4\$ -c\$ARG5\$<br/>} |
+| localhost.cfg             | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  Tomcat <br />       check_command        check_tomcat!7323!tomcat_username!tomcat_password!25%,25%!10%,10%<br /> } |
 
 ### check UPS_hat
 
 | /usr/local/nagios/libexec | check_ups_hat.pl generieren                                  |
 | ------------------------- | ------------------------------------------------------------ |
-| commands.cfg              | define command{<br/>       command_name check_ups_hat<br/>       command_line echo <PASSWORD> \| sudo -S /usr/bin/python /usr/lib/nagios/plugins/check_ups_hat<br/>} |
-| localhost.cfg             | define service{<br />        use                  local-service<br />        host_name            localhost<br />        service_description  UPS_HAT <br />       check_command        check_ups_hat<br /> } |
+| commands.cfg              | define command{<br/>       command_name  check_ups_hat<br/>       command_line      echo <PASSWORD> \| sudo -S /usr/bin/python /usr/lib/nagios/plugins/check_ups_hat<br/>} |
+| localhost.cfg             | define service{<br />        use                              local-service<br />        host_name                 localhost<br />        service_description  UPS_HAT <br />       check_command        check_ups_hat<br /> } |
 
 ## Apache 2
 
