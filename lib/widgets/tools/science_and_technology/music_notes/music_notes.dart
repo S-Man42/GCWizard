@@ -55,15 +55,15 @@ class MusicNotesState extends State<MusicNotes> {
             case NotesCodebook.ALT:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('altoclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.ALT,
-                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+                      child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             case NotesCodebook.TREBLE:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('trebleclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.TREBLE,
-                  child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+                      child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             case NotesCodebook.BASS:
               var tool = registeredTools.firstWhere((tool) => tool.i18nPrefix.contains('bassclef'));
               return GCWDropDownMenuItem( value: NotesCodebook.BASS,
-                        child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
+                      child: _buildDropDownMenuItem( tool.icon, tool.toolName, null));
             default:
               return null;
           };
@@ -99,9 +99,12 @@ class MusicNotesState extends State<MusicNotes> {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
+    if (displays != null && displays.length > 0) {
       currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
+      currentDisplay.remove(altClef);
+      currentDisplay.remove(bassClef);
+      currentDisplay.remove(trebleClef);
+    } else
       currentDisplay = {};
 
     switch (_currentCode) {
